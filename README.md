@@ -24,6 +24,7 @@ Start with:
 
 * [App 2.0 Blueprint](docs/planning/app-2-blueprint.md)
 * [ADR-0001 - Platform Foundation](docs/decisions/ADR-0001-platform-foundation.md)
+* [Local Development](docs/server/local-development.md)
 * [Server Readiness](docs/server/server-readiness.md)
 
 ## Development Policy

@@ -24,6 +24,11 @@ Start with:
 
 * [App 2.0 Blueprint](docs/planning/app-2-blueprint.md)
 * [ADR-0001 - Platform Foundation](docs/decisions/ADR-0001-platform-foundation.md)
+* [Start Here](docs/00-start-here.md)
+* [Authentication](docs/features/authentication.md)
+* [Event And Error Logging](docs/features/event-and-error-logging.md)
+* [Coding Standards](docs/standards/coding-standards.md)
+* [Commenting Standards](docs/standards/commenting-standards.md)
 * [Local Development](docs/server/local-development.md)
 * [Server Readiness](docs/server/server-readiness.md)
 

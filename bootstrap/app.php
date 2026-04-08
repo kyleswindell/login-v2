@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\EnsureRequestId;
+use App\Platform\Logging\PlatformLogger;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -11,8 +13,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->append(EnsureRequestId::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->report(function (Throwable $exception): void {
+            app(PlatformLogger::class)->recordException($exception);
+        });
     })->create();

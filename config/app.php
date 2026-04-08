@@ -15,6 +15,10 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'service_name' => env('APP_SERVICE_NAME', 'login-app-v2'),
+
+    'version' => env('APP_VERSION', 'local'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

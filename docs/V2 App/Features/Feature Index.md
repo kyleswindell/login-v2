@@ -7,8 +7,9 @@
 
 ## Planned Feature Tracks
 
-- platform foundation
-- tenant application foundation
+- core app foundation
+- platform-management foundation
+- tenantization and provisioning foundation
 - content and website foundation
 - platform operations and support tooling
 - advanced tenant products

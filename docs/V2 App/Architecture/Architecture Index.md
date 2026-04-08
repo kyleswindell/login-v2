@@ -3,6 +3,7 @@
 ## Architecture Notes
 
 - [[V2 App/Architecture/App 2.0 Blueprint]] | [App 2.0 Blueprint](App%202.0%20Blueprint.md)
+- [[V2 App/Architecture/Core App And Platform Layer Model]] | [Core App And Platform Layer Model](Core%20App%20And%20Platform%20Layer%20Model.md)
 - [[V2 App/Architecture/Stack Overview]] | [Stack Overview](Stack%20Overview.md)
 - [[V2 App/Architecture/Tenancy Foundation]] | [Tenancy Foundation](Tenancy%20Foundation.md)
 - [[V2 App/Architecture/Platform And Tenant Application Boundary]] | [Platform And Tenant Application Boundary](Platform%20And%20Tenant%20Application%20Boundary.md)

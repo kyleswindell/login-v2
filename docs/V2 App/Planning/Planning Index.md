@@ -6,6 +6,7 @@
 - [[V2 App/Planning/App 2.0 Commenting Standards Research]] | [App 2.0 Commenting Standards Research](App%202.0%20Commenting%20Standards%20Research.md)
 - [[V2 App/Planning/App 2.0 Logging DB Columns Research]] | [App 2.0 Logging DB Columns Research](App%202.0%20Logging%20DB%20Columns%20Research.md)
 - [[V2 App/Planning/V2 Feature Roadmap]] | [V2 Feature Roadmap](V2%20Feature%20Roadmap.md)
+- [[V2 App/Planning/Phase 0/Phase 0 Index]] | [Phase 0 Index](Phase%200/Phase%200%20Index.md)
 - [[V2 App/Planning/Phase 1/Phase 1 Index]] | [Phase 1 Index](Phase%201/Phase%201%20Index.md)
 - [[V2 App/Planning/Phase 1/Phase 1 - Platform Foundation Planning]] | [Phase 1 - Platform Foundation Planning](Phase%201/Phase%201%20-%20Platform%20Foundation%20Planning.md)
 

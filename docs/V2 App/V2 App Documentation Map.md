@@ -22,6 +22,7 @@ This note is the root node for the V2 documentation branch inside the shared vau
 - authentication
 - event and error logging
 - local development and server readiness
+- phase 0 deployment and environment setup
 - working planning research for commenting and logging
 - phase-specific planning starting with platform foundation
 
@@ -31,5 +32,6 @@ This note is the root node for the V2 documentation branch inside the shared vau
 - [[V2 App/Architecture/Architecture Index]] | [Architecture Index](Architecture/Architecture%20Index.md)
 - [[V2 App/Features/Feature Index]] | [Feature Index](Features/Feature%20Index.md)
 - [[V2 App/Reference/Reference Index]] | [Reference Index](Reference/Reference%20Index.md)
+- [[V2 App/Planning/Phase 0/Phase 0 Index]] | [Phase 0 Index](Planning/Phase%200/Phase%200%20Index.md)
 - [[V2 App/Planning/Phase 1/Phase 1 Index]] | [Phase 1 Index](Planning/Phase%201/Phase%201%20Index.md)
 - [[V2 App/Planning/Phase 1/Phase 1 - Platform Foundation Planning]] | [Phase 1 - Platform Foundation Planning](Planning/Phase%201/Phase%201%20-%20Platform%20Foundation%20Planning.md)

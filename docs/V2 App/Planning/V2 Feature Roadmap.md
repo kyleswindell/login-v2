@@ -45,6 +45,24 @@ These V1 areas are reference-only and should not automatically become day-one V2
 
 ## Proposed V2 Phases
 
+### Phase 0: Deployment And Environment Setup
+
+Goal:
+
+Establish the Git, server, and deployment baseline before the core app grows further.
+
+Features:
+
+* GitHub remote as source of truth
+* multi-device workflow readiness
+* server stack verification
+* deployment path verification
+* first deployment/bootstrap documentation
+
+Working planning note:
+
+* [[V2 App/Planning/Phase 0/Phase 0 - Deployment And Environment Setup]] | [Phase 0 - Deployment And Environment Setup](Phase%200/Phase%200%20-%20Deployment%20And%20Environment%20Setup.md)
+
 ### Phase 1: Core App Foundation
 
 Goal:
@@ -161,6 +179,7 @@ These should be documented before the next major build phase:
 ## Related
 
 * [[V2 App/Planning/Planning Index]] | [Planning Index](Planning%20Index.md)
+* [[V2 App/Planning/Phase 0/Phase 0 Index]] | [Phase 0 Index](Phase%200/Phase%200%20Index.md)
 * [[V2 App/Planning/Phase 1/Phase 1 Index]] | [Phase 1 Index](Phase%201/Phase%201%20Index.md)
 * [[V2 App/Planning/Phase 1/Phase 1 - Platform Foundation Planning]] | [Phase 1 - Platform Foundation Planning](Phase%201/Phase%201%20-%20Platform%20Foundation%20Planning.md)
 * [[V2 App/Architecture/Core App And Platform Layer Model]] | [Core App And Platform Layer Model](../Architecture/Core%20App%20And%20Platform%20Layer%20Model.md)

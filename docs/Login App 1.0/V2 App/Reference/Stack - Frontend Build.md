@@ -35,3 +35,8 @@ npm run build
 ## Notes
 
 Tailwind's official Vite guidance currently recommends the dedicated Vite plugin. Our stack should stay close to the current official guidance when we evolve the frontend build setup.
+
+## Related
+
+* [[V2 App/Reference/Reference Index]] | [Reference Index](Reference%20Index.md)
+* [[V2 App/Architecture/Stack Overview]] | [Stack Overview](../Architecture/Stack%20Overview.md)

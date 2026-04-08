@@ -27,3 +27,8 @@ Apache and PHP-FPM are the planned production runtime on the VPS.
 ## Practical Notes
 
 `mod_proxy_fcgi` requires `mod_proxy` and `mod_proxy_fcgi`. Apache proxies requests to PHP-FPM, but does not manage PHP-FPM itself, so service supervision still matters at the OS layer.
+
+## Related
+
+* [[V2 App/Reference/Reference Index]] | [Reference Index](Reference%20Index.md)
+* [[V2 App/Runbooks/Server Readiness]] | [Server Readiness](../Runbooks/Server%20Readiness.md)

@@ -1,4 +1,4 @@
-# App 2.0 Blueprint
+# App 2.0 Blueprint Planning
 
 This file is the working planning copy for Login App 2.0. The original planning notes were created in the Perfex 1.0 reference repository and should be treated as historical context.
 
@@ -62,3 +62,9 @@ Do not let the production VPS become the only source of truth for application co
 ## Open Implementation Detail
 
 Local development currently recommends Docker Compose. The scaffold can still begin by verifying the production-like `platform-prod` environment over SSH before the full local Compose file is finalized.
+
+## Related
+
+* [[V2 App/Planning/Planning Index]] | [Planning Index](Planning%20Index.md)
+* [[V2 App/Architecture/App 2.0 Blueprint]] | [App 2.0 Blueprint](../Architecture/App%202.0%20Blueprint.md)
+* [[Decisions/ADR-0003 - App 2.0 Platform Foundation]] | [ADR-0003 - App 2.0 Platform Foundation](../../Decisions/ADR-0003%20-%20App%202.0%20Platform%20Foundation.md)

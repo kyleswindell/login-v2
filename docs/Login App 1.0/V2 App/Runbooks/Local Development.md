@@ -106,3 +106,9 @@ If local Windows/WSL Node tooling is unreliable, prefer handling Node through Do
 ## Notes
 
 Laravel's default scaffold creates a SQLite placeholder during `composer create-project`. This project removes that placeholder because PostgreSQL is the intended platform database.
+
+## Related
+
+* [[V2 App/Runbooks/Runbook Index]] | [Runbook Index](Runbook%20Index.md)
+* [[V2 App/Reference/Stack - Docker Compose]] | [Stack - Docker Compose](../Reference/Stack%20-%20Docker%20Compose.md)
+* [[V2 App/Reference/Stack - Laravel]] | [Stack - Laravel](../Reference/Stack%20-%20Laravel.md)

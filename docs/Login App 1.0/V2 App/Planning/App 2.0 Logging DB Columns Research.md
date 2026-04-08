@@ -1,3 +1,5 @@
+# App 2.0 Logging DB Columns Research
+
 Yes. With **database-per-tenant already in place**, it is reasonable to make **tenant audit logs tenant-local**. I would still keep **platform-level centralized error/operational logging** as well.
 
 That is the model I would recommend.
@@ -12,8 +14,8 @@ Initial implementation now follows this direction as a central-platform baseline
 
 Related implementation docs:
 
-* [[../features/event-and-error-logging|Event And Error Logging]] | [Event And Error Logging](../features/event-and-error-logging.md)
-* [[../standards/logging-standards|Logging Standards]] | [Logging Standards](../standards/logging-standards.md)
+* [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../Features/Event%20And%20Error%20Logging.md)
+* [[Standards/Logging Standards]] | [Logging Standards](../../Standards/Logging%20Standards.md)
 
 ## Best design for your setup
 
@@ -289,6 +291,12 @@ If you want, I can draft the exact schema for:
 * central `error_logs`
 * central `security_logs`
 * a lightweight sync/mirroring table for the admin console.
+
+## Related
+
+* [[V2 App/Planning/Planning Index]] | [Planning Index](Planning%20Index.md)
+* [[V2 App/Reference/Logging Data Model Notes]] | [Logging Data Model Notes](../Reference/Logging%20Data%20Model%20Notes.md)
+* [[Standards/Logging Standards]] | [Logging Standards](../../Standards/Logging%20Standards.md)
 
 [1]: https://cheatsheetseries.owasp.org/cheatsheets/Multi_Tenant_Security_Cheat_Sheet.html?utm_source=chatgpt.com "Multi Tenant Security - OWASP Cheat Sheet Series"
 [2]: https://opentelemetry.io/docs/concepts/signals/logs/?utm_source=chatgpt.com "OpenTelemetry Logs"

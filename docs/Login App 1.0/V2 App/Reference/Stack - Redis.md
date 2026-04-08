@@ -32,3 +32,8 @@ Redis is infrastructure support for cache, queues, and fast transient state.
 ## Practical Notes
 
 For App 2.0, Redis should stay narrowly scoped until a concrete feature justifies broader usage.
+
+## Related
+
+* [[V2 App/Reference/Reference Index]] | [Reference Index](Reference%20Index.md)
+* [[V2 App/Architecture/Stack Overview]] | [Stack Overview](../Architecture/Stack%20Overview.md)

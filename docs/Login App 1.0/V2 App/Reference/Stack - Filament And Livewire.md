@@ -43,3 +43,8 @@ After installation:
 * register panel providers cleanly
 * verify panel paths do not conflict with app routes
 * keep panel-specific boot logic explicit
+
+## Related
+
+* [[V2 App/Reference/Reference Index]] | [Reference Index](Reference%20Index.md)
+* [[V2 App/Architecture/Stack Overview]] | [Stack Overview](../Architecture/Stack%20Overview.md)

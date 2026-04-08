@@ -35,3 +35,8 @@ PostgreSQL is the authoritative data store for the platform database and future 
 ## Practical Notes
 
 We should document the eventual tenant provisioning SQL and privilege model before implementing the connection manager and provisioning pipeline.
+
+## Related
+
+* [[V2 App/Reference/Reference Index]] | [Reference Index](Reference%20Index.md)
+* [[V2 App/Architecture/Tenancy Foundation]] | [Tenancy Foundation](../Architecture/Tenancy%20Foundation.md)

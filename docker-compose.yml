@@ -1,0 +1,63 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .docker/php/Dockerfile
+      args:
+        UID: ${DOCKER_UID:-1000}
+        GID: ${DOCKER_GID:-1000}
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "${APP_PORT:-8000}:8000"
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    command: sh -lc "composer install && php artisan serve --host=0.0.0.0 --port=8000"
+
+  node:
+    image: node:22-alpine
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "${VITE_PORT:-5173}:5173"
+    command: sh -lc "npm install && npm run dev -- --host 0.0.0.0"
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-login_v2_platform}
+      POSTGRES_USER: ${DB_USERNAME:-login_v2}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secret}
+    ports:
+      - "${FORWARD_DB_PORT:-5432}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-login_v2} -d ${DB_DATABASE:-login_v2_platform}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "${FORWARD_REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis-data:/data
+
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - "${FORWARD_MAILPIT_PORT:-1025}:1025"
+      - "${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025"
+
+volumes:
+  postgres-data:
+  redis-data:

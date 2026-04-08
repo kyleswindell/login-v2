@@ -30,3 +30,5 @@ Start with:
 ## Development Policy
 
 This repo is the source of truth for App 2.0 code and documentation. The DigitalOcean server can be used for verification and deployment preparation, but meaningful application code should be committed here before deployment.
+
+Local development should prefer the Docker Compose stack documented in [Local Development](docs/server/local-development.md).

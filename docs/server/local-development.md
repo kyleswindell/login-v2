@@ -2,9 +2,13 @@
 
 ## Required Local Tooling
 
-The local PHP CLI needs the same core extensions expected by the Laravel app.
+Docker Compose is the preferred local development path. The local PHP CLI is still useful for quick Composer and Artisan checks outside Docker.
 
-Required before running Composer/Laravel commands:
+Required before running the full local stack:
+
+* Docker Desktop or Docker Engine with Compose support
+
+Required before running Composer/Laravel commands outside Docker:
 
 * PHP 8.3
 * Composer
@@ -25,17 +29,45 @@ Required before running Composer/Laravel commands:
 
 App 2.0 uses PostgreSQL from the start.
 
-The example local platform database is:
+The Docker Compose local platform database is:
 
 * database: `login_v2_platform`
 * user: `login_v2`
 * password: `secret`
+* host from inside containers: `postgres`
+* host from the machine running Docker: `127.0.0.1:5432`
 
-These values are placeholders for local development and should be replaced by Docker Compose or local PostgreSQL setup values as the environment is finalized.
+These values are local-development placeholders only.
 
 ## Redis
 
 Redis is the default local cache and queue backend in `.env.example`.
+
+The Docker Compose Redis host is `redis` inside containers and `127.0.0.1:6379` from the machine running Docker.
+
+## Docker Compose
+
+Start from the repository root:
+
+```bash
+cp .env.example .env
+docker compose run --rm app php artisan key:generate
+docker compose up --build
+```
+
+Default local URLs:
+
+* Laravel app: `http://localhost:8000`
+* Vite dev server: `http://localhost:5173`
+* Mailpit dashboard: `http://localhost:8025`
+
+The Compose stack includes:
+
+* `app`: PHP 8.3 CLI container running Laravel's local server
+* `node`: Node 22 container running Vite
+* `postgres`: PostgreSQL 16
+* `redis`: Redis 7
+* `mailpit`: local email capture
 
 ## Frontend Assets
 

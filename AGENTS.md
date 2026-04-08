@@ -16,13 +16,17 @@ This repository contains Login App 2.0, a new Laravel-based platform intended to
 * Document architectural decisions in `docs/decisions/`.
 * Keep server and deployment notes in `docs/server/`.
 * Follow the commenting standard: prefer self-documenting code, use PHPDoc for contracts/static analysis, and remove commented-out starter code.
+* Use the stack guides in `docs/stack/` when implementing or debugging framework, infrastructure, and frontend concerns.
+* Prefer official documentation for Laravel, Filament, Livewire, PostgreSQL, Redis, Docker, Vite, Tailwind, and Apache when updating stack rules.
 
 ## Important Docs
 
 * [Start Here](docs/00-start-here.md)
+* [Stack Overview](docs/architecture/stack-overview.md)
 * [App 2.0 Blueprint](docs/planning/app-2-blueprint.md)
 * [ADR-0001 - Platform Foundation](docs/decisions/ADR-0001-platform-foundation.md)
 * [Coding Standards](docs/standards/coding-standards.md)
 * [Commenting Standards](docs/standards/commenting-standards.md)
 * [Logging Standards](docs/standards/logging-standards.md)
 * [Server Readiness](docs/server/server-readiness.md)
+* [skills.md](skills.md)

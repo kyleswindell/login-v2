@@ -2,10 +2,30 @@
 
 This docs folder is the App 2.0 Obsidian-friendly project vault.
 
-## Primary Links
+## Read In This Order
 
+If you are new to the repo, read these first:
+
+* [[architecture/stack-overview|Stack Overview]] | [Stack Overview](architecture/stack-overview.md)
 * [[planning/app-2-blueprint|App 2.0 Blueprint]] | [App 2.0 Blueprint](planning/app-2-blueprint.md)
 * [[architecture/tenancy-foundation|Tenancy Foundation]] | [Tenancy Foundation](architecture/tenancy-foundation.md)
+* [[features/authentication|Authentication]] | [Authentication](features/authentication.md)
+* [[features/event-and-error-logging|Event And Error Logging]] | [Event And Error Logging](features/event-and-error-logging.md)
+
+## Stack Guides
+
+Use these notes when implementing or debugging the planned stack:
+
+* [[stack/laravel|Laravel]] | [Laravel](stack/laravel.md)
+* [[stack/filament-and-livewire|Filament And Livewire]] | [Filament And Livewire](stack/filament-and-livewire.md)
+* [[stack/postgresql|PostgreSQL]] | [PostgreSQL](stack/postgresql.md)
+* [[stack/redis|Redis]] | [Redis](stack/redis.md)
+* [[stack/frontend-build|Frontend Build]] | [Frontend Build](stack/frontend-build.md)
+* [[stack/docker-compose|Docker Compose]] | [Docker Compose](stack/docker-compose.md)
+* [[stack/apache-php-fpm|Apache And PHP-FPM]] | [Apache And PHP-FPM](stack/apache-php-fpm.md)
+
+## Project Docs
+
 * [[features/authentication|Authentication]] | [Authentication](features/authentication.md)
 * [[features/event-and-error-logging|Event And Error Logging]] | [Event And Error Logging](features/event-and-error-logging.md)
 * [[standards/coding-standards|Coding Standards]] | [Coding Standards](standards/coding-standards.md)

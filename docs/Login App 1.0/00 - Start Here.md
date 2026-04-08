@@ -42,6 +42,7 @@ This vault contains three kinds of material:
 - [[V2 App/Features/Feature Index]] | [Feature Index](V2%20App/Features/Feature%20Index.md)
 - [[V2 App/Reference/Reference Index]] | [Reference Index](V2%20App/Reference/Reference%20Index.md)
 - [[V2 App/Runbooks/Runbook Index]] | [Runbook Index](V2%20App/Runbooks/Runbook%20Index.md)
+- [[V2 App/Planning/Planning Index]] | [Planning Index](V2%20App/Planning/Planning%20Index.md)
 
 ## Current Focus
 

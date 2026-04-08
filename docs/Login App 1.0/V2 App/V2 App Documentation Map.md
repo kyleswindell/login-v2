@@ -10,6 +10,7 @@ Map the current V2 Laravel application documentation inside the shared vault.
 - [[V2 App/Features/Feature Index]] | [Feature Index](Features/Feature%20Index.md)
 - [[V2 App/Reference/Reference Index]] | [Reference Index](Reference/Reference%20Index.md)
 - [[V2 App/Runbooks/Runbook Index]] | [Runbook Index](Runbooks/Runbook%20Index.md)
+- [[V2 App/Planning/Planning Index]] | [Planning Index](Planning/Planning%20Index.md)
 
 ## Current Coverage
 
@@ -19,6 +20,7 @@ Map the current V2 Laravel application documentation inside the shared vault.
 - authentication
 - event and error logging
 - local development and server readiness
+- working planning research for commenting and logging
 
 ## Related
 

@@ -24,6 +24,8 @@
 /.fleet/
 /.nova/
 /.zed/
+docs/.obsidian/
+Old Docs/
 /.DS_Store
 Thumbs.db
 *.log

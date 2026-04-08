@@ -1,0 +1,24 @@
+# Feature Index
+
+## Implemented Foundation Features
+
+- [[V2 App/Features/Authentication]] | [Authentication](Authentication.md)
+- [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](Event%20And%20Error%20Logging.md)
+
+## Planned Feature Tracks
+
+- platform foundation
+- tenant application foundation
+- content and website foundation
+- platform operations and support tooling
+- advanced tenant products
+
+See the current planning owner:
+
+- [[V2 App/Planning/V2 Feature Roadmap]] | [V2 Feature Roadmap](../Planning/V2%20Feature%20Roadmap.md)
+
+## Related
+
+- [[V2 App/V2 App Documentation Map]] | [V2 App Documentation Map](../V2%20App%20Documentation%20Map.md)
+- [[V2 App/Reference/Reference Index]] | [Reference Index](../Reference/Reference%20Index.md)
+- [[V2 App/Architecture/Platform And Tenant Application Boundary]] | [Platform And Tenant Application Boundary](../Architecture/Platform%20And%20Tenant%20Application%20Boundary.md)

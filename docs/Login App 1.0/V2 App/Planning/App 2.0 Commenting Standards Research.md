@@ -1,5 +1,11 @@
 # Modern Commenting Standards for Source Code and Developer Documentation
 
+## Purpose
+
+Preserve the deeper external research that informed the V2 commenting standard and related documentation choices.
+
+Use this note as research context, not as the canonical source for repo rules.
+
 ## Executive summary
 
 Modern commenting standards converge on a shared goal: maximize long-term comprehension while minimizing drift, noise, and duplicated truth. In practice, that means (a) write code that “explains itself” by structure and naming, (b) reserve comments for intent, constraints, contracts, and non-obvious rationale, and (c) treat documentation comments as a first-class API surface (because multiple ecosystems extract them into rendered docs and IDE hints). citeturn16view0turn11view0turn8view0turn12view4turn25view0
@@ -275,3 +281,9 @@ For license headers, SPDX identifiers can be enforced via simple repository scan
 | Licensing             | Prefer SPDX single-line identifiers near top for concise, machine-readable license                            | `# SPDX-License-Identifier: ...`                                                            | `// SPDX-License-Identifier: ...`                                                                                              | `// SPDX-License-Identifier: ...`                                                                                                                  | `//` or `/* ... */`                                                                                                                                   | `// SPDX-License-Identifier: ...` citeturn21view3turn21view4                                                                 |
 
 **Notes on “unspecified”:** Items marked unspecified are not concretely mandated in the cited primary sources; where needed, they should be standardized at the project level and enforced via tooling. citeturn23view0turn8view0turn11view0
+
+## Related
+
+* [[V2 App/Planning/Planning Index]] | [Planning Index](Planning%20Index.md)
+* [[Standards/Commenting Standards]] | [Commenting Standards](../../Standards/Commenting%20Standards.md)
+* [[Documentation Standards/Modern Commenting Standards Research]] | [Modern Commenting Standards Research](../../Documentation%20Standards/Modern%20Commenting%20Standards%20Research.md)

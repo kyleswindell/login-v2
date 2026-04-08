@@ -4,6 +4,8 @@
 
 Map the current V2 Laravel application documentation inside the shared vault.
 
+This note is the root node for the V2 documentation branch inside the shared vault.
+
 ## Main Sections
 
 - [[V2 App/Architecture/Architecture Index]] | [Architecture Index](Architecture/Architecture%20Index.md)
@@ -26,3 +28,5 @@ Map the current V2 Laravel application documentation inside the shared vault.
 
 - [[00 - Start Here]] | [00 - Start Here](../00%20-%20Start%20Here.md)
 - [[V2 App/Architecture/Architecture Index]] | [Architecture Index](Architecture/Architecture%20Index.md)
+- [[V2 App/Features/Feature Index]] | [Feature Index](Features/Feature%20Index.md)
+- [[V2 App/Reference/Reference Index]] | [Reference Index](Reference/Reference%20Index.md)

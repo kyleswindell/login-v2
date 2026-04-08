@@ -35,6 +35,9 @@ This vault contains three kinds of material:
 
 - [[V2 App/V2 App Documentation Map]] | [V2 App Documentation Map](V2%20App/V2%20App%20Documentation%20Map.md)
 
+- Start from the V2 root note and keep it open when exploring the V2 graph:
+  [[V2 App/V2 App Documentation Map]] | [V2 App Documentation Map](V2%20App/V2%20App%20Documentation%20Map.md)
+
 - [[V2 App/Architecture/Architecture Index]] | [Architecture Index](V2%20App/Architecture/Architecture%20Index.md)
 - [[V2 App/Architecture/App 2.0 Blueprint]] | [App 2.0 Blueprint](V2%20App/Architecture/App%202.0%20Blueprint.md)
 - [[V2 App/Architecture/Stack Overview]] | [Stack Overview](V2%20App/Architecture/Stack%20Overview.md)
@@ -49,6 +52,7 @@ This vault contains three kinds of material:
 - keep base standards and guidance reusable
 - keep V1 and V2 documentation clearly separated under their own app branches
 - continue using the shared base standards and Codex guidance for future V2 work
+- use `V2 App/V2 App Documentation Map.md` as the V2 root node for graph exploration and future V2 note additions
 
 ## Related
 

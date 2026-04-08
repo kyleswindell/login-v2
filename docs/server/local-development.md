@@ -69,6 +69,29 @@ The Compose stack includes:
 * `redis`: Redis 7
 * `mailpit`: local email capture
 
+## Verification Commands
+
+After `docker compose up --build` is running, use a second terminal from the repository root:
+
+```bash
+docker compose ps
+docker compose exec app php artisan about
+docker compose exec app php artisan migrate
+docker compose exec app php artisan test
+```
+
+Expected baseline:
+
+* all five services are up
+* `postgres` reports healthy
+* Laravel reports database driver `pgsql`
+* Laravel reports cache and queue drivers `redis`
+* Laravel reports mail driver `smtp`
+* migrations run against PostgreSQL
+* the default Laravel tests pass
+
+This baseline was verified locally after Docker Desktop WSL integration was enabled.
+
 ## Frontend Assets
 
 Laravel includes Vite frontend tooling. Node.js/npm must be available before running:

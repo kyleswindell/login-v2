@@ -21,12 +21,9 @@ This repository contains Login App 2.0, a new Laravel-based platform intended to
 
 ## Important Docs
 
-* [Start Here](docs/00-start-here.md)
-* [Stack Overview](docs/architecture/stack-overview.md)
-* [App 2.0 Blueprint](docs/planning/app-2-blueprint.md)
-* [ADR-0001 - Platform Foundation](docs/decisions/ADR-0001-platform-foundation.md)
-* [Coding Standards](docs/standards/coding-standards.md)
-* [Commenting Standards](docs/standards/commenting-standards.md)
-* [Logging Standards](docs/standards/logging-standards.md)
-* [Server Readiness](docs/server/server-readiness.md)
-* [skills.md](skills.md)
+* [Vault Start Here](docs/Login%20App%201.0/00%20-%20Start%20Here.md)
+* [V2 App Documentation Map](docs/Login%20App%201.0/V2%20App/V2%20App%20Documentation%20Map.md)
+* [Architecture Index](docs/Login%20App%201.0/V2%20App/Architecture/Architecture%20Index.md)
+* [Reference Index](docs/Login%20App%201.0/V2%20App/Reference/Reference%20Index.md)
+* [Standards Index](docs/Login%20App%201.0/Standards/Standards%20Index.md)
+* [Codex Working Rules](docs/Login%20App%201.0/Codex/Codex%20Working%20Rules.md)

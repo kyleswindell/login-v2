@@ -4,11 +4,11 @@ This file captures the repo-specific implementation and debugging workflows that
 
 ## Read Before Working
 
-* [[docs/00-start-here|Start Here]] | [Start Here](docs/00-start-here.md)
-* [[docs/architecture/stack-overview|Stack Overview]] | [Stack Overview](docs/architecture/stack-overview.md)
-* [[docs/standards/coding-standards|Coding Standards]] | [Coding Standards](docs/standards/coding-standards.md)
-* [[docs/standards/commenting-standards|Commenting Standards]] | [Commenting Standards](docs/standards/commenting-standards.md)
-* [[docs/standards/logging-standards|Logging Standards]] | [Logging Standards](docs/standards/logging-standards.md)
+* [[docs/Login App 1.0/00 - Start Here|Start Here]] | [Start Here](docs/Login%20App%201.0/00%20-%20Start%20Here.md)
+* [[docs/Login App 1.0/V2 App/Architecture/Stack Overview|Stack Overview]] | [Stack Overview](docs/Login%20App%201.0/V2%20App/Architecture/Stack%20Overview.md)
+* [[docs/Login App 1.0/Standards/Coding Standards|Coding Standards]] | [Coding Standards](docs/Login%20App%201.0/Standards/Coding%20Standards.md)
+* [[docs/Login App 1.0/Standards/Commenting Standards|Commenting Standards]] | [Commenting Standards](docs/Login%20App%201.0/Standards/Commenting%20Standards.md)
+* [[docs/Login App 1.0/Standards/Logging Standards|Logging Standards]] | [Logging Standards](docs/Login%20App%201.0/Standards/Logging%20Standards.md)
 
 ## Core Workflows
 
@@ -26,13 +26,13 @@ Use this flow when adding application behavior:
 
 Use the matching stack guide before making assumptions:
 
-* [[docs/stack/laravel|Laravel]] | [Laravel](docs/stack/laravel.md)
-* [[docs/stack/filament-and-livewire|Filament And Livewire]] | [Filament And Livewire](docs/stack/filament-and-livewire.md)
-* [[docs/stack/postgresql|PostgreSQL]] | [PostgreSQL](docs/stack/postgresql.md)
-* [[docs/stack/redis|Redis]] | [Redis](docs/stack/redis.md)
-* [[docs/stack/frontend-build|Frontend Build]] | [Frontend Build](docs/stack/frontend-build.md)
-* [[docs/stack/docker-compose|Docker Compose]] | [Docker Compose](docs/stack/docker-compose.md)
-* [[docs/stack/apache-php-fpm|Apache And PHP-FPM]] | [Apache And PHP-FPM](docs/stack/apache-php-fpm.md)
+* [[docs/Login App 1.0/V2 App/Reference/Stack - Laravel|Laravel]] | [Laravel](docs/Login%20App%201.0/V2%20App/Reference/Stack%20-%20Laravel.md)
+* [[docs/Login App 1.0/V2 App/Reference/Stack - Filament And Livewire|Filament And Livewire]] | [Filament And Livewire](docs/Login%20App%201.0/V2%20App/Reference/Stack%20-%20Filament%20And%20Livewire.md)
+* [[docs/Login App 1.0/V2 App/Reference/Stack - PostgreSQL|PostgreSQL]] | [PostgreSQL](docs/Login%20App%201.0/V2%20App/Reference/Stack%20-%20PostgreSQL.md)
+* [[docs/Login App 1.0/V2 App/Reference/Stack - Redis|Redis]] | [Redis](docs/Login%20App%201.0/V2%20App/Reference/Stack%20-%20Redis.md)
+* [[docs/Login App 1.0/V2 App/Reference/Stack - Frontend Build|Frontend Build]] | [Frontend Build](docs/Login%20App%201.0/V2%20App/Reference/Stack%20-%20Frontend%20Build.md)
+* [[docs/Login App 1.0/V2 App/Reference/Stack - Docker Compose|Docker Compose]] | [Docker Compose](docs/Login%20App%201.0/V2%20App/Reference/Stack%20-%20Docker%20Compose.md)
+* [[docs/Login App 1.0/V2 App/Reference/Stack - Apache And PHP-FPM|Apache And PHP-FPM]] | [Apache And PHP-FPM](docs/Login%20App%201.0/V2%20App/Reference/Stack%20-%20Apache%20And%20PHP-FPM.md)
 
 ### Bug review
 

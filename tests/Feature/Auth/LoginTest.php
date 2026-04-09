@@ -45,6 +45,7 @@ class LoginTest extends TestCase
         ])->assertRedirect('/dashboard');
 
         $this->assertAuthenticatedAs($user);
+        $this->assertNotNull($user->fresh()->last_login_at);
 
         $this->assertDatabaseHas('platform_audit_logs', [
             'event_type' => 'auth.login_succeeded',
@@ -71,6 +72,28 @@ class LoginTest extends TestCase
             'event_type' => 'auth.login_failed',
             'result' => 'failure',
             'severity' => 'warning',
+            'is_security_event' => true,
+        ]);
+    }
+
+    public function test_inactive_users_cannot_sign_in(): void
+    {
+        $user = User::factory()->create([
+            'password' => Hash::make('password'),
+            'is_active' => false,
+        ]);
+
+        $this->from('/login')->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ])->assertRedirect('/login');
+
+        $this->assertGuest();
+
+        $this->assertDatabaseHas('platform_audit_logs', [
+            'event_type' => 'auth.login_failed',
+            'actor_user_id' => $user->id,
+            'result' => 'failure',
             'is_security_event' => true,
         ]);
     }

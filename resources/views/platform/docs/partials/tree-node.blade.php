@@ -1,12 +1,26 @@
 <div class="{{ $depth > 0 ? 'mt-1' : '' }}">
     @if ($node['type'] === 'directory')
-        <div class="rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500" style="margin-left: {{ $depth * 0.75 }}rem;">
-            {{ $node['name'] }}
-        </div>
+        @php($isOpen = $selectedPath !== '' && str_starts_with($selectedPath, $node['path'].'/'))
 
-        @foreach ($node['children'] as $child)
-            @include('platform.docs.partials.tree-node', ['node' => $child, 'selectedPath' => $selectedPath, 'depth' => $depth + 1])
-        @endforeach
+        <details class="group" @open($isOpen)>
+            <summary
+                @class([
+                    'flex cursor-pointer list-none items-center justify-between rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] transition',
+                    'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => $isOpen,
+                    'text-slate-500 hover:bg-slate-800 hover:text-slate-200' => ! $isOpen,
+                ])
+                style="margin-left: {{ $depth * 0.75 }}rem;"
+            >
+                <span>{{ $node['name'] }}</span>
+                <span class="text-[10px] text-slate-500 transition group-open:rotate-90 group-open:text-sky-200">›</span>
+            </summary>
+
+            <div class="mt-1">
+                @foreach ($node['children'] as $child)
+                    @include('platform.docs.partials.tree-node', ['node' => $child, 'selectedPath' => $selectedPath, 'depth' => $depth + 1])
+                @endforeach
+            </div>
+        </details>
     @else
         <a
             href="{{ route('platform.docs.index', ['path' => $node['path']]) }}"

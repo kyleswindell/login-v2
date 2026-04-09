@@ -84,6 +84,41 @@ Current recommended direction:
 * privileged platform identities may be mapped into tenant contexts in a controlled way when needed
 * do not plan broad shared user-table behavior across all tenant databases in Phase 1
 
+### Phase 1 base auth tables
+
+Phase 1 should stay close to Laravel's defaults unless there is a clear architectural reason not to.
+
+Recommended first implementation:
+
+* `users`
+* `password_reset_tokens`
+* `roles`
+* `permissions`
+* `model_has_roles`
+* `role_has_permissions`
+
+Recommended stance:
+
+* use the central `users` table for the internal platform/core-app identities in Phase 1
+* do not introduce a separate `platform_users` table unless a concrete need appears
+* use package-backed RBAC tables rather than custom role pivots
+* keep tenant-runtime users out of scope for this database in Phase 1
+
+Recommended `users` baseline should support:
+
+* login identifier
+* password hash
+* active/inactive status
+* email verification readiness
+* invitation readiness if platform users become invite-only
+* last-login metadata if we decide it belongs on the user row rather than only in audit logs
+
+Recommended RBAC stance:
+
+* keep the standard role and permission table names in the central Phase 1 database
+* keep platform role naming in the permission/role data, not in table prefixes
+* keep future tenant auth tables separate in future tenant databases rather than overloading the Phase 1 central schema now
+
 ## Naming Direction
 
 Recommended permission naming:
@@ -127,6 +162,7 @@ Still worth deciding explicitly:
 * whether the first implementation should use one guard with scoped user types or clearly separate platform and tenant guards from the beginning
 * whether tenant privileged handoff should support route-specific destination targets in Phase 1
 * whether impersonation is deferred entirely or designed as a later extension of the handoff model
+* whether `users` should include explicit lifecycle columns such as `is_active`, `invited_at`, and `last_login_at` in Phase 1 or rely on audit logs first
 
 ## Related
 

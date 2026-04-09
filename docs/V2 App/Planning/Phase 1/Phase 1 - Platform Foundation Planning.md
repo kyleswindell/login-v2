@@ -566,44 +566,7 @@ Recommended model:
 
 ### 9. Initial database model
 
-Recommended landlord tables:
-
-* `platform_users`
-* `platform_password_reset_tokens`
-* `platform_roles`
-* `platform_permissions`
-* `platform_model_has_roles`
-* `platform_role_has_permissions`
-* `tenants`
-* `tenant_domains`
-* `audit_logs`
-* `notifications`
-* `notification_receipts`
-* `settings`
-* `module_registry`
-* `failed_jobs`
-* `jobs`
-* `cache` if database-backed cache is used
-* `sessions` if database-backed sessions are used
-
-Recommended `tenants` table fields:
-
-* `id` UUID
-* `key` unique stable tenant slug
-* `name`
-* `status` (`provisioning`, `active`, `suspended`, `archived`)
-* `primary_domain` nullable
-* `db_host`
-* `db_port`
-* `db_database`
-* `db_username`
-* encrypted `db_password`
-* `template_version`
-* `provisioned_at` nullable
-* `suspended_at` nullable
-* timestamps
-
-Recommended future tenant template tables:
+Recommended Phase 1 central tables:
 
 * `users`
 * `password_reset_tokens`
@@ -611,10 +574,61 @@ Recommended future tenant template tables:
 * `permissions`
 * `model_has_roles`
 * `role_has_permissions`
-* `settings`
+* `platform_audit_logs`
+* `central_error_logs`
 * `notifications`
-* `notification_receipts`
-* domain-specific module tables as tenant features are added
+* `settings`
+* `failed_jobs`
+* `jobs`
+* `cache` if database-backed cache is used
+* `sessions` if database-backed sessions are used
+
+Recommended Phase 1 stance:
+
+* keep Phase 1 close to Laravel defaults for auth-support tables
+* keep RBAC tables package-backed rather than custom
+* keep the current implemented logging tables as the platform baseline
+* keep one shared notification table first
+* keep one shared settings table first
+* defer tenancy registry tables until the platform-management and tenantization phases actually begin
+* defer `notification_receipts` unless multi-recipient delivery state becomes necessary in real implementation
+* defer `module_registry` unless feature registration in code proves insufficient
+
+Recommended future tenantization tables to defer for now:
+
+* `tenants`
+* `tenant_domains`
+* tenant database connection metadata tables
+* future tenant template tables such as:
+  * `users`
+  * `password_reset_tokens`
+  * `roles`
+  * `permissions`
+  * `model_has_roles`
+  * `role_has_permissions`
+  * `settings`
+  * `notifications`
+
+### 9.1 Live database workflow
+
+Phase 1 should treat migrations as the canonical schema definition.
+
+Recommended live workflow:
+
+1. define schema changes in Laravel migrations in the repo
+2. deploy the new release to the server
+3. ensure `/var/www/platform/shared/.env` has the correct live credentials
+4. run `php artisan migrate --force`
+5. verify with `php artisan migrate:status`
+6. inspect directly with `psql` only when verification or debugging requires it
+
+This keeps schema changes reviewable in Git while still acknowledging that the live PostgreSQL database must be migrated on the server to match the code.
+
+Recommended inspection tools:
+
+* `psql` first for server-side verification
+* `pgAdmin` later if a GUI becomes genuinely useful
+* do not plan around `phpMyAdmin`, which is not the normal PostgreSQL administration path
 
 ### 10. Component view
 

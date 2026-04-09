@@ -82,6 +82,7 @@ Features:
 Working planning note:
 
 * [[V2 App/Planning/Phase 1/Phase 1 - Platform Foundation Planning]] | [Phase 1 - Platform Foundation Planning](Phase%201/Phase%201%20-%20Platform%20Foundation%20Planning.md)
+* [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 1]] | [Phase 1 - Implementation Batch 1](Phase%201/Phase%201%20-%20Implementation%20Batch%201.md)
 
 ### Phase 2: Platform-Management Layer
 

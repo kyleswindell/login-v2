@@ -101,6 +101,58 @@ Current preferred direction:
 * settings should be grouped consistently by module or feature area
 * platform and tenant configuration should not be blurred together
 
+### Implementation-ready Phase 1 table baseline
+
+To keep Phase 1 practical, this planning area should assume the following central tables:
+
+* `platform_audit_logs`
+* `central_error_logs`
+* `notifications`
+* `settings`
+
+Recommended stance:
+
+* keep audit and runtime error storage separate
+* keep notifications in one shared table first
+* defer `notification_receipts` unless multi-recipient fan-out or per-recipient delivery state becomes a real implementation need
+* keep one flexible `settings` table first instead of per-feature settings tables
+
+Recommended `notifications` first-pass shape:
+
+* `id`
+* `uuid` or `ulid`
+* `notifiable_type`
+* `notifiable_id`
+* `module_key`
+* `severity`
+* `title`
+* `body`
+* `action_url`
+* `read_at`
+* `dismissed_at`
+* `delivery_channels`
+* `metadata`
+* timestamps
+
+Recommended `settings` first-pass shape:
+
+* `id`
+* `scope_type`
+* `scope_id`
+* `module_key`
+* `group_key`
+* `key`
+* `value_jsonb`
+* `data_type`
+* `is_encrypted`
+* `is_public`
+* `updated_by`
+* timestamps
+
+Recommended rule:
+
+* Phase 1 features should not invent new settings or notification tables unless the base shape is proven insufficient
+
 ### Feature bootstrap baseline
 
 Before a new feature is considered complete, it should define:
@@ -136,6 +188,7 @@ Still worth deciding explicitly:
 
 * which notification channels are live in Phase 1 versus only designed for later
 * whether notification persistence begins in the platform DB only
+* whether `notifications` should reuse Laravel's database notification conventions exactly or use a custom-but-similar table shape
 * whether a shared `settings` table or a more explicit per-scope model is preferred first
 * how release/version metadata should be recorded for modules or feature groups
 * whether the bootstrap checklist lives as a docs checklist, code manifest, or both

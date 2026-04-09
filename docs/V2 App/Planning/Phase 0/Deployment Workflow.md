@@ -116,6 +116,27 @@ Recommended next improvement:
 
 That will reduce the staging deploy workflow to a single command without granting broad root access.
 
+This limited sudoers rule has now been applied on staging, so the current helper flow can complete as a single-command deploy.
+
+## Future Automation Direction
+
+The current SSH helper is the right near-term staging tool, but the preferred future direction is to move deployment triggering into GitHub-driven automation.
+
+Recommended future shape:
+
+```text
+GitHub push/merge -> GitHub Actions deploy job -> server deploy script
+```
+
+Why this is the preferred next layer:
+
+* collaborators can work through GitHub without direct server SSH access
+* deployment access can be managed through GitHub branch, review, and merge policy
+* server deploy behavior stays constrained to the approved deploy script
+* deployment history and failures can be surfaced later inside the app without exposing arbitrary shell access
+
+The app may still gain a deployment visibility page later, but the actual deploy trigger should prefer GitHub Actions over an in-app shell execution model.
+
 ## Documentation Rule
 
 As deployment steps are validated, this note should be updated immediately so the deployment path becomes a repeatable runbook rather than tribal knowledge.

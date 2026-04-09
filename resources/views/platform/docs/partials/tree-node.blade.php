@@ -31,7 +31,7 @@
             ])
             style="margin-left: {{ $depth * 0.75 }}rem;"
         >
-            {{ $node['name'] }}
+            {{ \Illuminate\Support\Str::beforeLast($node['name'], '.'.pathinfo($node['name'], PATHINFO_EXTENSION)) }}
         </a>
     @endif
 </div>

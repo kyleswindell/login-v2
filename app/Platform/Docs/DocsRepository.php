@@ -63,7 +63,9 @@ class DocsRepository
 
         return [
             'name' => File::name($path),
+            'display_name' => $this->displayName($relativeFilePath),
             'path' => $relativeFilePath,
+            'display_path' => $this->displayPath($relativeFilePath),
             'extension' => $extension,
             'content' => $content,
             // Render Markdown in a locked-down mode so platform users can review notes
@@ -153,6 +155,26 @@ class DocsRepository
     private function relativePath(string $path): string
     {
         return ltrim(Str::after($path, $this->rootPath()), DIRECTORY_SEPARATOR);
+    }
+
+    private function displayName(string $relativePath): string
+    {
+        return pathinfo($relativePath, PATHINFO_FILENAME);
+    }
+
+    private function displayPath(string $relativePath): string
+    {
+        return collect(explode('/', $relativePath))
+            ->map(function (string $segment): string {
+                $extension = pathinfo($segment, PATHINFO_EXTENSION);
+
+                if ($extension === '') {
+                    return $segment;
+                }
+
+                return pathinfo($segment, PATHINFO_FILENAME);
+            })
+            ->implode(' / ');
     }
 
     private function rewriteLinks(string $html, string $currentPath): string

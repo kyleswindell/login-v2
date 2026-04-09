@@ -143,6 +143,7 @@ Features:
 * queue/job observability
 * backup and restore planning
 * security event review
+* GitHub Actions based deployment automation and release visibility
 * future admin tooling evaluation, including:
   * local database GUI workflows such as DBeaver or pgAdmin
   * targeted service web UIs where they add operational value safely

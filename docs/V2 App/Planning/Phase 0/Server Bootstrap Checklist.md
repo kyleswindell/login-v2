@@ -41,11 +41,11 @@ Verify:
 
 Verify:
 
-* virtual host strategy
+* virtual host strategy: verified
 * rewrite support
 * SSL plan
 * deploy user permissions: verified for `/var/www/login-v2`
-* writable Laravel directories: still needs final runtime alignment
+* writable Laravel directories: validated after adjusting `storage/` and `bootstrap/cache/` for the web server user
 
 ## Deployment Structure
 
@@ -53,8 +53,8 @@ Verify or create:
 
 * application root path: verified at `/var/www/login-v2`
 * release-based deploy path: verified
-* shared writable storage strategy
-* `.env` handling strategy: temporary validation only so far
+* shared writable storage strategy: partially validated, still needs to be formalized for future releases
+* `.env` handling strategy: shared `.env` symlink validated
 
 ## Operations Readiness
 
@@ -80,10 +80,17 @@ Remote inspection results:
 * `/var/www/login-v2` is owned by `deploy:deploy`
 * first release cloned at `/var/www/login-v2/releases/20260408224400`
 * `current` symlink points to that release
-* Node.js version: `v18.19.1`
-* npm version: `9.2.0`
+* shared server environment file now exists at `/var/www/login-v2/shared/.env`
+* current release `.env` now symlinks to the shared environment file
+* Node.js version: `v22.22.2`
+* npm version: `10.9.7`
 * Composer install completed in the current release
 * Laravel validation bootstrap completed with `php artisan about`
+* Apache module support needed for Laravel is present: `rewrite`, `proxy_fcgi`, `setenvif`, and `headers`
+* Apache vhost is enabled through `login-v2.conf`
+* `000-default.conf` has been disabled
+* frontend assets build successfully in the current release
+* local HTTP validation returns `200 OK`
 
 ## Related
 

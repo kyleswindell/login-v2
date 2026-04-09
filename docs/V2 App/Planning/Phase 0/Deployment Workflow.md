@@ -36,7 +36,7 @@ The current server also now has:
 * `/var/www/login-v2/releases/20260408224400`
 * `/var/www/login-v2/current`
 
-The release-based deploy path has been prepared for the `deploy` user. Apache/vhost routing still needs to be aligned to the Laravel app before the app can be served.
+The release-based deploy path has been prepared for the `deploy` user, and Apache has been aligned to the Laravel app for validation.
 
 ## First Deployment Goal
 
@@ -57,6 +57,11 @@ Current verified progress:
 * Composer dependencies install successfully inside the release
 * `.env` can be created and an application key can be generated
 * `php artisan about` succeeds from the server release
+* a shared server `.env` has been established under `/var/www/login-v2/shared/.env`
+* the current release now reads `.env` through a symlink
+* the Apache vhost is enabled and points to `/var/www/login-v2/current/public`
+* frontend assets build successfully with the upgraded Node runtime
+* local HTTP validation returns `200 OK`
 
 ## Validated Simple Bootstrap
 
@@ -68,17 +73,21 @@ The current release has now passed a simple validation bootstrap:
 4. create `.env` from `.env.example` for validation if missing
 5. run `php artisan key:generate --force`
 6. run `php artisan about`
+7. establish a shared `.env` and symlink the release to it
+8. build frontend assets with `npm ci && npm run build`
+9. enable the Apache vhost
+10. validate with `curl -I http://127.0.0.1`
 
-This proves the release layout, GitHub deploy key, PHP runtime, Composer, and Laravel bootstrap are working together on the server.
+This proves the release layout, GitHub deploy key, PHP runtime, Composer, Node/Vite build, Apache/PHP-FPM routing, and Laravel bootstrap are working together on the server.
 
 ## Immediate Next Step
 
 The next server step should stay focused on deployment readiness, not feature rollout:
 
-* define the real server `.env` strategy under `shared`
-* align Apache document root or vhost to Laravel's `public/`
-* review storage/link and writable directory handling
+* formalize storage/link and writable directory handling for each new release
+* replace temporary staging `.env` values with real deployment configuration
 * decide whether asset builds happen on the server or in CI/local before deploy
+* decide when to add SSL, domain routing, and harder production Apache settings
 
 ## Documentation Rule
 

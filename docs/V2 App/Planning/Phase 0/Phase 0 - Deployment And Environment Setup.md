@@ -50,7 +50,7 @@ Preferred flow:
 
 ## Verified Current State
 
-As of the first live `platform-prod-wsl` inspection:
+As of the completed Phase 0 validation pass:
 
 * GitHub remote is configured and `main` has been pushed
 * WSL SSH can authenticate to GitHub
@@ -69,19 +69,23 @@ As of the first live `platform-prod-wsl` inspection:
 * the first release has been cloned from GitHub
 * `/var/www/login-v2/current` points to the first release
 * Composer install has completed successfully inside the current release
-* `.env` has been created from `.env.example` for validation
+* shared server `.env` exists at `/var/www/login-v2/shared/.env`
+* the current release reads `.env` through a symlink
 * `APP_KEY` has been generated successfully on the server
 * `php artisan about` runs successfully from the current release
+* Apache is serving the Laravel vhost from `/var/www/login-v2/current/public`
+* Node.js has been upgraded to a Vite-compatible version
+* frontend assets build successfully in the current release
+* `curl -I http://127.0.0.1` returns `200 OK`
 
 ## Immediate Phase 0 Gaps
 
 Current gaps still to resolve:
 
-* verify Apache vhost and document-root strategy for the Laravel app
-* define shared `.env` handling for real deployments instead of copying `.env.example`
-* replace local-style defaults such as `APP_ENV=local`, debug enabled, and localhost-oriented values
+* replace temporary staging-oriented `.env` values with real deployment secrets and service endpoints
 * decide whether server-side Node builds are temporary validation only or part of the long-term deploy flow
-* align storage, writable directories, and Apache runtime configuration for real serving
+* move writable-path handling from one-time fix into a documented repeatable deploy step
+* decide when to add SSL, domain, and Apache hardening beyond the minimal validation setup
 
 ## Candidate Deliverables
 
@@ -90,6 +94,7 @@ Current gaps still to resolve:
 * documented deployment directory structure
 * documented environment variable handling
 * first successful server-side application bootstrap
+* first successful Apache-served HTTP response from the deployed Laravel app
 
 ## Related
 

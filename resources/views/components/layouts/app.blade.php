@@ -90,7 +90,7 @@
                     'flex-col lg:flex-row' => ! $hasCustomSidebar,
                 ])>
                     @if ($hasCustomSidebar)
-                        <aside class="w-full shrink-0 xl:sticky xl:top-24 xl:max-h-[calc(100vh-7rem)] xl:w-80 xl:overflow-y-auto">
+                        <aside class="w-full shrink-0 xl:sticky xl:top-24 xl:h-[calc(100vh-7rem)] xl:w-80">
                             {{ $sidebar }}
                         </aside>
                     @else

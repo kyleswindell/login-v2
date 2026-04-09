@@ -14,6 +14,8 @@ Keep documentation accurate as application behavior changes.
 - Keep indexes current when adding new docs sections or major notes.
 - Keep the vault graph healthy so notes remain reachable from the start note and from their parent/index notes.
 - Use ADRs for meaningful architecture decisions and release notes for rollout context.
+- When a planned system becomes implemented, review both the canonical system doc and the linked planning note for current implementation status accuracy.
+- Confirm that planning notes and canonical system docs link to each other so the implementation state is discoverable through the graph.
 
 ## Review Questions
 
@@ -21,6 +23,8 @@ Keep documentation accurate as application behavior changes.
 - Does this change alter how an admin, tenant, or public website user interacts with the app?
 - Does this change alter database schema, sync payloads, permissions, or tenant configuration?
 - Does this change need a release note or ADR?
+- Does the canonical system doc now need an updated implementation status section?
+- Does the related planning note still reflect the current implementation state accurately?
 
 ## Related
 

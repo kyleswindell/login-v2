@@ -16,6 +16,9 @@ Give Codex a concise project-specific operating guide.
 - Avoid hardcoded tenant paths, domains, secrets, database names, and environment-specific assumptions.
 - Follow the shared commenting, logging, security, and testing standards from `Standards/`.
 - Prefer structured website content blocks over raw editable HTML when designing editable website systems.
+- When a planned V2 system becomes implemented or changes materially, update the canonical system doc and the related planning note in the same work cycle.
+- Planning notes must carry a current implementation status section and link directly to their canonical system doc.
+- Canonical system docs must link back to the source planning note so the graph shows both design intent and live implementation state.
 
 ## Related
 

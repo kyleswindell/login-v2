@@ -18,12 +18,16 @@ This repository contains Login App 2.0, a new Laravel-based platform intended to
 * Follow the commenting standard: prefer self-documenting code, use PHPDoc for contracts/static analysis, and remove commented-out starter code.
 * Use the stack guides in `docs/stack/` when implementing or debugging framework, infrastructure, and frontend concerns.
 * Prefer official documentation for Laravel, Filament, Livewire, PostgreSQL, Redis, Docker, Vite, Tailwind, and Apache when updating stack rules.
+* When implementing a planned system, update the canonical system doc and the linked planning note in the same work cycle.
+* Planning notes must keep a current implementation status section, even when that status is copied from the canonical system doc.
+* Permanent system docs and their source planning notes must link to each other so implementation state is easy to confirm in the Obsidian graph.
 
 ## Important Docs
 
-* [Vault Start Here](docs/Login%20App%201.0/00%20-%20Start%20Here.md)
-* [V2 App Documentation Map](docs/Login%20App%201.0/V2%20App/V2%20App%20Documentation%20Map.md)
-* [Architecture Index](docs/Login%20App%201.0/V2%20App/Architecture/Architecture%20Index.md)
-* [Reference Index](docs/Login%20App%201.0/V2%20App/Reference/Reference%20Index.md)
-* [Standards Index](docs/Login%20App%201.0/Standards/Standards%20Index.md)
-* [Codex Working Rules](docs/Login%20App%201.0/Codex/Codex%20Working%20Rules.md)
+* [Vault Start Here](docs/00%20-%20Start%20Here.md)
+* [V2 App Documentation Map](docs/V2%20App/V2%20App%20Documentation%20Map.md)
+* [Architecture Index](docs/V2%20App/Architecture/Architecture%20Index.md)
+* [Reference Index](docs/V2%20App/Reference/Reference%20Index.md)
+* [Standards Index](docs/Standards/Standards%20Index.md)
+* [How To Write Docs](docs/Documentation%20Standards/How%20To%20Write%20Docs.md)
+* [Codex Working Rules](docs/Codex/Codex%20Working%20Rules.md)

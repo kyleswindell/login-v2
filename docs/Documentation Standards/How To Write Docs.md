@@ -72,6 +72,8 @@ Use these sections when they fit. It is okay to omit sections that do not apply.
 
 ## Purpose
 
+## Implementation Status
+
 ## Current Implementation
 
 ## Important Files
@@ -130,6 +132,17 @@ When changing behavior, ask:
 
 If yes, update or create the relevant documentation note before considering the work complete.
 
+When a planned system becomes implemented or changes materially:
+
+- update the canonical system doc in the same work cycle
+- update the linked planning note in the same work cycle
+- make sure both notes link to each other
+- make sure both notes state the current implementation status clearly enough to answer:
+  - is it planned only?
+  - is it implemented in code?
+  - is it migrated or deployed on staging?
+  - is there a UI yet?
+
 ## Structure Expectations
 
 For vault organization, obey the Obsidian structure guide first:
@@ -138,6 +151,7 @@ For vault organization, obey the Obsidian structure guide first:
 - every concept must have one canonical home
 - parent/index notes must link to children
 - detailed notes should link back to their parent/index note
+- when a planning note drives a system, it should link to the canonical system doc and the canonical system doc should link back to the planning note
 - folder placement alone is not enough; the graph must be built with links
 
 ## Writing Expectations
@@ -150,6 +164,7 @@ Inside the note itself:
 - keep explanations close to the feature, module, or reference that owns the concept
 - avoid repeating the same explanation across multiple notes
 - when a note mainly exists to route readers, keep it concise and make the links strong
+- planning notes may repeat a short implementation status summary from the canonical system doc when that helps readers confirm the current state quickly
 
 ## Changelog And Release Notes
 

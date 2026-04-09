@@ -15,10 +15,14 @@ class DocsController extends Controller
 
         $selectedPath = $request->string('path')->toString();
 
+        if ($selectedPath === '') {
+            $selectedPath = $docsRepository->defaultFilePath();
+        }
+
         return view('platform.docs.index', [
             'tree' => $docsRepository->tree(),
             'selectedPath' => $selectedPath,
-            'selectedFile' => $selectedPath !== '' ? $docsRepository->file($selectedPath) : null,
+            'selectedFile' => $docsRepository->file($selectedPath),
         ]);
     }
 }

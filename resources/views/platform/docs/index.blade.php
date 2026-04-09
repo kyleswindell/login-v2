@@ -12,10 +12,10 @@
             @endif
         </div>
 
-        <div class="grid min-h-[70vh] gap-6 lg:grid-cols-[22rem_minmax(0,1fr)]">
-            <aside class="rounded-3xl border border-slate-800 bg-slate-900/70 p-6">
+        <div class="grid min-h-[70vh] gap-6 xl:grid-cols-[22rem_minmax(0,1fr)]">
+            <aside class="rounded-3xl border border-slate-800 bg-slate-900/70 p-6 xl:sticky xl:top-8 xl:max-h-[calc(100vh-4rem)] xl:overflow-hidden">
                 <h2 class="text-lg font-semibold text-white">Repository Tree</h2>
-                <div class="mt-4 overflow-y-auto text-sm">
+                <div class="mt-4 text-sm xl:max-h-[calc(100vh-10rem)] xl:overflow-y-auto">
                     @foreach ($tree as $node)
                         @include('platform.docs.partials.tree-node', ['node' => $node, 'selectedPath' => $selectedPath, 'depth' => 0])
                     @endforeach
@@ -30,7 +30,20 @@
                         <p class="mt-2 break-all text-sm text-slate-400">{{ $selectedFile['path'] }}</p>
                     </div>
 
-                    <article class="prose prose-invert mt-6 max-w-none prose-headings:text-white prose-p:text-slate-300 prose-a:text-sky-300 prose-code:text-sky-200 prose-strong:text-white">
+                    <article class="mt-6 max-w-none text-slate-300
+                        [&_h1]:mt-8 [&_h1]:text-3xl [&_h1]:font-semibold [&_h1]:text-white
+                        [&_h2]:mt-8 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:text-white
+                        [&_h3]:mt-6 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-white
+                        [&_p]:mt-4 [&_p]:leading-7
+                        [&_ul]:mt-4 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6
+                        [&_ol]:mt-4 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-6
+                        [&_li]:leading-7
+                        [&_a]:font-medium [&_a]:text-sky-300 hover:[&_a]:text-sky-200
+                        [&_code]:rounded [&_code]:bg-slate-950 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-sky-200
+                        [&_pre]:mt-4 [&_pre]:overflow-x-auto [&_pre]:rounded-2xl [&_pre]:bg-slate-950 [&_pre]:p-4
+                        [&_blockquote]:mt-4 [&_blockquote]:border-l-4 [&_blockquote]:border-slate-700 [&_blockquote]:pl-4 [&_blockquote]:text-slate-400
+                        [&_hr]:my-6 [&_hr]:border-slate-800
+                        [&_strong]:font-semibold [&_strong]:text-white">
                         {!! $selectedFile['rendered'] !!}
                     </article>
                 @else

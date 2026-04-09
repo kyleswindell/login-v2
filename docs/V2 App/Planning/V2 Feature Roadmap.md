@@ -143,6 +143,11 @@ Features:
 * queue/job observability
 * backup and restore planning
 * security event review
+* future admin tooling evaluation, including:
+  * local database GUI workflows such as DBeaver or pgAdmin
+  * targeted service web UIs where they add operational value safely
+  * monitoring panels and dashboards
+  * deployment dashboards and release visibility
 
 ### Phase 6: Advanced Tenant Products
 

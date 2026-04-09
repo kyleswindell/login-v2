@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    // Treat the root URL as the app entry point so staging lands on the real auth flow
+    // instead of the Laravel starter page once the platform foundation is in place.
+    return redirect()->route(Auth::check() ? 'dashboard' : 'login');
 });
 
 Route::middleware('guest')->group(function (): void {

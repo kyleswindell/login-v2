@@ -9,7 +9,7 @@ class RequestIdTest extends TestCase
     public function test_request_id_header_is_added_to_responses(): void
     {
         $this->get('/')
-            ->assertOk()
+            ->assertRedirect('/login')
             ->assertHeader('X-Request-Id');
     }
 
@@ -19,7 +19,7 @@ class RequestIdTest extends TestCase
 
         $this->withHeader('X-Request-Id', $requestId)
             ->get('/')
-            ->assertOk()
+            ->assertRedirect('/login')
             ->assertHeader('X-Request-Id', $requestId);
     }
 }

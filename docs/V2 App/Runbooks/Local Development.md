@@ -31,8 +31,8 @@ App 2.0 uses PostgreSQL from the start.
 
 The Docker Compose local platform database is:
 
-* database: `login_v2_platform`
-* user: `login_v2`
+* database: `platform_app`
+* user: `platform_app`
 * password: `secret`
 * host from inside containers: `postgres`
 * host from the machine running Docker: `127.0.0.1:5432`

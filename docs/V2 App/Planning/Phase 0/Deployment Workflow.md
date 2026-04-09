@@ -17,8 +17,8 @@ Prefer the server as a deployment target, not as the source of truth.
 Recommended future deploy shape:
 
 ```text
-/var/www/login-v2/releases/<release-id>
-/var/www/login-v2/current
+/var/www/platform/releases/<release-id>
+/var/www/platform/current
 ```
 
 This can be simplified initially if needed, but release-based deploys are the preferred long-term direction.
@@ -32,11 +32,11 @@ The current server already has:
 
 The current server also now has:
 
-* `/var/www/login-v2`
-* `/var/www/login-v2/releases/20260408224400`
-* `/var/www/login-v2/current`
+* `/var/www/platform`
+* `/var/www/platform/releases/20260408224400`
+* `/var/www/platform/current`
 
-The release-based deploy path has been prepared for the `deploy` user, and Apache has been aligned to the Laravel app for validation.
+The release-based deploy path has been prepared for the `deploy` user, Apache has been aligned to the Laravel app, and the runtime path has been normalized to `/var/www/platform`.
 
 ## First Deployment Goal
 
@@ -57,10 +57,12 @@ Current verified progress:
 * Composer dependencies install successfully inside the release
 * `.env` can be created and an application key can be generated
 * `php artisan about` succeeds from the server release
-* a shared server `.env` has been established under `/var/www/login-v2/shared/.env`
+* a shared server `.env` has been established under `/var/www/platform/shared/.env`
 * the current release now reads `.env` through a symlink
-* the Apache vhost is enabled and points to `/var/www/login-v2/current/public`
+* the Apache vhost is enabled and points to `/var/www/platform/current/public`
 * frontend assets build successfully with the upgraded Node runtime
+* the live PostgreSQL role and database use `platform_app`
+* `php artisan migrate --force` succeeds against the live server database
 * local HTTP validation returns `200 OK`
 
 ## Validated Simple Bootstrap

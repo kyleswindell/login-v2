@@ -64,18 +64,20 @@ As of the completed Phase 0 validation pass:
 * Redis 7 is installed and active
 * required PHP extensions checked so far are present
 * Node.js and npm are installed
-* release-based deploy root exists at `/var/www/login-v2`
+* release-based deploy root exists at `/var/www/platform`
 * release directories and shared directory exist
 * the first release has been cloned from GitHub
-* `/var/www/login-v2/current` points to the first release
+* `/var/www/platform/current` points to the first release
 * Composer install has completed successfully inside the current release
-* shared server `.env` exists at `/var/www/login-v2/shared/.env`
+* shared server `.env` exists at `/var/www/platform/shared/.env`
 * the current release reads `.env` through a symlink
 * `APP_KEY` has been generated successfully on the server
 * `php artisan about` runs successfully from the current release
-* Apache is serving the Laravel vhost from `/var/www/login-v2/current/public`
+* Apache is serving the Laravel vhost from `/var/www/platform/current/public`
 * Node.js has been upgraded to a Vite-compatible version
 * frontend assets build successfully in the current release
+* live PostgreSQL role and database have been created as `platform_app`
+* live Laravel migrations run successfully against `platform_app`
 * `curl -I http://127.0.0.1` returns `200 OK`
 
 ## Immediate Phase 0 Gaps

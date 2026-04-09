@@ -44,14 +44,14 @@ Verify:
 * virtual host strategy: verified
 * rewrite support
 * SSL plan
-* deploy user permissions: verified for `/var/www/login-v2`
+* deploy user permissions: verified for `/var/www/platform`
 * writable Laravel directories: validated after adjusting `storage/` and `bootstrap/cache/` for the web server user
 
 ## Deployment Structure
 
 Verify or create:
 
-* application root path: verified at `/var/www/login-v2`
+* application root path: verified at `/var/www/platform`
 * release-based deploy path: verified
 * shared writable storage strategy: partially validated, still needs to be formalized for future releases
 * `.env` handling strategy: shared `.env` symlink validated
@@ -76,20 +76,24 @@ Remote inspection results:
 * deploy user: `deploy`
 * current web root exists at `/var/www/html`
 * `/var/www` and `/var/www/html` are currently root-owned
-* application deploy root exists at `/var/www/login-v2`
-* `/var/www/login-v2` is owned by `deploy:deploy`
-* first release cloned at `/var/www/login-v2/releases/20260408224400`
+* application deploy root exists at `/var/www/platform`
+* application deploy root is owned by `deploy:deploy`
+* first release cloned at `/var/www/platform/releases/20260408224400`
 * `current` symlink points to that release
-* shared server environment file now exists at `/var/www/login-v2/shared/.env`
+* shared server environment file exists at `/var/www/platform/shared/.env`
 * current release `.env` now symlinks to the shared environment file
 * Node.js version: `v22.22.2`
 * npm version: `10.9.7`
 * Composer install completed in the current release
 * Laravel validation bootstrap completed with `php artisan about`
 * Apache module support needed for Laravel is present: `rewrite`, `proxy_fcgi`, `setenvif`, and `headers`
-* Apache vhost is enabled through `login-v2.conf`
+* Apache vhost is enabled through `platform.conf`
 * `000-default.conf` has been disabled
 * frontend assets build successfully in the current release
+* PostgreSQL role `platform_app` exists
+* PostgreSQL database `platform_app` exists
+* live `php artisan migrate --force` completed successfully
+* `php artisan migrate:status` confirms all current migrations are applied
 * local HTTP validation returns `200 OK`
 
 ## Related

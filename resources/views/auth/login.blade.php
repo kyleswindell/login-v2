@@ -7,6 +7,7 @@
 
             <form method="POST" action="{{ route('login.store') }}" class="mt-8 space-y-5">
                 @csrf
+                <input type="hidden" name="timezone" id="timezone" value="{{ old('timezone') }}">
 
                 <div>
                     <label for="email" class="block text-sm font-medium text-slate-200">Email</label>
@@ -51,4 +52,8 @@
             </form>
         </div>
     </section>
+
+    <script>
+        document.getElementById('timezone').value = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    </script>
 </x-layouts.app>

@@ -42,10 +42,12 @@ class LoginTest extends TestCase
         $this->post('/login', [
             'email' => $user->email,
             'password' => 'password',
+            'timezone' => 'America/New_York',
         ])->assertRedirect('/dashboard');
 
         $this->assertAuthenticatedAs($user);
         $this->assertNotNull($user->fresh()->last_login_at);
+        $this->assertSame('America/New_York', $user->fresh()->timezone);
 
         $this->assertDatabaseHas('platform_audit_logs', [
             'event_type' => 'auth.login_succeeded',

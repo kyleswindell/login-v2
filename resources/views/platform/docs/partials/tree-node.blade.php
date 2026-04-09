@@ -9,7 +9,7 @@
         @endforeach
     @else
         <a
-            href="{{ route('platform.docs.index', ['path' => $node['path']]) }}"
+            href="{{ route('platform.docs.index', ['path' => $node['path']]).'#selected-doc' }}"
             @class([
                 'mt-1 block rounded-lg px-3 py-2 text-sm transition',
                 'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => $selectedPath === $node['path'],

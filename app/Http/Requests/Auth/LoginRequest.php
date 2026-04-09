@@ -20,6 +20,7 @@ class LoginRequest extends FormRequest
             'email' => ['required', 'email'],
             'password' => ['required', 'string'],
             'remember' => ['nullable', 'boolean'],
+            'timezone' => ['nullable', 'timezone'],
         ];
     }
 }

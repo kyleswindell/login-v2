@@ -57,6 +57,9 @@ class LoginController extends Controller
 
         Auth::user()?->forceFill([
             'last_login_at' => now(),
+            'timezone' => $request->string('timezone')->toString() !== ''
+                ? $request->string('timezone')->toString()
+                : Auth::user()?->timezone,
         ])->save();
 
         $this->logger->recordEvent('auth.login_succeeded', [

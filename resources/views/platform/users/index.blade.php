@@ -1,3 +1,5 @@
+@php($viewerTimezone = auth()->user()?->timezone ?: config('app.timezone'))
+
 <x-layouts.app title="Platform Users">
     <section class="flex flex-1 flex-col gap-6">
         <div class="flex flex-col gap-4 rounded-3xl border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30 md:flex-row md:items-center md:justify-between">
@@ -55,7 +57,7 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4 text-slate-400">
-                                {{ $user->last_login_at?->format('M j, Y g:i A') ?? 'Never' }}
+                                {{ $user->last_login_at?->timezone($viewerTimezone)->format('M j, Y g:i A T') ?? 'Never' }}
                             </td>
                             <td class="px-6 py-4 text-right">
                                 <a href="{{ route('platform.users.edit', $user) }}" class="text-sm font-semibold text-sky-300 transition hover:text-sky-200">

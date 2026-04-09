@@ -91,6 +91,31 @@ The next server step should stay focused on deployment readiness, not feature ro
 * decide whether asset builds happen on the server or in CI/local before deploy
 * decide when to add SSL, domain routing, and harder production Apache settings
 
+## Current Staging Helper Scripts
+
+The repo now includes a first repeatable staging deploy pair:
+
+* server script: `scripts/server/deploy-staging.sh`
+* local helper: `scripts/deploy-staging-remote.sh`
+
+The server script currently runs the in-place staging deploy workflow inside `/var/www/platform/current`.
+
+The local helper currently shells into `platform-prod-wsl` and executes that server script remotely.
+
+This is the current pragmatic automation layer while the app is still iterating quickly on staging.
+
+## Current Automation Limitation
+
+The deploy script can complete all application-level steps as `deploy`, but service reloads still depend on the server privilege model.
+
+Recommended next improvement:
+
+* add a narrow passwordless sudoers rule for `deploy` covering only:
+  * `systemctl reload php8.3-fpm`
+  * `systemctl reload apache2`
+
+That will reduce the staging deploy workflow to a single command without granting broad root access.
+
 ## Documentation Rule
 
 As deployment steps are validated, this note should be updated immediately so the deployment path becomes a repeatable runbook rather than tribal knowledge.

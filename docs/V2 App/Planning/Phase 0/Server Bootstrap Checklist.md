@@ -66,6 +66,7 @@ Verify:
 * firewall exposure
 * log file locations
 * real production environment values and secrets
+* limited sudoers rule for repeatable staging deploy service reloads
 
 ## Current Findings
 
@@ -95,6 +96,7 @@ Remote inspection results:
 * live `php artisan migrate --force` completed successfully
 * `php artisan migrate:status` confirms all current migrations are applied
 * local HTTP validation returns `200 OK`
+* first repo-level deploy helper scripts now exist for staging automation
 
 ## Related
 

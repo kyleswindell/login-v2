@@ -9,9 +9,9 @@ Describe the current shared notifications and settings foundation for the platfo
 Current status:
 
 * implemented in code
-* Reverb and Echo realtime notifications are implemented in code and pending staging deploy
-* header recent-notifications preview is implemented in code and pending staging deploy
-* notifications inbox UI is implemented in code and pending staging deploy
+* Reverb and Echo realtime notifications are deployed on staging and validated
+* header recent-notifications preview is live on staging with realtime updates
+* notifications inbox UI is live on staging with realtime updates
 * settings table and service are migrated on staging
 * dashboard and header unread-count surfaces are live on staging
 * no dedicated settings UI yet
@@ -105,7 +105,6 @@ Current gaps:
 * no settings management screen yet
 * no non-database delivery channels yet
 * no notification receipts or fan-out tables yet
-* staging Reverb server and queue worker still need to be applied live
 
 ## Related
 

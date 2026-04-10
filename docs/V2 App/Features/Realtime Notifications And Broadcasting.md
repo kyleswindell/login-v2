@@ -9,7 +9,8 @@ Describe the current Reverb and Echo architecture for live platform notification
 Current status:
 
 * implemented in code
-* pending staging deploy and server process setup
+* deployed on staging
+* staging Reverb, queue worker, and Apache websocket proxy are configured and validated
 * platform users only
 * header preview, inbox, and unread counts are wired for realtime updates
 * toast notifications are wired for newly created unread notifications
@@ -60,8 +61,6 @@ Current auth rule:
 
 Current gaps:
 
-* staging server process management still needs to be applied live
-* Apache websocket proxy still needs to be applied live
 * no tenant-facing realtime channels yet
 * no browser-native notifications
 * no realtime error-log streaming

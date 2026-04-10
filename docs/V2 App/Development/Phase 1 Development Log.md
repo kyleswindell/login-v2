@@ -18,7 +18,7 @@ Current state:
 * platform shell, platform user management, and docs viewer are implemented and live on staging
 * notifications UI, audit log viewer, and RBAC seed cleanup are implemented in code and pending staging deploy
 * settings UI and error log viewer remain pending
-* realtime notifications are implemented in code and pending staging runtime setup plus deploy
+* realtime notifications are deployed and validated on staging
 
 ## Milestones
 
@@ -129,8 +129,9 @@ Planning owner:
 Status:
 
 * implemented in code
-* pending staging deploy
-* pending staging Reverb, queue worker, and Apache proxy setup
+* deployed on staging
+* staging Reverb, queue worker, and Apache proxy setup completed
+* validated on staging with live header, inbox, toast, and cross-tab read sync behavior
 
 Implemented systems:
 
@@ -155,7 +156,6 @@ Planning owner:
 
 ## Next Expected Work
 
-* staging deploy and verification of Batch 3
 * settings UI
 * error log viewer planning separation from audit surfaces
 * continued documentation status sync as new Phase 1 systems are implemented

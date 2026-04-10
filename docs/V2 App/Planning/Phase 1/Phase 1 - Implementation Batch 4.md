@@ -9,8 +9,8 @@ Capture the first realtime-notifications implementation pass for the platform sh
 Current status:
 
 * implemented in code
-* pending staging deploy
-* pending staging Reverb, queue-worker, and Apache proxy setup
+* deployed on staging
+* staging Reverb, queue worker, and Apache proxy setup applied and validated
 
 Canonical docs:
 

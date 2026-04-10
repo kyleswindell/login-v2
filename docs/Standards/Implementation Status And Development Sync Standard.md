@@ -78,6 +78,26 @@ Before a phase batch is treated as complete, confirm:
 * the development log records the milestone
 * indexes and graph links are updated
 
+## Close-Out Gate
+
+Before implementation work is considered complete, all of the following must be true:
+
+* code done
+* canonical doc updated
+* planning note updated
+* development log updated
+
+## Commit Policy
+
+Documentation sync must be committed in the same working session as the implementation work.
+
+Required pattern:
+
+* use a single commit that includes code plus documentation sync changes
+* or, if separation is preferred, use a documentation-only follow-up commit in the same session immediately after the code commit
+
+Do not leave implementation and documentation status updates uncommitted across sessions.
+
 ## Related
 
 * [[Standards/Documentation Review Standards]] | [Documentation Review Standards](Documentation%20Review%20Standards.md)

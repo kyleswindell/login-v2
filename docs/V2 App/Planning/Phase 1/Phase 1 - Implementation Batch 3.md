@@ -12,7 +12,7 @@ Current status:
 
 * implemented in code
 * validated locally with passing tests
-* pending staging deploy
+* deployed on staging
 * settings UI remains out of scope for this batch
 * error log viewer remains deferred
 

@@ -104,7 +104,7 @@ Status:
 
 * implemented in code
 * validated locally with passing test suite
-* pending staging deploy
+* deployed on staging
 
 Implemented systems:
 

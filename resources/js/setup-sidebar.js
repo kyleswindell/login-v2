@@ -2,11 +2,8 @@
  * Setup sidebar slide-in/out behavior.
  *
  * The sidebar host contains a flex track with two panels side by side.
- * Translating the track by -288px (w-72) slides to the Setup panel.
- * Translating back to 0 restores the main nav.
+ * We measure panel width at runtime to avoid coupling to a hard-coded value.
  */
-
-const PANEL_WIDTH_PX = 288; // Tailwind w-72 = 18rem = 288px at default 16px base
 
 function initSetupSidebar() {
     const host = document.querySelector('[data-sidebar-host]');
@@ -15,29 +12,42 @@ function initSetupSidebar() {
     }
 
     const track = host.querySelector('[data-sidebar-track]');
+    const mainPanel = host.querySelector('[data-main-nav-panel]');
     const openBtn = host.querySelector('[data-setup-open]');
     const closeBtn = host.querySelector('[data-setup-close]');
 
-    if (!track || !openBtn || !closeBtn) {
+    if (!track || !mainPanel || !openBtn || !closeBtn) {
         return;
     }
 
+    let isOpen = false;
+
+    const panelWidth = () => Math.round(mainPanel.getBoundingClientRect().width);
+
     const openSetup = () => {
-        track.style.transform = `translateX(-${PANEL_WIDTH_PX}px)`;
+        track.style.transform = `translateX(-${panelWidth()}px)`;
         openBtn.setAttribute('aria-expanded', 'true');
+        isOpen = true;
     };
 
     const closeSetup = () => {
         track.style.transform = 'translateX(0)';
         openBtn.setAttribute('aria-expanded', 'false');
+        isOpen = false;
     };
 
     openBtn.addEventListener('click', openSetup);
     closeBtn.addEventListener('click', closeSetup);
 
+    window.addEventListener('resize', () => {
+        if (isOpen) {
+            track.style.transform = `translateX(-${panelWidth()}px)`;
+        }
+    });
+
     // Close on Escape key
     document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && track.style.transform !== 'translateX(0)') {
+        if (event.key === 'Escape' && isOpen) {
             closeSetup();
         }
     });

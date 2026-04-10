@@ -154,4 +154,26 @@ class ErrorLogViewerTest extends TestCase
             ->assertSee('Unhandled error')
             ->assertDontSee('Handled error');
     }
+
+    public function test_invalid_handled_filter_value_is_ignored(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->createErrorLog([
+            'severity' => 'error',
+            'message' => 'Handled error',
+            'handled' => true,
+        ]);
+
+        $this->createErrorLog([
+            'severity' => 'error',
+            'message' => 'Unhandled error',
+            'handled' => false,
+        ]);
+
+        $this->get('/platform/error-logs?handled=yes')
+            ->assertOk()
+            ->assertSee('Handled error')
+            ->assertSee('Unhandled error');
+    }
 }

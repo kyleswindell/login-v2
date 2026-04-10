@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\User;
+use App\Platform\Settings\SettingsService;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -27,7 +28,21 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define('view-platform-docs', function (User $user): bool {
-            return $user->can('platform.docs.view');
+            if (! $user->can('platform.docs.view')) {
+                return false;
+            }
+
+            $accessScope = app(SettingsService::class)->get(
+                'docs',
+                'access_scope',
+                'all_platform_users',
+            );
+
+            if ($accessScope === 'super_admins_only') {
+                return $user->hasRole('platform_super_admin');
+            }
+
+            return true;
         });
 
         Gate::define('view-platform-notifications', function (User $user): bool {

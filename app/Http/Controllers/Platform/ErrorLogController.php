@@ -13,9 +13,12 @@ class ErrorLogController extends Controller
     {
         $this->authorize('view-platform-error-logs');
 
+        $handledFilter = $request->query('handled');
+        $handledFilter = in_array($handledFilter, ['0', '1'], true) ? $handledFilter : '';
+
         $filters = [
             'severity' => trim($request->string('severity')->toString()),
-            'handled' => $request->input('handled', ''),
+            'handled' => $handledFilter,
             'environment' => trim($request->string('environment')->toString()),
             'exception_class' => trim($request->string('exception_class')->toString()),
             'date_from' => trim($request->string('date_from')->toString()),
@@ -24,7 +27,7 @@ class ErrorLogController extends Controller
 
         $logs = CentralErrorLog::query()
             ->when($filters['severity'] !== '', fn ($q) => $q->where('severity', $filters['severity']))
-            ->when($filters['handled'] !== '', fn ($q) => $q->where('handled', (bool) $filters['handled']))
+            ->when($filters['handled'] !== '', fn ($q) => $q->where('handled', $filters['handled'] === '1'))
             ->when($filters['environment'] !== '', fn ($q) => $q->where('environment', $filters['environment']))
             ->when($filters['exception_class'] !== '', fn ($q) => $q->where('exception_class', 'like', '%'.$filters['exception_class'].'%'))
             ->when($filters['date_from'] !== '', fn ($q) => $q->whereDate('occurred_at', '>=', $filters['date_from']))

@@ -2,7 +2,9 @@
 
 namespace Tests\Feature\Platform;
 
+use App\Platform\Settings\SettingsService;
 use App\Models\User;
+use Database\Seeders\PlatformRolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -33,6 +35,34 @@ class DocsRepositoryViewerTest extends TestCase
     public function test_standard_users_cannot_access_the_docs_repository_viewer(): void
     {
         $user = User::factory()->create();
+
+        $this->actingAs($user)
+            ->get('/platform/docs')
+            ->assertForbidden();
+    }
+
+    public function test_platform_admin_can_access_docs_when_scope_allows_platform_users(): void
+    {
+        $this->seed(PlatformRolesAndPermissionsSeeder::class);
+
+        $user = User::factory()->create();
+        $user->assignRole('platform_admin');
+
+        app(SettingsService::class)->put('docs', 'access_scope', 'all_platform_users', updatedBy: $user->id);
+
+        $this->actingAs($user)
+            ->get('/platform/docs')
+            ->assertOk();
+    }
+
+    public function test_platform_admin_cannot_access_docs_when_scope_is_super_admin_only(): void
+    {
+        $this->seed(PlatformRolesAndPermissionsSeeder::class);
+
+        $user = User::factory()->create();
+        $user->assignRole('platform_admin');
+
+        app(SettingsService::class)->put('docs', 'access_scope', 'super_admins_only', updatedBy: $user->id);
 
         $this->actingAs($user)
             ->get('/platform/docs')

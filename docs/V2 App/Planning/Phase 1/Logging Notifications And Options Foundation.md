@@ -12,6 +12,7 @@ Current status:
 * settings foundation is implemented and live on staging
 * notifications inbox UI is implemented in code and pending staging deploy
 * audit log viewer UI is implemented in code and pending staging deploy
+* Reverb and Echo realtime notifications are implemented in code and pending staging deploy plus runtime setup
 * no dedicated settings UI yet
 * no dedicated error log viewer UI yet
 
@@ -19,7 +20,9 @@ Canonical docs:
 
 * [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../../Features/Event%20And%20Error%20Logging.md)
 * [[V2 App/Features/Platform Notifications And Settings]] | [Platform Notifications And Settings](../../Features/Platform%20Notifications%20And%20Settings.md)
+* [[V2 App/Features/Realtime Notifications And Broadcasting]] | [Realtime Notifications And Broadcasting](../../Features/Realtime%20Notifications%20And%20Broadcasting.md)
 * [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 3]] | [Phase 1 - Implementation Batch 3](Phase%201%20-%20Implementation%20Batch%203.md)
+* [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 4]] | [Phase 1 - Implementation Batch 4](Phase%201%20-%20Implementation%20Batch%204.md)
 * [[V2 App/Development/Phase 1 Development Log]] | [Phase 1 Development Log](../../Development/Phase%201%20Development%20Log.md)
 
 ## Current Planning Direction

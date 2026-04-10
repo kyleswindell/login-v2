@@ -46,6 +46,11 @@ The current server deploy script performs:
 7. attempts `sudo -n systemctl reload php8.3-fpm`
 8. attempts `sudo -n systemctl reload apache2`
 
+Realtime note:
+
+* after Reverb is enabled on staging, this deploy flow also needs the queue worker and Reverb process restarted
+* see [[V2 App/Runbooks/Realtime Notifications And Reverb]] | [Realtime Notifications And Reverb](Realtime%20Notifications%20And%20Reverb.md)
+
 The script is intentionally honest about the current privilege model:
 
 * if passwordless sudo is not configured for the `deploy` user, the script prints a message and skips the service reload step instead of hanging for a password prompt

@@ -22,6 +22,7 @@ This note is the root node for the V2 documentation branch inside the shared vau
 - tenancy foundation
 - authentication
 - event and error logging
+- realtime notifications and broadcasting
 - local development and server readiness
 - phase 0 deployment and environment setup
 - phase development logging and implementation status tracking

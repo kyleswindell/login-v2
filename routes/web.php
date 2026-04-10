@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Platform\AuditLogController;
+use App\Http\Controllers\Platform\BroadcastAuthController;
 use App\Http\Controllers\Platform\DashboardController;
 use App\Http\Controllers\Platform\DocsController;
 use App\Http\Controllers\Platform\NotificationController;
@@ -22,6 +23,7 @@ Route::middleware('guest')->group(function (): void {
 
 Route::middleware('auth')->group(function (): void {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
+    Route::post('/platform/realtime/auth', BroadcastAuthController::class)->name('platform.realtime.auth');
 
     Route::get('/platform/users', [PlatformUserController::class, 'index'])->name('platform.users.index');
     Route::get('/platform/users/create', [PlatformUserController::class, 'create'])->name('platform.users.create');

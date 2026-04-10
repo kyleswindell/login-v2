@@ -13,6 +13,7 @@ Current status:
 * active staging review has already driven follow-up layout and docs-viewer corrections
 * search remains a placeholder only
 * header notifications preview is implemented in code and pending staging deploy
+* realtime header notification sync and toast hooks are implemented in code and pending staging deploy
 
 ## Current Implementation
 
@@ -69,5 +70,6 @@ Current gaps:
 ## Related
 
 * [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 2]] | [Phase 1 - Implementation Batch 2](../Planning/Phase%201/Phase%201%20-%20Implementation%20Batch%202.md)
+* [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 4]] | [Phase 1 - Implementation Batch 4](../Planning/Phase%201/Phase%201%20-%20Implementation%20Batch%204.md)
 * [[V2 App/Development/Phase 1 Development Log]] | [Phase 1 Development Log](../Development/Phase%201%20Development%20Log.md)
 * [[V2 App/Features/Platform Users And RBAC]] | [Platform Users And RBAC](Platform%20Users%20And%20RBAC.md)

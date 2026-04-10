@@ -18,6 +18,7 @@ Current state:
 * platform shell, platform user management, and docs viewer are implemented and live on staging
 * notifications UI, audit log viewer, and RBAC seed cleanup are implemented in code and pending staging deploy
 * settings UI and error log viewer remain pending
+* realtime notifications are implemented in code and pending staging runtime setup plus deploy
 
 ## Milestones
 
@@ -122,6 +123,35 @@ Canonical docs:
 Planning owner:
 
 * [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 3]] | [Phase 1 - Implementation Batch 3](../Planning/Phase%201/Phase%201%20-%20Implementation%20Batch%203.md)
+
+### 2026-04-09 - Phase 1 Batch 4 realtime notifications implemented
+
+Status:
+
+* implemented in code
+* pending staging deploy
+* pending staging Reverb, queue worker, and Apache proxy setup
+
+Implemented systems:
+
+* Reverb broadcasting configuration
+* private user-channel auth endpoint
+* notification created and updated broadcast events
+* Echo client wiring
+* realtime unread-count, preview, and inbox syncing
+* toast notifications for new unread notifications
+* staging server config templates and runbook
+
+Canonical docs:
+
+* [[V2 App/Features/Platform Notifications And Settings]] | [Platform Notifications And Settings](../Features/Platform%20Notifications%20And%20Settings.md)
+* [[V2 App/Features/Platform Workspace And Documentation Vault]] | [Platform Workspace And Documentation Vault](../Features/Platform%20Workspace%20And%20Documentation%20Vault.md)
+* [[V2 App/Features/Realtime Notifications And Broadcasting]] | [Realtime Notifications And Broadcasting](../Features/Realtime%20Notifications%20And%20Broadcasting.md)
+* [[V2 App/Runbooks/Realtime Notifications And Reverb]] | [Realtime Notifications And Reverb](../Runbooks/Realtime%20Notifications%20And%20Reverb.md)
+
+Planning owner:
+
+* [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 4]] | [Phase 1 - Implementation Batch 4](../Planning/Phase%201/Phase%201%20-%20Implementation%20Batch%204.md)
 
 ## Next Expected Work
 

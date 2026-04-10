@@ -5,6 +5,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ $title ?? config('app.name') }}</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
@@ -13,8 +14,22 @@
         @php($hasCustomSidebar = isset($sidebar))
         @php($unreadNotificationCount = $user ? \App\Models\PlatformNotification::query()->visibleTo($user)->whereNull('read_at')->count() : 0)
         @php($recentNotifications = $user ? \App\Models\PlatformNotification::query()->visibleTo($user)->latest()->limit(5)->get() : collect())
+        @php($realtimeNotificationsEnabled = $user && $user->can('platform.notifications.view'))
 
         <div class="min-h-screen">
+            @if ($realtimeNotificationsEnabled)
+                <div
+                    data-realtime-notifications="1"
+                    data-user-id="{{ $user->id }}"
+                    data-notifications-index-url="{{ route('platform.notifications.index') }}"
+                ></div>
+
+                <div
+                    class="pointer-events-none fixed right-6 top-24 z-[70] flex w-full max-w-sm flex-col gap-3"
+                    data-notification-toast-container
+                ></div>
+            @endif
+
             @if ($user)
                 <header class="sticky top-0 z-40 border-b border-slate-800 bg-slate-950/90 backdrop-blur">
                     <div class="mx-auto flex w-full max-w-[1700px] items-center gap-4 px-4 py-4 xl:px-6">
@@ -53,7 +68,7 @@
                                         aria-controls="notification-menu-panel"
                                     >
                                         <p class="font-medium text-white">Notifications</p>
-                                        <p class="text-xs text-slate-500">{{ $unreadNotificationCount }} unread</p>
+                                        <p class="text-xs text-slate-500" data-notification-trigger-summary>{{ $unreadNotificationCount }} unread</p>
                                     </button>
 
                                     <div
@@ -64,7 +79,7 @@
                                         <div class="flex items-start justify-between gap-4 border-b border-slate-800 pb-4">
                                             <div>
                                                 <p class="text-sm font-semibold text-white">Recent Notifications</p>
-                                                <p class="mt-1 text-xs text-slate-500">{{ $unreadNotificationCount }} unread across your latest updates</p>
+                                                <p class="mt-1 text-xs text-slate-500" data-notification-panel-summary>{{ $unreadNotificationCount }} unread across your latest updates</p>
                                             </div>
 
                                             <a href="{{ route('platform.notifications.index') }}" class="text-xs font-semibold uppercase tracking-[0.2em] text-sky-300 transition hover:text-sky-200">
@@ -72,11 +87,13 @@
                                             </a>
                                         </div>
 
-                                        <div class="mt-4 space-y-3">
+                                        <div class="mt-4 space-y-3" data-notification-preview-list>
                                             @forelse ($recentNotifications as $notification)
                                                 <a
                                                     href="{{ $notification->action_url ?: route('platform.notifications.index') }}"
                                                     class="block rounded-2xl border border-slate-800 bg-slate-950/80 px-4 py-4 transition hover:border-sky-500/30 hover:bg-slate-950"
+                                                    data-notification-preview-item
+                                                    data-notification-id="{{ $notification->id }}"
                                                 >
                                                     <div class="flex items-center gap-2">
                                                         @if (! $notification->read_at)
@@ -101,7 +118,7 @@
                                                     <p class="mt-1 line-clamp-2 text-sm text-slate-400">{{ $notification->body }}</p>
                                                 </a>
                                             @empty
-                                                <div class="rounded-2xl border border-dashed border-slate-800 bg-slate-950/50 px-4 py-8 text-center text-sm text-slate-500">
+                                                <div class="rounded-2xl border border-dashed border-slate-800 bg-slate-950/50 px-4 py-8 text-center text-sm text-slate-500" data-notification-preview-empty-state>
                                                     No recent notifications are available for your account.
                                                 </div>
                                             @endforelse

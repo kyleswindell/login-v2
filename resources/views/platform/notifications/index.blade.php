@@ -24,17 +24,17 @@
         <div class="grid gap-4 md:grid-cols-3">
             <article class="rounded-2xl border border-slate-800 bg-slate-900/70 p-6">
                 <p class="text-sm uppercase tracking-[0.25em] text-slate-500">Unread</p>
-                <p class="mt-4 text-3xl font-semibold text-white">{{ $unreadCount }}</p>
+                <p class="mt-4 text-3xl font-semibold text-white" data-notification-inbox-unread-count>{{ $unreadCount }}</p>
                 <p class="mt-2 text-sm text-slate-400">Notifications still requiring attention</p>
             </article>
         </div>
 
-        <div class="space-y-4">
+        <div class="space-y-4" data-notification-inbox-list>
             @forelse ($notifications as $notification)
-                <article class="rounded-3xl border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/20">
+                <article class="rounded-3xl border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/20" data-notification-card data-notification-id="{{ $notification->id }}">
                     <div class="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
                         <div class="min-w-0 flex-1">
-                            <div class="flex flex-wrap items-center gap-2">
+                            <div class="flex flex-wrap items-center gap-2" data-notification-badges>
                                 <span @class([
                                     'inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em]',
                                     'bg-sky-500/15 text-sky-300' => $notification->severity === 'info',
@@ -62,7 +62,7 @@
 
                             <div class="mt-4 flex flex-wrap gap-4 text-sm text-slate-500">
                                 <span>Module: {{ $notification->module_key }}</span>
-                                <span>{{ $notification->created_at?->format('M j, Y g:i A') }}</span>
+                                <span data-notification-created-label>{{ $notification->created_at?->format('M j, Y g:i A') }}</span>
                             </div>
 
                             @if ($notification->action_url)
@@ -74,7 +74,7 @@
                             @endif
                         </div>
 
-                        <div class="flex flex-wrap gap-3">
+                        <div class="flex flex-wrap gap-3" data-notification-actions>
                             @if (! $notification->read_at)
                                 <form method="POST" action="{{ route('platform.notifications.mark-read', $notification) }}">
                                     @csrf
@@ -96,7 +96,7 @@
                     </div>
                 </article>
             @empty
-                <div class="rounded-3xl border border-dashed border-slate-800 bg-slate-950/40 px-6 py-12 text-center text-slate-500">
+                <div class="rounded-3xl border border-dashed border-slate-800 bg-slate-950/40 px-6 py-12 text-center text-slate-500" data-notification-inbox-empty-state>
                     No notifications are available for your account yet.
                 </div>
             @endforelse

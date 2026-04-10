@@ -9,6 +9,7 @@ Describe the current shared notifications and settings foundation for the platfo
 Current status:
 
 * implemented in code
+* Reverb and Echo realtime notifications are implemented in code and pending staging deploy
 * header recent-notifications preview is implemented in code and pending staging deploy
 * notifications inbox UI is implemented in code and pending staging deploy
 * settings table and service are migrated on staging
@@ -24,6 +25,7 @@ Phase 1 currently includes:
 * unread notification count surfaced on the dashboard shell
 * a header recent-notifications preview of the five latest notifications with hover-open and click-to-pin behavior
 * database-first notification persistence
+* queued notification broadcast events for created and updated notifications
 * a notifications inbox page
 * notification mark-read, mark-all-read, and dismiss actions
 
@@ -44,9 +46,16 @@ Supported notification actions in code:
 * `app/Models/PlatformNotification.php`
 * `app/Platform/Settings/SettingsService.php`
 * `app/Platform/Notifications/NotificationService.php`
+* `app/Events/PlatformNotificationCreated.php`
+* `app/Events/PlatformNotificationUpdated.php`
+* `app/Http/Controllers/Platform/BroadcastAuthController.php`
 * `app/Http/Controllers/Platform/NotificationController.php`
 * `database/migrations/2026_04_09_000003_create_settings_table.php`
 * `database/migrations/2026_04_09_000004_create_notifications_table.php`
+* `config/broadcasting.php`
+* `config/reverb.php`
+* `routes/channels.php`
+* `resources/js/app.js`
 * `resources/views/platform/notifications/index.blade.php`
 
 ## Data / Tables
@@ -96,10 +105,13 @@ Current gaps:
 * no settings management screen yet
 * no non-database delivery channels yet
 * no notification receipts or fan-out tables yet
+* staging Reverb server and queue worker still need to be applied live
 
 ## Related
 
 * [[V2 App/Planning/Phase 1/Logging Notifications And Options Foundation]] | [Logging Notifications And Options Foundation](../Planning/Phase%201/Logging%20Notifications%20And%20Options%20Foundation.md)
 * [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 1]] | [Phase 1 - Implementation Batch 1](../Planning/Phase%201/Phase%201%20-%20Implementation%20Batch%201.md)
 * [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 3]] | [Phase 1 - Implementation Batch 3](../Planning/Phase%201/Phase%201%20-%20Implementation%20Batch%203.md)
+* [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 4]] | [Phase 1 - Implementation Batch 4](../Planning/Phase%201/Phase%201%20-%20Implementation%20Batch%204.md)
+* [[V2 App/Features/Realtime Notifications And Broadcasting]] | [Realtime Notifications And Broadcasting](Realtime%20Notifications%20And%20Broadcasting.md)
 * [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](Event%20And%20Error%20Logging.md)

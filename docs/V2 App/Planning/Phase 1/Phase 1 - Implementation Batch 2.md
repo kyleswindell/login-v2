@@ -6,6 +6,21 @@ Translate the newly validated staging foundation into the next usable platform-a
 
 This batch should focus on turning the current auth, dashboard shell, user management, and docs viewer baseline into a more complete internal platform workspace without pulling tenancy or broader domain modules in too early.
 
+## Implementation Status
+
+Current status:
+
+* implemented in code
+* deployed on staging
+* docs viewer and shell refinements have already been incorporated from staging review
+* role and permission seeding remains pending
+
+Canonical docs:
+
+* [[V2 App/Features/Platform Workspace And Documentation Vault]] | [Platform Workspace And Documentation Vault](../../Features/Platform%20Workspace%20And%20Documentation%20Vault.md)
+* [[V2 App/Features/Platform Users And RBAC]] | [Platform Users And RBAC](../../Features/Platform%20Users%20And%20RBAC.md)
+* [[V2 App/Development/Phase 1 Development Log]] | [Phase 1 Development Log](../../Development/Phase%201%20Development%20Log.md)
+
 ## Batch Goal
 
 Establish the first durable platform-operations layer on top of the Phase 1 foundation by improving:

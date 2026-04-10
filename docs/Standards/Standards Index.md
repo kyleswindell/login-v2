@@ -8,6 +8,7 @@
 - [[Standards/Logging Standards]] | [Logging Standards](Logging%20Standards.md)
 - [[Standards/Database Migration Standards]] | [Database Migration Standards](Database%20Migration%20Standards.md)
 - [[Standards/Documentation Review Standards]] | [Documentation Review Standards](Documentation%20Review%20Standards.md)
+- [[Standards/Implementation Status And Development Sync Standard]] | [Implementation Status And Development Sync Standard](Implementation%20Status%20And%20Development%20Sync%20Standard.md)
 - [[Standards/Module Development Standards]] | [Module Development Standards](Module%20Development%20Standards.md)
 - [[Standards/Release Notes Standards]] | [Release Notes Standards](Release%20Notes%20Standards.md)
 - [[Standards/Security Standards]] | [Security Standards](Security%20Standards.md)

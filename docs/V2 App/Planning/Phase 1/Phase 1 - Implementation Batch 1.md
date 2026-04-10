@@ -6,6 +6,23 @@ Translate the current Phase 1 planning guidance into the first realistic impleme
 
 This note is intentionally narrower than the full Phase 1 scope. It should describe the first migration and service layer batch that gives us a durable base without dragging tenancy or broad feature work in too early.
 
+## Implementation Status
+
+Current status:
+
+* implemented in code
+* migrated on staging
+* foundational data and service layer completed
+* dedicated admin UI still pending for notifications and settings
+
+Canonical docs:
+
+* [[V2 App/Features/Authentication]] | [Authentication](../../Features/Authentication.md)
+* [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../../Features/Event%20And%20Error%20Logging.md)
+* [[V2 App/Features/Platform Users And RBAC]] | [Platform Users And RBAC](../../Features/Platform%20Users%20And%20RBAC.md)
+* [[V2 App/Features/Platform Notifications And Settings]] | [Platform Notifications And Settings](../../Features/Platform%20Notifications%20And%20Settings.md)
+* [[V2 App/Development/Phase 1 Development Log]] | [Phase 1 Development Log](../../Development/Phase%201%20Development%20Log.md)
+
 ## Batch Goal
 
 Establish the first stable shared-core data and service foundation for:

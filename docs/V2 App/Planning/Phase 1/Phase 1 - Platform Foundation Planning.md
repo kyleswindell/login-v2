@@ -8,6 +8,24 @@ Use this note as the active planning surface for the first V2 build phase.
 
 This note is the root planning note for the Phase 1 branch.
 
+## Implementation Status
+
+Current status:
+
+* Phase 1 is active and partially implemented
+* Batch 1 foundation work is implemented and live on staging
+* Batch 2 platform shell and docs-vault work is implemented and live on staging
+* canonical system docs now exist for implemented auth, logging, RBAC, notifications/settings, and platform workspace surfaces
+
+Canonical docs:
+
+* [[V2 App/Features/Authentication]] | [Authentication](../../Features/Authentication.md)
+* [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../../Features/Event%20And%20Error%20Logging.md)
+* [[V2 App/Features/Platform Users And RBAC]] | [Platform Users And RBAC](../../Features/Platform%20Users%20And%20RBAC.md)
+* [[V2 App/Features/Platform Notifications And Settings]] | [Platform Notifications And Settings](../../Features/Platform%20Notifications%20And%20Settings.md)
+* [[V2 App/Features/Platform Workspace And Documentation Vault]] | [Platform Workspace And Documentation Vault](../../Features/Platform%20Workspace%20And%20Documentation%20Vault.md)
+* [[V2 App/Development/Phase 1 Development Log]] | [Phase 1 Development Log](../../Development/Phase%201%20Development%20Log.md)
+
 ## Phase Scope
 
 Phase 1 is the shared core-app foundation phase.

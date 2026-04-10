@@ -4,6 +4,21 @@
 
 Capture the Phase 1 planning work for platform authentication, tenant-auth separation, RBAC, super-admin behavior, and privileged access handoff.
 
+## Implementation Status
+
+Current status:
+
+* authentication baseline is implemented and live on staging
+* RBAC foundation is implemented and migrated on staging
+* platform user management UI is implemented and live on staging
+* tenant auth and privileged tenant handoff remain planned only
+
+Canonical docs:
+
+* [[V2 App/Features/Authentication]] | [Authentication](../../Features/Authentication.md)
+* [[V2 App/Features/Platform Users And RBAC]] | [Platform Users And RBAC](../../Features/Platform%20Users%20And%20RBAC.md)
+* [[V2 App/Development/Phase 1 Development Log]] | [Phase 1 Development Log](../../Development/Phase%201%20Development%20Log.md)
+
 ## Current Planning Direction
 
 This note should absorb and refine the auth-related decisions from the main Phase 1 planning note.
@@ -169,4 +184,5 @@ Still worth deciding explicitly:
 * [[V2 App/Planning/Phase 1/Phase 1 Index]] | [Phase 1 Index](Phase%201%20Index.md)
 * [[V2 App/Planning/Phase 1/Phase 1 - Platform Foundation Planning]] | [Phase 1 - Platform Foundation Planning](Phase%201%20-%20Platform%20Foundation%20Planning.md)
 * [[V2 App/Features/Authentication]] | [Authentication](../../Features/Authentication.md)
+* [[V2 App/Features/Platform Users And RBAC]] | [Platform Users And RBAC](../../Features/Platform%20Users%20And%20RBAC.md)
 * [[V2 App/Architecture/Platform And Tenant Application Boundary]] | [Platform And Tenant Application Boundary](../../Architecture/Platform%20And%20Tenant%20Application%20Boundary.md)

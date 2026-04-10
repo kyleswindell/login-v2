@@ -26,6 +26,7 @@ Give Codex a concise project-specific operating guide.
 - [[Standards/Coding Standards]] | [Coding Standards](../Standards/Coding%20Standards.md)
 - [[Standards/Commenting Standards]] | [Commenting Standards](../Standards/Commenting%20Standards.md)
 - [[Standards/File Building Standards]] | [File Building Standards](../Standards/File%20Building%20Standards.md)
+- [[Standards/Implementation Status And Development Sync Standard]] | [Implementation Status And Development Sync Standard](../Standards/Implementation%20Status%20And%20Development%20Sync%20Standard.md)
 - [[Standards/Tenant Safety Standards]] | [Tenant Safety Standards](../Standards/Tenant%20Safety%20Standards.md)
 - [[Codex/Codex Review Checklist]] | [Codex Review Checklist](Codex%20Review%20Checklist.md)
 - [[Codex/Codex Module Checklist]] | [Codex Module Checklist](Codex%20Module%20Checklist.md)

@@ -9,6 +9,7 @@
 - [[V2 App/Planning/Phase 0/Phase 0 Index]] | [Phase 0 Index](Phase%200/Phase%200%20Index.md)
 - [[V2 App/Planning/Phase 1/Phase 1 Index]] | [Phase 1 Index](Phase%201/Phase%201%20Index.md)
 - [[V2 App/Planning/Phase 1/Phase 1 - Platform Foundation Planning]] | [Phase 1 - Platform Foundation Planning](Phase%201/Phase%201%20-%20Platform%20Foundation%20Planning.md)
+- [[V2 App/Development/Development Index]] | [Development Index](../Development/Development%20Index.md)
 
 ## Purpose
 
@@ -18,4 +19,5 @@ This section holds working V2 planning and research notes that inform implementa
 
 - [[V2 App/V2 App Documentation Map]] | [V2 App Documentation Map](../V2%20App%20Documentation%20Map.md)
 - [[V2 App/Architecture/Architecture Index]] | [Architecture Index](../Architecture/Architecture%20Index.md)
+- [[Standards/Implementation Status And Development Sync Standard]] | [Implementation Status And Development Sync Standard](../../Standards/Implementation%20Status%20And%20Development%20Sync%20Standard.md)
 - [[Documentation Standards/How To Write Docs]] | [How To Write Docs](../../Documentation%20Standards/How%20To%20Write%20Docs.md)

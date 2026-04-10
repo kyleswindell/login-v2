@@ -4,6 +4,9 @@
 
 - [[V2 App/Features/Authentication]] | [Authentication](Authentication.md)
 - [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](Event%20And%20Error%20Logging.md)
+- [[V2 App/Features/Platform Users And RBAC]] | [Platform Users And RBAC](Platform%20Users%20And%20RBAC.md)
+- [[V2 App/Features/Platform Notifications And Settings]] | [Platform Notifications And Settings](Platform%20Notifications%20And%20Settings.md)
+- [[V2 App/Features/Platform Workspace And Documentation Vault]] | [Platform Workspace And Documentation Vault](Platform%20Workspace%20And%20Documentation%20Vault.md)
 
 ## Planned Feature Tracks
 

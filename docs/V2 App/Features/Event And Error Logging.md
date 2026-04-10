@@ -1,5 +1,19 @@
 # Event And Error Logging
 
+## Purpose
+
+Describe the current platform audit logging and database-backed error logging foundation.
+
+## Implementation Status
+
+Current status:
+
+* implemented in code
+* migrated on staging
+* audit events are actively written for current auth flows
+* exception reporting is wired to write into `central_error_logs`
+* no dedicated audit or error log viewer UI exists yet
+
 ## Current Scope
 
 App 2.0 begins with two database-backed logging tables:
@@ -95,5 +109,7 @@ This is the central-platform baseline. Tenant-local audit logs and central secur
 ## Related
 
 * [[V2 App/Features/Feature Index]] | [Feature Index](Feature%20Index.md)
+* [[V2 App/Planning/Phase 1/Logging Notifications And Options Foundation]] | [Logging Notifications And Options Foundation](../Planning/Phase%201/Logging%20Notifications%20And%20Options%20Foundation.md)
+* [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 1]] | [Phase 1 - Implementation Batch 1](../Planning/Phase%201/Phase%201%20-%20Implementation%20Batch%201.md)
 * [[V2 App/V2 App Documentation Map]] | [V2 App Documentation Map](../V2%20App%20Documentation%20Map.md)
 * [[V2 App/Reference/Reference Index]] | [Reference Index](../Reference/Reference%20Index.md)

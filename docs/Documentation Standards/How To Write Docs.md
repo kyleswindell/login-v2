@@ -185,4 +185,5 @@ Inside the note itself:
 - [[Documentation Standards/Templates/Runbook Template]] | [Runbook Template](Templates/Runbook%20Template.md)
 - [[Documentation Standards/Templates/ADR Template]] | [ADR Template](Templates/ADR%20Template.md)
 - [[Standards/Documentation Review Standards]] | [Documentation Review Standards](../Standards/Documentation%20Review%20Standards.md)
+- [[Standards/Implementation Status And Development Sync Standard]] | [Implementation Status And Development Sync Standard](../Standards/Implementation%20Status%20And%20Development%20Sync%20Standard.md)
 - [[00 - Start Here]] | [00 - Start Here](../00%20-%20Start%20Here.md)

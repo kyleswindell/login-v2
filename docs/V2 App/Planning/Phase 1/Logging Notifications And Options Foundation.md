@@ -4,6 +4,22 @@
 
 Capture the Phase 1 planning work for logging, notifications, configuration/options standards, and feature bootstrap rules.
 
+## Implementation Status
+
+Current status:
+
+* database-backed audit and error logging are implemented and live on staging
+* settings and notifications foundations are implemented and migrated on staging
+* no dedicated notifications UI yet
+* no dedicated settings UI yet
+* no dedicated audit or error log viewer UI yet
+
+Canonical docs:
+
+* [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../../Features/Event%20And%20Error%20Logging.md)
+* [[V2 App/Features/Platform Notifications And Settings]] | [Platform Notifications And Settings](../../Features/Platform%20Notifications%20And%20Settings.md)
+* [[V2 App/Development/Phase 1 Development Log]] | [Phase 1 Development Log](../../Development/Phase%201%20Development%20Log.md)
+
 ## Current Planning Direction
 
 This note should absorb and refine the cross-cutting standards from the main Phase 1 planning note.
@@ -199,5 +215,6 @@ Still worth deciding explicitly:
 * [[V2 App/Planning/Phase 1/Phase 1 - Platform Foundation Planning]] | [Phase 1 - Platform Foundation Planning](Phase%201%20-%20Platform%20Foundation%20Planning.md)
 * [[V2 App/Reference/Logging Data Model Notes]] | [Logging Data Model Notes](../../Reference/Logging%20Data%20Model%20Notes.md)
 * [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../../Features/Event%20And%20Error%20Logging.md)
+* [[V2 App/Features/Platform Notifications And Settings]] | [Platform Notifications And Settings](../../Features/Platform%20Notifications%20And%20Settings.md)
 * [[Standards/Logging Standards]] | [Logging Standards](../../../Standards/Logging%20Standards.md)
 * [[Standards/Release Notes Standards]] | [Release Notes Standards](../../../Standards/Release%20Notes%20Standards.md)

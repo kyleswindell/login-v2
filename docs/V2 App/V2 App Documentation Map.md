@@ -13,6 +13,7 @@ This note is the root node for the V2 documentation branch inside the shared vau
 - [[V2 App/Reference/Reference Index]] | [Reference Index](Reference/Reference%20Index.md)
 - [[V2 App/Runbooks/Runbook Index]] | [Runbook Index](Runbooks/Runbook%20Index.md)
 - [[V2 App/Planning/Planning Index]] | [Planning Index](Planning/Planning%20Index.md)
+- [[V2 App/Development/Development Index]] | [Development Index](Development/Development%20Index.md)
 
 ## Current Coverage
 
@@ -23,6 +24,7 @@ This note is the root node for the V2 documentation branch inside the shared vau
 - event and error logging
 - local development and server readiness
 - phase 0 deployment and environment setup
+- phase development logging and implementation status tracking
 - working planning research for commenting and logging
 - phase-specific planning starting with platform foundation
 
@@ -34,4 +36,5 @@ This note is the root node for the V2 documentation branch inside the shared vau
 - [[V2 App/Reference/Reference Index]] | [Reference Index](Reference/Reference%20Index.md)
 - [[V2 App/Planning/Phase 0/Phase 0 Index]] | [Phase 0 Index](Planning/Phase%200/Phase%200%20Index.md)
 - [[V2 App/Planning/Phase 1/Phase 1 Index]] | [Phase 1 Index](Planning/Phase%201/Phase%201%20Index.md)
+- [[V2 App/Development/Development Index]] | [Development Index](Development/Development%20Index.md)
 - [[V2 App/Planning/Phase 1/Phase 1 - Platform Foundation Planning]] | [Phase 1 - Platform Foundation Planning](Planning/Phase%201/Phase%201%20-%20Platform%20Foundation%20Planning.md)

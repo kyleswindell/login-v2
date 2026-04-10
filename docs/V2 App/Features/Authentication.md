@@ -1,5 +1,18 @@
 # Authentication
 
+## Purpose
+
+Describe the current platform authentication baseline and its immediate Phase 1 boundaries.
+
+## Implementation Status
+
+Current status:
+
+* implemented in code
+* deployed on staging
+* login and logout UI exist
+* password reset and broader account recovery flows are still pending
+
 ## Current Scope
 
 App 2.0 starts with a minimal first-party sign-in and sign-out flow.
@@ -42,5 +55,7 @@ This is intentionally not a full user-management or password-reset system yet. F
 ## Related
 
 * [[V2 App/Features/Feature Index]] | [Feature Index](Feature%20Index.md)
+* [[V2 App/Planning/Phase 1/Auth And Authorization Foundation]] | [Auth And Authorization Foundation](../Planning/Phase%201/Auth%20And%20Authorization%20Foundation.md)
+* [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 1]] | [Phase 1 - Implementation Batch 1](../Planning/Phase%201/Phase%201%20-%20Implementation%20Batch%201.md)
 * [[V2 App/V2 App Documentation Map]] | [V2 App Documentation Map](../V2%20App%20Documentation%20Map.md)
 * [[V2 App/Reference/Stack - Laravel]] | [Stack - Laravel](../Reference/Stack%20-%20Laravel.md)

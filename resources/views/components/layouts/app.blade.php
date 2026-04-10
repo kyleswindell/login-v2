@@ -12,6 +12,7 @@
         @php($user = auth()->user())
         @php($hasCustomSidebar = isset($sidebar))
         @php($unreadNotificationCount = $user ? \App\Models\PlatformNotification::query()->visibleTo($user)->whereNull('read_at')->count() : 0)
+        @php($recentNotifications = $user ? \App\Models\PlatformNotification::query()->visibleTo($user)->latest()->limit(5)->get() : collect())
 
         <div class="min-h-screen">
             @if ($user)
@@ -40,10 +41,73 @@
 
                         <div class="ml-auto flex items-center gap-3">
                             @can('view-platform-notifications')
-                                <a href="{{ route('platform.notifications.index') }}" class="hidden rounded-2xl border border-slate-800 bg-slate-900/70 px-4 py-3 text-sm text-slate-300 transition hover:border-sky-500/40 xl:block">
-                                    <p class="font-medium text-white">Notifications</p>
-                                    <p class="text-xs text-slate-500">{{ $unreadNotificationCount }} unread</p>
-                                </a>
+                                <div
+                                    class="relative hidden xl:block"
+                                    data-notification-menu
+                                >
+                                    <button
+                                        type="button"
+                                        class="rounded-2xl border border-slate-800 bg-slate-900/70 px-4 py-3 text-left text-sm text-slate-300 transition hover:border-sky-500/40"
+                                        data-notification-trigger
+                                        aria-expanded="false"
+                                        aria-controls="notification-menu-panel"
+                                    >
+                                        <p class="font-medium text-white">Notifications</p>
+                                        <p class="text-xs text-slate-500">{{ $unreadNotificationCount }} unread</p>
+                                    </button>
+
+                                    <div
+                                        id="notification-menu-panel"
+                                        class="absolute right-0 z-50 mt-3 hidden w-[28rem] rounded-3xl border border-slate-800 bg-slate-900/95 p-4 shadow-2xl shadow-black/40"
+                                        data-notification-panel
+                                    >
+                                        <div class="flex items-start justify-between gap-4 border-b border-slate-800 pb-4">
+                                            <div>
+                                                <p class="text-sm font-semibold text-white">Recent Notifications</p>
+                                                <p class="mt-1 text-xs text-slate-500">{{ $unreadNotificationCount }} unread across your latest updates</p>
+                                            </div>
+
+                                            <a href="{{ route('platform.notifications.index') }}" class="text-xs font-semibold uppercase tracking-[0.2em] text-sky-300 transition hover:text-sky-200">
+                                                View all
+                                            </a>
+                                        </div>
+
+                                        <div class="mt-4 space-y-3">
+                                            @forelse ($recentNotifications as $notification)
+                                                <a
+                                                    href="{{ $notification->action_url ?: route('platform.notifications.index') }}"
+                                                    class="block rounded-2xl border border-slate-800 bg-slate-950/80 px-4 py-4 transition hover:border-sky-500/30 hover:bg-slate-950"
+                                                >
+                                                    <div class="flex items-center gap-2">
+                                                        <span @class([
+                                                            'inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.15em]',
+                                                            'bg-sky-500/15 text-sky-300' => $notification->severity === 'info',
+                                                            'bg-emerald-500/15 text-emerald-300' => $notification->severity === 'success',
+                                                            'bg-violet-500/15 text-violet-300' => $notification->severity === 'notice',
+                                                            'bg-amber-500/15 text-amber-300' => $notification->severity === 'warning',
+                                                            'bg-rose-500/15 text-rose-300' => in_array($notification->severity, ['error', 'urgent'], true),
+                                                        ])>
+                                                            {{ $notification->severity }}
+                                                        </span>
+
+                                                        @if (! $notification->read_at)
+                                                            <span class="inline-flex rounded-full bg-sky-500/15 px-2.5 py-1 text-[11px] font-medium text-sky-200">Unread</span>
+                                                        @endif
+
+                                                        <span class="ml-auto text-xs text-slate-500">{{ $notification->created_at?->format('M j, g:i A') }}</span>
+                                                    </div>
+
+                                                    <p class="mt-3 text-sm font-semibold text-white">{{ $notification->title }}</p>
+                                                    <p class="mt-1 line-clamp-2 text-sm text-slate-400">{{ $notification->body }}</p>
+                                                </a>
+                                            @empty
+                                                <div class="rounded-2xl border border-dashed border-slate-800 bg-slate-950/50 px-4 py-8 text-center text-sm text-slate-500">
+                                                    No recent notifications are available for your account.
+                                                </div>
+                                            @endforelse
+                                        </div>
+                                    </div>
+                                </div>
                             @endcan
 
                             <details class="group relative">

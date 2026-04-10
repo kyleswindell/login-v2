@@ -9,6 +9,7 @@ Describe the current shared notifications and settings foundation for the platfo
 Current status:
 
 * implemented in code
+* header recent-notifications preview is implemented in code and pending staging deploy
 * notifications inbox UI is implemented in code and pending staging deploy
 * settings table and service are migrated on staging
 * dashboard and header unread-count surfaces are live on staging
@@ -21,6 +22,7 @@ Phase 1 currently includes:
 * a shared `settings` table and settings service
 * a shared `notifications` table and notification service
 * unread notification count surfaced on the dashboard shell
+* a header recent-notifications preview of the five latest notifications
 * database-first notification persistence
 * a notifications inbox page
 * notification mark-read, mark-all-read, and dismiss actions

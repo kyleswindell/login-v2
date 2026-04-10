@@ -11,14 +11,15 @@ Current status:
 * implemented in code
 * deployed on staging
 * active staging review has already driven follow-up layout and docs-viewer corrections
-* search and notifications header elements are placeholders only
+* search remains a placeholder only
+* header notifications preview is implemented in code and pending staging deploy
 
 ## Current Implementation
 
 The current platform shell includes:
 
 * a full-width authenticated layout
-* top header with brand, search placeholder, notifications placeholder, and user menu
+* top header with brand, search placeholder, recent-notifications preview, and user menu
 * platform navigation for dashboard, users, and docs
 * dashboard cards for users, settings, notifications, and docs counts
 * a dedicated docs-vault workspace mode with the repository tree replacing the normal app sidebar
@@ -62,7 +63,6 @@ Current workflows:
 Current gaps:
 
 * header search is a placeholder only
-* notifications header surface is a placeholder only
 * no docs full-text search yet
 * no deploy visibility surface in the app yet
 

@@ -79,6 +79,10 @@
                                                     class="block rounded-2xl border border-slate-800 bg-slate-950/80 px-4 py-4 transition hover:border-sky-500/30 hover:bg-slate-950"
                                                 >
                                                     <div class="flex items-center gap-2">
+                                                        @if (! $notification->read_at)
+                                                            <span class="inline-flex rounded-full bg-sky-500/15 px-2.5 py-1 text-[11px] font-medium text-sky-200">Unread</span>
+                                                        @endif
+
                                                         <span @class([
                                                             'inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.15em]',
                                                             'bg-sky-500/15 text-sky-300' => $notification->severity === 'info',
@@ -89,10 +93,6 @@
                                                         ])>
                                                             {{ $notification->severity }}
                                                         </span>
-
-                                                        @if (! $notification->read_at)
-                                                            <span class="inline-flex rounded-full bg-sky-500/15 px-2.5 py-1 text-[11px] font-medium text-sky-200">Unread</span>
-                                                        @endif
 
                                                         <span class="ml-auto text-xs text-slate-500">{{ $notification->created_at?->format('M j, g:i A') }}</span>
                                                     </div>

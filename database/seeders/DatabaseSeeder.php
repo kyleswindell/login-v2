@@ -12,9 +12,19 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-        User::factory()->create([
+        $this->call([
+            PlatformRolesAndPermissionsSeeder::class,
+        ]);
+
+        if (! app()->environment('local')) {
+            return;
+        }
+
+        $user = User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        $user->assignRole('platform_super_admin');
     }
 }

@@ -9,15 +9,17 @@ Capture the Phase 1 planning work for logging, notifications, configuration/opti
 Current status:
 
 * database-backed audit and error logging are implemented and live on staging
-* settings and notifications foundations are implemented and migrated on staging
-* no dedicated notifications UI yet
+* settings foundation is implemented and live on staging
+* notifications inbox UI is implemented in code and pending staging deploy
+* audit log viewer UI is implemented in code and pending staging deploy
 * no dedicated settings UI yet
-* no dedicated audit or error log viewer UI yet
+* no dedicated error log viewer UI yet
 
 Canonical docs:
 
 * [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../../Features/Event%20And%20Error%20Logging.md)
 * [[V2 App/Features/Platform Notifications And Settings]] | [Platform Notifications And Settings](../../Features/Platform%20Notifications%20And%20Settings.md)
+* [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 3]] | [Phase 1 - Implementation Batch 3](Phase%201%20-%20Implementation%20Batch%203.md)
 * [[V2 App/Development/Phase 1 Development Log]] | [Phase 1 Development Log](../../Development/Phase%201%20Development%20Log.md)
 
 ## Current Planning Direction

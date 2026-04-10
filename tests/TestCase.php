@@ -3,8 +3,8 @@
 namespace Tests;
 
 use App\Models\User;
+use Database\Seeders\PlatformRolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Spatie\Permission\Models\Role;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -12,10 +12,7 @@ abstract class TestCase extends BaseTestCase
     {
         $user ??= User::factory()->create();
 
-        Role::query()->firstOrCreate([
-            'name' => 'platform_super_admin',
-            'guard_name' => 'web',
-        ]);
+        $this->seed(PlatformRolesAndPermissionsSeeder::class);
 
         $user->syncRoles(['platform_super_admin']);
         $this->actingAs($user);

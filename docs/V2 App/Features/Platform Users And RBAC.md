@@ -11,7 +11,7 @@ Current status:
 * implemented in code
 * migrated on staging
 * platform user management UI exists
-* role and permission seeding is still incomplete
+* first-pass role and permission seeding is implemented in code and pending staging deploy
 * tenant-scoped auth and tenant roles are still deferred
 
 ## Current Implementation
@@ -68,7 +68,13 @@ Current authorization model:
 * RBAC is the baseline
 * `platform_super_admin` bypasses through a global Gate rule
 * direct UI access to platform user management requires the `manage-platform-users` ability
+* direct UI access to notifications and audit logs uses seeded permission-backed gates
 * inactive users are blocked from successful login
+
+Current seeded roles and permissions:
+
+* roles: `platform_super_admin`, `platform_admin`, `platform_operator`
+* permissions: `platform.users.manage`, `platform.docs.view`, `platform.notifications.view`, `platform.audit-logs.view`
 
 ## Common Workflows
 
@@ -83,7 +89,6 @@ Current workflows:
 
 Current gaps:
 
-* no formal first-pass role/permission seeders yet
 * no password reset UI flow yet
 * no tenant-auth boundary implementation yet
 
@@ -93,3 +98,4 @@ Current gaps:
 * [[V2 App/Planning/Phase 1/Auth And Authorization Foundation]] | [Auth And Authorization Foundation](../Planning/Phase%201/Auth%20And%20Authorization%20Foundation.md)
 * [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 1]] | [Phase 1 - Implementation Batch 1](../Planning/Phase%201/Phase%201%20-%20Implementation%20Batch%201.md)
 * [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 2]] | [Phase 1 - Implementation Batch 2](../Planning/Phase%201/Phase%201%20-%20Implementation%20Batch%202.md)
+* [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 3]] | [Phase 1 - Implementation Batch 3](../Planning/Phase%201/Phase%201%20-%20Implementation%20Batch%203.md)

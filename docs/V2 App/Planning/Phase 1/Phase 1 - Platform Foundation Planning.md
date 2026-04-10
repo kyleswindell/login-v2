@@ -15,6 +15,7 @@ Current status:
 * Phase 1 is active and partially implemented
 * Batch 1 foundation work is implemented and live on staging
 * Batch 2 platform shell and docs-vault work is implemented and live on staging
+* Batch 3 notifications UI, audit log viewer, and role/permission seeding cleanup are implemented in code and pending staging deploy
 * canonical system docs now exist for implemented auth, logging, RBAC, notifications/settings, and platform workspace surfaces
 
 Canonical docs:

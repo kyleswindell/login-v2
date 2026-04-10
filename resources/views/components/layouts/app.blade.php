@@ -11,6 +11,7 @@
     <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
         @php($user = auth()->user())
         @php($hasCustomSidebar = isset($sidebar))
+        @php($unreadNotificationCount = $user ? \App\Models\PlatformNotification::query()->visibleTo($user)->whereNull('read_at')->count() : 0)
 
         <div class="min-h-screen">
             @if ($user)
@@ -38,10 +39,12 @@
                         </div>
 
                         <div class="ml-auto flex items-center gap-3">
-                            <div class="hidden rounded-2xl border border-slate-800 bg-slate-900/70 px-4 py-3 text-sm text-slate-300 xl:block">
-                                <p class="font-medium text-white">Notifications</p>
-                                <p class="text-xs text-slate-500">Inbox UI coming soon</p>
-                            </div>
+                            @can('view-platform-notifications')
+                                <a href="{{ route('platform.notifications.index') }}" class="hidden rounded-2xl border border-slate-800 bg-slate-900/70 px-4 py-3 text-sm text-slate-300 transition hover:border-sky-500/40 xl:block">
+                                    <p class="font-medium text-white">Notifications</p>
+                                    <p class="text-xs text-slate-500">{{ $unreadNotificationCount }} unread</p>
+                                </a>
+                            @endcan
 
                             <details class="group relative">
                                 <summary class="flex cursor-pointer list-none items-center gap-3 rounded-2xl border border-slate-800 bg-slate-900/70 px-4 py-3 transition hover:border-sky-500/40">
@@ -69,6 +72,18 @@
                                     @can('view-platform-docs')
                                         <a href="{{ route('platform.docs.index') }}" class="mt-1 block rounded-2xl px-4 py-3 text-sm text-slate-200 transition hover:bg-slate-800 hover:text-white">
                                             Documentation Vault
+                                        </a>
+                                    @endcan
+
+                                    @can('view-platform-notifications')
+                                        <a href="{{ route('platform.notifications.index') }}" class="mt-1 block rounded-2xl px-4 py-3 text-sm text-slate-200 transition hover:bg-slate-800 hover:text-white">
+                                            Notifications
+                                        </a>
+                                    @endcan
+
+                                    @can('view-platform-audit-logs')
+                                        <a href="{{ route('platform.audit-logs.index') }}" class="mt-1 block rounded-2xl px-4 py-3 text-sm text-slate-200 transition hover:bg-slate-800 hover:text-white">
+                                            Audit Logs
                                         </a>
                                     @endcan
 
@@ -126,6 +141,26 @@
                                             'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.docs.index'),
                                         ])>
                                             Documentation Vault
+                                        </a>
+                                    @endcan
+
+                                    @can('view-platform-notifications')
+                                        <a href="{{ route('platform.notifications.index') }}" @class([
+                                            'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                                            'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.notifications.*'),
+                                            'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.notifications.*'),
+                                        ])>
+                                            Notifications
+                                        </a>
+                                    @endcan
+
+                                    @can('view-platform-audit-logs')
+                                        <a href="{{ route('platform.audit-logs.index') }}" @class([
+                                            'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                                            'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.audit-logs.*'),
+                                            'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.audit-logs.*'),
+                                        ])>
+                                            Audit Logs
                                         </a>
                                     @endcan
                                 </nav>

@@ -22,15 +22,20 @@ class AppServiceProvider extends ServiceProvider
             return null;
         });
 
-        // Batch 2 uses explicit platform gates until the first platform-management
-        // permissions are seeded, which keeps these screens locked down without
-        // pretending the broader permission catalog already exists.
         Gate::define('manage-platform-users', function (User $user): bool {
-            return $user->hasRole('platform_super_admin');
+            return $user->can('platform.users.manage');
         });
 
         Gate::define('view-platform-docs', function (User $user): bool {
-            return $user->hasRole('platform_super_admin');
+            return $user->can('platform.docs.view');
+        });
+
+        Gate::define('view-platform-notifications', function (User $user): bool {
+            return $user->can('platform.notifications.view');
+        });
+
+        Gate::define('view-platform-audit-logs', function (User $user): bool {
+            return $user->can('platform.audit-logs.view');
         });
     }
 }

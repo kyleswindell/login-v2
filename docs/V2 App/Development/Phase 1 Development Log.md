@@ -16,7 +16,8 @@ Current state:
 * database-backed audit and error logging are implemented and live on staging
 * RBAC, settings, and notifications foundations are implemented and live on staging
 * platform shell, platform user management, and docs viewer are implemented and live on staging
-* notifications UI, audit log viewer, and fuller system-management surfaces remain pending
+* notifications UI, audit log viewer, and RBAC seed cleanup are implemented in code and pending staging deploy
+* settings UI and error log viewer remain pending
 
 ## Milestones
 
@@ -96,11 +97,37 @@ Planning owner:
 
 * [[V2 App/Planning/Phase 0/Deployment Workflow]] | [Deployment Workflow](../Planning/Phase%200/Deployment%20Workflow.md)
 
+### 2026-04-09 - Phase 1 Batch 3 notifications and audit surfaces implemented
+
+Status:
+
+* implemented in code
+* validated locally with passing test suite
+* pending staging deploy
+
+Implemented systems:
+
+* notifications inbox UI
+* mark-read, mark-all-read, and dismiss notification actions
+* audit log viewer with first-pass filters
+* first-pass role and permission seeding cleanup
+* permission-backed access gates for notifications and audit logs
+
+Canonical docs:
+
+* [[V2 App/Features/Platform Notifications And Settings]] | [Platform Notifications And Settings](../Features/Platform%20Notifications%20And%20Settings.md)
+* [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../Features/Event%20And%20Error%20Logging.md)
+* [[V2 App/Features/Platform Users And RBAC]] | [Platform Users And RBAC](../Features/Platform%20Users%20And%20RBAC.md)
+
+Planning owner:
+
+* [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 3]] | [Phase 1 - Implementation Batch 3](../Planning/Phase%201/Phase%201%20-%20Implementation%20Batch%203.md)
+
 ## Next Expected Work
 
-* notifications UI
-* audit log viewer
-* role and permission seeding normalization
+* staging deploy and verification of Batch 3
+* settings UI
+* error log viewer planning separation from audit surfaces
 * continued documentation status sync as new Phase 1 systems are implemented
 
 ## Related

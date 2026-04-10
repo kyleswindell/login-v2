@@ -12,7 +12,8 @@ Current status:
 * migrated on staging
 * audit events are actively written for current auth flows
 * exception reporting is wired to write into `central_error_logs`
-* no dedicated audit or error log viewer UI exists yet
+* audit log viewer UI is implemented in code and pending staging deploy
+* no dedicated error log viewer UI exists yet
 
 ## Current Scope
 
@@ -26,6 +27,8 @@ Runtime pieces in the current implementation:
 * `App\Platform\Logging\PlatformLogger`
 * `App\Http\Middleware\EnsureRequestId`
 * exception reporting hook in `bootstrap/app.php`
+* `App\Http\Controllers\Platform\AuditLogController`
+* `resources/views/platform/audit-logs/index.blade.php`
 
 Related docs:
 
@@ -64,6 +67,12 @@ Current auth-related events:
 * `auth.login_succeeded`
 * `auth.login_failed`
 * `auth.logout`
+
+Current audit visibility surface:
+
+* `GET /platform/audit-logs`
+* filters by event type, actor, result, and severity
+* current audience is platform users with `platform.audit-logs.view`
 
 ## Application Error Logs
 
@@ -111,5 +120,6 @@ This is the central-platform baseline. Tenant-local audit logs and central secur
 * [[V2 App/Features/Feature Index]] | [Feature Index](Feature%20Index.md)
 * [[V2 App/Planning/Phase 1/Logging Notifications And Options Foundation]] | [Logging Notifications And Options Foundation](../Planning/Phase%201/Logging%20Notifications%20And%20Options%20Foundation.md)
 * [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 1]] | [Phase 1 - Implementation Batch 1](../Planning/Phase%201/Phase%201%20-%20Implementation%20Batch%201.md)
+* [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 3]] | [Phase 1 - Implementation Batch 3](../Planning/Phase%201/Phase%201%20-%20Implementation%20Batch%203.md)
 * [[V2 App/V2 App Documentation Map]] | [V2 App Documentation Map](../V2%20App%20Documentation%20Map.md)
 * [[V2 App/Reference/Reference Index]] | [Reference Index](../Reference/Reference%20Index.md)

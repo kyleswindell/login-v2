@@ -4,7 +4,6 @@ namespace Tests\Feature\Platform;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class PlatformUserManagementTest extends TestCase
@@ -33,11 +32,6 @@ class PlatformUserManagementTest extends TestCase
     {
         $this->actingAsPlatformSuperAdmin();
 
-        Role::query()->create([
-            'name' => 'platform_admin',
-            'guard_name' => 'web',
-        ]);
-
         $this->post('/platform/users', [
             'name' => 'Operations User',
             'email' => 'ops@example.com',
@@ -55,11 +49,6 @@ class PlatformUserManagementTest extends TestCase
     public function test_super_admin_can_update_platform_users(): void
     {
         $this->actingAsPlatformSuperAdmin();
-
-        Role::query()->create([
-            'name' => 'platform_admin',
-            'guard_name' => 'web',
-        ]);
 
         $user = User::factory()->create([
             'is_active' => true,

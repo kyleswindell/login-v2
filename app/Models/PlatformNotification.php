@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
@@ -45,5 +46,10 @@ class PlatformNotification extends Model
     public function notifiable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function scopeVisibleTo(Builder $query, Model $notifiable): Builder
+    {
+        return $query->whereMorphedTo('notifiable', $notifiable);
     }
 }

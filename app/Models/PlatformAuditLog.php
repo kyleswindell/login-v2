@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PlatformAuditLog extends Model
 {
@@ -42,5 +43,10 @@ class PlatformAuditLog extends Model
             'is_security_event' => 'boolean',
             'occurred_at' => 'datetime',
         ];
+    }
+
+    public function actorUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'actor_user_id');
     }
 }

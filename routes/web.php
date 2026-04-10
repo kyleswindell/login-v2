@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Platform\AuditLogController;
 use App\Http\Controllers\Platform\DashboardController;
 use App\Http\Controllers\Platform\DocsController;
+use App\Http\Controllers\Platform\NotificationController;
 use App\Http\Controllers\Platform\PlatformUserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +28,13 @@ Route::middleware('auth')->group(function (): void {
     Route::post('/platform/users', [PlatformUserController::class, 'store'])->name('platform.users.store');
     Route::get('/platform/users/{user}/edit', [PlatformUserController::class, 'edit'])->name('platform.users.edit');
     Route::match(['put', 'patch'], '/platform/users/{user}', [PlatformUserController::class, 'update'])->name('platform.users.update');
+
+    Route::get('/platform/notifications', [NotificationController::class, 'index'])->name('platform.notifications.index');
+    Route::post('/platform/notifications/mark-all-read', [NotificationController::class, 'markAllRead'])->name('platform.notifications.mark-all-read');
+    Route::post('/platform/notifications/{notification}/read', [NotificationController::class, 'markRead'])->name('platform.notifications.mark-read');
+    Route::post('/platform/notifications/{notification}/dismiss', [NotificationController::class, 'dismiss'])->name('platform.notifications.dismiss');
+
+    Route::get('/platform/audit-logs', [AuditLogController::class, 'index'])->name('platform.audit-logs.index');
 
     Route::get('/platform/docs', DocsController::class)->name('platform.docs.index');
 

@@ -17,7 +17,7 @@ Current state:
 * RBAC, settings, and notifications foundations are implemented and live on staging
 * platform shell, platform user management, and docs viewer are implemented and live on staging
 * notifications UI, audit log viewer, and RBAC seed cleanup are implemented in code and pending staging deploy
-* settings UI and error log viewer remain pending
+* settings UI, Setup/Settings sidebar shell, and error log viewer are implemented in code and pending staging deploy
 * realtime notifications are deployed and validated on staging
 
 ## Milestones
@@ -154,10 +154,38 @@ Planning owner:
 
 * [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 4]] | [Phase 1 - Implementation Batch 4](../Planning/Phase%201/Phase%201%20-%20Implementation%20Batch%204.md)
 
+### 2026-04-10 - Phase 1 Batch 5 setup/settings shell and error log viewer implemented
+
+Status:
+
+* implemented in code
+* validated locally with passing feature tests
+* pending staging deploy and validation
+
+Implemented systems:
+
+* Setup sidebar overlay shell and close interaction in the main layout
+* Settings second-column panel with page navigation
+* first-pass settings pages for general, notifications, audit logs, docs access, and user defaults
+* settings write actions through `SettingsService` with audit events
+* error log viewer list and detail pages with filters
+* new permissions and gates for settings management and error log visibility
+
+Canonical docs:
+
+* [[V2 App/Features/Platform Notifications And Settings]] | [Platform Notifications And Settings](../Features/Platform%20Notifications%20And%20Settings.md)
+* [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../Features/Event%20And%20Error%20Logging.md)
+* [[V2 App/Features/Platform Workspace And Documentation Vault]] | [Platform Workspace And Documentation Vault](../Features/Platform%20Workspace%20And%20Documentation%20Vault.md)
+
+Planning owner:
+
+* [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 5]] | [Phase 1 - Implementation Batch 5](../Planning/Phase%201/Phase%201%20-%20Implementation%20Batch%205.md)
+
 ## Next Expected Work
 
-* settings UI
-* error log viewer planning separation from audit surfaces
+* deploy Batch 5 changes to staging
+* validate Setup sidebar and settings pages on staging
+* validate error log viewer permissions and filters on staging
 * continued documentation status sync as new Phase 1 systems are implemented
 
 ## Related

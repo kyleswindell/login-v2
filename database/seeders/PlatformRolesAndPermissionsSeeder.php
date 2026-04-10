@@ -17,6 +17,8 @@ class PlatformRolesAndPermissionsSeeder extends Seeder
         'platform.docs.view',
         'platform.notifications.view',
         'platform.audit-logs.view',
+        'platform.error-logs.view',
+        'platform.settings.manage',
     ];
 
     public function run(): void
@@ -54,6 +56,7 @@ class PlatformRolesAndPermissionsSeeder extends Seeder
         $platformOperatorRole->syncPermissions([
             'platform.notifications.view',
             'platform.audit-logs.view',
+            'platform.error-logs.view',
         ]);
 
         app(PermissionRegistrar::class)->forgetCachedPermissions();

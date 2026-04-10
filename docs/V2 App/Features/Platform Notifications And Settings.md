@@ -14,7 +14,7 @@ Current status:
 * notifications inbox UI is live on staging with realtime updates
 * settings table and service are migrated on staging
 * dashboard and header unread-count surfaces are live on staging
-* no dedicated settings UI yet
+* settings UI and Setup/Settings sidebar shell are implemented in code and pending staging deploy
 
 ## Current Implementation
 
@@ -28,6 +28,8 @@ Phase 1 currently includes:
 * queued notification broadcast events for created and updated notifications
 * a notifications inbox page
 * notification mark-read, mark-all-read, and dismiss actions
+* Setup sidebar shell with a Setup-triggered slide interaction
+* Settings second-column panel and page set for general, notifications, audit logs, docs, and users
 
 Current services:
 
@@ -50,13 +52,21 @@ Supported notification actions in code:
 * `app/Events/PlatformNotificationUpdated.php`
 * `app/Http/Controllers/Platform/BroadcastAuthController.php`
 * `app/Http/Controllers/Platform/NotificationController.php`
+* `app/Http/Controllers/Platform/SettingsController.php`
 * `database/migrations/2026_04_09_000003_create_settings_table.php`
 * `database/migrations/2026_04_09_000004_create_notifications_table.php`
 * `config/broadcasting.php`
 * `config/reverb.php`
 * `routes/channels.php`
 * `resources/js/app.js`
+* `resources/js/setup-sidebar.js`
 * `resources/views/platform/notifications/index.blade.php`
+* `resources/views/platform/settings/_sidebar.blade.php`
+* `resources/views/platform/settings/general.blade.php`
+* `resources/views/platform/settings/notifications.blade.php`
+* `resources/views/platform/settings/audit-logs.blade.php`
+* `resources/views/platform/settings/docs.blade.php`
+* `resources/views/platform/settings/users.blade.php`
 
 ## Data / Tables
 
@@ -102,7 +112,6 @@ Phase 1 planning expects settings changes and notification events to remain audi
 
 Current gaps:
 
-* no settings management screen yet
 * no non-database delivery channels yet
 * no notification receipts or fan-out tables yet
 

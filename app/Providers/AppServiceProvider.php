@@ -37,5 +37,13 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('view-platform-audit-logs', function (User $user): bool {
             return $user->can('platform.audit-logs.view');
         });
+
+        Gate::define('view-platform-error-logs', function (User $user): bool {
+            return $user->can('platform.error-logs.view');
+        });
+
+        Gate::define('manage-platform-settings', function (User $user): bool {
+            return $user->can('platform.settings.manage');
+        });
     }
 }

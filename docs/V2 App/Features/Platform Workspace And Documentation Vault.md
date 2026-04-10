@@ -14,6 +14,7 @@ Current status:
 * search remains a placeholder only
 * header notifications preview is implemented in code and pending staging deploy
 * realtime header notification sync and toast hooks are implemented in code and pending staging deploy
+* Setup sidebar shell interaction is implemented in code and pending staging deploy
 
 ## Current Implementation
 
@@ -22,6 +23,7 @@ The current platform shell includes:
 * a full-width authenticated layout
 * top header with brand, search placeholder, recent-notifications preview, and user menu
 * platform navigation for dashboard, users, and docs
+* Setup sidebar shell that slides over the primary sidebar navigation
 * dashboard cards for users, settings, notifications, and docs counts
 * a dedicated docs-vault workspace mode with the repository tree replacing the normal app sidebar
 

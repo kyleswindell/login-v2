@@ -1,5 +1,11 @@
 # Module Development Standards
 
+## Scope
+
+These standards apply to **V1 (Perfex) modules only**.
+
+For V2 (Login App 2.0) feature development conventions, see [[Standards/Feature Development Standards]] | [Feature Development Standards](Feature%20Development%20Standards.md).
+
 ## Purpose
 
 Document conventions for building or modifying Perfex modules.

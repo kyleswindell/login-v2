@@ -5,8 +5,10 @@ use App\Http\Controllers\Platform\AuditLogController;
 use App\Http\Controllers\Platform\BroadcastAuthController;
 use App\Http\Controllers\Platform\DashboardController;
 use App\Http\Controllers\Platform\DocsController;
+use App\Http\Controllers\Platform\ErrorLogController;
 use App\Http\Controllers\Platform\NotificationController;
 use App\Http\Controllers\Platform\PlatformUserController;
+use App\Http\Controllers\Platform\SettingsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +39,20 @@ Route::middleware('auth')->group(function (): void {
     Route::post('/platform/notifications/{notification}/dismiss', [NotificationController::class, 'dismiss'])->name('platform.notifications.dismiss');
 
     Route::get('/platform/audit-logs', [AuditLogController::class, 'index'])->name('platform.audit-logs.index');
+
+    Route::get('/platform/error-logs', [ErrorLogController::class, 'index'])->name('platform.error-logs.index');
+    Route::get('/platform/error-logs/{log}', [ErrorLogController::class, 'show'])->name('platform.error-logs.show');
+
+    Route::get('/platform/settings/general', [SettingsController::class, 'general'])->name('platform.settings.general');
+    Route::post('/platform/settings/general', [SettingsController::class, 'updateGeneral'])->name('platform.settings.general.update');
+    Route::get('/platform/settings/notifications', [SettingsController::class, 'notifications'])->name('platform.settings.notifications');
+    Route::post('/platform/settings/notifications', [SettingsController::class, 'updateNotifications'])->name('platform.settings.notifications.update');
+    Route::get('/platform/settings/audit-logs', [SettingsController::class, 'auditLogs'])->name('platform.settings.audit-logs');
+    Route::post('/platform/settings/audit-logs', [SettingsController::class, 'updateAuditLogs'])->name('platform.settings.audit-logs.update');
+    Route::get('/platform/settings/docs', [SettingsController::class, 'docs'])->name('platform.settings.docs');
+    Route::post('/platform/settings/docs', [SettingsController::class, 'updateDocs'])->name('platform.settings.docs.update');
+    Route::get('/platform/settings/users', [SettingsController::class, 'users'])->name('platform.settings.users');
+    Route::post('/platform/settings/users', [SettingsController::class, 'updateUsers'])->name('platform.settings.users.update');
 
     Route::get('/platform/docs', DocsController::class)->name('platform.docs.index');
 

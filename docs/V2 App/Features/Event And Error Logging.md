@@ -13,7 +13,7 @@ Current status:
 * audit events are actively written for current auth flows
 * exception reporting is wired to write into `central_error_logs`
 * audit log viewer UI is implemented in code and pending staging deploy
-* no dedicated error log viewer UI exists yet
+* error log viewer UI is implemented in code and pending staging deploy
 
 ## Current Scope
 
@@ -28,7 +28,10 @@ Runtime pieces in the current implementation:
 * `App\Http\Middleware\EnsureRequestId`
 * exception reporting hook in `bootstrap/app.php`
 * `App\Http\Controllers\Platform\AuditLogController`
+* `App\Http\Controllers\Platform\ErrorLogController`
 * `resources/views/platform/audit-logs/index.blade.php`
+* `resources/views/platform/error-logs/index.blade.php`
+* `resources/views/platform/error-logs/show.blade.php`
 
 Related docs:
 
@@ -102,6 +105,13 @@ Important columns include:
 * `handled`
 * `release_version`
 * `hostname`
+
+Current error visibility surface:
+
+* `GET /platform/error-logs`
+* `GET /platform/error-logs/{log}`
+* filters by severity, handled state, environment, exception class, and date range
+* current audience is platform users with `platform.error-logs.view`
 
 ## Request Correlation
 

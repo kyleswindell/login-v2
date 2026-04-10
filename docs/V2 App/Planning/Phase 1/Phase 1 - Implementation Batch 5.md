@@ -10,8 +10,9 @@ This batch is the foundational navigation and configuration layer that all futur
 
 Current status:
 
-* planned
-* no implementation started
+* implemented in code
+* local feature tests passing
+* pending staging deploy and validation
 
 Canonical docs:
 

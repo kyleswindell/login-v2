@@ -186,65 +186,147 @@
                     'flex-col lg:flex-row' => ! $hasCustomSidebar,
                 ])>
                     @if ($hasCustomSidebar)
-                        <aside class="w-full shrink-0 xl:sticky xl:top-24 xl:h-[calc(100vh-7rem)] xl:w-80">
+                        <aside class="w-full shrink-0 xl:w-auto">
                             {{ $sidebar }}
                         </aside>
                     @else
-                        <aside class="hidden w-72 shrink-0 lg:block">
-                            <div class="sticky top-24 rounded-3xl border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30">
-                                <p class="text-xs font-semibold uppercase tracking-[0.3em] text-sky-300">Platform Navigation</p>
-                                <h1 class="mt-3 text-2xl font-semibold text-white">Workspace</h1>
-                                <p class="mt-2 text-sm text-slate-400">Core internal platform surfaces.</p>
+                        <aside class="hidden w-72 shrink-0 lg:block" data-sidebar-host>
+                            <div class="sticky top-24" data-sidebar-container>
+                                {{-- Slider track: main nav and Setup panel side by side --}}
+                                <div class="relative overflow-hidden">
+                                    <div class="flex transition-transform duration-300 will-change-transform" data-sidebar-track>
+                                        {{-- Panel 1: Main navigation --}}
+                                        <div class="w-72 shrink-0 rounded-3xl border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30" data-main-nav-panel>
+                                            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-sky-300">Platform Navigation</p>
+                                            <h1 class="mt-3 text-2xl font-semibold text-white">Workspace</h1>
+                                            <p class="mt-2 text-sm text-slate-400">Core internal platform surfaces.</p>
 
-                                <nav class="mt-8 space-y-2">
-                                    <a href="{{ route('dashboard') }}" @class([
-                                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
-                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('dashboard'),
-                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('dashboard'),
-                                    ])>
-                                        Dashboard
-                                    </a>
+                                            <nav class="mt-8 space-y-2">
+                                                <a href="{{ route('dashboard') }}" @class([
+                                                    'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                                                    'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('dashboard'),
+                                                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('dashboard'),
+                                                ])>
+                                                    Dashboard
+                                                </a>
 
-                                    @can('manage-platform-users')
-                                        <a href="{{ route('platform.users.index') }}" @class([
-                                            'block rounded-2xl px-4 py-3 text-sm font-medium transition',
-                                            'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.users.*'),
-                                            'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.users.*'),
-                                        ])>
-                                            Platform Users
-                                        </a>
-                                    @endcan
+                                                @can('manage-platform-users')
+                                                    <a href="{{ route('platform.users.index') }}" @class([
+                                                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.users.*'),
+                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.users.*'),
+                                                    ])>
+                                                        Platform Users
+                                                    </a>
+                                                @endcan
 
-                                    @can('view-platform-docs')
-                                        <a href="{{ route('platform.docs.index') }}" @class([
-                                            'block rounded-2xl px-4 py-3 text-sm font-medium transition',
-                                            'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.docs.index'),
-                                            'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.docs.index'),
-                                        ])>
-                                            Documentation Vault
-                                        </a>
-                                    @endcan
+                                                @can('view-platform-docs')
+                                                    <a href="{{ route('platform.docs.index') }}" @class([
+                                                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.docs.index'),
+                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.docs.index'),
+                                                    ])>
+                                                        Documentation Vault
+                                                    </a>
+                                                @endcan
 
-                                    @can('view-platform-notifications')
-                                        <a href="{{ route('platform.notifications.index') }}" @class([
-                                            'block rounded-2xl px-4 py-3 text-sm font-medium transition',
-                                            'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.notifications.*'),
-                                            'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.notifications.*'),
-                                        ])>
-                                            Notifications
-                                        </a>
-                                    @endcan
+                                                @can('view-platform-notifications')
+                                                    <a href="{{ route('platform.notifications.index') }}" @class([
+                                                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.notifications.*'),
+                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.notifications.*'),
+                                                    ])>
+                                                        Notifications
+                                                    </a>
+                                                @endcan
 
-                                    @can('view-platform-audit-logs')
-                                        <a href="{{ route('platform.audit-logs.index') }}" @class([
-                                            'block rounded-2xl px-4 py-3 text-sm font-medium transition',
-                                            'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.audit-logs.*'),
-                                            'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.audit-logs.*'),
-                                        ])>
-                                            Audit Logs
-                                        </a>
-                                    @endcan
-                                </nav>
+                                                @can('view-platform-audit-logs')
+                                                    <a href="{{ route('platform.audit-logs.index') }}" @class([
+                                                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.audit-logs.*'),
+                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.audit-logs.*'),
+                                                    ])>
+                                                        Audit Logs
+                                                    </a>
+                                                @endcan
+
+                                                @can('view-platform-error-logs')
+                                                    <a href="{{ route('platform.error-logs.index') }}" @class([
+                                                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.error-logs.*'),
+                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.error-logs.*'),
+                                                    ])>
+                                                        Error Logs
+                                                    </a>
+                                                @endcan
+                                            </nav>
+
+                                            {{-- Setup trigger at sidebar footer --}}
+                                            <div class="mt-6 border-t border-slate-800 pt-4">
+                                                <button
+                                                    type="button"
+                                                    class="flex w-full items-center rounded-2xl px-4 py-3 text-sm font-medium text-slate-400 transition hover:bg-slate-800 hover:text-white"
+                                                    data-setup-open
+                                                >
+                                                    <span>Setup</span>
+                                                    <span class="ml-auto text-slate-500" aria-hidden="true">→</span>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        {{-- Panel 2: Setup panel --}}
+                                        <div class="w-72 shrink-0 rounded-3xl border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30" data-setup-nav-panel>
+                                            <div class="flex items-center justify-between">
+                                                <p class="text-xs font-semibold uppercase tracking-[0.3em] text-sky-300">Setup</p>
+                                                <button
+                                                    type="button"
+                                                    class="rounded-xl border border-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-400 transition hover:border-slate-600 hover:text-white"
+                                                    data-setup-close
+                                                >
+                                                    ✕ Close
+                                                </button>
+                                            </div>
+
+                                            <nav class="mt-6 space-y-2">
+                                                @can('view-platform-notifications')
+                                                    <a href="{{ route('platform.notifications.index') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                                                        Platform Notifications
+                                                    </a>
+                                                @endcan
+
+                                                @can('view-platform-docs')
+                                                    <a href="{{ route('platform.docs.index') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                                                        Documentation Vault
+                                                    </a>
+                                                @endcan
+
+                                                @can('view-platform-audit-logs')
+                                                    <a href="{{ route('platform.audit-logs.index') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                                                        Audit Logs
+                                                    </a>
+                                                @endcan
+
+                                                @can('view-platform-error-logs')
+                                                    <a href="{{ route('platform.error-logs.index') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                                                        Error Logs
+                                                    </a>
+                                                @endcan
+
+                                                @can('manage-platform-users')
+                                                    <a href="{{ route('platform.users.index') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                                                        Platform Users
+                                                    </a>
+                                                @endcan
+
+                                                @can('manage-platform-settings')
+                                                    <a href="{{ route('platform.settings.general') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                                                        Settings
+                                                    </a>
+                                                @endcan
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </aside>
                     @endif

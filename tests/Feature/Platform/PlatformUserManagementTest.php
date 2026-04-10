@@ -10,6 +10,18 @@ class PlatformUserManagementTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_super_admin_can_view_platform_users_setup_page(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/setup/users')
+            ->assertOk()
+            ->assertSee('Platform Users Setup')
+            ->assertSee('Add Staff Member')
+            ->assertSee('Existing Staff')
+            ->assertSee('User Settings');
+    }
+
     public function test_super_admin_can_view_platform_users_index(): void
     {
         $this->actingAsPlatformSuperAdmin();
@@ -26,6 +38,10 @@ class PlatformUserManagementTest extends TestCase
         $this->actingAs($user)
             ->get('/platform/users')
             ->assertForbidden();
+
+            $this->actingAs($user)
+                ->get('/platform/setup/users')
+                ->assertForbidden();
     }
 
     public function test_super_admin_can_create_platform_users_with_roles(): void

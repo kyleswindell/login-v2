@@ -7,6 +7,7 @@ use App\Http\Controllers\Platform\DashboardController;
 use App\Http\Controllers\Platform\DocsController;
 use App\Http\Controllers\Platform\ErrorLogController;
 use App\Http\Controllers\Platform\NotificationController;
+use App\Http\Controllers\Platform\PlatformSetupController;
 use App\Http\Controllers\Platform\PlatformUserController;
 use App\Http\Controllers\Platform\SettingsController;
 use Illuminate\Support\Facades\Auth;
@@ -32,6 +33,8 @@ Route::middleware('auth')->group(function (): void {
     Route::post('/platform/users', [PlatformUserController::class, 'store'])->name('platform.users.store');
     Route::get('/platform/users/{user}/edit', [PlatformUserController::class, 'edit'])->name('platform.users.edit');
     Route::match(['put', 'patch'], '/platform/users/{user}', [PlatformUserController::class, 'update'])->name('platform.users.update');
+
+    Route::get('/platform/setup/users', [PlatformSetupController::class, 'users'])->name('platform.setup.users');
 
     Route::get('/platform/notifications', [NotificationController::class, 'index'])->name('platform.notifications.index');
     Route::post('/platform/notifications/mark-all-read', [NotificationController::class, 'markAllRead'])->name('platform.notifications.mark-all-read');

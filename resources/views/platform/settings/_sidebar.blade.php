@@ -8,29 +8,9 @@
         <p class="text-xs font-semibold uppercase tracking-[0.3em] text-sky-300">Setup</p>
 
         <nav class="mt-6 space-y-1">
-            @can('view-platform-notifications')
-                <a href="{{ route('platform.notifications.index') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
-                    Notifications
-                </a>
-            @endcan
-            @can('view-platform-docs')
-                <a href="{{ route('platform.docs.index') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
-                    Documentation Vault
-                </a>
-            @endcan
-            @can('view-platform-audit-logs')
-                <a href="{{ route('platform.audit-logs.index') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
-                    Audit Logs
-                </a>
-            @endcan
-            @can('view-platform-error-logs')
-                <a href="{{ route('platform.error-logs.index') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
-                    Error Logs
-                </a>
-            @endcan
             @can('manage-platform-users')
-                <a href="{{ route('platform.users.index') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
-                    Platform Users
+                <a href="{{ route('platform.setup.users') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                    Platform Users Setup
                 </a>
             @endcan
 

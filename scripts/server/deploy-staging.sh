@@ -19,6 +19,13 @@ echo "==> Pulling latest ${TARGET_BRANCH}"
 echo "==> Installing Composer dependencies"
 "${COMPOSER_BIN}" install --no-interaction --prefer-dist --optimize-autoloader
 
+echo "==> Installing Node dependencies"
+if [[ -f package-lock.json ]]; then
+    "${NPM_BIN}" ci
+else
+    "${NPM_BIN}" install
+fi
+
 echo "==> Building frontend assets"
 "${NPM_BIN}" run build
 

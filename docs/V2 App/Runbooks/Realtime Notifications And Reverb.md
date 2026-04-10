@@ -26,6 +26,7 @@ Current server templates live here:
 Set these values in `/var/www/platform/shared/.env` for staging:
 
 ```env
+APP_URL=https://staging.parasolutions.com
 BROADCAST_CONNECTION=reverb
 QUEUE_CONNECTION=redis
 CACHE_STORE=redis
@@ -44,6 +45,10 @@ VITE_REVERB_HOST=${REVERB_HOST}
 VITE_REVERB_PORT=${REVERB_PORT}
 VITE_REVERB_SCHEME=${REVERB_SCHEME}
 ```
+
+Important:
+
+* `APP_URL` must use `https://` on staging. If this is set to `http://`, notification action links can be generated as insecure URLs from CLI/event contexts and lead to browser security warnings plus `405 Method Not Allowed` after redirects.
 
 ## Staging Server Setup
 
@@ -75,6 +80,7 @@ Use these checks on staging:
 ```bash
 php artisan channel:list
 php artisan queue:work --once
+php artisan tinker --execute="\$u=\App\Models\User::where('email','kyle@parasolutions.com')->first(); \$t=now()->toDateTimeString(); app(\App\Platform\Notifications\NotificationService::class)->sendTo(\$u,'system','Realtime smoke '.$t,'Generated from tinker at '.$t,'info');"
 sudo systemctl status platform-reverb
 sudo systemctl status platform-queue-worker
 curl -I https://staging.parasolutions.com

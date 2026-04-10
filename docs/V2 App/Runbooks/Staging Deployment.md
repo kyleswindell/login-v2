@@ -39,12 +39,13 @@ The current server deploy script performs:
 
 1. `git pull origin main`
 2. `composer install --no-interaction --prefer-dist --optimize-autoloader`
-3. `npm run build`
-4. `php artisan config:clear`
-5. `php artisan migrate --force`
-6. `php artisan optimize:clear`
-7. attempts `sudo -n systemctl reload php8.3-fpm`
-8. attempts `sudo -n systemctl reload apache2`
+3. `npm ci` (falls back to `npm install` if no lockfile exists)
+4. `npm run build`
+5. `php artisan config:clear`
+6. `php artisan migrate --force`
+7. `php artisan optimize:clear`
+8. attempts `sudo -n systemctl reload php8.3-fpm`
+9. attempts `sudo -n systemctl reload apache2`
 
 Realtime note:
 

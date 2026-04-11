@@ -11,6 +11,7 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
@@ -46,6 +47,7 @@ class PlatformAuditLogResource extends Resource
     public static function infolist(Schema $schema): Schema
     {
         return $schema
+            ->columns(1)
             ->components([
                 Section::make('Event Summary')
                     ->schema([
@@ -67,7 +69,11 @@ class PlatformAuditLogResource extends Resource
                                 default => 'info',
                             }),
                     ])
-                    ->contained(false)
+                    ->columns([
+                        'md' => 2,
+                        'xl' => 4,
+                    ])
+                    ->columnSpanFull()
                     ->compact(),
                 Section::make('Actor And Subject')
                     ->schema([
@@ -86,7 +92,11 @@ class PlatformAuditLogResource extends Resource
                         TextEntry::make('subject_id')
                             ->placeholder('None'),
                     ])
-                    ->contained(false)
+                    ->columns([
+                        'md' => 2,
+                        'xl' => 3,
+                    ])
+                    ->columnSpanFull()
                     ->compact(),
                 Section::make('Request Context')
                     ->schema([
@@ -103,7 +113,11 @@ class PlatformAuditLogResource extends Resource
                         TextEntry::make('ip_address')
                             ->placeholder('None'),
                     ])
-                    ->contained(false)
+                    ->columns([
+                        'md' => 2,
+                        'xl' => 3,
+                    ])
+                    ->columnSpanFull()
                     ->compact(),
                 Section::make('Metadata')
                     ->schema([
@@ -115,7 +129,7 @@ class PlatformAuditLogResource extends Resource
                     ])
                     ->collapsible()
                     ->collapsed()
-                    ->contained(false)
+                    ->columnSpanFull()
                     ->compact(),
                 Section::make('Client Details')
                     ->schema([
@@ -128,7 +142,7 @@ class PlatformAuditLogResource extends Resource
                     ])
                     ->collapsible()
                     ->collapsed()
-                    ->contained(false)
+                    ->columnSpanFull()
                     ->compact(),
             ]);
     }
@@ -142,23 +156,34 @@ class PlatformAuditLogResource extends Resource
                 TextColumn::make('occurred_at')
                     ->label('Occurred')
                     ->formatStateUsing(fn (PlatformAuditLog $record): string => self::formatOccurredAt($record))
+                    ->visibleFrom('md')
+                    ->width('11rem')
+                    ->grow(false)
                     ->sortable(),
                 TextColumn::make('event_type')
                     ->label('Event')
                     ->searchable()
-                    ->limit(80)
+                    ->limit(75)
+                    ->lineClamp(2)
                     ->wrap()
-                    ->width('24rem')
-                    ->extraCellAttributes(['class' => 'max-w-sm break-words whitespace-normal'])
+                    ->width('48%')
+                    ->grow()
+                    ->extraCellAttributes(['class' => 'break-words whitespace-normal'])
                     ->sortable(),
                 TextColumn::make('actorUser.email')
                     ->label('Actor')
                     ->searchable()
                     ->placeholder('System')
+                    ->visibleFrom('xl')
+                    ->width('13rem')
+                    ->grow(false)
                     ->toggleable(),
                 TextColumn::make('result')
                     ->badge()
                     ->color(fn (?string $state): string => $state === 'success' ? 'success' : 'danger')
+                    ->visibleFrom('sm')
+                    ->width('6rem')
+                    ->grow(false)
                     ->sortable(),
                 TextColumn::make('severity')
                     ->badge()
@@ -167,12 +192,15 @@ class PlatformAuditLogResource extends Resource
                         'warning' => 'warning',
                         default => 'info',
                     })
+                    ->visibleFrom('xl')
+                    ->width('6rem')
+                    ->grow(false)
                     ->sortable(),
                 TextColumn::make('route')
                     ->searchable()
-                    ->limit(70)
+                    ->limit(55)
                     ->wrap()
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('request_id')
                     ->label('Request')
                     ->searchable()
@@ -207,6 +235,7 @@ class PlatformAuditLogResource extends Resource
             ->recordActions([
                 ViewAction::make()
                     ->modalHeading(fn (PlatformAuditLog $record): string => 'Audit Log #'.$record->id)
+                    ->modalWidth(Width::SevenExtraLarge)
                     ->slideOver(),
             ])
             ->toolbarActions([]);

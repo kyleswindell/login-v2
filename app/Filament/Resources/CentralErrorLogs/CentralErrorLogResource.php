@@ -11,6 +11,7 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
@@ -46,6 +47,7 @@ class CentralErrorLogResource extends Resource
     public static function infolist(Schema $schema): Schema
     {
         return $schema
+            ->columns(1)
             ->components([
                 Section::make('Summary')
                     ->schema([
@@ -65,7 +67,11 @@ class CentralErrorLogResource extends Resource
                             ->formatStateUsing(fn (bool $state): string => $state ? 'Handled' : 'Unhandled')
                             ->color(fn (bool $state): string => $state ? 'success' : 'danger'),
                     ])
-                    ->contained(false)
+                    ->columns([
+                        'md' => 2,
+                        'xl' => 4,
+                    ])
+                    ->columnSpanFull()
                     ->compact(),
                 Section::make('Exception')
                     ->schema([
@@ -80,7 +86,10 @@ class CentralErrorLogResource extends Resource
                         TextEntry::make('line_number')
                             ->placeholder('None'),
                     ])
-                    ->contained(false)
+                    ->columns([
+                        'md' => 2,
+                    ])
+                    ->columnSpanFull()
                     ->compact(),
                 Section::make('Request Context')
                     ->schema([
@@ -104,7 +113,11 @@ class CentralErrorLogResource extends Resource
                         TextEntry::make('hostname')
                             ->placeholder('None'),
                     ])
-                    ->contained(false)
+                    ->columns([
+                        'md' => 2,
+                        'xl' => 3,
+                    ])
+                    ->columnSpanFull()
                     ->compact(),
                 Section::make('Full Message')
                     ->schema([
@@ -116,7 +129,7 @@ class CentralErrorLogResource extends Resource
                     ])
                     ->collapsible()
                     ->collapsed()
-                    ->contained(false)
+                    ->columnSpanFull()
                     ->compact(),
                 Section::make('Stack Trace')
                     ->schema([
@@ -129,7 +142,7 @@ class CentralErrorLogResource extends Resource
                     ])
                     ->collapsible()
                     ->collapsed()
-                    ->contained(false)
+                    ->columnSpanFull()
                     ->compact(),
                 Section::make('Context')
                     ->schema([
@@ -141,7 +154,7 @@ class CentralErrorLogResource extends Resource
                     ])
                     ->collapsible()
                     ->collapsed()
-                    ->contained(false)
+                    ->columnSpanFull()
                     ->compact(),
             ]);
     }
@@ -155,6 +168,9 @@ class CentralErrorLogResource extends Resource
                 TextColumn::make('occurred_at')
                     ->label('Occurred')
                     ->formatStateUsing(fn (CentralErrorLog $record): string => self::formatOccurredAt($record))
+                    ->visibleFrom('md')
+                    ->width('11rem')
+                    ->grow(false)
                     ->sortable(),
                 TextColumn::make('severity')
                     ->badge()
@@ -163,35 +179,49 @@ class CentralErrorLogResource extends Resource
                         'warning' => 'warning',
                         default => 'info',
                     })
+                    ->visibleFrom('sm')
+                    ->width('6rem')
+                    ->grow(false)
                     ->sortable(),
                 TextColumn::make('environment')
                     ->badge()
+                    ->visibleFrom('xl')
+                    ->width('7rem')
+                    ->grow(false)
                     ->sortable(),
                 TextColumn::make('message')
                     ->searchable()
-                    ->limit(80)
+                    ->limit(70)
+                    ->lineClamp(2)
                     ->wrap()
-                    ->width('20rem')
-                    ->extraCellAttributes(['class' => 'max-w-xs break-words whitespace-normal']),
+                    ->width('45%')
+                    ->grow()
+                    ->extraCellAttributes(['class' => 'break-words whitespace-normal']),
                 TextColumn::make('exception_class')
                     ->label('Exception')
                     ->searchable()
-                    ->limit(70)
+                    ->limit(55)
                     ->wrap()
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('route')
                     ->searchable()
-                    ->limit(70)
+                    ->limit(55)
                     ->wrap()
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('status_code')
                     ->label('Status')
+                    ->visibleFrom('xl')
+                    ->width('5rem')
+                    ->grow(false)
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('handled')
                     ->badge()
                     ->formatStateUsing(fn (bool $state): string => $state ? 'Handled' : 'Unhandled')
                     ->color(fn (bool $state): string => $state ? 'success' : 'danger')
+                    ->visibleFrom('lg')
+                    ->width('7rem')
+                    ->grow(false)
                     ->sortable(),
             ])
             ->filters([
@@ -236,6 +266,7 @@ class CentralErrorLogResource extends Resource
             ->recordActions([
                 ViewAction::make()
                     ->modalHeading(fn (CentralErrorLog $record): string => 'Error Log #'.$record->id)
+                    ->modalWidth(Width::SevenExtraLarge)
                     ->slideOver(),
             ])
             ->toolbarActions([]);

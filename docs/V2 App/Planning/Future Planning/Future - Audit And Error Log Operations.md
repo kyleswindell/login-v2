@@ -72,6 +72,9 @@ Potential UI directions:
 * use specialized dashboards for remediation queues and security review workflows
 * add row actions for trace navigation once trace/request records exist
 * avoid overloading one audit table view with every operational workflow
+* keep operational log tables responsive by prioritizing core identifying columns first and hiding secondary diagnostics by breakpoint or table-column toggles
+* use full-width stacked detail sections for dense operational records so the detail view reads like a clear admin record rather than a cramped two-column card grid
+* evaluate Microsoft-style admin panel patterns for future log detail layouts, especially message trace, user activity, and investigation workflows
 
 ## Open Questions
 

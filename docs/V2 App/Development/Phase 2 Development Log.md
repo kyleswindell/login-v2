@@ -222,6 +222,27 @@ Canonical docs:
 * [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../Features/Event%20And%20Error%20Logging.md)
 * [[V2 App/Planning/Future Planning/Future - Audit And Error Log Operations]] | [Future - Audit And Error Log Operations](../Planning/Future%20Planning/Future%20-%20Audit%20And%20Error%20Log%20Operations.md)
 
+### 2026-04-11 - Filament operational log layout correction
+
+Status:
+
+* implemented locally
+* pending staging deployment and QA
+
+Correction:
+
+* changed error and audit log Filament tables to use responsive column priority instead of trying to fit every diagnostic column at once
+* kept the default table views focused on timestamp, severity/result, event/message summary, and the row action
+* moved exception, route, request ID, and other diagnostic fields behind hidden/toggleable columns or wider breakpoint visibility
+* restored detail slide-over content to full-width stacked section cards instead of side-by-side section columns
+* kept long full message, stack trace, metadata, and client detail content collapsed by default
+* preserved internal label/value grouping inside each full-width section where it improves readability
+
+Canonical docs:
+
+* [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../Features/Event%20And%20Error%20Logging.md)
+* [[V2 App/Planning/Future Planning/Future - Audit And Error Log Operations]] | [Future - Audit And Error Log Operations](../Planning/Future%20Planning/Future%20-%20Audit%20And%20Error%20Log%20Operations.md)
+
 ## Related
 
 * [[V2 App/Development/Development Index]] | [Development Index](Development%20Index.md)

@@ -202,7 +202,7 @@
                                             <p class="mt-2 text-sm text-slate-400">Core internal platform surfaces.</p>
 
                                             <nav class="mt-8 space-y-2">
-                                                <a href="{{ route('dashboard') }}" @class([
+                                                <a href="{{ route('dashboard') }}" data-main-nav-link @class([
                                                     'block rounded-2xl px-4 py-3 text-sm font-medium transition',
                                                     'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('dashboard'),
                                                     'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('dashboard'),
@@ -211,7 +211,7 @@
                                                 </a>
 
                                                 @can('manage-platform-users')
-                                                    <a href="{{ route('platform.users.index') }}" @class([
+                                                    <a href="{{ route('platform.users.index') }}" data-main-nav-link @class([
                                                         'block rounded-2xl px-4 py-3 text-sm font-medium transition',
                                                         'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.users.*'),
                                                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.users.*'),
@@ -221,7 +221,7 @@
                                                 @endcan
 
                                                 @can('view-platform-docs')
-                                                    <a href="{{ route('platform.docs.index') }}" @class([
+                                                    <a href="{{ route('platform.docs.index') }}" data-main-nav-link @class([
                                                         'block rounded-2xl px-4 py-3 text-sm font-medium transition',
                                                         'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.docs.index'),
                                                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.docs.index'),
@@ -231,7 +231,7 @@
                                                 @endcan
 
                                                 @can('view-platform-notifications')
-                                                    <a href="{{ route('platform.notifications.index') }}" @class([
+                                                    <a href="{{ route('platform.notifications.index') }}" data-main-nav-link @class([
                                                         'block rounded-2xl px-4 py-3 text-sm font-medium transition',
                                                         'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.notifications.*'),
                                                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.notifications.*'),
@@ -241,7 +241,7 @@
                                                 @endcan
 
                                                 @can('view-platform-audit-logs')
-                                                    <a href="{{ route('platform.audit-logs.index') }}" @class([
+                                                    <a href="{{ route('platform.audit-logs.index') }}" data-main-nav-link @class([
                                                         'block rounded-2xl px-4 py-3 text-sm font-medium transition',
                                                         'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.audit-logs.*'),
                                                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.audit-logs.*'),
@@ -251,7 +251,7 @@
                                                 @endcan
 
                                                 @can('view-platform-error-logs')
-                                                    <a href="{{ route('platform.error-logs.index') }}" @class([
+                                                    <a href="{{ route('platform.error-logs.index') }}" data-main-nav-link @class([
                                                         'block rounded-2xl px-4 py-3 text-sm font-medium transition',
                                                         'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.error-logs.*'),
                                                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.error-logs.*'),
@@ -289,37 +289,61 @@
 
                                             <nav class="mt-6 space-y-2">
                                                 @can('view-platform-notifications')
-                                                    <a href="{{ route('platform.setup.notifications') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                                                    <a href="{{ route('platform.setup.notifications') }}" data-setup-nav-link @class([
+                                                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.setup.notifications'),
+                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.notifications'),
+                                                    ])>
                                                         Notifications Setup
                                                     </a>
                                                 @endcan
 
                                                 @can('view-platform-docs')
-                                                    <a href="{{ route('platform.setup.docs') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                                                    <a href="{{ route('platform.setup.docs') }}" data-setup-nav-link @class([
+                                                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.setup.docs'),
+                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.docs'),
+                                                    ])>
                                                         Documentation Setup
                                                     </a>
                                                 @endcan
 
                                                 @can('view-platform-audit-logs')
-                                                    <a href="{{ route('platform.setup.audit-logs') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                                                    <a href="{{ route('platform.setup.audit-logs') }}" data-setup-nav-link @class([
+                                                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.setup.audit-logs'),
+                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.audit-logs'),
+                                                    ])>
                                                         Audit Logs Setup
                                                     </a>
                                                 @endcan
 
                                                 @can('view-platform-error-logs')
-                                                    <a href="{{ route('platform.setup.error-logs') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                                                    <a href="{{ route('platform.setup.error-logs') }}" data-setup-nav-link @class([
+                                                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.setup.error-logs'),
+                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.error-logs'),
+                                                    ])>
                                                         Error Logs Setup
                                                     </a>
                                                 @endcan
 
                                                 @can('manage-platform-users')
-                                                    <a href="{{ route('platform.setup.users') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                                                    <a href="{{ route('platform.setup.users') }}" data-setup-nav-link @class([
+                                                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.setup.users'),
+                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.users'),
+                                                    ])>
                                                         Platform Users Setup
                                                     </a>
                                                 @endcan
 
                                                 @can('manage-platform-settings')
-                                                    <a href="{{ route('platform.settings.general') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                                                    <a href="{{ route('platform.settings.general') }}" data-setup-nav-link @class([
+                                                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.settings.*'),
+                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.*'),
+                                                    ])>
                                                         Settings
                                                     </a>
                                                 @endcan

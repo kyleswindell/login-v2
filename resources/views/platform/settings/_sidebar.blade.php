@@ -9,33 +9,57 @@
 
         <nav class="mt-6 space-y-1">
             @can('view-platform-notifications')
-                <a href="{{ route('platform.setup.notifications') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                <a href="{{ route('platform.setup.notifications') }}" @class([
+                    'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                    'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.setup.notifications'),
+                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.notifications'),
+                ])>
                     Notifications Setup
                 </a>
             @endcan
             @can('view-platform-docs')
-                <a href="{{ route('platform.setup.docs') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                <a href="{{ route('platform.setup.docs') }}" @class([
+                    'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                    'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.setup.docs'),
+                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.docs'),
+                ])>
                     Documentation Setup
                 </a>
             @endcan
             @can('view-platform-audit-logs')
-                <a href="{{ route('platform.setup.audit-logs') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                <a href="{{ route('platform.setup.audit-logs') }}" @class([
+                    'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                    'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.setup.audit-logs'),
+                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.audit-logs'),
+                ])>
                     Audit Logs Setup
                 </a>
             @endcan
             @can('view-platform-error-logs')
-                <a href="{{ route('platform.setup.error-logs') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                <a href="{{ route('platform.setup.error-logs') }}" @class([
+                    'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                    'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.setup.error-logs'),
+                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.error-logs'),
+                ])>
                     Error Logs Setup
                 </a>
             @endcan
             @can('manage-platform-users')
-                <a href="{{ route('platform.setup.users') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                <a href="{{ route('platform.setup.users') }}" @class([
+                    'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                    'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.setup.users'),
+                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.users'),
+                ])>
                     Platform Users Setup
                 </a>
             @endcan
 
             @can('manage-platform-settings')
-                <a href="{{ route('platform.settings.general') }}" class="mt-2 block rounded-2xl border border-sky-500/30 bg-sky-500/10 px-4 py-3 text-sm font-medium text-sky-200">
+                <a href="{{ route('platform.settings.general') }}" @class([
+                    'mt-2 block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                    'border border-sky-500/30 bg-sky-500/10 text-sky-200' => request()->routeIs('platform.settings.*'),
+                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.*'),
+                ])>
                     Settings
                 </a>
             @endcan

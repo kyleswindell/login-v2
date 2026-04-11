@@ -15,6 +15,9 @@ function initSetupSidebar() {
     const mainPanel = host.querySelector('[data-main-nav-panel]');
     const openBtn = host.querySelector('[data-setup-open]');
     const closeBtn = host.querySelector('[data-setup-close]');
+    const setupNavLinks = host.querySelectorAll('[data-setup-nav-link]');
+    const mainNavLinks = host.querySelectorAll('[data-main-nav-link]');
+    const storageKey = 'platform.setupSidebarOpen';
 
     if (!track || !mainPanel || !openBtn || !closeBtn) {
         return;
@@ -27,17 +30,31 @@ function initSetupSidebar() {
     const openSetup = () => {
         track.style.transform = `translateX(-${panelWidth()}px)`;
         openBtn.setAttribute('aria-expanded', 'true');
+        window.localStorage.setItem(storageKey, '1');
         isOpen = true;
     };
 
     const closeSetup = () => {
         track.style.transform = 'translateX(0)';
         openBtn.setAttribute('aria-expanded', 'false');
+        window.localStorage.setItem(storageKey, '0');
         isOpen = false;
     };
 
     openBtn.addEventListener('click', openSetup);
     closeBtn.addEventListener('click', closeSetup);
+
+    setupNavLinks.forEach((link) => {
+        link.addEventListener('click', () => {
+            window.localStorage.setItem(storageKey, '1');
+        });
+    });
+
+    mainNavLinks.forEach((link) => {
+        link.addEventListener('click', () => {
+            window.localStorage.setItem(storageKey, '0');
+        });
+    });
 
     window.addEventListener('resize', () => {
         if (isOpen) {
@@ -51,6 +68,10 @@ function initSetupSidebar() {
             closeSetup();
         }
     });
+
+    if (window.localStorage.getItem(storageKey) === '1') {
+        openSetup();
+    }
 }
 
 document.addEventListener('DOMContentLoaded', initSetupSidebar);

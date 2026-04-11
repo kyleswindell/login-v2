@@ -28,6 +28,7 @@ This note is the root node for the V2 documentation branch inside the shared vau
 - phase development logging and implementation status tracking
 - working planning research for commenting and logging
 - phase-specific planning starting with platform foundation
+- phase 2 final-stack and UI-system planning
 
 ## Related
 
@@ -37,5 +38,7 @@ This note is the root node for the V2 documentation branch inside the shared vau
 - [[V2 App/Reference/Reference Index]] | [Reference Index](Reference/Reference%20Index.md)
 - [[V2 App/Planning/Phase 0/Phase 0 Index]] | [Phase 0 Index](Planning/Phase%200/Phase%200%20Index.md)
 - [[V2 App/Planning/Phase 1/Phase 1 Index]] | [Phase 1 Index](Planning/Phase%201/Phase%201%20Index.md)
+- [[V2 App/Planning/Phase 2/Phase 2 Index]] | [Phase 2 Index](Planning/Phase%202/Phase%202%20Index.md)
 - [[V2 App/Development/Development Index]] | [Development Index](Development/Development%20Index.md)
 - [[V2 App/Planning/Phase 1/Phase 1 - Platform Foundation Planning]] | [Phase 1 - Platform Foundation Planning](Planning/Phase%201/Phase%201%20-%20Platform%20Foundation%20Planning.md)
+- [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)

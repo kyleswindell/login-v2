@@ -97,6 +97,13 @@ Goal:
 
 Complete introduction of the intended long-term stack and UI architecture so future modules are built on final patterns instead of transitional patterns.
 
+Status:
+
+* planning started (2026-04-10)
+* Phase 1 foundation is complete and signed off
+* current implementation uses custom Blade app surfaces while Filament/Livewire remain planned
+* Phase 2 must decide route, panel, shell, design-system, and template direction before Phase 3 module expansion
+
 Features:
 
 * finalize app shell/navigation strategy for persistent panel behavior
@@ -104,6 +111,14 @@ Features:
 * establish design system baseline (layout, components, interaction patterns, responsive behavior)
 * standardize page and module scaffolding for future phase development
 * lock frontend architecture decisions before broad module expansion
+
+Working planning note:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
+
+Canonical architecture note:
+
+* [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
 
 ### Phase 3: Remaining Core Module Introduction
 
@@ -200,7 +215,7 @@ Examples:
 
 These should be documented before the next major build phase:
 
-* V2 final stack and UI architecture specification for Phase 2
+* V2 final stack and UI architecture specification for Phase 2 is started and must be expanded through Batch 1 decisions
 * V2 route and panel separation strategy
 * V2 remaining core-module inventory for Phase 3
 * V2 customer auth and portal model for Phase 4
@@ -210,19 +225,22 @@ These should be documented before the next major build phase:
 ## Recommended Next Docs
 
 1. `V2 App/Architecture/V2 Application Structure.md`
-2. `V2 App/Architecture/V2 Final Stack And UI Design Spec.md`
-3. `V2 App/Features/Core Module Inventory - Phase 3.md`
-4. `V2 App/Features/Customer Portal Foundation - Phase 4.md`
-5. `V2 App/Runbooks/Tenant Template And Version Rollout - Phase 5.md`
+2. `V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning.md`
+3. `V2 App/Architecture/V2 Final Stack And UI Design Spec.md`
+4. `V2 App/Features/Core Module Inventory - Phase 3.md`
+5. `V2 App/Features/Customer Portal Foundation - Phase 4.md`
+6. `V2 App/Runbooks/Tenant Template And Version Rollout - Phase 5.md`
 
 ## Related
 
 * [[V2 App/Planning/Planning Index]] | [Planning Index](Planning%20Index.md)
 * [[V2 App/Planning/Phase 0/Phase 0 Index]] | [Phase 0 Index](Phase%200/Phase%200%20Index.md)
 * [[V2 App/Planning/Phase 1/Phase 1 Index]] | [Phase 1 Index](Phase%201/Phase%201%20Index.md)
+* [[V2 App/Planning/Phase 2/Phase 2 Index]] | [Phase 2 Index](Phase%202/Phase%202%20Index.md)
 * [[V2 App/Planning/Phase 1/Phase 1 - Platform Foundation Planning]] | [Phase 1 - Platform Foundation Planning](Phase%201/Phase%201%20-%20Platform%20Foundation%20Planning.md)
 * [[V2 App/Architecture/Core App And Platform Layer Model]] | [Core App And Platform Layer Model](../Architecture/Core%20App%20And%20Platform%20Layer%20Model.md)
 * [[V2 App/Architecture/Platform And Tenant Application Boundary]] | [Platform And Tenant Application Boundary](../Architecture/Platform%20And%20Tenant%20Application%20Boundary.md)
+* [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
 * [[V2 App/Architecture/App 2.0 Blueprint]] | [App 2.0 Blueprint](../Architecture/App%202.0%20Blueprint.md)
 * [[V1 App/Features/V1 Feature Catalog]] | [V1 Feature Catalog](../../V1%20App/Features/V1%20Feature%20Catalog.md)
 * [[V1 App/Features/Tenant Provisioning]] | [Tenant Provisioning](../../V1%20App/Features/Tenant%20Provisioning.md)

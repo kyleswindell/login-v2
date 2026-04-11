@@ -5,6 +5,7 @@
 - [[Decisions/ADR-0001 - Documentation System]] | [ADR-0001 - Documentation System](ADR-0001%20-%20Documentation%20System.md)
 - [[Decisions/ADR-0002 - Block Based Website Builder Direction]] | [ADR-0002 - Block Based Website Builder Direction](ADR-0002%20-%20Block%20Based%20Website%20Builder%20Direction.md)
 - [[Decisions/ADR-0003 - App 2.0 Platform Foundation]] | [ADR-0003 - App 2.0 Platform Foundation](ADR-0003%20-%20App%202.0%20Platform%20Foundation.md)
+- [[Decisions/ADR-0004 - Shared Core Instance And Panel Boundary Direction]] | [ADR-0004 - Shared Core Instance And Panel Boundary Direction](ADR-0004%20-%20Shared%20Core%20Instance%20And%20Panel%20Boundary%20Direction.md)
 
 ## Related
 

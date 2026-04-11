@@ -8,6 +8,7 @@
 - [[V2 App/Architecture/Tenancy Foundation]] | [Tenancy Foundation](Tenancy%20Foundation.md)
 - [[V2 App/Architecture/Platform And Tenant Application Boundary]] | [Platform And Tenant Application Boundary](Platform%20And%20Tenant%20Application%20Boundary.md)
 - [[V2 App/Architecture/V2 Application Structure]] | [V2 Application Structure](V2%20Application%20Structure.md)
+- [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
 
 ## Related
 

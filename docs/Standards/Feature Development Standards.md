@@ -31,8 +31,40 @@ Before implementing any new V2 feature, answer these questions and record the an
 3. Which panel or route space owns the UI?
 4. What logs must stay central versus tenant-local?
 5. What parts are shared infrastructure versus tenant-facing capability?
+6. If this is tenant-optional, which migrations and seeders install its schema for selected tenants?
+7. What is the difference between installed, enabled, disabled, and unavailable states for this feature?
 
 See [[V2 App/Architecture/Platform And Tenant Application Boundary]] | [Platform And Tenant Application Boundary](../V2%20App/Architecture/Platform%20And%20Tenant%20Application%20Boundary.md) for the full decision framework.
+
+For Phase 2 and later work, also use [[V2 App/Planning/Phase 2/Phase 2 - Route And Panel Ownership Map]] | [Phase 2 - Route And Panel Ownership Map](../V2%20App/Planning/Phase%202/Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md) when deciding whether a screen belongs to the shared core app, platform-management layer, tenant context, Filament, Livewire, or custom Blade.
+
+## Filament Usage Standard
+
+Every implementation batch that includes UI work must explicitly pause and ask:
+
+* does utilizing Filament apply here?
+
+If yes, document why Filament is the correct UI owner for that surface.
+
+If no, document why not and evaluate the next most appropriate UI option:
+
+1. Livewire/custom Blade for reactive or specialized app UI.
+2. Existing Tailwind/Blade component patterns for standard server-rendered pages.
+3. A reviewed template or component library if the batch needs broader visual design support.
+4. Fully custom UI only when the available framework patterns do not fit the use case.
+
+Filament often fits CRUD-heavy admin records, table/filter/detail viewers, operational admin forms, settings/setup pages, and platform-management records. It may not fit specialized viewers, public/customer-facing pages, highly custom dashboards, or workflows where provisioning/module logic is the main concern.
+
+Filament resources, pages, and actions must call existing services or actions for business mutations. They must not become the only place where business rules, audit logging, notification dispatching, or tenant/module state transitions exist.
+
+Every Filament implementation must declare:
+
+* panel owner and route path
+* auth guard and permission gate/policy
+* database context
+* canonical feature doc owner
+* whether the screen is shared core, platform-management, tenant-only, or hybrid
+* which services/actions handle business behavior
 
 ## Setup And Settings Planning Requirement
 
@@ -95,4 +127,6 @@ The canonical doc must be kept current with implementation status and must link 
 * [[Standards/Module Development Standards]] | [Module Development Standards](Module%20Development%20Standards.md) — V1 Perfex module conventions only
 * [[Standards/Implementation Status And Development Sync Standard]] | [Implementation Status And Development Sync Standard](Implementation%20Status%20And%20Development%20Sync%20Standard.md)
 * [[V2 App/Architecture/Platform And Tenant Application Boundary]] | [Platform And Tenant Application Boundary](../V2%20App/Architecture/Platform%20And%20Tenant%20Application%20Boundary.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Route And Panel Ownership Map]] | [Phase 2 - Route And Panel Ownership Map](../V2%20App/Planning/Phase%202/Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md)
+* [[V2 App/Reference/Stack - Filament And Livewire]] | [Stack - Filament And Livewire](../V2%20App/Reference/Stack%20-%20Filament%20And%20Livewire.md)
 * [[V2 App/Features/Feature Index]] | [Feature Index](../V2%20App/Features/Feature%20Index.md)

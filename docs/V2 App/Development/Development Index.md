@@ -9,6 +9,7 @@ This branch is the chronological companion to planning and canonical system docs
 ## Development Logs
 
 * [[V2 App/Development/Phase 1 Development Log]] | [Phase 1 Development Log](Phase%201%20Development%20Log.md)
+* [[V2 App/Development/Phase 2 Development Log]] | [Phase 2 Development Log](Phase%202%20Development%20Log.md)
 
 ## Usage Rule
 

@@ -267,7 +267,7 @@ class CentralErrorLogResource extends Resource
             ->recordActions([
                 ViewAction::make()
                     ->modalHeading(fn (CentralErrorLog $record): string => 'Error Log #'.$record->id)
-                    ->modalWidth(Width::SevenExtraLarge)
+                    ->modalWidth(Width::ThreeExtraLarge)
                     ->slideOver(),
             ])
             ->toolbarActions([]);

@@ -238,6 +238,7 @@ Correction:
 * preserved internal label/value grouping inside each full-width section where it improves readability
 * added a scoped Filament console theme after the error log table still exceeded visible width because long error text influenced the browser's automatic table layout
 * forced the error log table into fixed-layout behavior inside the visible console container while leaving the audit table unchanged
+* reduced audit and error log slide-over widths to the `3xl` Filament width preset so detail panels stay closer to an 800px operational record view
 
 Canonical docs:
 

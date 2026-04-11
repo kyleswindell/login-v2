@@ -19,6 +19,7 @@ Current status:
 * audit and error log timestamps are stored as UTC and displayed in the signed-in user's timezone
 * Filament log viewers use safe modal headings and truncated long-text display to avoid oversized recursive exception output
 * Filament log slide-over details are organized into coherent sections with long message, stack trace, metadata, and client details collapsed by default
+* Filament log slide-overs use a narrower `3xl` width preset for focused operational record viewing
 * Filament log tables use responsive column priority so core log records remain within page width without default horizontal scrolling
 * the error log Filament table has a scoped console theme override that forces fixed-layout sizing and aggressive wrapping for long error text
 

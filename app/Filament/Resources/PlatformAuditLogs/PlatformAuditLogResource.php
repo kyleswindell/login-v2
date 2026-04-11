@@ -235,7 +235,7 @@ class PlatformAuditLogResource extends Resource
             ->recordActions([
                 ViewAction::make()
                     ->modalHeading(fn (PlatformAuditLog $record): string => 'Audit Log #'.$record->id)
-                    ->modalWidth(Width::SevenExtraLarge)
+                    ->modalWidth(Width::ThreeExtraLarge)
                     ->slideOver(),
             ])
             ->toolbarActions([]);

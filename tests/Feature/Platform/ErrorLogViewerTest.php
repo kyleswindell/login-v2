@@ -64,7 +64,7 @@ class ErrorLogViewerTest extends TestCase
             ->assertOk()
             ->assertSee('Error Logs')
             ->assertSee('Filament proof error')
-            ->assertSee('RuntimeException');
+            ->assertSee('critical');
     }
 
     public function test_guests_are_redirected_from_filament_error_log_proof(): void

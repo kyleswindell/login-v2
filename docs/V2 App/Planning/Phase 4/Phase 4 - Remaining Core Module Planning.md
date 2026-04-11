@@ -40,6 +40,7 @@ Deliver the remaining shared core modules after customer/public view foundations
 
 * setup entries
 * settings groups and pages
+* module-level email notice setup and preference controls
 * permission declarations
 * audit and error logging
 * notifications
@@ -95,17 +96,17 @@ Each Phase 4 module should ship with both:
 Baseline mapping draft:
 
 * Customers And Contacts: groups/default profile policy, lifecycle defaults
-* Sales Core: invoice/estimate defaults, numbering/format policy, payment defaults
+* Sales Core: invoice/estimate defaults, numbering/format policy, payment defaults, overdue reminder cadence, and finance sender-alias defaults
 * Finance Setup: tax catalogs, currencies, payment modes, expense categories
 * Expenses: default categories, approval policy, billable defaults
-* Contracts: type catalog, expiration/reminder defaults
+* Contracts: type catalog, expiration/reminder defaults, contract notice templates and sender defaults
 * Projects: project defaults, member policy, billing defaults
-* Tasks: task statuses/priorities defaults, timer/reminder defaults
-* Support: departments, statuses, priorities, service categories, canned replies
+* Tasks: task statuses/priorities defaults, timer/reminder defaults, due-soon and past-due alert defaults
+* Support: departments, statuses, priorities, service categories, canned replies, and ticket update email defaults
 * Leads: sources, statuses, intake defaults, conversion defaults
-* Estimate Requests: form templates, statuses, intake routing defaults
+* Estimate Requests: form templates, statuses, intake routing defaults, acknowledgement email defaults
 * Knowledge Base: article groups, access defaults, publishing defaults
-* Reports: report preset defaults, retention/export behavior
+* Reports: report preset defaults, retention/export behavior, periodic report email schedule defaults
 
 ## Cross-Module Interaction Requirements
 
@@ -117,6 +118,7 @@ Phase 4 must preserve and formalize these core interaction rules:
 * Support requires setup-backed records (departments, statuses, priorities, services) before ticket intake is usable.
 * Leads should support independent capture but clean conversion handoff into customer records.
 * Reports should read from shared module contracts, not feature-specific one-off query assumptions.
+* Module email automations should use the shared Phase 3 Graph mail delivery foundation, sender-alias routing rules, and notice-class policy model.
 
 ## Phase 4 Design And Implementation Guardrails
 
@@ -127,6 +129,7 @@ Every module delivered in Phase 4 must include:
 * audit events for high-value state changes
 * error logging coverage for critical failure paths
 * notification events where user action or system state changes matter
+* each automated email-capable feature must declare sender alias, template keys, user preference behavior, and mandatory-notice behavior
 * feature tests for permission gates, setup/settings writes, and key workflows
 * clean data APIs and query contracts so Phase 5 can expose module data through tenant-initialized publishing connectors
 
@@ -189,7 +192,7 @@ And until Phase 3 confirms:
 
 * customer/public shell and auth direction
 * outward-facing module integration contract
-* legacy website push compatibility direction where needed
+* Graph email delivery foundation contract, including sender-alias routing and notice-class policy
 
 ## Exit Criteria
 

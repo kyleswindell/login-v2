@@ -4,7 +4,7 @@
 
 Plan Phase 3: customer/public-facing foundations that must exist before broad core-module expansion so outward-facing business features do not need late reintegration.
 
-This note is the active planning surface for customer/public route ownership, visibility models, events-driven public business presentation, and interim website publishing compatibility.
+This note is the active planning surface for customer/public route ownership, visibility models, events-driven public business presentation, and Microsoft Graph email delivery foundations.
 
 ## Implementation Status
 
@@ -33,6 +33,7 @@ This Phase 3 draft is informed by:
 * [[V1 App/Reference/Events Routes]] | [Events Routes](../../../V1%20App/Reference/Events%20Routes.md)
 * [[V1 App/Reference/Events Data Model]] | [Events Data Model](../../../V1%20App/Reference/Events%20Data%20Model.md)
 * [[V2 App/Planning/Phase 3/Phase 3 - Events And Legacy Website Publishing Planning]] | [Phase 3 - Events And Legacy Website Publishing Planning](Phase%203%20-%20Events%20And%20Legacy%20Website%20Publishing%20Planning.md)
+* [[V2 App/Planning/Phase 3/Phase 3 - Microsoft Graph Email Sending Planning]] | [Phase 3 - Microsoft Graph Email Sending Planning](Phase%203%20-%20Microsoft%20Graph%20Email%20Sending%20Planning.md)
 
 ## Phase Goal
 
@@ -40,6 +41,7 @@ Establish customer/public-facing contracts early enough that:
 
 * outward-facing event and business-module views are part of initial design rather than retrofitted later
 * portal and public visibility rules are defined before core-module expansion
+* tenant email-delivery behavior is built on one configurable Microsoft Graph foundation before module-specific automation grows
 * legacy JSON publishing support can be added cleanly where business continuity requires it
 * platform-controlled integrations and tenant-operated workflows remain clearly separated
 
@@ -74,6 +76,30 @@ Phase 3 should establish:
 4. outward-facing module rendering conventions
 5. events as the first outward-facing business module proof
 6. data API and query contracts for Phase 4/Phase 5 integration with legacy website connectors
+7. Microsoft Graph email sending foundation with platform defaults, tenant overrides, per-feature alias mapping, and notice preference policy
+
+## Microsoft Graph Email Delivery Foundation
+
+Phase 3 should establish one shared email-delivery foundation for all transactional and automated module mail.
+
+Required baseline:
+
+* Microsoft Graph-backed outbound mail transport for transactional application email
+* GUI setup for platform-managed default sender accounts and aliases
+* GUI setup for tenant-managed sender accounts and aliases when tenants choose custom domain mailboxes
+* feature-level sender alias routing (for example finance, notifications, events, support)
+* user preference controls for optional notification classes
+* non-optional notice classes that cannot be opted out when legally or operationally required
+
+Mandatory notice baseline should include at least:
+
+* manually sent invoices and invoice delivery confirmations
+* invoice overdue reminders and escalating past-due notices
+* legally or contractually required billing and support status notices
+
+Detailed planning note:
+
+* [[V2 App/Planning/Phase 3/Phase 3 - Microsoft Graph Email Sending Planning]] | [Phase 3 - Microsoft Graph Email Sending Planning](Phase%203%20-%20Microsoft%20Graph%20Email%20Sending%20Planning.md)
 
 ## Events Module Implications For V2
 
@@ -150,6 +176,7 @@ Phase 3 can close when:
 * [[V2 App/Planning/Phase 3/Phase 3 Index]] | [Phase 3 Index](Phase%203%20Index.md)
 * [[V2 App/Planning/Phase 3/Phase 3 - Implementation Batch 1]] | [Phase 3 - Implementation Batch 1](Phase%203%20-%20Implementation%20Batch%201.md)
 * [[V2 App/Planning/Phase 3/Phase 3 - Events And Legacy Website Publishing Planning]] | [Phase 3 - Events And Legacy Website Publishing Planning](Phase%203%20-%20Events%20And%20Legacy%20Website%20Publishing%20Planning.md)
+* [[V2 App/Planning/Phase 3/Phase 3 - Microsoft Graph Email Sending Planning]] | [Phase 3 - Microsoft Graph Email Sending Planning](Phase%203%20-%20Microsoft%20Graph%20Email%20Sending%20Planning.md)
 * [[V2 App/Planning/Phase 4/Phase 4 - Remaining Core Module Planning]] | [Phase 4 - Remaining Core Module Planning](../Phase%204/Phase%204%20-%20Remaining%20Core%20Module%20Planning.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](../Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
 * [[V2 App/Planning/V2 Feature Roadmap]] | [V2 Feature Roadmap](../V2%20Feature%20Roadmap.md)

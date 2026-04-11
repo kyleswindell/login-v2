@@ -12,6 +12,9 @@ Current focus:
 
 * define customer and public route, shell, and visibility foundations before broader module rollout
 * map outward-facing business event behavior from the V1 custom Events module into V2
+* establish Microsoft Graph email sending foundation before core module rollout
+* define platform-default and tenant-override sender-account and alias configuration
+* define feature-based sender-alias routing plus user preference and mandatory notice rules
 * define interim legacy website JSON publishing compatibility direction
 * separate platform-owned publishing integrations from tenant-operated business data workflows
 
@@ -20,6 +23,7 @@ Current focus:
 * [[V2 App/Planning/Phase 3/Phase 3 - Customer And Public View Planning]] | [Phase 3 - Customer And Public View Planning](Phase%203%20-%20Customer%20And%20Public%20View%20Planning.md)
 * [[V2 App/Planning/Phase 3/Phase 3 - Implementation Batch 1]] | [Phase 3 - Implementation Batch 1](Phase%203%20-%20Implementation%20Batch%201.md)
 * [[V2 App/Planning/Phase 3/Phase 3 - Events And Legacy Website Publishing Planning]] | [Phase 3 - Events And Legacy Website Publishing Planning](Phase%203%20-%20Events%20And%20Legacy%20Website%20Publishing%20Planning.md)
+* [[V2 App/Planning/Phase 3/Phase 3 - Microsoft Graph Email Sending Planning]] | [Phase 3 - Microsoft Graph Email Sending Planning](Phase%203%20-%20Microsoft%20Graph%20Email%20Sending%20Planning.md)
 
 ## Canonical Inputs
 

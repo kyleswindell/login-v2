@@ -35,6 +35,7 @@ This batch establishes data and workflow primitives that later modules rely on:
 
 * module registration entries for the three batch modules
 * setup views and settings pages for customer, finance, and sales defaults
+* module notice settings using Phase 3 Graph email foundation (templates, sender alias mapping, mandatory-vs-optional policy)
 * permission declarations and policy gates
 * audit/error logging hooks for core create/update/payment state transitions
 * notification events for high-value actions (invoice state changes, payment recorded)
@@ -55,6 +56,7 @@ This batch establishes data and workflow primitives that later modules rely on:
 * permission matrix per module action
 * event taxonomy for audits and notifications
 * validation schema for each settings page
+* notice taxonomy and sender-alias routing keys for each module event that can send email
 * PostgreSQL table family and foreign-key map for each module
 * declared UI owner per surface (Filament, Livewire/custom Blade, or hybrid)
 
@@ -65,6 +67,7 @@ This batch establishes data and workflow primitives that later modules rely on:
 * all module writes emit expected audit events
 * critical failures route through centralized error logging
 * feature tests for primary module workflows and security boundaries are passing
+* automated finance and customer notices resolve sender aliases correctly and respect mandatory-notice rules
 * schema decisions avoid Perfex-style soft relationships and generic polymorphic line-item shortcuts
 * canonical feature docs and planning status are updated in the same work cycle
 
@@ -72,6 +75,7 @@ This batch establishes data and workflow primitives that later modules rely on:
 
 * [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](../Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
 * [[V2 App/Planning/Phase 3/Phase 3 - Customer And Public View Planning]] | [Phase 3 - Customer And Public View Planning](../Phase%203/Phase%203%20-%20Customer%20And%20Public%20View%20Planning.md)
+* [[V2 App/Planning/Phase 3/Phase 3 - Microsoft Graph Email Sending Planning]] | [Phase 3 - Microsoft Graph Email Sending Planning](../Phase%203/Phase%203%20-%20Microsoft%20Graph%20Email%20Sending%20Planning.md)
 * [[V1 App/Features/V1 Feature Catalog]] | [V1 Feature Catalog](../../../V1%20App/Features/V1%20Feature%20Catalog.md)
 * [[V1 App/Reference/Setup And Settings Map]] | [Setup And Settings Map](../../../V1%20App/Reference/Setup%20And%20Settings%20Map.md)
 * [[V2 App/Planning/Phase 4/Phase 4 - UI Ownership And PostgreSQL Schema Map]] | [Phase 4 - UI Ownership And PostgreSQL Schema Map](Phase%204%20-%20UI%20Ownership%20And%20PostgreSQL%20Schema%20Map.md)

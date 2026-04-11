@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Define the first implementation batch for Phase 3 by establishing customer/public route contracts, proving outward-facing business-module behavior, and validating interim legacy website publishing support.
+Define the first implementation batch for Phase 3 by establishing customer/public route contracts, proving outward-facing business-module behavior, and introducing Microsoft Graph email-delivery foundations.
 
 ## Implementation Status
 
@@ -21,7 +21,7 @@ Deliver the first dependency-safe public/customer slice required before broader 
 
 * customer/public route and visibility contract baseline
 * Events admin plus public-view proof
-* interim legacy website JSON publishing adapter proof
+* Microsoft Graph email sending baseline with GUI configuration
 
 ## Why This Batch First
 
@@ -37,38 +37,47 @@ This batch establishes outward-facing primitives that later modules rely on:
 * public and customer route ownership definitions
 * one public-facing event detail or listing proof
 * one tenant-admin event management proof
-* publish-target configuration direction owned by platform context
-* interim JSON publishing proof for legacy website compatibility
+* Graph mail transport setup for transactional sends
+* platform default sender accounts and alias configuration GUI
+* tenant sender-account and alias override GUI
+* feature-based sender alias mapping (for example finance, notifications, events, support)
+* user-level email preference model for optional notices
+* mandatory-notice policy model for non-optional notices
 * permission and policy rules for public, customer, staff, and platform surfaces
-* audit/error logging for publish operations and outward-facing event mutations
+* audit/error logging for outbound email operations and outward-facing event mutations
 
 ## Out Of Scope
 
 * full broad core-module rollout (Phase 4)
 * full CMS/website editing and deployment tooling
 * tenant rollout/provisioning behavior (Phase 5)
-* platform-management expansion beyond required publishing configuration
+* bulk marketing and newsletter campaign infrastructure
 
 ## Required Contracts Before Build
 
 * customer/public/staff/platform visibility model
 * public route namespace and rendering owner
 * event capability toggles and publishability model
-* publishing target contract and credential ownership model
-* JSON payload contract for event detail and event index artifacts
+* Graph sender-account ownership model (platform defaults, tenant overrides)
+* feature-to-sender alias resolution contract
+* notice-class policy contract (optional vs mandatory)
+* email preference key model for user-level subscription control
 
 ## Acceptance Criteria
 
 * outward-facing Events proof works from tenant-managed data
-* platform-configured publishing capability can be assigned without making the tenant own the integration framework
-* at least one legacy-compatible JSON artifact is published successfully through the selected adapter path
-* audit/error logging captures publish attempts and failures
-* the resulting contracts are reusable by later outward-facing modules
+* Graph mail transport sends at least account verification, notification update, and finance reminder message classes
+* platform defaults and tenant overrides are configurable through GUI setup
+* feature-based sender alias routing resolves correctly for at least finance and notifications
+* mandatory-notice rules override user opt-out for required classes (for example overdue invoice reminders)
+* audit/error logging captures send attempts, throttling retries, and terminal failures
+* resulting contracts are reusable by later Phase 4 modules
 
 ## Dependencies
 
 * [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](../Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
 * [[V2 App/Planning/Phase 3/Phase 3 - Events And Legacy Website Publishing Planning]] | [Phase 3 - Events And Legacy Website Publishing Planning](Phase%203%20-%20Events%20And%20Legacy%20Website%20Publishing%20Planning.md)
+* [[V2 App/Planning/Phase 3/Phase 3 - Microsoft Graph Email Sending Planning]] | [Phase 3 - Microsoft Graph Email Sending Planning](Phase%203%20-%20Microsoft%20Graph%20Email%20Sending%20Planning.md)
 * [[V1 App/Modules/Events]] | [Events](../../../V1%20App/Modules/Events.md)
 * [[V1 App/Architecture/Website Sync Architecture]] | [Website Sync Architecture](../../../V1%20App/Architecture/Website%20Sync%20Architecture.md)
 

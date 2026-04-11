@@ -15,21 +15,44 @@ Active customization structure:
 
 Prompts and skills are organized into four roles:
 
-| Role | Trigger | When |
-|---|---|---|
-| Phase Batch Planning | `/phase-batch-planning` | Organize and sequence a phase into batches |
-| Phase Batch Implementation | `/phase-batch-implementation` | Code the currently active batch |
-| Module Creation Kickoff | `/module-creation-kickoff` | Sub-task when a batch introduces a new module |
-| Planning Sync | `/planning-sync` | Sync canonical docs after any contract or scope change |
+| Role                       | Trigger                       | When                                                            |
+| -------------------------- | ----------------------------- | --------------------------------------------------------------- |
+| Phase Planning             | `/phase-planning`             | Define or realign a phase's goals, deliverables, and constraints |
+| Phase Batch Planning       | `/phase-batch-planning`       | Organize a finalized phase plan into dependency-ordered batches |
+| Phase Batch Implementation | `/phase-batch-implementation` | Code the currently active batch                                 |
+| Module Creation Kickoff    | `/module-creation-kickoff`    | Sub-task when a batch introduces a new module                   |
+| Planning Sync              | `/planning-sync`              | Sync canonical docs after any contract or scope change          |
 
 ---
 
-## Tier 1 — Phase Batch Planning
+## Tier 1 — Phase Planning
+
+**Prompt:** `/phase-planning`
+
+**When to use:**
+No phase plan exists yet, or an existing phase plan needs goals and deliverables realigned before batches are organized. Run this before `/phase-batch-planning`. Output feeds directly into batch planning.
+
+**Input:**
+```
+/phase-planning Phase [X]
+```
+
+**What it does:**
+Reads the roadmap and adjacent phases, defines or confirms phase goal, primary deliverables, explicit exclusions, cross-phase hand-off contracts, open decisions, and canonical doc ownership. Updates the phase index.
+
+**Example:**
+```
+/phase-planning Phase 3
+```
+
+---
+
+## Tier 2 — Phase Batch Planning
 
 **Prompt:** `/phase-batch-planning`
 
 **When to use:**
-A finalized phase plan exists but batches are not yet defined, or existing batch sequencing needs to be reviewed before implementation starts. Use this before touching code.
+A finalized phase plan exists (output of `/phase-planning`) but batches are not yet defined, or existing batch sequencing needs to be reviewed. Use this after phase goals and deliverables are locked and before touching code.
 
 **Input:**
 ```
@@ -46,7 +69,7 @@ Reads phase index and all planning/canonical docs, maps dependency relationships
 
 ---
 
-## Tier 2 — Phase Batch Implementation
+## Tier 3 — Phase Batch Implementation
 
 **Prompt:** `/phase-batch-implementation`
 
@@ -68,12 +91,12 @@ Continue from current repo state and uncommitted changes; do not re-plan complet
 
 ### Current Phase 2 Status (confirmed)
 
-| Batch | Status | Notes |
-|---|---|---|
-| Batch 1 | In progress — decisions open | App shell, visual design direction, planning close-out |
-| Batch 2 | Complete | Filament error log proof deployed and validated on staging |
-| Batch 3 | Complete | Filament audit log proof deployed and validated on staging |
-| Batch 4 | Not yet created | Next implementation slice — TBD scope |
+| Batch   | Status                       | Notes                                                      |
+| ------- | ---------------------------- | ---------------------------------------------------------- |
+| Batch 1 | In progress — decisions open | App shell, visual design direction, planning close-out     |
+| Batch 2 | Complete                     | Filament error log proof deployed and validated on staging |
+| Batch 3 | Complete                     | Filament audit log proof deployed and validated on staging |
+| Batch 4 | Not yet created              | Next implementation slice — TBD scope                      |
 
 **Phase 2 Batch 4 continuation starter:**
 ```
@@ -89,7 +112,7 @@ Implement the next dependency-safe slice, run relevant tests, and sync documenta
 
 ---
 
-## Tier 2 Sub-Task — Module Creation Kickoff
+## Tier 3 Sub-Task — Module Creation Kickoff
 
 **Prompt:** `/module-creation-kickoff`
 
@@ -108,7 +131,7 @@ Inside an active implementation session when a batch introduces a new module tha
 
 ---
 
-## Tier 3 — Planning Sync
+## Tier 4 — Planning Sync
 
 **Skill:** `/planning-sync`
 

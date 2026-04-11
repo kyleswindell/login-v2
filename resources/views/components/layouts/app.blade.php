@@ -288,6 +288,30 @@
                                             </div>
 
                                             <nav class="mt-6 space-y-2">
+                                                @can('view-platform-notifications')
+                                                    <a href="{{ route('platform.setup.notifications') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                                                        Notifications Setup
+                                                    </a>
+                                                @endcan
+
+                                                @can('view-platform-docs')
+                                                    <a href="{{ route('platform.setup.docs') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                                                        Documentation Setup
+                                                    </a>
+                                                @endcan
+
+                                                @can('view-platform-audit-logs')
+                                                    <a href="{{ route('platform.setup.audit-logs') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                                                        Audit Logs Setup
+                                                    </a>
+                                                @endcan
+
+                                                @can('view-platform-error-logs')
+                                                    <a href="{{ route('platform.setup.error-logs') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                                                        Error Logs Setup
+                                                    </a>
+                                                @endcan
+
                                                 @can('manage-platform-users')
                                                     <a href="{{ route('platform.setup.users') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
                                                         Platform Users Setup

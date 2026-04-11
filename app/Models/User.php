@@ -10,7 +10,28 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
-#[Fillable(['name', 'email', 'password', 'is_active', 'last_login_at', 'timezone'])]
+#[Fillable([
+    'name',
+    'first_name',
+    'last_name',
+    'email',
+    'password',
+    'is_active',
+    'last_login_at',
+    'timezone',
+    'hourly_rate',
+    'phone',
+    'facebook',
+    'linkedin',
+    'skype',
+    'default_language',
+    'email_signature',
+    'direction',
+    'send_welcome_email',
+    'is_administrator',
+    'is_staff_member',
+    'profile_image_path',
+])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -31,6 +52,10 @@ class User extends Authenticatable
             'is_active' => 'boolean',
             'last_login_at' => 'datetime',
             'password' => 'hashed',
+            'hourly_rate' => 'decimal:2',
+            'send_welcome_email' => 'boolean',
+            'is_administrator' => 'boolean',
+            'is_staff_member' => 'boolean',
         ];
     }
 }

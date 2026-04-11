@@ -1,7 +1,7 @@
-<x-layouts.app title="Edit Platform User">
+<x-layouts.app title="Edit Staff Member">
     @include('platform.users.partials.form', [
-        'heading' => 'Edit Platform User',
-        'subheading' => 'Update account details, role assignments, and activation state.',
+        'heading' => 'Edit Staff Member',
+        'subheading' => 'Update staff profile details, permission assignments, and account lifecycle state.',
         'action' => route('platform.users.update', $user),
         'method' => 'PUT',
         'user' => $user,

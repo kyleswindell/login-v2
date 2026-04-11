@@ -14,7 +14,7 @@ Current status:
 * notifications inbox UI is live on staging with realtime updates
 * settings table and service are migrated on staging
 * dashboard and header unread-count surfaces are live on staging
-* settings UI and Setup/Settings sidebar shell are implemented in code and pending staging deploy
+* settings UI, selective Setup pages, and the Setup/Settings sidebar shell are implemented in code and pending staging deploy
 
 ## Current Implementation
 
@@ -29,7 +29,10 @@ Phase 1 currently includes:
 * a notifications inbox page
 * notification mark-read, mark-all-read, and dismiss actions
 * Setup sidebar shell with a Setup-triggered slide interaction
+* selective Setup landing pages for notifications, docs, audit logs, error logs, and platform users
 * Settings second-column panel and page set for general, notifications, audit logs, docs, and users
+* a General settings section with pages for platform general, company information, localization, email, system update, and system/server info
+* settings writes routed through `SettingsService` with audit logging
 
 Current services:
 
@@ -41,6 +44,14 @@ Supported notification actions in code:
 * send to a notifiable model
 * mark read
 * dismiss
+
+Current settings groupings in code:
+
+* General
+* Platform Notifications
+* Audit Logs
+* Documentation Vault
+* Platform Users
 
 ## Important Files
 
@@ -60,9 +71,16 @@ Supported notification actions in code:
 * `routes/channels.php`
 * `resources/js/app.js`
 * `resources/js/setup-sidebar.js`
+* `resources/views/platform/setup/`
 * `resources/views/platform/notifications/index.blade.php`
 * `resources/views/platform/settings/_sidebar.blade.php`
+* `resources/views/platform/settings/_general-tabs.blade.php`
 * `resources/views/platform/settings/general.blade.php`
+* `resources/views/platform/settings/general-company-information.blade.php`
+* `resources/views/platform/settings/general-localization.blade.php`
+* `resources/views/platform/settings/general-email.blade.php`
+* `resources/views/platform/settings/general-system-update.blade.php`
+* `resources/views/platform/settings/general-system-server-info.blade.php`
 * `resources/views/platform/settings/notifications.blade.php`
 * `resources/views/platform/settings/audit-logs.blade.php`
 * `resources/views/platform/settings/docs.blade.php`
@@ -108,12 +126,18 @@ Key notification fields:
 
 Phase 1 planning expects settings changes and notification events to remain auditable as these surfaces gain fuller UI workflows.
 
+Current settings and docs access behavior:
+
+* settings writes are audited
+* docs viewer access is additionally constrained by the configured docs access scope
+
 ## Known Gaps
 
 Current gaps:
 
 * no non-database delivery channels yet
 * no notification receipts or fan-out tables yet
+* notification defaults are still limited to a first-pass set of platform-wide options
 
 ## Related
 

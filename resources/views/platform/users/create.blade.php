@@ -1,7 +1,7 @@
-<x-layouts.app title="Create Platform User">
+<x-layouts.app title="Add New Staff Member">
     @include('platform.users.partials.form', [
-        'heading' => 'Create Platform User',
-        'subheading' => 'Create a new internal user and assign their initial platform roles.',
+        'heading' => 'Add New Staff Member',
+        'subheading' => 'Create staff profile details and assign permissions using role-based access.',
         'action' => route('platform.users.store'),
         'method' => 'POST',
         'user' => null,

@@ -14,7 +14,7 @@ Current status:
 * search remains a placeholder only
 * header notifications preview is implemented in code and pending staging deploy
 * realtime header notification sync and toast hooks are implemented in code and pending staging deploy
-* Setup sidebar shell interaction is implemented in code and pending staging deploy
+* Setup sidebar shell interaction and selective feature setup pages are implemented in code and pending staging deploy
 
 ## Current Implementation
 
@@ -24,6 +24,7 @@ The current platform shell includes:
 * top header with brand, search placeholder, recent-notifications preview, and user menu
 * platform navigation for dashboard, users, and docs
 * Setup sidebar shell that slides over the primary sidebar navigation
+* selective setup landing pages for features that need setup-oriented workflows instead of linking Setup directly to the main feature list page
 * dashboard cards for users, settings, notifications, and docs counts
 * a dedicated docs-vault workspace mode with the repository tree replacing the normal app sidebar
 
@@ -51,7 +52,8 @@ The docs viewer currently supports:
 Current gates:
 
 * docs viewer access is limited to users who can `view-platform-docs`
-* the current intended audience is platform super admins
+* docs viewer access also respects the configured docs access scope
+* the current intended audience can be restricted to platform super admins through settings
 
 ## Common Workflows
 
@@ -59,6 +61,7 @@ Current workflows:
 
 * review system counts and quick links from the dashboard
 * browse the current `docs/` vault without leaving the app
+* open Setup and move into setup-oriented pages for docs, notifications, audit logs, error logs, or platform users
 * navigate back to the main platform workspace from the docs viewer
 
 ## Known Gaps

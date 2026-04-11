@@ -49,7 +49,8 @@ class PlatformUserManagementTest extends TestCase
         $this->actingAsPlatformSuperAdmin();
 
         $this->post('/platform/users', [
-            'name' => 'Operations User',
+            'first_name' => 'Operations',
+            'last_name' => 'User',
             'email' => 'ops@example.com',
             'password' => 'Password123!',
             'is_active' => '1',
@@ -71,7 +72,8 @@ class PlatformUserManagementTest extends TestCase
         ]);
 
         $this->put("/platform/users/{$user->id}", [
-            'name' => 'Updated User',
+            'first_name' => 'Updated',
+            'last_name' => 'User',
             'email' => $user->email,
             'password' => '',
             'roles' => ['platform_admin'],
@@ -80,7 +82,7 @@ class PlatformUserManagementTest extends TestCase
         $user->refresh();
 
         $this->assertSame('Updated User', $user->name);
-        $this->assertFalse($user->is_active);
+        $this->assertTrue($user->is_active);
         $this->assertTrue($user->hasRole('platform_admin'));
     }
 }

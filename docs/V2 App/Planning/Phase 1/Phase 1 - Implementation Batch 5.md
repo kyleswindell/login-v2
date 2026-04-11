@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Establish the Setup sidebar shell, the Settings second-column panel, a feature settings registration contract, and the first two platform admin surfaces: an error log viewer and the first real settings entries per existing feature.
+Establish the Setup sidebar shell, the Settings second-column panel, a feature settings registration contract, and the first real platform admin surfaces for Phase 1: selective setup pages, an error log viewer, and real settings entries per existing feature.
 
 This batch is the foundational navigation and configuration layer that all future feature work should extend. It must be in place before Phase 2 introduces new features that would otherwise need retro-fitting.
 
@@ -22,7 +22,7 @@ Canonical docs:
 
 ## Batch Goal
 
-Deliver the Setup/Settings navigation shell and the first two real admin content areas so the platform is operationally complete for Phase 1 and the pattern is established for all future features.
+Deliver the Setup/Settings navigation shell and the first real admin content areas so the platform is operationally complete for Phase 1 and the pattern is established for all future features.
 
 ## Navigation Architecture
 
@@ -48,6 +48,11 @@ Current planned Setup entries for Phase 1 features:
 * Platform Users
 * Settings (opens the Settings panel)
 
+Implementation note:
+
+* Setup is selective, not a second copy of the main navigation
+* features should point to dedicated setup-oriented pages only where setup work is meaningfully different from the main feature view
+
 ### Settings Panel
 
 The Settings panel opens as a second column immediately to the right of the Setup sidebar when the Settings entry is selected.
@@ -65,6 +70,11 @@ Current planned Settings categories and pages for Phase 1:
 
 General
 * Platform General (app display name, default timezone, default locale)
+* Company Information
+* Localization
+* Email
+* System Update
+* System/Server Info
 
 Platform Notifications
 * Notification Defaults (default severity for system notifications, max notifications retained per user)
@@ -111,6 +121,11 @@ This rule should be referenced in the doc standards and enforced during planning
 This batch implements at least one real setting per existing feature:
 
 * Platform General: app display name, default timezone, default locale
+* Company Information: company identity fields used by the platform shell and outbound comms
+* Localization: default language, timezone, and date/time display preferences
+* Email: from-name, from-address, and operational email defaults
+* System Update: current update channel and operator guidance settings
+* System/Server Info: read-only runtime environment summary
 * Platform Notifications: default severity for system notifications, max notifications retained per user
 * Audit Logs: retention period, login event severity level
 * Documentation Vault: vault access scope
@@ -121,6 +136,16 @@ All settings changes are:
 * written through `SettingsService`
 * attributed to the acting user via `updated_by`
 * recorded as an audit event
+
+### Selective Setup Pages
+
+This batch also establishes the selective setup-page pattern for Phase 1 features:
+
+* Platform Notifications setup page for notification defaults and navigation into the inbox/settings flow
+* Documentation Vault setup page for access and publishing guidance
+* Audit Logs setup page for retention/filter guidance and settings entry points
+* Error Logs setup page for operational guidance and viewer access
+* Platform Users setup page for staff onboarding and default role guidance
 
 ### Error Log Viewer
 
@@ -136,6 +161,9 @@ All settings changes are:
 * `platform.error-logs.view` permission added to the RBAC seed
 * `platform.settings.manage` permission added to the RBAC seed if not already present
 * relevant permission-backed gates registered in `AppServiceProvider`
+* docs access scope enforced through the docs gate
+* platform users expanded with richer staff profile fields
+* regular operator-facing tables should ship with search, pagination, rows-per-page, and result summaries where relevant
 
 ## Out Of Scope
 
@@ -157,10 +185,12 @@ Do not pull these into Batch 5:
 4. Build the Settings second-column panel shell with accordion categories
 5. Build error log controller (index + show) and views
 6. Build settings controllers and views for each Phase 1 feature settings page
-7. Wire all Setup entries and Settings pages into the new navigation shell
-8. Write feature tests for error log and settings controllers
-9. Run local tests and verify all surfaces in browser
-10. Deploy to staging and verify under a platform admin account
+7. Add selective setup landing pages for the Phase 1 features that need them
+8. Expand the staff setup flow and user-management table polish where it directly supports Phase 1 operations
+9. Wire all Setup entries and Settings pages into the new navigation shell
+10. Write feature tests for error log, settings, docs access, and setup controllers
+11. Run local tests and verify all surfaces in browser
+12. Deploy to staging and verify under a platform admin account
 
 ## Recommended Defaults
 
@@ -178,9 +208,11 @@ Batch 5 should leave the repo with:
 * a working Settings second-column panel
 * a feature settings registration rule documented in standards
 * first real settings pages for all existing Phase 1 features
+* selective setup landing pages for the current Phase 1 features
 * a working error log viewer with per-entry detail
+* richer staff setup and user-management defaults flow
 * new permissions seeded and gated correctly
-* feature tests for error log and settings controllers
+* feature tests for error log, settings, setup, and docs access controllers
 * canonical docs and development log updated to match
 
 ## Related

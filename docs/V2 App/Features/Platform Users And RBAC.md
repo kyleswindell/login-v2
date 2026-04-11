@@ -11,7 +11,8 @@ Current status:
 * implemented in code
 * migrated on staging
 * platform user management UI exists
-* first-pass role and permission seeding is implemented in code and pending staging deploy
+* richer staff profile management and selective setup flow are implemented in code and pending staging deploy
+* first-pass role and permission seeding updates are implemented in code and pending staging deploy
 * tenant-scoped auth and tenant roles are still deferred
 
 ## Current Implementation
@@ -24,14 +25,18 @@ Phase 1 currently uses:
 * active/inactive user status
 * `last_login_at` and timezone capture on login
 * platform user create/edit flows in the platform UI
+* expanded staff profile fields stored on `users`
+* a dedicated Platform Users setup page for onboarding and default-role guidance
 
 Current platform user management surfaces:
 
 * list users
-* create users
-* edit users
+* create staff members
+* edit staff members
 * assign roles
+* review grouped permissions by feature in the staff form
 * activate or deactivate accounts
+* search, paginate, and resize the users table entry count from the UI
 
 ## Important Files
 
@@ -41,7 +46,10 @@ Current platform user management surfaces:
 * `app/Http/Requests/Platform/UpdatePlatformUserRequest.php`
 * `app/Models/User.php`
 * `app/Providers/AppServiceProvider.php`
+* `database/migrations/2026_04_10_000001_add_staff_profile_fields_to_users_table.php`
 * `resources/views/platform/users/`
+* `resources/views/platform/setup/users.blade.php`
+* `resources/js/table-enhance.js`
 
 ## Data / Tables
 
@@ -61,6 +69,23 @@ Current lifecycle columns on `users`:
 * `last_login_at`
 * `timezone`
 
+Current staff profile columns on `users`:
+
+* `first_name`
+* `last_name`
+* `hourly_rate`
+* `phone`
+* `facebook`
+* `linkedin`
+* `skype`
+* `default_language`
+* `email_signature`
+* `direction`
+* `send_welcome_email`
+* `is_administrator`
+* `is_staff_member`
+* `profile_image_path`
+
 ## Permissions / Security
 
 Current authorization model:
@@ -74,14 +99,15 @@ Current authorization model:
 Current seeded roles and permissions:
 
 * roles: `platform_super_admin`, `platform_admin`, `platform_operator`
-* permissions: `platform.users.manage`, `platform.docs.view`, `platform.notifications.view`, `platform.audit-logs.view`
+* permissions: `platform.users.manage`, `platform.docs.view`, `platform.notifications.view`, `platform.audit-logs.view`, `platform.error-logs.view`, `platform.settings.manage`
 
 ## Common Workflows
 
 Current workflows:
 
-* create a new platform user
+* create a new staff member with profile details, activation state, and welcome-email preference
 * assign one or more platform roles
+* review effective permissions grouped by feature while editing a staff account
 * deactivate a platform user without deleting them
 * sign in and update `last_login_at` plus timezone on successful login
 
@@ -91,6 +117,7 @@ Current gaps:
 
 * no password reset UI flow yet
 * no tenant-auth boundary implementation yet
+* the permissions tab is still an informational grouped view driven by installed permissions, not a full direct per-capability assignment matrix
 
 ## Related
 

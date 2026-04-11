@@ -17,7 +17,7 @@ Current state:
 * RBAC, settings, and notifications foundations are implemented and live on staging
 * platform shell, platform user management, and docs viewer are implemented and live on staging
 * notifications UI, audit log viewer, and RBAC seed cleanup are implemented in code and pending staging deploy
-* settings UI, Setup/Settings sidebar shell, and error log viewer are implemented in code and pending staging deploy
+* settings UI, selective Setup pages, richer staff setup, users-table polish, and error log viewer are implemented in code and pending staging deploy
 * realtime notifications are deployed and validated on staging
 
 ## Milestones
@@ -154,7 +154,7 @@ Planning owner:
 
 * [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 4]] | [Phase 1 - Implementation Batch 4](../Planning/Phase%201/Phase%201%20-%20Implementation%20Batch%204.md)
 
-### 2026-04-10 - Phase 1 Batch 5 setup/settings shell and error log viewer implemented
+### 2026-04-10 - Phase 1 Batch 5 setup/settings shell and selective setup flows implemented
 
 Status:
 
@@ -166,9 +166,13 @@ Implemented systems:
 
 * Setup sidebar overlay shell and close interaction in the main layout
 * Settings second-column panel with page navigation
-* first-pass settings pages for general, notifications, audit logs, docs access, and user defaults
+* selective setup landing pages for notifications, docs, audit logs, error logs, and platform users
+* first-pass settings pages for general, company information, localization, email, system update, system/server info, notifications, audit logs, docs access, and user defaults
 * settings write actions through `SettingsService` with audit events
+* docs access scope enforcement in the docs gate
 * error log viewer list and detail pages with filters
+* richer staff profile fields and a profile-plus-permissions onboarding form
+* DataTables-style search, page sizing, pagination, and entry summary for the platform users table
 * new permissions and gates for settings management and error log visibility
 
 Canonical docs:

@@ -37,10 +37,57 @@ class PlatformSettingsTest extends TestCase
         $this->actingAsPlatformSuperAdmin();
 
         $this->get('/platform/settings/general')->assertOk()->assertSee('Platform General');
+        $this->get('/platform/settings/general/company-information')->assertOk()->assertSee('Company Information');
+        $this->get('/platform/settings/general/localization')->assertOk()->assertSee('Localization');
+        $this->get('/platform/settings/general/email')->assertOk()->assertSee('Email');
+        $this->get('/platform/settings/general/system-update')->assertOk()->assertSee('System Update');
+        $this->get('/platform/settings/general/system-server-info')->assertOk()->assertSee('System/Server Info');
         $this->get('/platform/settings/notifications')->assertOk()->assertSee('Notification Defaults');
         $this->get('/platform/settings/audit-logs')->assertOk()->assertSee('Audit Settings');
         $this->get('/platform/settings/docs')->assertOk()->assertSee('Vault Access');
         $this->get('/platform/settings/users')->assertOk()->assertSee('User Defaults');
+    }
+
+    public function test_company_information_settings_can_be_updated(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->post('/platform/settings/general/company-information', [
+            'company_name' => 'Para Solutions LLC',
+            'company_email' => 'hello@example.com',
+            'company_phone' => '123-456-7890',
+            'company_address' => '123 Main St',
+        ])->assertRedirect();
+
+        $this->assertDatabaseHas('settings', ['group_key' => 'general_company', 'key' => 'name']);
+    }
+
+    public function test_localization_settings_can_be_updated(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->post('/platform/settings/general/localization', [
+            'default_language' => 'en',
+            'date_format' => 'M j, Y',
+            'time_format' => 'g:i A',
+            'first_day_of_week' => 'monday',
+        ])->assertRedirect();
+
+        $this->assertDatabaseHas('settings', ['group_key' => 'general_localization', 'key' => 'default_language']);
+    }
+
+    public function test_general_email_settings_can_be_updated(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->post('/platform/settings/general/email', [
+            'from_name' => 'Platform',
+            'from_address' => 'platform@example.com',
+            'reply_to_address' => 'reply@example.com',
+            'mail_driver' => 'smtp',
+        ])->assertRedirect();
+
+        $this->assertDatabaseHas('settings', ['group_key' => 'general_email', 'key' => 'from_name']);
     }
 
     // -------------------------------------------------------------------------
@@ -235,6 +282,11 @@ class PlatformSettingsTest extends TestCase
     {
         return [
             '/platform/settings/general',
+            '/platform/settings/general/company-information',
+            '/platform/settings/general/localization',
+            '/platform/settings/general/email',
+            '/platform/settings/general/system-update',
+            '/platform/settings/general/system-server-info',
             '/platform/settings/notifications',
             '/platform/settings/audit-logs',
             '/platform/settings/docs',

@@ -20,8 +20,26 @@
             </div>
         @endif
 
-        <div class="overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/70">
-            <table class="min-w-full divide-y divide-slate-800">
+        <div class="rounded-3xl border border-slate-800 bg-slate-900/70" data-table-lite-container>
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 px-6 py-4">
+                <div class="flex items-center gap-3">
+                    <label class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Rows</label>
+                    <select data-table-lite-rows-per-page class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100">
+                        <option value="10">10</option>
+                        <option value="25" selected>25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+
+                <label class="block w-full max-w-sm">
+                    <span class="sr-only">Search users</span>
+                    <input type="text" data-table-lite-search placeholder="Search staff..." class="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500">
+                </label>
+            </div>
+
+            <div class="overflow-hidden">
+                <table class="min-w-full divide-y divide-slate-800" data-table-lite>
                 <thead class="bg-slate-900">
                     <tr class="text-left text-xs uppercase tracking-[0.2em] text-slate-500">
                         <th class="px-6 py-4">User</th>
@@ -71,7 +89,17 @@
                         </tr>
                     @endforelse
                 </tbody>
-            </table>
+                </table>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-4 border-t border-slate-800 px-6 py-4">
+                <p class="text-sm text-slate-400" data-table-lite-info></p>
+
+                <div class="flex items-center gap-2">
+                    <button type="button" data-table-lite-prev class="rounded-lg border border-slate-700 px-3 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-slate-300 transition hover:border-slate-600 hover:text-white">Prev</button>
+                    <button type="button" data-table-lite-next class="rounded-lg border border-slate-700 px-3 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-slate-300 transition hover:border-slate-600 hover:text-white">Next</button>
+                </div>
+            </div>
         </div>
     </section>
 </x-layouts.app>

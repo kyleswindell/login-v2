@@ -34,6 +34,10 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/platform/users/{user}/edit', [PlatformUserController::class, 'edit'])->name('platform.users.edit');
     Route::match(['put', 'patch'], '/platform/users/{user}', [PlatformUserController::class, 'update'])->name('platform.users.update');
 
+    Route::get('/platform/setup/notifications', [PlatformSetupController::class, 'notifications'])->name('platform.setup.notifications');
+    Route::get('/platform/setup/docs', [PlatformSetupController::class, 'docs'])->name('platform.setup.docs');
+    Route::get('/platform/setup/audit-logs', [PlatformSetupController::class, 'auditLogs'])->name('platform.setup.audit-logs');
+    Route::get('/platform/setup/error-logs', [PlatformSetupController::class, 'errorLogs'])->name('platform.setup.error-logs');
     Route::get('/platform/setup/users', [PlatformSetupController::class, 'users'])->name('platform.setup.users');
 
     Route::get('/platform/notifications', [NotificationController::class, 'index'])->name('platform.notifications.index');
@@ -48,6 +52,15 @@ Route::middleware('auth')->group(function (): void {
 
     Route::get('/platform/settings/general', [SettingsController::class, 'general'])->name('platform.settings.general');
     Route::post('/platform/settings/general', [SettingsController::class, 'updateGeneral'])->name('platform.settings.general.update');
+    Route::get('/platform/settings/general/company-information', [SettingsController::class, 'generalCompanyInformation'])->name('platform.settings.general.company-information');
+    Route::post('/platform/settings/general/company-information', [SettingsController::class, 'updateGeneralCompanyInformation'])->name('platform.settings.general.company-information.update');
+    Route::get('/platform/settings/general/localization', [SettingsController::class, 'generalLocalization'])->name('platform.settings.general.localization');
+    Route::post('/platform/settings/general/localization', [SettingsController::class, 'updateGeneralLocalization'])->name('platform.settings.general.localization.update');
+    Route::get('/platform/settings/general/email', [SettingsController::class, 'generalEmail'])->name('platform.settings.general.email');
+    Route::post('/platform/settings/general/email', [SettingsController::class, 'updateGeneralEmail'])->name('platform.settings.general.email.update');
+    Route::get('/platform/settings/general/system-update', [SettingsController::class, 'generalSystemUpdate'])->name('platform.settings.general.system-update');
+    Route::post('/platform/settings/general/system-update', [SettingsController::class, 'updateGeneralSystemUpdate'])->name('platform.settings.general.system-update.update');
+    Route::get('/platform/settings/general/system-server-info', [SettingsController::class, 'generalSystemServerInfo'])->name('platform.settings.general.system-server-info');
     Route::get('/platform/settings/notifications', [SettingsController::class, 'notifications'])->name('platform.settings.notifications');
     Route::post('/platform/settings/notifications', [SettingsController::class, 'updateNotifications'])->name('platform.settings.notifications.update');
     Route::get('/platform/settings/audit-logs', [SettingsController::class, 'auditLogs'])->name('platform.settings.audit-logs');

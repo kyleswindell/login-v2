@@ -69,6 +69,21 @@ Settings must:
 * Log operational failures through the central error log (`CentralErrorLog`).
 * At minimum, log settings changes as audit events.
 
+## Data Table UX Standard
+
+When a feature includes a tabular data view intended for regular operator use, ship a complete table interaction baseline in the same feature cycle:
+
+* search/filter capability (global search or scoped filters)
+* pagination support
+* rows-per-page selector where row count can grow materially
+* visible result summary (for example: showing X to Y of Z entries)
+
+Apply this intelligently:
+
+* use client-side table behavior for small-to-medium in-memory lists
+* use server-side filtering/pagination for large datasets or expensive queries
+* avoid adding fake table controls for tiny static tables where they reduce clarity
+
 ## Canonical Feature Doc
 
 Every feature must have a canonical doc under `docs/V2 App/Features/` registered in [[V2 App/Features/Feature Index]] | [Feature Index](../V2%20App/Features/Feature%20Index.md).

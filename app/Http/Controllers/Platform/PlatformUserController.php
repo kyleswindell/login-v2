@@ -8,6 +8,7 @@ use App\Http\Requests\Platform\UpdatePlatformUserRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class PlatformUserController extends Controller
@@ -27,6 +28,7 @@ class PlatformUserController extends Controller
 
         return view('platform.users.create', [
             'roles' => Role::query()->orderBy('name')->get(),
+            'permissionsByFeature' => $this->permissionsByFeature(),
         ]);
     }
 
@@ -35,6 +37,13 @@ class PlatformUserController extends Controller
         $this->authorize('manage-platform-users');
 
         $user = User::query()->create($request->validatedExceptRoles());
+
+        if ($request->hasFile('profile_image')) {
+            $user->forceFill([
+                'profile_image_path' => $request->file('profile_image')->store('profile-images', 'public'),
+            ])->save();
+        }
+
         $user->syncRoles($request->validatedRoles());
 
         return redirect()
@@ -49,6 +58,7 @@ class PlatformUserController extends Controller
         return view('platform.users.edit', [
             'user' => $user->load('roles'),
             'roles' => Role::query()->orderBy('name')->get(),
+            'permissionsByFeature' => $this->permissionsByFeature(),
         ]);
     }
 
@@ -57,6 +67,10 @@ class PlatformUserController extends Controller
         $this->authorize('manage-platform-users');
 
         $user->fill($request->validatedExceptRoles());
+
+        if ($request->hasFile('profile_image')) {
+            $user->profile_image_path = $request->file('profile_image')->store('profile-images', 'public');
+        }
 
         if ($request->filled('password')) {
             $user->password = $request->string('password')->toString();
@@ -68,5 +82,34 @@ class PlatformUserController extends Controller
         return redirect()
             ->route('platform.users.edit', $user)
             ->with('status', 'User updated successfully.');
+    }
+
+    /**
+     * @return array<string, list<string>>
+     */
+    private function permissionsByFeature(): array
+    {
+        $permissions = Permission::query()->orderBy('name')->pluck('name');
+
+        $grouped = [];
+
+        foreach ($permissions as $permission) {
+            $parts = explode('.', $permission);
+            $feature = $parts[1] ?? 'general';
+            $capability = $parts[2] ?? 'access';
+
+            $featureLabel = str($feature)->replace('-', ' ')->title()->toString();
+            $capabilityLabel = str($capability)->replace('-', ' ')->title()->toString();
+
+            $grouped[$featureLabel] ??= [];
+
+            if (! in_array($capabilityLabel, $grouped[$featureLabel], true)) {
+                $grouped[$featureLabel][] = $capabilityLabel;
+            }
+        }
+
+        ksort($grouped);
+
+        return $grouped;
     }
 }

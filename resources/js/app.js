@@ -2,6 +2,7 @@ import './bootstrap';
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 import './setup-sidebar';
+import './table-enhance';
 
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-notification-menu]').forEach((menu) => {

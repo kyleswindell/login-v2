@@ -8,6 +8,26 @@
         <p class="text-xs font-semibold uppercase tracking-[0.3em] text-sky-300">Setup</p>
 
         <nav class="mt-6 space-y-1">
+            @can('view-platform-notifications')
+                <a href="{{ route('platform.setup.notifications') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                    Notifications Setup
+                </a>
+            @endcan
+            @can('view-platform-docs')
+                <a href="{{ route('platform.setup.docs') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                    Documentation Setup
+                </a>
+            @endcan
+            @can('view-platform-audit-logs')
+                <a href="{{ route('platform.setup.audit-logs') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                    Audit Logs Setup
+                </a>
+            @endcan
+            @can('view-platform-error-logs')
+                <a href="{{ route('platform.setup.error-logs') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                    Error Logs Setup
+                </a>
+            @endcan
             @can('manage-platform-users')
                 <a href="{{ route('platform.setup.users') }}" class="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
                     Platform Users Setup
@@ -37,6 +57,41 @@
                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ($active ?? null) !== 'general',
                     ])>
                         Platform General
+                    </a>
+                    <a href="{{ route('platform.settings.general.company-information') }}" @class([
+                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.settings.general.company-information'),
+                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.general.company-information'),
+                    ])>
+                        Company Information
+                    </a>
+                    <a href="{{ route('platform.settings.general.localization') }}" @class([
+                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.settings.general.localization'),
+                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.general.localization'),
+                    ])>
+                        Localization
+                    </a>
+                    <a href="{{ route('platform.settings.general.email') }}" @class([
+                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.settings.general.email'),
+                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.general.email'),
+                    ])>
+                        Email
+                    </a>
+                    <a href="{{ route('platform.settings.general.system-update') }}" @class([
+                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.settings.general.system-update'),
+                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.general.system-update'),
+                    ])>
+                        System Update
+                    </a>
+                    <a href="{{ route('platform.settings.general.system-server-info') }}" @class([
+                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.settings.general.system-server-info'),
+                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.general.system-server-info'),
+                    ])>
+                        System/Server Info
                     </a>
                 </div>
             </div>

@@ -19,7 +19,7 @@ Current status:
 * shell/navigation baseline ownership is implemented in backend contracts
 * target operational ownership routes now exist under `/platform/operations/*` with gated redirects to transitional `/console` proof routes
 * Batch 5 visual baseline and first-pass owner matrix are explicit
-* platform-users migration is implemented locally as the first Batch 5 code slice
+* platform-users migration is implemented as the first Batch 5 code slice
 * operational shell and setup navigation now use `/platform/operations/*` target routes while legacy Blade log viewers remain compatibility paths
 
 Source planning note:

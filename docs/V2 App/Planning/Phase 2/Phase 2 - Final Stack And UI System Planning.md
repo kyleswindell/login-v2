@@ -10,14 +10,14 @@ This note is the active planning surface for deciding how the Phase 1 foundation
 
 Current status:
 
-* Phase 2 planning is active and decision refinement is in progress
+* Phase 2 planning is active and Batch 5 is ready for final review
 * Phase 1 is complete and signed off
 * current app surfaces are custom Blade, Vite, Tailwind, Laravel controllers, and small DOM-driven JavaScript
 * realtime notifications already use Reverb and Echo
 * Filament is installed and validated through read-only audit/error operational proofs
 * `/console` currently exists as a temporary proof path for operational Filament surfaces only
 * Livewire is present through Filament, while broad custom Livewire shell ownership remains deferred
-* Batch 4 route/navigation convergence is complete locally through target `/platform/operations/*` routes and centralized shell navigation
+* Batch 4 route/navigation convergence is complete through target `/platform/operations/*` routes and centralized shell navigation
 * Batch 5 visual baseline and first-pass owner matrix are locked so shared admin migrations can start
 
 Canonical architecture owner:
@@ -256,10 +256,11 @@ Current progress:
 * Batch 4 route convergence slice is implemented with target operational routes under `/platform/operations/*` that currently redirect to transitional `/console` proof routes with gate parity
 * Batch 5 visual baseline/template direction is locked: no external template, current Tailwind Blade shell, Filament-owned admin/data surfaces
 * Batch 5 owner matrix is locked for dashboard, shell, users, settings, notifications, operational logs, docs vault, and setup pages
-* first Batch 5 platform-users migration slice is implemented locally at `/platform/administration/users` and `/console/platform-users`
-* Batch 5 target administration routes are implemented locally for users, notifications, and settings
+* first Batch 5 platform-users migration slice is implemented at `/platform/administration/users` and `/console/platform-users`
+* Batch 5 target administration routes are implemented for users, notifications, and settings
+* Batch 5 operational setup links use `/platform/operations/*` target routes
 * broad custom Livewire shell work remains deferred behind core migration deliverables
-* next implementation sequence is: operational route retirement sequencing, then Batch 6 close-out contracts and handoff
+* next implementation sequence is: Batch 5 final review, then Batch 6 close-out contracts, `/console` panel-path retirement planning, and cross-phase handoff
 
 ## Remaining Decisions
 

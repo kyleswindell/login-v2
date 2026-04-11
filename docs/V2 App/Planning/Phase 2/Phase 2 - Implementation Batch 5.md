@@ -10,14 +10,15 @@ This batch implements the highest-value ownership migrations required for a cohe
 
 Current status:
 
-* in progress
-* Batch 4 route/navigation convergence is complete locally
-* kickoff contracts are being locked before screen migration starts
+* ready for final review
+* Batch 4 route/navigation convergence is complete
+* kickoff contracts are locked
 * visual baseline/template rules are locked for Batch 5 implementation
 * surface-by-surface owner matrix is locked for the first migration pass
-* platform-users Filament migration slice is implemented locally and shell navigation points to the target users route
+* platform-users Filament migration slice is implemented and shell navigation points to the target users route
 * target administration routes now exist for users, notifications, and settings while compatibility paths remain available
 * operational setup links now point to target `/platform/operations/*` routes while legacy Blade log viewers remain compatibility paths
+* final `/console` panel-path retirement is explicitly deferred to Batch 6 as a close-out contract
 
 Planning owner:
 
@@ -74,7 +75,7 @@ Start Batch 5 by locking:
 * users owner target: keep Blade temporarily, migrate to Filament, or hybrid migration sequence
 * settings owner target: identify which settings remain workflow pages versus Filament/admin forms
 * notifications owner target: preserve Reverb/Echo delivery, unread counts, and inbox sync while evaluating UI ownership
-* operational logs owner target: decide whether `/platform/operations/*` redirects are replaced by direct final Filament-owned routes in this batch
+* operational logs owner target: keep `/platform/operations/*` as the daily-use owner route in this batch and defer final `/console` panel-path retirement to Batch 6
 * compatibility paths: define which existing `/platform/*` and `/console/*` routes remain available during migration
 
 Do not implement screen migrations until the owner matrix and visual baseline are recorded in the planning owner and canonical architecture owner.
@@ -100,9 +101,9 @@ Rules:
 | --- | --- | --- | --- | --- | --- |
 | Dashboard | Keep custom Blade | `/dashboard` | authenticated user | none | Preserve as shell/home baseline; no migration in Batch 5. |
 | App shell/navigation | Keep custom Blade with backend navigation contract | shared layout | item-specific gates via `App\Platform\Navigation\PlatformNavigation` | none | Preserve and extend only when migrated surfaces need navigation changes. |
-| Platform users | Filament candidate, service-backed | `/platform/administration/users` redirects to `/console/platform-users`; current `/platform/users/*` remains until final retirement | `manage-platform-users` | current Blade `/platform/users/*` | Filament parity hardening implemented locally; shell navigation now points to the target route. |
-| Settings | Hybrid/custom Blade for Batch 5 | `/platform/administration/settings` redirects to `/platform/settings/general`; current `/platform/settings/*` remains | `manage-platform-settings` | current Blade settings pages | Target route implemented locally; grouped Filament page migration deferred until after users parity is stable. |
-| Notifications inbox | Keep custom Blade plus Echo for this batch | `/platform/administration/notifications` redirects to `/platform/notifications`; action routes remain under `/platform/notifications/*` | `view-platform-notifications` | current Blade inbox and header preview | Target route implemented locally; realtime behavior remains custom/Echo-backed. |
+| Platform users | Filament candidate, service-backed | `/platform/administration/users` redirects to `/console/platform-users`; current `/platform/users/*` remains until final retirement | `manage-platform-users` | current Blade `/platform/users/*` | Filament parity hardening implemented; shell navigation now points to the target route. |
+| Settings | Hybrid/custom Blade for Batch 5 | `/platform/administration/settings` redirects to `/platform/settings/general`; current `/platform/settings/*` remains | `manage-platform-settings` | current Blade settings pages | Target route implemented; grouped Filament page migration deferred until after users parity is stable. |
+| Notifications inbox | Keep custom Blade plus Echo for this batch | `/platform/administration/notifications` redirects to `/platform/notifications`; action routes remain under `/platform/notifications/*` | `view-platform-notifications` | current Blade inbox and header preview | Target route implemented; realtime behavior remains custom/Echo-backed. |
 | Header notification preview | Keep custom shell behavior | app layout and `resources/js/app.js`; default notification links use `/platform/administration/notifications` | `view-platform-notifications` | current header preview | Realtime unread count, preview, and toast behavior preserved. |
 | Audit logs | Filament-owned operational surface behind target route | `/platform/operations/audit-logs` | `view-platform-audit-logs` | `/platform/audit-logs` and `/console/platform-audit-logs` | Daily shell and setup navigation use the target route; legacy Blade viewer and console proof path remain compatibility paths during panel-path retirement planning. |
 | Error logs | Filament-owned operational surface behind target route | `/platform/operations/error-logs` | `view-platform-error-logs` | `/platform/error-logs/*` and `/console/central-error-logs` | Daily shell and setup navigation use the target route; legacy Blade viewer and console proof path remain compatibility paths during panel-path retirement planning. |
@@ -153,18 +154,38 @@ This batch is complete when:
 * regression checks pass for migrated surfaces
 * docs reflect final owner per surface and remaining transitional items (if any)
 
+## Review Readiness
+
+Batch 5 is ready for final review when these conditions are true:
+
+* target route ownership exists for users, settings, notifications, audit logs, and error logs
+* shell navigation uses target ownership routes instead of direct `/console` proof paths
+* setup navigation uses target settings and operational routes instead of legacy log viewer paths
+* notification header, preview, and fallback URLs use the target notifications route while Echo behavior remains unchanged
+* Filament users parity tests cover list/search, create, edit, role assignment, active state, and staff profile fields
+* authorization tests cover target routes, compatibility paths, and transitional Filament paths
+* planning, canonical feature, canonical architecture, and development docs record the same owner state
+
+Remaining transitional items for Batch 6:
+
+* select the final panel-path retirement plan for `/console`
+* decide when to retire legacy Blade users/log viewer compatibility paths
+* convert the Batch 5 owner decisions into Phase 3 and Phase 4 scaffolding standards
+
 ## Verification
 
-Verification focus:
+Completed verification:
 
-* authorization matrix tests for each migrated surface
-* route access parity checks for old versus new ownership paths
-* notification realtime behavior checks (delivery, unread counts, inbox sync)
-* no editor-reported errors in touched files
+* PHP syntax checks passed for touched PHP files and tests during implementation slices
+* `./vendor/bin/pint --dirty --test` passed
+* `git diff --check` passed
+* `php artisan route:list --path=platform/administration` lists users, notifications, and settings target routes
+* `php artisan route:list --path=platform/operations` lists audit-log and error-log target routes
+* Docker feature tests passed for dashboard, platform users, notifications, settings, setup pages, audit logs, and error logs: 69 tests, 259 assertions
 
 ## Follow-Up Batch Dependency
 
-Batch 6 can start after ownership migration is stable and documented.
+Batch 6 can start after Batch 5 final review accepts the implemented target ownership and the documented transitional-path deferrals.
 
 ## Related
 

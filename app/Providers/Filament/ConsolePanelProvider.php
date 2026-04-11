@@ -30,6 +30,7 @@ class ConsolePanelProvider extends PanelProvider
             ->login()
             ->brandName('Platform Console')
             ->maxContentWidth(Width::Full)
+            ->viteTheme('resources/css/filament/console/theme.css')
             ->colors([
                 'primary' => Color::Blue,
             ])

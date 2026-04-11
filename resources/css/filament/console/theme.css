@@ -1,0 +1,41 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+.fi-ta.platform-error-log-table,
+.fi-ta.platform-error-log-table .fi-ta-ctn,
+.fi-ta.platform-error-log-table .fi-ta-main,
+.fi-ta.platform-error-log-table .fi-ta-content-ctn,
+.fi-ta.platform-error-log-table .fi-ta-content {
+    max-width: 100%;
+    min-width: 0;
+}
+
+.fi-ta.platform-error-log-table .fi-ta-content-ctn {
+    overflow-x: hidden;
+}
+
+.fi-ta.platform-error-log-table .fi-ta-table {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    table-layout: fixed;
+}
+
+.fi-ta.platform-error-log-table .fi-ta-header-cell,
+.fi-ta.platform-error-log-table .fi-ta-cell {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.fi-ta.platform-error-log-table .fi-ta-col,
+.fi-ta.platform-error-log-table .fi-ta-text,
+.fi-ta.platform-error-log-table .fi-ta-text-item,
+.fi-ta.platform-error-log-table .fi-ta-text-item-label {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.fi-ta.platform-error-log-table .fi-ta-actions {
+    white-space: nowrap;
+}

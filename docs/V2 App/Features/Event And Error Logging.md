@@ -20,6 +20,7 @@ Current status:
 * Filament log viewers use safe modal headings and truncated long-text display to avoid oversized recursive exception output
 * Filament log slide-over details are organized into coherent sections with long message, stack trace, metadata, and client details collapsed by default
 * Filament log tables use responsive column priority so core log records remain within page width without default horizontal scrolling
+* the error log Filament table has a scoped console theme override that forces fixed-layout sizing and aggressive wrapping for long error text
 
 ## Current Scope
 
@@ -142,6 +143,7 @@ Filament proof notes:
 * access is limited to active users who can view platform error logs
 * the default table view prioritizes occurred time, severity, message, handled state, and row actions, while secondary diagnostic columns are hidden by default or reserved for wider breakpoints
 * the detail slide-over uses full-width stacked sections so summary, exception, request context, full message, stack trace, and context are visually separated without side-by-side section cards
+* error table layout CSS is scoped through `platform-error-log-table` and `resources/css/filament/console/theme.css`
 
 Audit Filament proof notes:
 

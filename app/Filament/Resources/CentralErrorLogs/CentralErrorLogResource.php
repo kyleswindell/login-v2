@@ -162,6 +162,7 @@ class CentralErrorLogResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->extraAttributes(['class' => 'platform-error-log-table'])
             ->recordTitleAttribute('message')
             ->defaultSort('occurred_at', 'desc')
             ->columns([

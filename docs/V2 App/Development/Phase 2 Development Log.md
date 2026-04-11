@@ -17,7 +17,8 @@ Current state:
 * UI surface disposition audit has been drafted
 * Filament usage standards have been expanded
 * Batch 2 Filament proof-of-concept plan has been drafted
-* Batch 2 Filament proof has been implemented locally and is pending staging deployment/QA
+* Batch 2 Filament error-log proof has been deployed and validated on staging
+* Batch 3 Filament audit-log proof has been implemented locally and is pending staging deployment/QA
 
 ## Milestones
 
@@ -79,8 +80,8 @@ Planning owners:
 
 ## Next Expected Work
 
-* deploy the Batch 2 Filament proof to staging
-* review the `/console/central-error-logs` proof against the current Blade error log viewer
+* deploy the Batch 3 Filament audit-log proof to staging
+* review `/console/platform-audit-logs` against the current Blade audit log viewer
 * decide persistent navigation strategy
 * review visual design and template options
 * define optional module migration/seeding convention
@@ -109,8 +110,7 @@ Planning owners:
 
 Status:
 
-* application code implemented locally
-* staging deployment pending
+* deployed and validated on staging
 * local automated test execution blocked by PostgreSQL host resolution outside Docker
 
 Work completed:
@@ -122,6 +122,7 @@ Work completed:
 * kept the existing Blade error log viewer routes available
 * added feature tests for authorized access, guest redirect, and unauthorized denial
 * updated deployment flow to publish Filament assets as generated deployment artifacts
+* validated table and slide-over detail behavior on staging
 
 Canonical docs:
 
@@ -137,8 +138,7 @@ Planning owners:
 
 Status:
 
-* implemented locally
-* pending staging deployment
+* deployed and validated on staging
 
 Correction:
 
@@ -150,6 +150,35 @@ Correction:
 Canonical docs:
 
 * [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../Features/Event%20And%20Error%20Logging.md)
+
+### 2026-04-11 - Phase 2 Batch 3 audit log Filament proof implemented locally
+
+Status:
+
+* implemented locally
+* pending staging deployment and QA
+
+Work completed:
+
+* added read-only `PlatformAuditLogResource`
+* exposed `/console/platform-audit-logs`
+* kept the existing Blade audit log viewer available at `/platform/audit-logs`
+* reused signed-in-user timezone formatting for audit timestamps
+* extended console panel access to users with audit-log permission
+* added feature tests for authorized access, guest redirect, and unauthorized denial
+* confirmed `/console/platform-audit-logs` route registration locally
+* confirmed local unit tests for timestamp conversion pass
+* targeted feature test execution still times out in the current non-Docker local environment
+
+Canonical docs:
+
+* [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../Features/Event%20And%20Error%20Logging.md)
+* [[V2 App/Reference/Stack - Filament And Livewire]] | [Stack - Filament And Livewire](../Reference/Stack%20-%20Filament%20And%20Livewire.md)
+
+Planning owners:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 3]] | [Phase 2 - Implementation Batch 3](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%203.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - UI Surface Disposition Audit]] | [Phase 2 - UI Surface Disposition Audit](../Planning/Phase%202/Phase%202%20-%20UI%20Surface%20Disposition%20Audit.md)
 
 ## Related
 

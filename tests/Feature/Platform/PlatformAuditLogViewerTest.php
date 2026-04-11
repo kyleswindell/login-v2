@@ -30,6 +30,42 @@ class PlatformAuditLogViewerTest extends TestCase
             ->assertSee('auth.login.success');
     }
 
+    public function test_authorized_users_can_view_filament_audit_log_proof(): void
+    {
+        $user = $this->actingAsPlatformSuperAdmin();
+
+        PlatformAuditLog::query()->create([
+            'occurred_at' => now('UTC'),
+            'event_type' => 'auth.login.success',
+            'action' => 'success',
+            'actor_user_id' => $user->id,
+            'result' => 'success',
+            'severity' => 'info',
+        ]);
+
+        $this->get('/console/platform-audit-logs')
+            ->assertOk()
+            ->assertSee('Audit Logs')
+            ->assertSee('auth.login.success');
+    }
+
+    public function test_guests_are_redirected_from_filament_audit_log_proof(): void
+    {
+        $this->get('/console/platform-audit-logs')
+            ->assertRedirect('/console/login');
+    }
+
+    public function test_users_without_permission_cannot_access_filament_audit_log_proof(): void
+    {
+        $user = User::factory()->create([
+            'is_active' => true,
+        ]);
+
+        $this->actingAs($user)
+            ->get('/console/platform-audit-logs')
+            ->assertForbidden();
+    }
+
     public function test_standard_users_cannot_access_audit_logs(): void
     {
         $user = User::factory()->create();

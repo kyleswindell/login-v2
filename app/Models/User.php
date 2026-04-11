@@ -51,6 +51,7 @@ class User extends Authenticatable implements FilamentUser
         return $this->is_active
             && (
                 $this->hasRole('platform_super_admin')
+                || $this->can('platform.audit-logs.view')
                 || $this->can('platform.error-logs.view')
             );
     }

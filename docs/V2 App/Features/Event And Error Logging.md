@@ -14,7 +14,8 @@ Current status:
 * exception reporting is wired to write into `central_error_logs`
 * audit log viewer UI is live on staging
 * error log viewer UI is live on staging
-* Filament read-only error log proof is implemented locally and pending staging deployment/QA
+* Filament read-only error log proof is deployed and validated on staging
+* Filament read-only audit log proof is implemented locally and pending staging deployment/QA
 * audit and error log timestamps are stored as UTC and displayed in the signed-in user's timezone
 
 ## Current Scope
@@ -31,6 +32,7 @@ Runtime pieces in the current implementation:
 * exception reporting hook in `bootstrap/app.php`
 * `App\Http\Controllers\Platform\AuditLogController`
 * `App\Http\Controllers\Platform\ErrorLogController`
+* `App\Filament\Resources\PlatformAuditLogs\PlatformAuditLogResource`
 * `App\Filament\Resources\CentralErrorLogs\CentralErrorLogResource`
 * `App\Providers\Filament\ConsolePanelProvider`
 * `resources/views/platform/audit-logs/index.blade.php`
@@ -78,6 +80,7 @@ Current auth-related events:
 Current audit visibility surface:
 
 * `GET /platform/audit-logs`
+* `GET /console/platform-audit-logs`, local Filament proof pending staging QA
 * filters by event type, actor, result, and severity
 * current audience is platform users with `platform.audit-logs.view`
 
@@ -135,6 +138,12 @@ Filament proof notes:
 * the Filament proof is read-only and uses the existing `view-platform-error-logs` gate
 * access is limited to active users who can view platform error logs
 
+Audit Filament proof notes:
+
+* the existing Blade audit log route remains the current live surface
+* the Filament proof is read-only and uses the existing `view-platform-audit-logs` gate
+* access is limited to active users who can view platform audit logs
+
 ## Request Correlation
 
 Every web request receives an `X-Request-Id`. That value is reused as the initial trace identifier so platform audit logs, error logs, file logs, and future external observability can be correlated without guessing.
@@ -154,5 +163,6 @@ This is the central-platform baseline. Tenant-local audit logs and central secur
 * [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 1]] | [Phase 1 - Implementation Batch 1](../Planning/Phase%201/Phase%201%20-%20Implementation%20Batch%201.md)
 * [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 3]] | [Phase 1 - Implementation Batch 3](../Planning/Phase%201/Phase%201%20-%20Implementation%20Batch%203.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 2]] | [Phase 2 - Implementation Batch 2](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%202.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 3]] | [Phase 2 - Implementation Batch 3](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%203.md)
 * [[V2 App/V2 App Documentation Map]] | [V2 App Documentation Map](../V2%20App%20Documentation%20Map.md)
 * [[V2 App/Reference/Reference Index]] | [Reference Index](../Reference/Reference%20Index.md)

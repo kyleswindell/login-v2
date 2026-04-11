@@ -18,7 +18,8 @@ Current status:
 * Livewire is present through Filament, while broad custom Livewire shell ownership remains deferred
 * shell/navigation baseline ownership is implemented in backend contracts
 * target operational ownership routes now exist under `/platform/operations/*` with gated redirects to transitional `/console` proof routes
-* Batch 5 is ready for kickoff planning once visual baseline and owner matrix decisions are explicit
+* Batch 5 visual baseline and first-pass owner matrix are explicit
+* platform-users migration is implemented locally as the first Batch 5 code slice
 
 Source planning note:
 
@@ -64,6 +65,8 @@ The following direction is locked for current Phase 2 planning and execution:
 * the existing Blade shell remains primary during current migration sequencing
 * Filament stays approved for admin/operational data surfaces and must align with unified navigation and design conventions
 * notifications realtime behavior remains Reverb/Echo based while UI ownership evolves
+* no third-party dashboard/admin template is adopted for Batch 5; the current Tailwind Blade shell remains the baseline while Filament owns selected admin/data surfaces
+* platform users now has an app-owned target route at `/platform/administration/users` that redirects to `/console/platform-users` during the migration window
 
 ## Current Implementation Versus Final Stack
 
@@ -88,6 +91,7 @@ The following areas are intentionally transitional:
 * navigation shell is full-page Blade, not a persistent Livewire shell
 * Setup and Settings UI exists, but the long-term panel ownership is not decided
 * UI styling is functional Tailwind, not yet a formal design system
+* Batch 5 uses this functional Tailwind baseline deliberately rather than adopting an external template
 
 ### Not yet introduced
 
@@ -174,6 +178,13 @@ A template should only be adopted if it:
 
 If no template is selected, Phase 2 should still define a small custom design system before Phase 3.
 
+Batch 5 decision:
+
+* do not adopt a third-party dashboard/admin template
+* keep the current Tailwind Blade shell as the working visual baseline
+* use Filament-native tables, forms, filters, actions, and slide-over/detail patterns where Filament owns a surface
+* defer broad dashboard or shell redesign until after shared admin owner migrations are stable
+
 ## Optional Module Schema Direction
 
 Optional tenant-specific modules should not force schema into every tenant database by default.
@@ -195,7 +206,7 @@ Open gaps:
 
 * Batch 4 introduced `/platform/operations/*` as the shell-owned target route layer, but no ADR yet confirms final direct replacement paths after transitional `/console` redirects are retired
 * no final UI component inventory exists
-* no visual design reference or template decision exists
+* Batch 5 has a working visual/template decision, but no final long-term design-system reference exists yet
 * no panel boundary test exists
 * no optional module schema installation standard exists yet
 * no platform-to-tenant access handoff standard exists yet

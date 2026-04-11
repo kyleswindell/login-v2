@@ -35,6 +35,12 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/platform/users/{user}/edit', [PlatformUserController::class, 'edit'])->name('platform.users.edit');
     Route::match(['put', 'patch'], '/platform/users/{user}', [PlatformUserController::class, 'update'])->name('platform.users.update');
 
+    Route::get('/platform/administration/users', function () {
+        abort_unless(Gate::allows('manage-platform-users'), 403);
+
+        return redirect('/console/platform-users');
+    })->name('platform.administration.users.index');
+
     Route::get('/platform/setup/notifications', [PlatformSetupController::class, 'notifications'])->name('platform.setup.notifications');
     Route::get('/platform/setup/docs', [PlatformSetupController::class, 'docs'])->name('platform.setup.docs');
     Route::get('/platform/setup/audit-logs', [PlatformSetupController::class, 'auditLogs'])->name('platform.setup.audit-logs');

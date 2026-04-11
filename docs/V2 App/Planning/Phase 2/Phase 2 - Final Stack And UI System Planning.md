@@ -18,7 +18,7 @@ Current status:
 * `/console` currently exists as a temporary proof path for operational Filament surfaces only
 * Livewire is present through Filament, while broad custom Livewire shell ownership remains deferred
 * Batch 4 route/navigation convergence is complete locally through target `/platform/operations/*` routes and centralized shell navigation
-* Phase 2 must now lock visual baseline and owner matrix details before Batch 5 shared admin migrations begin
+* Batch 5 visual baseline and first-pass owner matrix are locked so shared admin migrations can start
 
 Canonical architecture owner:
 
@@ -54,6 +54,7 @@ The following direction is now accepted for Phase 2 planning and execution:
 * operational log navigation now targets `/platform/operations/*` routes, which gate access before redirecting to transitional Filament proof resources
 * notifications realtime transport remains Reverb and Echo; migration work should not replace it with polling-first behavior
 * UI ownership must be declared per surface before implementation: custom Blade, Filament, or hybrid
+* Batch 5 will not adopt a third-party dashboard/admin template; it uses the current Tailwind Blade shell plus Filament-owned admin/data surfaces
 
 This keeps implementation consistent with the existing UI design workflow and avoids two parallel products forming accidentally.
 
@@ -178,7 +179,15 @@ Required output:
 
 ### 3. Visual design and template review
 
-Decide:
+Locked for Batch 5:
+
+* no third-party dashboard/admin template adoption
+* current full-page Blade shell remains primary
+* current Tailwind shell primitives remain the shared baseline
+* Filament resources use Filament-native tables, forms, filters, actions, and detail behavior while matching unified navigation direction
+* broad visual redesign is deferred unless local parity fixes are needed for a migrated surface
+
+Future design-system work still needs to decide:
 
 * whether to select a dashboard/admin template
 * whether to keep a custom Tailwind design system
@@ -245,9 +254,11 @@ Current progress:
 * Filament proof targets for audit and error logs are deployed and accepted as complete for Phase 2 proof purposes
 * app shell navigation ownership has a first implementation slice through a centralized navigation contract in the Blade shell
 * Batch 4 route convergence slice is implemented with target operational routes under `/platform/operations/*` that currently redirect to transitional `/console` proof routes with gate parity
-* visual design/template brief remains pending
+* Batch 5 visual baseline/template direction is locked: no external template, current Tailwind Blade shell, Filament-owned admin/data surfaces
+* Batch 5 owner matrix is locked for dashboard, shell, users, settings, notifications, operational logs, docs vault, and setup pages
+* first Batch 5 platform-users migration slice is implemented locally at `/platform/administration/users` and `/console/platform-users`
 * broad custom Livewire shell work remains deferred behind core migration deliverables
-* next implementation sequence is: Batch 5 kickoff planning for visual baseline and owner matrix, then Batch 5 shared admin owner migration, then Batch 6 close-out contracts and handoff
+* next implementation sequence is: platform-users parity hardening, then settings/notifications/operational route retirement sequencing, then Batch 6 close-out contracts and handoff
 
 ## Remaining Decisions
 
@@ -276,7 +287,7 @@ Open:
 
 Open:
 
-* exact target path plan replacing transitional `/console` routes
+* final direct target path plan replacing transitional `/console` routes after `/platform/operations/*` redirects are retired
 * whether platform-management and core-app admin screens finish Phase 2 as a hybrid shell with shared design and unified navigation entry points
 * whether future tenant screens use a separate panel provider
 * whether Livewire is used outside Filament before Phase 3

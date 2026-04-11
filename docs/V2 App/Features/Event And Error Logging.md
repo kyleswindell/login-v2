@@ -17,6 +17,7 @@ Current status:
 * Filament read-only error log proof is deployed and validated on staging
 * Filament read-only audit log proof is accepted for Phase 2 proof purposes
 * target operational shell routes exist at `/platform/operations/audit-logs` and `/platform/operations/error-logs`
+* Phase 2 Batch 5 keeps operational log daily navigation on `/platform/operations/*` while final direct Filament route ownership is sequenced behind the platform-users migration
 * audit and error log timestamps are stored as UTC and displayed in the signed-in user's timezone
 * Filament log viewers use safe modal headings and truncated long-text display to avoid oversized recursive exception output
 * Filament log slide-over details are organized into coherent sections with long message, stack trace, metadata, and client details collapsed by default
@@ -139,6 +140,12 @@ Current error visibility surface:
 * `GET /console/central-error-logs`, transitional Filament proof path
 * filters by severity, handled state, environment, exception class, and date range
 * current audience is platform users with `platform.error-logs.view`
+
+Phase 2 Batch 5 owner target:
+
+* operational logs are Filament-owned operational surfaces for long-term UI direction
+* `/platform/operations/*` remains the daily shell navigation layer until final direct Filament route paths are selected
+* legacy Blade routes stay available as compatibility paths during the first Batch 5 migration slice
 
 Filament proof notes:
 

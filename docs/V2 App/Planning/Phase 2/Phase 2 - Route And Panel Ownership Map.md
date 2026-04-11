@@ -34,6 +34,7 @@ Current Phase 1 route families:
 | `/login` | custom Blade auth | platform login | keep until panel/auth decision |
 | `/dashboard` | custom Blade | main authenticated dashboard | shared core candidate |
 | `/platform/users` | custom Blade | platform user management | migration candidate |
+| `/platform/administration/users` | Laravel route alias | target platform user ownership route that gate-checks then redirects to `/console/platform-users` | implemented in Batch 5 |
 | `/platform/setup/*` | custom Blade | Setup shell pages | route strategy pending |
 | `/platform/settings/*` | custom Blade | Settings pages | migration candidate |
 | `/platform/notifications` | custom Blade plus Echo | notification inbox | hybrid candidate |
@@ -43,6 +44,7 @@ Current Phase 1 route families:
 | `/platform/operations/error-logs` | Laravel route alias | target operational ownership route that gate-checks then redirects to `/console/central-error-logs` | implemented in Batch 4 |
 | `/console/platform-audit-logs` | Filament proof resource | read-only audit log proof surface | transitional proof path |
 | `/console/central-error-logs` | Filament proof resource | read-only error log proof surface | transitional proof path |
+| `/console/platform-users` | Filament migration resource | platform user management migration surface | transitional migration path |
 | `/platform/docs` | custom Blade | internal docs vault | keep custom Blade |
 | `/platform/realtime/auth` | Laravel endpoint | Echo private-channel auth | keep backend endpoint |
 
@@ -166,7 +168,7 @@ Open:
 
 * exact platform production domain
 * exact tenant admin domain pattern
-* final direct replacement path(s) for `/console` proof resources after the Batch 4 `/platform/operations/*` ownership redirects are retired
+* final direct replacement path(s) for `/console` proof/migration resources after the Batch 4 `/platform/operations/*` and Batch 5 `/platform/administration/*` ownership redirects are retired
 * whether shared core routes become unprefixed, `/app/*`, or Filament-owned
 * whether current non-operational `/platform/*` routes are retained as aliases, migrated, or reserved for platform-management only
 * whether platform-management is a separate panel or a grouped capability inside the shared core shell after transitional routes are retired

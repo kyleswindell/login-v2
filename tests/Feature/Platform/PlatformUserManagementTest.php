@@ -31,6 +31,23 @@ class PlatformUserManagementTest extends TestCase
             ->assertSee('Platform Users');
     }
 
+    public function test_super_admin_can_view_filament_platform_users_migration_surface(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/console/platform-users')
+            ->assertOk()
+            ->assertSee('Platform Users');
+    }
+
+    public function test_super_admin_is_redirected_from_target_users_route_to_filament_surface(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/administration/users')
+            ->assertRedirect('/console/platform-users');
+    }
+
     public function test_standard_users_cannot_access_platform_user_management(): void
     {
         $user = User::factory()->create();
@@ -39,9 +56,17 @@ class PlatformUserManagementTest extends TestCase
             ->get('/platform/users')
             ->assertForbidden();
 
-            $this->actingAs($user)
-                ->get('/platform/setup/users')
-                ->assertForbidden();
+        $this->actingAs($user)
+            ->get('/platform/setup/users')
+            ->assertForbidden();
+
+        $this->actingAs($user)
+            ->get('/console/platform-users')
+            ->assertForbidden();
+
+        $this->actingAs($user)
+            ->get('/platform/administration/users')
+            ->assertForbidden();
     }
 
     public function test_super_admin_can_create_platform_users_with_roles(): void

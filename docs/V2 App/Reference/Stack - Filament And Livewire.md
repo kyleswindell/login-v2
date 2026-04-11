@@ -92,6 +92,18 @@ Each panel must document:
 
 Panels should be visually consistent even when they are separated internally for safety.
 
+## Phase 2 Batch 5 Owner Direction
+
+Batch 5 starts with the current Tailwind Blade shell as the shared app shell and uses Filament for selected admin/data surfaces.
+
+Current Batch 5 owner decisions:
+
+* platform users is the first Filament migration candidate and is implemented locally at `/console/platform-users`
+* settings remain hybrid/custom until grouped page ownership is defined
+* notifications remain custom Blade plus Echo until realtime parity criteria are proven
+* operational logs remain Filament-owned operational surfaces reached through `/platform/operations/*` target routes while transitional `/console/*` proof paths are retired later
+* docs vault remains custom Blade
+
 ## Version Direction
 
 Current local install resolved:

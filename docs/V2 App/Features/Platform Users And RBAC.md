@@ -13,6 +13,9 @@ Current status:
 * platform user management UI exists
 * richer staff profile management and selective setup flow are live on staging
 * first-pass role and permission seeding updates are live on staging
+* Phase 2 Batch 5 selected platform users as the first shared admin Filament migration candidate
+* first Filament migration resource is implemented locally at `/console/platform-users`
+* target app-owned migration route is implemented locally at `/platform/administration/users`
 * tenant-scoped auth and tenant roles are still deferred
 
 ## Current Implementation
@@ -38,12 +41,27 @@ Current platform user management surfaces:
 * activate or deactivate accounts
 * search, paginate, and resize the users table entry count from the UI
 
+## Phase 2 Batch 5 Owner Target
+
+Batch 5 targets platform user management as the first shared admin Filament migration candidate.
+
+Migration requirements:
+
+* preserve the current Blade `/platform/users/*` routes until Filament create/edit/list behavior matches the existing workflow
+* route target: `/platform/administration/users`
+* transitional Filament route: `/console/platform-users`
+* keep `manage-platform-users` as the owner gate
+* preserve current staff profile fields, activation state, welcome-email flag, and role assignment behavior
+* keep validation and business behavior aligned with the existing request/model/RBAC contracts
+
 ## Important Files
 
 * `app/Http/Controllers/Auth/LoginController.php`
 * `app/Http/Controllers/Platform/PlatformUserController.php`
 * `app/Http/Requests/Platform/StorePlatformUserRequest.php`
 * `app/Http/Requests/Platform/UpdatePlatformUserRequest.php`
+* `app/Filament/Resources/PlatformUsers/PlatformUserResource.php`
+* `app/Filament/Resources/PlatformUsers/Pages/ManagePlatformUsers.php`
 * `app/Models/User.php`
 * `app/Providers/AppServiceProvider.php`
 * `database/migrations/2026_04_10_000001_add_staff_profile_fields_to_users_table.php`
@@ -118,6 +136,7 @@ Current gaps:
 * no password reset UI flow yet
 * no tenant-auth boundary implementation yet
 * the permissions tab is still an informational grouped view driven by installed permissions, not a full direct per-capability assignment matrix
+* Phase 2 Batch 5 still needs parity hardening before the Blade compatibility path can be retired
 
 ## Related
 

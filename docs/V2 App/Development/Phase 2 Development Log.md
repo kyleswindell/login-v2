@@ -22,7 +22,9 @@ Current state:
 * audit and error log Filament proof surfaces are accepted as complete for Phase 2 proof purposes
 * Batch 4 route/navigation convergence is complete locally through centralized shell navigation and `/platform/operations/*` target routes
 * `/console` proof routes are transitional and no longer linked directly from shell navigation
-* next Phase 2 focus is visual baseline, owner matrix lock, and Batch 5 migration sequencing
+* Batch 5 visual baseline and owner matrix are locked for the first shared admin migration pass
+* first Batch 5 platform-users Filament migration slice is implemented locally
+* next Phase 2 focus is platform-users parity hardening
 
 ## Milestones
 
@@ -84,13 +86,40 @@ Planning owners:
 
 ## Next Expected Work
 
-* lock visual baseline and template-review direction for the shared shell
-* decide whether the custom shell remains primary with Filament islands or shifts further into Filament/Livewire ownership
-* lock visual baseline and surface owner matrix before Batch 5 implementation starts
-* execute Batch 5 owner migrations for users/settings/notifications/operational surfaces after those Batch 5 entry contracts are met
+* harden the Batch 5 platform-users migration slice
+* evaluate settings and notifications migration after the platform-users Filament slice confirms parity expectations
+* retire transitional operational log proof routing after final direct owner paths are selected
 * execute Batch 6 close-out contracts and handoff updates for Phase 3 and Phase 4
 * define optional module migration/seeding convention
 * define platform-to-tenant access handoff approach
+
+### 2026-04-11 - Phase 2 Batch 5 kickoff contracts and users migration slice
+
+Status:
+
+* implemented locally
+* pending focused test verification in Docker/staging-equivalent environment
+
+Work completed:
+
+* locked Batch 5 visual baseline: current Tailwind Blade shell, no third-party template, Filament-owned admin/data surfaces where appropriate
+* locked first-pass owner matrix for dashboard, shell, users, settings, notifications, operational logs, docs vault, and setup pages
+* added `App\Filament\Resources\PlatformUsers\PlatformUserResource`
+* added `/console/platform-users` through the existing console Filament panel
+* added `/platform/administration/users` as the app-owned target users route with `manage-platform-users` gate parity
+* allowed active users with `platform.users.manage` to access the console panel during the migration window
+* kept current Blade `/platform/users/*` routes available and left shell navigation on the Blade users surface until parity hardening is complete
+
+Planning owners:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 5]] | [Phase 2 - Implementation Batch 5](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%205.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](../Planning/Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
+
+Canonical docs:
+
+* [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
+* [[V2 App/Features/Platform Users And RBAC]] | [Platform Users And RBAC](../Features/Platform%20Users%20And%20RBAC.md)
+* [[V2 App/Reference/Stack - Filament And Livewire]] | [Stack - Filament And Livewire](../Reference/Stack%20-%20Filament%20And%20Livewire.md)
 
 ### 2026-04-11 - Phase 2 batch sequence refinement
 

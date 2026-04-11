@@ -24,7 +24,7 @@ Current focus:
 | Batch 2 | Complete | Filament operational proof: error logs |
 | Batch 3 | Complete | Filament operational proof: audit logs |
 | Batch 4 | Complete locally | route and navigation convergence contracts |
-| Batch 5 | Ready for kickoff planning | users/settings/notifications/operational surface migration |
+| Batch 5 | In progress | users/settings/notifications/operational surface migration |
 | Batch 6 | Planned | phase close-out contracts and Phase 3/4 handoff |
 
 ## Planning Notes

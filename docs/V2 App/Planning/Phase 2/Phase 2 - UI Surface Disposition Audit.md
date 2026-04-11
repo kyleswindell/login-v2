@@ -15,7 +15,7 @@ Current status:
 * Phase 2 Batch 3 selected audit logs as the second Filament comparison surface
 * audit and error log Filament proofs are accepted as complete for Phase 2 proof purposes
 * `/console` proof routes are transitional and must merge into unified app navigation/ownership by Phase 2 close
-* next Phase 2 focus is app shell, navigation, visual baseline, template/design decision, and migration sequencing
+* Batch 5 visual baseline and owner matrix are locked for the first shared admin migration pass
 
 Source planning note:
 
@@ -41,7 +41,7 @@ Use these categories:
 | Login | `/login`, `resources/views/auth/login.blade.php` | custom Blade auth form | Transitional | May stay custom until Filament panel auth and tenant auth are designed. |
 | Dashboard | `/dashboard`, `resources/views/platform/dashboard.blade.php` | custom Blade dashboard cards and links | Hybrid candidate | Dashboard should define the shared app feel; may stay custom or become a Filament/Livewire dashboard after design review. |
 | App shell | `resources/views/components/layouts/app.blade.php` | custom top header, sidebar, setup overlay, user menu, notifications | Hybrid candidate | This is the highest-impact Phase 2 UI decision because it controls platform/tenant visual consistency. |
-| Platform users | `/platform/users/*`, `resources/views/platform/users/*` | custom Blade CRUD/list | Filament candidate | User management is CRUD-heavy and a good proof-of-concept candidate. |
+| Platform users | `/platform/users/*`, `resources/views/platform/users/*`, target route at `/platform/administration/users`, migration surface at `/console/platform-users` | custom Blade CRUD/list retained; Filament migration resource implemented locally | Filament candidate | User management is CRUD-heavy and Batch 5 selected it as the first shared admin migration slice. |
 | Setup pages | `/platform/setup/*`, `resources/views/platform/setup/*` | custom Blade setup landing pages | Transitional | Setup behavior may become module manifest driven and should not be expanded heavily before the route/panel decision. |
 | Settings pages | `/platform/settings/*`, `resources/views/platform/settings/*` | custom Blade forms and second-column nav | Filament candidate | Settings are form-heavy and likely benefit from a formal panel/resource/page pattern. |
 | Notifications inbox | `/platform/notifications`, `resources/views/platform/notifications/index.blade.php` | custom Blade plus Echo DOM updates | Hybrid candidate | Realtime behavior is already custom/Echo-backed; Filament migration needs care to preserve live updates. |
@@ -99,11 +99,10 @@ Phase 2 Batch 2 should not rebuild the whole UI.
 
 Recommended next scope:
 
-* lock route/panel option from the route map
-* map proof surfaces to target unified route/navigation ownership
-* define migration sequence for users/settings/notifications and operational logs
-* compare target ownership against the current custom Blade shell and design goals
-* retire proof-only routing from long-term phase intent
+* implement the platform-users Filament migration slice first
+* preserve settings and notifications until their parity criteria are locked against the first migration
+* keep operational log daily navigation on `/platform/operations/*` while final direct Filament route ownership is decided
+* retire proof-only routing from long-term phase intent after shared admin migration behavior is stable
 
 ## Related
 

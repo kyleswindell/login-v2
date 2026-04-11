@@ -11,9 +11,9 @@ This note is a Phase 2 working decision artifact.
 Current status:
 
 * drafted for Phase 2 Batch 1
-* no route or panel code changes made yet
+* Filament proof routes are implemented under `/console` for operational validation
 * current Phase 1 routes remain custom Blade under `/dashboard` and `/platform/...`
-* Filament is not installed yet
+* `/console` is transitional and must be merged into the unified app route/navigation direction before Phase 2 closes
 
 Canonical owner:
 
@@ -130,26 +130,30 @@ Risks:
 
 ## Current Recommendation
 
-Use Option B as the planning default unless the Filament proof of concept shows Option A is clean and safe.
+Use a hybrid of Option B and Option C for Phase 2 completion:
+
+* keep one coherent shell/navigation experience
+* keep explicit technical boundaries for platform-management capabilities
+* treat `/console` as transitional proof-only routing
+* migrate proof surfaces into unified app navigation/ownership during Phase 2 deliverables
 
 Reasoning:
 
-* user-facing style can remain consistent across platform and tenant contexts
-* technical boundaries stay explicit
-* platform-management capabilities can be isolated without changing the core app's visual language
-* it avoids prematurely forcing every shared core screen into one complex context-aware panel
+* user-facing style remains consistent across platform and tenant contexts
+* boundaries stay explicit without presenting separate products
+* this preserves proven Filament operational fit while avoiding long-term route fragmentation
 
 ## Filament Timing Recommendation
 
-Do not install Filament until the following are documented:
+Do not expand Filament scope beyond proven operational surfaces until the following are documented:
 
 * selected panel option
 * panel paths
 * auth guard/session expectations
 * current screen disposition list
-* first proof-of-concept target
+* migration sequence from transitional proof routes into unified ownership
 
-Phase 2 can still introduce Filament after this decision pass. The blocker is not tenancy being fully implemented; the blocker is unclear panel ownership.
+The blocker is not tenancy being fully implemented; the blocker is unclear panel ownership and route convergence.
 
 ## Open Decisions
 
@@ -157,10 +161,10 @@ Open:
 
 * exact platform production domain
 * exact tenant admin domain pattern
-* exact Filament panel path or paths
+* exact target replacement path(s) for `/console` proof surfaces
 * whether shared core routes become unprefixed, `/app/*`, or Filament-owned
 * whether current `/platform/*` routes are retained as aliases, migrated, or reserved for platform-management only
-* whether platform-management is a separate panel or a grouped capability inside the shared core shell
+* whether platform-management is a separate panel or a grouped capability inside the shared core shell after transitional routes are retired
 
 ## Related
 

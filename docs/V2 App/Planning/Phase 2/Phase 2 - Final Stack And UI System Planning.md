@@ -10,13 +10,14 @@ This note is the active planning surface for deciding how the Phase 1 foundation
 
 Current status:
 
-* Phase 2 planning has started
+* Phase 2 planning is active and decision refinement is in progress
 * Phase 1 is complete and signed off
 * current app surfaces are custom Blade, Vite, Tailwind, Laravel controllers, and small DOM-driven JavaScript
 * realtime notifications already use Reverb and Echo
 * Filament is installed and validated through read-only audit/error operational proofs
-* Livewire is present through Filament, but no custom Livewire app shell decision has been made yet
-* final app shell, navigation, and UI design decisions remain open
+* `/console` currently exists as a temporary proof path for operational Filament surfaces only
+* Livewire is present through Filament, while broad custom Livewire shell ownership remains deferred
+* Phase 2 must now lock one coherent app direction that merges current custom and proof surfaces
 
 Canonical architecture owner:
 
@@ -33,10 +34,26 @@ Batch artifacts:
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 2]] | [Phase 2 - Implementation Batch 2](Phase%202%20-%20Implementation%20Batch%202.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 3]] | [Phase 2 - Implementation Batch 3](Phase%202%20-%20Implementation%20Batch%203.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 4]] | [Phase 2 - Implementation Batch 4](Phase%202%20-%20Implementation%20Batch%204.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 5]] | [Phase 2 - Implementation Batch 5](Phase%202%20-%20Implementation%20Batch%205.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 6]] | [Phase 2 - Implementation Batch 6](Phase%202%20-%20Implementation%20Batch%206.md)
 
 ## Phase Goal
 
 Complete the final stack and UI architecture decisions before Phase 3 adds customer/public foundations and Phase 4 adds broad business modules.
+
+## Locked Phase 2 Decisions
+
+The following direction is now accepted for Phase 2 planning and execution:
+
+* the app must present one coherent experience across shared-core and platform-management surfaces
+* `/console` is transitional and should not remain a long-term standalone product surface
+* the current Blade shell remains the primary shell during Phase 2 while migrations are sequenced
+* Filament remains approved for admin and operational data-heavy surfaces, but must be integrated under the unified app direction
+* audit and error log Filament proofs are complete as technical validation and now move into migration planning
+* notifications realtime transport remains Reverb and Echo; migration work should not replace it with polling-first behavior
+* UI ownership must be declared per surface before implementation: custom Blade, Filament, or hybrid
+
+This keeps implementation consistent with the existing UI design workflow and avoids two parallel products forming accidentally.
 
 Phase 2 should prevent future rework by deciding:
 
@@ -116,40 +133,40 @@ Introducing Filament/Livewire after Phase 1 has these implications:
 * Reverb/Echo should stay as the realtime transport rather than being replaced by Livewire polling
 * UI migration should happen with one proving-ground surface before broad conversion
 
-## Proposed Phase 2 Workstreams
+## Phase 2 Workstreams
 
-### 1. Route and panel ownership decision
+### 1. Route and panel ownership lock
 
-Decide:
+Lock:
 
 * shared core app shell route space
 * platform-management route space
-* Filament panel path or paths, if introduced
+* final path replacement plan for transitional `/console` routes
 * future tenant route/panel path under tenant domains
 * which auth guard/session rules apply to each surface
-* whether setup/settings should remain custom or move into Filament
+* setup/settings ownership target and migration sequence
 * how platform-only modules appear inside the same overall app experience
 
 Required output:
 
-* ADR or architecture update
-* route/panel map
-* migration candidate list for existing screens
+* architecture owner update with locked route/panel direction
+* route/panel map with transitional and target routes
+* migration list for existing screens with owner and sequence
 
-### 2. Navigation and app shell decision
+### 2. Navigation and app shell lock
 
-Decide:
+Lock:
 
 * keep full-page Blade navigation
-* introduce a Livewire persistent shell
-* let Filament own panel navigation
+* defer broad custom Livewire shell work until after Phase 2 migration deliverables are complete
+* use Filament navigation only where surfaces are intentionally migrated
 * use a hybrid shell where custom pages and Filament panels coexist
 
 Required output:
 
 * selected shell model
 * back/forward/sidebar state expectations
-* page transition and persistent panel behavior rules
+* page transition and panel behavior rules for both shared-core and operational surfaces
 
 ### 3. Visual design and template review
 
@@ -169,18 +186,18 @@ Required output:
 
 ### 4. Filament/Livewire introduction
 
-Decide:
+Lock:
 
-* install Filament during Phase 2 or defer to Phase 3
-* if installed, what low-risk surface proves the pattern
+* Filament remains active in Phase 2 and moves from proof to migration sequencing
+* no additional Phase 2 proof-only surfaces should be created under `/console`
 * how panel resources interact with existing services and policies
 * how notifications, audit logs, and settings appear across panel/custom UI
 
 Required output:
 
-* install/defer decision
-* proof-of-concept scope
-* panel resource standards if installed
+* migration sequence from proof-only operational routes into unified app navigation
+* panel resource standards for permission, timezone display, and diagnostic table behavior
+* explicit stop conditions for creating new transitional routes
 
 ### 5. Future module scaffolding
 
@@ -200,30 +217,30 @@ Required output:
 * Phase 3 customer/public scaffold checklist and Phase 4 module scaffold checklist
 * updates to feature development standards if needed
 
-## Recommended Order
+## Recommended Remaining Order
 
 1. Audit Phase 1 screens and classify each as permanent, transitional, or migration candidate.
 2. Write the route/panel ownership decision.
 3. Decide the app shell and persistent navigation strategy.
 4. Review visual design/template options and lock a minimal design baseline.
-5. Decide whether Filament is installed in Phase 2 or deferred to the first Phase 4 module after Phase 3 customer/public foundations are established.
-6. If installed, migrate one low-risk administrative surface as a proof of concept.
+5. Convert the proof outcome into an integrated migration plan for existing surfaces.
+6. Migrate operational proof surfaces from transitional access into unified navigation and ownership.
 7. Define optional module schema installation rules before tenant-specific modules are planned.
 8. Define platform-to-tenant access handoff principles before tenant rollout work begins.
 9. Update standards so every future module declares UI ownership, setup/settings entries, permissions, logs, notifications, and schema installation rules before implementation.
 10. Close Phase 2 only when future Phase 3 customer/public scaffolding and Phase 4 module scaffolding are repeatable.
 
-Current Batch 1 progress:
+Current progress:
 
 * screen audit is drafted
 * route/panel ownership map is drafted
 * Filament proof targets for audit and error logs are deployed and accepted as complete for Phase 2 proof purposes
 * app shell navigation ownership has a first implementation slice through a centralized navigation contract in the Blade shell
 * visual design/template brief remains pending
-* Livewire shell decision remains pending
-* next implementation focus remains visual baseline and template/design decision, followed by broader shell ownership lock
+* broad custom Livewire shell work remains deferred behind core migration deliverables
+* next implementation sequence is: Batch 4 route/navigation convergence, Batch 5 shared admin owner migration, Batch 6 close-out contracts and handoff
 
-## Decisions Still Needed
+## Remaining Decisions
 
 ### UI design decisions
 
@@ -250,11 +267,11 @@ Open:
 
 Open:
 
-* exact Filament panel paths
-* whether platform-management and core-app admin screens share one panel, separate internal panels, or a hybrid shell with consistent styling
+* exact target path plan replacing transitional `/console` routes
+* whether platform-management and core-app admin screens finish Phase 2 as a hybrid shell with shared design and unified navigation entry points
 * whether future tenant screens use a separate panel provider
-* whether Livewire is used outside Filament
-* whether current custom Blade screens are wrapped, migrated, or left alone
+* whether Livewire is used outside Filament before Phase 3
+* final disposition of each current custom Blade screen after migration sequencing is complete
 
 ### Tenant and module boundary decisions
 
@@ -293,8 +310,9 @@ Phase 2 can close when:
 * route and panel ownership is documented
 * app shell/navigation behavior is selected
 * design system or template direction is selected
-* Filament/Livewire introduction timing is decided
+* transitional `/console` usage is resolved into the unified app direction and route plan
 * existing Phase 1 screens have a disposition list
+* users/settings/notifications/operational-log surfaces have explicit owner+route migration plans
 * optional module schema installation pattern is documented
 * platform-to-tenant access direction is documented
 * standards require future modules to declare UI ownership and schema installation behavior during design
@@ -305,6 +323,8 @@ Phase 2 can close when:
 * [[V2 App/Planning/Phase 2/Phase 2 Index]] | [Phase 2 Index](Phase%202%20Index.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 1]] | [Phase 2 - Implementation Batch 1](Phase%202%20-%20Implementation%20Batch%201.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 2]] | [Phase 2 - Implementation Batch 2](Phase%202%20-%20Implementation%20Batch%202.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 5]] | [Phase 2 - Implementation Batch 5](Phase%202%20-%20Implementation%20Batch%205.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 6]] | [Phase 2 - Implementation Batch 6](Phase%202%20-%20Implementation%20Batch%206.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Route And Panel Ownership Map]] | [Phase 2 - Route And Panel Ownership Map](Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - UI Surface Disposition Audit]] | [Phase 2 - UI Surface Disposition Audit](Phase%202%20-%20UI%20Surface%20Disposition%20Audit.md)
 * [[V2 App/Planning/V2 Feature Roadmap]] | [V2 Feature Roadmap](../V2%20Feature%20Roadmap.md)

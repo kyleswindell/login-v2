@@ -37,6 +37,13 @@ No phase plan exists yet, or an existing phase plan needs goals and deliverables
 /phase-planning Phase [X]
 ```
 
+**Input (editor-only safe mode):**
+```
+/phase-planning Phase [X]
+Use editor-first updates only. Do not use bash or scripted bulk rewrites for documentation edits.
+Apply minimal, file-scoped changes and summarize touched files before and after edits.
+```
+
 **What it does:**
 Reads the roadmap and adjacent phases, defines or confirms phase goal, primary deliverables, explicit exclusions, cross-phase hand-off contracts, open decisions, and canonical doc ownership. Updates the phase index.
 
@@ -57,6 +64,13 @@ A finalized phase plan exists (output of `/phase-planning`) but batches are not 
 **Input:**
 ```
 /phase-batch-planning Phase [X]
+```
+
+**Input (editor-only safe mode):**
+```
+/phase-batch-planning Phase [X]
+Use editor-first updates only. Do not use bash or scripted bulk rewrites for documentation edits.
+Apply minimal, file-scoped changes and summarize touched files before and after edits.
 ```
 
 **What it does:**
@@ -81,6 +95,13 @@ Batches are already planned and a batch is active or ready to start. Use this to
 /phase-batch-implementation Phase [X] Batch [Y]
 ```
 
+**Starter prompt (editor-only safe mode):**
+```
+/phase-batch-implementation Phase [X] Batch [Y]
+Use editor-first updates only. Do not use bash or scripted bulk rewrites for code or documentation edits.
+Apply minimal, file-scoped changes and summarize touched files before and after edits.
+```
+
 **Starter prompt (known active state):**
 ```
 /phase-batch-implementation active
@@ -91,12 +112,14 @@ Continue from current repo state and uncommitted changes; do not re-plan complet
 
 ### Current Phase 2 Status (confirmed)
 
-| Batch   | Status                       | Notes                                                      |
-| ------- | ---------------------------- | ---------------------------------------------------------- |
-| Batch 1 | In progress — decisions open | App shell, visual design direction, planning close-out     |
-| Batch 2 | Complete                     | Filament error log proof deployed and validated on staging |
-| Batch 3 | Complete                     | Filament audit log proof deployed and validated on staging |
-| Batch 4 | Not yet created              | Next implementation slice — TBD scope                      |
+| Batch   | Status                        | Notes                                                                   |
+| ------- | ----------------------------- | ----------------------------------------------------------------------- |
+| Batch 1 | In progress — close-out pass  | Decision lock and sequencing contracts                                  |
+| Batch 2 | Complete                      | Filament error log proof deployed and validated on staging              |
+| Batch 3 | Complete                      | Filament audit log proof deployed and validated on staging              |
+| Batch 4 | In progress                   | Route/navigation convergence and transitional `/console` ownership plan |
+| Batch 5 | Planned                       | Users/settings/notifications/operational-owner migration                |
+| Batch 6 | Planned                       | Phase close-out contracts and Phase 3/4 handoff                         |
 
 **Phase 2 Batch 4 continuation starter:**
 ```
@@ -104,10 +127,11 @@ Goal: Phase 2 Batch 4 implementation
 
 /phase-batch-implementation active
 Continue from current repo state and uncommitted changes; do not re-plan completed items.
-Batches 2 and 3 are complete. Batch 1 decisions are still open.
-Read the Phase 2 index, Phase 2 Batch 1 note, and linked canonical docs first.
-Confirm whether Batch 1 decisions are ready to close, then plan and create Phase 2 Batch 4 as the next implementation slice.
-Implement the next dependency-safe slice, run relevant tests, and sync documentation updates.
+Batches 2 and 3 are complete. Batch 4 is active and Batch 1 close-out decisions are in progress.
+Read the Phase 2 index, Batch 1, Batch 4, and linked canonical docs first.
+Implement Batch 4 route/navigation convergence contracts and transitional `/console` ownership mapping.
+Run relevant tests and sync planning/canonical/development docs.
+If Batch 4 exit criteria are met, prepare Batch 5 kickoff scope only; do not start Batch 5 implementation in the same pass.
 ```
 
 ---
@@ -142,6 +166,14 @@ After any change to contracts, sequencing, or delivery scope that requires updat
 ```
 /planning-sync
 Updated [what changed] in [source note]. Align the canonical owner, phase index, and implementation status sections.
+```
+
+**Starter prompt (editor-only safe mode):**
+```
+/planning-sync
+Updated [what changed] in [source note]. Align the canonical owner, phase index, and implementation status sections.
+Use editor-first updates only. Do not use bash or scripted bulk rewrites for documentation edits.
+Apply minimal, file-scoped changes and summarize touched files before and after edits.
 ```
 
 **Starter prompt (audit):**

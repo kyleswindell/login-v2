@@ -2,9 +2,9 @@
 
 ## Purpose
 
-Start the app shell and navigation baseline work after Phase 2 operational Filament proofs were accepted.
+Implement route and navigation convergence contracts after the operational Filament proofs were accepted.
 
-This batch focuses on dependency-safe shell ownership decisions and incremental implementation slices, not broad UI migration.
+This batch turns the Batch 1 decision lock into implementation-ready ownership rules without broad screen migration.
 
 ## Implementation Status
 
@@ -12,9 +12,9 @@ Current status:
 
 * in progress
 * Batch 2 and Batch 3 operational Filament proofs are complete and accepted
-* first implementation slice is complete: shell navigation ownership is centralized in `App\Platform\Navigation\PlatformNavigation`
-* current Blade route surfaces remain unchanged while shell/navigation standards are stabilized
-* visual/template selection remains open
+* shell navigation ownership baseline is complete through `App\Platform\Navigation\PlatformNavigation`
+* `/console` proof routes are transitional and now require explicit target route/navigation ownership
+* visual/template selection remains open and is a dependency for broad migration work
 
 Planning owner:
 
@@ -30,68 +30,156 @@ Reference owner:
 
 ## Batch Goal
 
-Define and implement the minimum shared shell/navigation contract needed before wider screen migration.
+Lock and implement the minimum route/navigation convergence slice required before UI-owner migrations begin.
 
 ## In Scope
 
 In scope:
 
-* centralize app-shell navigation ownership in backend code so permission and route mapping are not duplicated across menus
-* keep existing route families available (`/dashboard`, `/platform/*`, `/console/*`) while ownership decisions continue
+* keep shell navigation ownership centralized in backend contracts
+* define and implement route alias/convergence behavior for operational proof surfaces
+* preserve existing route families while introducing target route ownership mapping
 * keep setup navigation visibility permission-driven
-* add focused regression coverage for shell navigation behavior where practical
+* define acceptance checks that prevent new proof-only `/console` expansion
 * update planning, canonical architecture/reference, and development log notes in the same work cycle
 
 ## Out Of Scope
 
 Out of scope:
 
-* broad route renaming or alias migration
+* broad route renaming across all surfaces in one deployment
 * full shell redesign
 * template adoption final decision
-* migration of users/settings/notifications screens into new owners
+* migration of users/settings/notifications screens into final owners
 * tenant-domain runtime shell implementation
 
-## Delivered Slice 1
+## Required Contracts Before Build
 
-Delivered in this work cycle:
+1. Locked target ownership for audit and error log routes.
+2. Decision on whether `/platform/*` remains transitional alias space or target platform-management space.
+3. Permission and policy behavior parity between transitional and target routes.
+4. Navigation visibility rules for transitional versus target links.
 
-* created `App\Platform\Navigation\PlatformNavigation` as the app-shell navigation contract source
-* updated the main Blade shell layout to render account, primary, and setup navigation from that contract
-* removed duplicated hard-coded navigation lists from the layout
-* kept the existing gate behavior and route destinations unchanged
-* added dashboard feature assertions for setup-trigger visibility behavior
+## Exit Criteria
 
-## Success Criteria
+This batch is complete when:
 
-This batch is successful when:
+* target route/navigation ownership for operational log surfaces is documented and implemented
+* no regression appears in existing Blade and Filament operational log access paths
+* navigation contract remains single-source and permission-driven
+* docs record which route families are transitional and which are target owners
 
-* shell navigation route/permission ownership is centralized
-* shell rendering keeps current behavior for authorized and unauthorized users
-* setup trigger only appears when setup navigation items are available
-* docs clearly record what was implemented and what remains open
+## Verification
 
-## Current Verification State
+Verification focus:
 
-Current verification:
+* route registration checks for both transitional and target route paths
+* authorization checks for allowed and denied users
+* shell navigation visibility checks by role/permission
+* no editor-reported errors in touched files
 
-* PHP syntax checks pass for the new navigation contract class
-* focused feature test execution is still blocked in the current non-Docker local environment due PostgreSQL host resolution (`postgres`)
-* static Blade/problem checks report no editor errors in the changed files
+## Follow-Up Batch Dependency
 
-## Follow-Up Decision
-
-Next decision pass in this batch:
-
-* lock the visual baseline and template-review outcome
-* decide whether the existing custom shell remains primary with Filament islands, or whether broader shell ownership shifts further into Filament/Livewire
-* define migration order for users/settings/notifications after shell ownership is locked
+Batch 5 can start after this batch locks route/navigation convergence and confirms owner mapping for shared admin surfaces.
 
 ## Related
 
 * [[V2 App/Planning/Phase 2/Phase 2 Index]] | [Phase 2 Index](Phase%202%20Index.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 3]] | [Phase 2 - Implementation Batch 3](Phase%202%20-%20Implementation%20Batch%203.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Route And Panel Ownership Map]] | [Phase 2 - Route And Panel Ownership Map](Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md)
+* [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
+* [[V2 App/Reference/Stack - Frontend Build]] | [Stack - Frontend Build](../../Reference/Stack%20-%20Frontend%20Build.md)
+* [[V2 App/Development/Phase 2 Development Log]] | [Phase 2 Development Log](../../Development/Phase%202%20Development%20Log.md)# Phase 2 - Implementation Batch 4
+
+## Purpose
+
+Implement route and navigation convergence contracts after the operational Filament proofs were accepted.
+
+This batch turns the Batch 1 decision lock into implementation-ready ownership rules without broad screen migration.
+
+## Implementation Status
+
+Current status:
+
+* in progress
+* Batch 2 and Batch 3 operational Filament proofs are complete and accepted
+* shell navigation ownership baseline is complete through `App\Platform\Navigation\PlatformNavigation`
+* `/console` proof routes are transitional and now require explicit target route/navigation ownership
+* visual/template selection remains open and is a dependency for broad migration work
+
+Planning owner:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
+
+Canonical architecture owner:
+
+* [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
+
+Reference owner:
+
+* [[V2 App/Reference/Stack - Frontend Build]] | [Stack - Frontend Build](../../Reference/Stack%20-%20Frontend%20Build.md)
+
+## Batch Goal
+
+Lock and implement the minimum route/navigation convergence slice required before UI-owner migrations begin.
+
+## In Scope
+
+In scope:
+
+* keep shell navigation ownership centralized in backend contracts
+* define and implement route alias/convergence behavior for operational proof surfaces
+* preserve existing route families while introducing target route ownership mapping
+* keep setup navigation visibility permission-driven
+* define acceptance checks that prevent new proof-only `/console` expansion
+* update planning, canonical architecture/reference, and development log notes in the same work cycle
+
+## Out Of Scope
+
+Out of scope:
+
+* broad route renaming across all surfaces in one deployment
+* full shell redesign
+* template adoption final decision
+* migration of users/settings/notifications screens into final owners
+* tenant-domain runtime shell implementation
+
+## Required Contracts Before Build
+
+1. Locked target ownership for audit and error log routes.
+2. Decision on whether `/platform/*` remains transitional alias space or target platform-management space.
+3. Permission and policy behavior parity between transitional and target routes.
+4. Navigation visibility rules for transitional versus target links.
+
+## Exit Criteria
+
+This batch is complete when:
+
+* target route/navigation ownership for operational log surfaces is documented and implemented
+* no regression appears in existing Blade and Filament operational log access paths
+* navigation contract remains single-source and permission-driven
+* docs record which route families are transitional and which are target owners
+
+## Verification
+
+Verification focus:
+
+* route registration checks for both transitional and target route paths
+* authorization checks for allowed and denied users
+* shell navigation visibility checks by role/permission
+* no editor-reported errors in touched files
+
+## Follow-Up Batch Dependency
+
+Batch 5 can start after this batch locks route/navigation convergence and confirms owner mapping for shared admin surfaces.
+
+## Related
+
+* [[V2 App/Planning/Phase 2/Phase 2 Index]] | [Phase 2 Index](Phase%202%20Index.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 3]] | [Phase 2 - Implementation Batch 3](Phase%202%20-%20Implementation%20Batch%203.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Route And Panel Ownership Map]] | [Phase 2 - Route And Panel Ownership Map](Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md)
 * [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
 * [[V2 App/Reference/Stack - Frontend Build]] | [Stack - Frontend Build](../../Reference/Stack%20-%20Frontend%20Build.md)
 * [[V2 App/Development/Phase 2 Development Log]] | [Phase 2 Development Log](../../Development/Phase%202%20Development%20Log.md)

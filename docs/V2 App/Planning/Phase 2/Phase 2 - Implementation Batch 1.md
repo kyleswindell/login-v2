@@ -2,18 +2,19 @@
 
 ## Purpose
 
-Define the first Phase 2 batch: final-stack decision audit and UI architecture planning.
+Define the first Phase 2 batch: final-stack decision audit, UI ownership lock, and sequencing contracts.
 
-This batch should produce decisions and standards before installing new UI framework pieces.
+This batch establishes the dependency-safe plan for the remaining Phase 2 implementation batches.
 
 ## Implementation Status
 
 Current status:
 
-* in progress
+* in progress, close-out pass active
 * route and panel ownership map drafted
 * UI surface disposition audit drafted
-* no code implementation started
+* Filament operational proofs from Batch 2 and Batch 3 are complete and available as decision inputs
+* shell navigation ownership baseline from Batch 4 is complete and available as a decision input
 * depends on the Phase 2 root planning note and final stack architecture note
 
 Planning owner:
@@ -26,32 +27,30 @@ Canonical owner:
 
 ## Batch Goal
 
-Create the decision foundation for Phase 2 before making implementation changes.
+Close Phase 2 decision gaps and produce a locked implementation sequence for all remaining Phase 2 deliverables.
 
 ## Scope
 
 In scope:
 
-* audit current Phase 1 UI surfaces
-* classify each surface as permanent, transitional, or migration candidate
-* define route and panel ownership options
-* decide whether Phase 2 should install Filament immediately or defer installation until after route/panel mapping
-* decide whether Livewire is needed for persistent shell behavior
-* document visual design and template-review requirements
-* update standards if future modules need stricter UI ownership declarations
-* document optional module schema installation requirements
-* document platform-to-tenant access decision options
+* audit and lock current Phase 1+Phase 2 UI ownership decisions
+* lock route/panel convergence direction, including transition away from proof-only `/console` usage
+* lock shell direction for the rest of Phase 2
+* lock visual baseline/template decision criteria and output format
+* lock optional module schema installation direction
+* lock platform-to-tenant access direction requirements
+* define dependency-ordered remaining Phase 2 batches with entry and exit contracts
 
 Out of scope:
 
-* broad UI rebuild
+* broad UI rebuild in this batch
 * Phase 3 business modules
 * tenant runtime implementation
 * production rollout changes
 
 ## Required Current-State Audit
 
-Audit these Phase 1 surfaces:
+Audit these surfaces and confirm owner + target transition state:
 
 * dashboard
 * platform users
@@ -68,20 +67,20 @@ Each surface should receive one of these dispositions:
 * keep custom Blade
 * convert to Filament
 * convert to Livewire/custom component
-* leave as transitional until related module work
+* hybrid custom + Filament
+* transitional until later phase
 
 ## Decision Outputs
 
-Batch 1 should produce:
+Batch 1 close-out must produce:
 
-* route and panel ownership map: drafted in [[V2 App/Planning/Phase 2/Phase 2 - Route And Panel Ownership Map]] | [Phase 2 - Route And Panel Ownership Map](Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md)
-* UI surface disposition list: drafted in [[V2 App/Planning/Phase 2/Phase 2 - UI Surface Disposition Audit]] | [Phase 2 - UI Surface Disposition Audit](Phase%202%20-%20UI%20Surface%20Disposition%20Audit.md)
-* visual design/template decision brief
-* Filament install/defer decision: pending, with read-only audit/error log proof favored if Filament is introduced in Batch 2
-* Livewire shell decision
+* route and panel ownership lock: [[V2 App/Planning/Phase 2/Phase 2 - Route And Panel Ownership Map]] | [Phase 2 - Route And Panel Ownership Map](Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md)
+* UI surface disposition lock: [[V2 App/Planning/Phase 2/Phase 2 - UI Surface Disposition Audit]] | [Phase 2 - UI Surface Disposition Audit](Phase%202%20-%20UI%20Surface%20Disposition%20Audit.md)
+* visual design/template decision brief (accepted/rejected rules and baseline component expectations)
+* Livewire shell decision for Phase 2 scope
 * optional module schema installation direction
 * platform-to-tenant access direction
-* Phase 2 Batch 2 implementation scope
+* finalized dependency sequence for Batch 4, Batch 5, and Batch 6
 
 ## Current Batch 1 Findings
 
@@ -90,11 +89,10 @@ Findings so far:
 * long-term shared core routes should be context-neutral because the domain determines platform versus tenant runtime context
 * current `/platform/...` shared-core routes are useful Phase 1 routes but likely transitional
 * platform-management capabilities should be available only on platform domains but should not create a separate-looking product
-* Filament remains viable, but panel ownership should be decided before installation
-* Option B from the route map, separate internal panels with shared styling, is the current planning default
-* audit log or error log viewer is the safest first Filament proof target
+* Filament operational proofs are successful and should now transition into unified ownership planning
+* no new proof-only surfaces should be introduced under `/console`
 * docs vault should stay custom Blade for now
-* notifications should remain hybrid until Filament/Echo realtime behavior is proven
+* notifications should remain hybrid until Filament/Echo realtime behavior is proven for that surface
 
 ## Testing And Verification
 
@@ -103,7 +101,8 @@ This batch is documentation and architecture heavy.
 Verification should confirm:
 
 * docs link from planning to canonical architecture and back
-* decisions are clear enough to convert into implementation tasks
+* locked decisions are clear enough to convert into implementation tasks
+* dependency ordering is explicit and testable per batch
 * no future module can start without UI ownership, settings, permissions, logging, and notification expectations
 
 ## Related

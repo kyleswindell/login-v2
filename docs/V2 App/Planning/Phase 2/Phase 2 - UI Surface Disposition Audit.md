@@ -14,7 +14,8 @@ Current status:
 * the error log proof is deployed and validated on staging at `/console/central-error-logs`
 * Phase 2 Batch 3 selected audit logs as the second Filament comparison surface
 * audit and error log Filament proofs are accepted as complete for Phase 2 proof purposes
-* next Phase 2 focus is app shell, navigation, visual baseline, and template/design decision
+* `/console` proof routes are transitional and must merge into unified app navigation/ownership by Phase 2 close
+* next Phase 2 focus is app shell, navigation, visual baseline, template/design decision, and migration sequencing
 
 Source planning note:
 
@@ -45,8 +46,8 @@ Use these categories:
 | Settings pages | `/platform/settings/*`, `resources/views/platform/settings/*` | custom Blade forms and second-column nav | Filament candidate | Settings are form-heavy and likely benefit from a formal panel/resource/page pattern. |
 | Notifications inbox | `/platform/notifications`, `resources/views/platform/notifications/index.blade.php` | custom Blade plus Echo DOM updates | Hybrid candidate | Realtime behavior is already custom/Echo-backed; Filament migration needs care to preserve live updates. |
 | Header notification preview | app layout plus `resources/js/app.js` | custom DOM-driven realtime preview | Keep custom for now | It is shell-level behavior and should follow the final shell decision. |
-| Audit log viewer | `/platform/audit-logs`, `resources/views/platform/audit-logs/index.blade.php`, proof at `/console/platform-audit-logs` | custom Blade filtered table retained; Filament read-only proof deployed | Filament proof complete | Table/filter-heavy read-only admin surface is a good Filament candidate. |
-| Error log viewer | `/platform/error-logs/*`, `resources/views/platform/error-logs/*`, proof at `/console/central-error-logs` | custom Blade list/detail retained; Filament read-only proof deployed | Filament proof complete | Table/detail/filter workflow fits Filament well enough for Phase 2 proof purposes; future operational-log UX improvements are tracked separately. |
+| Audit log viewer | `/platform/audit-logs`, `resources/views/platform/audit-logs/index.blade.php`, proof at `/console/platform-audit-logs` | custom Blade filtered table retained; Filament read-only proof deployed | Migrate to unified owner | Filament proof is complete; Phase 2 now needs target route/navigation ownership so this does not remain a standalone `/console` surface. |
+| Error log viewer | `/platform/error-logs/*`, `resources/views/platform/error-logs/*`, proof at `/console/central-error-logs` | custom Blade list/detail retained; Filament read-only proof deployed | Migrate to unified owner | Filament proof is complete; Phase 2 now needs target route/navigation ownership so this does not remain a standalone `/console` surface. |
 | Docs vault | `/platform/docs`, `resources/views/platform/docs/*` | custom repository tree and Markdown viewer | Keep custom | Specialized document viewer is not normal CRUD and should not be first Filament target. |
 | Realtime auth endpoint | `/platform/realtime/auth` | controller endpoint for Echo private channels | Keep backend endpoint | This is infrastructure, not an admin surface. |
 
@@ -96,13 +97,13 @@ Reason:
 
 Phase 2 Batch 2 should not rebuild the whole UI.
 
-Recommended Batch 2 scope:
+Recommended next scope:
 
-* decide the panel option from the route map
-* install Filament only if the selected proof target is clear
-* build one read-only Filament proof surface
-* compare the result against the current custom Blade shell and design goals
-* only then decide whether to migrate CRUD-heavy screens
+* lock route/panel option from the route map
+* map proof surfaces to target unified route/navigation ownership
+* define migration sequence for users/settings/notifications and operational logs
+* compare target ownership against the current custom Blade shell and design goals
+* retire proof-only routing from long-term phase intent
 
 ## Related
 

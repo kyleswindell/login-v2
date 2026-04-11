@@ -14,9 +14,9 @@ Current status:
 * current Phase 1 UI is Blade, Vite, Tailwind, Laravel controllers, and small DOM-driven JavaScript
 * Reverb and Echo are already implemented for realtime notifications
 * Filament is installed and validated through read-only audit/error operational proofs
-* Livewire is present through Filament, while custom Livewire shell ownership remains undecided
-* final app shell, panel, and design-system decisions are not yet locked
-* Batch 4 shell/navigation baseline work is in progress
+* `/console` currently exists as a transitional proof path for operational Filament validation
+* Livewire is present through Filament, while broad custom Livewire shell ownership remains deferred
+* shell/navigation baseline ownership is implemented in backend contracts and Phase 2 now focuses on unified migration decisions
 
 Source planning note:
 
@@ -53,6 +53,16 @@ Decision owner:
 
 * [[Decisions/ADR-0004 - Shared Core Instance And Panel Boundary Direction]] | [ADR-0004 - Shared Core Instance And Panel Boundary Direction](../../Decisions/ADR-0004%20-%20Shared%20Core%20Instance%20And%20Panel%20Boundary%20Direction.md)
 
+## Locked Phase 2 Direction
+
+The following direction is locked for current Phase 2 planning and execution:
+
+* the app must converge on one coherent user experience across shared-core and platform-management surfaces
+* `/console` is transitional proof infrastructure and is not a long-term standalone product surface
+* the existing Blade shell remains primary during current migration sequencing
+* Filament stays approved for admin/operational data surfaces and must align with unified navigation and design conventions
+* notifications realtime behavior remains Reverb/Echo based while UI ownership evolves
+
 ## Current Implementation Versus Final Stack
 
 ### Already aligned
@@ -81,7 +91,7 @@ The following areas are intentionally transitional:
 
 The following final-stack elements are not yet active:
 
-* Filament installation and panel providers
+* final panel/provider ownership for unified shared-core and platform-management navigation
 * Livewire component architecture outside what Filament may bring
 * platform panel versus tenant panel route and auth boundaries
 * reusable UI component inventory
@@ -101,16 +111,16 @@ Introducing the remaining final stack after Phase 1 has consequences:
 
 ## Required Phase 2 Decisions
 
-Phase 2 must explicitly decide:
+Phase 2 must explicitly lock and document:
 
 1. Which screens remain custom Blade?
 2. Which screens move to Filament resources or Filament pages?
-3. Whether a persistent app shell should be Livewire-powered, Filament-powered, or remain server-rendered.
-4. Whether Setup and Settings belong in the custom app shell, a Filament panel, or a hybrid model.
-5. Whether platform-management screens and shared core-app screens share one user-facing shell, separate internal panels, or a hybrid model with consistent styling.
+3. Whether the current shell remains server-rendered through Phase 2 completion or introduces scoped Livewire persistence for selected surfaces.
+4. Setup and Settings ownership target and migration sequencing.
+5. How platform-management screens and shared core-app screens converge under one coherent navigation and visual model.
 6. What visual design baseline should govern layout, spacing, cards, tables, forms, empty states, and responsive behavior.
 7. Whether an existing dashboard/admin template should be adopted, referenced, or avoided.
-8. What UI work must be converted before Phase 3 customer/public work and Phase 4 modules start.
+8. What UI work must be converted, and which transitional routes are retired, before Phase 3 customer/public work and Phase 4 modules start.
 9. How optional module migrations are installed for selected tenant databases without forcing tenant-specific schema onto every tenant.
 10. How platform-to-tenant access is audited and authorized.
 
@@ -126,9 +136,9 @@ Use this order:
 1. Lock route and panel ownership.
 2. Lock the app shell and navigation model.
 3. Lock visual design primitives and template direction.
-4. Install or defer Filament based on the route and panel decision.
+4. Lock target route/navigation ownership for transitional Filament proof surfaces.
 5. Introduce Livewire only where the chosen shell or Filament pattern requires it.
-6. Migrate one low-risk internal surface as the proving ground.
+6. Complete migration sequencing for operational and shared-core surfaces.
 7. Document scaffolding conventions for future Phase 3 customer/public surfaces and Phase 4 modules.
 8. Start Phase 3 customer/public work and Phase 4 module expansion only after the scaffolding path is repeatable.
 
@@ -181,7 +191,7 @@ This preserves V1's useful post-release module rollout behavior without making a
 
 Open gaps:
 
-* no ADR yet confirms exact Filament/Livewire introduction timing
+* no ADR yet confirms exact replacement path for transitional `/console` routes
 * no final UI component inventory exists
 * no visual design reference or template decision exists
 * no panel boundary test exists

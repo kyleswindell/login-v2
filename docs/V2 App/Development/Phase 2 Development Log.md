@@ -20,7 +20,8 @@ Current state:
 * Batch 2 Filament error-log proof has been deployed and validated on staging
 * Batch 3 Filament audit-log proof has been deployed and validated on staging
 * audit and error log Filament proof surfaces are accepted as complete for Phase 2 proof purposes
-* next Phase 2 focus is app shell, navigation, visual baseline, and template/design decision
+* `/console` proof routes are now treated as transitional and must be merged into unified app ownership
+* next Phase 2 focus is app shell, navigation, visual baseline, template/design decision, and explicit migration sequencing
 
 ## Milestones
 
@@ -84,9 +85,57 @@ Planning owners:
 
 * lock visual baseline and template-review direction for the shared shell
 * decide whether the custom shell remains primary with Filament islands or shifts further into Filament/Livewire ownership
-* define migration order for users/settings/notifications after shell ownership is locked
+* complete Batch 4 route/navigation convergence and target ownership mapping for transitional `/console` surfaces
+* execute Batch 5 owner migrations for users/settings/notifications/operational surfaces after Batch 4 exit criteria are met
+* execute Batch 6 close-out contracts and handoff updates for Phase 3 and Phase 4
 * define optional module migration/seeding convention
 * define platform-to-tenant access handoff approach
+
+### 2026-04-11 - Phase 2 batch sequence refinement
+
+Status:
+
+* planning docs refined
+* no application code changes in this documentation pass
+
+Work completed:
+
+* re-drafted Batch 1 to focus on close-out decisions and sequencing contracts
+* re-drafted Batch 4 as route/navigation convergence implementation scope
+* created Batch 5 for shared admin owner migrations
+* created Batch 6 for phase close-out contracts and cross-phase handoff
+* updated Phase 2 index and planning index to include Batch 5 and Batch 6
+
+Planning owners:
+
+* [[V2 App/Planning/Phase 2/Phase 2 Index]] | [Phase 2 Index](../Planning/Phase%202/Phase%202%20Index.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 4]] | [Phase 2 - Implementation Batch 4](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%204.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 5]] | [Phase 2 - Implementation Batch 5](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%205.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 6]] | [Phase 2 - Implementation Batch 6](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%206.md)
+
+### 2026-04-11 - Phase 2 planning refinement for unified app direction
+
+Status:
+
+* planning docs refined
+* no application code changes in this documentation pass
+
+Work completed:
+
+* updated the Phase 2 planning owner to lock one coherent app direction across shared-core and platform-management surfaces
+* documented that `/console` is transitional proof infrastructure and not a long-term standalone product surface
+* synchronized the canonical Phase 2 architecture owner with the updated planning direction
+* updated Phase 2 route/surface planning artifacts to require migration from proof-only routes into unified ownership
+
+Planning owners:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](../Planning/Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Route And Panel Ownership Map]] | [Phase 2 - Route And Panel Ownership Map](../Planning/Phase%202/Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - UI Surface Disposition Audit]] | [Phase 2 - UI Surface Disposition Audit](../Planning/Phase%202/Phase%202%20-%20UI%20Surface%20Disposition%20Audit.md)
+
+Canonical owner:
+
+* [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
 
 ### 2026-04-10 - Filament usage standards and Batch 2 proof plan drafted
 

@@ -12,7 +12,7 @@ This note is the root planning note for the Phase 1 branch.
 
 Current status:
 
-* Phase 1 is substantially complete, pending final documentation synchronization and formal closeout
+* Phase 1 is complete and formally signed off (2026-04-10)
 * Batch 1 foundation work is implemented and live on staging
 * Batch 2 platform shell and docs-vault work is implemented and live on staging
 * Batch 3 notifications UI, audit log viewer, and role/permission seeding cleanup are implemented and live on staging
@@ -20,11 +20,11 @@ Current status:
 * Batch 5 setup/settings shell, selective setup pages, error log viewer, richer staff setup, and table polish are implemented and deployed on staging
 * all canonical system docs are updated to reflect Batch 1-5 implementation
 * latest sidebar behavior fixes (persistence and active highlighting) deployed on staging
+* staging QA validation passed for setup persistence and active highlighting
+* automated test suite validated against PostgreSQL test database (76 tests, 253 assertions)
 
 Next steps:
 
-* staging QA sign-off on latest fixes
-* formal phase closeout documentation and planning note sign-off
 * decision on navigation UX framework before Phase 2 starts (Livewire partial navigation vs current full-page model)
 
 Canonical docs:
@@ -110,7 +110,7 @@ Phase 1 produced:
 * table UX standards (search, pagination, rows-per-page, result summary)
 * stable boundary between core-app capabilities and future platform-management features
 * comprehensive canonical feature docs for all Phase 1 systems
-* passing feature test suite (60+ tests)
+* passing feature test suite (76 tests)
 
 ## Phase 1 Boundary Decisions Confirmed
 

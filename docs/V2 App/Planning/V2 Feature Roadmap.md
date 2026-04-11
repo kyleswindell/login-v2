@@ -69,6 +69,12 @@ Goal:
 
 Establish the shared business-application foundation that both the internal platform instance and future tenant instances should use.
 
+Status:
+
+* complete and signed off (2026-04-10)
+* staging QA completed for setup/sidebar behavior fixes
+* automated tests passing against PostgreSQL test database (76 tests, 253 assertions)
+
 Features:
 
 * platform staff auth

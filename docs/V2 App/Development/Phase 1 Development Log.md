@@ -8,7 +8,7 @@ This note should be updated as major Phase 1 batches are implemented, corrected,
 
 ## Current Phase Status
 
-Phase 1 is functionally complete pending QA sign-off.
+Phase 1 is complete and formally signed off.
 
 Current state:
 
@@ -20,14 +20,14 @@ Current state:
 * realtime notifications (Reverb/Echo) are deployed and validated on staging
 * settings UI, selective Setup pages, richer staff setup, users-table polish, and error log viewer are deployed on staging
 * sidebar behavior fixes (persistence and active highlighting) are deployed on staging
-* full test suite passing locally (60+ tests, 200+ assertions)
+* staging QA pass complete for setup persistence/highlighting and error-log baseline
+* full test suite passing against PostgreSQL test DB (76 tests, 253 assertions)
 * latest docs synced with actual implementation state
 
 Next phase gates:
 
-* final staging QA pass on Batch 5 and sidebar behavior fixes
 * decision on navigation UX framework before Phase 2 (Livewire partial navigation vs current full-page model)
-* formal Phase 1 closeout and sign-off
+* Phase 2 planning kickoff
 
 ## Milestones
 

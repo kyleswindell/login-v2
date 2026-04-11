@@ -12,9 +12,9 @@ Current status:
 * deployed on staging
 * active staging review has already driven follow-up layout and docs-viewer corrections
 * search remains a placeholder only
-* header notifications preview is implemented in code and pending staging deploy
-* realtime header notification sync and toast hooks are implemented in code and pending staging deploy
-* Setup sidebar shell interaction and selective feature setup pages are implemented in code and pending staging deploy
+* header notifications preview is live on staging
+* realtime header notification sync and toast hooks are live on staging
+* Setup sidebar shell interaction and selective feature setup pages are live on staging
 
 ## Current Implementation
 

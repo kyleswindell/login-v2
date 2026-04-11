@@ -10,11 +10,11 @@ Current status:
 
 * database-backed audit and error logging are implemented and live on staging
 * settings foundation is implemented and live on staging
-* notifications inbox UI is implemented in code and pending staging deploy
-* audit log viewer UI is implemented in code and pending staging deploy
-* Reverb and Echo realtime notifications are implemented in code and pending staging deploy plus runtime setup
-* no dedicated settings UI yet
-* no dedicated error log viewer UI yet
+* notifications inbox UI is implemented and live on staging
+* audit log viewer UI is implemented and live on staging
+* Reverb and Echo realtime notifications are implemented, deployed, and validated on staging
+* dedicated settings UI is implemented and live on staging
+* dedicated error log viewer UI is implemented and live on staging
 
 Canonical docs:
 

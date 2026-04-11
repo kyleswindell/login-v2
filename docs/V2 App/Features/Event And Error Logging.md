@@ -12,8 +12,8 @@ Current status:
 * migrated on staging
 * audit events are actively written for current auth flows
 * exception reporting is wired to write into `central_error_logs`
-* audit log viewer UI is implemented in code and pending staging deploy
-* error log viewer UI is implemented in code and pending staging deploy
+* audit log viewer UI is live on staging
+* error log viewer UI is live on staging
 
 ## Current Scope
 

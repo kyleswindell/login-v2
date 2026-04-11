@@ -83,7 +83,7 @@ These are not the primary target of Phase 1:
 
 Decisions made during Phase 1 implementation:
 
-1. Platform staff auth uses Laravel's standard web guard; tenant auth deferred to Phase 3 tenantization work.
+1. Platform staff auth uses Laravel's standard web guard; tenant auth remains deferred to later tenant rollout phases.
 2. Shared business features for Phase 1: user/role/permission baseline, dashboard, docs viewer, notifications, audit logs, error logs, settings.
 3. Mandatory rules for every future module: permission declaration, audit/error logging, notification events, settings group registration, setup page requirement before feature ships.
 4. Operational events always centrally visible: login/logout, permission changes, settings changes, error events, critical notifications.
@@ -92,7 +92,7 @@ Decisions made during Phase 1 implementation:
 ## Outstanding Questions For Phase 2
 
 1. When and how should Livewire be introduced for persistent-shell partial navigation?
-2. What is the MVP scope for Phase 2 platform-management features (tenant registry, domain management, control-plane visibility)?
+2. What exact implementation shape should Phase 2 use for the final stack/UI architecture (Filament/Livewire boundaries, shell persistence, and design-system primitives)?
 3. Should Phase 2 or Phase 3 introduce Filament admin panels?
 
 ## Phase 1 Deliverables

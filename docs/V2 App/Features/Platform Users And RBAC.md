@@ -11,8 +11,8 @@ Current status:
 * implemented in code
 * migrated on staging
 * platform user management UI exists
-* richer staff profile management and selective setup flow are implemented in code and pending staging deploy
-* first-pass role and permission seeding updates are implemented in code and pending staging deploy
+* richer staff profile management and selective setup flow are live on staging
+* first-pass role and permission seeding updates are live on staging
 * tenant-scoped auth and tenant roles are still deferred
 
 ## Current Implementation

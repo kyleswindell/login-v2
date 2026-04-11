@@ -168,8 +168,8 @@ Planning owner:
 Status:
 
 * implemented in code
-* validated locally with passing feature tests
-* pending staging deploy and validation
+* deployed and validated on staging
+* included in formal Phase 1 sign-off
 
 Implemented systems:
 
@@ -196,10 +196,9 @@ Planning owner:
 
 ## Next Expected Work
 
-* deploy Batch 5 changes to staging
-* validate Setup sidebar and settings pages on staging
-* validate error log viewer permissions and filters on staging
-* continued documentation status sync as new Phase 1 systems are implemented
+* execute Phase 2 final stack and UI system introduction planning
+* finalize persistent-shell navigation architecture decision and implementation approach
+* establish Phase 3 remaining core-module inventory and sequencing
 
 ## Phase 1 Process Observations: Planning Note Staleness and Documentation Workflow Learning
 

@@ -11,8 +11,8 @@ This batch is the foundational navigation and configuration layer that all futur
 Current status:
 
 * implemented in code
-* local feature tests passing
-* pending staging deploy and validation
+* deployed and validated on staging
+* included in formal Phase 1 sign-off (2026-04-10)
 
 Canonical docs:
 

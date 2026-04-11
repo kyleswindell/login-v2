@@ -14,7 +14,7 @@ Current status:
 * notifications inbox UI is live on staging with realtime updates
 * settings table and service are migrated on staging
 * dashboard and header unread-count surfaces are live on staging
-* settings UI, selective Setup pages, and the Setup/Settings sidebar shell are implemented in code and pending staging deploy
+* settings UI, selective Setup pages, and the Setup/Settings sidebar shell are live on staging
 
 ## Current Implementation
 

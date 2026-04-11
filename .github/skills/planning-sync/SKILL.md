@@ -8,6 +8,13 @@ disable-model-invocation: false
 
 # Planning Sync
 
+## Execution Guardrails
+
+- Prefer direct file edits in the VS Code editor.
+- Do not use bash or scripted bulk search/replace to rewrite docs unless explicitly requested.
+- Keep edits minimal and scoped to planning/canonical/index notes affected by the change.
+- Before writing, summarize intended file-by-file changes; after writing, summarize exactly what changed.
+
 ## When To Use
 
 Use this skill when a task changes behavior, contracts, sequencing, or delivery scope and multiple docs must stay aligned.
@@ -29,6 +36,10 @@ Trigger phrases:
 5. Verify bidirectional links between planning and canonical owners.
 6. Verify implementation status sections reflect the current state.
 7. Summarize changed files and any follow-up decisions still open.
+
+Required summary sections:
+- Planned file changes (before edits)
+- Applied file changes (after edits)
 
 ## Quality Gate
 

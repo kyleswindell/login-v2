@@ -2,7 +2,7 @@
 description: "Define or refine a phase's goals, deliverables, constraints, and cross-phase dependencies. Produces the finalized phase plan that phase-batch-planning then consumes. Use before batches exist or when phase scope needs realignment."
 name: "Phase Planning"
 argument-hint: "Phase to define or realign, for example: Phase 3"
-agent: "plan"
+agent: "Plan"
 ---
 Define or refine the goals, deliverables, and constraints for the specified phase.
 

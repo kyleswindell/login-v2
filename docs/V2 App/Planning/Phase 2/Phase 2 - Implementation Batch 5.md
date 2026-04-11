@@ -17,6 +17,7 @@ Current status:
 * surface-by-surface owner matrix is locked for the first migration pass
 * platform-users Filament migration slice is implemented locally and shell navigation points to the target users route
 * target administration routes now exist for users, notifications, and settings while compatibility paths remain available
+* operational setup links now point to target `/platform/operations/*` routes while legacy Blade log viewers remain compatibility paths
 
 Planning owner:
 
@@ -103,8 +104,8 @@ Rules:
 | Settings | Hybrid/custom Blade for Batch 5 | `/platform/administration/settings` redirects to `/platform/settings/general`; current `/platform/settings/*` remains | `manage-platform-settings` | current Blade settings pages | Target route implemented locally; grouped Filament page migration deferred until after users parity is stable. |
 | Notifications inbox | Keep custom Blade plus Echo for this batch | `/platform/administration/notifications` redirects to `/platform/notifications`; action routes remain under `/platform/notifications/*` | `view-platform-notifications` | current Blade inbox and header preview | Target route implemented locally; realtime behavior remains custom/Echo-backed. |
 | Header notification preview | Keep custom shell behavior | app layout and `resources/js/app.js`; default notification links use `/platform/administration/notifications` | `view-platform-notifications` | current header preview | Realtime unread count, preview, and toast behavior preserved. |
-| Audit logs | Filament-owned operational surface behind target route | `/platform/operations/audit-logs` | `view-platform-audit-logs` | `/platform/audit-logs` and `/console/platform-audit-logs` | Keep Batch 4 target route for daily navigation; decide final direct Filament route after users/settings/notifications sequencing. |
-| Error logs | Filament-owned operational surface behind target route | `/platform/operations/error-logs` | `view-platform-error-logs` | `/platform/error-logs/*` and `/console/central-error-logs` | Keep Batch 4 target route for daily navigation; decide final direct Filament route after users/settings/notifications sequencing. |
+| Audit logs | Filament-owned operational surface behind target route | `/platform/operations/audit-logs` | `view-platform-audit-logs` | `/platform/audit-logs` and `/console/platform-audit-logs` | Daily shell and setup navigation use the target route; legacy Blade viewer and console proof path remain compatibility paths during panel-path retirement planning. |
+| Error logs | Filament-owned operational surface behind target route | `/platform/operations/error-logs` | `view-platform-error-logs` | `/platform/error-logs/*` and `/console/central-error-logs` | Daily shell and setup navigation use the target route; legacy Blade viewer and console proof path remain compatibility paths during panel-path retirement planning. |
 | Docs vault | Keep custom Blade | `/platform/docs` | `view-platform-docs` plus configured docs scope | current Blade docs vault | Preserve specialized viewer; no Batch 5 migration. |
 | Setup pages | Transitional custom Blade | `/platform/setup/*` | feature-specific view/manage gates | current setup pages | Preserve visibility rules; do not add new setup stubs. |
 
@@ -130,6 +131,7 @@ Delivered locally:
 * `/platform/administration/settings` redirects to the current settings landing page after `manage-platform-settings` passes
 * shell notification links and notification fallback URLs use the target notifications route
 * setup navigation uses the target settings route while legacy settings pages remain the editable compatibility surface
+* operational setup cards use `/platform/operations/audit-logs` and `/platform/operations/error-logs` so setup workflows no longer send users to legacy Blade log viewers
 
 Required parity before retiring the current Blade users surface:
 

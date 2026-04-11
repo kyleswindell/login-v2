@@ -7,7 +7,7 @@
         </div>
 
         <div class="grid gap-4 md:grid-cols-2">
-            <a href="{{ route('platform.error-logs.index') }}" class="group rounded-3xl border border-slate-800 bg-slate-900/70 p-6 transition hover:border-sky-500/40 hover:bg-slate-900">
+            <a href="{{ route('platform.operations.error-logs.index') }}" class="group rounded-3xl border border-slate-800 bg-slate-900/70 p-6 transition hover:border-sky-500/40 hover:bg-slate-900">
                 <p class="text-xs font-semibold uppercase tracking-[0.2em] text-sky-300">Viewer</p>
                 <h2 class="mt-2 text-xl font-semibold text-white">Error Log Viewer</h2>
                 <p class="mt-2 text-sm text-slate-400">Inspect runtime failures with filterable list and detailed stack traces.</p>

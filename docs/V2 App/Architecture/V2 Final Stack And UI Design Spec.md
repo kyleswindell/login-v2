@@ -20,6 +20,7 @@ Current status:
 * target operational ownership routes now exist under `/platform/operations/*` with gated redirects to transitional `/console` proof routes
 * Batch 5 visual baseline and first-pass owner matrix are explicit
 * platform-users migration is implemented locally as the first Batch 5 code slice
+* operational shell and setup navigation now use `/platform/operations/*` target routes while legacy Blade log viewers remain compatibility paths
 
 Source planning note:
 
@@ -68,6 +69,7 @@ The following direction is locked for current Phase 2 planning and execution:
 * no third-party dashboard/admin template is adopted for Batch 5; the current Tailwind Blade shell remains the baseline while Filament owns selected admin/data surfaces
 * platform users now has an app-owned target route at `/platform/administration/users` that redirects to `/console/platform-users` during the migration window
 * notifications and settings now have app-owned target routes at `/platform/administration/notifications` and `/platform/administration/settings` while their custom Blade behavior remains authoritative
+* operational log setup and shell links now use `/platform/operations/*`; `/platform/audit-logs` and `/platform/error-logs/*` remain compatibility paths until final panel-path retirement is selected
 
 ## Current Implementation Versus Final Stack
 
@@ -205,7 +207,7 @@ This preserves V1's useful post-release module rollout behavior without making a
 
 Open gaps:
 
-* Batch 4 introduced `/platform/operations/*` as the shell-owned target route layer, but no ADR yet confirms final direct replacement paths after transitional `/console` redirects are retired
+* Batch 4 introduced `/platform/operations/*` as the shell-owned target route layer and Batch 5 converged setup links onto it, but no ADR yet confirms final direct replacement paths after transitional `/console` redirects are retired
 * no final UI component inventory exists
 * Batch 5 has a working visual/template decision, but no final long-term design-system reference exists yet
 * no panel boundary test exists

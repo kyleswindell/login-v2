@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Platform;
 
-use App\Platform\Settings\SettingsService;
 use App\Models\User;
+use App\Platform\Settings\SettingsService;
 use Database\Seeders\PlatformRolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -18,8 +18,16 @@ class PlatformSetupPagesTest extends TestCase
 
         $this->get('/platform/setup/notifications')->assertOk()->assertSee('Platform Notifications Setup');
         $this->get('/platform/setup/docs')->assertOk()->assertSee('Documentation Vault Setup');
-        $this->get('/platform/setup/audit-logs')->assertOk()->assertSee('Audit Logs Setup');
-        $this->get('/platform/setup/error-logs')->assertOk()->assertSee('Error Logs Setup');
+        $this->get('/platform/setup/audit-logs')
+            ->assertOk()
+            ->assertSee('Audit Logs Setup')
+            ->assertSee('/platform/operations/audit-logs', false)
+            ->assertDontSee('/platform/audit-logs', false);
+        $this->get('/platform/setup/error-logs')
+            ->assertOk()
+            ->assertSee('Error Logs Setup')
+            ->assertSee('/platform/operations/error-logs', false)
+            ->assertDontSee('/platform/error-logs', false);
         $this->get('/platform/setup/users')->assertOk()->assertSee('Platform Users Setup');
     }
 

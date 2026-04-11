@@ -12,7 +12,7 @@ Current status:
 
 * drafted for Phase 2 Batch 1 and updated through Batch 4 route convergence
 * Filament proof routes are implemented under `/console` for operational validation
-* target operational shell routes are implemented under `/platform/operations/*`
+* target operational shell and setup links are implemented under `/platform/operations/*`
 * current Phase 1 routes remain custom Blade under `/dashboard` and `/platform/...`
 * `/console` is transitional proof routing and is no longer linked directly from the shell navigation
 
@@ -42,8 +42,8 @@ Current Phase 1 route families:
 | `/platform/notifications` | custom Blade plus Echo | notification inbox | hybrid candidate |
 | `/platform/audit-logs` | custom Blade | audit log viewer | Filament candidate |
 | `/platform/error-logs` | custom Blade | error log viewer | Filament candidate |
-| `/platform/operations/audit-logs` | Laravel route alias | target operational ownership route that gate-checks then redirects to `/console/platform-audit-logs` | implemented in Batch 4 |
-| `/platform/operations/error-logs` | Laravel route alias | target operational ownership route that gate-checks then redirects to `/console/central-error-logs` | implemented in Batch 4 |
+| `/platform/operations/audit-logs` | Laravel route alias | target operational ownership route that gate-checks then redirects to `/console/platform-audit-logs`; used by shell and setup navigation | implemented in Batch 4; setup links converged in Batch 5 |
+| `/platform/operations/error-logs` | Laravel route alias | target operational ownership route that gate-checks then redirects to `/console/central-error-logs`; used by shell and setup navigation | implemented in Batch 4; setup links converged in Batch 5 |
 | `/console/platform-audit-logs` | Filament proof resource | read-only audit log proof surface | transitional proof path |
 | `/console/central-error-logs` | Filament proof resource | read-only error log proof surface | transitional proof path |
 | `/console/platform-users` | Filament migration resource | platform user management migration surface | transitional migration path |
@@ -144,7 +144,7 @@ Use a hybrid of Option B and Option C for Phase 2 completion:
 * keep one coherent shell/navigation experience
 * keep explicit technical boundaries for platform-management capabilities
 * treat `/console` as transitional proof-only routing
-* use `/platform/operations/*` as the current target operational navigation layer while Batch 5 decides whether final operational resources move to direct Filament-owned routes
+* use `/platform/operations/*` as the current target operational navigation layer while Batch 6 decides the final panel-path retirement plan for `/console`
 
 Reasoning:
 

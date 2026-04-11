@@ -25,7 +25,8 @@ Current state:
 * Batch 5 visual baseline and owner matrix are locked for the first shared admin migration pass
 * first Batch 5 platform-users Filament migration slice is implemented locally
 * target administration routes for users, notifications, and settings are implemented locally
-* next Phase 2 focus is operational route retirement sequencing
+* operational setup links now use `/platform/operations/*` target routes
+* next Phase 2 focus is final operational panel-path retirement sequencing
 
 ## Milestones
 
@@ -139,6 +140,29 @@ Canonical docs:
 * [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
 * [[V2 App/Features/Platform Users And RBAC]] | [Platform Users And RBAC](../Features/Platform%20Users%20And%20RBAC.md)
 * [[V2 App/Reference/Stack - Filament And Livewire]] | [Stack - Filament And Livewire](../Reference/Stack%20-%20Filament%20And%20Livewire.md)
+
+### 2026-04-11 - Phase 2 Batch 5 operational setup route convergence
+
+Status:
+
+* implemented locally
+* pending focused test verification in Docker/staging-equivalent environment
+
+Work completed:
+
+* moved Audit Logs Setup viewer card to `/platform/operations/audit-logs`
+* moved Error Logs Setup viewer card to `/platform/operations/error-logs`
+* added setup-page regression assertions that the operational cards no longer link to legacy Blade viewer paths
+* documented that legacy Blade log viewers remain compatibility paths while Batch 6 decides final `/console` panel-path retirement
+
+Planning owners:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 5]] | [Phase 2 - Implementation Batch 5](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%205.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Route And Panel Ownership Map]] | [Phase 2 - Route And Panel Ownership Map](../Planning/Phase%202/Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md)
+
+Canonical docs:
+
+* [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../Features/Event%20And%20Error%20Logging.md)
 
 ### 2026-04-11 - Phase 2 batch sequence refinement
 

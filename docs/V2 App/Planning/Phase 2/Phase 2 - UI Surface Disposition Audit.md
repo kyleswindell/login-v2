@@ -16,6 +16,7 @@ Current status:
 * audit and error log Filament proofs are accepted as complete for Phase 2 proof purposes
 * `/console` proof routes are transitional and must merge into unified app navigation/ownership by Phase 2 close
 * Batch 5 visual baseline and owner matrix are locked for the first shared admin migration pass
+* operational shell and setup navigation now point to `/platform/operations/*` target routes
 
 Source planning note:
 
@@ -46,8 +47,8 @@ Use these categories:
 | Settings pages | `/platform/settings/*`, target route at `/platform/administration/settings`, `resources/views/platform/settings/*` | custom Blade forms and second-column nav retained; target route implemented locally | Hybrid/custom for Batch 5 | Settings are form-heavy, but grouped Filament page migration is deferred until users parity is stable. |
 | Notifications inbox | `/platform/notifications`, target route at `/platform/administration/notifications`, `resources/views/platform/notifications/index.blade.php` | custom Blade plus Echo DOM updates retained; target route implemented locally | Keep custom for Batch 5 | Realtime behavior is already custom/Echo-backed; Batch 5 preserves it behind target ownership routing. |
 | Header notification preview | app layout plus `resources/js/app.js` | custom DOM-driven realtime preview | Keep custom for now | It is shell-level behavior and should follow the final shell decision. |
-| Audit log viewer | `/platform/audit-logs`, `resources/views/platform/audit-logs/index.blade.php`, target route at `/platform/operations/audit-logs`, proof at `/console/platform-audit-logs` | custom Blade filtered table retained; target route redirects to Filament proof after gate check | Migrate to unified owner | Batch 4 route/navigation ownership is complete locally; Batch 5 decides whether to retire the redirect and make Filament the direct owner. |
-| Error log viewer | `/platform/error-logs/*`, `resources/views/platform/error-logs/*`, target route at `/platform/operations/error-logs`, proof at `/console/central-error-logs` | custom Blade list/detail retained; target route redirects to Filament proof after gate check | Migrate to unified owner | Batch 4 route/navigation ownership is complete locally; Batch 5 decides whether to retire the redirect and make Filament the direct owner. |
+| Audit log viewer | `/platform/audit-logs`, `resources/views/platform/audit-logs/index.blade.php`, target route at `/platform/operations/audit-logs`, proof at `/console/platform-audit-logs` | custom Blade filtered table retained as compatibility; shell and setup navigation use the target route, which redirects to Filament proof after gate check | Migrate to unified owner | Batch 5 converged daily links onto the target route; Batch 6 decides final `/console` panel-path retirement. |
+| Error log viewer | `/platform/error-logs/*`, `resources/views/platform/error-logs/*`, target route at `/platform/operations/error-logs`, proof at `/console/central-error-logs` | custom Blade list/detail retained as compatibility; shell and setup navigation use the target route, which redirects to Filament proof after gate check | Migrate to unified owner | Batch 5 converged daily links onto the target route; Batch 6 decides final `/console` panel-path retirement. |
 | Docs vault | `/platform/docs`, `resources/views/platform/docs/*` | custom repository tree and Markdown viewer | Keep custom | Specialized document viewer is not normal CRUD and should not be first Filament target. |
 | Realtime auth endpoint | `/platform/realtime/auth` | controller endpoint for Echo private channels | Keep backend endpoint | This is infrastructure, not an admin surface. |
 
@@ -101,7 +102,7 @@ Recommended next scope:
 
 * implement the platform-users Filament migration slice first
 * preserve settings and notifications as custom Blade/Echo surfaces behind target administration routes
-* keep operational log daily navigation on `/platform/operations/*` while final direct Filament route ownership is decided
+* keep operational log daily navigation on `/platform/operations/*`, including setup cards, while final direct Filament route ownership is decided
 * retire proof-only routing from long-term phase intent after shared admin migration behavior is stable
 
 ## Related

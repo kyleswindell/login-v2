@@ -73,7 +73,7 @@ Phase 3 should establish:
 3. public versus customer-authenticated visibility contracts
 4. outward-facing module rendering conventions
 5. events as the first outward-facing business module proof
-6. interim legacy website JSON publishing adapter direction for tenants that still depend on V1-style site sync
+6. data API and query contracts for Phase 4/Phase 5 integration with legacy website connectors
 
 ## Events Module Implications For V2
 
@@ -109,33 +109,15 @@ Phase 3 should define explicit contracts for:
 
 These contracts must be declared during feature design so later modules do not invent their own outward-facing models.
 
-## Interim Legacy Website Publishing Direction
-
-Phase 3 should support a limited but useful compatibility path for legacy sites through configurable publishing adapters.
-
-Supported adapter modes should begin with:
-
-* filesystem JSON write mode
-* authenticated HTTPS endpoint push mode
-
-Platform-owned responsibilities:
-
-* adapter definition and credentials
-* target assignment to a tenant/module capability
-* operational policy and failure visibility
-
-Tenant-owned responsibilities after enablement:
-
-* managing business data that feeds the published payloads
-* triggering or monitoring routine publish operations from the tenant GUI where allowed
-
 ## Out Of Scope
 
 Not in current Phase 3 scope:
 
-* full website CMS editing or page builder tooling
-* generalized website content management and deployment pipelines
-* tenant self-service creation of publishing integrations
+* legacy JSON connector setup GUI (Phase 5 tenant initialization)
+* publishing job framework or scheduler (Phase 5)
+* full website CMS editing or page builder tooling (future)
+* generalized website content management and deployment pipelines (future)
+* tenant self-service creation of publishing integrations (future)
 * broad remaining core-module rollout (moved to Phase 4)
 * tenant provisioning/runtime rollout (Phase 5)
 
@@ -143,9 +125,8 @@ Not in current Phase 3 scope:
 
 1. Define customer/public route and shell ownership.
 2. Define visibility and access contracts for public, customer, staff, and platform surfaces.
-3. Prove one outward-facing business module with Events.
-4. Add interim legacy website publishing adapter support for event payloads where required.
-5. Lock reusable patterns before Phase 4 module expansion.
+3. Prove one outward-facing business module with Events and clean data APIs.
+4. Lock reusable patterns before Phase 4 module expansion.
 
 ## Entry Criteria
 
@@ -161,9 +142,8 @@ Phase 3 can close when:
 
 * customer/public route and visibility contracts are documented and implemented
 * at least one outward-facing module proof validates the pattern
-* interim legacy JSON publishing direction is documented and proven where needed
-* platform-versus-tenant publishing responsibilities are clear and enforced
-* Phase 4 can build core modules without re-inventing outward-facing integration rules
+* Events module exposes clean data APIs for Phase 5 publishing connector integration
+* Phase 4 can build core modules with publishable data contracts without re-inventing outward-facing integration rules
 
 ## Related
 

@@ -44,6 +44,7 @@ Deliver the remaining shared core modules after customer/public view foundations
 * audit and error logging
 * notifications
 * cross-module dependency behavior
+* data APIs and query contracts that Phase 5 can consume for tenant-initialization publishing connectors
 
 ## Proposed Phase 4 Module Scope
 
@@ -127,6 +128,7 @@ Every module delivered in Phase 4 must include:
 * error logging coverage for critical failure paths
 * notification events where user action or system state changes matter
 * feature tests for permission gates, setup/settings writes, and key workflows
+* clean data APIs and query contracts so Phase 5 can expose module data through tenant-initialized publishing connectors
 
 ## Potential Improvements Over V1
 

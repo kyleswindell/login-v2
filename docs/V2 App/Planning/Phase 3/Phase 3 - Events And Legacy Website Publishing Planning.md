@@ -2,9 +2,9 @@
 
 ## Purpose
 
-Capture how the V1 custom Events module should influence V2 customer/public view foundations, outward-facing business event presentation, and interim legacy website JSON publishing.
+Capture how the V1 custom Events module should influence V2 customer/public view foundations and outward-facing business event presentation.
 
-This note is the detailed planning companion for the Phase 3 customer/public foundation phase.
+This note is the detailed planning companion for the Phase 3 customer/public foundation phase. Legacy website JSON connector configuration is deferred to Phase 5 tenant initialization and management.
 
 ## Implementation Status
 
@@ -42,10 +42,11 @@ If V2 builds deep core modules first and delays customer/public surfaces until l
 * outward-facing route models
 * public/customer policy boundaries
 * public payload shaping
-* website publishing adapters
 * customer/public navigation and rendering conventions
 
 That is avoidable rework. For that reason, Events pushes customer/public foundations ahead of the broader module-expansion phase.
+
+Legacy website integration is a separate concern: tenants that need to sync event data to legacy JSON connectors will configure and manage that during Phase 5 tenant initialization via platform-provided GUI. Phase 3 and Phase 4 modules need not implement publishing adapters themselves; they need only expose data contracts that Phase 5 connector setup can consume.
 
 ## V2 Direction: Enhancement, Not Replacement
 
@@ -66,45 +67,18 @@ Suggested capability toggles:
 * public short-code access
 * photo-drop uploads
 * moderation workflow
-* website JSON publishing
-* legacy site compatibility mode
 
-## Platform-Controlled, Tenant-Operated Publishing Model
+## Data Contracts For Future Publishing Integration
+
+Phase 3 Events should expose data in a shape that Phase 5 tenant initialization can consume for legacy JSON connector setup.
 
 Required direction:
 
-* website JSON push adapters should be configured and governed by the platform instance
-* tenant instances should not own the adapter framework itself
-* once the platform configures website publishing for a tenant, day-to-day event operation should happen through the tenant GUI
+* Events module should provide clean APIs and query contracts for exporting event data
+* event detail payload should be structured as publishable JSON for legacy site consumption
+* event list/index payload should support filtering and pagination for incremental syncs
 
-This creates the right split:
-
-* platform owns integration/publishing capability and policy
-* tenant staff own business event data and routine event operations
-
-## Recommended Publishing Architecture In V2
-
-For interim legacy-site support, Phase 3 should support a configurable publishing adapter pattern.
-
-Publishing modes:
-
-1. filesystem JSON write mode
-2. authenticated HTTPS endpoint push mode
-
-Recommended adapter concepts:
-
-* `publishing_targets`
-* `publishing_target_credentials`
-* `publishing_jobs`
-* `publishing_job_attempts`
-* `published_artifacts`
-
-Recommended initial event payloads:
-
-* event detail JSON
-* event index JSON
-* optional channel index JSON
-* optional sponsor payload
+This allows Phase 5 to add a tenant GUI for configuring legacy connector targets without requiring Events to own the connector framework.
 
 ## Recommended PostgreSQL Table Direction For Events
 
@@ -114,21 +88,16 @@ Replace V1 `tblevents_*` naming with explicit V2 families:
 * `event_channels`
 * `event_collections`
 * `event_sponsors`
-* `event_publications`
 * `event_occurrences` if recurrence needs expansion
 * `event_upload_submissions`
 * `event_blocked_submitters`
-* `publishing_targets`
-* `publishing_target_assignments`
-* `publishing_artifacts`
 
 Recommended V2 changes from V1:
 
 * separate business event record from publishing state
-* separate publishing-target config from event content
 * use explicit foreign keys and assignment tables instead of implicit option-driven coupling
-* use `jsonb` only for payload metadata or target-specific adapter metadata
-* use job tables and operational logs for publishing attempts rather than hiding outcomes in a single timestamp column
+* use `jsonb` only for metadata or extensibility fields, not core relational structure
+* design event queries so they can be called by Phase 5 publishing connectors without circular dependencies
 
 ## Public And Customer View Implications
 
@@ -148,32 +117,32 @@ Recommended first Phase 3 proof-of-concept:
 
 * one V2 Events admin surface
 * one public event detail view
-* one legacy JSON publishing adapter proof
-* one scheduler or queued publishing flow
+* clean event data APIs and query contracts for Phase 5 integration
 
 This proves:
 
 * internal admin UI ownership
 * public rendering contracts
-* publishing architecture
-* tenant/platform split of control versus operation
+* tenant/platform split of control versus data operation
+* that Events data is consumable by future phase publishing connectors
 
 ## Out Of Scope For This Phase
 
 Not in current Phase 3 scope:
 
+* legacy JSON connector setup GUI or tenant initialization framework
+* publishing job framework or scheduler
 * full website CMS editing
 * WYSIWYG page builder and deployment pipeline
 * broad website theme/layout management
-* tenant self-service publishing adapter creation
-* generalized page/block website content system
 
-Those belong to much later website/CMS phases.
+The connector setup GUI and Phase 5 tenant-initialization plumbing belong to Phase 5. Events just needs to expose clean data APIs.
 
 ## Related
 
 * [[V2 App/Planning/Phase 3/Phase 3 Index]] | [Phase 3 Index](Phase%203%20Index.md)
 * [[V2 App/Planning/Phase 3/Phase 3 - Customer And Public View Planning]] | [Phase 3 - Customer And Public View Planning](Phase%203%20-%20Customer%20And%20Public%20View%20Planning.md)
+* [[V2 App/Planning/Phase 4/Phase 4 - Remaining Core Module Planning]] | [Phase 4 - Remaining Core Module Planning](../Phase%204/Phase%204%20-%20Remaining%20Core%20Module%20Planning.md)
 * [[V1 App/Modules/Events]] | [Events](../../../V1%20App/Modules/Events.md)
 * [[V1 App/Features/Event Website Sync]] | [Event Website Sync](../../../V1%20App/Features/Event%20Website%20Sync.md)
 * [[V1 App/Architecture/Website Sync Architecture]] | [Website Sync Architecture](../../../V1%20App/Architecture/Website%20Sync%20Architecture.md)

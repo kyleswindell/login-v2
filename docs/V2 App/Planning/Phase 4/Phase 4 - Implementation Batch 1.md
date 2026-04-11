@@ -38,6 +38,7 @@ This batch establishes data and workflow primitives that later modules rely on:
 * permission declarations and policy gates
 * audit/error logging hooks for core create/update/payment state transitions
 * notification events for high-value actions (invoice state changes, payment recorded)
+* clean data APIs and query contracts for Phase 5 publishing connector integration
 * integration tests covering permission-gated setup/settings writes and key CRUD workflows
 
 ## Out Of Scope

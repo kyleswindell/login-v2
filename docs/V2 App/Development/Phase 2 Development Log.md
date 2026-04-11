@@ -213,10 +213,14 @@ Correction:
 * reorganized audit log slide-over details into event summary, actor/subject, request context, metadata, and client detail sections
 * collapsed metadata and client details by default for audit logs
 * kept the implementation focused on reducing height and improving readability without forcing strict viewport-height constraints
+* removed redundant error message preview after user review and kept full message as the single collapsible message display
+* converted Filament detail sections to borderless containers to reduce visual clutter
+* documented future audit/error log expansion outside the active phase schedule
 
 Canonical docs:
 
 * [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../Features/Event%20And%20Error%20Logging.md)
+* [[V2 App/Planning/Future Planning/Future - Audit And Error Log Operations]] | [Future - Audit And Error Log Operations](../Planning/Future%20Planning/Future%20-%20Audit%20And%20Error%20Log%20Operations.md)
 
 ## Related
 

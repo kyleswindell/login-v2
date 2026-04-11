@@ -168,5 +168,6 @@ This is the central-platform baseline. Tenant-local audit logs and central secur
 * [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 3]] | [Phase 1 - Implementation Batch 3](../Planning/Phase%201/Phase%201%20-%20Implementation%20Batch%203.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 2]] | [Phase 2 - Implementation Batch 2](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%202.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 3]] | [Phase 2 - Implementation Batch 3](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%203.md)
+* [[V2 App/Planning/Future Planning/Future - Audit And Error Log Operations]] | [Future - Audit And Error Log Operations](../Planning/Future%20Planning/Future%20-%20Audit%20And%20Error%20Log%20Operations.md)
 * [[V2 App/V2 App Documentation Map]] | [V2 App Documentation Map](../V2%20App%20Documentation%20Map.md)
 * [[V2 App/Reference/Reference Index]] | [Reference Index](../Reference/Reference%20Index.md)

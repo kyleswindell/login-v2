@@ -64,13 +64,8 @@ class CentralErrorLogResource extends Resource
                             ->badge()
                             ->formatStateUsing(fn (bool $state): string => $state ? 'Handled' : 'Unhandled')
                             ->color(fn (bool $state): string => $state ? 'success' : 'danger'),
-                        TextEntry::make('message')
-                            ->label('Message preview')
-                            ->formatStateUsing(fn (?string $state): string => self::limitText($state, 260))
-                            ->extraAttributes(['class' => 'break-words whitespace-pre-wrap'])
-                            ->columnSpanFull(),
                     ])
-                    ->columns(2)
+                    ->contained(false)
                     ->compact(),
                 Section::make('Exception')
                     ->schema([
@@ -85,7 +80,7 @@ class CentralErrorLogResource extends Resource
                         TextEntry::make('line_number')
                             ->placeholder('None'),
                     ])
-                    ->columns(2)
+                    ->contained(false)
                     ->compact(),
                 Section::make('Request Context')
                     ->schema([
@@ -109,7 +104,7 @@ class CentralErrorLogResource extends Resource
                         TextEntry::make('hostname')
                             ->placeholder('None'),
                     ])
-                    ->columns(2)
+                    ->contained(false)
                     ->compact(),
                 Section::make('Full Message')
                     ->schema([
@@ -121,6 +116,7 @@ class CentralErrorLogResource extends Resource
                     ])
                     ->collapsible()
                     ->collapsed()
+                    ->contained(false)
                     ->compact(),
                 Section::make('Stack Trace')
                     ->schema([
@@ -133,6 +129,7 @@ class CentralErrorLogResource extends Resource
                     ])
                     ->collapsible()
                     ->collapsed()
+                    ->contained(false)
                     ->compact(),
                 Section::make('Context')
                     ->schema([
@@ -144,6 +141,7 @@ class CentralErrorLogResource extends Resource
                     ])
                     ->collapsible()
                     ->collapsed()
+                    ->contained(false)
                     ->compact(),
             ]);
     }
@@ -171,10 +169,10 @@ class CentralErrorLogResource extends Resource
                     ->sortable(),
                 TextColumn::make('message')
                     ->searchable()
-                    ->limit(100)
+                    ->limit(80)
                     ->wrap()
-                    ->width('28rem')
-                    ->extraCellAttributes(['class' => 'max-w-md break-words whitespace-normal']),
+                    ->width('20rem')
+                    ->extraCellAttributes(['class' => 'max-w-xs break-words whitespace-normal']),
                 TextColumn::make('exception_class')
                     ->label('Exception')
                     ->searchable()

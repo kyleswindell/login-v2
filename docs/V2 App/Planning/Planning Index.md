@@ -22,6 +22,7 @@
 - [[V2 App/Planning/Phase 4/Phase 4 - Remaining Core Module Planning]] | [Phase 4 - Remaining Core Module Planning](Phase%204/Phase%204%20-%20Remaining%20Core%20Module%20Planning.md)
 - [[V2 App/Planning/Phase 4/Phase 4 - Implementation Batch 1]] | [Phase 4 - Implementation Batch 1](Phase%204/Phase%204%20-%20Implementation%20Batch%201.md)
 - [[V2 App/Planning/Phase 4/Phase 4 - UI Ownership And PostgreSQL Schema Map]] | [Phase 4 - UI Ownership And PostgreSQL Schema Map](Phase%204/Phase%204%20-%20UI%20Ownership%20And%20PostgreSQL%20Schema%20Map.md)
+- [[V2 App/Planning/Future Planning/Future - Audit And Error Log Operations]] | [Future - Audit And Error Log Operations](Future%20Planning/Future%20-%20Audit%20And%20Error%20Log%20Operations.md)
 - [[V2 App/Development/Development Index]] | [Development Index](../Development/Development%20Index.md)
 
 ## Purpose

@@ -67,7 +67,7 @@ class PlatformAuditLogResource extends Resource
                                 default => 'info',
                             }),
                     ])
-                    ->columns(2)
+                    ->contained(false)
                     ->compact(),
                 Section::make('Actor And Subject')
                     ->schema([
@@ -86,7 +86,7 @@ class PlatformAuditLogResource extends Resource
                         TextEntry::make('subject_id')
                             ->placeholder('None'),
                     ])
-                    ->columns(2)
+                    ->contained(false)
                     ->compact(),
                 Section::make('Request Context')
                     ->schema([
@@ -103,7 +103,7 @@ class PlatformAuditLogResource extends Resource
                         TextEntry::make('ip_address')
                             ->placeholder('None'),
                     ])
-                    ->columns(2)
+                    ->contained(false)
                     ->compact(),
                 Section::make('Metadata')
                     ->schema([
@@ -115,6 +115,7 @@ class PlatformAuditLogResource extends Resource
                     ])
                     ->collapsible()
                     ->collapsed()
+                    ->contained(false)
                     ->compact(),
                 Section::make('Client Details')
                     ->schema([
@@ -127,6 +128,7 @@ class PlatformAuditLogResource extends Resource
                     ])
                     ->collapsible()
                     ->collapsed()
+                    ->contained(false)
                     ->compact(),
             ]);
     }

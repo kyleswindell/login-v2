@@ -29,7 +29,7 @@ class PlatformLogger
             $resolvedActorId = $actorUserId ?? Auth::id();
 
             PlatformAuditLog::query()->create([
-                'occurred_at' => now(),
+                'occurred_at' => now('UTC'),
                 'event_type' => $event,
                 'action' => Str::afterLast($event, '.'),
                 'actor_user_id' => $resolvedActorId,
@@ -71,7 +71,7 @@ class PlatformLogger
         try {
             CentralErrorLog::query()->create([
                 'tenant_key' => $context['tenant_key'] ?? null,
-                'occurred_at' => now(),
+                'occurred_at' => now('UTC'),
                 'environment' => app()->environment(),
                 'service_name' => config('app.service_name'),
                 'severity' => $level,

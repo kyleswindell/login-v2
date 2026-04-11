@@ -72,6 +72,7 @@ Filament resources and pages should:
 * call Laravel services for mutations that have business meaning
 * rely on policies/gates for access decisions
 * use resource queries only for UI-scoped filtering and table behavior
+* format date/time columns explicitly when they need signed-in-user timezone conversion
 * avoid duplicating validation rules already owned by form requests or services unless Filament is the canonical UI for that form
 * emit or trigger the same audit logs, notifications, and events as non-Filament workflows
 * avoid direct tenant database switching inside resource methods unless a documented context resolver owns it

@@ -133,6 +133,24 @@ Planning owners:
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 2]] | [Phase 2 - Implementation Batch 2](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%202.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - UI Surface Disposition Audit]] | [Phase 2 - UI Surface Disposition Audit](../Planning/Phase%202/Phase%202%20-%20UI%20Surface%20Disposition%20Audit.md)
 
+### 2026-04-10 - Error log timezone correction
+
+Status:
+
+* implemented locally
+* pending staging deployment
+
+Correction:
+
+* confirmed the Filament error log proof rendered the manual SQL test row with a UTC/local mismatch
+* standardized platform logger timestamps to write UTC for audit and error logs
+* updated Blade and Filament error log views to display `occurred_at` in the signed-in user's timezone
+* reset `.env.example` `APP_TIMEZONE` to `UTC` so app defaults match the UTC-at-rest logging standard
+
+Canonical docs:
+
+* [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../Features/Event%20And%20Error%20Logging.md)
+
 ## Related
 
 * [[V2 App/Development/Development Index]] | [Development Index](Development%20Index.md)

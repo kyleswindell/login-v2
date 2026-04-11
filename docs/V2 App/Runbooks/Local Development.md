@@ -40,6 +40,12 @@ The Docker Compose local platform database is:
 
 These values are local-development placeholders only.
 
+## Timezones
+
+Store application timestamps in UTC unless a feature-specific canonical doc states otherwise.
+
+Display user-facing timestamps in the signed-in user's timezone when available. `APP_TIMEZONE` should remain `UTC` in environment files unless an explicit decision record changes that default.
+
 ## Redis
 
 Redis is the default local cache and queue backend in `.env.example`.

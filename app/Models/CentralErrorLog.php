@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+use Carbon\CarbonImmutable;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Model;
+use Throwable;
 
 class CentralErrorLog extends Model
 {
@@ -47,5 +50,23 @@ class CentralErrorLog extends Model
             'handled' => 'boolean',
             'occurred_at' => 'datetime',
         ];
+    }
+
+    public function occurredAtForTimezone(?string $timezone = null): ?CarbonInterface
+    {
+        if (! $this->occurred_at) {
+            return null;
+        }
+
+        $targetTimezone = $timezone ?: config('app.timezone', 'UTC');
+
+        try {
+            return CarbonImmutable::parse(
+                $this->occurred_at->format('Y-m-d H:i:s.u'),
+                'UTC',
+            )->timezone($targetTimezone);
+        } catch (Throwable) {
+            return $this->occurred_at->timezone(config('app.timezone', 'UTC'));
+        }
     }
 }

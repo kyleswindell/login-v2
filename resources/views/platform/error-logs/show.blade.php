@@ -1,4 +1,6 @@
 <x-layouts.app title="Error Log Detail">
+    @php($viewerTimezone = auth()->user()?->timezone ?: config('app.timezone'))
+
     <section class="flex flex-1 flex-col gap-6">
         <div class="flex items-start justify-between gap-4 rounded-3xl border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
             <div>
@@ -66,7 +68,7 @@
                 <dl class="mt-5 space-y-4">
                     <div class="flex flex-col gap-1">
                         <dt class="text-xs uppercase tracking-[0.2em] text-slate-500">Occurred At</dt>
-                        <dd class="text-sm text-slate-200">{{ $log->occurred_at?->format('M j, Y g:i:s A') ?? '—' }}</dd>
+                        <dd class="text-sm text-slate-200">{{ $log->occurredAtForTimezone($viewerTimezone)?->format('M j, Y g:i:s A T') ?? '—' }}</dd>
                     </div>
                     <div class="flex flex-col gap-1">
                         <dt class="text-xs uppercase tracking-[0.2em] text-slate-500">Environment</dt>

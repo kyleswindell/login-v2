@@ -46,7 +46,7 @@ class CentralErrorLogResource extends Resource
         return $schema
             ->components([
                 TextEntry::make('occurred_at')
-                    ->dateTime('M j, Y g:i A T'),
+                    ->formatStateUsing(fn (CentralErrorLog $record): string => self::formatOccurredAt($record)),
                 TextEntry::make('severity')
                     ->badge()
                     ->color(fn (?string $state): string => match ($state) {
@@ -92,7 +92,7 @@ class CentralErrorLogResource extends Resource
             ->columns([
                 TextColumn::make('occurred_at')
                     ->label('Occurred')
-                    ->dateTime('M j, Y g:i A T')
+                    ->formatStateUsing(fn (CentralErrorLog $record): string => self::formatOccurredAt($record))
                     ->sortable(),
                 TextColumn::make('severity')
                     ->badge()
@@ -175,6 +175,13 @@ class CentralErrorLogResource extends Resource
     public static function canViewAny(): bool
     {
         return Gate::allows('view-platform-error-logs');
+    }
+
+    private static function formatOccurredAt(CentralErrorLog $record): string
+    {
+        return $record
+            ->occurredAtForTimezone(auth()->user()?->timezone)
+            ?->format('M j, Y g:i A T') ?? 'None';
     }
 
     public static function canView(Model $record): bool

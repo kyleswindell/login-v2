@@ -15,6 +15,7 @@ Current status:
 * audit log viewer UI is live on staging
 * error log viewer UI is live on staging
 * Filament read-only error log proof is implemented locally and pending staging deployment/QA
+* audit and error log timestamps are stored as UTC and displayed in the signed-in user's timezone
 
 ## Current Scope
 
@@ -80,9 +81,20 @@ Current audit visibility surface:
 * filters by event type, actor, result, and severity
 * current audience is platform users with `platform.audit-logs.view`
 
+Timestamp standard:
+
+* `platform_audit_logs.occurred_at` is treated as UTC at rest
+* UI surfaces convert `occurred_at` to the signed-in user's timezone when available
+
 ## Application Error Logs
 
 Use application error logs for operational failures and exceptions.
+
+Timestamp standard:
+
+* `central_error_logs.occurred_at` is treated as UTC at rest
+* UI surfaces convert `occurred_at` to the signed-in user's timezone when available
+* platform default timezone is only a display fallback when no user timezone is known
 
 The exception reporter calls the platform logger and the logger fails safely to Laravel's normal log channel if database logging is unavailable.
 

@@ -1,4 +1,6 @@
 <x-layouts.app title="Error Logs">
+    @php($viewerTimezone = auth()->user()?->timezone ?: config('app.timezone'))
+
     <section class="flex flex-1 flex-col gap-6">
         <div class="rounded-3xl border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
             <p class="text-sm font-medium uppercase tracking-[0.3em] text-sky-300">Platform Management</p>
@@ -77,7 +79,7 @@
                     @forelse ($logs as $log)
                         <tr class="align-top text-sm text-slate-200">
                             <td class="px-6 py-4 text-slate-400">
-                                {{ $log->occurred_at?->format('M j, Y g:i A') }}
+                                {{ $log->occurredAtForTimezone($viewerTimezone)?->format('M j, Y g:i A T') ?? '—' }}
                             </td>
                             <td class="px-6 py-4">
                                 <span @class([

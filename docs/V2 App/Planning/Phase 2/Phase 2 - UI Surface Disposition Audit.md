@@ -13,6 +13,8 @@ Current status:
 * Phase 2 Batch 2 selected the error log viewer as the first Filament proof
 * the error log proof is deployed and validated on staging at `/console/central-error-logs`
 * Phase 2 Batch 3 selected audit logs as the second Filament comparison surface
+* audit and error log Filament proofs are accepted as complete for Phase 2 proof purposes
+* next Phase 2 focus is app shell, navigation, visual baseline, and template/design decision
 
 Source planning note:
 
@@ -43,8 +45,8 @@ Use these categories:
 | Settings pages | `/platform/settings/*`, `resources/views/platform/settings/*` | custom Blade forms and second-column nav | Filament candidate | Settings are form-heavy and likely benefit from a formal panel/resource/page pattern. |
 | Notifications inbox | `/platform/notifications`, `resources/views/platform/notifications/index.blade.php` | custom Blade plus Echo DOM updates | Hybrid candidate | Realtime behavior is already custom/Echo-backed; Filament migration needs care to preserve live updates. |
 | Header notification preview | app layout plus `resources/js/app.js` | custom DOM-driven realtime preview | Keep custom for now | It is shell-level behavior and should follow the final shell decision. |
-| Audit log viewer | `/platform/audit-logs`, `resources/views/platform/audit-logs/index.blade.php`, proof at `/console/platform-audit-logs` | custom Blade filtered table retained; local Filament read-only proof added | Filament proof in progress | Table/filter-heavy read-only admin surface is a good Filament candidate. |
-| Error log viewer | `/platform/error-logs/*`, `resources/views/platform/error-logs/*`, proof at `/console/central-error-logs` | custom Blade list/detail retained; local Filament read-only proof added | Filament proof in progress | Table/detail/filter workflow fits Filament well and is low business-risk. |
+| Audit log viewer | `/platform/audit-logs`, `resources/views/platform/audit-logs/index.blade.php`, proof at `/console/platform-audit-logs` | custom Blade filtered table retained; Filament read-only proof deployed | Filament proof complete | Table/filter-heavy read-only admin surface is a good Filament candidate. |
+| Error log viewer | `/platform/error-logs/*`, `resources/views/platform/error-logs/*`, proof at `/console/central-error-logs` | custom Blade list/detail retained; Filament read-only proof deployed | Filament proof complete | Table/detail/filter workflow fits Filament well enough for Phase 2 proof purposes; future operational-log UX improvements are tracked separately. |
 | Docs vault | `/platform/docs`, `resources/views/platform/docs/*` | custom repository tree and Markdown viewer | Keep custom | Specialized document viewer is not normal CRUD and should not be first Filament target. |
 | Realtime auth endpoint | `/platform/realtime/auth` | controller endpoint for Echo private channels | Keep backend endpoint | This is infrastructure, not an admin surface. |
 
@@ -71,7 +73,8 @@ Reason:
 Current proof status:
 
 * error log viewer proof is deployed and validated at `/console/central-error-logs`
-* audit log viewer proof is implemented locally at `/console/platform-audit-logs`
+* audit log viewer proof is deployed and validated at `/console/platform-audit-logs`
+* both operational log proofs are accepted as complete for Phase 2 proof purposes
 
 ## Screens To Avoid As First Proof
 

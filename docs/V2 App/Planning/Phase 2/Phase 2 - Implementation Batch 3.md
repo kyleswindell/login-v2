@@ -10,8 +10,8 @@ This batch tests whether Filament remains a good fit for operational table/detai
 
 Current status:
 
-* implemented locally
-* pending staging deployment and QA
+* deployed and validated on staging
+* accepted as complete for Phase 2 proof purposes
 * proof target is the read-only audit log viewer
 * proof panel path remains `/console`
 * existing Blade audit log route remains available during evaluation
@@ -92,11 +92,17 @@ Current verification:
 * PHP syntax checks pass for the new resource and page classes
 * `/console/platform-audit-logs` registers locally
 * shared timestamp conversion unit tests pass
+* audit table and slide-over detail were validated on staging
+* audit log viewer is accepted as complete for Phase 2 proof purposes
 * targeted feature tests are written but local execution times out in the current non-Docker database/runtime environment
 
 ## Follow-Up Decision
 
-After staging QA, decide whether operational viewers should continue moving into Filament first, or whether Phase 2 should shift to the app shell/template decision before more UI surfaces are added.
+Staging QA decision:
+
+* keep the audit and error log Filament viewers as accepted Phase 2 proof surfaces
+* do not spend additional Phase 2 time polishing operational-log table behavior unless a functional regression appears
+* shift Phase 2 to the app shell, navigation, visual baseline, and template/design decision before broader UI migration
 
 ## Related
 

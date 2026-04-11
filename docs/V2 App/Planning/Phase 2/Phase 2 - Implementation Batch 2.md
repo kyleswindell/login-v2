@@ -10,11 +10,11 @@ This batch should validate whether Filament fits the desired shared-core/platfor
 
 Current status:
 
-* implemented locally
 * deployed and validated on staging
 * proof target is the read-only error log viewer
 * proof panel path is `/console`
 * existing Blade error log routes remain available during evaluation
+* accepted as complete for Phase 2 proof purposes
 * unit-level timezone conversion tests pass locally
 * local feature tests remain blocked outside Docker until the test database host resolves, because the current environment points PostgreSQL at `postgres`
 
@@ -131,6 +131,7 @@ Current verification state:
 * PHP syntax checks pass for the new panel provider and resource classes
 * error log table and slide-over detail were validated on staging with a manual row
 * timezone display correction was deployed and validated on staging
+* responsive table behavior is accepted for Phase 2, with future operational-log enhancements tracked separately
 * targeted feature tests are written but local execution is blocked by PostgreSQL DNS outside Docker
 
 ## Follow-Up Decision

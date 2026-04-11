@@ -14,8 +14,9 @@ Current status:
 * Phase 1 is complete and signed off
 * current app surfaces are custom Blade, Vite, Tailwind, Laravel controllers, and small DOM-driven JavaScript
 * realtime notifications already use Reverb and Echo
-* Filament and Livewire remain planned, not installed
-* no final route/panel/UI design decision has been made yet
+* Filament is installed and validated through read-only audit/error operational proofs
+* Livewire is present through Filament, but no custom Livewire app shell decision has been made yet
+* final app shell, navigation, and UI design decisions remain open
 
 Canonical architecture owner:
 
@@ -25,11 +26,13 @@ Development log:
 
 * [[V2 App/Development/Phase 2 Development Log]] | [Phase 2 Development Log](../../Development/Phase%202%20Development%20Log.md)
 
-Batch 1 decision artifacts:
+Batch artifacts:
 
 * [[V2 App/Planning/Phase 2/Phase 2 - Route And Panel Ownership Map]] | [Phase 2 - Route And Panel Ownership Map](Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - UI Surface Disposition Audit]] | [Phase 2 - UI Surface Disposition Audit](Phase%202%20-%20UI%20Surface%20Disposition%20Audit.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 2]] | [Phase 2 - Implementation Batch 2](Phase%202%20-%20Implementation%20Batch%202.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 3]] | [Phase 2 - Implementation Batch 3](Phase%202%20-%20Implementation%20Batch%203.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 4]] | [Phase 2 - Implementation Batch 4](Phase%202%20-%20Implementation%20Batch%204.md)
 
 ## Phase Goal
 
@@ -214,10 +217,11 @@ Current Batch 1 progress:
 
 * screen audit is drafted
 * route/panel ownership map is drafted
-* recommended Filament proof target is audit log or error log viewer
+* Filament proof targets for audit and error logs are deployed and accepted as complete for Phase 2 proof purposes
+* app shell navigation ownership has a first implementation slice through a centralized navigation contract in the Blade shell
 * visual design/template brief remains pending
 * Livewire shell decision remains pending
-* Batch 2 is drafted as a limited Filament proof-of-concept, not a full UI migration
+* next implementation focus remains visual baseline and template/design decision, followed by broader shell ownership lock
 
 ## Decisions Still Needed
 

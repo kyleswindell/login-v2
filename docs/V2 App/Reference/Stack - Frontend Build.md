@@ -36,6 +36,8 @@ npm run build
 
 Tailwind's official Vite guidance currently recommends the dedicated Vite plugin. Our stack should stay close to the current official guidance when we evolve the frontend build setup.
 
+For Phase 2 shell work, keep navigation ownership data-driven in backend contracts (for example `App\Platform\Navigation\PlatformNavigation`) and let Blade render from that contract so route/permission mapping is not duplicated in multiple shell menus.
+
 ## Related
 
 * [[V2 App/Reference/Reference Index]] | [Reference Index](Reference%20Index.md)

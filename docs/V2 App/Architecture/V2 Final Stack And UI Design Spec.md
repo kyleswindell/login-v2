@@ -13,8 +13,10 @@ Current status:
 * planning owner created for Phase 2
 * current Phase 1 UI is Blade, Vite, Tailwind, Laravel controllers, and small DOM-driven JavaScript
 * Reverb and Echo are already implemented for realtime notifications
-* Filament and Livewire are still planned, not installed
+* Filament is installed and validated through read-only audit/error operational proofs
+* Livewire is present through Filament, while custom Livewire shell ownership remains undecided
 * final app shell, panel, and design-system decisions are not yet locked
+* Batch 4 shell/navigation baseline work is in progress
 
 Source planning note:
 
@@ -182,7 +184,6 @@ Open gaps:
 * no ADR yet confirms exact Filament/Livewire introduction timing
 * no final UI component inventory exists
 * no visual design reference or template decision exists
-* no first Filament proof-of-concept exists
 * no panel boundary test exists
 * no optional module schema installation standard exists yet
 * no platform-to-tenant access handoff standard exists yet
@@ -196,6 +197,8 @@ Open gaps:
 * [[V2 App/Reference/Stack - Frontend Build]] | [Stack - Frontend Build](../Reference/Stack%20-%20Frontend%20Build.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](../Planning/Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 2]] | [Phase 2 - Implementation Batch 2](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%202.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 3]] | [Phase 2 - Implementation Batch 3](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%203.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 4]] | [Phase 2 - Implementation Batch 4](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%204.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Route And Panel Ownership Map]] | [Phase 2 - Route And Panel Ownership Map](../Planning/Phase%202/Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - UI Surface Disposition Audit]] | [Phase 2 - UI Surface Disposition Audit](../Planning/Phase%202/Phase%202%20-%20UI%20Surface%20Disposition%20Audit.md)
 * [[Decisions/ADR-0004 - Shared Core Instance And Panel Boundary Direction]] | [ADR-0004 - Shared Core Instance And Panel Boundary Direction](../../Decisions/ADR-0004%20-%20Shared%20Core%20Instance%20And%20Panel%20Boundary%20Direction.md)

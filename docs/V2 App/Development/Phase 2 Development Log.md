@@ -18,7 +18,9 @@ Current state:
 * Filament usage standards have been expanded
 * Batch 2 Filament proof-of-concept plan has been drafted
 * Batch 2 Filament error-log proof has been deployed and validated on staging
-* Batch 3 Filament audit-log proof has been implemented locally and is pending staging deployment/QA
+* Batch 3 Filament audit-log proof has been deployed and validated on staging
+* audit and error log Filament proof surfaces are accepted as complete for Phase 2 proof purposes
+* next Phase 2 focus is app shell, navigation, visual baseline, and template/design decision
 
 ## Milestones
 
@@ -80,10 +82,9 @@ Planning owners:
 
 ## Next Expected Work
 
-* deploy the Batch 3 Filament audit-log proof to staging
-* review `/console/platform-audit-logs` against the current Blade audit log viewer
-* decide persistent navigation strategy
-* review visual design and template options
+* lock visual baseline and template-review direction for the shared shell
+* decide whether the custom shell remains primary with Filament islands or shifts further into Filament/Livewire ownership
+* define migration order for users/settings/notifications after shell ownership is locked
 * define optional module migration/seeding convention
 * define platform-to-tenant access handoff approach
 
@@ -155,8 +156,8 @@ Canonical docs:
 
 Status:
 
-* implemented locally
-* pending staging deployment and QA
+* deployed and validated on staging
+* accepted as complete for Phase 2 proof purposes
 
 Work completed:
 
@@ -169,6 +170,7 @@ Work completed:
 * confirmed `/console/platform-audit-logs` route registration locally
 * confirmed local unit tests for timestamp conversion pass
 * targeted feature test execution still times out in the current non-Docker local environment
+* staging browser QA accepted the audit log viewer
 
 Canonical docs:
 
@@ -184,8 +186,7 @@ Planning owners:
 
 Status:
 
-* implemented locally
-* pending staging deployment
+* deployed and validated on staging
 
 Correction:
 
@@ -203,8 +204,7 @@ Canonical docs:
 
 Status:
 
-* implemented locally
-* pending staging deployment
+* deployed and validated on staging
 
 Correction:
 
@@ -226,7 +226,7 @@ Canonical docs:
 
 Status:
 
-* deployed and pending browser QA
+* deployed and accepted for Phase 2 proof purposes
 
 Correction:
 
@@ -246,6 +246,51 @@ Canonical docs:
 * [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../Features/Event%20And%20Error%20Logging.md)
 * [[V2 App/Planning/Future Planning/Future - Audit And Error Log Operations]] | [Future - Audit And Error Log Operations](../Planning/Future%20Planning/Future%20-%20Audit%20And%20Error%20Log%20Operations.md)
 * [[V2 App/Reference/Stack - Filament And Livewire]] | [Stack - Filament And Livewire](../Reference/Stack%20-%20Filament%20And%20Livewire.md)
+
+### 2026-04-11 - Phase 2 operational log proofs closed
+
+Status:
+
+* complete for Phase 2 proof purposes
+
+Decision:
+
+* audit and error log Filament viewers are accepted as done for Phase 2
+* no further Phase 2 time should be spent polishing operational log table behavior unless a functional regression appears
+* future remediation workflows, trace navigation, auth-specific log separation, and richer operational UX remain tracked in future planning
+* Phase 2 should now continue with app shell, navigation, visual baseline, and template/design decisions
+
+Canonical docs:
+
+* [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../Features/Event%20And%20Error%20Logging.md)
+* [[V2 App/Planning/Future Planning/Future - Audit And Error Log Operations]] | [Future - Audit And Error Log Operations](../Planning/Future%20Planning/Future%20-%20Audit%20And%20Error%20Log%20Operations.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 4]] | [Phase 2 - Implementation Batch 4](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%204.md)
+
+### 2026-04-11 - Phase 2 Batch 4 shell navigation baseline slice
+
+Status:
+
+* implemented locally
+* pending Docker/staging verification for feature tests
+
+Work completed:
+
+* created `App\Platform\Navigation\PlatformNavigation` as the shell navigation contract owner
+* updated the main Blade shell layout to render account, primary, and setup navigation from the centralized contract
+* removed duplicated hard-coded navigation lists from the layout while preserving route and gate behavior
+* made setup trigger visibility depend on setup item availability
+* added dashboard feature assertions for setup trigger visibility
+* local feature test execution remains blocked outside Docker by PostgreSQL host resolution (`postgres`)
+
+Canonical docs:
+
+* [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
+* [[V2 App/Reference/Stack - Frontend Build]] | [Stack - Frontend Build](../Reference/Stack%20-%20Frontend%20Build.md)
+
+Planning owners:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 4]] | [Phase 2 - Implementation Batch 4](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%204.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](../Planning/Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
 
 ## Related
 

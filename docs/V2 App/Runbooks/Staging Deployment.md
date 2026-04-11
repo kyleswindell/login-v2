@@ -71,6 +71,27 @@ sudo systemctl reload php8.3-fpm
 sudo systemctl reload apache2
 ```
 
+## Storage And Log Permissions
+
+Laravel must be able to write to `storage/` and `bootstrap/cache/` as the PHP-FPM user.
+
+If the app reports that `storage/logs/laravel.log` cannot be opened in append mode, repair ownership and permissions from the server:
+
+```bash
+cd /var/www/platform/current
+sudo chown -R deploy:www-data storage bootstrap/cache
+sudo find storage bootstrap/cache -type d -exec chmod 2775 {} +
+sudo find storage bootstrap/cache -type f -exec chmod 664 {} +
+sudo systemctl reload php8.3-fpm
+```
+
+The intended staging ownership model is:
+
+* owner: `deploy`
+* group: `www-data`
+* directories: group-writable with setgid
+* files: group-writable
+
 ## Recommended Limited Sudoers Rule
 
 For smoother staging deploys, add a narrow sudoers rule for the `deploy` user rather than broad passwordless sudo.

@@ -17,6 +17,7 @@ Current status:
 * Filament read-only error log proof is deployed and validated on staging
 * Filament read-only audit log proof is implemented locally and pending staging deployment/QA
 * audit and error log timestamps are stored as UTC and displayed in the signed-in user's timezone
+* Filament log viewers use safe modal headings and truncated long-text display to avoid oversized recursive exception output
 
 ## Current Scope
 
@@ -143,6 +144,7 @@ Audit Filament proof notes:
 * the existing Blade audit log route remains the current live surface
 * the Filament proof is read-only and uses the existing `view-platform-audit-logs` gate
 * access is limited to active users who can view platform audit logs
+* metadata display accepts mixed legacy/runtime values defensively so malformed context does not break the slide-over
 
 ## Request Correlation
 

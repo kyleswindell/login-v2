@@ -180,6 +180,25 @@ Planning owners:
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 3]] | [Phase 2 - Implementation Batch 3](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%203.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - UI Surface Disposition Audit]] | [Phase 2 - UI Surface Disposition Audit](../Planning/Phase%202/Phase%202%20-%20UI%20Surface%20Disposition%20Audit.md)
 
+### 2026-04-11 - Filament log viewer hardening
+
+Status:
+
+* implemented locally
+* pending staging deployment
+
+Correction:
+
+* fixed audit log slide-over failure caused by strict metadata formatting when runtime state was not an array
+* replaced long record-title modal headings with stable log ID headings
+* limited and wrapped long error text so recursive exception messages do not force oversized tables or modal headings
+* documented the staging storage/log permission repair procedure after `laravel.log` write permissions caused recursive logging failures
+
+Canonical docs:
+
+* [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../Features/Event%20And%20Error%20Logging.md)
+* [[V2 App/Runbooks/Staging Deployment]] | [Staging Deployment](../Runbooks/Staging%20Deployment.md)
+
 ## Related
 
 * [[V2 App/Development/Development Index]] | [Development Index](Development%20Index.md)

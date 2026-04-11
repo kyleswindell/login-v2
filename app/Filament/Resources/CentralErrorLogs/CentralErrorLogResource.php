@@ -18,6 +18,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 use UnitEnum;
 
 class CentralErrorLogResource extends Resource
@@ -61,6 +62,8 @@ class CentralErrorLogResource extends Resource
                     ->formatStateUsing(fn (bool $state): string => $state ? 'Handled' : 'Unhandled')
                     ->color(fn (bool $state): string => $state ? 'success' : 'danger'),
                 TextEntry::make('message')
+                    ->formatStateUsing(fn (?string $state): string => self::limitText($state, 2000))
+                    ->extraAttributes(['class' => 'break-words whitespace-pre-wrap'])
                     ->columnSpanFull(),
                 TextEntry::make('exception_class')
                     ->placeholder('None'),
@@ -75,11 +78,18 @@ class CentralErrorLogResource extends Resource
                     ->placeholder('None'),
                 TextEntry::make('file_path')
                     ->placeholder('None')
+                    ->extraAttributes(['class' => 'break-all'])
                     ->columnSpanFull(),
                 TextEntry::make('line_number')
                     ->placeholder('None'),
                 TextEntry::make('stack_trace')
+                    ->formatStateUsing(fn (?string $state): string => self::limitText($state, 4000))
                     ->placeholder('No stack trace captured')
+                    ->extraAttributes(['class' => 'break-words whitespace-pre-wrap'])
+                    ->columnSpanFull(),
+                TextEntry::make('context')
+                    ->formatStateUsing(fn (mixed $state): string => self::formatStructuredValue($state))
+                    ->extraAttributes(['class' => 'break-words whitespace-pre-wrap'])
                     ->columnSpanFull(),
             ]);
     }
@@ -107,14 +117,20 @@ class CentralErrorLogResource extends Resource
                     ->sortable(),
                 TextColumn::make('message')
                     ->searchable()
-                    ->limit(90)
-                    ->wrap(),
+                    ->limit(100)
+                    ->wrap()
+                    ->width('28rem')
+                    ->extraCellAttributes(['class' => 'max-w-md break-words whitespace-normal']),
                 TextColumn::make('exception_class')
                     ->label('Exception')
                     ->searchable()
+                    ->limit(70)
+                    ->wrap()
                     ->toggleable(),
                 TextColumn::make('route')
                     ->searchable()
+                    ->limit(70)
+                    ->wrap()
                     ->toggleable(),
                 TextColumn::make('status_code')
                     ->label('Status')
@@ -167,6 +183,7 @@ class CentralErrorLogResource extends Resource
             ])
             ->recordActions([
                 ViewAction::make()
+                    ->modalHeading(fn (CentralErrorLog $record): string => 'Error Log #'.$record->id)
                     ->slideOver(),
             ])
             ->toolbarActions([]);
@@ -182,6 +199,28 @@ class CentralErrorLogResource extends Resource
         return $record
             ->occurredAtForTimezone(auth()->user()?->timezone)
             ?->format('M j, Y g:i A T') ?? 'None';
+    }
+
+    private static function limitText(?string $state, int $limit): string
+    {
+        return $state ? Str::limit($state, $limit) : 'None';
+    }
+
+    private static function formatStructuredValue(mixed $state): string
+    {
+        if ($state === null || $state === '') {
+            return 'None';
+        }
+
+        if (is_array($state)) {
+            return json_encode($state, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?: 'None';
+        }
+
+        if (is_bool($state)) {
+            return $state ? 'true' : 'false';
+        }
+
+        return Str::limit((string) $state, 4000);
     }
 
     public static function canView(Model $record): bool

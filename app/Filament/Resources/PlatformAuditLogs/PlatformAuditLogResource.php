@@ -18,6 +18,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 use UnitEnum;
 
 class PlatformAuditLogResource extends Resource
@@ -87,7 +88,8 @@ class PlatformAuditLogResource extends Resource
                 TextEntry::make('ip_address')
                     ->placeholder('None'),
                 TextEntry::make('metadata')
-                    ->formatStateUsing(fn (?array $state): string => $state ? json_encode($state, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) : 'None')
+                    ->formatStateUsing(fn (mixed $state): string => self::formatStructuredValue($state))
+                    ->extraAttributes(['class' => 'break-words whitespace-pre-wrap'])
                     ->columnSpanFull(),
             ]);
     }
@@ -105,6 +107,10 @@ class PlatformAuditLogResource extends Resource
                 TextColumn::make('event_type')
                     ->label('Event')
                     ->searchable()
+                    ->limit(80)
+                    ->wrap()
+                    ->width('24rem')
+                    ->extraCellAttributes(['class' => 'max-w-sm break-words whitespace-normal'])
                     ->sortable(),
                 TextColumn::make('actorUser.email')
                     ->label('Actor')
@@ -125,6 +131,8 @@ class PlatformAuditLogResource extends Resource
                     ->sortable(),
                 TextColumn::make('route')
                     ->searchable()
+                    ->limit(70)
+                    ->wrap()
                     ->toggleable(),
                 TextColumn::make('request_id')
                     ->label('Request')
@@ -159,6 +167,7 @@ class PlatformAuditLogResource extends Resource
             ])
             ->recordActions([
                 ViewAction::make()
+                    ->modalHeading(fn (PlatformAuditLog $record): string => 'Audit Log #'.$record->id)
                     ->slideOver(),
             ])
             ->toolbarActions([]);
@@ -206,5 +215,22 @@ class PlatformAuditLogResource extends Resource
         return $record
             ->occurredAtForTimezone(auth()->user()?->timezone)
             ?->format('M j, Y g:i A T') ?? 'None';
+    }
+
+    private static function formatStructuredValue(mixed $state): string
+    {
+        if ($state === null || $state === '') {
+            return 'None';
+        }
+
+        if (is_array($state)) {
+            return json_encode($state, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?: 'None';
+        }
+
+        if (is_bool($state)) {
+            return $state ? 'true' : 'false';
+        }
+
+        return Str::limit((string) $state, 4000);
     }
 }

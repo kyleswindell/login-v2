@@ -134,6 +134,11 @@ Features:
 * shared conventions for permissions, audit logs, error logs, notifications, and options applied to every new core module
 * soft integration points for payment handling where needed
 
+Working planning note:
+
+* [[V2 App/Planning/Phase 3/Phase 3 - Remaining Core Module Planning]] | [Phase 3 - Remaining Core Module Planning](Phase%203/Phase%203%20-%20Remaining%20Core%20Module%20Planning.md)
+* [[V2 App/Planning/Phase 3/Phase 3 - Implementation Batch 1]] | [Phase 3 - Implementation Batch 1](Phase%203/Phase%203%20-%20Implementation%20Batch%201.md)
+
 ### Phase 4: Customer-Facing View System
 
 Goal:
@@ -237,6 +242,7 @@ These should be documented before the next major build phase:
 * [[V2 App/Planning/Phase 0/Phase 0 Index]] | [Phase 0 Index](Phase%200/Phase%200%20Index.md)
 * [[V2 App/Planning/Phase 1/Phase 1 Index]] | [Phase 1 Index](Phase%201/Phase%201%20Index.md)
 * [[V2 App/Planning/Phase 2/Phase 2 Index]] | [Phase 2 Index](Phase%202/Phase%202%20Index.md)
+* [[V2 App/Planning/Phase 3/Phase 3 Index]] | [Phase 3 Index](Phase%203/Phase%203%20Index.md)
 * [[V2 App/Planning/Phase 1/Phase 1 - Platform Foundation Planning]] | [Phase 1 - Platform Foundation Planning](Phase%201/Phase%201%20-%20Platform%20Foundation%20Planning.md)
 * [[V2 App/Architecture/Core App And Platform Layer Model]] | [Core App And Platform Layer Model](../Architecture/Core%20App%20And%20Platform%20Layer%20Model.md)
 * [[V2 App/Architecture/Platform And Tenant Application Boundary]] | [Platform And Tenant Application Boundary](../Architecture/Platform%20And%20Tenant%20Application%20Boundary.md)

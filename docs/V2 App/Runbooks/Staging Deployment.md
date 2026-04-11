@@ -39,13 +39,14 @@ The current server deploy script performs:
 
 1. `git pull origin main`
 2. `composer install --no-interaction --prefer-dist --optimize-autoloader`
-3. `npm ci` (falls back to `npm install` if no lockfile exists)
-4. `npm run build`
-5. `php artisan config:clear`
-6. `php artisan migrate --force`
-7. `php artisan optimize:clear`
-8. attempts `sudo -n systemctl reload php8.3-fpm`
-9. attempts `sudo -n systemctl reload apache2`
+3. `php artisan filament:assets`, when Filament is installed
+4. `npm ci` (falls back to `npm install` if no lockfile exists)
+5. `npm run build`
+6. `php artisan config:clear`
+7. `php artisan migrate --force`
+8. `php artisan optimize:clear`
+9. attempts `sudo -n systemctl reload php8.3-fpm`
+10. attempts `sudo -n systemctl reload apache2`
 
 Realtime note:
 
@@ -55,6 +56,11 @@ Realtime note:
 The script is intentionally honest about the current privilege model:
 
 * if passwordless sudo is not configured for the `deploy` user, the script prints a message and skips the service reload step instead of hanging for a password prompt
+
+Filament note:
+
+* staging PHP must have the `intl` extension enabled before Composer can install the current Filament stack
+* generated Filament assets are deployment artifacts and are published by the deploy script instead of being committed to the repo
 
 ## Current Manual Fallback
 

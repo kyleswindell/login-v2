@@ -11,13 +11,13 @@ Phase 2 is in planning.
 Current state:
 
 * Phase 1 is complete and signed off
-* Phase 2 planning branch has been created
+* Phase 2 planning branch has been created and locally committed
 * canonical final-stack/UI architecture note has been created
 * route and panel ownership map has been drafted
 * UI surface disposition audit has been drafted
 * Filament usage standards have been expanded
 * Batch 2 Filament proof-of-concept plan has been drafted
-* no Phase 2 implementation changes have started yet
+* Batch 2 Filament proof has been implemented locally and is pending staging deployment/QA
 
 ## Milestones
 
@@ -79,8 +79,8 @@ Planning owners:
 
 ## Next Expected Work
 
-* decide whether Option B remains the preferred panel model after user review
-* confirm Batch 2 proof target and panel path before installing Filament
+* deploy the Batch 2 Filament proof to staging
+* review the `/console/central-error-logs` proof against the current Blade error log viewer
 * decide persistent navigation strategy
 * review visual design and template options
 * define optional module migration/seeding convention
@@ -104,6 +104,34 @@ Planning owners:
 
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 2]] | [Phase 2 - Implementation Batch 2](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%202.md)
 * [[V2 App/Reference/Stack - Filament And Livewire]] | [Stack - Filament And Livewire](../Reference/Stack%20-%20Filament%20And%20Livewire.md)
+
+### 2026-04-10 - Phase 2 Batch 2 Filament proof implemented locally
+
+Status:
+
+* application code implemented locally
+* staging deployment pending
+* local automated test execution blocked by PostgreSQL host resolution outside Docker
+
+Work completed:
+
+* installed `filament/filament`
+* created the `console` Filament panel at `/console`
+* added active-user panel access gating through `User::canAccessPanel`
+* created a read-only `CentralErrorLogResource`
+* kept the existing Blade error log viewer routes available
+* added feature tests for authorized access, guest redirect, and unauthorized denial
+* updated deployment flow to publish Filament assets as generated deployment artifacts
+
+Canonical docs:
+
+* [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../Features/Event%20And%20Error%20Logging.md)
+* [[V2 App/Reference/Stack - Filament And Livewire]] | [Stack - Filament And Livewire](../Reference/Stack%20-%20Filament%20And%20Livewire.md)
+
+Planning owners:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 2]] | [Phase 2 - Implementation Batch 2](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%202.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - UI Surface Disposition Audit]] | [Phase 2 - UI Surface Disposition Audit](../Planning/Phase%202/Phase%202%20-%20UI%20Surface%20Disposition%20Audit.md)
 
 ## Related
 

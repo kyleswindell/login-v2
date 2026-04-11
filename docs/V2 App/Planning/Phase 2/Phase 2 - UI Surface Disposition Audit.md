@@ -10,7 +10,8 @@ Current status:
 
 * drafted for Phase 2 Batch 1
 * based on current `routes/web.php`, controllers, and Blade views
-* no implementation changes made yet
+* Phase 2 Batch 2 selected the error log viewer as the first Filament proof
+* the proof is implemented locally at `/console/central-error-logs` and pending staging deployment/QA
 
 Source planning note:
 
@@ -42,7 +43,7 @@ Use these categories:
 | Notifications inbox | `/platform/notifications`, `resources/views/platform/notifications/index.blade.php` | custom Blade plus Echo DOM updates | Hybrid candidate | Realtime behavior is already custom/Echo-backed; Filament migration needs care to preserve live updates. |
 | Header notification preview | app layout plus `resources/js/app.js` | custom DOM-driven realtime preview | Keep custom for now | It is shell-level behavior and should follow the final shell decision. |
 | Audit log viewer | `/platform/audit-logs`, `resources/views/platform/audit-logs/index.blade.php` | custom Blade filtered table | Filament candidate | Table/filter-heavy read-only admin surface is a good Filament candidate. |
-| Error log viewer | `/platform/error-logs/*`, `resources/views/platform/error-logs/*` | custom Blade list/detail with filters | Filament candidate | Table/detail/filter workflow fits Filament well and is low business-risk. |
+| Error log viewer | `/platform/error-logs/*`, `resources/views/platform/error-logs/*`, proof at `/console/central-error-logs` | custom Blade list/detail retained; local Filament read-only proof added | Filament proof in progress | Table/detail/filter workflow fits Filament well and is low business-risk. |
 | Docs vault | `/platform/docs`, `resources/views/platform/docs/*` | custom repository tree and Markdown viewer | Keep custom | Specialized document viewer is not normal CRUD and should not be first Filament target. |
 | Realtime auth endpoint | `/platform/realtime/auth` | controller endpoint for Echo private channels | Keep backend endpoint | This is infrastructure, not an admin surface. |
 
@@ -57,7 +58,7 @@ Best candidates:
 
 Recommended first proof:
 
-* error log viewer or audit log viewer
+* error log viewer
 
 Reason:
 
@@ -65,6 +66,11 @@ Reason:
 * low mutation risk
 * table/filter behavior maps well to Filament
 * validates auth, route, layout, and table conventions without risking user-management writes first
+
+Current proof status:
+
+* error log viewer proof is implemented locally at `/console/central-error-logs`
+* audit log viewer remains the fallback/next comparison candidate
 
 ## Screens To Avoid As First Proof
 

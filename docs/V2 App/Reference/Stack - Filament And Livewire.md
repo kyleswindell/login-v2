@@ -93,7 +93,14 @@ Panels should be visually consistent even when they are separated internally for
 
 ## Version Direction
 
-Official Filament docs currently point to 5.x as the stable direction. When we install Filament, prefer the current stable version unless a dependency or compatibility constraint is documented in an ADR.
+Current local install resolved:
+
+* `filament/filament` v5.5.0
+* `livewire/livewire` v4.2.4
+
+PHP `intl` is required for the current Filament dependency stack. Keep it installed locally, in Docker images, and on staging before running Composer installs.
+
+Official Filament docs currently point to 5.x as the stable direction. Prefer the current stable version unless a dependency or compatibility constraint is documented in an ADR.
 
 ## Official References
 
@@ -117,6 +124,7 @@ After installation:
 
 * register panel providers cleanly
 * verify panel paths do not conflict with app routes
+* publish Filament assets during deployment with `php artisan filament:assets`
 * keep panel-specific boot logic explicit
 * validate the first proof surface before migrating more screens
 * update the canonical feature doc, planning note, and phase development log in the same work cycle

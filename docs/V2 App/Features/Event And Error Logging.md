@@ -14,6 +14,7 @@ Current status:
 * exception reporting is wired to write into `central_error_logs`
 * audit log viewer UI is live on staging
 * error log viewer UI is live on staging
+* Filament read-only error log proof is implemented locally and pending staging deployment/QA
 
 ## Current Scope
 
@@ -29,6 +30,8 @@ Runtime pieces in the current implementation:
 * exception reporting hook in `bootstrap/app.php`
 * `App\Http\Controllers\Platform\AuditLogController`
 * `App\Http\Controllers\Platform\ErrorLogController`
+* `App\Filament\Resources\CentralErrorLogs\CentralErrorLogResource`
+* `App\Providers\Filament\ConsolePanelProvider`
 * `resources/views/platform/audit-logs/index.blade.php`
 * `resources/views/platform/error-logs/index.blade.php`
 * `resources/views/platform/error-logs/show.blade.php`
@@ -110,8 +113,15 @@ Current error visibility surface:
 
 * `GET /platform/error-logs`
 * `GET /platform/error-logs/{log}`
+* `GET /console/central-error-logs`, local Filament proof pending staging QA
 * filters by severity, handled state, environment, exception class, and date range
 * current audience is platform users with `platform.error-logs.view`
+
+Filament proof notes:
+
+* the existing Blade error log routes remain the current live surface
+* the Filament proof is read-only and uses the existing `view-platform-error-logs` gate
+* access is limited to active users who can view platform error logs
 
 ## Request Correlation
 
@@ -131,5 +141,6 @@ This is the central-platform baseline. Tenant-local audit logs and central secur
 * [[V2 App/Planning/Phase 1/Logging Notifications And Options Foundation]] | [Logging Notifications And Options Foundation](../Planning/Phase%201/Logging%20Notifications%20And%20Options%20Foundation.md)
 * [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 1]] | [Phase 1 - Implementation Batch 1](../Planning/Phase%201/Phase%201%20-%20Implementation%20Batch%201.md)
 * [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 3]] | [Phase 1 - Implementation Batch 3](../Planning/Phase%201/Phase%201%20-%20Implementation%20Batch%203.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 2]] | [Phase 2 - Implementation Batch 2](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%202.md)
 * [[V2 App/V2 App Documentation Map]] | [V2 App Documentation Map](../V2%20App%20Documentation%20Map.md)
 * [[V2 App/Reference/Reference Index]] | [Reference Index](../Reference/Reference%20Index.md)

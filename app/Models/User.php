@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Database\Factories\UserFactory;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -33,12 +35,25 @@ use Spatie\Permission\Traits\HasRoles;
     'profile_image_path',
 ])]
 #[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, HasRoles, Notifiable;
 
     protected string $guard_name = 'web';
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        if ($panel->getId() !== 'console') {
+            return false;
+        }
+
+        return $this->is_active
+            && (
+                $this->hasRole('platform_super_admin')
+                || $this->can('platform.error-logs.view')
+            );
+    }
 
     /**
      * Get the attributes that should be cast.

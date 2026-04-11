@@ -10,10 +10,12 @@ This batch should validate whether Filament fits the desired shared-core/platfor
 
 Current status:
 
-* planned
-* depends on approval of the Batch 1 route and panel ownership direction
-* no Filament package installation has started
-* preferred proof target is audit log viewer or error log viewer
+* implemented locally
+* pending staging deployment and QA
+* proof target is the read-only error log viewer
+* proof panel path is `/console`
+* existing Blade error log routes remain available during evaluation
+* local feature tests are blocked outside Docker until the test database host resolves, because the current environment points PostgreSQL at `postgres`
 
 Planning owner:
 
@@ -36,13 +38,13 @@ The goal is not to migrate the whole app. The goal is to validate:
 * table/filter/detail ergonomics
 * whether Filament should own more Phase 1 admin surfaces
 
-## Proposed Proof Target
+## Selected Proof Target
 
-Preferred first target:
+Selected first target:
 
 * error log viewer
 
-Alternative target:
+Retained fallback target:
 
 * audit log viewer
 
@@ -57,12 +59,12 @@ Reason:
 
 In scope:
 
-* install Filament panel builder if approved
+* install Filament panel builder
 * create the first panel provider
-* configure a conservative panel path that avoids current route conflicts
-* expose one read-only log viewer surface
-* enforce existing permissions through policies/gates
-* keep existing Blade route available during the proof
+* configure `/console` as a conservative panel path that avoids current route conflicts
+* expose one read-only error log viewer surface
+* enforce existing permissions through the `view-platform-error-logs` gate
+* keep existing Blade error log routes available during the proof
 * compare Filament output against current app shell and design requirements
 * update canonical docs, planning docs, and Phase 2 development log
 
@@ -89,6 +91,13 @@ Before starting code:
 6. Confirm required permission gate/policy.
 7. Confirm whether the proof should appear in the existing app navigation or be accessed directly during review.
 
+Decision result:
+
+* utilizing Filament applies to this batch because the error log viewer is a read-heavy table/detail/filter surface
+* this is a platform-only operational proof, not the final shared-core app shell
+* the proof is accessed directly at `/console/central-error-logs` during review
+* the current custom Blade error log viewer remains live at `/platform/error-logs`
+
 ## Draft Panel Path Options
 
 Candidate paths:
@@ -112,6 +121,14 @@ The proof is successful if:
 * no existing Blade surface regresses
 * visual fit is acceptable enough to continue evaluating Filament
 * docs accurately record what was implemented and what remains undecided
+
+Current verification state:
+
+* Filament installs cleanly after PHP `intl` is available
+* `/console` routes register locally
+* `php artisan filament:about` runs locally
+* PHP syntax checks pass for the new panel provider and resource classes
+* targeted feature tests are written but local execution is blocked by PostgreSQL DNS outside Docker
 
 ## Follow-Up Decision
 

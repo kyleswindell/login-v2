@@ -15,6 +15,7 @@ Required before running Composer/Laravel commands outside Docker:
 * Node.js and npm for Vite frontend asset builds
 * `curl`
 * `dom`
+* `intl`
 * `mbstring`
 * `xml`
 * `xmlreader`

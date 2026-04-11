@@ -47,6 +47,43 @@ class ErrorLogViewerTest extends TestCase
             ->assertSee('RuntimeException');
     }
 
+    public function test_authorized_users_can_view_filament_error_log_proof(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->createErrorLog([
+            'occurred_at' => now(),
+            'environment' => 'staging',
+            'severity' => 'critical',
+            'message' => 'Filament proof error',
+            'exception_class' => 'RuntimeException',
+            'handled' => false,
+        ]);
+
+        $this->get('/console/central-error-logs')
+            ->assertOk()
+            ->assertSee('Error Logs')
+            ->assertSee('Filament proof error')
+            ->assertSee('RuntimeException');
+    }
+
+    public function test_guests_are_redirected_from_filament_error_log_proof(): void
+    {
+        $this->get('/console/central-error-logs')
+            ->assertRedirect('/console/login');
+    }
+
+    public function test_users_without_permission_cannot_access_filament_error_log_proof(): void
+    {
+        $user = User::factory()->create([
+            'is_active' => true,
+        ]);
+
+        $this->actingAs($user)
+            ->get('/console/central-error-logs')
+            ->assertForbidden();
+    }
+
     public function test_guests_are_redirected_from_error_log_index(): void
     {
         $this->get('/platform/error-logs')

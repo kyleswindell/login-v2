@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Define the target stack and UI architecture decisions that Phase 2 must settle before broad Phase 3 module expansion begins.
+Define the target stack and UI architecture decisions that Phase 2 must settle before Phase 3 customer/public foundations and Phase 4 broad module expansion begin.
 
 This note is the canonical architecture owner for Phase 2 final-stack alignment.
 
@@ -95,7 +95,7 @@ Introducing the remaining final stack after Phase 1 has consequences:
 * Livewire should not become a place for business logic; services and policies must stay the backend source of truth
 * Reverb/Echo should remain the realtime event layer, even if visible screens move into Filament or Livewire
 * route names, permissions, settings keys, audit logs, and notification contracts should remain stable during UI migration
-* design-system decisions should happen before building broad Phase 3 module screens to avoid avoidable churn
+* design-system decisions should happen before building outward-facing Phase 3 surfaces and Phase 4 module screens to avoid avoidable churn
 
 ## Required Phase 2 Decisions
 
@@ -108,7 +108,7 @@ Phase 2 must explicitly decide:
 5. Whether platform-management screens and shared core-app screens share one user-facing shell, separate internal panels, or a hybrid model with consistent styling.
 6. What visual design baseline should govern layout, spacing, cards, tables, forms, empty states, and responsive behavior.
 7. Whether an existing dashboard/admin template should be adopted, referenced, or avoided.
-8. What UI work must be converted before Phase 3 modules start.
+8. What UI work must be converted before Phase 3 customer/public work and Phase 4 modules start.
 9. How optional module migrations are installed for selected tenant databases without forcing tenant-specific schema onto every tenant.
 10. How platform-to-tenant access is audited and authorized.
 
@@ -127,8 +127,8 @@ Use this order:
 4. Install or defer Filament based on the route and panel decision.
 5. Introduce Livewire only where the chosen shell or Filament pattern requires it.
 6. Migrate one low-risk internal surface as the proving ground.
-7. Document scaffolding conventions for future Phase 3 modules.
-8. Start Phase 3 module expansion only after the scaffolding path is repeatable.
+7. Document scaffolding conventions for future Phase 3 customer/public surfaces and Phase 4 modules.
+8. Start Phase 3 customer/public work and Phase 4 module expansion only after the scaffolding path is repeatable.
 
 ## Design System Baseline To Define
 

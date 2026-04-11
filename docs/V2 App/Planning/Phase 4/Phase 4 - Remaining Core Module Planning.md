@@ -1,19 +1,19 @@
-# Phase 3 - Remaining Core Module Planning
+# Phase 4 - Remaining Core Module Planning
 
 ## Purpose
 
-Plan Phase 3: introduction of remaining core business modules (V1-inspired core feature set) with consistent setup views, settings surfaces, and cross-module interaction rules.
+Plan Phase 4: introduction of remaining core business modules (V1-inspired core feature set) with consistent setup views, settings surfaces, and cross-module interaction rules.
 
-This note is the active planning surface for Phase 3 module scope, ordering, dependencies, and implementation guardrails.
+This note is the active planning surface for Phase 4 module scope, ordering, dependencies, and implementation guardrails.
 
 ## Implementation Status
 
 Current status:
 
-* Phase 3 planning has started
+* Phase 4 planning has started
 * module and interaction mapping drafted from V1 references
-* implementation is blocked on final Phase 2 stack/UI ownership decisions
-* no Phase 3 module implementation has started yet
+* implementation is blocked on final Phase 2 stack/UI ownership decisions and Phase 3 customer/public foundation outcomes
+* no Phase 4 module implementation has started yet
 
 Canonical roadmap owner:
 
@@ -21,22 +21,22 @@ Canonical roadmap owner:
 
 Phase index:
 
-* [[V2 App/Planning/Phase 3/Phase 3 Index]] | [Phase 3 Index](Phase%203%20Index.md)
+* [[V2 App/Planning/Phase 4/Phase 4 Index]] | [Phase 4 Index](Phase%204%20Index.md)
 
 ## Source Review Inputs
 
-This Phase 3 draft is informed by:
+This Phase 4 draft is informed by:
 
 * [[V1 App/Features/V1 Feature Catalog]] | [V1 Feature Catalog](../../../V1%20App/Features/V1%20Feature%20Catalog.md)
 * [[V1 App/Reference/Setup And Settings Map]] | [Setup And Settings Map](../../../V1%20App/Reference/Setup%20And%20Settings%20Map.md)
 * [[V1 App/Features/Tenant Core Feature Allowlist]] | [Tenant Core Feature Allowlist](../../../V1%20App/Features/Tenant%20Core%20Feature%20Allowlist.md)
 * [[V1 App/Features/Tenant Module Allowlist]] | [Tenant Module Allowlist](../../../V1%20App/Features/Tenant%20Module%20Allowlist.md)
 * [[V1 App/Features/Tenant Permissions]] | [Tenant Permissions](../../../V1%20App/Features/Tenant%20Permissions.md)
-* [[V2 App/Planning/Phase 3/Phase 3 - UI Ownership And PostgreSQL Schema Map]] | [Phase 3 - UI Ownership And PostgreSQL Schema Map](Phase%203%20-%20UI%20Ownership%20And%20PostgreSQL%20Schema%20Map.md)
+* [[V2 App/Planning/Phase 4/Phase 4 - UI Ownership And PostgreSQL Schema Map]] | [Phase 4 - UI Ownership And PostgreSQL Schema Map](Phase%204%20-%20UI%20Ownership%20And%20PostgreSQL%20Schema%20Map.md)
 
 ## Phase Goal
 
-Deliver the remaining shared core modules on top of Phase 1 foundations and Phase 2 UI/stack decisions, while preserving a consistent, data-driven contract for:
+Deliver the remaining shared core modules after customer/public view foundations are in place, while preserving a consistent, data-driven contract for:
 
 * setup entries
 * settings groups and pages
@@ -45,9 +45,9 @@ Deliver the remaining shared core modules on top of Phase 1 foundations and Phas
 * notifications
 * cross-module dependency behavior
 
-## Proposed Phase 3 Module Scope
+## Proposed Phase 4 Module Scope
 
-Phase 3 candidate modules (V1-derived, normalized for V2 boundaries):
+Phase 4 candidate modules (V1-derived, normalized for V2 boundaries):
 
 1. Customers And Contacts
 2. Sales Core (Estimates, Invoices, Payments, Credit Notes, Items)
@@ -66,10 +66,10 @@ Explicit follow-up scope call:
 
 * Subscriptions should be treated as a separate finance-adjacent module candidate if recurring billing is part of the required base system, not silently assumed inside Sales Core.
 
-Phase 3 excludes:
+Phase 4 excludes:
 
 * tenant runtime provisioning and rollout workflows (Phase 5)
-* customer-facing portal UX (Phase 4)
+* customer/public foundation work already targeted in Phase 3
 * platform-management control-plane expansion (Phase 6)
 
 ## Current Filament And UI Ownership Direction
@@ -82,11 +82,11 @@ Planning default based on Phase 2 UI docs:
 
 Detailed module-by-module guidance lives in:
 
-* [[V2 App/Planning/Phase 3/Phase 3 - UI Ownership And PostgreSQL Schema Map]] | [Phase 3 - UI Ownership And PostgreSQL Schema Map](Phase%203%20-%20UI%20Ownership%20And%20PostgreSQL%20Schema%20Map.md)
+* [[V2 App/Planning/Phase 4/Phase 4 - UI Ownership And PostgreSQL Schema Map]] | [Phase 4 - UI Ownership And PostgreSQL Schema Map](Phase%204%20-%20UI%20Ownership%20And%20PostgreSQL%20Schema%20Map.md)
 
 ## Setup Views And Settings Coverage Plan
 
-Each Phase 3 module should ship with both:
+Each Phase 4 module should ship with both:
 
 * one setup-oriented entry or section for onboarding/configuration workflow
 * one or more settings pages for default behavior and operational controls
@@ -108,7 +108,7 @@ Baseline mapping draft:
 
 ## Cross-Module Interaction Requirements
 
-Phase 3 must preserve and formalize these core interaction rules:
+Phase 4 must preserve and formalize these core interaction rules:
 
 * Customers are a base dependency for Sales, Contracts, Projects, Support, and parts of reporting.
 * Sales and Finance setup must be available before invoice/payment workflows are enabled.
@@ -117,9 +117,9 @@ Phase 3 must preserve and formalize these core interaction rules:
 * Leads should support independent capture but clean conversion handoff into customer records.
 * Reports should read from shared module contracts, not feature-specific one-off query assumptions.
 
-## Phase 3 Design And Implementation Guardrails
+## Phase 4 Design And Implementation Guardrails
 
-Every module delivered in Phase 3 must include:
+Every module delivered in Phase 4 must include:
 
 * declared permissions and policy gates
 * setup page registration and settings group registration
@@ -130,7 +130,7 @@ Every module delivered in Phase 3 must include:
 
 ## Potential Improvements Over V1
 
-Phase 3 should intentionally improve on V1 by:
+Phase 4 should intentionally improve on V1 by:
 
 * replacing ad hoc setup/menu coupling with data-driven module registration
 * standardizing settings validation contracts by module and page
@@ -144,13 +144,13 @@ Phase 3 should intentionally improve on V1 by:
 
 ## Additional Module Review
 
-Current evidence does not support treating true stock inventory as a Phase 3 core module.
+Current evidence does not support treating true stock inventory as a Phase 4 core module.
 
 Planning default:
 
-* keep item/catalog behavior inside Sales Core for Phase 3
+* keep item/catalog behavior inside Sales Core for Phase 4
 * defer true stock/warehouse/procurement inventory to a future distinct module unless a concrete business requirement elevates it
-* keep cross-cutting shared services such as custom fields, email templates, announcements, todos, and calendar aggregation outside the Phase 3 business-module list unless a later phase promotes them intentionally
+* keep cross-cutting shared services such as custom fields, email templates, announcements, todos, and calendar aggregation outside the Phase 4 business-module list unless a later phase promotes them intentionally
 
 ## Risks And Mitigations
 
@@ -166,7 +166,7 @@ Mitigations:
 * batch modules by dependency layers, not by menu labels
 * require setup/settings/permissions/logging checklist pass before feature acceptance
 * lock module contracts before broad implementation starts
-* keep Phase 3 development log updated per batch with integration notes and blockers
+* keep Phase 4 development log updated per batch with integration notes and blockers
 
 ## Proposed Delivery Sequence
 
@@ -177,15 +177,21 @@ Mitigations:
 
 ## Entry Criteria
 
-Phase 3 implementation should not start until Phase 2 confirms:
+Phase 4 implementation should not start until Phase 2 confirms:
 
 * final route/panel/UI ownership decisions
 * module scaffolding standard and design-system baseline
 * setup/settings registration pattern for new modules
 
+And until Phase 3 confirms:
+
+* customer/public shell and auth direction
+* outward-facing module integration contract
+* legacy website push compatibility direction where needed
+
 ## Exit Criteria
 
-Phase 3 can close when:
+Phase 4 can close when:
 
 * all planned modules have setup and settings coverage
 * cross-module dependencies are documented and enforced
@@ -195,8 +201,9 @@ Phase 3 can close when:
 
 ## Related
 
-* [[V2 App/Planning/Phase 3/Phase 3 Index]] | [Phase 3 Index](Phase%203%20Index.md)
-* [[V2 App/Planning/Phase 3/Phase 3 - Implementation Batch 1]] | [Phase 3 - Implementation Batch 1](Phase%203%20-%20Implementation%20Batch%201.md)
-* [[V2 App/Planning/Phase 3/Phase 3 - UI Ownership And PostgreSQL Schema Map]] | [Phase 3 - UI Ownership And PostgreSQL Schema Map](Phase%203%20-%20UI%20Ownership%20And%20PostgreSQL%20Schema%20Map.md)
+* [[V2 App/Planning/Phase 4/Phase 4 Index]] | [Phase 4 Index](Phase%204%20Index.md)
+* [[V2 App/Planning/Phase 4/Phase 4 - Implementation Batch 1]] | [Phase 4 - Implementation Batch 1](Phase%204%20-%20Implementation%20Batch%201.md)
+* [[V2 App/Planning/Phase 4/Phase 4 - UI Ownership And PostgreSQL Schema Map]] | [Phase 4 - UI Ownership And PostgreSQL Schema Map](Phase%204%20-%20UI%20Ownership%20And%20PostgreSQL%20Schema%20Map.md)
+* [[V2 App/Planning/Phase 3/Phase 3 - Customer And Public View Planning]] | [Phase 3 - Customer And Public View Planning](../Phase%203/Phase%203%20-%20Customer%20And%20Public%20View%20Planning.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](../Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
 * [[V2 App/Planning/V2 Feature Roadmap]] | [V2 Feature Roadmap](../V2%20Feature%20Roadmap.md)

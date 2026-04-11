@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Define the first implementation batch for Phase 3 by establishing module contracts, dependency-safe sequencing, and the first core-module delivery slice.
+Define the first implementation batch for Phase 3 by establishing customer/public route contracts, proving outward-facing business-module behavior, and validating interim legacy website publishing support.
 
 ## Implementation Status
 
@@ -13,69 +13,68 @@ Current status:
 
 Parent planning note:
 
-* [[V2 App/Planning/Phase 3/Phase 3 - Remaining Core Module Planning]] | [Phase 3 - Remaining Core Module Planning](Phase%203%20-%20Remaining%20Core%20Module%20Planning.md)
+* [[V2 App/Planning/Phase 3/Phase 3 - Customer And Public View Planning]] | [Phase 3 - Customer And Public View Planning](Phase%203%20-%20Customer%20And%20Public%20View%20Planning.md)
 
 ## Batch Goal
 
-Deliver the first dependency-safe core slice required for broader Phase 3 rollout:
+Deliver the first dependency-safe public/customer slice required before broader Phase 4 module rollout:
 
-* Customers And Contacts foundation
-* Finance Setup baseline (taxes/currencies/payment modes/expense categories)
-* Sales Core contracts (estimates/invoices/payments/credit notes/items)
+* customer/public route and visibility contract baseline
+* Events admin plus public-view proof
+* interim legacy website JSON publishing adapter proof
 
 ## Why This Batch First
 
-This batch establishes data and workflow primitives that later modules rely on:
+This batch establishes outward-facing primitives that later modules rely on:
 
-* projects, contracts, and support often require customer linkage
-* invoices/payments and expense behavior require finance setup baselines
-* reports and downstream customer-facing surfaces depend on sales contract stability
+* customer/public route ownership
+* public visibility contracts
+* module payload shaping for external consumption
+* platform-versus-tenant publishing responsibility boundaries
 
 ## In Scope
 
-* module registration entries for the three batch modules
-* setup views and settings pages for customer, finance, and sales defaults
-* permission declarations and policy gates
-* audit/error logging hooks for core create/update/payment state transitions
-* notification events for high-value actions (invoice state changes, payment recorded)
-* integration tests covering permission-gated setup/settings writes and key CRUD workflows
+* public and customer route ownership definitions
+* one public-facing event detail or listing proof
+* one tenant-admin event management proof
+* publish-target configuration direction owned by platform context
+* interim JSON publishing proof for legacy website compatibility
+* permission and policy rules for public, customer, staff, and platform surfaces
+* audit/error logging for publish operations and outward-facing event mutations
 
 ## Out Of Scope
 
-* full projects/tasks/support/leads implementation
-* customer-facing portal experience (Phase 4)
+* full broad core-module rollout (Phase 4)
+* full CMS/website editing and deployment tooling
 * tenant rollout/provisioning behavior (Phase 5)
-* platform-management control-plane expansion (Phase 6)
+* platform-management expansion beyond required publishing configuration
 
 ## Required Contracts Before Build
 
-* module key and route namespace per module
-* setup entry key and settings group keys per module
-* permission matrix per module action
-* event taxonomy for audits and notifications
-* validation schema for each settings page
-* PostgreSQL table family and foreign-key map for each module
-* declared UI owner per surface (Filament, Livewire/custom Blade, or hybrid)
+* customer/public/staff/platform visibility model
+* public route namespace and rendering owner
+* event capability toggles and publishability model
+* publishing target contract and credential ownership model
+* JSON payload contract for event detail and event index artifacts
 
 ## Acceptance Criteria
 
-* customers, finance setup, and sales core modules are navigable and permission-gated
-* each module has at least one real setup workflow and one real settings workflow
-* all module writes emit expected audit events
-* critical failures route through centralized error logging
-* feature tests for primary module workflows and security boundaries are passing
-* schema decisions avoid Perfex-style soft relationships and generic polymorphic line-item shortcuts
-* canonical feature docs and planning status are updated in the same work cycle
+* outward-facing Events proof works from tenant-managed data
+* platform-configured publishing capability can be assigned without making the tenant own the integration framework
+* at least one legacy-compatible JSON artifact is published successfully through the selected adapter path
+* audit/error logging captures publish attempts and failures
+* the resulting contracts are reusable by later outward-facing modules
 
 ## Dependencies
 
 * [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](../Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
-* [[V1 App/Features/V1 Feature Catalog]] | [V1 Feature Catalog](../../../V1%20App/Features/V1%20Feature%20Catalog.md)
-* [[V1 App/Reference/Setup And Settings Map]] | [Setup And Settings Map](../../../V1%20App/Reference/Setup%20And%20Settings%20Map.md)
-* [[V2 App/Planning/Phase 3/Phase 3 - UI Ownership And PostgreSQL Schema Map]] | [Phase 3 - UI Ownership And PostgreSQL Schema Map](Phase%203%20-%20UI%20Ownership%20And%20PostgreSQL%20Schema%20Map.md)
+* [[V2 App/Planning/Phase 3/Phase 3 - Events And Legacy Website Publishing Planning]] | [Phase 3 - Events And Legacy Website Publishing Planning](Phase%203%20-%20Events%20And%20Legacy%20Website%20Publishing%20Planning.md)
+* [[V1 App/Modules/Events]] | [Events](../../../V1%20App/Modules/Events.md)
+* [[V1 App/Architecture/Website Sync Architecture]] | [Website Sync Architecture](../../../V1%20App/Architecture/Website%20Sync%20Architecture.md)
 
 ## Related
 
 * [[V2 App/Planning/Phase 3/Phase 3 Index]] | [Phase 3 Index](Phase%203%20Index.md)
 * [[V2 App/Planning/V2 Feature Roadmap]] | [V2 Feature Roadmap](../V2%20Feature%20Roadmap.md)
+* [[V2 App/Planning/Phase 4/Phase 4 - Remaining Core Module Planning]] | [Phase 4 - Remaining Core Module Planning](../Phase%204/Phase%204%20-%20Remaining%20Core%20Module%20Planning.md)
 * [[V2 App/Development/Development Index]] | [Development Index](../../Development/Development%20Index.md)

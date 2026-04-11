@@ -15,9 +15,13 @@
 - [[V2 App/Planning/Phase 2/Phase 2 - Route And Panel Ownership Map]] | [Phase 2 - Route And Panel Ownership Map](Phase%202/Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md)
 - [[V2 App/Planning/Phase 2/Phase 2 - UI Surface Disposition Audit]] | [Phase 2 - UI Surface Disposition Audit](Phase%202/Phase%202%20-%20UI%20Surface%20Disposition%20Audit.md)
 - [[V2 App/Planning/Phase 3/Phase 3 Index]] | [Phase 3 Index](Phase%203/Phase%203%20Index.md)
-- [[V2 App/Planning/Phase 3/Phase 3 - Remaining Core Module Planning]] | [Phase 3 - Remaining Core Module Planning](Phase%203/Phase%203%20-%20Remaining%20Core%20Module%20Planning.md)
+- [[V2 App/Planning/Phase 3/Phase 3 - Customer And Public View Planning]] | [Phase 3 - Customer And Public View Planning](Phase%203/Phase%203%20-%20Customer%20And%20Public%20View%20Planning.md)
 - [[V2 App/Planning/Phase 3/Phase 3 - Implementation Batch 1]] | [Phase 3 - Implementation Batch 1](Phase%203/Phase%203%20-%20Implementation%20Batch%201.md)
-- [[V2 App/Planning/Phase 3/Phase 3 - UI Ownership And PostgreSQL Schema Map]] | [Phase 3 - UI Ownership And PostgreSQL Schema Map](Phase%203/Phase%203%20-%20UI%20Ownership%20And%20PostgreSQL%20Schema%20Map.md)
+- [[V2 App/Planning/Phase 3/Phase 3 - Events And Legacy Website Publishing Planning]] | [Phase 3 - Events And Legacy Website Publishing Planning](Phase%203/Phase%203%20-%20Events%20And%20Legacy%20Website%20Publishing%20Planning.md)
+- [[V2 App/Planning/Phase 4/Phase 4 Index]] | [Phase 4 Index](Phase%204/Phase%204%20Index.md)
+- [[V2 App/Planning/Phase 4/Phase 4 - Remaining Core Module Planning]] | [Phase 4 - Remaining Core Module Planning](Phase%204/Phase%204%20-%20Remaining%20Core%20Module%20Planning.md)
+- [[V2 App/Planning/Phase 4/Phase 4 - Implementation Batch 1]] | [Phase 4 - Implementation Batch 1](Phase%204/Phase%204%20-%20Implementation%20Batch%201.md)
+- [[V2 App/Planning/Phase 4/Phase 4 - UI Ownership And PostgreSQL Schema Map]] | [Phase 4 - UI Ownership And PostgreSQL Schema Map](Phase%204/Phase%204%20-%20UI%20Ownership%20And%20PostgreSQL%20Schema%20Map.md)
 - [[V2 App/Development/Development Index]] | [Development Index](../Development/Development%20Index.md)
 
 ## Purpose

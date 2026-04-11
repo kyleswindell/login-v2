@@ -33,7 +33,7 @@ Batch 1 decision artifacts:
 
 ## Phase Goal
 
-Complete the final stack and UI architecture decisions before Phase 3 adds broad business modules.
+Complete the final stack and UI architecture decisions before Phase 3 adds customer/public foundations and Phase 4 adds broad business modules.
 
 Phase 2 should prevent future rework by deciding:
 
@@ -88,7 +88,7 @@ The final stack still expects:
 * Livewire for reactive panel/admin behavior where appropriate
 * explicit platform versus tenant route and panel boundaries
 * reusable design-system primitives
-* repeatable page/module scaffolding before Phase 3 module expansion
+* repeatable scaffolding for Phase 3 customer/public surfaces and Phase 4 module expansion
 
 ### Main difference
 
@@ -194,7 +194,7 @@ Decide:
 
 Required output:
 
-* Phase 3 module scaffold checklist
+* Phase 3 customer/public scaffold checklist and Phase 4 module scaffold checklist
 * updates to feature development standards if needed
 
 ## Recommended Order
@@ -203,12 +203,12 @@ Required output:
 2. Write the route/panel ownership decision.
 3. Decide the app shell and persistent navigation strategy.
 4. Review visual design/template options and lock a minimal design baseline.
-5. Decide whether Filament is installed in Phase 2 or deferred to the first Phase 3 module.
+5. Decide whether Filament is installed in Phase 2 or deferred to the first Phase 4 module after Phase 3 customer/public foundations are established.
 6. If installed, migrate one low-risk administrative surface as a proof of concept.
 7. Define optional module schema installation rules before tenant-specific modules are planned.
 8. Define platform-to-tenant access handoff principles before tenant rollout work begins.
 9. Update standards so every future module declares UI ownership, setup/settings entries, permissions, logs, notifications, and schema installation rules before implementation.
-10. Close Phase 2 only when future Phase 3 module scaffolding is repeatable.
+10. Close Phase 2 only when future Phase 3 customer/public scaffolding and Phase 4 module scaffolding are repeatable.
 
 Current Batch 1 progress:
 
@@ -294,7 +294,7 @@ Phase 2 can close when:
 * optional module schema installation pattern is documented
 * platform-to-tenant access direction is documented
 * standards require future modules to declare UI ownership and schema installation behavior during design
-* Phase 3 module scaffolding is clear enough to build without inventing patterns
+* Phase 3 customer/public scaffolding and Phase 4 module scaffolding are clear enough to build without inventing patterns
 
 ## Related
 

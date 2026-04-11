@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Map the route, panel, domain, and database-context ownership decisions that must be settled before Filament and broader Phase 3 modules are introduced.
+Map the route, panel, domain, and database-context ownership decisions that must be settled before Phase 3 customer/public foundations and broader Phase 4 modules are introduced.
 
 This note is a Phase 2 working decision artifact.
 

@@ -13,7 +13,7 @@ Current focus:
 * reconcile Phase 1's custom Blade implementation with the locked final stack
 * decide Filament, Livewire, Blade, route, and panel ownership before broader module work
 * define the visual design and template-review path
-* establish repeatable scaffolding rules for Phase 3 modules
+* establish repeatable scaffolding rules for Phase 3 customer/public foundations and Phase 4 modules
 
 ## Planning Notes
 

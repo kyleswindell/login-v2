@@ -18,7 +18,8 @@ Use this boundary first:
 
 * shared core app first
 * final software stack and UI system introduction before broad module expansion
-* remaining core module expansion before tenant rollout
+* customer/public foundation before broad module expansion where modules have outward-facing behavior
+* remaining core module expansion after customer/public contracts are established
 * tenant app rollout only after the base system is complete and template DB is stable
 
 See:
@@ -102,7 +103,7 @@ Status:
 * planning started (2026-04-10)
 * Phase 1 foundation is complete and signed off
 * current implementation uses custom Blade app surfaces while Filament/Livewire remain planned
-* Phase 2 must decide route, panel, shell, design-system, and template direction before Phase 3 module expansion
+* Phase 2 must decide route, panel, shell, design-system, and template direction before Phase 3 customer/public foundation work and Phase 4 module expansion
 
 Features:
 
@@ -120,7 +121,29 @@ Canonical architecture note:
 
 * [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
 
-### Phase 3: Remaining Core Module Introduction
+### Phase 3: Customer And Public View Foundation
+
+Goal:
+
+Introduce customer/public-facing foundations early enough that outward-facing core modules do not require later architectural rework.
+
+Features:
+
+* customer login and session model
+* public/customer route and visibility contracts
+* customer/public shell and navigation baseline
+* outward-facing module rendering patterns
+* events/public business event presentation
+* interim legacy website JSON publishing adapters where needed
+* platform-configured, tenant-operated publishing integration direction
+
+Working planning note:
+
+* [[V2 App/Planning/Phase 3/Phase 3 - Customer And Public View Planning]] | [Phase 3 - Customer And Public View Planning](Phase%203/Phase%203%20-%20Customer%20And%20Public%20View%20Planning.md)
+* [[V2 App/Planning/Phase 3/Phase 3 - Implementation Batch 1]] | [Phase 3 - Implementation Batch 1](Phase%203/Phase%203%20-%20Implementation%20Batch%201.md)
+* [[V2 App/Planning/Phase 3/Phase 3 - Events And Legacy Website Publishing Planning]] | [Phase 3 - Events And Legacy Website Publishing Planning](Phase%203/Phase%203%20-%20Events%20And%20Legacy%20Website%20Publishing%20Planning.md)
+
+### Phase 4: Remaining Core Module Introduction
 
 Goal:
 
@@ -136,23 +159,9 @@ Features:
 
 Working planning note:
 
-* [[V2 App/Planning/Phase 3/Phase 3 - Remaining Core Module Planning]] | [Phase 3 - Remaining Core Module Planning](Phase%203/Phase%203%20-%20Remaining%20Core%20Module%20Planning.md)
-* [[V2 App/Planning/Phase 3/Phase 3 - Implementation Batch 1]] | [Phase 3 - Implementation Batch 1](Phase%203/Phase%203%20-%20Implementation%20Batch%201.md)
-* [[V2 App/Planning/Phase 3/Phase 3 - UI Ownership And PostgreSQL Schema Map]] | [Phase 3 - UI Ownership And PostgreSQL Schema Map](Phase%203/Phase%203%20-%20UI%20Ownership%20And%20PostgreSQL%20Schema%20Map.md)
-
-### Phase 4: Customer-Facing View System
-
-Goal:
-
-Introduce customer-facing authentication and portal experience so customers can access module outputs (for example invoices and payments) based on enabled modules.
-
-Features:
-
-* customer login and session model
-* customer portal shell and navigation
-* customer invoice visibility and payment flow integration points
-* module-aware customer visibility rules
-* baseline customer self-service patterns
+* [[V2 App/Planning/Phase 4/Phase 4 - Remaining Core Module Planning]] | [Phase 4 - Remaining Core Module Planning](Phase%204/Phase%204%20-%20Remaining%20Core%20Module%20Planning.md)
+* [[V2 App/Planning/Phase 4/Phase 4 - Implementation Batch 1]] | [Phase 4 - Implementation Batch 1](Phase%204/Phase%204%20-%20Implementation%20Batch%201.md)
+* [[V2 App/Planning/Phase 4/Phase 4 - UI Ownership And PostgreSQL Schema Map]] | [Phase 4 - UI Ownership And PostgreSQL Schema Map](Phase%204/Phase%204%20-%20UI%20Ownership%20And%20PostgreSQL%20Schema%20Map.md)
 
 ### Phase 5: Tenant App Version Rollout (Soft Introduction)
 
@@ -223,8 +232,8 @@ These should be documented before the next major build phase:
 
 * V2 final stack and UI architecture specification for Phase 2 is started and must be expanded through Batch 1 decisions
 * V2 route and panel separation strategy
-* V2 remaining core-module inventory for Phase 3
-* V2 customer auth and portal model for Phase 4
+* V2 customer/public route, shell, and publishing model for Phase 3
+* V2 remaining core-module inventory for Phase 4
 * V2 tenant template database baseline and rollout/versioning runbook for Phase 5
 * V2 deferred platform-management inventory for Phase 6+
 
@@ -233,8 +242,8 @@ These should be documented before the next major build phase:
 1. `V2 App/Architecture/V2 Application Structure.md`
 2. `V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning.md`
 3. `V2 App/Architecture/V2 Final Stack And UI Design Spec.md`
-4. `V2 App/Features/Core Module Inventory - Phase 3.md`
-5. `V2 App/Features/Customer Portal Foundation - Phase 4.md`
+4. `V2 App/Features/Customer And Public Foundation - Phase 3.md`
+5. `V2 App/Features/Core Module Inventory - Phase 4.md`
 6. `V2 App/Runbooks/Tenant Template And Version Rollout - Phase 5.md`
 
 ## Related
@@ -244,6 +253,7 @@ These should be documented before the next major build phase:
 * [[V2 App/Planning/Phase 1/Phase 1 Index]] | [Phase 1 Index](Phase%201/Phase%201%20Index.md)
 * [[V2 App/Planning/Phase 2/Phase 2 Index]] | [Phase 2 Index](Phase%202/Phase%202%20Index.md)
 * [[V2 App/Planning/Phase 3/Phase 3 Index]] | [Phase 3 Index](Phase%203/Phase%203%20Index.md)
+* [[V2 App/Planning/Phase 4/Phase 4 Index]] | [Phase 4 Index](Phase%204/Phase%204%20Index.md)
 * [[V2 App/Planning/Phase 1/Phase 1 - Platform Foundation Planning]] | [Phase 1 - Platform Foundation Planning](Phase%201/Phase%201%20-%20Platform%20Foundation%20Planning.md)
 * [[V2 App/Architecture/Core App And Platform Layer Model]] | [Core App And Platform Layer Model](../Architecture/Core%20App%20And%20Platform%20Layer%20Model.md)
 * [[V2 App/Architecture/Platform And Tenant Application Boundary]] | [Platform And Tenant Application Boundary](../Architecture/Platform%20And%20Tenant%20Application%20Boundary.md)

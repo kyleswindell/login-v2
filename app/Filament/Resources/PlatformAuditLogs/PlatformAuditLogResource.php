@@ -9,6 +9,7 @@ use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
@@ -46,51 +47,87 @@ class PlatformAuditLogResource extends Resource
     {
         return $schema
             ->components([
-                TextEntry::make('occurred_at')
-                    ->formatStateUsing(fn (PlatformAuditLog $record): string => self::formatOccurredAt($record)),
-                TextEntry::make('event_type')
-                    ->label('Event type'),
-                TextEntry::make('action'),
-                TextEntry::make('result')
-                    ->badge()
-                    ->color(fn (?string $state): string => $state === 'success' ? 'success' : 'danger'),
-                TextEntry::make('severity')
-                    ->badge()
-                    ->color(fn (?string $state): string => match ($state) {
-                        'critical', 'error' => 'danger',
-                        'warning' => 'warning',
-                        default => 'info',
-                    }),
-                TextEntry::make('actorUser.name')
-                    ->label('Actor name')
-                    ->placeholder('System'),
-                TextEntry::make('actorUser.email')
-                    ->label('Actor email')
-                    ->placeholder('None'),
-                TextEntry::make('actor_type')
-                    ->placeholder('None'),
-                TextEntry::make('actor_id')
-                    ->placeholder('None'),
-                TextEntry::make('subject_type')
-                    ->placeholder('None'),
-                TextEntry::make('subject_id')
-                    ->placeholder('None'),
-                TextEntry::make('route')
-                    ->placeholder('None'),
-                TextEntry::make('method')
-                    ->placeholder('None'),
-                TextEntry::make('request_id')
-                    ->copyable()
-                    ->placeholder('None'),
-                TextEntry::make('trace_id')
-                    ->copyable()
-                    ->placeholder('None'),
-                TextEntry::make('ip_address')
-                    ->placeholder('None'),
-                TextEntry::make('metadata')
-                    ->formatStateUsing(fn (mixed $state): string => self::formatStructuredValue($state))
-                    ->extraAttributes(['class' => 'break-words whitespace-pre-wrap'])
-                    ->columnSpanFull(),
+                Section::make('Event Summary')
+                    ->schema([
+                        TextEntry::make('occurred_at')
+                            ->formatStateUsing(fn (PlatformAuditLog $record): string => self::formatOccurredAt($record)),
+                        TextEntry::make('event_type')
+                            ->label('Event type')
+                            ->formatStateUsing(fn (?string $state): string => self::limitText($state, 180))
+                            ->extraAttributes(['class' => 'break-words whitespace-pre-wrap']),
+                        TextEntry::make('action'),
+                        TextEntry::make('result')
+                            ->badge()
+                            ->color(fn (?string $state): string => $state === 'success' ? 'success' : 'danger'),
+                        TextEntry::make('severity')
+                            ->badge()
+                            ->color(fn (?string $state): string => match ($state) {
+                                'critical', 'error' => 'danger',
+                                'warning' => 'warning',
+                                default => 'info',
+                            }),
+                    ])
+                    ->columns(2)
+                    ->compact(),
+                Section::make('Actor And Subject')
+                    ->schema([
+                        TextEntry::make('actorUser.name')
+                            ->label('Actor name')
+                            ->placeholder('System'),
+                        TextEntry::make('actorUser.email')
+                            ->label('Actor email')
+                            ->placeholder('None'),
+                        TextEntry::make('actor_type')
+                            ->placeholder('None'),
+                        TextEntry::make('actor_id')
+                            ->placeholder('None'),
+                        TextEntry::make('subject_type')
+                            ->placeholder('None'),
+                        TextEntry::make('subject_id')
+                            ->placeholder('None'),
+                    ])
+                    ->columns(2)
+                    ->compact(),
+                Section::make('Request Context')
+                    ->schema([
+                        TextEntry::make('route')
+                            ->placeholder('None'),
+                        TextEntry::make('method')
+                            ->placeholder('None'),
+                        TextEntry::make('request_id')
+                            ->copyable()
+                            ->placeholder('None'),
+                        TextEntry::make('trace_id')
+                            ->copyable()
+                            ->placeholder('None'),
+                        TextEntry::make('ip_address')
+                            ->placeholder('None'),
+                    ])
+                    ->columns(2)
+                    ->compact(),
+                Section::make('Metadata')
+                    ->schema([
+                        TextEntry::make('metadata')
+                            ->hiddenLabel()
+                            ->formatStateUsing(fn (mixed $state): string => self::formatStructuredValue($state))
+                            ->extraAttributes(['class' => 'break-words whitespace-pre-wrap'])
+                            ->columnSpanFull(),
+                    ])
+                    ->collapsible()
+                    ->collapsed()
+                    ->compact(),
+                Section::make('Client Details')
+                    ->schema([
+                        TextEntry::make('user_agent')
+                            ->label('User agent')
+                            ->formatStateUsing(fn (?string $state): string => self::limitText($state, 1000))
+                            ->placeholder('None')
+                            ->extraAttributes(['class' => 'break-words whitespace-pre-wrap'])
+                            ->columnSpanFull(),
+                    ])
+                    ->collapsible()
+                    ->collapsed()
+                    ->compact(),
             ]);
     }
 
@@ -232,5 +269,10 @@ class PlatformAuditLogResource extends Resource
         }
 
         return Str::limit((string) $state, 4000);
+    }
+
+    private static function limitText(?string $state, int $limit): string
+    {
+        return $state ? Str::limit($state, $limit) : 'None';
     }
 }

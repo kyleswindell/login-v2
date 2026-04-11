@@ -18,6 +18,7 @@ Current status:
 * Filament read-only audit log proof is implemented locally and pending staging deployment/QA
 * audit and error log timestamps are stored as UTC and displayed in the signed-in user's timezone
 * Filament log viewers use safe modal headings and truncated long-text display to avoid oversized recursive exception output
+* Filament log slide-over details are organized into coherent sections with long message, stack trace, metadata, and client details collapsed by default
 
 ## Current Scope
 
@@ -145,6 +146,7 @@ Audit Filament proof notes:
 * the Filament proof is read-only and uses the existing `view-platform-audit-logs` gate
 * access is limited to active users who can view platform audit logs
 * metadata display accepts mixed legacy/runtime values defensively so malformed context does not break the slide-over
+* long metadata and client fields are collapsed by default in the slide-over
 
 ## Request Correlation
 

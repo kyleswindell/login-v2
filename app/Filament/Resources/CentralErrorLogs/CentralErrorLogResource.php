@@ -9,6 +9,7 @@ use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
@@ -46,51 +47,104 @@ class CentralErrorLogResource extends Resource
     {
         return $schema
             ->components([
-                TextEntry::make('occurred_at')
-                    ->formatStateUsing(fn (CentralErrorLog $record): string => self::formatOccurredAt($record)),
-                TextEntry::make('severity')
-                    ->badge()
-                    ->color(fn (?string $state): string => match ($state) {
-                        'critical', 'error' => 'danger',
-                        'warning' => 'warning',
-                        default => 'info',
-                    }),
-                TextEntry::make('environment')
-                    ->badge(),
-                TextEntry::make('handled')
-                    ->badge()
-                    ->formatStateUsing(fn (bool $state): string => $state ? 'Handled' : 'Unhandled')
-                    ->color(fn (bool $state): string => $state ? 'success' : 'danger'),
-                TextEntry::make('message')
-                    ->formatStateUsing(fn (?string $state): string => self::limitText($state, 2000))
-                    ->extraAttributes(['class' => 'break-words whitespace-pre-wrap'])
-                    ->columnSpanFull(),
-                TextEntry::make('exception_class')
-                    ->placeholder('None'),
-                TextEntry::make('route')
-                    ->placeholder('None'),
-                TextEntry::make('method')
-                    ->placeholder('None'),
-                TextEntry::make('status_code')
-                    ->placeholder('None'),
-                TextEntry::make('request_id')
-                    ->copyable()
-                    ->placeholder('None'),
-                TextEntry::make('file_path')
-                    ->placeholder('None')
-                    ->extraAttributes(['class' => 'break-all'])
-                    ->columnSpanFull(),
-                TextEntry::make('line_number')
-                    ->placeholder('None'),
-                TextEntry::make('stack_trace')
-                    ->formatStateUsing(fn (?string $state): string => self::limitText($state, 4000))
-                    ->placeholder('No stack trace captured')
-                    ->extraAttributes(['class' => 'break-words whitespace-pre-wrap'])
-                    ->columnSpanFull(),
-                TextEntry::make('context')
-                    ->formatStateUsing(fn (mixed $state): string => self::formatStructuredValue($state))
-                    ->extraAttributes(['class' => 'break-words whitespace-pre-wrap'])
-                    ->columnSpanFull(),
+                Section::make('Summary')
+                    ->schema([
+                        TextEntry::make('occurred_at')
+                            ->formatStateUsing(fn (CentralErrorLog $record): string => self::formatOccurredAt($record)),
+                        TextEntry::make('severity')
+                            ->badge()
+                            ->color(fn (?string $state): string => match ($state) {
+                                'critical', 'error' => 'danger',
+                                'warning' => 'warning',
+                                default => 'info',
+                            }),
+                        TextEntry::make('environment')
+                            ->badge(),
+                        TextEntry::make('handled')
+                            ->badge()
+                            ->formatStateUsing(fn (bool $state): string => $state ? 'Handled' : 'Unhandled')
+                            ->color(fn (bool $state): string => $state ? 'success' : 'danger'),
+                        TextEntry::make('message')
+                            ->label('Message preview')
+                            ->formatStateUsing(fn (?string $state): string => self::limitText($state, 260))
+                            ->extraAttributes(['class' => 'break-words whitespace-pre-wrap'])
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(2)
+                    ->compact(),
+                Section::make('Exception')
+                    ->schema([
+                        TextEntry::make('exception_class')
+                            ->placeholder('None'),
+                        TextEntry::make('error_code')
+                            ->placeholder('None'),
+                        TextEntry::make('file_path')
+                            ->placeholder('None')
+                            ->extraAttributes(['class' => 'break-all'])
+                            ->columnSpanFull(),
+                        TextEntry::make('line_number')
+                            ->placeholder('None'),
+                    ])
+                    ->columns(2)
+                    ->compact(),
+                Section::make('Request Context')
+                    ->schema([
+                        TextEntry::make('route')
+                            ->placeholder('None'),
+                        TextEntry::make('method')
+                            ->placeholder('None'),
+                        TextEntry::make('status_code')
+                            ->placeholder('None'),
+                        TextEntry::make('request_id')
+                            ->copyable()
+                            ->placeholder('None'),
+                        TextEntry::make('trace_id')
+                            ->copyable()
+                            ->placeholder('None'),
+                        TextEntry::make('user_id')
+                            ->label('User')
+                            ->formatStateUsing(fn (?int $state): string => $state ? 'User #'.$state : 'Guest'),
+                        TextEntry::make('ip_address')
+                            ->placeholder('None'),
+                        TextEntry::make('hostname')
+                            ->placeholder('None'),
+                    ])
+                    ->columns(2)
+                    ->compact(),
+                Section::make('Full Message')
+                    ->schema([
+                        TextEntry::make('message')
+                            ->hiddenLabel()
+                            ->formatStateUsing(fn (?string $state): string => self::limitText($state, 4000))
+                            ->extraAttributes(['class' => 'break-words whitespace-pre-wrap'])
+                            ->columnSpanFull(),
+                    ])
+                    ->collapsible()
+                    ->collapsed()
+                    ->compact(),
+                Section::make('Stack Trace')
+                    ->schema([
+                        TextEntry::make('stack_trace')
+                            ->hiddenLabel()
+                            ->formatStateUsing(fn (?string $state): string => self::limitText($state, 6000))
+                            ->placeholder('No stack trace captured')
+                            ->extraAttributes(['class' => 'break-words whitespace-pre-wrap'])
+                            ->columnSpanFull(),
+                    ])
+                    ->collapsible()
+                    ->collapsed()
+                    ->compact(),
+                Section::make('Context')
+                    ->schema([
+                        TextEntry::make('context')
+                            ->hiddenLabel()
+                            ->formatStateUsing(fn (mixed $state): string => self::formatStructuredValue($state))
+                            ->extraAttributes(['class' => 'break-words whitespace-pre-wrap'])
+                            ->columnSpanFull(),
+                    ])
+                    ->collapsible()
+                    ->collapsed()
+                    ->compact(),
             ]);
     }
 

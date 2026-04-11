@@ -43,7 +43,7 @@ Key findings:
 
 * Phase 1 backend foundations mostly align with the final stack
 * current UI ownership is transitional because Filament and Livewire are planned but not installed
-* Phase 2 must resolve route, panel, shell, design-system, and template decisions before Phase 3 module expansion
+* Phase 2 must resolve route, panel, shell, design-system, and template decisions before Phase 3 customer/public foundation work and Phase 4 module expansion
 * platform should be treated as the first internal instance of the same shared core app tenants will use
 * platform-management capability should be layered into that same experience, not treated as a visually separate product
 * optional module schema installation must support selected-tenant rollout
@@ -198,6 +198,25 @@ Canonical docs:
 
 * [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../Features/Event%20And%20Error%20Logging.md)
 * [[V2 App/Runbooks/Staging Deployment]] | [Staging Deployment](../Runbooks/Staging%20Deployment.md)
+
+### 2026-04-11 - Filament log slide-over layout pass
+
+Status:
+
+* implemented locally
+* pending staging deployment
+
+Correction:
+
+* reorganized error log slide-over details into summary, exception, request context, full message, stack trace, and context sections
+* collapsed full message, stack trace, and context by default for error logs
+* reorganized audit log slide-over details into event summary, actor/subject, request context, metadata, and client detail sections
+* collapsed metadata and client details by default for audit logs
+* kept the implementation focused on reducing height and improving readability without forcing strict viewport-height constraints
+
+Canonical docs:
+
+* [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../Features/Event%20And%20Error%20Logging.md)
 
 ## Related
 

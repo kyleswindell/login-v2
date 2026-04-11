@@ -20,6 +20,7 @@ Parent planning note:
 Deliver the first dependency-safe public/customer slice required before broader Phase 4 module rollout:
 
 * customer/public route and visibility contract baseline
+* OAuth customer-access mode and provider policy baseline
 * Events admin plus public-view proof
 * Microsoft Graph email sending baseline with GUI configuration
 
@@ -35,7 +36,10 @@ This batch establishes outward-facing primitives that later modules rely on:
 ## In Scope
 
 * public and customer route ownership definitions
-* one public-facing event detail or listing proof
+* tenant-configurable customer access mode setup (`disabled`, `invite_only`, `open_enrollment`)
+* OAuth provider policy setup for Google and Microsoft sign-in
+* customer company multi-user membership contract (customer company with multiple users)
+* one public-facing event detail or listing proof with module-level and event-level visibility controls
 * one tenant-admin event management proof
 * Graph mail transport setup for transactional sends
 * platform default sender accounts and alias configuration GUI
@@ -57,6 +61,11 @@ This batch establishes outward-facing primitives that later modules rely on:
 
 * customer/public/staff/platform visibility model
 * public route namespace and rendering owner
+* OAuth provider contract for Google and Microsoft sign-in
+* tenant customer access mode contract (`disabled`, `invite_only`, `open_enrollment`)
+* customer-company and customer-user membership contract
+* module-level customer visibility toggle contract
+* record-level visibility contract for customer-facing entities
 * event capability toggles and publishability model
 * Graph sender-account ownership model (platform defaults, tenant overrides)
 * feature-to-sender alias resolution contract
@@ -65,7 +74,10 @@ This batch establishes outward-facing primitives that later modules rely on:
 
 ## Acceptance Criteria
 
-* outward-facing Events proof works from tenant-managed data
+* customer access mode switching works for `disabled`, `invite_only`, and `open_enrollment`
+* OAuth provider policy is configurable for Google and Microsoft sign-in
+* customer-company multi-user authorization rules are documented and testable by contract
+* outward-facing Events proof works from tenant-managed data with both module-level and event-level visibility toggles
 * Graph mail transport sends at least account verification, notification update, and finance reminder message classes
 * platform defaults and tenant overrides are configurable through GUI setup
 * feature-based sender alias routing resolves correctly for at least finance and notifications
@@ -78,6 +90,7 @@ This batch establishes outward-facing primitives that later modules rely on:
 * [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](../Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
 * [[V2 App/Planning/Phase 3/Phase 3 - Events And Legacy Website Publishing Planning]] | [Phase 3 - Events And Legacy Website Publishing Planning](Phase%203%20-%20Events%20And%20Legacy%20Website%20Publishing%20Planning.md)
 * [[V2 App/Planning/Phase 3/Phase 3 - Microsoft Graph Email Sending Planning]] | [Phase 3 - Microsoft Graph Email Sending Planning](Phase%203%20-%20Microsoft%20Graph%20Email%20Sending%20Planning.md)
+* [[V2 App/Planning/Phase 3/Phase 3 - OAuth And Customer Access Mode Planning]] | [Phase 3 - OAuth And Customer Access Mode Planning](Phase%203%20-%20OAuth%20And%20Customer%20Access%20Mode%20Planning.md)
 * [[V1 App/Modules/Events]] | [Events](../../../V1%20App/Modules/Events.md)
 * [[V1 App/Architecture/Website Sync Architecture]] | [Website Sync Architecture](../../../V1%20App/Architecture/Website%20Sync%20Architecture.md)
 

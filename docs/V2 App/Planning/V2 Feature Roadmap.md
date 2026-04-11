@@ -132,6 +132,10 @@ Features:
 * customer login and session model
 * public/customer route and visibility contracts
 * customer/public shell and navigation baseline
+* OAuth sign-in foundations for Google and Microsoft account providers
+* per-tenant customer access modes (`disabled`, `invite_only`, `open_enrollment`)
+* customer company multi-user identity model for strict ownership-based access
+* module-level and record-level customer visibility contracts
 * outward-facing module rendering patterns
 * events/public business event presentation
 * Microsoft Graph email delivery foundation for transactional and automated notices
@@ -144,6 +148,7 @@ Working planning note:
 * [[V2 App/Planning/Phase 3/Phase 3 - Implementation Batch 1]] | [Phase 3 - Implementation Batch 1](Phase%203/Phase%203%20-%20Implementation%20Batch%201.md)
 * [[V2 App/Planning/Phase 3/Phase 3 - Events And Legacy Website Publishing Planning]] | [Phase 3 - Events And Legacy Website Publishing Planning](Phase%203/Phase%203%20-%20Events%20And%20Legacy%20Website%20Publishing%20Planning.md)
 * [[V2 App/Planning/Phase 3/Phase 3 - Microsoft Graph Email Sending Planning]] | [Phase 3 - Microsoft Graph Email Sending Planning](Phase%203/Phase%203%20-%20Microsoft%20Graph%20Email%20Sending%20Planning.md)
+* [[V2 App/Planning/Phase 3/Phase 3 - OAuth And Customer Access Mode Planning]] | [Phase 3 - OAuth And Customer Access Mode Planning](Phase%203/Phase%203%20-%20OAuth%20And%20Customer%20Access%20Mode%20Planning.md)
 
 ### Phase 4: Remaining Core Module Introduction
 

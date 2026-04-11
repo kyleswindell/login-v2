@@ -13,6 +13,8 @@ Current focus:
 * map V1 foundational/core module behavior into V2 module boundaries
 * define required setup views and settings coverage per module
 * capture cross-module interaction requirements and dependency rules
+* define module-level and record-level customer-facing visibility controls
+* enforce customer-company ownership authorization for customer-facing records
 * identify V1 pain points and targeted V2 improvements before implementation starts
 * map Filament/Livewire/custom UI ownership per module
 * map PostgreSQL-first schema direction and V1-to-V2 table changes per module
@@ -27,6 +29,7 @@ Current focus:
 
 * [[V2 App/Planning/V2 Feature Roadmap]] | [V2 Feature Roadmap](../V2%20Feature%20Roadmap.md)
 * [[V2 App/Planning/Phase 3/Phase 3 - Customer And Public View Planning]] | [Phase 3 - Customer And Public View Planning](../Phase%203/Phase%203%20-%20Customer%20And%20Public%20View%20Planning.md)
+* [[V2 App/Planning/Phase 3/Phase 3 - OAuth And Customer Access Mode Planning]] | [Phase 3 - OAuth And Customer Access Mode Planning](../Phase%203/Phase%203%20-%20OAuth%20And%20Customer%20Access%20Mode%20Planning.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](../Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
 * [[V1 App/Features/V1 Feature Catalog]] | [V1 Feature Catalog](../../../V1%20App/Features/V1%20Feature%20Catalog.md)
 * [[V1 App/Reference/Setup And Settings Map]] | [Setup And Settings Map](../../../V1%20App/Reference/Setup%20And%20Settings%20Map.md)

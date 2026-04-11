@@ -45,6 +45,8 @@ Deliver the remaining shared core modules after customer/public view foundations
 * audit and error logging
 * notifications
 * cross-module dependency behavior
+* customer-facing module and record-level visibility controls
+* strict customer-company ownership authorization contracts
 * data APIs and query contracts that Phase 5 can consume for tenant-initialization publishing connectors
 
 ## Proposed Phase 4 Module Scope
@@ -95,18 +97,18 @@ Each Phase 4 module should ship with both:
 
 Baseline mapping draft:
 
-* Customers And Contacts: groups/default profile policy, lifecycle defaults
-* Sales Core: invoice/estimate defaults, numbering/format policy, payment defaults, overdue reminder cadence, and finance sender-alias defaults
+* Customers And Contacts: customer company and customer-user membership policy, lifecycle defaults, and company-scoped authorization defaults
+* Sales Core: invoice/estimate defaults, numbering/format policy, payment defaults, overdue reminder cadence, finance sender-alias defaults, module-level customer visibility, and record-level ownership enforcement
 * Finance Setup: tax catalogs, currencies, payment modes, expense categories
 * Expenses: default categories, approval policy, billable defaults
-* Contracts: type catalog, expiration/reminder defaults, contract notice templates and sender defaults
-* Projects: project defaults, member policy, billing defaults
-* Tasks: task statuses/priorities defaults, timer/reminder defaults, due-soon and past-due alert defaults
-* Support: departments, statuses, priorities, service categories, canned replies, and ticket update email defaults
+* Contracts: type catalog, expiration/reminder defaults, contract notice templates and sender defaults, customer visibility defaults
+* Projects: project defaults, member policy, billing defaults, customer ownership attachment rules, and record-level customer visibility controls
+* Tasks: task statuses/priorities defaults, timer/reminder defaults, due-soon and past-due alert defaults, and customer-linked task visibility rules
+* Support: departments, statuses, priorities, service categories, canned replies, ticket update email defaults, and customer-company ticket authorization rules
 * Leads: sources, statuses, intake defaults, conversion defaults
-* Estimate Requests: form templates, statuses, intake routing defaults, acknowledgement email defaults
+* Estimate Requests: form templates, statuses, intake routing defaults, acknowledgement email defaults, and customer visibility defaults
 * Knowledge Base: article groups, access defaults, publishing defaults
-* Reports: report preset defaults, retention/export behavior, periodic report email schedule defaults
+* Reports: report preset defaults, retention/export behavior, periodic report email schedule defaults, and customer-safe reporting scope rules
 
 ## Cross-Module Interaction Requirements
 
@@ -119,6 +121,8 @@ Phase 4 must preserve and formalize these core interaction rules:
 * Leads should support independent capture but clean conversion handoff into customer records.
 * Reports should read from shared module contracts, not feature-specific one-off query assumptions.
 * Module email automations should use the shared Phase 3 Graph mail delivery foundation, sender-alias routing rules, and notice-class policy model.
+* Customer-facing module enablement must be separate from record-level visibility and ownership enforcement.
+* Customer-facing record access must require tenant boundary, customer-company ownership, and customer-user membership validation.
 
 ## Phase 4 Design And Implementation Guardrails
 
@@ -126,11 +130,13 @@ Every module delivered in Phase 4 must include:
 
 * declared permissions and policy gates
 * setup page registration and settings group registration
+* module-level customer visibility toggle definitions
+* record-level customer visibility and ownership fields where customer-facing access is possible
 * audit events for high-value state changes
 * error logging coverage for critical failure paths
 * notification events where user action or system state changes matter
 * each automated email-capable feature must declare sender alias, template keys, user preference behavior, and mandatory-notice behavior
-* feature tests for permission gates, setup/settings writes, and key workflows
+* feature tests for permission gates, setup/settings writes, customer-ownership authorization, and key workflows
 * clean data APIs and query contracts so Phase 5 can expose module data through tenant-initialized publishing connectors
 
 ## Potential Improvements Over V1

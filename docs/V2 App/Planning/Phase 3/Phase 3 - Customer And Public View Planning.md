@@ -34,6 +34,7 @@ This Phase 3 draft is informed by:
 * [[V1 App/Reference/Events Data Model]] | [Events Data Model](../../../V1%20App/Reference/Events%20Data%20Model.md)
 * [[V2 App/Planning/Phase 3/Phase 3 - Events And Legacy Website Publishing Planning]] | [Phase 3 - Events And Legacy Website Publishing Planning](Phase%203%20-%20Events%20And%20Legacy%20Website%20Publishing%20Planning.md)
 * [[V2 App/Planning/Phase 3/Phase 3 - Microsoft Graph Email Sending Planning]] | [Phase 3 - Microsoft Graph Email Sending Planning](Phase%203%20-%20Microsoft%20Graph%20Email%20Sending%20Planning.md)
+* [[V2 App/Planning/Phase 3/Phase 3 - OAuth And Customer Access Mode Planning]] | [Phase 3 - OAuth And Customer Access Mode Planning](Phase%203%20-%20OAuth%20And%20Customer%20Access%20Mode%20Planning.md)
 
 ## Phase Goal
 
@@ -73,10 +74,14 @@ Phase 3 should establish:
 1. customer and public route ownership model
 2. customer/public shell and navigation baseline
 3. public versus customer-authenticated visibility contracts
-4. outward-facing module rendering conventions
-5. events as the first outward-facing business module proof
-6. data API and query contracts for Phase 4/Phase 5 integration with legacy website connectors
-7. Microsoft Graph email sending foundation with platform defaults, tenant overrides, per-feature alias mapping, and notice preference policy
+4. OAuth sign-in policy contracts (Google and Microsoft providers)
+5. per-tenant customer access mode contracts (`disabled`, `invite_only`, `open_enrollment`)
+6. customer company multi-user authorization model
+7. module-level and record-level customer visibility contracts
+8. outward-facing module rendering conventions
+9. events as the first outward-facing business module proof
+10. data API and query contracts for Phase 4/Phase 5 integration with legacy website connectors
+11. Microsoft Graph email sending foundation with platform defaults, tenant overrides, per-feature alias mapping, and notice preference policy
 
 ## Microsoft Graph Email Delivery Foundation
 
@@ -133,6 +138,24 @@ Phase 3 should define explicit contracts for:
 * `staff` surfaces: tenant admin/staff internal management
 * `platform` surfaces: platform-only control-plane and integration configuration
 
+OAuth and access-mode baseline:
+
+* support Google and Microsoft OAuth provider contracts for allowed sign-in surfaces
+* per-tenant customer auth mode must be configurable as `disabled`, `invite_only`, or `open_enrollment`
+* customer login mode must be enforceable independently from staff login mode
+
+Customer company baseline:
+
+* customer-facing records are owned by customer companies, not loose individual user links
+* each customer company can include multiple customer users with membership roles
+* authorization checks must enforce tenant context, customer-company ownership, and user membership before module visibility flags are evaluated
+
+Module visibility baseline:
+
+* each customer-capable module must support module-level customer visibility toggle
+* each customer-visible record must support record-level visibility decision where required
+* module-level enablement must never override ownership-based authorization
+
 These contracts must be declared during feature design so later modules do not invent their own outward-facing models.
 
 ## Out Of Scope
@@ -177,6 +200,7 @@ Phase 3 can close when:
 * [[V2 App/Planning/Phase 3/Phase 3 - Implementation Batch 1]] | [Phase 3 - Implementation Batch 1](Phase%203%20-%20Implementation%20Batch%201.md)
 * [[V2 App/Planning/Phase 3/Phase 3 - Events And Legacy Website Publishing Planning]] | [Phase 3 - Events And Legacy Website Publishing Planning](Phase%203%20-%20Events%20And%20Legacy%20Website%20Publishing%20Planning.md)
 * [[V2 App/Planning/Phase 3/Phase 3 - Microsoft Graph Email Sending Planning]] | [Phase 3 - Microsoft Graph Email Sending Planning](Phase%203%20-%20Microsoft%20Graph%20Email%20Sending%20Planning.md)
+* [[V2 App/Planning/Phase 3/Phase 3 - OAuth And Customer Access Mode Planning]] | [Phase 3 - OAuth And Customer Access Mode Planning](Phase%203%20-%20OAuth%20And%20Customer%20Access%20Mode%20Planning.md)
 * [[V2 App/Planning/Phase 4/Phase 4 - Remaining Core Module Planning]] | [Phase 4 - Remaining Core Module Planning](../Phase%204/Phase%204%20-%20Remaining%20Core%20Module%20Planning.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](../Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
 * [[V2 App/Planning/V2 Feature Roadmap]] | [V2 Feature Roadmap](../V2%20Feature%20Roadmap.md)

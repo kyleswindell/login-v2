@@ -35,6 +35,8 @@ Current Phase 1 route families:
 | `/dashboard` | custom Blade | main authenticated dashboard | shared core candidate |
 | `/platform/users` | custom Blade | platform user management | migration candidate |
 | `/platform/administration/users` | Laravel route alias | target platform user ownership route that gate-checks then redirects to `/console/platform-users` | implemented in Batch 5 |
+| `/platform/administration/notifications` | Laravel route alias | target notifications ownership route that gate-checks then redirects to `/platform/notifications` | implemented in Batch 5 |
+| `/platform/administration/settings` | Laravel route alias | target settings ownership route that gate-checks then redirects to `/platform/settings/general` | implemented in Batch 5 |
 | `/platform/setup/*` | custom Blade | Setup shell pages | route strategy pending |
 | `/platform/settings/*` | custom Blade | Settings pages | migration candidate |
 | `/platform/notifications` | custom Blade plus Echo | notification inbox | hybrid candidate |
@@ -168,7 +170,7 @@ Open:
 
 * exact platform production domain
 * exact tenant admin domain pattern
-* final direct replacement path(s) for `/console` proof/migration resources after the Batch 4 `/platform/operations/*` and Batch 5 `/platform/administration/*` ownership redirects are retired
+* final direct replacement path(s) for `/console` proof/migration resources after Batch 4 `/platform/operations/*` and Batch 5 `/platform/administration/users` redirects are retired
 * whether shared core routes become unprefixed, `/app/*`, or Filament-owned
 * whether current non-operational `/platform/*` routes are retained as aliases, migrated, or reserved for platform-management only
 * whether platform-management is a separate panel or a grouped capability inside the shared core shell after transitional routes are retired

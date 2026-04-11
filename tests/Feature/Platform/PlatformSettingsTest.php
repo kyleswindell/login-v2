@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Platform;
 
-use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -46,6 +45,14 @@ class PlatformSettingsTest extends TestCase
         $this->get('/platform/settings/audit-logs')->assertOk()->assertSee('Audit Settings');
         $this->get('/platform/settings/docs')->assertOk()->assertSee('Vault Access');
         $this->get('/platform/settings/users')->assertOk()->assertSee('User Defaults');
+    }
+
+    public function test_authorized_users_are_redirected_from_target_settings_route(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/administration/settings')
+            ->assertRedirect('/platform/settings/general');
     }
 
     public function test_company_information_settings_can_be_updated(): void
@@ -291,6 +298,7 @@ class PlatformSettingsTest extends TestCase
             '/platform/settings/audit-logs',
             '/platform/settings/docs',
             '/platform/settings/users',
+            '/platform/administration/settings',
         ];
     }
 }

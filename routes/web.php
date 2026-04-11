@@ -52,6 +52,12 @@ Route::middleware('auth')->group(function (): void {
     Route::post('/platform/notifications/{notification}/read', [NotificationController::class, 'markRead'])->name('platform.notifications.mark-read');
     Route::post('/platform/notifications/{notification}/dismiss', [NotificationController::class, 'dismiss'])->name('platform.notifications.dismiss');
 
+    Route::get('/platform/administration/notifications', function () {
+        abort_unless(Gate::allows('view-platform-notifications'), 403);
+
+        return redirect()->route('platform.notifications.index');
+    })->name('platform.administration.notifications.index');
+
     Route::get('/platform/audit-logs', [AuditLogController::class, 'index'])->name('platform.audit-logs.index');
 
     Route::get('/platform/operations/audit-logs', function () {
@@ -88,6 +94,12 @@ Route::middleware('auth')->group(function (): void {
     Route::post('/platform/settings/docs', [SettingsController::class, 'updateDocs'])->name('platform.settings.docs.update');
     Route::get('/platform/settings/users', [SettingsController::class, 'users'])->name('platform.settings.users');
     Route::post('/platform/settings/users', [SettingsController::class, 'updateUsers'])->name('platform.settings.users.update');
+
+    Route::get('/platform/administration/settings', function () {
+        abort_unless(Gate::allows('manage-platform-settings'), 403);
+
+        return redirect()->route('platform.settings.general');
+    })->name('platform.administration.settings.index');
 
     Route::get('/platform/docs', DocsController::class)->name('platform.docs.index');
 

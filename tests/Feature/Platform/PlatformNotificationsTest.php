@@ -31,6 +31,14 @@ class PlatformNotificationsTest extends TestCase
             ->assertSee('Review needed');
     }
 
+    public function test_authorized_users_are_redirected_from_target_notifications_route(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/administration/notifications')
+            ->assertRedirect('/platform/notifications');
+    }
+
     public function test_notification_index_only_shows_current_user_notifications(): void
     {
         $user = $this->actingAsPlatformSuperAdmin();
@@ -68,6 +76,10 @@ class PlatformNotificationsTest extends TestCase
 
         $this->actingAs($user)
             ->get('/platform/notifications')
+            ->assertForbidden();
+
+        $this->actingAs($user)
+            ->get('/platform/administration/notifications')
             ->assertForbidden();
     }
 

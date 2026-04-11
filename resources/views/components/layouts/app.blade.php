@@ -26,7 +26,7 @@
                 <div
                     data-realtime-notifications="1"
                     data-user-id="{{ $user->id }}"
-                    data-notifications-index-url="{{ route('platform.notifications.index') }}"
+                    data-notifications-index-url="{{ route('platform.administration.notifications.index') }}"
                 ></div>
 
                 <div
@@ -87,7 +87,7 @@
                                                 <p class="mt-1 text-xs text-slate-500" data-notification-panel-summary>{{ $unreadNotificationCount }} unread across your latest updates</p>
                                             </div>
 
-                                            <a href="{{ route('platform.notifications.index') }}" class="text-xs font-semibold uppercase tracking-[0.2em] text-sky-300 transition hover:text-sky-200">
+                                            <a href="{{ route('platform.administration.notifications.index') }}" class="text-xs font-semibold uppercase tracking-[0.2em] text-sky-300 transition hover:text-sky-200">
                                                 View all
                                             </a>
                                         </div>
@@ -95,7 +95,7 @@
                                         <div class="mt-4 space-y-3" data-notification-preview-list>
                                             @forelse ($recentNotifications as $notification)
                                                 <a
-                                                    href="{{ $notification->action_url ?: route('platform.notifications.index') }}"
+                                                    href="{{ $notification->action_url ?: route('platform.administration.notifications.index') }}"
                                                     class="block rounded-2xl border border-slate-800 bg-slate-950/80 px-4 py-4 transition hover:border-sky-500/30 hover:bg-slate-950"
                                                     data-notification-preview-item
                                                     data-notification-id="{{ $notification->id }}"

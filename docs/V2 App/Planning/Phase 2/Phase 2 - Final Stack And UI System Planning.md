@@ -257,8 +257,9 @@ Current progress:
 * Batch 5 visual baseline/template direction is locked: no external template, current Tailwind Blade shell, Filament-owned admin/data surfaces
 * Batch 5 owner matrix is locked for dashboard, shell, users, settings, notifications, operational logs, docs vault, and setup pages
 * first Batch 5 platform-users migration slice is implemented locally at `/platform/administration/users` and `/console/platform-users`
+* Batch 5 target administration routes are implemented locally for users, notifications, and settings
 * broad custom Livewire shell work remains deferred behind core migration deliverables
-* next implementation sequence is: platform-users parity hardening, then settings/notifications/operational route retirement sequencing, then Batch 6 close-out contracts and handoff
+* next implementation sequence is: operational route retirement sequencing, then Batch 6 close-out contracts and handoff
 
 ## Remaining Decisions
 

@@ -16,6 +16,7 @@ Current status:
 * Phase 2 Batch 5 selected platform users as the first shared admin Filament migration candidate
 * first Filament migration resource is implemented locally at `/console/platform-users`
 * target app-owned migration route is implemented locally at `/platform/administration/users`
+* shell navigation points to `/platform/administration/users`; current Blade `/platform/users/*` routes remain compatibility paths
 * tenant-scoped auth and tenant roles are still deferred
 
 ## Current Implementation
@@ -136,7 +137,7 @@ Current gaps:
 * no password reset UI flow yet
 * no tenant-auth boundary implementation yet
 * the permissions tab is still an informational grouped view driven by installed permissions, not a full direct per-capability assignment matrix
-* Phase 2 Batch 5 still needs parity hardening before the Blade compatibility path can be retired
+* Phase 2 Batch 5 still needs final compatibility-route retirement decisions before the Blade path can be removed from daily support
 
 ## Related
 

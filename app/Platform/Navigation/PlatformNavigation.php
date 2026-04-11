@@ -23,8 +23,12 @@ class PlatformNavigation
                 ],
                 [
                     'label' => 'Platform Users',
-                    'route' => 'platform.users.index',
-                    'active' => ['platform.users.*'],
+                    'route' => 'platform.administration.users.index',
+                    'active' => [
+                        'platform.administration.users.*',
+                        'platform.users.*',
+                        'filament.console.resources.platform-users.*',
+                    ],
                     'ability' => 'manage-platform-users',
                 ],
                 [
@@ -35,8 +39,11 @@ class PlatformNavigation
                 ],
                 [
                     'label' => 'Notifications',
-                    'route' => 'platform.notifications.index',
-                    'active' => ['platform.notifications.*'],
+                    'route' => 'platform.administration.notifications.index',
+                    'active' => [
+                        'platform.administration.notifications.*',
+                        'platform.notifications.*',
+                    ],
                     'ability' => 'view-platform-notifications',
                 ],
                 [
@@ -93,8 +100,11 @@ class PlatformNavigation
                 ],
                 [
                     'label' => 'Settings',
-                    'route' => 'platform.settings.general',
-                    'active' => ['platform.settings.*'],
+                    'route' => 'platform.administration.settings.index',
+                    'active' => [
+                        'platform.administration.settings.*',
+                        'platform.settings.*',
+                    ],
                     'ability' => 'manage-platform-settings',
                 ],
             ]),
@@ -106,8 +116,12 @@ class PlatformNavigation
                 ],
                 [
                     'label' => 'Platform Users',
-                    'route' => 'platform.users.index',
-                    'active' => ['platform.users.*'],
+                    'route' => 'platform.administration.users.index',
+                    'active' => [
+                        'platform.administration.users.*',
+                        'platform.users.*',
+                        'filament.console.resources.platform-users.*',
+                    ],
                     'ability' => 'manage-platform-users',
                 ],
                 [
@@ -118,8 +132,11 @@ class PlatformNavigation
                 ],
                 [
                     'label' => 'Notifications',
-                    'route' => 'platform.notifications.index',
-                    'active' => ['platform.notifications.*'],
+                    'route' => 'platform.administration.notifications.index',
+                    'active' => [
+                        'platform.administration.notifications.*',
+                        'platform.notifications.*',
+                    ],
                     'ability' => 'view-platform-notifications',
                 ],
                 [

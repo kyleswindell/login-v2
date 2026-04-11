@@ -19,7 +19,11 @@ class PlatformDashboardTest extends TestCase
             ->assertOk()
             ->assertSee($user->email)
             ->assertSee('Platform Users')
+            ->assertSee('/platform/administration/users', false)
+            ->assertDontSee('href="/platform/users"', false)
             ->assertSee('Documentation Vault')
+            ->assertSee('/platform/administration/notifications', false)
+            ->assertSee('/platform/administration/settings', false)
             ->assertSee('/platform/operations/audit-logs', false)
             ->assertSee('/platform/operations/error-logs', false)
             ->assertDontSee('/console/platform-audit-logs', false)
@@ -44,7 +48,8 @@ class PlatformDashboardTest extends TestCase
             ->assertOk()
             ->assertSee('Recent Notifications')
             ->assertSee('Header preview notification')
-            ->assertSee('1 unread');
+            ->assertSee('1 unread')
+            ->assertSee('/platform/administration/notifications', false);
     }
 
     public function test_dashboard_hides_platform_management_links_for_standard_users(): void
@@ -55,7 +60,10 @@ class PlatformDashboardTest extends TestCase
             ->get('/dashboard')
             ->assertOk()
             ->assertDontSee('Platform Users')
+            ->assertDontSee('/platform/administration/users', false)
             ->assertDontSee('Documentation Vault')
+            ->assertDontSee('/platform/administration/notifications', false)
+            ->assertDontSee('/platform/administration/settings', false)
             ->assertDontSee('/platform/operations/audit-logs', false)
             ->assertDontSee('/platform/operations/error-logs', false)
             ->assertDontSee('data-setup-open', false);

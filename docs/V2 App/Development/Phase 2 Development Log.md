@@ -24,7 +24,8 @@ Current state:
 * `/console` proof routes are transitional and no longer linked directly from shell navigation
 * Batch 5 visual baseline and owner matrix are locked for the first shared admin migration pass
 * first Batch 5 platform-users Filament migration slice is implemented locally
-* next Phase 2 focus is platform-users parity hardening
+* target administration routes for users, notifications, and settings are implemented locally
+* next Phase 2 focus is operational route retirement sequencing
 
 ## Milestones
 
@@ -86,8 +87,7 @@ Planning owners:
 
 ## Next Expected Work
 
-* harden the Batch 5 platform-users migration slice
-* evaluate settings and notifications migration after the platform-users Filament slice confirms parity expectations
+* sequence operational route retirement from transitional `/console` proof paths
 * retire transitional operational log proof routing after final direct owner paths are selected
 * execute Batch 6 close-out contracts and handoff updates for Phase 3 and Phase 4
 * define optional module migration/seeding convention
@@ -109,6 +109,25 @@ Work completed:
 * added `/platform/administration/users` as the app-owned target users route with `manage-platform-users` gate parity
 * allowed active users with `platform.users.manage` to access the console panel during the migration window
 * kept current Blade `/platform/users/*` routes available and left shell navigation on the Blade users surface until parity hardening is complete
+
+### 2026-04-11 - Phase 2 Batch 5 users parity and administration target routes
+
+Status:
+
+* implemented locally
+* focused Docker feature tests passed
+
+Work completed:
+
+* added Filament users parity tests for table search, create with role assignment, and edit with profile/status/role updates
+* moved shell Platform Users navigation to `/platform/administration/users`
+* added `/platform/administration/notifications` as the target notifications route while preserving the Echo-backed Blade inbox and action routes
+* added `/platform/administration/settings` as the target settings route while preserving existing Blade settings forms
+* updated notification header and realtime fallback URLs to use the target notifications route
+
+Verification:
+
+* Docker feature tests passed for dashboard, platform users, notifications, and settings
 
 Planning owners:
 

@@ -17,6 +17,7 @@ Current status:
 * settings UI, selective Setup pages, and the Setup/Settings sidebar shell are live on staging
 * Phase 2 Batch 5 keeps notifications custom/Echo-backed until realtime parity criteria are met
 * Phase 2 Batch 5 keeps settings on the current Blade workflow until grouped Filament page ownership is defined
+* target administration routes are implemented locally at `/platform/administration/notifications` and `/platform/administration/settings`
 
 ## Current Implementation
 
@@ -63,6 +64,8 @@ Owner targets:
 
 * settings remain hybrid/custom Blade until grouped Filament page ownership is defined
 * notifications inbox and header preview remain custom Blade plus Echo because live unread counts, preview state, inbox updates, and toast behavior are the critical contract
+* shell and realtime fallback links use `/platform/administration/notifications` while existing notification action routes remain under `/platform/notifications/*`
+* setup navigation can use `/platform/administration/settings` while editable settings forms remain under `/platform/settings/*`
 * any later Filament or Livewire migration must preserve `NotificationService`, `SettingsService`, audit logging, permissions, and Reverb/Echo delivery behavior
 
 ## Important Files
@@ -150,7 +153,7 @@ Current gaps:
 * no non-database delivery channels yet
 * no notification receipts or fan-out tables yet
 * notification defaults are still limited to a first-pass set of platform-wide options
-* no Batch 5 Filament settings or notifications owner implementation exists yet
+* no Batch 5 Filament settings or notifications owner implementation exists yet because custom Blade/Echo remains the selected owner for this batch
 
 ## Related
 

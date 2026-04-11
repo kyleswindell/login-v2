@@ -67,6 +67,7 @@ The following direction is locked for current Phase 2 planning and execution:
 * notifications realtime behavior remains Reverb/Echo based while UI ownership evolves
 * no third-party dashboard/admin template is adopted for Batch 5; the current Tailwind Blade shell remains the baseline while Filament owns selected admin/data surfaces
 * platform users now has an app-owned target route at `/platform/administration/users` that redirects to `/console/platform-users` during the migration window
+* notifications and settings now have app-owned target routes at `/platform/administration/notifications` and `/platform/administration/settings` while their custom Blade behavior remains authoritative
 
 ## Current Implementation Versus Final Stack
 

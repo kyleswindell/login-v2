@@ -110,7 +110,7 @@ class NotificationService
             'severity' => $notification->severity,
             'title' => $notification->title,
             'body' => $notification->body,
-            'action_url' => $notification->action_url ?: route('platform.notifications.index'),
+            'action_url' => $notification->action_url ?: route('platform.administration.notifications.index'),
             'read_at' => $notification->read_at?->toIso8601String(),
             'dismissed_at' => $notification->dismissed_at?->toIso8601String(),
             'created_at' => $notification->created_at?->toIso8601String(),
@@ -122,7 +122,7 @@ class NotificationService
                 ->count(),
             'mark_read_url' => route('platform.notifications.mark-read', $notification),
             'dismiss_url' => route('platform.notifications.dismiss', $notification),
-            'index_url' => route('platform.notifications.index'),
+            'index_url' => route('platform.administration.notifications.index'),
         ];
     }
 }

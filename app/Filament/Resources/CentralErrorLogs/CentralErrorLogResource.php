@@ -172,14 +172,6 @@ class CentralErrorLogResource extends Resource
                     ->width('11rem')
                     ->grow(false)
                     ->sortable(),
-                TextColumn::make('message')
-                    ->searchable()
-                    ->limit(75)
-                    ->lineClamp(2)
-                    ->wrap()
-                    ->width('48%')
-                    ->grow()
-                    ->extraCellAttributes(['class' => 'break-words whitespace-normal']),
                 TextColumn::make('severity')
                     ->badge()
                     ->color(fn (?string $state): string => match ($state) {
@@ -199,15 +191,24 @@ class CentralErrorLogResource extends Resource
                     ->width('7rem')
                     ->grow(false)
                     ->sortable(),
+                TextColumn::make('message')
+                    ->searchable()
+                    ->limit(75)
+                    ->lineClamp(2)
+                    ->wrap()
+                    ->visibleFrom('xl')
+                    ->width('22rem')
+                    ->grow()
+                    ->extraCellAttributes(['class' => 'break-words whitespace-normal']),
                 TextColumn::make('environment')
                     ->badge()
-                    ->visibleFrom('xl')
+                    ->visibleFrom('2xl')
                     ->width('7rem')
                     ->grow(false)
                     ->sortable(),
                 TextColumn::make('status_code')
                     ->label('Status')
-                    ->visibleFrom('xl')
+                    ->visibleFrom('2xl')
                     ->width('5rem')
                     ->grow(false)
                     ->sortable()

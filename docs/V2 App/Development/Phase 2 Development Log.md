@@ -238,6 +238,7 @@ Correction:
 * preserved internal label/value grouping inside each full-width section where it improves readability
 * removed the attempted fixed-layout error table override after browser QA showed it collapsed diagnostic columns and caused action/status overlap
 * aligned the error log table with the working audit log pattern: one primary message column plus hidden/toggleable diagnostic columns instead of squeezing every diagnostic field into the default table
+* adjusted the error log table breakpoint priority so stable operational columns remain visible first and the message preview drops below wider screens instead of forcing horizontal overflow
 * reduced audit and error log slide-over widths to the `3xl` Filament width preset so detail panels stay closer to an 800px operational record view
 
 Canonical docs:

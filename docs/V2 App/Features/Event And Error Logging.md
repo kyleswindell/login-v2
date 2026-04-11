@@ -141,7 +141,7 @@ Filament proof notes:
 * the existing Blade error log routes remain the current live surface
 * the Filament proof is read-only and uses the existing `view-platform-error-logs` gate
 * access is limited to active users who can view platform error logs
-* the default table view prioritizes occurred time, severity, message, handled state, and row actions, while secondary diagnostic columns are hidden by default or reserved for wider breakpoints
+* the default table view prioritizes occurred time, severity, handled state, and row actions, while the message preview and secondary diagnostic columns are reserved for wider breakpoints
 * the detail slide-over uses full-width stacked sections so summary, exception, request context, full message, stack trace, and context are visually separated without side-by-side section cards
 * exception and route are treated as secondary diagnostic columns and are hidden by default so the default table does not squeeze operational detail into unusable widths
 

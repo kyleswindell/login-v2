@@ -62,3 +62,4 @@ Cross-module schema rules:
 
 * [[V2 App/Planning/Phase 4/Phase 4 Index]] | [Phase 4 Index](Phase%204%20Index.md)
 * [[V2 App/Planning/Phase 4/Phase 4 - Remaining Core Module Planning]] | [Phase 4 - Remaining Core Module Planning](Phase%204%20-%20Remaining%20Core%20Module%20Planning.md)
+* [[V2 App/Planning/Phase 3/Phase 3 - OAuth And Customer Access Mode Planning]] | [Phase 3 - OAuth And Customer Access Mode Planning](../Phase%203/Phase%203%20-%20OAuth%20And%20Customer%20Access%20Mode%20Planning.md) — Phase 3 authority for customer-company and customer-user identity schema; Phase 4 CRM and authorization tables depend on this foundation

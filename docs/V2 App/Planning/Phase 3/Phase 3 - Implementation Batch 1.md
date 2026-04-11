@@ -54,6 +54,8 @@ This batch establishes data and workflow primitives that later modules rely on:
 * permission matrix per module action
 * event taxonomy for audits and notifications
 * validation schema for each settings page
+* PostgreSQL table family and foreign-key map for each module
+* declared UI owner per surface (Filament, Livewire/custom Blade, or hybrid)
 
 ## Acceptance Criteria
 
@@ -62,6 +64,7 @@ This batch establishes data and workflow primitives that later modules rely on:
 * all module writes emit expected audit events
 * critical failures route through centralized error logging
 * feature tests for primary module workflows and security boundaries are passing
+* schema decisions avoid Perfex-style soft relationships and generic polymorphic line-item shortcuts
 * canonical feature docs and planning status are updated in the same work cycle
 
 ## Dependencies
@@ -69,6 +72,7 @@ This batch establishes data and workflow primitives that later modules rely on:
 * [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](../Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
 * [[V1 App/Features/V1 Feature Catalog]] | [V1 Feature Catalog](../../../V1%20App/Features/V1%20Feature%20Catalog.md)
 * [[V1 App/Reference/Setup And Settings Map]] | [Setup And Settings Map](../../../V1%20App/Reference/Setup%20And%20Settings%20Map.md)
+* [[V2 App/Planning/Phase 3/Phase 3 - UI Ownership And PostgreSQL Schema Map]] | [Phase 3 - UI Ownership And PostgreSQL Schema Map](Phase%203%20-%20UI%20Ownership%20And%20PostgreSQL%20Schema%20Map.md)
 
 ## Related
 

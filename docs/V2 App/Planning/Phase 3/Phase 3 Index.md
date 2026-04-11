@@ -14,11 +14,14 @@ Current focus:
 * define required setup views and settings coverage per module
 * capture cross-module interaction requirements and dependency rules
 * identify V1 pain points and targeted V2 improvements before implementation starts
+* map Filament/Livewire/custom UI ownership per module
+* map PostgreSQL-first schema direction and V1-to-V2 table changes per module
 
 ## Planning Notes
 
 * [[V2 App/Planning/Phase 3/Phase 3 - Remaining Core Module Planning]] | [Phase 3 - Remaining Core Module Planning](Phase%203%20-%20Remaining%20Core%20Module%20Planning.md)
 * [[V2 App/Planning/Phase 3/Phase 3 - Implementation Batch 1]] | [Phase 3 - Implementation Batch 1](Phase%203%20-%20Implementation%20Batch%201.md)
+* [[V2 App/Planning/Phase 3/Phase 3 - UI Ownership And PostgreSQL Schema Map]] | [Phase 3 - UI Ownership And PostgreSQL Schema Map](Phase%203%20-%20UI%20Ownership%20And%20PostgreSQL%20Schema%20Map.md)
 
 ## Canonical Inputs
 

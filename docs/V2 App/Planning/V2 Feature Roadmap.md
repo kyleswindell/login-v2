@@ -138,6 +138,7 @@ Working planning note:
 
 * [[V2 App/Planning/Phase 3/Phase 3 - Remaining Core Module Planning]] | [Phase 3 - Remaining Core Module Planning](Phase%203/Phase%203%20-%20Remaining%20Core%20Module%20Planning.md)
 * [[V2 App/Planning/Phase 3/Phase 3 - Implementation Batch 1]] | [Phase 3 - Implementation Batch 1](Phase%203/Phase%203%20-%20Implementation%20Batch%201.md)
+* [[V2 App/Planning/Phase 3/Phase 3 - UI Ownership And PostgreSQL Schema Map]] | [Phase 3 - UI Ownership And PostgreSQL Schema Map](Phase%203/Phase%203%20-%20UI%20Ownership%20And%20PostgreSQL%20Schema%20Map.md)
 
 ### Phase 4: Customer-Facing View System
 

@@ -32,6 +32,7 @@ This Phase 3 draft is informed by:
 * [[V1 App/Features/Tenant Core Feature Allowlist]] | [Tenant Core Feature Allowlist](../../../V1%20App/Features/Tenant%20Core%20Feature%20Allowlist.md)
 * [[V1 App/Features/Tenant Module Allowlist]] | [Tenant Module Allowlist](../../../V1%20App/Features/Tenant%20Module%20Allowlist.md)
 * [[V1 App/Features/Tenant Permissions]] | [Tenant Permissions](../../../V1%20App/Features/Tenant%20Permissions.md)
+* [[V2 App/Planning/Phase 3/Phase 3 - UI Ownership And PostgreSQL Schema Map]] | [Phase 3 - UI Ownership And PostgreSQL Schema Map](Phase%203%20-%20UI%20Ownership%20And%20PostgreSQL%20Schema%20Map.md)
 
 ## Phase Goal
 
@@ -61,11 +62,27 @@ Phase 3 candidate modules (V1-derived, normalized for V2 boundaries):
 11. Knowledge Base
 12. Reports
 
+Explicit follow-up scope call:
+
+* Subscriptions should be treated as a separate finance-adjacent module candidate if recurring billing is part of the required base system, not silently assumed inside Sales Core.
+
 Phase 3 excludes:
 
 * tenant runtime provisioning and rollout workflows (Phase 5)
 * customer-facing portal UX (Phase 4)
 * platform-management control-plane expansion (Phase 6)
+
+## Current Filament And UI Ownership Direction
+
+Planning default based on Phase 2 UI docs:
+
+* Filament-first for CRUD-heavy internal/admin module management surfaces
+* hybrid Filament plus Livewire/custom UI for workflow-heavy modules such as Projects, Tasks, Support, and Reports
+* custom/public UI remains outside Filament for customer-facing or public submission flows
+
+Detailed module-by-module guidance lives in:
+
+* [[V2 App/Planning/Phase 3/Phase 3 - UI Ownership And PostgreSQL Schema Map]] | [Phase 3 - UI Ownership And PostgreSQL Schema Map](Phase%203%20-%20UI%20Ownership%20And%20PostgreSQL%20Schema%20Map.md)
 
 ## Setup Views And Settings Coverage Plan
 
@@ -123,6 +140,17 @@ Phase 3 should intentionally improve on V1 by:
 * creating report data contracts so reporting survives module evolution
 * establishing payment integration abstraction points instead of gateway-specific coupling
 * adding explicit module health/diagnostic notes for faster support and rollout readiness
+* replacing Perfex-style soft relationship and polymorphic table shortcuts with PostgreSQL-first explicit schema design
+
+## Additional Module Review
+
+Current evidence does not support treating true stock inventory as a Phase 3 core module.
+
+Planning default:
+
+* keep item/catalog behavior inside Sales Core for Phase 3
+* defer true stock/warehouse/procurement inventory to a future distinct module unless a concrete business requirement elevates it
+* keep cross-cutting shared services such as custom fields, email templates, announcements, todos, and calendar aggregation outside the Phase 3 business-module list unless a later phase promotes them intentionally
 
 ## Risks And Mitigations
 
@@ -169,5 +197,6 @@ Phase 3 can close when:
 
 * [[V2 App/Planning/Phase 3/Phase 3 Index]] | [Phase 3 Index](Phase%203%20Index.md)
 * [[V2 App/Planning/Phase 3/Phase 3 - Implementation Batch 1]] | [Phase 3 - Implementation Batch 1](Phase%203%20-%20Implementation%20Batch%201.md)
+* [[V2 App/Planning/Phase 3/Phase 3 - UI Ownership And PostgreSQL Schema Map]] | [Phase 3 - UI Ownership And PostgreSQL Schema Map](Phase%203%20-%20UI%20Ownership%20And%20PostgreSQL%20Schema%20Map.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](../Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
 * [[V2 App/Planning/V2 Feature Roadmap]] | [V2 Feature Roadmap](../V2%20Feature%20Roadmap.md)

@@ -162,7 +162,6 @@ class CentralErrorLogResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->extraAttributes(['class' => 'platform-error-log-table'])
             ->recordTitleAttribute('message')
             ->defaultSort('occurred_at', 'desc')
             ->columns([
@@ -173,6 +172,14 @@ class CentralErrorLogResource extends Resource
                     ->width('11rem')
                     ->grow(false)
                     ->sortable(),
+                TextColumn::make('message')
+                    ->searchable()
+                    ->limit(75)
+                    ->lineClamp(2)
+                    ->wrap()
+                    ->width('48%')
+                    ->grow()
+                    ->extraCellAttributes(['class' => 'break-words whitespace-normal']),
                 TextColumn::make('severity')
                     ->badge()
                     ->color(fn (?string $state): string => match ($state) {
@@ -184,38 +191,6 @@ class CentralErrorLogResource extends Resource
                     ->width('6rem')
                     ->grow(false)
                     ->sortable(),
-                TextColumn::make('environment')
-                    ->badge()
-                    ->visibleFrom('xl')
-                    ->width('7rem')
-                    ->grow(false)
-                    ->sortable(),
-                TextColumn::make('message')
-                    ->searchable()
-                    ->limit(70)
-                    ->lineClamp(2)
-                    ->wrap()
-                    ->width('45%')
-                    ->grow()
-                    ->extraCellAttributes(['class' => 'break-words whitespace-normal']),
-                TextColumn::make('exception_class')
-                    ->label('Exception')
-                    ->searchable()
-                    ->limit(55)
-                    ->wrap()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('route')
-                    ->searchable()
-                    ->limit(55)
-                    ->wrap()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('status_code')
-                    ->label('Status')
-                    ->visibleFrom('xl')
-                    ->width('5rem')
-                    ->grow(false)
-                    ->sortable()
-                    ->toggleable(),
                 TextColumn::make('handled')
                     ->badge()
                     ->formatStateUsing(fn (bool $state): string => $state ? 'Handled' : 'Unhandled')
@@ -224,6 +199,36 @@ class CentralErrorLogResource extends Resource
                     ->width('7rem')
                     ->grow(false)
                     ->sortable(),
+                TextColumn::make('environment')
+                    ->badge()
+                    ->visibleFrom('xl')
+                    ->width('7rem')
+                    ->grow(false)
+                    ->sortable(),
+                TextColumn::make('status_code')
+                    ->label('Status')
+                    ->visibleFrom('xl')
+                    ->width('5rem')
+                    ->grow(false)
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('exception_class')
+                    ->label('Exception')
+                    ->searchable()
+                    ->limit(45)
+                    ->lineClamp(1)
+                    ->visibleFrom('2xl')
+                    ->width('12rem')
+                    ->grow(false)
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('route')
+                    ->searchable()
+                    ->limit(45)
+                    ->lineClamp(1)
+                    ->visibleFrom('2xl')
+                    ->width('12rem')
+                    ->grow(false)
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 SelectFilter::make('severity')

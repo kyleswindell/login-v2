@@ -236,8 +236,8 @@ Correction:
 * restored detail slide-over content to full-width stacked section cards instead of side-by-side section columns
 * kept long full message, stack trace, metadata, and client detail content collapsed by default
 * preserved internal label/value grouping inside each full-width section where it improves readability
-* added a scoped Filament console theme after the error log table still exceeded visible width because long error text influenced the browser's automatic table layout
-* forced the error log table into fixed-layout behavior inside the visible console container while leaving the audit table unchanged
+* removed the attempted fixed-layout error table override after browser QA showed it collapsed diagnostic columns and caused action/status overlap
+* aligned the error log table with the working audit log pattern: one primary message column plus hidden/toggleable diagnostic columns instead of squeezing every diagnostic field into the default table
 * reduced audit and error log slide-over widths to the `3xl` Filament width preset so detail panels stay closer to an 800px operational record view
 
 Canonical docs:

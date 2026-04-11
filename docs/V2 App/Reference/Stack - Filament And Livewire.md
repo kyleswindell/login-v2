@@ -126,17 +126,9 @@ After installation:
 * register panel providers cleanly
 * verify panel paths do not conflict with app routes
 * publish Filament assets during deployment with `php artisan filament:assets`
-* register panel-specific Vite themes when a Filament UI surface needs scoped CSS overrides
 * keep panel-specific boot logic explicit
 * validate the first proof surface before migrating more screens
 * update the canonical feature doc, planning note, and phase development log in the same work cycle
-
-Current console theme:
-
-* `resources/css/filament/console/theme.css`
-* registered through `App\Providers\Filament\ConsolePanelProvider`
-* built through the standard Vite deploy step
-* currently used for a scoped error log table layout override so long error text cannot force the table wider than the visible console panel
 
 ## Related
 

@@ -17,7 +17,8 @@ Current status:
 * Filament is installed and validated through read-only audit/error operational proofs
 * `/console` currently exists as a temporary proof path for operational Filament surfaces only
 * Livewire is present through Filament, while broad custom Livewire shell ownership remains deferred
-* Phase 2 must now lock one coherent app direction that merges current custom and proof surfaces
+* Batch 4 route/navigation convergence is complete locally through target `/platform/operations/*` routes and centralized shell navigation
+* Phase 2 must now lock visual baseline and owner matrix details before Batch 5 shared admin migrations begin
 
 Canonical architecture owner:
 
@@ -50,6 +51,7 @@ The following direction is now accepted for Phase 2 planning and execution:
 * the current Blade shell remains the primary shell during Phase 2 while migrations are sequenced
 * Filament remains approved for admin and operational data-heavy surfaces, but must be integrated under the unified app direction
 * audit and error log Filament proofs are complete as technical validation and now move into migration planning
+* operational log navigation now targets `/platform/operations/*` routes, which gate access before redirecting to transitional Filament proof resources
 * notifications realtime transport remains Reverb and Echo; migration work should not replace it with polling-first behavior
 * UI ownership must be declared per surface before implementation: custom Blade, Filament, or hybrid
 
@@ -137,11 +139,17 @@ Introducing Filament/Livewire after Phase 1 has these implications:
 
 ### 1. Route and panel ownership lock
 
-Lock:
+Locked for Batch 4:
+
+* shell navigation ownership lives in `App\Platform\Navigation\PlatformNavigation`
+* operational log navigation uses `/platform/operations/audit-logs` and `/platform/operations/error-logs`
+* `/console/platform-audit-logs` and `/console/central-error-logs` remain transitional Filament proof targets behind gate-checked redirects
+
+Still to lock before broader migrations:
 
 * shared core app shell route space
 * platform-management route space
-* final path replacement plan for transitional `/console` routes
+* final direct owner path for Filament operational resources after proof redirects are retired
 * future tenant route/panel path under tenant domains
 * which auth guard/session rules apply to each surface
 * setup/settings ownership target and migration sequence
@@ -239,7 +247,7 @@ Current progress:
 * Batch 4 route convergence slice is implemented with target operational routes under `/platform/operations/*` that currently redirect to transitional `/console` proof routes with gate parity
 * visual design/template brief remains pending
 * broad custom Livewire shell work remains deferred behind core migration deliverables
-* next implementation sequence is: Batch 4 route/navigation convergence, Batch 5 shared admin owner migration, Batch 6 close-out contracts and handoff
+* next implementation sequence is: Batch 5 kickoff planning for visual baseline and owner matrix, then Batch 5 shared admin owner migration, then Batch 6 close-out contracts and handoff
 
 ## Remaining Decisions
 

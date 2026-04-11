@@ -10,10 +10,11 @@ This note is a Phase 2 working decision artifact.
 
 Current status:
 
-* drafted for Phase 2 Batch 1
+* drafted for Phase 2 Batch 1 and updated through Batch 4 route convergence
 * Filament proof routes are implemented under `/console` for operational validation
+* target operational shell routes are implemented under `/platform/operations/*`
 * current Phase 1 routes remain custom Blade under `/dashboard` and `/platform/...`
-* `/console` is transitional and must be merged into the unified app route/navigation direction before Phase 2 closes
+* `/console` is transitional proof routing and is no longer linked directly from the shell navigation
 
 Canonical owner:
 
@@ -38,6 +39,10 @@ Current Phase 1 route families:
 | `/platform/notifications` | custom Blade plus Echo | notification inbox | hybrid candidate |
 | `/platform/audit-logs` | custom Blade | audit log viewer | Filament candidate |
 | `/platform/error-logs` | custom Blade | error log viewer | Filament candidate |
+| `/platform/operations/audit-logs` | Laravel route alias | target operational ownership route that gate-checks then redirects to `/console/platform-audit-logs` | implemented in Batch 4 |
+| `/platform/operations/error-logs` | Laravel route alias | target operational ownership route that gate-checks then redirects to `/console/central-error-logs` | implemented in Batch 4 |
+| `/console/platform-audit-logs` | Filament proof resource | read-only audit log proof surface | transitional proof path |
+| `/console/central-error-logs` | Filament proof resource | read-only error log proof surface | transitional proof path |
 | `/platform/docs` | custom Blade | internal docs vault | keep custom Blade |
 | `/platform/realtime/auth` | Laravel endpoint | Echo private-channel auth | keep backend endpoint |
 
@@ -135,7 +140,7 @@ Use a hybrid of Option B and Option C for Phase 2 completion:
 * keep one coherent shell/navigation experience
 * keep explicit technical boundaries for platform-management capabilities
 * treat `/console` as transitional proof-only routing
-* migrate proof surfaces into unified app navigation/ownership during Phase 2 deliverables
+* use `/platform/operations/*` as the current target operational navigation layer while Batch 5 decides whether final operational resources move to direct Filament-owned routes
 
 Reasoning:
 
@@ -161,9 +166,9 @@ Open:
 
 * exact platform production domain
 * exact tenant admin domain pattern
-* exact target replacement path(s) for `/console` proof surfaces
+* final direct replacement path(s) for `/console` proof resources after the Batch 4 `/platform/operations/*` ownership redirects are retired
 * whether shared core routes become unprefixed, `/app/*`, or Filament-owned
-* whether current `/platform/*` routes are retained as aliases, migrated, or reserved for platform-management only
+* whether current non-operational `/platform/*` routes are retained as aliases, migrated, or reserved for platform-management only
 * whether platform-management is a separate panel or a grouped capability inside the shared core shell after transitional routes are retired
 
 ## Related

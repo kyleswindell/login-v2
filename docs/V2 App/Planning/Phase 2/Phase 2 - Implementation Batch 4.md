@@ -10,11 +10,12 @@ This batch turns the Batch 1 decision lock into implementation-ready ownership r
 
 Current status:
 
-* in progress
+* complete locally
 * Batch 2 and Batch 3 operational Filament proofs are complete and accepted
 * shell navigation ownership baseline is complete through `App\Platform\Navigation\PlatformNavigation`
-* `/console` proof routes are transitional and now require explicit target route/navigation ownership
-* visual/template selection remains open and is a dependency for broad migration work
+* target operational ownership routes now exist under `/platform/operations/*` and redirect to transitional Filament proof paths
+* `/console` proof routes remain transitional until Batch 5 ownership migration retires daily-use dependency on them
+* visual/template selection remains open and is a Batch 5 entry dependency, not remaining Batch 4 implementation scope
 
 Planning owner:
 
@@ -32,108 +33,18 @@ Reference owner:
 
 Lock and implement the minimum route/navigation convergence slice required before UI-owner migrations begin.
 
-## In Scope
+## Delivered Scope
 
-In scope:
+Delivered in this batch:
 
-* keep shell navigation ownership centralized in backend contracts
-* define and implement route alias/convergence behavior for operational proof surfaces
-* preserve existing route families while introducing target route ownership mapping
-* keep setup navigation visibility permission-driven
-* define acceptance checks that prevent new proof-only `/console` expansion
-* update planning, canonical architecture/reference, and development log notes in the same work cycle
-
-## Out Of Scope
-
-Out of scope:
-
-* broad route renaming across all surfaces in one deployment
-* full shell redesign
-* template adoption final decision
-* migration of users/settings/notifications screens into final owners
-* tenant-domain runtime shell implementation
-
-## Required Contracts Before Build
-
-1. Locked target ownership for audit and error log routes.
-2. Decision on whether `/platform/*` remains transitional alias space or target platform-management space.
-3. Permission and policy behavior parity between transitional and target routes.
-4. Navigation visibility rules for transitional versus target links.
-
-## Exit Criteria
-
-This batch is complete when:
-
-* target route/navigation ownership for operational log surfaces is documented and implemented
-* no regression appears in existing Blade and Filament operational log access paths
-* navigation contract remains single-source and permission-driven
-* docs record which route families are transitional and which are target owners
-
-## Verification
-
-Verification focus:
-
-* route registration checks for both transitional and target route paths
-* authorization checks for allowed and denied users
-* shell navigation visibility checks by role/permission
-* no editor-reported errors in touched files
-
-## Follow-Up Batch Dependency
-
-Batch 5 can start after this batch locks route/navigation convergence and confirms owner mapping for shared admin surfaces.
-
-## Related
-
-* [[V2 App/Planning/Phase 2/Phase 2 Index]] | [Phase 2 Index](Phase%202%20Index.md)
-* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 3]] | [Phase 2 - Implementation Batch 3](Phase%202%20-%20Implementation%20Batch%203.md)
-* [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
-* [[V2 App/Planning/Phase 2/Phase 2 - Route And Panel Ownership Map]] | [Phase 2 - Route And Panel Ownership Map](Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md)
-* [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
-* [[V2 App/Reference/Stack - Frontend Build]] | [Stack - Frontend Build](../../Reference/Stack%20-%20Frontend%20Build.md)
-* [[V2 App/Development/Phase 2 Development Log]] | [Phase 2 Development Log](../../Development/Phase%202%20Development%20Log.md)# Phase 2 - Implementation Batch 4
-
-## Purpose
-
-Implement route and navigation convergence contracts after the operational Filament proofs were accepted.
-
-This batch turns the Batch 1 decision lock into implementation-ready ownership rules without broad screen migration.
-
-## Implementation Status
-
-Current status:
-
-* in progress
-* Batch 2 and Batch 3 operational Filament proofs are complete and accepted
-* shell navigation ownership baseline is complete through `App\Platform\Navigation\PlatformNavigation`
-* `/console` proof routes are transitional and now require explicit target route/navigation ownership
-* visual/template selection remains open and is a dependency for broad migration work
-
-Planning owner:
-
-* [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
-
-Canonical architecture owner:
-
-* [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
-
-Reference owner:
-
-* [[V2 App/Reference/Stack - Frontend Build]] | [Stack - Frontend Build](../../Reference/Stack%20-%20Frontend%20Build.md)
-
-## Batch Goal
-
-Lock and implement the minimum route/navigation convergence slice required before UI-owner migrations begin.
-
-## In Scope
-
-In scope:
-
-* keep shell navigation ownership centralized in backend contracts
-* define and implement route alias/convergence behavior for operational proof surfaces
-* preserve existing route families while introducing target route ownership mapping
-* keep setup navigation visibility permission-driven
-* define acceptance checks that prevent new proof-only `/console` expansion
-* update planning, canonical architecture/reference, and development log notes in the same work cycle
+* centralized shell navigation ownership in `App\Platform\Navigation\PlatformNavigation`
+* updated the Blade shell to render account, primary, and setup navigation from the backend contract
+* preserved existing `/dashboard`, `/platform/*`, and `/console/*` route families while target ownership was introduced
+* added target operational routes at `/platform/operations/audit-logs` and `/platform/operations/error-logs`
+* redirected target operational routes to accepted transitional Filament proof paths after gate checks pass
+* updated operational navigation links to target `/platform/operations/*` routes instead of direct `/console/*` proof routes
+* kept setup navigation visibility permission-driven
+* added acceptance checks that prevent shell navigation from rendering direct proof-only `/console` links
 
 ## Out Of Scope
 
@@ -145,21 +56,22 @@ Out of scope:
 * migration of users/settings/notifications screens into final owners
 * tenant-domain runtime shell implementation
 
-## Required Contracts Before Build
+## Locked Contracts
 
-1. Locked target ownership for audit and error log routes.
-2. Decision on whether `/platform/*` remains transitional alias space or target platform-management space.
-3. Permission and policy behavior parity between transitional and target routes.
-4. Navigation visibility rules for transitional versus target links.
+1. Audit and error log navigation now belongs to `/platform/operations/*` target routes for Phase 2 shared shell use.
+2. `/console/*` remains a transitional Filament proof path and should not receive new daily-use navigation links.
+3. Target operational routes must enforce the same gate behavior before redirecting to Filament proof resources.
+4. Existing Blade operational routes stay available as compatibility paths until Batch 5 decides final operational owner migration.
+5. Shell navigation remains single-source and permission-driven through `App\Platform\Navigation\PlatformNavigation`.
 
 ## Exit Criteria
 
-This batch is complete when:
+This batch is complete because:
 
 * target route/navigation ownership for operational log surfaces is documented and implemented
-* no regression appears in existing Blade and Filament operational log access paths
-* navigation contract remains single-source and permission-driven
-* docs record which route families are transitional and which are target owners
+* existing Blade and Filament operational log access paths remain available
+* navigation ownership is centralized and permission-driven
+* docs record `/platform/operations/*` as target transitional ownership and `/console/*` as proof-only routing
 
 ## Verification
 
@@ -170,9 +82,26 @@ Verification focus:
 * shell navigation visibility checks by role/permission
 * no editor-reported errors in touched files
 
-## Follow-Up Batch Dependency
+Current verification state:
 
-Batch 5 can start after this batch locks route/navigation convergence and confirms owner mapping for shared admin surfaces.
+* target routes implemented: `/platform/operations/audit-logs`, `/platform/operations/error-logs`
+* target routes enforce parity gates before redirecting to `/console/platform-audit-logs` and `/console/central-error-logs`
+* `App\Platform\Navigation\PlatformNavigation` now points operational navigation to target ownership routes
+* dashboard acceptance checks confirm operational navigation renders target routes and does not render direct `/console` proof links
+* guest and unauthorized access parity checks pass for target operational routes
+* focused Docker feature tests pass for audit logs, error logs, and dashboard navigation
+
+## Batch 5 Kickoff Scope
+
+Batch 5 should start with these scope boundaries:
+
+* lock visual baseline/template rules before broad UI-owner migrations
+* lock the surface-by-surface owner matrix for users, settings, notifications, and operational logs
+* decide whether operational logs move directly into final Filament-owned routes or keep target redirects briefly while users/settings/notifications migrate
+* preserve Reverb/Echo notification behavior while inbox ownership is evaluated
+* keep docs vault custom Blade unless explicitly re-scoped
+
+Do not start Batch 5 implementation until the visual baseline and owner matrix are explicit.
 
 ## Related
 

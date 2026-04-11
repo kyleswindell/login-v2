@@ -89,7 +89,7 @@ Completed outputs:
 * route and panel ownership lock artifact exists: [[V2 App/Planning/Phase 2/Phase 2 - Route And Panel Ownership Map]] | [Phase 2 - Route And Panel Ownership Map](Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md)
 * UI surface disposition lock artifact exists: [[V2 App/Planning/Phase 2/Phase 2 - UI Surface Disposition Audit]] | [Phase 2 - UI Surface Disposition Audit](Phase%202%20-%20UI%20Surface%20Disposition%20Audit.md)
 * dependency-ordered remaining batches are defined and indexed: Batch 4, Batch 5, Batch 6
-* transitional `/console` intent is documented as proof-only and route-convergence work is active in Batch 4
+* transitional `/console` intent is documented as proof-only and Batch 4 route-convergence work is complete locally
 
 Decision sign-offs still required to fully close Batch 1:
 

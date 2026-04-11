@@ -16,8 +16,9 @@ Current status:
 * Filament is installed and validated through read-only audit/error operational proofs
 * `/console` currently exists as a transitional proof path for operational Filament validation
 * Livewire is present through Filament, while broad custom Livewire shell ownership remains deferred
-* shell/navigation baseline ownership is implemented in backend contracts and Phase 2 now focuses on unified migration decisions
+* shell/navigation baseline ownership is implemented in backend contracts
 * target operational ownership routes now exist under `/platform/operations/*` with gated redirects to transitional `/console` proof routes
+* Batch 5 is ready for kickoff planning once visual baseline and owner matrix decisions are explicit
 
 Source planning note:
 
@@ -192,7 +193,7 @@ This preserves V1's useful post-release module rollout behavior without making a
 
 Open gaps:
 
-* no ADR yet confirms exact replacement path for transitional `/console` routes
+* Batch 4 introduced `/platform/operations/*` as the shell-owned target route layer, but no ADR yet confirms final direct replacement paths after transitional `/console` redirects are retired
 * no final UI component inventory exists
 * no visual design reference or template decision exists
 * no panel boundary test exists

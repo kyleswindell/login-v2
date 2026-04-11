@@ -20,8 +20,9 @@ Current state:
 * Batch 2 Filament error-log proof has been deployed and validated on staging
 * Batch 3 Filament audit-log proof has been deployed and validated on staging
 * audit and error log Filament proof surfaces are accepted as complete for Phase 2 proof purposes
-* `/console` proof routes are now treated as transitional and must be merged into unified app ownership
-* next Phase 2 focus is app shell, navigation, visual baseline, template/design decision, and explicit migration sequencing
+* Batch 4 route/navigation convergence is complete locally through centralized shell navigation and `/platform/operations/*` target routes
+* `/console` proof routes are transitional and no longer linked directly from shell navigation
+* next Phase 2 focus is visual baseline, owner matrix lock, and Batch 5 migration sequencing
 
 ## Milestones
 
@@ -85,8 +86,8 @@ Planning owners:
 
 * lock visual baseline and template-review direction for the shared shell
 * decide whether the custom shell remains primary with Filament islands or shifts further into Filament/Livewire ownership
-* complete remaining Batch 4 decisions: visual baseline and shell ownership lock for users/settings/notifications migration sequencing
-* execute Batch 5 owner migrations for users/settings/notifications/operational surfaces after Batch 4 exit criteria are met
+* lock visual baseline and surface owner matrix before Batch 5 implementation starts
+* execute Batch 5 owner migrations for users/settings/notifications/operational surfaces after those Batch 5 entry contracts are met
 * execute Batch 6 close-out contracts and handoff updates for Phase 3 and Phase 4
 * define optional module migration/seeding convention
 * define platform-to-tenant access handoff approach
@@ -362,7 +363,7 @@ Planning owners:
 
 Status:
 
-* implemented locally
+* completed locally
 * validated in Docker feature tests
 * pending staging deployment/QA
 
@@ -386,6 +387,32 @@ Planning owners:
 
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 4]] | [Phase 2 - Implementation Batch 4](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%204.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](../Planning/Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
+
+### 2026-04-11 - Phase 2 Batch 4 local close-out
+
+Status:
+
+* complete locally
+* focused Docker feature tests passed for dashboard navigation, audit logs, and error logs
+* pending staging deployment/QA
+
+Work completed:
+
+* cleaned the Batch 4 planning note into a single current close-out artifact
+* synchronized the route ownership map, Phase 2 planning owner, canonical architecture owner, logging feature doc, and development log
+* recorded `/platform/operations/*` as the current shell-owned operational route layer
+* recorded `/console/*` as transitional Filament proof routing until Batch 5 retires daily-use dependency on it
+* prepared Batch 5 kickoff scope without starting Batch 5 implementation
+
+Planning owners:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 4]] | [Phase 2 - Implementation Batch 4](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%204.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 5]] | [Phase 2 - Implementation Batch 5](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%205.md)
+
+Canonical docs:
+
+* [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
+* [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../Features/Event%20And%20Error%20Logging.md)
 
 ## Related
 

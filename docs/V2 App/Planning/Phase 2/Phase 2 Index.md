@@ -23,8 +23,8 @@ Current focus:
 | Batch 1 | Close-out complete, decision sign-off pending | decision lock and batch sequencing contracts |
 | Batch 2 | Complete | Filament operational proof: error logs |
 | Batch 3 | Complete | Filament operational proof: audit logs |
-| Batch 4 | In progress | route and navigation convergence contracts |
-| Batch 5 | Planned | users/settings/notifications/operational surface migration |
+| Batch 4 | Complete locally | route and navigation convergence contracts |
+| Batch 5 | Ready for kickoff planning | users/settings/notifications/operational surface migration |
 | Batch 6 | Planned | phase close-out contracts and Phase 3/4 handoff |
 
 ## Planning Notes

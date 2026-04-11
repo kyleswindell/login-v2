@@ -10,8 +10,9 @@ This batch implements the highest-value ownership migrations required for a cohe
 
 Current status:
 
-* planned
-* depends on Batch 4 completion
+* ready for kickoff planning
+* Batch 4 route/navigation convergence is complete locally
+* implementation must wait for visual baseline/template rules and a surface-by-surface owner matrix
 
 Planning owner:
 
@@ -53,6 +54,18 @@ Out of scope:
 2. Shell ownership and route convergence contracts from Batch 4 must be complete.
 3. Surface-by-surface ownership matrix must be locked (owner, route family, permissions, fallback path).
 4. Realtime notification behavior contract must remain Reverb/Echo aligned.
+
+## Kickoff Scope
+
+Start Batch 5 by locking:
+
+* users owner target: keep Blade temporarily, migrate to Filament, or hybrid migration sequence
+* settings owner target: identify which settings remain workflow pages versus Filament/admin forms
+* notifications owner target: preserve Reverb/Echo delivery, unread counts, and inbox sync while evaluating UI ownership
+* operational logs owner target: decide whether `/platform/operations/*` redirects are replaced by direct final Filament-owned routes in this batch
+* compatibility paths: define which existing `/platform/*` and `/console/*` routes remain available during migration
+
+Do not implement screen migrations until the owner matrix and visual baseline are recorded in the planning owner and canonical architecture owner.
 
 ## Exit Criteria
 

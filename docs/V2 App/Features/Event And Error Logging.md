@@ -15,7 +15,8 @@ Current status:
 * audit log viewer UI is live on staging
 * error log viewer UI is live on staging
 * Filament read-only error log proof is deployed and validated on staging
-* Filament read-only audit log proof is implemented locally and pending staging deployment/QA
+* Filament read-only audit log proof is accepted for Phase 2 proof purposes
+* target operational shell routes exist at `/platform/operations/audit-logs` and `/platform/operations/error-logs`
 * audit and error log timestamps are stored as UTC and displayed in the signed-in user's timezone
 * Filament log viewers use safe modal headings and truncated long-text display to avoid oversized recursive exception output
 * Filament log slide-over details are organized into coherent sections with long message, stack trace, metadata, and client details collapsed by default
@@ -39,6 +40,7 @@ Runtime pieces in the current implementation:
 * `App\Filament\Resources\PlatformAuditLogs\PlatformAuditLogResource`
 * `App\Filament\Resources\CentralErrorLogs\CentralErrorLogResource`
 * `App\Providers\Filament\ConsolePanelProvider`
+* target operational routes in `routes/web.php`
 * `resources/views/platform/audit-logs/index.blade.php`
 * `resources/views/platform/error-logs/index.blade.php`
 * `resources/views/platform/error-logs/show.blade.php`
@@ -84,7 +86,8 @@ Current auth-related events:
 Current audit visibility surface:
 
 * `GET /platform/audit-logs`
-* `GET /console/platform-audit-logs`, local Filament proof pending staging QA
+* `GET /platform/operations/audit-logs`, target shell route that gate-checks then redirects to the transitional Filament proof
+* `GET /console/platform-audit-logs`, transitional Filament proof path
 * filters by event type, actor, result, and severity
 * current audience is platform users with `platform.audit-logs.view`
 
@@ -132,7 +135,8 @@ Current error visibility surface:
 
 * `GET /platform/error-logs`
 * `GET /platform/error-logs/{log}`
-* `GET /console/central-error-logs`, local Filament proof pending staging QA
+* `GET /platform/operations/error-logs`, target shell route that gate-checks then redirects to the transitional Filament proof
+* `GET /console/central-error-logs`, transitional Filament proof path
 * filters by severity, handled state, environment, exception class, and date range
 * current audience is platform users with `platform.error-logs.view`
 

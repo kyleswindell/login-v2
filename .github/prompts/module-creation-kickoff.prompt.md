@@ -23,3 +23,9 @@ Output format:
 - Notifications And Templates
 - Batch Fit Recommendation
 - Next Build Steps
+
+Git close-out (required when edits were made):
+1. Stage only the files changed for this task.
+2. Commit with a clear summary of completed work.
+3. Push to the current branch.
+4. Report commit SHA and pushed branch in the final summary.

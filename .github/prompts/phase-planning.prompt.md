@@ -6,6 +6,12 @@ agent: "plan"
 ---
 Define or refine the goals, deliverables, and constraints for the specified phase.
 
+Execution guardrails:
+- Prefer direct file edits in the VS Code editor.
+- Do not use bash or scripted bulk search/replace to rewrite documentation unless explicitly requested.
+- Keep edits minimal and scoped to the target phase docs, linked canonical docs, and the relevant indexes.
+- Before writing, summarize intended file-by-file changes; after writing, summarize exactly what changed.
+
 Do the following:
 1. Read the overall roadmap, the V2 Documentation Map, and the Architecture Index.
 2. Read adjacent phase plans (phase before and phase after if they exist) to understand hand-off contracts.
@@ -29,3 +35,9 @@ Output format:
 - Canonical Docs Owned Or Extended
 - Phase Index Status (current / updated / needs creation)
 - Conflicts With Adjacent Phases (if any)
+
+Git close-out (required when edits were made):
+1. Stage only the files changed for this task.
+2. Commit with a clear summary of completed work.
+3. Push to the current branch.
+4. Report commit SHA and pushed branch in the final summary.

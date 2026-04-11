@@ -6,6 +6,12 @@ agent: "agent"
 ---
 Start or continue implementation of the specified phase batch.
 
+Execution guardrails:
+- Prefer direct file edits in the VS Code editor for both code and docs.
+- Do not use bash or scripted bulk search/replace to rewrite files unless explicitly requested.
+- Keep edits minimal and scoped to the active batch's implementation slice.
+- Before writing, summarize intended file-by-file changes; after writing, summarize exactly what changed.
+
 Do the following:
 1. Read the phase index and confirm which batch is currently active.
 2. Read the batch note, the phase planning parent, and linked canonical owner docs.
@@ -27,3 +33,11 @@ Output after completion:
 - Test results
 - Docs updated
 - Remaining open items in this batch
+- Planned file changes (before edits)
+- Applied file changes (after edits)
+
+Git close-out (required when edits were made):
+1. Stage only the files changed for this task.
+2. Commit with a clear summary of completed work.
+3. Push to the current branch.
+4. Report commit SHA and pushed branch in the final summary.

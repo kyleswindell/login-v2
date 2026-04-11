@@ -51,6 +51,16 @@ class PlatformDashboardTest extends TestCase
             ->get('/dashboard')
             ->assertOk()
             ->assertDontSee('Platform Users')
-            ->assertDontSee('Documentation Vault');
+            ->assertDontSee('Documentation Vault')
+            ->assertDontSee('data-setup-open', false);
+    }
+
+    public function test_dashboard_shows_setup_trigger_for_super_admins(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/dashboard')
+            ->assertOk()
+            ->assertSee('data-setup-open', false);
     }
 }

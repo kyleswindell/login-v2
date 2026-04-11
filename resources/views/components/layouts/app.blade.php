@@ -12,9 +12,14 @@
     <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
         @php($user = auth()->user())
         @php($hasCustomSidebar = isset($sidebar))
+        @inject('platformNavigation', \App\Platform\Navigation\PlatformNavigation::class)
         @php($unreadNotificationCount = $user ? \App\Models\PlatformNotification::query()->visibleTo($user)->whereNull('read_at')->count() : 0)
         @php($recentNotifications = $user ? \App\Models\PlatformNotification::query()->visibleTo($user)->latest()->limit(5)->get() : collect())
         @php($realtimeNotificationsEnabled = $user && $user->can('platform.notifications.view'))
+        @php($navigation = $platformNavigation->forUser($user))
+        @php($accountNavigation = $navigation['account'])
+        @php($primaryNavigation = $navigation['primary'])
+        @php($setupNavigation = $navigation['setup'])
 
         <div class="min-h-screen">
             @if ($realtimeNotificationsEnabled)
@@ -140,33 +145,16 @@
                                 </summary>
 
                                 <div class="absolute right-0 z-50 mt-3 w-72 rounded-3xl border border-slate-800 bg-slate-900/95 p-3 shadow-2xl shadow-black/40">
-                                    <a href="{{ route('dashboard') }}" class="block rounded-2xl px-4 py-3 text-sm text-slate-200 transition hover:bg-slate-800 hover:text-white">
-                                        Dashboard
-                                    </a>
-
-                                    @can('manage-platform-users')
-                                        <a href="{{ route('platform.users.index') }}" class="mt-1 block rounded-2xl px-4 py-3 text-sm text-slate-200 transition hover:bg-slate-800 hover:text-white">
-                                            Platform Users
+                                    @foreach ($accountNavigation as $item)
+                                        <a href="{{ route($item['route']) }}" @class([
+                                            'block rounded-2xl px-4 py-3 text-sm transition',
+                                            'text-slate-200 hover:bg-slate-800 hover:text-white' => ! request()->routeIs(...$item['active']),
+                                            'bg-sky-500/10 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs(...$item['active']),
+                                            'mt-1' => ! $loop->first,
+                                        ])>
+                                            {{ $item['label'] }}
                                         </a>
-                                    @endcan
-
-                                    @can('view-platform-docs')
-                                        <a href="{{ route('platform.docs.index') }}" class="mt-1 block rounded-2xl px-4 py-3 text-sm text-slate-200 transition hover:bg-slate-800 hover:text-white">
-                                            Documentation Vault
-                                        </a>
-                                    @endcan
-
-                                    @can('view-platform-notifications')
-                                        <a href="{{ route('platform.notifications.index') }}" class="mt-1 block rounded-2xl px-4 py-3 text-sm text-slate-200 transition hover:bg-slate-800 hover:text-white">
-                                            Notifications
-                                        </a>
-                                    @endcan
-
-                                    @can('view-platform-audit-logs')
-                                        <a href="{{ route('platform.audit-logs.index') }}" class="mt-1 block rounded-2xl px-4 py-3 text-sm text-slate-200 transition hover:bg-slate-800 hover:text-white">
-                                            Audit Logs
-                                        </a>
-                                    @endcan
+                                    @endforeach
 
                                     <form method="POST" action="{{ route('logout') }}" class="mt-2 border-t border-slate-800 pt-2">
                                         @csrf
@@ -202,76 +190,29 @@
                                             <p class="mt-2 text-sm text-slate-400">Core internal platform surfaces.</p>
 
                                             <nav class="mt-8 space-y-2">
-                                                <a href="{{ route('dashboard') }}" data-main-nav-link @class([
-                                                    'block rounded-2xl px-4 py-3 text-sm font-medium transition',
-                                                    'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('dashboard'),
-                                                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('dashboard'),
-                                                ])>
-                                                    Dashboard
-                                                </a>
-
-                                                @can('manage-platform-users')
-                                                    <a href="{{ route('platform.users.index') }}" data-main-nav-link @class([
+                                                @foreach ($primaryNavigation as $item)
+                                                    <a href="{{ route($item['route']) }}" data-main-nav-link @class([
                                                         'block rounded-2xl px-4 py-3 text-sm font-medium transition',
-                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.users.*'),
-                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.users.*'),
+                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs(...$item['active']),
+                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs(...$item['active']),
                                                     ])>
-                                                        Platform Users
+                                                        {{ $item['label'] }}
                                                     </a>
-                                                @endcan
-
-                                                @can('view-platform-docs')
-                                                    <a href="{{ route('platform.docs.index') }}" data-main-nav-link @class([
-                                                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
-                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.docs.index'),
-                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.docs.index'),
-                                                    ])>
-                                                        Documentation Vault
-                                                    </a>
-                                                @endcan
-
-                                                @can('view-platform-notifications')
-                                                    <a href="{{ route('platform.notifications.index') }}" data-main-nav-link @class([
-                                                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
-                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.notifications.*'),
-                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.notifications.*'),
-                                                    ])>
-                                                        Notifications
-                                                    </a>
-                                                @endcan
-
-                                                @can('view-platform-audit-logs')
-                                                    <a href="{{ route('platform.audit-logs.index') }}" data-main-nav-link @class([
-                                                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
-                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.audit-logs.*'),
-                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.audit-logs.*'),
-                                                    ])>
-                                                        Audit Logs
-                                                    </a>
-                                                @endcan
-
-                                                @can('view-platform-error-logs')
-                                                    <a href="{{ route('platform.error-logs.index') }}" data-main-nav-link @class([
-                                                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
-                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.error-logs.*'),
-                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.error-logs.*'),
-                                                    ])>
-                                                        Error Logs
-                                                    </a>
-                                                @endcan
+                                                @endforeach
                                             </nav>
 
-                                            {{-- Setup trigger at sidebar footer --}}
-                                            <div class="mt-6 border-t border-slate-800 pt-4">
-                                                <button
-                                                    type="button"
-                                                    class="flex w-full items-center rounded-2xl px-4 py-3 text-sm font-medium text-slate-400 transition hover:bg-slate-800 hover:text-white"
-                                                    data-setup-open
-                                                >
-                                                    <span>Setup</span>
-                                                    <span class="ml-auto text-slate-500" aria-hidden="true">→</span>
-                                                </button>
-                                            </div>
+                                            @if (count($setupNavigation) > 0)
+                                                <div class="mt-6 border-t border-slate-800 pt-4">
+                                                    <button
+                                                        type="button"
+                                                        class="flex w-full items-center rounded-2xl px-4 py-3 text-sm font-medium text-slate-400 transition hover:bg-slate-800 hover:text-white"
+                                                        data-setup-open
+                                                    >
+                                                        <span>Setup</span>
+                                                        <span class="ml-auto text-slate-500" aria-hidden="true">→</span>
+                                                    </button>
+                                                </div>
+                                            @endif
                                         </div>
 
                                         {{-- Panel 2: Setup panel --}}
@@ -288,65 +229,15 @@
                                             </div>
 
                                             <nav class="mt-6 space-y-2">
-                                                @can('view-platform-notifications')
-                                                    <a href="{{ route('platform.setup.notifications') }}" data-setup-nav-link @class([
+                                                @foreach ($setupNavigation as $item)
+                                                    <a href="{{ route($item['route']) }}" data-setup-nav-link @class([
                                                         'block rounded-2xl px-4 py-3 text-sm font-medium transition',
-                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.setup.notifications'),
-                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.notifications'),
+                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs(...$item['active']),
+                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs(...$item['active']),
                                                     ])>
-                                                        Notifications Setup
+                                                        {{ $item['label'] }}
                                                     </a>
-                                                @endcan
-
-                                                @can('view-platform-docs')
-                                                    <a href="{{ route('platform.setup.docs') }}" data-setup-nav-link @class([
-                                                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
-                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.setup.docs'),
-                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.docs'),
-                                                    ])>
-                                                        Documentation Setup
-                                                    </a>
-                                                @endcan
-
-                                                @can('view-platform-audit-logs')
-                                                    <a href="{{ route('platform.setup.audit-logs') }}" data-setup-nav-link @class([
-                                                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
-                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.setup.audit-logs'),
-                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.audit-logs'),
-                                                    ])>
-                                                        Audit Logs Setup
-                                                    </a>
-                                                @endcan
-
-                                                @can('view-platform-error-logs')
-                                                    <a href="{{ route('platform.setup.error-logs') }}" data-setup-nav-link @class([
-                                                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
-                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.setup.error-logs'),
-                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.error-logs'),
-                                                    ])>
-                                                        Error Logs Setup
-                                                    </a>
-                                                @endcan
-
-                                                @can('manage-platform-users')
-                                                    <a href="{{ route('platform.setup.users') }}" data-setup-nav-link @class([
-                                                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
-                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.setup.users'),
-                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.users'),
-                                                    ])>
-                                                        Platform Users Setup
-                                                    </a>
-                                                @endcan
-
-                                                @can('manage-platform-settings')
-                                                    <a href="{{ route('platform.settings.general') }}" data-setup-nav-link @class([
-                                                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
-                                                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.settings.*'),
-                                                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.*'),
-                                                    ])>
-                                                        Settings
-                                                    </a>
-                                                @endcan
+                                                @endforeach
                                             </nav>
                                         </div>
                                     </div>

@@ -17,8 +17,9 @@ We are not migrating V1 tables or data. We are deciding which capabilities shoul
 Use this boundary first:
 
 * shared core app first
-* platform-management layer on top of the core app
-* tenantization after the shared core is shaped correctly
+* final software stack and UI system introduction before broad module expansion
+* remaining core module expansion before tenant rollout
+* tenant app rollout only after the base system is complete and template DB is stable
 
 See:
 
@@ -90,11 +91,67 @@ Working planning note:
 * [[V2 App/Planning/Phase 1/Phase 1 - Platform Foundation Planning]] | [Phase 1 - Platform Foundation Planning](Phase%201/Phase%201%20-%20Platform%20Foundation%20Planning.md)
 * [[V2 App/Planning/Phase 1/Phase 1 - Implementation Batch 1]] | [Phase 1 - Implementation Batch 1](Phase%201/Phase%201%20-%20Implementation%20Batch%201.md)
 
-### Phase 2: Platform-Management Layer
+### Phase 2: Final Stack And UI System Introduction
 
 Goal:
 
-Add the Parasolutions-only management capabilities on top of the shared core app.
+Complete introduction of the intended long-term stack and UI architecture so future modules are built on final patterns instead of transitional patterns.
+
+Features:
+
+* finalize app shell/navigation strategy for persistent panel behavior
+* introduce final UI framework patterns (Filament/Livewire where intended)
+* establish design system baseline (layout, components, interaction patterns, responsive behavior)
+* standardize page and module scaffolding for future phase development
+* lock frontend architecture decisions before broad module expansion
+
+### Phase 3: Remaining Core Module Introduction
+
+Goal:
+
+Introduce remaining core business modules (V1-inspired core capability set) including setup flows and settings coverage.
+
+Features:
+
+* core module rollout for the remaining baseline app capabilities
+* module-specific setup views and onboarding flows
+* module-specific settings groups and validation rules
+* shared conventions for permissions, audit logs, error logs, notifications, and options applied to every new core module
+* soft integration points for payment handling where needed
+
+### Phase 4: Customer-Facing View System
+
+Goal:
+
+Introduce customer-facing authentication and portal experience so customers can access module outputs (for example invoices and payments) based on enabled modules.
+
+Features:
+
+* customer login and session model
+* customer portal shell and navigation
+* customer invoice visibility and payment flow integration points
+* module-aware customer visibility rules
+* baseline customer self-service patterns
+
+### Phase 5: Tenant App Version Rollout (Soft Introduction)
+
+Goal:
+
+Begin tenant app rollout only after base-system stability is confirmed, using a clean tenant template database and controlled versioning.
+
+Features:
+
+* establish clean tenant template database baseline from completed core system
+* versioned tenant app rollout strategy and release checkpoints
+* controlled pilot tenant provisioning and verification flow
+* rollback and recovery guardrails for tenant rollout batches
+* defer wide tenant rollout until template stability is verified
+
+### Phase 6: Platform-Management Layer (Deferred)
+
+Goal:
+
+Introduce Parasolutions-only control-plane capabilities after core, customer, and initial tenant rollout foundations are stable.
 
 Features:
 
@@ -105,37 +162,7 @@ Features:
 * platform-only policy management
 * cross-tenant visibility
 
-### Phase 3: Tenantization And Provisioning Foundation
-
-Goal:
-
-Make the shared core app deployable as isolated tenant instances.
-
-Features:
-
-* tenant resolution
-* tenant provisioning pipeline
-* tenant database bootstrapping
-* tenant runtime lifecycle handling
-* tenant admin access handoff
-
-### Phase 4: Content And Website Foundation
-
-Goal:
-
-Establish the CMS-style features that are central to the V2 direction.
-
-Features:
-
-* pages
-* content blocks
-* articles or posts
-* SEO metadata
-* media linking
-* publish pipeline hooks
-* website environment settings
-
-### Phase 5: Policy, Operations, And Support
+### Phase 7: Policy, Operations, And Support
 
 Goal:
 
@@ -156,7 +183,7 @@ Features:
   * monitoring panels and dashboards
   * deployment dashboards and release visibility
 
-### Phase 6: Advanced Tenant Products
+### Phase 8: Advanced Tenant Products
 
 Goal:
 
@@ -173,21 +200,20 @@ Examples:
 
 These should be documented before the next major build phase:
 
-* V2 application folder and namespace strategy
+* V2 final stack and UI architecture specification for Phase 2
 * V2 route and panel separation strategy
-* V2 shared-core feature inventory
-* V2 platform-management feature inventory
-* V2 auth model for platform users versus tenant users
-* V2 provisioning workflow as a runbook/spec
-* V2 feature inventory note per major phase
+* V2 remaining core-module inventory for Phase 3
+* V2 customer auth and portal model for Phase 4
+* V2 tenant template database baseline and rollout/versioning runbook for Phase 5
+* V2 deferred platform-management inventory for Phase 6+
 
 ## Recommended Next Docs
 
 1. `V2 App/Architecture/V2 Application Structure.md`
-2. `V2 App/Features/Platform Foundation.md`
-3. `V2 App/Features/Tenant Foundation.md`
-4. `V2 App/Features/Content And Website Foundation.md`
-5. `V2 App/Runbooks/Tenant Provisioning Workflow.md`
+2. `V2 App/Architecture/V2 Final Stack And UI Design Spec.md`
+3. `V2 App/Features/Core Module Inventory - Phase 3.md`
+4. `V2 App/Features/Customer Portal Foundation - Phase 4.md`
+5. `V2 App/Runbooks/Tenant Template And Version Rollout - Phase 5.md`
 
 ## Related
 

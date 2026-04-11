@@ -49,6 +49,20 @@ class PlatformAuditLogViewerTest extends TestCase
             ->assertSee('auth.login.success');
     }
 
+    public function test_authorized_users_are_redirected_from_target_audit_route_to_filament_proof(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/operations/audit-logs')
+            ->assertRedirect('/console/platform-audit-logs');
+    }
+
+    public function test_guests_are_redirected_from_target_audit_route(): void
+    {
+        $this->get('/platform/operations/audit-logs')
+            ->assertRedirect('/login');
+    }
+
     public function test_guests_are_redirected_from_filament_audit_log_proof(): void
     {
         $this->get('/console/platform-audit-logs')
@@ -63,6 +77,17 @@ class PlatformAuditLogViewerTest extends TestCase
 
         $this->actingAs($user)
             ->get('/console/platform-audit-logs')
+            ->assertForbidden();
+    }
+
+    public function test_users_without_permission_cannot_access_target_audit_route(): void
+    {
+        $user = User::factory()->create([
+            'is_active' => true,
+        ]);
+
+        $this->actingAs($user)
+            ->get('/platform/operations/audit-logs')
             ->assertForbidden();
     }
 

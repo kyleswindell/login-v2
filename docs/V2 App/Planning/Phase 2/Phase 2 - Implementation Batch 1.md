@@ -10,12 +10,12 @@ This batch establishes the dependency-safe plan for the remaining Phase 2 implem
 
 Current status:
 
-* in progress, close-out pass active
-* route and panel ownership map drafted
-* UI surface disposition audit drafted
+* close-out pass complete for documented outputs; decision sign-off pending
+* route and panel ownership map is drafted and linked
+* UI surface disposition audit is drafted and linked
 * Filament operational proofs from Batch 2 and Batch 3 are complete and available as decision inputs
-* shell navigation ownership baseline from Batch 4 is complete and available as a decision input
-* depends on the Phase 2 root planning note and final stack architecture note
+* shell navigation ownership baseline and first route convergence slice from Batch 4 are complete and available as decision inputs
+* remaining Batch 1 scope is decision sign-off for unresolved contracts
 
 Planning owner:
 
@@ -81,6 +81,22 @@ Batch 1 close-out must produce:
 * optional module schema installation direction
 * platform-to-tenant access direction
 * finalized dependency sequence for Batch 4, Batch 5, and Batch 6
+
+## Close-Out Checklist
+
+Completed outputs:
+
+* route and panel ownership lock artifact exists: [[V2 App/Planning/Phase 2/Phase 2 - Route And Panel Ownership Map]] | [Phase 2 - Route And Panel Ownership Map](Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md)
+* UI surface disposition lock artifact exists: [[V2 App/Planning/Phase 2/Phase 2 - UI Surface Disposition Audit]] | [Phase 2 - UI Surface Disposition Audit](Phase%202%20-%20UI%20Surface%20Disposition%20Audit.md)
+* dependency-ordered remaining batches are defined and indexed: Batch 4, Batch 5, Batch 6
+* transitional `/console` intent is documented as proof-only and route-convergence work is active in Batch 4
+
+Decision sign-offs still required to fully close Batch 1:
+
+* visual baseline/template decision brief (accepted/rejected criteria and baseline component expectations)
+* explicit Livewire shell decision for Phase 2 scope (deferred vs adopted scope)
+* optional module schema installation direction standard (from preferred direction into implementation contract language)
+* platform-to-tenant access direction standard (handoff method and required audit events)
 
 ## Current Batch 1 Findings
 

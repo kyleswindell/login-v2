@@ -19,7 +19,11 @@ class PlatformDashboardTest extends TestCase
             ->assertOk()
             ->assertSee($user->email)
             ->assertSee('Platform Users')
-            ->assertSee('Documentation Vault');
+            ->assertSee('Documentation Vault')
+            ->assertSee('/platform/operations/audit-logs', false)
+            ->assertSee('/platform/operations/error-logs', false)
+            ->assertDontSee('/console/platform-audit-logs', false)
+            ->assertDontSee('/console/central-error-logs', false);
     }
 
     public function test_dashboard_renders_recent_notification_preview_data_for_super_admins(): void
@@ -52,6 +56,8 @@ class PlatformDashboardTest extends TestCase
             ->assertOk()
             ->assertDontSee('Platform Users')
             ->assertDontSee('Documentation Vault')
+            ->assertDontSee('/platform/operations/audit-logs', false)
+            ->assertDontSee('/platform/operations/error-logs', false)
             ->assertDontSee('data-setup-open', false);
     }
 

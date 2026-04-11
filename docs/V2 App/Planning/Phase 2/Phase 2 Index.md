@@ -20,7 +20,7 @@ Current focus:
 
 | Batch | Status | Primary output |
 | --- | --- | --- |
-| Batch 1 | In progress - close-out pass | decision lock and batch sequencing contracts |
+| Batch 1 | Close-out complete, decision sign-off pending | decision lock and batch sequencing contracts |
 | Batch 2 | Complete | Filament operational proof: error logs |
 | Batch 3 | Complete | Filament operational proof: audit logs |
 | Batch 4 | In progress | route and navigation convergence contracts |

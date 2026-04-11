@@ -236,6 +236,7 @@ Current progress:
 * route/panel ownership map is drafted
 * Filament proof targets for audit and error logs are deployed and accepted as complete for Phase 2 proof purposes
 * app shell navigation ownership has a first implementation slice through a centralized navigation contract in the Blade shell
+* Batch 4 route convergence slice is implemented with target operational routes under `/platform/operations/*` that currently redirect to transitional `/console` proof routes with gate parity
 * visual design/template brief remains pending
 * broad custom Livewire shell work remains deferred behind core migration deliverables
 * next implementation sequence is: Batch 4 route/navigation convergence, Batch 5 shared admin owner migration, Batch 6 close-out contracts and handoff

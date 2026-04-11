@@ -17,6 +17,7 @@ Current status:
 * `/console` currently exists as a transitional proof path for operational Filament validation
 * Livewire is present through Filament, while broad custom Livewire shell ownership remains deferred
 * shell/navigation baseline ownership is implemented in backend contracts and Phase 2 now focuses on unified migration decisions
+* target operational ownership routes now exist under `/platform/operations/*` with gated redirects to transitional `/console` proof routes
 
 Source planning note:
 

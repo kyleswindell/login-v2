@@ -67,6 +67,20 @@ class ErrorLogViewerTest extends TestCase
             ->assertSee('critical');
     }
 
+    public function test_authorized_users_are_redirected_from_target_error_route_to_filament_proof(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/operations/error-logs')
+            ->assertRedirect('/console/central-error-logs');
+    }
+
+    public function test_guests_are_redirected_from_target_error_route(): void
+    {
+        $this->get('/platform/operations/error-logs')
+            ->assertRedirect('/login');
+    }
+
     public function test_guests_are_redirected_from_filament_error_log_proof(): void
     {
         $this->get('/console/central-error-logs')
@@ -81,6 +95,17 @@ class ErrorLogViewerTest extends TestCase
 
         $this->actingAs($user)
             ->get('/console/central-error-logs')
+            ->assertForbidden();
+    }
+
+    public function test_users_without_permission_cannot_access_target_error_route(): void
+    {
+        $user = User::factory()->create([
+            'is_active' => true,
+        ]);
+
+        $this->actingAs($user)
+            ->get('/platform/operations/error-logs')
             ->assertForbidden();
     }
 

@@ -85,7 +85,7 @@ Planning owners:
 
 * lock visual baseline and template-review direction for the shared shell
 * decide whether the custom shell remains primary with Filament islands or shifts further into Filament/Livewire ownership
-* complete Batch 4 route/navigation convergence and target ownership mapping for transitional `/console` surfaces
+* complete remaining Batch 4 decisions: visual baseline and shell ownership lock for users/settings/notifications migration sequencing
 * execute Batch 5 owner migrations for users/settings/notifications/operational surfaces after Batch 4 exit criteria are met
 * execute Batch 6 close-out contracts and handoff updates for Phase 3 and Phase 4
 * define optional module migration/seeding convention
@@ -320,7 +320,8 @@ Canonical docs:
 Status:
 
 * implemented locally
-* pending Docker/staging verification for feature tests
+* validated in Docker feature tests
+* pending staging deployment/QA
 
 Work completed:
 
@@ -329,7 +330,52 @@ Work completed:
 * removed duplicated hard-coded navigation lists from the layout while preserving route and gate behavior
 * made setup trigger visibility depend on setup item availability
 * added dashboard feature assertions for setup trigger visibility
-* local feature test execution remains blocked outside Docker by PostgreSQL host resolution (`postgres`)
+* verified dashboard assertions in Docker test runs
+
+### 2026-04-11 - Phase 2 Batch 4 route convergence slice
+
+Status:
+
+* implemented locally
+* validated in Docker feature tests
+* pending staging deployment/QA
+
+Work completed:
+
+* added target operational ownership routes at `/platform/operations/audit-logs` and `/platform/operations/error-logs`
+* enforced gate parity on target operational routes before redirecting to transitional `/console` proof paths
+* updated shell navigation contract so operational links now target the converged `/platform/operations/*` routes
+* preserved existing Blade and Filament operational routes to avoid broad migration risk in this slice
+* added feature tests for allowed and denied access on the new target operational routes
+
+Canonical docs:
+
+* [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
+* [[V2 App/Reference/Stack - Frontend Build]] | [Stack - Frontend Build](../Reference/Stack%20-%20Frontend%20Build.md)
+
+Planning owners:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 4]] | [Phase 2 - Implementation Batch 4](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%204.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](../Planning/Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
+
+### 2026-04-11 - Phase 2 Batch 4 acceptance-check hardening slice
+
+Status:
+
+* implemented locally
+* validated in Docker feature tests
+* pending staging deployment/QA
+
+Work completed:
+
+* added dashboard assertions proving operational navigation links point to target `/platform/operations/*` routes
+* added dashboard assertions proving direct `/console/*` proof links are not rendered in shell navigation
+* added guest-redirect parity checks for target operational routes
+* re-ran dashboard, audit log, and error log feature suites in Docker with passing results
+
+Planning owner:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 4]] | [Phase 2 - Implementation Batch 4](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%204.md)
 
 Canonical docs:
 

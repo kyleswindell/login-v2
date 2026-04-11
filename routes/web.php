@@ -11,6 +11,7 @@ use App\Http\Controllers\Platform\PlatformSetupController;
 use App\Http\Controllers\Platform\PlatformUserController;
 use App\Http\Controllers\Platform\SettingsController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -47,8 +48,20 @@ Route::middleware('auth')->group(function (): void {
 
     Route::get('/platform/audit-logs', [AuditLogController::class, 'index'])->name('platform.audit-logs.index');
 
+    Route::get('/platform/operations/audit-logs', function () {
+        abort_unless(Gate::allows('view-platform-audit-logs'), 403);
+
+        return redirect('/console/platform-audit-logs');
+    })->name('platform.operations.audit-logs.index');
+
     Route::get('/platform/error-logs', [ErrorLogController::class, 'index'])->name('platform.error-logs.index');
     Route::get('/platform/error-logs/{log}', [ErrorLogController::class, 'show'])->name('platform.error-logs.show');
+
+    Route::get('/platform/operations/error-logs', function () {
+        abort_unless(Gate::allows('view-platform-error-logs'), 403);
+
+        return redirect('/console/central-error-logs');
+    })->name('platform.operations.error-logs.index');
 
     Route::get('/platform/settings/general', [SettingsController::class, 'general'])->name('platform.settings.general');
     Route::post('/platform/settings/general', [SettingsController::class, 'updateGeneral'])->name('platform.settings.general.update');

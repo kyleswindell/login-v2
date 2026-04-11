@@ -41,14 +41,22 @@ class PlatformNavigation
                 ],
                 [
                     'label' => 'Audit Logs',
-                    'route' => 'platform.audit-logs.index',
-                    'active' => ['platform.audit-logs.*'],
+                    'route' => 'platform.operations.audit-logs.index',
+                    'active' => [
+                        'platform.operations.audit-logs.*',
+                        'platform.audit-logs.*',
+                        'filament.console.resources.platform-audit-logs.*',
+                    ],
                     'ability' => 'view-platform-audit-logs',
                 ],
                 [
                     'label' => 'Error Logs',
-                    'route' => 'platform.error-logs.index',
-                    'active' => ['platform.error-logs.*'],
+                    'route' => 'platform.operations.error-logs.index',
+                    'active' => [
+                        'platform.operations.error-logs.*',
+                        'platform.error-logs.*',
+                        'filament.console.resources.central-error-logs.*',
+                    ],
                     'ability' => 'view-platform-error-logs',
                 ],
             ]),
@@ -116,8 +124,12 @@ class PlatformNavigation
                 ],
                 [
                     'label' => 'Audit Logs',
-                    'route' => 'platform.audit-logs.index',
-                    'active' => ['platform.audit-logs.*'],
+                    'route' => 'platform.operations.audit-logs.index',
+                    'active' => [
+                        'platform.operations.audit-logs.*',
+                        'platform.audit-logs.*',
+                        'filament.console.resources.platform-audit-logs.*',
+                    ],
                     'ability' => 'view-platform-audit-logs',
                 ],
             ]),

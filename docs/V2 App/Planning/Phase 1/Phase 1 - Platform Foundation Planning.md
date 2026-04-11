@@ -12,12 +12,20 @@ This note is the root planning note for the Phase 1 branch.
 
 Current status:
 
-* Phase 1 is active and partially implemented
+* Phase 1 is substantially complete, pending final documentation synchronization and formal closeout
 * Batch 1 foundation work is implemented and live on staging
 * Batch 2 platform shell and docs-vault work is implemented and live on staging
-* Batch 3 notifications UI, audit log viewer, and role/permission seeding cleanup are implemented in code and pending staging deploy
-* Batch 4 Reverb and Echo realtime notifications are implemented in code and pending staging deploy plus runtime setup
-* canonical system docs now exist for implemented auth, logging, RBAC, notifications/settings, and platform workspace surfaces
+* Batch 3 notifications UI, audit log viewer, and role/permission seeding cleanup are implemented and live on staging
+* Batch 4 Reverb and Echo realtime notifications are implemented and live on staging
+* Batch 5 setup/settings shell, selective setup pages, error log viewer, richer staff setup, and table polish are implemented and deployed on staging
+* all canonical system docs are updated to reflect Batch 1-5 implementation
+* latest sidebar behavior fixes (persistence and active highlighting) deployed on staging
+
+Next steps:
+
+* staging QA sign-off on latest fixes
+* formal phase closeout documentation and planning note sign-off
+* decision on navigation UX framework before Phase 2 starts (Livewire partial navigation vs current full-page model)
 
 Canonical docs:
 
@@ -71,55 +79,50 @@ These are not the primary target of Phase 1:
 * advanced tenant modules
 * broad V1 CRM feature parity
 
-## Planning Questions
+## Planning Questions Resolved
 
-Use this section to capture decisions still being worked through.
+Decisions made during Phase 1 implementation:
 
-Current questions:
+1. Platform staff auth uses Laravel's standard web guard; tenant auth deferred to Phase 3 tenantization work.
+2. Shared business features for Phase 1: user/role/permission baseline, dashboard, docs viewer, notifications, audit logs, error logs, settings.
+3. Mandatory rules for every future module: permission declaration, audit/error logging, notification events, settings group registration, setup page requirement before feature ships.
+4. Operational events always centrally visible: login/logout, permission changes, settings changes, error events, critical notifications.
+5. Boundaries preserved: clear separation between shared core app, platform-management layer, and future tenantization layer.
 
-1. How should platform staff auth and future tenant auth be separated at the guard and panel level?
-2. Which shared business features must be treated as core-app foundations in Phase 1?
-3. Which auth, role, logging, and configuration rules must be mandatory for every future module?
-4. Which operational events must always remain centrally visible?
-5. What boundaries must be preserved now so tenantization later does not require large rewrites?
+## Outstanding Questions For Phase 2
 
-## Candidate Deliverables
+1. When and how should Livewire be introduced for persistent-shell partial navigation?
+2. What is the MVP scope for Phase 2 platform-management features (tenant registry, domain management, control-plane visibility)?
+3. Should Phase 2 or Phase 3 introduce Filament admin panels?
 
-Phase 1 should likely produce:
+## Phase 1 Deliverables
 
-* core auth foundation
-* initial shared dashboard shell
-* reusable user/role/permission baseline
-* platform logging baseline
-* shared notification and options conventions
-* a stable boundary between core-app capabilities and future platform-management features
+Phase 1 produced:
 
-## Reviewed Notes Summary
+* core auth foundation with login, logout, and login audit events
+* shared dashboard shell with count cards and quick links
+* reusable user/role/permission baseline with Spatie Permission
+* platform logging baseline with central audit logs and error logs
+* shared notification and options/settings conventions with realtime Reverb/Echo
+* setup/settings navigation shell with selective setup pages and full General settings taxonomy
+* error log viewer with severity/environment/date filtering
+* richer staff profile and onboarding flow
+* table UX standards (search, pagination, rows-per-page, result summary)
+* stable boundary between core-app capabilities and future platform-management features
+* comprehensive canonical feature docs for all Phase 1 systems
+* passing feature test suite (60+ tests)
 
-The notes added during review point in a strong direction and are mostly aligned with the current V2 architecture.
+## Phase 1 Boundary Decisions Confirmed
 
-The main recommendation from those notes is:
+The current direction aligns with planned architecture:
 
-* Phase 1 should establish the shared core app first
-* the internal platform instance should be the first real consumer of that shared core
-* platform-management features should be layered on top rather than treated as the whole app
-* tenantization should be designed early enough to avoid bad assumptions, but not implemented as the whole identity of Phase 1
-
-## Corrections To Keep This Note Aligned With Current V2 Decisions
-
-The current direction should now be read with this clarified product model:
-
-* the internal platform instance is not only a control plane
-* it should also use the shared core business app that future tenant instances will use
-* platform-management and tenantization are additional layers, not the only identity of the product
-
-Current V2 direction is already stronger than that:
-
+* the internal platform instance is both a control-plane AND a consumer of the shared core business app
+* platform-management and tenantization are additional layers on top of the shared core
 * one central platform database
 * one separate PostgreSQL database per tenant
 * one PostgreSQL role per tenant
 
-That should remain the later tenantization baseline.
+These boundaries are set and should remain the tenantization baseline.
 
 ## Working Specification Notes
 

@@ -8,7 +8,7 @@ This note should be updated as major Phase 1 batches are implemented, corrected,
 
 ## Current Phase Status
 
-Phase 1 is actively in progress.
+Phase 1 is functionally complete pending QA sign-off.
 
 Current state:
 
@@ -16,9 +16,18 @@ Current state:
 * database-backed audit and error logging are implemented and live on staging
 * RBAC, settings, and notifications foundations are implemented and live on staging
 * platform shell, platform user management, and docs viewer are implemented and live on staging
-* notifications UI, audit log viewer, and RBAC seed cleanup are implemented in code and pending staging deploy
-* settings UI, selective Setup pages, richer staff setup, users-table polish, and error log viewer are implemented in code and pending staging deploy
-* realtime notifications are deployed and validated on staging
+* notifications UI, audit log viewer, and RBAC seed cleanup are implemented and live on staging
+* realtime notifications (Reverb/Echo) are deployed and validated on staging
+* settings UI, selective Setup pages, richer staff setup, users-table polish, and error log viewer are deployed on staging
+* sidebar behavior fixes (persistence and active highlighting) are deployed on staging
+* full test suite passing locally (60+ tests, 200+ assertions)
+* latest docs synced with actual implementation state
+
+Next phase gates:
+
+* final staging QA pass on Batch 5 and sidebar behavior fixes
+* decision on navigation UX framework before Phase 2 (Livewire partial navigation vs current full-page model)
+* formal Phase 1 closeout and sign-off
 
 ## Milestones
 
@@ -191,6 +200,31 @@ Planning owner:
 * validate Setup sidebar and settings pages on staging
 * validate error log viewer permissions and filters on staging
 * continued documentation status sync as new Phase 1 systems are implemented
+
+## Phase 1 Process Observations: Planning Note Staleness and Documentation Workflow Learning
+
+During Phase 1 closeout, a critical workflow issue was identified and corrected: the Phase 1 root planning note became stale between when it was written (pre-implementation) and when Phase 1 was completed (post-implementation). While the implementation itself was on track (all 5 batches delivered as planned), the planning document was never updated to reflect:
+
+* which decisions were resolved during implementation (vs which remained open)
+* what questions were discovered but deferred to Phase 2 (vs what was part of original scope)
+* which architectural boundaries were confirmed through actual implementation
+
+**Root cause:** Planning notes were treated as frozen pre-implementation specifications rather than working documents. Because no process required the planning note to be updated when implementation choices diverged, the note accumulated staleness without anyone being aware of it.
+
+**Consequences:** This created downstream knowledge loss — there was no single living source of truth for "what did the team commit to in Phase 1 and what did they defer?" This information scattered across commit messages, batch notes, and team memory.
+
+**Resolution:** 
+
+1. Formalized in [Implementation Status And Development Sync Standard](../../Standards/Implementation%20Status%20And%20Development%20Sync%20Standard.md) that planning notes must be **working documents updated during implementation**, not frozen specs.
+
+2. Established clear role distinction:
+   * **Planning note** = current plan state (what is committed for this phase, what was resolved, what is deferred, what boundaries were confirmed)
+   * **Development log** = chronological work record (what work was done, bugs encountered, solutions applied, reroutes taken and reasons why)
+   * **Canonical feature docs** = reference implementation (how features are currently built and configured)
+
+3. Added Close-Out Gate requirement: Planning note must be updated before Phase closeout sign-off.
+
+**For Phase 2:** Planning note must be reviewed and updated throughout the phase as decisions are finalized, rather than written once and left alone. This prevents recurrence of institutional knowledge loss and keeps the planning document truly useful.
 
 ## Related
 

@@ -16,6 +16,25 @@ When a planned system is implemented or materially changed:
 
 The work is not documentation-complete until those three layers agree on the current status.
 
+## Critical: Planning Notes Are Working Documents
+
+Planning notes must be treated as living working documents, not frozen pre-implementation specifications.
+
+During implementation, update the planning note whenever:
+
+* significant implementation approach diverges from the plan (document the new approach and why)
+* scope is adjusted (additions, deferrals, or stretches recorded)
+* architectural decisions change (updated with new direction and rationale)
+* unforeseen constraints or learnings emerge (recorded for next phase)
+
+This prevents planning notes from becoming stale and ensures the planning artifact captures not just the original intent, but the actual journey and decisions made during implementation.
+
+Failure to update planning notes during implementation causes:
+
+* canonical docs and development logs to become the only source of truth for decisions
+* loss of institutional knowledge about why paths were changed
+* stale planning notes that are useless as reference for future phases
+
 ## Required Documentation Layers
 
 For any implemented system, keep these layers aligned:
@@ -23,6 +42,18 @@ For any implemented system, keep these layers aligned:
 * `Planning`: sequencing, intent, scope, open questions, and current implementation status
 * `Canonical system doc`: current implementation, important files, data model, workflows, and known gaps
 * `Development log`: chronological milestone record, what changed, staging status, and follow-up work
+
+Expected synchronization during implementation:
+
+* Planning note is updated when significant divergence from the plan occurs or decisions change
+* Development log is updated as work progresses and milestones complete
+* Canonical system doc is updated when batch closes or major features ship
+
+By phase closeout, all three should converge:
+
+* Planning note reflects both original plan intent AND actual path taken, including variances and why
+* Development log provides chronological work record and testing results
+* Canonical system doc represents the final shipped implementation state
 
 ## Required Implementation Status Content
 
@@ -82,10 +113,10 @@ Before a phase batch is treated as complete, confirm:
 
 Before implementation work is considered complete, all of the following must be true:
 
+* planning note updated to reflect final decisions and any variances from original plan (planning notes are complete working artifacts, not frozen pre-implementation specs)
 * code done
-* canonical doc updated
-* planning note updated
-* development log updated
+* canonical doc updated to represent final implementation
+* development log updated with milestone completion and testing results
 
 ## Commit Policy
 

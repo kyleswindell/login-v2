@@ -52,6 +52,27 @@ class PlatformDashboardTest extends TestCase
             ->assertSee('/platform/administration/notifications', false);
     }
 
+    public function test_authorized_users_can_generate_dashboard_test_notifications(): void
+    {
+        $user = $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/dashboard')
+            ->assertOk()
+            ->assertSee('Generate Test Notification');
+
+        $this->from('/dashboard')
+            ->post('/dashboard/test-notification')
+            ->assertRedirect('/dashboard');
+
+        $this->assertDatabaseHas('notifications', [
+            'notifiable_type' => User::class,
+            'notifiable_id' => $user->id,
+            'module_key' => 'platform',
+            'title' => 'Test notification',
+            'body' => 'Temporary dashboard-generated notification for Batch 5 review.',
+        ]);
+    }
+
     public function test_dashboard_hides_platform_management_links_for_standard_users(): void
     {
         $user = User::factory()->create();
@@ -66,7 +87,12 @@ class PlatformDashboardTest extends TestCase
             ->assertDontSee('/platform/administration/settings', false)
             ->assertDontSee('/platform/operations/audit-logs', false)
             ->assertDontSee('/platform/operations/error-logs', false)
+            ->assertDontSee('Generate Test Notification')
             ->assertDontSee('data-setup-open', false);
+
+        $this->actingAs($user)
+            ->post('/dashboard/test-notification')
+            ->assertForbidden();
     }
 
     public function test_dashboard_shows_setup_trigger_for_super_admins(): void

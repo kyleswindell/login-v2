@@ -17,6 +17,7 @@ Current status:
 * first Filament migration resource is implemented locally at `/console/platform-users`
 * target app-owned migration route is implemented locally at `/platform/administration/users`
 * shell navigation points to `/platform/administration/users`; current Blade `/platform/users/*` routes remain compatibility paths
+* Filament create/edit flows persist password changes, role assignments, activation state, and staff profile fields
 * tenant-scoped auth and tenant roles are still deferred
 
 ## Current Implementation
@@ -38,6 +39,7 @@ Current platform user management surfaces:
 * create staff members
 * edit staff members
 * assign roles
+* set a password on create and update a password while editing
 * review grouped permissions by feature in the staff form
 * activate or deactivate accounts
 * search, paginate, and resize the users table entry count from the UI

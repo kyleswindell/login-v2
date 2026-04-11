@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Spatie\Permission\Models\Role;
 use UnitEnum;
@@ -242,6 +243,12 @@ class PlatformUserResource extends Resource
         $data['send_welcome_email'] = (bool) ($data['send_welcome_email'] ?? false);
         $data['is_administrator'] = (bool) ($data['is_administrator'] ?? false);
         $data['is_staff_member'] = (bool) ($data['is_staff_member'] ?? true);
+
+        if (filled($data['password'] ?? null)) {
+            $data['password'] = Hash::make((string) $data['password']);
+        } else {
+            Arr::forget($data, 'password');
+        }
 
         if ($isCreate) {
             $data['is_active'] = (bool) ($data['is_active'] ?? true);

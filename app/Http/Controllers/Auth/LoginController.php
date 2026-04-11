@@ -31,11 +31,20 @@ class LoginController extends Controller
         if ($user && ! $user->is_active) {
             // Keep inactive-account handling explicit so deactivated privileged users do not
             // authenticate successfully just because their password still matches.
-            $this->logger->recordEvent('auth.login_failed', [
-                'email' => $request->string('email')->toString(),
-                'ip' => $request->ip(),
-                'reason' => 'inactive_user',
-            ], actorUserId: $user->id, result: 'failure', severity: 'warning', isSecurityEvent: true);
+            $this->logger->recordEvent(
+                'auth.login_failed',
+                [
+                    'email' => $request->string('email')->toString(),
+                    'ip' => $request->ip(),
+                    'reason' => 'inactive_user',
+                ],
+                actorUserId: $user->id,
+                subjectType: User::class,
+                subjectId: (string) $user->id,
+                result: 'failure',
+                severity: 'warning',
+                isSecurityEvent: true,
+            );
 
             return back()
                 ->withErrors(['email' => __('These credentials do not match our records.')])
@@ -43,10 +52,18 @@ class LoginController extends Controller
         }
 
         if (! Auth::attempt($credentials, $remember)) {
-            $this->logger->recordEvent('auth.login_failed', [
-                'email' => $request->string('email')->toString(),
-                'ip' => $request->ip(),
-            ], result: 'failure', severity: 'warning', isSecurityEvent: true);
+            $this->logger->recordEvent(
+                'auth.login_failed',
+                [
+                    'email' => $request->string('email')->toString(),
+                    'ip' => $request->ip(),
+                ],
+                subjectType: $user ? User::class : null,
+                subjectId: $user ? (string) $user->id : null,
+                result: 'failure',
+                severity: 'warning',
+                isSecurityEvent: true,
+            );
 
             return back()
                 ->withErrors(['email' => __('These credentials do not match our records.')])

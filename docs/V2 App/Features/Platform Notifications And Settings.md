@@ -18,6 +18,8 @@ Current status:
 * Phase 2 Batch 5 keeps notifications custom/Echo-backed until realtime parity criteria are met
 * Phase 2 Batch 5 keeps settings on the current Blade workflow until grouped Filament page ownership is defined
 * target administration routes are implemented locally at `/platform/administration/notifications` and `/platform/administration/settings`
+* dismissed notifications are retained in the database but hidden from the inbox and unread counts
+* dashboard includes a permission-gated temporary test-notification action for Batch 5 review
 
 ## Current Implementation
 
@@ -31,6 +33,7 @@ Phase 1 currently includes:
 * queued notification broadcast events for created and updated notifications
 * a notifications inbox page
 * notification mark-read, mark-all-read, and dismiss actions
+* a temporary dashboard test-notification action for review workflows
 * Setup sidebar shell with a Setup-triggered slide interaction
 * selective Setup landing pages for notifications, docs, audit logs, error logs, and platform users
 * Settings second-column panel and page set for general, notifications, audit logs, docs, and users
@@ -46,7 +49,7 @@ Supported notification actions in code:
 
 * send to a notifiable model
 * mark read
-* dismiss
+* dismiss and hide from the visible inbox
 
 Current settings groupings in code:
 
@@ -67,6 +70,7 @@ Owner targets:
 * shell and realtime fallback links use `/platform/administration/notifications` while existing notification action routes remain under `/platform/notifications/*`
 * setup navigation can use `/platform/administration/settings` while editable settings forms remain under `/platform/settings/*`
 * any later Filament or Livewire migration must preserve `NotificationService`, `SettingsService`, audit logging, permissions, and Reverb/Echo delivery behavior
+* the dashboard test-notification action is temporary review tooling and should be removed or replaced by formal notification testing/admin tooling after Batch 5 sign-off
 
 ## Important Files
 

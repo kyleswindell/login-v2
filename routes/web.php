@@ -27,6 +27,7 @@ Route::middleware('guest')->group(function (): void {
 
 Route::middleware('auth')->group(function (): void {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
+    Route::post('/dashboard/test-notification', [DashboardController::class, 'sendTestNotification'])->name('dashboard.test-notification');
     Route::post('/platform/realtime/auth', BroadcastAuthController::class)->name('platform.realtime.auth');
 
     Route::get('/platform/users', [PlatformUserController::class, 'index'])->name('platform.users.index');

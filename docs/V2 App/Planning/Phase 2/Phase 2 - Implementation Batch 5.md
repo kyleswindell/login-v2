@@ -18,6 +18,7 @@ Current status:
 * platform-users Filament migration slice is implemented and shell navigation points to the target users route
 * target administration routes now exist for users, notifications, and settings while compatibility paths remain available
 * operational setup links now point to target `/platform/operations/*` routes while legacy Blade log viewers remain compatibility paths
+* review fixes are implemented for Filament password persistence, dismissed notification visibility, failed-login subject logging, and temporary dashboard test-notification generation
 * final `/console` panel-path retirement is explicitly deferred to Batch 6 as a close-out contract
 
 Planning owner:
@@ -133,6 +134,7 @@ Delivered locally:
 * shell notification links and notification fallback URLs use the target notifications route
 * setup navigation uses the target settings route while legacy settings pages remain the editable compatibility surface
 * operational setup cards use `/platform/operations/audit-logs` and `/platform/operations/error-logs` so setup workflows no longer send users to legacy Blade log viewers
+* dashboard includes a permission-gated temporary test-notification action for Batch 5 review
 
 Required parity before retiring the current Blade users surface:
 
@@ -141,6 +143,7 @@ Required parity before retiring the current Blade users surface:
 * role assignment preserves current Spatie role behavior
 * activation/deactivation remains available
 * staff profile fields remain editable
+* create/edit password changes persist through the Filament migration resource
 * permissions remain governed by `manage-platform-users`
 * business behavior stays outside Filament resource internals where existing requests, services, policies, or model behavior own it
 
@@ -162,6 +165,7 @@ Batch 5 is ready for final review when these conditions are true:
 * shell navigation uses target ownership routes instead of direct `/console` proof paths
 * setup navigation uses target settings and operational routes instead of legacy log viewer paths
 * notification header, preview, and fallback URLs use the target notifications route while Echo behavior remains unchanged
+* dismissed notifications leave an audit trail in the database but no longer remain visible in the inbox or unread count
 * Filament users parity tests cover list/search, create, edit, role assignment, active state, and staff profile fields
 * authorization tests cover target routes, compatibility paths, and transitional Filament paths
 * planning, canonical feature, canonical architecture, and development docs record the same owner state
@@ -181,7 +185,8 @@ Completed verification:
 * `git diff --check` passed
 * `php artisan route:list --path=platform/administration` lists users, notifications, and settings target routes
 * `php artisan route:list --path=platform/operations` lists audit-log and error-log target routes
-* Docker feature tests passed for dashboard, platform users, notifications, settings, setup pages, audit logs, and error logs: 69 tests, 259 assertions
+* Docker feature tests passed for auth, dashboard, platform users, notifications, settings, setup pages, audit logs, and error logs: 77 tests, 296 assertions
+* targeted review-fix Docker tests passed for auth, dashboard, platform users, and notifications: 30 tests, 124 assertions
 
 ## Follow-Up Batch Dependency
 

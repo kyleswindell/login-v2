@@ -26,6 +26,7 @@ Current state:
 * first Batch 5 platform-users Filament migration slice is implemented
 * target administration routes for users, notifications, and settings are implemented
 * operational setup links now use `/platform/operations/*` target routes
+* Batch 5 review fixes are implemented for Filament user passwords, dismissed notification visibility, failed-login subject logging, and dashboard test-notification generation
 * Batch 5 is ready for final review
 * next Phase 2 focus is final operational panel-path retirement sequencing in Batch 6
 
@@ -184,11 +185,40 @@ Verification:
 
 * `php artisan route:list --path=platform/administration`
 * `php artisan route:list --path=platform/operations`
-* focused Docker feature tests for dashboard, platform users, notifications, settings, setup pages, audit logs, and error logs passed: 69 tests, 259 assertions
+* focused Docker feature tests for auth, dashboard, platform users, notifications, settings, setup pages, audit logs, and error logs passed: 77 tests, 296 assertions
+* targeted review-fix Docker tests for auth, dashboard, platform users, and notifications passed: 30 tests, 124 assertions
 
 Planning owner:
 
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 5]] | [Phase 2 - Implementation Batch 5](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%205.md)
+
+### 2026-04-11 - Phase 2 Batch 5 review fixes
+
+Status:
+
+* implemented
+* focused Docker feature tests passed
+
+Work completed:
+
+* made Filament platform-user create/edit password persistence explicit and covered it with hash assertions
+* hid dismissed notifications from the inbox and unread-count payload while retaining the dismissed records in the database
+* added a permission-gated dashboard action that generates a temporary test notification for Batch 5 review
+* recorded existing-user failed login attempts with the user as the audit-log subject while keeping actor context unauthenticated
+
+Verification:
+
+* Docker feature tests passed for auth, dashboard, platform users, and notifications: 30 tests, 124 assertions
+
+Planning owner:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 5]] | [Phase 2 - Implementation Batch 5](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%205.md)
+
+Canonical docs:
+
+* [[V2 App/Features/Authentication]] | [Authentication](../Features/Authentication.md)
+* [[V2 App/Features/Platform Notifications And Settings]] | [Platform Notifications And Settings](../Features/Platform%20Notifications%20And%20Settings.md)
+* [[V2 App/Features/Platform Users And RBAC]] | [Platform Users And RBAC](../Features/Platform%20Users%20And%20RBAC.md)
 
 ### 2026-04-11 - Phase 2 batch sequence refinement
 

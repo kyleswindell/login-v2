@@ -46,6 +46,7 @@ Related docs:
 * Successful login regenerates the session.
 * Logout invalidates the session and regenerates the CSRF token.
 * Login success, login failure, and logout write platform audit events.
+* Failed login attempts for an existing user email record that user as the audit-log subject while the actor remains unauthenticated/system context.
 * Login validation is handled by a dedicated form request instead of inline controller rules.
 
 ## Near-Term Notes

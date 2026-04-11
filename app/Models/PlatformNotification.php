@@ -50,6 +50,8 @@ class PlatformNotification extends Model
 
     public function scopeVisibleTo(Builder $query, Model $notifiable): Builder
     {
-        return $query->whereMorphedTo('notifiable', $notifiable);
+        return $query
+            ->whereMorphedTo('notifiable', $notifiable)
+            ->whereNull('dismissed_at');
     }
 }

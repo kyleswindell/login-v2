@@ -4,6 +4,12 @@
             <p class="text-sm font-medium uppercase tracking-[0.3em] text-sky-300">Platform Foundation</p>
             <h1 class="mt-3 text-3xl font-semibold text-white">Dashboard</h1>
             <p class="mt-2 text-slate-400">You are signed in as {{ auth()->user()->email }}.</p>
+
+            @if (session('status'))
+                <div class="mt-5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
+                    {{ session('status') }}
+                </div>
+            @endif
         </div>
 
         <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -54,6 +60,19 @@
                             Open Documentation Viewer
                         </a>
                     </div>
+                </section>
+            @endcan
+
+            @can('view-platform-notifications')
+                <section class="rounded-3xl border border-amber-500/30 bg-slate-900/70 p-8">
+                    <h2 class="text-xl font-semibold text-white">Review Tools</h2>
+                    <p class="mt-2 text-sm text-slate-400">Generate a test notification for dashboard, header, and inbox review.</p>
+                    <form method="POST" action="{{ route('dashboard.test-notification') }}" class="mt-6">
+                        @csrf
+                        <button type="submit" class="inline-flex rounded-xl border border-amber-400/60 px-4 py-3 text-sm font-semibold text-amber-100 transition hover:border-amber-300 hover:text-white">
+                            Generate Test Notification
+                        </button>
+                    </form>
                 </section>
             @endcan
         </div>

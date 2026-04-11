@@ -72,6 +72,8 @@ class LoginTest extends TestCase
 
         $this->assertDatabaseHas('platform_audit_logs', [
             'event_type' => 'auth.login_failed',
+            'subject_type' => User::class,
+            'subject_id' => (string) $user->id,
             'result' => 'failure',
             'severity' => 'warning',
             'is_security_event' => true,

@@ -7,6 +7,7 @@ use App\Models\User;
 use Filament\Actions\Testing\TestAction;
 use Filament\Facades\Filament;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -97,6 +98,7 @@ class PlatformUserManagementTest extends TestCase
         $user = User::query()->where('email', 'filament.operator@example.com')->firstOrFail();
 
         $this->assertSame('Filament Operator', $user->name);
+        $this->assertTrue(Hash::check('Password123!', $user->password));
         $this->assertTrue($user->is_active);
         $this->assertTrue($user->is_staff_member);
         $this->assertTrue($user->hasRole('platform_admin'));
@@ -122,6 +124,7 @@ class PlatformUserManagementTest extends TestCase
             ->set('mountedActions.0.data.first_name', 'Updated')
             ->set('mountedActions.0.data.last_name', 'Admin')
             ->set('mountedActions.0.data.email', 'updated.admin@example.com')
+            ->set('mountedActions.0.data.password', 'NewPassword123!')
             ->set('mountedActions.0.data.hourly_rate', '125.50')
             ->set('mountedActions.0.data.is_active', false)
             ->set('mountedActions.0.data.is_staff_member', false)
@@ -133,6 +136,7 @@ class PlatformUserManagementTest extends TestCase
 
         $this->assertSame('Updated Admin', $user->name);
         $this->assertSame('updated.admin@example.com', $user->email);
+        $this->assertTrue(Hash::check('NewPassword123!', $user->password));
         $this->assertSame('125.50', $user->hourly_rate);
         $this->assertFalse($user->is_active);
         $this->assertFalse($user->is_staff_member);

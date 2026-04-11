@@ -172,5 +172,9 @@ class PlatformNotificationsTest extends TestCase
             ->assertRedirect();
 
         $this->assertNotNull($notification->fresh()->dismissed_at);
+
+        $this->get('/platform/notifications')
+            ->assertOk()
+            ->assertDontSee('Dismiss me');
     }
 }

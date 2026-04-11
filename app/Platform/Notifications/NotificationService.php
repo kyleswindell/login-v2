@@ -119,6 +119,7 @@ class NotificationService
                 ->where('notifiable_type', $notification->notifiable_type)
                 ->where('notifiable_id', $notification->notifiable_id)
                 ->whereNull('read_at')
+                ->whereNull('dismissed_at')
                 ->count(),
             'mark_read_url' => route('platform.notifications.mark-read', $notification),
             'dismiss_url' => route('platform.notifications.dismiss', $notification),

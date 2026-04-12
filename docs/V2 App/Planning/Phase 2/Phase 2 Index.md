@@ -18,14 +18,14 @@ Current focus:
 
 ## Batch Sequence Status
 
-| Batch | Status | Primary output |
-| --- | --- | --- |
-| Batch 1 | Close-out complete, decision sign-off pending | decision lock and batch sequencing contracts |
-| Batch 2 | Complete | Filament operational proof: error logs |
-| Batch 3 | Complete | Filament operational proof: audit logs |
-| Batch 4 | Complete locally | route and navigation convergence contracts |
-| Batch 5 | Complete | users/settings/notifications/operational surface migration |
-| Batch 6 | Planned | phase close-out contracts and Phase 3/4 handoff |
+| Batch   | Status                                        | Primary output                                             |
+| ------- | --------------------------------------------- | ---------------------------------------------------------- |
+| Batch 1 | Close-out complete, decision sign-off pending | decision lock and batch sequencing contracts               |
+| Batch 2 | Complete                                      | Filament operational proof: error logs                     |
+| Batch 3 | Complete                                      | Filament operational proof: audit logs                     |
+| Batch 4 | Complete locally                              | route and navigation convergence contracts                 |
+| Batch 5 | Complete                                      | users/settings/notifications/operational surface migration |
+| Batch 6 | In progress                                  | phase close-out contracts and Phase 3/4 handoff            |
 
 ## Planning Notes
 

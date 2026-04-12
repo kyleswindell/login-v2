@@ -92,9 +92,35 @@ Planning owners:
 
 * sequence operational route retirement from transitional `/console` proof paths
 * retire transitional operational log proof routing after final direct owner paths are selected
-* execute Batch 6 close-out contracts and handoff updates for Phase 3 and Phase 4
-* define optional module migration/seeding convention
-* define platform-to-tenant access handoff approach
+* finish Batch 6 close-out contracts and handoff updates for Phase 3 and Phase 4
+* finalize `/console` panel-path retirement sequence and compatibility-route retirement timing
+* convert Batch 6 locked contracts into implementation-ready follow-up tasks
+
+### 2026-04-11 - Phase 2 Batch 6 close-out contract lock pass 1
+
+Status:
+
+* implemented in planning/canonical/standards docs
+* follow-up implementation details pending for token exchange and final route retirement sequence
+
+Work completed:
+
+* started Batch 6 as active phase close-out work
+* locked optional module schema direction: canonical migrations/seeders with separate install state tracking
+* locked platform-to-tenant access direction: audited, single-use handoff token with required handoff audit events
+* locked dashboard and related custom Blade surface ownership decisions for Phase 2 close
+* added module planning contract requirement in standards: UI ownership matrix fields required before coding
+* propagated Batch 6 handoff contracts to Phase 3 and Phase 4 planning notes
+
+Planning owners:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 6]] | [Phase 2 - Implementation Batch 6](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%206.md)
+* [[V2 App/Planning/Phase 2/Phase 2 Index]] | [Phase 2 Index](../Planning/Phase%202/Phase%202%20Index.md)
+
+Canonical and standards owners:
+
+* [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
+* [[Standards/Implementation Status And Development Sync Standard]] | [Implementation Status And Development Sync Standard](../../Standards/Implementation%20Status%20And%20Development%20Sync%20Standard.md)
 
 ### 2026-04-11 - Phase 2 Batch 5 kickoff contracts and users migration slice
 

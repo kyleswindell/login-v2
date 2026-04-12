@@ -109,6 +109,21 @@ Before a phase batch is treated as complete, confirm:
 * the development log records the milestone
 * indexes and graph links are updated
 
+## Module Planning Contract Rule
+
+For any new Phase 3+ module planning note, include a UI ownership declaration matrix before implementation starts.
+
+Minimum required fields per surface:
+
+* current owner
+* target owner
+* route owner at delivery
+* required permissions/policies
+* parity checks
+* transitional alias/deprecation behavior
+
+If a module note omits this matrix, implementation should not be treated as planning-complete.
+
 ## Close-Out Gate
 
 Before implementation work is considered complete, all of the following must be true:

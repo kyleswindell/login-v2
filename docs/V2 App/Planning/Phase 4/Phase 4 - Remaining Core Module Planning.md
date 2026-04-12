@@ -12,7 +12,8 @@ Current status:
 
 * Phase 4 planning has started
 * module and interaction mapping drafted from V1 references
-* implementation is blocked on final Phase 2 stack/UI ownership decisions and Phase 3 customer/public foundation outcomes
+* implementation is blocked on final `/console` retirement path selection and remaining Phase 2 close-out details
+* Phase 4 module contracts now inherit Phase 2 Batch 6 requirements for optional schema installation direction and UI ownership declaration matrices
 * no Phase 4 module implementation has started yet
 
 Canonical roadmap owner:
@@ -199,6 +200,11 @@ And until Phase 3 confirms:
 * customer/public shell and auth direction
 * outward-facing module integration contract
 * Graph email delivery foundation contract, including sender-alias routing and notice-class policy
+
+Additional inherited contracts from Phase 2 Batch 6:
+
+* optional module schema direction: canonical migrations/seeders with separate installed/enabled/disabled state tracking
+* every module batch must declare UI ownership matrix fields (owner, route owner, policy requirements, parity checks, deprecation behavior) before coding
 
 ## Exit Criteria
 

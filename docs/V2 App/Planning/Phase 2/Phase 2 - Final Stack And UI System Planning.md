@@ -20,6 +20,7 @@ Current status:
 * Livewire is present through Filament, while broad custom Livewire shell ownership remains deferred
 * Batch 4 route/navigation convergence is complete through target `/platform/operations/*` routes and centralized shell navigation
 * Batch 5 visual baseline and first-pass owner matrix are implemented and verified for shared admin migrations
+* Batch 6 close-out contract pass is in progress for optional module schema direction, platform-to-tenant handoff, and UI ownership declaration standards
 
 Canonical architecture owner:
 
@@ -310,8 +311,7 @@ Open:
 * exact module manifest shape
 * exact tenant module migration runner
 * whether generated tenant template DBs are used for provisioning speed
-* platform-to-tenant access method: audited handoff token, redirected tenant login, or auto-created tenant admin account
-* what audit events are mandatory for platform-to-tenant access
+* implementation details for token storage, revocation, and tenant-auth callback exchange timing
 
 ## Non-Goals
 

@@ -12,7 +12,7 @@ Current status:
 
 * Phase 3 planning has started
 * V1 Events module review indicates customer/public functionality is an architectural prerequisite for multiple outward-facing modules
-* implementation is blocked on final Phase 2 stack/UI ownership decisions
+* implementation now consumes Phase 2 Batch 6 close-out contracts for handoff token direction and UI ownership declaration requirements
 * no Phase 3 customer/public implementation has started yet
 
 Canonical roadmap owner:
@@ -184,6 +184,8 @@ Phase 3 implementation should not start until Phase 2 confirms:
 * final route/panel/UI ownership decisions
 * shell and navigation direction
 * which surfaces remain custom versus Filament-owned
+* platform-to-tenant access handoff direction and mandatory audit events
+* UI ownership declaration matrix requirements for future module plans
 
 ## Exit Criteria
 

@@ -23,6 +23,7 @@ Current status:
 * operational shell and setup navigation now use `/platform/operations/*` target routes while legacy Blade log viewers remain compatibility paths
 * Batch 5 owner migration scope is complete
 * Batch 5 final audit passed (testing and visual web app confirmation)
+* Batch 6 close-out contract lock pass is in progress
 
 Source planning note:
 
@@ -213,8 +214,8 @@ Open gaps:
 * no final UI component inventory exists
 * Batch 5 has a working visual/template decision, but no final long-term design-system reference exists yet
 * no panel boundary test exists
-* no optional module schema installation standard exists yet
-* no platform-to-tenant access handoff standard exists yet
+* optional module schema direction is locked in Batch 6 planning, but implementation schema-runner contracts are not finalized yet
+* platform-to-tenant handoff direction is locked in Batch 6 planning, but token exchange implementation details are not finalized yet
 
 ## Related
 

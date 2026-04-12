@@ -10,7 +10,8 @@ This note is the active planning surface for deciding how the Phase 1 foundation
 
 Current status:
 
-* Phase 2 planning is active and Batch 5 is ready for final review
+* Phase 2 planning is active and Batch 5 is complete
+* Batch 5 final audit passed (testing and visual web app confirmation)
 * Phase 1 is complete and signed off
 * current app surfaces are custom Blade, Vite, Tailwind, Laravel controllers, and small DOM-driven JavaScript
 * realtime notifications already use Reverb and Echo
@@ -18,7 +19,7 @@ Current status:
 * `/console` currently exists as a temporary proof path for operational Filament surfaces only
 * Livewire is present through Filament, while broad custom Livewire shell ownership remains deferred
 * Batch 4 route/navigation convergence is complete through target `/platform/operations/*` routes and centralized shell navigation
-* Batch 5 visual baseline and first-pass owner matrix are locked so shared admin migrations can start
+* Batch 5 visual baseline and first-pass owner matrix are implemented and verified for shared admin migrations
 
 Canonical architecture owner:
 
@@ -260,7 +261,7 @@ Current progress:
 * Batch 5 target administration routes are implemented for users, notifications, and settings
 * Batch 5 operational setup links use `/platform/operations/*` target routes
 * broad custom Livewire shell work remains deferred behind core migration deliverables
-* next implementation sequence is: Batch 5 final review, then Batch 6 close-out contracts, `/console` panel-path retirement planning, and cross-phase handoff
+* next implementation sequence is: Batch 6 close-out contracts, `/console` panel-path retirement planning, and cross-phase handoff
 
 ## Remaining Decisions
 

@@ -6,14 +6,14 @@ Collect Phase 2 planning notes for final stack alignment and UI system introduct
 
 ## Current Phase Status
 
-Phase 2 is in decision-lock and implementation-planning refinement.
+Phase 2 is in close-out sequencing after Batch 5 completion.
 
 Current focus:
 
 * unify the current `/dashboard` and `/console` experiences into one coherent app experience
 * keep `/console` as a transitional Phase 2 proof path only, not a long-term product surface
 * lock route, panel, shell, and visual-baseline decisions before broader module work
-* define migration deliverables for users, settings, notifications, and operational log surfaces
+* close final Batch 6 contracts for panel-path retirement and cross-phase handoff
 * establish repeatable scaffolding rules for Phase 3 customer/public foundations and Phase 4 modules
 
 ## Batch Sequence Status
@@ -24,7 +24,7 @@ Current focus:
 | Batch 2 | Complete | Filament operational proof: error logs |
 | Batch 3 | Complete | Filament operational proof: audit logs |
 | Batch 4 | Complete locally | route and navigation convergence contracts |
-| Batch 5 | In progress | users/settings/notifications/operational surface migration |
+| Batch 5 | Complete | users/settings/notifications/operational surface migration |
 | Batch 6 | Planned | phase close-out contracts and Phase 3/4 handoff |
 
 ## Planning Notes

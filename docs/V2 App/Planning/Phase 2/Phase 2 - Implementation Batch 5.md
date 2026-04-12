@@ -10,7 +10,8 @@ This batch implements the highest-value ownership migrations required for a cohe
 
 Current status:
 
-* ready for final review
+* complete
+* final audit passed (testing and visual web app confirmation)
 * Batch 4 route/navigation convergence is complete
 * kickoff contracts are locked
 * visual baseline/template rules are locked for Batch 5 implementation
@@ -157,9 +158,9 @@ This batch is complete when:
 * regression checks pass for migrated surfaces
 * docs reflect final owner per surface and remaining transitional items (if any)
 
-## Review Readiness
+## Final Audit Record
 
-Batch 5 is ready for final review when these conditions are true:
+Batch 5 final audit passed with these confirmations:
 
 * target route ownership exists for users, settings, notifications, audit logs, and error logs
 * shell navigation uses target ownership routes instead of direct `/console` proof paths
@@ -190,7 +191,7 @@ Completed verification:
 
 ## Follow-Up Batch Dependency
 
-Batch 6 can start after Batch 5 final review accepts the implemented target ownership and the documented transitional-path deferrals.
+Batch 6 can proceed now that Batch 5 final audit accepted the implemented target ownership and documented transitional-path deferrals.
 
 ## Related
 

@@ -11,7 +11,7 @@ This batch is the phase close-out contract batch.
 Current status:
 
 * planned
-* depends on Batch 5 completion
+* Batch 5 completion dependency is satisfied
 
 Planning owner:
 

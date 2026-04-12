@@ -21,6 +21,8 @@ Current status:
 * Batch 5 visual baseline and first-pass owner matrix are explicit
 * platform-users migration is implemented as the first Batch 5 code slice
 * operational shell and setup navigation now use `/platform/operations/*` target routes while legacy Blade log viewers remain compatibility paths
+* Batch 5 owner migration scope is complete
+* Batch 5 final audit passed (testing and visual web app confirmation)
 
 Source planning note:
 

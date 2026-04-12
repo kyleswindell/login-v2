@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/platform/administration/users', function () {
         abort_unless(Gate::allows('manage-platform-users'), 403);
 
-        return redirect('/console/platform-users');
+        return redirect()->route('platform.users.index');
     })->name('platform.administration.users.index');
 
     Route::get('/platform/setup/notifications', [PlatformSetupController::class, 'notifications'])->name('platform.setup.notifications');

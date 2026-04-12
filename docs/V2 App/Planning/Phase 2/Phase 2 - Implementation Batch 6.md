@@ -13,6 +13,7 @@ Current status:
 * in progress
 * Batch 5 completion dependency is satisfied
 * first close-out contract lock pass implemented in docs
+* users-route retirement slice implemented: `/platform/administration/users` now redirects to app-owned `/platform/users`
 
 Planning owner:
 
@@ -164,6 +165,22 @@ Locked Phase 2-close decisions:
 * setup and settings shell framing: keep hybrid behavior; migrate grouped forms/workflows incrementally in later phase batches only when parity checks are specified
 * notifications inbox view: keep custom Blade plus Echo as target owner through Phase 2 close; migration trigger is feature-complete realtime parity under non-polling behavior
 * docs vault: keep custom Blade as locked exception for Phase 2 close
+
+## Locked Contract Decisions (Pass 2)
+
+### Users Administration Target Route Retirement Slice
+
+Locked direction:
+
+* keep `/platform/administration/users` as the shell-target route for navigation and setup references
+* retire dependency on transitional `/console/platform-users` for the shell-target users path
+* resolve `/platform/administration/users` directly to app-owned `/platform/users` while preserving `manage-platform-users` gate checks
+* keep `/console/platform-users` available only as a direct transitional proof path until final panel-path retirement is complete
+
+Remaining deferred retirement scope:
+
+* operational log shell-target retirement (`/platform/operations/*` currently still redirects to transitional `/console/*` proof paths)
+* full `/console` panel-path retirement timing and deprecation sequence
 
 ## Cross-Phase Handoff Contracts
 

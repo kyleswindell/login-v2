@@ -122,6 +122,33 @@ Canonical and standards owners:
 * [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
 * [[Standards/Implementation Status And Development Sync Standard]] | [Implementation Status And Development Sync Standard](../../Standards/Implementation%20Status%20And%20Development%20Sync%20Standard.md)
 
+### 2026-04-11 - Phase 2 Batch 6 users target-route retirement slice
+
+Status:
+
+* implemented in application routes and feature tests
+* Batch 6 remains in progress for operational `/console` retirement sequencing
+
+Work completed:
+
+* updated `/platform/administration/users` to keep the target shell route but resolve directly to app-owned `/platform/users`
+* removed shell-target dependency on transitional `/console/platform-users`
+* updated platform user management feature test expectations to match the new target-route behavior
+* synchronized Batch 6 planning and Platform Users feature owner docs with this retirement slice
+
+Verification:
+
+* Docker test execution is currently blocked in this session because `docker-compose exec` requires sudo password entry
+* local `php artisan test` execution failed in this environment because `postgres` host is not resolvable outside Docker
+
+Planning owners:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 6]] | [Phase 2 - Implementation Batch 6](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%206.md)
+
+Canonical docs:
+
+* [[V2 App/Features/Platform Users And RBAC]] | [Platform Users And RBAC](../Features/Platform%20Users%20And%20RBAC.md)
+
 ### 2026-04-11 - Phase 2 Batch 5 kickoff contracts and users migration slice
 
 Status:

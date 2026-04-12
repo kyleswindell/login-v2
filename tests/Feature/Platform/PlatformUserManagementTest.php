@@ -45,12 +45,12 @@ class PlatformUserManagementTest extends TestCase
             ->assertSee('Platform Users');
     }
 
-    public function test_super_admin_is_redirected_from_target_users_route_to_filament_surface(): void
+    public function test_super_admin_is_redirected_from_target_users_route_to_app_owned_surface(): void
     {
         $this->actingAsPlatformSuperAdmin();
 
         $this->get('/platform/administration/users')
-            ->assertRedirect('/console/platform-users');
+            ->assertRedirect('/platform/users');
     }
 
     public function test_filament_platform_users_surface_lists_and_searches_users(): void

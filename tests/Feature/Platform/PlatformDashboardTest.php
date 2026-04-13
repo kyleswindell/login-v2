@@ -152,6 +152,22 @@ class PlatformDashboardTest extends TestCase
         $this->assertTrue($statsSlot['is_visible']);
     }
 
+    public function test_dashboard_can_generate_test_notification(): void
+    {
+        $user = $this->actingAsPlatformSuperAdmin();
+
+        Livewire::actingAs($user)
+            ->test(DashboardPage::class)
+            ->call('generateTestNotification');
+
+        $this->assertDatabaseHas('notifications', [
+            'notifiable_type' => User::class,
+            'notifiable_id' => $user->id,
+            'module_key' => 'development',
+            'title' => 'Test notification',
+        ]);
+    }
+
     public function test_dashboard_reorder_widgets_ignores_unknown_keys(): void
     {
         $user = User::factory()->create();

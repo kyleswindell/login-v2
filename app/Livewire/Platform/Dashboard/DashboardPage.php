@@ -5,7 +5,9 @@ namespace App\Livewire\Platform\Dashboard;
 use App\Models\UserDashboardLayout;
 use App\Platform\Dashboard\RendersOnDashboard;
 use App\Platform\Dashboard\WidgetRegistry;
+use App\Platform\Notifications\NotificationService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Contracts\View\View as ViewContract;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Locked;
@@ -96,6 +98,28 @@ class DashboardPage extends Component
         $this->isLocked = true;
         $this->isEditing = false;
         $this->persistLayout();
+    }
+
+    public function generateTestNotification(): void
+    {
+        $user = Auth::user();
+
+        if (! $user || ! Gate::allows('view-platform-notifications')) {
+            return;
+        }
+
+        $notificationService = app(NotificationService::class);
+        $notificationService->sendTo(
+            notifiable: $user,
+            moduleKey: 'development',
+            title: 'Test notification',
+            body: 'This notification was generated from the dashboard development tools widget.',
+            severity: 'notice',
+            actionUrl: route('platform.administration.notifications.index'),
+            metadata: ['source' => 'dashboard-development-tools'],
+        );
+
+        session()->flash('status', 'Test notification generated and delivered to your inbox.');
     }
 
     private function persistLayout(): void

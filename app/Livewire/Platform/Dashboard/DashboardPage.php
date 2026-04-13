@@ -26,15 +26,21 @@ class DashboardPage extends Component
 
     public function mount(): void
     {
+        $defaults = app(WidgetRegistry::class)->defaults();
+
         $saved = UserDashboardLayout::query()
             ->where('user_id', Auth::id())
             ->first();
 
         if ($saved) {
-            $this->widgetLayout = $saved->layout;
+            $this->widgetLayout = $this->synchronizeLayoutWithDefaults($saved->layout, $defaults);
             $this->isLocked = $saved->is_locked;
+
+            if ($this->widgetLayout !== $saved->layout) {
+                $this->persistLayout();
+            }
         } else {
-            $this->widgetLayout = app(WidgetRegistry::class)->defaults();
+            $this->widgetLayout = $defaults;
             $this->isLocked = true;
         }
 
@@ -101,6 +107,59 @@ class DashboardPage extends Component
                 'is_locked' => $this->isLocked,
             ],
         );
+    }
+
+    /**
+     * @param  list<array{widget_key?: string, position?: int, column_span?: int|string, is_visible?: bool}>  $savedLayout
+     * @param  list<array{widget_key: string, position: int, column_span: int|string, is_visible: bool}>  $defaults
+     * @return list<array{widget_key: string, position: int, column_span: int|string, is_visible: bool}>
+     */
+    private function synchronizeLayoutWithDefaults(array $savedLayout, array $defaults): array
+    {
+        $registry = app(WidgetRegistry::class);
+        $knownKeys = array_keys($registry->getAll());
+
+        $defaultByKey = collect($defaults)
+            ->keyBy('widget_key');
+
+        $savedByKey = collect($savedLayout)
+            ->filter(fn (array $slot): bool => in_array($slot['widget_key'] ?? '', $knownKeys, true))
+            ->sortBy('position')
+            ->keyBy(fn (array $slot): string => (string) $slot['widget_key']);
+
+        $normalized = collect();
+
+        foreach ($savedByKey as $key => $slot) {
+            $fallback = $defaultByKey->get($key, [
+                'widget_key' => $key,
+                'position' => 0,
+                'column_span' => 'full',
+                'is_visible' => true,
+            ]);
+
+            $normalized->push([
+                'widget_key' => $key,
+                'position' => 0,
+                'column_span' => $slot['column_span'] ?? $fallback['column_span'],
+                'is_visible' => (bool) ($slot['is_visible'] ?? $fallback['is_visible']),
+            ]);
+        }
+
+        foreach ($defaults as $slot) {
+            if (! $savedByKey->has($slot['widget_key'])) {
+                $normalized->push($slot);
+            }
+        }
+
+        return $normalized
+            ->values()
+            ->map(fn (array $slot, int $index): array => [
+                'widget_key' => $slot['widget_key'],
+                'position' => $index,
+                'column_span' => $slot['column_span'],
+                'is_visible' => (bool) $slot['is_visible'],
+            ])
+            ->all();
     }
 
     /**

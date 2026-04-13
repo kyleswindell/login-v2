@@ -22,8 +22,8 @@
                     wire:click="toggleLock"
                     class="inline-flex items-center gap-2 rounded-md border px-3.5 py-2 text-sm font-semibold transition
                         {{ $isEditing
-                            ? 'border-emerald-500/40 bg-emerald-500/15 text-emerald-100 hover:border-emerald-400/60 hover:bg-emerald-500/25'
-                            : 'border-slate-700 bg-slate-800/60 text-slate-300 hover:border-slate-500 hover:text-white'
+                            ? 'border-emerald-300 bg-emerald-50 text-emerald-700 hover:border-emerald-400 hover:bg-emerald-100 dark:border-emerald-500/40 dark:bg-emerald-500/15 dark:text-emerald-100 dark:hover:border-emerald-400/60 dark:hover:bg-emerald-500/25'
+                            : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400 hover:bg-slate-50 hover:text-slate-900 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-300 dark:hover:border-slate-500 dark:hover:text-white'
                         }}"
                 >
                     @if ($isEditing)

@@ -43,6 +43,7 @@ class PlatformDashboardTest extends TestCase
         $this->assertContains('audit_activity', $visibleKeys);
         $this->assertContains('error_health', $visibleKeys);
         $this->assertContains('notifications_summary', $visibleKeys);
+        $this->assertContains('development_tools', $visibleKeys);
     }
 
     public function test_dashboard_layout_contains_all_core_widgets_in_defaults(): void
@@ -57,6 +58,29 @@ class PlatformDashboardTest extends TestCase
         $this->assertContains('error_health', $keys);
         $this->assertContains('audit_activity', $keys);
         $this->assertContains('notifications_summary', $keys);
+        $this->assertContains('development_tools', $keys);
+    }
+
+    public function test_dashboard_backfills_new_default_widgets_into_saved_layouts(): void
+    {
+        $user = User::factory()->create();
+
+        UserDashboardLayout::query()->create([
+            'user_id' => $user->id,
+            'is_locked' => true,
+            'layout' => [
+                ['widget_key' => 'platform_stats', 'position' => 0, 'column_span' => 'full', 'is_visible' => true],
+                ['widget_key' => 'error_health', 'position' => 1, 'column_span' => 6, 'is_visible' => true],
+                ['widget_key' => 'audit_activity', 'position' => 2, 'column_span' => 6, 'is_visible' => true],
+                ['widget_key' => 'notifications_summary', 'position' => 3, 'column_span' => 'full', 'is_visible' => true],
+            ],
+        ]);
+
+        $component = Livewire::actingAs($user)->test(DashboardPage::class);
+
+        $keys = collect($component->get('widgetLayout'))->pluck('widget_key')->all();
+
+        $this->assertContains('development_tools', $keys);
     }
 
     public function test_dashboard_loads_default_layout_for_new_users(): void

@@ -8,6 +8,18 @@
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+    /* Override slate with neutral grays so dark mode avoids blue undertones. */
+    --color-slate-50: #fafafa;
+    --color-slate-100: #f4f4f5;
+    --color-slate-200: #e4e4e7;
+    --color-slate-300: #d4d4d8;
+    --color-slate-400: #a1a1aa;
+    --color-slate-500: #71717a;
+    --color-slate-600: #52525b;
+    --color-slate-700: #3f3f46;
+    --color-slate-800: #27272a;
+    --color-slate-900: #18181b;
+    --color-slate-950: #09090b;
 }
 
 @layer components {
@@ -76,6 +88,14 @@
         background-color: rgb(248 250 252) !important;
     }
 
+    html[data-theme-resolved='light'] .bg-slate-950\/95,
+    html[data-theme-resolved='light'] .bg-slate-950\/90,
+    html[data-theme-resolved='light'] .bg-slate-950\/80,
+    html[data-theme-resolved='light'] .bg-slate-950\/75,
+    html[data-theme-resolved='light'] .bg-slate-950\/70 {
+        background-color: rgb(248 250 252 / 0.96) !important;
+    }
+
     html[data-theme-resolved='light'] .bg-slate-900,
     html[data-theme-resolved='light'] .bg-slate-900\/95,
     html[data-theme-resolved='light'] .bg-slate-900\/80,
@@ -84,12 +104,19 @@
         background-color: rgb(255 255 255) !important;
     }
 
+    html[data-theme-resolved='light'] .bg-slate-700,
     html[data-theme-resolved='light'] .bg-slate-800,
     html[data-theme-resolved='light'] .bg-slate-800\/95,
     html[data-theme-resolved='light'] .bg-slate-800\/80,
     html[data-theme-resolved='light'] .bg-slate-700\/70,
     html[data-theme-resolved='light'] .bg-slate-700\/60 {
         background-color: rgb(241 245 249) !important;
+    }
+
+    html[data-theme-resolved='light'] .hover\:bg-slate-800:hover,
+    html[data-theme-resolved='light'] .hover\:bg-slate-700:hover,
+    html[data-theme-resolved='light'] .hover\:bg-slate-950:hover {
+        background-color: rgb(226 232 240) !important;
     }
 
     html[data-theme-resolved='light'] .border-slate-800,
@@ -126,5 +153,11 @@
     html[data-theme-resolved='light'] .shadow-black\/30,
     html[data-theme-resolved='light'] .shadow-black\/20 {
         --tw-shadow-color: rgb(148 163 184 / 0.25) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-card,
+    html[data-theme-resolved='light'] .ui-shell-surface {
+        background-color: rgb(255 255 255) !important;
+        border-color: rgb(203 213 225) !important;
     }
 }

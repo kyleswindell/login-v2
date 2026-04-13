@@ -14,6 +14,18 @@ const resolveThemeMode = (mode) => {
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 };
 
+const getPreferredThemeMode = () => {
+    const storedMode = window.localStorage.getItem('platform.theme.mode');
+
+    if (allowedThemeModes.has(storedMode)) {
+        return storedMode;
+    }
+
+    const datasetMode = document.documentElement.dataset.themeMode;
+
+    return allowedThemeModes.has(datasetMode) ? datasetMode : 'system';
+};
+
 const applyThemeMode = (mode, persistLocal = true) => {
     const normalized = allowedThemeModes.has(mode) ? mode : 'system';
     const resolved = resolveThemeMode(normalized);
@@ -67,7 +79,7 @@ const persistThemePreference = (mode) => {
 
 const initThemeModeControls = () => {
     if (document.body?.dataset.themeControlsInit === '1') {
-        applyThemeMode(document.documentElement.dataset.themeMode || 'system', false);
+        applyThemeMode(getPreferredThemeMode(), false);
         return;
     }
 
@@ -94,7 +106,7 @@ const initThemeModeControls = () => {
         persistThemePreference(mode);
     });
 
-    applyThemeMode(document.documentElement.dataset.themeMode || 'system', false);
+    applyThemeMode(getPreferredThemeMode(), false);
 };
 
 const initNotificationMenus = () => {

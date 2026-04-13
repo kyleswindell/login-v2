@@ -56,7 +56,7 @@
     }
 
     .ui-action {
-        @apply inline-flex items-center rounded-md border border-slate-700 bg-slate-800/70 px-3.5 py-2 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-700/80 hover:text-white;
+        @apply inline-flex items-center rounded-md border border-emerald-500/40 bg-emerald-500/15 px-3.5 py-2 text-sm font-semibold text-emerald-100 transition hover:border-emerald-400/60 hover:bg-emerald-500/25 hover:text-emerald-50;
     }
 }
 
@@ -177,14 +177,14 @@
     }
 
     html[data-theme-resolved='light'] .ui-action {
-        background-color: rgb(244 244 245) !important;
-        border-color: rgb(212 212 216) !important;
-        color: rgb(24 24 27) !important;
+        background-color: rgb(236 253 245) !important;
+        border-color: rgb(110 231 183) !important;
+        color: rgb(6 95 70) !important;
     }
 
     html[data-theme-resolved='light'] .ui-action:hover {
-        background-color: rgb(228 228 231) !important;
-        border-color: rgb(161 161 170) !important;
-        color: rgb(9 9 11) !important;
+        background-color: rgb(209 250 229) !important;
+        border-color: rgb(52 211 153) !important;
+        color: rgb(6 78 59) !important;
     }
 }

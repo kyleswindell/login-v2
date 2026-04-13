@@ -31,17 +31,37 @@ class ErrorLogController extends Controller
             ->when($filters['severity'] !== '', fn ($q) => $q->where('severity', $filters['severity']))
             ->when($filters['handled'] !== '', fn ($q) => $q->where('handled', $filters['handled'] === '1'))
             ->when($filters['environment'] !== '', fn ($q) => $q->where('environment', $filters['environment']))
-            ->when($filters['exception_class'] !== '', fn ($q) => $q->where('exception_class', 'like', '%'.$filters['exception_class'].'%'))
+            ->when($filters['exception_class'] !== '', fn ($q) => $q->where('exception_class', $filters['exception_class']))
             ->when($filters['date_from'] !== '', fn ($q) => $q->whereDate('occurred_at', '>=', $filters['date_from']))
             ->when($filters['date_to'] !== '', fn ($q) => $q->whereDate('occurred_at', '<=', $filters['date_to']))
             ->latest('occurred_at')
             ->paginate($perPage)
             ->withQueryString();
 
+        $environments = CentralErrorLog::query()
+            ->select('environment')
+            ->whereNotNull('environment')
+            ->distinct()
+            ->orderBy('environment')
+            ->limit(50)
+            ->pluck('environment')
+            ->all();
+
+        $exceptionClasses = CentralErrorLog::query()
+            ->select('exception_class')
+            ->whereNotNull('exception_class')
+            ->distinct()
+            ->orderBy('exception_class')
+            ->limit(100)
+            ->pluck('exception_class')
+            ->all();
+
         return view('platform.error-logs.index', [
             'logs' => $logs,
             'filters' => $filters,
             'perPage' => $perPage,
+            'environments' => $environments,
+            'exceptionClasses' => $exceptionClasses,
         ]);
     }
 

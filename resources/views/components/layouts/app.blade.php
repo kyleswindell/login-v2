@@ -71,6 +71,15 @@
             @if ($user)
                 <header class="sticky top-0 z-40 border-b border-slate-800 bg-slate-950/90 backdrop-blur">
                     <div class="mx-auto flex w-full max-w-[1700px] items-center gap-4 px-4 py-4 xl:px-6">
+                        <button
+                            type="button"
+                            class="inline-flex items-center justify-center rounded-md border border-slate-700 p-2 text-slate-300 transition hover:border-slate-500 hover:text-white lg:hidden"
+                            aria-label="Toggle navigation"
+                            data-sidebar-toggle
+                        >
+                            ☰
+                        </button>
+
                         <a href="{{ route('dashboard') }}" wire:navigate class="flex min-w-0 items-center gap-3 py-1">
                             <div class="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-600 bg-zinc-800/70 text-lg font-semibold text-zinc-100">P</div>
                             <div class="min-w-0">
@@ -248,8 +257,22 @@
                             {{ $sidebar }}
                         </aside>
                     @else
-                        <aside class="hidden w-60 shrink-0 lg:block" data-sidebar-host>
-                            <div class="sticky top-24" data-sidebar-container>
+                        <aside
+                            class="fixed inset-y-0 left-0 z-40 hidden w-72 shrink-0 overflow-y-auto bg-slate-950/95 p-4 lg:static lg:block lg:w-60 lg:bg-transparent lg:p-0"
+                            data-sidebar-host
+                            data-sidebar-panel
+                        >
+                            <div class="mb-3 flex items-center justify-between lg:hidden">
+                                <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Navigation</span>
+                                <button
+                                    type="button"
+                                    class="rounded-md border border-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-300 transition hover:border-slate-500 hover:text-white"
+                                    data-sidebar-toggle
+                                >
+                                    Close
+                                </button>
+                            </div>
+                            <div class="lg:sticky lg:top-24" data-sidebar-container>
                                 {{-- Slider track: main nav and Setup panel side by side --}}
                                 <div class="relative overflow-hidden">
                                     <div class="flex transition-transform duration-300 will-change-transform" data-sidebar-track>

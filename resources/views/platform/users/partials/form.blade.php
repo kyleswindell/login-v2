@@ -168,9 +168,8 @@
                 </div>
             </div>
         </div>
-        </div>
 
-        <div class="mt-8 flex flex-wrap gap-3">
+        <div class="mt-8 flex flex-wrap gap-3 border-t border-slate-800 pt-6">
             <button type="submit" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:text-slate-300">
                 Save User
             </button>

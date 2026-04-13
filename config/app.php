@@ -21,7 +21,7 @@ return [
 
     'console_proof_paths_enabled' => (bool) env(
         'CONSOLE_PROOF_PATHS_ENABLED',
-        in_array(env('APP_ENV'), ['local', 'staging'], true),
+        false,
     ),
 
     /*

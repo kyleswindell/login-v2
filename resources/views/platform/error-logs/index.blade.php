@@ -2,12 +2,20 @@
     @php($viewerTimezone = auth()->user()?->timezone ?: config('app.timezone'))
 
     <section class="flex flex-1 flex-col gap-6">
-        <div>
+        <div class="flex flex-wrap items-start justify-between gap-3">
             <h1 class="ui-page-header-title">Error Logs</h1>
             <p class="ui-page-header-copy">Review platform-level errors and operational failures captured at runtime.</p>
+            <button
+                type="button"
+                class="inline-flex items-center gap-2 rounded-md border border-slate-700 px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-300 transition hover:border-slate-500 hover:text-white"
+                data-filter-toggle
+            >
+                <span>Filters</span>
+                <span aria-hidden="true">▾</span>
+            </button>
         </div>
 
-        <form method="GET" action="{{ route('platform.error-logs.index') }}" class="rounded-lg border border-slate-800 bg-slate-900/70 p-6">
+        <form method="GET" action="{{ route('platform.error-logs.index') }}" class="hidden rounded-lg border border-slate-800 bg-slate-900/70 p-6" data-filter-panel>
             <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                 <label class="block">
                     <span class="text-sm font-semibold text-slate-200">Severity</span>
@@ -32,12 +40,22 @@
 
                 <label class="block">
                     <span class="text-sm font-semibold text-slate-200">Environment</span>
-                    <input type="text" name="environment" value="{{ $filters['environment'] }}" placeholder="e.g. staging" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
+                    <select name="environment" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
+                        <option value="">Any environment</option>
+                        @foreach ($environments as $environment)
+                            <option value="{{ $environment }}" @selected($filters['environment'] === $environment)>{{ $environment }}</option>
+                        @endforeach
+                    </select>
                 </label>
 
                 <label class="block">
                     <span class="text-sm font-semibold text-slate-200">Exception Class</span>
-                    <input type="text" name="exception_class" value="{{ $filters['exception_class'] }}" placeholder="e.g. RuntimeException" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
+                    <select name="exception_class" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
+                        <option value="">Any exception</option>
+                        @foreach ($exceptionClasses as $exceptionClass)
+                            <option value="{{ $exceptionClass }}" @selected($filters['exception_class'] === $exceptionClass)>{{ $exceptionClass }}</option>
+                        @endforeach
+                    </select>
                 </label>
 
                 <label class="block">
@@ -118,9 +136,34 @@
                                 {{ $log->environment ?? '—' }}
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <a wire:navigate href="{{ route('platform.error-logs.show', $log) }}" class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-300 transition hover:text-slate-300">
+                                <button
+                                    type="button"
+                                    class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-300 transition hover:text-white"
+                                    data-error-log-view
+                                    data-error-log='@json([
+                                        "occurred_at" => $log->occurredAtForTimezone($viewerTimezone)?->format("M j, Y g:i A T"),
+                                        "severity" => $log->severity,
+                                        "handled" => $log->handled,
+                                        "environment" => $log->environment,
+                                        "message" => $log->message,
+                                        "exception_class" => $log->exception_class,
+                                        "error_code" => $log->error_code,
+                                        "file_path" => $log->file_path,
+                                        "line_number" => $log->line_number,
+                                        "route" => $log->route,
+                                        "method" => $log->method,
+                                        "status_code" => $log->status_code,
+                                        "request_id" => $log->request_id,
+                                        "trace_id" => $log->trace_id,
+                                        "user_id" => $log->user_id,
+                                        "ip_address" => $log->ip_address,
+                                        "hostname" => $log->hostname,
+                                        "stack_trace" => $log->stack_trace,
+                                        "context" => $log->context,
+                                    ])'
+                                >
                                     View
-                                </a>
+                                </button>
                             </td>
                         </tr>
                     @empty
@@ -182,6 +225,72 @@
                         'border-slate-700 text-slate-300 hover:border-slate-600 hover:text-white' => $logs->hasMorePages(),
                         'cursor-not-allowed border-slate-800 text-slate-600' => ! $logs->hasMorePages(),
                     ])>Next</a>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 p-4"
+            data-error-log-modal
+        >
+            <div class="max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-lg border border-slate-800 bg-slate-950 p-6 shadow-2xl shadow-black/40">
+                <div class="flex items-start justify-between gap-3">
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">Error Log Detail</p>
+                        <h2 class="mt-2 text-2xl font-semibold text-white" data-error-log-title>—</h2>
+                        <p class="mt-2 text-sm text-slate-400" data-error-log-subtitle>—</p>
+                    </div>
+                    <button type="button" class="rounded-md border border-slate-700 px-3 py-2 text-xs font-semibold text-slate-300 transition hover:border-slate-500 hover:text-white" data-error-log-close>Close</button>
+                </div>
+
+                <div class="mt-6 grid gap-4 md:grid-cols-2">
+                    <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                        <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Summary</h3>
+                        <dl class="mt-3 space-y-2 text-sm text-slate-300">
+                            <div class="flex items-center justify-between"><dt>Occurred</dt><dd data-error-log-occurred>—</dd></div>
+                            <div class="flex items-center justify-between"><dt>Severity</dt><dd data-error-log-severity>—</dd></div>
+                            <div class="flex items-center justify-between"><dt>Handled</dt><dd data-error-log-handled>—</dd></div>
+                            <div class="flex items-center justify-between"><dt>Environment</dt><dd data-error-log-environment>—</dd></div>
+                        </dl>
+                    </div>
+
+                    <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                        <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Exception</h3>
+                        <dl class="mt-3 space-y-2 text-sm text-slate-300">
+                            <div><dt>Class</dt><dd data-error-log-exception>—</dd></div>
+                            <div><dt>Code</dt><dd data-error-log-code>—</dd></div>
+                            <div><dt>File</dt><dd class="break-all" data-error-log-file>—</dd></div>
+                        </dl>
+                    </div>
+                </div>
+
+                <div class="mt-4 rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Request Context</h3>
+                    <dl class="mt-3 grid gap-2 text-sm text-slate-300 md:grid-cols-2">
+                        <div><dt>Route</dt><dd data-error-log-route>—</dd></div>
+                        <div><dt>Method</dt><dd data-error-log-method>—</dd></div>
+                        <div><dt>Status</dt><dd data-error-log-status>—</dd></div>
+                        <div><dt>User</dt><dd data-error-log-user>—</dd></div>
+                        <div><dt>Request ID</dt><dd class="break-all" data-error-log-request>—</dd></div>
+                        <div><dt>Trace ID</dt><dd class="break-all" data-error-log-trace>—</dd></div>
+                        <div><dt>IP</dt><dd data-error-log-ip>—</dd></div>
+                        <div><dt>Host</dt><dd data-error-log-host>—</dd></div>
+                    </dl>
+                </div>
+
+                <div class="mt-4 rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Message</h3>
+                    <p class="mt-2 text-sm text-slate-300" data-error-log-message>—</p>
+                </div>
+
+                <div class="mt-4 rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Stack Trace</h3>
+                    <pre class="mt-2 max-h-64 overflow-y-auto whitespace-pre-wrap text-xs text-slate-300" data-error-log-trace-stack>—</pre>
+                </div>
+
+                <div class="mt-4 rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Context</h3>
+                    <pre class="mt-2 max-h-64 overflow-y-auto whitespace-pre-wrap text-xs text-slate-300" data-error-log-context>—</pre>
                 </div>
             </div>
         </div>

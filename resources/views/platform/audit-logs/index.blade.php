@@ -2,21 +2,42 @@
     @php($viewerTimezone = auth()->user()?->timezone ?: config('app.timezone'))
 
     <section class="flex flex-1 flex-col gap-6">
-        <div>
+        <div class="flex flex-wrap items-start justify-between gap-3">
             <h1 class="ui-page-header-title">Audit Logs</h1>
             <p class="ui-page-header-copy">Review current platform activity events and auth-related audit history.</p>
+            <button
+                type="button"
+                class="inline-flex items-center gap-2 rounded-md border border-slate-700 px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-300 transition hover:border-slate-500 hover:text-white"
+                data-filter-toggle
+            >
+                <span>Filters</span>
+                <span aria-hidden="true">▾</span>
+            </button>
         </div>
 
-        <form method="GET" action="{{ route('platform.audit-logs.index') }}" class="rounded-lg border border-slate-800 bg-slate-900/70 p-6">
+        <form method="GET" action="{{ route('platform.audit-logs.index') }}" class="hidden rounded-lg border border-slate-800 bg-slate-900/70 p-6" data-filter-panel>
             <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                 <label class="block">
                     <span class="text-sm font-semibold text-slate-200">Event Type</span>
-                    <input type="text" name="event_type" value="{{ $filters['event_type'] }}" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
+                    <select name="event_type" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
+                        <option value="">Any event type</option>
+                        @foreach ($eventTypes as $eventType)
+                            <option value="{{ $eventType }}" @selected($filters['event_type'] === $eventType)>{{ $eventType }}</option>
+                        @endforeach
+                    </select>
                 </label>
 
                 <label class="block">
                     <span class="text-sm font-semibold text-slate-200">Actor</span>
-                    <input type="text" name="actor" value="{{ $filters['actor'] }}" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
+                    <select name="actor_id" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
+                        <option value="">Any actor</option>
+                        <option value="system" @selected($filters['actor_id'] === 'system')>System</option>
+                        @foreach ($actorUsers as $actor)
+                            <option value="{{ $actor->id }}" @selected($filters['actor_id'] == $actor->id)>
+                                {{ $actor->name }} ({{ $actor->email }})
+                            </option>
+                        @endforeach
+                    </select>
                 </label>
 
                 <label class="block">
@@ -65,6 +86,7 @@
                         <th class="px-6 py-4">Event</th>
                         <th class="px-6 py-4">Actor</th>
                         <th class="px-6 py-4">Result</th>
+                        <th class="px-6 py-4">Severity</th>
                         <th class="px-6 py-4">Route</th>
                         <th class="px-6 py-4">Request</th>
                     </tr>
@@ -95,8 +117,18 @@
                                 ])>
                                     {{ $log->result }}
                                 </span>
-
-                                <div class="mt-2 text-xs text-slate-500">{{ $log->severity }}</div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span @class([
+                                    'inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em]',
+                                    'bg-slate-700/60 text-slate-300' => $log->severity === 'info',
+                                    'bg-violet-500/15 text-violet-300' => $log->severity === 'notice',
+                                    'bg-amber-500/15 text-amber-300' => $log->severity === 'warning',
+                                    'bg-rose-500/15 text-rose-300' => $log->severity === 'error',
+                                    'bg-red-600/20 text-red-300' => $log->severity === 'critical',
+                                ])>
+                                    {{ $log->severity }}
+                                </span>
                             </td>
                             <td class="px-6 py-4 text-slate-400">
                                 <p>{{ $log->route ?? 'n/a' }}</p>
@@ -108,7 +140,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="px-6 py-8 text-center text-sm text-slate-500">No audit log rows match the current filters.</td>
+                            <td colspan="7" class="px-6 py-8 text-center text-sm text-slate-500">No audit log rows match the current filters.</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -118,7 +150,7 @@
                 <div class="flex items-center gap-3">
                     <form method="GET" action="{{ route('platform.audit-logs.index') }}" class="flex items-center gap-3">
                         <input type="hidden" name="event_type" value="{{ $filters['event_type'] }}">
-                        <input type="hidden" name="actor" value="{{ $filters['actor'] }}">
+                        <input type="hidden" name="actor_id" value="{{ $filters['actor_id'] }}">
                         <input type="hidden" name="result" value="{{ $filters['result'] }}">
                         <input type="hidden" name="severity" value="{{ $filters['severity'] }}">
                         <label class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Rows</label>
@@ -145,7 +177,7 @@
 
                     <form method="GET" action="{{ route('platform.audit-logs.index') }}">
                         <input type="hidden" name="event_type" value="{{ $filters['event_type'] }}">
-                        <input type="hidden" name="actor" value="{{ $filters['actor'] }}">
+                        <input type="hidden" name="actor_id" value="{{ $filters['actor_id'] }}">
                         <input type="hidden" name="result" value="{{ $filters['result'] }}">
                         <input type="hidden" name="severity" value="{{ $filters['severity'] }}">
                         <input type="hidden" name="per_page" value="{{ $perPage }}">

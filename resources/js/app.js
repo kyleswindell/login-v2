@@ -110,6 +110,145 @@ const initThemeModeControls = () => {
     applyThemeMode(getPreferredThemeMode(), false);
 };
 
+const initFilterPanels = () => {
+    document.querySelectorAll('[data-filter-toggle]').forEach((toggle) => {
+        if (toggle.dataset.filterToggleInit === '1') {
+            return;
+        }
+        toggle.dataset.filterToggleInit = '1';
+
+        const panel = toggle.closest('section')?.querySelector('[data-filter-panel]')
+            ?? document.querySelector('[data-filter-panel]');
+
+        if (!panel) {
+            return;
+        }
+
+        toggle.addEventListener('click', () => {
+            panel.classList.toggle('hidden');
+        });
+    });
+};
+
+const initErrorLogModal = () => {
+    const errorLogModal = document.querySelector('[data-error-log-modal]');
+
+    if (!errorLogModal || errorLogModal.dataset.errorLogInit === '1') {
+        return;
+    }
+
+    errorLogModal.dataset.errorLogInit = '1';
+
+    const errorLogClose = document.querySelector('[data-error-log-close]');
+    const errorLogViewButtons = document.querySelectorAll('[data-error-log-view]');
+    const formatPayload = (value) => {
+        if (value === null || value === undefined || value === '') {
+            return '';
+        }
+
+        if (typeof value === 'string') {
+            return value;
+        }
+
+        try {
+            return JSON.stringify(value, null, 2);
+        } catch (error) {
+            return String(value);
+        }
+    };
+
+    const modalSetText = (selector, value) => {
+        const target = errorLogModal.querySelector(selector);
+
+        if (target) {
+            target.textContent = value || '—';
+        }
+    };
+
+    const modalOpen = () => {
+        errorLogModal.classList.remove('hidden');
+        errorLogModal.classList.add('flex');
+    };
+
+    const modalClose = () => {
+        errorLogModal.classList.add('hidden');
+        errorLogModal.classList.remove('flex');
+    };
+
+    errorLogViewButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            const payload = button.dataset.errorLog;
+            const data = payload ? JSON.parse(payload) : {};
+
+            modalSetText('[data-error-log-title]', data.message);
+            modalSetText('[data-error-log-subtitle]', data.exception_class);
+            modalSetText('[data-error-log-occurred]', data.occurred_at);
+            modalSetText('[data-error-log-severity]', data.severity);
+            modalSetText('[data-error-log-handled]', data.handled ? 'Handled' : 'Uncaught');
+            modalSetText('[data-error-log-environment]', data.environment);
+            modalSetText('[data-error-log-exception]', data.exception_class);
+            modalSetText('[data-error-log-code]', data.error_code);
+            modalSetText('[data-error-log-file]', data.file_path ? `${data.file_path}:${data.line_number || ''}` : '');
+            modalSetText('[data-error-log-route]', data.route);
+            modalSetText('[data-error-log-method]', data.method);
+            modalSetText('[data-error-log-status]', data.status_code);
+            modalSetText('[data-error-log-user]', data.user_id);
+            modalSetText('[data-error-log-request]', data.request_id);
+            modalSetText('[data-error-log-trace]', data.trace_id);
+            modalSetText('[data-error-log-ip]', data.ip_address);
+            modalSetText('[data-error-log-host]', data.hostname);
+            modalSetText('[data-error-log-message]', data.message);
+            modalSetText('[data-error-log-trace-stack]', formatPayload(data.stack_trace));
+            modalSetText('[data-error-log-context]', formatPayload(data.context));
+
+            modalOpen();
+        });
+    });
+
+    errorLogModal.addEventListener('click', (event) => {
+        if (event.target === errorLogModal) {
+            modalClose();
+        }
+    });
+
+    if (errorLogClose) {
+        errorLogClose.addEventListener('click', modalClose);
+    }
+};
+
+const initSidebarToggle = () => {
+    const sidebar = document.querySelector('[data-sidebar-panel]');
+
+    if (!sidebar || sidebar.dataset.sidebarInit === '1') {
+        return;
+    }
+
+    sidebar.dataset.sidebarInit = '1';
+
+    const sidebarToggles = document.querySelectorAll('[data-sidebar-toggle]');
+    const sidebarLinks = document.querySelectorAll('[data-main-nav-link], [data-setup-nav-link]');
+
+    sidebarToggles.forEach((toggle) => {
+        toggle.addEventListener('click', () => {
+            sidebar.classList.toggle('hidden');
+        });
+    });
+
+    sidebarLinks.forEach((link) => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth < 1024) {
+                sidebar.classList.add('hidden');
+            }
+        });
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 1024) {
+            sidebar.classList.remove('hidden');
+        }
+    });
+};
+
 const initNotificationMenus = () => {
     document.querySelectorAll('[data-notification-menu]').forEach((menu) => {
         if (menu.dataset.notificationMenuInit === '1') {
@@ -254,6 +393,12 @@ document.addEventListener('DOMContentLoaded', initAccountMenu);
 document.addEventListener('livewire:navigated', initAccountMenu);
 document.addEventListener('DOMContentLoaded', initDocsTree);
 document.addEventListener('livewire:navigated', initDocsTree);
+document.addEventListener('DOMContentLoaded', initFilterPanels);
+document.addEventListener('livewire:navigated', initFilterPanels);
+document.addEventListener('DOMContentLoaded', initErrorLogModal);
+document.addEventListener('livewire:navigated', initErrorLogModal);
+document.addEventListener('DOMContentLoaded', initSidebarToggle);
+document.addEventListener('livewire:navigated', initSidebarToggle);
 document.addEventListener('DOMContentLoaded', initThemeModeControls);
 document.addEventListener('livewire:navigated', initThemeModeControls);
 document.addEventListener('livewire:navigating', () => {

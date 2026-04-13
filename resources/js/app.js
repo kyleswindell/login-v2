@@ -4,6 +4,92 @@ import Pusher from 'pusher-js';
 import './setup-sidebar';
 import './table-enhance';
 
+const allowedThemeModes = new Set(['system', 'dark', 'light']);
+
+const resolveThemeMode = (mode) => {
+    if (mode === 'dark' || mode === 'light') {
+        return mode;
+    }
+
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+};
+
+const applyThemeMode = (mode, persistLocal = true) => {
+    const normalized = allowedThemeModes.has(mode) ? mode : 'system';
+    const resolved = resolveThemeMode(normalized);
+    const root = document.documentElement;
+
+    root.dataset.themeMode = normalized;
+    root.dataset.themeResolved = resolved;
+    root.classList.toggle('dark', resolved === 'dark');
+
+    if (persistLocal) {
+        window.localStorage.setItem('platform.theme.mode', normalized);
+    }
+
+    document.querySelectorAll('[data-theme-mode-toggle]').forEach((button) => {
+        const isActive = button.dataset.themeMode === normalized;
+        button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        button.classList.toggle('bg-slate-700', isActive);
+        button.classList.toggle('text-white', isActive);
+        button.classList.toggle('text-slate-300', !isActive);
+    });
+};
+
+const persistThemePreference = (mode) => {
+    const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    const url = document.body?.dataset.themeUpdateUrl;
+
+    if (!url || !token) {
+        return;
+    }
+
+    window.fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'X-CSRF-TOKEN': token,
+            Accept: 'application/json',
+        },
+        body: new URLSearchParams({
+            theme_preference: mode,
+        }),
+        credentials: 'same-origin',
+    }).catch(() => {});
+};
+
+const initThemeModeControls = () => {
+    if (document.body?.dataset.themeControlsInit === '1') {
+        applyThemeMode(document.documentElement.dataset.themeMode || 'system', false);
+        return;
+    }
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    mediaQuery.addEventListener('change', () => {
+        if ((document.documentElement.dataset.themeMode || 'system') === 'system') {
+            applyThemeMode('system', false);
+        }
+    });
+
+    document.body.dataset.themeControlsInit = '1';
+
+    document.addEventListener('click', (event) => {
+        const button = event.target.closest('[data-theme-mode-toggle]');
+
+        if (!button) {
+            return;
+        }
+
+        event.preventDefault();
+        const mode = allowedThemeModes.has(button.dataset.themeMode) ? button.dataset.themeMode : 'system';
+        applyThemeMode(mode);
+        persistThemePreference(mode);
+    });
+
+    applyThemeMode(document.documentElement.dataset.themeMode || 'system', false);
+};
+
 const initNotificationMenus = () => {
     document.querySelectorAll('[data-notification-menu]').forEach((menu) => {
         if (menu.dataset.notificationMenuInit === '1') {
@@ -93,6 +179,8 @@ const initNotificationMenus = () => {
 
 document.addEventListener('DOMContentLoaded', initNotificationMenus);
 document.addEventListener('livewire:navigated', initNotificationMenus);
+document.addEventListener('DOMContentLoaded', initThemeModeControls);
+document.addEventListener('livewire:navigated', initThemeModeControls);
 
 const realtimeRoot = document.querySelector('[data-realtime-notifications="1"]');
 

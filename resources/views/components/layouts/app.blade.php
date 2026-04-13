@@ -1,4 +1,6 @@
 @props(['title' => null])
+@php($bootThemeMode = auth()->user()?->theme_preference)
+@php($bootThemeMode = in_array($bootThemeMode, ['system', 'dark', 'light'], true) ? $bootThemeMode : 'system')
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -7,10 +9,31 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ $title ?? config('app.name') }}</title>
+        <script>
+            (() => {
+                const root = document.documentElement;
+                const allowedModes = new Set(['system', 'dark', 'light']);
+                const persistedMode = window.localStorage.getItem('platform.theme.mode');
+                const serverMode = @json($bootThemeMode);
+                const themeMode = allowedModes.has(persistedMode) ? persistedMode : serverMode;
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const resolved = themeMode === 'system' ? (prefersDark ? 'dark' : 'light') : themeMode;
+
+                root.dataset.themeMode = themeMode;
+                root.dataset.themeResolved = resolved;
+                root.classList.toggle('dark', resolved === 'dark');
+            })();
+        </script>
         @livewireStyles
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+    <body
+        @class([
+            'min-h-screen antialiased bg-slate-100 text-slate-900 transition-colors dark:bg-slate-950 dark:text-slate-100',
+            'has-auth-shell' => auth()->check(),
+        ])
+        data-theme-update-url="{{ auth()->check() ? route('platform.account.preferences.update') : '' }}"
+    >
         @php($user = auth()->user())
         @php($hasCustomSidebar = isset($sidebar))
         @inject('platformNavigation', \App\Platform\Navigation\PlatformNavigation::class)
@@ -158,11 +181,36 @@
                                 </summary>
 
                                 <div class="absolute right-0 z-50 mt-3 w-72 rounded-lg border border-slate-800 bg-slate-900/95 p-3 shadow-2xl shadow-black/40">
+                                    <div class="rounded-md border border-slate-800 bg-slate-950/70 p-2">
+                                        <p class="px-2 pb-2 text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">Theme</p>
+                                        <div class="grid grid-cols-3 gap-1">
+                                            <button
+                                                type="button"
+                                                class="rounded-md px-2 py-2 text-xs font-semibold text-slate-300 transition hover:bg-slate-800 hover:text-white"
+                                                data-theme-mode-toggle
+                                                data-theme-mode="light"
+                                            >Light</button>
+                                            <button
+                                                type="button"
+                                                class="rounded-md px-2 py-2 text-xs font-semibold text-slate-300 transition hover:bg-slate-800 hover:text-white"
+                                                data-theme-mode-toggle
+                                                data-theme-mode="dark"
+                                            >Dark</button>
+                                            <button
+                                                type="button"
+                                                class="rounded-md px-2 py-2 text-xs font-semibold text-slate-300 transition hover:bg-slate-800 hover:text-white"
+                                                data-theme-mode-toggle
+                                                data-theme-mode="system"
+                                            >System</button>
+                                        </div>
+                                    </div>
+
                                     @foreach ($accountNavigation as $item)
                                         <a href="{{ route($item['route']) }}" wire:navigate @class([
                                             'block rounded-md px-4 py-3 text-sm transition',
                                             'text-slate-200 hover:bg-slate-800 hover:text-white' => ! request()->routeIs(...$item['active']),
                                             'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs(...$item['active']),
+                                            'mt-2' => $loop->first,
                                             'mt-1' => ! $loop->first,
                                         ])>
                                             {{ $item['label'] }}

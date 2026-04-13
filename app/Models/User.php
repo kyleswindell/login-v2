@@ -27,6 +27,7 @@ use Spatie\Permission\Traits\HasRoles;
     'linkedin',
     'skype',
     'default_language',
+    'theme_preference',
     'email_signature',
     'direction',
     'send_welcome_email',

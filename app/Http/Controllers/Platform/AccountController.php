@@ -61,6 +61,7 @@ class AccountController extends Controller
         $validated = $request->validate([
             'timezone' => ['nullable', 'string', 'timezone'],
             'default_language' => ['nullable', 'string', 'max:10'],
+            'theme_preference' => ['nullable', Rule::in(['system', 'dark', 'light'])],
         ]);
 
         $request->user()->forceFill($validated)->save();

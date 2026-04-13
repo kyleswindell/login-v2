@@ -135,6 +135,32 @@ Planning owners:
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 8]] | [Phase 2 - Implementation Batch 8](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%208.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 9]] | [Phase 2 - Implementation Batch 9](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%209.md)
 
+### 2026-04-12 - Phase 2 Batch 7 theme-mode parity pass (light/dark/system)
+
+Status:
+
+* implemented locally
+* ready for staging visual verification
+
+Work completed:
+
+* added persisted account-level `theme_preference` (`system` / `dark` / `light`)
+* added Account Preferences theme-mode controls and server-side validation
+* added header account-dropdown quick theme toggles for immediate shell switching
+* added boot-time theme resolution in the shared layout so the selected mode applies before UI render
+* added runtime system-mode tracking to follow OS preference changes when mode is `system`
+* added a shell-wide light-mode override pass so existing Batch 7 surfaces render with non-blue neutral light palette when light mode is active
+
+Verification:
+
+* `php artisan view:cache` passes after layout/theme control updates
+* `php -l` passes for account controller, user model, and theme-preference migration
+* local asset build remains blocked in this environment because Node tooling reports unsupported runtime (`WSL 1 is not supported`)
+
+Planning owner:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]] | [Phase 2 - Implementation Batch 7](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%207.md)
+
 ### 2026-04-12 - Phase 2 Batch 7 final visual UI migration implementation
 
 Status:

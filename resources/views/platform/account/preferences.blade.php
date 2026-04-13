@@ -3,7 +3,7 @@
         <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30">
             <p class="text-sm font-medium uppercase tracking-[0.3em] text-slate-300">Account</p>
             <h1 class="mt-3 text-2xl font-semibold text-white">Account Preferences</h1>
-            <p class="mt-2 text-sm text-slate-400">Set your personal display defaults for timezone and language.</p>
+            <p class="mt-2 text-sm text-slate-400">Set your personal defaults for timezone, language, and theme mode.</p>
         </div>
 
         @if (session('success'))
@@ -33,6 +33,14 @@
                 <div>
                     <label for="default_language" class="block text-sm font-semibold text-slate-200">Default Language</label>
                     <input id="default_language" name="default_language" type="text" value="{{ old('default_language', $user->default_language) }}" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-slate-100 focus:border-slate-500 focus:outline-none">
+                </div>
+                <div>
+                    <label for="theme_preference" class="block text-sm font-semibold text-slate-200">Theme Mode</label>
+                    <select id="theme_preference" name="theme_preference" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-slate-100 focus:border-slate-500 focus:outline-none">
+                        <option value="system" @selected(old('theme_preference', $user->theme_preference ?? 'system') === 'system')>System</option>
+                        <option value="dark" @selected(old('theme_preference', $user->theme_preference ?? 'system') === 'dark')>Dark</option>
+                        <option value="light" @selected(old('theme_preference', $user->theme_preference ?? 'system') === 'light')>Light</option>
+                    </select>
                 </div>
             </div>
 

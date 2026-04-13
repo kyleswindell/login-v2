@@ -73,6 +73,7 @@ Completed in this batch:
 * corrected documentation tree behavior so only the active file is highlighted while the folder path remains expanded to the selected file location
 * finalized shell visual normalization away from blue accents to a neutral light/dark baseline and removed boxed logo/user header framing
 * replaced duplicate workspace links in the header account dropdown with account-focused options and added initial My Account, Account Settings, and Preferences routes/views
+* implemented persisted `light` / `dark` / `system` theme modes (account preference + header quick-toggle) to match the prior `/console` mode behavior baseline
 * applied the same neutral visual baseline to the login/auth screen for universal current-theme consistency
 * added password and security controls into Account Settings with current-password validation and password update flow
 * set direct `/console/*` proof-path access deprecation default to off with compatibility redirects already in place from Batch 6
@@ -90,6 +91,7 @@ Verification focus:
 * Docker-backed feature test execution for dashboard/shell regressions (local non-Docker execution is blocked by `postgres` host resolution)
 * shell navigation behavior check with `wire:navigate` enabled to prevent full document reload on setup/sidebar page changes
 * in-content navigation behavior check with `wire:navigate` enabled so setup/settings/dashboard route transitions preserve shell without full document refresh
+* theme-mode behavior check across authenticated shell + login surface with persisted account preference and runtime system-mode resolution
 
 ## Exit Criteria
 

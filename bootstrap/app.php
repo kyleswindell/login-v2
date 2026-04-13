@@ -18,6 +18,14 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->report(function (Throwable $exception): void {
-            app(PlatformLogger::class)->recordException($exception);
+            if (app()->runningInConsole() || ! app()->bound('db')) {
+                return;
+            }
+
+            try {
+                app(PlatformLogger::class)->recordException($exception);
+            } catch (Throwable) {
+                // Avoid cascading failures during exception reporting.
+            }
         });
     })->create();

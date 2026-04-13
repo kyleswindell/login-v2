@@ -140,27 +140,7 @@
                                     type="button"
                                     class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-300 transition hover:text-white"
                                     data-error-log-view
-                                    data-error-log='@json([
-                                        "occurred_at" => $log->occurredAtForTimezone($viewerTimezone)?->format("M j, Y g:i A T"),
-                                        "severity" => $log->severity,
-                                        "handled" => $log->handled,
-                                        "environment" => $log->environment,
-                                        "message" => $log->message,
-                                        "exception_class" => $log->exception_class,
-                                        "error_code" => $log->error_code,
-                                        "file_path" => $log->file_path,
-                                        "line_number" => $log->line_number,
-                                        "route" => $log->route,
-                                        "method" => $log->method,
-                                        "status_code" => $log->status_code,
-                                        "request_id" => $log->request_id,
-                                        "trace_id" => $log->trace_id,
-                                        "user_id" => $log->user_id,
-                                        "ip_address" => $log->ip_address,
-                                        "hostname" => $log->hostname,
-                                        "stack_trace" => $log->stack_trace,
-                                        "context" => $log->getRawOriginal('context'),
-                                    ], JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_INVALID_UTF8_SUBSTITUTE)'
+                                    data-error-log-url="{{ route('platform.error-logs.show', $log) }}"
                                 >
                                     View
                                 </button>

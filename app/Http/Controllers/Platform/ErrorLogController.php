@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Platform;
 use App\Http\Controllers\Controller;
 use App\Models\CentralErrorLog;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ErrorLogController extends Controller
@@ -65,9 +66,48 @@ class ErrorLogController extends Controller
         ]);
     }
 
-    public function show(CentralErrorLog $log): View
+    public function show(Request $request, CentralErrorLog $log): View|JsonResponse
     {
         $this->authorize('view-platform-error-logs');
+
+        if ($request->expectsJson()) {
+            $viewerTimezone = $request->user()?->timezone ?: config('app.timezone');
+            $rawContext = $log->getRawOriginal('context');
+            $contextPayload = $rawContext;
+
+            if (is_string($rawContext)) {
+                $decodedContext = json_decode($rawContext, true);
+                $contextPayload = $decodedContext === null && $rawContext !== 'null'
+                    ? $rawContext
+                    : $decodedContext;
+            }
+
+            $payload = [
+                'occurred_at' => $log->occurredAtForTimezone($viewerTimezone)?->format('M j, Y g:i A T'),
+                'severity' => $log->severity,
+                'handled' => $log->handled,
+                'environment' => $log->environment,
+                'message' => $log->message,
+                'exception_class' => $log->exception_class,
+                'error_code' => $log->error_code,
+                'file_path' => $log->file_path,
+                'line_number' => $log->line_number,
+                'route' => $log->route,
+                'method' => $log->method,
+                'status_code' => $log->status_code,
+                'request_id' => $log->request_id,
+                'trace_id' => $log->trace_id,
+                'user_id' => $log->user_id,
+                'ip_address' => $log->ip_address,
+                'hostname' => $log->hostname,
+                'stack_trace' => $log->stack_trace,
+                'context' => $contextPayload,
+            ];
+
+            return response()
+                ->json($payload)
+                ->setEncodingOptions(JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_INVALID_UTF8_SUBSTITUTE);
+        }
 
         return view('platform.error-logs.show', [
             'log' => $log,

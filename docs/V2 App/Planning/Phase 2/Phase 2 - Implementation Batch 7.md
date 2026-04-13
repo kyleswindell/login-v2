@@ -13,6 +13,7 @@ Current status:
 * implementation complete
 * review-ready for final visual UI sign-off
 * created after Batch 6 close-out to capture missed final-UI-migration scope explicitly
+* remediation in progress: error log modal payload now fetched via JSON endpoint and mobile sidebar defaults to collapsed on small screens (pending staging verification)
 
 Planning owner:
 

@@ -175,10 +175,44 @@ const initErrorLogModal = () => {
         errorLogModal.classList.remove('flex');
     };
 
+    const loadPayload = async (button) => {
+        const payload = button.dataset.errorLog;
+
+        if (payload) {
+            try {
+                return JSON.parse(payload);
+            } catch (error) {
+                return {};
+            }
+        }
+
+        const url = button.dataset.errorLogUrl;
+
+        if (!url) {
+            return {};
+        }
+
+        try {
+            const response = await window.fetch(url, {
+                headers: {
+                    Accept: 'application/json',
+                },
+                credentials: 'same-origin',
+            });
+
+            if (!response.ok) {
+                return {};
+            }
+
+            return await response.json();
+        } catch (error) {
+            return {};
+        }
+    };
+
     errorLogViewButtons.forEach((button) => {
-        button.addEventListener('click', () => {
-            const payload = button.dataset.errorLog;
-            const data = payload ? JSON.parse(payload) : {};
+        button.addEventListener('click', async () => {
+            const data = await loadPayload(button);
 
             modalSetText('[data-error-log-title]', data.message);
             modalSetText('[data-error-log-subtitle]', data.exception_class);
@@ -220,14 +254,13 @@ const initSidebarToggle = () => {
     const sidebar = document.querySelector('[data-sidebar-panel]');
     const root = document.documentElement;
 
-    if (!sidebar || sidebar.dataset.sidebarInit === '1') {
+    if (!sidebar) {
         return;
     }
 
-    sidebar.dataset.sidebarInit = '1';
-
     const sidebarToggles = document.querySelectorAll('[data-sidebar-toggle]');
     const sidebarLinks = document.querySelectorAll('[data-main-nav-link], [data-setup-nav-link]');
+    const isInitialized = sidebar.dataset.sidebarInit === '1';
 
     const setOpen = (isOpen) => {
         root.classList.toggle('sidebar-open', isOpen);
@@ -239,29 +272,33 @@ const initSidebarToggle = () => {
 
     const shouldBeOpen = () => window.innerWidth >= 1024 || root.classList.contains('sidebar-open');
 
-    sidebarToggles.forEach((toggle) => {
-        toggle.addEventListener('click', () => {
-            setOpen(!root.classList.contains('sidebar-open'));
-        });
-    });
+    if (!isInitialized) {
+        sidebar.dataset.sidebarInit = '1';
 
-    sidebarLinks.forEach((link) => {
-        link.addEventListener('click', () => {
-            if (window.innerWidth < 1024) {
-                setOpen(false);
-            }
+        sidebarToggles.forEach((toggle) => {
+            toggle.addEventListener('click', () => {
+                setOpen(!root.classList.contains('sidebar-open'));
+            });
         });
-    });
+
+        sidebarLinks.forEach((link) => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 1024) {
+                    setOpen(false);
+                }
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            setOpen(shouldBeOpen());
+        });
+    }
 
     if (window.innerWidth < 1024) {
         setOpen(false);
     } else {
         setOpen(true);
     }
-
-    window.addEventListener('resize', () => {
-        setOpen(shouldBeOpen());
-    });
 };
 
 const initNotificationMenus = () => {

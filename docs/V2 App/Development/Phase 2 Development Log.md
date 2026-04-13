@@ -137,6 +137,22 @@ Canonical docs:
 * [[V2 App/Features/Inter-Tenant Messaging Contract]] | [Inter-Tenant Messaging Contract](../Features/Inter-Tenant%20Messaging%20Contract.md)
 * [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
 
+### 2026-04-13 - Phase 2 Batch 7 remediation: error log modal and mobile sidebar
+
+Status:
+
+* in progress
+* staging verification pending
+
+Work completed:
+
+* error log modal payload now loads via a JSON endpoint to avoid invalid inline payloads on the index view
+* mobile sidebar now defaults to collapsed on small screens during navigation
+
+Planning owners:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]] | [Phase 2 - Implementation Batch 7](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%207.md)
+
 ### 2026-04-13 - Phase 2 Batch 10 calendar foundation planning
 
 Status:

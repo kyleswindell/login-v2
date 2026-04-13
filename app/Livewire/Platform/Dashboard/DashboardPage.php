@@ -118,8 +118,6 @@ class DashboardPage extends Component
             actionUrl: route('platform.administration.notifications.index'),
             metadata: ['source' => 'dashboard-development-tools'],
         );
-
-        session()->flash('status', 'Test notification generated and delivered to your inbox.');
     }
 
     private function persistLayout(): void

@@ -41,12 +41,6 @@
             </div>
         </div>
 
-        @if (session('status'))
-            <div class="rounded-md border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-2.5 text-sm text-emerald-100">
-                {{ session('status') }}
-            </div>
-        @endif
-
         {{-- Widget grid --}}
         <div
             id="dashboard-widget-grid"

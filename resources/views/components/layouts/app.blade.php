@@ -247,6 +247,8 @@
                     </div>
                 </header>
 
+                <div class="fixed inset-0 z-30 hidden bg-black/60 lg:hidden" data-sidebar-backdrop></div>
+
                 <div @class([
                     'mx-auto flex min-h-[calc(100vh-5.5rem)] w-full max-w-[1700px] gap-6 px-4 py-6 xl:px-6',
                     'flex-col xl:flex-row' => $hasCustomSidebar,

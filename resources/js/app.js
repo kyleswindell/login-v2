@@ -253,6 +253,8 @@ const initErrorLogModal = () => {
 const initSidebarToggle = () => {
     const sidebar = document.querySelector('[data-sidebar-panel]');
     const root = document.documentElement;
+    const backdrop = document.querySelector('[data-sidebar-backdrop]');
+    const body = document.body;
 
     if (!sidebar) {
         return;
@@ -262,22 +264,36 @@ const initSidebarToggle = () => {
     const sidebarLinks = document.querySelectorAll('[data-main-nav-link], [data-setup-nav-link]');
     const isInitialized = sidebar.dataset.sidebarInit === '1';
 
+    const isMobile = () => window.innerWidth < 1024;
+
     const setOpen = (isOpen) => {
-        root.classList.toggle('sidebar-open', isOpen);
-        sidebar.classList.toggle('hidden', !isOpen);
+        const mobile = isMobile();
+        const shouldShow = mobile ? isOpen : true;
+
+        root.classList.toggle('sidebar-open', mobile && isOpen);
+        sidebar.classList.toggle('hidden', !shouldShow);
+
+        if (backdrop) {
+            backdrop.classList.toggle('hidden', !(mobile && isOpen));
+        }
+
+        if (body) {
+            body.classList.toggle('overflow-hidden', mobile && isOpen);
+        }
+
         sidebarToggles.forEach((toggle) => {
-            toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            toggle.setAttribute('aria-expanded', mobile && isOpen ? 'true' : 'false');
         });
     };
-
-    const shouldBeOpen = () => window.innerWidth >= 1024 || root.classList.contains('sidebar-open');
 
     if (!isInitialized) {
         sidebar.dataset.sidebarInit = '1';
 
         sidebarToggles.forEach((toggle) => {
             toggle.addEventListener('click', () => {
-                setOpen(!root.classList.contains('sidebar-open'));
+                if (isMobile()) {
+                    setOpen(!root.classList.contains('sidebar-open'));
+                }
             });
         });
 
@@ -289,12 +305,24 @@ const initSidebarToggle = () => {
             });
         });
 
+        if (backdrop) {
+            backdrop.addEventListener('click', () => {
+                if (isMobile()) {
+                    setOpen(false);
+                }
+            });
+        }
+
         window.addEventListener('resize', () => {
-            setOpen(shouldBeOpen());
+            if (isMobile()) {
+                setOpen(false);
+            } else {
+                setOpen(true);
+            }
         });
     }
 
-    if (window.innerWidth < 1024) {
+    if (isMobile()) {
         setOpen(false);
     } else {
         setOpen(true);

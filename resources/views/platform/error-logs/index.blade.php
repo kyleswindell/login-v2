@@ -159,7 +159,7 @@
                                         "ip_address" => $log->ip_address,
                                         "hostname" => $log->hostname,
                                         "stack_trace" => $log->stack_trace,
-                                        "context" => $log->context,
+                                        "context" => $log->getRawOriginal('context'),
                                     ], JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_INVALID_UTF8_SUBSTITUTE)'
                                 >
                                     View

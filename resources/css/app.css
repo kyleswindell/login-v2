@@ -206,4 +206,14 @@
         border-color: rgb(52 211 153) !important;
         color: rgb(6 78 59) !important;
     }
+
+    @media (max-width: 1023px) {
+        [data-sidebar-panel] {
+            display: none !important;
+        }
+
+        .sidebar-open [data-sidebar-panel] {
+            display: block !important;
+        }
+    }
 }

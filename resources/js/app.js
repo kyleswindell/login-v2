@@ -218,6 +218,7 @@ const initErrorLogModal = () => {
 
 const initSidebarToggle = () => {
     const sidebar = document.querySelector('[data-sidebar-panel]');
+    const root = document.documentElement;
 
     if (!sidebar || sidebar.dataset.sidebarInit === '1') {
         return;
@@ -228,28 +229,38 @@ const initSidebarToggle = () => {
     const sidebarToggles = document.querySelectorAll('[data-sidebar-toggle]');
     const sidebarLinks = document.querySelectorAll('[data-main-nav-link], [data-setup-nav-link]');
 
+    const setOpen = (isOpen) => {
+        root.classList.toggle('sidebar-open', isOpen);
+        sidebar.classList.toggle('hidden', !isOpen);
+        sidebarToggles.forEach((toggle) => {
+            toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+    };
+
+    const shouldBeOpen = () => window.innerWidth >= 1024 || root.classList.contains('sidebar-open');
+
     sidebarToggles.forEach((toggle) => {
         toggle.addEventListener('click', () => {
-            sidebar.classList.toggle('hidden');
+            setOpen(!root.classList.contains('sidebar-open'));
         });
     });
 
     sidebarLinks.forEach((link) => {
         link.addEventListener('click', () => {
             if (window.innerWidth < 1024) {
-                sidebar.classList.add('hidden');
+                setOpen(false);
             }
         });
     });
 
     if (window.innerWidth < 1024) {
-        sidebar.classList.add('hidden');
+        setOpen(false);
+    } else {
+        setOpen(true);
     }
 
     window.addEventListener('resize', () => {
-        if (window.innerWidth >= 1024) {
-            sidebar.classList.remove('hidden');
-        }
+        setOpen(shouldBeOpen());
     });
 };
 

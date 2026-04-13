@@ -7,9 +7,13 @@ use App\Platform\Dashboard\RendersOnDashboard;
 use App\Platform\Dashboard\WidgetRegistry;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\View as ViewContract;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Locked;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
+#[Layout('components.layouts.app')]
+#[Title('Dashboard')]
 class DashboardPage extends Component
 {
     /** @var list<array{widget_key: string, position: int, column_span: int|string, is_visible: bool}> */
@@ -157,8 +161,6 @@ class DashboardPage extends Component
             'visibleWidgets' => $this->getVisibleWidgets(),
             'allSlots'       => $this->widgetLayout,
             'widgetClasses'  => app(WidgetRegistry::class)->getAll(),
-        ])->layout('components.layouts.app', [
-            'title' => 'Dashboard',
         ]);
     }
 }

@@ -1,6 +1,7 @@
 @props(['title' => null])
 @php($bootThemeMode = auth()->user()?->theme_preference)
 @php($bootThemeMode = in_array($bootThemeMode, ['system', 'dark', 'light'], true) ? $bootThemeMode : 'system')
+@php($themeBootPayload = json_encode(['mode' => $bootThemeMode], JSON_THROW_ON_ERROR))
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -14,7 +15,8 @@
                 const root = document.documentElement;
                 const allowedModes = new Set(['system', 'dark', 'light']);
                 const persistedMode = window.localStorage.getItem('platform.theme.mode');
-                const serverMode = @json($bootThemeMode);
+                const bootPayload = document.getElementById('theme-boot-payload');
+                const serverMode = bootPayload ? JSON.parse(bootPayload.textContent).mode : 'system';
                 const themeMode = allowedModes.has(persistedMode) ? persistedMode : serverMode;
                 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
                 const resolved = themeMode === 'system' ? (prefersDark ? 'dark' : 'light') : themeMode;
@@ -26,6 +28,7 @@
                 root.style.color = resolved === 'light' ? 'rgb(15 23 42)' : 'rgb(241 245 249)';
             })();
         </script>
+        <script id="theme-boot-payload" type="application/json">{{ $themeBootPayload }}</script>
         @livewireStyles
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>

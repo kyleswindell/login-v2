@@ -121,6 +121,7 @@ Work completed:
   * `/account/preferences`
 * added password and security controls to account settings (current-password validation + password update flow)
 * drafted Batch 8 and Batch 9 planning notes for account IA close-out and inter-tenant messaging foundation
+* added an explicit Batch 7 final-review checklist with pass/deferred status markers to support deterministic close-out review
 
 Verification:
 

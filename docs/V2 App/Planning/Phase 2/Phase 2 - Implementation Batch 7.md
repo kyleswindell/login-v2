@@ -105,6 +105,21 @@ Current exit status:
 * implemented and review-ready
 * final visual UI sign-off on staging remains the final review step
 
+## Final Review Checklist
+
+| Check | Status | Notes |
+| --- | --- | --- |
+| Dashboard visual baseline migrated from transitional custom-only state | pass | Dashboard + shared shell now use the Batch 7 final baseline and neutralized accent system. |
+| Shared shell navigation behavior (no full-page refresh on sidebar/setup/settings nav) | pass | `wire:navigate` enabled for shell and in-content internal route links; setup/sidebar state persistence logic updated. |
+| Left-nav active-state correctness (single active item) | pass | Settings hierarchy now highlights only the exact active route; docs tree highlights only the selected file. |
+| Header/UI visual cohesion pass (traditional shell framing, control consistency) | pass | Header framing, control sizing, notification/user controls, and account dropdown IA are aligned to final Batch 7 decisions. |
+| Blue-heavy scheme retired in active app surfaces | pass | Active platform and auth surfaces now use neutral light/dark baseline tones (legacy Laravel welcome page remains non-app starter artifact). |
+| Account dropdown + initial account pages added | pass | Added `My Account`, `Account Settings`, `Preferences` routes/views with password/security controls in account settings. |
+| `/console/*` proof-path daily UX retirement behavior | pass | Retired by default via `CONSOLE_PROOF_PATHS_ENABLED=false`; app-owned fallback redirects remain in place. |
+| Documentation sync across planning/canonical/development/index notes | pass | Batch 7, Phase 2 planning owner, UI audit, architecture note, and development log are synchronized. |
+| Local compile/regression sanity checks | pass | `php artisan view:cache` and account route registration checks pass. |
+| Final staging visual sign-off | deferred | Pending explicit staging visual QA completion and sign-off marker. |
+
 ## Related
 
 * [[V2 App/Planning/Phase 2/Phase 2 Index]] | [Phase 2 Index](Phase%202%20Index.md)

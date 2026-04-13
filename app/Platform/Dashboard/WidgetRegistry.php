@@ -54,6 +54,7 @@ class WidgetRegistry
             ['widget_key' => 'error_health',          'position' => 1, 'column_span' => 6,      'is_visible' => true],
             ['widget_key' => 'audit_activity',        'position' => 2, 'column_span' => 6,      'is_visible' => true],
             ['widget_key' => 'notifications_summary', 'position' => 3, 'column_span' => 'full', 'is_visible' => true],
+            ['widget_key' => 'development_tools',     'position' => 4, 'column_span' => 'full', 'is_visible' => true],
         ];
     }
 }

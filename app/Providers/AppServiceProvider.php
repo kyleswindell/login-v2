@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Filament\Widgets\DevelopmentToolsWidget;
 use App\Filament\Widgets\PlatformErrorHealth;
 use App\Filament\Widgets\PlatformStatsOverview;
 use App\Filament\Widgets\RecentAuditActivity;
@@ -33,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
         $registry->register('error_health',          PlatformErrorHealth::class);
         $registry->register('audit_activity',        RecentAuditActivity::class);
         $registry->register('notifications_summary', SystemNotificationsWidget::class);
+        $registry->register('development_tools',     DevelopmentToolsWidget::class);
     }
 
     private function registerGates(): void

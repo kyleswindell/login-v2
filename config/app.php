@@ -19,7 +19,10 @@ return [
 
     'version' => env('APP_VERSION', 'local'),
 
-    'console_proof_paths_enabled' => (bool) env('CONSOLE_PROOF_PATHS_ENABLED', false),
+    'console_proof_paths_enabled' => (bool) env(
+        'CONSOLE_PROOF_PATHS_ENABLED',
+        app()->environment(['local', 'staging']),
+    ),
 
     /*
     |--------------------------------------------------------------------------

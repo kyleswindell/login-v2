@@ -49,12 +49,27 @@
 }
 
 @layer base {
+    html,
+    body {
+        background-color: rgb(2 6 23);
+    }
+
     html[data-theme-resolved='light'] {
         color-scheme: light;
+        background-color: rgb(248 250 252) !important;
+    }
+
+    html[data-theme-resolved='light'] body {
+        background-color: rgb(248 250 252) !important;
     }
 
     html[data-theme-resolved='dark'] {
         color-scheme: dark;
+        background-color: rgb(2 6 23) !important;
+    }
+
+    html[data-theme-resolved='dark'] body {
+        background-color: rgb(2 6 23) !important;
     }
 
     html[data-theme-resolved='light'] .bg-slate-950 {

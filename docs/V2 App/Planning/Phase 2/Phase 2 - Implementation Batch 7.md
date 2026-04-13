@@ -65,6 +65,7 @@ Completed in this batch:
 
 * migrated dashboard card/action visual baseline to a tighter Filament-aligned style while preserving existing route and permission contracts
 * updated shared shell header, account menu, and sidebar panel radii/spacing conventions for consistent surface framing across dashboard and admin navigation
+* applied requested traditional shell polish pass: circular user control, circular bell notification control with unread count badge, and non-refresh sidebar navigation behavior
 * normalized realtime notification preview, inbox-card, and toast shape patterns to match the updated shell baseline
 * set direct `/console/*` proof-path access deprecation default to off with compatibility redirects already in place from Batch 6
 * synchronized Phase 2 planning, architecture, standards, and development-log notes to reflect corrected phase scope and deliverable sequencing
@@ -79,6 +80,7 @@ Verification focus:
 * feature test updates for changed UI ownership/expectations
 * local asset build/runtime verification in a supported environment (current local WSL runtime is not supported for Node build tooling)
 * Docker-backed feature test execution for dashboard/shell regressions (local non-Docker execution is blocked by `postgres` host resolution)
+* shell navigation behavior check with `wire:navigate` enabled to prevent full document reload on setup/sidebar page changes
 
 ## Exit Criteria
 

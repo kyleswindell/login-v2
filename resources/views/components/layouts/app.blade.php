@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ $title ?? config('app.name') }}</title>
+        @livewireStyles
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
@@ -38,7 +39,7 @@
             @if ($user)
                 <header class="sticky top-0 z-40 border-b border-slate-800 bg-slate-950/90 backdrop-blur">
                     <div class="mx-auto flex w-full max-w-[1700px] items-center gap-4 px-4 py-4 xl:px-6">
-                        <a href="{{ route('dashboard') }}" class="flex min-w-0 items-center gap-3 rounded-md border border-slate-800 bg-slate-900/70 px-4 py-3 transition hover:border-sky-500/40">
+                        <a href="{{ route('dashboard') }}" wire:navigate class="flex min-w-0 items-center gap-3 rounded-md border border-slate-800 bg-slate-900/70 px-4 py-3 transition hover:border-sky-500/40">
                             <div class="flex h-10 w-10 items-center justify-center rounded-md bg-sky-500/15 text-lg font-semibold text-sky-300">P</div>
                             <div class="min-w-0">
                                 <p class="truncate text-sm font-semibold text-white">Parasolutions Platform</p>
@@ -67,13 +68,24 @@
                                 >
                                     <button
                                         type="button"
-                                        class="rounded-md border border-slate-800 bg-slate-900/70 px-4 py-3 text-left text-sm text-slate-300 transition hover:border-sky-500/40"
+                                        class="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-700 bg-slate-900/80 text-slate-300 transition hover:border-sky-500/40 hover:text-white"
                                         data-notification-trigger
                                         aria-expanded="false"
                                         aria-controls="notification-menu-panel"
+                                        title="Notifications"
                                     >
-                                        <p class="font-medium text-white">Notifications</p>
-                                        <p class="text-xs text-slate-500" data-notification-trigger-summary>{{ $unreadNotificationCount }} unread</p>
+                                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 1 5.454 1.31A8.967 8.967 0 0 1 18 9.75V9a6 6 0 1 0-12 0v.75a8.967 8.967 0 0 1-2.312 8.642 23.848 23.848 0 0 1 5.454-1.31m5.715 0a24.255 24.255 0 0 0-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+                                        </svg>
+                                        <span class="sr-only">Unread notifications</span>
+                                        <span
+                                            @class([
+                                                'absolute -right-1 -top-1 min-w-[1.2rem] rounded-full px-1.5 py-0.5 text-center text-[10px] font-semibold leading-none',
+                                                'bg-sky-500 text-slate-950' => $unreadNotificationCount > 0,
+                                                'bg-slate-700 text-slate-300' => $unreadNotificationCount === 0,
+                                            ])
+                                            data-notification-trigger-summary
+                                        >{{ $unreadNotificationCount }}</span>
                                     </button>
 
                                     <div
@@ -87,7 +99,7 @@
                                                 <p class="mt-1 text-xs text-slate-500" data-notification-panel-summary>{{ $unreadNotificationCount }} unread across your latest updates</p>
                                             </div>
 
-                                            <a href="{{ route('platform.administration.notifications.index') }}" class="text-xs font-semibold uppercase tracking-[0.2em] text-sky-300 transition hover:text-sky-200">
+                                            <a href="{{ route('platform.administration.notifications.index') }}" wire:navigate class="text-xs font-semibold uppercase tracking-[0.2em] text-sky-300 transition hover:text-sky-200">
                                                 View all
                                             </a>
                                         </div>
@@ -96,6 +108,7 @@
                                             @forelse ($recentNotifications as $notification)
                                                 <a
                                                     href="{{ $notification->action_url ?: route('platform.administration.notifications.index') }}"
+                                                    wire:navigate
                                                     class="block rounded-md border border-slate-800 bg-slate-950/80 px-4 py-4 transition hover:border-sky-500/30 hover:bg-slate-950"
                                                     data-notification-preview-item
                                                     data-notification-id="{{ $notification->id }}"
@@ -134,7 +147,7 @@
 
                             <details class="group relative">
                                 <summary class="flex cursor-pointer list-none items-center gap-3 rounded-md border border-slate-800 bg-slate-900/70 px-4 py-3 transition hover:border-sky-500/40">
-                                    <div class="flex h-10 w-10 items-center justify-center rounded-md bg-slate-800 text-sm font-semibold text-white">
+                                    <div class="flex h-10 w-10 items-center justify-center rounded-full border border-slate-700 bg-slate-800 text-sm font-semibold text-white">
                                         {{ strtoupper(substr($user->name, 0, 1)) }}
                                     </div>
                                     <div class="hidden text-left lg:block">
@@ -146,7 +159,7 @@
 
                                 <div class="absolute right-0 z-50 mt-3 w-72 rounded-lg border border-slate-800 bg-slate-900/95 p-3 shadow-2xl shadow-black/40">
                                     @foreach ($accountNavigation as $item)
-                                        <a href="{{ route($item['route']) }}" @class([
+                                        <a href="{{ route($item['route']) }}" wire:navigate @class([
                                             'block rounded-md px-4 py-3 text-sm transition',
                                             'text-slate-200 hover:bg-slate-800 hover:text-white' => ! request()->routeIs(...$item['active']),
                                             'bg-sky-500/10 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs(...$item['active']),
@@ -191,7 +204,7 @@
 
                                             <nav class="mt-8 space-y-2">
                                                 @foreach ($primaryNavigation as $item)
-                                                    <a href="{{ route($item['route']) }}" data-main-nav-link @class([
+                                                    <a href="{{ route($item['route']) }}" wire:navigate data-main-nav-link @class([
                                                         'block rounded-md px-4 py-3 text-sm font-medium transition',
                                                         'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs(...$item['active']),
                                                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs(...$item['active']),
@@ -230,7 +243,7 @@
 
                                             <nav class="mt-6 space-y-2">
                                                 @foreach ($setupNavigation as $item)
-                                                    <a href="{{ route($item['route']) }}" data-setup-nav-link @class([
+                                                    <a href="{{ route($item['route']) }}" wire:navigate data-setup-nav-link @class([
                                                         'block rounded-md px-4 py-3 text-sm font-medium transition',
                                                         'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs(...$item['active']),
                                                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs(...$item['active']),
@@ -256,5 +269,6 @@
                 </main>
             @endif
         </div>
+        @livewireScripts
     </body>
 </html>

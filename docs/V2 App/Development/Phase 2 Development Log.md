@@ -126,6 +126,31 @@ Planning owners:
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]] | [Phase 2 - Implementation Batch 7](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%207.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](../Planning/Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
 
+### 2026-04-12 - Phase 2 Batch 7 shell UX correction pass (traditional console feel)
+
+Status:
+
+* implemented
+* ready for staging visual validation
+
+Work completed:
+
+* updated shared shell header controls to the requested traditional pattern: circular user avatar control and circular bell notification trigger with unread count badge
+* enabled `wire:navigate` on shell/sidebar/settings navigation links so sidebar page transitions no longer perform full document refresh
+* added `@livewireStyles` and `@livewireScripts` to the shared app layout to support navigation without full reload
+* updated setup sidebar initializer to rebind on `livewire:navigated` and restore open state without replaying the setup slide animation between setup-page navigations
+* updated notification-menu JS initialization to rebind safely on `livewire:navigated` without duplicate listeners
+
+Verification:
+
+* `php artisan view:cache` passes with the updated Blade directives and templates
+* visual confirmation is pending staging review
+* local feature tests remain blocked in this non-Docker environment because `postgres` host resolution fails outside Docker
+
+Planning owner:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]] | [Phase 2 - Implementation Batch 7](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%207.md)
+
 ### 2026-04-11 - Phase 2 Batch 6 close-out contract lock pass 1
 
 Status:

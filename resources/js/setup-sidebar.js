@@ -10,6 +10,10 @@ function initSetupSidebar() {
     if (!host) {
         return;
     }
+    if (host.dataset.sidebarInit === '1') {
+        return;
+    }
+    host.dataset.sidebarInit = '1';
 
     const track = host.querySelector('[data-sidebar-track]');
     const mainPanel = host.querySelector('[data-main-nav-panel]');
@@ -27,11 +31,21 @@ function initSetupSidebar() {
 
     const panelWidth = () => Math.round(mainPanel.getBoundingClientRect().width);
 
-    const openSetup = () => {
+    const openSetup = ({ animate = true } = {}) => {
+        if (!animate) {
+            track.style.transition = 'none';
+        }
+
         track.style.transform = `translateX(-${panelWidth()}px)`;
         openBtn.setAttribute('aria-expanded', 'true');
         window.localStorage.setItem(storageKey, '1');
         isOpen = true;
+
+        if (!animate) {
+            requestAnimationFrame(() => {
+                track.style.transition = '';
+            });
+        }
     };
 
     const closeSetup = () => {
@@ -70,8 +84,9 @@ function initSetupSidebar() {
     });
 
     if (window.localStorage.getItem(storageKey) === '1') {
-        openSetup();
+        openSetup({ animate: false });
     }
 }
 
 document.addEventListener('DOMContentLoaded', initSetupSidebar);
+document.addEventListener('livewire:navigated', initSetupSidebar);

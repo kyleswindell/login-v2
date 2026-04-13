@@ -4,8 +4,13 @@ import Pusher from 'pusher-js';
 import './setup-sidebar';
 import './table-enhance';
 
-document.addEventListener('DOMContentLoaded', () => {
+const initNotificationMenus = () => {
     document.querySelectorAll('[data-notification-menu]').forEach((menu) => {
+        if (menu.dataset.notificationMenuInit === '1') {
+            return;
+        }
+        menu.dataset.notificationMenuInit = '1';
+
         const trigger = menu.querySelector('[data-notification-trigger]');
         const panel = menu.querySelector('[data-notification-panel]');
 
@@ -84,7 +89,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-});
+};
+
+document.addEventListener('DOMContentLoaded', initNotificationMenus);
+document.addEventListener('livewire:navigated', initNotificationMenus);
 
 const realtimeRoot = document.querySelector('[data-realtime-notifications="1"]');
 
@@ -135,10 +143,8 @@ if (realtimeRoot) {
         .replaceAll("'", '&#039;');
 
     const updateUnreadSummaries = (unreadCount) => {
-        const unreadLabel = `${unreadCount} unread`;
-
         if (triggerSummary) {
-            triggerSummary.textContent = unreadLabel;
+            triggerSummary.textContent = `${unreadCount}`;
         }
 
         if (panelSummary) {

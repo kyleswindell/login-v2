@@ -129,21 +129,58 @@ Current exit status:
 
 ## Critical Failure Analysis (Rollback Justification)
 
-**Major Issues Found (from staging QA audit 2026-04-13):**
+**Comprehensive Issues Found (from staging QA audit 2026-04-13):**
 
-**Tier 1: Functional Breaks**
-1. User form Save/Apply buttons **do nothing** (form not submitting)
-2. Form buttons **off-page in footer** (not visible without scroll)
-3. Account settings Save redirects to **dashboard** instead of previous page
+### **Category 1: Form Behavior & Visibility**
+- User form Save/Apply buttons **completely non-functional** (form never submits)
+- Form action bar placed **off-page in footer** (requires scrolling past all form content to see)
+- Account settings Save button redirects to **dashboard** instead of **previous page** (was working, broke during implementation)
+- Settings forms given Save/Apply behavior when they should **only have cancel** (only data-table sourced flows need save/apply)
+- Cancel button shows browser unsaved-changes dialog (inconsistent with form intent)
 
-**Tier 2: Architectural Regressions**
-1. Audit/error log details reverted from **modal pop-out to dedicated pages** (breaks `/console` UX pattern)
-2. Mobile sidebar **full-width at top** instead of collapsible hamburger
-3. Light mode docs **white text on light backgrounds** (completely unreadable)
+### **Category 2: Architectural & UX Pattern Regressions**
+- Audit/error log details **reverted from modal pop-out to dedicated pages** (explicitly breaks `/console` admin panel UX pattern that was working)
+- Modal pop-out pattern was established as required, explicitly changed without approval
+- Missing modal restoration path for row detail views
 
-**Tier 3: Table/Filter Issues**
-1. Filter dropdowns became text inputs
-2. Missing filter clear/search confirmation UI
+### **Category 3: Notification & Feedback Display**
+- Dashboard displays success notification as **raw JSON HTML block** instead of **toast popup**
+- Account settings form shows no success/error feedback at all after save
+- Flash messages not using standard app-wide toast notification pattern
+- No facility for app-wide alert popups similar to notification center
+
+### **Category 4: Table & Filter Issues**
+- Filter fields mistakenly changed from **dropdowns to text inputs** (event_type, environment, exception_class)
+- Filter control changed from icon to text "Filters" button
+- Missing filter clear button (X icon) and search confirmation (Enter) UI affordances
+- No way for users to understand they should press Enter or clear search  
+- Severity column location changed in audit log table (previously own column, now nested in filter panel location)
+- Actor filter is redundant with search functionality
+
+### **Category 5: Mobile & Responsive Design**
+- Mobile sidebar changed from **hidden to full-width at top** (breaks mobile UX, requires user to scroll)
+- No hamburger menu fallback for small screens
+- Sidebar should **collapse into left-side hamburger menu** on mobile, not display full-width
+
+### **Category 6: Light Mode & Theming**
+- Docs viewer text color hardcoded to **white**, unreadable on light backgrounds (CSS selector issue)
+- Docs markdown viewer broken in light mode with dark backgrounds
+- Form control contrast weak in light mode
+- Button text/hover contrast too dull in light mode
+- Alert colors too muted in light mode
+- Various light-mode color inversions not applied correctly
+
+### **Category 7: Navigation & Structure**
+- Setup sidebar back-button doesn't persist when settings sidebar also present
+- Documentation and Logs moved under Admin sections (correct, but implementation had issues)
+- Setup naming "Setup Setup..." redundancy
+- Audit/error routes grouped under Logs (correct), but implementation broke modal pattern
+
+### **Category 8: Missing Features & Defaults**
+- No timezone/locale dropdown options (should map from V1)
+- Settings Access control display poor in light mode (toggle size inconsistent, value unclear)
+- Docs tree expansion doesn't auto-open parent folders to active document
+- Missing "Back to Setup" button behavior consistency
 
 **Root Causes:**
 1. Tried to implement Save/Apply pattern across all forms (only needed for data-table flows)
@@ -155,22 +192,73 @@ Current exit status:
 
 **Decision:** Rollback + split into focused sub-batches
 
+## Detailed Re-Implementation Mapping
+
+| Issue Category | Sub-Batch | Scope | Files Estimate |
+| --- | --- | --- | --- |
+| Dashboard notification display (JSON→toast) | 7a | Convert flash display to toast popup, hide generic JSON block | 2-3 |
+| Docs tree auto-expand + docs light-mode text color fix | 7b | Fix docs viewer text color in light mode, JS tree expansion | 4-5 |
+| Account menu click-away behavior | 7b | JS click-away and ESC key handler for account menu | 1-2 |
+| Audit/error modal detail views (architectural restoration) | 7c | Restore modal pop-out pattern from `/console`, remove dedicated pages | 6-8 |
+| Audit/error table filter fixes (dropdowns + clear button) | 7c | Convert text inputs back to dropdowns, add clear/search affordances | 2-3 |
+| Mobile sidebar hamburger menu | 7d | Replace full-width sidebar with collapsible hamburger toggle | 4-5 |
+| Light mode CSS fixes (contrast, colors, toggle state visibility) | 7e | Style-only: button contrast, form controls, badge colors, alert visibility | 1-2 |
+| Form Save/Apply behavior (user flows only, remove from settings) | 7f | Fix save/apply logic, restrict to user table flow only, remove from settings | 6-8 |
+| Account settings Save redirect (previous page, not dashboard) | 7f | Correct account controller redirect target | 1 |
+| Form action bar visibility (not off-page) | 7f | Move action bar into view, restructure form container if needed | 2-3 |
+| Settings timezone/locale dropdowns | 7f | Add proper select options (map from V1 config/seeds) | 2-3 |
+| Settings sidebar back-button consistency | 7f | Ensure back-button persists across settings navigation | 1 |
+| Docs tree expansion (auto-open to active document) | 7b | JS hook to open parent folders to selected document | 1-2 |
+
 ## Re-Implementation Plan
 
 **Sub-batch sequence (isolated validation after each):**
 
-1. **Batch 7a**: Dashboard dev tools widget only (1-2 files, JS hook + controller method)
-2. **Batch 7b**: Docs tree expansion + account menu click-away (3-4 files, JS hooks)
-3. **Batch 7c**: Audit/error modal detail views (5-6 files, route + view restoration)
-4. **Batch 7d**: Mobile sidebar hamburger menu (3-4 files, responsive redesign)
-5. **Batch 7e**: Light mode CSS fixes (style-only, no templates)
-6. **Batch 7f**: Form redirect behavior (only for user table flows, not settings)
+1. **Batch 7a**: Dashboard dev tools notification display (toast instead of JSON)
+   - Fixes: Category 3 notification display
+   - Files: ~2-3
+   - Validation: Dashboard notification generation works, displays as toast
+
+2. **Batch 7b**: Docs tree auto-expand + light mode + account menu click-away
+   - Fixes: Category 6 (docs text color), Category 8 (docs tree), Account menu behavior
+   - Files: ~5-7
+   - Validation: Docs text readable in light mode, tree opens to active file, account menu closes on click-away
+
+3. **Batch 7c**: Audit/error modal detail views + table filter fixes
+   - Fixes: Category 2 (modal restoration), Category 4 (filter dropdowns + clear button)
+   - Files: ~8-11
+   - Validation: Row detail opens as modal, not page. Filters are dropdowns, clear button works.
+
+4. **Batch 7d**: Mobile sidebar hamburger menu
+   - Fixes: Category 5 (responsive sidebar)
+   - Files: ~4-5
+   - Validation: Mobile sidebar collapses to hamburger, remains accessible
+
+5. **Batch 7e**: Light mode CSS fixes (contrast, visibility, toggles)
+   - Fixes: Category 6 (all light-mode contrast issues)
+   - Files: ~1-2
+   - Validation: All elements readable in light mode, form controls visible, toggle states clear
+
+6. **Batch 7f**: Form behavior fixes (Save/Apply, redirects, action bar placement)
+   - Fixes: Category 1 (form visibility, behavior, settings form separation)
+   - Includes: Account settings redirect, user form save/apply, settings form cancel-only, timezone/locale dropdowns, back-button consistency
+   - Files: ~9-11
+   - Validation: User form Save/Apply work, settings forms have cancel-only, action bar visible, account save redirects correctly
 
 Each sub-batch:
-- Under 10 file changes
+- Under 10 file changes (7f may reach 10-11 but isolated to forms/settings)
 - Independent validation on staging
 - Single feature focus
 - No cross-cutting concerns
+- Comprehensive test coverage after each
+
+**Validation Gates:**
+- After 7a: Dashboard notification works
+- After 7b: Docs readable + accessible + menu responsive
+- After 7c: Audit/error are modal + filters work
+- After 7d: Mobile sidebar works
+- After 7e: All light mode issues fixed
+- After 7f: Forms work end-to-end
 
 **Gate:** Batch 8 blocked until all Batch 7 sub-batches complete and re-validated
 

@@ -15,7 +15,11 @@
 
             <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30 xl:flex xl:min-h-0 xl:flex-1 xl:flex-col">
                 <h2 class="text-lg font-semibold text-white">Repository Tree</h2>
-                <div class="mt-4 text-sm xl:min-h-0 xl:flex-1 xl:overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                <div
+                    class="mt-4 text-sm xl:min-h-0 xl:flex-1 xl:overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                    data-docs-tree
+                    data-selected-path="{{ $selectedPath }}"
+                >
                     @foreach ($tree as $node)
                         @include('platform.docs.partials.tree-node', ['node' => $node, 'selectedPath' => $selectedPath, 'depth' => 0])
                     @endforeach

@@ -197,8 +197,63 @@ const initNotificationMenus = () => {
     });
 };
 
+const initAccountMenu = () => {
+    const menu = document.querySelector('[data-account-menu]');
+    if (!menu) {
+        return;
+    }
+    if (menu.dataset.accountMenuInit === '1') {
+        return;
+    }
+    menu.dataset.accountMenuInit = '1';
+
+    const closeMenu = () => {
+        menu.removeAttribute('open');
+    };
+
+    document.addEventListener('click', (event) => {
+        if (!menu.contains(event.target)) {
+            closeMenu();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            closeMenu();
+        }
+    });
+};
+
+const initDocsTree = () => {
+    const tree = document.querySelector('[data-docs-tree]');
+    if (!tree) {
+        return;
+    }
+
+    const selectedPath = tree.dataset.selectedPath || '';
+    if (!selectedPath) {
+        return;
+    }
+
+    tree.querySelectorAll('[data-docs-dir][data-docs-path]').forEach((node) => {
+        const path = node.dataset.docsPath || '';
+        if (path && (selectedPath === path || selectedPath.startsWith(`${path}/`))) {
+            node.setAttribute('open', 'open');
+        }
+    });
+
+    const selectedFile = tree.querySelector(`[data-docs-file][data-docs-path="${CSS.escape(selectedPath)}"]`);
+    if (selectedFile) {
+        selectedFile.scrollIntoView({ block: 'center' });
+    }
+};
+
 document.addEventListener('DOMContentLoaded', initNotificationMenus);
 document.addEventListener('livewire:navigated', initNotificationMenus);
+document.addEventListener('DOMContentLoaded', initAccountMenu);
+document.addEventListener('livewire:navigated', initAccountMenu);
+document.addEventListener('DOMContentLoaded', initDocsTree);
+document.addEventListener('livewire:navigated', initDocsTree);
 document.addEventListener('DOMContentLoaded', initThemeModeControls);
 document.addEventListener('livewire:navigated', initThemeModeControls);
 document.addEventListener('livewire:navigating', () => {

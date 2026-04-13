@@ -100,7 +100,8 @@
     html[data-theme-resolved='light'] .bg-slate-950\/90,
     html[data-theme-resolved='light'] .bg-slate-950\/80,
     html[data-theme-resolved='light'] .bg-slate-950\/75,
-    html[data-theme-resolved='light'] .bg-slate-950\/70 {
+    html[data-theme-resolved='light'] .bg-slate-950\/70,
+    html[data-theme-resolved='light'] .bg-slate-950\/40 {
         background-color: rgb(248 250 252 / 0.96) !important;
     }
 
@@ -117,7 +118,9 @@
     html[data-theme-resolved='light'] .bg-slate-800\/95,
     html[data-theme-resolved='light'] .bg-slate-800\/80,
     html[data-theme-resolved='light'] .bg-slate-700\/70,
-    html[data-theme-resolved='light'] .bg-slate-700\/60 {
+    html[data-theme-resolved='light'] .bg-slate-700\/60,
+    html[data-theme-resolved='light'] .bg-slate-900\/60,
+    html[data-theme-resolved='light'] .bg-slate-800\/30 {
         background-color: rgb(241 245 249) !important;
     }
 

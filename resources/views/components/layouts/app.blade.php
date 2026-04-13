@@ -177,7 +177,7 @@
                                 </div>
                             @endcan
 
-                            <details class="group relative">
+                            <details class="group relative" data-account-menu>
                                 <summary class="flex cursor-pointer list-none items-center gap-3 px-1 py-1 transition hover:text-white">
                                     <div class="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-600 bg-zinc-800/70 text-sm font-semibold text-zinc-100">
                                         {{ strtoupper(substr($user->name, 0, 1)) }}

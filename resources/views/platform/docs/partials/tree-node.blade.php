@@ -2,7 +2,7 @@
     @if ($node['type'] === 'directory')
         @php($isOpen = $selectedPath !== '' && str_starts_with($selectedPath, $node['path'].'/'))
 
-        <details class="group" @open($isOpen)>
+        <details class="group" @open($isOpen) data-docs-dir data-docs-path="{{ $node['path'] }}">
             <summary
                 @class([
                     'flex cursor-pointer list-none items-center justify-between rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] transition',
@@ -25,6 +25,8 @@
         <a
             href="{{ route('platform.docs.index', ['path' => $node['path']]) }}"
             wire:navigate
+            data-docs-file
+            data-docs-path="{{ $node['path'] }}"
             @class([
                 'mt-1 block rounded-lg px-3 py-2 text-sm transition',
                 'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => $selectedPath === $node['path'],

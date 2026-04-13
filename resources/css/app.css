@@ -56,14 +56,14 @@
     }
 
     .ui-action {
-        @apply inline-flex items-center rounded-md border border-slate-700 px-3.5 py-2 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:text-white;
+        @apply inline-flex items-center rounded-md border border-slate-700 bg-slate-800/70 px-3.5 py-2 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-700/80 hover:text-white;
     }
 }
 
 @layer base {
     html,
     body {
-        background-color: rgb(2 6 23);
+        background-color: rgb(9 9 11);
     }
 
     html[data-theme-resolved='light'] {
@@ -77,11 +77,11 @@
 
     html[data-theme-resolved='dark'] {
         color-scheme: dark;
-        background-color: rgb(2 6 23) !important;
+        background-color: rgb(9 9 11) !important;
     }
 
     html[data-theme-resolved='dark'] body {
-        background-color: rgb(2 6 23) !important;
+        background-color: rgb(9 9 11) !important;
     }
 
     html[data-theme-resolved='light'] .bg-slate-950 {
@@ -159,5 +159,32 @@
     html[data-theme-resolved='light'] .ui-shell-surface {
         background-color: rgb(255 255 255) !important;
         border-color: rgb(203 213 225) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-card-title,
+    html[data-theme-resolved='light'] .ui-stat-value {
+        color: rgb(15 23 42) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-card-copy,
+    html[data-theme-resolved='light'] .ui-stat-copy {
+        color: rgb(71 85 105) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-kicker,
+    html[data-theme-resolved='light'] .ui-stat-label {
+        color: rgb(100 116 139) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-action {
+        background-color: rgb(244 244 245) !important;
+        border-color: rgb(212 212 216) !important;
+        color: rgb(24 24 27) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-action:hover {
+        background-color: rgb(228 228 231) !important;
+        border-color: rgb(161 161 170) !important;
+        color: rgb(9 9 11) !important;
     }
 }

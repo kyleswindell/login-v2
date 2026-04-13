@@ -22,6 +22,8 @@
                 root.dataset.themeMode = themeMode;
                 root.dataset.themeResolved = resolved;
                 root.classList.toggle('dark', resolved === 'dark');
+                root.style.backgroundColor = resolved === 'light' ? 'rgb(248 250 252)' : 'rgb(9 9 11)';
+                root.style.color = resolved === 'light' ? 'rgb(15 23 42)' : 'rgb(241 245 249)';
             })();
         </script>
         @livewireStyles
@@ -63,7 +65,7 @@
                 <header class="sticky top-0 z-40 border-b border-slate-800 bg-slate-950/90 backdrop-blur">
                     <div class="mx-auto flex w-full max-w-[1700px] items-center gap-4 px-4 py-4 xl:px-6">
                         <a href="{{ route('dashboard') }}" wire:navigate class="flex min-w-0 items-center gap-3 py-1">
-                            <div class="flex h-10 w-10 items-center justify-center rounded-full text-lg font-semibold text-slate-200">P</div>
+                            <div class="flex h-10 w-10 items-center justify-center rounded-full border border-slate-700 bg-slate-900/70 text-lg font-semibold text-slate-100">P</div>
                             <div class="min-w-0">
                                 <p class="truncate text-sm font-semibold text-white">Parasolutions Platform</p>
                                 <p class="truncate text-xs uppercase tracking-[0.2em] text-slate-500">Login App 2.0</p>
@@ -170,7 +172,7 @@
 
                             <details class="group relative">
                                 <summary class="flex cursor-pointer list-none items-center gap-3 px-1 py-1 transition hover:text-white">
-                                    <div class="flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold text-white">
+                                    <div class="flex h-10 w-10 items-center justify-center rounded-full border border-slate-700 bg-slate-900/70 text-sm font-semibold text-slate-100">
                                         {{ strtoupper(substr($user->name, 0, 1)) }}
                                     </div>
                                     <div class="hidden text-left lg:block">

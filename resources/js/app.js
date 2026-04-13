@@ -22,11 +22,11 @@ const applyThemeMode = (mode, persistLocal = true) => {
     root.dataset.themeMode = normalized;
     root.dataset.themeResolved = resolved;
     root.classList.toggle('dark', resolved === 'dark');
-    root.style.backgroundColor = resolved === 'light' ? 'rgb(248 250 252)' : 'rgb(2 6 23)';
+    root.style.backgroundColor = resolved === 'light' ? 'rgb(248 250 252)' : 'rgb(9 9 11)';
     root.style.color = resolved === 'light' ? 'rgb(15 23 42)' : 'rgb(241 245 249)';
 
     if (document.body) {
-        document.body.style.backgroundColor = resolved === 'light' ? 'rgb(248 250 252)' : 'rgb(2 6 23)';
+        document.body.style.backgroundColor = resolved === 'light' ? 'rgb(248 250 252)' : 'rgb(9 9 11)';
         document.body.style.color = resolved === 'light' ? 'rgb(15 23 42)' : 'rgb(241 245 249)';
     }
 

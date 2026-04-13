@@ -31,6 +31,40 @@ Current focus:
 * [[V2 App/Planning/Phase 3/Phase 3 - OAuth And Customer Access Mode Planning]] | [Phase 3 - OAuth And Customer Access Mode Planning](Phase%203%20-%20OAuth%20And%20Customer%20Access%20Mode%20Planning.md)
 * [[V2 App/Planning/Phase 3/Phase 3 - UI Ownership And PostgreSQL Schema Map]] | [Phase 3 - UI Ownership And PostgreSQL Schema Map](Phase%203%20-%20UI%20Ownership%20And%20PostgreSQL%20Schema%20Map.md) — redirect: this topic moved to Phase 4 after phase resequencing; see Phase 4 - UI Ownership And PostgreSQL Schema Map
 
+## Multi-Agent Scheduling
+
+Phase 3 Batch 1 as currently scoped contains two largely independent workstreams that can run on separate worktrees in parallel once Phase 2 closes out.
+
+### Internal Batch 1 Workstreams
+
+| Workstream | Content | Files owned |
+|---|---|---|
+| Outward-facing foundations | Customer routes, OAuth sign-in policy, customer access mode (`disabled` / `invite_only` / `open_enrollment`), customer-company membership model, Events admin and public-view proof | `routes/`, customer-facing controllers, OAuth config, customer/tenant models, Events module skeleton |
+| Email infrastructure | Microsoft Graph sending service, platform and tenant sender-account GUI, feature alias routing, notice preference policy, queue jobs | `app/Services/Mail/`, mail transport config, sender-account migrations, alias routing service |
+
+### Dependency Graph
+
+```
+Phase 2 close-out
+    ├─ P3-B1: Outward-facing foundations  (Agent A worktree)
+    └─ P3-B1: Email infrastructure        (Agent B worktree)
+          └─ merge both → Phase 3 Batch 2+ (depends on both streams)
+```
+
+### Parallelism Windows
+
+| Agent A (worktree A) | Agent B (worktree B) | Gate |
+|---|---|---|
+| Customer routes + OAuth + access mode + Events proof | Microsoft Graph email service + GUI + queue | Both require Phase 2 close-out; neither stream depends on the other |
+| (merged) Phase 3 Batch 2+ | — | Cannot start until both streams are merged and tests pass |
+
+### Notes
+
+* Neither stream depends on the other at build time. The outward-facing stream owns public route namespaces and customer-facing models. The email infrastructure stream owns the mail transport layer and sender configuration.
+* Both streams will touch `database/migrations/` and `app/Providers/AppServiceProvider.php` (service binding, gate definitions). These are the primary merge-time conflict points.
+* If Phase 3 Batch 1 is later split into separate numbered batches by workstream, this scheduling map should be reflected in those batch notes. The current single-batch scope is a planning simplification; the build itself is safely splittable.
+* See [Agent Sessions And Parallel Work](../../Runbooks/Agent%20Sessions%20And%20Parallel%20Work.md) for worktree setup steps.
+
 ## Canonical Inputs
 
 * [[V2 App/Planning/V2 Feature Roadmap]] | [V2 Feature Roadmap](../V2%20Feature%20Roadmap.md)

@@ -19,6 +19,7 @@ Give Codex a concise project-specific operating guide.
 - When a planned V2 system becomes implemented or changes materially, update the canonical system doc and the related planning note in the same work cycle.
 - Planning notes must carry a current implementation status section and link directly to their canonical system doc.
 - Canonical system docs must link back to the source planning note so the graph shows both design intent and live implementation state.
+- For concurrent agent work, keep one writable session per working tree and use separate branches plus separate worktrees when multiple sessions must both edit files.
 
 ## Related
 
@@ -31,4 +32,5 @@ Give Codex a concise project-specific operating guide.
 - [[Codex/Codex Review Checklist]] | [Codex Review Checklist](Codex%20Review%20Checklist.md)
 - [[Codex/Codex Module Checklist]] | [Codex Module Checklist](Codex%20Module%20Checklist.md)
 - [[Codex/Agent Instruction Model]] | [Agent Instruction Model](Agent%20Instruction%20Model.md)
+- [[V2 App/Runbooks/Agent Sessions And Parallel Work]] | [Agent Sessions And Parallel Work](../V2%20App/Runbooks/Agent%20Sessions%20And%20Parallel%20Work.md)
 - [[Codex/Skills Index]] | [Skills Index](Skills%20Index.md)

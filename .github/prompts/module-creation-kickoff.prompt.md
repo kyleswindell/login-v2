@@ -6,6 +6,11 @@ agent: "agent"
 ---
 Prepare a module kickoff package for the requested module.
 
+Execution guardrails:
+- Module kickoff defaults to read-only in a shared folder when another writable session is active.
+- Before editing any planning or canonical docs, verify session mode, branch/worktree context, and dirty state.
+- If module kickoff must write in parallel with another writer, move it to a separate branch and separate worktree first.
+
 Do the following:
 1. Validate the module against V2 roadmap, phase scope, and relevant V1 references.
 2. Define module key, route namespace, setup entries, and settings groups.

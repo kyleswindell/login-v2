@@ -186,6 +186,31 @@ Audit cross-links and implementation status consistency across Phase [X] plannin
 
 ## General Session Strategy
 
+### Session Safety Model
+
+Default rule:
+
+- one writable session per working tree
+- additional sessions in the same local repo folder must stay read-only unless the writable role is explicitly handed over
+
+Shared-folder read-only sessions are appropriate for:
+- planning
+- code review
+- documentation audit
+- contract and scope analysis
+
+If a second session must write while another writable session is still active:
+- move the second session to a separate branch and separate git worktree
+- do not rely on a checkout or lock file as protection
+
+Startup checklist before any edits:
+- confirm whether this session is read-only or writable
+- confirm current branch and worktree path
+- confirm whether the folder already contains uncommitted work
+- confirm the last stable commit or pushed state this session can rely on
+- confirm no other writable same-folder session is active
+- confirm the scope this session owns before writing
+
 **New session when:**
 - Role changes materially (planning → implementation, one module → another)
 - Context history is stale for the new task
@@ -196,9 +221,13 @@ Audit cross-links and implementation status consistency across Phase [X] plannin
 - Mid-batch and not yet done
 
 **Parallel sessions pattern:**
-- Session A: active batch implementation
-- Session B: future phase planning or module kickoff
-- Session C (optional): cross-phase contract or security audit
+- Session A: active writable batch implementation in the shared folder
+- Session B: future phase planning or module kickoff in read-only mode unless moved to its own worktree
+- Session C (optional): cross-phase contract or security audit in read-only mode
+
+**Writable handoff rule:**
+- if Session B or Session C needs to edit files while Session A is still active, that session should move to its own branch and worktree first
+- if the writable role is intentionally handed over in the shared folder, the prior writer should stop editing and leave a clear state summary
 
 **One-line goal prefix:**
 Starting with a clear goal line improves instruction routing:
@@ -206,3 +235,8 @@ Starting with a clear goal line improves instruction routing:
 - `Goal: Phase 3 batch planning`
 - `Goal: Support module kickoff`
 - `Goal: Phase 3 planning sync after OAuth decision`
+
+Helpful mode prefix when relevant:
+- `Mode: writable shared-folder implementation session`
+- `Mode: read-only planning session in shared folder`
+- `Mode: writable planning session in separate worktree`

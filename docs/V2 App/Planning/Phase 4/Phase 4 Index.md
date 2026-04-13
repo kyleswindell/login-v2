@@ -25,6 +25,34 @@ Current focus:
 * [[V2 App/Planning/Phase 4/Phase 4 - Implementation Batch 1]] | [Phase 4 - Implementation Batch 1](Phase%204%20-%20Implementation%20Batch%201.md)
 * [[V2 App/Planning/Phase 4/Phase 4 - UI Ownership And PostgreSQL Schema Map]] | [Phase 4 - UI Ownership And PostgreSQL Schema Map](Phase%204%20-%20UI%20Ownership%20And%20PostgreSQL%20Schema%20Map.md)
 
+## Multi-Agent Scheduling
+
+Phase 4 Batch 1 introduces three tightly-related modules. Two are independently buildable; the third depends on both.
+
+### Dependency Graph
+
+```
+Phase 3 close-out
+    ├─ Customers + Contacts module  (Agent A worktree — no upstream module dependency)
+    ├─ Finance Setup baseline       (Agent B worktree — no upstream module dependency)
+    └─ merge both → Sales Core     (sequential — requires Customers + Finance both merged and tested)
+```
+
+### Parallelism Windows
+
+| Agent A (worktree A) | Agent B (worktree B) | Gate |
+|---|---|---|
+| Customers + Contacts module | Finance Setup baseline (taxes, currencies, payment modes, expense categories) | Both require Phase 3 close-out only; no inter-module dependency |
+| (merged) Sales Core (estimates, invoices, payments, credit notes) | — | Cannot start until both Customers and Finance modules are merged and feature tests pass |
+
+### Notes
+
+* Customers and Finance are safe to build in parallel. They own distinct table families (`customers`, `contacts` vs `tax_rates`, `currencies`, `payment_modes`, `expense_categories`), separate route namespaces, and separate settings groups.
+* Sales Core has hard runtime dependencies on both modules: customer linkage on estimates and invoices, and tax/currency/payment config from Finance. Do not start Sales Core until both modules are merged and migrated.
+* Common merge-time conflict points: `routes/web.php` (module route registrations), `app/Providers/AppServiceProvider.php` (module service and permission registrations), and `docs/V2 App/Planning/Phase 4/Phase 4 Index.md` (batch status updates from both agents).
+* Later Phase 4 batches (Projects, Tasks, Support, Leads) follow the same split-merge pattern. Their dependency analysis is deferred to their batch planning sessions; use the same scheduling approach when those batch notes are created.
+* See [Agent Sessions And Parallel Work](../../Runbooks/Agent%20Sessions%20And%20Parallel%20Work.md) for worktree setup steps.
+
 ## Canonical Inputs
 
 * [[V2 App/Planning/V2 Feature Roadmap]] | [V2 Feature Roadmap](../V2%20Feature%20Roadmap.md)

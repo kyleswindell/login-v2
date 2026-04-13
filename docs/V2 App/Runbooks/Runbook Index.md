@@ -2,6 +2,7 @@
 
 ## Runbooks
 
+- [[V2 App/Runbooks/Agent Sessions And Parallel Work]] | [Agent Sessions And Parallel Work](Agent%20Sessions%20And%20Parallel%20Work.md)
 - [[V2 App/Runbooks/Local Development]] | [Local Development](Local%20Development.md)
 - [[V2 App/Runbooks/Realtime Notifications And Reverb]] | [Realtime Notifications And Reverb](Realtime%20Notifications%20And%20Reverb.md)
 - [[V2 App/Runbooks/Server Readiness]] | [Server Readiness](Server%20Readiness.md)

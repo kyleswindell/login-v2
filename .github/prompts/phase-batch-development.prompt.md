@@ -7,13 +7,18 @@ agent: "plan"
 Create a delivery-ready implementation plan for the requested phase batch.
 
 Requirements:
-1. Read the phase index, batch note, and linked canonical owner docs.
-2. Produce a dependency-safe implementation slice with explicit in-scope and out-of-scope.
-3. List required contracts before build starts.
-4. Define code touchpoints by area (routes, requests, services, policies, migrations, tests, views/components).
-5. Define test matrix (authorization, ownership, validation, integration, regression).
-6. Define documentation sync updates required in the same work cycle.
-7. Call out blockers and missing decisions separately from implementation steps.
+1. Confirm whether this session is operating read-only or writable before any edits.
+2. Read the phase index, batch note, and linked canonical owner docs.
+3. Produce a dependency-safe implementation slice with explicit in-scope and out-of-scope.
+4. List required contracts before build starts.
+5. Define code touchpoints by area (routes, requests, services, policies, migrations, tests, views/components).
+6. Define test matrix (authorization, ownership, validation, integration, regression).
+7. Define documentation sync updates required in the same work cycle.
+8. Call out blockers and missing decisions separately from implementation steps.
+
+Guardrails:
+- shared-folder batch development planning should stay read-only when another writable session is active
+- if this session must edit while another writer is active, move to a separate branch and separate worktree first
 
 Output format:
 - Scope Summary

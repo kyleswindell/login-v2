@@ -10,6 +10,9 @@ Execution guardrails:
 - Prefer direct file edits in the VS Code editor.
 - Do not use bash or scripted bulk search/replace to rewrite documentation unless explicitly requested.
 - Keep edits minimal and scoped to the target phase docs, linked canonical docs, and the relevant indexes.
+- Shared-folder phase planning defaults to read-only when another writable session is already active.
+- Before editing, verify whether this session is read-only or writable, plus the current branch/worktree context and dirty state.
+- If this planning task must write in parallel with another writer, move it to a separate branch and separate worktree first.
 - Before writing, summarize intended file-by-file changes; after writing, summarize exactly what changed.
 
 Do the following:

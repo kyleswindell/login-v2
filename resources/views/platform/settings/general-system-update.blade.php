@@ -10,8 +10,6 @@
             <p class="mt-2 text-slate-400">Choose update channel policy and operational maintenance defaults.</p>
         </div>
 
-        @include('platform.settings._general-tabs', ['generalTab' => 'system-update'])
-
         @if (session('success'))
             <div class="rounded-md border border-emerald-500/30 bg-emerald-500/10 px-5 py-4 text-sm font-medium text-emerald-300">{{ session('success') }}</div>
         @endif

@@ -10,8 +10,6 @@
             <p class="mt-2 text-slate-400">Configure the platform display name, default timezone, and locale.</p>
         </div>
 
-        @include('platform.settings._general-tabs', ['generalTab' => 'general'])
-
         @if (session('success'))
             <div class="rounded-md border border-emerald-500/30 bg-emerald-500/10 px-5 py-4 text-sm font-medium text-emerald-300">
                 {{ session('success') }}

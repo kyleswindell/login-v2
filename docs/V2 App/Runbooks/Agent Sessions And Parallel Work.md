@@ -121,14 +121,21 @@ Recommended workflow for planned phase work:
 3. `/phase-batch-development` creates an implementation-ready delivery plan when the batch still needs a concrete build slice.
 4. `/phase-batch-implementation` performs the scoped code and doc changes, runs tests, and prepares a review handoff.
 5. `/phase-batch-review` compares the implementation against the batch note, canonical docs, tests, and diff. If clean, it commits and pushes. If not, it reports findings and returns the batch to implementation.
-6. `/phase-close-out` performs final status sync after review passes and any required manual QA is complete.
+6. `/phase-batch-close-out` finalizes the reviewed and approved batch, syncs deferments and scope updates into parent phase planning docs, and marks the batch complete.
+7. `/phase-close-out` performs full phase finalization after relevant batch close-outs are complete.
 
 Sign-off rules:
 
 * implementation completion is not the same as sign-off
-* a batch should not be marked complete until review passes and close-out updates the docs
-* a phase should not be marked complete until all intended batches are either closed out or explicitly deferred forward
+* a batch should not be marked complete until review passes and phase-batch-close-out updates the docs
+* a phase should not be marked complete until intended batches are batch-closed-out or explicitly deferred forward
 * deferments discovered during review or close-out must be written into the appropriate future batch, future phase, or future-planning note
+
+Manual visual review note:
+
+* if rendered UI review requires staging, do not merge to `main` only to make the shared staging URL available
+* instead, commit and push the review-clean branch, deploy that branch to staging for temporary QA, then promote to `main` only after the review is approved
+* once review is complete, restore staging to `main` unless the approved branch is being promoted immediately
 
 ## Handoff Checklist
 

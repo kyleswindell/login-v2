@@ -23,13 +23,14 @@ Do the following:
 6. Check that planning, canonical, and development-log docs were updated where required.
 7. If findings remain, report them ordered by severity and stop before commit.
 8. If the batch is review-clean, stage only the scoped files, commit with a clear summary, and push to the current branch.
-9. Report review outcome, commit SHA, pushed branch, and any remaining follow-up needed before close-out.
+9. If rendered UI review is required, report the exact branch that should be deployed to staging and stop short of close-out until manual QA is complete.
+10. Report review outcome, commit SHA, pushed branch, and any remaining follow-up needed before close-out.
 
 Output format:
 - Findings
 - Test results
 - Doc sync status
-- Review decision (blocked / approved for close-out)
+- Review decision (blocked / approved for staging review / approved for close-out)
 - Planned file changes (before edits)
 - Applied file changes (after edits)
 
@@ -37,4 +38,4 @@ Rules:
 - Findings come first when problems are found.
 - Do not approve or commit mixed-scope changes; narrow the scope or stop.
 - Do not mark the batch complete from review alone.
-- Close-out still requires `/phase-close-out` after review passes and manual QA is complete.
+- Close-out still requires `/phase-batch-close-out` after review passes and manual QA is complete.

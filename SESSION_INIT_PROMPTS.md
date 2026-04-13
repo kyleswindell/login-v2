@@ -13,7 +13,7 @@ Active customization structure:
 
 ## Role Structure
 
-Prompts and skills are organized into eight roles:
+Prompts and skills are organized into nine roles:
 
 | Role                       | Trigger                       | When                                                            |
 | -------------------------- | ----------------------------- | --------------------------------------------------------------- |
@@ -22,7 +22,8 @@ Prompts and skills are organized into eight roles:
 | Phase Batch Development    | `/phase-batch-development`    | Turn a batch note into a delivery-ready implementation slice with tests and doc sync scope |
 | Phase Batch Review         | `/phase-batch-review`         | Review a completed batch against docs, tests, and repo diff before commit/push |
 | Phase Batch Implementation | `/phase-batch-implementation` | Code the currently active batch                                 |
-| Phase Close-Out            | `/phase-close-out`            | Finalize a phase batch or full phase after review and manual QA |
+| Phase Batch Close-Out      | `/phase-batch-close-out`      | Finalize a reviewed and approved batch and sync batch outcomes into parent phase planning docs |
+| Phase Close-Out            | `/phase-close-out`            | Finalize a full phase after batch close-outs are complete |
 | Module Creation Kickoff    | `/module-creation-kickoff`    | Sub-task when a batch introduces a new module                   |
 | Planning Sync              | `/planning-sync`              | Sync canonical docs after any contract or scope change          |
 
@@ -79,6 +80,10 @@ Apply minimal, file-scoped changes and summarize touched files before and after 
 **What it does:**
 Reads phase index and all planning/canonical docs, maps dependency relationships, defines batch boundaries and contracts, flags open decisions that block any batch from starting.
 
+Expected outcome:
+- phase-batch-planning should normally leave active and near-term batches ready for direct implementation.
+- use phase-batch-development only when a batch note still lacks concrete implementation detail after planning.
+
 **Example:**
 ```
 /phase-batch-planning Phase 3
@@ -92,6 +97,8 @@ Reads phase index and all planning/canonical docs, maps dependency relationships
 
 **When to use:**
 Use this after a batch exists but before coding when the build still needs a delivery-ready implementation slice, explicit code touchpoints, a test matrix, or clearer in-scope versus out-of-scope guidance.
+
+This is optional. Do not treat it as a standard prerequisite when the batch note is already specific enough to implement safely.
 
 **Starter prompt:**
 ```
@@ -110,7 +117,8 @@ Builds a dependency-safe implementation plan for the selected batch, including r
 **When to use:**
 Batches are already planned and a batch is active or ready to start. Use this to write code. Reads repo state first, continues from where the last session left off, runs tests, syncs docs.
 
-Implementation should prepare the batch for review, not self-sign it off. Normal flow is implementation, then `/phase-batch-review`, then `/phase-close-out` after review and manual QA are complete.
+Implementation should prepare the batch for review, not self-sign it off. Normal flow is implementation, then `/phase-batch-review`, then `/phase-batch-close-out` after review and manual QA are complete.
+If the implementation prompt finds that the batch is not delivery-ready, it should stop before code edits and recommend `/phase-batch-development` with concrete reasons rather than trying to invent the missing plan during implementation.
 
 **Starter prompt (new or unknown state):**
 ```
@@ -181,6 +189,25 @@ If not, report findings and stop before commit.
 **What it does:**
 Performs a batch-scoped audit of code, tests, doc sync, and implementation status. If findings remain, it reports them and leaves the batch open. If clean, it stages the scoped files, commits, pushes, and records the handoff state for close-out.
 
+If rendered UI review is required, the normal path is to push the review-clean branch first, deploy that branch to staging for temporary visual QA, and defer `/phase-batch-close-out` until that review is approved.
+
+---
+
+## Tier 3.75 — Phase Batch Close-Out
+
+**Prompt:** `/phase-batch-close-out`
+
+**When to use:**
+Use after batch review passes and manual QA is approved. This is the only workflow step that should mark a phase batch complete and sync batch outcomes back into parent phase planning docs.
+
+**Starter prompt:**
+```
+/phase-batch-close-out Phase [X] Batch [Y]
+```
+
+**What it does:**
+Finalizes batch-level implementation status, deferments, and follow-up routing, then updates parent phase planning notes so phase close-out is lighter and primarily aggregation-focused.
+
 ---
 
 ## Tier 3 Sub-Task — Module Creation Kickoff
@@ -207,12 +234,7 @@ Inside an active implementation session when a batch introduces a new module tha
 **Prompt:** `/phase-close-out`
 
 **When to use:**
-Use only after review has passed and any required manual QA or visual review is complete. This is the only workflow step that should mark a phase batch or an entire phase as complete, signed off, or deferred-forward in the docs.
-
-**Starter prompt (batch):**
-```
-/phase-close-out Phase [X] Batch [Y]
-```
+Use only after all relevant phase batches are closed out and any required phase-level QA checks are complete. This is the only workflow step that should mark a full phase complete in the docs.
 
 **Starter prompt (phase):**
 ```
@@ -220,7 +242,9 @@ Use only after review has passed and any required manual QA or visual review is 
 ```
 
 **What it does:**
-Audits implementation status, planning notes, canonical docs, indexes, and development logs for the target batch or full phase. Confirms what is complete, what is deferred, and what must roll into the next batch or phase. Updates docs to reflect final status and pushes the close-out commit when edits are required.
+Audits and finalizes phase-level implementation status, planning notes, canonical docs, indexes, and development logs after batch close-outs are complete. Confirms what is complete for the full phase and what rolls forward to later phases.
+
+If a non-main branch was used for batch visual review, phase close-out should happen only after approved work is promoted to `main` and staging is restored to `main` or immediately redeployed from promoted `main`.
 
 ---
 
@@ -300,7 +324,8 @@ Startup checklist before any edits:
 - `/phase-batch-development` when a delivery-ready implementation slice is needed before coding
 - `/phase-batch-implementation` to build the active slice and sync docs
 - `/phase-batch-review` to validate the diff and commit or push only when review-clean
-- `/phase-close-out` to mark the batch or phase complete after review and manual QA
+- `/phase-batch-close-out` to mark the reviewed batch complete and sync it into parent phase planning
+- `/phase-close-out` to mark the full phase complete after relevant batch close-outs are done
 
 **Writable handoff rule:**
 - if Session B or Session C needs to edit files while Session A is still active, that session should move to its own branch and worktree first

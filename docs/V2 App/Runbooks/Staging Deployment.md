@@ -24,6 +24,18 @@ bash scripts/deploy-staging-remote.sh
 
 This connects to `platform-prod-wsl` and runs the server deploy script in the current release.
 
+To deploy a review branch for staging-only visual QA before close-out:
+
+```bash
+TARGET_BRANCH=feature/[batch-or-review-branch] bash scripts/deploy-staging-remote.sh
+```
+
+After review is complete, restore staging to `main` unless the reviewed branch is being promoted immediately:
+
+```bash
+TARGET_BRANCH=main bash scripts/deploy-staging-remote.sh
+```
+
 ### Directly on the server
 
 Use the server script:
@@ -37,16 +49,28 @@ bash scripts/server/deploy-staging.sh
 
 The current server deploy script performs:
 
-1. `git pull origin main`
-2. `composer install --no-interaction --prefer-dist --optimize-autoloader`
-3. `php artisan filament:assets`, when Filament is installed
-4. `npm ci` (falls back to `npm install` if no lockfile exists)
-5. `npm run build`
-6. `php artisan config:clear`
-7. `php artisan migrate --force`
-8. `php artisan optimize:clear`
-9. attempts `sudo -n systemctl reload php8.3-fpm`
-10. attempts `sudo -n systemctl reload apache2`
+1. `git fetch origin <target-branch>`
+2. `git checkout <target-branch>`
+3. `git reset --hard origin/<target-branch>`
+4. `composer install --no-interaction --prefer-dist --optimize-autoloader`
+5. `php artisan filament:assets`, when Filament is installed
+6. `npm ci` (falls back to `npm install` if no lockfile exists)
+7. `npm run build`
+8. `php artisan config:clear`
+9. `php artisan migrate --force`
+10. `php artisan optimize:clear`
+11. attempts `sudo -n systemctl reload php8.3-fpm`
+12. attempts `sudo -n systemctl reload apache2`
+
+Default target branch:
+
+* `main`
+
+Override mechanism:
+
+* set `TARGET_BRANCH` when calling the local helper or server script
+
+The deploy script now checks out and hard-resets to the target branch instead of using `git pull origin <branch>`. This matters for review branches because `git pull origin feature/x` while currently on `main` would merge the review branch into the server's local `main`, which is not the desired preview behavior.
 
 Realtime note:
 
@@ -112,6 +136,28 @@ This should be added with `visudo` and reviewed carefully before use.
 ## Notes
 
 This is the current in-place staging deploy workflow.
+
+## Visual Review Before Close-Out
+
+Recommended workflow when a batch or phase needs rendered UI review before final close-out:
+
+1. complete `/phase-batch-implementation`
+2. run `/phase-batch-review`
+3. if review is clean, commit and push the review branch without merging to `main`
+4. deploy that branch to staging with `TARGET_BRANCH=<review-branch> bash scripts/deploy-staging-remote.sh`
+5. perform manual visual review on `https://staging.parasolutions.com`
+6. if rejected, fix on the same review branch and redeploy that branch
+7. if approved, merge or promote the approved branch into `main`
+8. redeploy `main` to staging
+9. run `/phase-close-out`
+
+Key constraint:
+
+* staging is a single shared environment, so only one non-main review branch should own staging at a time
+
+Recommended naming:
+
+* use a branch that makes the review target obvious, for example `review/phase-2-batch-11` or the existing feature branch if it already has narrow scope
 
 Longer term, the preferred direction is still:
 

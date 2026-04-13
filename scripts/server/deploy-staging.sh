@@ -13,8 +13,18 @@ TARGET_BRANCH="${TARGET_BRANCH:-main}"
 
 cd "${APP_ROOT}"
 
-echo "==> Pulling latest ${TARGET_BRANCH}"
-"${GIT_BIN}" pull origin "${TARGET_BRANCH}"
+echo "==> Fetching origin/${TARGET_BRANCH}"
+"${GIT_BIN}" fetch origin "${TARGET_BRANCH}"
+
+echo "==> Checking out ${TARGET_BRANCH}"
+if "${GIT_BIN}" show-ref --verify --quiet "refs/heads/${TARGET_BRANCH}"; then
+    "${GIT_BIN}" checkout "${TARGET_BRANCH}"
+else
+    "${GIT_BIN}" checkout -B "${TARGET_BRANCH}" "origin/${TARGET_BRANCH}"
+fi
+
+echo "==> Resetting ${TARGET_BRANCH} to origin/${TARGET_BRANCH}"
+"${GIT_BIN}" reset --hard "origin/${TARGET_BRANCH}"
 
 echo "==> Installing Composer dependencies"
 "${COMPOSER_BIN}" install --no-interaction --prefer-dist --optimize-autoloader

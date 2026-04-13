@@ -1,10 +1,10 @@
 ---
-description: "Close out a completed phase batch or full phase after review and manual QA. Sync implementation status, deferments, indexes, and final documentation state."
+description: "Close out a full phase after batch close-outs are complete. Sync final implementation status, deferments, canonical docs, indexes, and phase-level documentation state."
 name: "Phase Close-Out"
-argument-hint: "Phase target or phase plus batch, for example: Phase 2 Batch 11 or Phase 2"
+argument-hint: "Phase target, for example: Phase 2"
 agent: "plan"
 ---
-Close out the specified phase batch or full phase.
+Close out the specified full phase.
 
 Execution guardrails:
 - Prefer direct file edits in the VS Code editor.
@@ -15,25 +15,25 @@ Execution guardrails:
 - Before writing, summarize intended file-by-file changes; after writing, summarize exactly what changed.
 
 Do the following:
-1. Confirm whether the target is a specific batch or an entire phase.
-2. Read the target batch note or phase index, linked canonical docs, development log, and relevant indexes.
-3. Confirm review passed and manual QA or visual review has been completed, or explicitly record the remaining exception if close-out cannot proceed.
-4. Verify implementation status sections reflect reality: complete, in progress, deferred, or blocked.
-5. Move any newly discovered out-of-scope or deferred work into the correct future batch, phase, or future-planning note.
-6. Update planning notes, canonical owner docs, development log, and indexes so the target's final status is unambiguous.
-7. If close-out changes were required, stage only the scoped files, commit with a clear summary, and push to the current branch.
-8. Report the final close-out state, commit SHA, pushed branch, and any remaining follow-up work.
+1. Confirm the target phase and verify all intended phase batches have passed `/phase-batch-close-out` or are explicitly deferred.
+2. Read the phase index, phase planning owner notes, canonical owner docs, development log, and relevant indexes.
+3. Confirm phase-level review and QA posture is complete enough for final sign-off, or explicitly record remaining exceptions.
+4. Verify phase implementation status sections reflect reality: complete, partially complete, deferred-forward, or blocked.
+5. Aggregate and route any remaining out-of-scope or deferred work into the correct future phase or future-planning note.
+6. Update phase planning notes, canonical owner docs, development log, and indexes so final phase status is unambiguous.
+7. If close-out changes were required, stage only scoped files, commit with a clear summary, and push to the current branch.
+8. Report final phase close-out status, commit SHA, pushed branch, and remaining cross-phase follow-up.
 
 Output format:
 - Close-out target
 - Review and QA status
-- Final implementation status
+- Final phase implementation status
 - Deferred or follow-up items
 - Docs updated
 - Planned file changes (before edits)
 - Applied file changes (after edits)
 
 Rules:
-- This is the only workflow step that should mark a phase batch or full phase complete.
-- If review has not passed, stop and send the work back to `/phase-batch-review` or `/phase-batch-implementation`.
-- If manual QA is still pending, record that explicitly and do not mark the target complete.
+- This is the only workflow step that should mark a full phase complete.
+- If required batches are not yet closed out, stop and run `/phase-batch-close-out` first for the missing batches.
+- If manual QA is still pending at phase level, record that explicitly and do not mark the phase complete.

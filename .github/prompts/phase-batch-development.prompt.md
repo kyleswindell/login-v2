@@ -1,10 +1,12 @@
 ---
-description: "Run a phase batch development workflow: map scope, dependencies, contracts, implementation slice, tests, and doc sync for a selected phase/batch."
+description: "Optional pre-implementation workflow for a phase batch: map scope, dependencies, contracts, implementation slice, tests, and doc sync when the batch note is not yet delivery-ready."
 name: "Phase Batch Development"
 argument-hint: "Phase and batch target, for example: Phase 4 Batch 1 - Sales Core"
 agent: "plan"
 ---
 Create a delivery-ready implementation plan for the requested phase batch.
+
+Use this only when the batch note still needs a concrete build slice before coding. If the batch note already defines clear contracts, touchpoints, tests, and doc sync expectations, skip this prompt and move directly to `/phase-batch-implementation`.
 
 Requirements:
 1. Confirm whether this session is operating read-only or writable before any edits.

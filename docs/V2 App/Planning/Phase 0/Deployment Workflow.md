@@ -104,6 +104,8 @@ The local helper currently shells into `platform-prod-wsl` and executes that ser
 
 This is the current pragmatic automation layer while the app is still iterating quickly on staging.
 
+The staging helper now also supports previewing a non-main branch by passing `TARGET_BRANCH=<branch>` before invoking the helper. This supports manual visual review on staging before a batch or phase is promoted to `main`.
+
 ## Current Automation Limitation
 
 The deploy script can complete all application-level steps as `deploy`, but service reloads still depend on the server privilege model.
@@ -117,6 +119,19 @@ Recommended next improvement:
 That will reduce the staging deploy workflow to a single command without granting broad root access.
 
 This limited sudoers rule has now been applied on staging, so the current helper flow can complete as a single-command deploy.
+
+## Current Visual Review Direction
+
+When rendered UI review is needed before a batch or phase is closed out, the preferred near-term flow is:
+
+1. review-clean batch branch is committed and pushed
+2. staging temporarily deploys that branch via `TARGET_BRANCH=<branch>`
+3. manual QA or visual review is completed on staging
+4. approved work is promoted to `main`
+5. staging is restored to `main`
+6. close-out updates docs and final status
+
+This is safer than merging unreviewed work into `main` only to make the staging URL render the changes.
 
 ## Future Automation Direction
 

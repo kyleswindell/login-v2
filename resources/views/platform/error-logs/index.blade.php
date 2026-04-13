@@ -3,7 +3,7 @@
 
     <section class="flex flex-1 flex-col gap-6">
         <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
-            <p class="text-sm font-medium uppercase tracking-[0.3em] text-sky-300">Platform Management</p>
+            <p class="text-sm font-medium uppercase tracking-[0.3em] text-slate-300">Platform Management</p>
             <h1 class="mt-3 text-3xl font-semibold text-white">Error Logs</h1>
             <p class="mt-2 text-slate-400">Review platform-level errors and operational failures captured at runtime.</p>
         </div>
@@ -12,7 +12,7 @@
             <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                 <label class="block">
                     <span class="text-sm font-semibold text-slate-200">Severity</span>
-                    <select name="severity" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-sky-400 focus:outline-none focus:ring-0">
+                    <select name="severity" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
                         <option value="">Any severity</option>
                         <option value="debug" @selected($filters['severity'] === 'debug')>Debug</option>
                         <option value="info" @selected($filters['severity'] === 'info')>Info</option>
@@ -24,7 +24,7 @@
 
                 <label class="block">
                     <span class="text-sm font-semibold text-slate-200">Handled</span>
-                    <select name="handled" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-sky-400 focus:outline-none focus:ring-0">
+                    <select name="handled" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
                         <option value="">Any</option>
                         <option value="1" @selected($filters['handled'] === '1')>Handled</option>
                         <option value="0" @selected($filters['handled'] === '0')>Unhandled</option>
@@ -33,27 +33,27 @@
 
                 <label class="block">
                     <span class="text-sm font-semibold text-slate-200">Environment</span>
-                    <input type="text" name="environment" value="{{ $filters['environment'] }}" placeholder="e.g. staging" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-sky-400 focus:outline-none focus:ring-0">
+                    <input type="text" name="environment" value="{{ $filters['environment'] }}" placeholder="e.g. staging" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
                 </label>
 
                 <label class="block">
                     <span class="text-sm font-semibold text-slate-200">Exception Class</span>
-                    <input type="text" name="exception_class" value="{{ $filters['exception_class'] }}" placeholder="e.g. RuntimeException" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-sky-400 focus:outline-none focus:ring-0">
+                    <input type="text" name="exception_class" value="{{ $filters['exception_class'] }}" placeholder="e.g. RuntimeException" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
                 </label>
 
                 <label class="block">
                     <span class="text-sm font-semibold text-slate-200">From</span>
-                    <input type="date" name="date_from" value="{{ $filters['date_from'] }}" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-sky-400 focus:outline-none focus:ring-0">
+                    <input type="date" name="date_from" value="{{ $filters['date_from'] }}" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
                 </label>
 
                 <label class="block">
                     <span class="text-sm font-semibold text-slate-200">To</span>
-                    <input type="date" name="date_to" value="{{ $filters['date_to'] }}" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-sky-400 focus:outline-none focus:ring-0">
+                    <input type="date" name="date_to" value="{{ $filters['date_to'] }}" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
                 </label>
             </div>
 
             <div class="mt-6 flex flex-wrap gap-3">
-                <button type="submit" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-sky-400 hover:text-sky-300">
+                <button type="submit" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:text-slate-300">
                     Apply Filters
                 </button>
                 <a wire:navigate href="{{ route('platform.error-logs.index') }}" class="inline-flex rounded-md border border-slate-800 px-4 py-3 text-sm font-semibold text-slate-300 transition hover:border-slate-600 hover:text-white">
@@ -85,7 +85,7 @@
                                 <span @class([
                                     'inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em]',
                                     'bg-slate-500/15 text-slate-300' => $log->severity === 'debug',
-                                    'bg-sky-500/15 text-sky-300' => $log->severity === 'info',
+                                    'bg-slate-700/60 text-slate-300' => $log->severity === 'info',
                                     'bg-amber-500/15 text-amber-300' => $log->severity === 'warning',
                                     'bg-rose-500/15 text-rose-300' => $log->severity === 'error',
                                     'bg-red-600/20 text-red-300' => $log->severity === 'critical',
@@ -113,7 +113,7 @@
                                 {{ $log->environment ?? '—' }}
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <a wire:navigate href="{{ route('platform.error-logs.show', $log) }}" class="text-xs font-semibold uppercase tracking-[0.2em] text-sky-400 transition hover:text-sky-300">
+                                <a wire:navigate href="{{ route('platform.error-logs.show', $log) }}" class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-300 transition hover:text-slate-300">
                                     View
                                 </a>
                             </td>

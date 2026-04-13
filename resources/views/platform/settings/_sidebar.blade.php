@@ -5,13 +5,13 @@
 <div class="flex w-full gap-3">
     {{-- Column 1: Setup entries --}}
     <div class="w-48 shrink-0 rounded-lg border border-slate-800 bg-slate-900/70 p-5 shadow-2xl shadow-black/30 xl:sticky xl:top-24 xl:h-[calc(100vh-7rem)] xl:overflow-y-auto">
-        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-sky-300">Setup</p>
+        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300">Setup</p>
 
         <nav class="mt-6 space-y-1">
             @can('view-platform-notifications')
                 <a wire:navigate href="{{ route('platform.setup.notifications') }}" @class([
                     'block rounded-md px-4 py-3 text-sm font-medium transition',
-                    'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.setup.notifications'),
+                    'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.setup.notifications'),
                     'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.notifications'),
                 ])>
                     Notifications Setup
@@ -20,7 +20,7 @@
             @can('view-platform-docs')
                 <a wire:navigate href="{{ route('platform.setup.docs') }}" @class([
                     'block rounded-md px-4 py-3 text-sm font-medium transition',
-                    'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.setup.docs'),
+                    'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.setup.docs'),
                     'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.docs'),
                 ])>
                     Documentation Setup
@@ -29,7 +29,7 @@
             @can('view-platform-audit-logs')
                 <a wire:navigate href="{{ route('platform.setup.audit-logs') }}" @class([
                     'block rounded-md px-4 py-3 text-sm font-medium transition',
-                    'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.setup.audit-logs'),
+                    'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.setup.audit-logs'),
                     'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.audit-logs'),
                 ])>
                     Audit Logs Setup
@@ -38,7 +38,7 @@
             @can('view-platform-error-logs')
                 <a wire:navigate href="{{ route('platform.setup.error-logs') }}" @class([
                     'block rounded-md px-4 py-3 text-sm font-medium transition',
-                    'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.setup.error-logs'),
+                    'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.setup.error-logs'),
                     'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.error-logs'),
                 ])>
                     Error Logs Setup
@@ -47,7 +47,7 @@
             @can('manage-platform-users')
                 <a wire:navigate href="{{ route('platform.setup.users') }}" @class([
                     'block rounded-md px-4 py-3 text-sm font-medium transition',
-                    'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.setup.users'),
+                    'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.setup.users'),
                     'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.users'),
                 ])>
                     Platform Users Setup
@@ -57,7 +57,7 @@
             @can('manage-platform-settings')
                 <a wire:navigate href="{{ route('platform.settings.general') }}" @class([
                     'mt-2 block rounded-md px-4 py-3 text-sm font-medium transition',
-                    'border border-sky-500/30 bg-sky-500/10 text-sky-200' => request()->routeIs('platform.settings.*'),
+                    'border border-slate-500/40 bg-slate-700/60 text-white' => request()->routeIs('platform.settings.*'),
                     'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.*'),
                 ])>
                     Settings
@@ -77,42 +77,42 @@
                 <div class="mt-1 space-y-1">
                     <a wire:navigate href="{{ route('platform.settings.general') }}" @class([
                         'block rounded-md px-4 py-3 text-sm font-medium transition',
-                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => ($active ?? null) === 'general',
-                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ($active ?? null) !== 'general',
+                        'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.settings.general'),
+                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.general'),
                     ])>
                         Platform General
                     </a>
                     <a wire:navigate href="{{ route('platform.settings.general.company-information') }}" @class([
                         'block rounded-md px-4 py-3 text-sm font-medium transition',
-                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.settings.general.company-information'),
+                        'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.settings.general.company-information'),
                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.general.company-information'),
                     ])>
                         Company Information
                     </a>
                     <a wire:navigate href="{{ route('platform.settings.general.localization') }}" @class([
                         'block rounded-md px-4 py-3 text-sm font-medium transition',
-                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.settings.general.localization'),
+                        'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.settings.general.localization'),
                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.general.localization'),
                     ])>
                         Localization
                     </a>
                     <a wire:navigate href="{{ route('platform.settings.general.email') }}" @class([
                         'block rounded-md px-4 py-3 text-sm font-medium transition',
-                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.settings.general.email'),
+                        'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.settings.general.email'),
                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.general.email'),
                     ])>
                         Email
                     </a>
                     <a wire:navigate href="{{ route('platform.settings.general.system-update') }}" @class([
                         'block rounded-md px-4 py-3 text-sm font-medium transition',
-                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.settings.general.system-update'),
+                        'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.settings.general.system-update'),
                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.general.system-update'),
                     ])>
                         System Update
                     </a>
                     <a wire:navigate href="{{ route('platform.settings.general.system-server-info') }}" @class([
                         'block rounded-md px-4 py-3 text-sm font-medium transition',
-                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs('platform.settings.general.system-server-info'),
+                        'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.settings.general.system-server-info'),
                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.general.system-server-info'),
                     ])>
                         System/Server Info
@@ -126,8 +126,8 @@
                 <div class="mt-1 space-y-1">
                     <a wire:navigate href="{{ route('platform.settings.notifications') }}" @class([
                         'block rounded-md px-4 py-3 text-sm font-medium transition',
-                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => ($active ?? null) === 'notifications',
-                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ($active ?? null) !== 'notifications',
+                        'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.settings.notifications'),
+                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.notifications'),
                     ])>
                         Notification Defaults
                     </a>
@@ -140,8 +140,8 @@
                 <div class="mt-1 space-y-1">
                     <a wire:navigate href="{{ route('platform.settings.audit-logs') }}" @class([
                         'block rounded-md px-4 py-3 text-sm font-medium transition',
-                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => ($active ?? null) === 'audit-logs',
-                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ($active ?? null) !== 'audit-logs',
+                        'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.settings.audit-logs'),
+                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.audit-logs'),
                     ])>
                         Audit Settings
                     </a>
@@ -154,8 +154,8 @@
                 <div class="mt-1 space-y-1">
                     <a wire:navigate href="{{ route('platform.settings.docs') }}" @class([
                         'block rounded-md px-4 py-3 text-sm font-medium transition',
-                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => ($active ?? null) === 'docs',
-                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ($active ?? null) !== 'docs',
+                        'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.settings.docs'),
+                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.docs'),
                     ])>
                         Vault Access
                     </a>
@@ -168,8 +168,8 @@
                 <div class="mt-1 space-y-1">
                     <a wire:navigate href="{{ route('platform.settings.users') }}" @class([
                         'block rounded-md px-4 py-3 text-sm font-medium transition',
-                        'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => ($active ?? null) === 'users',
-                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ($active ?? null) !== 'users',
+                        'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.settings.users'),
+                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.users'),
                     ])>
                         User Defaults
                     </a>

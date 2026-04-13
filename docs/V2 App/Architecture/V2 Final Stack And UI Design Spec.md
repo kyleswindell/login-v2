@@ -27,6 +27,7 @@ Current status:
 * Batch 6 close-out contracts are complete
 * Batch 7 implementation is complete for final visual UI migration of existing Phase 2 surfaces and is pending final visual sign-off
 * Batch 7 UI audit pass applied doc-workflow fit checks per surface and normalized custom Blade surface primitives toward the shared Filament-aligned baseline
+* Batch 7 correction pass adds account-focused dropdown routes/views and final active-state/header/color-baseline fixes ahead of visual sign-off
 
 Source planning note:
 

@@ -2,14 +2,14 @@
     <section class="flex flex-1 flex-col gap-6">
         <div class="flex flex-col gap-4 rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30 md:flex-row md:items-center md:justify-between">
             <div>
-                <p class="text-sm font-medium uppercase tracking-[0.3em] text-sky-300">Platform Management</p>
+                <p class="text-sm font-medium uppercase tracking-[0.3em] text-slate-300">Platform Management</p>
                 <h1 class="mt-3 text-3xl font-semibold text-white">Notifications</h1>
                 <p class="mt-2 text-slate-400">Review your current in-app platform notifications.</p>
             </div>
 
             <form method="POST" action="{{ route('platform.notifications.mark-all-read') }}">
                 @csrf
-                <button type="submit" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-sky-400 hover:text-sky-300">
+                <button type="submit" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:text-slate-300">
                     Mark all read
                 </button>
             </form>
@@ -37,7 +37,7 @@
                             <div class="flex flex-wrap items-center gap-2" data-notification-badges>
                                 <span @class([
                                     'inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em]',
-                                    'bg-sky-500/15 text-sky-300' => $notification->severity === 'info',
+                                    'bg-slate-700/60 text-slate-300' => $notification->severity === 'info',
                                     'bg-emerald-500/15 text-emerald-300' => $notification->severity === 'success',
                                     'bg-violet-500/15 text-violet-300' => $notification->severity === 'notice',
                                     'bg-amber-500/15 text-amber-300' => $notification->severity === 'warning',
@@ -49,7 +49,7 @@
                                 @if ($notification->read_at)
                                     <span class="inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300">Read</span>
                                 @else
-                                    <span class="inline-flex rounded-full bg-sky-500/15 px-3 py-1 text-xs font-medium text-sky-200">Unread</span>
+                                    <span class="inline-flex rounded-full bg-slate-700/60 px-3 py-1 text-xs font-medium text-slate-200">Unread</span>
                                 @endif
 
                                 @if ($notification->dismissed_at)
@@ -67,7 +67,7 @@
 
                             @if ($notification->action_url)
                                 <div class="mt-4">
-                                    <a href="{{ $notification->action_url }}" class="text-sm font-semibold text-sky-300 transition hover:text-sky-200">
+                                    <a href="{{ $notification->action_url }}" class="text-sm font-semibold text-slate-300 transition hover:text-slate-200">
                                         Open notification link
                                     </a>
                                 </div>
@@ -78,7 +78,7 @@
                             @if (! $notification->read_at)
                                 <form method="POST" action="{{ route('platform.notifications.mark-read', $notification) }}">
                                     @csrf
-                                    <button type="submit" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-sky-400 hover:text-sky-300">
+                                    <button type="submit" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:text-slate-300">
                                         Mark read
                                     </button>
                                 </form>

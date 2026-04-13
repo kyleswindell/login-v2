@@ -95,8 +95,44 @@ Planning owners:
 ## Next Expected Work
 
 * run visual UI review for Batch 7 on staging
+* execute Batch 8 account IA and account-surface ownership close-out
+* execute Batch 9 inter-tenant messaging foundation implementation
 * execute final `/console` proof-resource retirement sequencing based on Batch 7 visual-review verification
 * close Phase 2 after final visual sign-off and sync final handoff updates for Phase 3 and Phase 4
+
+### 2026-04-12 - Phase 2 Batch 7 final UI correction pass (active states, neutral styling, account menu)
+
+Status:
+
+* implemented locally
+* review-ready for staging visual sign-off
+
+Work completed:
+
+* fixed settings sidebar active-state behavior so only the current settings route highlights as active
+* fixed documentation vault tree behavior so active-file highlighting is singular and folder hierarchy stays open to the selected file path
+* removed boxed/logo framed header styling and normalized header control sizing for logo, search, notifications, and user menu
+* normalized shell and platform page accent styling from blue-heavy accents to neutral light/dark tones for final Batch 7 visual baseline
+* extended neutral light/dark visual baseline to the login/auth screen for universal current-theme consistency
+* replaced duplicate workspace account-dropdown links with account-focused options
+* added initial account routes and views:
+  * `/account`
+  * `/account/settings`
+  * `/account/preferences`
+* added password and security controls to account settings (current-password validation + password update flow)
+* drafted Batch 8 and Batch 9 planning notes for account IA close-out and inter-tenant messaging foundation
+
+Verification:
+
+* `php artisan route:list --path=account` confirms account route registration
+* `php artisan view:cache` passes after layout, navigation, and new account-view updates
+* local feature tests remain blocked in this non-Docker environment because `postgres` host resolution fails outside Docker
+
+Planning owners:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]] | [Phase 2 - Implementation Batch 7](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%207.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 8]] | [Phase 2 - Implementation Batch 8](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%208.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 9]] | [Phase 2 - Implementation Batch 9](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%209.md)
 
 ### 2026-04-12 - Phase 2 Batch 7 final visual UI migration implementation
 

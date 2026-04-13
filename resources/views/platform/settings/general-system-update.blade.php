@@ -5,7 +5,7 @@
 
     <section class="flex flex-1 flex-col gap-6">
         <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
-            <p class="text-sm font-medium uppercase tracking-[0.3em] text-sky-300">Settings — General</p>
+            <p class="text-sm font-medium uppercase tracking-[0.3em] text-slate-300">Settings — General</p>
             <h1 class="mt-3 text-3xl font-semibold text-white">System Update</h1>
             <p class="mt-2 text-slate-400">Choose update channel policy and operational maintenance defaults.</p>
         </div>
@@ -34,13 +34,13 @@
 
                 <label class="flex items-center gap-3 rounded-md border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-slate-200 md:col-span-2">
                     <input type="hidden" name="auto_check" value="0">
-                    <input type="checkbox" name="auto_check" value="1" @checked((bool) old('auto_check', $autoCheck)) class="rounded border-slate-600 bg-slate-900 text-sky-400 focus:ring-sky-400">
+                    <input type="checkbox" name="auto_check" value="1" @checked((bool) old('auto_check', $autoCheck)) class="rounded border-slate-600 bg-slate-900 text-slate-300 focus:ring-slate-500">
                     <span>Enable automatic update checks</span>
                 </label>
             </div>
 
             <div class="mt-8 border-t border-slate-800 pt-6">
-                <button type="submit" class="rounded-md bg-sky-500/15 px-6 py-3 text-sm font-semibold text-sky-200 ring-1 ring-sky-500/30">Save Update Policy</button>
+                <button type="submit" class="rounded-md bg-slate-700/60 px-6 py-3 text-sm font-semibold text-slate-200 ring-1 ring-slate-500/40">Save Update Policy</button>
             </div>
         </form>
     </section>

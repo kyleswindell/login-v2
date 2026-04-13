@@ -6,7 +6,7 @@ Collect Phase 2 planning notes for final stack alignment and UI system introduct
 
 ## Current Phase Status
 
-Phase 2 is in final review sequencing after Batch 7 implementation completion.
+Phase 2 is in final review sequencing with Batch 7 implementation active for final design correction and Batch 8/9 drafted.
 
 Current focus:
 
@@ -14,7 +14,9 @@ Current focus:
 * keep `/console` as a transitional Phase 2 proof path only, not a long-term product surface
 * lock route, panel, shell, and visual-baseline decisions before broader module work
 * close Batch 6 contracts for panel-path retirement and cross-phase handoff
+* complete final Batch 7 design-correction pass for active-state behavior and color/header consistency
 * run final visual review of Batch 7 dashboard/shell migration on staging
+* prepare Batch 8 account IA close-out and Batch 9 messaging foundation sequencing
 * establish repeatable scaffolding rules for Phase 3 customer/public foundations and Phase 4 modules
 
 ## Batch Sequence Status
@@ -28,6 +30,8 @@ Current focus:
 | Batch 5 | Complete                                      | users/settings/notifications/operational surface migration |
 | Batch 6 | Complete                                     | phase close-out contracts and Phase 3/4 handoff            |
 | Batch 7 | Review-ready                                 | final UI migration and Phase 2 visual stack completion     |
+| Batch 8 | Drafted                                      | account menu IA and account surface ownership              |
+| Batch 9 | Drafted                                      | inter-tenant messaging foundation                          |
 
 ## Planning Notes
 
@@ -39,6 +43,8 @@ Current focus:
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 5]] | [Phase 2 - Implementation Batch 5](Phase%202%20-%20Implementation%20Batch%205.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 6]] | [Phase 2 - Implementation Batch 6](Phase%202%20-%20Implementation%20Batch%206.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]] | [Phase 2 - Implementation Batch 7](Phase%202%20-%20Implementation%20Batch%207.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 8]] | [Phase 2 - Implementation Batch 8](Phase%202%20-%20Implementation%20Batch%208.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 9]] | [Phase 2 - Implementation Batch 9](Phase%202%20-%20Implementation%20Batch%209.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Route And Panel Ownership Map]] | [Phase 2 - Route And Panel Ownership Map](Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - UI Surface Disposition Audit]] | [Phase 2 - UI Surface Disposition Audit](Phase%202%20-%20UI%20Surface%20Disposition%20Audit.md)
 

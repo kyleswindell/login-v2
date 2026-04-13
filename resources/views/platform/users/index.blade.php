@@ -4,12 +4,12 @@
     <section class="flex flex-1 flex-col gap-6">
         <div class="flex flex-col gap-4 rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30 md:flex-row md:items-center md:justify-between">
             <div>
-                <p class="text-sm font-medium uppercase tracking-[0.3em] text-sky-300">Platform Management</p>
+                <p class="text-sm font-medium uppercase tracking-[0.3em] text-slate-300">Platform Management</p>
                 <h1 class="mt-3 text-3xl font-semibold text-white">Platform Users</h1>
                 <p class="mt-2 text-slate-400">Create, review, and update internal platform user access.</p>
             </div>
 
-            <a wire:navigate href="{{ route('platform.users.create') }}" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-sky-400 hover:text-sky-300">
+            <a wire:navigate href="{{ route('platform.users.create') }}" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:text-slate-300">
                 Create User
             </a>
         </div>
@@ -78,7 +78,7 @@
                                 {{ $user->last_login_at?->timezone($viewerTimezone)->format('M j, Y g:i A T') ?? 'Never' }}
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <a wire:navigate href="{{ route('platform.users.edit', $user) }}" class="text-sm font-semibold text-sky-300 transition hover:text-sky-200">
+                                <a wire:navigate href="{{ route('platform.users.edit', $user) }}" class="text-sm font-semibold text-slate-300 transition hover:text-slate-200">
                                     Edit
                                 </a>
                             </td>

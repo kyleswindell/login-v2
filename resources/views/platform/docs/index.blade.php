@@ -2,12 +2,12 @@
     <x-slot:sidebar>
         <div class="space-y-6 xl:flex xl:h-full xl:flex-col">
             <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30">
-                <p class="text-sm font-medium uppercase tracking-[0.3em] text-sky-300">Platform Management</p>
+                <p class="text-sm font-medium uppercase tracking-[0.3em] text-slate-300">Platform Management</p>
                 <h1 class="mt-3 text-2xl font-semibold text-white">Documentation Vault</h1>
                 <p class="mt-2 text-sm text-slate-400">Browse the current `docs/` repository directly inside the staging app.</p>
 
                 <div class="mt-6">
-                    <a wire:navigate href="{{ route('dashboard') }}" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-sky-400 hover:text-sky-300">
+                    <a wire:navigate href="{{ route('dashboard') }}" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:text-white">
                         Back to app
                     </a>
                 </div>
@@ -26,7 +26,7 @@
 
     <section class="flex flex-1 flex-col gap-6">
         <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
-            <p class="text-sm font-medium uppercase tracking-[0.3em] text-sky-300">Documentation Workspace</p>
+            <p class="text-sm font-medium uppercase tracking-[0.3em] text-slate-300">Documentation Workspace</p>
             <h1 class="mt-3 text-3xl font-semibold text-white">{{ $selectedFile['display_name'] ?? 'Documentation Vault' }}</h1>
             <p class="mt-2 text-slate-400">
                 {{ $selectedFile['display_path'] ?? 'Select a note from the repository tree to review the current documentation vault.' }}
@@ -43,12 +43,12 @@
                     [&_ul]:mt-4 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6
                     [&_ol]:mt-4 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-6
                     [&_li]:leading-7
-                    [&_a]:font-medium [&_a]:text-sky-300 hover:[&_a]:text-sky-200
+                    [&_a]:font-medium [&_a]:text-slate-200 hover:[&_a]:text-white
                     [&_table]:mt-6 [&_table]:w-full [&_table]:border-collapse [&_table]:overflow-hidden [&_table]:rounded-md
                     [&_thead]:bg-slate-950/80
                     [&_th]:border [&_th]:border-slate-800 [&_th]:px-4 [&_th]:py-3 [&_th]:text-left [&_th]:text-sm [&_th]:font-semibold [&_th]:text-white
                     [&_td]:border [&_td]:border-slate-800 [&_td]:px-4 [&_td]:py-3 [&_td]:align-top
-                    [&_code]:rounded [&_code]:bg-slate-950 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-sky-200
+                    [&_code]:rounded [&_code]:bg-slate-950 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-slate-200
                     [&_pre]:mt-4 [&_pre]:overflow-x-auto [&_pre]:rounded-md [&_pre]:bg-slate-950 [&_pre]:p-4
                     [&_blockquote]:mt-4 [&_blockquote]:border-l-4 [&_blockquote]:border-slate-700 [&_blockquote]:pl-4 [&_blockquote]:text-slate-400
                     [&_hr]:my-6 [&_hr]:border-slate-800

@@ -5,7 +5,7 @@
 
     <section class="flex flex-1 flex-col gap-6">
         <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
-            <p class="text-sm font-medium uppercase tracking-[0.3em] text-sky-300">Settings — General</p>
+            <p class="text-sm font-medium uppercase tracking-[0.3em] text-slate-300">Settings — General</p>
             <h1 class="mt-3 text-3xl font-semibold text-white">Localization</h1>
             <p class="mt-2 text-slate-400">Default locale formats for language, date/time display, and week start.</p>
         </div>
@@ -41,7 +41,7 @@
             </div>
 
             <div class="mt-8 border-t border-slate-800 pt-6">
-                <button type="submit" class="rounded-md bg-sky-500/15 px-6 py-3 text-sm font-semibold text-sky-200 ring-1 ring-sky-500/30">Save Localization</button>
+                <button type="submit" class="rounded-md bg-slate-700/60 px-6 py-3 text-sm font-semibold text-slate-200 ring-1 ring-slate-500/40">Save Localization</button>
             </div>
         </form>
     </section>

@@ -23,6 +23,8 @@ Current status:
 * Batch 6 close-out contract pass is implemented for optional module schema direction, platform-to-tenant handoff, UI ownership declaration standards, and `/console` proof-path retirement control
 * full existing UI surface review is completed and synced in the UI Surface Disposition Audit sign-off matrix
 * Batch 7 implementation is complete for final visual UI migration scope that was expected as part of Phase 2 deliverables
+* Batch 8 and Batch 9 planning drafts are created for account IA close-out and inter-tenant messaging foundation sequencing
+* Batch 9 planning now locks a single core Thread/Message messaging engine with module-specific shells attached by context instead of separate parallel messaging systems
 * final visual sign-off review remains before Phase 2 can be fully closed
 
 Canonical architecture owner:

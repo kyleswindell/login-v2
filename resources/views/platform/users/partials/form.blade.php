@@ -1,6 +1,6 @@
 <section class="flex flex-1 flex-col gap-6">
     <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
-        <p class="text-sm font-medium uppercase tracking-[0.3em] text-sky-300">Platform Management</p>
+        <p class="text-sm font-medium uppercase tracking-[0.3em] text-slate-300">Platform Management</p>
         <h1 class="mt-3 text-3xl font-semibold text-white">{{ $heading }}</h1>
         <p class="mt-2 text-slate-400">{{ $subheading }}</p>
     </div>
@@ -28,7 +28,7 @@
         @endif
 
         <div class="flex flex-wrap gap-2 rounded-md border border-slate-800 bg-slate-950/70 p-2" data-staff-form-tabs>
-            <button type="button" class="rounded-md bg-sky-500/20 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-sky-200 ring-1 ring-sky-500/30" data-staff-tab-trigger="profile">Profile</button>
+            <button type="button" class="rounded-md bg-slate-700/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-200 ring-1 ring-slate-500/40" data-staff-tab-trigger="profile">Profile</button>
             <button type="button" class="rounded-md px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-300 transition hover:bg-slate-800 hover:text-white" data-staff-tab-trigger="permissions">Permissions</button>
         </div>
 
@@ -106,25 +106,25 @@
             <div class="grid gap-3 lg:grid-cols-2">
                 <label class="flex items-center gap-3 rounded-md border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-slate-200">
                     <input type="hidden" name="is_active" value="0">
-                    <input type="checkbox" name="is_active" value="1" @checked(old('is_active', $user?->is_active ?? true)) class="rounded border-slate-600 bg-slate-900 text-sky-400 focus:ring-sky-400">
+                    <input type="checkbox" name="is_active" value="1" @checked(old('is_active', $user?->is_active ?? true)) class="rounded border-slate-600 bg-slate-900 text-slate-300 focus:ring-slate-500">
                     <span>Staff account is active</span>
                 </label>
 
                 <label class="flex items-center gap-3 rounded-md border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-slate-200">
                     <input type="hidden" name="is_administrator" value="0">
-                    <input type="checkbox" name="is_administrator" value="1" @checked(old('is_administrator', $user?->is_administrator ?? false)) class="rounded border-slate-600 bg-slate-900 text-sky-400 focus:ring-sky-400">
+                    <input type="checkbox" name="is_administrator" value="1" @checked(old('is_administrator', $user?->is_administrator ?? false)) class="rounded border-slate-600 bg-slate-900 text-slate-300 focus:ring-slate-500">
                     <span>Administrator</span>
                 </label>
 
                 <label class="flex items-center gap-3 rounded-md border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-slate-200">
                     <input type="hidden" name="not_staff_member" value="0">
-                    <input type="checkbox" name="not_staff_member" value="1" @checked(old('not_staff_member', isset($user) ? ! $user->is_staff_member : false)) class="rounded border-slate-600 bg-slate-900 text-sky-400 focus:ring-sky-400">
+                    <input type="checkbox" name="not_staff_member" value="1" @checked(old('not_staff_member', isset($user) ? ! $user->is_staff_member : false)) class="rounded border-slate-600 bg-slate-900 text-slate-300 focus:ring-slate-500">
                     <span>Not Staff Member</span>
                 </label>
 
                 <label class="flex items-center gap-3 rounded-md border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-slate-200">
                     <input type="hidden" name="send_welcome_email" value="0">
-                    <input type="checkbox" name="send_welcome_email" value="1" @checked(old('send_welcome_email', $user?->send_welcome_email ?? true)) class="rounded border-slate-600 bg-slate-900 text-sky-400 focus:ring-sky-400">
+                    <input type="checkbox" name="send_welcome_email" value="1" @checked(old('send_welcome_email', $user?->send_welcome_email ?? true)) class="rounded border-slate-600 bg-slate-900 text-slate-300 focus:ring-slate-500">
                     <span>Send welcome email</span>
                 </label>
             </div>
@@ -142,7 +142,7 @@
                                 name="roles[]"
                                 value="{{ $role->name }}"
                                 @checked($selectedRoles->contains($role->name))
-                                class="rounded border-slate-600 bg-slate-900 text-sky-400 focus:ring-sky-400"
+                                class="rounded border-slate-600 bg-slate-900 text-slate-300 focus:ring-slate-500"
                             >
                             <span>{{ $role->name }}</span>
                         </label>
@@ -171,7 +171,7 @@
         </div>
 
         <div class="mt-8 flex flex-wrap gap-3">
-            <button type="submit" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-sky-400 hover:text-sky-300">
+            <button type="submit" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:text-slate-300">
                 Save User
             </button>
 
@@ -196,10 +196,10 @@
 
                 triggers.forEach((trigger) => {
                     const active = trigger.dataset.staffTabTrigger === target;
-                    trigger.classList.toggle('bg-sky-500/20', active);
-                    trigger.classList.toggle('text-sky-200', active);
+                    trigger.classList.toggle('bg-slate-700/60', active);
+                    trigger.classList.toggle('text-slate-200', active);
                     trigger.classList.toggle('ring-1', active);
-                    trigger.classList.toggle('ring-sky-500/30', active);
+                    trigger.classList.toggle('ring-slate-500/40', active);
                     trigger.classList.toggle('text-slate-300', !active);
                 });
             };

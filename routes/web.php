@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Platform\AuditLogController;
 use App\Http\Controllers\Platform\BroadcastAuthController;
+use App\Http\Controllers\Platform\AccountController;
 use App\Http\Controllers\Platform\DashboardController;
 use App\Http\Controllers\Platform\DocsController;
 use App\Http\Controllers\Platform\ErrorLogController;
@@ -29,6 +30,12 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::post('/dashboard/test-notification', [DashboardController::class, 'sendTestNotification'])->name('dashboard.test-notification');
     Route::post('/platform/realtime/auth', BroadcastAuthController::class)->name('platform.realtime.auth');
+
+    Route::get('/account', [AccountController::class, 'index'])->name('platform.account.index');
+    Route::get('/account/settings', [AccountController::class, 'settings'])->name('platform.account.settings');
+    Route::post('/account/settings', [AccountController::class, 'updateSettings'])->name('platform.account.settings.update');
+    Route::get('/account/preferences', [AccountController::class, 'preferences'])->name('platform.account.preferences');
+    Route::post('/account/preferences', [AccountController::class, 'updatePreferences'])->name('platform.account.preferences.update');
 
     Route::get('/platform/users', [PlatformUserController::class, 'index'])->name('platform.users.index');
     Route::get('/platform/users/create', [PlatformUserController::class, 'create'])->name('platform.users.create');

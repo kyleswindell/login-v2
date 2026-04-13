@@ -5,7 +5,7 @@
 
     <section class="flex flex-1 flex-col gap-6">
         <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
-            <p class="text-sm font-medium uppercase tracking-[0.3em] text-sky-300">Settings — Audit Logs</p>
+            <p class="text-sm font-medium uppercase tracking-[0.3em] text-slate-300">Settings — Audit Logs</p>
             <h1 class="mt-3 text-3xl font-semibold text-white">Audit Settings</h1>
             <p class="mt-2 text-slate-400">Configure log retention period and the severity level used for login events.</p>
         </div>
@@ -30,7 +30,7 @@
                         value="{{ old('retention_days', $retentionDays) }}"
                         min="7"
                         max="3650"
-                        class="mt-3 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-sky-400 focus:outline-none focus:ring-0"
+                        class="mt-3 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0"
                     >
                     @error('retention_days')
                         <p class="mt-2 text-xs text-rose-400">{{ $message }}</p>
@@ -43,7 +43,7 @@
                     <select
                         id="login_event_severity"
                         name="login_event_severity"
-                        class="mt-3 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-sky-400 focus:outline-none focus:ring-0"
+                        class="mt-3 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0"
                     >
                         @foreach (['info', 'notice', 'security'] as $option)
                             <option value="{{ $option }}" @selected(old('login_event_severity', $loginEventSeverity) === $option)>
@@ -58,7 +58,7 @@
             </div>
 
             <div class="mt-8 border-t border-slate-800 pt-6">
-                <button type="submit" class="rounded-md bg-sky-500/15 px-6 py-3 text-sm font-semibold text-sky-200 ring-1 ring-sky-500/30 transition hover:bg-sky-500/25 hover:text-sky-100">
+                <button type="submit" class="rounded-md bg-slate-700/60 px-6 py-3 text-sm font-semibold text-slate-200 ring-1 ring-slate-500/40 transition hover:bg-slate-700/80 hover:text-white">
                     Save Audit Log Settings
                 </button>
             </div>

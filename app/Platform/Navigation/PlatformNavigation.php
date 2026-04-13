@@ -110,44 +110,37 @@ class PlatformNavigation
             ]),
             'account' => $this->filterAllowed($user, [
                 [
-                    'label' => 'Dashboard',
-                    'route' => 'dashboard',
-                    'active' => ['dashboard'],
+                    'label' => 'My Account',
+                    'route' => 'platform.account.index',
+                    'active' => ['platform.account.index'],
                 ],
                 [
-                    'label' => 'Platform Users',
-                    'route' => 'platform.administration.users.index',
+                    'label' => 'Account Settings',
+                    'route' => 'platform.account.settings',
+                    'active' => ['platform.account.settings'],
+                ],
+                [
+                    'label' => 'Preferences',
+                    'route' => 'platform.account.preferences',
+                    'active' => ['platform.account.preferences'],
+                ],
+                [
+                    'label' => 'Platform Settings',
+                    'route' => 'platform.administration.settings.index',
                     'active' => [
-                        'platform.administration.users.*',
-                        'platform.users.*',
-                        'filament.console.resources.platform-users.*',
+                        'platform.administration.settings.*',
+                        'platform.settings.*',
                     ],
-                    'ability' => 'manage-platform-users',
+                    'ability' => 'manage-platform-settings',
                 ],
                 [
-                    'label' => 'Documentation Vault',
-                    'route' => 'platform.docs.index',
-                    'active' => ['platform.docs.index'],
-                    'ability' => 'view-platform-docs',
-                ],
-                [
-                    'label' => 'Notifications',
+                    'label' => 'Notification Inbox',
                     'route' => 'platform.administration.notifications.index',
                     'active' => [
                         'platform.administration.notifications.*',
                         'platform.notifications.*',
                     ],
                     'ability' => 'view-platform-notifications',
-                ],
-                [
-                    'label' => 'Audit Logs',
-                    'route' => 'platform.operations.audit-logs.index',
-                    'active' => [
-                        'platform.operations.audit-logs.*',
-                        'platform.audit-logs.*',
-                        'filament.console.resources.platform-audit-logs.*',
-                    ],
-                    'ability' => 'view-platform-audit-logs',
                 ],
             ]),
         ];

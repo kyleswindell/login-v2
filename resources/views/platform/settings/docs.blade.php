@@ -5,7 +5,7 @@
 
     <section class="flex flex-1 flex-col gap-6">
         <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
-            <p class="text-sm font-medium uppercase tracking-[0.3em] text-sky-300">Settings — Documentation Vault</p>
+            <p class="text-sm font-medium uppercase tracking-[0.3em] text-slate-300">Settings — Documentation Vault</p>
             <h1 class="mt-3 text-3xl font-semibold text-white">Vault Access</h1>
             <p class="mt-2 text-slate-400">Control which platform users can access the internal documentation vault.</p>
         </div>
@@ -25,13 +25,13 @@
                     <p class="mt-1 text-xs text-slate-500">Determines which authenticated platform users can view documentation vault pages.</p>
 
                     <div class="mt-4 space-y-3">
-                        <label class="flex cursor-pointer items-start gap-4 rounded-md border border-slate-700 bg-slate-950/50 px-5 py-4 transition has-[:checked]:border-sky-500/40 has-[:checked]:bg-sky-500/5">
+                        <label class="flex cursor-pointer items-start gap-4 rounded-md border border-slate-700 bg-slate-950/50 px-5 py-4 transition has-[:checked]:border-slate-500/40 has-[:checked]:bg-slate-700/30">
                             <input
                                 type="radio"
                                 name="access_scope"
                                 value="all_platform_users"
                                 @checked(old('access_scope', $accessScope) === 'all_platform_users')
-                                class="mt-0.5 accent-sky-400"
+                                class="mt-0.5 accent-slate-300"
                             >
                             <div>
                                 <p class="text-sm font-semibold text-white">All Platform Users</p>
@@ -39,13 +39,13 @@
                             </div>
                         </label>
 
-                        <label class="flex cursor-pointer items-start gap-4 rounded-md border border-slate-700 bg-slate-950/50 px-5 py-4 transition has-[:checked]:border-sky-500/40 has-[:checked]:bg-sky-500/5">
+                        <label class="flex cursor-pointer items-start gap-4 rounded-md border border-slate-700 bg-slate-950/50 px-5 py-4 transition has-[:checked]:border-slate-500/40 has-[:checked]:bg-slate-700/30">
                             <input
                                 type="radio"
                                 name="access_scope"
                                 value="super_admins_only"
                                 @checked(old('access_scope', $accessScope) === 'super_admins_only')
-                                class="mt-0.5 accent-sky-400"
+                                class="mt-0.5 accent-slate-300"
                             >
                             <div>
                                 <p class="text-sm font-semibold text-white">Super Admins Only</p>
@@ -60,7 +60,7 @@
             </div>
 
             <div class="mt-8 border-t border-slate-800 pt-6">
-                <button type="submit" class="rounded-md bg-sky-500/15 px-6 py-3 text-sm font-semibold text-sky-200 ring-1 ring-sky-500/30 transition hover:bg-sky-500/25 hover:text-sky-100">
+                <button type="submit" class="rounded-md bg-slate-700/60 px-6 py-3 text-sm font-semibold text-slate-200 ring-1 ring-slate-500/40 transition hover:bg-slate-700/80 hover:text-white">
                     Save Vault Settings
                 </button>
             </div>

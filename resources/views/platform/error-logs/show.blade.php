@@ -4,7 +4,7 @@
     <section class="flex flex-1 flex-col gap-6">
         <div class="flex items-start justify-between gap-4 rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
             <div>
-                <p class="text-sm font-medium uppercase tracking-[0.3em] text-sky-300">Platform Management</p>
+                <p class="text-sm font-medium uppercase tracking-[0.3em] text-slate-300">Platform Management</p>
                 <h1 class="mt-3 text-3xl font-semibold text-white">Error Log Detail</h1>
                 <p class="mt-2 text-slate-400">{{ $log->message }}</p>
             </div>
@@ -24,7 +24,7 @@
                             <span @class([
                                 'inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em]',
                                 'bg-slate-500/15 text-slate-300' => $log->severity === 'debug',
-                                'bg-sky-500/15 text-sky-300' => $log->severity === 'info',
+                                'bg-slate-700/60 text-slate-300' => $log->severity === 'info',
                                 'bg-amber-500/15 text-amber-300' => $log->severity === 'warning',
                                 'bg-rose-500/15 text-rose-300' => $log->severity === 'error',
                                 'bg-red-600/20 text-red-300' => $log->severity === 'critical',

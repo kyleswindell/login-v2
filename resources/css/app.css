@@ -28,7 +28,7 @@
     }
 
     .ui-kicker {
-        @apply text-xs font-semibold uppercase tracking-[0.18em] text-sky-300;
+        @apply text-xs font-semibold uppercase tracking-[0.18em] text-slate-300;
     }
 
     .ui-stat-label {
@@ -44,6 +44,6 @@
     }
 
     .ui-action {
-        @apply inline-flex items-center rounded-md border border-slate-700 px-3.5 py-2 text-sm font-semibold text-slate-100 transition hover:border-sky-400 hover:text-sky-200;
+        @apply inline-flex items-center rounded-md border border-slate-700 px-3.5 py-2 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:text-white;
     }
 }

@@ -5,7 +5,7 @@
 
     <section class="flex flex-1 flex-col gap-6">
         <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
-            <p class="text-sm font-medium uppercase tracking-[0.3em] text-sky-300">Settings — General</p>
+            <p class="text-sm font-medium uppercase tracking-[0.3em] text-slate-300">Settings — General</p>
             <h1 class="mt-3 text-3xl font-semibold text-white">System/Server Info</h1>
             <p class="mt-2 text-slate-400">Read-only runtime diagnostics for fast environment checks.</p>
         </div>

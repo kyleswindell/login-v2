@@ -168,13 +168,13 @@ if (realtimeRoot) {
             case 'urgent':
                 return 'bg-rose-500/15 text-rose-300';
             default:
-                return 'bg-sky-500/15 text-sky-300';
+                return 'bg-slate-700/60 text-slate-200';
         }
     };
 
     const unreadBadge = (notification) => notification.read_at
         ? ''
-        : '<span class="inline-flex rounded-full bg-sky-500/15 px-2.5 py-1 text-[11px] font-medium text-sky-200">Unread</span>';
+        : '<span class="inline-flex rounded-full bg-slate-700/70 px-2.5 py-1 text-[11px] font-medium text-slate-200">Unread</span>';
 
     const dismissedBadge = (notification) => notification.dismissed_at
         ? '<span class="inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-400">Dismissed</span>'
@@ -182,12 +182,12 @@ if (realtimeRoot) {
 
     const readBadge = (notification) => notification.read_at
         ? '<span class="inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300">Read</span>'
-        : '<span class="inline-flex rounded-full bg-sky-500/15 px-3 py-1 text-xs font-medium text-sky-200">Unread</span>';
+        : '<span class="inline-flex rounded-full bg-slate-700/70 px-3 py-1 text-xs font-medium text-slate-200">Unread</span>';
 
     const createPreviewMarkup = (notification) => `
         <a
             href="${escapeHtml(notification.action_url || indexUrl)}"
-            class="block rounded-md border border-slate-800 bg-slate-950/80 px-4 py-4 transition hover:border-sky-500/30 hover:bg-slate-950"
+            class="block rounded-md border border-slate-800 bg-slate-950/80 px-4 py-4 transition hover:border-slate-600 hover:bg-slate-950"
             data-notification-preview-item
             data-notification-id="${notification.id}"
         >
@@ -221,7 +221,7 @@ if (realtimeRoot) {
                         <span data-notification-created-label>${escapeHtml(notification.created_at_label || '')}</span>
                     </div>
                     <div class="mt-4">
-                        <a href="${escapeHtml(notification.action_url || indexUrl)}" class="text-sm font-semibold text-sky-300 transition hover:text-sky-200">
+                        <a href="${escapeHtml(notification.action_url || indexUrl)}" class="text-sm font-semibold text-slate-200 transition hover:text-white">
                             Open notification link
                         </a>
                     </div>
@@ -230,7 +230,7 @@ if (realtimeRoot) {
                     ${notification.read_at ? '' : `
                         <form method="POST" action="${escapeHtml(notification.mark_read_url)}">
                             <input type="hidden" name="_token" value="${escapeHtml(csrfToken || '')}">
-                            <button type="submit" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-sky-400 hover:text-sky-300">
+                            <button type="submit" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:text-white">
                                 Mark read
                             </button>
                         </form>
@@ -297,7 +297,7 @@ if (realtimeRoot) {
 
         const toast = document.createElement('a');
         toast.href = notification.action_url || indexUrl;
-        toast.className = 'pointer-events-auto block rounded-md border border-slate-800 bg-slate-900/95 px-4 py-4 shadow-2xl shadow-black/40 transition hover:border-sky-500/30';
+        toast.className = 'pointer-events-auto block rounded-md border border-slate-800 bg-slate-900/95 px-4 py-4 shadow-2xl shadow-black/40 transition hover:border-slate-600';
         toast.innerHTML = `
             <div class="flex items-start gap-3">
                 <div class="mt-0.5 inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.15em] ${severityClasses(notification.severity)}">

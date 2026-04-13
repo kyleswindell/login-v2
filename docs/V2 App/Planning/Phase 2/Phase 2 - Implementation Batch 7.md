@@ -69,6 +69,12 @@ Completed in this batch:
 * normalized realtime notification preview, inbox-card, and toast shape patterns to match the updated shell baseline
 * completed a doc-workflow UI audit pass across active custom Blade surfaces and normalized card/form/action shape conventions to the shared Filament-aligned baseline (reduced one-off radius/shadow drift)
 * enabled `wire:navigate` on in-content internal route links across setup/settings/dashboard/admin pages so shell chrome persists beyond sidebar-only navigation
+* corrected settings-category active-state logic so only the currently active settings route is highlighted
+* corrected documentation tree behavior so only the active file is highlighted while the folder path remains expanded to the selected file location
+* finalized shell visual normalization away from blue accents to a neutral light/dark baseline and removed boxed logo/user header framing
+* replaced duplicate workspace links in the header account dropdown with account-focused options and added initial My Account, Account Settings, and Preferences routes/views
+* applied the same neutral visual baseline to the login/auth screen for universal current-theme consistency
+* added password and security controls into Account Settings with current-password validation and password update flow
 * set direct `/console/*` proof-path access deprecation default to off with compatibility redirects already in place from Batch 6
 * synchronized Phase 2 planning, architecture, standards, and development-log notes to reflect corrected phase scope and deliverable sequencing
 

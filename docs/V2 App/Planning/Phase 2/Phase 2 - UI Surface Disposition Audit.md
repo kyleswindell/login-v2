@@ -20,6 +20,7 @@ Current status:
 * this note now serves as the Batch 6 completion artifact for full existing-UI review and final UI/stack decision sync
 * Batch 7 visual migration updates the active dashboard and shared shell styling baseline to the final Phase 2 review target
 * Batch 7 UI audit pass normalizes active custom Blade element conventions to the shared Filament-aligned baseline while keeping the locked surface-owner decisions
+* Batch 7 correction pass adds account-focused header dropdown options and initial account pages (`/account`, `/account/settings`, `/account/preferences`) as custom Blade ownership
 
 Source planning note:
 
@@ -45,6 +46,7 @@ Use these categories:
 | Login | `/login`, `resources/views/auth/login.blade.php` | custom Blade auth form | Transitional | May stay custom until Filament panel auth and tenant auth are designed. |
 | Dashboard | `/dashboard`, `resources/views/platform/dashboard.blade.php` | custom Blade dashboard cards and links | Keep custom | Phase 2 closes with dashboard as app-owned Blade surface; future Livewire/Filament migration is deferred behind explicit parity scope. |
 | App shell | `resources/views/components/layouts/app.blade.php` | custom top header, sidebar, setup overlay, user menu, notifications | Keep custom | Batch 6 locks full-page Blade shell for Phase 2 close and prevents broad shell rewrite during close-out. |
+| Account pages | `/account*`, `resources/views/platform/account/*` | custom Blade account profile/settings/preferences pages | Keep custom | User-scoped account workflow is shell-native and not a Filament-first surface in this phase. |
 | Platform users | `/platform/users/*`, `resources/views/platform/users/*`, target route at `/platform/administration/users`, migration surface at `/console/platform-users` | custom Blade CRUD/list retained; shell target now resolves to app-owned `/platform/users`; direct `/console` proof access is deprecated by default | Hybrid candidate | Batch 6 retires daily shell dependency on `/console` while preserving migration-proof resources behind opt-in proof access. |
 | Setup pages | `/platform/setup/*`, `resources/views/platform/setup/*` | custom Blade setup landing pages | Hybrid candidate | Batch 6 closes with setup pages in the app-owned Blade shell; grouped migration is deferred to later phase batches with explicit parity checks. |
 | Settings pages | `/platform/settings/*`, target route at `/platform/administration/settings`, `resources/views/platform/settings/*` | custom Blade forms and second-column nav retained; target route implemented | Hybrid candidate | Batch 6 keeps settings custom through Phase 2 close and defers grouped migration timing. |

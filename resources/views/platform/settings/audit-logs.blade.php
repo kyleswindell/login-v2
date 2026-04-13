@@ -4,10 +4,9 @@
     </x-slot:sidebar>
 
     <section class="flex flex-1 flex-col gap-6">
-        <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
-            <p class="text-sm font-medium uppercase tracking-[0.3em] text-slate-300">Settings — Audit Logs</p>
-            <h1 class="mt-3 text-3xl font-semibold text-white">Audit Settings</h1>
-            <p class="mt-2 text-slate-400">Configure log retention period and the severity level used for login events.</p>
+        <div>
+            <h1 class="ui-page-header-title">Audit Settings</h1>
+            <p class="ui-page-header-copy">Configure log retention period and the severity level used for login events.</p>
         </div>
 
         @if (session('success'))

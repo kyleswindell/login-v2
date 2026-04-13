@@ -161,6 +161,31 @@ Planning owner:
 
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]] | [Phase 2 - Implementation Batch 7](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%207.md)
 
+### 2026-04-13 - Phase 2 Batch 7 personal-notes UI parity pass
+
+Status:
+
+* implemented locally
+* ready for staging visual verification
+
+Work completed:
+
+* applied sidebar polish items from `docs/Personal Notes/Phase 2 Batch 7.md`:
+  * added contextual icons on shared sidebar navigation entries
+  * grouped audit/error surfaces under a single collapsible `Logs` section in the primary sidebar
+  * removed legacy sidebar title/description copy clutter in the primary shell sidebar panel
+* replaced top banner-style header cards with simple V1-style page title + copy headers across active dashboard/setup/settings/account surfaces
+* removed redundant in-content general-settings tab strip so settings navigation ownership remains in the sidebar only
+
+Verification:
+
+* `php artisan view:cache` passes after navigation + page-header template updates
+* local feature tests remain blocked in this non-Docker environment because `postgres` host resolution fails outside Docker
+
+Planning owner:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]] | [Phase 2 - Implementation Batch 7](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%207.md)
+
 ### 2026-04-12 - Phase 2 Batch 7 final visual UI migration implementation
 
 Status:

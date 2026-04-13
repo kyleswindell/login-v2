@@ -1,10 +1,9 @@
 <x-layouts.app title="Notifications">
     <section class="flex flex-1 flex-col gap-6">
-        <div class="flex flex-col gap-4 rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30 md:flex-row md:items-center md:justify-between">
+        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
-                <p class="text-sm font-medium uppercase tracking-[0.3em] text-slate-300">Platform Management</p>
-                <h1 class="mt-3 text-3xl font-semibold text-white">Notifications</h1>
-                <p class="mt-2 text-slate-400">Review your current in-app platform notifications.</p>
+                <h1 class="ui-page-header-title">Notifications</h1>
+                <p class="ui-page-header-copy">Review your current in-app platform notifications.</p>
             </div>
 
             <form method="POST" action="{{ route('platform.notifications.mark-all-read') }}">

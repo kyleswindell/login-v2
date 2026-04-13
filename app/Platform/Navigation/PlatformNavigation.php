@@ -10,7 +10,12 @@ class PlatformNavigation
     public function __construct(private readonly Gate $gate) {}
 
     /**
-     * @return array{primary: array<int, array<string, mixed>>, setup: array<int, array<string, mixed>>, account: array<int, array<string, mixed>>}
+     * @return array{
+     *   primary: array<int, array<string, mixed>>,
+     *   logs: array<int, array<string, mixed>>,
+     *   setup: array<int, array<string, mixed>>,
+     *   account: array<int, array<string, mixed>>
+     * }
      */
     public function forUser(?User $user): array
     {
@@ -20,6 +25,7 @@ class PlatformNavigation
                     'label' => 'Dashboard',
                     'route' => 'dashboard',
                     'active' => ['dashboard'],
+                    'icon' => 'home',
                 ],
                 [
                     'label' => 'Platform Users',
@@ -30,12 +36,14 @@ class PlatformNavigation
                         'filament.console.resources.platform-users.*',
                     ],
                     'ability' => 'manage-platform-users',
+                    'icon' => 'users',
                 ],
                 [
                     'label' => 'Documentation Vault',
                     'route' => 'platform.docs.index',
                     'active' => ['platform.docs.index'],
                     'ability' => 'view-platform-docs',
+                    'icon' => 'docs',
                 ],
                 [
                     'label' => 'Notifications',
@@ -45,7 +53,10 @@ class PlatformNavigation
                         'platform.notifications.*',
                     ],
                     'ability' => 'view-platform-notifications',
+                    'icon' => 'bell',
                 ],
+            ]),
+            'logs' => $this->filterAllowed($user, [
                 [
                     'label' => 'Audit Logs',
                     'route' => 'platform.operations.audit-logs.index',
@@ -55,6 +66,7 @@ class PlatformNavigation
                         'filament.console.resources.platform-audit-logs.*',
                     ],
                     'ability' => 'view-platform-audit-logs',
+                    'icon' => 'audit-log',
                 ],
                 [
                     'label' => 'Error Logs',
@@ -65,6 +77,7 @@ class PlatformNavigation
                         'filament.console.resources.central-error-logs.*',
                     ],
                     'ability' => 'view-platform-error-logs',
+                    'icon' => 'error-log',
                 ],
             ]),
             'setup' => $this->filterAllowed($user, [
@@ -73,30 +86,35 @@ class PlatformNavigation
                     'route' => 'platform.setup.notifications',
                     'active' => ['platform.setup.notifications'],
                     'ability' => 'view-platform-notifications',
+                    'icon' => 'bell',
                 ],
                 [
                     'label' => 'Documentation Setup',
                     'route' => 'platform.setup.docs',
                     'active' => ['platform.setup.docs'],
                     'ability' => 'view-platform-docs',
+                    'icon' => 'docs',
                 ],
                 [
                     'label' => 'Audit Logs Setup',
                     'route' => 'platform.setup.audit-logs',
                     'active' => ['platform.setup.audit-logs'],
                     'ability' => 'view-platform-audit-logs',
+                    'icon' => 'audit-log',
                 ],
                 [
                     'label' => 'Error Logs Setup',
                     'route' => 'platform.setup.error-logs',
                     'active' => ['platform.setup.error-logs'],
                     'ability' => 'view-platform-error-logs',
+                    'icon' => 'error-log',
                 ],
                 [
                     'label' => 'Platform Users Setup',
                     'route' => 'platform.setup.users',
                     'active' => ['platform.setup.users'],
                     'ability' => 'manage-platform-users',
+                    'icon' => 'users',
                 ],
                 [
                     'label' => 'Settings',
@@ -106,6 +124,7 @@ class PlatformNavigation
                         'platform.settings.*',
                     ],
                     'ability' => 'manage-platform-settings',
+                    'icon' => 'settings',
                 ],
             ]),
             'account' => $this->filterAllowed($user, [

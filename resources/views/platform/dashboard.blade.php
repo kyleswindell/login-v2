@@ -1,16 +1,15 @@
 <x-layouts.app title="Dashboard">
     <section class="flex flex-1 flex-col gap-6">
-        <div class="ui-card">
-            <p class="ui-kicker">Platform Dashboard</p>
-            <h1 class="mt-2 text-2xl font-semibold text-white">Dashboard</h1>
-            <p class="mt-2 text-sm text-slate-400">You are signed in as {{ auth()->user()->email }}.</p>
-
-            @if (session('status'))
-                <div class="mt-4 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-2.5 text-sm text-emerald-100">
-                    {{ session('status') }}
-                </div>
-            @endif
+        <div>
+            <h1 class="ui-page-header-title">Dashboard</h1>
+            <p class="ui-page-header-copy">You are signed in as {{ auth()->user()->email }}.</p>
         </div>
+
+        @if (session('status'))
+            <div class="rounded-md border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-2.5 text-sm text-emerald-100">
+                {{ session('status') }}
+            </div>
+        @endif
 
         <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             <article class="ui-card">

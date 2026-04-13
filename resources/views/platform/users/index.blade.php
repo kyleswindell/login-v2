@@ -2,11 +2,10 @@
 
 <x-layouts.app title="Platform Users">
     <section class="flex flex-1 flex-col gap-6">
-        <div class="flex flex-col gap-4 rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30 md:flex-row md:items-center md:justify-between">
+        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
-                <p class="text-sm font-medium uppercase tracking-[0.3em] text-slate-300">Platform Management</p>
-                <h1 class="mt-3 text-3xl font-semibold text-white">Platform Users</h1>
-                <p class="mt-2 text-slate-400">Create, review, and update internal platform user access.</p>
+                <h1 class="ui-page-header-title">Platform Users</h1>
+                <p class="ui-page-header-copy">Create, review, and update internal platform user access.</p>
             </div>
 
             <a wire:navigate href="{{ route('platform.users.create') }}" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:text-slate-300">

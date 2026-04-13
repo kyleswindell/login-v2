@@ -58,6 +58,14 @@
     .ui-action {
         @apply inline-flex items-center rounded-md border border-emerald-500/40 bg-emerald-500/15 px-3.5 py-2 text-sm font-semibold text-emerald-100 transition hover:border-emerald-400/60 hover:bg-emerald-500/25 hover:text-emerald-50;
     }
+
+    .ui-page-header-title {
+        @apply text-3xl font-semibold text-white;
+    }
+
+    .ui-page-header-copy {
+        @apply mt-2 text-sm text-slate-400;
+    }
 }
 
 @layer base {
@@ -164,6 +172,14 @@
     html[data-theme-resolved='light'] .ui-card-title,
     html[data-theme-resolved='light'] .ui-stat-value {
         color: rgb(15 23 42) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-page-header-title {
+        color: rgb(15 23 42) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-page-header-copy {
+        color: rgb(71 85 105) !important;
     }
 
     html[data-theme-resolved='light'] .ui-card-copy,

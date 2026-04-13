@@ -46,6 +46,7 @@
         @php($navigation = $platformNavigation->forUser($user))
         @php($accountNavigation = $navigation['account'])
         @php($primaryNavigation = $navigation['primary'])
+        @php($logsNavigation = $navigation['logs'] ?? [])
         @php($setupNavigation = $navigation['setup'])
 
         <div class="min-h-screen">
@@ -249,24 +250,43 @@
                                     <div class="flex transition-transform duration-300 will-change-transform" data-sidebar-track>
                                         {{-- Panel 1: Main navigation --}}
                                         <div class="w-60 shrink-0 rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30" data-main-nav-panel>
-                                            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300">Platform Navigation</p>
-                                            <h1 class="mt-3 text-2xl font-semibold text-white">Workspace</h1>
-                                            <p class="mt-2 text-sm text-slate-400">Core internal platform surfaces.</p>
-
-                                            <nav class="mt-8 space-y-2">
+                                            <nav class="space-y-2">
                                                 @foreach ($primaryNavigation as $item)
                                                     <a href="{{ route($item['route']) }}" wire:navigate data-main-nav-link @class([
-                                                        'block rounded-md px-4 py-3 text-sm font-medium transition',
+                                                        'flex items-center gap-3 rounded-md px-4 py-3 text-sm font-medium transition',
                                                         'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs(...$item['active']),
                                                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs(...$item['active']),
                                                     ])>
+                                                        <x-layouts.nav-icon :icon="$item['icon'] ?? null" />
                                                         {{ $item['label'] }}
                                                     </a>
                                                 @endforeach
                                             </nav>
 
+                                            @if (count($logsNavigation) > 0)
+                                                <details class="mt-4 group" @if (collect($logsNavigation)->contains(fn (array $item): bool => request()->routeIs(...$item['active']))) open @endif>
+                                                    <summary class="flex cursor-pointer list-none items-center gap-3 rounded-md px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
+                                                        <x-layouts.nav-icon icon="audit-log" />
+                                                        <span>Logs</span>
+                                                        <span class="ml-auto text-slate-500 transition group-open:rotate-180">⌄</span>
+                                                    </summary>
+                                                    <div class="mt-2 space-y-2 pl-2">
+                                                        @foreach ($logsNavigation as $item)
+                                                            <a href="{{ route($item['route']) }}" wire:navigate data-main-nav-link @class([
+                                                                'flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition',
+                                                                'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs(...$item['active']),
+                                                                'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs(...$item['active']),
+                                                            ])>
+                                                                <x-layouts.nav-icon :icon="$item['icon'] ?? null" />
+                                                                {{ $item['label'] }}
+                                                            </a>
+                                                        @endforeach
+                                                    </div>
+                                                </details>
+                                            @endif
+
                                             @if (count($setupNavigation) > 0)
-                                                <div class="mt-6 border-t border-slate-800 pt-4">
+                                                <div class="mt-4 border-t border-slate-800 pt-4">
                                                     <button
                                                         type="button"
                                                         class="flex w-full items-center rounded-md px-4 py-3 text-sm font-medium text-slate-400 transition hover:bg-slate-800 hover:text-white"
@@ -295,10 +315,11 @@
                                             <nav class="mt-6 space-y-2">
                                                 @foreach ($setupNavigation as $item)
                                                     <a href="{{ route($item['route']) }}" wire:navigate data-setup-nav-link @class([
-                                                        'block rounded-md px-4 py-3 text-sm font-medium transition',
+                                                        'flex items-center gap-3 rounded-md px-4 py-3 text-sm font-medium transition',
                                                         'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs(...$item['active']),
                                                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs(...$item['active']),
                                                     ])>
+                                                        <x-layouts.nav-icon :icon="$item['icon'] ?? null" />
                                                         {{ $item['label'] }}
                                                     </a>
                                                 @endforeach

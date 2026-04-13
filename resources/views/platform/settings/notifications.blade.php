@@ -4,10 +4,9 @@
     </x-slot:sidebar>
 
     <section class="flex flex-1 flex-col gap-6">
-        <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
-            <p class="text-sm font-medium uppercase tracking-[0.3em] text-slate-300">Settings — Platform Notifications</p>
-            <h1 class="mt-3 text-3xl font-semibold text-white">Notification Defaults</h1>
-            <p class="mt-2 text-slate-400">Configure default severity and per-user notification retention limits.</p>
+        <div>
+            <h1 class="ui-page-header-title">Notification Defaults</h1>
+            <p class="ui-page-header-copy">Configure default severity and per-user notification retention limits.</p>
         </div>
 
         @if (session('success'))

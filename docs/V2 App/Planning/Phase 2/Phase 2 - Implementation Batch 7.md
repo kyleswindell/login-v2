@@ -74,6 +74,10 @@ Completed in this batch:
 * finalized shell visual normalization away from blue accents to a neutral light/dark baseline and removed boxed logo/user header framing
 * replaced duplicate workspace links in the header account dropdown with account-focused options and added initial My Account, Account Settings, and Preferences routes/views
 * implemented persisted `light` / `dark` / `system` theme modes (account preference + header quick-toggle) to match the prior `/console` mode behavior baseline
+* applied personal-note cleanup pass for Batch 7: removed leftover top banner cards from active platform/setup/settings/account pages and switched to simple page-title headers
+* added contextual sidebar icons across shared navigation and setup/settings navigation entries
+* grouped audit/error routes under a single collapsible `Logs` sidebar section to reduce primary-nav clutter
+* removed legacy sidebar title/description copy blocks from the main shell navigation panel
 * applied the same neutral visual baseline to the login/auth screen for universal current-theme consistency
 * added password and security controls into Account Settings with current-password validation and password update flow
 * set direct `/console/*` proof-path access deprecation default to off with compatibility redirects already in place from Batch 6

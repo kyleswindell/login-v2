@@ -1,9 +1,8 @@
 <x-layouts.app title="Platform Users Setup">
     <section class="flex flex-1 flex-col gap-6">
-        <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
-            <p class="text-sm font-medium uppercase tracking-[0.3em] text-slate-300">Setup</p>
-            <h1 class="mt-3 text-3xl font-semibold text-white">Platform Users Setup</h1>
-            <p class="mt-2 text-slate-400">Manage staff lifecycle actions from one setup surface instead of routing setup links directly into feature list pages.</p>
+        <div>
+            <h1 class="ui-page-header-title">Platform Users Setup</h1>
+            <p class="ui-page-header-copy">Manage staff lifecycle actions from one setup surface instead of routing setup links directly into feature list pages.</p>
         </div>
 
         <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

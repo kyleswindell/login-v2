@@ -14,7 +14,10 @@
                     'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.setup.notifications'),
                     'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.notifications'),
                 ])>
-                    Notifications Setup
+                    <span class="inline-flex items-center gap-2">
+                        <x-layouts.nav-icon icon="bell" />
+                        <span>Notifications Setup</span>
+                    </span>
                 </a>
             @endcan
             @can('view-platform-docs')
@@ -23,7 +26,10 @@
                     'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.setup.docs'),
                     'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.docs'),
                 ])>
-                    Documentation Setup
+                    <span class="inline-flex items-center gap-2">
+                        <x-layouts.nav-icon icon="docs" />
+                        <span>Documentation Setup</span>
+                    </span>
                 </a>
             @endcan
             @can('view-platform-audit-logs')
@@ -32,7 +38,10 @@
                     'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.setup.audit-logs'),
                     'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.audit-logs'),
                 ])>
-                    Audit Logs Setup
+                    <span class="inline-flex items-center gap-2">
+                        <x-layouts.nav-icon icon="audit-log" />
+                        <span>Audit Logs Setup</span>
+                    </span>
                 </a>
             @endcan
             @can('view-platform-error-logs')
@@ -41,7 +50,10 @@
                     'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.setup.error-logs'),
                     'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.error-logs'),
                 ])>
-                    Error Logs Setup
+                    <span class="inline-flex items-center gap-2">
+                        <x-layouts.nav-icon icon="error-log" />
+                        <span>Error Logs Setup</span>
+                    </span>
                 </a>
             @endcan
             @can('manage-platform-users')
@@ -50,7 +62,10 @@
                     'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.setup.users'),
                     'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.users'),
                 ])>
-                    Platform Users Setup
+                    <span class="inline-flex items-center gap-2">
+                        <x-layouts.nav-icon icon="users" />
+                        <span>Platform Users Setup</span>
+                    </span>
                 </a>
             @endcan
 
@@ -60,7 +75,10 @@
                     'border border-slate-500/40 bg-slate-700/60 text-white' => request()->routeIs('platform.settings.*'),
                     'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.*'),
                 ])>
-                    Settings
+                    <span class="inline-flex items-center gap-2">
+                        <x-layouts.nav-icon icon="settings" />
+                        <span>Settings</span>
+                    </span>
                 </a>
             @endcan
         </nav>
@@ -80,42 +98,60 @@
                         'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.settings.general'),
                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.general'),
                     ])>
-                        Platform General
+                        <span class="inline-flex items-center gap-2">
+                            <x-layouts.nav-icon icon="settings" />
+                            <span>Platform General</span>
+                        </span>
                     </a>
                     <a wire:navigate href="{{ route('platform.settings.general.company-information') }}" @class([
                         'block rounded-md px-4 py-3 text-sm font-medium transition',
                         'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.settings.general.company-information'),
                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.general.company-information'),
                     ])>
-                        Company Information
+                        <span class="inline-flex items-center gap-2">
+                            <x-layouts.nav-icon icon="docs" />
+                            <span>Company Information</span>
+                        </span>
                     </a>
                     <a wire:navigate href="{{ route('platform.settings.general.localization') }}" @class([
                         'block rounded-md px-4 py-3 text-sm font-medium transition',
                         'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.settings.general.localization'),
                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.general.localization'),
                     ])>
-                        Localization
+                        <span class="inline-flex items-center gap-2">
+                            <x-layouts.nav-icon icon="settings" />
+                            <span>Localization</span>
+                        </span>
                     </a>
                     <a wire:navigate href="{{ route('platform.settings.general.email') }}" @class([
                         'block rounded-md px-4 py-3 text-sm font-medium transition',
                         'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.settings.general.email'),
                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.general.email'),
                     ])>
-                        Email
+                        <span class="inline-flex items-center gap-2">
+                            <x-layouts.nav-icon icon="bell" />
+                            <span>Email</span>
+                        </span>
                     </a>
                     <a wire:navigate href="{{ route('platform.settings.general.system-update') }}" @class([
                         'block rounded-md px-4 py-3 text-sm font-medium transition',
                         'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.settings.general.system-update'),
                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.general.system-update'),
                     ])>
-                        System Update
+                        <span class="inline-flex items-center gap-2">
+                            <x-layouts.nav-icon icon="settings" />
+                            <span>System Update</span>
+                        </span>
                     </a>
                     <a wire:navigate href="{{ route('platform.settings.general.system-server-info') }}" @class([
                         'block rounded-md px-4 py-3 text-sm font-medium transition',
                         'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.settings.general.system-server-info'),
                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.general.system-server-info'),
                     ])>
-                        System/Server Info
+                        <span class="inline-flex items-center gap-2">
+                            <x-layouts.nav-icon icon="settings" />
+                            <span>System/Server Info</span>
+                        </span>
                     </a>
                 </div>
             </div>
@@ -129,7 +165,10 @@
                         'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.settings.notifications'),
                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.notifications'),
                     ])>
-                        Notification Defaults
+                        <span class="inline-flex items-center gap-2">
+                            <x-layouts.nav-icon icon="bell" />
+                            <span>Notification Defaults</span>
+                        </span>
                     </a>
                 </div>
             </div>
@@ -143,7 +182,10 @@
                         'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.settings.audit-logs'),
                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.audit-logs'),
                     ])>
-                        Audit Settings
+                        <span class="inline-flex items-center gap-2">
+                            <x-layouts.nav-icon icon="audit-log" />
+                            <span>Audit Settings</span>
+                        </span>
                     </a>
                 </div>
             </div>
@@ -157,7 +199,10 @@
                         'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.settings.docs'),
                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.docs'),
                     ])>
-                        Vault Access
+                        <span class="inline-flex items-center gap-2">
+                            <x-layouts.nav-icon icon="docs" />
+                            <span>Vault Access</span>
+                        </span>
                     </a>
                 </div>
             </div>
@@ -171,7 +216,10 @@
                         'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.settings.users'),
                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.users'),
                     ])>
-                        User Defaults
+                        <span class="inline-flex items-center gap-2">
+                            <x-layouts.nav-icon icon="users" />
+                            <span>User Defaults</span>
+                        </span>
                     </a>
                 </div>
             </div>

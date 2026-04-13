@@ -186,6 +186,35 @@ Planning owner:
 
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]] | [Phase 2 - Implementation Batch 7](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%207.md)
 
+### 2026-04-13 - Phase 2 Batch 7 personal-notes table standardization pass
+
+Status:
+
+* implemented locally
+* ready for staging visual verification
+
+Work completed:
+
+* implemented platform users table standardization updates from personal notes:
+  * moved primary table action (`Create User`) to a dedicated table-action row directly above table content
+  * added appliable table filters (search, status, role) with reset behavior
+  * moved rows-per-page selector to bottom-left table footer area
+  * standardized pagination controls on bottom-right (Prev/Next + explicit page selector)
+* replaced plain text row actions with prominent button actions:
+  * yellow-styled `Edit` action button
+  * stateful `Activate` / `Deactivate` button
+* added `/platform/users/{user}/toggle-active` action route/controller handler with self-deactivation guard
+
+Verification:
+
+* `php -l app/Http/Controllers/Platform/PlatformUserController.php` passes
+* `php artisan route:list --path=platform/users` confirms toggle-active route registration
+* `php artisan view:cache` passes after table/action template updates
+
+Planning owner:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]] | [Phase 2 - Implementation Batch 7](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%207.md)
+
 ### 2026-04-12 - Phase 2 Batch 7 final visual UI migration implementation
 
 Status:

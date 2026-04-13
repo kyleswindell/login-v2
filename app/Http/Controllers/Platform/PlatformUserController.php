@@ -7,6 +7,7 @@ use App\Http\Requests\Platform\StorePlatformUserRequest;
 use App\Http\Requests\Platform\UpdatePlatformUserRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -82,6 +83,23 @@ class PlatformUserController extends Controller
         return redirect()
             ->route('platform.users.edit', $user)
             ->with('status', 'User updated successfully.');
+    }
+
+    public function toggleActive(Request $request, User $user): RedirectResponse
+    {
+        $this->authorize('manage-platform-users');
+
+        $targetState = ! $user->is_active;
+
+        if ($request->user()?->is($user) && ! $targetState) {
+            return back()->with('status', 'You cannot deactivate your own account.');
+        }
+
+        $user->forceFill([
+            'is_active' => $targetState,
+        ])->save();
+
+        return back()->with('status', $targetState ? 'User activated successfully.' : 'User deactivated successfully.');
     }
 
     /**

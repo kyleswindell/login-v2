@@ -8,7 +8,11 @@ function initDataTablesLite() {
         }
 
         const searchInput = container.querySelector('[data-table-lite-search]');
+        const statusFilter = container.querySelector('[data-table-lite-filter-status]');
+        const roleFilter = container.querySelector('[data-table-lite-filter-role]');
+        const resetFiltersBtn = container.querySelector('[data-table-lite-filter-reset]');
         const rowsPerPageSelect = container.querySelector('[data-table-lite-rows-per-page]');
+        const pageSelect = container.querySelector('[data-table-lite-page-select]');
         const info = container.querySelector('[data-table-lite-info]');
         const prevBtn = container.querySelector('[data-table-lite-prev]');
         const nextBtn = container.querySelector('[data-table-lite-next]');
@@ -26,13 +30,30 @@ function initDataTablesLite() {
         let page = 1;
         let rowsPerPage = Number(rowsPerPageSelect?.value ?? 10);
         let term = '';
+        let status = '';
+        let role = '';
 
         const filteredRows = () => {
             if (term === '') {
-                return allRows;
+                return allRows.filter((row) => {
+                    const rowStatus = row.dataset.tableStatus || '';
+                    const rowRoles = row.dataset.tableRoles || '';
+
+                    const statusMatch = status === '' || rowStatus === status;
+                    const roleMatch = role === '' || rowRoles.split(',').includes(role);
+
+                    return statusMatch && roleMatch;
+                });
             }
 
-            return allRows.filter((row) => row.textContent.toLowerCase().includes(term));
+            return allRows.filter((row) => {
+                const rowStatus = row.dataset.tableStatus || '';
+                const rowRoles = row.dataset.tableRoles || '';
+                const statusMatch = status === '' || rowStatus === status;
+                const roleMatch = role === '' || rowRoles.split(',').includes(role);
+
+                return statusMatch && roleMatch && row.textContent.toLowerCase().includes(term);
+            });
         };
 
         const render = () => {
@@ -64,6 +85,23 @@ function initDataTablesLite() {
             if (nextBtn) {
                 nextBtn.disabled = page >= pages;
             }
+
+            if (pageSelect) {
+                const desiredOptions = Array.from({ length: pages }, (_, index) => index + 1);
+                const existingOptions = Array.from(pageSelect.options).map((option) => Number(option.value));
+
+                if (desiredOptions.length !== existingOptions.length || desiredOptions.some((value, index) => value !== existingOptions[index])) {
+                    pageSelect.innerHTML = '';
+                    desiredOptions.forEach((value) => {
+                        const option = document.createElement('option');
+                        option.value = `${value}`;
+                        option.textContent = `Page ${value}`;
+                        pageSelect.append(option);
+                    });
+                }
+
+                pageSelect.value = `${page}`;
+            }
         };
 
         searchInput?.addEventListener('input', (event) => {
@@ -78,6 +116,39 @@ function initDataTablesLite() {
             render();
         });
 
+        statusFilter?.addEventListener('change', (event) => {
+            status = (event.target.value || '').toLowerCase();
+            page = 1;
+            render();
+        });
+
+        roleFilter?.addEventListener('change', (event) => {
+            role = (event.target.value || '').toLowerCase();
+            page = 1;
+            render();
+        });
+
+        resetFiltersBtn?.addEventListener('click', () => {
+            term = '';
+            status = '';
+            role = '';
+            page = 1;
+
+            if (searchInput) {
+                searchInput.value = '';
+            }
+
+            if (statusFilter) {
+                statusFilter.value = '';
+            }
+
+            if (roleFilter) {
+                roleFilter.value = '';
+            }
+
+            render();
+        });
+
         prevBtn?.addEventListener('click', () => {
             page = Math.max(1, page - 1);
             render();
@@ -85,6 +156,11 @@ function initDataTablesLite() {
 
         nextBtn?.addEventListener('click', () => {
             page += 1;
+            render();
+        });
+
+        pageSelect?.addEventListener('change', (event) => {
+            page = Number(event.target.value || 1);
             render();
         });
 

@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function (): void {
     Route::post('/platform/users', [PlatformUserController::class, 'store'])->name('platform.users.store');
     Route::get('/platform/users/{user}/edit', [PlatformUserController::class, 'edit'])->name('platform.users.edit');
     Route::match(['put', 'patch'], '/platform/users/{user}', [PlatformUserController::class, 'update'])->name('platform.users.update');
+    Route::post('/platform/users/{user}/toggle-active', [PlatformUserController::class, 'toggleActive'])->name('platform.users.toggle-active');
 
     Route::get('/platform/administration/users', function () {
         abort_unless(Gate::allows('manage-platform-users'), 403);

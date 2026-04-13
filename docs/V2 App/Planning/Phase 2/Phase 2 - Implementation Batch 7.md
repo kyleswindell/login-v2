@@ -78,6 +78,8 @@ Completed in this batch:
 * added contextual sidebar icons across shared navigation and setup/settings navigation entries
 * grouped audit/error routes under a single collapsible `Logs` sidebar section to reduce primary-nav clutter
 * removed legacy sidebar title/description copy blocks from the main shell navigation panel
+* applied personal-note table standardization pass for platform-user management: top-level table action row, per-table filters, bottom-left rows selector, bottom-right prev/next + page selector, and prominent action buttons
+* added direct activate/deactivate row action for platform users with self-deactivation guard
 * applied the same neutral visual baseline to the login/auth screen for universal current-theme consistency
 * added password and security controls into Account Settings with current-password validation and password update flow
 * set direct `/console/*` proof-path access deprecation default to off with compatibility redirects already in place from Batch 6

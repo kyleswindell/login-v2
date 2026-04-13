@@ -37,7 +37,7 @@ class AuditLogController extends Controller
 
                 $query->where('actor_user_id', $filters['actor_id']);
             })
-            ->latest('occurred_at')
+            ->latest('occurred_at');
 
         $logs = $logsQuery
             ->paginate($perPage)

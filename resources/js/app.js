@@ -242,6 +242,10 @@ const initSidebarToggle = () => {
         });
     });
 
+    if (window.innerWidth < 1024) {
+        sidebar.classList.add('hidden');
+    }
+
     window.addEventListener('resize', () => {
         if (window.innerWidth >= 1024) {
             sidebar.classList.remove('hidden');

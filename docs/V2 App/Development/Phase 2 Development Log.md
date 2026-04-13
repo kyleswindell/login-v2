@@ -263,6 +263,36 @@ Planning owner:
 
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]] | [Phase 2 - Implementation Batch 7](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%207.md)
 
+### 2026-04-13 - Phase 2 Batch 7 app-wide table standardization completion pass
+
+Status:
+
+* implemented locally
+* ready for staging visual verification
+
+Work completed:
+
+* completed table-standard baseline updates across current operator tables:
+  * Platform Users table
+  * Audit Logs table
+  * Error Logs table
+* standardized table footer control placement:
+  * bottom-left rows selector + result summary
+  * bottom-right Prev / page selector / Next controls
+* added/kept applicable filter rows and dedicated table action rows above table content
+* added server-side `per_page` support for audit/error table views to align rows-per-page behavior with the shared standard
+* updated `Feature Development Standards` with explicit future table layout/interaction requirements for all new tables
+
+Verification:
+
+* `php artisan route:list --path=platform/users` confirms user-table action routes including toggle-active
+* `php artisan view:cache` passes after audit/error/users table template updates
+* `php -l` passes for updated audit/error/user controllers
+
+Planning owner:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]] | [Phase 2 - Implementation Batch 7](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%207.md)
+
 ### 2026-04-12 - Phase 2 Batch 7 final visual UI migration implementation
 
 Status:

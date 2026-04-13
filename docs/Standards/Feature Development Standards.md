@@ -120,6 +120,18 @@ When a feature includes a tabular data view intended for regular operator use, s
 * pagination support
 * rows-per-page selector where row count can grow materially
 * visible result summary (for example: showing X to Y of Z entries)
+* prominent row action buttons (do not rely on plain text links for primary actions)
+
+Required baseline layout order for app-owned Blade tables:
+
+1. page title/subtitle row
+2. optional table stats row
+3. table action row (left-aligned actions such as `Create`, `Settings`, `Export`)
+4. filter row (if scoped filters apply)
+5. table
+6. table footer controls:
+   * bottom-left: rows selector + result summary
+   * bottom-right: `Prev` / page selector / `Next`
 
 Apply this intelligently:
 

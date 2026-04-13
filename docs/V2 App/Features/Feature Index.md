@@ -9,6 +9,8 @@
 - [[V2 App/Features/Realtime Notifications And Broadcasting]] | [Realtime Notifications And Broadcasting](Realtime%20Notifications%20And%20Broadcasting.md)
 - [[V2 App/Features/Platform Workspace And Documentation Vault]] | [Platform Workspace And Documentation Vault](Platform%20Workspace%20And%20Documentation%20Vault.md)
 
+- [[V2 App/Features/Dashboard]] | [Dashboard](Dashboard.md)
+
 ## Drafted Contracts
 
 - [[V2 App/Features/Calendar And CalendarEntry Contract]] | [Calendar And CalendarEntry Contract](Calendar%20And%20CalendarEntry%20Contract.md)

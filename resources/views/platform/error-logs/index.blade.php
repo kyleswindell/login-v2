@@ -61,6 +61,12 @@
             </div>
         </form>
 
+        <div class="flex flex-wrap items-center gap-3">
+            <a wire:navigate href="{{ route('platform.setup.error-logs') }}" class="inline-flex items-center rounded-md border border-amber-500/50 bg-amber-500/15 px-4 py-2.5 text-sm font-semibold text-amber-100 transition hover:border-amber-400/70 hover:bg-amber-500/25 hover:text-amber-50">
+                Error Setup
+            </a>
+        </div>
+
         <div class="overflow-hidden rounded-lg border border-slate-800 bg-slate-900/70">
             <table class="min-w-full divide-y divide-slate-800">
                 <thead class="bg-slate-900">
@@ -124,8 +130,60 @@
                     @endforelse
                 </tbody>
             </table>
-        </div>
 
-        {{ $logs->links() }}
+            <div class="flex flex-wrap items-center justify-between gap-4 border-t border-slate-800 px-6 py-4">
+                <div class="flex items-center gap-3">
+                    <form method="GET" action="{{ route('platform.error-logs.index') }}" class="flex items-center gap-3">
+                        <input type="hidden" name="severity" value="{{ $filters['severity'] }}">
+                        <input type="hidden" name="handled" value="{{ $filters['handled'] }}">
+                        <input type="hidden" name="environment" value="{{ $filters['environment'] }}">
+                        <input type="hidden" name="exception_class" value="{{ $filters['exception_class'] }}">
+                        <input type="hidden" name="date_from" value="{{ $filters['date_from'] }}">
+                        <input type="hidden" name="date_to" value="{{ $filters['date_to'] }}">
+                        <label class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Rows</label>
+                        <select name="per_page" onchange="this.form.submit()" class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100">
+                            @foreach ([10, 25, 50, 100] as $option)
+                                <option value="{{ $option }}" @selected($perPage === $option)>{{ $option }}</option>
+                            @endforeach
+                        </select>
+                    </form>
+
+                    <p class="text-sm text-slate-400">
+                        Showing {{ $logs->firstItem() ?? 0 }} to {{ $logs->lastItem() ?? 0 }} of {{ $logs->total() }} entries
+                    </p>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    @php($prevPage = max(1, $logs->currentPage() - 1))
+                    @php($nextPage = min($logs->lastPage(), $logs->currentPage() + 1))
+                    <a href="{{ $logs->onFirstPage() ? '#' : $logs->url($prevPage) }}" @class([
+                        'rounded-lg border px-3 py-2 text-xs font-semibold uppercase tracking-[0.15em] transition',
+                        'border-slate-700 text-slate-300 hover:border-slate-600 hover:text-white' => ! $logs->onFirstPage(),
+                        'cursor-not-allowed border-slate-800 text-slate-600' => $logs->onFirstPage(),
+                    ])>Prev</a>
+
+                    <form method="GET" action="{{ route('platform.error-logs.index') }}">
+                        <input type="hidden" name="severity" value="{{ $filters['severity'] }}">
+                        <input type="hidden" name="handled" value="{{ $filters['handled'] }}">
+                        <input type="hidden" name="environment" value="{{ $filters['environment'] }}">
+                        <input type="hidden" name="exception_class" value="{{ $filters['exception_class'] }}">
+                        <input type="hidden" name="date_from" value="{{ $filters['date_from'] }}">
+                        <input type="hidden" name="date_to" value="{{ $filters['date_to'] }}">
+                        <input type="hidden" name="per_page" value="{{ $perPage }}">
+                        <select name="page" onchange="this.form.submit()" class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-slate-200">
+                            @for ($page = 1; $page <= $logs->lastPage(); $page++)
+                                <option value="{{ $page }}" @selected($page === $logs->currentPage())>Page {{ $page }}</option>
+                            @endfor
+                        </select>
+                    </form>
+
+                    <a href="{{ $logs->hasMorePages() ? $logs->url($nextPage) : '#' }}" @class([
+                        'rounded-lg border px-3 py-2 text-xs font-semibold uppercase tracking-[0.15em] transition',
+                        'border-slate-700 text-slate-300 hover:border-slate-600 hover:text-white' => $logs->hasMorePages(),
+                        'cursor-not-allowed border-slate-800 text-slate-600' => ! $logs->hasMorePages(),
+                    ])>Next</a>
+                </div>
+            </div>
+        </div>
     </section>
 </x-layouts.app>

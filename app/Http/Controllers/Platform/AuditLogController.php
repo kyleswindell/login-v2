@@ -19,6 +19,8 @@ class AuditLogController extends Controller
             'severity' => trim($request->string('severity')->toString()),
             'actor' => trim($request->string('actor')->toString()),
         ];
+        $perPage = (int) $request->integer('per_page', 25);
+        $perPage = in_array($perPage, [10, 25, 50, 100], true) ? $perPage : 25;
 
         $logs = PlatformAuditLog::query()
             ->with('actorUser')
@@ -33,12 +35,13 @@ class AuditLogController extends Controller
                 });
             })
             ->latest('occurred_at')
-            ->paginate(25)
+            ->paginate($perPage)
             ->withQueryString();
 
         return view('platform.audit-logs.index', [
             'logs' => $logs,
             'filters' => $filters,
+            'perPage' => $perPage,
         ]);
     }
 }

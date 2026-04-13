@@ -24,6 +24,8 @@ class ErrorLogController extends Controller
             'date_from' => trim($request->string('date_from')->toString()),
             'date_to' => trim($request->string('date_to')->toString()),
         ];
+        $perPage = (int) $request->integer('per_page', 25);
+        $perPage = in_array($perPage, [10, 25, 50, 100], true) ? $perPage : 25;
 
         $logs = CentralErrorLog::query()
             ->when($filters['severity'] !== '', fn ($q) => $q->where('severity', $filters['severity']))
@@ -33,12 +35,13 @@ class ErrorLogController extends Controller
             ->when($filters['date_from'] !== '', fn ($q) => $q->whereDate('occurred_at', '>=', $filters['date_from']))
             ->when($filters['date_to'] !== '', fn ($q) => $q->whereDate('occurred_at', '<=', $filters['date_to']))
             ->latest('occurred_at')
-            ->paginate(25)
+            ->paginate($perPage)
             ->withQueryString();
 
         return view('platform.error-logs.index', [
             'logs' => $logs,
             'filters' => $filters,
+            'perPage' => $perPage,
         ]);
     }
 

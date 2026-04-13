@@ -4,13 +4,13 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Platform\AuditLogController;
 use App\Http\Controllers\Platform\BroadcastAuthController;
 use App\Http\Controllers\Platform\AccountController;
-use App\Http\Controllers\Platform\DashboardController;
 use App\Http\Controllers\Platform\DocsController;
 use App\Http\Controllers\Platform\ErrorLogController;
 use App\Http\Controllers\Platform\NotificationController;
 use App\Http\Controllers\Platform\PlatformSetupController;
 use App\Http\Controllers\Platform\PlatformUserController;
 use App\Http\Controllers\Platform\SettingsController;
+use App\Livewire\Platform\Dashboard\DashboardPage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
@@ -27,8 +27,7 @@ Route::middleware('guest')->group(function (): void {
 });
 
 Route::middleware('auth')->group(function (): void {
-    Route::get('/dashboard', DashboardController::class)->name('dashboard');
-    Route::post('/dashboard/test-notification', [DashboardController::class, 'sendTestNotification'])->name('dashboard.test-notification');
+    Route::get('/dashboard', DashboardPage::class)->name('dashboard');
     Route::post('/platform/realtime/auth', BroadcastAuthController::class)->name('platform.realtime.auth');
 
     Route::get('/account', [AccountController::class, 'index'])->name('platform.account.index');

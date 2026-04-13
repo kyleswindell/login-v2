@@ -3,6 +3,7 @@ import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 import './setup-sidebar';
 import './table-enhance';
+import './dashboard-sort';
 
 const allowedThemeModes = new Set(['system', 'dark', 'light']);
 

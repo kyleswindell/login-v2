@@ -2,16 +2,40 @@
 
 namespace App\Providers;
 
+use App\Filament\Widgets\PlatformErrorHealth;
+use App\Filament\Widgets\PlatformStatsOverview;
+use App\Filament\Widgets\RecentAuditActivity;
+use App\Filament\Widgets\SystemNotificationsWidget;
 use App\Models\User;
+use App\Platform\Dashboard\WidgetRegistry;
 use App\Platform\Settings\SettingsService;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    public function register(): void {}
+    public function register(): void
+    {
+        $this->app->singleton(WidgetRegistry::class, fn () => new WidgetRegistry());
+    }
 
     public function boot(): void
+    {
+        $this->registerDashboardWidgets();
+        $this->registerGates();
+    }
+
+    private function registerDashboardWidgets(): void
+    {
+        $registry = $this->app->make(WidgetRegistry::class);
+
+        $registry->register('platform_stats',       PlatformStatsOverview::class);
+        $registry->register('error_health',          PlatformErrorHealth::class);
+        $registry->register('audit_activity',        RecentAuditActivity::class);
+        $registry->register('notifications_summary', SystemNotificationsWidget::class);
+    }
+
+    private function registerGates(): void
     {
         // Keep the super-admin bypass centralized so feature policies can stay focused on
         // normal role/permission checks instead of duplicating privileged override logic.

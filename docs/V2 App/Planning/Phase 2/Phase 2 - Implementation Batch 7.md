@@ -78,8 +78,8 @@ Completed in this batch:
 * added contextual sidebar icons across shared navigation and setup/settings navigation entries
 * grouped audit/error routes under a single collapsible `Logs` sidebar section to reduce primary-nav clutter
 * removed legacy sidebar title/description copy blocks from the main shell navigation panel
-* applied personal-note table standardization pass for platform-user management: top-level table action row, per-table filters, bottom-left rows selector, bottom-right prev/next + page selector, and prominent action buttons
-* added direct activate/deactivate row action for platform users with self-deactivation guard
+* applied app-wide table standardization pass for current operator tables (Platform Users, Audit Logs, Error Logs): top-level table action row, applicable filters, bottom-left rows selector, bottom-right prev/next + page selector, and visible result summary
+* replaced plain-text row actions with prominent button actions where applicable and added direct activate/deactivate row action for platform users with self-deactivation guard
 * split shared navigation into `Base Features` and `Administrator` sections (including setup navigation)
 * moved Documentation Vault + Logs under Administrator sections and renamed setup user navigation to `Staff Setup` (setup-only)
 * applied the same neutral visual baseline to the login/auth screen for universal current-theme consistency
@@ -126,7 +126,7 @@ Current exit status:
 | Blue-heavy scheme retired in active app surfaces | pass | Active platform and auth surfaces now use neutral light/dark baseline tones (legacy Laravel welcome page remains non-app starter artifact). |
 | Account dropdown + initial account pages added | pass | Added `My Account`, `Account Settings`, `Preferences` routes/views with password/security controls in account settings. |
 | `/console/*` proof-path daily UX retirement behavior | pass | Retired by default via `CONSOLE_PROOF_PATHS_ENABLED=false`; app-owned fallback redirects remain in place. |
-| Personal-notes table standardization scope | deferred | Implemented for Platform Users table; broader app-wide table standardization remains pending scope confirmation for Batch 7 close-out vs Batch 8 carry-over. |
+| Personal-notes table standardization scope | pass | Current operator-facing tables (Users, Audit Logs, Error Logs) now follow the shared table baseline and controls order. |
 | Documentation sync across planning/canonical/development/index notes | pass | Batch 7, Phase 2 planning owner, UI audit, architecture note, and development log are synchronized. |
 | Local compile/regression sanity checks | pass | `php artisan view:cache` and account route registration checks pass. |
 | Final staging visual sign-off | deferred | Pending explicit staging visual QA completion and sign-off marker. |

@@ -64,7 +64,7 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/platform/operations/audit-logs', function () {
         abort_unless(Gate::allows('view-platform-audit-logs'), 403);
 
-        return redirect('/console/platform-audit-logs');
+        return redirect()->route('platform.audit-logs.index');
     })->name('platform.operations.audit-logs.index');
 
     Route::get('/platform/error-logs', [ErrorLogController::class, 'index'])->name('platform.error-logs.index');
@@ -73,7 +73,7 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/platform/operations/error-logs', function () {
         abort_unless(Gate::allows('view-platform-error-logs'), 403);
 
-        return redirect('/console/central-error-logs');
+        return redirect()->route('platform.error-logs.index');
     })->name('platform.operations.error-logs.index');
 
     Route::get('/platform/settings/general', [SettingsController::class, 'general'])->name('platform.settings.general');

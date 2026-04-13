@@ -38,8 +38,8 @@
             @if ($user)
                 <header class="sticky top-0 z-40 border-b border-slate-800 bg-slate-950/90 backdrop-blur">
                     <div class="mx-auto flex w-full max-w-[1700px] items-center gap-4 px-4 py-4 xl:px-6">
-                        <a href="{{ route('dashboard') }}" class="flex min-w-0 items-center gap-3 rounded-2xl border border-slate-800 bg-slate-900/70 px-4 py-3 transition hover:border-sky-500/40">
-                            <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-sky-500/15 text-lg font-semibold text-sky-300">P</div>
+                        <a href="{{ route('dashboard') }}" class="flex min-w-0 items-center gap-3 rounded-md border border-slate-800 bg-slate-900/70 px-4 py-3 transition hover:border-sky-500/40">
+                            <div class="flex h-10 w-10 items-center justify-center rounded-md bg-sky-500/15 text-lg font-semibold text-sky-300">P</div>
                             <div class="min-w-0">
                                 <p class="truncate text-sm font-semibold text-white">Parasolutions Platform</p>
                                 <p class="truncate text-xs uppercase tracking-[0.2em] text-slate-500">Login App 2.0</p>
@@ -54,7 +54,7 @@
                                     id="app-search"
                                     type="text"
                                     placeholder="Global search coming soon"
-                                    class="w-full rounded-2xl border border-slate-800 bg-slate-900/70 py-3 pl-20 pr-4 text-sm text-slate-200 placeholder:text-slate-500 focus:border-sky-500/40 focus:outline-none"
+                                    class="w-full rounded-md border border-slate-800 bg-slate-900/70 py-3 pl-20 pr-4 text-sm text-slate-200 placeholder:text-slate-500 focus:border-sky-500/40 focus:outline-none"
                                 >
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                                 >
                                     <button
                                         type="button"
-                                        class="rounded-2xl border border-slate-800 bg-slate-900/70 px-4 py-3 text-left text-sm text-slate-300 transition hover:border-sky-500/40"
+                                        class="rounded-md border border-slate-800 bg-slate-900/70 px-4 py-3 text-left text-sm text-slate-300 transition hover:border-sky-500/40"
                                         data-notification-trigger
                                         aria-expanded="false"
                                         aria-controls="notification-menu-panel"
@@ -78,7 +78,7 @@
 
                                     <div
                                         id="notification-menu-panel"
-                                        class="absolute right-0 z-50 mt-3 hidden w-[28rem] rounded-3xl border border-slate-800 bg-slate-900/95 p-4 shadow-2xl shadow-black/40"
+                                        class="absolute right-0 z-50 mt-3 hidden w-[28rem] rounded-lg border border-slate-800 bg-slate-900/95 p-4 shadow-2xl shadow-black/40"
                                         data-notification-panel
                                     >
                                         <div class="flex items-start justify-between gap-4 border-b border-slate-800 pb-4">
@@ -96,7 +96,7 @@
                                             @forelse ($recentNotifications as $notification)
                                                 <a
                                                     href="{{ $notification->action_url ?: route('platform.administration.notifications.index') }}"
-                                                    class="block rounded-2xl border border-slate-800 bg-slate-950/80 px-4 py-4 transition hover:border-sky-500/30 hover:bg-slate-950"
+                                                    class="block rounded-md border border-slate-800 bg-slate-950/80 px-4 py-4 transition hover:border-sky-500/30 hover:bg-slate-950"
                                                     data-notification-preview-item
                                                     data-notification-id="{{ $notification->id }}"
                                                 >
@@ -123,7 +123,7 @@
                                                     <p class="mt-1 line-clamp-2 text-sm text-slate-400">{{ $notification->body }}</p>
                                                 </a>
                                             @empty
-                                                <div class="rounded-2xl border border-dashed border-slate-800 bg-slate-950/50 px-4 py-8 text-center text-sm text-slate-500" data-notification-preview-empty-state>
+                                                <div class="rounded-md border border-dashed border-slate-800 bg-slate-950/50 px-4 py-8 text-center text-sm text-slate-500" data-notification-preview-empty-state>
                                                     No recent notifications are available for your account.
                                                 </div>
                                             @endforelse
@@ -133,8 +133,8 @@
                             @endcan
 
                             <details class="group relative">
-                                <summary class="flex cursor-pointer list-none items-center gap-3 rounded-2xl border border-slate-800 bg-slate-900/70 px-4 py-3 transition hover:border-sky-500/40">
-                                    <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-800 text-sm font-semibold text-white">
+                                <summary class="flex cursor-pointer list-none items-center gap-3 rounded-md border border-slate-800 bg-slate-900/70 px-4 py-3 transition hover:border-sky-500/40">
+                                    <div class="flex h-10 w-10 items-center justify-center rounded-md bg-slate-800 text-sm font-semibold text-white">
                                         {{ strtoupper(substr($user->name, 0, 1)) }}
                                     </div>
                                     <div class="hidden text-left lg:block">
@@ -144,10 +144,10 @@
                                     <span class="text-slate-500 transition group-open:rotate-180">⌄</span>
                                 </summary>
 
-                                <div class="absolute right-0 z-50 mt-3 w-72 rounded-3xl border border-slate-800 bg-slate-900/95 p-3 shadow-2xl shadow-black/40">
+                                <div class="absolute right-0 z-50 mt-3 w-72 rounded-lg border border-slate-800 bg-slate-900/95 p-3 shadow-2xl shadow-black/40">
                                     @foreach ($accountNavigation as $item)
                                         <a href="{{ route($item['route']) }}" @class([
-                                            'block rounded-2xl px-4 py-3 text-sm transition',
+                                            'block rounded-md px-4 py-3 text-sm transition',
                                             'text-slate-200 hover:bg-slate-800 hover:text-white' => ! request()->routeIs(...$item['active']),
                                             'bg-sky-500/10 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs(...$item['active']),
                                             'mt-1' => ! $loop->first,
@@ -158,7 +158,7 @@
 
                                     <form method="POST" action="{{ route('logout') }}" class="mt-2 border-t border-slate-800 pt-2">
                                         @csrf
-                                        <button type="submit" class="w-full rounded-2xl px-4 py-3 text-left text-sm font-semibold text-rose-200 transition hover:bg-rose-500/10 hover:text-rose-100">
+                                        <button type="submit" class="w-full rounded-md px-4 py-3 text-left text-sm font-semibold text-rose-200 transition hover:bg-rose-500/10 hover:text-rose-100">
                                             Sign out
                                         </button>
                                     </form>
@@ -184,7 +184,7 @@
                                 <div class="relative overflow-hidden">
                                     <div class="flex transition-transform duration-300 will-change-transform" data-sidebar-track>
                                         {{-- Panel 1: Main navigation --}}
-                                        <div class="w-72 shrink-0 rounded-3xl border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30" data-main-nav-panel>
+                                        <div class="w-72 shrink-0 rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30" data-main-nav-panel>
                                             <p class="text-xs font-semibold uppercase tracking-[0.3em] text-sky-300">Platform Navigation</p>
                                             <h1 class="mt-3 text-2xl font-semibold text-white">Workspace</h1>
                                             <p class="mt-2 text-sm text-slate-400">Core internal platform surfaces.</p>
@@ -192,7 +192,7 @@
                                             <nav class="mt-8 space-y-2">
                                                 @foreach ($primaryNavigation as $item)
                                                     <a href="{{ route($item['route']) }}" data-main-nav-link @class([
-                                                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                                                        'block rounded-md px-4 py-3 text-sm font-medium transition',
                                                         'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs(...$item['active']),
                                                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs(...$item['active']),
                                                     ])>
@@ -205,7 +205,7 @@
                                                 <div class="mt-6 border-t border-slate-800 pt-4">
                                                     <button
                                                         type="button"
-                                                        class="flex w-full items-center rounded-2xl px-4 py-3 text-sm font-medium text-slate-400 transition hover:bg-slate-800 hover:text-white"
+                                                        class="flex w-full items-center rounded-md px-4 py-3 text-sm font-medium text-slate-400 transition hover:bg-slate-800 hover:text-white"
                                                         data-setup-open
                                                     >
                                                         <span>Setup</span>
@@ -216,12 +216,12 @@
                                         </div>
 
                                         {{-- Panel 2: Setup panel --}}
-                                        <div class="w-72 shrink-0 rounded-3xl border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30" data-setup-nav-panel>
+                                        <div class="w-72 shrink-0 rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30" data-setup-nav-panel>
                                             <div class="flex items-center justify-between">
                                                 <p class="text-xs font-semibold uppercase tracking-[0.3em] text-sky-300">Setup</p>
                                                 <button
                                                     type="button"
-                                                    class="rounded-xl border border-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-400 transition hover:border-slate-600 hover:text-white"
+                                                    class="rounded-md border border-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-400 transition hover:border-slate-600 hover:text-white"
                                                     data-setup-close
                                                 >
                                                     ✕ Close
@@ -231,7 +231,7 @@
                                             <nav class="mt-6 space-y-2">
                                                 @foreach ($setupNavigation as $item)
                                                     <a href="{{ route($item['route']) }}" data-setup-nav-link @class([
-                                                        'block rounded-2xl px-4 py-3 text-sm font-medium transition',
+                                                        'block rounded-md px-4 py-3 text-sm font-medium transition',
                                                         'bg-sky-500/15 text-sky-200 ring-1 ring-sky-500/30' => request()->routeIs(...$item['active']),
                                                         'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs(...$item['active']),
                                                     ])>

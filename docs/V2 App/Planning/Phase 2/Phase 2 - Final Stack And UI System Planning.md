@@ -10,7 +10,7 @@ This note is the active planning surface for deciding how the Phase 1 foundation
 
 Current status:
 
-* Phase 2 planning is active and Batch 5 is complete
+* Phase 2 planning is active and Batch 6 is complete
 * Batch 5 final audit passed (testing and visual web app confirmation)
 * Phase 1 is complete and signed off
 * current app surfaces are custom Blade, Vite, Tailwind, Laravel controllers, and small DOM-driven JavaScript
@@ -20,7 +20,10 @@ Current status:
 * Livewire is present through Filament, while broad custom Livewire shell ownership remains deferred
 * Batch 4 route/navigation convergence is complete through target `/platform/operations/*` routes and centralized shell navigation
 * Batch 5 visual baseline and first-pass owner matrix are implemented and verified for shared admin migrations
-* Batch 6 close-out contract pass is in progress for optional module schema direction, platform-to-tenant handoff, and UI ownership declaration standards
+* Batch 6 close-out contract pass is implemented for optional module schema direction, platform-to-tenant handoff, UI ownership declaration standards, and `/console` proof-path retirement control
+* full existing UI surface review is completed and synced in the UI Surface Disposition Audit sign-off matrix
+* Batch 7 implementation is complete for final visual UI migration scope that was expected as part of Phase 2 deliverables
+* final visual sign-off review remains before Phase 2 can be fully closed
 
 Canonical architecture owner:
 
@@ -39,6 +42,7 @@ Batch artifacts:
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 4]] | [Phase 2 - Implementation Batch 4](Phase%202%20-%20Implementation%20Batch%204.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 5]] | [Phase 2 - Implementation Batch 5](Phase%202%20-%20Implementation%20Batch%205.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 6]] | [Phase 2 - Implementation Batch 6](Phase%202%20-%20Implementation%20Batch%206.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]] | [Phase 2 - Implementation Batch 7](Phase%202%20-%20Implementation%20Batch%207.md)
 
 ## Phase Goal
 
@@ -53,7 +57,7 @@ The following direction is now accepted for Phase 2 planning and execution:
 * the current Blade shell remains the primary shell during Phase 2 while migrations are sequenced
 * Filament remains approved for admin and operational data-heavy surfaces, but must be integrated under the unified app direction
 * audit and error log Filament proofs are complete as technical validation and now move into migration planning
-* operational log navigation now targets `/platform/operations/*` routes, which gate access before redirecting to transitional Filament proof resources
+* operational log navigation now targets `/platform/operations/*` routes, which gate access before redirecting to app-owned operational views
 * notifications realtime transport remains Reverb and Echo; migration work should not replace it with polling-first behavior
 * UI ownership must be declared per surface before implementation: custom Blade, Filament, or hybrid
 * Batch 5 will not adopt a third-party dashboard/admin template; it uses the current Tailwind Blade shell plus Filament-owned admin/data surfaces
@@ -146,13 +150,13 @@ Locked for Batch 4:
 
 * shell navigation ownership lives in `App\Platform\Navigation\PlatformNavigation`
 * operational log navigation uses `/platform/operations/audit-logs` and `/platform/operations/error-logs`
-* `/console/platform-audit-logs` and `/console/central-error-logs` remain transitional Filament proof targets behind gate-checked redirects
+* `/console/platform-audit-logs` and `/console/central-error-logs` remain transitional Filament proof targets with direct access disabled by default behind `CONSOLE_PROOF_PATHS_ENABLED=false`
 
 Still to lock before broader migrations:
 
 * shared core app shell route space
 * platform-management route space
-* final direct owner path for Filament operational resources after proof redirects are retired
+* final removal timing for direct `/console/*` proof resources after post-close monitoring window
 * future tenant route/panel path under tenant domains
 * which auth guard/session rules apply to each surface
 * setup/settings ownership target and migration sequence
@@ -251,51 +255,50 @@ Required output:
 
 Current progress:
 
-* screen audit is drafted
-* route/panel ownership map is drafted
+* screen audit is completed and locked for Batch 6 review-readiness
+* route/panel ownership map is synchronized to Batch 6 retirement slices
 * Filament proof targets for audit and error logs are deployed and accepted as complete for Phase 2 proof purposes
 * app shell navigation ownership has a first implementation slice through a centralized navigation contract in the Blade shell
-* Batch 4 route convergence slice is implemented with target operational routes under `/platform/operations/*` that currently redirect to transitional `/console` proof routes with gate parity
+* Batch 6 operational retirement slice updates `/platform/operations/*` target routes to redirect to app-owned operational views with gate parity
 * Batch 5 visual baseline/template direction is locked: no external template, current Tailwind Blade shell, Filament-owned admin/data surfaces
 * Batch 5 owner matrix is locked for dashboard, shell, users, settings, notifications, operational logs, docs vault, and setup pages
-* first Batch 5 platform-users migration slice is implemented at `/platform/administration/users` and `/console/platform-users`
+* Batch 6 users retirement slice resolves `/platform/administration/users` to app-owned `/platform/users` while keeping `/console/platform-users` as direct transitional proof access
+* Batch 6 sets `CONSOLE_PROOF_PATHS_ENABLED=false` as the default so direct `/console/*` proof access is deprecated while app-owned fallback redirects remain
 * Batch 5 target administration routes are implemented for users, notifications, and settings
 * Batch 5 operational setup links use `/platform/operations/*` target routes
 * broad custom Livewire shell work remains deferred behind core migration deliverables
-* next implementation sequence is: Batch 6 close-out contracts, `/console` panel-path retirement planning, and cross-phase handoff
+* next implementation sequence is: final staging visual review and sign-off, then close Phase 2 with Phase 3/4 handoff sequencing
 
 ## Remaining Decisions
 
 ### UI design decisions
 
-Open:
+Locked at Phase 2 close:
 
-* what final dashboard layout should look like
-* whether the current top header/sidebar model remains
-* how dense data tables should be
-* how full-width pages should behave on desktop
-* how mobile/tablet behavior should work
-* whether the docs vault remains a specialized custom view
+* current dashboard layout remains app-owned custom Blade
+* current top header/sidebar model remains app-owned custom Blade shell
+* Filament data-table density/style follows Filament-native patterns for migrated admin/operational surfaces
+* full-width desktop behavior remains the current Tailwind Blade shell baseline
+* current responsive behavior remains the Phase 2 baseline pending Phase 3 design-system expansion
+* docs vault remains a specialized custom view and locked exception
 
 ### Templating decisions
 
-Open:
+Locked at Phase 2 close:
 
-* adopt a dashboard/admin template, reference one, or avoid templates
-* if a template is used, whether it is applied only visually or structurally
-* template license and maintenance acceptability
-* compatibility with Tailwind, Filament, Livewire, and Vite
-* whether template assets introduce unnecessary JavaScript or CSS weight
+* no dashboard/admin template is adopted
+* current Tailwind Blade shell baseline is retained
+* future template/design-system work is deferred and must be evaluated under later-phase scope
 
 ### Framework boundary decisions
 
 Open:
 
-* final direct target path plan replacing transitional `/console` routes after `/platform/operations/*` redirects are retired
+* final removal timing for `/console/*` proof resources after post-close monitoring
 * whether platform-management and core-app admin screens finish Phase 2 as a hybrid shell with shared design and unified navigation entry points
 * whether future tenant screens use a separate panel provider
 * whether Livewire is used outside Filament before Phase 3
-* final disposition of each current custom Blade screen after migration sequencing is complete
+* broad post-Phase-2 migration disposition sequencing for custom Blade screens beyond locked Phase 2 ownership
 
 ### Tenant and module boundary decisions
 

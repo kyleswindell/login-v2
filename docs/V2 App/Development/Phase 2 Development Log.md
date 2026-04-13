@@ -6,7 +6,7 @@ Record Phase 2 final-stack and UI-system planning, decisions, implementation mil
 
 ## Current Phase Status
 
-Phase 2 is in close-out sequencing.
+Phase 2 is in final review sequencing.
 
 Current state:
 
@@ -26,9 +26,13 @@ Current state:
 * first Batch 5 platform-users Filament migration slice is implemented
 * target administration routes for users, notifications, and settings are implemented
 * operational setup links now use `/platform/operations/*` target routes
+* Batch 6 users and operational target-route retirement slices are implemented to remove daily shell dependency on `/console/*`
+* Batch 6 adds a config-controlled `/console` proof-path retirement switch with app-owned fallback redirects
+* Batch 6 full existing-UI review is updated and synced as a completion requirement for final UI/stack decisions
 * Batch 5 review fixes are implemented for Filament user passwords, dismissed notification visibility, failed-login subject logging, and dashboard test-notification generation
 * Batch 5 is complete and final audit passed (testing and visual web app confirmation)
-* next Phase 2 focus is final operational panel-path retirement sequencing in Batch 6
+* Phase 2 Batch 6 close-out contracts are complete
+* Phase 2 Batch 7 final visual UI migration implementation is complete and ready for visual review
 
 ## Milestones
 
@@ -90,11 +94,37 @@ Planning owners:
 
 ## Next Expected Work
 
-* sequence operational route retirement from transitional `/console` proof paths
-* retire transitional operational log proof routing after final direct owner paths are selected
-* finish Batch 6 close-out contracts and handoff updates for Phase 3 and Phase 4
-* finalize `/console` panel-path retirement sequence and compatibility-route retirement timing
-* convert Batch 6 locked contracts into implementation-ready follow-up tasks
+* run visual UI review for Batch 7 on staging
+* execute final `/console` proof-resource retirement sequencing based on Batch 7 visual-review verification
+* close Phase 2 after final visual sign-off and sync final handoff updates for Phase 3 and Phase 4
+
+### 2026-04-12 - Phase 2 Batch 7 final visual UI migration implementation
+
+Status:
+
+* implemented
+* review-ready for visual UI sign-off
+
+Work completed:
+
+* migrated `resources/views/platform/dashboard.blade.php` to the Batch 7 final visual baseline with Filament-aligned card/action density and preserved permission-gated behavior
+* migrated `resources/views/components/layouts/app.blade.php` header/menu/sidebar panels to a cohesive updated shell styling baseline
+* updated realtime notification client template classes in `resources/js/app.js` to align dynamic notification cards and toasts with the updated shell/card baseline
+* added reusable UI utility component classes in `resources/css/app.css` for consistent card/stat/action patterns
+* synchronized Batch 7, Phase 2 index/planning owner, canonical architecture, and UI surface audit docs with implementation status
+
+Verification:
+
+* `php artisan route:list --path=dashboard` confirms dashboard routes remain registered
+* `php artisan route:list --path=platform/administration` and `--path=platform/operations` confirm target ownership routes remain registered
+* local `php artisan test tests/Feature/Platform/PlatformDashboardTest.php` could not execute to assertions because `postgres` host resolution fails outside Docker
+* local asset build is blocked in this environment because Node tooling reports unsupported WSL runtime (`WSL 1 is not supported`)
+* visual review is intentionally deferred to staging sign-off pass once all systems are ready for review
+
+Planning owners:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]] | [Phase 2 - Implementation Batch 7](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%207.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](../Planning/Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
 
 ### 2026-04-11 - Phase 2 Batch 6 close-out contract lock pass 1
 
@@ -148,6 +178,122 @@ Planning owners:
 Canonical docs:
 
 * [[V2 App/Features/Platform Users And RBAC]] | [Platform Users And RBAC](../Features/Platform%20Users%20And%20RBAC.md)
+
+### 2026-04-12 - Phase 2 Batch 6 operational target-route retirement slice
+
+Status:
+
+* implemented in application routes and feature tests
+* Batch 6 remains in progress for final direct `/console` panel-path retirement sequencing
+
+Work completed:
+
+* updated `/platform/operations/audit-logs` to keep the target shell route but resolve directly to app-owned `/platform/audit-logs`
+* updated `/platform/operations/error-logs` to keep the target shell route but resolve directly to app-owned `/platform/error-logs`
+* removed shell-target dependency on transitional `/console/platform-audit-logs` and `/console/central-error-logs`
+* updated operational log viewer feature test expectations to match the new target-route behavior
+* synchronized Batch 6 planning, route ownership map, and canonical logging/architecture docs with this retirement slice
+
+Verification:
+
+* Docker test execution is currently blocked in this session because `docker-compose exec` requires sudo password entry
+* local `php artisan test` execution failed in this environment because `postgres` host is not resolvable outside Docker
+
+Planning owners:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 6]] | [Phase 2 - Implementation Batch 6](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%206.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Route And Panel Ownership Map]] | [Phase 2 - Route And Panel Ownership Map](../Planning/Phase%202/Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md)
+
+Canonical docs:
+
+* [[V2 App/Features/Event And Error Logging]] | [Event And Error Logging](../Features/Event%20And%20Error%20Logging.md)
+* [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
+
+### 2026-04-12 - Phase 2 Batch 6 console proof-path retirement control slice
+
+Status:
+
+* implemented in application middleware, panel wiring, and feature tests
+* Batch 6 remains in progress for release timing and deprecation-window close-out
+
+Work completed:
+
+* added `CONSOLE_PROOF_PATHS_ENABLED` retirement control for direct `/console/*` proof paths
+* added panel middleware to enforce proof-path retirement behavior when the flag is disabled
+* added compatibility redirects from direct `/console/*` proof paths to app-owned routes
+* added feature tests covering `/console/platform-users`, `/console/platform-audit-logs`, `/console/central-error-logs`, and `/console/login` fallback behavior when disabled
+* synchronized Batch 6 planning and canonical architecture/route docs with the new retirement control contract
+
+Verification:
+
+* `php artisan route:list --path=platform/operations` confirms shell-target operational routes remain active
+* targeted feature tests could not be executed to completion in this non-Docker environment because `postgres` host resolution fails outside Docker
+
+Planning owners:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 6]] | [Phase 2 - Implementation Batch 6](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%206.md)
+
+Canonical docs:
+
+* [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Route And Panel Ownership Map]] | [Phase 2 - Route And Panel Ownership Map](../Planning/Phase%202/Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md)
+
+### 2026-04-12 - Phase 2 Batch 6 review-readiness and full UI review closure
+
+Status:
+
+* review-ready
+* Batch 6 completion requirement for full existing-UI review is satisfied and synchronized
+
+Work completed:
+
+* set `CONSOLE_PROOF_PATHS_ENABLED=false` as the default to deprecate direct `/console/*` proof access
+* retained fallback redirects from direct `/console/*` proof routes to app-owned `/dashboard` and `/platform/*` ownership routes for cohesive daily navigation
+* updated proof-path feature coverage so direct proof access remains testable when explicitly re-enabled
+* completed and synchronized the full UI review matrix in the UI Surface Disposition Audit with explicit final Phase 2-close ownership decisions for dashboard, shell, notifications, setup/settings, and docs vault
+* updated Batch 6 planning and canonical architecture/planning docs to reflect review-readiness and remaining post-close non-blockers
+* added a PR-style final review checklist in Batch 6 with explicit PASS/DEFERRED exit-criterion status and evidence links
+
+Verification:
+
+* `php artisan route:list --path=platform/operations` confirms shell-target operational routes remain active
+* `php artisan route:list --path=console` confirms proof routes still register for controlled compatibility
+* targeted feature tests remain blocked in this environment because `postgres` host resolution fails outside Docker
+
+Planning owners:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 6]] | [Phase 2 - Implementation Batch 6](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%206.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - UI Surface Disposition Audit]] | [Phase 2 - UI Surface Disposition Audit](../Planning/Phase%202/Phase%202%20-%20UI%20Surface%20Disposition%20Audit.md)
+
+Canonical docs:
+
+* [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](../Planning/Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
+
+### 2026-04-12 - Phase 2 Batch 6 closed and Batch 7 drafted
+
+Status:
+
+* Batch 6 complete
+* Batch 7 planned for final visual UI migration completion
+
+Work completed:
+
+* closed Batch 6 as the phase close-out contract batch with final checklist outcomes recorded
+* drafted Batch 7 specifically to complete final UI migration work that was expected in Phase 2 but not delivered by Batch 6
+* updated Phase 2 index and planning index to include Batch 7 in the official sequence
+* updated Phase 2 planning owner note to reflect scope correction and next implementation order
+* updated standards to require explicit phase deliverable review and sign-off before implementation begins
+
+Verification:
+
+* doc graph and index links updated for Batch 7
+* Batch 6 status, scope boundary, and handoff path now align across planning owner and development log
+
+Planning owners:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 6]] | [Phase 2 - Implementation Batch 6](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%206.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]] | [Phase 2 - Implementation Batch 7](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%207.md)
 
 ### 2026-04-11 - Phase 2 Batch 5 kickoff contracts and users migration slice
 

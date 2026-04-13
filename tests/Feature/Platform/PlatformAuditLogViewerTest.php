@@ -32,6 +32,7 @@ class PlatformAuditLogViewerTest extends TestCase
 
     public function test_authorized_users_can_view_filament_audit_log_proof(): void
     {
+        config()->set('app.console_proof_paths_enabled', true);
         $user = $this->actingAsPlatformSuperAdmin();
 
         PlatformAuditLog::query()->create([
@@ -49,12 +50,12 @@ class PlatformAuditLogViewerTest extends TestCase
             ->assertSee('auth.login.success');
     }
 
-    public function test_authorized_users_are_redirected_from_target_audit_route_to_filament_proof(): void
+    public function test_authorized_users_are_redirected_from_target_audit_route_to_app_owned_audit_logs(): void
     {
         $this->actingAsPlatformSuperAdmin();
 
         $this->get('/platform/operations/audit-logs')
-            ->assertRedirect('/console/platform-audit-logs');
+            ->assertRedirect('/platform/audit-logs');
     }
 
     public function test_guests_are_redirected_from_target_audit_route(): void
@@ -65,12 +66,14 @@ class PlatformAuditLogViewerTest extends TestCase
 
     public function test_guests_are_redirected_from_filament_audit_log_proof(): void
     {
+        config()->set('app.console_proof_paths_enabled', true);
         $this->get('/console/platform-audit-logs')
             ->assertRedirect('/console/login');
     }
 
     public function test_users_without_permission_cannot_access_filament_audit_log_proof(): void
     {
+        config()->set('app.console_proof_paths_enabled', true);
         $user = User::factory()->create([
             'is_active' => true,
         ]);

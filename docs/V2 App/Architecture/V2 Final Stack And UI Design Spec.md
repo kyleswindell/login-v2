@@ -17,13 +17,15 @@ Current status:
 * `/console` currently exists as a transitional proof path for operational Filament validation
 * Livewire is present through Filament, while broad custom Livewire shell ownership remains deferred
 * shell/navigation baseline ownership is implemented in backend contracts
-* target operational ownership routes now exist under `/platform/operations/*` with gated redirects to transitional `/console` proof routes
+* target operational ownership routes now exist under `/platform/operations/*` with gated redirects to app-owned operational views
 * Batch 5 visual baseline and first-pass owner matrix are explicit
 * platform-users migration is implemented as the first Batch 5 code slice
 * operational shell and setup navigation now use `/platform/operations/*` target routes while legacy Blade log viewers remain compatibility paths
+* `/console` direct proof-path access now has a config-controlled retirement switch (`CONSOLE_PROOF_PATHS_ENABLED`, default `false`) with app-owned fallback redirects
 * Batch 5 owner migration scope is complete
 * Batch 5 final audit passed (testing and visual web app confirmation)
-* Batch 6 close-out contract lock pass is in progress
+* Batch 6 close-out contracts are complete
+* Batch 7 implementation is complete for final visual UI migration of existing Phase 2 surfaces and is pending final visual sign-off
 
 Source planning note:
 
@@ -70,9 +72,10 @@ The following direction is locked for current Phase 2 planning and execution:
 * Filament stays approved for admin/operational data surfaces and must align with unified navigation and design conventions
 * notifications realtime behavior remains Reverb/Echo based while UI ownership evolves
 * no third-party dashboard/admin template is adopted for Batch 5; the current Tailwind Blade shell remains the baseline while Filament owns selected admin/data surfaces
-* platform users now has an app-owned target route at `/platform/administration/users` that redirects to `/console/platform-users` during the migration window
+* platform users now has an app-owned target route at `/platform/administration/users` that redirects to app-owned `/platform/users`
 * notifications and settings now have app-owned target routes at `/platform/administration/notifications` and `/platform/administration/settings` while their custom Blade behavior remains authoritative
-* operational log setup and shell links now use `/platform/operations/*`; `/platform/audit-logs` and `/platform/error-logs/*` remain compatibility paths until final panel-path retirement is selected
+* operational log setup and shell links now use `/platform/operations/*`, which now resolves to app-owned `/platform/audit-logs` and `/platform/error-logs`; `/console/*` operational proofs remain direct transitional paths only
+* direct `/console/*` proof-path retirement is active by default via `CONSOLE_PROOF_PATHS_ENABLED=false` rather than immediate route deletion
 
 ## Current Implementation Versus Final Stack
 
@@ -210,7 +213,7 @@ This preserves V1's useful post-release module rollout behavior without making a
 
 Open gaps:
 
-* Batch 4 introduced `/platform/operations/*` as the shell-owned target route layer and Batch 5 converged setup links onto it, but no ADR yet confirms final direct replacement paths after transitional `/console` redirects are retired
+* no ADR yet confirms final timing for removing direct `/console/*` proof resources after the Batch 6 deprecation window
 * no final UI component inventory exists
 * Batch 5 has a working visual/template decision, but no final long-term design-system reference exists yet
 * no panel boundary test exists

@@ -17,7 +17,8 @@ Current status:
 * Filament read-only error log proof is deployed and validated on staging
 * Filament read-only audit log proof is accepted for Phase 2 proof purposes
 * target operational shell routes exist at `/platform/operations/audit-logs` and `/platform/operations/error-logs`
-* Phase 2 Batch 5 keeps operational log daily navigation and setup entry points on `/platform/operations/*` while final direct Filament route ownership is sequenced behind the platform-users migration
+* Phase 2 Batch 6 retires operational target-route dependency on `/console/*`; `/platform/operations/*` now redirects to app-owned operational views
+* direct `/console` proof-path access is now controlled by `CONSOLE_PROOF_PATHS_ENABLED` (default off) with app-owned fallback redirects when disabled
 * audit and error log timestamps are stored as UTC and displayed in the signed-in user's timezone
 * Filament log viewers use safe modal headings and truncated long-text display to avoid oversized recursive exception output
 * Filament log slide-over details are organized into coherent sections with long message, stack trace, metadata, and client details collapsed by default
@@ -87,8 +88,8 @@ Current auth-related events:
 Current audit visibility surface:
 
 * `GET /platform/audit-logs`
-* `GET /platform/operations/audit-logs`, target shell/setup route that gate-checks then redirects to the transitional Filament proof
-* `GET /console/platform-audit-logs`, transitional Filament proof path
+* `GET /platform/operations/audit-logs`, target shell/setup route that gate-checks then redirects to app-owned `/platform/audit-logs`
+* `GET /console/platform-audit-logs`, transitional Filament proof path (redirects to `/platform/audit-logs` when proof access is disabled)
 * filters by event type, actor, result, and severity
 * current audience is platform users with `platform.audit-logs.view`
 
@@ -136,15 +137,15 @@ Current error visibility surface:
 
 * `GET /platform/error-logs`
 * `GET /platform/error-logs/{log}`
-* `GET /platform/operations/error-logs`, target shell/setup route that gate-checks then redirects to the transitional Filament proof
-* `GET /console/central-error-logs`, transitional Filament proof path
+* `GET /platform/operations/error-logs`, target shell/setup route that gate-checks then redirects to app-owned `/platform/error-logs`
+* `GET /console/central-error-logs`, transitional Filament proof path (redirects to `/platform/error-logs` when proof access is disabled)
 * filters by severity, handled state, environment, exception class, and date range
 * current audience is platform users with `platform.error-logs.view`
 
-Phase 2 Batch 5 owner target:
+Phase 2 Batch 6 owner target:
 
 * operational logs are Filament-owned operational surfaces for long-term UI direction
-* `/platform/operations/*` remains the daily shell and setup navigation layer until final direct Filament route paths are selected
+* `/platform/operations/*` remains the daily shell and setup navigation layer while redirecting to app-owned operational views in current implementation
 * legacy Blade routes stay available as compatibility paths during the first Batch 5 migration slice
 
 Filament proof notes:

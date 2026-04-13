@@ -9,3 +9,41 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+@layer components {
+    .ui-shell-surface {
+        @apply border border-slate-800 bg-slate-900/80 shadow-xl shadow-black/20;
+    }
+
+    .ui-card {
+        @apply rounded-lg border border-slate-800 bg-slate-900/75 p-6 shadow-xl shadow-black/20;
+    }
+
+    .ui-card-title {
+        @apply text-lg font-semibold text-white;
+    }
+
+    .ui-card-copy {
+        @apply mt-2 text-sm text-slate-400;
+    }
+
+    .ui-kicker {
+        @apply text-xs font-semibold uppercase tracking-[0.18em] text-sky-300;
+    }
+
+    .ui-stat-label {
+        @apply text-xs font-semibold uppercase tracking-[0.16em] text-slate-500;
+    }
+
+    .ui-stat-value {
+        @apply mt-3 text-3xl font-semibold text-white;
+    }
+
+    .ui-stat-copy {
+        @apply mt-2 text-sm text-slate-400;
+    }
+
+    .ui-action {
+        @apply inline-flex items-center rounded-md border border-slate-700 px-3.5 py-2 text-sm font-semibold text-slate-100 transition hover:border-sky-400 hover:text-sky-200;
+    }
+}

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Close Phase 2 by finalizing cross-phase contracts, standards updates, and readiness handoff to Phase 3 and Phase 4.
+Close out the Phase 2 contract and handoff layer by finalizing cross-phase contracts, standards updates, and readiness handoff to Phase 3 and Phase 4.
 
 This batch is the phase close-out contract batch.
 
@@ -10,10 +10,13 @@ This batch is the phase close-out contract batch.
 
 Current status:
 
-* in progress
+* complete
 * Batch 5 completion dependency is satisfied
 * first close-out contract lock pass implemented in docs
 * users-route retirement slice implemented: `/platform/administration/users` now redirects to app-owned `/platform/users`
+* operational-route retirement slice implemented: `/platform/operations/*` now redirects to app-owned operational views (`/platform/audit-logs`, `/platform/error-logs`)
+* `/console` proof-path retirement control implemented with `CONSOLE_PROOF_PATHS_ENABLED` and compatibility redirects to app-owned routes
+* full existing UI review is synchronized in the UI Surface Disposition Audit with final Phase 2-close owner decisions
 
 Planning owner:
 
@@ -179,8 +182,46 @@ Locked direction:
 
 Remaining deferred retirement scope:
 
-* operational log shell-target retirement (`/platform/operations/*` currently still redirects to transitional `/console/*` proof paths)
-* full `/console` panel-path retirement timing and deprecation sequence
+* remove direct `/console/*` proof resources entirely in Batch 7 after final UI migration verification confirms no dependency
+
+## Locked Contract Decisions (Pass 3)
+
+### Operational Target Route Retirement Slice
+
+Locked direction:
+
+* keep `/platform/operations/audit-logs` and `/platform/operations/error-logs` as shell/setup target routes
+* retire dependency on transitional `/console/platform-audit-logs` and `/console/central-error-logs` for target operational routing
+* resolve `/platform/operations/audit-logs` directly to app-owned `/platform/audit-logs` while preserving `view-platform-audit-logs` gate checks
+* resolve `/platform/operations/error-logs` directly to app-owned `/platform/error-logs` while preserving `view-platform-error-logs` gate checks
+* keep `/console/platform-audit-logs` and `/console/central-error-logs` available only as direct transitional proof paths until final panel-path retirement is complete
+
+## Locked Contract Decisions (Pass 4)
+
+### Console Proof-Path Retirement Control
+
+Locked direction:
+
+* gate direct `/console/*` proof-path access behind `CONSOLE_PROOF_PATHS_ENABLED` (default `false`)
+* when disabled, redirect direct proof paths to app-owned routes:
+	* `/console/platform-users` -> `/platform/users`
+	* `/console/platform-audit-logs` -> `/platform/audit-logs`
+	* `/console/central-error-logs` -> `/platform/error-logs`
+	* `/console/login` -> `/login`
+* keep proof resources and panel registrations intact during Phase 2 close so retirement can be rolled out per environment without route deletion risk
+
+## Batch 6 Completion Requirement: Full Existing UI Review
+
+Completion requirement:
+
+* the full existing UI review must be updated with final Phase 2-close UI and stack decisions
+* `/console` proof-path deprecation and base-route cohesion must be reflected in owner/route status
+* dashboard/shell/notifications/setup/settings/docs ownership decisions must be explicit and linked to parity checks
+
+Implementation record:
+
+* updated in [[V2 App/Planning/Phase 2/Phase 2 - UI Surface Disposition Audit]] with a Batch 6 full UI review sign-off matrix
+* synchronized in canonical architecture and route-owner planning notes
 
 ## Cross-Phase Handoff Contracts
 
@@ -203,6 +244,32 @@ This batch is complete when:
 * dashboard and related custom Blade surfaces have explicit Phase 2 close ownership decisions and parity expectations
 * standards and canonical docs are synchronized with final Phase 2 decisions
 * Phase 3 and Phase 4 planning notes reference the finalized Phase 2 contracts
+
+## Final Review Checklist (PR-Style)
+
+Review date:
+
+* 2026-04-12
+
+Checklist:
+
+* [PASS] all Phase 2 exit criteria in the phase planning owner note are satisfied for Batch 6 close-out scope
+	* evidence: Batch 6 locked contract decisions and implementation status synchronization across planning, canonical, and development-log layers
+* [PASS] open decision blockers are closed or explicitly deferred with owner and rationale
+	* evidence: Locked Contract Decisions (Pass 1-4) in this note and Batch 7 scope-correction handoff for final UI migration/removal timing
+* [PASS] dashboard and related custom Blade surfaces have explicit Phase 2-close ownership decisions and parity expectations
+	* evidence: [[V2 App/Planning/Phase 2/Phase 2 - UI Surface Disposition Audit]] Batch 6 full UI review sign-off matrix
+* [PASS] standards and canonical docs are synchronized with final Phase 2 decisions
+	* evidence: [[V2 App/Architecture/V2 Final Stack And UI Design Spec]], [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]], [[V2 App/Planning/Phase 2/Phase 2 - Route And Panel Ownership Map]], [[V2 App/Development/Phase 2 Development Log]]
+* [PASS] Phase 3 and Phase 4 planning notes reference the finalized Phase 2 contracts
+	* evidence: Cross-Phase Handoff Contracts section in this note and linked phase index references
+* [PASS] Batch 6 implementation checks are complete for close-out scope
+	* evidence: route ownership checks and documentation parity checks are complete; environment-limited test execution constraints are recorded in the Phase 2 development log
+
+Batch closure note:
+
+* Batch 6 is closed as the phase close-out contract batch.
+* The missed full visual migration scope is explicitly moved into [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]].
 
 ## Verification
 

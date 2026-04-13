@@ -38,6 +38,7 @@ class PlatformUserManagementTest extends TestCase
 
     public function test_super_admin_can_view_filament_platform_users_migration_surface(): void
     {
+        config()->set('app.console_proof_paths_enabled', true);
         $this->actingAsPlatformSuperAdmin();
 
         $this->get('/console/platform-users')
@@ -146,6 +147,7 @@ class PlatformUserManagementTest extends TestCase
 
     public function test_standard_users_cannot_access_platform_user_management(): void
     {
+        config()->set('app.console_proof_paths_enabled', true);
         $user = User::factory()->create();
 
         $this->actingAs($user)

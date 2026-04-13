@@ -15,6 +15,8 @@ Current status:
 * target operational shell and setup links are implemented under `/platform/operations/*`
 * current Phase 1 routes remain custom Blade under `/dashboard` and `/platform/...`
 * `/console` is transitional proof routing and is no longer linked directly from the shell navigation
+* Batch 6 retirement slices now route `/platform/administration/users` and `/platform/operations/*` to app-owned surfaces while keeping `/console/*` for direct proof access only
+* Batch 6 adds a config-controlled direct-proof retirement switch (`CONSOLE_PROOF_PATHS_ENABLED`, default `false`) for `/console/*` paths
 
 Canonical owner:
 
@@ -34,7 +36,7 @@ Current Phase 1 route families:
 | `/login` | custom Blade auth | platform login | keep until panel/auth decision |
 | `/dashboard` | custom Blade | main authenticated dashboard | shared core candidate |
 | `/platform/users` | custom Blade | platform user management | migration candidate |
-| `/platform/administration/users` | Laravel route alias | target platform user ownership route that gate-checks then redirects to `/console/platform-users` | implemented in Batch 5 |
+| `/platform/administration/users` | Laravel route alias | target platform user ownership route that gate-checks then redirects to app-owned `/platform/users` | implemented in Batch 6 users retirement slice |
 | `/platform/administration/notifications` | Laravel route alias | target notifications ownership route that gate-checks then redirects to `/platform/notifications` | implemented in Batch 5 |
 | `/platform/administration/settings` | Laravel route alias | target settings ownership route that gate-checks then redirects to `/platform/settings/general` | implemented in Batch 5 |
 | `/platform/setup/*` | custom Blade | Setup shell pages | route strategy pending |
@@ -42,8 +44,8 @@ Current Phase 1 route families:
 | `/platform/notifications` | custom Blade plus Echo | notification inbox | hybrid candidate |
 | `/platform/audit-logs` | custom Blade | audit log viewer | Filament candidate |
 | `/platform/error-logs` | custom Blade | error log viewer | Filament candidate |
-| `/platform/operations/audit-logs` | Laravel route alias | target operational ownership route that gate-checks then redirects to `/console/platform-audit-logs`; used by shell and setup navigation | implemented in Batch 4; setup links converged in Batch 5 |
-| `/platform/operations/error-logs` | Laravel route alias | target operational ownership route that gate-checks then redirects to `/console/central-error-logs`; used by shell and setup navigation | implemented in Batch 4; setup links converged in Batch 5 |
+| `/platform/operations/audit-logs` | Laravel route alias | target operational ownership route that gate-checks then redirects to app-owned `/platform/audit-logs`; used by shell and setup navigation | implemented in Batch 6 operational retirement slice |
+| `/platform/operations/error-logs` | Laravel route alias | target operational ownership route that gate-checks then redirects to app-owned `/platform/error-logs`; used by shell and setup navigation | implemented in Batch 6 operational retirement slice |
 | `/console/platform-audit-logs` | Filament proof resource | read-only audit log proof surface | transitional proof path |
 | `/console/central-error-logs` | Filament proof resource | read-only error log proof surface | transitional proof path |
 | `/console/platform-users` | Filament migration resource | platform user management migration surface | transitional migration path |
@@ -170,7 +172,7 @@ Open:
 
 * exact platform production domain
 * exact tenant admin domain pattern
-* final direct replacement path(s) for `/console` proof/migration resources after Batch 4 `/platform/operations/*` and Batch 5 `/platform/administration/users` redirects are retired
+* final timing for removing direct `/console` proof resources after the deprecation window
 * whether shared core routes become unprefixed, `/app/*`, or Filament-owned
 * whether current non-operational `/platform/*` routes are retained as aliases, migrated, or reserved for platform-management only
 * whether platform-management is a separate panel or a grouped capability inside the shared core shell after transitional routes are retired

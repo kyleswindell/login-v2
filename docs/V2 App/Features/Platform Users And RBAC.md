@@ -17,6 +17,7 @@ Current status:
 * first Filament migration resource is implemented locally at `/console/platform-users`
 * target app-owned migration route is implemented locally at `/platform/administration/users`
 * shell navigation points to `/platform/administration/users`, and that target route now resolves to app-owned `/platform/users`
+* direct `/console/platform-users` access is now controlled by `CONSOLE_PROOF_PATHS_ENABLED` (default off) with fallback redirect to `/platform/users`
 * current Blade `/platform/users/*` routes remain compatibility paths for full parity validation
 * Filament create/edit flows persist password changes, role assignments, activation state, and staff profile fields
 * tenant-scoped auth and tenant roles are still deferred
@@ -53,7 +54,7 @@ Migration requirements:
 
 * preserve the current Blade `/platform/users/*` routes until Filament create/edit/list behavior matches the existing workflow
 * route target: `/platform/administration/users`
-* transitional Filament proof path: `/console/platform-users` (direct access only; not required by shell-target routing)
+* transitional Filament proof path: `/console/platform-users` (direct access only; not required by shell-target routing; redirects to app-owned path when proof access is disabled)
 * keep `manage-platform-users` as the owner gate
 * preserve current staff profile fields, activation state, welcome-email flag, and role assignment behavior
 * keep validation and business behavior aligned with the existing request/model/RBAC contracts

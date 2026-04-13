@@ -109,6 +109,22 @@ Before a phase batch is treated as complete, confirm:
 * the development log records the milestone
 * indexes and graph links are updated
 
+## Phase Deliverable Review Gate (Pre-Implementation)
+
+Before implementation starts for any phase, the phase owner note must include an explicit deliverable checklist and sign-off review.
+
+Minimum required content:
+
+* phase deliverables list with clear acceptance language
+* explicit in-scope and out-of-scope boundaries
+* required verification artifacts (tests, staging checks, visual checks, doc sync targets)
+* owner sign-off marker showing deliverables were reviewed before coding starts
+
+If this gate is missing:
+
+* implementation should not begin
+* any batch started without this review must add a correction note and updated deliverables checklist before further implementation continues
+
 ## Module Planning Contract Rule
 
 For any new Phase 3+ module planning note, include a UI ownership declaration matrix before implementation starts.

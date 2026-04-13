@@ -78,6 +78,17 @@ This is a documentation procedure requirement, not a code enforcement:
 
 This requirement is reviewed during planning note review before implementation begins.
 
+## Phase Kickoff Deliverable Review Requirement
+
+When feature work belongs to a phase plan, phase deliverables must be explicitly reviewed and signed off before implementation starts.
+
+Required phase-kickoff checks:
+
+* confirm feature-level deliverables align to phase-level deliverables
+* confirm final UI ownership outcomes are explicit for each affected surface
+* confirm verification expectations are defined (tests, staging checks, visual review, doc sync)
+* confirm any deferred scope is declared before coding starts, not after batch close-out
+
 ## Feature Settings Registration Rule
 
 A feature's Setup sidebar entry must not be created until at least one real editable setting exists for that feature.

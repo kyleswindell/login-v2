@@ -49,6 +49,7 @@ class ErrorLogViewerTest extends TestCase
 
     public function test_authorized_users_can_view_filament_error_log_proof(): void
     {
+        config()->set('app.console_proof_paths_enabled', true);
         $this->actingAsPlatformSuperAdmin();
 
         $this->createErrorLog([
@@ -67,12 +68,12 @@ class ErrorLogViewerTest extends TestCase
             ->assertSee('critical');
     }
 
-    public function test_authorized_users_are_redirected_from_target_error_route_to_filament_proof(): void
+    public function test_authorized_users_are_redirected_from_target_error_route_to_app_owned_error_logs(): void
     {
         $this->actingAsPlatformSuperAdmin();
 
         $this->get('/platform/operations/error-logs')
-            ->assertRedirect('/console/central-error-logs');
+            ->assertRedirect('/platform/error-logs');
     }
 
     public function test_guests_are_redirected_from_target_error_route(): void
@@ -83,12 +84,14 @@ class ErrorLogViewerTest extends TestCase
 
     public function test_guests_are_redirected_from_filament_error_log_proof(): void
     {
+        config()->set('app.console_proof_paths_enabled', true);
         $this->get('/console/central-error-logs')
             ->assertRedirect('/console/login');
     }
 
     public function test_users_without_permission_cannot_access_filament_error_log_proof(): void
     {
+        config()->set('app.console_proof_paths_enabled', true);
         $user = User::factory()->create([
             'is_active' => true,
         ]);

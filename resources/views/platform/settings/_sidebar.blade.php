@@ -7,7 +7,8 @@
     <div class="w-60 shrink-0 rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30 xl:sticky xl:top-24 xl:h-[calc(100vh-7rem)] xl:overflow-y-auto">
         <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300">Setup</p>
 
-        <nav class="mt-6 space-y-1">
+        <p class="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Base Features</p>
+        <nav class="space-y-1">
             @can('view-platform-notifications')
                 <a wire:navigate href="{{ route('platform.setup.notifications') }}" @class([
                     'block rounded-md px-4 py-3 text-sm font-medium transition',
@@ -64,24 +65,65 @@
                 ])>
                     <span class="inline-flex items-center gap-2">
                         <x-layouts.nav-icon icon="users" />
-                        <span>Platform Users Setup</span>
-                    </span>
-                </a>
-            @endcan
-
-            @can('manage-platform-settings')
-                <a wire:navigate href="{{ route('platform.settings.general') }}" @class([
-                    'mt-2 block rounded-md px-4 py-3 text-sm font-medium transition',
-                    'border border-slate-500/40 bg-slate-700/60 text-white' => request()->routeIs('platform.settings.*'),
-                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.*'),
-                ])>
-                    <span class="inline-flex items-center gap-2">
-                        <x-layouts.nav-icon icon="settings" />
-                        <span>Settings</span>
+                        <span>Staff Setup</span>
                     </span>
                 </a>
             @endcan
         </nav>
+
+        <div class="mt-4 border-t border-slate-800 pt-4">
+            <p class="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Administrator</p>
+            <nav class="space-y-1">
+                @can('view-platform-docs')
+                    <a wire:navigate href="{{ route('platform.setup.docs') }}" @class([
+                        'block rounded-md px-4 py-3 text-sm font-medium transition',
+                        'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.setup.docs'),
+                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.docs'),
+                    ])>
+                        <span class="inline-flex items-center gap-2">
+                            <x-layouts.nav-icon icon="docs" />
+                            <span>Documentation Setup</span>
+                        </span>
+                    </a>
+                @endcan
+                @can('view-platform-audit-logs')
+                    <a wire:navigate href="{{ route('platform.setup.audit-logs') }}" @class([
+                        'block rounded-md px-4 py-3 text-sm font-medium transition',
+                        'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.setup.audit-logs'),
+                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.audit-logs'),
+                    ])>
+                        <span class="inline-flex items-center gap-2">
+                            <x-layouts.nav-icon icon="audit-log" />
+                            <span>Audit Logs Setup</span>
+                        </span>
+                    </a>
+                @endcan
+                @can('view-platform-error-logs')
+                    <a wire:navigate href="{{ route('platform.setup.error-logs') }}" @class([
+                        'block rounded-md px-4 py-3 text-sm font-medium transition',
+                        'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs('platform.setup.error-logs'),
+                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.setup.error-logs'),
+                    ])>
+                        <span class="inline-flex items-center gap-2">
+                            <x-layouts.nav-icon icon="error-log" />
+                            <span>Error Logs Setup</span>
+                        </span>
+                    </a>
+                @endcan
+            @can('manage-platform-settings')
+                    <a wire:navigate href="{{ route('platform.settings.general') }}" @class([
+                        'block rounded-md px-4 py-3 text-sm font-medium transition',
+                        'border border-slate-500/40 bg-slate-700/60 text-white' => request()->routeIs('platform.settings.*'),
+                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ! request()->routeIs('platform.settings.*'),
+                    ])>
+                        <span class="inline-flex items-center gap-2">
+                            <x-layouts.nav-icon icon="settings" />
+                            <span>Settings</span>
+                        </span>
+                    </a>
+            @endcan
+            </nav>
+        </div>
     </div>
 
     {{-- Column 2: Settings accordion --}}

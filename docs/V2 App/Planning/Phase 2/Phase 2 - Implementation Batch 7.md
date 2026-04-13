@@ -80,6 +80,8 @@ Completed in this batch:
 * removed legacy sidebar title/description copy blocks from the main shell navigation panel
 * applied personal-note table standardization pass for platform-user management: top-level table action row, per-table filters, bottom-left rows selector, bottom-right prev/next + page selector, and prominent action buttons
 * added direct activate/deactivate row action for platform users with self-deactivation guard
+* split shared navigation into `Base Features` and `Administrator` sections (including setup navigation)
+* moved Documentation Vault + Logs under Administrator sections and renamed setup user navigation to `Staff Setup` (setup-only)
 * applied the same neutral visual baseline to the login/auth screen for universal current-theme consistency
 * added password and security controls into Account Settings with current-password validation and password update flow
 * set direct `/console/*` proof-path access deprecation default to off with compatibility redirects already in place from Batch 6

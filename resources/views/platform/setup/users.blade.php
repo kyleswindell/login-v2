@@ -1,7 +1,7 @@
-<x-layouts.app title="Platform Users Setup">
+<x-layouts.app title="Staff Setup">
     <section class="flex flex-1 flex-col gap-6">
         <div>
-            <h1 class="ui-page-header-title">Platform Users Setup</h1>
+            <h1 class="ui-page-header-title">Staff Setup</h1>
             <p class="ui-page-header-copy">Manage staff lifecycle actions from one setup surface instead of routing setup links directly into feature list pages.</p>
         </div>
 

@@ -215,6 +215,29 @@ Planning owner:
 
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]] | [Phase 2 - Implementation Batch 7](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%207.md)
 
+### 2026-04-13 - Phase 2 Batch 7 navigation separation pass (base vs administrator)
+
+Status:
+
+* implemented locally
+* ready for staging visual verification
+
+Work completed:
+
+* split shared shell navigation into explicit `Base Features` and `Administrator` sections
+* applied the same section separation to setup navigation panel and settings-sidebar setup column
+* moved Documentation Vault and Logs ownership into Administrator sections
+* renamed setup user item to `Staff Setup` and kept this entry setup-only
+
+Verification:
+
+* `php artisan route:list --path=platform/setup` confirms setup route ownership unchanged
+* `php artisan view:cache` passes after navigation template updates
+
+Planning owner:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]] | [Phase 2 - Implementation Batch 7](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%207.md)
+
 ### 2026-04-12 - Phase 2 Batch 7 final visual UI migration implementation
 
 Status:

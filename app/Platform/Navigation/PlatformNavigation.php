@@ -11,39 +11,23 @@ class PlatformNavigation
 
     /**
      * @return array{
-     *   primary: array<int, array<string, mixed>>,
+     *   primaryBase: array<int, array<string, mixed>>,
+     *   primaryAdmin: array<int, array<string, mixed>>,
      *   logs: array<int, array<string, mixed>>,
-     *   setup: array<int, array<string, mixed>>,
+     *   setupBase: array<int, array<string, mixed>>,
+     *   setupAdmin: array<int, array<string, mixed>>,
      *   account: array<int, array<string, mixed>>
      * }
      */
     public function forUser(?User $user): array
     {
         return [
-            'primary' => $this->filterAllowed($user, [
+            'primaryBase' => $this->filterAllowed($user, [
                 [
                     'label' => 'Dashboard',
                     'route' => 'dashboard',
                     'active' => ['dashboard'],
                     'icon' => 'home',
-                ],
-                [
-                    'label' => 'Platform Users',
-                    'route' => 'platform.administration.users.index',
-                    'active' => [
-                        'platform.administration.users.*',
-                        'platform.users.*',
-                        'filament.console.resources.platform-users.*',
-                    ],
-                    'ability' => 'manage-platform-users',
-                    'icon' => 'users',
-                ],
-                [
-                    'label' => 'Documentation Vault',
-                    'route' => 'platform.docs.index',
-                    'active' => ['platform.docs.index'],
-                    'ability' => 'view-platform-docs',
-                    'icon' => 'docs',
                 ],
                 [
                     'label' => 'Notifications',
@@ -54,6 +38,15 @@ class PlatformNavigation
                     ],
                     'ability' => 'view-platform-notifications',
                     'icon' => 'bell',
+                ],
+            ]),
+            'primaryAdmin' => $this->filterAllowed($user, [
+                [
+                    'label' => 'Documentation Vault',
+                    'route' => 'platform.docs.index',
+                    'active' => ['platform.docs.index'],
+                    'ability' => 'view-platform-docs',
+                    'icon' => 'docs',
                 ],
             ]),
             'logs' => $this->filterAllowed($user, [
@@ -80,7 +73,7 @@ class PlatformNavigation
                     'icon' => 'error-log',
                 ],
             ]),
-            'setup' => $this->filterAllowed($user, [
+            'setupBase' => $this->filterAllowed($user, [
                 [
                     'label' => 'Notifications Setup',
                     'route' => 'platform.setup.notifications',
@@ -88,6 +81,15 @@ class PlatformNavigation
                     'ability' => 'view-platform-notifications',
                     'icon' => 'bell',
                 ],
+                [
+                    'label' => 'Staff Setup',
+                    'route' => 'platform.setup.users',
+                    'active' => ['platform.setup.users'],
+                    'ability' => 'manage-platform-users',
+                    'icon' => 'users',
+                ],
+            ]),
+            'setupAdmin' => $this->filterAllowed($user, [
                 [
                     'label' => 'Documentation Setup',
                     'route' => 'platform.setup.docs',
@@ -108,13 +110,6 @@ class PlatformNavigation
                     'active' => ['platform.setup.error-logs'],
                     'ability' => 'view-platform-error-logs',
                     'icon' => 'error-log',
-                ],
-                [
-                    'label' => 'Platform Users Setup',
-                    'route' => 'platform.setup.users',
-                    'active' => ['platform.setup.users'],
-                    'ability' => 'manage-platform-users',
-                    'icon' => 'users',
                 ],
                 [
                     'label' => 'Settings',

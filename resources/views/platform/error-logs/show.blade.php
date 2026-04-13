@@ -2,20 +2,20 @@
     @php($viewerTimezone = auth()->user()?->timezone ?: config('app.timezone'))
 
     <section class="flex flex-1 flex-col gap-6">
-        <div class="flex items-start justify-between gap-4 rounded-3xl border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
+        <div class="flex items-start justify-between gap-4 rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
             <div>
                 <p class="text-sm font-medium uppercase tracking-[0.3em] text-sky-300">Platform Management</p>
                 <h1 class="mt-3 text-3xl font-semibold text-white">Error Log Detail</h1>
                 <p class="mt-2 text-slate-400">{{ $log->message }}</p>
             </div>
-            <a href="{{ route('platform.error-logs.index') }}" class="mt-1 shrink-0 rounded-2xl border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-300 transition hover:border-slate-600 hover:text-white">
+            <a wire:navigate href="{{ route('platform.error-logs.index') }}" class="mt-1 shrink-0 rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-300 transition hover:border-slate-600 hover:text-white">
                 ← Back to list
             </a>
         </div>
 
         <div class="grid gap-6 xl:grid-cols-2">
             {{-- Identity and classification --}}
-            <div class="rounded-3xl border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30">
+            <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30">
                 <h2 class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-400">Classification</h2>
                 <dl class="mt-5 space-y-4">
                     <div class="flex flex-col gap-1">
@@ -63,7 +63,7 @@
             </div>
 
             {{-- Request context --}}
-            <div class="rounded-3xl border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30">
+            <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30">
                 <h2 class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-400">Request Context</h2>
                 <dl class="mt-5 space-y-4">
                     <div class="flex flex-col gap-1">
@@ -114,17 +114,17 @@
 
         {{-- Stack trace --}}
         @if ($log->stack_trace)
-            <div class="rounded-3xl border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30">
+            <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30">
                 <h2 class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-400">Stack Trace</h2>
-                <pre class="mt-4 overflow-x-auto rounded-2xl border border-slate-700 bg-slate-950 p-5 text-xs font-mono leading-relaxed text-slate-300">{{ $log->stack_trace }}</pre>
+                <pre class="mt-4 overflow-x-auto rounded-md border border-slate-700 bg-slate-950 p-5 text-xs font-mono leading-relaxed text-slate-300">{{ $log->stack_trace }}</pre>
             </div>
         @endif
 
         {{-- Additional context --}}
         @if ($log->context)
-            <div class="rounded-3xl border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30">
+            <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30">
                 <h2 class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-400">Context</h2>
-                <pre class="mt-4 overflow-x-auto rounded-2xl border border-slate-700 bg-slate-950 p-5 text-xs font-mono leading-relaxed text-slate-300">{{ json_encode($log->context, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) }}</pre>
+                <pre class="mt-4 overflow-x-auto rounded-md border border-slate-700 bg-slate-950 p-5 text-xs font-mono leading-relaxed text-slate-300">{{ json_encode($log->context, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) }}</pre>
             </div>
         @endif
     </section>

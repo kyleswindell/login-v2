@@ -2,25 +2,25 @@
 
 <x-layouts.app title="Platform Users">
     <section class="flex flex-1 flex-col gap-6">
-        <div class="flex flex-col gap-4 rounded-3xl border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30 md:flex-row md:items-center md:justify-between">
+        <div class="flex flex-col gap-4 rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30 md:flex-row md:items-center md:justify-between">
             <div>
                 <p class="text-sm font-medium uppercase tracking-[0.3em] text-sky-300">Platform Management</p>
                 <h1 class="mt-3 text-3xl font-semibold text-white">Platform Users</h1>
                 <p class="mt-2 text-slate-400">Create, review, and update internal platform user access.</p>
             </div>
 
-            <a href="{{ route('platform.users.create') }}" class="inline-flex rounded-xl border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-sky-400 hover:text-sky-300">
+            <a wire:navigate href="{{ route('platform.users.create') }}" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-sky-400 hover:text-sky-300">
                 Create User
             </a>
         </div>
 
         @if (session('status'))
-            <div class="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
+            <div class="rounded-md border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
                 {{ session('status') }}
             </div>
         @endif
 
-        <div class="rounded-3xl border border-slate-800 bg-slate-900/70" data-table-lite-container>
+        <div class="rounded-lg border border-slate-800 bg-slate-900/70" data-table-lite-container>
             <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 px-6 py-4">
                 <div class="flex items-center gap-3">
                     <label class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Rows</label>
@@ -34,7 +34,7 @@
 
                 <label class="block w-full max-w-sm">
                     <span class="sr-only">Search users</span>
-                    <input type="text" data-table-lite-search placeholder="Search staff..." class="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500">
+                    <input type="text" data-table-lite-search placeholder="Search staff..." class="w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500">
                 </label>
             </div>
 
@@ -78,7 +78,7 @@
                                 {{ $user->last_login_at?->timezone($viewerTimezone)->format('M j, Y g:i A T') ?? 'Never' }}
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <a href="{{ route('platform.users.edit', $user) }}" class="text-sm font-semibold text-sky-300 transition hover:text-sky-200">
+                                <a wire:navigate href="{{ route('platform.users.edit', $user) }}" class="text-sm font-semibold text-sky-300 transition hover:text-sky-200">
                                     Edit
                                 </a>
                             </td>

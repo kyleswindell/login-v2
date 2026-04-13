@@ -1,6 +1,6 @@
 <x-layouts.app title="Notifications">
     <section class="flex flex-1 flex-col gap-6">
-        <div class="flex flex-col gap-4 rounded-3xl border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30 md:flex-row md:items-center md:justify-between">
+        <div class="flex flex-col gap-4 rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30 md:flex-row md:items-center md:justify-between">
             <div>
                 <p class="text-sm font-medium uppercase tracking-[0.3em] text-sky-300">Platform Management</p>
                 <h1 class="mt-3 text-3xl font-semibold text-white">Notifications</h1>
@@ -9,20 +9,20 @@
 
             <form method="POST" action="{{ route('platform.notifications.mark-all-read') }}">
                 @csrf
-                <button type="submit" class="inline-flex rounded-xl border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-sky-400 hover:text-sky-300">
+                <button type="submit" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-sky-400 hover:text-sky-300">
                     Mark all read
                 </button>
             </form>
         </div>
 
         @if (session('status'))
-            <div class="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
+            <div class="rounded-md border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
                 {{ session('status') }}
             </div>
         @endif
 
         <div class="grid gap-4 md:grid-cols-3">
-            <article class="rounded-2xl border border-slate-800 bg-slate-900/70 p-6">
+            <article class="rounded-md border border-slate-800 bg-slate-900/70 p-6">
                 <p class="text-sm uppercase tracking-[0.25em] text-slate-500">Unread</p>
                 <p class="mt-4 text-3xl font-semibold text-white" data-notification-inbox-unread-count>{{ $unreadCount }}</p>
                 <p class="mt-2 text-sm text-slate-400">Notifications still requiring attention</p>
@@ -31,7 +31,7 @@
 
         <div class="space-y-4" data-notification-inbox-list>
             @forelse ($notifications as $notification)
-                <article class="rounded-3xl border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/20" data-notification-card data-notification-id="{{ $notification->id }}">
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/20" data-notification-card data-notification-id="{{ $notification->id }}">
                     <div class="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
                         <div class="min-w-0 flex-1">
                             <div class="flex flex-wrap items-center gap-2" data-notification-badges>
@@ -78,7 +78,7 @@
                             @if (! $notification->read_at)
                                 <form method="POST" action="{{ route('platform.notifications.mark-read', $notification) }}">
                                     @csrf
-                                    <button type="submit" class="inline-flex rounded-xl border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-sky-400 hover:text-sky-300">
+                                    <button type="submit" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-sky-400 hover:text-sky-300">
                                         Mark read
                                     </button>
                                 </form>
@@ -87,7 +87,7 @@
                             @if (! $notification->dismissed_at)
                                 <form method="POST" action="{{ route('platform.notifications.dismiss', $notification) }}">
                                     @csrf
-                                    <button type="submit" class="inline-flex rounded-xl border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:text-white">
+                                    <button type="submit" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:text-white">
                                         Dismiss
                                     </button>
                                 </form>
@@ -96,7 +96,7 @@
                     </div>
                 </article>
             @empty
-                <div class="rounded-3xl border border-dashed border-slate-800 bg-slate-950/40 px-6 py-12 text-center text-slate-500" data-notification-inbox-empty-state>
+                <div class="rounded-lg border border-dashed border-slate-800 bg-slate-950/40 px-6 py-12 text-center text-slate-500" data-notification-inbox-empty-state>
                     No notifications are available for your account yet.
                 </div>
             @endforelse

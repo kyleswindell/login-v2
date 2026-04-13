@@ -4,19 +4,19 @@
     </x-slot:sidebar>
 
     <section class="flex flex-1 flex-col gap-6">
-        <div class="rounded-3xl border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
+        <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
             <p class="text-sm font-medium uppercase tracking-[0.3em] text-sky-300">Settings — Documentation Vault</p>
             <h1 class="mt-3 text-3xl font-semibold text-white">Vault Access</h1>
             <p class="mt-2 text-slate-400">Control which platform users can access the internal documentation vault.</p>
         </div>
 
         @if (session('success'))
-            <div class="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-4 text-sm font-medium text-emerald-300">
+            <div class="rounded-md border border-emerald-500/30 bg-emerald-500/10 px-5 py-4 text-sm font-medium text-emerald-300">
                 {{ session('success') }}
             </div>
         @endif
 
-        <form method="POST" action="{{ route('platform.settings.docs.update') }}" class="rounded-3xl border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
+        <form method="POST" action="{{ route('platform.settings.docs.update') }}" class="rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
             @csrf
 
             <div>
@@ -25,7 +25,7 @@
                     <p class="mt-1 text-xs text-slate-500">Determines which authenticated platform users can view documentation vault pages.</p>
 
                     <div class="mt-4 space-y-3">
-                        <label class="flex cursor-pointer items-start gap-4 rounded-2xl border border-slate-700 bg-slate-950/50 px-5 py-4 transition has-[:checked]:border-sky-500/40 has-[:checked]:bg-sky-500/5">
+                        <label class="flex cursor-pointer items-start gap-4 rounded-md border border-slate-700 bg-slate-950/50 px-5 py-4 transition has-[:checked]:border-sky-500/40 has-[:checked]:bg-sky-500/5">
                             <input
                                 type="radio"
                                 name="access_scope"
@@ -39,7 +39,7 @@
                             </div>
                         </label>
 
-                        <label class="flex cursor-pointer items-start gap-4 rounded-2xl border border-slate-700 bg-slate-950/50 px-5 py-4 transition has-[:checked]:border-sky-500/40 has-[:checked]:bg-sky-500/5">
+                        <label class="flex cursor-pointer items-start gap-4 rounded-md border border-slate-700 bg-slate-950/50 px-5 py-4 transition has-[:checked]:border-sky-500/40 has-[:checked]:bg-sky-500/5">
                             <input
                                 type="radio"
                                 name="access_scope"
@@ -60,7 +60,7 @@
             </div>
 
             <div class="mt-8 border-t border-slate-800 pt-6">
-                <button type="submit" class="rounded-2xl bg-sky-500/15 px-6 py-3 text-sm font-semibold text-sky-200 ring-1 ring-sky-500/30 transition hover:bg-sky-500/25 hover:text-sky-100">
+                <button type="submit" class="rounded-md bg-sky-500/15 px-6 py-3 text-sm font-semibold text-sky-200 ring-1 ring-sky-500/30 transition hover:bg-sky-500/25 hover:text-sky-100">
                     Save Vault Settings
                 </button>
             </div>

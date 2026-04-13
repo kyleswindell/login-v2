@@ -44,7 +44,7 @@
                     <h2 class="ui-card-title">Platform Users</h2>
                     <p class="ui-card-copy">Manage platform access, active status, and role assignments for internal users.</p>
                     <div class="mt-5">
-                        <a href="{{ route('platform.administration.users.index') }}" class="ui-action">
+                        <a wire:navigate href="{{ route('platform.administration.users.index') }}" class="ui-action">
                             Open User Management
                         </a>
                     </div>
@@ -56,7 +56,7 @@
                     <h2 class="ui-card-title">Documentation Vault</h2>
                     <p class="ui-card-copy">Review the current `docs/` repository directly inside the platform without leaving the staging app.</p>
                     <div class="mt-5">
-                        <a href="{{ route('platform.docs.index') }}" class="ui-action">
+                        <a wire:navigate href="{{ route('platform.docs.index') }}" class="ui-action">
                             Open Documentation Viewer
                         </a>
                     </div>

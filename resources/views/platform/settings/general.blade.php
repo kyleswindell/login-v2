@@ -4,7 +4,7 @@
     </x-slot:sidebar>
 
     <section class="flex flex-1 flex-col gap-6">
-        <div class="rounded-3xl border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
+        <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
             <p class="text-sm font-medium uppercase tracking-[0.3em] text-sky-300">Settings — General</p>
             <h1 class="mt-3 text-3xl font-semibold text-white">Platform General</h1>
             <p class="mt-2 text-slate-400">Configure the platform display name, default timezone, and locale.</p>
@@ -13,12 +13,12 @@
         @include('platform.settings._general-tabs', ['generalTab' => 'general'])
 
         @if (session('success'))
-            <div class="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-4 text-sm font-medium text-emerald-300">
+            <div class="rounded-md border border-emerald-500/30 bg-emerald-500/10 px-5 py-4 text-sm font-medium text-emerald-300">
                 {{ session('success') }}
             </div>
         @endif
 
-        <form method="POST" action="{{ route('platform.settings.general.update') }}" class="rounded-3xl border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
+        <form method="POST" action="{{ route('platform.settings.general.update') }}" class="rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
             @csrf
 
             <div class="grid gap-6 md:grid-cols-2">
@@ -30,7 +30,7 @@
                         type="text"
                         name="display_name"
                         value="{{ old('display_name', $displayName) }}"
-                        class="mt-3 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-sky-400 focus:outline-none focus:ring-0"
+                        class="mt-3 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-sky-400 focus:outline-none focus:ring-0"
                     >
                     @error('display_name')
                         <p class="mt-2 text-xs text-rose-400">{{ $message }}</p>
@@ -46,7 +46,7 @@
                         name="timezone"
                         value="{{ old('timezone', $timezone) }}"
                         placeholder="e.g. America/New_York"
-                        class="mt-3 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-sky-400 focus:outline-none focus:ring-0"
+                        class="mt-3 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-sky-400 focus:outline-none focus:ring-0"
                     >
                     @error('timezone')
                         <p class="mt-2 text-xs text-rose-400">{{ $message }}</p>
@@ -62,7 +62,7 @@
                         name="locale"
                         value="{{ old('locale', $locale) }}"
                         placeholder="e.g. en"
-                        class="mt-3 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-sky-400 focus:outline-none focus:ring-0"
+                        class="mt-3 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-sky-400 focus:outline-none focus:ring-0"
                     >
                     @error('locale')
                         <p class="mt-2 text-xs text-rose-400">{{ $message }}</p>
@@ -71,7 +71,7 @@
             </div>
 
             <div class="mt-8 border-t border-slate-800 pt-6">
-                <button type="submit" class="rounded-2xl bg-sky-500/15 px-6 py-3 text-sm font-semibold text-sky-200 ring-1 ring-sky-500/30 transition hover:bg-sky-500/25 hover:text-sky-100">
+                <button type="submit" class="rounded-md bg-sky-500/15 px-6 py-3 text-sm font-semibold text-sky-200 ring-1 ring-sky-500/30 transition hover:bg-sky-500/25 hover:text-sky-100">
                     Save General Settings
                 </button>
             </div>

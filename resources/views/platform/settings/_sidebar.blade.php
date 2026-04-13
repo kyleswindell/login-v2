@@ -4,7 +4,7 @@
 --}}
 <div class="flex w-full gap-3">
     {{-- Column 1: Setup entries --}}
-    <div class="w-48 shrink-0 rounded-lg border border-slate-800 bg-slate-900/70 p-5 shadow-2xl shadow-black/30 xl:sticky xl:top-24 xl:h-[calc(100vh-7rem)] xl:overflow-y-auto">
+    <div class="w-60 shrink-0 rounded-lg border border-slate-800 bg-slate-900/70 p-5 shadow-2xl shadow-black/30 xl:sticky xl:top-24 xl:h-[calc(100vh-7rem)] xl:overflow-y-auto">
         <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300">Setup</p>
 
         <nav class="mt-6 space-y-1">
@@ -67,7 +67,7 @@
     </div>
 
     {{-- Column 2: Settings accordion --}}
-    <div class="w-52 shrink-0 rounded-lg border border-slate-800 bg-slate-900/70 p-5 shadow-2xl shadow-black/30 xl:sticky xl:top-24 xl:h-[calc(100vh-7rem)] xl:overflow-y-auto">
+    <div class="w-56 shrink-0 rounded-lg border border-slate-800 bg-slate-900/70 p-5 shadow-2xl shadow-black/30 xl:sticky xl:top-24 xl:h-[calc(100vh-7rem)] xl:overflow-y-auto">
         <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">Settings</p>
 
         <nav class="mt-6 space-y-4">

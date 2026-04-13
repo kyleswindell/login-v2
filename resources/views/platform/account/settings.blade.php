@@ -1,5 +1,5 @@
 <x-layouts.app title="Account Settings">
-    <section class="mx-auto w-full max-w-4xl space-y-6">
+    <section class="w-full space-y-6">
         <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30">
             <p class="text-sm font-medium uppercase tracking-[0.3em] text-slate-300">Account</p>
             <h1 class="mt-3 text-2xl font-semibold text-white">Account Settings</h1>

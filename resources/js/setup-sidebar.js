@@ -22,6 +22,7 @@ function initSetupSidebar() {
     const setupNavLinks = host.querySelectorAll('[data-setup-nav-link]');
     const mainNavLinks = host.querySelectorAll('[data-main-nav-link]');
     const storageKey = 'platform.setupSidebarOpen';
+    const sidebarContext = document.body?.dataset.sidebarContext ?? 'primary';
 
     if (!track || !mainPanel || !openBtn || !closeBtn) {
         return;
@@ -82,6 +83,12 @@ function initSetupSidebar() {
             closeSetup();
         }
     });
+
+    if (sidebarContext !== 'setup') {
+        window.localStorage.setItem(storageKey, '0');
+        closeSetup();
+        return;
+    }
 
     if (window.localStorage.getItem(storageKey) === '1') {
         openSetup({ animate: false });

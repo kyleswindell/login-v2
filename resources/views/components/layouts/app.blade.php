@@ -31,10 +31,11 @@
     </head>
     <body
         @class([
-            'min-h-screen antialiased bg-slate-100 text-slate-900 transition-colors dark:bg-slate-950 dark:text-slate-100',
+            'min-h-screen antialiased bg-slate-100 text-slate-900 dark:bg-slate-950 dark:text-slate-100',
             'has-auth-shell' => auth()->check(),
         ])
         data-theme-update-url="{{ auth()->check() ? route('platform.account.preferences.update') : '' }}"
+        data-sidebar-context="{{ request()->routeIs('platform.setup.*', 'platform.settings.*') ? 'setup' : 'primary' }}"
     >
         @php($user = auth()->user())
         @php($hasCustomSidebar = isset($sidebar))
@@ -65,16 +66,16 @@
                 <header class="sticky top-0 z-40 border-b border-slate-800 bg-slate-950/90 backdrop-blur">
                     <div class="mx-auto flex w-full max-w-[1700px] items-center gap-4 px-4 py-4 xl:px-6">
                         <a href="{{ route('dashboard') }}" wire:navigate class="flex min-w-0 items-center gap-3 py-1">
-                            <div class="flex h-10 w-10 items-center justify-center rounded-full border border-slate-700 bg-slate-900/70 text-lg font-semibold text-slate-100">P</div>
+                            <div class="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-600 bg-zinc-800/70 text-lg font-semibold text-zinc-100">P</div>
                             <div class="min-w-0">
                                 <p class="truncate text-sm font-semibold text-white">Parasolutions Platform</p>
                                 <p class="truncate text-xs uppercase tracking-[0.2em] text-slate-500">Login App 2.0</p>
                             </div>
                         </a>
 
-                        <div class="hidden min-w-0 flex-1 md:block">
+                        <div class="hidden min-w-0 flex-1 justify-center md:flex">
                             <label for="app-search" class="sr-only">Search</label>
-                            <div class="relative">
+                            <div class="relative w-full max-w-[22rem] xl:max-w-[26rem]">
                                 <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-500">Search</span>
                                 <input
                                     id="app-search"
@@ -172,7 +173,7 @@
 
                             <details class="group relative">
                                 <summary class="flex cursor-pointer list-none items-center gap-3 px-1 py-1 transition hover:text-white">
-                                    <div class="flex h-10 w-10 items-center justify-center rounded-full border border-slate-700 bg-slate-900/70 text-sm font-semibold text-slate-100">
+                                    <div class="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-600 bg-zinc-800/70 text-sm font-semibold text-zinc-100">
                                         {{ strtoupper(substr($user->name, 0, 1)) }}
                                     </div>
                                     <div class="hidden text-left lg:block">
@@ -241,13 +242,13 @@
                             {{ $sidebar }}
                         </aside>
                     @else
-                        <aside class="hidden w-72 shrink-0 lg:block" data-sidebar-host>
+                        <aside class="hidden w-60 shrink-0 lg:block" data-sidebar-host>
                             <div class="sticky top-24" data-sidebar-container>
                                 {{-- Slider track: main nav and Setup panel side by side --}}
                                 <div class="relative overflow-hidden">
                                     <div class="flex transition-transform duration-300 will-change-transform" data-sidebar-track>
                                         {{-- Panel 1: Main navigation --}}
-                                        <div class="w-72 shrink-0 rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30" data-main-nav-panel>
+                                        <div class="w-60 shrink-0 rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30" data-main-nav-panel>
                                             <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300">Platform Navigation</p>
                                             <h1 class="mt-3 text-2xl font-semibold text-white">Workspace</h1>
                                             <p class="mt-2 text-sm text-slate-400">Core internal platform surfaces.</p>
@@ -279,7 +280,7 @@
                                         </div>
 
                                         {{-- Panel 2: Setup panel --}}
-                                        <div class="w-72 shrink-0 rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30" data-setup-nav-panel>
+                                        <div class="w-60 shrink-0 rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30" data-setup-nav-panel>
                                             <div class="flex items-center justify-between">
                                                 <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300">Setup</p>
                                                 <button

@@ -200,6 +200,12 @@ document.addEventListener('DOMContentLoaded', initNotificationMenus);
 document.addEventListener('livewire:navigated', initNotificationMenus);
 document.addEventListener('DOMContentLoaded', initThemeModeControls);
 document.addEventListener('livewire:navigated', initThemeModeControls);
+document.addEventListener('livewire:navigating', () => {
+    applyThemeMode(getPreferredThemeMode(), false);
+});
+window.addEventListener('pageshow', () => {
+    applyThemeMode(getPreferredThemeMode(), false);
+});
 
 const realtimeRoot = document.querySelector('[data-realtime-notifications="1"]');
 

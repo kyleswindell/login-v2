@@ -112,24 +112,67 @@ This batch is complete when:
 
 Current exit status:
 
-* implemented and review-ready
-* final visual UI sign-off on staging remains the final review step
+* **ROLLED BACK** - 2026-04-13
+* Implementation introduced cascading systemic failures across 46 files
+* Reverted to commit `e1ab44d` (known-good baseline)
+* Re-implementation planned as split sub-batches to isolate concerns
+* Staging redeployed with working baseline
 
 ## Final Review Checklist
 
 | Check | Status | Notes |
 | --- | --- | --- |
-| Dashboard visual baseline migrated from transitional custom-only state | pass | Dashboard + shared shell now use the Batch 7 final baseline and neutralized accent system. |
-| Shared shell navigation behavior (no full-page refresh on sidebar/setup/settings nav) | pass | `wire:navigate` enabled for shell and in-content internal route links; setup/sidebar state persistence logic updated. |
-| Left-nav active-state correctness (single active item) | pass | Settings hierarchy now highlights only the exact active route; docs tree highlights only the selected file. |
-| Header/UI visual cohesion pass (traditional shell framing, control consistency) | pass | Header framing, control sizing, notification/user controls, and account dropdown IA are aligned to final Batch 7 decisions. |
-| Blue-heavy scheme retired in active app surfaces | pass | Active platform and auth surfaces now use neutral light/dark baseline tones (legacy Laravel welcome page remains non-app starter artifact). |
-| Account dropdown + initial account pages added | pass | Added `My Account`, `Account Settings`, `Preferences` routes/views with password/security controls in account settings. |
-| `/console/*` proof-path daily UX retirement behavior | pass | Retired by default via `CONSOLE_PROOF_PATHS_ENABLED=false`; app-owned fallback redirects remain in place. |
-| Personal-notes table standardization scope | pass | Current operator-facing tables (Users, Audit Logs, Error Logs) now follow the shared table baseline and controls order. |
-| Documentation sync across planning/canonical/development/index notes | pass | Batch 7, Phase 2 planning owner, UI audit, architecture note, and development log are synchronized. |
-| Local compile/regression sanity checks | pass | `php artisan view:cache` and account route registration checks pass. |
-| Final staging visual sign-off | deferred | Pending explicit staging visual QA completion and sign-off marker. |
+| Dashboard visual baseline migrated from transitional custom-only state | reverted | Implementation found critical systemic issues; rolled back and planned for careful re-implementation. |
+| Shared shell navigation behavior | reverted | Rolled back; will re-implement in focused Batch 7a–7f sequence. |
+| Account dropdown + initial account pages | reverted | Rolled back with all other changes. |
+| Final integration and validation | blocked | Awaiting re-implementation in split sub-batches. |
+
+## Critical Failure Analysis (Rollback Justification)
+
+**Major Issues Found (from staging QA audit 2026-04-13):**
+
+**Tier 1: Functional Breaks**
+1. User form Save/Apply buttons **do nothing** (form not submitting)
+2. Form buttons **off-page in footer** (not visible without scroll)
+3. Account settings Save redirects to **dashboard** instead of previous page
+
+**Tier 2: Architectural Regressions**
+1. Audit/error log details reverted from **modal pop-out to dedicated pages** (breaks `/console` UX pattern)
+2. Mobile sidebar **full-width at top** instead of collapsible hamburger
+3. Light mode docs **white text on light backgrounds** (completely unreadable)
+
+**Tier 3: Table/Filter Issues**
+1. Filter dropdowns became text inputs
+2. Missing filter clear/search confirmation UI
+
+**Root Causes:**
+1. Tried to implement Save/Apply pattern across all forms (only needed for data-table flows)
+2. Replaced working modal pattern with dedicated pages (architectural regression)
+3. Mobile sidebar redesign without hamburger menu fallback
+4. CSS light-mode failures (hardcoded dark colors don't invert)
+5. Form action bar placed in scrollable container (invisible without scroll)
+6. **46 files changed in single commit** = too many cross-cutting concerns to debug
+
+**Decision:** Rollback + split into focused sub-batches
+
+## Re-Implementation Plan
+
+**Sub-batch sequence (isolated validation after each):**
+
+1. **Batch 7a**: Dashboard dev tools widget only (1-2 files, JS hook + controller method)
+2. **Batch 7b**: Docs tree expansion + account menu click-away (3-4 files, JS hooks)
+3. **Batch 7c**: Audit/error modal detail views (5-6 files, route + view restoration)
+4. **Batch 7d**: Mobile sidebar hamburger menu (3-4 files, responsive redesign)
+5. **Batch 7e**: Light mode CSS fixes (style-only, no templates)
+6. **Batch 7f**: Form redirect behavior (only for user table flows, not settings)
+
+Each sub-batch:
+- Under 10 file changes
+- Independent validation on staging
+- Single feature focus
+- No cross-cutting concerns
+
+**Gate:** Batch 8 blocked until all Batch 7 sub-batches complete and re-validated
 
 ## Related
 

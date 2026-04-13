@@ -32,6 +32,7 @@ Current focus:
 | Batch 7 | Review-ready                                 | final UI migration and Phase 2 visual stack completion     |
 | Batch 8 | Drafted                                      | account menu IA and account surface ownership              |
 | Batch 9 | Drafted                                      | inter-tenant messaging foundation                          |
+| Batch 10 | Drafted                                     | calendar foundation and CalendarEntry contract             |
 
 ## Planning Notes
 
@@ -45,6 +46,7 @@ Current focus:
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]] | [Phase 2 - Implementation Batch 7](Phase%202%20-%20Implementation%20Batch%207.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 8]] | [Phase 2 - Implementation Batch 8](Phase%202%20-%20Implementation%20Batch%208.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 9]] | [Phase 2 - Implementation Batch 9](Phase%202%20-%20Implementation%20Batch%209.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 10]] | [Phase 2 - Implementation Batch 10](Phase%202%20-%20Implementation%20Batch%2010.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Route And Panel Ownership Map]] | [Phase 2 - Route And Panel Ownership Map](Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - UI Surface Disposition Audit]] | [Phase 2 - UI Surface Disposition Audit](Phase%202%20-%20UI%20Surface%20Disposition%20Audit.md)
 

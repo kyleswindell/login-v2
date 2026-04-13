@@ -25,6 +25,7 @@ Current status:
 * Batch 7 implementation is complete for final visual UI migration scope that was expected as part of Phase 2 deliverables
 * Batch 8 and Batch 9 planning drafts are created for account IA close-out and inter-tenant messaging foundation sequencing
 * Batch 9 planning now locks a single core Thread/Message messaging engine with module-specific shells attached by context instead of separate parallel messaging systems
+* Batch 10 planning draft is created for calendar foundation and CalendarEntry contract sequencing
 * final visual sign-off review remains before Phase 2 can be fully closed
 
 Canonical architecture owner:
@@ -45,6 +46,9 @@ Batch artifacts:
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 5]] | [Phase 2 - Implementation Batch 5](Phase%202%20-%20Implementation%20Batch%205.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 6]] | [Phase 2 - Implementation Batch 6](Phase%202%20-%20Implementation%20Batch%206.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]] | [Phase 2 - Implementation Batch 7](Phase%202%20-%20Implementation%20Batch%207.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 8]] | [Phase 2 - Implementation Batch 8](Phase%202%20-%20Implementation%20Batch%208.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 9]] | [Phase 2 - Implementation Batch 9](Phase%202%20-%20Implementation%20Batch%209.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 10]] | [Phase 2 - Implementation Batch 10](Phase%202%20-%20Implementation%20Batch%2010.md)
 
 ## Phase Goal
 

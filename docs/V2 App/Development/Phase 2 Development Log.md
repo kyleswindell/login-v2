@@ -98,8 +98,32 @@ Planning owners:
 * resolve Batch 7 table-standardization close-out scope (app-wide completion now vs explicit carry-over)
 * execute Batch 8 account IA and account-surface ownership close-out
 * execute Batch 9 inter-tenant messaging foundation implementation
+* execute Batch 10 calendar foundation and CalendarEntry contract implementation
 * execute final `/console` proof-resource retirement sequencing based on Batch 7 visual-review verification
 * close Phase 2 after final visual sign-off and sync final handoff updates for Phase 3 and Phase 4
+
+### 2026-04-13 - Phase 2 Batch 10 calendar foundation planning
+
+Status:
+
+* planning docs created
+
+Work completed:
+
+* created Phase 2 Batch 10 planning note for calendar foundation and CalendarEntry contract
+* created canonical Calendar And CalendarEntry Contract feature note
+* updated Phase 2 Index with Batch 10 status row and planning-note link
+* updated Phase 2 Final Stack And UI System Planning with Batch 10 implementation status and batch artifact references
+* registered Calendar And CalendarEntry Contract in the Feature Index
+* locked CalendarEntry as the universal base calendar object term (table: `calendar_entries`); retired `event` as a calendar base-object label
+
+Planning owners:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 10]] | [Phase 2 - Implementation Batch 10](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%2010.md)
+
+Canonical docs:
+
+* [[V2 App/Features/Calendar And CalendarEntry Contract]] | [Calendar And CalendarEntry Contract](../Features/Calendar%20And%20CalendarEntry%20Contract.md)
 
 ### 2026-04-12 - Phase 2 Batch 7 final UI correction pass (active states, neutral styling, account menu)
 

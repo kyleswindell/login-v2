@@ -95,6 +95,7 @@ Planning owners:
 ## Next Expected Work
 
 * run visual UI review for Batch 7 on staging
+* resolve Batch 7 table-standardization close-out scope (app-wide completion now vs explicit carry-over)
 * execute Batch 8 account IA and account-surface ownership close-out
 * execute Batch 9 inter-tenant messaging foundation implementation
 * execute final `/console` proof-resource retirement sequencing based on Batch 7 visual-review verification

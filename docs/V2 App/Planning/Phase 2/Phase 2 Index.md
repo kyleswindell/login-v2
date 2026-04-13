@@ -6,7 +6,7 @@ Collect Phase 2 planning notes for final stack alignment and UI system introduct
 
 ## Current Phase Status
 
-Phase 2 is in final review sequencing with Batch 7 implementation active for final design correction and Batch 8/9 drafted.
+Phase 2 is in final review sequencing with Batch 7 implemented and awaiting final close-out review/sign-off; Batch 8/9 are drafted.
 
 Current focus:
 
@@ -14,8 +14,8 @@ Current focus:
 * keep `/console` as a transitional Phase 2 proof path only, not a long-term product surface
 * lock route, panel, shell, and visual-baseline decisions before broader module work
 * close Batch 6 contracts for panel-path retirement and cross-phase handoff
-* complete final Batch 7 design-correction pass for active-state behavior and color/header consistency
 * run final visual review of Batch 7 dashboard/shell migration on staging
+* resolve whether app-wide table-standardization updates are required for Batch 7 close-out or intentionally carried into Batch 8
 * prepare Batch 8 account IA close-out and Batch 9 messaging foundation sequencing
 * establish repeatable scaffolding rules for Phase 3 customer/public foundations and Phase 4 modules
 

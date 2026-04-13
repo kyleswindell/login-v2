@@ -126,6 +126,7 @@ Current exit status:
 | Blue-heavy scheme retired in active app surfaces | pass | Active platform and auth surfaces now use neutral light/dark baseline tones (legacy Laravel welcome page remains non-app starter artifact). |
 | Account dropdown + initial account pages added | pass | Added `My Account`, `Account Settings`, `Preferences` routes/views with password/security controls in account settings. |
 | `/console/*` proof-path daily UX retirement behavior | pass | Retired by default via `CONSOLE_PROOF_PATHS_ENABLED=false`; app-owned fallback redirects remain in place. |
+| Personal-notes table standardization scope | deferred | Implemented for Platform Users table; broader app-wide table standardization remains pending scope confirmation for Batch 7 close-out vs Batch 8 carry-over. |
 | Documentation sync across planning/canonical/development/index notes | pass | Batch 7, Phase 2 planning owner, UI audit, architecture note, and development log are synchronized. |
 | Local compile/regression sanity checks | pass | `php artisan view:cache` and account route registration checks pass. |
 | Final staging visual sign-off | deferred | Pending explicit staging visual QA completion and sign-off marker. |

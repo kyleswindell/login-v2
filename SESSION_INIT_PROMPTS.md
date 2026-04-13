@@ -13,13 +13,16 @@ Active customization structure:
 
 ## Role Structure
 
-Prompts and skills are organized into four roles:
+Prompts and skills are organized into eight roles:
 
 | Role                       | Trigger                       | When                                                            |
 | -------------------------- | ----------------------------- | --------------------------------------------------------------- |
 | Phase Planning             | `/phase-planning`             | Define or realign a phase's goals, deliverables, and constraints |
 | Phase Batch Planning       | `/phase-batch-planning`       | Organize a finalized phase plan into dependency-ordered batches |
+| Phase Batch Development    | `/phase-batch-development`    | Turn a batch note into a delivery-ready implementation slice with tests and doc sync scope |
+| Phase Batch Review         | `/phase-batch-review`         | Review a completed batch against docs, tests, and repo diff before commit/push |
 | Phase Batch Implementation | `/phase-batch-implementation` | Code the currently active batch                                 |
+| Phase Close-Out            | `/phase-close-out`            | Finalize a phase batch or full phase after review and manual QA |
 | Module Creation Kickoff    | `/module-creation-kickoff`    | Sub-task when a batch introduces a new module                   |
 | Planning Sync              | `/planning-sync`              | Sync canonical docs after any contract or scope change          |
 
@@ -83,12 +86,31 @@ Reads phase index and all planning/canonical docs, maps dependency relationships
 
 ---
 
+## Tier 2.5 — Phase Batch Development
+
+**Prompt:** `/phase-batch-development`
+
+**When to use:**
+Use this after a batch exists but before coding when the build still needs a delivery-ready implementation slice, explicit code touchpoints, a test matrix, or clearer in-scope versus out-of-scope guidance.
+
+**Starter prompt:**
+```
+/phase-batch-development Phase [X] Batch [Y]
+```
+
+**What it does:**
+Builds a dependency-safe implementation plan for the selected batch, including required contracts, code touchpoints, tests, doc sync work, and blockers that must be resolved before implementation starts.
+
+---
+
 ## Tier 3 — Phase Batch Implementation
 
 **Prompt:** `/phase-batch-implementation`
 
 **When to use:**
 Batches are already planned and a batch is active or ready to start. Use this to write code. Reads repo state first, continues from where the last session left off, runs tests, syncs docs.
+
+Implementation should prepare the batch for review, not self-sign it off. Normal flow is implementation, then `/phase-batch-review`, then `/phase-close-out` after review and manual QA are complete.
 
 **Starter prompt (new or unknown state):**
 ```
@@ -136,6 +158,31 @@ If Batch 4 exit criteria are met, prepare Batch 5 kickoff scope only; do not sta
 
 ---
 
+## Tier 3.5 — Phase Batch Review
+
+**Prompt:** `/phase-batch-review`
+
+**When to use:**
+Implementation for a specific batch is complete or paused at a reviewable checkpoint. Use this to compare the current diff or unpushed commit scope against the batch note, phase plan, and canonical docs before any commit or push.
+
+**Starter prompt:**
+```
+/phase-batch-review Phase [X] Batch [Y]
+```
+
+**Starter prompt (known active state):**
+```
+/phase-batch-review active
+Review the current implementation diff against the active batch note and linked canonical docs.
+If the batch is review-clean, stage only the scoped files, commit, and push.
+If not, report findings and stop before commit.
+```
+
+**What it does:**
+Performs a batch-scoped audit of code, tests, doc sync, and implementation status. If findings remain, it reports them and leaves the batch open. If clean, it stages the scoped files, commits, pushes, and records the handoff state for close-out.
+
+---
+
 ## Tier 3 Sub-Task — Module Creation Kickoff
 
 **Prompt:** `/module-creation-kickoff`
@@ -155,7 +202,29 @@ Inside an active implementation session when a batch introduces a new module tha
 
 ---
 
-## Tier 4 — Planning Sync
+## Tier 4 — Phase Close-Out
+
+**Prompt:** `/phase-close-out`
+
+**When to use:**
+Use only after review has passed and any required manual QA or visual review is complete. This is the only workflow step that should mark a phase batch or an entire phase as complete, signed off, or deferred-forward in the docs.
+
+**Starter prompt (batch):**
+```
+/phase-close-out Phase [X] Batch [Y]
+```
+
+**Starter prompt (phase):**
+```
+/phase-close-out Phase [X]
+```
+
+**What it does:**
+Audits implementation status, planning notes, canonical docs, indexes, and development logs for the target batch or full phase. Confirms what is complete, what is deferred, and what must roll into the next batch or phase. Updates docs to reflect final status and pushes the close-out commit when edits are required.
+
+---
+
+## Tier 5 — Planning Sync
 
 **Skill:** `/planning-sync`
 
@@ -224,6 +293,14 @@ Startup checklist before any edits:
 - Session A: active writable batch implementation in the shared folder
 - Session B: future phase planning or module kickoff in read-only mode unless moved to its own worktree
 - Session C (optional): cross-phase contract or security audit in read-only mode
+
+**Recommended delivery flow:**
+- `/phase-planning` to define or realign a phase
+- `/phase-batch-planning` to sequence dependency-safe batches
+- `/phase-batch-development` when a delivery-ready implementation slice is needed before coding
+- `/phase-batch-implementation` to build the active slice and sync docs
+- `/phase-batch-review` to validate the diff and commit or push only when review-clean
+- `/phase-close-out` to mark the batch or phase complete after review and manual QA
 
 **Writable handoff rule:**
 - if Session B or Session C needs to edit files while Session A is still active, that session should move to its own branch and worktree first

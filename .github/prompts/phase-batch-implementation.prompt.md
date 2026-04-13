@@ -1,5 +1,5 @@
 ---
-description: "Start or continue implementation of the currently active phase batch. Reads repo state, confirms active batch, and executes the next dependency-safe code slice with tests and doc sync."
+description: "Start or continue implementation of the currently active phase batch. Reads repo state, confirms active batch, executes the next dependency-safe code slice, and prepares review handoff after tests and doc sync."
 name: "Phase Batch Implementation"
 argument-hint: "Phase and batch, or 'active' to auto-detect from repo state, for example: Phase 2 Batch 4"
 agent: "agent"
@@ -24,7 +24,7 @@ Do the following:
 6. Implement code changes (routes, requests, services, policies, migrations, views, components as required).
 7. Run relevant tests and confirm passing.
 8. Sync documentation updates in the same work cycle.
-9. Report what was completed, what is still open, and what the next slice is.
+9. Prepare review handoff: summarize completed work, tests run, docs synced, remaining open items, and the exact scoped files that should be reviewed next.
 
 Rules:
 - Never re-plan completed items.
@@ -40,9 +40,10 @@ Output after completion:
 - Remaining open items in this batch
 - Planned file changes (before edits)
 - Applied file changes (after edits)
+- Recommended review target and review handoff notes
 
-Git close-out (required when edits were made):
-1. Stage only the files changed for this task.
-2. Commit with a clear summary of completed work.
-3. Push to the current branch.
-4. Report commit SHA and pushed branch in the final summary.
+Normal next step after implementation:
+1. Run `/phase-batch-review` for this batch.
+2. Do not mark the batch complete from implementation alone.
+3. Do not commit or push from implementation unless the user explicitly overrides the standard review-first flow.
+4. Leave a clear review handoff summary in the final response.

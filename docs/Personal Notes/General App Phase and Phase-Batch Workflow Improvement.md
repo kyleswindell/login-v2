@@ -37,3 +37,7 @@ If phase batch is the last documented batch in a phase, conduct additional full 
 
 Close out specified phase or phase batch following manual visual review and correction process. 
 Audit docs in relation to specified phase or phase batch docs to ensure syncing across planning and canonical docs.  This is the only agent command that can close out a phase or phase batch.
+
+Additional concern: Conducting manual visual review and inspection of rendered App UI through web URL requires a commit and push to main as the server workflow currently only pulls updated github repo main branch for updates. 
+
+How does this affect workflow with a pre close-out push to main currently expected for visual review? Is there an improved workflow that can be established for visual review prior to final closeouts of batches and phases?

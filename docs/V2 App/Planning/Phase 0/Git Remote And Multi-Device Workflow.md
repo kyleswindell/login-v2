@@ -71,6 +71,18 @@ When multiple sessions must both write:
 
 A manual checkout or lock file may be used only as an advisory note. It does not protect files from concurrent local edits.
 
+## Agent Delivery Flow
+
+Recommended prompt flow for planned work:
+
+1. phase planning or phase batch planning establishes the scope and sequencing
+2. batch development planning is optional when a batch still needs a delivery-ready implementation slice
+3. phase batch implementation performs the scoped changes and prepares review handoff
+4. phase batch review validates the diff against docs and tests before commit and push
+5. phase close-out is the only step that should mark a batch or phase complete after review and manual QA
+
+This keeps implementation, review, and final sign-off separate so a batch is not treated as complete just because code exists in the working tree.
+
 ## Related
 
 * [[V2 App/Planning/Phase 0/Phase 0 Index]] | [Phase 0 Index](Phase%200%20Index.md)

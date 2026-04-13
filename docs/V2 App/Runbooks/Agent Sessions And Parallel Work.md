@@ -112,6 +112,24 @@ When multiple sessions use the same folder:
 * review and audit sessions should report findings, not apply fixes, unless the writable role is explicitly handed over
 * do not treat uncommitted local changes as completed work until the writer closes out or explicitly hands off the state
 
+## Delivery Flow And Sign-Off Gates
+
+Recommended workflow for planned phase work:
+
+1. `/phase-planning` defines or realigns the phase scope.
+2. `/phase-batch-planning` sequences dependency-safe batches and parallel windows.
+3. `/phase-batch-development` creates an implementation-ready delivery plan when the batch still needs a concrete build slice.
+4. `/phase-batch-implementation` performs the scoped code and doc changes, runs tests, and prepares a review handoff.
+5. `/phase-batch-review` compares the implementation against the batch note, canonical docs, tests, and diff. If clean, it commits and pushes. If not, it reports findings and returns the batch to implementation.
+6. `/phase-close-out` performs final status sync after review passes and any required manual QA is complete.
+
+Sign-off rules:
+
+* implementation completion is not the same as sign-off
+* a batch should not be marked complete until review passes and close-out updates the docs
+* a phase should not be marked complete until all intended batches are either closed out or explicitly deferred forward
+* deferments discovered during review or close-out must be written into the appropriate future batch, future phase, or future-planning note
+
 ## Handoff Checklist
 
 Before the writable session is handed off or another writable session begins:

@@ -13,7 +13,9 @@
 
 ## Drafted Contracts
 
+- [[V2 App/Features/Account Management And Settings]] | [Account Management And Settings](Account%20Management%20And%20Settings.md)
 - [[V2 App/Features/Calendar And CalendarEntry Contract]] | [Calendar And CalendarEntry Contract](Calendar%20And%20CalendarEntry%20Contract.md)
+- [[V2 App/Features/Inter-Tenant Messaging Contract]] | [Inter-Tenant Messaging Contract](Inter-Tenant%20Messaging%20Contract.md)
 
 ## Planned Feature Tracks
 

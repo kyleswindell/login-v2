@@ -8,8 +8,9 @@ Establish a universal CalendarEntry base object and module extension contract as
 
 Current status:
 
-* drafted
-* planned after Batch 9 inter-tenant messaging foundation
+* contract-complete
+* implementation-ready for future-phase sequencing
+* code delivery remains out of scope for this Phase 2 contract batch
 
 Planning owner:
 

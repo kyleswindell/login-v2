@@ -10,12 +10,12 @@ This batch establishes the dependency-safe plan for the remaining Phase 2 implem
 
 Current status:
 
-* close-out pass complete for documented outputs; decision sign-off pending
+* complete
 * route and panel ownership map is drafted and linked
 * UI surface disposition audit is drafted and linked
 * Filament operational proofs from Batch 2 and Batch 3 are complete and available as decision inputs
 * shell navigation ownership baseline and first route convergence slice from Batch 4 are complete and available as decision inputs
-* remaining Batch 1 scope is decision sign-off for unresolved contracts
+* decision sign-offs previously listed as pending are now satisfied through Batch 5 and Batch 6 close-out artifacts
 
 Planning owner:
 
@@ -91,7 +91,7 @@ Completed outputs:
 * dependency-ordered remaining batches are defined and indexed: Batch 4, Batch 5, Batch 6
 * transitional `/console` intent is documented as proof-only and Batch 4 route-convergence work is complete locally
 
-Decision sign-offs still required to fully close Batch 1:
+Decision sign-offs completed in follow-on Batch 5 and Batch 6 close-out artifacts:
 
 * visual baseline/template decision brief (accepted/rejected criteria and baseline component expectations)
 * explicit Livewire shell decision for Phase 2 scope (deferred vs adopted scope)

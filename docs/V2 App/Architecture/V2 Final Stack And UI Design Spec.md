@@ -28,6 +28,10 @@ Current status:
 * Batch 7 implementation is complete for final visual UI migration of existing Phase 2 surfaces and is pending final visual sign-off
 * Batch 7 UI audit pass applied doc-workflow fit checks per surface and normalized custom Blade surface primitives toward the shared Filament-aligned baseline
 * Batch 7 correction pass adds account-focused dropdown routes/views and final active-state/header/color-baseline fixes ahead of visual sign-off
+* Batch 8 canonical owner is defined for account-surface contracts and remains blocked by the Batch 7 sign-off gate
+* Batch 9 canonical owner is defined for messaging foundation contracts and remains blocked by Batch 8 completion
+* Batch 10 calendar contract is complete in canonical docs
+* Batch 11 widget dashboard delivery is code-complete and locally verified in Docker; staging deployment and visual QA are pending
 
 Source planning note:
 
@@ -233,6 +237,11 @@ Open gaps:
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 2]] | [Phase 2 - Implementation Batch 2](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%202.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 3]] | [Phase 2 - Implementation Batch 3](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%203.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 4]] | [Phase 2 - Implementation Batch 4](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%204.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 8]] | [Phase 2 - Implementation Batch 8](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%208.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 9]] | [Phase 2 - Implementation Batch 9](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%209.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 11]] | [Phase 2 - Implementation Batch 11](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%2011.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Route And Panel Ownership Map]] | [Phase 2 - Route And Panel Ownership Map](../Planning/Phase%202/Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - UI Surface Disposition Audit]] | [Phase 2 - UI Surface Disposition Audit](../Planning/Phase%202/Phase%202%20-%20UI%20Surface%20Disposition%20Audit.md)
+* [[V2 App/Features/Account Management And Settings]] | [Account Management And Settings](../Features/Account%20Management%20And%20Settings.md)
+* [[V2 App/Features/Inter-Tenant Messaging Contract]] | [Inter-Tenant Messaging Contract](../Features/Inter-Tenant%20Messaging%20Contract.md)
 * [[Decisions/ADR-0004 - Shared Core Instance And Panel Boundary Direction]] | [ADR-0004 - Shared Core Instance And Panel Boundary Direction](../../Decisions/ADR-0004%20-%20Shared%20Core%20Instance%20And%20Panel%20Boundary%20Direction.md)

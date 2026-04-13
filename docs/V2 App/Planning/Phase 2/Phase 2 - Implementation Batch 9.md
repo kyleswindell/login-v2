@@ -9,7 +9,8 @@ Implement a basic inter-tenant messaging foundation as an app query/support chan
 Current status:
 
 * drafted
-* planned after Batch 8 account ownership close-out
+* implementation-ready after hard gates are satisfied
+* blocked until Batch 8 account ownership close-out is complete
 
 Planning owner:
 
@@ -18,7 +19,15 @@ Planning owner:
 Canonical owners:
 
 * [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
-* [[V2 App/Reference/Stack - Filament And Livewire]] | [Stack - Filament And Livewire](../../Reference/Stack%20-%20Filament%20And%20Livewire.md)
+* [[V2 App/Features/Inter-Tenant Messaging Contract]] | [Inter-Tenant Messaging Contract](../../Features/Inter-Tenant%20Messaging%20Contract.md)
+
+## Entry Gates
+
+Batch 9 implementation may start only when all of the following are true:
+
+* Batch 8 is complete and account ownership contracts are closed
+* thread/message participant contract remains aligned with this planning note and canonical owner note
+* implementation status remains synchronized across planning, canonical owner, and Phase 2 index notes
 
 ## Batch Goal
 
@@ -140,3 +149,4 @@ This batch is complete when:
 * [[V2 App/Planning/Phase 2/Phase 2 Index]] | [Phase 2 Index](Phase%202%20Index.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 8]] | [Phase 2 - Implementation Batch 8](Phase%202%20-%20Implementation%20Batch%208.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
+* [[V2 App/Features/Inter-Tenant Messaging Contract]] | [Inter-Tenant Messaging Contract](../../Features/Inter-Tenant%20Messaging%20Contract.md)

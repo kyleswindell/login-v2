@@ -6,34 +6,34 @@ Collect Phase 2 planning notes for final stack alignment and UI system introduct
 
 ## Current Phase Status
 
-Phase 2 is in final review sequencing with Batch 7 implemented and awaiting final close-out review/sign-off; Batch 8/9 are drafted.
+Phase 2 is in final review sequencing with Batch 7 implemented and pending required staging visual sign-off. Batch 8 and Batch 9 are planning-ready but blocked behind hard dependency gates.
 
 Current focus:
 
 * unify the current `/dashboard` and `/console` experiences into one coherent app experience
 * keep `/console` as a transitional Phase 2 proof path only, not a long-term product surface
-* lock route, panel, shell, and visual-baseline decisions before broader module work
-* close Batch 6 contracts for panel-path retirement and cross-phase handoff
-* run final visual review of Batch 7 dashboard/shell migration on staging
-* resolve whether app-wide table-standardization updates are required for Batch 7 close-out or intentionally carried into Batch 8
-* prepare Batch 8 account IA close-out and Batch 9 messaging foundation sequencing
+* hold Batch 8 start until Batch 7 staging visual sign-off is explicitly recorded
+* require canonical owner docs before implementation for Batch 8 and Batch 9
+* keep Batch 8 -> Batch 9 as a strict implementation sequence
+* treat Batch 10 as contract-complete and ready for future implementation sequencing
+* complete Batch 11 staging deploy and visual verification before Phase 2 close-out
 * establish repeatable scaffolding rules for Phase 3 customer/public foundations and Phase 4 modules
 
 ## Batch Sequence Status
 
 | Batch   | Status                                        | Primary output                                             |
 | ------- | --------------------------------------------- | ---------------------------------------------------------- |
-| Batch 1 | Close-out complete, decision sign-off pending | decision lock and batch sequencing contracts               |
+| Batch 1 | Complete                                      | decision lock and batch sequencing contracts               |
 | Batch 2 | Complete                                      | Filament operational proof: error logs                     |
 | Batch 3 | Complete                                      | Filament operational proof: audit logs                     |
 | Batch 4 | Complete locally                              | route and navigation convergence contracts                 |
 | Batch 5 | Complete                                      | users/settings/notifications/operational surface migration |
-| Batch 6 | Complete                                     | phase close-out contracts and Phase 3/4 handoff            |
-| Batch 7 | Review-ready                                 | final UI migration and Phase 2 visual stack completion     |
-| Batch 8 | Drafted                                      | account menu IA and account surface ownership              |
-| Batch 9 | Drafted                                      | inter-tenant messaging foundation                          |
-| Batch 10 | Drafted                                     | calendar foundation and CalendarEntry contract             |
-| Batch 11 | In progress                                 | widget-based customizable dashboard                        |
+| Batch 6 | Complete                                      | phase close-out contracts and Phase 3/4 handoff            |
+| Batch 7 | Review-ready (hard gate open)                 | final UI migration and Phase 2 visual stack completion     |
+| Batch 8 | Blocked (Batch 7 sign-off required)           | account menu IA and account surface ownership              |
+| Batch 9 | Blocked (Batch 8 completion required)         | inter-tenant messaging foundation                          |
+| Batch 10 | Contract-complete                            | calendar foundation and CalendarEntry contract             |
+| Batch 11 | Code-complete, staging QA pending            | widget-based customizable dashboard                        |
 
 ## Planning Notes
 
@@ -54,33 +54,33 @@ Current focus:
 
 ## Multi-Agent Scheduling
 
-Phase 2 remaining batches form one strict sequential chain (Batch 8 → 9 → 10) with one independent parallel window (Batch 11 dashboard).
+Phase 2 remaining implementation batches use a conservative sequence: Batch 8 and Batch 9 are strict serial dependencies, while Batch 10 contract maintenance and Batch 11 staging QA can run in parallel where ownership boundaries are explicit.
 
 ### Dependency Graph
 
 ```
-Batch 7 staging sign-off
-    └─ Batch 8  (account surfaces — requires Batch 7 shell baseline)
-          └─ Batch 9  (messaging foundation — requires Batch 8 account ownership)
-                └─ Batch 10  (calendar foundation — requires Batch 9 context/polymorphic engine)
+Batch 7 staging sign-off (required)
+    └─ Batch 8 implementation
+          └─ Batch 9 implementation
 
-Batch 11  (dashboard widgets — independent of Batch 8/9/10 chain)
+Batch 10  (contract-complete; implementation can be scheduled independently)
+Batch 11  (code-complete; staging deploy and visual QA pending)
 ```
 
 ### Parallelism Windows
 
 | Agent A (shared folder, writable) | Agent B (separate worktree, writable) | Gate |
 |---|---|---|
-| Batch 11 implementation (active now) | Batch 8 and Batch 9 planning preparation (read-only in shared folder) | Batch 8 cannot start until Batch 7 staging sign-off |
-| Batch 8 implementation (after Batch 7 sign-off) | Batch 11 close-out / follow-up work if still needed | Both touch `routes/web.php` — coordinate route section ownership before starting parallel |
-| Batch 9 implementation | — | No safe parallel candidate; Batch 9 thread and user ownership models must come from Batch 8 |
-| Batch 10 implementation | — | Strict Batch 9 dependency; calendar context model reuses the messaging context engine pattern |
+| Batch 11 staging deploy and QA | Batch 10 contract/doc refinement (if needed) | Safe when scoped to docs + staging checks |
+| Batch 8 implementation (after Batch 7 sign-off) | Batch 11 close-out follow-up (if still needed) | Coordinate `routes/web.php` section ownership before parallel edits |
+| Batch 9 implementation | — | No safe parallel candidate; Batch 9 thread and user ownership models depend on Batch 8 |
 
 ### Notes
 
-* Batch 11 is the current active batch. Complete it in the shared folder before handing the writable role to the Batch 8 agent.
-* Batch 8 and a fully merged Batch 11 can technically run in parallel on separate worktrees if needed. `routes/web.php` is the primary conflict file — keep additions in separate named sections in each branch.
-* Batch 9 and Batch 10 are strictly sequential with no internal parallelism. Doc-sync and planning work for Batch 9 and Batch 10 can start as read-only preparation while earlier batches are active.
+* Batch 7 visual sign-off is a hard gate for starting Batch 8 implementation.
+* Batch 8 and Batch 9 require canonical feature owner notes before coding starts.
+* Batch 11 and Batch 10 can run as separate close-out lanes (staging QA vs contract maintenance) with explicit ownership boundaries.
+* Batch 8 and a fully merged Batch 11 can run in parallel only on separate worktrees with named `routes/web.php` sections to reduce merge collision risk.
 * See [Agent Sessions And Parallel Work](../../Runbooks/Agent%20Sessions%20And%20Parallel%20Work.md) for setup steps.
 
 ## Canonical Owners
@@ -89,6 +89,8 @@ Batch 11  (dashboard widgets — independent of Batch 8/9/10 chain)
 * [[V2 App/Architecture/Stack Overview]] | [Stack Overview](../../Architecture/Stack%20Overview.md)
 * [[V2 App/Reference/Stack - Filament And Livewire]] | [Stack - Filament And Livewire](../../Reference/Stack%20-%20Filament%20And%20Livewire.md)
 * [[V2 App/Reference/Stack - Frontend Build]] | [Stack - Frontend Build](../../Reference/Stack%20-%20Frontend%20Build.md)
+* [[V2 App/Features/Account Management And Settings]] | [Account Management And Settings](../../Features/Account%20Management%20And%20Settings.md)
+* [[V2 App/Features/Inter-Tenant Messaging Contract]] | [Inter-Tenant Messaging Contract](../../Features/Inter-Tenant%20Messaging%20Contract.md)
 * [[V2 App/Development/Phase 2 Development Log]] | [Phase 2 Development Log](../../Development/Phase%202%20Development%20Log.md)
 
 ## Related

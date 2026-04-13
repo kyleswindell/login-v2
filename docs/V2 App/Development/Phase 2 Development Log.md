@@ -33,6 +33,11 @@ Current state:
 * Batch 5 is complete and final audit passed (testing and visual web app confirmation)
 * Phase 2 Batch 6 close-out contracts are complete
 * Phase 2 Batch 7 final visual UI migration implementation is complete and ready for visual review
+* Batch 8 and Batch 9 canonical feature-owner notes are now created and linked
+* Batch 8 remains blocked until Batch 7 staging visual sign-off is approved
+* Batch 9 remains blocked until Batch 8 account ownership close-out is complete
+* Batch 10 calendar contract is complete in planning and canonical docs
+* Batch 11 dashboard widgets are code-complete and locally verified in Docker; staging deployment and visual QA remain pending
 
 ## Milestones
 
@@ -94,13 +99,43 @@ Planning owners:
 
 ## Next Expected Work
 
-* run visual UI review for Batch 7 on staging
-* resolve Batch 7 table-standardization close-out scope (app-wide completion now vs explicit carry-over)
-* execute Batch 8 account IA and account-surface ownership close-out
-* execute Batch 9 inter-tenant messaging foundation implementation
-* execute Batch 10 calendar foundation and CalendarEntry contract implementation
+* run visual UI review for Batch 7 on staging and record explicit sign-off
+* execute Batch 8 account IA and account-surface ownership close-out after Batch 7 sign-off
+* execute Batch 9 inter-tenant messaging foundation implementation after Batch 8 close-out
+* schedule Batch 10 implementation as future-phase work using the locked contract baseline
 * execute final `/console` proof-resource retirement sequencing based on Batch 7 visual-review verification
 * close Phase 2 after final visual sign-off and sync final handoff updates for Phase 3 and Phase 4
+
+### 2026-04-13 - Phase 2 readiness and canonical-owner sync refresh
+
+Status:
+
+* planning and canonical docs synchronized
+* implementation gates clarified for remaining batches
+
+Work completed:
+
+* updated Phase 2 index and planning owner notes with hard-gate sequencing and conservative concurrency guidance
+* closed Batch 1 decision sign-off language using Batch 5 and Batch 6 lock artifacts
+* updated Batch 8 and Batch 9 planning notes with explicit entry gates and canonical owner alignment
+* marked Batch 10 as contract-complete and implementation-ready for future-phase sequencing
+* created canonical owner notes:
+  * Account Management And Settings
+  * Inter-Tenant Messaging Contract
+* updated Feature Index and architecture owner note with new canonical links and current batch status
+
+Planning owners:
+
+* [[V2 App/Planning/Phase 2/Phase 2 Index]] | [Phase 2 Index](../Planning/Phase%202/Phase%202%20Index.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](../Planning/Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 8]] | [Phase 2 - Implementation Batch 8](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%208.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 9]] | [Phase 2 - Implementation Batch 9](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%209.md)
+
+Canonical docs:
+
+* [[V2 App/Features/Account Management And Settings]] | [Account Management And Settings](../Features/Account%20Management%20And%20Settings.md)
+* [[V2 App/Features/Inter-Tenant Messaging Contract]] | [Inter-Tenant Messaging Contract](../Features/Inter-Tenant%20Messaging%20Contract.md)
+* [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
 
 ### 2026-04-13 - Phase 2 Batch 10 calendar foundation planning
 

@@ -9,7 +9,8 @@ Establish a proper user account menu and account-management surface under the he
 Current status:
 
 * drafted
-* planned after Batch 7 visual sign-off
+* implementation-ready after hard gates are satisfied
+* blocked until Batch 7 staging visual sign-off is explicitly approved
 
 Planning owner:
 
@@ -18,7 +19,15 @@ Planning owner:
 Canonical owners:
 
 * [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
-* [[V2 App/Planning/Phase 2/Phase 2 - UI Surface Disposition Audit]] | [Phase 2 - UI Surface Disposition Audit](Phase%202%20-%20UI%20Surface%20Disposition%20Audit.md)
+* [[V2 App/Features/Account Management And Settings]] | [Account Management And Settings](../../Features/Account%20Management%20And%20Settings.md)
+
+## Entry Gates
+
+Batch 8 implementation may start only when all of the following are true:
+
+* Batch 7 final staging visual sign-off is explicitly approved and recorded
+* account route ownership is synchronized with the current shell baseline and no duplicate account/settings ownership remains in platform-global settings
+* this planning note and canonical owner note stay synchronized for implementation status and contract scope
 
 ## Batch Goal
 
@@ -80,3 +89,4 @@ This batch is complete when:
 * [[V2 App/Planning/Phase 2/Phase 2 Index]] | [Phase 2 Index](Phase%202%20Index.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]] | [Phase 2 - Implementation Batch 7](Phase%202%20-%20Implementation%20Batch%207.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
+* [[V2 App/Features/Account Management And Settings]] | [Account Management And Settings](../../Features/Account%20Management%20And%20Settings.md)

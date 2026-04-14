@@ -38,20 +38,39 @@
                     </div>
 
                     <div class="ml-auto flex max-w-full items-center justify-end gap-3">
-                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="w-64 max-w-full flex-shrink-0">
+                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="relative w-64 max-w-full flex-shrink-0" data-table-search-form>
                             <input type="hidden" name="workspace_status" value="{{ $workspaceFilters['status'] }}">
                             <input type="hidden" name="workspace_owner" value="{{ $workspaceFilters['owner'] }}">
                             <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
                             <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
                             <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
+                            <label for="workspace-table-search" class="sr-only">Search workspace rows</label>
+                            <span class="pointer-events-none absolute inset-y-0 left-0 inline-flex w-9 items-center justify-center text-slate-500">
+                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+                                    <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 3.473 9.766l3.13 3.13a.75.75 0 1 0 1.06-1.06l-3.13-3.13A5.5 5.5 0 0 0 9 3.5ZM5 9a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z" clip-rule="evenodd" />
+                                </svg>
+                            </span>
                             <input
+                                id="workspace-table-search"
                                 type="text"
                                 name="workspace_search"
                                 value="{{ $workspaceFilters['search'] }}"
+                                data-table-search-input
+                                data-initial-search="{{ $workspaceFilters['search'] }}"
                                 placeholder="Search name or owner"
                                 aria-label="Search workspace rows"
-                                class="w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500"
+                                class="w-full rounded-md border border-slate-700 bg-slate-950 py-2 pl-9 pr-9 text-sm text-slate-100 placeholder:text-slate-500"
                             />
+                            <button type="button" class="absolute inset-y-0 right-0 hidden w-9 items-center justify-center text-slate-500 transition hover:text-slate-300" data-table-search-clear aria-label="Clear search text">
+                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+                                    <path fill-rule="evenodd" d="M4.22 4.22a.75.75 0 0 1 1.06 0L10 8.94l4.72-4.72a.75.75 0 1 1 1.06 1.06L11.06 10l4.72 4.72a.75.75 0 1 1-1.06 1.06L10 11.06l-4.72 4.72a.75.75 0 1 1-1.06-1.06L8.94 10 4.22 5.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                            <button type="button" class="absolute inset-y-0 right-0 hidden w-9 items-center justify-center text-rose-500 transition hover:text-rose-400" data-table-search-reset aria-label="Reset applied search filter">
+                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+                                    <path fill-rule="evenodd" d="M4.22 4.22a.75.75 0 0 1 1.06 0L10 8.94l4.72-4.72a.75.75 0 1 1 1.06 1.06L11.06 10l4.72 4.72a.75.75 0 1 1-1.06 1.06L10 11.06l-4.72 4.72a.75.75 0 1 1-1.06-1.06L8.94 10 4.22 5.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
                         </form>
                         <button type="button" class="ui-icon-button" data-filter-toggle aria-expanded="false" aria-label="Toggle workspace filters">
                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
@@ -186,20 +205,39 @@
                     </form>
 
                     <div class="ml-auto flex max-w-full items-center justify-end gap-3">
-                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="w-64 max-w-full flex-shrink-0">
+                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="relative w-64 max-w-full flex-shrink-0" data-table-search-form>
                             <input type="hidden" name="audit_severity" value="{{ $auditFilters['severity'] }}">
                             <input type="hidden" name="audit_result" value="{{ $auditFilters['result'] }}">
                             <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
                             <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
                             <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
+                            <label for="audit-table-search" class="sr-only">Search audit rows</label>
+                            <span class="pointer-events-none absolute inset-y-0 left-0 inline-flex w-9 items-center justify-center text-slate-500">
+                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+                                    <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 3.473 9.766l3.13 3.13a.75.75 0 1 0 1.06-1.06l-3.13-3.13A5.5 5.5 0 0 0 9 3.5ZM5 9a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z" clip-rule="evenodd" />
+                                </svg>
+                            </span>
                             <input
+                                id="audit-table-search"
                                 type="text"
                                 name="audit_search"
                                 value="{{ $auditFilters['search'] }}"
+                                data-table-search-input
+                                data-initial-search="{{ $auditFilters['search'] }}"
                                 placeholder="Event, actor, route"
                                 aria-label="Search audit rows"
-                                class="w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500"
+                                class="w-full rounded-md border border-slate-700 bg-slate-950 py-2 pl-9 pr-9 text-sm text-slate-100 placeholder:text-slate-500"
                             />
+                            <button type="button" class="absolute inset-y-0 right-0 hidden w-9 items-center justify-center text-slate-500 transition hover:text-slate-300" data-table-search-clear aria-label="Clear search text">
+                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+                                    <path fill-rule="evenodd" d="M4.22 4.22a.75.75 0 0 1 1.06 0L10 8.94l4.72-4.72a.75.75 0 1 1 1.06 1.06L11.06 10l4.72 4.72a.75.75 0 1 1-1.06 1.06L10 11.06l-4.72 4.72a.75.75 0 1 1-1.06-1.06L8.94 10 4.22 5.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                            <button type="button" class="absolute inset-y-0 right-0 hidden w-9 items-center justify-center text-rose-500 transition hover:text-rose-400" data-table-search-reset aria-label="Reset applied search filter">
+                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+                                    <path fill-rule="evenodd" d="M4.22 4.22a.75.75 0 0 1 1.06 0L10 8.94l4.72-4.72a.75.75 0 1 1 1.06 1.06L11.06 10l4.72 4.72a.75.75 0 1 1-1.06 1.06L10 11.06l-4.72 4.72a.75.75 0 1 1-1.06-1.06L8.94 10 4.22 5.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
                         </form>
                         <button type="button" class="ui-icon-button" data-filter-toggle aria-expanded="false" aria-label="Toggle audit demo filters">
                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
@@ -333,20 +371,39 @@
                     </form>
 
                     <div class="ml-auto flex max-w-full items-center justify-end gap-3">
-                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="w-64 max-w-full flex-shrink-0">
+                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="relative w-64 max-w-full flex-shrink-0" data-table-search-form>
                             <input type="hidden" name="error_severity" value="{{ $errorFilters['severity'] }}">
                             <input type="hidden" name="error_environment" value="{{ $errorFilters['environment'] }}">
                             <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
                             <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
                             <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
+                            <label for="error-table-search" class="sr-only">Search error rows</label>
+                            <span class="pointer-events-none absolute inset-y-0 left-0 inline-flex w-9 items-center justify-center text-slate-500">
+                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+                                    <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 3.473 9.766l3.13 3.13a.75.75 0 1 0 1.06-1.06l-3.13-3.13A5.5 5.5 0 0 0 9 3.5ZM5 9a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z" clip-rule="evenodd" />
+                                </svg>
+                            </span>
                             <input
+                                id="error-table-search"
                                 type="text"
                                 name="error_search"
                                 value="{{ $errorFilters['search'] }}"
+                                data-table-search-input
+                                data-initial-search="{{ $errorFilters['search'] }}"
                                 placeholder="Message, exception, route"
                                 aria-label="Search error rows"
-                                class="w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500"
+                                class="w-full rounded-md border border-slate-700 bg-slate-950 py-2 pl-9 pr-9 text-sm text-slate-100 placeholder:text-slate-500"
                             />
+                            <button type="button" class="absolute inset-y-0 right-0 hidden w-9 items-center justify-center text-slate-500 transition hover:text-slate-300" data-table-search-clear aria-label="Clear search text">
+                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+                                    <path fill-rule="evenodd" d="M4.22 4.22a.75.75 0 0 1 1.06 0L10 8.94l4.72-4.72a.75.75 0 1 1 1.06 1.06L11.06 10l4.72 4.72a.75.75 0 1 1-1.06 1.06L10 11.06l-4.72 4.72a.75.75 0 1 1-1.06-1.06L8.94 10 4.22 5.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                            <button type="button" class="absolute inset-y-0 right-0 hidden w-9 items-center justify-center text-rose-500 transition hover:text-rose-400" data-table-search-reset aria-label="Reset applied search filter">
+                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+                                    <path fill-rule="evenodd" d="M4.22 4.22a.75.75 0 0 1 1.06 0L10 8.94l4.72-4.72a.75.75 0 1 1 1.06 1.06L11.06 10l4.72 4.72a.75.75 0 1 1-1.06 1.06L10 11.06l-4.72 4.72a.75.75 0 1 1-1.06-1.06L8.94 10 4.22 5.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
                         </form>
                         <button type="button" class="ui-icon-button" data-filter-toggle aria-expanded="false" aria-label="Toggle error demo filters">
                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">

@@ -192,6 +192,32 @@ Canonical docs:
 
 * [[V2 App/Reference/UI Action Tokens And Drawer Patterns]] | [UI Action Tokens And Drawer Patterns](../Reference/UI%20Action%20Tokens%20And%20Drawer%20Patterns.md)
 
+### 2026-04-14 - Phase 2 Batch 7 slice verification: notification inbox and widget action styling
+
+Status:
+
+* implemented locally and verified on staging
+
+Work completed:
+
+* moved notification inbox actions onto the shared action-token baseline for the Blade render and the realtime JS-rendered inbox cards
+* kept dashboard and Filament notification widget actions aligned with the same shared notice-action token
+* added notification regression coverage so the inbox page keeps the action-token classes for `Open notification link`, `Mark all read`, `Mark read`, and `Dismiss`
+* pushed commit `b3db0ca` and redeployed staging from the updated `origin/main`
+
+Verification:
+
+* `docker compose exec -T app php artisan test tests/Feature/Platform/PlatformNotificationsTest.php`
+* staging visual checks on `/platform/notifications` and `/dashboard`
+
+Planning owners:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]] | [Phase 2 - Implementation Batch 7](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%207.md)
+
+Canonical docs:
+
+* [[V2 App/Reference/UI Action Tokens And Drawer Patterns]] | [UI Action Tokens And Drawer Patterns](../Reference/UI%20Action%20Tokens%20And%20Drawer%20Patterns.md)
+
 ### 2026-04-13 - Phase 2 Batch 10 calendar foundation planning
 
 Status:

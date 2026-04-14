@@ -15,6 +15,7 @@ Current status:
 * created after Batch 6 close-out to capture missed final-UI-migration scope explicitly
 * remediation in progress: audit/error log right-side drawers, icon-based filter toggles, shared action tokens, and widget action styling are implemented locally and passing Docker viewer tests
 * current slice verified on staging: audit log filter icon affordance and audit row action buttons are live after redeploy; remaining Batch 7 items still require follow-up slices
+* current slice verified on staging: notification inbox actions and dashboard notification widget actions now use the shared action-token baseline after redeploy
 
 Planning owner:
 
@@ -113,6 +114,8 @@ Verification focus:
 * theme-mode behavior check across authenticated shell + login surface with persisted account preference and runtime system-mode resolution
 * Docker viewer regression command: `docker compose exec -T app php artisan test tests/Feature/Platform/PlatformAuditLogViewerTest.php tests/Feature/Platform/ErrorLogViewerTest.php`
 * staging visual check: `/platform/audit-logs` shows icon-only filter affordance and button-styled `View` row action after redeploy
+* Docker notification regression command: `docker compose exec -T app php artisan test tests/Feature/Platform/PlatformNotificationsTest.php`
+* staging visual checks: `/platform/notifications` shows tokenized inbox actions and `/dashboard` shows tokenized notification widget `View` actions after redeploy
 
 ## Exit Criteria
 

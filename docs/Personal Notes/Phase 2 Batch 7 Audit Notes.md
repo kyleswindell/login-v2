@@ -11,8 +11,8 @@ Capture current Batch 7 UI audit findings, likely causes, and solution paths for
 - 7c: Audit log row actions now render as button-styled actions on staging after redeploy; error log parity still needs its own verification pass.
 - 7d: Mobile sidebar toggle behavior is broken at small widths (starts open, toggle not interactable).
 - 7e: Light-mode action buttons have contrast regressions and unreadable text.
-- 7e: Notification widget and dashboard action buttons lack consistent action styling.
-- 7e: Notification inbox "Open notification link" actions still render as plain text links.
+- 7e: Notification widget and dashboard action buttons now render with shared action tokens on staging after redeploy.
+- 7e: Notification inbox action links and read/dismiss controls now render with shared action tokens on staging after redeploy.
 - 7e: Development Tools "Generate" button is too dark in light mode.
 - 7e/7f: No standardized action colorway system (success/warning/error/notice/info/neutral) across surfaces.
 - Planning: Batch 7 and future batches need explicit links to canonical UI design docs for feature UI patterns.
@@ -86,6 +86,9 @@ Capture current Batch 7 UI audit findings, likely causes, and solution paths for
 
 - Problem
 	- Notifications dashboard widget "View" actions render as plain text links (missing button affordance).
+- Current slice status
+	- Dashboard notification widget `View` actions are now rendering as shared notice-style action buttons on staging.
+	- Filament notification widget actions are already on the same shared token baseline in source.
 - Likely causes or pitfalls
 	- Widget uses the default anchor styling instead of shared action-button classes.
 	- No standardized UI action token system guiding widget-level actions.
@@ -130,6 +133,9 @@ Capture current Batch 7 UI audit findings, likely causes, and solution paths for
 
 - Problem
 	- Notification inbox cards render the "Open notification link" as plain text links instead of button-styled actions.
+- Current slice status
+	- Inbox cards now render `Open notification link`, `Mark read`, `Dismiss`, and `Mark all read` with shared action tokens on staging.
+	- Realtime JS inbox rendering now uses the same token classes as the initial Blade render.
 - Likely causes or pitfalls
 	- Inbox card template does not apply shared action token classes to inline links.
 	- Action token usage is inconsistent between dashboard widgets and inbox cards.

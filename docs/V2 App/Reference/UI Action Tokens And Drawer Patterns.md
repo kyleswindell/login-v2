@@ -18,6 +18,7 @@ This note is a scoped implementation reference. The canonical UI design system o
 * active owner for app-owned action tokens and operational log drawer behavior
 * staging visual verification still required before Batch 7 sign-off
 * audit log filter icon affordance and audit row-action button styling verified on staging after the 2026-04-13 redeploy
+* notification inbox actions and dashboard notification widget actions verified on staging after the 2026-04-14 redeploy
 
 ## Current Implementation
 
@@ -74,6 +75,12 @@ Current Batch 7 app-owned drawer use:
 * `resources/views/livewire/platform/dashboard/widgets/development-tools.blade.php` - dashboard development action token usage
 * `resources/views/livewire/platform/dashboard/widgets/system-notifications.blade.php` - dashboard notification action token usage
 * `resources/views/filament/widgets/system-notifications-widget.blade.php` - Filament-owned notification widget action token usage
+* `resources/views/platform/notifications/index.blade.php` - notification inbox action token usage for page-rendered actions
+
+Notification action-token parity now verified on staging for:
+
+* dashboard notification widget `View` actions
+* notification inbox `Open notification link`, `Mark read`, `Dismiss`, and `Mark all read` actions
 
 ## Related
 

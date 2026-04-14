@@ -22,6 +22,26 @@ Current status:
 * app-owned UI reference workspace is implemented at `/platform/ui-reference` as the canonical future UI reference surface for shell, forms, table, token, and drawer examples
 * UI reference workspace access is intentionally restricted to platform super admins for baseline governance and review control
 * multi-agent update workflow and prompt baseline are defined for parallel UI-reference updates
+* dedicated UI/UX source-of-truth and decision-log structure is now established under `docs/V2 App/Reference/UI UX System/`
+
+## External System Review Baseline
+
+Current source-of-truth review direction:
+
+* Material Design guidance (M2 request scope, with static archive review where JS-only pages block extraction)
+* IBM Carbon Design System guidance for enterprise rigor and accessibility consistency
+
+High-level outcomes that now require explicit lock decisions:
+
+1. tokenized color and theme semantics for light/dark parity
+2. typography and spacing scales
+3. elevation/layering and corner-radius system
+4. component behavior contracts (drawer/modal/table/form/empty state/toast)
+5. UX consistency policies (navigation hierarchy, action placement, destructive flow, feedback timing)
+
+Canonical owner set for this work:
+
+* [[V2 App/Reference/UI UX System/UI UX System Index]] | [UI UX System Index](UI%20UX%20System/UI%20UX%20System%20Index.md)
 
 ## Design Tokens
 

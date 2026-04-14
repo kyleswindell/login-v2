@@ -71,94 +71,49 @@ class UiReferenceController extends Controller
     {
         $this->authorizeSuperAdmin($request);
 
-        $workspaceFilters = [
-            'status' => trim($request->string('workspace_status')->toString()),
-            'owner' => trim($request->string('workspace_owner')->toString()),
-            'search' => trim($request->string('workspace_search')->toString()),
-        ];
-        $workspacePerPage = $this->normalizePerPage($request->integer('workspace_per_page', 25));
-        $workspaceRows = collect($this->workspaceRows())
-            ->when($workspaceFilters['status'] !== '', fn (Collection $rows): Collection => $rows->where('status', $workspaceFilters['status']))
-            ->when($workspaceFilters['owner'] !== '', fn (Collection $rows): Collection => $rows->where('owner', $workspaceFilters['owner']))
-            ->when($workspaceFilters['search'] !== '', function (Collection $rows) use ($workspaceFilters): Collection {
-                $needle = mb_strtolower($workspaceFilters['search']);
+        return $this->renderSection('overview');
+    }
 
-                return $rows->filter(function (array $row) use ($needle): bool {
-                    return str_contains(mb_strtolower($row['name']), $needle)
-                        || str_contains(mb_strtolower($row['owner']), $needle);
-                });
-            });
-        $workspacePaginator = $this->paginateCollection(
-            $workspaceRows,
-            $workspacePerPage,
-            max(1, (int) $request->integer('workspace_page', 1)),
-            'workspace_page',
-            $request
-        );
+    public function actions(Request $request): View
+    {
+        $this->authorizeSuperAdmin($request);
 
-        $auditFilters = [
-            'severity' => trim($request->string('audit_severity')->toString()),
-            'result' => trim($request->string('audit_result')->toString()),
-            'search' => trim($request->string('audit_search')->toString()),
-        ];
-        $auditPerPage = $this->normalizePerPage($request->integer('audit_per_page', 10));
-        $auditRows = collect($this->auditRows())
-            ->when($auditFilters['severity'] !== '', fn (Collection $rows): Collection => $rows->where('severity', $auditFilters['severity']))
-            ->when($auditFilters['result'] !== '', fn (Collection $rows): Collection => $rows->where('result', $auditFilters['result']))
-            ->when($auditFilters['search'] !== '', function (Collection $rows) use ($auditFilters): Collection {
-                $needle = mb_strtolower($auditFilters['search']);
+        return $this->renderSection('components.actions');
+    }
 
-                return $rows->filter(function (array $row) use ($needle): bool {
-                    return str_contains(mb_strtolower($row['event_type']), $needle)
-                        || str_contains(mb_strtolower($row['actor_label']), $needle)
-                        || str_contains(mb_strtolower($row['route']), $needle);
-                });
-            });
-        $auditPaginator = $this->paginateCollection(
-            $auditRows,
-            $auditPerPage,
-            max(1, (int) $request->integer('audit_page', 1)),
-            'audit_page',
-            $request
-        );
+    public function status(Request $request): View
+    {
+        $this->authorizeSuperAdmin($request);
 
-        $errorFilters = [
-            'severity' => trim($request->string('error_severity')->toString()),
-            'environment' => trim($request->string('error_environment')->toString()),
-            'search' => trim($request->string('error_search')->toString()),
-        ];
-        $errorPerPage = $this->normalizePerPage($request->integer('error_per_page', 10));
-        $errorRows = collect($this->errorRows())
-            ->when($errorFilters['severity'] !== '', fn (Collection $rows): Collection => $rows->where('severity', $errorFilters['severity']))
-            ->when($errorFilters['environment'] !== '', fn (Collection $rows): Collection => $rows->where('environment', $errorFilters['environment']))
-            ->when($errorFilters['search'] !== '', function (Collection $rows) use ($errorFilters): Collection {
-                $needle = mb_strtolower($errorFilters['search']);
+        return $this->renderSection('components.status');
+    }
 
-                return $rows->filter(function (array $row) use ($needle): bool {
-                    return str_contains(mb_strtolower($row['message']), $needle)
-                        || str_contains(mb_strtolower($row['exception_class']), $needle)
-                        || str_contains(mb_strtolower($row['route']), $needle);
-                });
-            });
-        $errorPaginator = $this->paginateCollection(
-            $errorRows,
-            $errorPerPage,
-            max(1, (int) $request->integer('error_page', 1)),
-            'error_page',
-            $request
-        );
+    public function forms(Request $request): View
+    {
+        $this->authorizeSuperAdmin($request);
 
-        return view('platform.ui-reference.index', [
-            'workspaceFilters' => $workspaceFilters,
-            'workspacePerPage' => $workspacePerPage,
-            'workspaceRows' => $workspacePaginator,
-            'auditFilters' => $auditFilters,
-            'auditPerPage' => $auditPerPage,
-            'auditSamples' => $auditPaginator,
-            'errorFilters' => $errorFilters,
-            'errorPerPage' => $errorPerPage,
-            'errorSamples' => $errorPaginator,
-        ]);
+        return $this->renderSection('components.forms');
+    }
+
+    public function tables(Request $request): View
+    {
+        $this->authorizeSuperAdmin($request);
+
+        return $this->renderSection('patterns.tables', $this->tablePagePayload($request));
+    }
+
+    public function overlays(Request $request): View
+    {
+        $this->authorizeSuperAdmin($request);
+
+        return $this->renderSection('patterns.overlays');
+    }
+
+    public function navigation(Request $request): View
+    {
+        $this->authorizeSuperAdmin($request);
+
+        return $this->renderSection('patterns.navigation');
     }
 
     public function showAuditSample(Request $request, string $sample): JsonResponse
@@ -239,6 +194,17 @@ class UiReferenceController extends Controller
         abort_unless($request->user()?->hasRole('platform_super_admin') === true, 403);
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function renderSection(string $section, array $data = []): View
+    {
+        return view('platform.ui-reference.'.$section, [
+            'currentSection' => $section,
+            ...$data,
+        ]);
+    }
+
     private function normalizePerPage(int $perPage): int
     {
         return in_array($perPage, [10, 25, 50, 100], true) ? $perPage : 25;
@@ -267,6 +233,101 @@ class UiReferenceController extends Controller
                 'query' => $request->query(),
             ]
         );
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function tablePagePayload(Request $request): array
+    {
+        $workspaceFilters = [
+            'status' => trim($request->string('workspace_status')->toString()),
+            'owner' => trim($request->string('workspace_owner')->toString()),
+            'search' => trim($request->string('workspace_search')->toString()),
+        ];
+        $workspacePerPage = $this->normalizePerPage($request->integer('workspace_per_page', 25));
+        $workspaceRows = collect($this->workspaceRows())
+            ->when($workspaceFilters['status'] !== '', fn (Collection $rows): Collection => $rows->where('status', $workspaceFilters['status']))
+            ->when($workspaceFilters['owner'] !== '', fn (Collection $rows): Collection => $rows->where('owner', $workspaceFilters['owner']))
+            ->when($workspaceFilters['search'] !== '', function (Collection $rows) use ($workspaceFilters): Collection {
+                $needle = mb_strtolower($workspaceFilters['search']);
+
+                return $rows->filter(function (array $row) use ($needle): bool {
+                    return str_contains(mb_strtolower($row['name']), $needle)
+                        || str_contains(mb_strtolower($row['owner']), $needle);
+                });
+            });
+        $workspacePaginator = $this->paginateCollection(
+            $workspaceRows,
+            $workspacePerPage,
+            max(1, (int) $request->integer('workspace_page', 1)),
+            'workspace_page',
+            $request
+        );
+
+        $auditFilters = [
+            'severity' => trim($request->string('audit_severity')->toString()),
+            'result' => trim($request->string('audit_result')->toString()),
+            'search' => trim($request->string('audit_search')->toString()),
+        ];
+        $auditPerPage = $this->normalizePerPage($request->integer('audit_per_page', 10));
+        $auditRows = collect($this->auditRows())
+            ->when($auditFilters['severity'] !== '', fn (Collection $rows): Collection => $rows->where('severity', $auditFilters['severity']))
+            ->when($auditFilters['result'] !== '', fn (Collection $rows): Collection => $rows->where('result', $auditFilters['result']))
+            ->when($auditFilters['search'] !== '', function (Collection $rows) use ($auditFilters): Collection {
+                $needle = mb_strtolower($auditFilters['search']);
+
+                return $rows->filter(function (array $row) use ($needle): bool {
+                    return str_contains(mb_strtolower($row['event_type']), $needle)
+                        || str_contains(mb_strtolower($row['actor_label']), $needle)
+                        || str_contains(mb_strtolower($row['route']), $needle);
+                });
+            });
+        $auditPaginator = $this->paginateCollection(
+            $auditRows,
+            $auditPerPage,
+            max(1, (int) $request->integer('audit_page', 1)),
+            'audit_page',
+            $request
+        );
+
+        $errorFilters = [
+            'severity' => trim($request->string('error_severity')->toString()),
+            'environment' => trim($request->string('error_environment')->toString()),
+            'search' => trim($request->string('error_search')->toString()),
+        ];
+        $errorPerPage = $this->normalizePerPage($request->integer('error_per_page', 10));
+        $errorRows = collect($this->errorRows())
+            ->when($errorFilters['severity'] !== '', fn (Collection $rows): Collection => $rows->where('severity', $errorFilters['severity']))
+            ->when($errorFilters['environment'] !== '', fn (Collection $rows): Collection => $rows->where('environment', $errorFilters['environment']))
+            ->when($errorFilters['search'] !== '', function (Collection $rows) use ($errorFilters): Collection {
+                $needle = mb_strtolower($errorFilters['search']);
+
+                return $rows->filter(function (array $row) use ($needle): bool {
+                    return str_contains(mb_strtolower($row['message']), $needle)
+                        || str_contains(mb_strtolower($row['exception_class']), $needle)
+                        || str_contains(mb_strtolower($row['route']), $needle);
+                });
+            });
+        $errorPaginator = $this->paginateCollection(
+            $errorRows,
+            $errorPerPage,
+            max(1, (int) $request->integer('error_page', 1)),
+            'error_page',
+            $request
+        );
+
+        return [
+            'workspaceFilters' => $workspaceFilters,
+            'workspacePerPage' => $workspacePerPage,
+            'workspaceRows' => $workspacePaginator,
+            'auditFilters' => $auditFilters,
+            'auditPerPage' => $auditPerPage,
+            'auditSamples' => $auditPaginator,
+            'errorFilters' => $errorFilters,
+            'errorPerPage' => $errorPerPage,
+            'errorSamples' => $errorPaginator,
+        ];
     }
 
     /**

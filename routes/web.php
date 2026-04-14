@@ -113,6 +113,12 @@ Route::middleware('auth')->group(function (): void {
 
     Route::get('/platform/docs', DocsController::class)->name('platform.docs.index');
     Route::get('/platform/ui-reference', [UiReferenceController::class, 'index'])->name('platform.ui-reference.index');
+    Route::get('/platform/ui-reference/components/actions', [UiReferenceController::class, 'actions'])->name('platform.ui-reference.components.actions');
+    Route::get('/platform/ui-reference/components/status', [UiReferenceController::class, 'status'])->name('platform.ui-reference.components.status');
+    Route::get('/platform/ui-reference/components/forms', [UiReferenceController::class, 'forms'])->name('platform.ui-reference.components.forms');
+    Route::get('/platform/ui-reference/patterns/tables', [UiReferenceController::class, 'tables'])->name('platform.ui-reference.patterns.tables');
+    Route::get('/platform/ui-reference/patterns/overlays-feedback', [UiReferenceController::class, 'overlays'])->name('platform.ui-reference.patterns.overlays');
+    Route::get('/platform/ui-reference/patterns/navigation', [UiReferenceController::class, 'navigation'])->name('platform.ui-reference.patterns.navigation');
     Route::get('/platform/ui-reference/audit-logs/{sample}', [UiReferenceController::class, 'showAuditSample'])->name('platform.ui-reference.audit-samples.show');
     Route::get('/platform/ui-reference/error-logs/{sample}', [UiReferenceController::class, 'showErrorSample'])->name('platform.ui-reference.error-samples.show');
 

@@ -448,8 +448,9 @@
     }
 
     .ui-status-pill {
-        @apply rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em];
+        @apply inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em];
         border: 1px solid transparent;
+        vertical-align: middle;
     }
 
     .ui-status-neutral {

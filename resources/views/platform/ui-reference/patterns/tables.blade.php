@@ -80,10 +80,10 @@
                                 <td class="px-5 py-3">{{ $row['owner'] }}</td>
                                 <td class="px-5 py-3">
                                     <span @class([
-                                        'rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em]',
-                                        'bg-emerald-500/15 text-emerald-300' => $row['status'] === 'active',
-                                        'bg-amber-500/15 text-amber-300' => $row['status'] === 'review',
-                                        'bg-rose-500/15 text-rose-300' => $row['status'] === 'disabled',
+                                        'ui-status-pill',
+                                        'ui-status-success' => $row['status'] === 'active',
+                                        'ui-status-warning' => $row['status'] === 'review',
+                                        'ui-status-danger' => $row['status'] === 'disabled',
                                     ])>{{ $row['status'] }}</span>
                                 </td>
                                 <td class="px-5 py-3 text-slate-400">{{ $row['updated_at_label'] }}</td>
@@ -213,8 +213,8 @@
                                 <td class="px-5 py-3 text-slate-400">{{ $sample['occurred_at_label'] }}</td>
                                 <td class="px-5 py-3 font-semibold text-white">{{ $sample['event_type'] }}</td>
                                 <td class="px-5 py-3">{{ $sample['actor_label'] }}</td>
-                                <td class="px-5 py-3"><span class="rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-emerald-300">{{ $sample['result'] }}</span></td>
-                                <td class="px-5 py-3"><span class="rounded-full bg-violet-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-violet-300">{{ $sample['severity'] }}</span></td>
+                                <td class="px-5 py-3"><span class="ui-status-pill ui-status-success">{{ $sample['result'] }}</span></td>
+                                <td class="px-5 py-3"><span class="ui-status-pill ui-status-notice">{{ $sample['severity'] }}</span></td>
                                 <td class="px-5 py-3 text-slate-400">{{ $sample['route'] }}</td>
                                 <td class="px-5 py-3 text-right">
                                     <a href="{{ route('platform.ui-reference.audit-samples.show', $sample['sample_key']) }}" class="ui-action ui-action-primary" data-audit-log-view data-audit-log-url="{{ route('platform.ui-reference.audit-samples.show', $sample['sample_key']) }}">View</a>
@@ -342,7 +342,7 @@
                                 <td class="px-5 py-3 text-slate-400">{{ $sample['occurred_at_label'] }}</td>
                                 <td class="px-5 py-3 font-semibold text-white">{{ $sample['message'] }}</td>
                                 <td class="px-5 py-3">{{ $sample['exception_class'] }}</td>
-                                <td class="px-5 py-3"><span class="rounded-full bg-rose-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-rose-300">{{ $sample['severity'] }}</span></td>
+                                <td class="px-5 py-3"><span class="ui-status-pill ui-status-danger">{{ $sample['severity'] }}</span></td>
                                 <td class="px-5 py-3 text-slate-400">{{ $sample['environment'] }}</td>
                                 <td class="px-5 py-3 text-slate-400">{{ $sample['request_id'] }}</td>
                                 <td class="px-5 py-3 text-right">

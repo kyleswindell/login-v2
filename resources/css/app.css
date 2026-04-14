@@ -24,67 +24,142 @@
 
 @layer components {
     .ui-shell-surface {
-        @apply border border-slate-800 bg-slate-900/80 shadow-xl shadow-black/20;
+        @apply border shadow-xl;
+        border-color: var(--ui-border-default);
+        background-color: var(--ui-surface-elevated);
+        box-shadow: 0 16px 30px color-mix(in srgb, var(--ui-shadow-color) 35%, transparent);
     }
 
     .ui-card {
-        @apply rounded-lg border border-slate-800 bg-slate-900/75 p-6 shadow-xl shadow-black/20;
+        @apply rounded-lg border p-6 shadow-xl;
+        border-color: var(--ui-border-default);
+        background-color: var(--ui-surface);
+        box-shadow: 0 16px 30px color-mix(in srgb, var(--ui-shadow-color) 35%, transparent);
     }
 
     .ui-card-title {
-        @apply text-lg font-semibold text-white;
+        @apply text-lg font-semibold;
+        color: var(--ui-text-strong);
     }
 
     .ui-card-copy {
-        @apply mt-2 text-sm text-slate-400;
+        @apply mt-2 text-sm;
+        color: var(--ui-text-muted);
     }
 
     .ui-kicker {
-        @apply text-xs font-semibold uppercase tracking-[0.18em] text-slate-300;
+        @apply text-xs font-semibold uppercase tracking-[0.18em];
+        color: var(--ui-text-secondary);
     }
 
     .ui-stat-label {
-        @apply text-xs font-semibold uppercase tracking-[0.16em] text-slate-500;
+        @apply text-xs font-semibold uppercase tracking-[0.16em];
+        color: var(--ui-text-muted);
     }
 
     .ui-stat-value {
-        @apply mt-3 text-3xl font-semibold text-white;
+        @apply mt-3 text-3xl font-semibold;
+        color: var(--ui-text-strong);
     }
 
     .ui-stat-copy {
-        @apply mt-2 text-sm text-slate-400;
+        @apply mt-2 text-sm;
+        color: var(--ui-text-muted);
     }
 
     .ui-action {
-        @apply inline-flex items-center justify-center gap-2 rounded-md border border-slate-700 bg-slate-800/60 px-3.5 py-2 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-800 hover:text-white;
+        @apply inline-flex items-center justify-center gap-2 rounded-md border px-3.5 py-2 text-sm font-semibold transition;
+        border-color: var(--ui-action-neutral-border);
+        background-color: var(--ui-action-neutral-bg);
+        color: var(--ui-action-neutral-text);
+    }
+
+    .ui-action:hover {
+        border-color: var(--ui-action-neutral-border-hover);
+        background-color: var(--ui-action-neutral-bg-hover);
+        color: var(--ui-action-neutral-text-hover);
     }
 
     .ui-action-primary {
-        @apply border-sky-500/40 bg-sky-500/15 text-sky-100 hover:border-sky-400/60 hover:bg-sky-500/25 hover:text-sky-50;
+        border-color: var(--ui-action-primary-border);
+        background-color: var(--ui-action-primary-bg);
+        color: var(--ui-action-primary-text);
+    }
+
+    .ui-action-primary:hover {
+        border-color: var(--ui-action-primary-border-hover);
+        background-color: var(--ui-action-primary-bg-hover);
+        color: var(--ui-action-primary-text-hover);
     }
 
     .ui-action-success {
-        @apply border-emerald-500/40 bg-emerald-500/15 text-emerald-100 hover:border-emerald-400/60 hover:bg-emerald-500/25 hover:text-emerald-50;
+        border-color: var(--ui-action-success-border);
+        background-color: var(--ui-action-success-bg);
+        color: var(--ui-action-success-text);
+    }
+
+    .ui-action-success:hover {
+        border-color: var(--ui-action-success-border-hover);
+        background-color: var(--ui-action-success-bg-hover);
+        color: var(--ui-action-success-text-hover);
     }
 
     .ui-action-warning {
-        @apply border-amber-500/50 bg-amber-500/15 text-amber-100 hover:border-amber-400/70 hover:bg-amber-500/25 hover:text-amber-50;
+        border-color: var(--ui-action-warning-border);
+        background-color: var(--ui-action-warning-bg);
+        color: var(--ui-action-warning-text);
+    }
+
+    .ui-action-warning:hover {
+        border-color: var(--ui-action-warning-border-hover);
+        background-color: var(--ui-action-warning-bg-hover);
+        color: var(--ui-action-warning-text-hover);
     }
 
     .ui-action-danger {
-        @apply border-rose-500/40 bg-rose-500/15 text-rose-100 hover:border-rose-400/60 hover:bg-rose-500/25 hover:text-rose-50;
+        border-color: var(--ui-action-danger-border);
+        background-color: var(--ui-action-danger-bg);
+        color: var(--ui-action-danger-text);
+    }
+
+    .ui-action-danger:hover {
+        border-color: var(--ui-action-danger-border-hover);
+        background-color: var(--ui-action-danger-bg-hover);
+        color: var(--ui-action-danger-text-hover);
     }
 
     .ui-action-notice {
-        @apply border-violet-500/40 bg-violet-500/15 text-violet-100 hover:border-violet-400/60 hover:bg-violet-500/25 hover:text-violet-50;
+        border-color: var(--ui-action-notice-border);
+        background-color: var(--ui-action-notice-bg);
+        color: var(--ui-action-notice-text);
+    }
+
+    .ui-action-notice:hover {
+        border-color: var(--ui-action-notice-border-hover);
+        background-color: var(--ui-action-notice-bg-hover);
+        color: var(--ui-action-notice-text-hover);
     }
 
     .ui-action-info {
-        @apply border-cyan-500/40 bg-cyan-500/15 text-cyan-100 hover:border-cyan-400/60 hover:bg-cyan-500/25 hover:text-cyan-50;
+        border-color: var(--ui-action-info-border);
+        background-color: var(--ui-action-info-bg);
+        color: var(--ui-action-info-text);
+    }
+
+    .ui-action-info:hover {
+        border-color: var(--ui-action-info-border-hover);
+        background-color: var(--ui-action-info-bg-hover);
+        color: var(--ui-action-info-text-hover);
     }
 
     .ui-action-ghost {
-        @apply bg-transparent text-slate-300 hover:bg-slate-800/80 hover:text-white;
+        background-color: transparent;
+        color: var(--ui-action-ghost-text);
+    }
+
+    .ui-action-ghost:hover {
+        background-color: var(--ui-action-ghost-bg-hover);
+        color: var(--ui-action-ghost-text-hover);
     }
 
     .ui-action-soft {
@@ -92,31 +167,73 @@
     }
 
     .ui-action.ui-action-soft {
-        @apply border-slate-600/60 bg-slate-700/20 text-slate-100 hover:bg-slate-700/30;
+        border-color: var(--ui-action-soft-neutral-border);
+        background-color: var(--ui-action-soft-neutral-bg);
+        color: var(--ui-action-soft-neutral-text);
+    }
+
+    .ui-action.ui-action-soft:hover {
+        background-color: var(--ui-action-soft-neutral-bg-hover);
     }
 
     .ui-action-primary.ui-action-soft {
-        @apply border-sky-500/45 bg-sky-500/20 text-sky-100 hover:bg-sky-500/30;
+        border-color: var(--ui-action-soft-primary-border);
+        background-color: var(--ui-action-soft-primary-bg);
+        color: var(--ui-action-soft-primary-text);
+    }
+
+    .ui-action-primary.ui-action-soft:hover {
+        background-color: var(--ui-action-soft-primary-bg-hover);
     }
 
     .ui-action-success.ui-action-soft {
-        @apply border-emerald-500/45 bg-emerald-500/20 text-emerald-100 hover:bg-emerald-500/30;
+        border-color: var(--ui-action-soft-success-border);
+        background-color: var(--ui-action-soft-success-bg);
+        color: var(--ui-action-soft-success-text);
+    }
+
+    .ui-action-success.ui-action-soft:hover {
+        background-color: var(--ui-action-soft-success-bg-hover);
     }
 
     .ui-action-warning.ui-action-soft {
-        @apply border-amber-500/55 bg-amber-500/20 text-amber-100 hover:bg-amber-500/30;
+        border-color: var(--ui-action-soft-warning-border);
+        background-color: var(--ui-action-soft-warning-bg);
+        color: var(--ui-action-soft-warning-text);
+    }
+
+    .ui-action-warning.ui-action-soft:hover {
+        background-color: var(--ui-action-soft-warning-bg-hover);
     }
 
     .ui-action-danger.ui-action-soft {
-        @apply border-rose-500/45 bg-rose-500/20 text-rose-100 hover:bg-rose-500/30;
+        border-color: var(--ui-action-soft-danger-border);
+        background-color: var(--ui-action-soft-danger-bg);
+        color: var(--ui-action-soft-danger-text);
+    }
+
+    .ui-action-danger.ui-action-soft:hover {
+        background-color: var(--ui-action-soft-danger-bg-hover);
     }
 
     .ui-action-notice.ui-action-soft {
-        @apply border-violet-500/45 bg-violet-500/20 text-violet-100 hover:bg-violet-500/30;
+        border-color: var(--ui-action-soft-notice-border);
+        background-color: var(--ui-action-soft-notice-bg);
+        color: var(--ui-action-soft-notice-text);
+    }
+
+    .ui-action-notice.ui-action-soft:hover {
+        background-color: var(--ui-action-soft-notice-bg-hover);
     }
 
     .ui-action-info.ui-action-soft {
-        @apply border-cyan-500/45 bg-cyan-500/20 text-cyan-100 hover:bg-cyan-500/30;
+        border-color: var(--ui-action-soft-info-border);
+        background-color: var(--ui-action-soft-info-bg);
+        color: var(--ui-action-soft-info-text);
+    }
+
+    .ui-action-info.ui-action-soft:hover {
+        background-color: var(--ui-action-soft-info-bg-hover);
     }
 
     .ui-action-outline {
@@ -124,31 +241,66 @@
     }
 
     .ui-action.ui-action-outline {
-        @apply border-slate-500 text-slate-200 hover:bg-slate-800/30;
+        border-color: var(--ui-action-outline-neutral-border);
+        color: var(--ui-action-outline-neutral-text);
+    }
+
+    .ui-action.ui-action-outline:hover {
+        background-color: var(--ui-action-outline-neutral-bg-hover);
     }
 
     .ui-action-primary.ui-action-outline {
-        @apply border-sky-400 text-sky-200 hover:bg-sky-500/15;
+        border-color: var(--ui-action-outline-primary-border);
+        color: var(--ui-action-outline-primary-text);
+    }
+
+    .ui-action-primary.ui-action-outline:hover {
+        background-color: var(--ui-action-outline-primary-bg-hover);
     }
 
     .ui-action-success.ui-action-outline {
-        @apply border-emerald-400 text-emerald-200 hover:bg-emerald-500/15;
+        border-color: var(--ui-action-outline-success-border);
+        color: var(--ui-action-outline-success-text);
+    }
+
+    .ui-action-success.ui-action-outline:hover {
+        background-color: var(--ui-action-outline-success-bg-hover);
     }
 
     .ui-action-warning.ui-action-outline {
-        @apply border-amber-400 text-amber-200 hover:bg-amber-500/15;
+        border-color: var(--ui-action-outline-warning-border);
+        color: var(--ui-action-outline-warning-text);
+    }
+
+    .ui-action-warning.ui-action-outline:hover {
+        background-color: var(--ui-action-outline-warning-bg-hover);
     }
 
     .ui-action-danger.ui-action-outline {
-        @apply border-rose-400 text-rose-200 hover:bg-rose-500/15;
+        border-color: var(--ui-action-outline-danger-border);
+        color: var(--ui-action-outline-danger-text);
+    }
+
+    .ui-action-danger.ui-action-outline:hover {
+        background-color: var(--ui-action-outline-danger-bg-hover);
     }
 
     .ui-action-notice.ui-action-outline {
-        @apply border-violet-400 text-violet-200 hover:bg-violet-500/15;
+        border-color: var(--ui-action-outline-notice-border);
+        color: var(--ui-action-outline-notice-text);
+    }
+
+    .ui-action-notice.ui-action-outline:hover {
+        background-color: var(--ui-action-outline-notice-bg-hover);
     }
 
     .ui-action-info.ui-action-outline {
-        @apply border-cyan-400 text-cyan-200 hover:bg-cyan-500/15;
+        border-color: var(--ui-action-outline-info-border);
+        color: var(--ui-action-outline-info-text);
+    }
+
+    .ui-action-info.ui-action-outline:hover {
+        background-color: var(--ui-action-outline-info-bg-hover);
     }
 
     .ui-action-xs,
@@ -181,15 +333,38 @@
     }
 
     .ui-action-login-google {
-        @apply border-slate-200 bg-white text-slate-900 hover:bg-slate-100;
+        @apply border;
+        border-color: var(--ui-login-google-border);
+        background-color: var(--ui-login-google-bg);
+        color: var(--ui-login-google-text);
+    }
+
+    .ui-action-login-google:hover {
+        background-color: var(--ui-login-google-bg-hover);
     }
 
     .ui-action-login-github {
-        @apply border-slate-700 bg-slate-900 text-slate-100 hover:border-slate-500 hover:bg-slate-800;
+        @apply border;
+        border-color: var(--ui-login-github-border);
+        background-color: var(--ui-login-github-bg);
+        color: var(--ui-login-github-text);
+    }
+
+    .ui-action-login-github:hover {
+        border-color: var(--ui-login-github-border-hover);
+        background-color: var(--ui-login-github-bg-hover);
     }
 
     .ui-action-login-microsoft {
-        @apply border-sky-500/60 bg-sky-600 text-white hover:border-sky-500 hover:bg-sky-500;
+        @apply border;
+        border-color: var(--ui-login-microsoft-border);
+        background-color: var(--ui-login-microsoft-bg);
+        color: var(--ui-login-microsoft-text);
+    }
+
+    .ui-action-login-microsoft:hover {
+        border-color: var(--ui-login-microsoft-border-hover);
+        background-color: var(--ui-login-microsoft-bg-hover);
     }
 
     .btn {
@@ -197,19 +372,45 @@
     }
 
     .btn-info {
-        @apply border-cyan-500/45 bg-cyan-500/20 text-cyan-100 hover:border-cyan-400/70 hover:bg-cyan-500/30 hover:text-white;
+        border-color: var(--ui-action-info-border);
+        background-color: var(--ui-action-info-bg);
+        color: var(--ui-action-info-text);
+    }
+
+    .btn-info:hover {
+        border-color: var(--ui-action-info-border-hover);
+        background-color: var(--ui-action-info-bg-hover);
+        color: var(--ui-action-info-text-hover);
     }
 
     .btn-soft {
-        @apply border-slate-600/60 bg-slate-700/20 text-slate-100 hover:bg-slate-700/30;
+        border-color: var(--ui-action-soft-neutral-border);
+        background-color: var(--ui-action-soft-neutral-bg);
+        color: var(--ui-action-soft-neutral-text);
+    }
+
+    .btn-soft:hover {
+        background-color: var(--ui-action-soft-neutral-bg-hover);
     }
 
     .btn-outline {
-        @apply border-slate-500 bg-transparent text-slate-200 hover:bg-slate-800/30;
+        border-color: var(--ui-action-outline-neutral-border);
+        background-color: transparent;
+        color: var(--ui-action-outline-neutral-text);
+    }
+
+    .btn-outline:hover {
+        background-color: var(--ui-action-outline-neutral-bg-hover);
     }
 
     .btn-ghost {
-        @apply bg-transparent text-slate-300 hover:bg-slate-800/80 hover:text-white;
+        background-color: transparent;
+        color: var(--ui-action-ghost-text);
+    }
+
+    .btn-ghost:hover {
+        background-color: var(--ui-action-ghost-bg-hover);
+        color: var(--ui-action-ghost-text-hover);
     }
 
     .btn-login {
@@ -217,31 +418,452 @@
     }
 
     .ui-icon-button {
-        @apply inline-flex h-10 w-10 items-center justify-center rounded-md border border-slate-700 bg-slate-900/70 text-slate-300 transition hover:border-slate-500 hover:bg-slate-800 hover:text-white;
+        @apply inline-flex h-10 w-10 items-center justify-center rounded-md border transition;
+        border-color: var(--ui-action-neutral-border);
+        background-color: var(--ui-surface-elevated);
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-icon-button:hover {
+        border-color: var(--ui-action-neutral-border-hover);
+        background-color: var(--ui-action-neutral-bg-hover);
+        color: var(--ui-text-strong);
     }
 
     .ui-log-drawer-panel {
-        @apply relative ml-auto flex h-full w-full max-w-3xl flex-col overflow-hidden border-l border-slate-800 bg-slate-950 shadow-2xl shadow-black/40;
+        @apply relative ml-auto flex h-full w-full max-w-3xl flex-col overflow-hidden border-l shadow-2xl;
+        border-color: var(--ui-border-default);
+        background-color: var(--ui-surface-elevated);
+        box-shadow: 0 20px 40px color-mix(in srgb, var(--ui-shadow-color) 45%, transparent);
     }
 
     .ui-page-header-title {
-        @apply text-3xl font-semibold text-white;
+        @apply text-3xl font-semibold;
+        color: var(--ui-text-strong);
     }
 
     .ui-page-header-copy {
-        @apply mt-2 text-sm text-slate-400;
+        @apply mt-2 text-sm;
+        color: var(--ui-text-muted);
+    }
+
+    .ui-status-pill {
+        @apply rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em];
+        border: 1px solid transparent;
+    }
+
+    .ui-status-neutral {
+        background-color: var(--ui-status-neutral-bg);
+        color: var(--ui-status-neutral-text);
+    }
+
+    .ui-status-info {
+        background-color: var(--ui-status-info-bg);
+        color: var(--ui-status-info-text);
+    }
+
+    .ui-status-success {
+        background-color: var(--ui-status-success-bg);
+        color: var(--ui-status-success-text);
+    }
+
+    .ui-status-warning {
+        background-color: var(--ui-status-warning-bg);
+        color: var(--ui-status-warning-text);
+    }
+
+    .ui-status-danger {
+        background-color: var(--ui-status-danger-bg);
+        color: var(--ui-status-danger-text);
+    }
+
+    .ui-status-notice {
+        background-color: var(--ui-status-notice-bg);
+        color: var(--ui-status-notice-text);
+    }
+
+    .ui-status-outline {
+        background-color: transparent;
+        border-color: currentColor;
+    }
+
+    .ui-inline-alert {
+        @apply rounded-lg border px-4 py-3 text-sm;
+    }
+
+    .ui-inline-alert-info {
+        border-color: var(--ui-alert-info-border);
+        background-color: var(--ui-alert-info-bg);
+        color: var(--ui-alert-info-text);
+    }
+
+    .ui-inline-alert-success {
+        border-color: var(--ui-alert-success-border);
+        background-color: var(--ui-alert-success-bg);
+        color: var(--ui-alert-success-text);
+    }
+
+    .ui-inline-alert-warning {
+        border-color: var(--ui-alert-warning-border);
+        background-color: var(--ui-alert-warning-bg);
+        color: var(--ui-alert-warning-text);
+    }
+
+    .ui-inline-alert-danger {
+        border-color: var(--ui-alert-danger-border);
+        background-color: var(--ui-alert-danger-bg);
+        color: var(--ui-alert-danger-text);
     }
 }
 
 @layer base {
+    :root {
+        color-scheme: dark;
+        --ui-canvas: rgb(9 9 11);
+        --ui-surface: rgb(24 24 27 / 0.75);
+        --ui-surface-elevated: rgb(24 24 27 / 0.9);
+        --ui-border-default: rgb(63 63 70);
+        --ui-text-strong: rgb(244 244 245);
+        --ui-text-secondary: rgb(212 212 216);
+        --ui-text-muted: rgb(161 161 170);
+        --ui-shadow-color: rgb(0 0 0);
+
+        --ui-action-neutral-border: rgb(82 82 91);
+        --ui-action-neutral-bg: rgb(39 39 42 / 0.7);
+        --ui-action-neutral-text: rgb(228 228 231);
+        --ui-action-neutral-border-hover: rgb(113 113 122);
+        --ui-action-neutral-bg-hover: rgb(39 39 42 / 0.95);
+        --ui-action-neutral-text-hover: rgb(250 250 250);
+
+        --ui-action-primary-border: rgb(37 99 235 / 0.45);
+        --ui-action-primary-bg: rgb(37 99 235 / 0.22);
+        --ui-action-primary-text: rgb(219 234 254);
+        --ui-action-primary-border-hover: rgb(37 99 235 / 0.65);
+        --ui-action-primary-bg-hover: rgb(37 99 235 / 0.35);
+        --ui-action-primary-text-hover: rgb(239 246 255);
+
+        --ui-action-success-border: rgb(5 150 105 / 0.45);
+        --ui-action-success-bg: rgb(5 150 105 / 0.22);
+        --ui-action-success-text: rgb(209 250 229);
+        --ui-action-success-border-hover: rgb(5 150 105 / 0.65);
+        --ui-action-success-bg-hover: rgb(5 150 105 / 0.35);
+        --ui-action-success-text-hover: rgb(236 253 245);
+
+        --ui-action-warning-border: rgb(217 119 6 / 0.5);
+        --ui-action-warning-bg: rgb(217 119 6 / 0.22);
+        --ui-action-warning-text: rgb(254 243 199);
+        --ui-action-warning-border-hover: rgb(217 119 6 / 0.7);
+        --ui-action-warning-bg-hover: rgb(217 119 6 / 0.35);
+        --ui-action-warning-text-hover: rgb(255 251 235);
+
+        --ui-action-danger-border: rgb(225 29 72 / 0.45);
+        --ui-action-danger-bg: rgb(225 29 72 / 0.22);
+        --ui-action-danger-text: rgb(255 228 230);
+        --ui-action-danger-border-hover: rgb(225 29 72 / 0.65);
+        --ui-action-danger-bg-hover: rgb(225 29 72 / 0.35);
+        --ui-action-danger-text-hover: rgb(255 241 242);
+
+        --ui-action-notice-border: rgb(124 58 237 / 0.45);
+        --ui-action-notice-bg: rgb(124 58 237 / 0.22);
+        --ui-action-notice-text: rgb(237 233 254);
+        --ui-action-notice-border-hover: rgb(124 58 237 / 0.65);
+        --ui-action-notice-bg-hover: rgb(124 58 237 / 0.35);
+        --ui-action-notice-text-hover: rgb(245 243 255);
+
+        --ui-action-info-border: rgb(8 145 178 / 0.45);
+        --ui-action-info-bg: rgb(8 145 178 / 0.22);
+        --ui-action-info-text: rgb(207 250 254);
+        --ui-action-info-border-hover: rgb(8 145 178 / 0.65);
+        --ui-action-info-bg-hover: rgb(8 145 178 / 0.35);
+        --ui-action-info-text-hover: rgb(236 254 255);
+
+        --ui-action-ghost-text: rgb(212 212 216);
+        --ui-action-ghost-bg-hover: rgb(39 39 42 / 0.85);
+        --ui-action-ghost-text-hover: rgb(250 250 250);
+
+        --ui-action-soft-neutral-border: rgb(113 113 122 / 0.65);
+        --ui-action-soft-neutral-bg: rgb(63 63 70 / 0.25);
+        --ui-action-soft-neutral-text: rgb(228 228 231);
+        --ui-action-soft-neutral-bg-hover: rgb(63 63 70 / 0.38);
+
+        --ui-action-soft-primary-border: rgb(37 99 235 / 0.55);
+        --ui-action-soft-primary-bg: rgb(37 99 235 / 0.2);
+        --ui-action-soft-primary-text: rgb(219 234 254);
+        --ui-action-soft-primary-bg-hover: rgb(37 99 235 / 0.3);
+
+        --ui-action-soft-success-border: rgb(5 150 105 / 0.55);
+        --ui-action-soft-success-bg: rgb(5 150 105 / 0.2);
+        --ui-action-soft-success-text: rgb(209 250 229);
+        --ui-action-soft-success-bg-hover: rgb(5 150 105 / 0.3);
+
+        --ui-action-soft-warning-border: rgb(217 119 6 / 0.6);
+        --ui-action-soft-warning-bg: rgb(217 119 6 / 0.2);
+        --ui-action-soft-warning-text: rgb(254 243 199);
+        --ui-action-soft-warning-bg-hover: rgb(217 119 6 / 0.3);
+
+        --ui-action-soft-danger-border: rgb(225 29 72 / 0.55);
+        --ui-action-soft-danger-bg: rgb(225 29 72 / 0.2);
+        --ui-action-soft-danger-text: rgb(255 228 230);
+        --ui-action-soft-danger-bg-hover: rgb(225 29 72 / 0.3);
+
+        --ui-action-soft-notice-border: rgb(124 58 237 / 0.55);
+        --ui-action-soft-notice-bg: rgb(124 58 237 / 0.2);
+        --ui-action-soft-notice-text: rgb(237 233 254);
+        --ui-action-soft-notice-bg-hover: rgb(124 58 237 / 0.3);
+
+        --ui-action-soft-info-border: rgb(8 145 178 / 0.55);
+        --ui-action-soft-info-bg: rgb(8 145 178 / 0.2);
+        --ui-action-soft-info-text: rgb(207 250 254);
+        --ui-action-soft-info-bg-hover: rgb(8 145 178 / 0.3);
+
+        --ui-action-outline-neutral-border: rgb(161 161 170);
+        --ui-action-outline-neutral-text: rgb(228 228 231);
+        --ui-action-outline-neutral-bg-hover: rgb(39 39 42 / 0.4);
+
+        --ui-action-outline-primary-border: rgb(96 165 250);
+        --ui-action-outline-primary-text: rgb(191 219 254);
+        --ui-action-outline-primary-bg-hover: rgb(37 99 235 / 0.18);
+
+        --ui-action-outline-success-border: rgb(52 211 153);
+        --ui-action-outline-success-text: rgb(167 243 208);
+        --ui-action-outline-success-bg-hover: rgb(5 150 105 / 0.18);
+
+        --ui-action-outline-warning-border: rgb(251 191 36);
+        --ui-action-outline-warning-text: rgb(252 211 77);
+        --ui-action-outline-warning-bg-hover: rgb(217 119 6 / 0.18);
+
+        --ui-action-outline-danger-border: rgb(251 113 133);
+        --ui-action-outline-danger-text: rgb(253 164 175);
+        --ui-action-outline-danger-bg-hover: rgb(225 29 72 / 0.18);
+
+        --ui-action-outline-notice-border: rgb(167 139 250);
+        --ui-action-outline-notice-text: rgb(196 181 253);
+        --ui-action-outline-notice-bg-hover: rgb(124 58 237 / 0.18);
+
+        --ui-action-outline-info-border: rgb(34 211 238);
+        --ui-action-outline-info-text: rgb(103 232 249);
+        --ui-action-outline-info-bg-hover: rgb(8 145 178 / 0.18);
+
+        --ui-login-google-border: rgb(228 228 231);
+        --ui-login-google-bg: rgb(255 255 255);
+        --ui-login-google-text: rgb(24 24 27);
+        --ui-login-google-bg-hover: rgb(244 244 245);
+
+        --ui-login-github-border: rgb(82 82 91);
+        --ui-login-github-bg: rgb(24 24 27);
+        --ui-login-github-text: rgb(244 244 245);
+        --ui-login-github-border-hover: rgb(113 113 122);
+        --ui-login-github-bg-hover: rgb(39 39 42);
+
+        --ui-login-microsoft-border: rgb(37 99 235);
+        --ui-login-microsoft-bg: rgb(37 99 235);
+        --ui-login-microsoft-text: rgb(248 250 252);
+        --ui-login-microsoft-border-hover: rgb(29 78 216);
+        --ui-login-microsoft-bg-hover: rgb(29 78 216);
+
+        --ui-status-neutral-bg: rgb(63 63 70 / 0.65);
+        --ui-status-neutral-text: rgb(228 228 231);
+        --ui-status-info-bg: rgb(8 145 178 / 0.2);
+        --ui-status-info-text: rgb(165 243 252);
+        --ui-status-success-bg: rgb(5 150 105 / 0.2);
+        --ui-status-success-text: rgb(167 243 208);
+        --ui-status-warning-bg: rgb(217 119 6 / 0.2);
+        --ui-status-warning-text: rgb(253 230 138);
+        --ui-status-danger-bg: rgb(225 29 72 / 0.2);
+        --ui-status-danger-text: rgb(253 164 175);
+        --ui-status-notice-bg: rgb(124 58 237 / 0.2);
+        --ui-status-notice-text: rgb(196 181 253);
+
+        --ui-alert-info-border: rgb(8 145 178 / 0.45);
+        --ui-alert-info-bg: rgb(8 145 178 / 0.14);
+        --ui-alert-info-text: rgb(207 250 254);
+        --ui-alert-success-border: rgb(5 150 105 / 0.45);
+        --ui-alert-success-bg: rgb(5 150 105 / 0.14);
+        --ui-alert-success-text: rgb(209 250 229);
+        --ui-alert-warning-border: rgb(217 119 6 / 0.5);
+        --ui-alert-warning-bg: rgb(217 119 6 / 0.14);
+        --ui-alert-warning-text: rgb(254 243 199);
+        --ui-alert-danger-border: rgb(225 29 72 / 0.45);
+        --ui-alert-danger-bg: rgb(225 29 72 / 0.14);
+        --ui-alert-danger-text: rgb(255 228 230);
+    }
+
     html,
     body {
-        background-color: rgb(9 9 11);
+        background-color: var(--ui-canvas);
     }
 
     html[data-theme-resolved='light'] {
         color-scheme: light;
-        background-color: rgb(248 250 252) !important;
+        --ui-canvas: rgb(248 250 252);
+        --ui-surface: rgb(255 255 255);
+        --ui-surface-elevated: rgb(255 255 255);
+        --ui-border-default: rgb(203 213 225);
+        --ui-text-strong: rgb(15 23 42);
+        --ui-text-secondary: rgb(51 65 85);
+        --ui-text-muted: rgb(100 116 139);
+        --ui-shadow-color: rgb(148 163 184);
+
+        --ui-action-neutral-border: rgb(203 213 225);
+        --ui-action-neutral-bg: rgb(255 255 255);
+        --ui-action-neutral-text: rgb(51 65 85);
+        --ui-action-neutral-border-hover: rgb(148 163 184);
+        --ui-action-neutral-bg-hover: rgb(241 245 249);
+        --ui-action-neutral-text-hover: rgb(15 23 42);
+
+        --ui-action-primary-border: rgb(2 132 199);
+        --ui-action-primary-bg: rgb(3 105 161);
+        --ui-action-primary-text: rgb(241 245 249);
+        --ui-action-primary-border-hover: rgb(14 116 144);
+        --ui-action-primary-bg-hover: rgb(7 89 133);
+        --ui-action-primary-text-hover: rgb(248 250 252);
+
+        --ui-action-success-border: rgb(5 150 105);
+        --ui-action-success-bg: rgb(4 120 87);
+        --ui-action-success-text: rgb(240 253 244);
+        --ui-action-success-border-hover: rgb(4 120 87);
+        --ui-action-success-bg-hover: rgb(6 95 70);
+        --ui-action-success-text-hover: rgb(240 253 244);
+
+        --ui-action-warning-border: rgb(217 119 6);
+        --ui-action-warning-bg: rgb(180 83 9);
+        --ui-action-warning-text: rgb(255 251 235);
+        --ui-action-warning-border-hover: rgb(180 83 9);
+        --ui-action-warning-bg-hover: rgb(146 64 14);
+        --ui-action-warning-text-hover: rgb(255 251 235);
+
+        --ui-action-danger-border: rgb(225 29 72);
+        --ui-action-danger-bg: rgb(190 24 93);
+        --ui-action-danger-text: rgb(255 241 242);
+        --ui-action-danger-border-hover: rgb(190 24 93);
+        --ui-action-danger-bg-hover: rgb(159 18 57);
+        --ui-action-danger-text-hover: rgb(255 241 242);
+
+        --ui-action-notice-border: rgb(124 58 237);
+        --ui-action-notice-bg: rgb(109 40 217);
+        --ui-action-notice-text: rgb(245 243 255);
+        --ui-action-notice-border-hover: rgb(109 40 217);
+        --ui-action-notice-bg-hover: rgb(91 33 182);
+        --ui-action-notice-text-hover: rgb(245 243 255);
+
+        --ui-action-info-border: rgb(8 145 178);
+        --ui-action-info-bg: rgb(14 116 144);
+        --ui-action-info-text: rgb(236 254 255);
+        --ui-action-info-border-hover: rgb(14 116 144);
+        --ui-action-info-bg-hover: rgb(21 94 117);
+        --ui-action-info-text-hover: rgb(236 254 255);
+
+        --ui-action-ghost-text: rgb(71 85 105);
+        --ui-action-ghost-bg-hover: rgb(241 245 249);
+        --ui-action-ghost-text-hover: rgb(15 23 42);
+
+        --ui-action-soft-neutral-border: rgb(203 213 225);
+        --ui-action-soft-neutral-bg: rgb(248 250 252);
+        --ui-action-soft-neutral-text: rgb(51 65 85);
+        --ui-action-soft-neutral-bg-hover: rgb(241 245 249);
+
+        --ui-action-soft-primary-border: rgb(56 189 248);
+        --ui-action-soft-primary-bg: rgb(224 242 254);
+        --ui-action-soft-primary-text: rgb(3 105 161);
+        --ui-action-soft-primary-bg-hover: rgb(186 230 253);
+
+        --ui-action-soft-success-border: rgb(52 211 153);
+        --ui-action-soft-success-bg: rgb(220 252 231);
+        --ui-action-soft-success-text: rgb(6 95 70);
+        --ui-action-soft-success-bg-hover: rgb(187 247 208);
+
+        --ui-action-soft-warning-border: rgb(245 158 11);
+        --ui-action-soft-warning-bg: rgb(254 243 199);
+        --ui-action-soft-warning-text: rgb(146 64 14);
+        --ui-action-soft-warning-bg-hover: rgb(253 230 138);
+
+        --ui-action-soft-danger-border: rgb(251 113 133);
+        --ui-action-soft-danger-bg: rgb(255 228 230);
+        --ui-action-soft-danger-text: rgb(159 18 57);
+        --ui-action-soft-danger-bg-hover: rgb(254 205 211);
+
+        --ui-action-soft-notice-border: rgb(167 139 250);
+        --ui-action-soft-notice-bg: rgb(237 233 254);
+        --ui-action-soft-notice-text: rgb(91 33 182);
+        --ui-action-soft-notice-bg-hover: rgb(221 214 254);
+
+        --ui-action-soft-info-border: rgb(34 211 238);
+        --ui-action-soft-info-bg: rgb(207 250 254);
+        --ui-action-soft-info-text: rgb(14 116 144);
+        --ui-action-soft-info-bg-hover: rgb(165 243 252);
+
+        --ui-action-outline-neutral-border: rgb(100 116 139);
+        --ui-action-outline-neutral-text: rgb(51 65 85);
+        --ui-action-outline-neutral-bg-hover: rgb(241 245 249);
+
+        --ui-action-outline-primary-border: rgb(3 105 161);
+        --ui-action-outline-primary-text: rgb(3 105 161);
+        --ui-action-outline-primary-bg-hover: rgb(224 242 254);
+
+        --ui-action-outline-success-border: rgb(4 120 87);
+        --ui-action-outline-success-text: rgb(4 120 87);
+        --ui-action-outline-success-bg-hover: rgb(220 252 231);
+
+        --ui-action-outline-warning-border: rgb(180 83 9);
+        --ui-action-outline-warning-text: rgb(180 83 9);
+        --ui-action-outline-warning-bg-hover: rgb(254 243 199);
+
+        --ui-action-outline-danger-border: rgb(190 24 93);
+        --ui-action-outline-danger-text: rgb(190 24 93);
+        --ui-action-outline-danger-bg-hover: rgb(255 228 230);
+
+        --ui-action-outline-notice-border: rgb(109 40 217);
+        --ui-action-outline-notice-text: rgb(109 40 217);
+        --ui-action-outline-notice-bg-hover: rgb(237 233 254);
+
+        --ui-action-outline-info-border: rgb(14 116 144);
+        --ui-action-outline-info-text: rgb(14 116 144);
+        --ui-action-outline-info-bg-hover: rgb(207 250 254);
+
+        --ui-login-google-border: rgb(203 213 225);
+        --ui-login-google-bg: rgb(255 255 255);
+        --ui-login-google-text: rgb(15 23 42);
+        --ui-login-google-bg-hover: rgb(241 245 249);
+
+        --ui-login-github-border: rgb(71 85 105);
+        --ui-login-github-bg: rgb(30 41 59);
+        --ui-login-github-text: rgb(241 245 249);
+        --ui-login-github-border-hover: rgb(51 65 85);
+        --ui-login-github-bg-hover: rgb(15 23 42);
+
+        --ui-login-microsoft-border: rgb(2 132 199);
+        --ui-login-microsoft-bg: rgb(3 105 161);
+        --ui-login-microsoft-text: rgb(241 245 249);
+        --ui-login-microsoft-border-hover: rgb(14 116 144);
+        --ui-login-microsoft-bg-hover: rgb(7 89 133);
+
+        --ui-status-neutral-bg: rgb(241 245 249);
+        --ui-status-neutral-text: rgb(51 65 85);
+        --ui-status-info-bg: rgb(207 250 254);
+        --ui-status-info-text: rgb(14 116 144);
+        --ui-status-success-bg: rgb(220 252 231);
+        --ui-status-success-text: rgb(6 95 70);
+        --ui-status-warning-bg: rgb(254 243 199);
+        --ui-status-warning-text: rgb(146 64 14);
+        --ui-status-danger-bg: rgb(255 228 230);
+        --ui-status-danger-text: rgb(159 18 57);
+        --ui-status-notice-bg: rgb(237 233 254);
+        --ui-status-notice-text: rgb(91 33 182);
+
+        --ui-alert-info-border: rgb(8 145 178 / 0.45);
+        --ui-alert-info-bg: rgb(207 250 254 / 0.8);
+        --ui-alert-info-text: rgb(14 116 144);
+        --ui-alert-success-border: rgb(5 150 105 / 0.45);
+        --ui-alert-success-bg: rgb(220 252 231 / 0.8);
+        --ui-alert-success-text: rgb(6 95 70);
+        --ui-alert-warning-border: rgb(217 119 6 / 0.45);
+        --ui-alert-warning-bg: rgb(254 243 199 / 0.8);
+        --ui-alert-warning-text: rgb(146 64 14);
+        --ui-alert-danger-border: rgb(225 29 72 / 0.45);
+        --ui-alert-danger-bg: rgb(255 228 230 / 0.8);
+        --ui-alert-danger-text: rgb(159 18 57);
+
+        background-color: var(--ui-canvas) !important;
     }
 
     html[data-theme-resolved='light'] body {
@@ -329,236 +951,6 @@
     html[data-theme-resolved='light'] .shadow-black\/30,
     html[data-theme-resolved='light'] .shadow-black\/20 {
         --tw-shadow-color: rgb(148 163 184 / 0.25) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-card,
-    html[data-theme-resolved='light'] .ui-shell-surface {
-        background-color: rgb(255 255 255) !important;
-        border-color: rgb(203 213 225) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-card-title,
-    html[data-theme-resolved='light'] .ui-stat-value {
-        color: rgb(15 23 42) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-page-header-title {
-        color: rgb(15 23 42) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-page-header-copy {
-        color: rgb(71 85 105) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-card-copy,
-    html[data-theme-resolved='light'] .ui-stat-copy {
-        color: rgb(71 85 105) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-kicker,
-    html[data-theme-resolved='light'] .ui-stat-label {
-        color: rgb(100 116 139) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action {
-        background-color: rgb(255 255 255) !important;
-        border-color: rgb(203 213 225) !important;
-        color: rgb(51 65 85) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action:hover {
-        background-color: rgb(241 245 249) !important;
-        border-color: rgb(148 163 184) !important;
-        color: rgb(15 23 42) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-primary {
-        background-color: rgb(3 105 161) !important;
-        border-color: rgb(2 132 199) !important;
-        color: rgb(241 245 249) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-primary:hover {
-        background-color: rgb(7 89 133) !important;
-        border-color: rgb(14 116 144) !important;
-        color: rgb(248 250 252) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-success {
-        background-color: rgb(4 120 87) !important;
-        border-color: rgb(5 150 105) !important;
-        color: rgb(240 253 244) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-success:hover {
-        background-color: rgb(6 95 70) !important;
-        border-color: rgb(4 120 87) !important;
-        color: rgb(240 253 244) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-warning {
-        background-color: rgb(180 83 9) !important;
-        border-color: rgb(217 119 6) !important;
-        color: rgb(255 251 235) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-warning:hover {
-        background-color: rgb(146 64 14) !important;
-        border-color: rgb(180 83 9) !important;
-        color: rgb(255 251 235) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-danger {
-        background-color: rgb(190 24 93) !important;
-        border-color: rgb(225 29 72) !important;
-        color: rgb(255 241 242) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-danger:hover {
-        background-color: rgb(159 18 57) !important;
-        border-color: rgb(190 24 93) !important;
-        color: rgb(255 241 242) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-notice {
-        background-color: rgb(109 40 217) !important;
-        border-color: rgb(124 58 237) !important;
-        color: rgb(245 243 255) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-notice:hover {
-        background-color: rgb(91 33 182) !important;
-        border-color: rgb(109 40 217) !important;
-        color: rgb(245 243 255) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-info,
-    html[data-theme-resolved='light'] .btn-info {
-        background-color: rgb(14 116 144) !important;
-        border-color: rgb(8 145 178) !important;
-        color: rgb(236 254 255) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-info:hover,
-    html[data-theme-resolved='light'] .btn-info:hover {
-        background-color: rgb(21 94 117) !important;
-        border-color: rgb(14 116 144) !important;
-        color: rgb(236 254 255) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-soft,
-    html[data-theme-resolved='light'] .btn-soft {
-        background-color: rgb(248 250 252) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-primary.ui-action-soft {
-        background-color: rgb(224 242 254) !important;
-        border-color: rgb(56 189 248) !important;
-        color: rgb(3 105 161) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-success.ui-action-soft {
-        background-color: rgb(220 252 231) !important;
-        border-color: rgb(52 211 153) !important;
-        color: rgb(6 95 70) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-warning.ui-action-soft {
-        background-color: rgb(254 243 199) !important;
-        border-color: rgb(245 158 11) !important;
-        color: rgb(146 64 14) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-danger.ui-action-soft {
-        background-color: rgb(255 228 230) !important;
-        border-color: rgb(251 113 133) !important;
-        color: rgb(159 18 57) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-notice.ui-action-soft {
-        background-color: rgb(237 233 254) !important;
-        border-color: rgb(167 139 250) !important;
-        color: rgb(91 33 182) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-info.ui-action-soft {
-        background-color: rgb(207 250 254) !important;
-        border-color: rgb(34 211 238) !important;
-        color: rgb(14 116 144) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-outline,
-    html[data-theme-resolved='light'] .btn-outline {
-        background-color: transparent !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-primary.ui-action-outline {
-        border-color: rgb(3 105 161) !important;
-        color: rgb(3 105 161) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-success.ui-action-outline {
-        border-color: rgb(4 120 87) !important;
-        color: rgb(4 120 87) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-warning.ui-action-outline {
-        border-color: rgb(180 83 9) !important;
-        color: rgb(180 83 9) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-danger.ui-action-outline {
-        border-color: rgb(190 24 93) !important;
-        color: rgb(190 24 93) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-notice.ui-action-outline {
-        border-color: rgb(109 40 217) !important;
-        color: rgb(109 40 217) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-info.ui-action-outline {
-        border-color: rgb(14 116 144) !important;
-        color: rgb(14 116 144) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-login-google {
-        border-color: rgb(203 213 225) !important;
-        background-color: rgb(255 255 255) !important;
-        color: rgb(15 23 42) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-login-github {
-        border-color: rgb(71 85 105) !important;
-        background-color: rgb(30 41 59) !important;
-        color: rgb(241 245 249) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-login-microsoft {
-        border-color: rgb(2 132 199) !important;
-        background-color: rgb(3 105 161) !important;
-        color: rgb(241 245 249) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-ghost {
-        background-color: transparent !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-icon-button {
-        background-color: rgb(255 255 255) !important;
-        border-color: rgb(203 213 225) !important;
-        color: rgb(51 65 85) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-icon-button:hover {
-        background-color: rgb(241 245 249) !important;
-        border-color: rgb(148 163 184) !important;
-        color: rgb(15 23 42) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-log-drawer-panel {
-        background-color: rgb(255 255 255) !important;
-        border-color: rgb(203 213 225) !important;
     }
 
     @media (max-width: 1023px) {

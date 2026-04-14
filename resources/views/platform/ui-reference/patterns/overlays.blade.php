@@ -46,10 +46,10 @@
         <section class="ui-card">
             <p class="ui-kicker">Inline Alerts</p>
             <div class="mt-4 grid gap-3">
-                <div class="rounded-lg border border-sky-500/40 bg-sky-500/10 px-4 py-3 text-sm text-sky-100" role="status">Info: Workspace settings were loaded from policy defaults.</div>
-                <div class="rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100" role="status">Success: Notification digest preferences updated.</div>
-                <div class="rounded-lg border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-sm text-amber-100" role="alert">Warning: Audit export contains redacted values.</div>
-                <div class="rounded-lg border border-rose-500/40 bg-rose-500/10 px-4 py-3 text-sm text-rose-100" role="alert">Danger: Failed to persist queue escalation policy.</div>
+                <div class="ui-inline-alert ui-inline-alert-info" role="status">Info: Workspace settings were loaded from policy defaults.</div>
+                <div class="ui-inline-alert ui-inline-alert-success" role="status">Success: Notification digest preferences updated.</div>
+                <div class="ui-inline-alert ui-inline-alert-warning" role="alert">Warning: Audit export contains redacted values.</div>
+                <div class="ui-inline-alert ui-inline-alert-danger" role="alert">Danger: Failed to persist queue escalation policy.</div>
             </div>
         </section>
 

@@ -37,8 +37,8 @@
                         <button type="button" class="ui-action">Export</button>
                     </div>
 
-                    <div class="ml-auto flex w-full items-center justify-end gap-3 sm:w-auto">
-                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="w-full sm:w-auto">
+                    <div class="ml-auto flex max-w-full items-center justify-end gap-3">
+                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="w-64 max-w-full flex-shrink-0">
                             <input type="hidden" name="workspace_status" value="{{ $workspaceFilters['status'] }}">
                             <input type="hidden" name="workspace_owner" value="{{ $workspaceFilters['owner'] }}">
                             <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
@@ -50,7 +50,7 @@
                                 value="{{ $workspaceFilters['search'] }}"
                                 placeholder="Search name or owner"
                                 aria-label="Search workspace rows"
-                                class="w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 sm:w-64"
+                                class="w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500"
                             />
                         </form>
                         <button type="button" class="ui-icon-button" data-filter-toggle aria-expanded="false" aria-label="Toggle workspace filters">
@@ -185,8 +185,8 @@
                         </select>
                     </form>
 
-                    <div class="ml-auto flex w-full items-center justify-end gap-3 sm:w-auto">
-                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="w-full sm:w-auto">
+                    <div class="ml-auto flex max-w-full items-center justify-end gap-3">
+                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="w-64 max-w-full flex-shrink-0">
                             <input type="hidden" name="audit_severity" value="{{ $auditFilters['severity'] }}">
                             <input type="hidden" name="audit_result" value="{{ $auditFilters['result'] }}">
                             <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
@@ -198,7 +198,7 @@
                                 value="{{ $auditFilters['search'] }}"
                                 placeholder="Event, actor, route"
                                 aria-label="Search audit rows"
-                                class="w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 sm:w-64"
+                                class="w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500"
                             />
                         </form>
                         <button type="button" class="ui-icon-button" data-filter-toggle aria-expanded="false" aria-label="Toggle audit demo filters">
@@ -332,8 +332,8 @@
                         </select>
                     </form>
 
-                    <div class="ml-auto flex w-full items-center justify-end gap-3 sm:w-auto">
-                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="w-full sm:w-auto">
+                    <div class="ml-auto flex max-w-full items-center justify-end gap-3">
+                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="w-64 max-w-full flex-shrink-0">
                             <input type="hidden" name="error_severity" value="{{ $errorFilters['severity'] }}">
                             <input type="hidden" name="error_environment" value="{{ $errorFilters['environment'] }}">
                             <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
@@ -345,7 +345,7 @@
                                 value="{{ $errorFilters['search'] }}"
                                 placeholder="Message, exception, route"
                                 aria-label="Search error rows"
-                                class="w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 sm:w-64"
+                                class="w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500"
                             />
                         </form>
                         <button type="button" class="ui-icon-button" data-filter-toggle aria-expanded="false" aria-label="Toggle error demo filters">

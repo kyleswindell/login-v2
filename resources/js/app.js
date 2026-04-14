@@ -589,12 +589,61 @@ const initDocsTree = () => {
     }
 };
 
+const initMobileSidebarTabs = () => {
+    document.querySelectorAll('[data-mobile-sidebar-tabs]').forEach((container) => {
+        if (container.dataset.mobileSidebarTabsInit === '1') {
+            return;
+        }
+        container.dataset.mobileSidebarTabsInit = '1';
+
+        const buttons = Array.from(container.querySelectorAll('[data-mobile-sidebar-target]'));
+        const panels = Array.from(container.querySelectorAll('[data-mobile-sidebar-panel]'));
+        const isMobile = () => window.innerWidth < 1024;
+
+        if (buttons.length === 0 || panels.length === 0) {
+            return;
+        }
+
+        const setActivePanel = (target) => {
+            const selected = target || container.dataset.defaultPanel || 'setup';
+
+            buttons.forEach((button) => {
+                const isActive = button.dataset.mobileSidebarTarget === selected;
+                button.classList.toggle('bg-slate-700/60', isActive);
+                button.classList.toggle('text-white', isActive);
+                button.classList.toggle('ring-1', isActive);
+                button.classList.toggle('ring-slate-500/40', isActive);
+                button.classList.toggle('text-slate-300', !isActive);
+                button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            });
+
+            panels.forEach((panel) => {
+                panel.classList.toggle('hidden', isMobile() && panel.dataset.mobileSidebarPanel !== selected);
+            });
+        };
+
+        buttons.forEach((button) => {
+            button.addEventListener('click', () => {
+                setActivePanel(button.dataset.mobileSidebarTarget);
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            setActivePanel(container.dataset.defaultPanel || 'setup');
+        });
+
+        setActivePanel(container.dataset.defaultPanel || 'setup');
+    });
+};
+
 document.addEventListener('DOMContentLoaded', initNotificationMenus);
 document.addEventListener('livewire:navigated', initNotificationMenus);
 document.addEventListener('DOMContentLoaded', initAccountMenu);
 document.addEventListener('livewire:navigated', initAccountMenu);
 document.addEventListener('DOMContentLoaded', initDocsTree);
 document.addEventListener('livewire:navigated', initDocsTree);
+document.addEventListener('DOMContentLoaded', initMobileSidebarTabs);
+document.addEventListener('livewire:navigated', initMobileSidebarTabs);
 document.addEventListener('DOMContentLoaded', initFilterPanels);
 document.addEventListener('livewire:navigated', initFilterPanels);
 document.addEventListener('DOMContentLoaded', initErrorLogDrawer);

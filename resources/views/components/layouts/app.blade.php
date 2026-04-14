@@ -247,7 +247,7 @@
                     </div>
                 </header>
 
-                <div class="fixed inset-0 z-30 hidden bg-black/60 lg:hidden" data-sidebar-backdrop></div>
+                <div class="fixed inset-0 z-50 hidden bg-black/70 lg:hidden" data-sidebar-backdrop></div>
 
                 <div @class([
                     'mx-auto flex min-h-[calc(100vh-5.5rem)] w-full max-w-[1700px] gap-6 px-4 py-6 xl:px-6',
@@ -255,12 +255,25 @@
                     'flex-col lg:flex-row' => ! $hasCustomSidebar,
                 ])>
                     @if ($hasCustomSidebar)
-                        <aside class="w-full shrink-0 xl:w-auto">
+                        <aside
+                            class="fixed inset-2 z-[60] hidden shrink-0 overflow-y-auto rounded-2xl border border-slate-700 bg-slate-950/95 p-4 shadow-2xl shadow-black/40 lg:inset-auto lg:sticky lg:top-24 lg:z-auto lg:block lg:w-auto lg:max-h-[calc(100vh-7rem)] lg:overflow-visible lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none"
+                            data-sidebar-panel
+                        >
+                            <div class="mb-3 flex items-center justify-between lg:hidden">
+                                <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Navigation</span>
+                                <button
+                                    type="button"
+                                    class="rounded-md border border-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-300 transition hover:border-slate-500 hover:text-white"
+                                    data-sidebar-toggle
+                                >
+                                    Close
+                                </button>
+                            </div>
                             {{ $sidebar }}
                         </aside>
                     @else
                         <aside
-                            class="fixed inset-x-3 bottom-4 top-20 z-40 hidden shrink-0 overflow-y-auto rounded-2xl border border-slate-700 bg-slate-950/95 p-4 shadow-2xl shadow-black/40 lg:inset-auto lg:sticky lg:top-24 lg:block lg:w-60 lg:self-start lg:max-h-[calc(100vh-7rem)] lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none"
+                            class="fixed inset-2 z-[60] hidden shrink-0 overflow-y-auto rounded-2xl border border-slate-700 bg-slate-950/95 p-4 shadow-2xl shadow-black/40 lg:inset-auto lg:sticky lg:top-24 lg:z-auto lg:block lg:w-60 lg:self-start lg:max-h-[calc(100vh-7rem)] lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none"
                             data-sidebar-host
                             data-sidebar-panel
                         >
@@ -279,7 +292,7 @@
                                 <div class="relative overflow-hidden">
                                     <div class="flex transition-transform duration-300 will-change-transform" data-sidebar-track>
                                         {{-- Panel 1: Main navigation --}}
-                                        <div class="w-60 shrink-0 rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30" data-main-nav-panel>
+                                        <div class="w-full shrink-0 rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30 lg:w-60" data-main-nav-panel>
                                             <p class="mb-3 px-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Base Features</p>
                                             <nav class="space-y-2">
                                                 @foreach ($primaryBaseNavigation as $item)
@@ -349,7 +362,7 @@
                                         </div>
 
                                         {{-- Panel 2: Setup panel --}}
-                                        <div class="w-60 shrink-0 rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30" data-setup-nav-panel>
+                                        <div class="w-full shrink-0 rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30 lg:w-60" data-setup-nav-panel>
                                             <div class="flex items-center justify-between">
                                                 <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300">Setup</p>
                                                 <button

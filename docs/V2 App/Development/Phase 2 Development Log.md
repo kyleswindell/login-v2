@@ -38,6 +38,7 @@ Current state:
 * Batch 9 remains blocked until Batch 8 account ownership close-out is complete
 * Batch 10 calendar contract is complete in planning and canonical docs
 * Batch 11 dashboard widgets are code-complete and locally verified in Docker; staging deployment and visual QA remain pending
+* `/platform/ui-reference` is now implemented as an app-owned canonical Phase 2+ UI baseline review workspace with sample log-drawer payload contracts
 
 ## Milestones
 
@@ -217,6 +218,35 @@ Planning owners:
 Canonical docs:
 
 * [[V2 App/Reference/UI Action Tokens And Drawer Patterns]] | [UI Action Tokens And Drawer Patterns](../Reference/UI%20Action%20Tokens%20And%20Drawer%20Patterns.md)
+
+### 2026-04-14 - Phase 2 UI reference workspace for baseline shell and component review
+
+Status:
+
+* implemented locally
+* review-ready for visual sign-off
+
+Work completed:
+
+* added app-owned `/platform/ui-reference` workspace under authenticated platform routes for canonical UI baseline review
+* restricted `/platform/ui-reference` and its demo endpoints to platform super admins
+* added reference examples for shell behavior, theme behavior, action tokens, forms, and multi-row operator/log tables with filter + rows-per-page + pagination controls
+* added sample JSON payload contracts for audit/error drawer demos so the reference workspace can validate drawer behavior without relying on production log data
+* added Administrator navigation entry for UI reference access under the existing docs permission gate
+* added regression coverage for workspace authorization and sample payload endpoints
+
+Verification:
+
+* `php artisan test tests/Feature/Platform/PlatformUiReferenceTest.php`
+
+Planning owners:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](../Planning/Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
+
+Canonical docs:
+
+* [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
+* [[V2 App/Reference/UI Design System Standards]] | [UI Design System Standards](../Reference/UI%20Design%20System%20Standards.md)
 
 ### 2026-04-13 - Phase 2 Batch 10 calendar foundation planning
 

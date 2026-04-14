@@ -19,6 +19,8 @@ Current status:
 * action tokens and drawer patterns migrated from Batch 7 reference
 * table UX baseline synchronized with Feature Development Standards
 * forms, cards, and notification standards added; typography and spacing remain to be fully standardized
+* app-owned UI reference workspace is implemented at `/platform/ui-reference` as the canonical future UI reference surface for shell, forms, table, token, and drawer examples
+* UI reference workspace access is intentionally restricted to platform super admins for baseline governance and review control
 
 ## Design Tokens
 
@@ -140,9 +142,12 @@ Input standards:
 * `resources/js/app.js` - filter toggle wiring and drawer logic
 * `resources/views/platform/audit-logs/index.blade.php` - filter toggle, row actions, drawer markup
 * `resources/views/platform/error-logs/index.blade.php` - filter toggle, row actions, drawer markup
+* `resources/views/platform/ui-reference/index.blade.php` - app-owned UI reference examples for shell, forms, tables, tokens, and drawer behavior
 * `resources/views/livewire/platform/dashboard/widgets/development-tools.blade.php` - dashboard action token usage
 * `resources/views/livewire/platform/dashboard/widgets/system-notifications.blade.php` - dashboard notification action tokens
 * `resources/views/filament/widgets/system-notifications-widget.blade.php` - Filament widget action tokens
+* `app/Http/Controllers/Platform/UiReferenceController.php` - reference-page and sample drawer JSON payload contracts
+* `routes/web.php` - `/platform/ui-reference` and sample payload routes
 
 ## Related
 

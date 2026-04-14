@@ -48,6 +48,14 @@ class PlatformNavigation
                     'ability' => 'view-platform-docs',
                     'icon' => 'docs',
                 ],
+                [
+                    'label' => 'UI Reference',
+                    'route' => 'platform.ui-reference.index',
+                    'active' => ['platform.ui-reference.*'],
+                    'ability' => 'view-platform-docs',
+                    'role' => 'platform_super_admin',
+                    'icon' => 'docs',
+                ],
             ]),
             'logs' => $this->filterAllowed($user, [
                 [
@@ -172,7 +180,13 @@ class PlatformNavigation
 
         return array_values(array_filter(
             $items,
-            fn (array $item): bool => ! isset($item['ability']) || $this->gate->forUser($user)->allows($item['ability'])
+            function (array $item) use ($user): bool {
+                if (isset($item['role']) && ! $user->hasRole($item['role'])) {
+                    return false;
+                }
+
+                return ! isset($item['ability']) || $this->gate->forUser($user)->allows($item['ability']);
+            }
         ));
     }
 }

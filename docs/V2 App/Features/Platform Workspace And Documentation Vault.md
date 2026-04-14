@@ -15,6 +15,7 @@ Current status:
 * header notifications preview is live on staging
 * realtime header notification sync and toast hooks are live on staging
 * Setup sidebar shell interaction and selective feature setup pages are live on staging
+* app-owned `/platform/ui-reference` workspace is implemented as the canonical shell/component baseline review surface (forms, tables, tokens, drawers) and is super-admin-only
 
 ## Current Implementation
 
@@ -42,9 +43,11 @@ The docs viewer currently supports:
 * `resources/views/components/layouts/app.blade.php`
 * `resources/views/platform/dashboard.blade.php`
 * `resources/views/platform/docs/index.blade.php`
+* `resources/views/platform/ui-reference/index.blade.php`
 * `resources/views/platform/docs/partials/tree-node.blade.php`
 * `app/Http/Controllers/Platform/DashboardController.php`
 * `app/Http/Controllers/Platform/DocsController.php`
+* `app/Http/Controllers/Platform/UiReferenceController.php`
 * `app/Platform/Docs/DocsRepository.php`
 
 ## Permissions / Security

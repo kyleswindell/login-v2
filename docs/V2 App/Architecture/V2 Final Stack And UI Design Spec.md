@@ -29,6 +29,8 @@ Current status:
 * Batch 7 UI audit pass applied doc-workflow fit checks per surface and normalized custom Blade surface primitives toward the shared Filament-aligned baseline
 * Batch 7 correction pass adds account-focused dropdown routes/views and final active-state/header/color-baseline fixes ahead of visual sign-off
 * Batch 7 remediation now restores app-owned audit/error log drawers, icon-based table filter affordances, and shared action-token styling under a canonical UI reference note
+* app-owned `/platform/ui-reference` workspace now provides a reusable and canonical UI baseline surface for shell, forms, table patterns, action tokens, and log-drawer behavior outside transitional `/console/*` proof paths
+* `/platform/ui-reference` access is intentionally restricted to platform super admins for canonical UI baseline governance
 * Batch 8 canonical owner is defined for account-surface contracts and remains blocked by the Batch 7 sign-off gate
 * Batch 9 canonical owner is defined for messaging foundation contracts and remains blocked by Batch 8 completion
 * Batch 10 calendar contract is complete in canonical docs

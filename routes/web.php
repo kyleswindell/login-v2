@@ -10,6 +10,7 @@ use App\Http\Controllers\Platform\NotificationController;
 use App\Http\Controllers\Platform\PlatformSetupController;
 use App\Http\Controllers\Platform\PlatformUserController;
 use App\Http\Controllers\Platform\SettingsController;
+use App\Http\Controllers\Platform\UiReferenceController;
 use App\Livewire\Platform\Dashboard\DashboardPage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -111,6 +112,9 @@ Route::middleware('auth')->group(function (): void {
     })->name('platform.administration.settings.index');
 
     Route::get('/platform/docs', DocsController::class)->name('platform.docs.index');
+    Route::get('/platform/ui-reference', [UiReferenceController::class, 'index'])->name('platform.ui-reference.index');
+    Route::get('/platform/ui-reference/audit-logs/{sample}', [UiReferenceController::class, 'showAuditSample'])->name('platform.ui-reference.audit-samples.show');
+    Route::get('/platform/ui-reference/error-logs/{sample}', [UiReferenceController::class, 'showErrorSample'])->name('platform.ui-reference.error-samples.show');
 
     Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 });

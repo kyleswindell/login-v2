@@ -260,7 +260,7 @@
                         </aside>
                     @else
                         <aside
-                            class="fixed inset-y-0 left-0 z-40 hidden w-72 shrink-0 overflow-y-auto bg-slate-950/95 p-4 lg:sticky lg:top-24 lg:block lg:w-60 lg:self-start lg:max-h-[calc(100vh-7rem)] lg:bg-transparent lg:p-0"
+                            class="fixed inset-x-3 bottom-4 top-20 z-40 hidden shrink-0 overflow-y-auto rounded-2xl border border-slate-700 bg-slate-950/95 p-4 shadow-2xl shadow-black/40 lg:inset-x-auto lg:bottom-auto lg:top-24 lg:w-60 lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none"
                             data-sidebar-host
                             data-sidebar-panel
                         >

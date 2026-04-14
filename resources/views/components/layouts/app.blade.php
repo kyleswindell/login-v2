@@ -259,17 +259,17 @@
                             class="fixed inset-2 z-[60] hidden shrink-0 overflow-y-auto rounded-2xl border border-slate-700 bg-slate-950/95 p-4 shadow-2xl shadow-black/40 lg:inset-auto lg:sticky lg:top-24 lg:z-auto lg:block lg:w-auto lg:max-h-[calc(100vh-7rem)] lg:overflow-visible lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none"
                             data-sidebar-panel
                         >
-                            <div class="mb-3 flex items-center justify-between lg:hidden">
-                                <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Navigation</span>
-                                <button
-                                    type="button"
-                                    class="rounded-md border border-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-300 transition hover:border-slate-500 hover:text-white"
-                                    data-sidebar-toggle
-                                >
-                                    Close
-                                </button>
+                            <x-layouts.mobile-sidebar
+                                :primary-base-navigation="$primaryBaseNavigation"
+                                :primary-admin-navigation="$primaryAdminNavigation"
+                                :logs-navigation="$logsNavigation"
+                                :setup-base-navigation="$setupBaseNavigation"
+                                :setup-admin-navigation="$setupAdminNavigation"
+                            />
+
+                            <div class="hidden lg:block">
+                                {{ $sidebar }}
                             </div>
-                            {{ $sidebar }}
                         </aside>
                     @else
                         <aside
@@ -277,17 +277,15 @@
                             data-sidebar-host
                             data-sidebar-panel
                         >
-                            <div class="mb-3 flex items-center justify-between lg:hidden">
-                                <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Navigation</span>
-                                <button
-                                    type="button"
-                                    class="rounded-md border border-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-300 transition hover:border-slate-500 hover:text-white"
-                                    data-sidebar-toggle
-                                >
-                                    Close
-                                </button>
-                            </div>
-                            <div data-sidebar-container>
+                            <x-layouts.mobile-sidebar
+                                :primary-base-navigation="$primaryBaseNavigation"
+                                :primary-admin-navigation="$primaryAdminNavigation"
+                                :logs-navigation="$logsNavigation"
+                                :setup-base-navigation="$setupBaseNavigation"
+                                :setup-admin-navigation="$setupAdminNavigation"
+                            />
+
+                            <div class="hidden lg:block" data-sidebar-container>
                                 {{-- Slider track: main nav and Setup panel side by side --}}
                                 <div class="relative overflow-hidden">
                                     <div class="flex transition-transform duration-300 will-change-transform" data-sidebar-track>

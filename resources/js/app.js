@@ -589,15 +589,15 @@ const initDocsTree = () => {
     }
 };
 
-const initMobileSidebarTabs = () => {
-    document.querySelectorAll('[data-mobile-sidebar-tabs]').forEach((container) => {
-        if (container.dataset.mobileSidebarTabsInit === '1') {
+const initMobileSidebarDock = () => {
+    document.querySelectorAll('[data-mobile-sidebar-dock]').forEach((container) => {
+        if (container.dataset.mobileSidebarDockInit === '1') {
             return;
         }
-        container.dataset.mobileSidebarTabsInit = '1';
+        container.dataset.mobileSidebarDockInit = '1';
 
-        const buttons = Array.from(container.querySelectorAll('[data-mobile-sidebar-target]'));
-        const panels = Array.from(container.querySelectorAll('[data-mobile-sidebar-panel]'));
+        const buttons = Array.from(container.querySelectorAll('[data-mobile-dock-target]'));
+        const panels = Array.from(container.querySelectorAll('[data-mobile-dock-panel]'));
         const isMobile = () => window.innerWidth < 1024;
 
         if (buttons.length === 0 || panels.length === 0) {
@@ -605,10 +605,10 @@ const initMobileSidebarTabs = () => {
         }
 
         const setActivePanel = (target) => {
-            const selected = target || container.dataset.defaultPanel || 'setup';
+            const selected = target || container.dataset.defaultPanel || 'main';
 
             buttons.forEach((button) => {
-                const isActive = button.dataset.mobileSidebarTarget === selected;
+                const isActive = button.dataset.mobileDockTarget === selected;
                 button.classList.toggle('bg-slate-700/60', isActive);
                 button.classList.toggle('text-white', isActive);
                 button.classList.toggle('ring-1', isActive);
@@ -618,21 +618,21 @@ const initMobileSidebarTabs = () => {
             });
 
             panels.forEach((panel) => {
-                panel.classList.toggle('hidden', isMobile() && panel.dataset.mobileSidebarPanel !== selected);
+                panel.classList.toggle('hidden', isMobile() && panel.dataset.mobileDockPanel !== selected);
             });
         };
 
         buttons.forEach((button) => {
             button.addEventListener('click', () => {
-                setActivePanel(button.dataset.mobileSidebarTarget);
+                setActivePanel(button.dataset.mobileDockTarget);
             });
         });
 
         window.addEventListener('resize', () => {
-            setActivePanel(container.dataset.defaultPanel || 'setup');
+            setActivePanel(container.dataset.defaultPanel || 'main');
         });
 
-        setActivePanel(container.dataset.defaultPanel || 'setup');
+        setActivePanel(container.dataset.defaultPanel || 'main');
     });
 };
 
@@ -642,8 +642,8 @@ document.addEventListener('DOMContentLoaded', initAccountMenu);
 document.addEventListener('livewire:navigated', initAccountMenu);
 document.addEventListener('DOMContentLoaded', initDocsTree);
 document.addEventListener('livewire:navigated', initDocsTree);
-document.addEventListener('DOMContentLoaded', initMobileSidebarTabs);
-document.addEventListener('livewire:navigated', initMobileSidebarTabs);
+document.addEventListener('DOMContentLoaded', initMobileSidebarDock);
+document.addEventListener('livewire:navigated', initMobileSidebarDock);
 document.addEventListener('DOMContentLoaded', initFilterPanels);
 document.addEventListener('livewire:navigated', initFilterPanels);
 document.addEventListener('DOMContentLoaded', initErrorLogDrawer);

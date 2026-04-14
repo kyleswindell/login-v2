@@ -2,7 +2,7 @@
 
 ## Staging Status
 
-- proposed
+- applied
 
 ## Metadata
 
@@ -46,6 +46,12 @@ This staged note proposes minimal canonical doc updates so the one-line requirem
 
 ## Review Outcome
 
-- decision: pending docs-sync review
-- applied locations: pending
-- follow-up needed: docs-sync agent to apply approved canonical note updates
+- decision: applied
+- applied locations:
+  - `docs/V2 App/Reference/UI Design System Standards.md`
+  - `docs/V2 App/Reference/UI UX System/UI UX Component Library Standards.md`
+  - `docs/V2 App/Reference/UI UX System/Component Contracts/Tier 1 - Badges And Status Contract.md`
+  - `docs/V2 App/Reference/UI UX System/UI UX Component Taxonomy And Coverage Matrix.md`
+  - `docs/V2 App/Reference/UI UX System/UI UX Status And Badge Production Rollout Checklist.md`
+  - `docs/V2 App/Reference/UI UX System/UI UX System Index.md`
+- follow-up needed: execute production migration checklist and advance matrix production status after rollout QA

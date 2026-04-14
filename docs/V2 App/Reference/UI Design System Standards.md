@@ -81,6 +81,19 @@ Rules:
 * keep light-mode button colorways visually aligned with dark-mode intent (avoid pastel-only drift on primary actions)
 * do not rely on plain text links for primary actions
 
+## Status And Badge Baseline
+
+Canonical status rules:
+
+* status pills must render in a single line by default
+* status icon and label remain horizontally aligned in all default contexts
+* default table/card/filter contexts do not allow status label wrap
+* semantic meaning must remain text-first, not color-only
+
+Implementation owner:
+
+* shared class `ui-status-pill` is the canonical owner for single-line badge layout behavior
+
 ## Tables And Data Grids
 
 Baseline requirements for operator tables:

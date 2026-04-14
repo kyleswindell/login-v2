@@ -7,7 +7,7 @@
 - Component name: Badge and Status Pill
 - Taxonomy path (L1/L2): Data Display / Indicators
 - Owner: Platform UI baseline owner
-- Status (`Draft`/`Proposed`/`Locked`): Proposed (`Ready For Review` in matrix)
+- Status (`Draft`/`Proposed`/`Locked`): Locked (UI reference baseline), production rollout in progress
 
 ### 2. Intent And Theory
 
@@ -29,7 +29,7 @@
 - Hover/focus/active behavior: only interactive when explicitly implemented as filter chip.
 - Disabled/loading behavior: muted token and lower emphasis.
 - Error/warning/success behavior (if applicable): must map to shared semantic colors.
-- Responsive behavior (desktop/tablet/mobile): wraps cleanly in row/action groups.
+- Responsive behavior (desktop/tablet/mobile): wraps cleanly in row/action groups while each pill remains one-line.
 
 ### 5. Accessibility Requirements
 
@@ -70,9 +70,9 @@
 
 ### 10. Lock Record
 
-- Lock date: pending
-- Reviewers: pending
-- Notes: move to `Locked` after status semantics review in operations tables.
+- Lock date: 2026-04-14
+- Reviewers: platform owner visual QA + Codex implementation pass
+- Notes: UI reference baseline locked. Production rollout remains tracked in dedicated checklist.
 
 ## Related
 

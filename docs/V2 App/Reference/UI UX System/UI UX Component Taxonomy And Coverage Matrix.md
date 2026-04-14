@@ -100,7 +100,7 @@ Status values:
 |---|---|---|---|---|---|---|
 | Button | Inputs And Forms | default, hover, focus, active, disabled, loading | contrast, focus-visible, keyboard trigger | Ready For Review | In Progress | Tier 1 |
 | Icon Button | Inputs And Forms | default, hover, focus, active, disabled | aria-label, focus-visible, touch target | Ready For Review | In Progress | Tier 1 |
-| Badge / Status Pill | Data Display | default, subtle, outline, disabled | contrast and semantic meaning | Ready For Review | In Progress | Tier 1 |
+| Badge / Status Pill | Data Display | default, subtle, outline, disabled | contrast and semantic meaning | Locked | In Progress | Tier 1 |
 | Text Input | Inputs And Forms | default, focus, error, disabled, readonly | label association, error announcement | Ready For Review | In Progress | Tier 1 |
 | Textarea | Inputs And Forms | default, focus, error, disabled | label association, resize behavior | Ready For Review | In Progress | Tier 1 |
 | Select | Inputs And Forms | default, focus, error, disabled | label association, keyboard nav | Ready For Review | In Progress | Tier 1 |

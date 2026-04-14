@@ -18,6 +18,8 @@ Current status:
 - Tier 1 implementation checklist for `/platform/ui-reference` is defined
 - Tier 1 matrix rows are now `Ready For Review`
 - component docs are expected to include both theory rationale and concrete implementation examples
+- badges/status Tier 1 contract is now `Locked` for UI reference baseline behavior
+- status/badge production rollout checklist is now established for non-reference surfaces
 
 ## Component Categories
 
@@ -95,6 +97,17 @@ Required behavior:
 
 Status: `Draft`
 
+### Badges and status pills
+
+Required behavior:
+
+- semantic roles must resolve through shared status mappings
+- status pills render single-line by default in standard table/card/filter contexts
+- icon and label stay horizontally aligned
+- text label is mandatory for semantic status (no icon-only semantic status)
+
+Status: `Locked` (UI reference baseline), production adoption `In Progress`
+
 ## UX Consistency Rules
 
 ### Navigation hierarchy
@@ -160,6 +173,7 @@ Per-component lock contract template:
 - [[V2 App/Reference/UI UX System/UI UX Component Acceptance Contract Template]] | [UI UX Component Acceptance Contract Template](UI%20UX%20Component%20Acceptance%20Contract%20Template.md)
 - [[V2 App/Reference/UI UX System/Component Contracts/Component Contracts Index]] | [Component Contracts Index](Component%20Contracts/Component%20Contracts%20Index.md)
 - [[V2 App/Reference/UI UX System/UI UX Tier 1 UI Reference Implementation Checklist]] | [UI UX Tier 1 UI Reference Implementation Checklist](UI%20UX%20Tier%201%20UI%20Reference%20Implementation%20Checklist.md)
+- [[V2 App/Reference/UI UX System/UI UX Status And Badge Production Rollout Checklist]] | [UI UX Status And Badge Production Rollout Checklist](UI%20UX%20Status%20And%20Badge%20Production%20Rollout%20Checklist.md)
 
 ## Planning Source
 

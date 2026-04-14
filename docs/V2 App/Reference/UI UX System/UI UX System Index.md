@@ -17,6 +17,7 @@ Provide one reference index for the Login V2 UI/UX source-of-truth notes, decisi
 - [[V2 App/Reference/UI UX System/UI UX Component Acceptance Contract Template]] | [UI UX Component Acceptance Contract Template](UI%20UX%20Component%20Acceptance%20Contract%20Template.md)
 - [[V2 App/Reference/UI UX System/Component Contracts/Component Contracts Index]] | [Component Contracts Index](Component%20Contracts/Component%20Contracts%20Index.md)
 - [[V2 App/Reference/UI UX System/UI UX Tier 1 UI Reference Implementation Checklist]] | [UI UX Tier 1 UI Reference Implementation Checklist](UI%20UX%20Tier%201%20UI%20Reference%20Implementation%20Checklist.md)
+- [[V2 App/Reference/UI UX System/UI UX Status And Badge Production Rollout Checklist]] | [UI UX Status And Badge Production Rollout Checklist](UI%20UX%20Status%20And%20Badge%20Production%20Rollout%20Checklist.md)
 
 ## Planning Source
 

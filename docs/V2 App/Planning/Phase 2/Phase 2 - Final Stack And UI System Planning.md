@@ -31,6 +31,7 @@ Current status:
 * Batch 8 and Batch 9 now have canonical feature owner notes and remain blocked by execution gates (Batch 7 visual sign-off before Batch 8, then Batch 8 completion before Batch 9)
 * app-owned `/platform/ui-reference` workspace is implemented as the canonical repeatable review surface for Phase 2+ UI baselines (shell, forms, tables, action tokens, and drawer interactions)
 * `/platform/ui-reference` access is restricted to platform super admins
+* `/platform/ui-reference` now carries expanded button baseline references and a parallel-agent update workflow template
 * final visual sign-off review remains before Phase 2 can be fully closed
 
 Canonical architecture owner:

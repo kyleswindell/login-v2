@@ -21,6 +21,7 @@ Current status:
 * forms, cards, and notification standards added; typography and spacing remain to be fully standardized
 * app-owned UI reference workspace is implemented at `/platform/ui-reference` as the canonical future UI reference surface for shell, forms, table, token, and drawer examples
 * UI reference workspace access is intentionally restricted to platform super admins for baseline governance and review control
+* multi-agent update workflow and prompt baseline are defined for parallel UI-reference updates
 
 ## Design Tokens
 
@@ -41,13 +42,19 @@ Shared action-token classes:
 * `ui-action-warning` - cautionary actions
 * `ui-action-danger` - destructive actions
 * `ui-action-notice` - informational actions
+* `ui-action-info` - informational/system actions (`btn-info` alias supported for Daisy-style naming)
 * `ui-action-ghost` - low-emphasis border actions
+* `ui-action-soft` - low-intensity colorway variant for reduced-emphasis actions
+* `ui-action-outline` - outlined variant for secondary emphasis
+* `ui-action-login` plus provider variants (`google`, `github`, `microsoft`) for auth-surface references
+* size variants: `ui-action-xs`, `ui-action-sm`, `ui-action-md`, `ui-action-lg`, `ui-action-xl`
 * `ui-icon-button` - icon-only button affordance for compact controls
 
 Rules:
 
 * apply shared action tokens to table row actions, widget actions, and dashboard actions
 * ensure light and dark mode variants are explicit for each action token
+* keep light-mode button colorways visually aligned with dark-mode intent (avoid pastel-only drift on primary actions)
 * do not rely on plain text links for primary actions
 
 ## Tables And Data Grids
@@ -143,6 +150,8 @@ Input standards:
 * `resources/views/platform/audit-logs/index.blade.php` - filter toggle, row actions, drawer markup
 * `resources/views/platform/error-logs/index.blade.php` - filter toggle, row actions, drawer markup
 * `resources/views/platform/ui-reference/index.blade.php` - app-owned UI reference examples for shell, forms, tables, tokens, and drawer behavior
+* `docs/V2 App/Reference/UI Reference Workspace Workflow.md` - parallel update ownership model and review workflow
+* `scripts/ui-reference-agent-prompt.md` - reusable prompt template for section-scoped agent tasks
 * `resources/views/livewire/platform/dashboard/widgets/development-tools.blade.php` - dashboard action token usage
 * `resources/views/livewire/platform/dashboard/widgets/system-notifications.blade.php` - dashboard notification action tokens
 * `resources/views/filament/widgets/system-notifications-widget.blade.php` - Filament widget action tokens

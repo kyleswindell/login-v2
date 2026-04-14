@@ -64,7 +64,7 @@
                     <p class="ui-kicker">Action Tokens</p>
                     <h2 class="ui-card-title mt-2">Buttons And Badges</h2>
                 </div>
-                <p class="text-sm text-slate-400">Canonical classes from `resources/css/app.css`.</p>
+                <p class="text-sm text-slate-400">Mapped from DaisyUI button references into the project token system.</p>
             </div>
 
             <div class="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -74,12 +74,67 @@
                 <button type="button" class="ui-action ui-action-warning">Warning</button>
                 <button type="button" class="ui-action ui-action-danger">Danger</button>
                 <button type="button" class="ui-action ui-action-notice">Notice</button>
+                <button type="button" class="ui-action ui-action-info">Info</button>
                 <button type="button" class="ui-action ui-action-ghost">Ghost</button>
+            </div>
+
+            <p class="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Soft Buttons</p>
+            <div class="mt-2 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                <button type="button" class="ui-action ui-action-soft">Soft Neutral</button>
+                <button type="button" class="ui-action ui-action-primary ui-action-soft">Soft Primary</button>
+                <button type="button" class="ui-action ui-action-success ui-action-soft">Soft Success</button>
+                <button type="button" class="ui-action ui-action-warning ui-action-soft">Soft Warning</button>
+                <button type="button" class="ui-action ui-action-danger ui-action-soft">Soft Danger</button>
+                <button type="button" class="ui-action ui-action-notice ui-action-soft">Soft Notice</button>
+                <button type="button" class="ui-action ui-action-info ui-action-soft">Soft Info</button>
+                <button type="button" class="ui-action ui-action-outline">Outline Neutral</button>
+            </div>
+
+            <p class="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Outline Buttons</p>
+            <div class="mt-2 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                <button type="button" class="ui-action ui-action-primary ui-action-outline">Outline Primary</button>
+                <button type="button" class="ui-action ui-action-success ui-action-outline">Outline Success</button>
+                <button type="button" class="ui-action ui-action-warning ui-action-outline">Outline Warning</button>
+                <button type="button" class="ui-action ui-action-danger ui-action-outline">Outline Danger</button>
+                <button type="button" class="ui-action ui-action-notice ui-action-outline">Outline Notice</button>
+                <button type="button" class="ui-action ui-action-info ui-action-outline">Outline Info</button>
                 <button type="button" class="ui-icon-button" aria-label="Example icon action">
                     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
                         <path fill-rule="evenodd" d="M2.5 4.75A.75.75 0 0 1 3.25 4h13.5a.75.75 0 0 1 .53 1.28L12 10.56v4.19a.75.75 0 0 1-.44.68l-3 1.333A.75.75 0 0 1 7.5 16V10.56L2.22 5.28a.75.75 0 0 1 .28-1.28Z" clip-rule="evenodd" />
                     </svg>
                 </button>
+            </div>
+
+            <p class="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Login Buttons</p>
+            <div class="mt-2 grid gap-3 md:grid-cols-3">
+                <button type="button" class="ui-action-login ui-action-login-google">
+                    <span aria-hidden="true">G</span>
+                    Continue with Google
+                </button>
+                <button type="button" class="ui-action-login ui-action-login-github">
+                    <span aria-hidden="true">GH</span>
+                    Continue with GitHub
+                </button>
+                <button type="button" class="ui-action-login ui-action-login-microsoft">
+                    <span aria-hidden="true">MS</span>
+                    Continue with Microsoft
+                </button>
+            </div>
+
+            <p class="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Button Sizes</p>
+            <div class="mt-2 flex flex-wrap items-center gap-3">
+                <button type="button" class="ui-action ui-action-primary ui-action-xs">XS</button>
+                <button type="button" class="ui-action ui-action-primary ui-action-sm">SM</button>
+                <button type="button" class="ui-action ui-action-primary ui-action-md">MD</button>
+                <button type="button" class="ui-action ui-action-primary ui-action-lg">LG</button>
+                <button type="button" class="ui-action ui-action-primary ui-action-xl">XL</button>
+            </div>
+
+            <p class="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Daisy-Compatible Aliases</p>
+            <div class="mt-2 flex flex-wrap gap-3">
+                <button type="button" class="btn btn-info">btn-info</button>
+                <button type="button" class="btn btn-soft">btn-soft</button>
+                <button type="button" class="btn btn-outline">btn-outline</button>
             </div>
 
             <div class="mt-4 flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-[0.15em]">

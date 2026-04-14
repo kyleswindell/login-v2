@@ -39,6 +39,7 @@ Current state:
 * Batch 10 calendar contract is complete in planning and canonical docs
 * Batch 11 dashboard widgets are code-complete and locally verified in Docker; staging deployment and visual QA remain pending
 * `/platform/ui-reference` is now implemented as an app-owned canonical Phase 2+ UI baseline review workspace with sample log-drawer payload contracts
+* UI reference workspace now includes expanded button baseline (info, soft, outline, login, sizes) and a parallel-agent update workflow template
 
 ## Milestones
 
@@ -247,6 +248,32 @@ Canonical docs:
 
 * [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
 * [[V2 App/Reference/UI Design System Standards]] | [UI Design System Standards](../Reference/UI%20Design%20System%20Standards.md)
+
+### 2026-04-14 - UI reference button baseline expansion and parallel-agent workflow
+
+Status:
+
+* implemented locally
+* review-ready for visual verification
+
+Work completed:
+
+* added `btn-info` plus mapped `ui-action-info` token support
+* added soft-button and outline-button categories mapped to current app token conventions
+* added login-button reference variants (Google/GitHub/Microsoft) for auth-surface parity review
+* added button-size references (`xs`, `sm`, `md`, `lg`, `xl`) for consistent control density decisions
+* strengthened light-mode action button colorway contrast so light mode preserves dark-mode visual intent instead of pastel-like rendering
+* created canonical multi-agent workflow reference and reusable agent prompt template for parallel `/platform/ui-reference` updates
+
+Verification:
+
+* `php artisan route:list --path=platform/ui-reference`
+* `php artisan view:cache`
+
+Canonical docs:
+
+* [[V2 App/Reference/UI Design System Standards]] | [UI Design System Standards](../Reference/UI%20Design%20System%20Standards.md)
+* [[V2 App/Reference/UI Reference Workspace Workflow]] | [UI Reference Workspace Workflow](../Reference/UI%20Reference%20Workspace%20Workflow.md)
 
 ### 2026-04-13 - Phase 2 Batch 10 calendar foundation planning
 

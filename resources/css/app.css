@@ -79,8 +79,141 @@
         @apply border-violet-500/40 bg-violet-500/15 text-violet-100 hover:border-violet-400/60 hover:bg-violet-500/25 hover:text-violet-50;
     }
 
+    .ui-action-info {
+        @apply border-cyan-500/40 bg-cyan-500/15 text-cyan-100 hover:border-cyan-400/60 hover:bg-cyan-500/25 hover:text-cyan-50;
+    }
+
     .ui-action-ghost {
         @apply bg-transparent text-slate-300 hover:bg-slate-800/80 hover:text-white;
+    }
+
+    .ui-action-soft {
+        @apply shadow-none;
+    }
+
+    .ui-action.ui-action-soft {
+        @apply border-slate-600/60 bg-slate-700/20 text-slate-100 hover:bg-slate-700/30;
+    }
+
+    .ui-action-primary.ui-action-soft {
+        @apply border-sky-500/45 bg-sky-500/20 text-sky-100 hover:bg-sky-500/30;
+    }
+
+    .ui-action-success.ui-action-soft {
+        @apply border-emerald-500/45 bg-emerald-500/20 text-emerald-100 hover:bg-emerald-500/30;
+    }
+
+    .ui-action-warning.ui-action-soft {
+        @apply border-amber-500/55 bg-amber-500/20 text-amber-100 hover:bg-amber-500/30;
+    }
+
+    .ui-action-danger.ui-action-soft {
+        @apply border-rose-500/45 bg-rose-500/20 text-rose-100 hover:bg-rose-500/30;
+    }
+
+    .ui-action-notice.ui-action-soft {
+        @apply border-violet-500/45 bg-violet-500/20 text-violet-100 hover:bg-violet-500/30;
+    }
+
+    .ui-action-info.ui-action-soft {
+        @apply border-cyan-500/45 bg-cyan-500/20 text-cyan-100 hover:bg-cyan-500/30;
+    }
+
+    .ui-action-outline {
+        @apply bg-transparent;
+    }
+
+    .ui-action.ui-action-outline {
+        @apply border-slate-500 text-slate-200 hover:bg-slate-800/30;
+    }
+
+    .ui-action-primary.ui-action-outline {
+        @apply border-sky-400 text-sky-200 hover:bg-sky-500/15;
+    }
+
+    .ui-action-success.ui-action-outline {
+        @apply border-emerald-400 text-emerald-200 hover:bg-emerald-500/15;
+    }
+
+    .ui-action-warning.ui-action-outline {
+        @apply border-amber-400 text-amber-200 hover:bg-amber-500/15;
+    }
+
+    .ui-action-danger.ui-action-outline {
+        @apply border-rose-400 text-rose-200 hover:bg-rose-500/15;
+    }
+
+    .ui-action-notice.ui-action-outline {
+        @apply border-violet-400 text-violet-200 hover:bg-violet-500/15;
+    }
+
+    .ui-action-info.ui-action-outline {
+        @apply border-cyan-400 text-cyan-200 hover:bg-cyan-500/15;
+    }
+
+    .ui-action-xs,
+    .btn-xs {
+        @apply rounded px-2.5 py-1.5 text-xs;
+    }
+
+    .ui-action-sm,
+    .btn-sm {
+        @apply px-3 py-1.5 text-sm;
+    }
+
+    .ui-action-md,
+    .btn-md {
+        @apply px-3.5 py-2 text-sm;
+    }
+
+    .ui-action-lg,
+    .btn-lg {
+        @apply rounded-lg px-4.5 py-2.5 text-base;
+    }
+
+    .ui-action-xl,
+    .btn-xl {
+        @apply rounded-lg px-5 py-3 text-base;
+    }
+
+    .ui-action-login {
+        @apply inline-flex items-center justify-center gap-2 rounded-md border px-4 py-2.5 text-sm font-semibold transition;
+    }
+
+    .ui-action-login-google {
+        @apply border-slate-200 bg-white text-slate-900 hover:bg-slate-100;
+    }
+
+    .ui-action-login-github {
+        @apply border-slate-700 bg-slate-900 text-slate-100 hover:border-slate-500 hover:bg-slate-800;
+    }
+
+    .ui-action-login-microsoft {
+        @apply border-sky-500/60 bg-sky-600 text-white hover:border-sky-500 hover:bg-sky-500;
+    }
+
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-md border border-slate-700 bg-slate-800/60 px-3.5 py-2 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-800 hover:text-white;
+    }
+
+    .btn-info {
+        @apply border-cyan-500/45 bg-cyan-500/20 text-cyan-100 hover:border-cyan-400/70 hover:bg-cyan-500/30 hover:text-white;
+    }
+
+    .btn-soft {
+        @apply border-slate-600/60 bg-slate-700/20 text-slate-100 hover:bg-slate-700/30;
+    }
+
+    .btn-outline {
+        @apply border-slate-500 bg-transparent text-slate-200 hover:bg-slate-800/30;
+    }
+
+    .btn-ghost {
+        @apply bg-transparent text-slate-300 hover:bg-slate-800/80 hover:text-white;
+    }
+
+    .btn-login {
+        @apply inline-flex items-center justify-center gap-2 rounded-md border px-4 py-2.5 text-sm font-semibold transition;
     }
 
     .ui-icon-button {
@@ -240,63 +373,171 @@
     }
 
     html[data-theme-resolved='light'] .ui-action-primary {
-        background-color: rgb(224 242 254) !important;
-        border-color: rgb(125 211 252) !important;
-        color: rgb(3 105 161) !important;
+        background-color: rgb(3 105 161) !important;
+        border-color: rgb(2 132 199) !important;
+        color: rgb(241 245 249) !important;
     }
 
     html[data-theme-resolved='light'] .ui-action-primary:hover {
-        background-color: rgb(186 230 253) !important;
-        border-color: rgb(56 189 248) !important;
-        color: rgb(7 89 133) !important;
+        background-color: rgb(7 89 133) !important;
+        border-color: rgb(14 116 144) !important;
+        color: rgb(248 250 252) !important;
     }
 
     html[data-theme-resolved='light'] .ui-action-success {
-        background-color: rgb(236 253 245) !important;
-        border-color: rgb(110 231 183) !important;
-        color: rgb(6 95 70) !important;
+        background-color: rgb(4 120 87) !important;
+        border-color: rgb(5 150 105) !important;
+        color: rgb(240 253 244) !important;
     }
 
     html[data-theme-resolved='light'] .ui-action-success:hover {
-        background-color: rgb(209 250 229) !important;
-        border-color: rgb(52 211 153) !important;
-        color: rgb(6 78 59) !important;
+        background-color: rgb(6 95 70) !important;
+        border-color: rgb(4 120 87) !important;
+        color: rgb(240 253 244) !important;
     }
 
     html[data-theme-resolved='light'] .ui-action-warning {
-        background-color: rgb(255 251 235) !important;
-        border-color: rgb(252 211 77) !important;
-        color: rgb(146 64 14) !important;
+        background-color: rgb(180 83 9) !important;
+        border-color: rgb(217 119 6) !important;
+        color: rgb(255 251 235) !important;
     }
 
     html[data-theme-resolved='light'] .ui-action-warning:hover {
-        background-color: rgb(254 243 199) !important;
-        border-color: rgb(245 158 11) !important;
-        color: rgb(120 53 15) !important;
+        background-color: rgb(146 64 14) !important;
+        border-color: rgb(180 83 9) !important;
+        color: rgb(255 251 235) !important;
     }
 
     html[data-theme-resolved='light'] .ui-action-danger {
-        background-color: rgb(255 241 242) !important;
-        border-color: rgb(253 164 175) !important;
-        color: rgb(190 24 93) !important;
+        background-color: rgb(190 24 93) !important;
+        border-color: rgb(225 29 72) !important;
+        color: rgb(255 241 242) !important;
     }
 
     html[data-theme-resolved='light'] .ui-action-danger:hover {
+        background-color: rgb(159 18 57) !important;
+        border-color: rgb(190 24 93) !important;
+        color: rgb(255 241 242) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-action-notice {
+        background-color: rgb(109 40 217) !important;
+        border-color: rgb(124 58 237) !important;
+        color: rgb(245 243 255) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-action-notice:hover {
+        background-color: rgb(91 33 182) !important;
+        border-color: rgb(109 40 217) !important;
+        color: rgb(245 243 255) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-action-info,
+    html[data-theme-resolved='light'] .btn-info {
+        background-color: rgb(14 116 144) !important;
+        border-color: rgb(8 145 178) !important;
+        color: rgb(236 254 255) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-action-info:hover,
+    html[data-theme-resolved='light'] .btn-info:hover {
+        background-color: rgb(21 94 117) !important;
+        border-color: rgb(14 116 144) !important;
+        color: rgb(236 254 255) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-action-soft,
+    html[data-theme-resolved='light'] .btn-soft {
+        background-color: rgb(248 250 252) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-action-primary.ui-action-soft {
+        background-color: rgb(224 242 254) !important;
+        border-color: rgb(56 189 248) !important;
+        color: rgb(3 105 161) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-action-success.ui-action-soft {
+        background-color: rgb(220 252 231) !important;
+        border-color: rgb(52 211 153) !important;
+        color: rgb(6 95 70) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-action-warning.ui-action-soft {
+        background-color: rgb(254 243 199) !important;
+        border-color: rgb(245 158 11) !important;
+        color: rgb(146 64 14) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-action-danger.ui-action-soft {
         background-color: rgb(255 228 230) !important;
         border-color: rgb(251 113 133) !important;
         color: rgb(159 18 57) !important;
     }
 
-    html[data-theme-resolved='light'] .ui-action-notice {
-        background-color: rgb(245 243 255) !important;
-        border-color: rgb(196 181 253) !important;
-        color: rgb(109 40 217) !important;
-    }
-
-    html[data-theme-resolved='light'] .ui-action-notice:hover {
+    html[data-theme-resolved='light'] .ui-action-notice.ui-action-soft {
         background-color: rgb(237 233 254) !important;
         border-color: rgb(167 139 250) !important;
         color: rgb(91 33 182) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-action-info.ui-action-soft {
+        background-color: rgb(207 250 254) !important;
+        border-color: rgb(34 211 238) !important;
+        color: rgb(14 116 144) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-action-outline,
+    html[data-theme-resolved='light'] .btn-outline {
+        background-color: transparent !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-action-primary.ui-action-outline {
+        border-color: rgb(3 105 161) !important;
+        color: rgb(3 105 161) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-action-success.ui-action-outline {
+        border-color: rgb(4 120 87) !important;
+        color: rgb(4 120 87) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-action-warning.ui-action-outline {
+        border-color: rgb(180 83 9) !important;
+        color: rgb(180 83 9) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-action-danger.ui-action-outline {
+        border-color: rgb(190 24 93) !important;
+        color: rgb(190 24 93) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-action-notice.ui-action-outline {
+        border-color: rgb(109 40 217) !important;
+        color: rgb(109 40 217) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-action-info.ui-action-outline {
+        border-color: rgb(14 116 144) !important;
+        color: rgb(14 116 144) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-action-login-google {
+        border-color: rgb(203 213 225) !important;
+        background-color: rgb(255 255 255) !important;
+        color: rgb(15 23 42) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-action-login-github {
+        border-color: rgb(71 85 105) !important;
+        background-color: rgb(30 41 59) !important;
+        color: rgb(241 245 249) !important;
+    }
+
+    html[data-theme-resolved='light'] .ui-action-login-microsoft {
+        border-color: rgb(2 132 199) !important;
+        background-color: rgb(3 105 161) !important;
+        color: rgb(241 245 249) !important;
     }
 
     html[data-theme-resolved='light'] .ui-action-ghost {

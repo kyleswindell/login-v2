@@ -31,6 +31,7 @@ Current status:
 * Batch 7 remediation now restores app-owned audit/error log drawers, icon-based table filter affordances, and shared action-token styling under a canonical UI reference note
 * app-owned `/platform/ui-reference` workspace now provides a reusable and canonical UI baseline surface for shell, forms, table patterns, action tokens, and log-drawer behavior outside transitional `/console/*` proof paths
 * `/platform/ui-reference` access is intentionally restricted to platform super admins for canonical UI baseline governance
+* `/platform/ui-reference` now includes expanded button taxonomy baselines (info, soft, outline, login, size variants) plus a parallel-agent update workflow reference
 * Batch 8 canonical owner is defined for account-surface contracts and remains blocked by the Batch 7 sign-off gate
 * Batch 9 canonical owner is defined for messaging foundation contracts and remains blocked by Batch 8 completion
 * Batch 10 calendar contract is complete in canonical docs

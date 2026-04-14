@@ -19,6 +19,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertOk()
             ->assertSee('UI Reference Workspace')
             ->assertSee('ui-action ui-action-primary', false)
+            ->assertSee('btn-info', false)
             ->assertSee('data-audit-log-modal', false)
             ->assertSee('data-error-log-modal', false);
     }

@@ -12,6 +12,7 @@
 - [[V2 App/Reference/Logging Data Model Notes]] | [Logging Data Model Notes](Logging%20Data%20Model%20Notes.md)
 - [[V2 App/Reference/UI Action Tokens And Drawer Patterns]] | [UI Action Tokens And Drawer Patterns](UI%20Action%20Tokens%20And%20Drawer%20Patterns.md)
 - [[V2 App/Reference/UI Design System Standards]] | [UI Design System Standards](UI%20Design%20System%20Standards.md)
+- [[V2 App/Reference/UI Reference Workspace Workflow]] | [UI Reference Workspace Workflow](UI%20Reference%20Workspace%20Workflow.md)
 
 ## Related
 

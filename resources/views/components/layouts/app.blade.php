@@ -73,11 +73,12 @@
                     <div class="mx-auto flex w-full max-w-[1700px] items-center gap-4 px-4 py-4 xl:px-6">
                         <button
                             type="button"
-                            class="inline-flex items-center justify-center rounded-md border border-slate-700 p-2 text-slate-300 transition hover:border-slate-500 hover:text-white lg:hidden"
+                            class="inline-flex items-center justify-center gap-2 rounded-md border border-slate-700 px-3 py-2 text-slate-300 transition hover:border-slate-500 hover:text-white"
                             aria-label="Toggle navigation"
                             data-sidebar-toggle
                         >
-                            ☰
+                            <span class="text-base leading-none" data-sidebar-toggle-icon>☰</span>
+                            <span class="hidden text-xs font-semibold uppercase tracking-[0.16em] lg:inline" data-sidebar-toggle-label>Menu</span>
                         </button>
 
                         <a href="{{ route('dashboard') }}" wire:navigate class="flex min-w-0 items-center gap-3 py-1">

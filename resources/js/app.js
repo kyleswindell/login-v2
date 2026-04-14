@@ -355,28 +355,66 @@ const initSidebarToggle = () => {
 
     const sidebarToggles = document.querySelectorAll('[data-sidebar-toggle]');
     const sidebarLinks = document.querySelectorAll('[data-main-nav-link], [data-setup-nav-link]');
+    const toggleIcons = document.querySelectorAll('[data-sidebar-toggle-icon]');
+    const toggleLabels = document.querySelectorAll('[data-sidebar-toggle-label]');
     const isInitialized = sidebar.dataset.sidebarInit === '1';
 
     const isMobile = () => window.innerWidth < 1024;
+    const desktopStorageKey = 'platform.sidebar.desktop.open';
+    const readDesktopPreference = () => window.localStorage.getItem(desktopStorageKey) !== '0';
+    const writeDesktopPreference = (isOpen) => {
+        window.localStorage.setItem(desktopStorageKey, isOpen ? '1' : '0');
+    };
 
-    const setOpen = (isOpen) => {
+    let mobileOpen = false;
+    let desktopOpen = readDesktopPreference();
+
+    const updateToggleAffordances = () => {
         const mobile = isMobile();
-        const shouldShow = mobile ? isOpen : true;
+        const open = mobile ? mobileOpen : desktopOpen;
+        const icon = open ? '✕' : '☰';
+        const label = open ? 'Close' : 'Menu';
 
-        root.classList.toggle('sidebar-open', mobile && isOpen);
+        sidebarToggles.forEach((toggle) => {
+            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+
+        toggleIcons.forEach((target) => {
+            target.textContent = icon;
+        });
+
+        toggleLabels.forEach((target) => {
+            target.textContent = label;
+        });
+    };
+
+    const renderSidebar = () => {
+        const mobile = isMobile();
+        const open = mobile ? mobileOpen : desktopOpen;
+        const shouldShow = mobile ? open : true;
+
+        root.classList.toggle('sidebar-open', mobile && open);
         sidebar.classList.toggle('hidden', !shouldShow);
+        sidebar.style.display = mobile || open ? '' : 'none';
 
         if (backdrop) {
-            backdrop.classList.toggle('hidden', !(mobile && isOpen));
+            backdrop.classList.toggle('hidden', !(mobile && open));
         }
 
         if (body) {
-            body.classList.toggle('overflow-hidden', mobile && isOpen);
+            body.classList.toggle('overflow-hidden', mobile && open);
         }
+        updateToggleAffordances();
+    };
 
-        sidebarToggles.forEach((toggle) => {
-            toggle.setAttribute('aria-expanded', mobile && isOpen ? 'true' : 'false');
-        });
+    const setOpen = (isOpen) => {
+        if (isMobile()) {
+            mobileOpen = isOpen;
+        } else {
+            desktopOpen = isOpen;
+            writeDesktopPreference(isOpen);
+        }
+        renderSidebar();
     };
 
     if (!isInitialized) {
@@ -384,16 +422,16 @@ const initSidebarToggle = () => {
 
         sidebarToggles.forEach((toggle) => {
             toggle.addEventListener('click', () => {
-                if (isMobile()) {
-                    setOpen(!root.classList.contains('sidebar-open'));
-                }
+                const mobile = isMobile();
+                setOpen(mobile ? !mobileOpen : !desktopOpen);
             });
         });
 
         sidebarLinks.forEach((link) => {
             link.addEventListener('click', () => {
-                if (window.innerWidth < 1024) {
-                    setOpen(false);
+                if (isMobile()) {
+                    mobileOpen = false;
+                    renderSidebar();
                 }
             });
         });
@@ -401,25 +439,28 @@ const initSidebarToggle = () => {
         if (backdrop) {
             backdrop.addEventListener('click', () => {
                 if (isMobile()) {
-                    setOpen(false);
+                    mobileOpen = false;
+                    renderSidebar();
                 }
             });
         }
 
         window.addEventListener('resize', () => {
             if (isMobile()) {
-                setOpen(false);
+                mobileOpen = false;
             } else {
-                setOpen(true);
+                desktopOpen = readDesktopPreference();
             }
+            renderSidebar();
         });
     }
 
     if (isMobile()) {
-        setOpen(false);
+        mobileOpen = false;
     } else {
-        setOpen(true);
+        desktopOpen = readDesktopPreference();
     }
+    renderSidebar();
 };
 
 const initNotificationMenus = () => {

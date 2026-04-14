@@ -260,7 +260,7 @@
                         </aside>
                     @else
                         <aside
-                            class="fixed inset-y-0 left-0 z-40 hidden w-72 shrink-0 overflow-y-auto bg-slate-950/95 p-4 lg:static lg:block lg:w-60 lg:bg-transparent lg:p-0"
+                            class="fixed inset-y-0 left-0 z-40 hidden w-72 shrink-0 overflow-y-auto bg-slate-950/95 p-4 lg:sticky lg:top-24 lg:block lg:w-60 lg:self-start lg:max-h-[calc(100vh-7rem)] lg:bg-transparent lg:p-0"
                             data-sidebar-host
                             data-sidebar-panel
                         >
@@ -274,7 +274,7 @@
                                     Close
                                 </button>
                             </div>
-                            <div class="lg:sticky lg:top-24" data-sidebar-container>
+                            <div data-sidebar-container>
                                 {{-- Slider track: main nav and Setup panel side by side --}}
                                 <div class="relative overflow-hidden">
                                     <div class="flex transition-transform duration-300 will-change-transform" data-sidebar-track>

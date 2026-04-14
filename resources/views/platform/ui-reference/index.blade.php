@@ -130,13 +130,6 @@
                 <button type="button" class="ui-action ui-action-primary ui-action-xl">XL</button>
             </div>
 
-            <p class="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Daisy-Compatible Aliases</p>
-            <div class="mt-2 flex flex-wrap gap-3">
-                <button type="button" class="btn btn-info">btn-info</button>
-                <button type="button" class="btn btn-soft">btn-soft</button>
-                <button type="button" class="btn btn-outline">btn-outline</button>
-            </div>
-
             <div class="mt-4 flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-[0.15em]">
                 <span class="rounded-full bg-slate-700/60 px-3 py-1 text-slate-200">info</span>
                 <span class="rounded-full bg-emerald-500/15 px-3 py-1 text-emerald-300">success</span>

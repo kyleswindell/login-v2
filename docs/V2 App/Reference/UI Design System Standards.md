@@ -42,7 +42,7 @@ Shared action-token classes:
 * `ui-action-warning` - cautionary actions
 * `ui-action-danger` - destructive actions
 * `ui-action-notice` - informational actions
-* `ui-action-info` - informational/system actions (`btn-info` alias supported for Daisy-style naming)
+* `ui-action-info` - informational/system actions
 * `ui-action-ghost` - low-emphasis border actions
 * `ui-action-soft` - low-intensity colorway variant for reduced-emphasis actions
 * `ui-action-outline` - outlined variant for secondary emphasis

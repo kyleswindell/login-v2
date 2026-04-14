@@ -12,12 +12,12 @@
         <section class="ui-card">
             <p class="ui-kicker">Semantic Status</p>
             <div class="mt-4 flex flex-wrap gap-2">
-                <span class="ui-status-pill ui-status-neutral">neutral</span>
-                <span class="ui-status-pill ui-status-info">info</span>
-                <span class="ui-status-pill ui-status-success">success</span>
-                <span class="ui-status-pill ui-status-notice">notice</span>
-                <span class="ui-status-pill ui-status-warning">warning</span>
-                <span class="ui-status-pill ui-status-danger">danger</span>
+                <x-ui.badge label="neutral" semantic="neutral" />
+                <x-ui.badge label="info" semantic="info" />
+                <x-ui.badge label="success" semantic="success" />
+                <x-ui.badge label="notice" semantic="notice" />
+                <x-ui.badge label="warning" semantic="warning" />
+                <x-ui.badge label="danger" semantic="danger" />
             </div>
         </section>
 
@@ -28,20 +28,42 @@
                 <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
                     <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Soft Status</p>
                     <div class="mt-3 flex flex-wrap gap-2">
-                        <span class="ui-status-pill ui-status-success">active</span>
-                        <span class="ui-status-pill ui-status-warning">pending review</span>
-                        <span class="ui-status-pill ui-status-danger">blocked</span>
+                        <x-ui.badge status="active" />
+                        <x-ui.badge status="pending review" />
+                        <x-ui.badge status="blocked" />
                     </div>
                 </div>
 
                 <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
                     <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Outline Status</p>
                     <div class="mt-3 flex flex-wrap gap-2">
-                        <span class="ui-status-pill ui-status-success ui-status-outline">ready</span>
-                        <span class="ui-status-pill ui-status-notice ui-status-outline">in progress</span>
-                        <span class="ui-status-pill ui-status-neutral ui-status-outline">archived</span>
+                        <x-ui.badge status="ready" variant="outline" />
+                        <x-ui.badge status="in progress" variant="outline" />
+                        <x-ui.badge status="archived" variant="outline" />
                     </div>
                 </div>
+            </div>
+
+            <div class="mt-4 rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Solid Status</p>
+                <p class="mt-2 text-xs text-slate-500">Use sparingly for critical summary emphasis.</p>
+                <div class="mt-3 flex flex-wrap gap-2">
+                    <x-ui.badge status="critical" variant="solid" />
+                    <x-ui.badge status="failed" variant="solid" />
+                    <x-ui.badge status="needs action" variant="solid" />
+                </div>
+            </div>
+        </section>
+
+        <section class="ui-card">
+            <p class="ui-kicker">Inline Status Pattern</p>
+            <p class="mt-2 text-sm text-slate-400">Lighter status treatment for metadata-heavy rows and logs.</p>
+            <div class="mt-4 flex flex-wrap items-center gap-4">
+                <x-ui.status status="synced" />
+                <x-ui.status status="under review" />
+                <x-ui.status status="degraded" />
+                <x-ui.status status="failed" />
+                <x-ui.status status="archived" dot="true" />
             </div>
         </section>
 
@@ -60,21 +82,21 @@
                     <tbody class="divide-y divide-slate-800 text-sm text-slate-200">
                         <tr>
                             <td class="px-4 py-3 text-white">North Region Tenant</td>
-                            <td class="px-4 py-3"><span class="ui-status-pill ui-status-success">synced</span></td>
-                            <td class="px-4 py-3"><span class="ui-status-pill ui-status-info ui-status-outline">audited</span></td>
-                            <td class="px-4 py-3"><span class="ui-status-pill ui-status-neutral">low</span></td>
+                            <td class="px-4 py-3"><x-ui.badge status="synced" /></td>
+                            <td class="px-4 py-3"><x-ui.badge status="audited" variant="outline" /></td>
+                            <td class="px-4 py-3"><x-ui.badge status="low" /></td>
                         </tr>
                         <tr>
                             <td class="px-4 py-3 text-white">Messaging Queue</td>
-                            <td class="px-4 py-3"><span class="ui-status-pill ui-status-warning">degraded</span></td>
-                            <td class="px-4 py-3"><span class="ui-status-pill ui-status-notice ui-status-outline">review</span></td>
-                            <td class="px-4 py-3"><span class="ui-status-pill ui-status-warning">moderate</span></td>
+                            <td class="px-4 py-3"><x-ui.badge status="degraded" /></td>
+                            <td class="px-4 py-3"><x-ui.badge status="review" variant="outline" /></td>
+                            <td class="px-4 py-3"><x-ui.badge status="moderate" /></td>
                         </tr>
                         <tr>
                             <td class="px-4 py-3 text-white">Webhook Replay Service</td>
-                            <td class="px-4 py-3"><span class="ui-status-pill ui-status-danger">failed</span></td>
-                            <td class="px-4 py-3"><span class="ui-status-pill ui-status-danger ui-status-outline">needs action</span></td>
-                            <td class="px-4 py-3"><span class="ui-status-pill ui-status-danger">high</span></td>
+                            <td class="px-4 py-3"><x-ui.badge status="failed" /></td>
+                            <td class="px-4 py-3"><x-ui.badge status="needs action" variant="outline" /></td>
+                            <td class="px-4 py-3"><x-ui.badge status="high" /></td>
                         </tr>
                     </tbody>
                 </table>

@@ -79,12 +79,7 @@
                                 <td class="px-5 py-3 font-semibold text-white">{{ $row['name'] }}</td>
                                 <td class="px-5 py-3">{{ $row['owner'] }}</td>
                                 <td class="px-5 py-3">
-                                    <span @class([
-                                        'ui-status-pill',
-                                        'ui-status-success' => $row['status'] === 'active',
-                                        'ui-status-warning' => $row['status'] === 'review',
-                                        'ui-status-danger' => $row['status'] === 'disabled',
-                                    ])>{{ $row['status'] }}</span>
+                                    <x-ui.badge :status="$row['status'] === 'review' ? 'pending review' : $row['status']" :show-icon="false" />
                                 </td>
                                 <td class="px-5 py-3 text-slate-400">{{ $row['updated_at_label'] }}</td>
                                 <td class="px-5 py-3 text-right"><button type="button" class="ui-action ui-action-primary">View</button></td>
@@ -213,8 +208,8 @@
                                 <td class="px-5 py-3 text-slate-400">{{ $sample['occurred_at_label'] }}</td>
                                 <td class="px-5 py-3 font-semibold text-white">{{ $sample['event_type'] }}</td>
                                 <td class="px-5 py-3">{{ $sample['actor_label'] }}</td>
-                                <td class="px-5 py-3"><span class="ui-status-pill ui-status-success">{{ $sample['result'] }}</span></td>
-                                <td class="px-5 py-3"><span class="ui-status-pill ui-status-notice">{{ $sample['severity'] }}</span></td>
+                                <td class="px-5 py-3"><x-ui.badge :status="$sample['result']" :show-icon="false" /></td>
+                                <td class="px-5 py-3"><x-ui.badge :status="$sample['severity']" :show-icon="false" /></td>
                                 <td class="px-5 py-3 text-slate-400">{{ $sample['route'] }}</td>
                                 <td class="px-5 py-3 text-right">
                                     <a href="{{ route('platform.ui-reference.audit-samples.show', $sample['sample_key']) }}" class="ui-action ui-action-primary" data-audit-log-view data-audit-log-url="{{ route('platform.ui-reference.audit-samples.show', $sample['sample_key']) }}">View</a>
@@ -342,7 +337,7 @@
                                 <td class="px-5 py-3 text-slate-400">{{ $sample['occurred_at_label'] }}</td>
                                 <td class="px-5 py-3 font-semibold text-white">{{ $sample['message'] }}</td>
                                 <td class="px-5 py-3">{{ $sample['exception_class'] }}</td>
-                                <td class="px-5 py-3"><span class="ui-status-pill ui-status-danger">{{ $sample['severity'] }}</span></td>
+                                <td class="px-5 py-3"><x-ui.badge :status="$sample['severity']" :show-icon="false" /></td>
                                 <td class="px-5 py-3 text-slate-400">{{ $sample['environment'] }}</td>
                                 <td class="px-5 py-3 text-slate-400">{{ $sample['request_id'] }}</td>
                                 <td class="px-5 py-3 text-right">

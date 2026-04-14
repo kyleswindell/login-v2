@@ -487,6 +487,62 @@
         border-color: currentColor;
     }
 
+    .ui-status-solid {
+        color: var(--ui-status-solid-text);
+    }
+
+    .ui-status-neutral.ui-status-solid {
+        background-color: var(--ui-status-neutral-solid-bg);
+    }
+
+    .ui-status-info.ui-status-solid {
+        background-color: var(--ui-status-info-solid-bg);
+    }
+
+    .ui-status-success.ui-status-solid {
+        background-color: var(--ui-status-success-solid-bg);
+    }
+
+    .ui-status-warning.ui-status-solid {
+        background-color: var(--ui-status-warning-solid-bg);
+    }
+
+    .ui-status-danger.ui-status-solid {
+        background-color: var(--ui-status-danger-solid-bg);
+    }
+
+    .ui-status-notice.ui-status-solid {
+        background-color: var(--ui-status-notice-solid-bg);
+    }
+
+    .ui-status-inline {
+        @apply inline-flex items-center gap-1.5 text-xs font-medium;
+    }
+
+    .ui-status-inline-neutral {
+        color: var(--ui-status-neutral-text);
+    }
+
+    .ui-status-inline-info {
+        color: var(--ui-status-info-text);
+    }
+
+    .ui-status-inline-success {
+        color: var(--ui-status-success-text);
+    }
+
+    .ui-status-inline-warning {
+        color: var(--ui-status-warning-text);
+    }
+
+    .ui-status-inline-danger {
+        color: var(--ui-status-danger-text);
+    }
+
+    .ui-status-inline-notice {
+        color: var(--ui-status-notice-text);
+    }
+
     .ui-inline-alert {
         @apply rounded-lg border px-4 py-3 text-sm;
     }
@@ -673,6 +729,13 @@
         --ui-status-danger-text: rgb(253 164 175);
         --ui-status-notice-bg: rgb(124 58 237 / 0.2);
         --ui-status-notice-text: rgb(196 181 253);
+        --ui-status-solid-text: rgb(248 250 252);
+        --ui-status-neutral-solid-bg: rgb(63 63 70);
+        --ui-status-info-solid-bg: rgb(8 145 178);
+        --ui-status-success-solid-bg: rgb(5 150 105);
+        --ui-status-warning-solid-bg: rgb(217 119 6);
+        --ui-status-danger-solid-bg: rgb(225 29 72);
+        --ui-status-notice-solid-bg: rgb(124 58 237);
 
         --ui-alert-info-border: rgb(8 145 178 / 0.45);
         --ui-alert-info-bg: rgb(8 145 178 / 0.14);
@@ -849,6 +912,13 @@
         --ui-status-danger-text: rgb(159 18 57);
         --ui-status-notice-bg: rgb(237 233 254);
         --ui-status-notice-text: rgb(91 33 182);
+        --ui-status-solid-text: rgb(248 250 252);
+        --ui-status-neutral-solid-bg: rgb(71 85 105);
+        --ui-status-info-solid-bg: rgb(14 116 144);
+        --ui-status-success-solid-bg: rgb(4 120 87);
+        --ui-status-warning-solid-bg: rgb(180 83 9);
+        --ui-status-danger-solid-bg: rgb(190 24 93);
+        --ui-status-notice-solid-bg: rgb(109 40 217);
 
         --ui-alert-info-border: rgb(8 145 178 / 0.45);
         --ui-alert-info-bg: rgb(207 250 254 / 0.8);

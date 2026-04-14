@@ -20,7 +20,10 @@ Give Codex a concise project-specific operating guide.
 - Planning notes must carry a current implementation status section and link directly to their canonical system doc.
 - Canonical system docs must link back to the source planning note so the graph shows both design intent and live implementation state.
 - For concurrent agent work, keep one writable session per working tree and use separate branches plus separate worktrees when multiple sessions must both edit files.
-- For concurrent documentation work, stage proposed doc updates under `docs/Codex/Agent Doc Staging/` and have review agents apply approved changes into canonical docs.
+- CPD guardrail: during `commit/push/deploy`, stage only files the active agent touched for the current requested scope; avoid `git add .` and do not include unrelated staged files.
+- If unrelated staged files are discovered before commit, unstage them or pause and ask before proceeding.
+- For concurrent documentation work, implementation agents should stage proposed canonical doc updates under `docs/Codex/Agent Doc Staging/`; docs-sync review agents apply approved changes into canonical docs.
+- Canonical docs should not be directly edited by multiple implementation agents in parallel without going through the staging queue workflow.
 
 ## Related
 

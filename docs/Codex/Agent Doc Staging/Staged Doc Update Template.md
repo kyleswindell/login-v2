@@ -7,6 +7,13 @@
 * applied
 * rejected
 
+## Metadata
+
+* Owner agent/session:
+* Created date:
+* Requested by:
+* Related implementation scope:
+
 ## Scope
 
 Describe the change scope in 2 to 5 lines.

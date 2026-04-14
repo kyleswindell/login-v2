@@ -21,10 +21,11 @@ Canonical docs still live in their existing owner branches:
 
 ## Workflow
 
-1. Coding agent creates one staged update note per batch or scoped change in this folder.
-2. Coding agent fills the template sections and links all impacted canonical docs.
-3. Review agent validates accuracy, resolves conflicts across staged proposals, and applies approved updates into canonical docs.
-4. Review agent updates the staged note status to `applied` (or `rejected` with reason).
+1. Implementation agent creates one staged update note per batch or scoped change in this folder.
+2. Implementation agent fills the template sections and links all impacted canonical docs.
+3. Implementation agent does not directly edit canonical docs for this staged scope unless explicitly assigned as docs-sync reviewer.
+4. Docs-sync review agent periodically reviews queue items, validates accuracy, resolves cross-agent conflicts, and applies approved changes into canonical docs.
+5. Docs-sync review agent updates staged note status to `applied` (or `rejected` with reason and follow-up action).
 
 ## Naming Convention
 
@@ -38,6 +39,9 @@ Example:
 
 ## Required Content In Every Staged Note
 
+* staging status (`proposed`, `in review`, `applied`, `rejected`)
+* owner agent/session identifier
+* created date
 * scope summary
 * canonical target docs
 * proposed content updates

@@ -23,6 +23,8 @@ This repository contains Login App 2.0, a new Laravel-based platform intended to
 * Permanent system docs and their source planning notes must link to each other so implementation state is easy to confirm in the Obsidian graph.
 * Start docs discovery from `docs/00 - Start Here.md`, then follow the V2 map, the relevant index note, and the canonical feature/reference/runbook doc before changing code.
 * Use `docs/V2 App/Planning/` for sequencing and intent, and use `docs/V2 App/Features/`, `docs/V2 App/Reference/`, and `docs/V2 App/Runbooks/` as the canonical implementation/system owners.
+* During CPD (`commit/push/deploy`), commit only files the active agent explicitly touched for the requested scope; do not include unrelated staged or modified files.
+* For concurrent documentation work, implementation agents stage proposed canonical doc updates under `docs/Codex/Agent Doc Staging/` using the queue/template workflow; docs-sync review agents apply approved updates into canonical docs.
 
 ## Important Docs
 

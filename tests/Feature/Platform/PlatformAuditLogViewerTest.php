@@ -5,6 +5,8 @@ namespace Tests\Feature\Platform;
 use App\Models\PlatformAuditLog;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class PlatformAuditLogViewerTest extends TestCase
@@ -27,7 +29,8 @@ class PlatformAuditLogViewerTest extends TestCase
         $this->get('/platform/audit-logs')
             ->assertOk()
             ->assertSee('Audit Logs')
-            ->assertSee('auth.login.success');
+            ->assertSee('auth.login.success')
+            ->assertSee('data-audit-log-view', false);
     }
 
     public function test_authorized_users_can_view_filament_audit_log_proof(): void
@@ -125,17 +128,25 @@ class PlatformAuditLogViewerTest extends TestCase
             'severity' => 'warning',
         ]);
 
-        $this->get('/platform/audit-logs?result=failure&severity=warning&event_type=platform.user')
+        $this->get('/platform/audit-logs?result=failure&severity=warning&event_type=platform.user.updated')
             ->assertOk()
             ->assertSee('platform.user.updated')
-            ->assertDontSee('auth.login.success');
+            ->assertViewHas('logs', function (LengthAwarePaginator $logs): bool {
+                return $logs->count() === 1
+                    && $logs->first()?->event_type === 'platform.user.updated';
+            });
     }
 
-    public function test_actor_filter_matches_name_and_email(): void
+    public function test_actor_filter_limits_results_by_selected_actor(): void
     {
-        $user = User::factory()->create([
+        $actor = User::factory()->create([
             'name' => 'Kyle Swindell',
             'email' => 'kyle@parasolutions.com',
+        ]);
+
+        $otherActor = User::factory()->create([
+            'name' => 'Other User',
+            'email' => 'other@parasolutions.com',
         ]);
 
         $this->actingAsPlatformSuperAdmin();
@@ -144,17 +155,75 @@ class PlatformAuditLogViewerTest extends TestCase
             'occurred_at' => now(),
             'event_type' => 'platform.user.created',
             'action' => 'created',
-            'actor_user_id' => $user->id,
+            'actor_user_id' => $actor->id,
             'result' => 'success',
             'severity' => 'info',
         ]);
 
-        $this->get('/platform/audit-logs?actor=kyle@parasolutions.com')
-            ->assertOk()
-            ->assertSee('platform.user.created');
+        PlatformAuditLog::query()->create([
+            'occurred_at' => now()->subMinute(),
+            'event_type' => 'platform.user.updated',
+            'action' => 'updated',
+            'actor_user_id' => $otherActor->id,
+            'result' => 'success',
+            'severity' => 'info',
+        ]);
 
-        $this->get('/platform/audit-logs?actor=Kyle')
+        $this->get('/platform/audit-logs?actor_id='.$actor->id)
             ->assertOk()
-            ->assertSee('platform.user.created');
+            ->assertSee('platform.user.created')
+            ->assertViewHas('logs', function (LengthAwarePaginator $logs) use ($actor): bool {
+                return $logs->count() === 1
+                    && $logs->first()?->actor_user_id === $actor->id;
+            });
+    }
+
+    public function test_authorized_users_can_view_audit_log_detail(): void
+    {
+        $user = $this->actingAsPlatformSuperAdmin();
+
+        $log = PlatformAuditLog::query()->create([
+            'occurred_at' => now(),
+            'event_type' => 'platform.user.invited',
+            'action' => 'invited',
+            'actor_user_id' => $user->id,
+            'result' => 'success',
+            'severity' => 'notice',
+            'route' => 'platform.users.store',
+            'method' => 'POST',
+            'request_id' => (string) Str::uuid(),
+            'trace_id' => (string) Str::uuid(),
+            'ip_address' => '127.0.0.1',
+            'subject_type' => User::class,
+            'subject_id' => 42,
+            'metadata' => ['invitation' => 'queued'],
+        ]);
+
+        $this->get("/platform/audit-logs/{$log->id}")
+            ->assertOk()
+            ->assertSee('Audit Log Detail')
+            ->assertSee('platform.user.invited')
+            ->assertSee((string) $log->request_id);
+    }
+
+    public function test_authorized_users_can_view_audit_log_detail_as_json(): void
+    {
+        $user = $this->actingAsPlatformSuperAdmin();
+
+        $log = PlatformAuditLog::query()->create([
+            'occurred_at' => now(),
+            'event_type' => 'auth.login.success',
+            'action' => 'success',
+            'actor_user_id' => $user->id,
+            'result' => 'success',
+            'severity' => 'info',
+            'metadata' => ['guard' => 'web'],
+        ]);
+
+        $this->getJson("/platform/audit-logs/{$log->id}")
+            ->assertOk()
+            ->assertJsonPath('event_type', 'auth.login.success')
+            ->assertJsonPath('actor_name', $user->name)
+            ->assertJsonPath('metadata.guard', 'web');
     }
 }

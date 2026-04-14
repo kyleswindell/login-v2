@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PlatformAuditLog;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class AuditLogController extends Controller
@@ -70,6 +71,38 @@ class AuditLogController extends Controller
             'perPage' => $perPage,
             'eventTypes' => $eventTypes,
             'actorUsers' => $actorUsers,
+        ]);
+    }
+
+    public function show(Request $request, PlatformAuditLog $log): View|JsonResponse
+    {
+        $this->authorize('view-platform-audit-logs');
+
+        if ($request->expectsJson()) {
+            $viewerTimezone = $request->user()?->timezone ?: config('app.timezone');
+
+            return response()->json([
+                'occurred_at' => $log->occurredAtForTimezone($viewerTimezone)?->format('M j, Y g:i A T'),
+                'event_type' => $log->event_type,
+                'action' => $log->action,
+                'actor_name' => $log->actorUser?->name,
+                'actor_email' => $log->actorUser?->email,
+                'actor_label' => $log->actorUser ? $log->actorUser->name : 'System',
+                'result' => $log->result,
+                'severity' => $log->severity,
+                'route' => $log->route,
+                'method' => $log->method,
+                'request_id' => $log->request_id,
+                'trace_id' => $log->trace_id,
+                'ip_address' => $log->ip_address,
+                'subject_type' => $log->subject_type,
+                'subject_id' => $log->subject_id,
+                'metadata' => $log->metadata,
+            ])->setEncodingOptions(JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_INVALID_UTF8_SUBSTITUTE);
+        }
+
+        return view('platform.audit-logs.show', [
+            'log' => $log->loadMissing('actorUser'),
         ]);
     }
 }

@@ -7,11 +7,15 @@
             <p class="ui-page-header-copy">Review current platform activity events and auth-related audit history.</p>
             <button
                 type="button"
-                class="inline-flex items-center gap-2 rounded-md border border-slate-700 px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-300 transition hover:border-slate-500 hover:text-white"
+                class="ui-icon-button"
                 data-filter-toggle
+                aria-expanded="false"
+                aria-label="Toggle audit log filters"
             >
-                <span>Filters</span>
-                <span aria-hidden="true">▾</span>
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+                    <path fill-rule="evenodd" d="M2.5 4.75A.75.75 0 0 1 3.25 4h13.5a.75.75 0 0 1 .53 1.28L12 10.56v4.19a.75.75 0 0 1-.44.68l-3 1.333A.75.75 0 0 1 7.5 16V10.56L2.22 5.28a.75.75 0 0 1 .28-1.28Z" clip-rule="evenodd" />
+                </svg>
+                <span class="sr-only">Filters</span>
             </button>
         </div>
 
@@ -62,18 +66,18 @@
             </div>
 
             <div class="mt-6 flex flex-wrap gap-3">
-                <button type="submit" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:text-slate-300">
+                <button type="submit" class="ui-action ui-action-primary">
                     Apply Filters
                 </button>
 
-                <a wire:navigate href="{{ route('platform.audit-logs.index') }}" class="inline-flex rounded-md border border-slate-800 px-4 py-3 text-sm font-semibold text-slate-300 transition hover:border-slate-600 hover:text-white">
+                <a wire:navigate href="{{ route('platform.audit-logs.index') }}" class="ui-action ui-action-ghost">
                     Reset
                 </a>
             </div>
         </form>
 
         <div class="flex flex-wrap items-center gap-3">
-            <a wire:navigate href="{{ route('platform.settings.audit-logs') }}" class="inline-flex items-center rounded-md border border-amber-500/50 bg-amber-500/15 px-4 py-2.5 text-sm font-semibold text-amber-100 transition hover:border-amber-400/70 hover:bg-amber-500/25 hover:text-amber-50">
+            <a wire:navigate href="{{ route('platform.settings.audit-logs') }}" class="ui-action ui-action-warning">
                 Audit Settings
             </a>
         </div>
@@ -89,11 +93,12 @@
                         <th class="px-6 py-4">Severity</th>
                         <th class="px-6 py-4">Route</th>
                         <th class="px-6 py-4">Request</th>
+                        <th class="px-6 py-4 sr-only">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-800">
                     @forelse ($logs as $log)
-                        <tr class="align-top text-sm text-slate-200">
+                        <tr class="align-top text-sm text-slate-200 transition hover:bg-slate-950/40 cursor-pointer" data-audit-log-row data-audit-log-url="{{ route('platform.audit-logs.show', $log) }}">
                             <td class="px-6 py-4 text-slate-400">
                                 {{ $log->occurredAtForTimezone($viewerTimezone)?->format('M j, Y g:i A T') ?? '—' }}
                             </td>
@@ -137,10 +142,15 @@
                             <td class="px-6 py-4 text-xs text-slate-500">
                                 {{ $log->request_id ?? 'n/a' }}
                             </td>
+                            <td class="px-6 py-4 text-right">
+                                <a href="{{ route('platform.audit-logs.show', $log) }}" class="ui-action ui-action-primary" data-audit-log-view data-audit-log-url="{{ route('platform.audit-logs.show', $log) }}">
+                                    View
+                                </a>
+                            </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="px-6 py-8 text-center text-sm text-slate-500">No audit log rows match the current filters.</td>
+                            <td colspan="8" class="px-6 py-8 text-center text-sm text-slate-500">No audit log rows match the current filters.</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -193,6 +203,58 @@
                         'border-slate-700 text-slate-300 hover:border-slate-600 hover:text-white' => $logs->hasMorePages(),
                         'cursor-not-allowed border-slate-800 text-slate-600' => ! $logs->hasMorePages(),
                     ])>Next</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="fixed inset-0 z-50 hidden bg-black/60" data-audit-log-modal aria-hidden="true">
+            <div class="ui-log-drawer-panel" data-log-drawer-panel tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="audit-log-drawer-title">
+                <div class="flex items-start justify-between gap-3 border-b border-slate-800 px-6 py-5">
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">Audit Log Detail</p>
+                        <h2 id="audit-log-drawer-title" class="mt-2 text-2xl font-semibold text-white" data-audit-log-title>—</h2>
+                        <p class="mt-2 text-sm text-slate-400" data-audit-log-subtitle>—</p>
+                    </div>
+                    <button type="button" class="ui-action ui-action-ghost" data-audit-log-close>Close</button>
+                </div>
+
+                <div class="overflow-y-auto px-6 py-6">
+                    <div class="grid gap-4 md:grid-cols-2">
+                        <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                            <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Summary</h3>
+                            <dl class="mt-3 space-y-2 text-sm text-slate-300">
+                                <div class="flex items-center justify-between"><dt>Occurred</dt><dd data-audit-log-occurred>—</dd></div>
+                                <div class="flex items-center justify-between"><dt>Result</dt><dd data-audit-log-result>—</dd></div>
+                                <div class="flex items-center justify-between"><dt>Severity</dt><dd data-audit-log-severity>—</dd></div>
+                                <div class="flex items-center justify-between"><dt>Action</dt><dd data-audit-log-action>—</dd></div>
+                            </dl>
+                        </div>
+
+                        <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                            <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Actor</h3>
+                            <dl class="mt-3 space-y-2 text-sm text-slate-300">
+                                <div><dt>Name</dt><dd data-audit-log-actor-name>—</dd></div>
+                                <div><dt>Email</dt><dd data-audit-log-actor-email>—</dd></div>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                        <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Request Context</h3>
+                        <dl class="mt-3 grid gap-2 text-sm text-slate-300 md:grid-cols-2">
+                            <div><dt>Route</dt><dd data-audit-log-route>—</dd></div>
+                            <div><dt>Method</dt><dd data-audit-log-method>—</dd></div>
+                            <div><dt>Request ID</dt><dd class="break-all" data-audit-log-request>—</dd></div>
+                            <div><dt>Trace ID</dt><dd class="break-all" data-audit-log-trace>—</dd></div>
+                            <div><dt>IP</dt><dd data-audit-log-ip>—</dd></div>
+                            <div><dt>Subject</dt><dd data-audit-log-subject>—</dd></div>
+                        </dl>
+                    </div>
+
+                    <div class="mt-4 rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                        <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Metadata</h3>
+                        <pre class="mt-2 max-h-64 overflow-y-auto whitespace-pre-wrap text-xs text-slate-300" data-audit-log-metadata>—</pre>
+                    </div>
                 </div>
             </div>
         </div>

@@ -7,11 +7,15 @@
             <p class="ui-page-header-copy">Review platform-level errors and operational failures captured at runtime.</p>
             <button
                 type="button"
-                class="inline-flex items-center gap-2 rounded-md border border-slate-700 px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-300 transition hover:border-slate-500 hover:text-white"
+                class="ui-icon-button"
                 data-filter-toggle
+                aria-expanded="false"
+                aria-label="Toggle error log filters"
             >
-                <span>Filters</span>
-                <span aria-hidden="true">▾</span>
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+                    <path fill-rule="evenodd" d="M2.5 4.75A.75.75 0 0 1 3.25 4h13.5a.75.75 0 0 1 .53 1.28L12 10.56v4.19a.75.75 0 0 1-.44.68l-3 1.333A.75.75 0 0 1 7.5 16V10.56L2.22 5.28a.75.75 0 0 1 .28-1.28Z" clip-rule="evenodd" />
+                </svg>
+                <span class="sr-only">Filters</span>
             </button>
         </div>
 
@@ -70,17 +74,17 @@
             </div>
 
             <div class="mt-6 flex flex-wrap gap-3">
-                <button type="submit" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:text-slate-300">
+                <button type="submit" class="ui-action ui-action-primary">
                     Apply Filters
                 </button>
-                <a wire:navigate href="{{ route('platform.error-logs.index') }}" class="inline-flex rounded-md border border-slate-800 px-4 py-3 text-sm font-semibold text-slate-300 transition hover:border-slate-600 hover:text-white">
+                <a wire:navigate href="{{ route('platform.error-logs.index') }}" class="ui-action ui-action-ghost">
                     Reset
                 </a>
             </div>
         </form>
 
         <div class="flex flex-wrap items-center gap-3">
-            <a wire:navigate href="{{ route('platform.setup.error-logs') }}" class="inline-flex items-center rounded-md border border-amber-500/50 bg-amber-500/15 px-4 py-2.5 text-sm font-semibold text-amber-100 transition hover:border-amber-400/70 hover:bg-amber-500/25 hover:text-amber-50">
+            <a wire:navigate href="{{ route('platform.setup.error-logs') }}" class="ui-action ui-action-warning">
                 Error Setup
             </a>
         </div>
@@ -100,7 +104,7 @@
                 </thead>
                 <tbody class="divide-y divide-slate-800">
                     @forelse ($logs as $log)
-                        <tr class="align-top text-sm text-slate-200">
+                        <tr class="align-top text-sm text-slate-200 transition hover:bg-slate-950/40 cursor-pointer" data-error-log-row data-error-log-url="{{ route('platform.error-logs.show', $log) }}">
                             <td class="px-6 py-4 text-slate-400">
                                 {{ $log->occurredAtForTimezone($viewerTimezone)?->format('M j, Y g:i A T') ?? '—' }}
                             </td>
@@ -136,14 +140,14 @@
                                 {{ $log->environment ?? '—' }}
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <button
-                                    type="button"
-                                    class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-300 transition hover:text-white"
+                                <a
+                                    href="{{ route('platform.error-logs.show', $log) }}"
+                                    class="ui-action ui-action-primary"
                                     data-error-log-view
                                     data-error-log-url="{{ route('platform.error-logs.show', $log) }}"
                                 >
                                     View
-                                </button>
+                                </a>
                             </td>
                         </tr>
                     @empty
@@ -210,21 +214,23 @@
         </div>
 
         <div
-            class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 p-4"
+            class="fixed inset-0 z-50 hidden bg-black/60"
             data-error-log-modal
+            aria-hidden="true"
         >
-            <div class="max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-lg border border-slate-800 bg-slate-950 p-6 shadow-2xl shadow-black/40">
-                <div class="flex items-start justify-between gap-3">
+            <div class="ui-log-drawer-panel" data-log-drawer-panel tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="error-log-drawer-title">
+                <div class="flex items-start justify-between gap-3 border-b border-slate-800 px-6 py-5">
                     <div>
                         <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">Error Log Detail</p>
-                        <h2 class="mt-2 text-2xl font-semibold text-white" data-error-log-title>—</h2>
+                        <h2 id="error-log-drawer-title" class="mt-2 text-2xl font-semibold text-white" data-error-log-title>—</h2>
                         <p class="mt-2 text-sm text-slate-400" data-error-log-subtitle>—</p>
                     </div>
-                    <button type="button" class="rounded-md border border-slate-700 px-3 py-2 text-xs font-semibold text-slate-300 transition hover:border-slate-500 hover:text-white" data-error-log-close>Close</button>
+                    <button type="button" class="ui-action ui-action-ghost" data-error-log-close>Close</button>
                 </div>
 
-                <div class="mt-6 grid gap-4 md:grid-cols-2">
-                    <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                <div class="overflow-y-auto px-6 py-6">
+                    <div class="grid gap-4 md:grid-cols-2">
+                        <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
                         <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Summary</h3>
                         <dl class="mt-3 space-y-2 text-sm text-slate-300">
                             <div class="flex items-center justify-between"><dt>Occurred</dt><dd data-error-log-occurred>—</dd></div>
@@ -234,7 +240,7 @@
                         </dl>
                     </div>
 
-                    <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                        <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
                         <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Exception</h3>
                         <dl class="mt-3 space-y-2 text-sm text-slate-300">
                             <div><dt>Class</dt><dd data-error-log-exception>—</dd></div>
@@ -244,33 +250,34 @@
                     </div>
                 </div>
 
-                <div class="mt-4 rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Request Context</h3>
-                    <dl class="mt-3 grid gap-2 text-sm text-slate-300 md:grid-cols-2">
-                        <div><dt>Route</dt><dd data-error-log-route>—</dd></div>
-                        <div><dt>Method</dt><dd data-error-log-method>—</dd></div>
-                        <div><dt>Status</dt><dd data-error-log-status>—</dd></div>
-                        <div><dt>User</dt><dd data-error-log-user>—</dd></div>
-                        <div><dt>Request ID</dt><dd class="break-all" data-error-log-request>—</dd></div>
-                        <div><dt>Trace ID</dt><dd class="break-all" data-error-log-trace>—</dd></div>
-                        <div><dt>IP</dt><dd data-error-log-ip>—</dd></div>
-                        <div><dt>Host</dt><dd data-error-log-host>—</dd></div>
-                    </dl>
-                </div>
+                    <div class="mt-4 rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                        <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Request Context</h3>
+                        <dl class="mt-3 grid gap-2 text-sm text-slate-300 md:grid-cols-2">
+                            <div><dt>Route</dt><dd data-error-log-route>—</dd></div>
+                            <div><dt>Method</dt><dd data-error-log-method>—</dd></div>
+                            <div><dt>Status</dt><dd data-error-log-status>—</dd></div>
+                            <div><dt>User</dt><dd data-error-log-user>—</dd></div>
+                            <div><dt>Request ID</dt><dd class="break-all" data-error-log-request>—</dd></div>
+                            <div><dt>Trace ID</dt><dd class="break-all" data-error-log-trace>—</dd></div>
+                            <div><dt>IP</dt><dd data-error-log-ip>—</dd></div>
+                            <div><dt>Host</dt><dd data-error-log-host>—</dd></div>
+                        </dl>
+                    </div>
 
-                <div class="mt-4 rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Message</h3>
-                    <p class="mt-2 text-sm text-slate-300" data-error-log-message>—</p>
-                </div>
+                    <div class="mt-4 rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                        <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Message</h3>
+                        <p class="mt-2 text-sm text-slate-300" data-error-log-message>—</p>
+                    </div>
 
-                <div class="mt-4 rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Stack Trace</h3>
-                    <pre class="mt-2 max-h-64 overflow-y-auto whitespace-pre-wrap text-xs text-slate-300" data-error-log-trace-stack>—</pre>
-                </div>
+                    <div class="mt-4 rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                        <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Stack Trace</h3>
+                        <pre class="mt-2 max-h-64 overflow-y-auto whitespace-pre-wrap text-xs text-slate-300" data-error-log-trace-stack>—</pre>
+                    </div>
 
-                <div class="mt-4 rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Context</h3>
-                    <pre class="mt-2 max-h-64 overflow-y-auto whitespace-pre-wrap text-xs text-slate-300" data-error-log-context>—</pre>
+                    <div class="mt-4 rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                        <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Context</h3>
+                        <pre class="mt-2 max-h-64 overflow-y-auto whitespace-pre-wrap text-xs text-slate-300" data-error-log-context>—</pre>
+                    </div>
                 </div>
             </div>
         </div>

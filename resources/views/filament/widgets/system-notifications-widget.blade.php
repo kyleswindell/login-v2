@@ -24,7 +24,7 @@
             </div>
             @if ($notification->action_url)
                 <a href="{{ $notification->action_url }}"
-                   class="flex-shrink-0 text-xs text-primary-600 hover:text-primary-500 dark:text-primary-400">
+                   class="ui-action ui-action-notice flex-shrink-0 text-xs">
                     View
                 </a>
             @endif

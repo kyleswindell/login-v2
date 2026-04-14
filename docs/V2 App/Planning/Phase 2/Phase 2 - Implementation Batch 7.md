@@ -13,7 +13,7 @@ Current status:
 * implementation complete
 * review-ready for final visual UI sign-off
 * created after Batch 6 close-out to capture missed final-UI-migration scope explicitly
-* remediation in progress: error log modal payload now fetched via JSON endpoint and mobile sidebar defaults to collapsed on small screens (pending staging verification)
+* remediation in progress: audit/error log right-side drawers, icon-based filter toggles, shared action tokens, and widget action styling are implemented locally and passing Docker viewer tests (pending staging verification)
 
 Planning owner:
 
@@ -23,6 +23,12 @@ Canonical owners:
 
 * [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - UI Surface Disposition Audit]] | [Phase 2 - UI Surface Disposition Audit](Phase%202%20-%20UI%20Surface%20Disposition%20Audit.md)
+
+Design ownership links (required for Batch 7 deliverables):
+
+* [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
+* [[V2 App/Reference/UI Action Tokens And Drawer Patterns]] | [UI Action Tokens And Drawer Patterns](../../Reference/UI%20Action%20Tokens%20And%20Drawer%20Patterns.md)
+* [[V2 App/Reference/UI Design System Standards]] | [UI Design System Standards](../../Reference/UI%20Design%20System%20Standards.md)
 
 ## Batch Goal
 
@@ -59,6 +65,7 @@ Out of scope:
 	* visual baseline conformance
 4. Final `/console/*` proof-path retirement step completed or explicitly staged with owner/date and release gate.
 5. Documentation sync complete across planning, canonical docs, development log, and indexes.
+6. Each Batch 7 UI deliverable links to a canonical UI design owner doc (or a scoped section inside the canonical design spec).
 
 ## Implementation Summary
 
@@ -81,6 +88,8 @@ Completed in this batch:
 * removed legacy sidebar title/description copy blocks from the main shell navigation panel
 * applied app-wide table standardization pass for current operator tables (Platform Users, Audit Logs, Error Logs): top-level table action row, applicable filters, bottom-left rows selector, bottom-right prev/next + page selector, and visible result summary
 * replaced plain-text row actions with prominent button actions where applicable and added direct activate/deactivate row action for platform users with self-deactivation guard
+* restored app-owned audit/error log detail viewing to a shared right-side drawer pattern with JSON-backed payload loading and direct-page fallbacks for non-JavaScript access
+* introduced a canonical shared action-token baseline for Batch 7 surfaces and moved log actions, widget actions, and dashboard development actions onto that baseline with explicit light-mode variants
 * split shared navigation into `Base Features` and `Administrator` sections (including setup navigation)
 * moved Documentation Vault + Logs under Administrator sections and renamed setup user navigation to `Staff Setup` (setup-only)
 * applied the same neutral visual baseline to the login/auth screen for universal current-theme consistency
@@ -101,6 +110,7 @@ Verification focus:
 * shell navigation behavior check with `wire:navigate` enabled to prevent full document reload on setup/sidebar page changes
 * in-content navigation behavior check with `wire:navigate` enabled so setup/settings/dashboard route transitions preserve shell without full document refresh
 * theme-mode behavior check across authenticated shell + login surface with persisted account preference and runtime system-mode resolution
+* Docker viewer regression command: `docker compose exec -T app php artisan test tests/Feature/Platform/PlatformAuditLogViewerTest.php tests/Feature/Platform/ErrorLogViewerTest.php`
 
 ## Exit Criteria
 

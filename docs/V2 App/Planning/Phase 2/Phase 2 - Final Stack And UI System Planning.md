@@ -216,6 +216,7 @@ Required output:
 * visual baseline
 * accepted/rejected template notes
 * table/form/card/header/sidebar standards
+* canonical UI design system owner note that consolidates action tokens, tables, forms, and drawer patterns: [[V2 App/Reference/UI Design System Standards]] | [UI Design System Standards](../Reference/UI%20Design%20System%20Standards.md)
 
 ### 4. Filament/Livewire introduction
 

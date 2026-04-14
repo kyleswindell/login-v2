@@ -137,7 +137,7 @@ Canonical docs:
 * [[V2 App/Features/Inter-Tenant Messaging Contract]] | [Inter-Tenant Messaging Contract](../Features/Inter-Tenant%20Messaging%20Contract.md)
 * [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
 
-### 2026-04-13 - Phase 2 Batch 7 remediation: error log modal and mobile sidebar
+### 2026-04-13 - Phase 2 Batch 7 remediation: log drawers, action tokens, and widget affordances
 
 Status:
 
@@ -148,10 +148,24 @@ Work completed:
 
 * error log modal payload now loads via a JSON endpoint to avoid invalid inline payloads on the index view
 * mobile sidebar now defaults to collapsed on small screens during navigation
+* restored audit log detail access with an app-owned JSON/detail endpoint and matched both log viewers to a shared right-side drawer pattern
+* replaced text-based filter toggles with icon-based affordances on the audit/error tables
+* introduced shared action token classes and explicit light-mode overrides for primary, warning, notice, and neutral actions
+* moved audit/error row actions, dashboard Development Tools actions, and notification widget actions onto the shared token baseline
+* added Batch 7 canonical UI reference owner note for action buttons, filter affordances, and drawer patterns
+
+Verification:
+
+* `docker compose exec -T app php artisan test tests/Feature/Platform/PlatformAuditLogViewerTest.php tests/Feature/Platform/ErrorLogViewerTest.php`
 
 Planning owners:
 
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]] | [Phase 2 - Implementation Batch 7](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%207.md)
+
+Canonical docs:
+
+* [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
+* [[V2 App/Reference/UI Action Tokens And Drawer Patterns]] | [UI Action Tokens And Drawer Patterns](../Reference/UI%20Action%20Tokens%20And%20Drawer%20Patterns.md)
 
 ### 2026-04-13 - Phase 2 Batch 10 calendar foundation planning
 

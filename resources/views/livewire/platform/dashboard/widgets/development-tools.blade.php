@@ -15,7 +15,7 @@
             <button
                 type="button"
                 wire:click="generateTestNotification"
-                class="flex-shrink-0 inline-flex items-center rounded-md bg-sky-600 px-3.5 py-2 text-sm font-semibold text-white transition hover:bg-sky-500 active:bg-sky-700"
+                class="ui-action ui-action-primary flex-shrink-0"
             >
                 Generate
             </button>

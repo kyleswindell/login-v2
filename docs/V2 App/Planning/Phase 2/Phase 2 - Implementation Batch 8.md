@@ -20,6 +20,7 @@ Canonical owners:
 
 * [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
 * [[V2 App/Features/Account Management And Settings]] | [Account Management And Settings](../../Features/Account%20Management%20And%20Settings.md)
+* [[V2 App/Reference/UI Design System Standards]] | [UI Design System Standards](../../Reference/UI%20Design%20System%20Standards.md)
 
 ## Entry Gates
 

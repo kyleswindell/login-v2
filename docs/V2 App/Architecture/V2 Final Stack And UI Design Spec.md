@@ -28,6 +28,7 @@ Current status:
 * Batch 7 implementation is complete for final visual UI migration of existing Phase 2 surfaces and is pending final visual sign-off
 * Batch 7 UI audit pass applied doc-workflow fit checks per surface and normalized custom Blade surface primitives toward the shared Filament-aligned baseline
 * Batch 7 correction pass adds account-focused dropdown routes/views and final active-state/header/color-baseline fixes ahead of visual sign-off
+* Batch 7 remediation now restores app-owned audit/error log drawers, icon-based table filter affordances, and shared action-token styling under a canonical UI reference note
 * Batch 8 canonical owner is defined for account-surface contracts and remains blocked by the Batch 7 sign-off gate
 * Batch 9 canonical owner is defined for messaging foundation contracts and remains blocked by Batch 8 completion
 * Batch 10 calendar contract is complete in canonical docs
@@ -149,6 +150,7 @@ Current decision artifacts:
 
 * [[V2 App/Planning/Phase 2/Phase 2 - Route And Panel Ownership Map]] | [Phase 2 - Route And Panel Ownership Map](../Planning/Phase%202/Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - UI Surface Disposition Audit]] | [Phase 2 - UI Surface Disposition Audit](../Planning/Phase%202/Phase%202%20-%20UI%20Surface%20Disposition%20Audit.md)
+* [[V2 App/Reference/UI Action Tokens And Drawer Patterns]] | [UI Action Tokens And Drawer Patterns](../Reference/UI%20Action%20Tokens%20And%20Drawer%20Patterns.md)
 
 ## Recommended Stack Introduction Order
 
@@ -178,6 +180,16 @@ The design baseline should cover:
 * error and empty states
 * mobile and tablet behavior
 * icon and badge conventions
+
+Interim canonical sources (until a single consolidated design system owner exists):
+
+* [[V2 App/Reference/UI Action Tokens And Drawer Patterns]] | [UI Action Tokens And Drawer Patterns](../Reference/UI%20Action%20Tokens%20And%20Drawer%20Patterns.md)
+* [[Standards/Feature Development Standards]] | [Feature Development Standards](../../Standards/Feature%20Development%20Standards.md)
+* [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](../Planning/Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
+
+Canonical UI design system owner note:
+
+* [[V2 App/Reference/UI Design System Standards]] | [UI Design System Standards](../Reference/UI%20Design%20System%20Standards.md)
 
 ## Template Review Stance
 
@@ -221,7 +233,7 @@ Open gaps:
 
 * no ADR yet confirms final timing for removing direct `/console/*` proof resources after the Batch 6 deprecation window
 * no final UI component inventory exists
-* Batch 5 has a working visual/template decision, but no final long-term design-system reference exists yet
+* Batch 7 now has a reference owner for action tokens and drawer patterns, but the broader component inventory is still incomplete
 * no panel boundary test exists
 * optional module schema direction is locked in Batch 6 planning, but implementation schema-runner contracts are not finalized yet
 * platform-to-tenant handoff direction is locked in Batch 6 planning, but token exchange implementation details are not finalized yet
@@ -233,6 +245,7 @@ Open gaps:
 * [[V2 App/Architecture/Platform And Tenant Application Boundary]] | [Platform And Tenant Application Boundary](Platform%20And%20Tenant%20Application%20Boundary.md)
 * [[V2 App/Reference/Stack - Filament And Livewire]] | [Stack - Filament And Livewire](../Reference/Stack%20-%20Filament%20And%20Livewire.md)
 * [[V2 App/Reference/Stack - Frontend Build]] | [Stack - Frontend Build](../Reference/Stack%20-%20Frontend%20Build.md)
+* [[V2 App/Reference/UI Action Tokens And Drawer Patterns]] | [UI Action Tokens And Drawer Patterns](../Reference/UI%20Action%20Tokens%20And%20Drawer%20Patterns.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Final Stack And UI System Planning]] | [Phase 2 - Final Stack And UI System Planning](../Planning/Phase%202/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 2]] | [Phase 2 - Implementation Batch 2](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%202.md)
 * [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 3]] | [Phase 2 - Implementation Batch 3](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%203.md)

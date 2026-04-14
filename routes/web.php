@@ -67,6 +67,7 @@ Route::middleware('auth')->group(function (): void {
     })->name('platform.administration.notifications.index');
 
     Route::get('/platform/audit-logs', [AuditLogController::class, 'index'])->name('platform.audit-logs.index');
+    Route::get('/platform/audit-logs/{log}', [AuditLogController::class, 'show'])->name('platform.audit-logs.show');
 
     Route::get('/platform/operations/audit-logs', function () {
         abort_unless(Gate::allows('view-platform-audit-logs'), 403);

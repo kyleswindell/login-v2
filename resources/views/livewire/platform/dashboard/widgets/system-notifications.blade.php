@@ -22,7 +22,7 @@
                     @endif
                 </div>
                 @if ($notification->action_url)
-                    <a href="{{ $notification->action_url }}" class="text-xs font-semibold uppercase tracking-[0.15em] text-amber-300 hover:text-amber-200">
+                    <a href="{{ $notification->action_url }}" class="ui-action ui-action-notice text-xs">
                         View
                     </a>
                 @endif

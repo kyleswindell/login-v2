@@ -344,26 +344,19 @@ const initAuditLogDrawer = () => {
 };
 
 const initSidebarToggle = () => {
-    const sidebar = document.querySelector('[data-sidebar-panel]');
     const root = document.documentElement;
-    const backdrop = document.querySelector('[data-sidebar-backdrop]');
     const body = document.body;
 
-    if (!sidebar) {
-        return;
-    }
-
-    const sidebarToggles = document.querySelectorAll('[data-sidebar-toggle]');
-    const sidebarLinks = document.querySelectorAll('[data-main-nav-link], [data-setup-nav-link]');
-    const isInitialized = sidebar.dataset.sidebarInit === '1';
-
     const isMobile = () => window.innerWidth < 1024;
-    let mobileOpen = false;
+    const getSidebar = () => document.querySelector('[data-sidebar-panel]');
+    const getBackdrop = () => document.querySelector('[data-sidebar-backdrop]');
+    const isOpen = () => root.dataset.sidebarMobileOpen === '1';
+
     const updateToggleAffordances = () => {
-        const open = isMobile() && mobileOpen;
+        const open = isMobile() && isOpen();
         const icon = open ? '✕' : '☰';
 
-        sidebarToggles.forEach((toggle) => {
+        document.querySelectorAll('[data-sidebar-toggle]').forEach((toggle) => {
             toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
         });
 
@@ -373,8 +366,15 @@ const initSidebarToggle = () => {
     };
 
     const renderSidebar = () => {
+        const sidebar = getSidebar();
+        const backdrop = getBackdrop();
+
+        if (!sidebar) {
+            return;
+        }
+
         const mobile = isMobile();
-        const open = mobile && mobileOpen;
+        const open = mobile && isOpen();
         const shouldShow = mobile ? open : true;
 
         root.classList.toggle('sidebar-open', open);
@@ -392,67 +392,62 @@ const initSidebarToggle = () => {
     };
 
     const setOpen = (isOpen) => {
-        mobileOpen = isMobile() ? isOpen : false;
+        root.dataset.sidebarMobileOpen = isMobile() && isOpen ? '1' : '0';
         renderSidebar();
     };
 
-    if (!isInitialized) {
-        sidebar.dataset.sidebarInit = '1';
+    if (body && body.dataset.sidebarEventsInit !== '1') {
+        body.dataset.sidebarEventsInit = '1';
 
-        sidebarToggles.forEach((toggle) => {
-            toggle.addEventListener('click', () => {
-                if (isMobile()) {
-                    setOpen(!mobileOpen);
+        document.addEventListener('click', (event) => {
+            const toggle = event.target.closest('[data-sidebar-toggle]');
+            if (toggle) {
+                if (!isMobile()) {
+                    return;
                 }
-            });
+                event.preventDefault();
+                setOpen(!isOpen());
+                return;
+            }
+
+            const backdrop = event.target.closest('[data-sidebar-backdrop]');
+            if (backdrop && isMobile()) {
+                setOpen(false);
+                return;
+            }
+
+            if (!isMobile()) {
+                return;
+            }
+
+            const navigationTarget = event.target.closest('[data-main-nav-link], [data-setup-nav-link], a[href], button[type="submit"], input[type="submit"]');
+            if (navigationTarget) {
+                setOpen(false);
+            }
         });
 
-        sidebarLinks.forEach((link) => {
-            link.addEventListener('click', () => {
-                if (isMobile()) {
-                    mobileOpen = false;
-                    renderSidebar();
-                }
-            });
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && isMobile() && isOpen()) {
+                setOpen(false);
+            }
         });
-
-        if (backdrop) {
-            backdrop.addEventListener('click', () => {
-                if (isMobile()) {
-                    mobileOpen = false;
-                    renderSidebar();
-                }
-            });
-        }
 
         window.addEventListener('resize', () => {
-            if (isMobile()) {
-                mobileOpen = false;
+            if (!isMobile()) {
+                setOpen(false);
+                return;
             }
             renderSidebar();
         });
 
         document.addEventListener('livewire:navigating', () => {
-            if (isMobile()) {
-                setOpen(false);
-            }
-        });
-
-        document.addEventListener('click', (event) => {
-            if (!isMobile()) {
-                return;
-            }
-
-            const clickedNavigationElement = event.target.closest('a[href], button[type="submit"], input[type="submit"]');
-            const clickedSidebarOrToggle = event.target.closest('[data-sidebar-panel], [data-sidebar-toggle]');
-
-            if (clickedNavigationElement && !clickedSidebarOrToggle) {
-                setOpen(false);
-            }
+            setOpen(false);
         });
     }
 
-    mobileOpen = false;
+    if (!isMobile()) {
+        root.dataset.sidebarMobileOpen = '0';
+    }
     renderSidebar();
 };
 

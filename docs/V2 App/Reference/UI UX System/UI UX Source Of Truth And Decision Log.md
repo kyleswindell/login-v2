@@ -17,6 +17,7 @@ Current status:
 - component-level implementation lock decisions are in progress
 - accessibility baseline is locked to WCAG 2.2 AA
 - initial theme/shape/icon direction is locked (subtle radius, neutral enterprise default, Heroicons)
+- canonical standards notes for color, typography, and iconography are now established
 
 ## External Source Baseline
 
@@ -54,12 +55,12 @@ Decision status values:
 
 1. Design principles set (`Proposed`)
 2. Base spacing scale and layout grid (`Proposed`)
-3. Typography families and type scale (`Locked`: see personal typography source note)
+3. Typography families and type scale (`Locked`: canonical typography standard established)
 4. Corner radius scale (`Locked`: subtle `4/6/8` baseline)
 5. Elevation/shadow model (`Draft`)
 6. Motion durations/easing/curve set (`Draft`)
-7. Icon library and icon sizing rules (`Locked`: Material-style semantics + Heroicons)
-8. Light/dark semantic theme tokens (`Proposed`)
+7. Icon library and icon sizing rules (`Locked`: Material-style semantics + Heroicons; canonical iconography standard established)
+8. Light/dark semantic theme tokens (`Proposed`: canonical token architecture is documented)
 9. State and feedback colors (success/info/warning/danger) (`Proposed`)
 10. Accessibility target level (`Locked`: WCAG 2.2 AA minimum)
 11. Baseline color strategy (`Locked`: neutral enterprise with restrained accent)
@@ -94,7 +95,7 @@ Before moving a decision to `Locked`, complete all checks:
 ## Locked Decisions (Current)
 
 1. Accessibility baseline: WCAG 2.2 AA is mandatory for all surfaces.
-2. Typography source: `docs/Personal Notes/App Typography Standard Note.md` is the current type baseline source pending canonical migration.
+2. Typography baseline is canonicalized in `UI UX Typography Standards`.
 3. Radius baseline: subtle corner system (`4/6/8`) is the default.
 4. Color baseline: neutral enterprise with restrained accent is the default.
 5. Icon baseline: Material-style semantics with Heroicons as the icon library.
@@ -107,5 +108,8 @@ Before moving a decision to `Locked`, complete all checks:
 ## Related
 
 - [[V2 App/Reference/UI UX System/UI UX Foundations And Theming Standards]] | [UI UX Foundations And Theming Standards](UI%20UX%20Foundations%20And%20Theming%20Standards.md)
+- [[V2 App/Reference/UI UX System/UI UX Color Token Standards]] | [UI UX Color Token Standards](UI%20UX%20Color%20Token%20Standards.md)
+- [[V2 App/Reference/UI UX System/UI UX Typography Standards]] | [UI UX Typography Standards](UI%20UX%20Typography%20Standards.md)
+- [[V2 App/Reference/UI UX System/UI UX Iconography Standards]] | [UI UX Iconography Standards](UI%20UX%20Iconography%20Standards.md)
 - [[V2 App/Reference/UI UX System/UI UX Component Library Standards]] | [UI UX Component Library Standards](UI%20UX%20Component%20Library%20Standards.md)
 - [[V2 App/Reference/UI Design System Standards]] | [UI Design System Standards](../UI%20Design%20System%20Standards.md)

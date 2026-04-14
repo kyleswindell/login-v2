@@ -18,6 +18,7 @@ Current status:
 - Tier 1 acceptance contracts are now filled
 - Tier 1 `/platform/ui-reference` checklist and dedicated views are now in place
 - Tier 1 rows are set to `Ready For Review` pending lock sign-off
+- canonical color token, typography, and iconography standards are now established from personal-note baselines
 
 ## Canonical Source Notes
 
@@ -56,6 +57,9 @@ Current execution artifacts:
 - [[V2 App/Reference/UI UX System/UI UX Component Acceptance Contract Template]] | [UI UX Component Acceptance Contract Template](../../Reference/UI%20UX%20System/UI%20UX%20Component%20Acceptance%20Contract%20Template.md)
 - [[V2 App/Reference/UI UX System/Component Contracts/Component Contracts Index]] | [Component Contracts Index](../../Reference/UI%20UX%20System/Component%20Contracts/Component%20Contracts%20Index.md)
 - [[V2 App/Reference/UI UX System/UI UX Tier 1 UI Reference Implementation Checklist]] | [UI UX Tier 1 UI Reference Implementation Checklist](../../Reference/UI%20UX%20System/UI%20UX%20Tier%201%20UI%20Reference%20Implementation%20Checklist.md)
+- [[V2 App/Reference/UI UX System/UI UX Color Token Standards]] | [UI UX Color Token Standards](../../Reference/UI%20UX%20System/UI%20UX%20Color%20Token%20Standards.md)
+- [[V2 App/Reference/UI UX System/UI UX Typography Standards]] | [UI UX Typography Standards](../../Reference/UI%20UX%20System/UI%20UX%20Typography%20Standards.md)
+- [[V2 App/Reference/UI UX System/UI UX Iconography Standards]] | [UI UX Iconography Standards](../../Reference/UI%20UX%20System/UI%20UX%20Iconography%20Standards.md)
 
 ## Related
 

@@ -14,6 +14,9 @@
 - [[V2 App/Reference/UI Design System Standards]] | [UI Design System Standards](UI%20Design%20System%20Standards.md)
 - [[V2 App/Reference/UI Reference Workspace Workflow]] | [UI Reference Workspace Workflow](UI%20Reference%20Workspace%20Workflow.md)
 - [[V2 App/Reference/UI UX System/UI UX System Index]] | [UI UX System Index](UI%20UX%20System/UI%20UX%20System%20Index.md)
+- [[V2 App/Reference/UI UX System/UI UX Color Token Standards]] | [UI UX Color Token Standards](UI%20UX%20System/UI%20UX%20Color%20Token%20Standards.md)
+- [[V2 App/Reference/UI UX System/UI UX Typography Standards]] | [UI UX Typography Standards](UI%20UX%20System/UI%20UX%20Typography%20Standards.md)
+- [[V2 App/Reference/UI UX System/UI UX Iconography Standards]] | [UI UX Iconography Standards](UI%20UX%20System/UI%20UX%20Iconography%20Standards.md)
 
 ## Related
 

@@ -8,6 +8,9 @@ Provide one reference index for the Login V2 UI/UX source-of-truth notes, decisi
 
 - [[V2 App/Reference/UI UX System/UI UX Source Of Truth And Decision Log]] | [UI UX Source Of Truth And Decision Log](UI%20UX%20Source%20Of%20Truth%20And%20Decision%20Log.md)
 - [[V2 App/Reference/UI UX System/UI UX Foundations And Theming Standards]] | [UI UX Foundations And Theming Standards](UI%20UX%20Foundations%20And%20Theming%20Standards.md)
+- [[V2 App/Reference/UI UX System/UI UX Color Token Standards]] | [UI UX Color Token Standards](UI%20UX%20Color%20Token%20Standards.md)
+- [[V2 App/Reference/UI UX System/UI UX Typography Standards]] | [UI UX Typography Standards](UI%20UX%20Typography%20Standards.md)
+- [[V2 App/Reference/UI UX System/UI UX Iconography Standards]] | [UI UX Iconography Standards](UI%20UX%20Iconography%20Standards.md)
 - [[V2 App/Reference/UI UX System/UI UX Component Library Standards]] | [UI UX Component Library Standards](UI%20UX%20Component%20Library%20Standards.md)
 - [[V2 App/Reference/UI UX System/UI UX External System Review And Baseline Matrix]] | [UI UX External System Review And Baseline Matrix](UI%20UX%20External%20System%20Review%20And%20Baseline%20Matrix.md)
 - [[V2 App/Reference/UI UX System/UI UX Component Taxonomy And Coverage Matrix]] | [UI UX Component Taxonomy And Coverage Matrix](UI%20UX%20Component%20Taxonomy%20And%20Coverage%20Matrix.md)

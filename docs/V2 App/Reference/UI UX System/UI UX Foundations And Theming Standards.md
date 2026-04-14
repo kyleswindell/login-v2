@@ -18,6 +18,9 @@ Current status:
 - corner radius baseline locked to subtle `4/6/8`
 - color baseline direction locked to neutral enterprise + restrained accent
 - icon direction locked to Material semantics with Heroicons
+- canonical color token standards note is now established
+- canonical typography standards note is now established
+- canonical iconography standards note is now established
 
 ## Design Principles
 
@@ -70,7 +73,11 @@ Initial type roles:
 - Caption
 - Label/button
 
-Status: `Locked` (source baseline: `docs/Personal Notes/App Typography Standard Note.md`; migrate into canonical token spec during implementation phase)
+Status: `Locked`
+
+Canonical owner:
+
+- [[V2 App/Reference/UI UX System/UI UX Typography Standards]] | [UI UX Typography Standards](UI%20UX%20Typography%20Standards.md)
 
 ### Shape and corners
 
@@ -126,7 +133,11 @@ Required groups:
 - feedback (`success`, `info`, `warning`, `danger`, `notice`)
 - focus (`ring`, `ring-offset`)
 
-Status: `Draft`
+Status: `Proposed`
+
+Canonical owner:
+
+- [[V2 App/Reference/UI UX System/UI UX Color Token Standards]] | [UI UX Color Token Standards](UI%20UX%20Color%20Token%20Standards.md)
 
 Locked direction:
 
@@ -194,4 +205,7 @@ Status: `Locked`
 ## Related
 
 - [[V2 App/Reference/UI UX System/UI UX Source Of Truth And Decision Log]] | [UI UX Source Of Truth And Decision Log](UI%20UX%20Source%20Of%20Truth%20And%20Decision%20Log.md)
+- [[V2 App/Reference/UI UX System/UI UX Color Token Standards]] | [UI UX Color Token Standards](UI%20UX%20Color%20Token%20Standards.md)
+- [[V2 App/Reference/UI UX System/UI UX Typography Standards]] | [UI UX Typography Standards](UI%20UX%20Typography%20Standards.md)
+- [[V2 App/Reference/UI UX System/UI UX Iconography Standards]] | [UI UX Iconography Standards](UI%20UX%20Iconography%20Standards.md)
 - [[V2 App/Reference/UI UX System/UI UX Component Library Standards]] | [UI UX Component Library Standards](UI%20UX%20Component%20Library%20Standards.md)

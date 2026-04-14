@@ -181,7 +181,7 @@ Implementation requirement:
 ## Current Locked Baseline Inputs
 
 1. Accessibility target: WCAG 2.2 AA (mandatory)
-2. Typography baseline source: `docs/Personal Notes/App Typography Standard Note.md`
+2. Typography baseline source: `UI UX Typography Standards` (canonicalized from personal-note baseline)
 3. Corner radius baseline: subtle `4/6/8`
 4. Color baseline: neutral enterprise with restrained accent
 5. Icon direction: Material-style semantics with Heroicons
@@ -218,4 +218,7 @@ Carbon references:
 
 - [[V2 App/Reference/UI UX System/UI UX Source Of Truth And Decision Log]] | [UI UX Source Of Truth And Decision Log](UI%20UX%20Source%20Of%20Truth%20And%20Decision%20Log.md)
 - [[V2 App/Reference/UI UX System/UI UX Foundations And Theming Standards]] | [UI UX Foundations And Theming Standards](UI%20UX%20Foundations%20And%20Theming%20Standards.md)
+- [[V2 App/Reference/UI UX System/UI UX Color Token Standards]] | [UI UX Color Token Standards](UI%20UX%20Color%20Token%20Standards.md)
+- [[V2 App/Reference/UI UX System/UI UX Typography Standards]] | [UI UX Typography Standards](UI%20UX%20Typography%20Standards.md)
+- [[V2 App/Reference/UI UX System/UI UX Iconography Standards]] | [UI UX Iconography Standards](UI%20UX%20Iconography%20Standards.md)
 - [[V2 App/Reference/UI UX System/UI UX Component Library Standards]] | [UI UX Component Library Standards](UI%20UX%20Component%20Library%20Standards.md)

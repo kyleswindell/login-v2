@@ -23,6 +23,7 @@ Current status:
 * UI reference workspace access is intentionally restricted to platform super admins for baseline governance and review control
 * multi-agent update workflow and prompt baseline are defined for parallel UI-reference updates
 * dedicated UI/UX source-of-truth and decision-log structure is now established under `docs/V2 App/Reference/UI UX System/`
+* canonical token standards are now established for color, typography, and iconography under the UI UX System folder
 
 ## External System Review Baseline
 
@@ -42,6 +43,9 @@ High-level outcomes that now require explicit lock decisions:
 Canonical owner set for this work:
 
 * [[V2 App/Reference/UI UX System/UI UX System Index]] | [UI UX System Index](UI%20UX%20System/UI%20UX%20System%20Index.md)
+* [[V2 App/Reference/UI UX System/UI UX Color Token Standards]] | [UI UX Color Token Standards](UI%20UX%20System/UI%20UX%20Color%20Token%20Standards.md)
+* [[V2 App/Reference/UI UX System/UI UX Typography Standards]] | [UI UX Typography Standards](UI%20UX%20System/UI%20UX%20Typography%20Standards.md)
+* [[V2 App/Reference/UI UX System/UI UX Iconography Standards]] | [UI UX Iconography Standards](UI%20UX%20System/UI%20UX%20Iconography%20Standards.md)
 
 ## Design Tokens
 

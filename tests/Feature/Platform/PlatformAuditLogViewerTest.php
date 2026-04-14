@@ -30,7 +30,10 @@ class PlatformAuditLogViewerTest extends TestCase
             ->assertOk()
             ->assertSee('Audit Logs')
             ->assertSee('auth.login.success')
-            ->assertSee('data-audit-log-view', false);
+            ->assertSee('aria-label="Toggle audit log filters"', false)
+            ->assertSee('class="ui-icon-button"', false)
+            ->assertSee('Actions')
+            ->assertSee('class="ui-action ui-action-primary" data-audit-log-view', false);
     }
 
     public function test_authorized_users_can_view_filament_audit_log_proof(): void

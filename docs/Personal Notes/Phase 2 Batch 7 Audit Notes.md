@@ -7,8 +7,8 @@ Capture current Batch 7 UI audit findings, likely causes, and solution paths for
 ## Summary Of Open Deliverables
 
 - 7c: Audit/error log modal detail views (Microsoft-style side pop-out) still not restored.
-- 7c: Filter controls not using the default filter icon across tables.
-- 7c: Error and audit log row actions still read as plain text instead of action buttons.
+- 7c: Audit log filter control now uses the default filter icon on staging after redeploy; error log parity still needs its own verification pass.
+- 7c: Audit log row actions now render as button-styled actions on staging after redeploy; error log parity still needs its own verification pass.
 - 7d: Mobile sidebar toggle behavior is broken at small widths (starts open, toggle not interactable).
 - 7e: Light-mode action buttons have contrast regressions and unreadable text.
 - 7e: Notification widget and dashboard action buttons lack consistent action styling.
@@ -23,6 +23,9 @@ Capture current Batch 7 UI audit findings, likely causes, and solution paths for
 
 - Problem
 	- Row-level View actions in audit/error logs render as plain text (no button affordance), reducing scanability and accessibility.
+- Current slice status
+	- Audit logs are now rendering the `View` action as a shared `ui-action ui-action-primary` button on staging.
+	- Error logs still need a dedicated parity verification pass before this finding can be closed completely.
 - Likely causes or pitfalls
 	- Recent refactors swapped link/button styling without applying the shared action button classes.
 	- Focus on modal hookup led to missing UI action styling pass.
@@ -57,6 +60,9 @@ Capture current Batch 7 UI audit findings, likely causes, and solution paths for
 
 - Problem
 	- Filter buttons show text "Filters" instead of the standard filter icon.
+- Current slice status
+	- Audit logs now render the compact filter icon button on staging with the expected accessible label.
+	- Error logs still need a dedicated parity verification pass before this finding can be closed completely.
 - Likely causes or pitfalls
 	- Recent toggle refactor added text labels but removed the icon-only affordance.
 - Potential solution paths

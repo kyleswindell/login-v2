@@ -8,7 +8,7 @@
 
             <form method="POST" action="{{ route('platform.notifications.mark-all-read') }}">
                 @csrf
-                <button type="submit" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:text-slate-300">
+                <button type="submit" class="ui-action ui-action-primary">
                     Mark all read
                 </button>
             </form>
@@ -65,8 +65,8 @@
                             </div>
 
                             @if ($notification->action_url)
-                                <div class="mt-4">
-                                    <a href="{{ $notification->action_url }}" class="text-sm font-semibold text-slate-300 transition hover:text-slate-200">
+                                <div class="mt-4 flex flex-wrap gap-3">
+                                    <a href="{{ $notification->action_url }}" class="ui-action ui-action-notice text-sm">
                                         Open notification link
                                     </a>
                                 </div>
@@ -77,7 +77,7 @@
                             @if (! $notification->read_at)
                                 <form method="POST" action="{{ route('platform.notifications.mark-read', $notification) }}">
                                     @csrf
-                                    <button type="submit" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:text-slate-300">
+                                    <button type="submit" class="ui-action ui-action-success">
                                         Mark read
                                     </button>
                                 </form>
@@ -86,7 +86,7 @@
                             @if (! $notification->dismissed_at)
                                 <form method="POST" action="{{ route('platform.notifications.dismiss', $notification) }}">
                                     @csrf
-                                    <button type="submit" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:text-white">
+                                    <button type="submit" class="ui-action ui-action-ghost">
                                         Dismiss
                                     </button>
                                 </form>

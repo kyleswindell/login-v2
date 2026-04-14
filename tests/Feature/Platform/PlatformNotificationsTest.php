@@ -23,12 +23,18 @@ class PlatformNotificationsTest extends TestCase
             'severity' => 'notice',
             'title' => 'Review needed',
             'body' => 'A notification body.',
+            'action_url' => '/dashboard',
         ]);
 
         $this->get('/platform/notifications')
             ->assertOk()
             ->assertSee('Notifications')
-            ->assertSee('Review needed');
+            ->assertSee('Review needed')
+            ->assertSee('Open notification link')
+            ->assertSee('class="ui-action ui-action-notice text-sm"', false)
+            ->assertSee('class="ui-action ui-action-primary"', false)
+            ->assertSee('class="ui-action ui-action-success"', false)
+            ->assertSee('class="ui-action ui-action-ghost"', false);
     }
 
     public function test_authorized_users_are_redirected_from_target_notifications_route(): void

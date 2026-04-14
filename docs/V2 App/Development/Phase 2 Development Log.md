@@ -167,6 +167,31 @@ Canonical docs:
 * [[V2 App/Architecture/V2 Final Stack And UI Design Spec]] | [V2 Final Stack And UI Design Spec](../Architecture/V2%20Final%20Stack%20And%20UI%20Design%20Spec.md)
 * [[V2 App/Reference/UI Action Tokens And Drawer Patterns]] | [UI Action Tokens And Drawer Patterns](../Reference/UI%20Action%20Tokens%20And%20Drawer%20Patterns.md)
 
+### 2026-04-13 - Phase 2 Batch 7 slice verification: audit filter icon and row actions
+
+Status:
+
+* implemented locally and verified on staging
+
+Work completed:
+
+* added regression coverage so the audit log index must keep the icon-button filter affordance and button-styled `View` row action markup
+* redeployed current `main` to staging and rebuilt frontend assets and Laravel caches
+* verified `/platform/audit-logs` now shows the icon-based filter affordance and the `Actions` column with button-styled `View` links
+
+Verification:
+
+* `docker compose exec -T app php artisan test tests/Feature/Platform/PlatformAuditLogViewerTest.php`
+* staging visual check on `/platform/audit-logs`
+
+Planning owners:
+
+* [[V2 App/Planning/Phase 2/Phase 2 - Implementation Batch 7]] | [Phase 2 - Implementation Batch 7](../Planning/Phase%202/Phase%202%20-%20Implementation%20Batch%207.md)
+
+Canonical docs:
+
+* [[V2 App/Reference/UI Action Tokens And Drawer Patterns]] | [UI Action Tokens And Drawer Patterns](../Reference/UI%20Action%20Tokens%20And%20Drawer%20Patterns.md)
+
 ### 2026-04-13 - Phase 2 Batch 10 calendar foundation planning
 
 Status:

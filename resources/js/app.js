@@ -709,8 +709,8 @@ if (realtimeRoot) {
                         <span>Module: ${escapeHtml(notification.module_key)}</span>
                         <span data-notification-created-label>${escapeHtml(notification.created_at_label || '')}</span>
                     </div>
-                    <div class="mt-4">
-                        <a href="${escapeHtml(notification.action_url || indexUrl)}" class="text-sm font-semibold text-slate-200 transition hover:text-white">
+                    <div class="mt-4 flex flex-wrap gap-3">
+                        <a href="${escapeHtml(notification.action_url || indexUrl)}" class="ui-action ui-action-notice text-sm">
                             Open notification link
                         </a>
                     </div>
@@ -719,7 +719,7 @@ if (realtimeRoot) {
                     ${notification.read_at ? '' : `
                         <form method="POST" action="${escapeHtml(notification.mark_read_url)}">
                             <input type="hidden" name="_token" value="${escapeHtml(csrfToken || '')}">
-                            <button type="submit" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:text-white">
+                            <button type="submit" class="ui-action ui-action-success">
                                 Mark read
                             </button>
                         </form>
@@ -727,7 +727,7 @@ if (realtimeRoot) {
                     ${notification.dismissed_at ? '' : `
                         <form method="POST" action="${escapeHtml(notification.dismiss_url)}">
                             <input type="hidden" name="_token" value="${escapeHtml(csrfToken || '')}">
-                            <button type="submit" class="inline-flex rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:text-white">
+                            <button type="submit" class="ui-action ui-action-ghost">
                                 Dismiss
                             </button>
                         </form>

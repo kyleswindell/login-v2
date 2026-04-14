@@ -13,7 +13,8 @@ Current status:
 * implementation complete
 * review-ready for final visual UI sign-off
 * created after Batch 6 close-out to capture missed final-UI-migration scope explicitly
-* remediation in progress: audit/error log right-side drawers, icon-based filter toggles, shared action tokens, and widget action styling are implemented locally and passing Docker viewer tests (pending staging verification)
+* remediation in progress: audit/error log right-side drawers, icon-based filter toggles, shared action tokens, and widget action styling are implemented locally and passing Docker viewer tests
+* current slice verified on staging: audit log filter icon affordance and audit row action buttons are live after redeploy; remaining Batch 7 items still require follow-up slices
 
 Planning owner:
 
@@ -111,6 +112,7 @@ Verification focus:
 * in-content navigation behavior check with `wire:navigate` enabled so setup/settings/dashboard route transitions preserve shell without full document refresh
 * theme-mode behavior check across authenticated shell + login surface with persisted account preference and runtime system-mode resolution
 * Docker viewer regression command: `docker compose exec -T app php artisan test tests/Feature/Platform/PlatformAuditLogViewerTest.php tests/Feature/Platform/ErrorLogViewerTest.php`
+* staging visual check: `/platform/audit-logs` shows icon-only filter affordance and button-styled `View` row action after redeploy
 
 ## Exit Criteria
 

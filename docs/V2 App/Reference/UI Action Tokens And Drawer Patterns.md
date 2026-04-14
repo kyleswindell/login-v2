@@ -17,6 +17,7 @@ This note is a scoped implementation reference. The canonical UI design system o
 * introduced during Phase 2 Batch 7 remediation
 * active owner for app-owned action tokens and operational log drawer behavior
 * staging visual verification still required before Batch 7 sign-off
+* audit log filter icon affordance and audit row-action button styling verified on staging after the 2026-04-13 redeploy
 
 ## Current Implementation
 

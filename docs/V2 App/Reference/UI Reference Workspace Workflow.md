@@ -66,7 +66,7 @@ Requirements:
 
 * styles match light/dark token behavior
 * mobile layouts remain usable under 1024px
-* tables keep filter row + rows-per-page + pagination + summary
+* tables keep header control row (rows selector, search input, filter pop-up toggle), pagination, and result summary
 * icon-only controls retain accessible labels
 * drawers keep Escape/backdrop/close behavior
 

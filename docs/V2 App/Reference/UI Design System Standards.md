@@ -18,6 +18,7 @@ Current status:
 * canonical owner note created for UI design system standards
 * action tokens and drawer patterns migrated from Batch 7 reference
 * table UX baseline synchronized with Feature Development Standards
+* table baseline at `/platform/ui-reference/patterns/tables` now uses header-level rows selector placement, right-side search + filter toggle pairing, and a toggle-opened filter pop-up panel for scoped non-search filters
 * forms, cards, and notification standards added; typography and spacing remain to be fully standardized
 * app-owned UI reference workspace is implemented at `/platform/ui-reference` as the canonical future UI reference surface for shell, forms, table, token, and drawer examples
 * UI reference workspace access is intentionally restricted to platform super admins for baseline governance and review control
@@ -100,16 +101,19 @@ Baseline requirements for operator tables:
 
 1. page title/subtitle row
 2. optional table stats row
-3. table action row (left-aligned actions such as Create, Settings, Export)
-4. filter row (if scoped filters apply)
+3. table control row:
+   * left side: rows selector followed by table action buttons (when present)
+   * right side: right-justified search input + filter icon toggle
+4. filter pop-up panel (toggle-opened, not inline; when scoped filters apply)
 5. table
 6. table footer controls:
-   * bottom-left: rows selector + result summary
+   * bottom-left: result summary
    * bottom-right: Prev / page selector / Next
 
 Additional rules:
 
 * provide search/filter capability for regular operator views
+* keep table search in the control row and do not duplicate it inside the filter pop-up panel
 * include prominent row action buttons for primary actions
 * do not use text-only action links for primary actions
 
@@ -117,6 +121,9 @@ Additional rules:
 
 * use the shared `ui-icon-button` affordance
 * include an accessible label via `aria-label` or visually hidden text
+* filter toggle opens a pop-up panel anchored to the table controls row
+* panel contains only scoped non-search filter fields with Apply and Reset actions
+* table search stays in the controls row and is not duplicated in the filter pop-up panel
 * toggle a nearby `data-filter-panel` region rather than navigating away
 * prefer icon-first affordance over plain text-only "Filters" buttons on dense operator tables
 

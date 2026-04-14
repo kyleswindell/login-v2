@@ -10,29 +10,63 @@
         </div>
 
         <section class="ui-card">
-            <div class="flex flex-wrap items-start justify-between gap-3">
-                <div>
-                    <p class="ui-kicker">General Table</p>
-                    <h2 class="ui-card-title mt-2">Operator Data Grid Baseline</h2>
+            <div>
+                <p class="ui-kicker">General Table</p>
+                <h2 class="ui-card-title mt-2">Operator Data Grid Baseline</h2>
+            </div>
+
+            <div class="relative mt-4">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex flex-wrap items-center gap-3">
+                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="flex items-center gap-3">
+                            <input type="hidden" name="workspace_status" value="{{ $workspaceFilters['status'] }}">
+                            <input type="hidden" name="workspace_owner" value="{{ $workspaceFilters['owner'] }}">
+                            <input type="hidden" name="workspace_search" value="{{ $workspaceFilters['search'] }}">
+                            <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
+                            <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
+                            <label class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Rows</label>
+                            <select name="workspace_per_page" onchange="this.form.submit()" class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100">
+                                @foreach ([10, 25, 50, 100] as $option)
+                                    <option value="{{ $option }}" @selected($workspacePerPage === $option)>{{ $option }}</option>
+                                @endforeach
+                            </select>
+                        </form>
+
+                        <button type="button" class="ui-action ui-action-primary">Create</button>
+                        <button type="button" class="ui-action ui-action-warning">Settings</button>
+                        <button type="button" class="ui-action">Export</button>
+                    </div>
+
+                    <div class="ml-auto flex w-full items-center justify-end gap-3 sm:w-auto">
+                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="w-full sm:w-auto">
+                            <input type="hidden" name="workspace_status" value="{{ $workspaceFilters['status'] }}">
+                            <input type="hidden" name="workspace_owner" value="{{ $workspaceFilters['owner'] }}">
+                            <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
+                            <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
+                            <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
+                            <input
+                                type="text"
+                                name="workspace_search"
+                                value="{{ $workspaceFilters['search'] }}"
+                                placeholder="Search name or owner"
+                                aria-label="Search workspace rows"
+                                class="w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 sm:w-64"
+                            />
+                        </form>
+                        <button type="button" class="ui-icon-button" data-filter-toggle aria-expanded="false" aria-label="Toggle workspace filters">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+                                <path fill-rule="evenodd" d="M2.5 4.75A.75.75 0 0 1 3.25 4h13.5a.75.75 0 0 1 .53 1.28L12 10.56v4.19a.75.75 0 0 1-.44.68l-3 1.333A.75.75 0 0 1 7.5 16V10.56L2.22 5.28a.75.75 0 0 1 .28-1.28Z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
-                <button type="button" class="ui-icon-button" data-filter-toggle aria-expanded="false" aria-label="Toggle workspace filters">
-                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
-                        <path fill-rule="evenodd" d="M2.5 4.75A.75.75 0 0 1 3.25 4h13.5a.75.75 0 0 1 .53 1.28L12 10.56v4.19a.75.75 0 0 1-.44.68l-3 1.333A.75.75 0 0 1 7.5 16V10.56L2.22 5.28a.75.75 0 0 1 .28-1.28Z" clip-rule="evenodd" />
-                    </svg>
-                </button>
-            </div>
 
-            <div class="mt-4 flex flex-wrap gap-3">
-                <button type="button" class="ui-action ui-action-primary">Create</button>
-                <button type="button" class="ui-action ui-action-warning">Settings</button>
-                <button type="button" class="ui-action">Export</button>
-            </div>
-
-            <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="mt-4 hidden rounded-lg border border-slate-800 bg-slate-900/70 p-5" data-filter-panel>
-                <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
-                <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
-                <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
-                <div class="grid gap-4 md:grid-cols-3">
+                <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="absolute right-0 top-full z-20 mt-3 hidden w-full max-w-4xl rounded-lg border border-slate-800 bg-slate-900/95 p-5 shadow-2xl" data-filter-panel>
+                    <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
+                    <input type="hidden" name="workspace_search" value="{{ $workspaceFilters['search'] }}">
+                    <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
+                    <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
+                    <div class="grid gap-4 md:grid-cols-2">
                     <label>
                         <span class="text-sm font-semibold text-slate-200">Status</span>
                         <select name="workspace_status" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2.5 text-slate-100">
@@ -51,16 +85,13 @@
                             @endforeach
                         </select>
                     </label>
-                    <label>
-                        <span class="text-sm font-semibold text-slate-200">Search</span>
-                        <input type="text" name="workspace_search" value="{{ $workspaceFilters['search'] }}" placeholder="Search name or owner" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2.5 text-slate-100 placeholder:text-slate-500" />
-                    </label>
                 </div>
-                <div class="mt-4 flex flex-wrap gap-3">
-                    <button type="submit" class="ui-action ui-action-primary">Apply</button>
-                    <a wire:navigate href="{{ route('platform.ui-reference.patterns.tables') }}" class="ui-action ui-action-ghost">Reset</a>
-                </div>
-            </form>
+                    <div class="mt-4 flex flex-wrap gap-3">
+                        <button type="submit" class="ui-action ui-action-primary">Apply</button>
+                        <a wire:navigate href="{{ route('platform.ui-reference.patterns.tables') }}" class="ui-action ui-action-ghost">Reset</a>
+                    </div>
+                </form>
+            </div>
 
             <div class="mt-4 overflow-x-auto rounded-lg border border-slate-800 bg-slate-900/70">
                 <table class="min-w-[760px] w-full divide-y divide-slate-800">
@@ -94,20 +125,6 @@
 
                 <div class="flex flex-wrap items-center justify-between gap-3 border-t border-slate-800 px-5 py-3">
                     <div class="flex items-center gap-3">
-                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="flex items-center gap-3">
-                            <input type="hidden" name="workspace_status" value="{{ $workspaceFilters['status'] }}">
-                            <input type="hidden" name="workspace_owner" value="{{ $workspaceFilters['owner'] }}">
-                            <input type="hidden" name="workspace_search" value="{{ $workspaceFilters['search'] }}">
-                            <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
-                            <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
-                            <label class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Rows</label>
-                            <select name="workspace_per_page" onchange="this.form.submit()" class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100">
-                                @foreach ([10, 25, 50, 100] as $option)
-                                    <option value="{{ $option }}" @selected($workspacePerPage === $option)>{{ $option }}</option>
-                                @endforeach
-                            </select>
-                        </form>
-
                         <p class="text-sm text-slate-400">Showing {{ $workspaceRows->firstItem() ?? 0 }} to {{ $workspaceRows->lastItem() ?? 0 }} of {{ $workspaceRows->total() }} entries</p>
                     </div>
 
@@ -146,23 +163,58 @@
         </section>
 
         <section class="ui-card">
-            <div class="flex flex-wrap items-start justify-between gap-3">
-                <div>
-                    <p class="ui-kicker">Logs Table</p>
-                    <h2 class="ui-card-title mt-2">Audit Drawer Example</h2>
-                    <p class="ui-card-copy">Row clicks and explicit `View` actions both open the right-side drawer.</p>
-                </div>
-                <button type="button" class="ui-icon-button" data-filter-toggle aria-expanded="false" aria-label="Toggle audit demo filters">
-                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
-                        <path fill-rule="evenodd" d="M2.5 4.75A.75.75 0 0 1 3.25 4h13.5a.75.75 0 0 1 .53 1.28L12 10.56v4.19a.75.75 0 0 1-.44.68l-3 1.333A.75.75 0 0 1 7.5 16V10.56L2.22 5.28a.75.75 0 0 1 .28-1.28Z" clip-rule="evenodd" />
-                    </svg>
-                </button>
+            <div>
+                <p class="ui-kicker">Logs Table</p>
+                <h2 class="ui-card-title mt-2">Audit Drawer Example</h2>
+                <p class="ui-card-copy">Row clicks and explicit `View` actions both open the right-side drawer.</p>
             </div>
 
-            <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="mt-4 hidden rounded-lg border border-slate-800 bg-slate-900/70 p-5" data-filter-panel>
-                <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
-                <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
-                <div class="grid gap-4 md:grid-cols-3">
+            <div class="relative mt-4">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="flex items-center gap-3">
+                        <input type="hidden" name="audit_severity" value="{{ $auditFilters['severity'] }}">
+                        <input type="hidden" name="audit_result" value="{{ $auditFilters['result'] }}">
+                        <input type="hidden" name="audit_search" value="{{ $auditFilters['search'] }}">
+                        <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
+                        <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
+                        <label class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Rows</label>
+                        <select name="audit_per_page" onchange="this.form.submit()" class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100">
+                            @foreach ([10, 25, 50, 100] as $option)
+                                <option value="{{ $option }}" @selected($auditPerPage === $option)>{{ $option }}</option>
+                            @endforeach
+                        </select>
+                    </form>
+
+                    <div class="ml-auto flex w-full items-center justify-end gap-3 sm:w-auto">
+                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="w-full sm:w-auto">
+                            <input type="hidden" name="audit_severity" value="{{ $auditFilters['severity'] }}">
+                            <input type="hidden" name="audit_result" value="{{ $auditFilters['result'] }}">
+                            <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
+                            <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
+                            <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
+                            <input
+                                type="text"
+                                name="audit_search"
+                                value="{{ $auditFilters['search'] }}"
+                                placeholder="Event, actor, route"
+                                aria-label="Search audit rows"
+                                class="w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 sm:w-64"
+                            />
+                        </form>
+                        <button type="button" class="ui-icon-button" data-filter-toggle aria-expanded="false" aria-label="Toggle audit demo filters">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+                                <path fill-rule="evenodd" d="M2.5 4.75A.75.75 0 0 1 3.25 4h13.5a.75.75 0 0 1 .53 1.28L12 10.56v4.19a.75.75 0 0 1-.44.68l-3 1.333A.75.75 0 0 1 7.5 16V10.56L2.22 5.28a.75.75 0 0 1 .28-1.28Z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="absolute right-0 top-full z-20 mt-3 hidden w-full max-w-4xl rounded-lg border border-slate-800 bg-slate-900/95 p-5 shadow-2xl" data-filter-panel>
+                    <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
+                    <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
+                    <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
+                    <input type="hidden" name="audit_search" value="{{ $auditFilters['search'] }}">
+                    <div class="grid gap-4 md:grid-cols-2">
                     <label>
                         <span class="text-sm font-semibold text-slate-200">Severity</span>
                         <select name="audit_severity" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2.5 text-slate-100">
@@ -178,16 +230,13 @@
                             <option value="success" @selected($auditFilters['result'] === 'success')>Success</option>
                         </select>
                     </label>
-                    <label>
-                        <span class="text-sm font-semibold text-slate-200">Search</span>
-                        <input type="text" name="audit_search" value="{{ $auditFilters['search'] }}" placeholder="Event, actor, route" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2.5 text-slate-100 placeholder:text-slate-500" />
-                    </label>
-                </div>
-                <div class="mt-4 flex flex-wrap gap-3">
-                    <button type="submit" class="ui-action ui-action-primary">Apply</button>
-                    <a wire:navigate href="{{ route('platform.ui-reference.patterns.tables') }}" class="ui-action ui-action-ghost">Reset</a>
-                </div>
-            </form>
+                    </div>
+                    <div class="mt-4 flex flex-wrap gap-3">
+                        <button type="submit" class="ui-action ui-action-primary">Apply</button>
+                        <a wire:navigate href="{{ route('platform.ui-reference.patterns.tables') }}" class="ui-action ui-action-ghost">Reset</a>
+                    </div>
+                </form>
+            </div>
 
             <div class="mt-4 overflow-x-auto rounded-lg border border-slate-800 bg-slate-900/70">
                 <table class="min-w-[920px] w-full divide-y divide-slate-800">
@@ -225,19 +274,6 @@
 
                 <div class="flex flex-wrap items-center justify-between gap-3 border-t border-slate-800 px-5 py-3">
                     <div class="flex items-center gap-3">
-                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="flex items-center gap-3">
-                            <input type="hidden" name="audit_severity" value="{{ $auditFilters['severity'] }}">
-                            <input type="hidden" name="audit_result" value="{{ $auditFilters['result'] }}">
-                            <input type="hidden" name="audit_search" value="{{ $auditFilters['search'] }}">
-                            <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
-                            <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
-                            <label class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Rows</label>
-                            <select name="audit_per_page" onchange="this.form.submit()" class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100">
-                                @foreach ([10, 25, 50, 100] as $option)
-                                    <option value="{{ $option }}" @selected($auditPerPage === $option)>{{ $option }}</option>
-                                @endforeach
-                            </select>
-                        </form>
                         <p class="text-sm text-slate-400">Showing {{ $auditSamples->firstItem() ?? 0 }} to {{ $auditSamples->lastItem() ?? 0 }} of {{ $auditSamples->total() }} entries</p>
                     </div>
 
@@ -275,22 +311,57 @@
         </section>
 
         <section class="ui-card">
-            <div class="flex flex-wrap items-start justify-between gap-3">
-                <div>
-                    <p class="ui-kicker">Logs Table</p>
-                    <h2 class="ui-card-title mt-2">Error Drawer Example</h2>
-                </div>
-                <button type="button" class="ui-icon-button" data-filter-toggle aria-expanded="false" aria-label="Toggle error demo filters">
-                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
-                        <path fill-rule="evenodd" d="M2.5 4.75A.75.75 0 0 1 3.25 4h13.5a.75.75 0 0 1 .53 1.28L12 10.56v4.19a.75.75 0 0 1-.44.68l-3 1.333A.75.75 0 0 1 7.5 16V10.56L2.22 5.28a.75.75 0 0 1 .28-1.28Z" clip-rule="evenodd" />
-                    </svg>
-                </button>
+            <div>
+                <p class="ui-kicker">Logs Table</p>
+                <h2 class="ui-card-title mt-2">Error Drawer Example</h2>
             </div>
 
-            <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="mt-4 hidden rounded-lg border border-slate-800 bg-slate-900/70 p-5" data-filter-panel>
-                <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
-                <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
-                <div class="grid gap-4 md:grid-cols-3">
+            <div class="relative mt-4">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="flex items-center gap-3">
+                        <input type="hidden" name="error_severity" value="{{ $errorFilters['severity'] }}">
+                        <input type="hidden" name="error_environment" value="{{ $errorFilters['environment'] }}">
+                        <input type="hidden" name="error_search" value="{{ $errorFilters['search'] }}">
+                        <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
+                        <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
+                        <label class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Rows</label>
+                        <select name="error_per_page" onchange="this.form.submit()" class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100">
+                            @foreach ([10, 25, 50, 100] as $option)
+                                <option value="{{ $option }}" @selected($errorPerPage === $option)>{{ $option }}</option>
+                            @endforeach
+                        </select>
+                    </form>
+
+                    <div class="ml-auto flex w-full items-center justify-end gap-3 sm:w-auto">
+                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="w-full sm:w-auto">
+                            <input type="hidden" name="error_severity" value="{{ $errorFilters['severity'] }}">
+                            <input type="hidden" name="error_environment" value="{{ $errorFilters['environment'] }}">
+                            <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
+                            <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
+                            <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
+                            <input
+                                type="text"
+                                name="error_search"
+                                value="{{ $errorFilters['search'] }}"
+                                placeholder="Message, exception, route"
+                                aria-label="Search error rows"
+                                class="w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 sm:w-64"
+                            />
+                        </form>
+                        <button type="button" class="ui-icon-button" data-filter-toggle aria-expanded="false" aria-label="Toggle error demo filters">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+                                <path fill-rule="evenodd" d="M2.5 4.75A.75.75 0 0 1 3.25 4h13.5a.75.75 0 0 1 .53 1.28L12 10.56v4.19a.75.75 0 0 1-.44.68l-3 1.333A.75.75 0 0 1 7.5 16V10.56L2.22 5.28a.75.75 0 0 1 .28-1.28Z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="absolute right-0 top-full z-20 mt-3 hidden w-full max-w-4xl rounded-lg border border-slate-800 bg-slate-900/95 p-5 shadow-2xl" data-filter-panel>
+                    <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
+                    <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
+                    <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
+                    <input type="hidden" name="error_search" value="{{ $errorFilters['search'] }}">
+                    <div class="grid gap-4 md:grid-cols-2">
                     <label>
                         <span class="text-sm font-semibold text-slate-200">Severity</span>
                         <select name="error_severity" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2.5 text-slate-100">
@@ -307,16 +378,13 @@
                             <option value="production" @selected($errorFilters['environment'] === 'production')>Production</option>
                         </select>
                     </label>
-                    <label>
-                        <span class="text-sm font-semibold text-slate-200">Search</span>
-                        <input type="text" name="error_search" value="{{ $errorFilters['search'] }}" placeholder="Message, exception, route" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2.5 text-slate-100 placeholder:text-slate-500" />
-                    </label>
-                </div>
-                <div class="mt-4 flex flex-wrap gap-3">
-                    <button type="submit" class="ui-action ui-action-primary">Apply</button>
-                    <a wire:navigate href="{{ route('platform.ui-reference.patterns.tables') }}" class="ui-action ui-action-ghost">Reset</a>
-                </div>
-            </form>
+                    </div>
+                    <div class="mt-4 flex flex-wrap gap-3">
+                        <button type="submit" class="ui-action ui-action-primary">Apply</button>
+                        <a wire:navigate href="{{ route('platform.ui-reference.patterns.tables') }}" class="ui-action ui-action-ghost">Reset</a>
+                    </div>
+                </form>
+            </div>
 
             <div class="mt-4 overflow-x-auto rounded-lg border border-slate-800 bg-slate-900/70">
                 <table class="min-w-[920px] w-full divide-y divide-slate-800">
@@ -354,19 +422,6 @@
 
                 <div class="flex flex-wrap items-center justify-between gap-3 border-t border-slate-800 px-5 py-3">
                     <div class="flex items-center gap-3">
-                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="flex items-center gap-3">
-                            <input type="hidden" name="error_severity" value="{{ $errorFilters['severity'] }}">
-                            <input type="hidden" name="error_environment" value="{{ $errorFilters['environment'] }}">
-                            <input type="hidden" name="error_search" value="{{ $errorFilters['search'] }}">
-                            <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
-                            <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
-                            <label class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Rows</label>
-                            <select name="error_per_page" onchange="this.form.submit()" class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100">
-                                @foreach ([10, 25, 50, 100] as $option)
-                                    <option value="{{ $option }}" @selected($errorPerPage === $option)>{{ $option }}</option>
-                                @endforeach
-                            </select>
-                        </form>
                         <p class="text-sm text-slate-400">Showing {{ $errorSamples->firstItem() ?? 0 }} to {{ $errorSamples->lastItem() ?? 0 }} of {{ $errorSamples->total() }} entries</p>
                     </div>
 

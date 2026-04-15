@@ -22,18 +22,18 @@ Login App 2.0 is the planned Laravel-based replacement foundation for the curren
 
 Start with:
 
-* [App 2.0 Blueprint](docs/planning/app-2-blueprint.md)
-* [ADR-0001 - Platform Foundation](docs/decisions/ADR-0001-platform-foundation.md)
+* [App 2.0 Blueprint](docs/03-architecture/app-2-0-blueprint.md)
+* [Architecture Baseline](docs/03-architecture/app-2-0-blueprint-architecture-baseline.md)
 * [Start Here](docs/00-start-here.md)
-* [Authentication](docs/features/authentication.md)
-* [Event And Error Logging](docs/features/event-and-error-logging.md)
-* [Coding Standards](docs/standards/coding-standards.md)
-* [Commenting Standards](docs/standards/commenting-standards.md)
-* [Local Development](docs/server/local-development.md)
-* [Server Readiness](docs/server/server-readiness.md)
+* [Authentication](docs/04-features/auth/authentication.md)
+* [Event And Error Logging](docs/04-features/logging/event-and-error-logging.md)
+* [Coding Standards](docs/02-standards/coding/Coding%20Standards.md)
+* [Commenting Standards](docs/02-standards/coding/Commenting%20Standards.md)
+* [Local Development](docs/10-runbooks/local-dev.md)
+* [Server Readiness](docs/10-runbooks/server-readiness.md)
 
 ## Development Policy
 
 This repo is the source of truth for App 2.0 code and documentation. The DigitalOcean server can be used for verification and deployment preparation, but meaningful application code should be committed here before deployment.
 
-Local development should prefer the Docker Compose stack documented in [Local Development](docs/server/local-development.md).
+Local development should prefer the Docker Compose stack documented in [Local Development](docs/10-runbooks/local-dev.md).

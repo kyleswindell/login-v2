@@ -68,8 +68,9 @@
             <div class="mt-2 flex flex-wrap items-center gap-3">
                 <p class="text-sm text-slate-400">Toasts should use a polite live region for non-critical updates, an assertive region for high-severity failures, and only minimal baseline entry/exit motion.</p>
                 <button type="button" class="ui-action ui-action-ghost ui-action-xs" data-ui-demo-toast-reset>Reset Toast Stack</button>
+                <button type="button" class="ui-action ui-action-soft ui-action-info ui-action-xs" data-ui-demo-toast-generate>Generate Example Toast</button>
             </div>
-            <div class="mt-4 flex flex-col gap-3">
+            <div class="mt-4 flex flex-col gap-3" data-ui-demo-toast-stack>
                 <div data-ui-demo-toast class="ui-toast ui-toast-neutral" role="status" aria-live="polite">
                     <div class="flex items-start justify-between gap-3">
                         <div>
@@ -124,6 +125,17 @@
                         <button type="button" class="ui-action ui-action-ghost ui-action-xs" data-ui-demo-toast-dismiss>Dismiss</button>
                     </div>
                 </div>
+                <template data-ui-demo-toast-template>
+                    <div data-ui-demo-toast class="ui-toast ui-toast-info hidden" role="status" aria-live="polite">
+                        <div class="flex items-start justify-between gap-3">
+                            <div>
+                                <p class="font-semibold">Generated Example</p>
+                                <p class="mt-1">Review the baseline toast entry and dismiss motion on a fresh example.</p>
+                            </div>
+                            <button type="button" class="ui-action ui-action-ghost ui-action-xs" data-ui-demo-toast-dismiss>Dismiss</button>
+                        </div>
+                    </div>
+                </template>
             </div>
         </section>
 

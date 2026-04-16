@@ -12,6 +12,7 @@
 - The manual visual review surfaced a separate set of implementation-only polish issues in Batch A: semantic contrast in light mode, danger/warning hue tuning, link readability, spinner visibility, checkbox focus rendering, and switch/toggle interaction fidelity.
 - The follow-up visual review pass identified additional Tier 1 presentation issues around disabled-state clarity, primary/info separation in dark mode, soft-vs-base distinction, and ad hoc parity tokens in the navigation review surface.
 - The current toast baseline work required a standards correction: the active standards tree did not contain a separate Tier 2 notification/toast addendum entry for toast animation, but the Tier 1 toast contract still discouraged animated entry/exit even though minimal baseline motion is appropriate for Tier 1.
+- The toast baseline review surface still lacked an on-demand generation path after the motion work landed, which made it harder to inspect entry/dismiss animation on a fresh example without resetting the entire stack.
 
 
 ## Decisions
@@ -28,6 +29,7 @@
 - Treat disabled-state clarity as a shared Tier 1 action/icon-button concern rather than a one-off view-level opacity tweak.
 - The first deploy attempt for this follow-up pass failed during `vite build` on the server because `@apply peer` is not accepted in this Tailwind setup; the switch helper was revised to use explicit CSS instead.
 - Treat minimal toast appear/dismiss motion as a Tier 1 baseline behavior and keep it reduced-motion-safe; do not expand that into richer notification-system logic in Batch A.
+- Add a single generated example toast control to the UI Reference baseline instead of introducing a richer notification queue or feature-level notification behavior.
 
 
 ## Risks / Questions
@@ -39,3 +41,4 @@
 - Docker verification was refreshed after the latest disabled/info/soft/navigation parity adjustments and the targeted suite remained green.
 - Docker verification remained green after replacing the unsupported `@apply peer` switch helper implementation.
 - Docker verification was refreshed after the Tier 1 toast motion correction pass and the targeted suite remained green.
+- Docker verification was refreshed after adding the generated toast trigger and the overlays reference page remained covered by the targeted Batch A suite.

@@ -730,6 +730,19 @@ const initUiReferenceOverlayDemos = () => {
         window.setTimeout(finalizeHidden, 170);
     };
 
+    const bindToastDismissButtons = (root) => {
+        root.querySelectorAll('[data-ui-demo-toast-dismiss]').forEach((button) => {
+            if (button.dataset.uiDemoToastDismissInit === '1') {
+                return;
+            }
+
+            button.dataset.uiDemoToastDismissInit = '1';
+            button.addEventListener('click', () => {
+                animateToastVisibility(button.closest('[data-ui-demo-toast]'), false);
+            });
+        });
+    };
+
     document.querySelectorAll('[data-ui-demo-overlay]').forEach((overlay) => {
         if (overlay.dataset.uiDemoOverlayInit === '1') {
             return;
@@ -787,16 +800,7 @@ const initUiReferenceOverlayDemos = () => {
         });
     });
 
-    document.querySelectorAll('[data-ui-demo-toast-dismiss]').forEach((button) => {
-        if (button.dataset.uiDemoToastDismissInit === '1') {
-            return;
-        }
-
-        button.dataset.uiDemoToastDismissInit = '1';
-        button.addEventListener('click', () => {
-            animateToastVisibility(button.closest('[data-ui-demo-toast]'), false);
-        });
-    });
+    bindToastDismissButtons(document);
 
     document.querySelectorAll('[data-ui-demo-toast-reset]').forEach((button) => {
         if (button.dataset.uiDemoToastResetInit === '1') {
@@ -808,6 +812,33 @@ const initUiReferenceOverlayDemos = () => {
             button.closest('[data-ui-demo-toast-root]')?.querySelectorAll('[data-ui-demo-toast]').forEach((toast) => {
                 animateToastVisibility(toast, true);
             });
+        });
+    });
+
+    document.querySelectorAll('[data-ui-demo-toast-generate]').forEach((button) => {
+        if (button.dataset.uiDemoToastGenerateInit === '1') {
+            return;
+        }
+
+        button.dataset.uiDemoToastGenerateInit = '1';
+        button.addEventListener('click', () => {
+            const root = button.closest('[data-ui-demo-toast-root]');
+            const stack = root?.querySelector('[data-ui-demo-toast-stack]');
+            const template = root?.querySelector('[data-ui-demo-toast-template]');
+
+            if (!(stack instanceof HTMLElement) || !(template instanceof HTMLTemplateElement)) {
+                return;
+            }
+
+            const nextToast = template.content.firstElementChild?.cloneNode(true);
+
+            if (!(nextToast instanceof HTMLElement)) {
+                return;
+            }
+
+            stack.prepend(nextToast);
+            bindToastDismissButtons(nextToast);
+            animateToastVisibility(nextToast, true);
         });
     });
 };

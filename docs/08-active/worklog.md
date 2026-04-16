@@ -15,6 +15,7 @@
 - Applied the follow-up Batch A visual review fixes to disabled-state clarity, dark-mode primary/info separation, dark-mode soft variant separation, light-mode switch visibility, lighter light-mode table hover, and account-dropdown parity token normalization.
 - Corrected a follow-up implementation issue in the shared switch CSS after the first deploy attempt exposed an unsupported `@apply peer` usage in the Tailwind build pipeline.
 - Reclassified minimal toast entry/exit motion into the Tier 1 toast baseline and added a standards-aligned baseline appear/dismiss animation for the UI Reference toast surface.
+- Added a generated example toast trigger beside the reset control so baseline toast display and dismiss animation can be reviewed on demand in the UI Reference workspace.
 
 
 ## Changes
@@ -30,10 +31,10 @@
 - `resources/views/platform/ui-reference/components/actions.blade.php`
 - `resources/views/platform/ui-reference/components/status.blade.php`
 - `resources/views/platform/ui-reference/patterns/navigation.blade.php`
-- `resources/views/platform/ui-reference/patterns/overlays.blade.php`
 - `docs/02-standards/ui/contracts/Tier 1 - Toast And Inline Alert Contract.md`
 - `resources/views/platform/ui-reference/overview.blade.php`
 - `resources/views/platform/ui-reference/patterns/tables.blade.php`
+- `resources/views/platform/ui-reference/patterns/overlays.blade.php`
 - `resources/views/livewire/platform/dashboard.blade.php`
 - `resources/views/components/layouts/app.blade.php`
 - `resources/views/components/layouts/mobile-sidebar.blade.php`
@@ -52,4 +53,5 @@
 - Result after the visual review fix pass: `PASS` with `7` tests and `25` assertions.
 - Result after the follow-up visual review fix pass: `PASS` with `7` tests and `25` assertions.
 - Result after the toast baseline motion correction pass: `PASS` with `7` tests and `25` assertions.
+- Result after the generated toast trigger pass: `PASS` with `7` tests and `28` assertions.
 - Batch A implementation is now prepared for manual review; manual review itself is still pending.

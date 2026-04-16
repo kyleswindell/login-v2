@@ -40,6 +40,11 @@ class PlatformUiReferenceTest extends TestCase
             ->assertOk()
             ->assertSee('Layout And Scaffolding')
             ->assertSee('Grid Baseline');
+
+        $this->get('/platform/ui-reference/patterns/overlays-feedback')
+            ->assertOk()
+            ->assertSee('Toast Baseline')
+            ->assertSee('Generate Example Toast');
     }
 
     public function test_standard_users_cannot_view_ui_reference_workspace(): void

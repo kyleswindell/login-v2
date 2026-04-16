@@ -1,15 +1,21 @@
 # Review
 
 ## Status
-PASS / PARTIAL / FAIL
+PARTIAL
 
 ## Issues
-- 
+- Implementation is ready for manual review, but the manual review pass has not been completed yet.
+- Manual visual review has not been completed.
+- Manual functional validation has not been completed.
+- Host-shell execution remains non-canonical for this repo; automated feature verification should be run in Docker where `postgres` resolves correctly.
+
 
 ## Required Fixes
-- 
+- Complete a manual review pass for UI Reference states, shell behavior, overlay behavior, and responsive layout behavior.
+- Keep using Docker for automated UI Reference verification during the review/finalization pass.
+
 
 ## Manual Review
 
-Visual: PASS / FAIL  
-Functional: PASS / FAIL
+Visual: FAIL  
+Functional: FAIL

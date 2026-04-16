@@ -23,49 +23,49 @@
     };
 
     $taxonomy = [
-        'active' => ['semantic' => 'success', 'icon' => 'check-circle', 'variant' => 'soft'],
-        'inactive' => ['semantic' => 'neutral', 'icon' => 'minus-circle', 'variant' => 'soft'],
+        'active' => ['semantic' => 'success', 'icon' => 'check-circle', 'variant' => 'base'],
+        'inactive' => ['semantic' => 'neutral', 'icon' => 'minus-circle', 'variant' => 'base'],
         'archived' => ['semantic' => 'neutral', 'icon' => 'archive-box', 'variant' => 'outline'],
-        'draft' => ['semantic' => 'neutral', 'icon' => 'minus-circle', 'variant' => 'soft'],
-        'ready' => ['semantic' => 'info', 'icon' => 'information-circle', 'variant' => 'soft'],
-        'enabled' => ['semantic' => 'success', 'icon' => 'check-circle', 'variant' => 'soft'],
+        'draft' => ['semantic' => 'neutral', 'icon' => 'minus-circle', 'variant' => 'base'],
+        'ready' => ['semantic' => 'info', 'icon' => 'information-circle', 'variant' => 'base'],
+        'enabled' => ['semantic' => 'success', 'icon' => 'check-circle', 'variant' => 'base'],
         'disabled' => ['semantic' => 'neutral', 'icon' => 'minus-circle', 'variant' => 'outline'],
-        'submitted' => ['semantic' => 'notice', 'icon' => 'clock', 'variant' => 'soft'],
-        'pending review' => ['semantic' => 'notice', 'icon' => 'clock', 'variant' => 'soft'],
-        'under review' => ['semantic' => 'notice', 'icon' => 'clock', 'variant' => 'soft'],
-        'in progress' => ['semantic' => 'notice', 'icon' => 'clock', 'variant' => 'soft'],
-        'approved' => ['semantic' => 'success', 'icon' => 'check-circle', 'variant' => 'soft'],
-        'rejected' => ['semantic' => 'danger', 'icon' => 'x-circle', 'variant' => 'soft'],
-        'blocked' => ['semantic' => 'danger', 'icon' => 'no-symbol', 'variant' => 'soft'],
-        'needs action' => ['semantic' => 'warning', 'icon' => 'exclamation-triangle', 'variant' => 'soft'],
-        'healthy' => ['semantic' => 'success', 'icon' => 'check-circle', 'variant' => 'soft'],
-        'running' => ['semantic' => 'success', 'icon' => 'check-circle', 'variant' => 'soft'],
-        'synced' => ['semantic' => 'success', 'icon' => 'check-circle', 'variant' => 'soft'],
-        'pending' => ['semantic' => 'notice', 'icon' => 'clock', 'variant' => 'soft'],
-        'queued' => ['semantic' => 'notice', 'icon' => 'clock', 'variant' => 'soft'],
-        'degraded' => ['semantic' => 'warning', 'icon' => 'exclamation-triangle', 'variant' => 'soft'],
-        'delayed' => ['semantic' => 'warning', 'icon' => 'exclamation-triangle', 'variant' => 'soft'],
-        'failed' => ['semantic' => 'danger', 'icon' => 'x-circle', 'variant' => 'soft'],
-        'error' => ['semantic' => 'danger', 'icon' => 'x-circle', 'variant' => 'soft'],
-        'offline' => ['semantic' => 'danger', 'icon' => 'x-circle', 'variant' => 'soft'],
-        'syncing' => ['semantic' => 'notice', 'icon' => 'arrow-path', 'variant' => 'soft'],
-        'stale' => ['semantic' => 'warning', 'icon' => 'exclamation-triangle', 'variant' => 'soft'],
-        'out of sync' => ['semantic' => 'danger', 'icon' => 'x-circle', 'variant' => 'soft'],
+        'submitted' => ['semantic' => 'notice', 'icon' => 'clock', 'variant' => 'base'],
+        'pending review' => ['semantic' => 'notice', 'icon' => 'clock', 'variant' => 'base'],
+        'under review' => ['semantic' => 'notice', 'icon' => 'clock', 'variant' => 'base'],
+        'in progress' => ['semantic' => 'notice', 'icon' => 'clock', 'variant' => 'base'],
+        'approved' => ['semantic' => 'success', 'icon' => 'check-circle', 'variant' => 'base'],
+        'rejected' => ['semantic' => 'danger', 'icon' => 'x-circle', 'variant' => 'base'],
+        'blocked' => ['semantic' => 'danger', 'icon' => 'no-symbol', 'variant' => 'base'],
+        'needs action' => ['semantic' => 'warning', 'icon' => 'exclamation-triangle', 'variant' => 'base'],
+        'healthy' => ['semantic' => 'success', 'icon' => 'check-circle', 'variant' => 'base'],
+        'running' => ['semantic' => 'success', 'icon' => 'check-circle', 'variant' => 'base'],
+        'synced' => ['semantic' => 'success', 'icon' => 'check-circle', 'variant' => 'base'],
+        'pending' => ['semantic' => 'notice', 'icon' => 'clock', 'variant' => 'base'],
+        'queued' => ['semantic' => 'notice', 'icon' => 'clock', 'variant' => 'base'],
+        'degraded' => ['semantic' => 'warning', 'icon' => 'exclamation-triangle', 'variant' => 'base'],
+        'delayed' => ['semantic' => 'warning', 'icon' => 'exclamation-triangle', 'variant' => 'base'],
+        'failed' => ['semantic' => 'danger', 'icon' => 'x-circle', 'variant' => 'base'],
+        'error' => ['semantic' => 'danger', 'icon' => 'x-circle', 'variant' => 'base'],
+        'offline' => ['semantic' => 'danger', 'icon' => 'x-circle', 'variant' => 'base'],
+        'syncing' => ['semantic' => 'notice', 'icon' => 'arrow-path', 'variant' => 'base'],
+        'stale' => ['semantic' => 'warning', 'icon' => 'exclamation-triangle', 'variant' => 'base'],
+        'out of sync' => ['semantic' => 'danger', 'icon' => 'x-circle', 'variant' => 'base'],
         'audited' => ['semantic' => 'success', 'icon' => 'check-circle', 'variant' => 'outline'],
-        'compliant' => ['semantic' => 'success', 'icon' => 'check-circle', 'variant' => 'soft'],
+        'compliant' => ['semantic' => 'success', 'icon' => 'check-circle', 'variant' => 'base'],
         'review' => ['semantic' => 'notice', 'icon' => 'clock', 'variant' => 'outline'],
-        'non-compliant' => ['semantic' => 'danger', 'icon' => 'x-circle', 'variant' => 'soft'],
-        'low' => ['semantic' => 'success', 'icon' => 'check-circle', 'variant' => 'soft'],
-        'moderate' => ['semantic' => 'notice', 'icon' => 'clock', 'variant' => 'soft'],
-        'elevated' => ['semantic' => 'warning', 'icon' => 'exclamation-triangle', 'variant' => 'soft'],
-        'high' => ['semantic' => 'danger', 'icon' => 'x-circle', 'variant' => 'soft'],
-        'critical' => ['semantic' => 'danger', 'icon' => 'x-circle', 'variant' => 'solid'],
-        'neutral' => ['semantic' => 'neutral', 'icon' => 'minus-circle', 'variant' => 'soft'],
-        'info' => ['semantic' => 'info', 'icon' => 'information-circle', 'variant' => 'soft'],
-        'success' => ['semantic' => 'success', 'icon' => 'check-circle', 'variant' => 'soft'],
-        'notice' => ['semantic' => 'notice', 'icon' => 'clock', 'variant' => 'soft'],
-        'warning' => ['semantic' => 'warning', 'icon' => 'exclamation-triangle', 'variant' => 'soft'],
-        'danger' => ['semantic' => 'danger', 'icon' => 'x-circle', 'variant' => 'soft'],
+        'non-compliant' => ['semantic' => 'danger', 'icon' => 'x-circle', 'variant' => 'base'],
+        'low' => ['semantic' => 'success', 'icon' => 'check-circle', 'variant' => 'base'],
+        'moderate' => ['semantic' => 'notice', 'icon' => 'clock', 'variant' => 'base'],
+        'elevated' => ['semantic' => 'warning', 'icon' => 'exclamation-triangle', 'variant' => 'base'],
+        'high' => ['semantic' => 'danger', 'icon' => 'x-circle', 'variant' => 'base'],
+        'critical' => ['semantic' => 'danger', 'icon' => 'x-circle', 'variant' => 'base'],
+        'neutral' => ['semantic' => 'neutral', 'icon' => 'minus-circle', 'variant' => 'base'],
+        'info' => ['semantic' => 'info', 'icon' => 'information-circle', 'variant' => 'base'],
+        'success' => ['semantic' => 'success', 'icon' => 'check-circle', 'variant' => 'base'],
+        'notice' => ['semantic' => 'notice', 'icon' => 'clock', 'variant' => 'base'],
+        'warning' => ['semantic' => 'warning', 'icon' => 'exclamation-triangle', 'variant' => 'base'],
+        'danger' => ['semantic' => 'danger', 'icon' => 'x-circle', 'variant' => 'base'],
     ];
 
     $resolved = $normalized !== null && array_key_exists($normalized, $taxonomy)
@@ -76,8 +76,15 @@
     $resolvedSemantic = in_array($semantic, ['neutral', 'info', 'success', 'notice', 'warning', 'danger'], true)
         ? $semantic
         : $resolved['semantic'];
-    $resolvedVariant = in_array($variant, ['soft', 'outline', 'solid'], true)
-        ? $variant
+    $resolvedVariant = match ($variant) {
+        'soft' => 'base',
+        'outline' => 'outline',
+        'base', null => $variant ?? $resolved['variant'],
+        default => $resolved['variant'],
+    };
+
+    $resolvedVariant = in_array($resolvedVariant, ['base', 'outline'], true)
+        ? $resolvedVariant
         : $resolved['variant'];
     $resolvedIcon = $icon ?? $resolved['icon'];
 
@@ -87,9 +94,6 @@
         $classes .= ' ui-status-outline';
     }
 
-    if ($resolvedVariant === 'solid') {
-        $classes .= ' ui-status-solid';
-    }
 @endphp
 
 <span {{ $attributes->merge(['class' => $classes]) }}>

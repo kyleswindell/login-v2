@@ -23,7 +23,7 @@
             <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                 <label class="block">
                     <span class="text-sm font-semibold text-slate-200">Severity</span>
-                    <select name="severity" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
+                    <select name="severity" class="ui-select mt-2">
                         <option value="">Any severity</option>
                         <option value="debug" @selected($filters['severity'] === 'debug')>Debug</option>
                         <option value="info" @selected($filters['severity'] === 'info')>Info</option>
@@ -35,7 +35,7 @@
 
                 <label class="block">
                     <span class="text-sm font-semibold text-slate-200">Handled</span>
-                    <select name="handled" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
+                    <select name="handled" class="ui-select mt-2">
                         <option value="">Any</option>
                         <option value="1" @selected($filters['handled'] === '1')>Handled</option>
                         <option value="0" @selected($filters['handled'] === '0')>Unhandled</option>
@@ -44,7 +44,7 @@
 
                 <label class="block">
                     <span class="text-sm font-semibold text-slate-200">Environment</span>
-                    <select name="environment" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
+                    <select name="environment" class="ui-select mt-2">
                         <option value="">Any environment</option>
                         @foreach ($environments as $environment)
                             <option value="{{ $environment }}" @selected($filters['environment'] === $environment)>{{ $environment }}</option>
@@ -54,7 +54,7 @@
 
                 <label class="block">
                     <span class="text-sm font-semibold text-slate-200">Exception Class</span>
-                    <select name="exception_class" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
+                    <select name="exception_class" class="ui-select mt-2">
                         <option value="">Any exception</option>
                         @foreach ($exceptionClasses as $exceptionClass)
                             <option value="{{ $exceptionClass }}" @selected($filters['exception_class'] === $exceptionClass)>{{ $exceptionClass }}</option>
@@ -64,12 +64,12 @@
 
                 <label class="block">
                     <span class="text-sm font-semibold text-slate-200">From</span>
-                    <input type="date" name="date_from" value="{{ $filters['date_from'] }}" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
+                    <input type="date" name="date_from" value="{{ $filters['date_from'] }}" class="ui-input mt-2">
                 </label>
 
                 <label class="block">
                     <span class="text-sm font-semibold text-slate-200">To</span>
-                    <input type="date" name="date_to" value="{{ $filters['date_to'] }}" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
+                    <input type="date" name="date_to" value="{{ $filters['date_to'] }}" class="ui-input mt-2">
                 </label>
             </div>
 
@@ -109,16 +109,7 @@
                                 {{ $log->occurredAtForTimezone($viewerTimezone)?->format('M j, Y g:i A T') ?? '—' }}
                             </td>
                             <td class="px-6 py-4">
-                                <span @class([
-                                    'inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em]',
-                                    'bg-slate-500/15 text-slate-300' => $log->severity === 'debug',
-                                    'bg-slate-700/60 text-slate-300' => $log->severity === 'info',
-                                    'bg-amber-500/15 text-amber-300' => $log->severity === 'warning',
-                                    'bg-rose-500/15 text-rose-300' => $log->severity === 'error',
-                                    'bg-red-600/20 text-red-300' => $log->severity === 'critical',
-                                ])>
-                                    {{ $log->severity }}
-                                </span>
+                                <x-ui.badge :status="match ($log->severity) { 'warning' => 'warning', 'error', 'critical' => 'danger', default => 'neutral' }" :label="$log->severity" :show-icon="false" />
                             </td>
                             <td class="max-w-xs px-6 py-4">
                                 <p class="truncate font-semibold text-white">{{ $log->message }}</p>
@@ -131,9 +122,9 @@
                             </td>
                             <td class="px-6 py-4">
                                 @if ($log->handled)
-                                    <span class="inline-flex rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-emerald-300">Handled</span>
+                                    <x-ui.badge label="Handled" semantic="success" :show-icon="false" />
                                 @else
-                                    <span class="inline-flex rounded-full bg-rose-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-rose-300">Unhandled</span>
+                                    <x-ui.badge label="Unhandled" semantic="danger" :show-icon="false" />
                                 @endif
                             </td>
                             <td class="px-6 py-4 text-slate-400">
@@ -168,7 +159,7 @@
                         <input type="hidden" name="date_from" value="{{ $filters['date_from'] }}">
                         <input type="hidden" name="date_to" value="{{ $filters['date_to'] }}">
                         <label class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Rows</label>
-                        <select name="per_page" onchange="this.form.submit()" class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100">
+                        <select name="per_page" onchange="this.form.submit()" class="ui-select !w-auto px-3 py-2 text-sm">
                             @foreach ([10, 25, 50, 100] as $option)
                                 <option value="{{ $option }}" @selected($perPage === $option)>{{ $option }}</option>
                             @endforeach
@@ -184,8 +175,8 @@
                     @php($prevPage = max(1, $logs->currentPage() - 1))
                     @php($nextPage = min($logs->lastPage(), $logs->currentPage() + 1))
                     <a href="{{ $logs->onFirstPage() ? '#' : $logs->url($prevPage) }}" @class([
-                        'rounded-lg border px-3 py-2 text-xs font-semibold uppercase tracking-[0.15em] transition',
-                        'border-slate-700 text-slate-300 hover:border-slate-600 hover:text-white' => ! $logs->onFirstPage(),
+                        'ui-action ui-action-xs',
+                        'ui-action-ghost' => ! $logs->onFirstPage(),
                         'cursor-not-allowed border-slate-800 text-slate-600' => $logs->onFirstPage(),
                     ])>Prev</a>
 
@@ -197,7 +188,7 @@
                         <input type="hidden" name="date_from" value="{{ $filters['date_from'] }}">
                         <input type="hidden" name="date_to" value="{{ $filters['date_to'] }}">
                         <input type="hidden" name="per_page" value="{{ $perPage }}">
-                        <select name="page" onchange="this.form.submit()" class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-slate-200">
+                        <select name="page" onchange="this.form.submit()" class="ui-select !w-auto px-3 py-2 text-xs font-semibold uppercase tracking-[0.1em]">
                             @for ($page = 1; $page <= $logs->lastPage(); $page++)
                                 <option value="{{ $page }}" @selected($page === $logs->currentPage())>Page {{ $page }}</option>
                             @endfor
@@ -205,8 +196,8 @@
                     </form>
 
                     <a href="{{ $logs->hasMorePages() ? $logs->url($nextPage) : '#' }}" @class([
-                        'rounded-lg border px-3 py-2 text-xs font-semibold uppercase tracking-[0.15em] transition',
-                        'border-slate-700 text-slate-300 hover:border-slate-600 hover:text-white' => $logs->hasMorePages(),
+                        'ui-action ui-action-xs',
+                        'ui-action-ghost' => $logs->hasMorePages(),
                         'cursor-not-allowed border-slate-800 text-slate-600' => ! $logs->hasMorePages(),
                     ])>Next</a>
                 </div>

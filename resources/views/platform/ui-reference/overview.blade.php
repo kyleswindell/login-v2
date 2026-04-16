@@ -32,11 +32,12 @@
             <ul class="mt-4 space-y-2 text-sm text-slate-300">
                 <li>1. Buttons and icon buttons</li>
                 <li>2. Badges and status indicators</li>
-                <li>3. Inputs, textareas, and selects</li>
-                <li>4. Table standards (general + log table)</li>
-                <li>5. Drawer and modal behavior</li>
-                <li>6. Toast and inline alert feedback</li>
-                <li>7. Sidebar and account-menu behavior standards</li>
+                <li>3. Inputs, textareas, selects, checkboxes, radios, and switches</li>
+                <li>4. Utility primitives: divider, tooltip, spinner, icon, label, and link</li>
+                <li>5. Table standards (general + log table)</li>
+                <li>6. Drawer and modal behavior</li>
+                <li>7. Toast and inline alert feedback</li>
+                <li>8. Sidebar, account-menu behavior, and layout scaffolding</li>
             </ul>
         </section>
 
@@ -68,7 +69,7 @@
                         <tr>
                             <td class="px-4 py-3 text-white">Badges + Status</td>
                             <td class="px-4 py-3"><a wire:navigate href="{{ route('platform.ui-reference.components.status') }}" class="text-sky-300 hover:text-sky-200">Components / Status</a></td>
-                            <td class="px-4 py-3">semantic, soft, outline, disabled</td>
+                            <td class="px-4 py-3">semantic, base, outline, inline status</td>
                             <td class="px-4 py-3">contrast-safe tokens</td>
                             <td class="px-4 py-3">table + inline display</td>
                             <td class="px-4 py-3">not color-only signal</td>
@@ -76,10 +77,18 @@
                         <tr>
                             <td class="px-4 py-3 text-white">Inputs + Forms</td>
                             <td class="px-4 py-3"><a wire:navigate href="{{ route('platform.ui-reference.components.forms') }}" class="text-sky-300 hover:text-sky-200">Components / Forms</a></td>
-                            <td class="px-4 py-3">default, focus, error, readonly, disabled</td>
+                            <td class="px-4 py-3">default, focus, error, readonly, disabled, selected</td>
                             <td class="px-4 py-3">light/dark parity required</td>
                             <td class="px-4 py-3">single + 2-col layouts</td>
                             <td class="px-4 py-3">labels + error links</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3 text-white">Utility Primitives</td>
+                            <td class="px-4 py-3"><a wire:navigate href="{{ route('platform.ui-reference.components.forms') }}" class="text-sky-300 hover:text-sky-200">Components / Forms</a></td>
+                            <td class="px-4 py-3">default, hover, focus, loading</td>
+                            <td class="px-4 py-3">token-aligned utility states</td>
+                            <td class="px-4 py-3">inline + wrapped examples</td>
+                            <td class="px-4 py-3">labels + tooltip semantics</td>
                         </tr>
                         <tr>
                             <td class="px-4 py-3 text-white">Table Baseline</td>
@@ -112,6 +121,14 @@
                             <td class="px-4 py-3">theme-safe shell</td>
                             <td class="px-4 py-3">desktop + mobile modal</td>
                             <td class="px-4 py-3">escape + focus order</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3 text-white">Layout + Scaffolding</td>
+                            <td class="px-4 py-3"><a wire:navigate href="{{ route('platform.ui-reference.patterns.navigation') }}" class="text-sky-300 hover:text-sky-200">Patterns / Navigation</a></td>
+                            <td class="px-4 py-3">passive structural baseline</td>
+                            <td class="px-4 py-3">spacing and panel tokens</td>
+                            <td class="px-4 py-3">container + grid collapse</td>
+                            <td class="px-4 py-3">structural grouping remains semantic</td>
                         </tr>
                     </tbody>
                 </table>

@@ -571,6 +571,95 @@
         background-color: var(--ui-alert-danger-bg);
         color: var(--ui-alert-danger-text);
     }
+
+    .ui-control-label {
+        @apply text-sm font-semibold;
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-control-copy {
+        @apply mt-2 text-xs;
+        color: var(--ui-text-muted);
+    }
+
+    .ui-input,
+    .ui-select,
+    .ui-textarea {
+        @apply w-full rounded-md border px-4 py-3 text-sm transition focus:outline-none;
+        border-color: var(--ui-border-default);
+        background-color: var(--ui-surface-elevated);
+        color: var(--ui-text-strong);
+    }
+
+    .ui-input::placeholder,
+    .ui-textarea::placeholder {
+        color: var(--ui-text-muted);
+    }
+
+    .ui-input:hover,
+    .ui-select:hover,
+    .ui-textarea:hover {
+        border-color: var(--ui-action-neutral-border-hover);
+    }
+
+    .ui-input:focus,
+    .ui-select:focus,
+    .ui-textarea:focus {
+        border-color: var(--ui-action-info-border-hover);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-action-info-bg-hover) 55%, transparent);
+    }
+
+    .ui-input[readonly],
+    .ui-input:disabled,
+    .ui-select:disabled,
+    .ui-textarea:disabled {
+        cursor: not-allowed;
+        background-color: color-mix(in srgb, var(--ui-surface) 75%, transparent);
+        color: var(--ui-text-muted);
+    }
+
+    .ui-input[aria-invalid='true'],
+    .ui-select[aria-invalid='true'],
+    .ui-textarea[aria-invalid='true'] {
+        border-color: var(--ui-alert-danger-border);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-alert-danger-bg) 45%, transparent);
+    }
+
+    .ui-divider {
+        @apply border-0;
+        border-top: 1px solid var(--ui-border-default);
+    }
+
+    .ui-link {
+        @apply inline-flex items-center gap-1 text-sm font-semibold underline decoration-transparent underline-offset-4 transition;
+        color: var(--ui-action-info-text);
+    }
+
+    .ui-link:hover {
+        color: var(--ui-action-info-text-hover);
+        text-decoration-color: currentColor;
+    }
+
+    .ui-link:focus-visible {
+        outline: 2px solid color-mix(in srgb, var(--ui-action-info-border-hover) 70%, white 10%);
+        outline-offset: 2px;
+        border-radius: 0.375rem;
+    }
+
+    .ui-spinner {
+        @apply inline-block rounded-full border-2 border-solid;
+        width: 1rem;
+        height: 1rem;
+        border-color: color-mix(in srgb, var(--ui-border-default) 85%, transparent);
+        border-top-color: var(--ui-action-info-border-hover);
+        animation: ui-spin 0.8s linear infinite;
+    }
+}
+
+@keyframes ui-spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @layer base {

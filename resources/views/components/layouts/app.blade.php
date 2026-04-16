@@ -73,7 +73,7 @@
                     <div class="mx-auto flex w-full max-w-[1700px] items-center gap-4 px-4 py-4 xl:px-6">
                         <button
                             type="button"
-                            class="inline-flex items-center justify-center rounded-md border border-slate-700 p-2 text-slate-300 transition hover:border-slate-500 hover:text-white lg:hidden"
+                            class="ui-icon-button lg:hidden"
                             aria-label="Toggle navigation"
                             data-sidebar-toggle
                         >

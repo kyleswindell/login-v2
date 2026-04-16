@@ -22,11 +22,11 @@
         </section>
 
         <section class="ui-card">
-            <p class="ui-kicker">Emphasis Levels</p>
-            <p class="mt-2 text-sm text-slate-400">Soft and outline variants should preserve semantic meaning without introducing color-only differentiation.</p>
+            <p class="ui-kicker">Allowed Variants</p>
+            <p class="mt-2 text-sm text-slate-400">Tier 1 badges are limited to base and outline variants only.</p>
             <div class="mt-4 grid gap-4 lg:grid-cols-2">
                 <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Soft Status</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Base Status</p>
                     <div class="mt-3 flex flex-wrap gap-2">
                         <x-ui.badge status="active" />
                         <x-ui.badge status="pending review" />
@@ -43,16 +43,7 @@
                     </div>
                 </div>
             </div>
-
-            <div class="mt-4 rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Solid Status</p>
-                <p class="mt-2 text-xs text-slate-500">Use sparingly for critical summary emphasis.</p>
-                <div class="mt-3 flex flex-wrap gap-2">
-                    <x-ui.badge status="critical" variant="solid" />
-                    <x-ui.badge status="failed" variant="solid" />
-                    <x-ui.badge status="needs action" variant="solid" />
-                </div>
-            </div>
+            <p class="mt-4 text-sm text-slate-400">Disabled is not part of the Tier 1 badge/status contract, so it is intentionally not shown here.</p>
         </section>
 
         <section class="ui-card">

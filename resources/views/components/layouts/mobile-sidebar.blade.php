@@ -12,7 +12,7 @@
     <div class="relative mb-4 flex items-center justify-center border-b border-slate-800 pb-3">
         <button
             type="button"
-            class="absolute left-0 inline-flex h-10 w-10 items-center justify-center rounded-md border border-slate-700 text-slate-200 transition hover:border-slate-500 hover:text-white"
+            class="absolute left-0 ui-icon-button"
             data-sidebar-toggle
             aria-label="Close navigation"
         >

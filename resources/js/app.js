@@ -695,6 +695,89 @@ const initMobileSidebarDock = () => {
     });
 };
 
+const initUiReferenceOverlayDemos = () => {
+    document.querySelectorAll('[data-ui-demo-overlay]').forEach((overlay) => {
+        if (overlay.dataset.uiDemoOverlayInit === '1') {
+            return;
+        }
+
+        overlay.dataset.uiDemoOverlayInit = '1';
+
+        const overlayKey = overlay.dataset.uiDemoOverlay;
+        const panel = overlay.querySelector('[data-ui-demo-panel]');
+        const closeButtons = overlay.querySelectorAll('[data-ui-demo-close]');
+        let lastFocusedElement = null;
+
+        const setOpen = (open) => {
+            overlay.classList.toggle('hidden', !open);
+            overlay.setAttribute('aria-hidden', open ? 'false' : 'true');
+            document.body.classList.toggle('overflow-hidden', open);
+
+            if (open) {
+                panel?.focus();
+                return;
+            }
+
+            if (lastFocusedElement instanceof HTMLElement) {
+                lastFocusedElement.focus();
+            }
+        };
+
+        document.querySelectorAll(`[data-ui-demo-overlay-open="${overlayKey}"]`).forEach((trigger) => {
+            if (trigger.dataset.uiDemoOverlayTriggerInit === '1') {
+                return;
+            }
+
+            trigger.dataset.uiDemoOverlayTriggerInit = '1';
+            trigger.addEventListener('click', (event) => {
+                event.preventDefault();
+                lastFocusedElement = trigger;
+                setOpen(true);
+            });
+        });
+
+        closeButtons.forEach((button) => {
+            button.addEventListener('click', () => setOpen(false));
+        });
+
+        overlay.addEventListener('click', (event) => {
+            if (event.target === overlay) {
+                setOpen(false);
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !overlay.classList.contains('hidden')) {
+                setOpen(false);
+            }
+        });
+    });
+
+    document.querySelectorAll('[data-ui-demo-toast-dismiss]').forEach((button) => {
+        if (button.dataset.uiDemoToastDismissInit === '1') {
+            return;
+        }
+
+        button.dataset.uiDemoToastDismissInit = '1';
+        button.addEventListener('click', () => {
+            button.closest('[data-ui-demo-toast]')?.classList.add('hidden');
+        });
+    });
+
+    document.querySelectorAll('[data-ui-demo-toast-reset]').forEach((button) => {
+        if (button.dataset.uiDemoToastResetInit === '1') {
+            return;
+        }
+
+        button.dataset.uiDemoToastResetInit = '1';
+        button.addEventListener('click', () => {
+            button.closest('[data-ui-demo-toast-root]')?.querySelectorAll('[data-ui-demo-toast]').forEach((toast) => {
+                toast.classList.remove('hidden');
+            });
+        });
+    });
+};
+
 document.addEventListener('DOMContentLoaded', initNotificationMenus);
 document.addEventListener('livewire:navigated', initNotificationMenus);
 document.addEventListener('DOMContentLoaded', initAccountMenu);
@@ -715,6 +798,8 @@ document.addEventListener('DOMContentLoaded', initSidebarToggle);
 document.addEventListener('livewire:navigated', initSidebarToggle);
 document.addEventListener('DOMContentLoaded', initThemeModeControls);
 document.addEventListener('livewire:navigated', initThemeModeControls);
+document.addEventListener('DOMContentLoaded', initUiReferenceOverlayDemos);
+document.addEventListener('livewire:navigated', initUiReferenceOverlayDemos);
 document.addEventListener('livewire:navigating', () => {
     applyThemeMode(getPreferredThemeMode(), false);
 });

@@ -9,7 +9,7 @@
             <p class="ui-page-header-copy">Tier 1 contract for filters, pagination, rows-per-page controls, empty states, and log drawer interactions.</p>
         </div>
 
-        <section class="ui-card">
+        <section id="workspace-table-baseline" class="ui-card">
             <div>
                 <p class="ui-kicker">General Table</p>
                 <h2 class="ui-card-title mt-2">Operator Data Grid Baseline</h2>
@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="ml-auto flex max-w-full items-center justify-end gap-3">
-                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="relative w-64 max-w-full flex-shrink-0" data-table-search-form>
+                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}#workspace-table-baseline" class="relative w-64 max-w-full flex-shrink-0" data-table-search-form>
                             <input type="hidden" name="workspace_status" value="{{ $workspaceFilters['status'] }}">
                             <input type="hidden" name="workspace_owner" value="{{ $workspaceFilters['owner'] }}">
                             <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
@@ -182,6 +182,65 @@
         </section>
 
         <section class="ui-card">
+            <p class="ui-kicker">Table State Validation</p>
+            <p class="mt-2 text-sm text-slate-400">These static review surfaces make loading and empty states explicit without relying on filter setup during manual review.</p>
+            <div class="mt-4 grid gap-6 xl:grid-cols-2">
+                <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Loading State</p>
+                    <div class="mt-3 overflow-x-auto rounded-lg border border-slate-800 bg-slate-950/70">
+                        <table class="min-w-[640px] w-full divide-y divide-slate-800">
+                            <thead class="bg-slate-900">
+                                <tr class="text-left text-xs uppercase tracking-[0.2em] text-slate-500">
+                                    <th class="px-5 py-3">Name</th>
+                                    <th class="px-5 py-3">Owner</th>
+                                    <th class="px-5 py-3">Status</th>
+                                    <th class="px-5 py-3">Updated</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm text-slate-300">
+                                <tr>
+                                    <td colspan="4" class="px-5 py-10">
+                                        <div class="flex flex-col items-center justify-center gap-3 text-center">
+                                            <span class="ui-spinner" aria-hidden="true"></span>
+                                            <div>
+                                                <p class="font-semibold text-white">Loading workspace rows</p>
+                                                <p class="mt-1 text-slate-400">Use this baseline to verify centered feedback, table framing, and non-jumping layout.</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Empty State</p>
+                    <div class="mt-3 overflow-x-auto rounded-lg border border-slate-800 bg-slate-950/70">
+                        <table class="min-w-[640px] w-full divide-y divide-slate-800">
+                            <thead class="bg-slate-900">
+                                <tr class="text-left text-xs uppercase tracking-[0.2em] text-slate-500">
+                                    <th class="px-5 py-3">Name</th>
+                                    <th class="px-5 py-3">Owner</th>
+                                    <th class="px-5 py-3">Status</th>
+                                    <th class="px-5 py-3">Updated</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm text-slate-300">
+                                <tr>
+                                    <td colspan="4" class="px-5 py-10 text-center">
+                                        <p class="font-semibold text-white">No workspace rows matched the current filters.</p>
+                                        <p class="mt-2 text-slate-400">The empty state stays inside the table baseline and preserves table structure for review.</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="audit-table-baseline" class="ui-card">
             <div>
                 <p class="ui-kicker">Logs Table</p>
                 <h2 class="ui-card-title mt-2">Audit Drawer Example</h2>
@@ -205,7 +264,7 @@
                     </form>
 
                     <div class="ml-auto flex max-w-full items-center justify-end gap-3">
-                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="relative w-64 max-w-full flex-shrink-0" data-table-search-form>
+                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}#audit-table-baseline" class="relative w-64 max-w-full flex-shrink-0" data-table-search-form>
                             <input type="hidden" name="audit_severity" value="{{ $auditFilters['severity'] }}">
                             <input type="hidden" name="audit_result" value="{{ $auditFilters['result'] }}">
                             <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
@@ -348,7 +407,7 @@
             </div>
         </section>
 
-        <section class="ui-card">
+        <section id="error-table-baseline" class="ui-card">
             <div>
                 <p class="ui-kicker">Logs Table</p>
                 <h2 class="ui-card-title mt-2">Error Drawer Example</h2>
@@ -371,7 +430,7 @@
                     </form>
 
                     <div class="ml-auto flex max-w-full items-center justify-end gap-3">
-                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="relative w-64 max-w-full flex-shrink-0" data-table-search-form>
+                        <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}#error-table-baseline" class="relative w-64 max-w-full flex-shrink-0" data-table-search-form>
                             <input type="hidden" name="error_severity" value="{{ $errorFilters['severity'] }}">
                             <input type="hidden" name="error_environment" value="{{ $errorFilters['environment'] }}">
                             <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">

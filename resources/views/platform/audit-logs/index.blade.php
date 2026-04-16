@@ -23,7 +23,7 @@
             <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                 <label class="block">
                     <span class="text-sm font-semibold text-slate-200">Event Type</span>
-                    <select name="event_type" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
+                    <select name="event_type" class="ui-select mt-2">
                         <option value="">Any event type</option>
                         @foreach ($eventTypes as $eventType)
                             <option value="{{ $eventType }}" @selected($filters['event_type'] === $eventType)>{{ $eventType }}</option>
@@ -33,7 +33,7 @@
 
                 <label class="block">
                     <span class="text-sm font-semibold text-slate-200">Actor</span>
-                    <select name="actor_id" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
+                    <select name="actor_id" class="ui-select mt-2">
                         <option value="">Any actor</option>
                         <option value="system" @selected($filters['actor_id'] === 'system')>System</option>
                         @foreach ($actorUsers as $actor)
@@ -46,7 +46,7 @@
 
                 <label class="block">
                     <span class="text-sm font-semibold text-slate-200">Result</span>
-                    <select name="result" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
+                    <select name="result" class="ui-select mt-2">
                         <option value="">Any result</option>
                         <option value="success" @selected($filters['result'] === 'success')>Success</option>
                         <option value="failure" @selected($filters['result'] === 'failure')>Failure</option>
@@ -55,7 +55,7 @@
 
                 <label class="block">
                     <span class="text-sm font-semibold text-slate-200">Severity</span>
-                    <select name="severity" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0">
+                    <select name="severity" class="ui-select mt-2">
                         <option value="">Any severity</option>
                         <option value="info" @selected($filters['severity'] === 'info')>Info</option>
                         <option value="notice" @selected($filters['severity'] === 'notice')>Notice</option>
@@ -115,25 +115,10 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4">
-                                <span @class([
-                                    'inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em]',
-                                    'bg-emerald-500/15 text-emerald-300' => $log->result === 'success',
-                                    'bg-rose-500/15 text-rose-300' => $log->result !== 'success',
-                                ])>
-                                    {{ $log->result }}
-                                </span>
+                                <x-ui.badge :status="$log->result === 'success' ? 'success' : 'failed'" :show-icon="false" />
                             </td>
                             <td class="px-6 py-4">
-                                <span @class([
-                                    'inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em]',
-                                    'bg-slate-700/60 text-slate-300' => $log->severity === 'info',
-                                    'bg-violet-500/15 text-violet-300' => $log->severity === 'notice',
-                                    'bg-amber-500/15 text-amber-300' => $log->severity === 'warning',
-                                    'bg-rose-500/15 text-rose-300' => $log->severity === 'error',
-                                    'bg-red-600/20 text-red-300' => $log->severity === 'critical',
-                                ])>
-                                    {{ $log->severity }}
-                                </span>
+                                <x-ui.badge :status="$log->severity === 'error' || $log->severity === 'critical' ? 'danger' : $log->severity" :label="$log->severity" :show-icon="false" />
                             </td>
                             <td class="px-6 py-4 text-slate-400">
                                 <p>{{ $log->route ?? 'n/a' }}</p>
@@ -164,7 +149,7 @@
                         <input type="hidden" name="result" value="{{ $filters['result'] }}">
                         <input type="hidden" name="severity" value="{{ $filters['severity'] }}">
                         <label class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Rows</label>
-                        <select name="per_page" onchange="this.form.submit()" class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100">
+                        <select name="per_page" onchange="this.form.submit()" class="ui-select !w-auto px-3 py-2 text-sm">
                             @foreach ([10, 25, 50, 100] as $option)
                                 <option value="{{ $option }}" @selected($perPage === $option)>{{ $option }}</option>
                             @endforeach
@@ -180,8 +165,8 @@
                     @php($prevPage = max(1, $logs->currentPage() - 1))
                     @php($nextPage = min($logs->lastPage(), $logs->currentPage() + 1))
                     <a href="{{ $logs->onFirstPage() ? '#' : $logs->url($prevPage) }}" @class([
-                        'rounded-lg border px-3 py-2 text-xs font-semibold uppercase tracking-[0.15em] transition',
-                        'border-slate-700 text-slate-300 hover:border-slate-600 hover:text-white' => ! $logs->onFirstPage(),
+                        'ui-action ui-action-xs',
+                        'ui-action-ghost' => ! $logs->onFirstPage(),
                         'cursor-not-allowed border-slate-800 text-slate-600' => $logs->onFirstPage(),
                     ])>Prev</a>
 
@@ -191,7 +176,7 @@
                         <input type="hidden" name="result" value="{{ $filters['result'] }}">
                         <input type="hidden" name="severity" value="{{ $filters['severity'] }}">
                         <input type="hidden" name="per_page" value="{{ $perPage }}">
-                        <select name="page" onchange="this.form.submit()" class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-slate-200">
+                        <select name="page" onchange="this.form.submit()" class="ui-select !w-auto px-3 py-2 text-xs font-semibold uppercase tracking-[0.1em]">
                             @for ($page = 1; $page <= $logs->lastPage(); $page++)
                                 <option value="{{ $page }}" @selected($page === $logs->currentPage())>Page {{ $page }}</option>
                             @endfor
@@ -199,8 +184,8 @@
                     </form>
 
                     <a href="{{ $logs->hasMorePages() ? $logs->url($nextPage) : '#' }}" @class([
-                        'rounded-lg border px-3 py-2 text-xs font-semibold uppercase tracking-[0.15em] transition',
-                        'border-slate-700 text-slate-300 hover:border-slate-600 hover:text-white' => $logs->hasMorePages(),
+                        'ui-action ui-action-xs',
+                        'ui-action-ghost' => $logs->hasMorePages(),
                         'cursor-not-allowed border-slate-800 text-slate-600' => ! $logs->hasMorePages(),
                     ])>Next</a>
                 </div>

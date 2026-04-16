@@ -66,7 +66,7 @@
         <section class="ui-card" data-ui-demo-toast-root>
             <p class="ui-kicker">Toast Baseline</p>
             <div class="mt-2 flex flex-wrap items-center gap-3">
-                <p class="text-sm text-slate-400">Toasts should use a polite live region for non-critical updates and an assertive region for high-severity failures.</p>
+                <p class="text-sm text-slate-400">Toasts should use a polite live region for non-critical updates, an assertive region for high-severity failures, and only minimal baseline entry/exit motion.</p>
                 <button type="button" class="ui-action ui-action-ghost ui-action-xs" data-ui-demo-toast-reset>Reset Toast Stack</button>
             </div>
             <div class="mt-4 flex flex-col gap-3">

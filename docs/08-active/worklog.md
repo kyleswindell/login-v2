@@ -14,6 +14,7 @@
 - Applied the Batch A visual review fixes to the shared Tier 1 presentation layer: alert/toast contrast, danger and warning palette tuning, form validation text contrast, link/spinner visibility, checkbox focus shape, and interactive switch normalization.
 - Applied the follow-up Batch A visual review fixes to disabled-state clarity, dark-mode primary/info separation, dark-mode soft variant separation, light-mode switch visibility, lighter light-mode table hover, and account-dropdown parity token normalization.
 - Corrected a follow-up implementation issue in the shared switch CSS after the first deploy attempt exposed an unsupported `@apply peer` usage in the Tailwind build pipeline.
+- Reclassified minimal toast entry/exit motion into the Tier 1 toast baseline and added a standards-aligned baseline appear/dismiss animation for the UI Reference toast surface.
 
 
 ## Changes
@@ -30,6 +31,7 @@
 - `resources/views/platform/ui-reference/components/status.blade.php`
 - `resources/views/platform/ui-reference/patterns/navigation.blade.php`
 - `resources/views/platform/ui-reference/patterns/overlays.blade.php`
+- `docs/02-standards/ui/contracts/Tier 1 - Toast And Inline Alert Contract.md`
 - `resources/views/platform/ui-reference/overview.blade.php`
 - `resources/views/platform/ui-reference/patterns/tables.blade.php`
 - `resources/views/livewire/platform/dashboard.blade.php`
@@ -49,4 +51,5 @@
 - Result after the final Tier 1 coverage cleanup pass: `PASS` with `7` tests and `25` assertions.
 - Result after the visual review fix pass: `PASS` with `7` tests and `25` assertions.
 - Result after the follow-up visual review fix pass: `PASS` with `7` tests and `25` assertions.
+- Result after the toast baseline motion correction pass: `PASS` with `7` tests and `25` assertions.
 - Batch A implementation is now prepared for manual review; manual review itself is still pending.

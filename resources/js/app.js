@@ -696,6 +696,40 @@ const initMobileSidebarDock = () => {
 };
 
 const initUiReferenceOverlayDemos = () => {
+    const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+    const animateToastVisibility = (toast, makeVisible) => {
+        if (!(toast instanceof HTMLElement)) {
+            return;
+        }
+
+        if (prefersReducedMotion) {
+            toast.classList.toggle('hidden', !makeVisible);
+            toast.classList.remove('is-entering', 'is-exiting');
+            return;
+        }
+
+        const finalizeVisible = () => {
+            toast.classList.remove('is-entering');
+        };
+
+        const finalizeHidden = () => {
+            toast.classList.add('hidden');
+            toast.classList.remove('is-exiting');
+        };
+
+        if (makeVisible) {
+            toast.classList.remove('hidden', 'is-exiting');
+            toast.classList.add('is-entering');
+            requestAnimationFrame(() => {
+                requestAnimationFrame(finalizeVisible);
+            });
+            return;
+        }
+
+        toast.classList.add('is-exiting');
+        window.setTimeout(finalizeHidden, 170);
+    };
+
     document.querySelectorAll('[data-ui-demo-overlay]').forEach((overlay) => {
         if (overlay.dataset.uiDemoOverlayInit === '1') {
             return;
@@ -760,7 +794,7 @@ const initUiReferenceOverlayDemos = () => {
 
         button.dataset.uiDemoToastDismissInit = '1';
         button.addEventListener('click', () => {
-            button.closest('[data-ui-demo-toast]')?.classList.add('hidden');
+            animateToastVisibility(button.closest('[data-ui-demo-toast]'), false);
         });
     });
 
@@ -772,7 +806,7 @@ const initUiReferenceOverlayDemos = () => {
         button.dataset.uiDemoToastResetInit = '1';
         button.addEventListener('click', () => {
             button.closest('[data-ui-demo-toast-root]')?.querySelectorAll('[data-ui-demo-toast]').forEach((toast) => {
-                toast.classList.remove('hidden');
+                animateToastVisibility(toast, true);
             });
         });
     });

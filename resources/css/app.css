@@ -599,6 +599,18 @@
     .ui-toast {
         @apply ml-auto w-full max-w-md rounded-lg border px-4 py-3 text-sm shadow-xl;
         box-shadow: 0 18px 30px color-mix(in srgb, var(--ui-shadow-color) 30%, transparent);
+        opacity: 1;
+        transform: translateY(0);
+        transition:
+            opacity 160ms ease,
+            transform 160ms ease;
+        will-change: opacity, transform;
+    }
+
+    .ui-toast.is-entering,
+    .ui-toast.is-exiting {
+        opacity: 0;
+        transform: translateY(0.5rem);
     }
 
     .ui-toast-neutral {
@@ -770,6 +782,18 @@
         border-color: var(--ui-spinner-track);
         border-top-color: var(--ui-spinner-head);
         animation: ui-spin 0.8s linear infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-toast {
+            transition: none;
+        }
+
+        .ui-toast.is-entering,
+        .ui-toast.is-exiting {
+            opacity: 1;
+            transform: none;
+        }
     }
 }
 

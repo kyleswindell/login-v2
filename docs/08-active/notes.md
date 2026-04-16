@@ -11,6 +11,7 @@
 - The remaining coverage issues after the prior pass were mostly review-surface precision issues: the overview still implied a disabled badge state that is not part of the Tier 1 contract, the switch example was not a real control, and table loading/empty states were not isolated enough for clean visual review.
 - The manual visual review surfaced a separate set of implementation-only polish issues in Batch A: semantic contrast in light mode, danger/warning hue tuning, link readability, spinner visibility, checkbox focus rendering, and switch/toggle interaction fidelity.
 - The follow-up visual review pass identified additional Tier 1 presentation issues around disabled-state clarity, primary/info separation in dark mode, soft-vs-base distinction, and ad hoc parity tokens in the navigation review surface.
+- The current toast baseline work required a standards correction: the active standards tree did not contain a separate Tier 2 notification/toast addendum entry for toast animation, but the Tier 1 toast contract still discouraged animated entry/exit even though minimal baseline motion is appropriate for Tier 1.
 
 
 ## Decisions
@@ -26,6 +27,7 @@
 - Normalize the account dropdown parity chips to canonical badge styling instead of leaving them as ad hoc token pills.
 - Treat disabled-state clarity as a shared Tier 1 action/icon-button concern rather than a one-off view-level opacity tweak.
 - The first deploy attempt for this follow-up pass failed during `vite build` on the server because `@apply peer` is not accepted in this Tailwind setup; the switch helper was revised to use explicit CSS instead.
+- Treat minimal toast appear/dismiss motion as a Tier 1 baseline behavior and keep it reduced-motion-safe; do not expand that into richer notification-system logic in Batch A.
 
 
 ## Risks / Questions
@@ -36,3 +38,4 @@
 - Docker verification was re-run after the visual review fix pass and the targeted UI Reference suite remained green.
 - Docker verification was refreshed after the latest disabled/info/soft/navigation parity adjustments and the targeted suite remained green.
 - Docker verification remained green after replacing the unsupported `@apply peer` switch helper implementation.
+- Docker verification was refreshed after the Tier 1 toast motion correction pass and the targeted suite remained green.

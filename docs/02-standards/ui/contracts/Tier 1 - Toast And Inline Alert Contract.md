@@ -23,13 +23,18 @@ This document defines the canonical scope and intent for Tier 1 - Toast And Inli
 - Light theme behavior: preserve border/text contrast.
 - Dark theme behavior: maintain readable contrast over darker surfaces.
 - Density/size variants: inline full-width blocks and compact stacked toast cards.
+- Allowed variants: `base` only.
+- Allowed semantic subset:
+  - Toast: `neutral`, `success`, `warning`, `danger`, `info`, `notice`
+  - Inline Alert: `neutral`, `success`, `warning`, `danger`, `info`, `notice`
 
 ### 4. Behavior Rules
 
 - Default behavior: feedback appears near action context.
+- Minimal motion behavior: toast entry and dismiss may use a short baseline fade/slide transition when motion is allowed.
 - Hover/focus/active behavior: dismiss controls remain visible and focusable.
 - Disabled/loading behavior: not applicable.
-- Error/warning/success behavior (if applicable): info/success/warning/danger set.
+- Error/warning/success behavior (if applicable): use only the allowed semantic subset defined above.
 - Responsive behavior (desktop/tablet/mobile): toast stack aligns and does not block primary controls.
 
 ### 5. Accessibility Requirements
@@ -39,7 +44,7 @@ This document defines the canonical scope and intent for Tier 1 - Toast And Inli
 - Focus-visible rules: visible focus on dismiss controls.
 - Contrast requirements: WCAG 2.2 AA baseline.
 - Screen reader behavior: live regions set to polite/assertive by severity.
-- Reduced-motion behavior: avoid reliance on animated entrance/exit.
+- Reduced-motion behavior: baseline toast entry/exit motion must be minimal and disabled when reduced motion is requested.
 
 ### 6. Content Rules
 

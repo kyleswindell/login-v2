@@ -11,6 +11,7 @@
 - Added live drawer/modal demos, full toast and inline alert severity coverage, and a clearer desktop/mobile navigation inspection surface.
 - Re-ran Docker verification after the final UI Reference pass and kept the targeted suite green.
 - Closed the remaining Tier 1 UI Reference visibility gaps by adding explicit table loading/empty-state examples, replacing the visual-only switch sample with real switch controls, clarifying badge/status contract coverage, adding a loading overlay action example, and making icon button hover/active snapshots explicit.
+- Applied the Batch A visual review fixes to the shared Tier 1 presentation layer: alert/toast contrast, danger and warning palette tuning, form validation text contrast, link/spinner visibility, checkbox focus shape, and interactive switch normalization.
 
 
 ## Changes
@@ -27,6 +28,7 @@
 - `resources/views/platform/ui-reference/patterns/navigation.blade.php`
 - `resources/views/platform/ui-reference/patterns/overlays.blade.php`
 - `resources/views/platform/ui-reference/overview.blade.php`
+- `resources/views/platform/ui-reference/patterns/tables.blade.php`
 - `resources/views/livewire/platform/dashboard.blade.php`
 - `resources/views/components/layouts/app.blade.php`
 - `resources/views/components/layouts/mobile-sidebar.blade.php`
@@ -42,4 +44,5 @@
 - Result after test fixes: `PASS` with `7` tests and `25` assertions.
 - Result after the final UI Reference completion pass: `PASS` with `7` tests and `25` assertions.
 - Result after the final Tier 1 coverage cleanup pass: `PASS` with `7` tests and `25` assertions.
+- Result after the visual review fix pass: `PASS` with `7` tests and `25` assertions.
 - Batch A implementation is now prepared for manual review; manual review itself is still pending.

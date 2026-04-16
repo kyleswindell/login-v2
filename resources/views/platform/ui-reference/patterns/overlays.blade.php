@@ -57,7 +57,7 @@
                 <div class="ui-inline-alert border-slate-700 bg-slate-900/70 text-slate-200" role="status">Neutral: Workspace defaults are unchanged.</div>
                 <div class="ui-inline-alert ui-inline-alert-info" role="status">Info: Workspace settings were loaded from policy defaults.</div>
                 <div class="ui-inline-alert ui-inline-alert-success" role="status">Success: Notification digest preferences updated.</div>
-                <div class="ui-inline-alert border-violet-500/40 bg-violet-500/10 text-violet-100" role="status">Notice: Review handoff was scheduled for the next batch pass.</div>
+                <div class="ui-inline-alert ui-inline-alert-notice" role="status">Notice: Review handoff was scheduled for the next batch pass.</div>
                 <div class="ui-inline-alert ui-inline-alert-warning" role="alert">Warning: Audit export contains redacted values.</div>
                 <div class="ui-inline-alert ui-inline-alert-danger" role="alert">Danger: Failed to persist queue escalation policy.</div>
             </div>
@@ -70,7 +70,7 @@
                 <button type="button" class="ui-action ui-action-ghost ui-action-xs" data-ui-demo-toast-reset>Reset Toast Stack</button>
             </div>
             <div class="mt-4 flex flex-col gap-3">
-                <div data-ui-demo-toast class="ml-auto w-full max-w-md rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 shadow-xl shadow-black/30" role="status" aria-live="polite">
+                <div data-ui-demo-toast class="ui-toast ui-toast-neutral" role="status" aria-live="polite">
                     <div class="flex items-start justify-between gap-3">
                         <div>
                             <p class="font-semibold text-white">Neutral</p>
@@ -79,7 +79,7 @@
                         <button type="button" class="ui-action ui-action-ghost ui-action-xs" data-ui-demo-toast-dismiss>Dismiss</button>
                     </div>
                 </div>
-                <div data-ui-demo-toast class="ml-auto w-full max-w-md rounded-lg border border-cyan-500/40 bg-cyan-500/10 px-4 py-3 text-sm text-cyan-100 shadow-xl shadow-black/30" role="status" aria-live="polite">
+                <div data-ui-demo-toast class="ui-toast ui-toast-info" role="status" aria-live="polite">
                     <div class="flex items-start justify-between gap-3">
                         <div>
                             <p class="font-semibold">Info</p>
@@ -88,7 +88,7 @@
                         <button type="button" class="ui-action ui-action-ghost ui-action-xs" data-ui-demo-toast-dismiss>Dismiss</button>
                     </div>
                 </div>
-                <div data-ui-demo-toast class="ml-auto w-full max-w-md rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100 shadow-xl shadow-black/30" role="status" aria-live="polite">
+                <div data-ui-demo-toast class="ui-toast ui-toast-success" role="status" aria-live="polite">
                     <div class="flex items-start justify-between gap-3">
                         <div>
                             <p class="font-semibold">Success</p>
@@ -97,7 +97,7 @@
                         <button type="button" class="ui-action ui-action-ghost ui-action-xs" data-ui-demo-toast-dismiss>Dismiss</button>
                     </div>
                 </div>
-                <div data-ui-demo-toast class="ml-auto w-full max-w-md rounded-lg border border-violet-500/40 bg-violet-500/10 px-4 py-3 text-sm text-violet-100 shadow-xl shadow-black/30" role="status" aria-live="polite">
+                <div data-ui-demo-toast class="ui-toast ui-toast-notice" role="status" aria-live="polite">
                     <div class="flex items-start justify-between gap-3">
                         <div>
                             <p class="font-semibold">Notice</p>
@@ -106,7 +106,7 @@
                         <button type="button" class="ui-action ui-action-ghost ui-action-xs" data-ui-demo-toast-dismiss>Dismiss</button>
                     </div>
                 </div>
-                <div data-ui-demo-toast class="ml-auto w-full max-w-md rounded-lg border border-amber-500/50 bg-amber-500/10 px-4 py-3 text-sm text-amber-100 shadow-xl shadow-black/30" role="alert" aria-live="assertive">
+                <div data-ui-demo-toast class="ui-toast ui-toast-warning" role="alert" aria-live="assertive">
                     <div class="flex items-start justify-between gap-3">
                         <div>
                             <p class="font-semibold">Warning</p>
@@ -115,7 +115,7 @@
                         <button type="button" class="ui-action ui-action-ghost ui-action-xs" data-ui-demo-toast-dismiss>Dismiss</button>
                     </div>
                 </div>
-                <div data-ui-demo-toast class="ml-auto w-full max-w-md rounded-lg border border-rose-500/50 bg-rose-500/10 px-4 py-3 text-sm text-rose-100 shadow-xl shadow-black/30" role="alert" aria-live="assertive">
+                <div data-ui-demo-toast class="ui-toast ui-toast-danger" role="alert" aria-live="assertive">
                     <div class="flex items-start justify-between gap-3">
                         <div>
                             <p class="font-semibold">Danger</p>
@@ -198,10 +198,10 @@
         <div data-ui-demo-overlay="reference-modal" class="fixed inset-0 z-50 hidden bg-black/70 px-4 py-8" aria-hidden="true">
             <div class="mx-auto flex min-h-full max-w-xl items-center justify-center">
                 <div class="w-full rounded-xl border border-slate-700 bg-slate-950 p-6 shadow-2xl shadow-black/40" data-ui-demo-panel tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="reference-modal-title">
-                    <p class="text-xs font-semibold uppercase tracking-[0.3em] text-rose-300">Modal Baseline</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.3em] text-red-300">Modal Baseline</p>
                     <h2 id="reference-modal-title" class="mt-2 text-2xl font-semibold text-white">Delete Workspace?</h2>
                     <p class="mt-3 text-sm text-slate-400">This destructive action is blocking, explicit, and keeps the consequence language visible.</p>
-                    <div class="mt-4 rounded-lg border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-100">
+                    <div class="ui-inline-alert ui-inline-alert-danger mt-4">
                         This removes linked policies and cannot be undone.
                     </div>
                     <div class="mt-6 flex flex-wrap justify-end gap-3">

@@ -566,9 +566,61 @@
         color: var(--ui-alert-warning-text);
     }
 
+    .ui-inline-alert-notice {
+        border-color: var(--ui-alert-notice-border);
+        background-color: var(--ui-alert-notice-bg);
+        color: var(--ui-alert-notice-text);
+    }
+
     .ui-inline-alert-danger {
         border-color: var(--ui-alert-danger-border);
         background-color: var(--ui-alert-danger-bg);
+        color: var(--ui-alert-danger-text);
+    }
+
+    .ui-toast {
+        @apply ml-auto w-full max-w-md rounded-lg border px-4 py-3 text-sm shadow-xl;
+        box-shadow: 0 18px 30px color-mix(in srgb, var(--ui-shadow-color) 30%, transparent);
+    }
+
+    .ui-toast-neutral {
+        border-color: var(--ui-border-default);
+        background-color: var(--ui-surface-elevated);
+        color: var(--ui-text-strong);
+    }
+
+    .ui-toast-info {
+        border-color: var(--ui-alert-info-border);
+        background-color: color-mix(in srgb, var(--ui-alert-info-bg) 90%, var(--ui-surface-elevated));
+        color: var(--ui-alert-info-text);
+    }
+
+    .ui-toast-success {
+        border-color: var(--ui-alert-success-border);
+        background-color: color-mix(in srgb, var(--ui-alert-success-bg) 90%, var(--ui-surface-elevated));
+        color: var(--ui-alert-success-text);
+    }
+
+    .ui-toast-notice {
+        border-color: var(--ui-alert-notice-border);
+        background-color: color-mix(in srgb, var(--ui-alert-notice-bg) 90%, var(--ui-surface-elevated));
+        color: var(--ui-alert-notice-text);
+    }
+
+    .ui-toast-warning {
+        border-color: var(--ui-alert-warning-border);
+        background-color: color-mix(in srgb, var(--ui-alert-warning-bg) 90%, var(--ui-surface-elevated));
+        color: var(--ui-alert-warning-text);
+    }
+
+    .ui-toast-danger {
+        border-color: var(--ui-alert-danger-border);
+        background-color: color-mix(in srgb, var(--ui-alert-danger-bg) 90%, var(--ui-surface-elevated));
+        color: var(--ui-alert-danger-text);
+    }
+
+    .ui-control-error {
+        @apply mt-2 text-xs;
         color: var(--ui-alert-danger-text);
     }
 
@@ -650,8 +702,8 @@
         @apply inline-block rounded-full border-2 border-solid;
         width: 1rem;
         height: 1rem;
-        border-color: color-mix(in srgb, var(--ui-border-default) 85%, transparent);
-        border-top-color: var(--ui-action-info-border-hover);
+        border-color: var(--ui-spinner-track);
+        border-top-color: var(--ui-spinner-head);
         animation: ui-spin 0.8s linear infinite;
     }
 }
@@ -673,6 +725,8 @@
         --ui-text-secondary: rgb(212 212 216);
         --ui-text-muted: rgb(161 161 170);
         --ui-shadow-color: rgb(0 0 0);
+        --ui-spinner-track: rgb(113 113 122 / 0.65);
+        --ui-spinner-head: rgb(147 197 253);
 
         --ui-action-neutral-border: rgb(82 82 91);
         --ui-action-neutral-bg: rgb(39 39 42 / 0.7);
@@ -695,19 +749,19 @@
         --ui-action-success-bg-hover: rgb(5 150 105 / 0.35);
         --ui-action-success-text-hover: rgb(236 253 245);
 
-        --ui-action-warning-border: rgb(217 119 6 / 0.5);
-        --ui-action-warning-bg: rgb(217 119 6 / 0.22);
-        --ui-action-warning-text: rgb(254 243 199);
-        --ui-action-warning-border-hover: rgb(217 119 6 / 0.7);
-        --ui-action-warning-bg-hover: rgb(217 119 6 / 0.35);
-        --ui-action-warning-text-hover: rgb(255 251 235);
+        --ui-action-warning-border: rgb(245 158 11 / 0.55);
+        --ui-action-warning-bg: rgb(245 158 11 / 0.22);
+        --ui-action-warning-text: rgb(254 240 138);
+        --ui-action-warning-border-hover: rgb(250 204 21 / 0.75);
+        --ui-action-warning-bg-hover: rgb(245 158 11 / 0.35);
+        --ui-action-warning-text-hover: rgb(254 249 195);
 
-        --ui-action-danger-border: rgb(225 29 72 / 0.45);
-        --ui-action-danger-bg: rgb(225 29 72 / 0.22);
-        --ui-action-danger-text: rgb(255 228 230);
-        --ui-action-danger-border-hover: rgb(225 29 72 / 0.65);
-        --ui-action-danger-bg-hover: rgb(225 29 72 / 0.35);
-        --ui-action-danger-text-hover: rgb(255 241 242);
+        --ui-action-danger-border: rgb(239 68 68 / 0.5);
+        --ui-action-danger-bg: rgb(220 38 38 / 0.22);
+        --ui-action-danger-text: rgb(254 226 226);
+        --ui-action-danger-border-hover: rgb(248 113 113 / 0.7);
+        --ui-action-danger-bg-hover: rgb(220 38 38 / 0.35);
+        --ui-action-danger-text-hover: rgb(254 242 242);
 
         --ui-action-notice-border: rgb(124 58 237 / 0.45);
         --ui-action-notice-bg: rgb(124 58 237 / 0.22);
@@ -742,15 +796,15 @@
         --ui-action-soft-success-text: rgb(209 250 229);
         --ui-action-soft-success-bg-hover: rgb(5 150 105 / 0.3);
 
-        --ui-action-soft-warning-border: rgb(217 119 6 / 0.6);
-        --ui-action-soft-warning-bg: rgb(217 119 6 / 0.2);
-        --ui-action-soft-warning-text: rgb(254 243 199);
-        --ui-action-soft-warning-bg-hover: rgb(217 119 6 / 0.3);
+        --ui-action-soft-warning-border: rgb(245 158 11 / 0.6);
+        --ui-action-soft-warning-bg: rgb(245 158 11 / 0.2);
+        --ui-action-soft-warning-text: rgb(254 240 138);
+        --ui-action-soft-warning-bg-hover: rgb(245 158 11 / 0.3);
 
-        --ui-action-soft-danger-border: rgb(225 29 72 / 0.55);
-        --ui-action-soft-danger-bg: rgb(225 29 72 / 0.2);
-        --ui-action-soft-danger-text: rgb(255 228 230);
-        --ui-action-soft-danger-bg-hover: rgb(225 29 72 / 0.3);
+        --ui-action-soft-danger-border: rgb(239 68 68 / 0.6);
+        --ui-action-soft-danger-bg: rgb(220 38 38 / 0.2);
+        --ui-action-soft-danger-text: rgb(254 226 226);
+        --ui-action-soft-danger-bg-hover: rgb(220 38 38 / 0.3);
 
         --ui-action-soft-notice-border: rgb(124 58 237 / 0.55);
         --ui-action-soft-notice-bg: rgb(124 58 237 / 0.2);
@@ -774,13 +828,13 @@
         --ui-action-outline-success-text: rgb(167 243 208);
         --ui-action-outline-success-bg-hover: rgb(5 150 105 / 0.18);
 
-        --ui-action-outline-warning-border: rgb(251 191 36);
-        --ui-action-outline-warning-text: rgb(252 211 77);
-        --ui-action-outline-warning-bg-hover: rgb(217 119 6 / 0.18);
+        --ui-action-outline-warning-border: rgb(250 204 21);
+        --ui-action-outline-warning-text: rgb(253 224 71);
+        --ui-action-outline-warning-bg-hover: rgb(245 158 11 / 0.18);
 
-        --ui-action-outline-danger-border: rgb(251 113 133);
-        --ui-action-outline-danger-text: rgb(253 164 175);
-        --ui-action-outline-danger-bg-hover: rgb(225 29 72 / 0.18);
+        --ui-action-outline-danger-border: rgb(248 113 113);
+        --ui-action-outline-danger-text: rgb(252 165 165);
+        --ui-action-outline-danger-bg-hover: rgb(220 38 38 / 0.18);
 
         --ui-action-outline-notice-border: rgb(167 139 250);
         --ui-action-outline-notice-text: rgb(196 181 253);
@@ -813,10 +867,10 @@
         --ui-status-info-text: rgb(165 243 252);
         --ui-status-success-bg: rgb(5 150 105 / 0.2);
         --ui-status-success-text: rgb(167 243 208);
-        --ui-status-warning-bg: rgb(217 119 6 / 0.2);
-        --ui-status-warning-text: rgb(253 230 138);
-        --ui-status-danger-bg: rgb(225 29 72 / 0.2);
-        --ui-status-danger-text: rgb(253 164 175);
+        --ui-status-warning-bg: rgb(245 158 11 / 0.2);
+        --ui-status-warning-text: rgb(253 224 71);
+        --ui-status-danger-bg: rgb(220 38 38 / 0.2);
+        --ui-status-danger-text: rgb(252 165 165);
         --ui-status-notice-bg: rgb(124 58 237 / 0.2);
         --ui-status-notice-text: rgb(196 181 253);
         --ui-status-solid-text: rgb(248 250 252);
@@ -824,7 +878,7 @@
         --ui-status-info-solid-bg: rgb(8 145 178);
         --ui-status-success-solid-bg: rgb(5 150 105);
         --ui-status-warning-solid-bg: rgb(217 119 6);
-        --ui-status-danger-solid-bg: rgb(225 29 72);
+        --ui-status-danger-solid-bg: rgb(220 38 38);
         --ui-status-notice-solid-bg: rgb(124 58 237);
 
         --ui-alert-info-border: rgb(8 145 178 / 0.45);
@@ -833,12 +887,15 @@
         --ui-alert-success-border: rgb(5 150 105 / 0.45);
         --ui-alert-success-bg: rgb(5 150 105 / 0.14);
         --ui-alert-success-text: rgb(209 250 229);
-        --ui-alert-warning-border: rgb(217 119 6 / 0.5);
-        --ui-alert-warning-bg: rgb(217 119 6 / 0.14);
-        --ui-alert-warning-text: rgb(254 243 199);
-        --ui-alert-danger-border: rgb(225 29 72 / 0.45);
-        --ui-alert-danger-bg: rgb(225 29 72 / 0.14);
-        --ui-alert-danger-text: rgb(255 228 230);
+        --ui-alert-warning-border: rgb(245 158 11 / 0.5);
+        --ui-alert-warning-bg: rgb(245 158 11 / 0.14);
+        --ui-alert-warning-text: rgb(254 249 195);
+        --ui-alert-notice-border: rgb(124 58 237 / 0.45);
+        --ui-alert-notice-bg: rgb(124 58 237 / 0.14);
+        --ui-alert-notice-text: rgb(221 214 254);
+        --ui-alert-danger-border: rgb(239 68 68 / 0.5);
+        --ui-alert-danger-bg: rgb(220 38 38 / 0.14);
+        --ui-alert-danger-text: rgb(254 226 226);
     }
 
     html,
@@ -856,6 +913,8 @@
         --ui-text-secondary: rgb(51 65 85);
         --ui-text-muted: rgb(100 116 139);
         --ui-shadow-color: rgb(148 163 184);
+        --ui-spinner-track: rgb(148 163 184 / 0.4);
+        --ui-spinner-head: rgb(3 105 161);
 
         --ui-action-neutral-border: rgb(203 213 225);
         --ui-action-neutral-bg: rgb(255 255 255);
@@ -878,18 +937,18 @@
         --ui-action-success-bg-hover: rgb(6 95 70);
         --ui-action-success-text-hover: rgb(240 253 244);
 
-        --ui-action-warning-border: rgb(217 119 6);
-        --ui-action-warning-bg: rgb(180 83 9);
-        --ui-action-warning-text: rgb(255 251 235);
-        --ui-action-warning-border-hover: rgb(180 83 9);
-        --ui-action-warning-bg-hover: rgb(146 64 14);
-        --ui-action-warning-text-hover: rgb(255 251 235);
+        --ui-action-warning-border: rgb(234 179 8);
+        --ui-action-warning-bg: rgb(250 204 21);
+        --ui-action-warning-text: rgb(66 32 6);
+        --ui-action-warning-border-hover: rgb(245 158 11);
+        --ui-action-warning-bg-hover: rgb(245 158 11);
+        --ui-action-warning-text-hover: rgb(66 32 6);
 
-        --ui-action-danger-border: rgb(225 29 72);
-        --ui-action-danger-bg: rgb(190 24 93);
+        --ui-action-danger-border: rgb(220 38 38);
+        --ui-action-danger-bg: rgb(220 38 38);
         --ui-action-danger-text: rgb(255 241 242);
-        --ui-action-danger-border-hover: rgb(190 24 93);
-        --ui-action-danger-bg-hover: rgb(159 18 57);
+        --ui-action-danger-border-hover: rgb(185 28 28);
+        --ui-action-danger-bg-hover: rgb(185 28 28);
         --ui-action-danger-text-hover: rgb(255 241 242);
 
         --ui-action-notice-border: rgb(124 58 237);
@@ -926,14 +985,14 @@
         --ui-action-soft-success-bg-hover: rgb(187 247 208);
 
         --ui-action-soft-warning-border: rgb(245 158 11);
-        --ui-action-soft-warning-bg: rgb(254 243 199);
-        --ui-action-soft-warning-text: rgb(146 64 14);
-        --ui-action-soft-warning-bg-hover: rgb(253 230 138);
+        --ui-action-soft-warning-bg: rgb(254 240 138);
+        --ui-action-soft-warning-text: rgb(120 53 15);
+        --ui-action-soft-warning-bg-hover: rgb(253 224 71);
 
-        --ui-action-soft-danger-border: rgb(251 113 133);
-        --ui-action-soft-danger-bg: rgb(255 228 230);
-        --ui-action-soft-danger-text: rgb(159 18 57);
-        --ui-action-soft-danger-bg-hover: rgb(254 205 211);
+        --ui-action-soft-danger-border: rgb(248 113 113);
+        --ui-action-soft-danger-bg: rgb(254 226 226);
+        --ui-action-soft-danger-text: rgb(153 27 27);
+        --ui-action-soft-danger-bg-hover: rgb(254 202 202);
 
         --ui-action-soft-notice-border: rgb(167 139 250);
         --ui-action-soft-notice-bg: rgb(237 233 254);
@@ -958,12 +1017,12 @@
         --ui-action-outline-success-bg-hover: rgb(220 252 231);
 
         --ui-action-outline-warning-border: rgb(180 83 9);
-        --ui-action-outline-warning-text: rgb(180 83 9);
-        --ui-action-outline-warning-bg-hover: rgb(254 243 199);
+        --ui-action-outline-warning-text: rgb(146 64 14);
+        --ui-action-outline-warning-bg-hover: rgb(254 240 138);
 
-        --ui-action-outline-danger-border: rgb(190 24 93);
-        --ui-action-outline-danger-text: rgb(190 24 93);
-        --ui-action-outline-danger-bg-hover: rgb(255 228 230);
+        --ui-action-outline-danger-border: rgb(185 28 28);
+        --ui-action-outline-danger-text: rgb(153 27 27);
+        --ui-action-outline-danger-bg-hover: rgb(254 226 226);
 
         --ui-action-outline-notice-border: rgb(109 40 217);
         --ui-action-outline-notice-text: rgb(109 40 217);
@@ -996,10 +1055,10 @@
         --ui-status-info-text: rgb(14 116 144);
         --ui-status-success-bg: rgb(220 252 231);
         --ui-status-success-text: rgb(6 95 70);
-        --ui-status-warning-bg: rgb(254 243 199);
-        --ui-status-warning-text: rgb(146 64 14);
-        --ui-status-danger-bg: rgb(255 228 230);
-        --ui-status-danger-text: rgb(159 18 57);
+        --ui-status-warning-bg: rgb(254 240 138);
+        --ui-status-warning-text: rgb(120 53 15);
+        --ui-status-danger-bg: rgb(254 226 226);
+        --ui-status-danger-text: rgb(153 27 27);
         --ui-status-notice-bg: rgb(237 233 254);
         --ui-status-notice-text: rgb(91 33 182);
         --ui-status-solid-text: rgb(248 250 252);
@@ -1007,7 +1066,7 @@
         --ui-status-info-solid-bg: rgb(14 116 144);
         --ui-status-success-solid-bg: rgb(4 120 87);
         --ui-status-warning-solid-bg: rgb(180 83 9);
-        --ui-status-danger-solid-bg: rgb(190 24 93);
+        --ui-status-danger-solid-bg: rgb(220 38 38);
         --ui-status-notice-solid-bg: rgb(109 40 217);
 
         --ui-alert-info-border: rgb(8 145 178 / 0.45);
@@ -1016,12 +1075,15 @@
         --ui-alert-success-border: rgb(5 150 105 / 0.45);
         --ui-alert-success-bg: rgb(220 252 231 / 0.8);
         --ui-alert-success-text: rgb(6 95 70);
-        --ui-alert-warning-border: rgb(217 119 6 / 0.45);
-        --ui-alert-warning-bg: rgb(254 243 199 / 0.8);
-        --ui-alert-warning-text: rgb(146 64 14);
-        --ui-alert-danger-border: rgb(225 29 72 / 0.45);
-        --ui-alert-danger-bg: rgb(255 228 230 / 0.8);
-        --ui-alert-danger-text: rgb(159 18 57);
+        --ui-alert-warning-border: rgb(245 158 11 / 0.45);
+        --ui-alert-warning-bg: rgb(254 240 138 / 0.8);
+        --ui-alert-warning-text: rgb(120 53 15);
+        --ui-alert-notice-border: rgb(139 92 246 / 0.45);
+        --ui-alert-notice-bg: rgb(237 233 254 / 0.85);
+        --ui-alert-notice-text: rgb(76 29 149);
+        --ui-alert-danger-border: rgb(239 68 68 / 0.45);
+        --ui-alert-danger-bg: rgb(254 226 226 / 0.85);
+        --ui-alert-danger-text: rgb(127 29 29);
 
         background-color: var(--ui-canvas) !important;
     }

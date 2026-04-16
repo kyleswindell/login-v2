@@ -13,7 +13,7 @@
             <p class="ui-kicker">Field States</p>
             <form class="mt-4 grid gap-5 lg:grid-cols-2" action="#" method="POST" onsubmit="event.preventDefault()">
                 <label class="block">
-                    <span class="ui-control-label">Workspace Name <span class="text-rose-300">*</span></span>
+                    <span class="ui-control-label">Workspace Name <span class="text-red-300">*</span></span>
                     <input type="text" value="Platform Operations Workspace" class="ui-input mt-2" />
                     <p class="ui-control-copy">Required. Visible across shared platform navigation.</p>
                 </label>
@@ -65,9 +65,9 @@
         <section class="ui-card">
             <p class="ui-kicker">Validation Block</p>
             <div class="mt-4 grid gap-5 lg:grid-cols-2">
-                <div class="rounded-lg border border-rose-500/40 bg-rose-500/10 p-4" role="alert" aria-live="polite">
-                    <h2 class="text-sm font-semibold uppercase tracking-[0.15em] text-rose-200">Form Validation Errors</h2>
-                    <ul class="mt-2 list-disc space-y-1 pl-4 text-sm text-rose-100">
+                <div class="ui-inline-alert ui-inline-alert-danger" role="alert" aria-live="polite">
+                    <h2 class="text-sm font-semibold uppercase tracking-[0.15em]">Form Validation Errors</h2>
+                    <ul class="mt-2 list-disc space-y-1 pl-4 text-sm">
                         <li>Workspace name is required.</li>
                         <li>Owner scope must be selected.</li>
                     </ul>
@@ -77,7 +77,7 @@
                     <label class="block">
                         <span class="ui-control-label">Example Error Field</span>
                         <input aria-invalid="true" aria-describedby="workspace-name-error" type="text" value="" placeholder="Required field" class="ui-input mt-2" />
-                        <p id="workspace-name-error" class="mt-2 text-xs text-rose-300">Workspace name cannot be empty.</p>
+                        <p id="workspace-name-error" class="ui-control-error">Workspace name cannot be empty.</p>
                     </label>
                 </div>
             </div>
@@ -121,7 +121,7 @@
                     <div>
                         <p class="ui-control-label">Focused Checkbox</p>
                         <label class="mt-3 flex items-start gap-3 text-sm text-slate-200">
-                            <input type="checkbox" checked class="mt-0.5 h-4 w-4 rounded border-slate-600 bg-slate-950 text-sky-400 ring-2 ring-sky-400/40 ring-offset-2 ring-offset-slate-900" />
+                            <input type="checkbox" checked class="mt-0.5 h-4 w-4 rounded-sm border-slate-600 bg-slate-950 text-sky-400 ring-2 ring-sky-400/40 ring-offset-2 ring-offset-slate-900" />
                             <span>Selected state with visible focus treatment.</span>
                         </label>
                     </div>
@@ -140,33 +140,31 @@
                                     type="checkbox"
                                     checked
                                     role="switch"
-                                    aria-checked="true"
                                     aria-label="Lock after 15 minutes"
                                     class="peer sr-only"
                                 />
-                                <span class="block h-6 w-11 rounded-full border border-sky-400/30 bg-sky-500/30 transition peer-focus-visible:ring-2 peer-focus-visible:ring-sky-400/50 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-slate-900"></span>
-                                <span class="pointer-events-none absolute left-0.5 top-0.5 h-5 w-5 translate-x-5 rounded-full bg-sky-200 shadow-sm transition peer-checked:translate-x-5"></span>
+                                <span class="block h-6 w-11 rounded-full border border-slate-700 bg-slate-800 transition peer-checked:border-sky-400/30 peer-checked:bg-sky-500/30 peer-focus-visible:ring-2 peer-focus-visible:ring-sky-400/50 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-slate-900"></span>
+                                <span class="pointer-events-none absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-slate-200 shadow-sm transition peer-checked:translate-x-5 peer-checked:bg-sky-200"></span>
                             </span>
                         </label>
                     </div>
 
                     <div>
-                        <p class="ui-control-label">Focused Toggle</p>
+                        <p class="ui-control-label">Toggle Baseline</p>
                         <label class="mt-3 flex items-center justify-between gap-4 rounded-lg border border-slate-800 bg-slate-950/70 px-4 py-3">
                             <span>
                                 <span class="block text-sm font-semibold text-slate-100">Require operator acknowledgment</span>
-                                <span class="block text-xs text-slate-500">Real switch control with visible focus treatment for manual inspection.</span>
+                                <span class="block text-xs text-slate-500">Use keyboard focus and click/tap to verify state changes on the real control.</span>
                             </span>
                             <span class="relative inline-flex items-center">
                                 <input
                                     type="checkbox"
                                     role="switch"
-                                    aria-checked="false"
                                     aria-label="Require operator acknowledgment"
                                     class="peer sr-only"
                                 />
-                                <span class="block h-6 w-11 rounded-full border border-slate-700 bg-slate-800 transition ring-2 ring-sky-400/50 ring-offset-2 ring-offset-slate-900"></span>
-                                <span class="pointer-events-none absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-slate-200 shadow-sm transition"></span>
+                                <span class="block h-6 w-11 rounded-full border border-slate-700 bg-slate-800 transition peer-checked:border-sky-400/30 peer-checked:bg-sky-500/30 peer-focus-visible:ring-2 peer-focus-visible:ring-sky-400/50 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-slate-900"></span>
+                                <span class="pointer-events-none absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-slate-200 shadow-sm transition peer-checked:translate-x-5 peer-checked:bg-sky-200"></span>
                             </span>
                         </label>
                     </div>

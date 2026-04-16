@@ -25,6 +25,7 @@
 - Keep primary mapped to blue in dark mode; no standards clarification blocked that normalization, so this remained an implementation-level alignment task.
 - Normalize the account dropdown parity chips to canonical badge styling instead of leaving them as ad hoc token pills.
 - Treat disabled-state clarity as a shared Tier 1 action/icon-button concern rather than a one-off view-level opacity tweak.
+- The first deploy attempt for this follow-up pass failed during `vite build` on the server because `@apply peer` is not accepted in this Tailwind setup; the switch helper was revised to use explicit CSS instead.
 
 
 ## Risks / Questions
@@ -34,3 +35,4 @@
 - The latest visual review fixes still need a fresh manual re-review to confirm the adjusted contrast and palette behavior in both light and dark modes.
 - Docker verification was re-run after the visual review fix pass and the targeted UI Reference suite remained green.
 - Docker verification was refreshed after the latest disabled/info/soft/navigation parity adjustments and the targeted suite remained green.
+- Docker verification remained green after replacing the unsupported `@apply peer` switch helper implementation.

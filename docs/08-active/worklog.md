@@ -13,6 +13,7 @@
 - Closed the remaining Tier 1 UI Reference visibility gaps by adding explicit table loading/empty-state examples, replacing the visual-only switch sample with real switch controls, clarifying badge/status contract coverage, adding a loading overlay action example, and making icon button hover/active snapshots explicit.
 - Applied the Batch A visual review fixes to the shared Tier 1 presentation layer: alert/toast contrast, danger and warning palette tuning, form validation text contrast, link/spinner visibility, checkbox focus shape, and interactive switch normalization.
 - Applied the follow-up Batch A visual review fixes to disabled-state clarity, dark-mode primary/info separation, dark-mode soft variant separation, light-mode switch visibility, lighter light-mode table hover, and account-dropdown parity token normalization.
+- Corrected a follow-up implementation issue in the shared switch CSS after the first deploy attempt exposed an unsupported `@apply peer` usage in the Tailwind build pipeline.
 
 
 ## Changes

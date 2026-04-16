@@ -51,7 +51,8 @@ class PlatformUiReferenceTest extends TestCase
             ->assertOk()
             ->assertSee('Toast Baseline')
             ->assertSee('Generate Example Toast')
-            ->assertSee('data-ui-demo-toast-generated-stack', false);
+            ->assertSee('data-ui-demo-toast-generated-stack', false)
+            ->assertSee('data-ui-demo-toast-generated-overlay', false);
     }
 
     public function test_standard_users_cannot_view_ui_reference_workspace(): void

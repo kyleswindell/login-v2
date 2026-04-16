@@ -10,6 +10,7 @@
 - Live drawer/modal demos can be exercised directly in the UI Reference now, including `Escape`, backdrop close, dismiss paths, and focus-return behavior.
 - The remaining coverage issues after the prior pass were mostly review-surface precision issues: the overview still implied a disabled badge state that is not part of the Tier 1 contract, the switch example was not a real control, and table loading/empty states were not isolated enough for clean visual review.
 - The manual visual review surfaced a separate set of implementation-only polish issues in Batch A: semantic contrast in light mode, danger/warning hue tuning, link readability, spinner visibility, checkbox focus rendering, and switch/toggle interaction fidelity.
+- The follow-up visual review pass identified additional Tier 1 presentation issues around disabled-state clarity, primary/info separation in dark mode, soft-vs-base distinction, and ad hoc parity tokens in the navigation review surface.
 
 
 ## Decisions
@@ -22,6 +23,8 @@
 - Remove invalid disabled-state claims from badge/status coverage instead of inventing a disabled badge contract.
 - Normalize toast and inline-alert rendering through shared semantic classes instead of one-off hardcoded color utilities in the UI Reference views.
 - Keep primary mapped to blue in dark mode; no standards clarification blocked that normalization, so this remained an implementation-level alignment task.
+- Normalize the account dropdown parity chips to canonical badge styling instead of leaving them as ad hoc token pills.
+- Treat disabled-state clarity as a shared Tier 1 action/icon-button concern rather than a one-off view-level opacity tweak.
 
 
 ## Risks / Questions
@@ -30,3 +33,4 @@
 - Docker verification was re-run after this final UI Reference cleanup pass and the targeted suite remained green.
 - The latest visual review fixes still need a fresh manual re-review to confirm the adjusted contrast and palette behavior in both light and dark modes.
 - Docker verification was re-run after the visual review fix pass and the targeted UI Reference suite remained green.
+- Docker verification was refreshed after the latest disabled/info/soft/navigation parity adjustments and the targeted suite remained green.

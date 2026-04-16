@@ -135,17 +135,11 @@
                                 <span class="block text-sm font-semibold text-slate-100">Lock after 15 minutes</span>
                                 <span class="block text-xs text-slate-500">Toggle uses the base variant only.</span>
                             </span>
-                            <span class="relative inline-flex items-center">
-                                <input
-                                    type="checkbox"
-                                    checked
-                                    role="switch"
-                                    aria-label="Lock after 15 minutes"
-                                    class="peer sr-only"
-                                />
-                                <span class="block h-6 w-11 rounded-full border border-slate-700 bg-slate-800 transition peer-checked:border-sky-400/30 peer-checked:bg-sky-500/30 peer-focus-visible:ring-2 peer-focus-visible:ring-sky-400/50 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-slate-900"></span>
-                                <span class="pointer-events-none absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-slate-200 shadow-sm transition peer-checked:translate-x-5 peer-checked:bg-sky-200"></span>
-                            </span>
+                            <label class="ui-switch">
+                                <input type="checkbox" checked role="switch" aria-label="Lock after 15 minutes" class="ui-switch-input" />
+                                <span class="ui-switch-track"></span>
+                                <span class="ui-switch-thumb"></span>
+                            </label>
                         </label>
                     </div>
 
@@ -156,16 +150,11 @@
                                 <span class="block text-sm font-semibold text-slate-100">Require operator acknowledgment</span>
                                 <span class="block text-xs text-slate-500">Use keyboard focus and click/tap to verify state changes on the real control.</span>
                             </span>
-                            <span class="relative inline-flex items-center">
-                                <input
-                                    type="checkbox"
-                                    role="switch"
-                                    aria-label="Require operator acknowledgment"
-                                    class="peer sr-only"
-                                />
-                                <span class="block h-6 w-11 rounded-full border border-slate-700 bg-slate-800 transition peer-checked:border-sky-400/30 peer-checked:bg-sky-500/30 peer-focus-visible:ring-2 peer-focus-visible:ring-sky-400/50 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-slate-900"></span>
-                                <span class="pointer-events-none absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-slate-200 shadow-sm transition peer-checked:translate-x-5 peer-checked:bg-sky-200"></span>
-                            </span>
+                            <label class="ui-switch">
+                                <input type="checkbox" role="switch" aria-label="Require operator acknowledgment" class="ui-switch-input" />
+                                <span class="ui-switch-track"></span>
+                                <span class="ui-switch-thumb"></span>
+                            </label>
                         </label>
                     </div>
 

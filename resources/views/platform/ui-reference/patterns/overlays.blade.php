@@ -32,7 +32,7 @@
                 <div class="flex flex-wrap items-center gap-3">
                     <button type="button" class="ui-action ui-action-primary" data-ui-demo-overlay-open="reference-drawer">Open Drawer</button>
                     <button type="button" class="ui-action ui-action-outline ring-2 ring-sky-400/40 ring-offset-2 ring-offset-slate-950" data-ui-demo-overlay-open="reference-drawer">Focused Trigger</button>
-                    <button type="button" disabled class="ui-action ui-action-primary opacity-60">Disabled Trigger</button>
+                    <button type="button" disabled class="ui-action ui-action-primary">Disabled Trigger</button>
                 </div>
                 <p class="mt-3 text-sm text-slate-400">Open the drawer and verify focus lands inside the panel, `Escape` closes it, backdrop click closes it, and focus returns to the trigger.</p>
             </div>
@@ -44,7 +44,7 @@
                 <div class="flex flex-wrap items-center gap-3">
                     <button type="button" class="ui-action ui-action-danger" data-ui-demo-overlay-open="reference-modal">Open Destructive Modal</button>
                     <button type="button" class="ui-action ui-action-outline ring-2 ring-sky-400/40 ring-offset-2 ring-offset-slate-950" data-ui-demo-overlay-open="reference-modal">Focused Trigger</button>
-                    <button type="button" disabled class="ui-action ui-action-danger opacity-60">Disabled Trigger</button>
+                    <button type="button" disabled class="ui-action ui-action-danger">Disabled Trigger</button>
                 </div>
                 <p class="mt-3 text-sm text-slate-400">This modal is the blocking Tier 1 confirmation baseline. It should close via explicit action, `Escape`, or backdrop click.</p>
             </div>

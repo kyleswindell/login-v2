@@ -44,10 +44,10 @@
             <div class="mt-4 rounded-lg border border-slate-800 bg-slate-900/70 p-4">
                 <p class="text-sm text-slate-300">Sidebar toggle behavior should match account menu fundamentals: explicit open/close state, outside-click dismissal, escape handling, and keyboard focus return.</p>
                 <div class="mt-4 flex flex-wrap gap-3">
-                    <span class="rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-emerald-300">open state token</span>
-                    <span class="rounded-full bg-sky-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-sky-300">aria-expanded sync</span>
-                    <span class="rounded-full bg-violet-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-violet-300">focus-return target</span>
-                    <span class="rounded-full bg-amber-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-amber-300">route-change close</span>
+                    <x-ui.badge label="open state token" semantic="success" variant="outline" :show-icon="false" />
+                    <x-ui.badge label="aria-expanded sync" semantic="info" variant="outline" :show-icon="false" />
+                    <x-ui.badge label="focus-return target" semantic="notice" variant="outline" :show-icon="false" />
+                    <x-ui.badge label="route-change close" semantic="warning" variant="outline" :show-icon="false" />
                 </div>
             </div>
         </section>

@@ -80,6 +80,15 @@
         color: var(--ui-action-neutral-text-hover);
     }
 
+    .ui-action:disabled {
+        cursor: not-allowed;
+        border-color: var(--ui-action-disabled-border);
+        background-color: var(--ui-action-disabled-bg);
+        color: var(--ui-action-disabled-text);
+        opacity: 1;
+        box-shadow: none;
+    }
+
     .ui-action-primary {
         border-color: var(--ui-action-primary-border);
         background-color: var(--ui-action-primary-bg);
@@ -430,6 +439,15 @@
         color: var(--ui-text-strong);
     }
 
+    .ui-icon-button:disabled {
+        cursor: not-allowed;
+        border-color: var(--ui-action-disabled-border);
+        background-color: var(--ui-action-disabled-bg);
+        color: var(--ui-action-disabled-text);
+        opacity: 1;
+        box-shadow: none;
+    }
+
     .ui-log-drawer-panel {
         @apply relative ml-auto flex h-full w-full max-w-3xl flex-col overflow-hidden border-l shadow-2xl;
         border-color: var(--ui-border-default);
@@ -624,6 +642,45 @@
         color: var(--ui-alert-danger-text);
     }
 
+    .ui-switch {
+        @apply relative inline-flex items-center;
+    }
+
+    .ui-switch-input {
+        @apply peer sr-only;
+    }
+
+    .ui-switch-track {
+        @apply block h-6 w-11 rounded-full border transition;
+        border-color: var(--ui-switch-track-off-border);
+        background-color: var(--ui-switch-track-off-bg);
+    }
+
+    .ui-switch-input:checked + .ui-switch-track {
+        border-color: var(--ui-switch-track-on-border);
+        background-color: var(--ui-switch-track-on-bg);
+    }
+
+    .ui-switch-input:focus-visible + .ui-switch-track {
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-action-info-bg-hover) 55%, transparent);
+    }
+
+    .ui-switch-thumb {
+        @apply pointer-events-none absolute left-0.5 top-0.5 h-5 w-5 rounded-full shadow-sm transition;
+        background-color: var(--ui-switch-thumb-off-bg);
+    }
+
+    .ui-switch-input:checked + .ui-switch-track + .ui-switch-thumb {
+        transform: translateX(1.25rem);
+        background-color: var(--ui-switch-thumb-on-bg);
+    }
+
+    .ui-switch-input:disabled + .ui-switch-track,
+    .ui-switch-input:disabled + .ui-switch-track + .ui-switch-thumb {
+        cursor: not-allowed;
+        opacity: 0.75;
+    }
+
     .ui-control-label {
         @apply text-sm font-semibold;
         color: var(--ui-text-secondary);
@@ -684,11 +741,11 @@
 
     .ui-link {
         @apply inline-flex items-center gap-1 text-sm font-semibold underline decoration-transparent underline-offset-4 transition;
-        color: var(--ui-action-info-text);
+        color: var(--ui-link-text);
     }
 
     .ui-link:hover {
-        color: var(--ui-action-info-text-hover);
+        color: var(--ui-link-text-hover);
         text-decoration-color: currentColor;
     }
 
@@ -727,6 +784,17 @@
         --ui-shadow-color: rgb(0 0 0);
         --ui-spinner-track: rgb(113 113 122 / 0.65);
         --ui-spinner-head: rgb(147 197 253);
+        --ui-link-text: rgb(191 219 254);
+        --ui-link-text-hover: rgb(224 242 254);
+        --ui-action-disabled-border: rgb(113 113 122 / 0.9);
+        --ui-action-disabled-bg: rgb(63 63 70 / 0.55);
+        --ui-action-disabled-text: rgb(228 228 231 / 0.92);
+        --ui-switch-track-off-border: rgb(161 161 170);
+        --ui-switch-track-off-bg: rgb(82 82 91);
+        --ui-switch-track-on-border: rgb(96 165 250);
+        --ui-switch-track-on-bg: rgb(37 99 235 / 0.45);
+        --ui-switch-thumb-off-bg: rgb(250 250 250);
+        --ui-switch-thumb-on-bg: rgb(219 234 254);
 
         --ui-action-neutral-border: rgb(82 82 91);
         --ui-action-neutral-bg: rgb(39 39 42 / 0.7);
@@ -770,51 +838,51 @@
         --ui-action-notice-bg-hover: rgb(124 58 237 / 0.35);
         --ui-action-notice-text-hover: rgb(245 243 255);
 
-        --ui-action-info-border: rgb(8 145 178 / 0.45);
-        --ui-action-info-bg: rgb(8 145 178 / 0.22);
-        --ui-action-info-text: rgb(207 250 254);
-        --ui-action-info-border-hover: rgb(8 145 178 / 0.65);
-        --ui-action-info-bg-hover: rgb(8 145 178 / 0.35);
-        --ui-action-info-text-hover: rgb(236 254 255);
+        --ui-action-info-border: rgb(125 211 252 / 0.45);
+        --ui-action-info-bg: rgb(56 189 248 / 0.14);
+        --ui-action-info-text: rgb(224 242 254);
+        --ui-action-info-border-hover: rgb(125 211 252 / 0.65);
+        --ui-action-info-bg-hover: rgb(56 189 248 / 0.24);
+        --ui-action-info-text-hover: rgb(240 249 255);
 
         --ui-action-ghost-text: rgb(212 212 216);
         --ui-action-ghost-bg-hover: rgb(39 39 42 / 0.85);
         --ui-action-ghost-text-hover: rgb(250 250 250);
 
-        --ui-action-soft-neutral-border: rgb(113 113 122 / 0.65);
-        --ui-action-soft-neutral-bg: rgb(63 63 70 / 0.25);
+        --ui-action-soft-neutral-border: rgb(161 161 170 / 0.4);
+        --ui-action-soft-neutral-bg: rgb(82 82 91 / 0.12);
         --ui-action-soft-neutral-text: rgb(228 228 231);
-        --ui-action-soft-neutral-bg-hover: rgb(63 63 70 / 0.38);
+        --ui-action-soft-neutral-bg-hover: rgb(82 82 91 / 0.2);
 
-        --ui-action-soft-primary-border: rgb(37 99 235 / 0.55);
-        --ui-action-soft-primary-bg: rgb(37 99 235 / 0.2);
-        --ui-action-soft-primary-text: rgb(219 234 254);
-        --ui-action-soft-primary-bg-hover: rgb(37 99 235 / 0.3);
+        --ui-action-soft-primary-border: rgb(96 165 250 / 0.42);
+        --ui-action-soft-primary-bg: rgb(37 99 235 / 0.1);
+        --ui-action-soft-primary-text: rgb(191 219 254);
+        --ui-action-soft-primary-bg-hover: rgb(37 99 235 / 0.18);
 
-        --ui-action-soft-success-border: rgb(5 150 105 / 0.55);
-        --ui-action-soft-success-bg: rgb(5 150 105 / 0.2);
+        --ui-action-soft-success-border: rgb(52 211 153 / 0.42);
+        --ui-action-soft-success-bg: rgb(5 150 105 / 0.1);
         --ui-action-soft-success-text: rgb(209 250 229);
-        --ui-action-soft-success-bg-hover: rgb(5 150 105 / 0.3);
+        --ui-action-soft-success-bg-hover: rgb(5 150 105 / 0.18);
 
-        --ui-action-soft-warning-border: rgb(245 158 11 / 0.6);
-        --ui-action-soft-warning-bg: rgb(245 158 11 / 0.2);
+        --ui-action-soft-warning-border: rgb(250 204 21 / 0.46);
+        --ui-action-soft-warning-bg: rgb(245 158 11 / 0.1);
         --ui-action-soft-warning-text: rgb(254 240 138);
-        --ui-action-soft-warning-bg-hover: rgb(245 158 11 / 0.3);
+        --ui-action-soft-warning-bg-hover: rgb(245 158 11 / 0.18);
 
-        --ui-action-soft-danger-border: rgb(239 68 68 / 0.6);
-        --ui-action-soft-danger-bg: rgb(220 38 38 / 0.2);
+        --ui-action-soft-danger-border: rgb(248 113 113 / 0.46);
+        --ui-action-soft-danger-bg: rgb(220 38 38 / 0.1);
         --ui-action-soft-danger-text: rgb(254 226 226);
-        --ui-action-soft-danger-bg-hover: rgb(220 38 38 / 0.3);
+        --ui-action-soft-danger-bg-hover: rgb(220 38 38 / 0.18);
 
-        --ui-action-soft-notice-border: rgb(124 58 237 / 0.55);
-        --ui-action-soft-notice-bg: rgb(124 58 237 / 0.2);
+        --ui-action-soft-notice-border: rgb(167 139 250 / 0.42);
+        --ui-action-soft-notice-bg: rgb(124 58 237 / 0.1);
         --ui-action-soft-notice-text: rgb(237 233 254);
-        --ui-action-soft-notice-bg-hover: rgb(124 58 237 / 0.3);
+        --ui-action-soft-notice-bg-hover: rgb(124 58 237 / 0.18);
 
-        --ui-action-soft-info-border: rgb(8 145 178 / 0.55);
-        --ui-action-soft-info-bg: rgb(8 145 178 / 0.2);
-        --ui-action-soft-info-text: rgb(207 250 254);
-        --ui-action-soft-info-bg-hover: rgb(8 145 178 / 0.3);
+        --ui-action-soft-info-border: rgb(125 211 252 / 0.42);
+        --ui-action-soft-info-bg: rgb(56 189 248 / 0.08);
+        --ui-action-soft-info-text: rgb(224 242 254);
+        --ui-action-soft-info-bg-hover: rgb(56 189 248 / 0.16);
 
         --ui-action-outline-neutral-border: rgb(161 161 170);
         --ui-action-outline-neutral-text: rgb(228 228 231);
@@ -840,9 +908,9 @@
         --ui-action-outline-notice-text: rgb(196 181 253);
         --ui-action-outline-notice-bg-hover: rgb(124 58 237 / 0.18);
 
-        --ui-action-outline-info-border: rgb(34 211 238);
-        --ui-action-outline-info-text: rgb(103 232 249);
-        --ui-action-outline-info-bg-hover: rgb(8 145 178 / 0.18);
+        --ui-action-outline-info-border: rgb(125 211 252);
+        --ui-action-outline-info-text: rgb(186 230 253);
+        --ui-action-outline-info-bg-hover: rgb(56 189 248 / 0.12);
 
         --ui-login-google-border: rgb(228 228 231);
         --ui-login-google-bg: rgb(255 255 255);
@@ -863,8 +931,8 @@
 
         --ui-status-neutral-bg: rgb(63 63 70 / 0.65);
         --ui-status-neutral-text: rgb(228 228 231);
-        --ui-status-info-bg: rgb(8 145 178 / 0.2);
-        --ui-status-info-text: rgb(165 243 252);
+        --ui-status-info-bg: rgb(56 189 248 / 0.14);
+        --ui-status-info-text: rgb(186 230 253);
         --ui-status-success-bg: rgb(5 150 105 / 0.2);
         --ui-status-success-text: rgb(167 243 208);
         --ui-status-warning-bg: rgb(245 158 11 / 0.2);
@@ -875,15 +943,15 @@
         --ui-status-notice-text: rgb(196 181 253);
         --ui-status-solid-text: rgb(248 250 252);
         --ui-status-neutral-solid-bg: rgb(63 63 70);
-        --ui-status-info-solid-bg: rgb(8 145 178);
+        --ui-status-info-solid-bg: rgb(2 132 199);
         --ui-status-success-solid-bg: rgb(5 150 105);
         --ui-status-warning-solid-bg: rgb(217 119 6);
         --ui-status-danger-solid-bg: rgb(220 38 38);
         --ui-status-notice-solid-bg: rgb(124 58 237);
 
-        --ui-alert-info-border: rgb(8 145 178 / 0.45);
-        --ui-alert-info-bg: rgb(8 145 178 / 0.14);
-        --ui-alert-info-text: rgb(207 250 254);
+        --ui-alert-info-border: rgb(125 211 252 / 0.45);
+        --ui-alert-info-bg: rgb(56 189 248 / 0.12);
+        --ui-alert-info-text: rgb(224 242 254);
         --ui-alert-success-border: rgb(5 150 105 / 0.45);
         --ui-alert-success-bg: rgb(5 150 105 / 0.14);
         --ui-alert-success-text: rgb(209 250 229);
@@ -915,6 +983,17 @@
         --ui-shadow-color: rgb(148 163 184);
         --ui-spinner-track: rgb(148 163 184 / 0.4);
         --ui-spinner-head: rgb(3 105 161);
+        --ui-link-text: rgb(3 105 161);
+        --ui-link-text-hover: rgb(7 89 133);
+        --ui-action-disabled-border: rgb(203 213 225);
+        --ui-action-disabled-bg: rgb(241 245 249);
+        --ui-action-disabled-text: rgb(100 116 139);
+        --ui-switch-track-off-border: rgb(148 163 184);
+        --ui-switch-track-off-bg: rgb(226 232 240);
+        --ui-switch-track-on-border: rgb(3 105 161);
+        --ui-switch-track-on-bg: rgb(125 211 252);
+        --ui-switch-thumb-off-bg: rgb(255 255 255);
+        --ui-switch-thumb-on-bg: rgb(255 255 255);
 
         --ui-action-neutral-border: rgb(203 213 225);
         --ui-action-neutral-bg: rgb(255 255 255);
@@ -1136,7 +1215,7 @@
     html[data-theme-resolved='light'] .hover\:bg-slate-800:hover,
     html[data-theme-resolved='light'] .hover\:bg-slate-700:hover,
     html[data-theme-resolved='light'] .hover\:bg-slate-950:hover {
-        background-color: rgb(226 232 240) !important;
+        background-color: rgb(241 245 249) !important;
     }
 
     html[data-theme-resolved='light'] .border-slate-800,

@@ -17,6 +17,8 @@
 - Reclassified minimal toast entry/exit motion into the Tier 1 toast baseline and added a standards-aligned baseline appear/dismiss animation for the UI Reference toast surface.
 - Added a generated example toast trigger beside the reset control so baseline toast display and dismiss animation can be reviewed on demand in the UI Reference workspace.
 - Added deterministic column sorting to the UI Reference table baselines, tightened pagination/filter-panel visibility, expanded radio-group validation coverage, normalized semantic action variants, and tuned shared Tier 1 control/palette behavior for this review pass.
+- Corrected generated toast mounting so on-demand toast examples now render in a page-level stack below the overlays header instead of inside the Toast Baseline card.
+- Evaluated the requested Tier 2 notification/toast addendum cleanup against the active Batch A scope and stopped without implementation because the target file is a Tier 2 standards doc excluded by `docs/08-active/batch.md`.
 
 
 ## Changes
@@ -44,6 +46,8 @@
 - `resources/views/platform/audit-logs/index.blade.php`
 - `resources/views/platform/error-logs/index.blade.php`
 - `tests/Feature/Platform/PlatformUiReferenceTest.php`
+- `docs/08-active/worklog.md`
+- `docs/08-active/notes.md`
 
 
 ## Notes
@@ -57,4 +61,6 @@
 - Result after the toast baseline motion correction pass: `PASS` with `7` tests and `25` assertions.
 - Result after the generated toast trigger pass: `PASS` with `7` tests and `28` assertions.
 - Result after the table/control/palette normalization pass: `PASS` with `7` tests and `32` assertions.
+- Result after the generated toast placement correction pass: `PASS` with `7` tests and `33` assertions.
 - Batch A implementation is now prepared for manual review; manual review itself is still pending.
+- No Tier 2 standards files were modified in this pass because the requested notification/toast addendum cleanup is outside the active Batch A scope.

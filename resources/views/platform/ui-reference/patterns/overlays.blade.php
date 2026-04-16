@@ -9,6 +9,10 @@
             <p class="ui-page-header-copy">Tier 1 contract for drawer/modal containers plus toast and inline alert feedback semantics.</p>
         </div>
 
+        <div class="flex justify-end" data-ui-demo-toast-page-stack>
+            <div class="flex w-full max-w-md flex-col gap-3" data-ui-demo-toast-generated-stack aria-live="polite" aria-label="Generated toast stack"></div>
+        </div>
+
         <section class="ui-card">
             <p class="ui-kicker">Drawer Baseline</p>
             <p class="mt-2 text-sm text-slate-400">Use right-side drawer for contextual details while preserving table context. See live behavior in Table Baselines.</p>
@@ -126,7 +130,7 @@
                     </div>
                 </div>
                 <template data-ui-demo-toast-template>
-                    <div data-ui-demo-toast class="ui-toast ui-toast-info hidden" role="status" aria-live="polite">
+                    <div data-ui-demo-toast data-ui-demo-generated-toast class="ui-toast ui-toast-info hidden" role="status" aria-live="polite">
                         <div class="flex items-start justify-between gap-3">
                             <div>
                                 <p class="font-semibold">Generated Example</p>

@@ -15,6 +15,8 @@
 - The toast baseline review surface still lacked an on-demand generation path after the motion work landed, which made it harder to inspect entry/dismiss animation on a fresh example without resetting the entire stack.
 - The latest Batch A review pass centered on Tier 1 normalization rather than feature expansion: sortable demo columns, stronger disabled/pagination visibility, filter-panel sizing, semantic palette correction, and more complete action/control state coverage in the UI Reference.
 - Numbered pagination was evaluated during the table pass, but keeping the current Prev / page select / Next baseline is safer for Batch A because a numbered paginator treatment reads like a broader pattern decision rather than a settled Tier 1 requirement.
+- The generated toast trigger was functionally correct but mounted to the wrong validation surface: fresh toasts were being inserted inside the Toast Baseline card instead of the page-level toast destination area intended for final placement review.
+- The requested Tier 2 notification/toast addendum correction is outside the active Batch A scope. `docs/08-active/batch.md` explicitly excludes Tier 2 patterns, while the conflicting content lives in `docs/02-standards/ui/components/Tier 2 Pattern Library Checklist.md`.
 
 
 ## Decisions
@@ -34,6 +36,8 @@
 - Add a single generated example toast control to the UI Reference baseline instead of introducing a richer notification queue or feature-level notification behavior.
 - Keep sortable headers and pagination-state polish inside the current Tier 1 table baseline, but defer any numbered pagination pattern finalization to a follow-up standards/doc-sync pass.
 - Add semantic ghost coverage and an inverse spinner helper in the implementation layer for this pass, and record them for doc-sync follow-up instead of editing canonical standards during Batch A work.
+- Keep the static baseline toast examples in the Toast Baseline card, but mount generated examples into a dedicated page-level stack immediately below the overlays header so placement and motion match the intended final destination.
+- Stop the requested Tier 2 notification/toast addendum pass in the current work-batch cycle rather than editing out-of-scope Tier 2 standards during Batch A.
 
 
 ## Risks / Questions
@@ -48,3 +52,6 @@
 - Docker verification was refreshed after adding the generated toast trigger and the overlays reference page remained covered by the targeted Batch A suite.
 - Canonical docs likely need a follow-up sync pass if semantic ghost coverage and inverse spinner usage are intended to remain part of the supported Tier 1 action utility surface.
 - Docker verification was refreshed after the table/control/palette normalization pass and the targeted UI Reference suite remained green.
+- No structural layout blocker was found for the toast fix; the smallest standards-aligned correction was to add a dedicated page-level generated-toast stack above the card surfaces and point the demo trigger at that destination.
+- Docker verification was refreshed after the generated toast placement correction and the targeted UI Reference suite remained green.
+- Follow-up is required in a separate standards-scoped batch or doc-sync pass if the Tier 2 notification/toast addendum should be corrected. The current conflicts are real, but fixing them inside Batch A would violate the active batch boundary.

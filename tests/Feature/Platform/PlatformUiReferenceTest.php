@@ -50,7 +50,8 @@ class PlatformUiReferenceTest extends TestCase
         $this->get('/platform/ui-reference/patterns/overlays-feedback')
             ->assertOk()
             ->assertSee('Toast Baseline')
-            ->assertSee('Generate Example Toast');
+            ->assertSee('Generate Example Toast')
+            ->assertSee('data-ui-demo-toast-generated-stack', false);
     }
 
     public function test_standard_users_cannot_view_ui_reference_workspace(): void

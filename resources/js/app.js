@@ -809,8 +809,14 @@ const initUiReferenceOverlayDemos = () => {
 
         button.dataset.uiDemoToastResetInit = '1';
         button.addEventListener('click', () => {
-            button.closest('[data-ui-demo-toast-root]')?.querySelectorAll('[data-ui-demo-toast]').forEach((toast) => {
+            const root = button.closest('[data-ui-demo-toast-root]');
+
+            root?.querySelectorAll('[data-ui-demo-toast-stack] [data-ui-demo-toast]').forEach((toast) => {
                 animateToastVisibility(toast, true);
+            });
+
+            root?.querySelectorAll('[data-ui-demo-generated-toast]').forEach((toast) => {
+                toast.remove();
             });
         });
     });
@@ -823,7 +829,7 @@ const initUiReferenceOverlayDemos = () => {
         button.dataset.uiDemoToastGenerateInit = '1';
         button.addEventListener('click', () => {
             const root = button.closest('[data-ui-demo-toast-root]');
-            const stack = root?.querySelector('[data-ui-demo-toast-stack]');
+            const stack = document.querySelector('[data-ui-demo-toast-generated-stack]');
             const template = root?.querySelector('[data-ui-demo-toast-template]');
 
             if (!(stack instanceof HTMLElement) || !(template instanceof HTMLTemplateElement)) {

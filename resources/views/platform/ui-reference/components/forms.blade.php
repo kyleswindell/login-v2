@@ -119,6 +119,24 @@
                         </fieldset>
                     </div>
                     <div>
+                        <p class="ui-control-label">Single-Select Group</p>
+                        <fieldset class="mt-3 space-y-2">
+                            <legend class="sr-only">Workspace visibility mode</legend>
+                            <label class="flex items-center gap-3 rounded-lg border border-slate-800 bg-slate-950/70 px-4 py-3 text-sm text-slate-200">
+                                <input type="radio" checked name="visibility_mode" class="h-4 w-4 border-slate-600 bg-slate-950 text-sky-400 focus:ring-sky-400/40" />
+                                <span>Internal only</span>
+                            </label>
+                            <label class="flex items-center gap-3 rounded-lg border border-slate-800 bg-slate-950/70 px-4 py-3 text-sm text-slate-200">
+                                <input type="radio" name="visibility_mode" class="h-4 w-4 border-slate-600 bg-slate-950 text-sky-400 focus:ring-sky-400/40" />
+                                <span>Shared with auditors</span>
+                            </label>
+                            <label class="flex items-center gap-3 rounded-lg border border-slate-800 bg-slate-950/70 px-4 py-3 text-sm text-slate-500">
+                                <input type="radio" disabled name="visibility_mode" class="h-4 w-4 border-slate-700 bg-slate-900 text-slate-500" />
+                                <span>Tenant-facing preview disabled by policy</span>
+                            </label>
+                        </fieldset>
+                    </div>
+                    <div>
                         <p class="ui-control-label">Focused Checkbox</p>
                         <label class="mt-3 flex items-start gap-3 text-sm text-slate-200">
                             <input type="checkbox" checked class="mt-0.5 h-4 w-4 rounded-sm border-slate-600 bg-slate-950 text-sky-400 ring-2 ring-sky-400/40 ring-offset-2 ring-offset-slate-900" />

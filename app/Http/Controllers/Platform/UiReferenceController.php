@@ -210,6 +210,42 @@ class UiReferenceController extends Controller
         return in_array($perPage, [10, 25, 50, 100], true) ? $perPage : 25;
     }
 
+    /**
+     * @param array<int, string> $allowed
+     */
+    private function normalizeSort(string $sort, array $allowed, string $default): string
+    {
+        return in_array($sort, $allowed, true) ? $sort : $default;
+    }
+
+    private function normalizeDirection(string $direction, string $default = 'asc'): string
+    {
+        if ($direction === 'asc' || $direction === 'desc') {
+            return $direction;
+        }
+
+        return $default;
+    }
+
+    /**
+     * @param array<string, \Closure(array<string, mixed>): mixed> $resolvers
+     */
+    private function sortRows(Collection $rows, string $sort, string $direction, array $resolvers): Collection
+    {
+        $resolver = $resolvers[$sort] ?? reset($resolvers);
+
+        if (! $resolver instanceof \Closure) {
+            return $rows->values();
+        }
+
+        $sorted = $rows->sortBy(
+            fn (array $row): mixed => $resolver($row),
+            options: SORT_NATURAL | SORT_FLAG_CASE
+        )->values();
+
+        return $direction === 'desc' ? $sorted->reverse()->values() : $sorted;
+    }
+
     private function paginateCollection(
         Collection $rows,
         int $perPage,
@@ -245,6 +281,15 @@ class UiReferenceController extends Controller
             'owner' => trim($request->string('workspace_owner')->toString()),
             'search' => trim($request->string('workspace_search')->toString()),
         ];
+        $workspaceSort = $this->normalizeSort(
+            trim($request->string('workspace_sort')->toString()),
+            ['name', 'owner', 'policy_count', 'updated_at_timestamp'],
+            'updated_at_timestamp'
+        );
+        $workspaceDirection = $this->normalizeDirection(
+            trim($request->string('workspace_direction')->toString()),
+            'desc'
+        );
         $workspacePerPage = $this->normalizePerPage($request->integer('workspace_per_page', 25));
         $workspaceRows = collect($this->workspaceRows())
             ->when($workspaceFilters['status'] !== '', fn (Collection $rows): Collection => $rows->where('status', $workspaceFilters['status']))
@@ -257,6 +302,12 @@ class UiReferenceController extends Controller
                         || str_contains(mb_strtolower($row['owner']), $needle);
                 });
             });
+        $workspaceRows = $this->sortRows($workspaceRows, $workspaceSort, $workspaceDirection, [
+            'name' => fn (array $row): string => mb_strtolower((string) $row['name']),
+            'owner' => fn (array $row): string => mb_strtolower((string) $row['owner']),
+            'policy_count' => fn (array $row): int => (int) $row['policy_count'],
+            'updated_at_timestamp' => fn (array $row): int => (int) $row['updated_at_timestamp'],
+        ]);
         $workspacePaginator = $this->paginateCollection(
             $workspaceRows,
             $workspacePerPage,
@@ -270,6 +321,15 @@ class UiReferenceController extends Controller
             'result' => trim($request->string('audit_result')->toString()),
             'search' => trim($request->string('audit_search')->toString()),
         ];
+        $auditSort = $this->normalizeSort(
+            trim($request->string('audit_sort')->toString()),
+            ['occurred_at_timestamp', 'event_type', 'actor_label', 'route'],
+            'occurred_at_timestamp'
+        );
+        $auditDirection = $this->normalizeDirection(
+            trim($request->string('audit_direction')->toString()),
+            'desc'
+        );
         $auditPerPage = $this->normalizePerPage($request->integer('audit_per_page', 10));
         $auditRows = collect($this->auditRows())
             ->when($auditFilters['severity'] !== '', fn (Collection $rows): Collection => $rows->where('severity', $auditFilters['severity']))
@@ -283,6 +343,12 @@ class UiReferenceController extends Controller
                         || str_contains(mb_strtolower($row['route']), $needle);
                 });
             });
+        $auditRows = $this->sortRows($auditRows, $auditSort, $auditDirection, [
+            'occurred_at_timestamp' => fn (array $row): int => (int) $row['occurred_at_timestamp'],
+            'event_type' => fn (array $row): string => mb_strtolower((string) $row['event_type']),
+            'actor_label' => fn (array $row): string => mb_strtolower((string) $row['actor_label']),
+            'route' => fn (array $row): string => mb_strtolower((string) $row['route']),
+        ]);
         $auditPaginator = $this->paginateCollection(
             $auditRows,
             $auditPerPage,
@@ -296,6 +362,15 @@ class UiReferenceController extends Controller
             'environment' => trim($request->string('error_environment')->toString()),
             'search' => trim($request->string('error_search')->toString()),
         ];
+        $errorSort = $this->normalizeSort(
+            trim($request->string('error_sort')->toString()),
+            ['occurred_at_timestamp', 'message', 'exception_class', 'request_id'],
+            'occurred_at_timestamp'
+        );
+        $errorDirection = $this->normalizeDirection(
+            trim($request->string('error_direction')->toString()),
+            'desc'
+        );
         $errorPerPage = $this->normalizePerPage($request->integer('error_per_page', 10));
         $errorRows = collect($this->errorRows())
             ->when($errorFilters['severity'] !== '', fn (Collection $rows): Collection => $rows->where('severity', $errorFilters['severity']))
@@ -309,6 +384,12 @@ class UiReferenceController extends Controller
                         || str_contains(mb_strtolower($row['route']), $needle);
                 });
             });
+        $errorRows = $this->sortRows($errorRows, $errorSort, $errorDirection, [
+            'occurred_at_timestamp' => fn (array $row): int => (int) $row['occurred_at_timestamp'],
+            'message' => fn (array $row): string => mb_strtolower((string) $row['message']),
+            'exception_class' => fn (array $row): string => mb_strtolower((string) $row['exception_class']),
+            'request_id' => fn (array $row): string => mb_strtolower((string) $row['request_id']),
+        ]);
         $errorPaginator = $this->paginateCollection(
             $errorRows,
             $errorPerPage,
@@ -319,12 +400,18 @@ class UiReferenceController extends Controller
 
         return [
             'workspaceFilters' => $workspaceFilters,
+            'workspaceSort' => $workspaceSort,
+            'workspaceDirection' => $workspaceDirection,
             'workspacePerPage' => $workspacePerPage,
             'workspaceRows' => $workspacePaginator,
             'auditFilters' => $auditFilters,
+            'auditSort' => $auditSort,
+            'auditDirection' => $auditDirection,
             'auditPerPage' => $auditPerPage,
             'auditSamples' => $auditPaginator,
             'errorFilters' => $errorFilters,
+            'errorSort' => $errorSort,
+            'errorDirection' => $errorDirection,
             'errorPerPage' => $errorPerPage,
             'errorSamples' => $errorPaginator,
         ];
@@ -353,8 +440,10 @@ class UiReferenceController extends Controller
             $rows[] = [
                 'name' => $names[$i % count($names)].' '.$i,
                 'owner' => $owners[$i % count($owners)],
+                'policy_count' => (string) (($i * 3) % 17 + 4),
                 'status' => $statuses[$i % count($statuses)],
                 'updated_at_label' => now()->subDays($i)->format('M j, Y'),
+                'updated_at_timestamp' => (string) now()->subDays($i)->timestamp,
             ];
         }
 
@@ -374,6 +463,7 @@ class UiReferenceController extends Controller
             $rows[] = [
                 'sample_key' => $sample['id'],
                 'occurred_at_label' => now()->subMinutes($i * 13)->format('M j, Y g:i A T'),
+                'occurred_at_timestamp' => (string) now()->subMinutes($i * 13)->timestamp,
                 'event_type' => $sample['event_type'],
                 'action' => $sample['action'],
                 'actor_label' => $sample['actor_label'],
@@ -400,6 +490,7 @@ class UiReferenceController extends Controller
             $rows[] = [
                 'sample_key' => $sample['id'],
                 'occurred_at_label' => now()->subMinutes($i * 17)->format('M j, Y g:i A T'),
+                'occurred_at_timestamp' => (string) now()->subMinutes($i * 17)->timestamp,
                 'message' => $sample['message'],
                 'exception_class' => $sample['exception_class'],
                 'severity' => $sample['severity'],

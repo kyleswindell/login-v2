@@ -41,6 +41,12 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Layout And Scaffolding')
             ->assertSee('Grid Baseline');
 
+        $this->get('/platform/ui-reference/patterns/tables?workspace_sort=policy_count&workspace_direction=desc&audit_sort=event_type&audit_direction=asc&error_sort=message&error_direction=asc')
+            ->assertOk()
+            ->assertSee('Policies')
+            ->assertSee('Settings')
+            ->assertSee('Export');
+
         $this->get('/platform/ui-reference/patterns/overlays-feedback')
             ->assertOk()
             ->assertSee('Toast Baseline')

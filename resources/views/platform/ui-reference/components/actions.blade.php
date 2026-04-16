@@ -26,15 +26,43 @@
         <section class="ui-card">
             <p class="ui-kicker">Variant Styles</p>
             <p class="mt-2 text-sm text-slate-400">Soft and outline variants must preserve contrast in both themes.</p>
-            <div class="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                <button type="button" class="ui-action ui-action-soft">Soft Neutral</button>
-                <button type="button" class="ui-action ui-action-primary ui-action-soft">Soft Primary</button>
-                <button type="button" class="ui-action ui-action-danger ui-action-soft">Soft Danger</button>
-                <button type="button" class="ui-action ui-action-info ui-action-soft">Soft Info</button>
-                <button type="button" class="ui-action ui-action-outline">Outline Neutral</button>
-                <button type="button" class="ui-action ui-action-primary ui-action-outline">Outline Primary</button>
-                <button type="button" class="ui-action ui-action-warning ui-action-outline">Outline Warning</button>
-                <button type="button" class="ui-action ui-action-danger ui-action-outline">Outline Danger</button>
+            <div class="mt-4 space-y-4">
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Soft</p>
+                    <div class="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                        <button type="button" class="ui-action ui-action-soft">Soft Neutral</button>
+                        <button type="button" class="ui-action ui-action-primary ui-action-soft">Soft Primary</button>
+                        <button type="button" class="ui-action ui-action-success ui-action-soft">Soft Success</button>
+                        <button type="button" class="ui-action ui-action-warning ui-action-soft">Soft Warning</button>
+                        <button type="button" class="ui-action ui-action-danger ui-action-soft">Soft Danger</button>
+                        <button type="button" class="ui-action ui-action-notice ui-action-soft">Soft Notice</button>
+                        <button type="button" class="ui-action ui-action-info ui-action-soft">Soft Info</button>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Outline</p>
+                    <div class="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                        <button type="button" class="ui-action ui-action-outline">Outline Neutral</button>
+                        <button type="button" class="ui-action ui-action-primary ui-action-outline">Outline Primary</button>
+                        <button type="button" class="ui-action ui-action-success ui-action-outline">Outline Success</button>
+                        <button type="button" class="ui-action ui-action-warning ui-action-outline">Outline Warning</button>
+                        <button type="button" class="ui-action ui-action-danger ui-action-outline">Outline Danger</button>
+                        <button type="button" class="ui-action ui-action-notice ui-action-outline">Outline Notice</button>
+                        <button type="button" class="ui-action ui-action-info ui-action-outline">Outline Info</button>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Ghost</p>
+                    <div class="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                        <button type="button" class="ui-action ui-action-ghost">Ghost Neutral</button>
+                        <button type="button" class="ui-action ui-action-primary ui-action-ghost">Ghost Primary</button>
+                        <button type="button" class="ui-action ui-action-success ui-action-ghost">Ghost Success</button>
+                        <button type="button" class="ui-action ui-action-warning ui-action-ghost">Ghost Warning</button>
+                        <button type="button" class="ui-action ui-action-danger ui-action-ghost">Ghost Danger</button>
+                        <button type="button" class="ui-action ui-action-notice ui-action-ghost">Ghost Notice</button>
+                        <button type="button" class="ui-action ui-action-info ui-action-ghost">Ghost Info</button>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -49,7 +77,10 @@
             </div>
             <div class="mt-4 flex flex-wrap items-center gap-3">
                 <button type="button" disabled class="ui-action ui-action-primary">Disabled</button>
-                <button type="button" class="ui-action ui-action-primary" aria-busy="true">Loading…</button>
+                <button type="button" class="ui-action ui-action-primary" aria-busy="true">
+                    <span class="ui-spinner ui-spinner-inverse" aria-hidden="true"></span>
+                    Loading…
+                </button>
                 <button type="button" class="ui-icon-button" aria-label="Filter results">
                     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
                         <path fill-rule="evenodd" d="M2.5 4.75A.75.75 0 0 1 3.25 4h13.5a.75.75 0 0 1 .53 1.28L12 10.56v4.19a.75.75 0 0 1-.44.68l-3 1.333A.75.75 0 0 1 7.5 16V10.56L2.22 5.28a.75.75 0 0 1 .28-1.28Z" clip-rule="evenodd" />
@@ -90,7 +121,7 @@
                 <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
                     <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Loading</p>
                     <button type="button" class="mt-3 ui-action ui-action-primary" aria-busy="true">
-                        <span class="ui-spinner" aria-hidden="true"></span>
+                        <span class="ui-spinner ui-spinner-inverse" aria-hidden="true"></span>
                         Loading
                     </button>
                 </div>

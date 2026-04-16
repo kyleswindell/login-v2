@@ -80,15 +80,6 @@
         color: var(--ui-action-neutral-text-hover);
     }
 
-    .ui-action:disabled {
-        cursor: not-allowed;
-        border-color: var(--ui-action-disabled-border);
-        background-color: var(--ui-action-disabled-bg);
-        color: var(--ui-action-disabled-text);
-        opacity: 1;
-        box-shadow: none;
-    }
-
     .ui-action-primary {
         border-color: var(--ui-action-primary-border);
         background-color: var(--ui-action-primary-bg);
@@ -312,6 +303,77 @@
         background-color: var(--ui-action-outline-info-bg-hover);
     }
 
+    .ui-action-primary.ui-action-ghost,
+    .ui-action-success.ui-action-ghost,
+    .ui-action-warning.ui-action-ghost,
+    .ui-action-danger.ui-action-ghost,
+    .ui-action-notice.ui-action-ghost,
+    .ui-action-info.ui-action-ghost {
+        border-color: transparent;
+    }
+
+    .ui-action-primary.ui-action-ghost {
+        color: var(--ui-action-outline-primary-text);
+    }
+
+    .ui-action-primary.ui-action-ghost:hover {
+        background-color: var(--ui-action-outline-primary-bg-hover);
+    }
+
+    .ui-action-success.ui-action-ghost {
+        color: var(--ui-action-outline-success-text);
+    }
+
+    .ui-action-success.ui-action-ghost:hover {
+        background-color: var(--ui-action-outline-success-bg-hover);
+    }
+
+    .ui-action-warning.ui-action-ghost {
+        color: var(--ui-action-outline-warning-text);
+    }
+
+    .ui-action-warning.ui-action-ghost:hover {
+        background-color: var(--ui-action-outline-warning-bg-hover);
+    }
+
+    .ui-action-danger.ui-action-ghost {
+        color: var(--ui-action-outline-danger-text);
+    }
+
+    .ui-action-danger.ui-action-ghost:hover {
+        background-color: var(--ui-action-outline-danger-bg-hover);
+    }
+
+    .ui-action-notice.ui-action-ghost {
+        color: var(--ui-action-outline-notice-text);
+    }
+
+    .ui-action-notice.ui-action-ghost:hover {
+        background-color: var(--ui-action-outline-notice-bg-hover);
+    }
+
+    .ui-action-info.ui-action-ghost {
+        color: var(--ui-action-outline-info-text);
+    }
+
+    .ui-action-info.ui-action-ghost:hover {
+        background-color: var(--ui-action-outline-info-bg-hover);
+    }
+
+    .ui-action:disabled,
+    .ui-action:disabled:hover {
+        cursor: not-allowed;
+        border-color: var(--ui-action-disabled-border);
+        background-color: var(--ui-action-disabled-bg);
+        color: var(--ui-action-disabled-text);
+        opacity: 1;
+        box-shadow: none;
+    }
+
+    .ui-action:disabled:hover {
+        background-color: color-mix(in srgb, var(--ui-action-disabled-bg) 92%, var(--ui-text-strong) 8%);
+    }
+
     .ui-action-xs,
     .btn-xs {
         @apply rounded px-2.5 py-1.5 text-xs;
@@ -446,6 +508,12 @@
         color: var(--ui-action-disabled-text);
         opacity: 1;
         box-shadow: none;
+    }
+
+    .ui-icon-button:disabled:hover {
+        border-color: var(--ui-action-disabled-border);
+        background-color: color-mix(in srgb, var(--ui-action-disabled-bg) 92%, var(--ui-text-strong) 8%);
+        color: var(--ui-action-disabled-text);
     }
 
     .ui-log-drawer-panel {
@@ -674,6 +742,7 @@
         @apply block h-6 w-11 rounded-full border transition;
         border-color: var(--ui-switch-track-off-border);
         background-color: var(--ui-switch-track-off-bg);
+        box-shadow: inset 0 1px 2px color-mix(in srgb, var(--ui-shadow-color) 20%, transparent);
     }
 
     .ui-switch-input:checked + .ui-switch-track {
@@ -688,6 +757,7 @@
     .ui-switch-thumb {
         @apply pointer-events-none absolute left-0.5 top-0.5 h-5 w-5 rounded-full shadow-sm transition;
         background-color: var(--ui-switch-thumb-off-bg);
+        border: 1px solid color-mix(in srgb, var(--ui-border-default) 65%, transparent);
     }
 
     .ui-switch-input:checked + .ui-switch-track + .ui-switch-thumb {
@@ -743,8 +813,9 @@
     .ui-select:disabled,
     .ui-textarea:disabled {
         cursor: not-allowed;
-        background-color: color-mix(in srgb, var(--ui-surface) 75%, transparent);
-        color: var(--ui-text-muted);
+        border-color: var(--ui-action-disabled-border);
+        background-color: color-mix(in srgb, var(--ui-action-disabled-bg) 92%, var(--ui-surface) 8%);
+        color: color-mix(in srgb, var(--ui-action-disabled-text) 86%, var(--ui-text-secondary) 14%);
     }
 
     .ui-input[aria-invalid='true'],
@@ -784,6 +855,65 @@
         animation: ui-spin 0.8s linear infinite;
     }
 
+    .ui-spinner-inverse {
+        border-color: color-mix(in srgb, currentColor 24%, transparent);
+        border-top-color: currentColor;
+    }
+
+    .ui-table-sort {
+        @apply inline-flex items-center gap-2 rounded-md px-2 py-1 text-left text-[0.7rem] font-semibold uppercase tracking-[0.18em] transition;
+        color: var(--ui-text-muted);
+    }
+
+    .ui-table-sort:hover {
+        background-color: color-mix(in srgb, var(--ui-action-neutral-bg-hover) 70%, transparent);
+        color: var(--ui-text-strong);
+    }
+
+    .ui-table-sort.is-active {
+        color: var(--ui-text-strong);
+    }
+
+    .ui-table-sort-indicator {
+        @apply text-[0.6rem] font-bold;
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-table-row {
+        transition: background-color 160ms ease;
+    }
+
+    .ui-table-row:hover {
+        background-color: color-mix(in srgb, var(--ui-surface-elevated) 74%, var(--ui-action-neutral-bg-hover) 26%);
+    }
+
+    .ui-table-filter-panel {
+        @apply absolute right-0 top-full z-20 mt-3 hidden w-full max-w-xl rounded-lg border p-5 shadow-2xl;
+        border-color: var(--ui-border-default);
+        background-color: color-mix(in srgb, var(--ui-surface) 94%, transparent);
+    }
+
+    .ui-pagination-control {
+        @apply inline-flex items-center justify-center rounded-lg border px-3 py-2 text-xs font-semibold uppercase tracking-[0.15em] transition;
+        border-color: var(--ui-action-neutral-border);
+        background-color: var(--ui-action-neutral-bg);
+        color: var(--ui-action-neutral-text);
+    }
+
+    .ui-pagination-control:hover {
+        border-color: var(--ui-action-neutral-border-hover);
+        background-color: var(--ui-action-neutral-bg-hover);
+        color: var(--ui-action-neutral-text-hover);
+    }
+
+    .ui-pagination-control.is-disabled,
+    .ui-pagination-control.is-disabled:hover {
+        cursor: not-allowed;
+        border-color: var(--ui-action-disabled-border);
+        background-color: var(--ui-action-disabled-bg);
+        color: var(--ui-action-disabled-text);
+    }
+
     @media (prefers-reduced-motion: reduce) {
         .ui-toast {
             transition: none;
@@ -821,10 +951,10 @@
         --ui-action-disabled-border: rgb(113 113 122 / 0.9);
         --ui-action-disabled-bg: rgb(63 63 70 / 0.55);
         --ui-action-disabled-text: rgb(228 228 231 / 0.92);
-        --ui-switch-track-off-border: rgb(161 161 170);
-        --ui-switch-track-off-bg: rgb(82 82 91);
+        --ui-switch-track-off-border: rgb(161 161 170 / 0.95);
+        --ui-switch-track-off-bg: rgb(113 113 122 / 0.9);
         --ui-switch-track-on-border: rgb(96 165 250);
-        --ui-switch-track-on-bg: rgb(37 99 235 / 0.45);
+        --ui-switch-track-on-bg: rgb(29 78 216 / 0.58);
         --ui-switch-thumb-off-bg: rgb(250 250 250);
         --ui-switch-thumb-on-bg: rgb(219 234 254);
 
@@ -835,11 +965,11 @@
         --ui-action-neutral-bg-hover: rgb(39 39 42 / 0.95);
         --ui-action-neutral-text-hover: rgb(250 250 250);
 
-        --ui-action-primary-border: rgb(37 99 235 / 0.45);
-        --ui-action-primary-bg: rgb(37 99 235 / 0.22);
+        --ui-action-primary-border: rgb(37 99 235 / 0.52);
+        --ui-action-primary-bg: rgb(29 78 216 / 0.28);
         --ui-action-primary-text: rgb(219 234 254);
-        --ui-action-primary-border-hover: rgb(37 99 235 / 0.65);
-        --ui-action-primary-bg-hover: rgb(37 99 235 / 0.35);
+        --ui-action-primary-border-hover: rgb(59 130 246 / 0.72);
+        --ui-action-primary-bg-hover: rgb(29 78 216 / 0.42);
         --ui-action-primary-text-hover: rgb(239 246 255);
 
         --ui-action-success-border: rgb(5 150 105 / 0.45);
@@ -849,18 +979,18 @@
         --ui-action-success-bg-hover: rgb(5 150 105 / 0.35);
         --ui-action-success-text-hover: rgb(236 253 245);
 
-        --ui-action-warning-border: rgb(245 158 11 / 0.55);
-        --ui-action-warning-bg: rgb(245 158 11 / 0.22);
+        --ui-action-warning-border: rgb(250 204 21 / 0.6);
+        --ui-action-warning-bg: rgb(250 204 21 / 0.24);
         --ui-action-warning-text: rgb(254 240 138);
-        --ui-action-warning-border-hover: rgb(250 204 21 / 0.75);
-        --ui-action-warning-bg-hover: rgb(245 158 11 / 0.35);
+        --ui-action-warning-border-hover: rgb(250 204 21 / 0.8);
+        --ui-action-warning-bg-hover: rgb(250 204 21 / 0.36);
         --ui-action-warning-text-hover: rgb(254 249 195);
 
-        --ui-action-danger-border: rgb(239 68 68 / 0.5);
-        --ui-action-danger-bg: rgb(220 38 38 / 0.22);
+        --ui-action-danger-border: rgb(248 113 113 / 0.54);
+        --ui-action-danger-bg: rgb(239 68 68 / 0.24);
         --ui-action-danger-text: rgb(254 226 226);
-        --ui-action-danger-border-hover: rgb(248 113 113 / 0.7);
-        --ui-action-danger-bg-hover: rgb(220 38 38 / 0.35);
+        --ui-action-danger-border-hover: rgb(248 113 113 / 0.74);
+        --ui-action-danger-bg-hover: rgb(220 38 38 / 0.38);
         --ui-action-danger-text-hover: rgb(254 242 242);
 
         --ui-action-notice-border: rgb(124 58 237 / 0.45);
@@ -870,11 +1000,11 @@
         --ui-action-notice-bg-hover: rgb(124 58 237 / 0.35);
         --ui-action-notice-text-hover: rgb(245 243 255);
 
-        --ui-action-info-border: rgb(125 211 252 / 0.45);
-        --ui-action-info-bg: rgb(56 189 248 / 0.14);
-        --ui-action-info-text: rgb(224 242 254);
-        --ui-action-info-border-hover: rgb(125 211 252 / 0.65);
-        --ui-action-info-bg-hover: rgb(56 189 248 / 0.24);
+        --ui-action-info-border: rgb(186 230 253 / 0.5);
+        --ui-action-info-bg: rgb(125 211 252 / 0.18);
+        --ui-action-info-text: rgb(240 249 255);
+        --ui-action-info-border-hover: rgb(186 230 253 / 0.7);
+        --ui-action-info-bg-hover: rgb(125 211 252 / 0.3);
         --ui-action-info-text-hover: rgb(240 249 255);
 
         --ui-action-ghost-text: rgb(212 212 216);
@@ -886,35 +1016,35 @@
         --ui-action-soft-neutral-text: rgb(228 228 231);
         --ui-action-soft-neutral-bg-hover: rgb(82 82 91 / 0.2);
 
-        --ui-action-soft-primary-border: rgb(96 165 250 / 0.42);
-        --ui-action-soft-primary-bg: rgb(37 99 235 / 0.1);
+        --ui-action-soft-primary-border: rgb(96 165 250 / 0.48);
+        --ui-action-soft-primary-bg: rgb(29 78 216 / 0.08);
         --ui-action-soft-primary-text: rgb(191 219 254);
-        --ui-action-soft-primary-bg-hover: rgb(37 99 235 / 0.18);
+        --ui-action-soft-primary-bg-hover: rgb(29 78 216 / 0.16);
 
         --ui-action-soft-success-border: rgb(52 211 153 / 0.42);
         --ui-action-soft-success-bg: rgb(5 150 105 / 0.1);
         --ui-action-soft-success-text: rgb(209 250 229);
         --ui-action-soft-success-bg-hover: rgb(5 150 105 / 0.18);
 
-        --ui-action-soft-warning-border: rgb(250 204 21 / 0.46);
-        --ui-action-soft-warning-bg: rgb(245 158 11 / 0.1);
+        --ui-action-soft-warning-border: rgb(250 204 21 / 0.5);
+        --ui-action-soft-warning-bg: rgb(250 204 21 / 0.08);
         --ui-action-soft-warning-text: rgb(254 240 138);
-        --ui-action-soft-warning-bg-hover: rgb(245 158 11 / 0.18);
+        --ui-action-soft-warning-bg-hover: rgb(250 204 21 / 0.16);
 
-        --ui-action-soft-danger-border: rgb(248 113 113 / 0.46);
-        --ui-action-soft-danger-bg: rgb(220 38 38 / 0.1);
+        --ui-action-soft-danger-border: rgb(248 113 113 / 0.5);
+        --ui-action-soft-danger-bg: rgb(239 68 68 / 0.09);
         --ui-action-soft-danger-text: rgb(254 226 226);
-        --ui-action-soft-danger-bg-hover: rgb(220 38 38 / 0.18);
+        --ui-action-soft-danger-bg-hover: rgb(239 68 68 / 0.16);
 
         --ui-action-soft-notice-border: rgb(167 139 250 / 0.42);
         --ui-action-soft-notice-bg: rgb(124 58 237 / 0.1);
         --ui-action-soft-notice-text: rgb(237 233 254);
         --ui-action-soft-notice-bg-hover: rgb(124 58 237 / 0.18);
 
-        --ui-action-soft-info-border: rgb(125 211 252 / 0.42);
-        --ui-action-soft-info-bg: rgb(56 189 248 / 0.08);
+        --ui-action-soft-info-border: rgb(186 230 253 / 0.48);
+        --ui-action-soft-info-bg: rgb(125 211 252 / 0.08);
         --ui-action-soft-info-text: rgb(224 242 254);
-        --ui-action-soft-info-bg-hover: rgb(56 189 248 / 0.16);
+        --ui-action-soft-info-bg-hover: rgb(125 211 252 / 0.16);
 
         --ui-action-outline-neutral-border: rgb(161 161 170);
         --ui-action-outline-neutral-text: rgb(228 228 231);
@@ -922,7 +1052,7 @@
 
         --ui-action-outline-primary-border: rgb(96 165 250);
         --ui-action-outline-primary-text: rgb(191 219 254);
-        --ui-action-outline-primary-bg-hover: rgb(37 99 235 / 0.18);
+        --ui-action-outline-primary-bg-hover: rgb(29 78 216 / 0.18);
 
         --ui-action-outline-success-border: rgb(52 211 153);
         --ui-action-outline-success-text: rgb(167 243 208);
@@ -930,19 +1060,19 @@
 
         --ui-action-outline-warning-border: rgb(250 204 21);
         --ui-action-outline-warning-text: rgb(253 224 71);
-        --ui-action-outline-warning-bg-hover: rgb(245 158 11 / 0.18);
+        --ui-action-outline-warning-bg-hover: rgb(250 204 21 / 0.16);
 
         --ui-action-outline-danger-border: rgb(248 113 113);
         --ui-action-outline-danger-text: rgb(252 165 165);
-        --ui-action-outline-danger-bg-hover: rgb(220 38 38 / 0.18);
+        --ui-action-outline-danger-bg-hover: rgb(239 68 68 / 0.16);
 
         --ui-action-outline-notice-border: rgb(167 139 250);
         --ui-action-outline-notice-text: rgb(196 181 253);
         --ui-action-outline-notice-bg-hover: rgb(124 58 237 / 0.18);
 
-        --ui-action-outline-info-border: rgb(125 211 252);
-        --ui-action-outline-info-text: rgb(186 230 253);
-        --ui-action-outline-info-bg-hover: rgb(56 189 248 / 0.12);
+        --ui-action-outline-info-border: rgb(186 230 253);
+        --ui-action-outline-info-text: rgb(224 242 254);
+        --ui-action-outline-info-bg-hover: rgb(125 211 252 / 0.12);
 
         --ui-login-google-border: rgb(228 228 231);
         --ui-login-google-bg: rgb(255 255 255);
@@ -963,38 +1093,38 @@
 
         --ui-status-neutral-bg: rgb(63 63 70 / 0.65);
         --ui-status-neutral-text: rgb(228 228 231);
-        --ui-status-info-bg: rgb(56 189 248 / 0.14);
-        --ui-status-info-text: rgb(186 230 253);
+        --ui-status-info-bg: rgb(125 211 252 / 0.18);
+        --ui-status-info-text: rgb(224 242 254);
         --ui-status-success-bg: rgb(5 150 105 / 0.2);
         --ui-status-success-text: rgb(167 243 208);
-        --ui-status-warning-bg: rgb(245 158 11 / 0.2);
+        --ui-status-warning-bg: rgb(250 204 21 / 0.2);
         --ui-status-warning-text: rgb(253 224 71);
-        --ui-status-danger-bg: rgb(220 38 38 / 0.2);
-        --ui-status-danger-text: rgb(252 165 165);
+        --ui-status-danger-bg: rgb(239 68 68 / 0.2);
+        --ui-status-danger-text: rgb(254 202 202);
         --ui-status-notice-bg: rgb(124 58 237 / 0.2);
         --ui-status-notice-text: rgb(196 181 253);
         --ui-status-solid-text: rgb(248 250 252);
         --ui-status-neutral-solid-bg: rgb(63 63 70);
-        --ui-status-info-solid-bg: rgb(2 132 199);
+        --ui-status-info-solid-bg: rgb(14 116 144);
         --ui-status-success-solid-bg: rgb(5 150 105);
         --ui-status-warning-solid-bg: rgb(217 119 6);
         --ui-status-danger-solid-bg: rgb(220 38 38);
         --ui-status-notice-solid-bg: rgb(124 58 237);
 
-        --ui-alert-info-border: rgb(125 211 252 / 0.45);
-        --ui-alert-info-bg: rgb(56 189 248 / 0.12);
-        --ui-alert-info-text: rgb(224 242 254);
+        --ui-alert-info-border: rgb(186 230 253 / 0.48);
+        --ui-alert-info-bg: rgb(125 211 252 / 0.14);
+        --ui-alert-info-text: rgb(240 249 255);
         --ui-alert-success-border: rgb(5 150 105 / 0.45);
         --ui-alert-success-bg: rgb(5 150 105 / 0.14);
         --ui-alert-success-text: rgb(209 250 229);
-        --ui-alert-warning-border: rgb(245 158 11 / 0.5);
-        --ui-alert-warning-bg: rgb(245 158 11 / 0.14);
+        --ui-alert-warning-border: rgb(250 204 21 / 0.5);
+        --ui-alert-warning-bg: rgb(250 204 21 / 0.14);
         --ui-alert-warning-text: rgb(254 249 195);
         --ui-alert-notice-border: rgb(124 58 237 / 0.45);
         --ui-alert-notice-bg: rgb(124 58 237 / 0.14);
         --ui-alert-notice-text: rgb(221 214 254);
-        --ui-alert-danger-border: rgb(239 68 68 / 0.5);
-        --ui-alert-danger-bg: rgb(220 38 38 / 0.14);
+        --ui-alert-danger-border: rgb(248 113 113 / 0.5);
+        --ui-alert-danger-bg: rgb(239 68 68 / 0.14);
         --ui-alert-danger-text: rgb(254 226 226);
     }
 
@@ -1017,13 +1147,13 @@
         --ui-spinner-head: rgb(3 105 161);
         --ui-link-text: rgb(3 105 161);
         --ui-link-text-hover: rgb(7 89 133);
-        --ui-action-disabled-border: rgb(203 213 225);
-        --ui-action-disabled-bg: rgb(241 245 249);
-        --ui-action-disabled-text: rgb(100 116 139);
-        --ui-switch-track-off-border: rgb(148 163 184);
-        --ui-switch-track-off-bg: rgb(226 232 240);
-        --ui-switch-track-on-border: rgb(3 105 161);
-        --ui-switch-track-on-bg: rgb(125 211 252);
+        --ui-action-disabled-border: rgb(148 163 184);
+        --ui-action-disabled-bg: rgb(226 232 240);
+        --ui-action-disabled-text: rgb(71 85 105);
+        --ui-switch-track-off-border: rgb(100 116 139);
+        --ui-switch-track-off-bg: rgb(203 213 225);
+        --ui-switch-track-on-border: rgb(2 132 199);
+        --ui-switch-track-on-bg: rgb(56 189 248);
         --ui-switch-thumb-off-bg: rgb(255 255 255);
         --ui-switch-thumb-on-bg: rgb(255 255 255);
 
@@ -1048,11 +1178,11 @@
         --ui-action-success-bg-hover: rgb(6 95 70);
         --ui-action-success-text-hover: rgb(240 253 244);
 
-        --ui-action-warning-border: rgb(234 179 8);
+        --ui-action-warning-border: rgb(245 158 11);
         --ui-action-warning-bg: rgb(250 204 21);
         --ui-action-warning-text: rgb(66 32 6);
-        --ui-action-warning-border-hover: rgb(245 158 11);
-        --ui-action-warning-bg-hover: rgb(245 158 11);
+        --ui-action-warning-border-hover: rgb(234 179 8);
+        --ui-action-warning-bg-hover: rgb(234 179 8);
         --ui-action-warning-text-hover: rgb(66 32 6);
 
         --ui-action-danger-border: rgb(220 38 38);
@@ -1069,12 +1199,12 @@
         --ui-action-notice-bg-hover: rgb(91 33 182);
         --ui-action-notice-text-hover: rgb(245 243 255);
 
-        --ui-action-info-border: rgb(8 145 178);
-        --ui-action-info-bg: rgb(14 116 144);
-        --ui-action-info-text: rgb(236 254 255);
-        --ui-action-info-border-hover: rgb(14 116 144);
-        --ui-action-info-bg-hover: rgb(21 94 117);
-        --ui-action-info-text-hover: rgb(236 254 255);
+        --ui-action-info-border: rgb(56 189 248);
+        --ui-action-info-bg: rgb(224 242 254);
+        --ui-action-info-text: rgb(12 74 110);
+        --ui-action-info-border-hover: rgb(14 165 233);
+        --ui-action-info-bg-hover: rgb(186 230 253);
+        --ui-action-info-text-hover: rgb(12 74 110);
 
         --ui-action-ghost-text: rgb(71 85 105);
         --ui-action-ghost-bg-hover: rgb(241 245 249);
@@ -1110,10 +1240,10 @@
         --ui-action-soft-notice-text: rgb(91 33 182);
         --ui-action-soft-notice-bg-hover: rgb(221 214 254);
 
-        --ui-action-soft-info-border: rgb(34 211 238);
-        --ui-action-soft-info-bg: rgb(207 250 254);
-        --ui-action-soft-info-text: rgb(14 116 144);
-        --ui-action-soft-info-bg-hover: rgb(165 243 252);
+        --ui-action-soft-info-border: rgb(56 189 248);
+        --ui-action-soft-info-bg: rgb(224 242 254);
+        --ui-action-soft-info-text: rgb(12 74 110);
+        --ui-action-soft-info-bg-hover: rgb(186 230 253);
 
         --ui-action-outline-neutral-border: rgb(100 116 139);
         --ui-action-outline-neutral-text: rgb(51 65 85);
@@ -1139,9 +1269,9 @@
         --ui-action-outline-notice-text: rgb(109 40 217);
         --ui-action-outline-notice-bg-hover: rgb(237 233 254);
 
-        --ui-action-outline-info-border: rgb(14 116 144);
-        --ui-action-outline-info-text: rgb(14 116 144);
-        --ui-action-outline-info-bg-hover: rgb(207 250 254);
+        --ui-action-outline-info-border: rgb(14 165 233);
+        --ui-action-outline-info-text: rgb(12 74 110);
+        --ui-action-outline-info-bg-hover: rgb(224 242 254);
 
         --ui-login-google-border: rgb(203 213 225);
         --ui-login-google-bg: rgb(255 255 255);
@@ -1162,8 +1292,8 @@
 
         --ui-status-neutral-bg: rgb(241 245 249);
         --ui-status-neutral-text: rgb(51 65 85);
-        --ui-status-info-bg: rgb(207 250 254);
-        --ui-status-info-text: rgb(14 116 144);
+        --ui-status-info-bg: rgb(224 242 254);
+        --ui-status-info-text: rgb(12 74 110);
         --ui-status-success-bg: rgb(220 252 231);
         --ui-status-success-text: rgb(6 95 70);
         --ui-status-warning-bg: rgb(254 240 138);
@@ -1174,15 +1304,15 @@
         --ui-status-notice-text: rgb(91 33 182);
         --ui-status-solid-text: rgb(248 250 252);
         --ui-status-neutral-solid-bg: rgb(71 85 105);
-        --ui-status-info-solid-bg: rgb(14 116 144);
+        --ui-status-info-solid-bg: rgb(14 165 233);
         --ui-status-success-solid-bg: rgb(4 120 87);
         --ui-status-warning-solid-bg: rgb(180 83 9);
         --ui-status-danger-solid-bg: rgb(220 38 38);
         --ui-status-notice-solid-bg: rgb(109 40 217);
 
-        --ui-alert-info-border: rgb(8 145 178 / 0.45);
-        --ui-alert-info-bg: rgb(207 250 254 / 0.8);
-        --ui-alert-info-text: rgb(14 116 144);
+        --ui-alert-info-border: rgb(56 189 248 / 0.45);
+        --ui-alert-info-bg: rgb(224 242 254 / 0.9);
+        --ui-alert-info-text: rgb(12 74 110);
         --ui-alert-success-border: rgb(5 150 105 / 0.45);
         --ui-alert-success-bg: rgb(220 252 231 / 0.8);
         --ui-alert-success-text: rgb(6 95 70);

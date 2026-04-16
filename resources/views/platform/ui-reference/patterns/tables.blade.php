@@ -3,6 +3,33 @@
         @include('platform.ui-reference.partials.sidebar', ['currentSection' => $currentSection ?? 'patterns.tables'])
     </x-slot:sidebar>
 
+    @php
+        $tablesUrl = function (array $overrides = [], string $anchor = '') {
+            $query = array_merge(request()->query(), $overrides);
+
+            return route('platform.ui-reference.patterns.tables').($query !== [] ? '?'.http_build_query($query) : '').$anchor;
+        };
+
+        $sortMeta = function (
+            string $currentSort,
+            string $currentDirection,
+            string $column,
+            string $defaultDirection = 'asc',
+            string $ascendingLabel = 'A-Z',
+            string $descendingLabel = 'Z-A'
+        ): array {
+            $active = $currentSort === $column;
+
+            return [
+                'active' => $active,
+                'next' => $active && $currentDirection === 'asc' ? 'desc' : 'asc',
+                'indicator' => $active
+                    ? ($currentDirection === 'asc' ? $ascendingLabel : $descendingLabel)
+                    : ($defaultDirection === 'asc' ? $ascendingLabel : $descendingLabel),
+            ];
+        };
+    @endphp
+
     <section class="flex flex-1 flex-col gap-6">
         <div>
             <h1 class="ui-page-header-title">Table Baselines</h1>
@@ -22,6 +49,8 @@
                             <input type="hidden" name="workspace_status" value="{{ $workspaceFilters['status'] }}">
                             <input type="hidden" name="workspace_owner" value="{{ $workspaceFilters['owner'] }}">
                             <input type="hidden" name="workspace_search" value="{{ $workspaceFilters['search'] }}">
+                            <input type="hidden" name="workspace_sort" value="{{ $workspaceSort }}">
+                            <input type="hidden" name="workspace_direction" value="{{ $workspaceDirection }}">
                             <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
                             <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
                             <label class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Rows</label>
@@ -33,8 +62,19 @@
                         </form>
 
                         <button type="button" class="ui-action ui-action-primary">Create</button>
-                        <button type="button" class="ui-action ui-action-warning">Settings</button>
-                        <button type="button" class="ui-action">Export</button>
+                        <button type="button" class="ui-action">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+                                <path fill-rule="evenodd" d="M7.84 1.804a1.75 1.75 0 0 1 2.32 0l.337.302a1.75 1.75 0 0 0 1.744.348l.433-.145a1.75 1.75 0 0 1 2.27 1.493l.05.45a1.75 1.75 0 0 0 1.084 1.406l.415.178a1.75 1.75 0 0 1 .995 2.095l-.12.437a1.75 1.75 0 0 0 .365 1.743l.301.338a1.75 1.75 0 0 1 0 2.319l-.301.338a1.75 1.75 0 0 0-.365 1.742l.12.438a1.75 1.75 0 0 1-.995 2.095l-.415.178a1.75 1.75 0 0 0-1.084 1.406l-.05.45a1.75 1.75 0 0 1-2.27 1.493l-.433-.145a1.75 1.75 0 0 0-1.744.348l-.337.302a1.75 1.75 0 0 1-2.32 0l-.337-.302a1.75 1.75 0 0 0-1.744-.348l-.433.145a1.75 1.75 0 0 1-2.27-1.493l-.05-.45a1.75 1.75 0 0 0-1.084-1.406l-.415-.178a1.75 1.75 0 0 1-.995-2.095l.12-.438a1.75 1.75 0 0 0-.365-1.742l-.301-.338a1.75 1.75 0 0 1 0-2.319l.301-.338a1.75 1.75 0 0 0 .365-1.743l-.12-.437a1.75 1.75 0 0 1 .995-2.095l.415-.178A1.75 1.75 0 0 0 4.96 4.252l.05-.45A1.75 1.75 0 0 1 7.28 2.31l.433.145a1.75 1.75 0 0 0 1.744-.348l.337-.302ZM10 13.25A3.25 3.25 0 1 0 10 6.75a3.25 3.25 0 0 0 0 6.5Z" clip-rule="evenodd" />
+                            </svg>
+                            Settings
+                        </button>
+                        <button type="button" class="ui-action ui-action-warning ui-action-outline">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+                                <path d="M3.75 3.5A1.25 1.25 0 0 0 2.5 4.75v10.5A1.25 1.25 0 0 0 3.75 16.5h12.5a1.25 1.25 0 0 0 1.25-1.25V9.873a.75.75 0 0 0-1.28-.53l-2.47 2.47a1.75 1.75 0 0 1-2.475 0L8.938 9.476a1.75 1.75 0 0 1 0-2.475l2.47-2.47A.75.75 0 0 0 10.877 3.5H3.75Z" />
+                                <path d="M17.53 2.47a.75.75 0 0 0-1.06 0L10 8.94l2.53 2.53 6.47-6.47a.75.75 0 0 0 0-1.06l-1.47-1.47Z" />
+                            </svg>
+                            Export
+                        </button>
                     </div>
 
                     <div class="ml-auto flex max-w-full items-center justify-end gap-3">
@@ -42,6 +82,8 @@
                             <input type="hidden" name="workspace_status" value="{{ $workspaceFilters['status'] }}">
                             <input type="hidden" name="workspace_owner" value="{{ $workspaceFilters['owner'] }}">
                             <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
+                            <input type="hidden" name="workspace_sort" value="{{ $workspaceSort }}">
+                            <input type="hidden" name="workspace_direction" value="{{ $workspaceDirection }}">
                             <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
                             <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
                             <label for="workspace-table-search" class="sr-only">Search workspace rows</label>
@@ -80,9 +122,11 @@
                     </div>
                 </div>
 
-                <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="absolute right-0 top-full z-20 mt-3 hidden w-full max-w-4xl rounded-lg border border-slate-800 bg-slate-900/95 p-5 shadow-2xl" data-filter-panel>
+                <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="ui-table-filter-panel" data-filter-panel>
                     <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
                     <input type="hidden" name="workspace_search" value="{{ $workspaceFilters['search'] }}">
+                    <input type="hidden" name="workspace_sort" value="{{ $workspaceSort }}">
+                    <input type="hidden" name="workspace_direction" value="{{ $workspaceDirection }}">
                     <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
                     <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
                     <div class="grid gap-4 md:grid-cols-2">
@@ -113,21 +157,47 @@
             </div>
 
             <div class="mt-4 overflow-x-auto rounded-lg border border-slate-800 bg-slate-900/70">
-                <table class="min-w-[760px] w-full divide-y divide-slate-800">
+                <table class="min-w-[860px] w-full divide-y divide-slate-800">
                     <thead class="bg-slate-900">
                         <tr class="text-left text-xs uppercase tracking-[0.2em] text-slate-500">
-                            <th class="px-5 py-3">Name</th>
-                            <th class="px-5 py-3">Owner</th>
+                            @php($workspaceNameSort = $sortMeta($workspaceSort, $workspaceDirection, 'name'))
+                            @php($workspaceOwnerSort = $sortMeta($workspaceSort, $workspaceDirection, 'owner'))
+                            @php($workspacePolicySort = $sortMeta($workspaceSort, $workspaceDirection, 'policy_count', 'desc', 'Low-High', 'High-Low'))
+                            @php($workspaceUpdatedSort = $sortMeta($workspaceSort, $workspaceDirection, 'updated_at_timestamp', 'desc', 'Oldest', 'Newest'))
+                            <th class="px-5 py-3">
+                                <a href="{{ $tablesUrl(['workspace_sort' => 'name', 'workspace_direction' => $workspaceNameSort['next'], 'workspace_page' => 1], '#workspace-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $workspaceNameSort['active']])>
+                                    <span>Name</span>
+                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $workspaceNameSort['indicator'] }}</span>
+                                </a>
+                            </th>
+                            <th class="px-5 py-3">
+                                <a href="{{ $tablesUrl(['workspace_sort' => 'owner', 'workspace_direction' => $workspaceOwnerSort['next'], 'workspace_page' => 1], '#workspace-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $workspaceOwnerSort['active']])>
+                                    <span>Owner</span>
+                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $workspaceOwnerSort['indicator'] }}</span>
+                                </a>
+                            </th>
+                            <th class="px-5 py-3">
+                                <a href="{{ $tablesUrl(['workspace_sort' => 'policy_count', 'workspace_direction' => $workspacePolicySort['next'], 'workspace_page' => 1], '#workspace-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $workspacePolicySort['active']])>
+                                    <span>Policies</span>
+                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $workspacePolicySort['indicator'] }}</span>
+                                </a>
+                            </th>
                             <th class="px-5 py-3">Status</th>
-                            <th class="px-5 py-3">Updated</th>
+                            <th class="px-5 py-3">
+                                <a href="{{ $tablesUrl(['workspace_sort' => 'updated_at_timestamp', 'workspace_direction' => $workspaceUpdatedSort['next'], 'workspace_page' => 1], '#workspace-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $workspaceUpdatedSort['active']])>
+                                    <span>Updated</span>
+                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $workspaceUpdatedSort['indicator'] }}</span>
+                                </a>
+                            </th>
                             <th class="px-5 py-3 sr-only">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-800 text-sm text-slate-200">
                         @forelse ($workspaceRows as $row)
-                            <tr>
+                            <tr class="ui-table-row">
                                 <td class="px-5 py-3 font-semibold text-white">{{ $row['name'] }}</td>
                                 <td class="px-5 py-3">{{ $row['owner'] }}</td>
+                                <td class="px-5 py-3">{{ $row['policy_count'] }}</td>
                                 <td class="px-5 py-3">
                                     <x-ui.badge :status="$row['status'] === 'review' ? 'pending review' : $row['status']" :show-icon="false" />
                                 </td>
@@ -136,7 +206,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="px-5 py-8 text-center text-sm text-slate-500">No workspace rows matched the current filters.</td>
+                                <td colspan="6" class="px-5 py-8 text-center text-sm text-slate-500">No workspace rows matched the current filters.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -151,17 +221,19 @@
                         @php($workspacePrev = max(1, $workspaceRows->currentPage() - 1))
                         @php($workspaceNext = min($workspaceRows->lastPage(), $workspaceRows->currentPage() + 1))
 
-                        <a href="{{ $workspaceRows->onFirstPage() ? '#' : $workspaceRows->url($workspacePrev) }}" @class([
-                            'rounded-lg border px-3 py-2 text-xs font-semibold uppercase tracking-[0.15em] transition',
-                            'border-slate-700 text-slate-300 hover:border-slate-600 hover:text-white' => ! $workspaceRows->onFirstPage(),
-                            'cursor-not-allowed border-slate-800 text-slate-600' => $workspaceRows->onFirstPage(),
-                        ])>Prev</a>
+                        @if ($workspaceRows->onFirstPage())
+                            <span class="ui-pagination-control is-disabled" aria-disabled="true">Prev</span>
+                        @else
+                            <a href="{{ $workspaceRows->url($workspacePrev) }}" class="ui-pagination-control">Prev</a>
+                        @endif
 
                         <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}">
                             <input type="hidden" name="workspace_status" value="{{ $workspaceFilters['status'] }}">
                             <input type="hidden" name="workspace_owner" value="{{ $workspaceFilters['owner'] }}">
                             <input type="hidden" name="workspace_search" value="{{ $workspaceFilters['search'] }}">
                             <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
+                            <input type="hidden" name="workspace_sort" value="{{ $workspaceSort }}">
+                            <input type="hidden" name="workspace_direction" value="{{ $workspaceDirection }}">
                             <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
                             <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
                             <select name="workspace_page" onchange="this.form.submit()" class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-slate-200">
@@ -171,11 +243,11 @@
                             </select>
                         </form>
 
-                        <a href="{{ $workspaceRows->hasMorePages() ? $workspaceRows->url($workspaceNext) : '#' }}" @class([
-                            'rounded-lg border px-3 py-2 text-xs font-semibold uppercase tracking-[0.15em] transition',
-                            'border-slate-700 text-slate-300 hover:border-slate-600 hover:text-white' => $workspaceRows->hasMorePages(),
-                            'cursor-not-allowed border-slate-800 text-slate-600' => ! $workspaceRows->hasMorePages(),
-                        ])>Next</a>
+                        @if ($workspaceRows->hasMorePages())
+                            <a href="{{ $workspaceRows->url($workspaceNext) }}" class="ui-pagination-control">Next</a>
+                        @else
+                            <span class="ui-pagination-control is-disabled" aria-disabled="true">Next</span>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -253,6 +325,8 @@
                         <input type="hidden" name="audit_severity" value="{{ $auditFilters['severity'] }}">
                         <input type="hidden" name="audit_result" value="{{ $auditFilters['result'] }}">
                         <input type="hidden" name="audit_search" value="{{ $auditFilters['search'] }}">
+                        <input type="hidden" name="audit_sort" value="{{ $auditSort }}">
+                        <input type="hidden" name="audit_direction" value="{{ $auditDirection }}">
                         <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
                         <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
                         <label class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Rows</label>
@@ -268,6 +342,8 @@
                             <input type="hidden" name="audit_severity" value="{{ $auditFilters['severity'] }}">
                             <input type="hidden" name="audit_result" value="{{ $auditFilters['result'] }}">
                             <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
+                            <input type="hidden" name="audit_sort" value="{{ $auditSort }}">
+                            <input type="hidden" name="audit_direction" value="{{ $auditDirection }}">
                             <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
                             <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
                             <label for="audit-table-search" class="sr-only">Search audit rows</label>
@@ -306,11 +382,13 @@
                     </div>
                 </div>
 
-                <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="absolute right-0 top-full z-20 mt-3 hidden w-full max-w-4xl rounded-lg border border-slate-800 bg-slate-900/95 p-5 shadow-2xl" data-filter-panel>
+                <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="ui-table-filter-panel" data-filter-panel>
                     <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
                     <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
                     <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
                     <input type="hidden" name="audit_search" value="{{ $auditFilters['search'] }}">
+                    <input type="hidden" name="audit_sort" value="{{ $auditSort }}">
+                    <input type="hidden" name="audit_direction" value="{{ $auditDirection }}">
                     <div class="grid gap-4 md:grid-cols-2">
                     <label>
                         <span class="text-sm font-semibold text-slate-200">Severity</span>
@@ -339,18 +417,42 @@
                 <table class="min-w-[920px] w-full divide-y divide-slate-800">
                     <thead class="bg-slate-900">
                         <tr class="text-left text-xs uppercase tracking-[0.2em] text-slate-500">
-                            <th class="px-5 py-3">Occurred</th>
-                            <th class="px-5 py-3">Event</th>
-                            <th class="px-5 py-3">Actor</th>
+                            @php($auditOccurredSort = $sortMeta($auditSort, $auditDirection, 'occurred_at_timestamp', 'desc', 'Oldest', 'Newest'))
+                            @php($auditEventSort = $sortMeta($auditSort, $auditDirection, 'event_type'))
+                            @php($auditActorSort = $sortMeta($auditSort, $auditDirection, 'actor_label'))
+                            @php($auditRouteSort = $sortMeta($auditSort, $auditDirection, 'route'))
+                            <th class="px-5 py-3">
+                                <a href="{{ $tablesUrl(['audit_sort' => 'occurred_at_timestamp', 'audit_direction' => $auditOccurredSort['next'], 'audit_page' => 1], '#audit-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $auditOccurredSort['active']])>
+                                    <span>Occurred</span>
+                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $auditOccurredSort['indicator'] }}</span>
+                                </a>
+                            </th>
+                            <th class="px-5 py-3">
+                                <a href="{{ $tablesUrl(['audit_sort' => 'event_type', 'audit_direction' => $auditEventSort['next'], 'audit_page' => 1], '#audit-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $auditEventSort['active']])>
+                                    <span>Event</span>
+                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $auditEventSort['indicator'] }}</span>
+                                </a>
+                            </th>
+                            <th class="px-5 py-3">
+                                <a href="{{ $tablesUrl(['audit_sort' => 'actor_label', 'audit_direction' => $auditActorSort['next'], 'audit_page' => 1], '#audit-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $auditActorSort['active']])>
+                                    <span>Actor</span>
+                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $auditActorSort['indicator'] }}</span>
+                                </a>
+                            </th>
                             <th class="px-5 py-3">Result</th>
                             <th class="px-5 py-3">Severity</th>
-                            <th class="px-5 py-3">Route</th>
+                            <th class="px-5 py-3">
+                                <a href="{{ $tablesUrl(['audit_sort' => 'route', 'audit_direction' => $auditRouteSort['next'], 'audit_page' => 1], '#audit-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $auditRouteSort['active']])>
+                                    <span>Route</span>
+                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $auditRouteSort['indicator'] }}</span>
+                                </a>
+                            </th>
                             <th class="px-5 py-3 sr-only">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-800 text-sm text-slate-200">
                         @forelse ($auditSamples as $sample)
-                            <tr class="cursor-pointer transition hover:bg-slate-950/40" data-audit-log-row data-audit-log-url="{{ route('platform.ui-reference.audit-samples.show', $sample['sample_key']) }}">
+                            <tr class="ui-table-row cursor-pointer" data-audit-log-row data-audit-log-url="{{ route('platform.ui-reference.audit-samples.show', $sample['sample_key']) }}">
                                 <td class="px-5 py-3 text-slate-400">{{ $sample['occurred_at_label'] }}</td>
                                 <td class="px-5 py-3 font-semibold text-white">{{ $sample['event_type'] }}</td>
                                 <td class="px-5 py-3">{{ $sample['actor_label'] }}</td>
@@ -377,17 +479,19 @@
                     <div class="flex items-center gap-2">
                         @php($auditPrev = max(1, $auditSamples->currentPage() - 1))
                         @php($auditNext = min($auditSamples->lastPage(), $auditSamples->currentPage() + 1))
-                        <a href="{{ $auditSamples->onFirstPage() ? '#' : $auditSamples->url($auditPrev) }}" @class([
-                            'rounded-lg border px-3 py-2 text-xs font-semibold uppercase tracking-[0.15em] transition',
-                            'border-slate-700 text-slate-300 hover:border-slate-600 hover:text-white' => ! $auditSamples->onFirstPage(),
-                            'cursor-not-allowed border-slate-800 text-slate-600' => $auditSamples->onFirstPage(),
-                        ])>Prev</a>
+                        @if ($auditSamples->onFirstPage())
+                            <span class="ui-pagination-control is-disabled" aria-disabled="true">Prev</span>
+                        @else
+                            <a href="{{ $auditSamples->url($auditPrev) }}" class="ui-pagination-control">Prev</a>
+                        @endif
 
                         <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}">
                             <input type="hidden" name="audit_severity" value="{{ $auditFilters['severity'] }}">
                             <input type="hidden" name="audit_result" value="{{ $auditFilters['result'] }}">
                             <input type="hidden" name="audit_search" value="{{ $auditFilters['search'] }}">
                             <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
+                            <input type="hidden" name="audit_sort" value="{{ $auditSort }}">
+                            <input type="hidden" name="audit_direction" value="{{ $auditDirection }}">
                             <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
                             <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
                             <select name="audit_page" onchange="this.form.submit()" class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-slate-200">
@@ -397,11 +501,11 @@
                             </select>
                         </form>
 
-                        <a href="{{ $auditSamples->hasMorePages() ? $auditSamples->url($auditNext) : '#' }}" @class([
-                            'rounded-lg border px-3 py-2 text-xs font-semibold uppercase tracking-[0.15em] transition',
-                            'border-slate-700 text-slate-300 hover:border-slate-600 hover:text-white' => $auditSamples->hasMorePages(),
-                            'cursor-not-allowed border-slate-800 text-slate-600' => ! $auditSamples->hasMorePages(),
-                        ])>Next</a>
+                        @if ($auditSamples->hasMorePages())
+                            <a href="{{ $auditSamples->url($auditNext) }}" class="ui-pagination-control">Next</a>
+                        @else
+                            <span class="ui-pagination-control is-disabled" aria-disabled="true">Next</span>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -419,6 +523,8 @@
                         <input type="hidden" name="error_severity" value="{{ $errorFilters['severity'] }}">
                         <input type="hidden" name="error_environment" value="{{ $errorFilters['environment'] }}">
                         <input type="hidden" name="error_search" value="{{ $errorFilters['search'] }}">
+                        <input type="hidden" name="error_sort" value="{{ $errorSort }}">
+                        <input type="hidden" name="error_direction" value="{{ $errorDirection }}">
                         <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
                         <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
                         <label class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Rows</label>
@@ -434,6 +540,8 @@
                             <input type="hidden" name="error_severity" value="{{ $errorFilters['severity'] }}">
                             <input type="hidden" name="error_environment" value="{{ $errorFilters['environment'] }}">
                             <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
+                            <input type="hidden" name="error_sort" value="{{ $errorSort }}">
+                            <input type="hidden" name="error_direction" value="{{ $errorDirection }}">
                             <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
                             <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
                             <label for="error-table-search" class="sr-only">Search error rows</label>
@@ -472,11 +580,13 @@
                     </div>
                 </div>
 
-                <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="absolute right-0 top-full z-20 mt-3 hidden w-full max-w-4xl rounded-lg border border-slate-800 bg-slate-900/95 p-5 shadow-2xl" data-filter-panel>
+                <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="ui-table-filter-panel" data-filter-panel>
                     <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
                     <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
                     <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
                     <input type="hidden" name="error_search" value="{{ $errorFilters['search'] }}">
+                    <input type="hidden" name="error_sort" value="{{ $errorSort }}">
+                    <input type="hidden" name="error_direction" value="{{ $errorDirection }}">
                     <div class="grid gap-4 md:grid-cols-2">
                     <label>
                         <span class="text-sm font-semibold text-slate-200">Severity</span>
@@ -506,18 +616,42 @@
                 <table class="min-w-[920px] w-full divide-y divide-slate-800">
                     <thead class="bg-slate-900">
                         <tr class="text-left text-xs uppercase tracking-[0.2em] text-slate-500">
-                            <th class="px-5 py-3">Occurred</th>
-                            <th class="px-5 py-3">Message</th>
-                            <th class="px-5 py-3">Exception</th>
+                            @php($errorOccurredSort = $sortMeta($errorSort, $errorDirection, 'occurred_at_timestamp', 'desc', 'Oldest', 'Newest'))
+                            @php($errorMessageSort = $sortMeta($errorSort, $errorDirection, 'message'))
+                            @php($errorExceptionSort = $sortMeta($errorSort, $errorDirection, 'exception_class'))
+                            @php($errorRequestSort = $sortMeta($errorSort, $errorDirection, 'request_id'))
+                            <th class="px-5 py-3">
+                                <a href="{{ $tablesUrl(['error_sort' => 'occurred_at_timestamp', 'error_direction' => $errorOccurredSort['next'], 'error_page' => 1], '#error-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $errorOccurredSort['active']])>
+                                    <span>Occurred</span>
+                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $errorOccurredSort['indicator'] }}</span>
+                                </a>
+                            </th>
+                            <th class="px-5 py-3">
+                                <a href="{{ $tablesUrl(['error_sort' => 'message', 'error_direction' => $errorMessageSort['next'], 'error_page' => 1], '#error-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $errorMessageSort['active']])>
+                                    <span>Message</span>
+                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $errorMessageSort['indicator'] }}</span>
+                                </a>
+                            </th>
+                            <th class="px-5 py-3">
+                                <a href="{{ $tablesUrl(['error_sort' => 'exception_class', 'error_direction' => $errorExceptionSort['next'], 'error_page' => 1], '#error-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $errorExceptionSort['active']])>
+                                    <span>Exception</span>
+                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $errorExceptionSort['indicator'] }}</span>
+                                </a>
+                            </th>
                             <th class="px-5 py-3">Severity</th>
                             <th class="px-5 py-3">Environment</th>
-                            <th class="px-5 py-3">Request</th>
+                            <th class="px-5 py-3">
+                                <a href="{{ $tablesUrl(['error_sort' => 'request_id', 'error_direction' => $errorRequestSort['next'], 'error_page' => 1], '#error-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $errorRequestSort['active']])>
+                                    <span>Request</span>
+                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $errorRequestSort['indicator'] }}</span>
+                                </a>
+                            </th>
                             <th class="px-5 py-3 sr-only">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-800 text-sm text-slate-200">
                         @forelse ($errorSamples as $sample)
-                            <tr class="cursor-pointer transition hover:bg-slate-950/40" data-error-log-row data-error-log-url="{{ route('platform.ui-reference.error-samples.show', $sample['sample_key']) }}">
+                            <tr class="ui-table-row cursor-pointer" data-error-log-row data-error-log-url="{{ route('platform.ui-reference.error-samples.show', $sample['sample_key']) }}">
                                 <td class="px-5 py-3 text-slate-400">{{ $sample['occurred_at_label'] }}</td>
                                 <td class="px-5 py-3 font-semibold text-white">{{ $sample['message'] }}</td>
                                 <td class="px-5 py-3">{{ $sample['exception_class'] }}</td>
@@ -544,17 +678,19 @@
                     <div class="flex items-center gap-2">
                         @php($errorPrev = max(1, $errorSamples->currentPage() - 1))
                         @php($errorNext = min($errorSamples->lastPage(), $errorSamples->currentPage() + 1))
-                        <a href="{{ $errorSamples->onFirstPage() ? '#' : $errorSamples->url($errorPrev) }}" @class([
-                            'rounded-lg border px-3 py-2 text-xs font-semibold uppercase tracking-[0.15em] transition',
-                            'border-slate-700 text-slate-300 hover:border-slate-600 hover:text-white' => ! $errorSamples->onFirstPage(),
-                            'cursor-not-allowed border-slate-800 text-slate-600' => $errorSamples->onFirstPage(),
-                        ])>Prev</a>
+                        @if ($errorSamples->onFirstPage())
+                            <span class="ui-pagination-control is-disabled" aria-disabled="true">Prev</span>
+                        @else
+                            <a href="{{ $errorSamples->url($errorPrev) }}" class="ui-pagination-control">Prev</a>
+                        @endif
 
                         <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}">
                             <input type="hidden" name="error_severity" value="{{ $errorFilters['severity'] }}">
                             <input type="hidden" name="error_environment" value="{{ $errorFilters['environment'] }}">
                             <input type="hidden" name="error_search" value="{{ $errorFilters['search'] }}">
                             <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
+                            <input type="hidden" name="error_sort" value="{{ $errorSort }}">
+                            <input type="hidden" name="error_direction" value="{{ $errorDirection }}">
                             <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
                             <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
                             <select name="error_page" onchange="this.form.submit()" class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-slate-200">
@@ -564,11 +700,11 @@
                             </select>
                         </form>
 
-                        <a href="{{ $errorSamples->hasMorePages() ? $errorSamples->url($errorNext) : '#' }}" @class([
-                            'rounded-lg border px-3 py-2 text-xs font-semibold uppercase tracking-[0.15em] transition',
-                            'border-slate-700 text-slate-300 hover:border-slate-600 hover:text-white' => $errorSamples->hasMorePages(),
-                            'cursor-not-allowed border-slate-800 text-slate-600' => ! $errorSamples->hasMorePages(),
-                        ])>Next</a>
+                        @if ($errorSamples->hasMorePages())
+                            <a href="{{ $errorSamples->url($errorNext) }}" class="ui-pagination-control">Next</a>
+                        @else
+                            <span class="ui-pagination-control is-disabled" aria-disabled="true">Next</span>
+                        @endif
                     </div>
                 </div>
             </div>

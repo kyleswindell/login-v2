@@ -16,6 +16,7 @@
 - Corrected a follow-up implementation issue in the shared switch CSS after the first deploy attempt exposed an unsupported `@apply peer` usage in the Tailwind build pipeline.
 - Reclassified minimal toast entry/exit motion into the Tier 1 toast baseline and added a standards-aligned baseline appear/dismiss animation for the UI Reference toast surface.
 - Added a generated example toast trigger beside the reset control so baseline toast display and dismiss animation can be reviewed on demand in the UI Reference workspace.
+- Added deterministic column sorting to the UI Reference table baselines, tightened pagination/filter-panel visibility, expanded radio-group validation coverage, normalized semantic action variants, and tuned shared Tier 1 control/palette behavior for this review pass.
 
 
 ## Changes
@@ -23,6 +24,7 @@
 - `docs/08-active/notes.md`
 - `docs/08-active/review.md`
 - `docs/08-active/checklist.md`
+- `app/Http/Controllers/Platform/UiReferenceController.php`
 - `resources/css/app.css`
 - `resources/views/components/ui/badge.blade.php`
 - `resources/js/app.js`
@@ -54,4 +56,5 @@
 - Result after the follow-up visual review fix pass: `PASS` with `7` tests and `25` assertions.
 - Result after the toast baseline motion correction pass: `PASS` with `7` tests and `25` assertions.
 - Result after the generated toast trigger pass: `PASS` with `7` tests and `28` assertions.
+- Result after the table/control/palette normalization pass: `PASS` with `7` tests and `32` assertions.
 - Batch A implementation is now prepared for manual review; manual review itself is still pending.

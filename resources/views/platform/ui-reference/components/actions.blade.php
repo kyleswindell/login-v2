@@ -110,6 +110,10 @@
                     <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Focus Snapshot</p>
                     <button type="button" class="mt-3 ui-action ui-action-primary ring-2 ring-sky-400/50 ring-offset-2 ring-offset-slate-900">Primary Action</button>
                 </div>
+                <div class="rounded-lg border border-sky-400/40 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Danger Focus Snapshot</p>
+                    <button type="button" class="mt-3 ui-action ui-action-danger ring-2 ring-sky-400/50 ring-offset-2 ring-offset-slate-900">Danger Action</button>
+                </div>
                 <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
                     <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Active Snapshot</p>
                     <button type="button" class="mt-3 ui-action ui-action-primary border-blue-700/70 bg-blue-700/45 text-blue-50">Primary Action</button>

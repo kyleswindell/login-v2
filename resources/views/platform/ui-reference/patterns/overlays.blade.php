@@ -4,15 +4,13 @@
     </x-slot:sidebar>
 
     <section class="flex flex-1 flex-col gap-6">
-        <div class="relative">
-            <div>
-                <h1 class="ui-page-header-title">Overlays And Feedback</h1>
-                <p class="ui-page-header-copy">Tier 1 contract for drawer/modal containers plus toast and inline alert feedback semantics.</p>
-            </div>
+        <div>
+            <h1 class="ui-page-header-title">Overlays And Feedback</h1>
+            <p class="ui-page-header-copy">Tier 1 contract for drawer/modal containers plus toast and inline alert feedback semantics.</p>
+        </div>
 
-            <div class="pointer-events-none absolute right-0 top-full z-30 mt-4 w-full max-w-md" data-ui-demo-toast-page-stack data-ui-demo-toast-generated-overlay>
-                <div class="pointer-events-auto flex flex-col gap-3" data-ui-demo-toast-generated-stack aria-live="polite" aria-label="Generated toast stack"></div>
-            </div>
+        <div class="pointer-events-none fixed right-6 top-24 z-40 w-[min(100%-3rem,28rem)]" data-ui-demo-toast-page-stack data-ui-demo-toast-generated-overlay>
+            <div class="pointer-events-auto flex flex-col gap-3" data-ui-demo-toast-generated-stack aria-live="polite" aria-label="Generated toast stack"></div>
         </div>
 
         <section class="ui-card">

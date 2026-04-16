@@ -18,6 +18,8 @@
 - The generated toast trigger was functionally correct but mounted to the wrong validation surface: fresh toasts were being inserted inside the Toast Baseline card instead of the page-level toast destination area intended for final placement review.
 - Even after moving generated toasts out of the card, the first correction still placed the generated stack in normal page flow. That made it a page-level destination logically, but not a true overlay-level toast presentation.
 - The requested Tier 2 notification/toast addendum correction is outside the active Batch A scope. `docs/08-active/batch.md` explicitly excludes Tier 2 patterns, while the conflicting content lives in `docs/02-standards/ui/components/Tier 2 Pattern Library Checklist.md`.
+- The Tier 1 action focus review surface had drifted from the button contract: the focused trigger snapshots were being presented with ad hoc styling instead of preserving the semantic action treatment and layering focus indication on top.
+- The generated toast stack still was not matching intended production-style placement after the overlay pass because the mount remained container-relative `absolute` positioning and scrolled with page content.
 
 
 ## Decisions
@@ -40,6 +42,8 @@
 - Keep the static baseline toast examples in the Toast Baseline card, but mount generated examples into a dedicated page-level stack immediately below the overlays header so placement and motion match the intended final destination.
 - Anchor the generated toast stack with absolute positioning on the overlays header container so the stack layers above the page, sits top-right below the header, and does not consume normal content layout.
 - Stop the requested Tier 2 notification/toast addendum pass in the current work-batch cycle rather than editing out-of-scope Tier 2 standards during Batch A.
+- Keep the button focus snapshots in the action UI Reference on the canonical semantic action classes and add only ring/offset focus indication so the examples match actual component behavior.
+- Mount the generated toast stack in a viewport-fixed container with a header-safe top offset so generated toasts behave like pop-up notices during page scroll instead of moving with the page content.
 
 
 ## Risks / Questions
@@ -59,3 +63,5 @@
 - No structural blocker was found for the layering correction either; the smallest fix was to convert the page-level generated stack into a header-anchored overlay container with pointer-event isolation.
 - Docker verification was refreshed after the generated toast overlay-layer correction and the targeted UI Reference suite remained green.
 - Follow-up is required in a separate standards-scoped batch or doc-sync pass if the Tier 2 notification/toast addendum should be corrected. The current conflicts are real, but fixing them inside Batch A would violate the active batch boundary.
+- No standards clarification was required for the button focus correction because the Tier 1 contract already states that focus adds a visible ring without changing semantic action hierarchy.
+- No structural blocker prevented the viewport-fixed toast correction; the issue was limited to the generated mount point still using container-relative positioning after the prior pass.

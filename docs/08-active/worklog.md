@@ -20,6 +20,8 @@
 - Corrected generated toast mounting so on-demand toast examples now render in a page-level stack below the overlays header instead of inside the Toast Baseline card.
 - Corrected generated toast layering so the page-level stack now renders as an overlay anchored top-right below the overlays header instead of participating in normal document flow.
 - Evaluated the requested Tier 2 notification/toast addendum cleanup against the active Batch A scope and stopped without implementation because the target file is a Tier 2 standards doc excluded by `docs/08-active/batch.md`.
+- Corrected the Tier 1 button focus review examples so focused primary and danger actions preserve their semantic styles and add only the expected focus ring treatment.
+- Corrected the generated toast stack mount again so it now uses a true viewport-fixed overlay container, remains anchored top-right below the header during scroll, and stays out of normal page flow.
 
 
 ## Changes

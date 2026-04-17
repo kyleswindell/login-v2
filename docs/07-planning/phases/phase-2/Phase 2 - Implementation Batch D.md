@@ -4,7 +4,11 @@ This document defines the canonical scope and intent for Phase 2 - Implementatio
 
 ## Purpose
 
-Deliver notifications interaction work as a dedicated feature batch separate from shell convergence and account delivery.
+Preserve the notifications planning placeholder without assigning it to active Phase 2 execution.
+
+## Status
+
+Deferred to future phase.
 
 ## Planning Owner
 
@@ -18,19 +22,19 @@ Deliver notifications interaction work as a dedicated feature batch separate fro
 
 ## Batch Goal
 
-Deliver inbox, header-interaction, and notification state-change work with explicit ownership and no cross-bundling with other UI batches.
+Retain notifications feature planning context as a placeholder only.
 
 ## In Scope
 
-* notifications inbox interactions
-* header preview interactions
-* notification read state changes
-* notification dismiss state changes
-* alignment with current realtime behavior contract
+* placeholder reference to notifications inbox interactions
+* placeholder reference to header preview interactions
+* placeholder reference to notification read and dismiss state changes
+* placeholder reference to current realtime behavior contract
 
 ## Out Of Scope
 
-* shell-wide layout convergence outside notifications surfaces
+* active Phase 2 implementation
+* shell-wide layout convergence
 * account feature behavior
 * new notification channel design
 * staging deploy and visual QA
@@ -38,23 +42,25 @@ Deliver inbox, header-interaction, and notification state-change work with expli
 
 ## Required Deliverables
 
-1. Inbox interaction scope is explicit and behavior-owned by the notifications feature note.
-2. Header interaction scope is explicit and behavior-owned by the notifications feature note.
-3. Read and dismiss state transitions are sourced from the notification flow note.
-4. Notifications work is not bundled into Batch B or Batch C.
+1. Placeholder note is preserved.
+2. Deferred status is explicit.
+3. Future-phase assignment need is explicit.
 
 ## Entry Gates
 
-* Batch B is complete.
-* Notifications feature note and notification read/dismiss flow are current.
+Not applicable while deferred.
 
 ## Exit Criteria
 
 This batch is complete when:
 
-* notifications feature implementation is delivery-ready without ambiguity
-* interaction ownership stays within the notifications feature branch
-* realtime behavior dependencies remain explicit
+* the note is preserved without deletion
+* deferred status is visible
+* the note states `To be assigned to future phase`
+
+## Future-Phase Assignment
+
+To be assigned to future phase.
 
 ## Related
 

@@ -1,28 +1,29 @@
-# Tier 1 - Sidebar And Account Menu Contract
+# Tier 1 - Shell Navigation Contract
 
-This document defines the canonical scope and intent for Tier 1 - Sidebar And Account Menu Contract.
+This document defines the canonical scope and intent for Tier 1 - Shell Navigation Contract.
 
 ## Component Contract
 
 ### 1. Component Identity
 
-- Component name: Sidebar, Mobile Dock, Account Menu
+- Component name: Sidebar, Header, Mobile Dock, Account Menu
 - Taxonomy path (L1/L2): Shell And Navigation / Global shell
 - Owner: Platform UI baseline owner
 
 ### 2. Intent And Theory
 
-- Primary use case: persistent orientation and fast movement between app areas.
+- Primary use case: persistent orientation and fast movement between app areas with a coherent top-level shell.
 - When to use: global app navigation and identity/account controls.
 - When not to use: in-page secondary filters or tab content swapping.
 - Interaction intent summary: one coherent navigation model across desktop and mobile.
 
 ### 3. Visual Rules
 
-- Token usage (color, spacing, type, radius, elevation): persistent header + sidebar surfaces with active route emphasis.
+- Token usage (color, spacing, type, radius, elevation): persistent header and sidebar surfaces with active route emphasis.
 - Light theme behavior: maintain separator and active state contrast.
 - Dark theme behavior: maintain panel hierarchy with restrained contrast ramps.
 - Density/size variants: desktop sticky sidebar and mobile modal + dock switcher.
+- Allowed variants: `base` only.
 
 ### 4. Behavior Rules
 

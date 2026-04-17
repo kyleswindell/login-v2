@@ -4,7 +4,7 @@ This document defines the canonical scope and intent for Phase 2 - Implementatio
 
 ## Purpose
 
-Converge the platform dashboard and shared shell surfaces onto the locked UI standards baseline.
+Implement Tier 2 patterns and adopt the locked UI system across converging platform surfaces.
 
 ## Planning Owner
 
@@ -14,16 +14,16 @@ Converge the platform dashboard and shared shell surfaces onto the locked UI sta
 
 * [UI Design System Standards](../../../02-standards/ui/UI%20Design%20System%20Standards.md)
 * [Dashboard](../../../04-features/dashboard/dashboard.md)
-* [Dashboard Customization Flow](../../../05-flows/dashboard-customization-flow.md)
 
 ## Batch Goal
 
-Deliver platform surface convergence for dashboard and shell behavior using existing standards and existing feature contracts.
+Deliver Tier 2 pattern adoption and platform surface convergence for dashboard and shared shell surfaces using existing UI standards.
 
 ## In Scope
 
 * shared layout convergence
 * shared navigation convergence
+* Tier 2 pattern adoption
 * operator table baseline adoption
 * responsive behavior convergence for dashboard and shell surfaces
 * route/panel ownership cleanup required for the converged shell
@@ -33,19 +33,21 @@ Deliver platform surface convergence for dashboard and shell behavior using exis
 * creation of new UI standards
 * account feature behavior
 * notifications feature behavior
+* messaging
 * staging deploy and visual QA
 
 ## Required Deliverables
 
-1. Dashboard and shell implementation scope bounded to existing standards.
-2. Table and responsive adoption scope explicitly limited to dashboard and shell-owned surfaces.
-3. Route and navigation cleanup scope linked to current ownership notes.
-4. Clear handoff boundaries for Batch C and Batch D.
+1. Tier 2 pattern implementation scope is explicit.
+2. Dashboard and shell adoption scope is bounded to existing UI standards.
+3. Table and responsive adoption scope is explicitly limited to dashboard and shell-owned surfaces.
+4. Route and navigation cleanup scope is linked to current ownership notes.
+5. Clear statement that feature-specific UI behavior is deferred to future phase.
 
 ## Entry Gates
 
 * Batch A is complete.
-* Dashboard feature contract and dashboard customization flow are current.
+* dashboard and shell owner references are current.
 
 ## Exit Criteria
 
@@ -53,7 +55,7 @@ This batch is complete when:
 
 * dashboard and shell convergence scope is implementable without feature ambiguity
 * standards references are explicit
-* account and notifications work remain excluded from this batch
+* non-UI and feature-specific work remain excluded from this batch
 
 ## Related
 

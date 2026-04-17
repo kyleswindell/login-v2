@@ -6,7 +6,7 @@ This document defines the canonical scope and intent for UI Design System Standa
 
 Consolidate the canonical UI design system standards for Login App 2.0, including action tokens, table UX baselines, filter affordances, and drawer vs modal patterns.
 
-This note is the primary source of truth for UI design element standards. The Batch 7 action-token note remains a scoped reference for implementation details.
+This note is a reference note for applying the canonical foundations, color-token, and Tier 1 contract decisions to shared UI surfaces. It is not the primary owner for semantic roles, state models, or explicit token mappings.
 
 ## Planning Sources
 
@@ -50,29 +50,47 @@ Canonical owner set for this work:
 * [UI UX Typography Standards](UI%20UX%20Typography%20Standards.md)
 * [UI UX Iconography Standards](UI%20UX%20Iconography%20Standards.md)
 
-## Design Tokens
+## Reference Summary
 
-Define and standardize these token groups:
+Reference the canonical owners for:
 
-* colorways: primary, secondary, success, warning, danger, info, notice, neutral, ghost, outline
-* light/dark mode variants with contrast checks
-* typography and type scale
-* spacing, border radius, and elevation
+* semantic roles and required states -> [UI UX Foundations And Theming Standards](UI%20UX%20Foundations%20And%20Theming%20Standards.md)
+* explicit light/dark/state token mappings -> [UI UX Color Token Standards](tokens/UI%20UX%20Color%20Token%20Standards.md)
+* per-component semantic subsets and allowed variants -> Tier 1 component contracts
 
 ## Action Buttons
 
+### Semantic Action Mapping
+
+Reference-only mapping summary:
+
+* `primary` semantic action -> `ui-action-primary`
+* `neutral` semantic action -> `ui-action`
+* `success` semantic action -> `ui-action-success`
+* `warning` semantic action -> `ui-action-warning`
+* `danger` semantic action -> `ui-action-danger`
+* `notice` semantic action -> `ui-action-notice`
+* `info` semantic action -> `ui-action-info`
+
+Priority clarification:
+
+* `secondary` describes action emphasis priority only
+* `ghost` and `outline` are variants, not semantic roles
+* secondary-priority actions use neutral semantic actions with `outline` or `ghost` variants when the component contract allows them
+* do not create a separate `secondary` token family or `ui-action-secondary` class unless a later standard explicitly adds one
+
 Shared action-token classes:
 
-* `ui-action` - neutral action baseline for secondary actions
+* `ui-action` - neutral action baseline
 * `ui-action-primary` - primary emphasis actions
 * `ui-action-success` - affirmative actions
 * `ui-action-warning` - cautionary actions
 * `ui-action-danger` - destructive actions
 * `ui-action-notice` - informational actions
 * `ui-action-info` - informational/system actions
-* `ui-action-ghost` - low-emphasis border actions
+* `ui-action-ghost` - ghost variant for low-emphasis action usage
 * `ui-action-soft` - low-intensity colorway variant for reduced-emphasis actions
-* `ui-action-outline` - outlined variant for secondary emphasis
+* `ui-action-outline` - outline variant for secondary emphasis
 * `ui-action-login` plus provider variants (`google`, `github`, `microsoft`) for auth-surface references
 * size variants: `ui-action-xs`, `ui-action-sm`, `ui-action-md`, `ui-action-lg`, `ui-action-xl`
 * `ui-icon-button` - icon-only button affordance for compact controls
@@ -146,7 +164,7 @@ App-owned operational detail drawers should follow these rules:
 * use the shared toast pattern for success/error feedback
 * avoid raw JSON or inline HTML blocks for standard notifications
 * keep toasts short: title + 1-2 lines, optional single action
-* match toast colorways to action tokens (success, warning, danger, notice)
+* defer canonical semantic/state/variant ownership to the foundations, color-token, and toast contract notes
 
 ### Notification Widgets
 

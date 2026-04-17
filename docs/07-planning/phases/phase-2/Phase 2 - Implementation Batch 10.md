@@ -1,5 +1,11 @@
 # Phase 2 - Implementation Batch 10
 
+## Status
+
+Deferred to future phase.
+
+This note is preserved as a planning placeholder only.
+
 This document defines the canonical scope and intent for Phase 2 - Implementation Batch 10.
 
 ## Purpose

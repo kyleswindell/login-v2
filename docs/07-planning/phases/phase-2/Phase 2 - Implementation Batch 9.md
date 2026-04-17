@@ -1,18 +1,24 @@
 # Phase 2 - Implementation Batch 9
 
+## Status
+
+Deferred to future phase.
+
+This note is preserved as a planning placeholder only.
+
 This document defines the canonical scope and intent for Phase 2 - Implementation Batch 9.
 
 ## Purpose
 
-Implement a basic inter-tenant messaging foundation as an app query/support channel, not a real-time chat product.
+Preserve the messaging foundation planning placeholder without assigning it to active Phase 2 execution.
 
 ## Implementation Status
 
 Current status:
 
 * drafted
-* implementation-ready after hard gates are satisfied
-* blocked until Batch C account ownership close-out is complete
+* deferred placeholder only
+* to be assigned to future phase
 
 Planning owner:
 
@@ -27,9 +33,7 @@ Canonical owners:
 
 Batch 9 implementation may start only when all of the following are true:
 
-* Batch C is complete and account ownership contracts are closed
-* thread/message participant contract remains aligned with this planning note and canonical owner note
-* implementation status remains synchronized across planning, canonical owner, and Phase 2 index notes
+Not applicable while deferred.
 
 ## Batch Goal
 
@@ -149,6 +153,8 @@ This batch is complete when:
 ## Related
 
 * [Phase 2 Index](Phase%202%20Index.md)
-* [Phase 2 - Implementation Batch C](Phase%202%20-%20Implementation%20Batch%20C.md)
+## Future-Phase Assignment
+
+To be assigned to future phase.
 * [Phase 2 - Final Stack And UI System Planning](Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
 * [Inter-Tenant Messaging Contract](../../../04-features/tenants/inter-tenant-messaging-contract.md)

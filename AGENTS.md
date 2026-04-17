@@ -2,45 +2,148 @@
 
 ## Project Context
 
-This repository contains Login App 2.0, a new Laravel-based platform intended to replace the current customized Perfex 1.0 foundation over time.
+This repository contains Login App 2.0, a Laravel-based platform intended to replace the current customized Perfex 1.0 foundation over time.
 
-## High-Priority Rules
+---
 
-* Treat this repository as the source of truth for App 2.0.
-* Keep the Perfex 1.0 repository as reference only unless the user explicitly asks to modify it.
-* Use Laravel, Filament, Livewire, PostgreSQL, Redis, and Apache/PHP-FPM as the locked foundation unless a decision record changes that.
-* Support arbitrary tenant admin domains from day one.
-* Keep tenants isolated with one tenant database and one PostgreSQL role per tenant.
-* Prefer data-driven tenant configuration over file-copy-driven behavior.
-* Do not build meaningful untracked application code directly on the production server.
-* Treat `docs/` as the canonical documentation root for active App 2.0 documentation.
-* Treat `docs/_archive/` as historical-only and out of scope for active updates unless explicitly requested.
-* Document architectural and operational decisions in the canonical `docs/` branches and keep them synchronized with related planning notes.
-* Keep server and deployment notes in `docs/10-runbooks/` and related Phase 0 planning notes under `docs/07-planning/`.
-* Follow the commenting standard: prefer self-documenting code, use PHPDoc for contracts/static analysis, and remove commented-out starter code.
-* Use the stack guides in `docs/09-reference/` when implementing or debugging framework, infrastructure, and frontend concerns.
-* Prefer official documentation for Laravel, Filament, Livewire, PostgreSQL, Redis, Docker, Vite, Tailwind, and Apache when updating stack rules.
-* When implementing a planned system, update the canonical system doc and the linked planning note in the same work cycle.
-* Planning notes must keep a current implementation status section, even when that status is copied from the canonical system doc.
-* Permanent system docs and their source planning notes must link to each other so implementation state is easy to confirm in the Obsidian graph.
-* Start docs discovery from `docs/00-start-here.md`, then follow the relevant branch index and canonical owner doc before changing code.
-* Use `docs/07-planning/` for sequencing and intent, and use `docs/02-standards/`, `docs/03-architecture/`, `docs/04-features/`, `docs/06-database/`, and `docs/10-runbooks/` as canonical implementation/system owners by branch.
-* Enforce docs branch responsibilities: `02-standards` rules only, `03-architecture` structure only, `04-features` behavior only, `05-flows` execution steps only, `06-database` schema only, `07-planning` sequencing only, `09-reference` support only, `10-runbooks` operations only.
-* Do not introduce legacy documentation paths or legacy wiki links in active docs; always use current canonical `docs/` paths.
-* During CPD (`commit/push/deploy`), commit only files the active agent explicitly touched for the requested scope; do not include unrelated staged or modified files.
-* For concurrent documentation work, follow the active staging and docs-sync workflow defined from the canonical `docs/` standards and start-here guidance.
+## Core Principles
+
+- Treat this repository as the source of truth for App 2.0.
+- Keep the Perfex 1.0 repository as reference only unless explicitly instructed otherwise.
+- Use Laravel, Filament, Livewire, PostgreSQL, Redis, and Apache/PHP-FPM as the locked foundation unless a decision record changes that.
+- Support arbitrary tenant admin domains from day one.
+- Keep tenants isolated with one tenant database and one PostgreSQL role per tenant.
+- Prefer data-driven tenant configuration over file-copy-driven behavior.
+- Do not build meaningful untracked application code directly on the production server.
+
+---
+
+## Canonical Documentation Rules
+
+- Treat `/docs/` as the canonical root for all active documentation.
+- Ignore `/docs/_archive/` unless explicitly requested.
+- Do not introduce legacy documentation paths or outdated references.
+
+### Branch Responsibilities
+
+- `02-standards` → rules only  
+- `03-architecture` → system structure only  
+- `04-features` → behavior only  
+- `05-flows` → execution paths only  
+- `06-database` → schema and constraints only  
+- `07-planning` → sequencing and intent only  
+- `09-reference` → non-canonical support only  
+- `10-runbooks` → operations only  
+
+Always respect branch ownership. Do not duplicate or reassign responsibility across branches.
+
+---
+
+## Active Workspace (`/docs/08-active/`)
+
+- `/docs/08-active/` represents the current batch workspace.
+- It is the only location where active batch state is stored.
+- Only batch workflows (`batch-start`, `work-batch`, `batch-update-manual-review-status`, `batch-review-and-finalize`) may modify it.
+- Do not manually alter its structure outside those workflows.
+
+---
+
+## Implementation and Docs Sync
+
+- When implementing a planned system, update canonical docs and related planning notes in the same work cycle.
+- Planning notes must reflect current implementation status.
+- Canonical system docs and planning notes must remain linked.
+
+---
+
+## Code and Documentation Discipline
+
+- Only modify files directly required for the current scope.
+- Do not include unrelated changes in commits.
+- If unrelated issues are found:
+  - record them in `/docs/08-active/notes.md`
+  - do not fix them immediately
+
+- Prefer minimal, explicit changes over broad rewrites.
+- Maintain consistency with existing naming, tokens, and patterns.
+
+---
+
+## Git and Deployment Rules
+
+- Follow `docs/10-runbooks/git-batch-commit-workflow.md` for all commits.
+- Commits must:
+  - map to a single batch and a single concern
+  - include only files touched for that scope
+
+- Use batch checkpoints:
+  - batch initialized
+  - implementation save points
+  - review-ready
+  - finalized
+
+- Only commit when the work is scoped, intentional, and reviewable.
+
+---
+
+## Agent Execution Rules
+
+- Only one agent may modify canonical docs or code in a session.
+- Separate:
+  - prompt generation
+  - implementation
+  - review
+- Do not combine review and implementation in the same step.
+
+---
+
+## Batch Workflow Enforcement
+
+- Always execute batch work through:
+  - `batch-start`
+  - `work-batch`
+  - `batch-update-manual-review-status`
+  - `batch-review-and-finalize`
+
+- Do not:
+  - skip batch initialization
+  - mix multiple batches
+  - introduce Tier 2 or Tier 3 work into a Tier 1 batch
+
+---
+
+## UI and Component Standards
+
+- Tier 1 = primitives and baseline components  
+- Tier 2 = reusable patterns  
+- Tier 3 = feature modules  
+
+Rules:
+- Do not bypass tiers
+- Do not redefine primitives at higher tiers
+- UI Reference must reflect actual component behavior
+
+---
 
 ## Important Docs
 
-* [Vault Start Here](docs/00-start-here.md)
-* [Standards Index](docs/02-standards/index.md)
-* [Architecture Index](docs/03-architecture/index.md)
-* [Feature Index](docs/04-features/index.md)
-* [Flows Index](docs/05-flows/index.md)
-* [Database Index](docs/06-database/index.md)
-* [Planning Index](docs/07-planning/index.md)
-* [Reference Index](docs/09-reference/index.md)
-* [Runbook Index](docs/10-runbooks/index.md)
-* [Implementation Status And Development Sync Standard](docs/02-standards/documentation/Implementation%20Status%20And%20Development%20Sync%20Standard.md)
-* [How To Write Docs](docs/02-standards/documentation/How%20To%20Write%20Docs.md)
-* [Obsidian Vault Structure Guide](docs/02-standards/documentation/Obsidian%20Vault%20Structure%20Guide.md)
+- `docs/00-start-here.md`
+- `docs/02-standards/index.md`
+- `docs/03-architecture/index.md`
+- `docs/04-features/index.md`
+- `docs/05-flows/index.md`
+- `docs/06-database/index.md`
+- `docs/07-planning/index.md`
+- `docs/09-reference/index.md`
+- `docs/10-runbooks/index.md`
+
+---
+
+## Final Rule
+
+If a change cannot be clearly tied to:
+- one batch
+- one concern
+- one canonical owner
+
+then do not implement it yet.

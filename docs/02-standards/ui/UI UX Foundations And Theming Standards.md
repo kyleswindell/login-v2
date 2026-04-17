@@ -6,7 +6,7 @@ This document defines the canonical scope and intent for UI UX Foundations And T
 
 Define foundational UI standards for color, typography, spacing, elevation, shape, motion, and accessibility.
 
-This note is the canonical owner for foundational UI/UX token and theme rules.
+This note is the canonical owner for foundational UI/UX semantic roles, Tier 1 variant model, and required state model.
 
 ## Design Principles
 
@@ -88,6 +88,30 @@ Define all of the following:
 
 ## Color And Theme Baseline
 
+### Canonical Semantic Set
+
+The canonical Tier 1 semantic set is:
+
+- `primary`
+- `neutral`
+- `success`
+- `warning`
+- `danger`
+- `info`
+- `notice`
+
+Meaning rules:
+
+- `primary` = default high-emphasis action or highlighted primary state
+- `neutral` = non-destructive default baseline state
+- `success` = positive completion or healthy state
+- `warning` = caution requiring attention
+- `danger` = destructive or failing state
+- `info` = informational system context
+- `notice` = policy, announcement, or non-error attention state that should remain distinct from warning and info
+
+This semantic set applies across Tier 1 buttons, badges/status, toast, and inline alert usage. Components may use only an explicit subset of this set as defined by their own Tier 1 contract.
+
 ### Semantic token groups
 
 Required groups:
@@ -95,15 +119,49 @@ Required groups:
 - background (`canvas`, `surface`, `surface-muted`, `surface-elevated`)
 - text (`primary`, `secondary`, `muted`, `inverse`)
 - border (`subtle`, `default`, `strong`)
-- action (`primary`, `secondary`, `ghost`)
+- action semantics (`primary`, `neutral`)
+- action variants (`base`, `soft`, `outline`, `ghost`)
 - feedback (`success`, `info`, `warning`, `danger`, `notice`)
 - focus (`ring`, `ring-offset`)
+
+### Action token mapping baseline
+
+Use the following rule everywhere:
+
+1. semantic action roles are `primary`, `neutral`, `success`, `warning`, `danger`, `info`, and `notice`
+2. `secondary` describes emphasis priority, not a separate semantic token family
+3. `ghost` and `outline` are variants, not semantic roles
+4. secondary-emphasis actions map to neutral-family action tokens in the design system rather than a standalone `secondary` token family
 
 Canonical owner:
 
 - [UI UX Color Token Standards](tokens/UI%20UX%20Color%20Token%20Standards.md)
 
 Theme direction: neutral enterprise baseline with restrained accent.
+
+### Tier 1 Variant Model
+
+The global Tier 1 variant model is:
+
+- `base`
+- `soft`
+- `outline`
+- `ghost`
+
+Variant intent:
+
+- `base` = default filled or primary surface treatment for the chosen semantic role
+- `soft` = reduced-intensity treatment using subtle semantic surfaces
+- `outline` = bordered treatment with transparent or minimal fill
+- `ghost` = minimal-chrome treatment with transparent background and no persistent border
+
+Variants are defined once here. Components may use only an explicit subset of this variant model as defined by their own Tier 1 contract.
+
+Tier 1 use rule:
+
+1. `ghost` and `outline` are never semantic roles
+2. `ghost` is action-only in Tier 1 unless a later contract explicitly expands it
+3. `soft` and `ghost` are not available to non-action Tier 1 surfaces unless a component contract explicitly allows them
 
 ### Light and dark theme requirements
 
@@ -120,13 +178,30 @@ Theme tokens must support future DB-backed palette storage and runtime substitut
 
 Required states:
 
-- success
-- info
-- warning
-- danger
-- disabled
-- selected
-- focus-visible
+- `default`
+- `hover`
+- `active`
+- `disabled`
+- `focus`
+- `selected`
+
+### Required State Model
+
+The required Tier 1 state model for all semantics is:
+
+- `default`
+- `hover`
+- `active`
+- `disabled`
+- `focus`
+- `selected`
+
+State rules:
+
+1. every semantic role must define all six states
+2. the same state model applies to action surfaces and non-action semantic surfaces
+3. components may ignore non-applicable interactive rendering, but the semantic token/state mapping must still exist canonically
+4. `selected` is required for persistent picked/current-state surfaces and must not be replaced by `active`
 
 ## Accessibility Baseline
 

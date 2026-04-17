@@ -15,6 +15,7 @@ Structure and architecture ownership only. Behavior, flow steps, schema details,
 - [System Overview](system-overview.md)
 - [App 2.0 Blueprint](app-2-0-blueprint.md)
 - [App 2.0 Blueprint Architecture Baseline](app-2-0-blueprint-architecture-baseline.md)
+- [Feature Modules Alignment Checklist](feature-modules-alignment-checklist.md)
 - [Phase 1 Foundation Architecture Direction](phase-1-foundation-architecture-direction.md)
 - [Stack Overview](stack-overview.md)
 - [Platform Boundary](platform-boundary.md)

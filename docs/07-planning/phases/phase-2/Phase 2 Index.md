@@ -4,22 +4,22 @@ This index provides canonical navigation and scope for this branch.
 
 ## Purpose
 
-Collect Phase 2 planning notes for UI standards adoption and platform surface convergence.
+Collect Phase 2 planning notes for UI system completion, component library implementation, and platform surface convergence.
 
 ## Current Phase Status
 
-Phase 2 is active for UI standards adoption and platform surface convergence sequencing.
+Phase 2 is active for UI system completion, component library implementation, and platform surface convergence sequencing.
 
-The prior Batch 7 implementation path is invalid and must not be reused. UI system work now runs through a rebuilt Batch A-E sequence with separated standards-adoption, surface-convergence, feature, and close-out scopes.
+The prior Batch 7 implementation path is invalid and must not be reused. Phase 2 is now strictly bounded to one system layer only: UI system completion and platform surface convergence.
 
 Current focus:
 
-* apply locked UI standards without introducing new rule-making inside implementation batches
-* converge current platform-owned dashboard, shell, and notifications surfaces onto the locked standards baseline
-* separate account behavior into its own feature batch instead of bundling it into shell migration work
-* complete staging deploy and visual QA only after standards adoption and surface feature batches are complete
+* complete Tier 1 component implementation and UI reference coverage
+* complete Tier 2 pattern definition through implementation-ready planning and adoption scope
+* converge current platform-owned dashboard and shell surfaces onto the locked UI baseline
+* complete staging deploy and visual QA only after UI-system and surface-convergence batches are complete
 * keep `/console` as transitional proof-only routing until the convergence batches explicitly retire remaining dependencies
-* keep non-UI Phase 2 contract work separate from the UI convergence lane
+* defer feature-specific UI behavior and non-UI contracts to future phases
 
 ## Batch Sequence Status
 
@@ -32,13 +32,13 @@ Current focus:
 | Batch 5 | Complete                                      | users/settings/notifications/operational surface migration |
 | Batch 6 | Complete                                      | phase close-out contracts and Phase 3/4 handoff            |
 | Batch 7 | Removed from active sequence                  | invalid over-bundled batch; replaced by Batch A-E          |
-| Batch A | Planning-ready                                | UI standards adoption only                                 |
-| Batch B | Blocked by Batch A                            | dashboard and shell convergence                            |
-| Batch C | Blocked by Batch B                            | account feature delivery                                   |
-| Batch D | Blocked by Batch B                            | notifications interactions and state changes               |
-| Batch E | Blocked by B, C, and D                        | staging deploy and visual QA close-out                     |
-| Batch 9 | Blocked (Batch C completion required)         | inter-tenant messaging foundation                          |
-| Batch 10 | Contract-complete                            | calendar foundation and CalendarEntry contract             |
+| Batch A | Planning-ready                                | Tier 1 components and UI reference                         |
+| Batch B | Blocked by Batch A                            | Tier 2 patterns and platform surface adoption              |
+| Batch C | Deferred to future phase                      | account feature placeholder                                |
+| Batch D | Deferred to future phase                      | notifications feature placeholder                          |
+| Batch E | Blocked by Batch A and Batch B                | visual QA and Phase 2 UI close-out                         |
+| Batch 9 | Deferred to future phase                      | messaging foundation placeholder                           |
+| Batch 10 | Deferred to future phase                     | calendar foundation placeholder                            |
 | Batch 11 | Historical delivery record                   | dashboard implementation record; close-out superseded by E |
 
 ## Planning Notes
@@ -53,9 +53,9 @@ Current focus:
 * [Phase 2 - Implementation Batch 7](Phase%202%20-%20Implementation%20Batch%207.md)
 * [Phase 2 - Implementation Batch A](Phase%202%20-%20Implementation%20Batch%20A.md)
 * [Phase 2 - Implementation Batch B](Phase%202%20-%20Implementation%20Batch%20B.md)
+* [Phase 2 - Implementation Batch E](Phase%202%20-%20Implementation%20Batch%20E.md)
 * [Phase 2 - Implementation Batch C](Phase%202%20-%20Implementation%20Batch%20C.md)
 * [Phase 2 - Implementation Batch D](Phase%202%20-%20Implementation%20Batch%20D.md)
-* [Phase 2 - Implementation Batch E](Phase%202%20-%20Implementation%20Batch%20E.md)
 * [Phase 2 - Implementation Batch 9](Phase%202%20-%20Implementation%20Batch%209.md)
 * [Phase 2 - Implementation Batch 10](Phase%202%20-%20Implementation%20Batch%2010.md)
 * [Phase 2 - Route And Panel Ownership Map](Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md)
@@ -63,19 +63,19 @@ Current focus:
 
 ## Multi-Agent Scheduling
 
-Phase 2 remaining UI implementation batches use a conservative sequence: Batch A starts the rebuilt UI lane, Batch B depends on Batch A, Batch C and Batch D depend on Batch B, and Batch E closes the lane after B/C/D are complete. Batch 9 and Batch 10 remain outside the rebuilt UI lane.
+Phase 2 active implementation batches use a conservative sequence: Batch A starts the UI-system lane, Batch B depends on Batch A, and Batch E closes the lane after Batch B. Deferred placeholders remain linked here for future phase assignment only.
 
 ### Dependency Graph
 
 ```
 Batch A implementation
     └─ Batch B implementation
-          ├─ Batch C implementation
-          ├─ Batch D implementation
-          └─ Batch E close-out after B/C/D
+          └─ Batch E close-out after A/B
 
-Batch 9   (separate messaging foundation lane)
-Batch 10  (contract-complete; implementation can be scheduled independently)
+Batch C   (deferred to future phase)
+Batch D   (deferred to future phase)
+Batch 9   (deferred to future phase)
+Batch 10  (deferred to future phase)
 Batch 11  (historical dashboard delivery record only)
 ```
 
@@ -83,17 +83,17 @@ Batch 11  (historical dashboard delivery record only)
 
 | Agent A (shared folder, writable) | Agent B (separate worktree, writable) | Gate |
 |---|---|---|
-| Batch B implementation | Batch 10 contract/doc refinement (if needed) | Safe when UI convergence and calendar contract work stay isolated |
-| Batch C implementation | Batch D implementation | Safe after Batch B when account and notifications ownership stay separate |
-| Batch E staging deploy and QA | Batch 10 contract/doc refinement (if needed) | Safe when close-out work is limited to staging and validation |
+| Batch A implementation | Batch 11 historical reference review (if needed) | Safe when reference use does not change active scope |
+| Batch B implementation | deferred placeholder refinement | Safe when deferred items remain non-executable placeholders |
+| Batch E staging deploy and QA | deferred placeholder refinement | Safe when close-out work stays limited to UI-system validation |
 
 ### Notes
 
 * Batch 7 is not reusable and remains only as a superseded planning record.
-* Batch A applies existing standards only and must not introduce new standards or feature behavior.
-* Batch B owns shared-surface convergence only and must not absorb account or notifications feature behavior.
-* Batch C and Batch D require canonical feature owner notes and corresponding flows before implementation starts.
-* Batch E owns staging deploy and visual QA only; it does not own new feature delivery.
+* Batch A owns Tier 1 components and UI reference only.
+* Batch B owns Tier 2 patterns and platform surface adoption only.
+* Batch E owns visual QA and close-out only.
+* Batch C, Batch D, Batch 9, and Batch 10 are preserved as placeholders only and are to be assigned to future phase.
 * See [Agent Sessions And Parallel Work](../../../10-runbooks/agent-sessions-and-parallel-work.md) for setup steps.
 
 ## Canonical Owners
@@ -103,11 +103,18 @@ Batch 11  (historical dashboard delivery record only)
 * [Stack - Filament And Livewire](../../../09-reference/architecture/phase-2-stack-and-ui-system-notes.md)
 * [Stack - Frontend Build](../../../09-reference/architecture/phase-2-stack-and-ui-system-notes.md)
 * [UI Design System Standards](../../../02-standards/ui/UI Design System Standards.md)
-* [Account Management And Settings](../../../04-features/account/account-management-and-settings.md)
 * [Dashboard](../../../04-features/dashboard/dashboard.md)
-* [Platform Notifications And Settings](../../../04-features/notifications/platform-notifications-and-settings.md)
-* [Inter-Tenant Messaging Contract](../../../04-features/tenants/inter-tenant-messaging-contract.md)
 * Phase 2 Development Log
+
+## Deferred Items
+
+The following items are not part of the active Phase 2 scope and are to be assigned to future phase:
+
+* account features
+* notifications feature behavior
+* messaging foundation
+* calendar foundation
+* other feature-specific UI behavior outside dashboard and shared platform shell convergence
 
 ## Related
 

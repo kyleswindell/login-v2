@@ -4,7 +4,11 @@ This document defines the canonical scope and intent for Phase 2 - Implementatio
 
 ## Purpose
 
-Deliver the account feature as a dedicated Phase 2 batch separate from shell convergence.
+Preserve the account feature planning placeholder without assigning it to active Phase 2 execution.
+
+## Status
+
+Deferred to future phase.
 
 ## Planning Owner
 
@@ -18,43 +22,44 @@ Deliver the account feature as a dedicated Phase 2 batch separate from shell con
 
 ## Batch Goal
 
-Deliver `/account` feature work with clear separation between account-owned behavior and platform-global settings ownership.
+Retain account feature planning context as a placeholder only.
 
 ## In Scope
 
-* `/account` routes
-* My Account behavior
-* Account Settings behavior
-* Preferences behavior
-* password update flow and validation behavior
-* account-vs-platform settings ownership separation
+* placeholder reference to `/account` routes
+* placeholder reference to My Account, Account Settings, and Preferences behavior
+* placeholder reference to password update flow and validation behavior
+* placeholder reference to account-vs-platform settings ownership separation
 
 ## Out Of Scope
 
-* shell-wide convergence outside account surfaces
+* active Phase 2 implementation
+* shell-wide convergence
 * notifications interactions
 * staging deploy and visual QA
 * creation of new UI rules
 
 ## Required Deliverables
 
-1. Account route scope is explicit and complete.
-2. Password and security behavior is sourced from the account feature note and password-change flow.
-3. Preferences and settings ownership are separated from platform-global settings.
-4. Account work is not bundled into shell or notifications implementation.
+1. Placeholder note is preserved.
+2. Deferred status is explicit.
+3. Future-phase assignment need is explicit.
 
 ## Entry Gates
 
-* Batch B is complete.
-* Account feature note and password-change flow are current.
+Not applicable while deferred.
 
 ## Exit Criteria
 
 This batch is complete when:
 
-* account feature implementation is delivery-ready without shell ambiguity
-* account-owned fields and actions are separated from platform-owned settings
-* standards references stay implementation-facing only
+* the note is preserved without deletion
+* deferred status is visible
+* the note states `To be assigned to future phase`
+
+## Future-Phase Assignment
+
+To be assigned to future phase.
 
 ## Related
 

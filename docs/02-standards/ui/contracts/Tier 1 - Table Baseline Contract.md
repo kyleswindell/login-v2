@@ -23,6 +23,7 @@ This document defines the canonical scope and intent for Tier 1 - Table Baseline
 - Light theme behavior: clear row separators and actionable control visibility.
 - Dark theme behavior: maintain legible row and header contrast.
 - Density/size variants: Tier 1 uses standard density and rows-per-page options 10/25/50/100.
+- Allowed variants: not variant-bearing.
 
 ### 4. Behavior Rules
 

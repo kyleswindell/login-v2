@@ -19,10 +19,28 @@ This document defines the canonical scope and intent for Tier 1 - Buttons And Ic
 
 ### 3. Visual Rules
 
-- Token usage (color, spacing, type, radius, elevation): semantic action tokens (`primary`, `success`, `warning`, `danger`, `notice`, `info`, `ghost`) with 4/6/8 radius system and medium weight labels.
+- Token usage (color, spacing, type, radius, elevation): semantic action tokens map through the current design system classes:
+  - `primary -> ui-action-primary`
+  - `neutral -> ui-action`
+  - `success -> ui-action-success`
+  - `warning -> ui-action-warning`
+  - `danger -> ui-action-danger`
+  - `notice -> ui-action-notice`
+  - `info -> ui-action-info`
+- `outline` and `ghost` are variants, not semantic roles.
+- variant mapping:
+  - `base` uses the semantic action class directly
+  - `soft` uses the semantic action class with reduced-intensity treatment
+  - `outline` uses `ui-action-outline`
+  - `ghost` uses `ui-action-ghost`
+- Secondary-priority actions use neutral semantic actions with `outline` or `ghost` variants; `secondary` is not a separate token family.
+- Radius uses canonical token names such as `radius-sm`, `radius-md`, and `radius-lg` rather than raw numeric values.
 - Light theme behavior: Preserve stronger contrast than pastel soft variants.
 - Dark theme behavior: Maintain visible border and fill distinction for default, soft, and outline.
 - Density/size variants: `xs`, `sm`, `md`, `lg`, `xl`.
+- Allowed variants: `base`, `soft`, `outline`, `ghost`.
+- Allowed semantic subset: `primary`, `neutral`, `success`, `warning`, `danger`, `info`, `notice`.
+- Variant constraint: `outline` and `ghost` are neutral-emphasis variants in Tier 1 and must not redefine semantic severity.
 
 ### 4. Behavior Rules
 

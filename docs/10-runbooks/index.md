@@ -19,6 +19,8 @@ Operations procedures only. This branch does not own architecture structure, fea
 
 ## Environment And Procedure Runbooks
 
+- [Batch Workflow](batch-workflow.md)
+- [Git Batch Commit Workflow](git-batch-commit-workflow.md)
 - [Server Readiness](server-readiness.md)
 - [Server Bootstrap](server-bootstrap.md)
 - [Deployment Workflow](deployment-workflow.md)

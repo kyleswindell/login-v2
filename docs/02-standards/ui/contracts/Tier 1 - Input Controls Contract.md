@@ -1,41 +1,42 @@
-# Tier 1 - Inputs Textarea Select Contract
+# Tier 1 - Input Controls Contract
 
-This document defines the canonical scope and intent for Tier 1 - Inputs Textarea Select Contract.
+This document defines the canonical scope and intent for Tier 1 - Input Controls Contract.
 
 ## Component Contract
 
 ### 1. Component Identity
 
-- Component name: Text Input, Textarea, Select
+- Component name: Text Input, Textarea, Select, Checkbox, Radio Group, Switch / Toggle
 - Taxonomy path (L1/L2): Inputs And Forms / Inputs
 - Owner: Platform UI baseline owner
 
 ### 2. Intent And Theory
 
-- Primary use case: Capture structured and freeform data reliably.
-- When to use: Configuration forms, settings forms, filtering forms.
-- When not to use: One-click binary actions (use toggles/checkbox/radio when locked).
+- Primary use case: Capture structured, freeform, and binary/selectable data reliably.
+- When to use: Configuration forms, settings forms, filtering forms, and boolean/choice inputs.
+- When not to use: One-click action triggers that do not collect or change field state.
 - Interaction intent summary: predictable field behavior with clear validation and assistive context.
 
 ### 3. Visual Rules
 
-- Token usage (color, spacing, type, radius, elevation): shared form field container token with clear label/helper/error hierarchy.
+- Token usage (color, spacing, type, radius, elevation): shared form field and control tokens with clear label/helper/error hierarchy.
 - Light theme behavior: retain border and label contrast.
 - Dark theme behavior: preserve field/background distinction.
 - Density/size variants: standard default density for Tier 1.
+- Allowed variants: `base` only.
 
 ### 4. Behavior Rules
 
-- Default behavior: editable field with helper text support.
-- Hover/focus/active behavior: visible focus border/ring.
-- Disabled/loading behavior: disabled fields non-interactive but readable.
+- Default behavior: editable field or selectable control with helper text support.
+- Hover/focus/active behavior: visible focus border/ring or checked-state affordance as appropriate to the control.
+- Disabled/loading behavior: disabled fields and controls are non-interactive but readable.
 - Error/warning/success behavior (if applicable): inline field error + optional summary block.
 - Responsive behavior (desktop/tablet/mobile): one and two-column layouts collapse without clipping.
 
 ### 5. Accessibility Requirements
 
-- Semantic structure required: associated `label` and field IDs.
-- Keyboard interactions: standard tab/shift-tab and native control keyboard support.
+- Semantic structure required: associated `label` and field IDs or explicit control labeling for grouped controls.
+- Keyboard interactions: standard tab/shift-tab and native control keyboard support, including radio and checkbox semantics.
 - Focus-visible rules: strong visible focus for all fields.
 - Contrast requirements: WCAG 2.2 AA baseline.
 - Screen reader behavior: errors linked via `aria-describedby`; invalid state via `aria-invalid`.
@@ -43,7 +44,7 @@ This document defines the canonical scope and intent for Tier 1 - Inputs Textare
 
 ### 6. Content Rules
 
-- Label/content guidelines: clear nouns for fields, concise helper text.
+- Label/content guidelines: clear nouns for fields and explicit option labels for selectable controls.
 - Error/help messaging rules: describe what failed and how to fix.
 - Localization notes: support longer translated labels and helper text.
 
@@ -51,7 +52,7 @@ This document defines the canonical scope and intent for Tier 1 - Inputs Textare
 
 - Anti-pattern 1: missing visible labels
 - Anti-pattern 2: errors shown without field association
-- Anti-pattern 3: disabled fields with unreadable contrast
+- Anti-pattern 3: disabled fields or controls with unreadable contrast
 
 
 ## Related

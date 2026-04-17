@@ -64,18 +64,18 @@ The following are Tier 2 or higher and are excluded from this checklist:
 
 Contract owner:
 
-* [Tier 1 - Buttons And Icon Buttons Contract](../02-standards/ui/contracts/Tier%201%20-%20Buttons%20And%20Icon%20Buttons%20Contract.md)
+* [Tier 1 - Buttons And Icon Buttons Contract](../contracts/Tier%201%20-%20Buttons%20And%20Icon%20Buttons%20Contract.md)
 
 Checklist:
 
 * [ ] Button
-  Status: requires updates (see change-queue)
+  Status: not implemented
   - action-token naming aligns to current canonical terminology
   - allowed variants: base, soft, outline, ghost
   - size variants align to current canonical terminology
   - states: default, hover, focus, active, disabled, loading
 * [ ] Icon Button
-  Status: implemented (pending manual review)
+  Status: not implemented
   - states: default, hover, focus, active, disabled
   - accessible label is required
 
@@ -83,22 +83,22 @@ Checklist:
 
 Contract owner:
 
-* [Tier 1 - Input Controls Contract](../02-standards/ui/contracts/Tier%201%20-%20Input%20Controls%20Contract.md)
+* [Tier 1 - Input Controls Contract](../contracts/Tier%201%20-%20Input%20Controls%20Contract.md)
 
 Checklist:
 
 * [ ] Text Input
-  Status: implemented (pending manual review)
+  Status: not implemented
 * [ ] Textarea
-  Status: implemented (pending manual review)
+  Status: not implemented
 * [ ] Select
-  Status: implemented (pending manual review)
+  Status: not implemented
 * [ ] Checkbox
-  Status: implemented (pending manual review)
+  Status: not implemented
 * [ ] Radio Group
-  Status: implemented (pending manual review)
+  Status: not implemented
 * [ ] Switch / Toggle
-  Status: implemented (pending manual review)
+  Status: not implemented
 
 Requirements:
 
@@ -115,14 +115,14 @@ Requirements:
 
 Contract owner:
 
-* [Tier 1 - Badges And Status Contract](../02-standards/ui/contracts/Tier%201%20-%20Badges%20And%20Status%20Contract.md)
+* [Tier 1 - Badges And Status Contract](../contracts/Tier%201%20-%20Badges%20And%20Status%20Contract.md)
 
 Checklist:
 
 * [ ] Badge baseline
-  Status: implemented (pending manual review)
+  Status: not implemented
 * [ ] Status pill baseline
-  Status: implemented (pending manual review)
+  Status: not implemented
 
 Requirements:
 
@@ -135,24 +135,24 @@ Requirements:
 
 Contract owner:
 
-* [Tier 1 - Utility Primitives Contract](../02-standards/ui/contracts/Tier%201%20-%20Utility%20Primitives%20Contract.md)
+* [Tier 1 - Utility Primitives Contract](../contracts/Tier%201%20-%20Utility%20Primitives%20Contract.md)
 
 Checklist:
 
 * [ ] Divider
-  Status: implemented (pending manual review)
+  Status: not implemented
 * [ ] Tooltip
-  Status: implemented (pending manual review)
+  Status: not implemented
   - non-interactive only
   - not treated as a popover replacement
 * [ ] Spinner
-  Status: implemented (pending manual review)
+  Status: not implemented
 * [ ] Icon baseline
-  Status: implemented (pending manual review)
+  Status: not implemented
 * [ ] Label baseline
-  Status: implemented (pending manual review)
+  Status: not implemented
 * [ ] Link baseline
-  Status: implemented (pending manual review)
+  Status: not implemented
 
 Requirements:
 
@@ -164,12 +164,12 @@ Requirements:
 
 Contract owner:
 
-* [Tier 1 - Table Baseline Contract](../02-standards/ui/contracts/Tier%201%20-%20Table%20Baseline%20Contract.md)
+* [Tier 1 - Table Baseline Contract](../contracts/Tier%201%20-%20Table%20Baseline%20Contract.md)
 
 Checklist:
 
 * [ ] Table baseline
-  Status: implemented (pending manual review)
+  Status: not implemented
   - page title/subtitle row
   - optional stats row
   - control row structure
@@ -188,14 +188,14 @@ Checklist:
 
 Contract owner:
 
-* [Tier 1 - Drawer And Modal Contract](../02-standards/ui/contracts/Tier%201%20-%20Drawer%20And%20Modal%20Contract.md)
+* [Tier 1 - Drawer And Modal Contract](../contracts/Tier%201%20-%20Drawer%20And%20Modal%20Contract.md)
 
 Checklist:
 
 * [ ] Modal baseline
-  Status: implemented (pending manual review)
+  Status: not implemented
 * [ ] Drawer baseline
-  Status: implemented (pending manual review)
+  Status: not implemented
 
 Requirements:
 
@@ -210,14 +210,14 @@ Requirements:
 
 Contract owner:
 
-* [Tier 1 - Toast And Inline Alert Contract](../02-standards/ui/contracts/Tier%201%20-%20Toast%20And%20Inline%20Alert%20Contract.md)
+* [Tier 1 - Toast And Inline Alert Contract](../contracts/Tier%201%20-%20Toast%20And%20Inline%20Alert%20Contract.md)
 
 Checklist:
 
 * [ ] Toast baseline
-  Status: requires updates (see change-queue)
+  Status: not implemented
 * [ ] Inline alert baseline
-  Status: implemented (pending manual review)
+  Status: not implemented
 
 Requirements:
 
@@ -230,18 +230,18 @@ Requirements:
 
 Contract owner:
 
-* [Tier 1 - Shell Navigation Contract](../02-standards/ui/contracts/Tier%201%20-%20Shell%20Navigation%20Contract.md)
+* [Tier 1 - Shell Navigation Contract](../contracts/Tier%201%20-%20Shell%20Navigation%20Contract.md)
 
 Checklist:
 
 * [ ] Sidebar baseline
-  Status: requires updates (see change-queue)
+  Status: not implemented
 * [ ] Header baseline
-  Status: implemented (pending manual review)
+  Status: not implemented
 * [ ] Account Menu baseline
-  Status: implemented (pending manual review)
+  Status: not implemented
 * [ ] Mobile Nav Dock baseline
-  Status: implemented (pending manual review)
+  Status: not implemented
 
 Requirements:
 
@@ -253,18 +253,18 @@ Requirements:
 
 Contract owner:
 
-* [Tier 1 - Layout And Scaffolding Contract](../02-standards/ui/contracts/Tier%201%20-%20Layout%20And%20Scaffolding%20Contract.md)
+* [Tier 1 - Layout And Scaffolding Contract](../contracts/Tier%201%20-%20Layout%20And%20Scaffolding%20Contract.md)
 
 Checklist:
 
 * [ ] Container baseline
-  Status: implemented (pending manual review)
+  Status: not implemented
 * [ ] Grid baseline
-  Status: implemented (pending manual review)
+  Status: not implemented
 * [ ] Stack / Flex baseline
-  Status: implemented (pending manual review)
+  Status: not implemented
 * [ ] Section / Panel baseline
-  Status: implemented (pending manual review)
+  Status: not implemented
 
 Requirements:
 
@@ -275,7 +275,7 @@ Requirements:
 ### Tokens
 
 * [ ] Tokens
-  Status: requires updates (see change-queue)
+  Status: not implemented
   - semantic color mapping is used
   - spacing scale is used
   - typography scale is used
@@ -287,7 +287,7 @@ Requirements:
 All interactive Tier 1 components must support applicable states:
 
 * [ ] Interaction states
-  Status: implemented (pending manual review)
+  Status: not implemented
   - default
   - hover
   - focus
@@ -298,7 +298,7 @@ All interactive Tier 1 components must support applicable states:
 ### Accessibility
 
 * [ ] Accessibility
-  Status: implemented (pending manual review)
+  Status: not implemented
   - keyboard navigation is supported where applicable
   - visible focus treatment is present
   - ARIA labeling is present where needed
@@ -312,7 +312,7 @@ Applicable Tier 1 components must be represented in the UI reference workspace.
 Checklist:
 
 * [ ] UI Reference Validation
-  Status: implemented (pending manual review)
+  Status: not implemented
   - every Tier 1 component is visible where applicable
   - canonical variants are shown
   - required states are shown
@@ -333,7 +333,7 @@ Batch A is complete only if:
 
 ## Related
 
-* [UI UX Component Taxonomy And Coverage Matrix](../02-standards/ui/components/UI%20UX%20Component%20Taxonomy%20And%20Coverage%20Matrix.md)
-* [UI UX Component Library Standards](../02-standards/ui/components/UI%20UX%20Component%20Library%20Standards.md)
-* [UI Design System Standards](../02-standards/ui/UI%20Design%20System%20Standards.md)
-* [Component Contracts Index](../02-standards/ui/contracts/Component%20Contracts%20Index.md)
+* [UI UX Component Taxonomy And Coverage Matrix](UI%20UX%20Component%20Taxonomy%20And%20Coverage%20Matrix.md)
+* [UI UX Component Library Standards](UI%20UX%20Component%20Library%20Standards.md)
+* [UI Design System Standards](../UI%20Design%20System%20Standards.md)
+* [Component Contracts Index](../contracts/Component%20Contracts%20Index.md)

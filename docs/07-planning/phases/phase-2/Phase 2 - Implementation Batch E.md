@@ -13,18 +13,16 @@ Close the rebuilt UI convergence lane with staging deploy and visual QA only.
 ## Canonical Owners
 
 * [Dashboard](../../../04-features/dashboard/dashboard.md)
-* [Account Management And Settings](../../../04-features/account/account-management-and-settings.md)
-* [Platform Notifications And Settings](../../../04-features/notifications/platform-notifications-and-settings.md)
 
 ## Batch Goal
 
-Validate the rebuilt UI lane on staging after implementation work from Batch B, Batch C, and Batch D is complete.
+Validate the UI-system lane on staging after implementation work from Batch A and Batch B is complete.
 
 ## In Scope
 
 * staging deploy
 * visual QA
-* final validation against batch deliverables from B, C, and D
+* final validation against batch deliverables from A and B
 * planning close-out and readiness confirmation
 
 ## Out Of Scope
@@ -37,13 +35,13 @@ Validate the rebuilt UI lane on staging after implementation work from Batch B, 
 ## Required Deliverables
 
 1. Staging deploy is complete for the rebuilt UI lane.
-2. Visual QA is recorded for dashboard/shell, account, and notifications surfaces.
+2. Visual QA is recorded for Tier 1 components, Tier 2 patterns, dashboard, and shared shell surfaces.
 3. Any failed validation is routed back to the owning batch instead of being patched into close-out scope.
 4. Final readiness decision is explicit.
 
 ## Entry Gates
 
-* Batch B, Batch C, and Batch D are complete.
+* Batch A and Batch B are complete.
 
 ## Exit Criteria
 
@@ -57,6 +55,5 @@ This batch is complete when:
 ## Related
 
 * [Phase 2 Index](Phase%202%20Index.md)
+* [Phase 2 - Implementation Batch A](Phase%202%20-%20Implementation%20Batch%20A.md)
 * [Phase 2 - Implementation Batch B](Phase%202%20-%20Implementation%20Batch%20B.md)
-* [Phase 2 - Implementation Batch C](Phase%202%20-%20Implementation%20Batch%20C.md)
-* [Phase 2 - Implementation Batch D](Phase%202%20-%20Implementation%20Batch%20D.md)

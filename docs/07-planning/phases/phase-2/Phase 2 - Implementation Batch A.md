@@ -4,7 +4,7 @@ This document defines the canonical scope and intent for Phase 2 - Implementatio
 
 ## Purpose
 
-Apply the existing locked UI standards to implementation planning without creating new rules, feature behavior, or flow contracts.
+Complete Tier 1 component-library implementation and UI reference coverage using the existing locked UI standards.
 
 ## Planning Owner
 
@@ -18,29 +18,29 @@ Apply the existing locked UI standards to implementation planning without creati
 
 ## Batch Goal
 
-Create an implementation-ready adoption baseline that references existing UI standards only.
+Deliver an implementation-ready Tier 1 UI system baseline anchored in canonical component standards and the UI reference surface.
 
 ## In Scope
 
 * standards-to-surface mapping for current platform-owned UI
 * confirmation of which standards are already locked and reusable
-* implementation sequencing for standards adoption only
+* Tier 1 component implementation planning
+* UI reference coverage for Tier 1 components
 * identification of standards-owned rules that must not be rewritten in later batches
 
 ## Out Of Scope
 
 * creating or revising UI standards
-* dashboard or shell feature implementation
-* account feature behavior
-* notifications feature behavior
+* Tier 2 pattern implementation
+* feature-specific UI behavior
 * staging deploy or QA close-out
 
 ## Required Deliverables
 
-1. Explicit mapping from current platform-owned surfaces to existing UI standards.
-2. Adoption checklist for Batch B, Batch C, and Batch D consumers.
-3. Clear statement that no new rules are created in this batch.
-4. Documentation sync limited to planning references and standards cross-links.
+1. Tier 1 component implementation scope is explicit.
+2. UI reference coverage scope is explicit for Tier 1 components.
+3. Adoption checklist for Batch B consumers.
+4. Clear statement that no new rules are created in this batch.
 
 ## Entry Gates
 
@@ -53,7 +53,7 @@ This batch is complete when:
 
 * adoption work is fully sourced from existing standards
 * no feature or flow behavior is defined here
-* downstream batches can implement without ambiguity about which standards apply
+* Batch B can implement without ambiguity about which Tier 1 components are complete
 
 ## Related
 

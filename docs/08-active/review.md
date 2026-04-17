@@ -1,26 +1,25 @@
 # Review
 
 ## Status
-PARTIAL
+FAIL
 
 ## Issues
-- Implementation is ready for manual re-review, but the manual review pass has not been completed yet.
-- Manual visual re-review has not been completed after the latest contrast, disabled-state, and palette fixes.
-- Manual visual re-review has not been completed after the toast baseline motion correction.
-- Manual visual re-review has not been completed after adding the generated example toast trigger for on-demand animation inspection.
-- Manual visual re-review has not been completed after the latest table sorting, pagination/filter-panel, control-visibility, and semantic variant normalization updates.
-- Manual visual re-review has not been completed after correcting generated toast placement to the page-level stack below the overlays header.
-- Manual visual re-review has not been completed after correcting generated toast layering so the page-level stack behaves as an overlay and no longer occupies normal page flow.
-- Manual visual re-review has not been completed after correcting the Tier 1 button focus snapshots so semantic button styles are preserved under focus treatment.
-- Manual visual re-review has not been completed after correcting the generated toast stack to use viewport-fixed positioning so it stays top-right and does not scroll with the page.
-- Manual visual re-review has not been completed after normalizing shared navigation/icon-button icon rendering to the approved Heroicons path and correcting the mobile dock icon-label mismatch.
-- Manual functional validation has not been completed.
+- The generated example toast now deploys to the correct fixed overlay location, but the dark-mode toast background remains too transparent and needs full opacity.
+- The Documentation Vault repository-tree sidebar does not support the required page-scroll, sticky-handoff, and overflow-scroll behavior for long repository trees.
+- The repository-tree sidebar overflow area does not yet expose a styled vertical scrollbar aligned to application standards in light and dark mode.
+- The neutral ghost button still shows a border even though the other ghost semantic variants do not.
+- The dark-mode primary semantic background and related border, text, and state colors still need retuning toward `#1d95d873`.
+- The dark-mode info semantic background and related border, text, and state colors still need retuning toward `#6ef3ff66`.
+- Phase 2 still needs a separate later-batch full UI standards pass across existing views and elements before overall close-out.
 - Host-shell execution remains non-canonical for this repo; automated feature verification should be run in Docker where `postgres` resolves correctly.
 
 
 ## Required Fixes
-- Complete a manual re-review pass for UI Reference states, shell behavior, overlay behavior, responsive layout behavior, the latest contrast/palette/disabled-state updates, the corrected semantic button focus snapshots, the new sortable table headers and pagination states, and the corrected viewport-fixed toast stack behavior using the generated example trigger plus dismiss path.
-- Re-review the normalized icon-source path in shared navigation and the UI Reference icon-button examples, and confirm the mobile dock now pairs `Setup` and `Settings` with the intended icons.
+- Increase the dark-mode toast background opacity to full opacity and then re-run manual review of the toast baseline.
+- Fix the Documentation Vault repository-tree sidebar scroll, sticky handoff, and overflow-scroll behavior, including a themed visible vertical scrollbar for long trees.
+- Remove the neutral ghost button border so the ghost semantic variants render consistently.
+- Retune the dark-mode primary and info semantic background, border, text, and state colors to the requested darker translucent targets.
+- Carry the later Phase 2 full UI standards pass note forward as deferred close-out scope rather than expanding the current batch.
 - Keep using Docker for automated UI Reference verification during the review/finalization pass.
 
 

@@ -6,7 +6,7 @@ This document defines the canonical scope and intent for UI UX Component Library
 
 Define the component inventory, behavior contracts, and UX consistency rules for Login App 2.0.
 
-This note is the canonical component library owner for UI/UX behavior decisions.
+This note references the canonical component inventory and contract landscape. Tier 1 semantic roles, state models, and explicit token mappings are owned by the foundations and color-token standards; per-component subsets and allowed variants are owned by the Tier 1 contracts.
 
 ## Component Categories
 

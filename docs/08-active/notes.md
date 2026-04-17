@@ -23,6 +23,14 @@
 - Shared navigation icon rendering is still bypassing the approved Heroicons source path because `resources/views/components/layouts/nav-icon.blade.php` hand-renders custom inline SVGs for every semantic key.
 - The mobile dock icon mapping drifted from its labels: `Setup` was showing the settings icon and `Settings` was showing the users icon.
 - The active work-batch prompt requires `docs/10-runbooks/git-batch-commit-workflow.md`, but that runbook is not present in this checkout.
+- Manual review confirmed that generated example toasts now deploy to the appropriate fixed overlay location.
+- Manual review found that the dark-mode toast background is still too transparent and should be increased to full opacity.
+- Manual review found that the Documentation Vault repository-tree sidebar does not yet support the required page-scroll, sticky-handoff, and overflow-scroll behavior for long repository trees.
+- Manual review found that the repository-tree sidebar overflow area still needs a visible themed vertical scrollbar that works in both light and dark mode.
+- Manual review found that the neutral ghost button still renders with a border while the other ghost semantic variants do not.
+- Manual review found that the dark-mode primary semantic background should shift toward `#1d95d873`, with related border, text, and state colors retuned to match.
+- Manual review found that the dark-mode info semantic background should shift toward `#6ef3ff66`, with related border, text, and state colors retuned to match.
+- Phase 2 overall close-out still requires a later-batch full UI standards pass across existing views and elements.
 
 
 ## Decisions
@@ -50,6 +58,9 @@
 - Normalize the existing navigation semantic keys to Heroicons in the shared `nav-icon` component so reviewed settings/sidebar surfaces inherit the approved source path without introducing a new abstraction layer.
 - Limit raw inline SVG replacement in UI Reference to the canonical icon-button review surface for this pass; other inline SVG usages that are not demonstrating canonical icon-source behavior stay out of scope.
 - Use the existing `docs/10-runbooks/git-batch-save-points.md` pattern for commit/deploy execution if this pass is review-ready, because the named commit-workflow runbook is missing locally.
+- Treat the toast overlay mount location as confirmed and do not reopen that placement issue in the next work pass.
+- Keep the Documentation Vault repository-tree scroll/sticky behavior inside the current change queue as a shell/sidebar follow-up rather than widening the batch into unrelated docs surfaces.
+- Record the Phase 2 full UI standards pass as deferred close-out scope for a later Phase 2 batch instead of expanding the current active batch.
 
 
 ## Risks / Questions
@@ -73,3 +84,5 @@
 - No structural blocker prevented the viewport-fixed toast correction; the issue was limited to the generated mount point still using container-relative positioning after the prior pass.
 - No new standards decision was required for icon normalization because the approved icon source was already resolved for this batch; the remaining work was implementation drift only.
 - Follow-up may still be needed in a documentation batch to restore the missing `git-batch-commit-workflow.md` runbook path expected by the active agent workflow, but that is outside this implementation pass.
+- Worklog `2-A-0001` remains the relevant implementation history reference for the icon normalization pass; the new manual review findings above define the next active follow-up work instead of changing worklog history.
+- Another work pass is now required to address the failed toast opacity, Documentation Vault sidebar scroll behavior, ghost neutral border, and dark-mode semantic primary/info palette updates before Batch A can return to manual review.

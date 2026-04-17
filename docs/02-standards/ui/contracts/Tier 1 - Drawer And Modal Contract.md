@@ -23,6 +23,7 @@ This document defines the canonical scope and intent for Tier 1 - Drawer And Mod
 - Light theme behavior: visible border and separation from backdrop.
 - Dark theme behavior: high-contrast surface over dimmed backdrop.
 - Density/size variants: right-side drawer and centered modal baseline.
+- Allowed variants: `base` only.
 
 ### 4. Behavior Rules
 

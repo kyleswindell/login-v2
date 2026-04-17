@@ -5,7 +5,8 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "lint:docs:guardrails": "bash scripts/check-docs-guardrails.sh"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",

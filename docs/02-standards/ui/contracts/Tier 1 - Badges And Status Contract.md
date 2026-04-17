@@ -22,12 +22,14 @@ This document defines the canonical scope and intent for Tier 1 - Badges And Sta
 - Token usage (color, spacing, type, radius, elevation): semantic fills/outlines with uppercase compact labels and rounded pill shape.
 - Light theme behavior: maintain readable text and border contrast.
 - Dark theme behavior: keep subtle background tint with clear text contrast.
-- Density/size variants: standard compact pill; optional outline variant.
+- Density/size variants: standard compact pill.
+- Allowed variants: `base`, `outline`.
+- Allowed semantic subset: `neutral`, `success`, `warning`, `danger`, `info`, `notice`.
 
 ### 4. Behavior Rules
 
 - Default behavior: passive indicator with no click behavior.
-- Hover/focus/active behavior: only interactive when explicitly implemented as filter chip.
+- Hover/focus/active behavior: no interactive behavior in Tier 1 passive badge/status usage.
 - Disabled/loading behavior: muted token and lower emphasis.
 - Error/warning/success behavior (if applicable): must map to shared semantic colors.
 - Responsive behavior (desktop/tablet/mobile): wraps cleanly in row/action groups while each pill remains one-line.
@@ -35,8 +37,8 @@ This document defines the canonical scope and intent for Tier 1 - Badges And Sta
 ### 5. Accessibility Requirements
 
 - Semantic structure required: text content must be explicit.
-- Keyboard interactions: none unless interactive chip variant is used.
-- Focus-visible rules: required only for interactive chip variant.
+- Keyboard interactions: none for Tier 1 passive usage.
+- Focus-visible rules: not applicable for Tier 1 passive usage.
 - Contrast requirements: WCAG 2.2 AA baseline.
 - Screen reader behavior: meaning conveyed in text label, not color.
 - Reduced-motion behavior: no motion required.
@@ -52,6 +54,10 @@ This document defines the canonical scope and intent for Tier 1 - Badges And Sta
 - Anti-pattern 1: using only color with no text label
 - Anti-pattern 2: overloading one color token with multiple unrelated meanings
 - Anti-pattern 3: excessively long status labels that break table rhythm
+
+## Tier Boundary Note
+
+Interactive chips and other clickable filter-token patterns are outside Tier 1 passive badge/status scope unless a later contract explicitly introduces them.
 
 
 ## Related

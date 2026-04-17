@@ -74,6 +74,10 @@ Use `L1 / L2 / Component` classification.
 
 ### Tier 3
 
+Tier 3 in this taxonomy is the UI-facing subset of the broader architecture-owned Feature Module layer.
+
+This taxonomy names Tier 3 UI surfaces and pattern classes only. Canonical Tier 3 implementation structure, ownership, and composition rules are owned by the architecture checklist.
+
 - chat/timeline surfaces
 - advanced data visual shells
 - specialized module-only interaction patterns
@@ -81,5 +85,6 @@ Use `L1 / L2 / Component` classification.
 ## Related
 
 - [UI UX Component Library Standards](UI%20UX%20Component%20Library%20Standards.md)
+- [Feature Modules Alignment Checklist](../../../03-architecture/feature-modules-alignment-checklist.md)
 - [UI UX Component Acceptance Contract Template](../contracts/UI%20UX%20Component%20Acceptance%20Contract%20Template.md)
 - [UI UX Component Coverage Matrix](../../../09-reference/ui/UI%20UX%20Component%20Coverage%20Matrix.md)

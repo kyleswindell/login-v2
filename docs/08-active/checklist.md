@@ -76,6 +76,7 @@ Checklist:
 * [x] Icon Button
   * [x] states: default, hover, focus, active, disabled
   * [x] accessible label is required
+  * Status note: canonical Heroicons source path normalized in shared action review surfaces (implemented, pending review)
 
 ### Input Controls Baseline
 
@@ -131,6 +132,7 @@ Checklist:
   * [x] not treated as a popover replacement
 * [x] Spinner
 * [x] Icon baseline
+  * Status note: shared navigation semantic icon keys now resolve through the approved Heroicons source path (implemented, pending review)
 * [x] Label baseline
 * [x] Link baseline
 * [x] variant policy matches utility contract rules
@@ -203,6 +205,7 @@ Checklist:
 * [x] Header baseline
 * [x] Account Menu baseline
 * [x] Mobile Nav Dock baseline
+  * Status note: mobile dock icon-label mismatch corrected for `Setup` and `Settings` (implemented, pending review)
 * [x] allowed variants: base only
 * [x] mobile behavior matches desktop intent
 * [x] current-location and parent-context visibility are preserved

@@ -184,11 +184,11 @@
                 <span class="ml-1">Main</span>
             </button>
             <button type="button" class="flex items-center justify-center rounded-lg px-2 py-2 text-xs font-semibold text-slate-300 transition" data-mobile-dock-target="setup">
-                <x-layouts.nav-icon icon="settings" />
+                <x-layouts.nav-icon icon="docs" />
                 <span class="ml-1">Setup</span>
             </button>
             <button type="button" class="flex items-center justify-center rounded-lg px-2 py-2 text-xs font-semibold text-slate-300 transition" data-mobile-dock-target="settings">
-                <x-layouts.nav-icon icon="users" />
+                <x-layouts.nav-icon icon="settings" />
                 <span class="ml-1">Settings</span>
             </button>
         </div>

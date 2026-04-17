@@ -20,6 +20,9 @@
 - The requested Tier 2 notification/toast addendum correction is outside the active Batch A scope. `docs/08-active/batch.md` explicitly excludes Tier 2 patterns, while the conflicting content lives in `docs/02-standards/ui/components/Tier 2 Pattern Library Checklist.md`.
 - The Tier 1 action focus review surface had drifted from the button contract: the focused trigger snapshots were being presented with ad hoc styling instead of preserving the semantic action treatment and layering focus indication on top.
 - The generated toast stack still was not matching intended production-style placement after the overlay pass because the mount remained container-relative `absolute` positioning and scrolled with page content.
+- Shared navigation icon rendering is still bypassing the approved Heroicons source path because `resources/views/components/layouts/nav-icon.blade.php` hand-renders custom inline SVGs for every semantic key.
+- The mobile dock icon mapping drifted from its labels: `Setup` was showing the settings icon and `Settings` was showing the users icon.
+- The active work-batch prompt requires `docs/10-runbooks/git-batch-commit-workflow.md`, but that runbook is not present in this checkout.
 
 
 ## Decisions
@@ -44,6 +47,9 @@
 - Stop the requested Tier 2 notification/toast addendum pass in the current work-batch cycle rather than editing out-of-scope Tier 2 standards during Batch A.
 - Keep the button focus snapshots in the action UI Reference on the canonical semantic action classes and add only ring/offset focus indication so the examples match actual component behavior.
 - Mount the generated toast stack in a viewport-fixed container with a header-safe top offset so generated toasts behave like pop-up notices during page scroll instead of moving with the page content.
+- Normalize the existing navigation semantic keys to Heroicons in the shared `nav-icon` component so reviewed settings/sidebar surfaces inherit the approved source path without introducing a new abstraction layer.
+- Limit raw inline SVG replacement in UI Reference to the canonical icon-button review surface for this pass; other inline SVG usages that are not demonstrating canonical icon-source behavior stay out of scope.
+- Use the existing `docs/10-runbooks/git-batch-save-points.md` pattern for commit/deploy execution if this pass is review-ready, because the named commit-workflow runbook is missing locally.
 
 
 ## Risks / Questions
@@ -65,3 +71,5 @@
 - Follow-up is required in a separate standards-scoped batch or doc-sync pass if the Tier 2 notification/toast addendum should be corrected. The current conflicts are real, but fixing them inside Batch A would violate the active batch boundary.
 - No standards clarification was required for the button focus correction because the Tier 1 contract already states that focus adds a visible ring without changing semantic action hierarchy.
 - No structural blocker prevented the viewport-fixed toast correction; the issue was limited to the generated mount point still using container-relative positioning after the prior pass.
+- No new standards decision was required for icon normalization because the approved icon source was already resolved for this batch; the remaining work was implementation drift only.
+- Follow-up may still be needed in a documentation batch to restore the missing `git-batch-commit-workflow.md` runbook path expected by the active agent workflow, but that is outside this implementation pass.

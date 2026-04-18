@@ -63,8 +63,8 @@ Run the active batch work workflow against the current ready change-queue items 
 
 ## Commit / Deploy Status
 
-- Commit: No
-- Deploy: No
+- Commit: Yes
+- Deploy: Yes
 
 ## Notes
 

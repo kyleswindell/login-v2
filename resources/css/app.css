@@ -718,6 +718,30 @@
         color: var(--ui-alert-danger-text);
     }
 
+    html[data-theme-resolved='dark'] .ui-toast-neutral {
+        background-color: rgb(39 39 42);
+    }
+
+    html[data-theme-resolved='dark'] .ui-toast-info {
+        background-color: rgb(47 78 81);
+    }
+
+    html[data-theme-resolved='dark'] .ui-toast-success {
+        background-color: rgb(20 83 45);
+    }
+
+    html[data-theme-resolved='dark'] .ui-toast-notice {
+        background-color: rgb(76 29 149);
+    }
+
+    html[data-theme-resolved='dark'] .ui-toast-warning {
+        background-color: rgb(133 77 14);
+    }
+
+    html[data-theme-resolved='dark'] .ui-toast-danger {
+        background-color: rgb(127 29 29);
+    }
+
     .ui-scrollbar {
         scrollbar-width: thin;
         scrollbar-color: var(--ui-scrollbar-thumb) var(--ui-scrollbar-track);
@@ -821,11 +845,11 @@
             linear-gradient(45deg, transparent 50%, currentColor 50%),
             linear-gradient(135deg, currentColor 50%, transparent 50%);
         background-position:
-            calc(100% - 1.35rem) calc(50% - 0.16rem),
-            calc(100% - 0.95rem) calc(50% - 0.16rem);
+            calc(100% - 1.15rem) calc(50% - 0.16rem),
+            calc(100% - 0.78rem) calc(50% - 0.16rem);
         background-repeat: no-repeat;
         background-size: 0.45rem 0.45rem, 0.45rem 0.45rem;
-        padding-right: 3.35rem;
+        padding-right: 2.85rem;
     }
 
     .ui-select-compact {
@@ -943,7 +967,7 @@
     }
 
     .ui-table-filter-panel {
-        @apply absolute right-0 top-full z-20 mt-3 hidden w-full max-w-xl rounded-lg border p-5 shadow-2xl;
+        @apply absolute right-0 top-full z-20 mt-3 w-full max-w-xl rounded-lg border p-5 shadow-2xl;
         border-color: var(--ui-border-default);
         background-color: color-mix(in srgb, var(--ui-surface) 94%, transparent);
     }

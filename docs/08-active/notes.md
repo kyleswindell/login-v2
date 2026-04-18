@@ -1,6 +1,7 @@
 # Notes
 
 ## Findings
+- Manual review approved the latest change-queue items for visible icon + text button examples in the UI Reference, in-place table pagination/page-size refresh behavior, and the dark-mode drawer close outline treatment; those items no longer require re-review.
 - The current Batch A implementation surface already existed, but it had material Tier 1 gaps: missing checkbox/radio/switch coverage, no visible utility primitives section, and a status validation example using a non-contract `solid` badge variant.
 - Core platform tables and dashboard controls were only partially aligned with Tier 1 shared primitives; this pass moved key surfaces toward the canonical actions/badges/input controls already in the app.
 - `php artisan route:list --path=platform/ui-reference` succeeds after the changes, so the UI Reference route surface remains intact.
@@ -40,6 +41,7 @@
 - The remaining reviewed raw icon usage in scope was concentrated in the shared header notification trigger plus UI Reference overview/table/form demo controls that are meant to reflect the canonical icon source path.
 - Manual batch review approved the current UI Reference presence and visual coverage for input controls, badge/status surfaces, utility primitives, structural baselines, shell/navigation baselines, and layout/scaffolding baselines, so those top-level checklist items now pass review.
 - Manual batch review also approved state validation for buttons/icon buttons, shared input controls, badge/status semantics, utility primitive presentation, tokens, and cross-cutting interaction states, so those top-level checklist items now pass review as well.
+- Manual interaction review approved tooltip behavior, table baseline behavior, modal/drawer interaction behavior, toast/inline-alert baseline behavior, and accessibility interaction checks, so `Accessibility` now passes review and the previously approved structural baseline items remain confirmed.
 - The latest manual review found that the UI Reference `Buttons + icons` surface still shows icon-only controls but not visible icon + text button examples, even though the iconography standard requires icon + text treatment for primary, destructive, and ambiguous actions.
 - The latest manual review found that the current selectable-group surfaces do not emphasize selected items strongly enough; the smallest in-scope correction is to reuse the existing focused-state treatment on selected items for the first remediation pass.
 - The latest manual review found that shared select controls still place the dropdown caret too close to the right border, indicating a remaining spacing issue in the common select styling rather than a one-off view bug.
@@ -47,11 +49,20 @@
 - The latest manual review found that current table pagination still forces a full-page reload instead of refreshing table data in place with the canonical loading-state treatment.
 - The latest manual review found that the dark-mode drawer close button still does not render as a visible neutral outline action.
 - Manual review approved the restored Documentation Vault repository-tree sidebar behavior, the neutral ghost button border removal, the dark-mode primary/info semantic palette retuning, and the reviewed Heroicons-path normalization work.
+- Manual review found that dark-mode toast backgrounds still need to be fully opaque and darker across all semantic colorways; the approved darker info direction is closer to `#2f4e51`, and the remaining toast colorways need equivalent darkening.
+- Manual review found that the current table filter button does not perform any action.
+- Manual review found that toast pop-ups should clear themselves automatically after roughly 15-20 seconds while keeping manual dismiss available.
+- Manual review found that the Documentation Vault sidebar is no longer sticky as a whole after the recent custom-sidebar host changes; only the inner repository-tree card sticks, so the earlier sticky-fix item should not remain treated as successful.
+- Manual review found that the shared select/dropdown indicator spacing is improved but overshot the target, and the dropdown arrow is no longer visually centered.
+- Manual review found that the selectable-group surfaces only show the strengthened selected-state treatment on initial page load; the selected emphasis does not update dynamically on click.
 - The six current ready change-queue items were all implementable inside the existing Batch A UI Reference and shell surfaces without introducing a new token, variant, or ownership decision.
 - The table no-reload correction stayed inside the existing server-rendered tables route by replacing the current root with fetched HTML and reusing the canonical table loading overlay instead of introducing a new client-side table model.
+- The current ready follow-up items also stayed inside existing Batch A implementation points: the custom-sidebar host, shared select styling, selectable-group state syncing, existing table filter panel, and generated-toast demo behavior all accepted the required corrections without introducing a new pattern decision.
+- The darker toast pass remained implementation-only because it reused the existing semantic toast surfaces and overlay mount rather than adding a new notification behavior or token family.
 
 
 ## Decisions
+- Move the approved icon + text button examples, in-place table refresh behavior, and drawer close outline treatment items from `Implemented Pending Review` to `Passed Review`; keep Batch A in `PARTIAL` because other manual-review issues remain open.
 - Keep Batch A scoped to implementation changes in the app/UI surface and do not modify canonical planning or standards docs during this pass.
 - Treat the badge `solid` variant as out of Batch A contract scope and normalize Tier 1 badge examples to base/outline only.
 - Add utility primitives and layout/scaffolding examples into existing UI Reference views instead of creating a new route, to stay within the current Batch A validation surface.
@@ -98,6 +109,14 @@
 - Align the shared shell row layout to the `lg` breakpoint so the custom sidebar and main-content handoff occur at the same responsive transition.
 - Reuse the current UI Reference tables route as the fetch source for in-place sorting, pagination, and page-size refresh instead of introducing a second data path.
 - Move the confirmed Documentation Vault sidebar, neutral ghost, primary/info palette, and reviewed Heroicons normalization fixes from `Implemented Pending Review` to `Passed Review` without reopening them in the next work pass.
+- Move the prior toast-opacity queue item back into active follow-up as a darker full-palette toast treatment task rather than treating the earlier opacity-only correction as complete.
+- Treat the inert filter button and missing toast timeout dismissal as new Batch A implementation drift inside existing table/toast behaviors rather than new pattern decisions.
+- Move the custom-sidebar sticky item, shared select indicator adjustment, and selectable-group dynamic selected-state behavior back into `Ready To Implement` because the latest review shows those fixes were incomplete rather than fully passing.
+- Restore sticky behavior at the custom-sidebar host level and remove the duplicate inner sticky treatment from Documentation Vault so the sidebar container, not just the repository-tree card, owns the desktop sticky responsibility again.
+- Keep the shared select caret implementation centralized and retune only its offset/padding so the dropdown indicator remains centered without widening control chrome.
+- Add delegated selectable-group state syncing in shared UI Reference JS so selected emphasis updates live on click for both radio and checkbox review surfaces.
+- Keep the table filter interaction on the existing hidden filter-panel path by removing the always-hidden shared CSS behavior and using class-based hidden state instead.
+- Limit timeout-based auto-dismiss to generated toast pop-ups so the static baseline stack remains available for inspection while overlay-style demo toasts clear themselves after roughly sixteen seconds.
 
 
 ## Risks / Questions
@@ -125,5 +144,9 @@
 - Batch A can return to manual review once the current pass verification and CPD steps are complete, because the ready change-queue items were implemented rather than deferred or blocked.
 - Docker verification was rerun after this pass and both targeted suites passed: `PlatformUiReferenceTest` (7 tests / 34 assertions) and `DocsRepositoryViewerTest` (5 tests / 9 assertions).
 - Another manual review pass is still required for the remaining unchecked checklist areas, especially `Accessibility`, `UI Reference Validation`, and `Batch A Exit Criteria`.
+- Another manual review pass is still required for `UI Reference Validation` and `Batch A Exit Criteria`, and a new implementation pass is now required for darker toast colorways, table filter behavior, and toast timeout dismissal.
 - The table no-reload correction may expose a real architecture limit in the current enhancement path; if so, the next work pass should record that as a blocker instead of forcing a wider redesign under Batch A.
 - Manual browser review is still required for the JS-driven in-place table refresh path because the current automated test surface does not exercise fetch-based root replacement directly.
+- Manual visual re-review is still required for the retuned sticky host, select indicator alignment, and darker toast backgrounds because those changes are primarily presentation-level corrections.
+- Automated feature tests still do not exercise the generated-toast timeout path or the live selectable-group state sync directly, so those behaviors remain browser-review dependent even after verification.
+- Host-side `npm run build` is not currently usable in this workspace because the local Node install is on unsupported WSL1; Docker feature verification passed, and deploy-time Vite build remains the practical build check for this pass.

@@ -254,7 +254,8 @@
                 ])>
                     @if ($hasCustomSidebar)
                         <aside
-                            class="fixed inset-2 z-[60] hidden shrink-0 overflow-y-auto rounded-2xl border border-slate-700 bg-slate-950/95 p-4 shadow-2xl shadow-black/40 lg:static lg:inset-auto lg:z-auto lg:block lg:w-auto lg:self-start lg:overflow-visible lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none"
+                            class="fixed inset-2 z-[60] hidden shrink-0 overflow-y-auto rounded-2xl border border-slate-700 bg-slate-950/95 p-4 shadow-2xl shadow-black/40 lg:inset-auto lg:sticky lg:top-24 lg:z-auto lg:block lg:w-auto lg:self-start lg:max-h-[calc(100vh-7rem)] lg:overflow-visible lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none"
+                            data-sidebar-host
                             data-sidebar-panel
                         >
                             <x-layouts.mobile-sidebar

@@ -13,7 +13,7 @@
                 </div>
             </div>
 
-            <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30 xl:sticky xl:top-24 xl:max-h-[calc(100vh-7rem)] xl:overflow-hidden">
+            <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30 xl:max-h-[calc(100vh-7rem)] xl:overflow-hidden">
                 <h2 class="text-lg font-semibold text-white">Repository Tree</h2>
                 <div
                     class="ui-scrollbar mt-4 text-sm xl:max-h-[calc(100vh-12rem)] xl:overflow-y-auto"

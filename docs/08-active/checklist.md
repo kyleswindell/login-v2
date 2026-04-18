@@ -97,8 +97,10 @@ Checklist:
   Note: shared caret spacing refreshed in worklog `2-A-0004`; pending re-review
 * [x] Checkbox
   Status: passed review
+  Note: live selectable-state emphasis refreshed in worklog `2-A-0005`; pending re-review
 * [x] Radio Group
   Status: passed review
+  Note: live selectable-state emphasis refreshed in worklog `2-A-0005`; pending re-review
 * [x] Switch / Toggle
   Status: passed review
 
@@ -219,6 +221,7 @@ Checklist:
 
 * [x] Toast baseline
   Status: passed review
+  Note: darker dark-mode toast surfaces and generated-toast timeout dismissal refreshed in worklog `2-A-0005`; pending re-review
 * [x] Inline alert baseline
   Status: passed review
 
@@ -239,6 +242,7 @@ Checklist:
 
 * [x] Sidebar baseline
   Status: passed review
+  Note: custom-sidebar sticky host refreshed in worklog `2-A-0005`; pending re-review
 * [x] Header baseline
   Status: passed review
 * [x] Account Menu baseline
@@ -300,8 +304,8 @@ All interactive Tier 1 components must support applicable states:
 
 ### Accessibility
 
-* [ ] Accessibility
-  Status: implemented (pending manual review)
+* [x] Accessibility
+  Status: passed review
   - keyboard navigation is supported where applicable
   - visible focus treatment is present
   - ARIA labeling is present where needed

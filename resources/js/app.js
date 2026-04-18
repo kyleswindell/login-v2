@@ -124,11 +124,67 @@ const initFilterPanels = () => {
             return;
         }
 
+        const syncExpandedState = () => {
+            toggle.setAttribute('aria-expanded', panel.classList.contains('hidden') ? 'false' : 'true');
+        };
+
+        syncExpandedState();
+
         toggle.addEventListener('click', () => {
             panel.classList.toggle('hidden');
-            toggle.setAttribute('aria-expanded', panel.classList.contains('hidden') ? 'false' : 'true');
+            syncExpandedState();
         });
     });
+};
+
+const syncSelectableOptionStates = (scope = document) => {
+    scope.querySelectorAll('.ui-selectable-option').forEach((option) => {
+        const input = option.querySelector('input[type="checkbox"], input[type="radio"]');
+
+        if (!(input instanceof HTMLInputElement)) {
+            return;
+        }
+
+        option.classList.toggle('is-selected', input.checked);
+    });
+};
+
+const initSelectableOptionStates = () => {
+    if (document.body?.dataset.selectableOptionStateInit !== '1') {
+        document.body.dataset.selectableOptionStateInit = '1';
+
+        document.addEventListener('change', (event) => {
+            const input = event.target.closest('.ui-selectable-option input[type="checkbox"], .ui-selectable-option input[type="radio"]');
+
+            if (!(input instanceof HTMLInputElement)) {
+                return;
+            }
+
+            const fieldset = input.closest('fieldset');
+
+            if (input.type === 'radio' && input.name) {
+                const scope = fieldset ?? document;
+
+                scope.querySelectorAll(`input[type="radio"][name="${CSS.escape(input.name)}"]`).forEach((radio) => {
+                    const option = radio.closest('.ui-selectable-option');
+
+                    if (option) {
+                        option.classList.toggle('is-selected', radio.checked);
+                    }
+                });
+
+                return;
+            }
+
+            const option = input.closest('.ui-selectable-option');
+
+            if (option) {
+                option.classList.toggle('is-selected', input.checked);
+            }
+        });
+    }
+
+    syncSelectableOptionStates(document);
 };
 
 const initTableSearchInputs = () => {
@@ -795,27 +851,71 @@ const initMobileSidebarDock = () => {
 
 const initUiReferenceOverlayDemos = () => {
     const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+    const generatedToastTimers = new WeakMap();
+
+    const clearGeneratedToastTimer = (toast) => {
+        const timeoutId = generatedToastTimers.get(toast);
+
+        if (timeoutId) {
+            window.clearTimeout(timeoutId);
+            generatedToastTimers.delete(toast);
+        }
+    };
+
+    const scheduleGeneratedToastDismiss = (toast) => {
+        if (!(toast instanceof HTMLElement) || !toast.hasAttribute('data-ui-demo-generated-toast')) {
+            return;
+        }
+
+        clearGeneratedToastTimer(toast);
+
+        const timeoutId = window.setTimeout(() => {
+            animateToastVisibility(toast, false);
+        }, 16000);
+
+        generatedToastTimers.set(toast, timeoutId);
+    };
+
     const animateToastVisibility = (toast, makeVisible) => {
         if (!(toast instanceof HTMLElement)) {
             return;
         }
 
         if (prefersReducedMotion) {
-            toast.classList.toggle('hidden', !makeVisible);
+            if (makeVisible) {
+                toast.classList.remove('hidden');
+                scheduleGeneratedToastDismiss(toast);
+                return;
+            }
+
+            clearGeneratedToastTimer(toast);
+
+            if (toast.hasAttribute('data-ui-demo-generated-toast')) {
+                toast.remove();
+                return;
+            }
+
+            toast.classList.add('hidden');
             toast.classList.remove('is-entering', 'is-exiting');
             return;
         }
 
         const finalizeVisible = () => {
             toast.classList.remove('is-entering');
+            scheduleGeneratedToastDismiss(toast);
         };
 
         const finalizeHidden = () => {
-            toast.classList.add('hidden');
+            if (toast.hasAttribute('data-ui-demo-generated-toast')) {
+                toast.remove();
+            } else {
+                toast.classList.add('hidden');
+            }
             toast.classList.remove('is-exiting');
         };
 
         if (makeVisible) {
+            clearGeneratedToastTimer(toast);
             toast.classList.remove('hidden', 'is-exiting');
             toast.classList.add('is-entering');
             requestAnimationFrame(() => {
@@ -824,6 +924,7 @@ const initUiReferenceOverlayDemos = () => {
             return;
         }
 
+        clearGeneratedToastTimer(toast);
         toast.classList.add('is-exiting');
         window.setTimeout(finalizeHidden, 170);
     };
@@ -836,7 +937,10 @@ const initUiReferenceOverlayDemos = () => {
 
             button.dataset.uiDemoToastDismissInit = '1';
             button.addEventListener('click', () => {
-                animateToastVisibility(button.closest('[data-ui-demo-toast]'), false);
+                const toast = button.closest('[data-ui-demo-toast]');
+
+                clearGeneratedToastTimer(toast);
+                animateToastVisibility(toast, false);
             });
         });
     };
@@ -914,6 +1018,7 @@ const initUiReferenceOverlayDemos = () => {
             });
 
             root?.querySelectorAll('[data-ui-demo-generated-toast]').forEach((toast) => {
+                clearGeneratedToastTimer(toast);
                 toast.remove();
             });
         });
@@ -959,6 +1064,8 @@ document.addEventListener('DOMContentLoaded', initFilterPanels);
 document.addEventListener('livewire:navigated', initFilterPanels);
 document.addEventListener('DOMContentLoaded', initTableSearchInputs);
 document.addEventListener('livewire:navigated', initTableSearchInputs);
+document.addEventListener('DOMContentLoaded', initSelectableOptionStates);
+document.addEventListener('livewire:navigated', initSelectableOptionStates);
 document.addEventListener('DOMContentLoaded', initErrorLogDrawer);
 document.addEventListener('livewire:navigated', initErrorLogDrawer);
 document.addEventListener('DOMContentLoaded', initAuditLogDrawer);

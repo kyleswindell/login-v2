@@ -5,13 +5,12 @@
 ## In Progress
 
 ## Implemented Pending Review
-- [x] Added visible icon + text button examples to the UI Reference `Buttons + icons` surface so the library demonstrates canonical text-bearing action buttons alongside icon-only controls.
-- [x] Strengthened selected-state indication for the current single-select and multi-select selectable-group surfaces by layering the existing focused treatment onto selected items as the first Batch A correction, without introducing a new variant.
-- [x] Increased the shared select/dropdown indicator spacing so the down-arrow affordance sits farther from the right border across canonical select surfaces.
-- [x] Re-aligned the shared shell breakpoint behavior so the main content does not switch to the full-width state before the sidebar crosses into the mobile-nav state at the same breakpoint.
-- [x] Replaced table pagination and rows-per-page full-page reloads with the existing in-place table refresh path plus the canonical table loading state where feasible inside the current Batch A table baseline, without broad table-system redesign.
-- [x] Changed the dark-mode table drawer close control to the neutral outline button treatment so the button keeps a visible border and matches the drawer/modal action baseline.
-- [x] Increased dark-mode toast background opacity while keeping the generated example toast fixed to the approved page-level overlay location.
+- [x] Restored desktop sticky behavior for the custom-sidebar host so the Documentation Vault sidebar container itself remains sticky again instead of only the inner repository-tree card sticking.
+- [x] Refined the shared select/dropdown indicator spacing again so the overall right-side offset is not excessive and the dropdown arrow remains visually centered.
+- [x] Made selectable-group selected-state styling update dynamically on click so the stronger focused-style emphasis is added and removed live instead of only appearing from the initial server-rendered state.
+- [x] Retuned dark-mode toast backgrounds across all semantic colorways so they are fully opaque and visibly darker, using the newly approved darker direction for each toast/alert family (for example, info aligned closer to `#2f4e51`) while keeping the current overlay placement intact.
+- [x] Made the current table filter button perform the expected filter-panel toggle/action instead of remaining inert.
+- [x] Added automatic timeout dismissal for toast pop-ups after a short interval in the 15-20 second range while preserving manual dismiss behavior.
 
 ## Blocked
 
@@ -19,6 +18,9 @@
 - [ ] Record Phase 2 follow-up scope for a full UI standards pass across existing views and elements in a later Phase 2 batch.
 
 ## Passed Review
+- [x] Added visible icon + text button examples to the UI Reference `Buttons + icons` surface so the library demonstrates canonical text-bearing action buttons alongside icon-only controls.
+- [x] Replaced table pagination and rows-per-page full-page reloads with the existing in-place table refresh path plus the canonical table loading state where feasible inside the current Batch A table baseline, without broad table-system redesign.
+- [x] Changed the dark-mode table drawer close control to the neutral outline button treatment so the button keeps a visible border and matches the drawer/modal action baseline.
 - [x] Generated example toast deploys to the approved fixed overlay location.
 - [x] Normalized the remaining reviewed navigation and UI Reference icon surfaces to the approved Heroicons path and removed the lingering inline SVG usage from those reviewed surfaces.
 - [x] Restored Documentation Vault repository-tree sidebar behavior so the page can scroll normally, the docs sidebar scrolls off-screen before sticking, and the repository-tree card supports its own themed vertical scrollbar in light and dark mode when content overflows.

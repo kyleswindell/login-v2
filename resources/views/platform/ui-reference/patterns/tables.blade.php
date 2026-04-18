@@ -116,7 +116,7 @@
                     </div>
                 </div>
 
-                <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="ui-table-filter-panel" data-filter-panel>
+                <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="ui-table-filter-panel hidden" data-filter-panel>
                     <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
                     <input type="hidden" name="workspace_search" value="{{ $workspaceFilters['search'] }}">
                     <input type="hidden" name="workspace_sort" value="{{ $workspaceSort }}">
@@ -375,7 +375,7 @@
                     </div>
                 </div>
 
-                <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="ui-table-filter-panel" data-filter-panel>
+                <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="ui-table-filter-panel hidden" data-filter-panel>
                     <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
                     <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
                     <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
@@ -572,7 +572,7 @@
                     </div>
                 </div>
 
-                <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="ui-table-filter-panel" data-filter-panel>
+                <form method="GET" action="{{ route('platform.ui-reference.patterns.tables') }}" class="ui-table-filter-panel hidden" data-filter-panel>
                     <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
                     <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
                     <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">

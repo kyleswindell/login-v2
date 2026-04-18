@@ -30,13 +30,20 @@
         };
     @endphp
 
-    <section class="flex flex-1 flex-col gap-6">
+    <section class="flex flex-1 flex-col gap-6" data-ui-reference-tables-root>
         <div>
             <h1 class="ui-page-header-title">Table Baselines</h1>
             <p class="ui-page-header-copy">Tier 1 contract for filters, pagination, rows-per-page controls, empty states, and log drawer interactions.</p>
         </div>
 
-        <section id="workspace-table-baseline" class="ui-card">
+        <section id="workspace-table-baseline" class="ui-card relative" data-table-section="workspace">
+            <div class="pointer-events-none absolute inset-0 z-10 hidden items-center justify-center rounded-lg bg-slate-950/65" data-table-loading-overlay aria-hidden="true">
+                <div class="rounded-lg border border-slate-800 bg-slate-900/90 px-5 py-4 text-center shadow-2xl shadow-black/30">
+                    <span class="ui-spinner" aria-hidden="true"></span>
+                    <p class="mt-3 text-sm font-semibold text-white">Refreshing workspace rows</p>
+                    <p class="mt-1 text-xs text-slate-400">Applying the current table controls without a full page reload.</p>
+                </div>
+            </div>
             <div>
                 <p class="ui-kicker">General Table</p>
                 <h2 class="ui-card-title mt-2">Operator Data Grid Baseline</h2>
@@ -54,7 +61,7 @@
                             <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
                             <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
                             <label class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Rows</label>
-                            <select name="workspace_per_page" onchange="this.form.submit()" class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100">
+                            <select name="workspace_per_page" onchange="this.form.submit()" class="ui-select ui-select-compact rounded-lg text-sm">
                                 @foreach ([10, 25, 50, 100] as $option)
                                     <option value="{{ $option }}" @selected($workspacePerPage === $option)>{{ $option }}</option>
                                 @endforeach
@@ -119,7 +126,7 @@
                     <div class="grid gap-4 md:grid-cols-2">
                     <label>
                         <span class="text-sm font-semibold text-slate-200">Status</span>
-                        <select name="workspace_status" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2.5 text-slate-100">
+                        <select name="workspace_status" class="ui-select ui-select-compact mt-2 text-slate-100">
                             <option value="">Any</option>
                             <option value="active" @selected($workspaceFilters['status'] === 'active')>Active</option>
                             <option value="review" @selected($workspaceFilters['status'] === 'review')>Review</option>
@@ -128,7 +135,7 @@
                     </label>
                     <label>
                         <span class="text-sm font-semibold text-slate-200">Owner</span>
-                        <select name="workspace_owner" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2.5 text-slate-100">
+                        <select name="workspace_owner" class="ui-select ui-select-compact mt-2 text-slate-100">
                             <option value="">Any</option>
                             @foreach (['Platform Team', 'Security', 'Operations', 'Docs Team'] as $owner)
                                 <option value="{{ $owner }}" @selected($workspaceFilters['owner'] === $owner)>{{ $owner }}</option>
@@ -223,7 +230,7 @@
                             <input type="hidden" name="workspace_direction" value="{{ $workspaceDirection }}">
                             <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
                             <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
-                            <select name="workspace_page" onchange="this.form.submit()" class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-slate-200">
+                            <select name="workspace_page" onchange="this.form.submit()" class="ui-select ui-select-compact rounded-lg text-xs font-semibold uppercase tracking-[0.1em] text-slate-200">
                                 @for ($page = 1; $page <= $workspaceRows->lastPage(); $page++)
                                     <option value="{{ $page }}" @selected($page === $workspaceRows->currentPage())>Page {{ $page }}</option>
                                 @endfor
@@ -299,7 +306,14 @@
             </div>
         </section>
 
-        <section id="audit-table-baseline" class="ui-card">
+        <section id="audit-table-baseline" class="ui-card relative" data-table-section="audit">
+            <div class="pointer-events-none absolute inset-0 z-10 hidden items-center justify-center rounded-lg bg-slate-950/65" data-table-loading-overlay aria-hidden="true">
+                <div class="rounded-lg border border-slate-800 bg-slate-900/90 px-5 py-4 text-center shadow-2xl shadow-black/30">
+                    <span class="ui-spinner" aria-hidden="true"></span>
+                    <p class="mt-3 text-sm font-semibold text-white">Refreshing audit rows</p>
+                    <p class="mt-1 text-xs text-slate-400">Applying the current table controls without a full page reload.</p>
+                </div>
+            </div>
             <div>
                 <p class="ui-kicker">Logs Table</p>
                 <h2 class="ui-card-title mt-2">Audit Drawer Example</h2>
@@ -317,7 +331,7 @@
                         <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
                         <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
                         <label class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Rows</label>
-                        <select name="audit_per_page" onchange="this.form.submit()" class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100">
+                        <select name="audit_per_page" onchange="this.form.submit()" class="ui-select ui-select-compact rounded-lg text-sm">
                             @foreach ([10, 25, 50, 100] as $option)
                                 <option value="{{ $option }}" @selected($auditPerPage === $option)>{{ $option }}</option>
                             @endforeach
@@ -371,7 +385,7 @@
                     <div class="grid gap-4 md:grid-cols-2">
                     <label>
                         <span class="text-sm font-semibold text-slate-200">Severity</span>
-                        <select name="audit_severity" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2.5 text-slate-100">
+                        <select name="audit_severity" class="ui-select ui-select-compact mt-2 text-slate-100">
                             <option value="">Any</option>
                             <option value="info" @selected($auditFilters['severity'] === 'info')>Info</option>
                             <option value="notice" @selected($auditFilters['severity'] === 'notice')>Notice</option>
@@ -379,7 +393,7 @@
                     </label>
                     <label>
                         <span class="text-sm font-semibold text-slate-200">Result</span>
-                        <select name="audit_result" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2.5 text-slate-100">
+                        <select name="audit_result" class="ui-select ui-select-compact mt-2 text-slate-100">
                             <option value="">Any</option>
                             <option value="success" @selected($auditFilters['result'] === 'success')>Success</option>
                         </select>
@@ -473,7 +487,7 @@
                             <input type="hidden" name="audit_direction" value="{{ $auditDirection }}">
                             <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
                             <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
-                            <select name="audit_page" onchange="this.form.submit()" class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-slate-200">
+                            <select name="audit_page" onchange="this.form.submit()" class="ui-select ui-select-compact rounded-lg text-xs font-semibold uppercase tracking-[0.1em] text-slate-200">
                                 @for ($page = 1; $page <= $auditSamples->lastPage(); $page++)
                                     <option value="{{ $page }}" @selected($page === $auditSamples->currentPage())>Page {{ $page }}</option>
                                 @endfor
@@ -490,7 +504,14 @@
             </div>
         </section>
 
-        <section id="error-table-baseline" class="ui-card">
+        <section id="error-table-baseline" class="ui-card relative" data-table-section="error">
+            <div class="pointer-events-none absolute inset-0 z-10 hidden items-center justify-center rounded-lg bg-slate-950/65" data-table-loading-overlay aria-hidden="true">
+                <div class="rounded-lg border border-slate-800 bg-slate-900/90 px-5 py-4 text-center shadow-2xl shadow-black/30">
+                    <span class="ui-spinner" aria-hidden="true"></span>
+                    <p class="mt-3 text-sm font-semibold text-white">Refreshing error rows</p>
+                    <p class="mt-1 text-xs text-slate-400">Applying the current table controls without a full page reload.</p>
+                </div>
+            </div>
             <div>
                 <p class="ui-kicker">Logs Table</p>
                 <h2 class="ui-card-title mt-2">Error Drawer Example</h2>
@@ -507,7 +528,7 @@
                         <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
                         <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
                         <label class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Rows</label>
-                        <select name="error_per_page" onchange="this.form.submit()" class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100">
+                        <select name="error_per_page" onchange="this.form.submit()" class="ui-select ui-select-compact rounded-lg text-sm">
                             @foreach ([10, 25, 50, 100] as $option)
                                 <option value="{{ $option }}" @selected($errorPerPage === $option)>{{ $option }}</option>
                             @endforeach
@@ -561,7 +582,7 @@
                     <div class="grid gap-4 md:grid-cols-2">
                     <label>
                         <span class="text-sm font-semibold text-slate-200">Severity</span>
-                        <select name="error_severity" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2.5 text-slate-100">
+                        <select name="error_severity" class="ui-select ui-select-compact mt-2 text-slate-100">
                             <option value="">Any</option>
                             <option value="warning" @selected($errorFilters['severity'] === 'warning')>Warning</option>
                             <option value="error" @selected($errorFilters['severity'] === 'error')>Error</option>
@@ -569,7 +590,7 @@
                     </label>
                     <label>
                         <span class="text-sm font-semibold text-slate-200">Environment</span>
-                        <select name="error_environment" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2.5 text-slate-100">
+                        <select name="error_environment" class="ui-select ui-select-compact mt-2 text-slate-100">
                             <option value="">Any</option>
                             <option value="staging" @selected($errorFilters['environment'] === 'staging')>Staging</option>
                             <option value="production" @selected($errorFilters['environment'] === 'production')>Production</option>
@@ -664,7 +685,7 @@
                             <input type="hidden" name="error_direction" value="{{ $errorDirection }}">
                             <input type="hidden" name="workspace_per_page" value="{{ $workspacePerPage }}">
                             <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
-                            <select name="error_page" onchange="this.form.submit()" class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-slate-200">
+                            <select name="error_page" onchange="this.form.submit()" class="ui-select ui-select-compact rounded-lg text-xs font-semibold uppercase tracking-[0.1em] text-slate-200">
                                 @for ($page = 1; $page <= $errorSamples->lastPage(); $page++)
                                     <option value="{{ $page }}" @selected($page === $errorSamples->currentPage())>Page {{ $page }}</option>
                                 @endfor
@@ -689,7 +710,7 @@
                         <h2 id="audit-log-drawer-title" class="mt-2 text-2xl font-semibold text-white" data-audit-log-title>—</h2>
                         <p class="mt-2 text-sm text-slate-400" data-audit-log-subtitle>—</p>
                     </div>
-                    <button type="button" class="ui-action ui-action-ghost" data-audit-log-close>Close</button>
+                    <button type="button" class="ui-action ui-action-outline" data-audit-log-close>Close</button>
                 </div>
 
                 <div class="overflow-y-auto px-6 py-6">
@@ -741,7 +762,7 @@
                         <h2 id="error-log-drawer-title" class="mt-2 text-2xl font-semibold text-white" data-error-log-title>—</h2>
                         <p class="mt-2 text-sm text-slate-400" data-error-log-subtitle>—</p>
                     </div>
-                    <button type="button" class="ui-action ui-action-ghost" data-error-log-close>Close</button>
+                    <button type="button" class="ui-action ui-action-outline" data-error-log-close>Close</button>
                 </div>
 
                 <div class="overflow-y-auto px-6 py-6">

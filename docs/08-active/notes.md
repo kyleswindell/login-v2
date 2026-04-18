@@ -38,6 +38,17 @@
 - That class change leaves the custom sidebar out of normal desktop layout flow, which explains the current failure mode where the main view expands to full width and the sidebar overlays it.
 - The two current ready change-queue items were both implementation drift inside existing Batch A surfaces; neither required a new token, variant, or standards ownership decision.
 - The remaining reviewed raw icon usage in scope was concentrated in the shared header notification trigger plus UI Reference overview/table/form demo controls that are meant to reflect the canonical icon source path.
+- Manual batch review approved the current UI Reference presence and visual coverage for input controls, badge/status surfaces, utility primitives, structural baselines, shell/navigation baselines, and layout/scaffolding baselines, so those top-level checklist items now pass review.
+- Manual batch review also approved state validation for buttons/icon buttons, shared input controls, badge/status semantics, utility primitive presentation, tokens, and cross-cutting interaction states, so those top-level checklist items now pass review as well.
+- The latest manual review found that the UI Reference `Buttons + icons` surface still shows icon-only controls but not visible icon + text button examples, even though the iconography standard requires icon + text treatment for primary, destructive, and ambiguous actions.
+- The latest manual review found that the current selectable-group surfaces do not emphasize selected items strongly enough; the smallest in-scope correction is to reuse the existing focused-state treatment on selected items for the first remediation pass.
+- The latest manual review found that shared select controls still place the dropdown caret too close to the right border, indicating a remaining spacing issue in the common select styling rather than a one-off view bug.
+- The latest manual review found that the shared shell/content breakpoint handoff is still misaligned around `1280px`, where the main content expands before the sidebar has switched to the mobile navigation state.
+- The latest manual review found that current table pagination still forces a full-page reload instead of refreshing table data in place with the canonical loading-state treatment.
+- The latest manual review found that the dark-mode drawer close button still does not render as a visible neutral outline action.
+- Manual review approved the restored Documentation Vault repository-tree sidebar behavior, the neutral ghost button border removal, the dark-mode primary/info semantic palette retuning, and the reviewed Heroicons-path normalization work.
+- The six current ready change-queue items were all implementable inside the existing Batch A UI Reference and shell surfaces without introducing a new token, variant, or ownership decision.
+- The table no-reload correction stayed inside the existing server-rendered tables route by replacing the current root with fetched HTML and reusing the canonical table loading overlay instead of introducing a new client-side table model.
 
 
 ## Decisions
@@ -74,6 +85,19 @@
 - Treat the sidebar overlay regression as the top-priority follow-up item and correct it in the shared auth-shell layout before any further Documentation Vault review, because the break is in the shared desktop sidebar host rather than in the repository-tree card itself.
 - Correct the shared custom-sidebar host by restoring desktop in-flow positioning with a desktop `static` override and leaving sticky/overflow behavior to the sidebar content that already owns it.
 - Normalize the remaining reviewed navigation and UI Reference icon drift by swapping raw inline SVG markup to Heroicons directly in the affected shared/app reference surfaces instead of introducing another icon abstraction.
+- Keep the newly approved checklist items marked as passed review without moving the remaining implementation-drift queue items yet, because the confirmed findings covered visual approval of those checklist surfaces rather than full closure of every related follow-up item.
+- Keep the newly approved state-validation items marked as passed review without moving the current ready change-queue items yet, because the approved findings did not clear the newer review issues around button-library coverage gaps, selectable-group emphasis, select spacing, breakpoint handoff, pagination reload behavior, or drawer close styling.
+- Treat the missing icon + text button examples as a UI Reference validation gap inside the existing Buttons and Icon Buttons contract, not a new component requirement.
+- Treat the selectable-group emphasis issue as a state-visibility correction that should reuse the existing focus treatment on selected items first, rather than inventing a new selected token or variant in Batch A.
+- Correct the select caret spacing in the shared select styling so dropdown-indicator offset is normalized once across Batch A surfaces.
+- Fix the `1280px` shell issue in the shared responsive layout rules so main-content width and sidebar mobile-collapse behavior transition together at one breakpoint.
+- Attempt the table no-reload correction only through the current table enhancement/loading-state path; do not redesign the table system for Batch A just to satisfy this review note.
+- Change the drawer close control to the neutral outline action treatment in dark mode instead of trying to tune ghost styling case-by-case.
+- Add the missing icon + text button examples directly to the Buttons + icons review surface rather than broadening the component library.
+- Reuse the existing focus treatment as the stronger selected-state indication for the selectable-group review surfaces.
+- Align the shared shell row layout to the `lg` breakpoint so the custom sidebar and main-content handoff occur at the same responsive transition.
+- Reuse the current UI Reference tables route as the fetch source for in-place sorting, pagination, and page-size refresh instead of introducing a second data path.
+- Move the confirmed Documentation Vault sidebar, neutral ghost, primary/info palette, and reviewed Heroicons normalization fixes from `Implemented Pending Review` to `Passed Review` without reopening them in the next work pass.
 
 
 ## Risks / Questions
@@ -100,3 +124,6 @@
 - Worklog `2-A-0001` remains the relevant implementation history reference for the icon normalization pass; the new manual review findings above define the next active follow-up work instead of changing worklog history.
 - Batch A can return to manual review once the current pass verification and CPD steps are complete, because the ready change-queue items were implemented rather than deferred or blocked.
 - Docker verification was rerun after this pass and both targeted suites passed: `PlatformUiReferenceTest` (7 tests / 34 assertions) and `DocsRepositoryViewerTest` (5 tests / 9 assertions).
+- Another manual review pass is still required for the remaining unchecked checklist areas, especially `Accessibility`, `UI Reference Validation`, and `Batch A Exit Criteria`.
+- The table no-reload correction may expose a real architecture limit in the current enhancement path; if so, the next work pass should record that as a blocker instead of forcing a wider redesign under Batch A.
+- Manual browser review is still required for the JS-driven in-place table refresh path because the current automated test surface does not exercise fetch-based root replacement directly.

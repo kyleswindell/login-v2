@@ -95,12 +95,12 @@
                 <div class="space-y-4 rounded-lg border border-slate-800 bg-slate-900/70 p-4">
                     <div>
                         <p class="ui-control-label">Checkbox</p>
-                        <label class="mt-3 flex items-start gap-3 text-sm text-slate-200">
-                            <input type="checkbox" checked class="mt-0.5 h-4 w-4 rounded border-slate-600 bg-slate-950 text-sky-400 focus:ring-sky-400/40" />
-                            <span>
-                                Enable workspace notifications
-                                <span class="block text-xs text-slate-500">Helper text remains visible for binary settings.</span>
-                            </span>
+                            <label class="ui-selectable-option is-selected mt-3 flex items-start gap-3 text-sm text-slate-200">
+                                <input type="checkbox" checked class="mt-0.5 h-4 w-4 rounded border-slate-600 bg-slate-950 text-sky-400 focus:ring-sky-400/40" />
+                                <span>
+                                    Enable workspace notifications
+                                    <span class="block text-xs text-slate-500">Helper text remains visible for binary settings.</span>
+                                </span>
                         </label>
                     </div>
 
@@ -122,15 +122,15 @@
                         <p class="ui-control-label">Single-Select Group</p>
                         <fieldset class="mt-3 space-y-2">
                             <legend class="sr-only">Workspace visibility mode</legend>
-                            <label class="flex items-center gap-3 rounded-lg border border-slate-800 bg-slate-950/70 px-4 py-3 text-sm text-slate-200">
+                            <label class="ui-selectable-option is-selected flex items-center gap-3 text-sm text-slate-200">
                                 <input type="radio" checked name="visibility_mode" class="h-4 w-4 border-slate-600 bg-slate-950 text-sky-400 focus:ring-sky-400/40" />
                                 <span>Internal only</span>
                             </label>
-                            <label class="flex items-center gap-3 rounded-lg border border-slate-800 bg-slate-950/70 px-4 py-3 text-sm text-slate-200">
+                            <label class="ui-selectable-option flex items-center gap-3 text-sm text-slate-200">
                                 <input type="radio" name="visibility_mode" class="h-4 w-4 border-slate-600 bg-slate-950 text-sky-400 focus:ring-sky-400/40" />
                                 <span>Shared with auditors</span>
                             </label>
-                            <label class="flex items-center gap-3 rounded-lg border border-slate-800 bg-slate-950/70 px-4 py-3 text-sm text-slate-500">
+                            <label class="ui-selectable-option flex items-center gap-3 text-sm text-slate-500">
                                 <input type="radio" disabled name="visibility_mode" class="h-4 w-4 border-slate-700 bg-slate-900 text-slate-500" />
                                 <span>Tenant-facing preview disabled by policy</span>
                             </label>
@@ -185,7 +185,7 @@
                     </div>
                     <div>
                         <p class="ui-control-label">Selected Radio Snapshot</p>
-                        <label class="mt-3 flex items-center gap-3 rounded-lg border border-sky-400/30 bg-slate-950/70 px-4 py-3 text-sm text-slate-200">
+                        <label class="ui-selectable-option is-selected mt-3 flex items-center gap-3 text-sm text-slate-200">
                             <input type="radio" checked class="h-4 w-4 border-slate-600 bg-slate-950 text-sky-400" />
                             <span>Selected option remains explicit without relying on color only.</span>
                         </label>

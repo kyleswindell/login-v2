@@ -68,14 +68,15 @@ Contract owner:
 
 Checklist:
 
-* [ ] Button
-  Status: implemented (pending manual review)
+* [x] Button
+  Status: passed review
+  Note: icon + text review examples refreshed in worklog `2-A-0004`; pending re-review
   - action-token naming aligns to current canonical terminology
   - allowed variants: base, soft, outline, ghost
   - size variants align to current canonical terminology
   - states: default, hover, focus, active, disabled, loading
-* [ ] Icon Button
-  Status: implemented (pending manual review)
+* [x] Icon Button
+  Status: passed review
   - states: default, hover, focus, active, disabled
   - accessible label is required
 
@@ -87,18 +88,19 @@ Contract owner:
 
 Checklist:
 
-* [ ] Text Input
-  Status: implemented (pending manual review)
-* [ ] Textarea
-  Status: implemented (pending manual review)
-* [ ] Select
-  Status: implemented (pending manual review)
-* [ ] Checkbox
-  Status: implemented (pending manual review)
-* [ ] Radio Group
-  Status: implemented (pending manual review)
-* [ ] Switch / Toggle
-  Status: implemented (pending manual review)
+* [x] Text Input
+  Status: passed review
+* [x] Textarea
+  Status: passed review
+* [x] Select
+  Status: passed review
+  Note: shared caret spacing refreshed in worklog `2-A-0004`; pending re-review
+* [x] Checkbox
+  Status: passed review
+* [x] Radio Group
+  Status: passed review
+* [x] Switch / Toggle
+  Status: passed review
 
 Requirements:
 
@@ -119,10 +121,10 @@ Contract owner:
 
 Checklist:
 
-* [ ] Badge baseline
-  Status: implemented (pending manual review)
-* [ ] Status pill baseline
-  Status: implemented (pending manual review)
+* [x] Badge baseline
+  Status: passed review
+* [x] Status pill baseline
+  Status: passed review
 
 Requirements:
 
@@ -139,20 +141,20 @@ Contract owner:
 
 Checklist:
 
-* [ ] Divider
-  Status: implemented (pending manual review)
-* [ ] Tooltip
-  Status: implemented (pending manual review)
+* [x] Divider
+  Status: passed review
+* [x] Tooltip
+  Status: passed review
   - non-interactive only
   - not treated as a popover replacement
-* [ ] Spinner
-  Status: implemented (pending manual review)
-* [ ] Icon baseline
-  Status: implemented (pending manual review)
-* [ ] Label baseline
-  Status: implemented (pending manual review)
-* [ ] Link baseline
-  Status: implemented (pending manual review)
+* [x] Spinner
+  Status: passed review
+* [x] Icon baseline
+  Status: passed review
+* [x] Label baseline
+  Status: passed review
+* [x] Link baseline
+  Status: passed review
 
 Requirements:
 
@@ -168,8 +170,9 @@ Contract owner:
 
 Checklist:
 
-* [ ] Table baseline
-  Status: implemented (pending manual review)
+* [x] Table baseline
+  Status: passed review
+  Note: in-place refresh and drawer-close treatment refreshed in worklog `2-A-0004`; pending re-review
   - page title/subtitle row
   - optional stats row
   - control row structure
@@ -192,10 +195,10 @@ Contract owner:
 
 Checklist:
 
-* [ ] Modal baseline
-  Status: implemented (pending manual review)
-* [ ] Drawer baseline
-  Status: implemented (pending manual review)
+* [x] Modal baseline
+  Status: passed review
+* [x] Drawer baseline
+  Status: passed review
 
 Requirements:
 
@@ -214,10 +217,10 @@ Contract owner:
 
 Checklist:
 
-* [ ] Toast baseline
-  Status: implemented (pending manual review)
-* [ ] Inline alert baseline
-  Status: implemented (pending manual review)
+* [x] Toast baseline
+  Status: passed review
+* [x] Inline alert baseline
+  Status: passed review
 
 Requirements:
 
@@ -234,14 +237,14 @@ Contract owner:
 
 Checklist:
 
-* [ ] Sidebar baseline
-  Status: implemented (pending manual review)
-* [ ] Header baseline
-  Status: implemented (pending manual review)
-* [ ] Account Menu baseline
-  Status: implemented (pending manual review)
-* [ ] Mobile Nav Dock baseline
-  Status: implemented (pending manual review)
+* [x] Sidebar baseline
+  Status: passed review
+* [x] Header baseline
+  Status: passed review
+* [x] Account Menu baseline
+  Status: passed review
+* [x] Mobile Nav Dock baseline
+  Status: passed review
 
 Requirements:
 
@@ -257,14 +260,14 @@ Contract owner:
 
 Checklist:
 
-* [ ] Container baseline
-  Status: implemented (pending manual review)
-* [ ] Grid baseline
-  Status: implemented (pending manual review)
-* [ ] Stack / Flex baseline
-  Status: implemented (pending manual review)
-* [ ] Section / Panel baseline
-  Status: implemented (pending manual review)
+* [x] Container baseline
+  Status: passed review
+* [x] Grid baseline
+  Status: passed review
+* [x] Stack / Flex baseline
+  Status: passed review
+* [x] Section / Panel baseline
+  Status: passed review
 
 Requirements:
 
@@ -274,8 +277,8 @@ Requirements:
 
 ### Tokens
 
-* [ ] Tokens
-  Status: requires updates (see change-queue)
+* [x] Tokens
+  Status: passed review
   - semantic color mapping is used
   - spacing scale is used
   - typography scale is used
@@ -286,8 +289,8 @@ Requirements:
 
 All interactive Tier 1 components must support applicable states:
 
-* [ ] Interaction states
-  Status: implemented (pending manual review)
+* [x] Interaction states
+  Status: passed review
   - default
   - hover
   - focus

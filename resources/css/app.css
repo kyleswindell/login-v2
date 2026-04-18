@@ -815,6 +815,36 @@
         color: var(--ui-text-strong);
     }
 
+    .ui-select {
+        appearance: none;
+        background-image:
+            linear-gradient(45deg, transparent 50%, currentColor 50%),
+            linear-gradient(135deg, currentColor 50%, transparent 50%);
+        background-position:
+            calc(100% - 1.35rem) calc(50% - 0.16rem),
+            calc(100% - 0.95rem) calc(50% - 0.16rem);
+        background-repeat: no-repeat;
+        background-size: 0.45rem 0.45rem, 0.45rem 0.45rem;
+        padding-right: 3.35rem;
+    }
+
+    .ui-select-compact {
+        @apply py-2;
+    }
+
+    .ui-selectable-option {
+        @apply rounded-lg border px-4 py-3 transition;
+        border-color: var(--ui-border-default);
+        background-color: color-mix(in srgb, var(--ui-surface-elevated) 92%, transparent);
+    }
+
+    .ui-selectable-option.is-selected {
+        border-color: var(--ui-action-info-border-hover);
+        box-shadow:
+            0 0 0 1px color-mix(in srgb, var(--ui-action-info-border-hover) 75%, transparent),
+            0 0 0 3px color-mix(in srgb, var(--ui-action-info-bg-hover) 35%, transparent);
+    }
+
     .ui-input::placeholder,
     .ui-textarea::placeholder {
         color: var(--ui-text-muted);

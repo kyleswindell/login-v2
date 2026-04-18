@@ -88,6 +88,20 @@
                     <x-heroicon-o-funnel class="h-4 w-4" aria-hidden="true" />
                 </button>
             </div>
+            <div class="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                <button type="button" class="ui-action ui-action-primary">
+                    <x-heroicon-o-plus class="h-4 w-4" aria-hidden="true" />
+                    Create Workspace
+                </button>
+                <button type="button" class="ui-action ui-action-outline">
+                    <x-heroicon-o-cog-6-tooth class="h-4 w-4" aria-hidden="true" />
+                    Open Settings
+                </button>
+                <button type="button" class="ui-action ui-action-warning ui-action-outline">
+                    <x-heroicon-o-arrow-down-tray class="h-4 w-4" aria-hidden="true" />
+                    Export Results
+                </button>
+            </div>
         </section>
 
         <section class="ui-card">

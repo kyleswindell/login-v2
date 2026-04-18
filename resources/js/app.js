@@ -190,6 +190,104 @@ const initTableSearchInputs = () => {
     });
 };
 
+const initUiReferenceTablesRemote = () => {
+    const root = document.querySelector('[data-ui-reference-tables-root]');
+
+    if (!root || root.dataset.uiReferenceTablesRemoteInit === '1') {
+        return;
+    }
+
+    root.dataset.uiReferenceTablesRemoteInit = '1';
+
+    const setSectionLoading = (section, isLoading) => {
+        const overlay = section?.querySelector('[data-table-loading-overlay]');
+
+        if (!(overlay instanceof HTMLElement)) {
+            return;
+        }
+
+        overlay.classList.toggle('hidden', !isLoading);
+        overlay.classList.toggle('flex', isLoading);
+        overlay.setAttribute('aria-hidden', isLoading ? 'false' : 'true');
+    };
+
+    const reinitTableRoot = () => {
+        initFilterPanels();
+        initTableSearchInputs();
+        initAuditLogDrawer();
+        initErrorLogDrawer();
+        initUiReferenceTablesRemote();
+    };
+
+    const replaceRoot = async (url, section) => {
+        const requestUrl = url instanceof URL ? url : new URL(url, window.location.origin);
+
+        setSectionLoading(section, true);
+
+        try {
+            const response = await window.fetch(requestUrl.toString(), {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                credentials: 'same-origin',
+            });
+
+            if (!response.ok) {
+                window.location.assign(requestUrl.toString());
+                return;
+            }
+
+            const html = await response.text();
+            const documentFragment = new DOMParser().parseFromString(html, 'text/html');
+            const nextRoot = documentFragment.querySelector('[data-ui-reference-tables-root]');
+
+            if (!(nextRoot instanceof HTMLElement)) {
+                window.location.assign(requestUrl.toString());
+                return;
+            }
+
+            root.replaceWith(nextRoot);
+            window.history.replaceState({}, '', requestUrl.toString());
+            reinitTableRoot();
+        } catch (error) {
+            window.location.assign(requestUrl.toString());
+        } finally {
+            setSectionLoading(section, false);
+        }
+    };
+
+    root.querySelectorAll('form[method="GET"]').forEach((form) => {
+        if (form.dataset.uiReferenceTableFormInit === '1') {
+            return;
+        }
+
+        form.dataset.uiReferenceTableFormInit = '1';
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const action = form.getAttribute('action') || window.location.href;
+            const url = new URL(action, window.location.origin);
+            const formData = new FormData(form);
+
+            url.search = new URLSearchParams(formData).toString();
+
+            replaceRoot(url, form.closest('[data-table-section]'));
+        });
+    });
+
+    root.querySelectorAll('a.ui-pagination-control, a.ui-table-sort').forEach((link) => {
+        if (link.dataset.uiReferenceTableLinkInit === '1') {
+            return;
+        }
+
+        link.dataset.uiReferenceTableLinkInit = '1';
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            replaceRoot(link.href, link.closest('[data-table-section]'));
+        });
+    });
+};
+
 const formatDrawerPayload = (value) => {
     if (value === null || value === undefined || value === '') {
         return '';
@@ -871,6 +969,8 @@ document.addEventListener('DOMContentLoaded', initThemeModeControls);
 document.addEventListener('livewire:navigated', initThemeModeControls);
 document.addEventListener('DOMContentLoaded', initUiReferenceOverlayDemos);
 document.addEventListener('livewire:navigated', initUiReferenceOverlayDemos);
+document.addEventListener('DOMContentLoaded', initUiReferenceTablesRemote);
+document.addEventListener('livewire:navigated', initUiReferenceTablesRemote);
 document.addEventListener('livewire:navigating', () => {
     applyThemeMode(getPreferredThemeMode(), false);
 });

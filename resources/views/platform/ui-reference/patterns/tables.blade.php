@@ -63,16 +63,11 @@
 
                         <button type="button" class="ui-action ui-action-primary">Create</button>
                         <button type="button" class="ui-action">
-                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
-                                <path fill-rule="evenodd" d="M7.84 1.804a1.75 1.75 0 0 1 2.32 0l.337.302a1.75 1.75 0 0 0 1.744.348l.433-.145a1.75 1.75 0 0 1 2.27 1.493l.05.45a1.75 1.75 0 0 0 1.084 1.406l.415.178a1.75 1.75 0 0 1 .995 2.095l-.12.437a1.75 1.75 0 0 0 .365 1.743l.301.338a1.75 1.75 0 0 1 0 2.319l-.301.338a1.75 1.75 0 0 0-.365 1.742l.12.438a1.75 1.75 0 0 1-.995 2.095l-.415.178a1.75 1.75 0 0 0-1.084 1.406l-.05.45a1.75 1.75 0 0 1-2.27 1.493l-.433-.145a1.75 1.75 0 0 0-1.744.348l-.337.302a1.75 1.75 0 0 1-2.32 0l-.337-.302a1.75 1.75 0 0 0-1.744-.348l-.433.145a1.75 1.75 0 0 1-2.27-1.493l-.05-.45a1.75 1.75 0 0 0-1.084-1.406l-.415-.178a1.75 1.75 0 0 1-.995-2.095l.12-.438a1.75 1.75 0 0 0-.365-1.742l-.301-.338a1.75 1.75 0 0 1 0-2.319l.301-.338a1.75 1.75 0 0 0 .365-1.743l-.12-.437a1.75 1.75 0 0 1 .995-2.095l.415-.178A1.75 1.75 0 0 0 4.96 4.252l.05-.45A1.75 1.75 0 0 1 7.28 2.31l.433.145a1.75 1.75 0 0 0 1.744-.348l.337-.302ZM10 13.25A3.25 3.25 0 1 0 10 6.75a3.25 3.25 0 0 0 0 6.5Z" clip-rule="evenodd" />
-                            </svg>
+                            <x-heroicon-o-cog-6-tooth class="h-4 w-4" aria-hidden="true" />
                             Settings
                         </button>
                         <button type="button" class="ui-action ui-action-warning ui-action-outline">
-                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
-                                <path d="M3.75 3.5A1.25 1.25 0 0 0 2.5 4.75v10.5A1.25 1.25 0 0 0 3.75 16.5h12.5a1.25 1.25 0 0 0 1.25-1.25V9.873a.75.75 0 0 0-1.28-.53l-2.47 2.47a1.75 1.75 0 0 1-2.475 0L8.938 9.476a1.75 1.75 0 0 1 0-2.475l2.47-2.47A.75.75 0 0 0 10.877 3.5H3.75Z" />
-                                <path d="M17.53 2.47a.75.75 0 0 0-1.06 0L10 8.94l2.53 2.53 6.47-6.47a.75.75 0 0 0 0-1.06l-1.47-1.47Z" />
-                            </svg>
+                            <x-heroicon-o-arrow-down-tray class="h-4 w-4" aria-hidden="true" />
                             Export
                         </button>
                     </div>
@@ -88,9 +83,7 @@
                             <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
                             <label for="workspace-table-search" class="sr-only">Search workspace rows</label>
                             <span class="pointer-events-none absolute inset-y-0 left-0 inline-flex w-9 items-center justify-center text-slate-500">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
-                                    <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 3.473 9.766l3.13 3.13a.75.75 0 1 0 1.06-1.06l-3.13-3.13A5.5 5.5 0 0 0 9 3.5ZM5 9a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z" clip-rule="evenodd" />
-                                </svg>
+                                <x-heroicon-o-magnifying-glass class="h-4 w-4" aria-hidden="true" />
                             </span>
                             <input
                                 id="workspace-table-search"
@@ -104,20 +97,14 @@
                                 class="w-full rounded-md border border-slate-700 bg-slate-950 py-2 pl-9 pr-9 text-sm text-slate-100 placeholder:text-slate-500"
                             />
                             <button type="button" class="absolute inset-y-0 right-0 hidden w-9 items-center justify-center text-slate-500 transition hover:text-slate-300" data-table-search-clear aria-label="Clear search text">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
-                                    <path fill-rule="evenodd" d="M4.22 4.22a.75.75 0 0 1 1.06 0L10 8.94l4.72-4.72a.75.75 0 1 1 1.06 1.06L11.06 10l4.72 4.72a.75.75 0 1 1-1.06 1.06L10 11.06l-4.72 4.72a.75.75 0 1 1-1.06-1.06L8.94 10 4.22 5.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                                </svg>
+                                <x-heroicon-o-x-mark class="h-4 w-4" aria-hidden="true" />
                             </button>
                             <button type="button" class="absolute inset-y-0 right-0 hidden w-9 items-center justify-center text-rose-500 transition hover:text-rose-400" data-table-search-reset aria-label="Reset applied search filter">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
-                                    <path fill-rule="evenodd" d="M4.22 4.22a.75.75 0 0 1 1.06 0L10 8.94l4.72-4.72a.75.75 0 1 1 1.06 1.06L11.06 10l4.72 4.72a.75.75 0 1 1-1.06 1.06L10 11.06l-4.72 4.72a.75.75 0 1 1-1.06-1.06L8.94 10 4.22 5.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                                </svg>
+                                <x-heroicon-o-x-mark class="h-4 w-4" aria-hidden="true" />
                             </button>
                         </form>
                         <button type="button" class="ui-icon-button" data-filter-toggle aria-expanded="false" aria-label="Toggle workspace filters">
-                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
-                                <path fill-rule="evenodd" d="M2.5 4.75A.75.75 0 0 1 3.25 4h13.5a.75.75 0 0 1 .53 1.28L12 10.56v4.19a.75.75 0 0 1-.44.68l-3 1.333A.75.75 0 0 1 7.5 16V10.56L2.22 5.28a.75.75 0 0 1 .28-1.28Z" clip-rule="evenodd" />
-                            </svg>
+                            <x-heroicon-o-funnel class="h-4 w-4" aria-hidden="true" />
                         </button>
                     </div>
                 </div>
@@ -348,9 +335,7 @@
                             <input type="hidden" name="error_per_page" value="{{ $errorPerPage }}">
                             <label for="audit-table-search" class="sr-only">Search audit rows</label>
                             <span class="pointer-events-none absolute inset-y-0 left-0 inline-flex w-9 items-center justify-center text-slate-500">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
-                                    <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 3.473 9.766l3.13 3.13a.75.75 0 1 0 1.06-1.06l-3.13-3.13A5.5 5.5 0 0 0 9 3.5ZM5 9a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z" clip-rule="evenodd" />
-                                </svg>
+                                <x-heroicon-o-magnifying-glass class="h-4 w-4" aria-hidden="true" />
                             </span>
                             <input
                                 id="audit-table-search"
@@ -364,20 +349,14 @@
                                 class="w-full rounded-md border border-slate-700 bg-slate-950 py-2 pl-9 pr-9 text-sm text-slate-100 placeholder:text-slate-500"
                             />
                             <button type="button" class="absolute inset-y-0 right-0 hidden w-9 items-center justify-center text-slate-500 transition hover:text-slate-300" data-table-search-clear aria-label="Clear search text">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
-                                    <path fill-rule="evenodd" d="M4.22 4.22a.75.75 0 0 1 1.06 0L10 8.94l4.72-4.72a.75.75 0 1 1 1.06 1.06L11.06 10l4.72 4.72a.75.75 0 1 1-1.06 1.06L10 11.06l-4.72 4.72a.75.75 0 1 1-1.06-1.06L8.94 10 4.22 5.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                                </svg>
+                                <x-heroicon-o-x-mark class="h-4 w-4" aria-hidden="true" />
                             </button>
                             <button type="button" class="absolute inset-y-0 right-0 hidden w-9 items-center justify-center text-rose-500 transition hover:text-rose-400" data-table-search-reset aria-label="Reset applied search filter">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
-                                    <path fill-rule="evenodd" d="M4.22 4.22a.75.75 0 0 1 1.06 0L10 8.94l4.72-4.72a.75.75 0 1 1 1.06 1.06L11.06 10l4.72 4.72a.75.75 0 1 1-1.06 1.06L10 11.06l-4.72 4.72a.75.75 0 1 1-1.06-1.06L8.94 10 4.22 5.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                                </svg>
+                                <x-heroicon-o-x-mark class="h-4 w-4" aria-hidden="true" />
                             </button>
                         </form>
                         <button type="button" class="ui-icon-button" data-filter-toggle aria-expanded="false" aria-label="Toggle audit demo filters">
-                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
-                                <path fill-rule="evenodd" d="M2.5 4.75A.75.75 0 0 1 3.25 4h13.5a.75.75 0 0 1 .53 1.28L12 10.56v4.19a.75.75 0 0 1-.44.68l-3 1.333A.75.75 0 0 1 7.5 16V10.56L2.22 5.28a.75.75 0 0 1 .28-1.28Z" clip-rule="evenodd" />
-                            </svg>
+                            <x-heroicon-o-funnel class="h-4 w-4" aria-hidden="true" />
                         </button>
                     </div>
                 </div>
@@ -546,9 +525,7 @@
                             <input type="hidden" name="audit_per_page" value="{{ $auditPerPage }}">
                             <label for="error-table-search" class="sr-only">Search error rows</label>
                             <span class="pointer-events-none absolute inset-y-0 left-0 inline-flex w-9 items-center justify-center text-slate-500">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
-                                    <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 3.473 9.766l3.13 3.13a.75.75 0 1 0 1.06-1.06l-3.13-3.13A5.5 5.5 0 0 0 9 3.5ZM5 9a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z" clip-rule="evenodd" />
-                                </svg>
+                                <x-heroicon-o-magnifying-glass class="h-4 w-4" aria-hidden="true" />
                             </span>
                             <input
                                 id="error-table-search"
@@ -562,20 +539,14 @@
                                 class="w-full rounded-md border border-slate-700 bg-slate-950 py-2 pl-9 pr-9 text-sm text-slate-100 placeholder:text-slate-500"
                             />
                             <button type="button" class="absolute inset-y-0 right-0 hidden w-9 items-center justify-center text-slate-500 transition hover:text-slate-300" data-table-search-clear aria-label="Clear search text">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
-                                    <path fill-rule="evenodd" d="M4.22 4.22a.75.75 0 0 1 1.06 0L10 8.94l4.72-4.72a.75.75 0 1 1 1.06 1.06L11.06 10l4.72 4.72a.75.75 0 1 1-1.06 1.06L10 11.06l-4.72 4.72a.75.75 0 1 1-1.06-1.06L8.94 10 4.22 5.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                                </svg>
+                                <x-heroicon-o-x-mark class="h-4 w-4" aria-hidden="true" />
                             </button>
                             <button type="button" class="absolute inset-y-0 right-0 hidden w-9 items-center justify-center text-rose-500 transition hover:text-rose-400" data-table-search-reset aria-label="Reset applied search filter">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
-                                    <path fill-rule="evenodd" d="M4.22 4.22a.75.75 0 0 1 1.06 0L10 8.94l4.72-4.72a.75.75 0 1 1 1.06 1.06L11.06 10l4.72 4.72a.75.75 0 1 1-1.06 1.06L10 11.06l-4.72 4.72a.75.75 0 1 1-1.06-1.06L8.94 10 4.22 5.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                                </svg>
+                                <x-heroicon-o-x-mark class="h-4 w-4" aria-hidden="true" />
                             </button>
                         </form>
                         <button type="button" class="ui-icon-button" data-filter-toggle aria-expanded="false" aria-label="Toggle error demo filters">
-                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
-                                <path fill-rule="evenodd" d="M2.5 4.75A.75.75 0 0 1 3.25 4h13.5a.75.75 0 0 1 .53 1.28L12 10.56v4.19a.75.75 0 0 1-.44.68l-3 1.333A.75.75 0 0 1 7.5 16V10.56L2.22 5.28a.75.75 0 0 1 .28-1.28Z" clip-rule="evenodd" />
-                            </svg>
+                            <x-heroicon-o-funnel class="h-4 w-4" aria-hidden="true" />
                         </button>
                     </div>
                 </div>

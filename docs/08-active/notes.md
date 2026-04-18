@@ -34,6 +34,10 @@
 - The five current `Ready To Implement` change-queue items were all implementable inside Batch A without introducing any new rules or ownership decisions.
 - The combined Docker verification run for the change-queue pass did not return in a reasonable window, so the affected suites were split into separate targeted runs for deterministic verification.
 - Manual review found that iconography normalization was reviewed but not fully implemented, and inline SVG usage may still remain in navigation and UI Reference surfaces that should use the approved Heroicons path.
+- Review of worklog `2-A-0002` and the supporting layout files indicates the desktop sidebar regression was introduced in `resources/views/components/layouts/app.blade.php` when the custom-sidebar branch removed the desktop sticky/in-flow classes but left the base `fixed` positioning on the sidebar panel.
+- That class change leaves the custom sidebar out of normal desktop layout flow, which explains the current failure mode where the main view expands to full width and the sidebar overlays it.
+- The two current ready change-queue items were both implementation drift inside existing Batch A surfaces; neither required a new token, variant, or standards ownership decision.
+- The remaining reviewed raw icon usage in scope was concentrated in the shared header notification trigger plus UI Reference overview/table/form demo controls that are meant to reflect the canonical icon source path.
 
 
 ## Decisions
@@ -67,6 +71,9 @@
 - Resolve the current change-queue items inside centralized implementation points only: `resources/css/app.css` for toast/ghost/palette fixes and the Documentation Vault view plus shared custom-sidebar host for sidebar handoff/overflow behavior.
 - Treat the Documentation Vault sidebar fix as a layout implementation correction, not a new pattern decision, because the repository-tree card already exists and only needed scroll/sticky responsibility reassigned between the outer host and inner card.
 - Treat the remaining iconography issue as an implementation-drift follow-up for a dedicated work-batch pass rather than reopening standards ownership or expanding scope beyond the active batch.
+- Treat the sidebar overlay regression as the top-priority follow-up item and correct it in the shared auth-shell layout before any further Documentation Vault review, because the break is in the shared desktop sidebar host rather than in the repository-tree card itself.
+- Correct the shared custom-sidebar host by restoring desktop in-flow positioning with a desktop `static` override and leaving sticky/overflow behavior to the sidebar content that already owns it.
+- Normalize the remaining reviewed navigation and UI Reference icon drift by swapping raw inline SVG markup to Heroicons directly in the affected shared/app reference surfaces instead of introducing another icon abstraction.
 
 
 ## Risks / Questions
@@ -92,4 +99,4 @@
 - Follow-up may still be needed in a documentation batch to restore the missing `git-batch-commit-workflow.md` runbook path expected by the active agent workflow, but that is outside this implementation pass.
 - Worklog `2-A-0001` remains the relevant implementation history reference for the icon normalization pass; the new manual review findings above define the next active follow-up work instead of changing worklog history.
 - Batch A can return to manual review once the current pass verification and CPD steps are complete, because the ready change-queue items were implemented rather than deferred or blocked.
-- Another work-batch pass is also required to normalize any remaining inline SVG icon usage in navigation and UI Reference surfaces to the approved Heroicons path before Batch A can complete review.
+- Docker verification was rerun after this pass and both targeted suites passed: `PlatformUiReferenceTest` (7 tests / 34 assertions) and `DocsRepositoryViewerTest` (5 tests / 9 assertions).

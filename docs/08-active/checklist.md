@@ -148,7 +148,7 @@ Checklist:
 * [ ] Spinner
   Status: implemented (pending manual review)
 * [ ] Icon baseline
-  Status: requires updates (see change-queue)
+  Status: implemented (pending manual review)
 * [ ] Label baseline
   Status: implemented (pending manual review)
 * [ ] Link baseline

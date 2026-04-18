@@ -4,3 +4,4 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | 2-A-0001 | 2026-04-17 | Correct iconography implementation drift | READY_FOR_REVIEW | Yes | Yes | Commit `cacf16a`; deployed for manual review |
 | 2-A-0002 | 2026-04-18 | Resolve current Batch A change-queue UI fixes | READY_FOR_REVIEW | No | No | Queue items implemented and targeted serial verification passed |
+| 2-A-0003 | 2026-04-18 | Resolve remaining ready queue items for sidebar flow and icon normalization | READY_FOR_REVIEW | No | No | Shared desktop sidebar flow restored and reviewed Heroicons drift removed |

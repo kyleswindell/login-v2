@@ -213,9 +213,7 @@
                     <div class="mt-3 flex flex-wrap items-center gap-4">
                         <div class="group relative inline-flex">
                             <button type="button" class="ui-icon-button" aria-describedby="tooltip-non-interactive">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
-                                    <path fill-rule="evenodd" d="M18 10A8 8 0 1 1 2 10a8 8 0 0 1 16 0Zm-7-3a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm-2 2.25a.75.75 0 0 0 0 1.5h.25v2.5H9a.75.75 0 0 0 0 1.5h2a.75.75 0 0 0 .75-.75v-3.25A.75.75 0 0 0 11 9.25H9Z" clip-rule="evenodd" />
-                                </svg>
+                                <x-heroicon-o-information-circle class="h-4 w-4" aria-hidden="true" />
                             </button>
                             <span id="tooltip-non-interactive" role="tooltip" class="pointer-events-none absolute left-1/2 top-full z-10 mt-2 hidden -translate-x-1/2 whitespace-nowrap rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-xs text-slate-200 shadow-xl group-hover:block">
                                 Non-interactive tooltip only

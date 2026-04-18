@@ -1,11 +1,12 @@
 # Change Queue
 
 ## Ready To Implement
-- [ ] Normalize all remaining navigation and UI Reference icons to the approved Heroicons path and remove any lingering inline SVG usage.
 
 ## In Progress
 
 ## Implemented Pending Review
+- [x] Restored the desktop custom-sidebar shell layout contract in `app.blade.php` so the sidebar participates in normal desktop flow instead of remaining `fixed` and overlaying the main content, while preserving the Documentation Vault repository-tree sticky/overflow handoff inside the sidebar content.
+- [x] Normalized the remaining reviewed navigation and UI Reference icon surfaces to the approved Heroicons path and removed the lingering inline SVG usage from those reviewed surfaces.
 - [x] Increased dark-mode toast background opacity while keeping the generated example toast fixed to the approved page-level overlay location.
 - [x] Restored Documentation Vault repository-tree sidebar behavior so the page can scroll normally, the docs sidebar scrolls off-screen before sticking, and the repository-tree card supports its own themed vertical scrollbar in light and dark mode when content overflows.
 - [x] Removed the stray border from the neutral ghost button so ghost semantic variants render consistently.

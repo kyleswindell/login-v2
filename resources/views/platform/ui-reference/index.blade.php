@@ -99,9 +99,7 @@
                 <button type="button" class="ui-action ui-action-notice ui-action-outline">Outline Notice</button>
                 <button type="button" class="ui-action ui-action-info ui-action-outline">Outline Info</button>
                 <button type="button" class="ui-icon-button" aria-label="Example icon action">
-                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
-                        <path fill-rule="evenodd" d="M2.5 4.75A.75.75 0 0 1 3.25 4h13.5a.75.75 0 0 1 .53 1.28L12 10.56v4.19a.75.75 0 0 1-.44.68l-3 1.333A.75.75 0 0 1 7.5 16V10.56L2.22 5.28a.75.75 0 0 1 .28-1.28Z" clip-rule="evenodd" />
-                    </svg>
+                    <x-heroicon-o-funnel class="h-4 w-4" aria-hidden="true" />
                 </button>
             </div>
 
@@ -185,9 +183,7 @@
                     <h2 class="ui-card-title mt-2">Operator Data Grid Baseline</h2>
                 </div>
                 <button type="button" class="ui-icon-button" data-filter-toggle aria-expanded="false" aria-label="Toggle workspace filters">
-                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
-                        <path fill-rule="evenodd" d="M2.5 4.75A.75.75 0 0 1 3.25 4h13.5a.75.75 0 0 1 .53 1.28L12 10.56v4.19a.75.75 0 0 1-.44.68l-3 1.333A.75.75 0 0 1 7.5 16V10.56L2.22 5.28a.75.75 0 0 1 .28-1.28Z" clip-rule="evenodd" />
-                    </svg>
+                    <x-heroicon-o-funnel class="h-4 w-4" aria-hidden="true" />
                 </button>
             </div>
 
@@ -327,9 +323,7 @@
                     <p class="ui-card-copy">Row clicks and explicit `View` actions both open the right-side drawer.</p>
                 </div>
                 <button type="button" class="ui-icon-button" data-filter-toggle aria-expanded="false" aria-label="Toggle audit demo filters">
-                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
-                        <path fill-rule="evenodd" d="M2.5 4.75A.75.75 0 0 1 3.25 4h13.5a.75.75 0 0 1 .53 1.28L12 10.56v4.19a.75.75 0 0 1-.44.68l-3 1.333A.75.75 0 0 1 7.5 16V10.56L2.22 5.28a.75.75 0 0 1 .28-1.28Z" clip-rule="evenodd" />
-                    </svg>
+                    <x-heroicon-o-funnel class="h-4 w-4" aria-hidden="true" />
                 </button>
             </div>
 
@@ -455,9 +449,7 @@
                     <h2 class="ui-card-title mt-2">Error Drawer Example</h2>
                 </div>
                 <button type="button" class="ui-icon-button" data-filter-toggle aria-expanded="false" aria-label="Toggle error demo filters">
-                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
-                        <path fill-rule="evenodd" d="M2.5 4.75A.75.75 0 0 1 3.25 4h13.5a.75.75 0 0 1 .53 1.28L12 10.56v4.19a.75.75 0 0 1-.44.68l-3 1.333A.75.75 0 0 1 7.5 16V10.56L2.22 5.28a.75.75 0 0 1 .28-1.28Z" clip-rule="evenodd" />
-                    </svg>
+                    <x-heroicon-o-funnel class="h-4 w-4" aria-hidden="true" />
                 </button>
             </div>
 

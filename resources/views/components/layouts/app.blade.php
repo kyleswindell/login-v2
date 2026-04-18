@@ -115,9 +115,7 @@
                                         aria-controls="notification-menu-panel"
                                         title="Notifications"
                                     >
-                                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 1 5.454 1.31A8.967 8.967 0 0 1 18 9.75V9a6 6 0 1 0-12 0v.75a8.967 8.967 0 0 1-2.312 8.642 23.848 23.848 0 0 1 5.454-1.31m5.715 0a24.255 24.255 0 0 0-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
-                                        </svg>
+                                        <x-heroicon-o-bell class="h-5 w-5" aria-hidden="true" />
                                         <span class="sr-only">Unread notifications</span>
                                         <span
                                             @class([
@@ -256,7 +254,7 @@
                 ])>
                     @if ($hasCustomSidebar)
                         <aside
-                            class="fixed inset-2 z-[60] hidden shrink-0 overflow-y-auto rounded-2xl border border-slate-700 bg-slate-950/95 p-4 shadow-2xl shadow-black/40 lg:inset-auto lg:z-auto lg:block lg:w-auto lg:self-start lg:overflow-visible lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none"
+                            class="fixed inset-2 z-[60] hidden shrink-0 overflow-y-auto rounded-2xl border border-slate-700 bg-slate-950/95 p-4 shadow-2xl shadow-black/40 lg:static lg:inset-auto lg:z-auto lg:block lg:w-auto lg:self-start lg:overflow-visible lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none"
                             data-sidebar-panel
                         >
                             <x-layouts.mobile-sidebar

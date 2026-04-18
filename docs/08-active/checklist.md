@@ -69,7 +69,7 @@ Contract owner:
 Checklist:
 
 * [ ] Button
-  Status: requires updates (see change-queue)
+  Status: implemented (pending manual review)
   - action-token naming aligns to current canonical terminology
   - allowed variants: base, soft, outline, ghost
   - size variants align to current canonical terminology
@@ -148,7 +148,7 @@ Checklist:
 * [ ] Spinner
   Status: implemented (pending manual review)
 * [ ] Icon baseline
-  Status: implemented (pending manual review)
+  Status: requires updates (see change-queue)
 * [ ] Label baseline
   Status: implemented (pending manual review)
 * [ ] Link baseline
@@ -215,7 +215,7 @@ Contract owner:
 Checklist:
 
 * [ ] Toast baseline
-  Status: requires updates (see change-queue)
+  Status: implemented (pending manual review)
 * [ ] Inline alert baseline
   Status: implemented (pending manual review)
 
@@ -235,7 +235,7 @@ Contract owner:
 Checklist:
 
 * [ ] Sidebar baseline
-  Status: requires updates (see change-queue)
+  Status: implemented (pending manual review)
 * [ ] Header baseline
   Status: implemented (pending manual review)
 * [ ] Account Menu baseline

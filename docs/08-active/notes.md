@@ -31,6 +31,9 @@
 - Manual review found that the dark-mode primary semantic background should shift toward `#1d95d873`, with related border, text, and state colors retuned to match.
 - Manual review found that the dark-mode info semantic background should shift toward `#6ef3ff66`, with related border, text, and state colors retuned to match.
 - Phase 2 overall close-out still requires a later-batch full UI standards pass across existing views and elements.
+- The five current `Ready To Implement` change-queue items were all implementable inside Batch A without introducing any new rules or ownership decisions.
+- The combined Docker verification run for the change-queue pass did not return in a reasonable window, so the affected suites were split into separate targeted runs for deterministic verification.
+- Manual review found that iconography normalization was reviewed but not fully implemented, and inline SVG usage may still remain in navigation and UI Reference surfaces that should use the approved Heroicons path.
 
 
 ## Decisions
@@ -61,6 +64,9 @@
 - Treat the toast overlay mount location as confirmed and do not reopen that placement issue in the next work pass.
 - Keep the Documentation Vault repository-tree scroll/sticky behavior inside the current change queue as a shell/sidebar follow-up rather than widening the batch into unrelated docs surfaces.
 - Record the Phase 2 full UI standards pass as deferred close-out scope for a later Phase 2 batch instead of expanding the current active batch.
+- Resolve the current change-queue items inside centralized implementation points only: `resources/css/app.css` for toast/ghost/palette fixes and the Documentation Vault view plus shared custom-sidebar host for sidebar handoff/overflow behavior.
+- Treat the Documentation Vault sidebar fix as a layout implementation correction, not a new pattern decision, because the repository-tree card already exists and only needed scroll/sticky responsibility reassigned between the outer host and inner card.
+- Treat the remaining iconography issue as an implementation-drift follow-up for a dedicated work-batch pass rather than reopening standards ownership or expanding scope beyond the active batch.
 
 
 ## Risks / Questions
@@ -85,4 +91,5 @@
 - No new standards decision was required for icon normalization because the approved icon source was already resolved for this batch; the remaining work was implementation drift only.
 - Follow-up may still be needed in a documentation batch to restore the missing `git-batch-commit-workflow.md` runbook path expected by the active agent workflow, but that is outside this implementation pass.
 - Worklog `2-A-0001` remains the relevant implementation history reference for the icon normalization pass; the new manual review findings above define the next active follow-up work instead of changing worklog history.
-- Another work pass is now required to address the failed toast opacity, Documentation Vault sidebar scroll behavior, ghost neutral border, and dark-mode semantic primary/info palette updates before Batch A can return to manual review.
+- Batch A can return to manual review once the current pass verification and CPD steps are complete, because the ready change-queue items were implemented rather than deferred or blocked.
+- Another work-batch pass is also required to normalize any remaining inline SVG icon usage in navigation and UI Reference surfaces to the approved Heroicons path before Batch A can complete review.

@@ -1,6 +1,6 @@
 <x-layouts.app title="Documentation Vault">
     <x-slot:sidebar>
-        <div class="space-y-6 xl:flex xl:h-full xl:flex-col">
+        <div class="space-y-6 xl:flex xl:flex-col" data-docs-sidebar-layout>
             <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30">
                 <p class="text-sm font-medium uppercase tracking-[0.3em] text-slate-300">Platform Management</p>
                 <h1 class="mt-3 text-2xl font-semibold text-white">Documentation Vault</h1>
@@ -13,10 +13,10 @@
                 </div>
             </div>
 
-            <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30 xl:flex xl:min-h-0 xl:flex-1 xl:flex-col">
+            <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30 xl:sticky xl:top-24 xl:max-h-[calc(100vh-7rem)] xl:overflow-hidden">
                 <h2 class="text-lg font-semibold text-white">Repository Tree</h2>
                 <div
-                    class="mt-4 text-sm xl:min-h-0 xl:flex-1 xl:overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                    class="ui-scrollbar mt-4 text-sm xl:max-h-[calc(100vh-12rem)] xl:overflow-y-auto"
                     data-docs-tree
                     data-selected-path="{{ $selectedPath }}"
                 >

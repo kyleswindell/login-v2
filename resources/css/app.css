@@ -153,6 +153,7 @@
     }
 
     .ui-action-ghost {
+        border-color: transparent;
         background-color: transparent;
         color: var(--ui-action-ghost-text);
     }
@@ -717,6 +718,30 @@
         color: var(--ui-alert-danger-text);
     }
 
+    .ui-scrollbar {
+        scrollbar-width: thin;
+        scrollbar-color: var(--ui-scrollbar-thumb) var(--ui-scrollbar-track);
+    }
+
+    .ui-scrollbar::-webkit-scrollbar {
+        width: 0.75rem;
+    }
+
+    .ui-scrollbar::-webkit-scrollbar-track {
+        background-color: var(--ui-scrollbar-track);
+        border-radius: 9999px;
+    }
+
+    .ui-scrollbar::-webkit-scrollbar-thumb {
+        background-color: var(--ui-scrollbar-thumb);
+        border-radius: 9999px;
+        border: 2px solid var(--ui-scrollbar-track);
+    }
+
+    .ui-scrollbar::-webkit-scrollbar-thumb:hover {
+        background-color: var(--ui-scrollbar-thumb-hover);
+    }
+
     .ui-control-error {
         @apply mt-2 text-xs;
         color: var(--ui-alert-danger-text);
@@ -948,6 +973,9 @@
         --ui-spinner-head: rgb(147 197 253);
         --ui-link-text: rgb(191 219 254);
         --ui-link-text-hover: rgb(224 242 254);
+        --ui-scrollbar-track: rgb(24 24 27 / 0.9);
+        --ui-scrollbar-thumb: rgb(82 82 91 / 0.95);
+        --ui-scrollbar-thumb-hover: rgb(113 113 122);
         --ui-action-disabled-border: rgb(113 113 122 / 0.9);
         --ui-action-disabled-bg: rgb(63 63 70 / 0.55);
         --ui-action-disabled-text: rgb(228 228 231 / 0.92);
@@ -965,11 +993,11 @@
         --ui-action-neutral-bg-hover: rgb(39 39 42 / 0.95);
         --ui-action-neutral-text-hover: rgb(250 250 250);
 
-        --ui-action-primary-border: rgb(37 99 235 / 0.52);
-        --ui-action-primary-bg: rgb(29 78 216 / 0.28);
-        --ui-action-primary-text: rgb(219 234 254);
-        --ui-action-primary-border-hover: rgb(59 130 246 / 0.72);
-        --ui-action-primary-bg-hover: rgb(29 78 216 / 0.42);
+        --ui-action-primary-border: rgb(61 166 229 / 0.62);
+        --ui-action-primary-bg: rgb(29 149 216 / 0.45);
+        --ui-action-primary-text: rgb(240 249 255);
+        --ui-action-primary-border-hover: rgb(96 197 255 / 0.82);
+        --ui-action-primary-bg-hover: rgb(29 149 216 / 0.57);
         --ui-action-primary-text-hover: rgb(239 246 255);
 
         --ui-action-success-border: rgb(5 150 105 / 0.45);
@@ -1000,12 +1028,12 @@
         --ui-action-notice-bg-hover: rgb(124 58 237 / 0.35);
         --ui-action-notice-text-hover: rgb(245 243 255);
 
-        --ui-action-info-border: rgb(186 230 253 / 0.5);
-        --ui-action-info-bg: rgb(125 211 252 / 0.18);
-        --ui-action-info-text: rgb(240 249 255);
-        --ui-action-info-border-hover: rgb(186 230 253 / 0.7);
-        --ui-action-info-bg-hover: rgb(125 211 252 / 0.3);
-        --ui-action-info-text-hover: rgb(240 249 255);
+        --ui-action-info-border: rgb(139 245 255 / 0.62);
+        --ui-action-info-bg: rgb(110 243 255 / 0.4);
+        --ui-action-info-text: rgb(242 254 255);
+        --ui-action-info-border-hover: rgb(167 249 255 / 0.8);
+        --ui-action-info-bg-hover: rgb(110 243 255 / 0.5);
+        --ui-action-info-text-hover: rgb(255 255 255);
 
         --ui-action-ghost-text: rgb(212 212 216);
         --ui-action-ghost-bg-hover: rgb(39 39 42 / 0.85);
@@ -1112,7 +1140,7 @@
         --ui-status-notice-solid-bg: rgb(124 58 237);
 
         --ui-alert-info-border: rgb(186 230 253 / 0.48);
-        --ui-alert-info-bg: rgb(125 211 252 / 0.14);
+        --ui-alert-info-bg: rgb(110 243 255 / 0.4);
         --ui-alert-info-text: rgb(240 249 255);
         --ui-alert-success-border: rgb(5 150 105 / 0.45);
         --ui-alert-success-bg: rgb(5 150 105 / 0.14);
@@ -1147,6 +1175,9 @@
         --ui-spinner-head: rgb(3 105 161);
         --ui-link-text: rgb(3 105 161);
         --ui-link-text-hover: rgb(7 89 133);
+        --ui-scrollbar-track: rgb(226 232 240);
+        --ui-scrollbar-thumb: rgb(148 163 184);
+        --ui-scrollbar-thumb-hover: rgb(100 116 139);
         --ui-action-disabled-border: rgb(148 163 184);
         --ui-action-disabled-bg: rgb(226 232 240);
         --ui-action-disabled-text: rgb(71 85 105);

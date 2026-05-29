@@ -178,7 +178,10 @@ class PlatformNotificationsTest extends TestCase
             ->assertOk()
             ->assertSee('class="ui-notification-trigger"', false)
             ->assertSee('data-notification-trigger-unread="true"', false)
+            ->assertSee('data-notification-trigger-badge-hidden="false"', false)
+            ->assertSee('data-notification-mark-all-enabled="true"', false)
             ->assertSee('1 unread notifications', false)
+            ->assertSee('Mark all as read', false)
             ->assertSee('class="ui-notification-trigger-badge"', false);
     }
 
@@ -189,6 +192,8 @@ class PlatformNotificationsTest extends TestCase
         $this->get('/platform/notifications')
             ->assertOk()
             ->assertSee('data-notification-trigger-unread="false"', false)
+            ->assertSee('data-notification-trigger-badge-hidden="true"', false)
+            ->assertSee('data-notification-mark-all-enabled="false"', false)
             ->assertSee('No unread notifications', false);
     }
 

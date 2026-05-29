@@ -1117,6 +1117,7 @@ if (realtimeRoot) {
     const notificationTrigger = document.querySelector('[data-notification-trigger]');
     const notificationTriggerLabel = document.querySelector('[data-notification-trigger-label]');
     const triggerSummary = document.querySelector('[data-notification-trigger-summary]');
+    const markAllButton = document.querySelector('[data-notification-mark-all]');
     const panelSummary = document.querySelector('[data-notification-panel-summary]');
     const previewList = document.querySelector('[data-notification-preview-list]');
     const previewEmptyState = document.querySelector('[data-notification-preview-empty-state]');
@@ -1169,14 +1170,21 @@ if (realtimeRoot) {
         if (notificationTriggerLabel) {
             notificationTriggerLabel.textContent = hasUnread ? `${unreadCount} unread notifications` : 'No unread notifications';
         }
+
+        if (triggerSummary) {
+            triggerSummary.textContent = `${unreadCount}`;
+            triggerSummary.classList.toggle('hidden', !hasUnread);
+            triggerSummary.dataset.notificationTriggerBadgeHidden = hasUnread ? 'false' : 'true';
+        }
+
+        if (markAllButton) {
+            markAllButton.disabled = !hasUnread;
+            markAllButton.dataset.notificationMarkAllEnabled = hasUnread ? 'true' : 'false';
+        }
     };
 
     const updateUnreadSummaries = (unreadCount) => {
         syncNotificationTriggerState(unreadCount);
-
-        if (triggerSummary) {
-            triggerSummary.textContent = `${unreadCount}`;
-        }
 
         if (panelSummary) {
             panelSummary.textContent = `${unreadCount} unread across your latest updates`;

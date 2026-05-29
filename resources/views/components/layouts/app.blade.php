@@ -121,8 +121,12 @@
                                             {{ $unreadNotificationCount > 0 ? "{$unreadNotificationCount} unread notifications" : 'No unread notifications' }}
                                         </span>
                                         <span
-                                            class="ui-notification-trigger-badge"
+                                            @class([
+                                                'ui-notification-trigger-badge',
+                                                'hidden' => $unreadNotificationCount === 0,
+                                            ])
                                             data-notification-trigger-summary
+                                            data-notification-trigger-badge-hidden="{{ $unreadNotificationCount > 0 ? 'false' : 'true' }}"
                                         >{{ $unreadNotificationCount }}</span>
                                     </button>
 
@@ -131,15 +135,30 @@
                                         class="absolute right-0 z-50 mt-3 hidden w-[28rem] rounded-lg border border-slate-800 bg-slate-900/95 p-4 shadow-2xl shadow-black/40"
                                         data-notification-panel
                                     >
-                                        <div class="flex items-start justify-between gap-4 border-b border-slate-800 pb-4">
+                                        <div class="flex flex-wrap items-start justify-between gap-3 border-b border-slate-800 pb-4">
                                             <div>
                                                 <p class="text-sm font-semibold text-white">Recent Notifications</p>
                                                 <p class="mt-1 text-xs text-slate-500" data-notification-panel-summary>{{ $unreadNotificationCount }} unread across your latest updates</p>
                                             </div>
 
-                                            <a href="{{ route('platform.administration.notifications.index') }}" wire:navigate class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-300 transition hover:text-white">
-                                                View all
-                                            </a>
+                                            <div class="flex flex-wrap items-center gap-2">
+                                                <form method="POST" action="{{ route('platform.notifications.mark-all-read') }}">
+                                                    @csrf
+                                                    <button
+                                                        type="submit"
+                                                        class="ui-action ui-action-xs"
+                                                        data-notification-mark-all
+                                                        data-notification-mark-all-enabled="{{ $unreadNotificationCount > 0 ? 'true' : 'false' }}"
+                                                        @disabled($unreadNotificationCount === 0)
+                                                    >
+                                                        Mark all as read
+                                                    </button>
+                                                </form>
+
+                                                <a href="{{ route('platform.administration.notifications.index') }}" wire:navigate class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-300 transition hover:text-white">
+                                                    View all
+                                                </a>
+                                            </div>
                                         </div>
 
                                         <div class="mt-4 space-y-3" data-notification-preview-list>

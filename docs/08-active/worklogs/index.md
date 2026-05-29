@@ -9,3 +9,4 @@
 | 2-A-0005 | 2026-04-18 | Resolve current ready queue items for sidebar, select, toast, and filter behavior | READY_FOR_REVIEW | Yes | Yes | Commit `305d651`; deployed for manual review |
 | 2-A-0006 | 2026-05-29 | Improve active sort-state visibility for UI Reference table headers | PARTIAL | Yes | No | Commit `e55cc4b` pushed; verification and staging deploy blocked locally |
 | 2-A-0007 | 2026-05-29 | Replace sortable-header badge treatment with an icon-led active sort indicator | PARTIAL | Yes | No | Commit `cba2fed` pushed; Docker verification passed, staging deploy still needs the interactive local WSL shell |
+| 2-A-0008 | 2026-05-29 | Resolve the remaining filter-dismissal and notification-trigger review findings | READY_FOR_REVIEW | Yes | Yes | Review-ready pass pushed and deployed for manual review |

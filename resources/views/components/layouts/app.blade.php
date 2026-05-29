@@ -109,20 +109,19 @@
                                 >
                                     <button
                                         type="button"
-                                        class="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-slate-300 transition hover:bg-slate-800 hover:text-white"
+                                        class="ui-notification-trigger"
                                         data-notification-trigger
+                                        data-notification-trigger-unread="{{ $unreadNotificationCount > 0 ? 'true' : 'false' }}"
                                         aria-expanded="false"
                                         aria-controls="notification-menu-panel"
                                         title="Notifications"
                                     >
-                                        <x-heroicon-o-bell class="h-5 w-5" aria-hidden="true" />
-                                        <span class="sr-only">Unread notifications</span>
+                                        <x-heroicon-o-bell class="ui-notification-trigger-icon" data-notification-trigger-icon aria-hidden="true" />
+                                        <span class="sr-only" data-notification-trigger-label>
+                                            {{ $unreadNotificationCount > 0 ? "{$unreadNotificationCount} unread notifications" : 'No unread notifications' }}
+                                        </span>
                                         <span
-                                            @class([
-                                                'absolute -right-1 -top-1 min-w-[1.2rem] rounded-full px-1.5 py-0.5 text-center text-[10px] font-semibold leading-none',
-                                                'bg-slate-200 text-slate-900' => $unreadNotificationCount > 0,
-                                                'bg-slate-700 text-slate-300' => $unreadNotificationCount === 0,
-                                            ])
+                                            class="ui-notification-trigger-badge"
                                             data-notification-trigger-summary
                                         >{{ $unreadNotificationCount }}</span>
                                     </button>

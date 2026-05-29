@@ -939,6 +939,53 @@
         border-top-color: currentColor;
     }
 
+    .ui-notification-trigger {
+        @apply relative inline-flex h-10 w-10 items-center justify-center rounded-full border transition;
+        border-color: color-mix(in srgb, var(--ui-border-default) 48%, transparent);
+        background-color: color-mix(in srgb, var(--ui-surface-elevated) 78%, transparent);
+        color: var(--ui-text-secondary);
+        box-shadow: 0 10px 30px color-mix(in srgb, var(--ui-shadow-color) 12%, transparent);
+    }
+
+    .ui-notification-trigger:hover {
+        border-color: color-mix(in srgb, var(--ui-action-neutral-border-hover) 72%, transparent);
+        background-color: color-mix(in srgb, var(--ui-action-neutral-bg-hover) 72%, transparent);
+        color: var(--ui-text-strong);
+    }
+
+    .ui-notification-trigger:focus-visible {
+        outline: 2px solid color-mix(in srgb, var(--ui-action-info-border-hover) 72%, transparent);
+        outline-offset: 2px;
+    }
+
+    .ui-notification-trigger[data-notification-trigger-unread='true'] {
+        border-color: color-mix(in srgb, var(--ui-action-info-border-hover) 72%, transparent);
+        background-color: color-mix(in srgb, var(--ui-action-info-bg-hover) 34%, var(--ui-surface-elevated) 66%);
+        color: var(--ui-action-info-text-hover);
+        box-shadow:
+            0 0 0 1px color-mix(in srgb, var(--ui-action-info-border) 32%, transparent),
+            0 16px 34px color-mix(in srgb, var(--ui-shadow-color) 18%, transparent);
+    }
+
+    .ui-notification-trigger-icon {
+        @apply h-5 w-5 transition;
+        color: currentColor;
+    }
+
+    .ui-notification-trigger-badge {
+        @apply absolute -right-1 -top-1 min-w-[1.35rem] rounded-full px-1.5 py-0.5 text-center text-[10px] font-semibold leading-none transition;
+        border: 1px solid color-mix(in srgb, var(--ui-border-default) 58%, transparent);
+        background-color: color-mix(in srgb, var(--ui-action-neutral-bg) 90%, var(--ui-surface-elevated) 10%);
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-notification-trigger[data-notification-trigger-unread='true'] .ui-notification-trigger-badge {
+        border-color: color-mix(in srgb, var(--ui-action-info-border-hover) 84%, transparent);
+        background-color: color-mix(in srgb, var(--ui-action-info-bg-hover) 82%, transparent);
+        color: var(--ui-action-info-text-hover);
+        box-shadow: 0 8px 20px color-mix(in srgb, var(--ui-shadow-color) 16%, transparent);
+    }
+
     .ui-table-sort {
         @apply flex w-full items-center justify-between gap-3 rounded-md border border-transparent px-3 py-2 text-left text-[0.7rem] font-semibold uppercase tracking-[0.18em] transition;
         color: var(--ui-text-muted);

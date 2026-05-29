@@ -68,6 +68,10 @@
 - The reviewable sort-state implementation was pushed to `main` as commit `e55cc4b`, but the staging deploy helper could not run from this Windows session because WSL is unavailable here and the documented SSH aliases are not resolvable outside the expected local deployment environment.
 - Manual review of the deployed sort-state pass confirmed that the first remediation was functionally correct but visually too badge-like; the follow-up pass should move to a more standard neutral-sort glyph plus directional active-arrow treatment.
 - Docker verification passed again for `PlatformUiReferenceTest` after replacing the badge-style sort-state treatment with the icon-led sortable-header pattern.
+- Manual review approved the refreshed sortable-header treatment from worklog `2-A-0007` in both light and dark mode, and the staging deploy for that pass completed successfully after rerunning the validated WSL helper with host-level access.
+- The two remaining ready change-queue items were both centralized implementation drift in existing shared surfaces: table filter outside-click dismissal in `resources/js/app.js` and unread-state visibility in the shared header notification trigger.
+- Docker verification passed for the remaining queue pass after correcting the container test path, covering both `PlatformNotificationsTest` and `PlatformUiReferenceTest` in one targeted run.
+- The Windows-host `npm run build` path is still unreliable in this shell because the native Tailwind bindings do not load cleanly here, but the same Vite build succeeds through the validated WSL Ubuntu path.
 
 
 ## Decisions
@@ -131,8 +135,13 @@
 - Keep the active sort-state remediation inside the existing shared sortable-header treatment and apply it consistently across all UI Reference table baselines rather than inventing per-table variants.
 - Treat the missing table-filter outside-click dismissal as Batch A table-baseline implementation drift inside the existing filter-panel behavior rather than a new pattern or standards decision.
 - Treat the weak notification-trigger unread-state distinction as Batch A shell/navigation implementation drift inside the existing header notification control rather than a new component or standards decision.
+- Drive the notification-trigger follow-up directly from the `Ready To Implement` queue item with enough outcome detail for `work-batch` to act on it without depending on inferred context from review notes alone: unread state distinct at the trigger-control level, zero state still subdued, and no new component or standards expansion.
+- Use a concrete unread-state direction for the notification trigger follow-up instead of leaving the visual treatment open-ended: tint the bell button itself, move the bell icon into the same unread accent family, and make the unread count badge more prominent so the control reads as active when unread items exist.
 - Record the current pass as pushed but not deployed, and require the next manual-review operator to deploy `main` from the configured staging environment before reviewing the remote surface.
 - Replace the sortable-header `Sorted` badge and tiny text token with a full-width trigger, neutral unsorted arrow glyph, and directional active arrow so the interaction matches common accessible table-sort patterns more closely.
+- Move the sortable-header follow-up item from `Implemented Pending Review` to `Passed Review` based on confirmed approval in both themes, while leaving the unrelated table-filter and notification-trigger findings open for the next work pass.
+- Keep the final two Batch A implementation fixes centralized in the shared JS/layout layer instead of patching individual table or page surfaces, because both issues are shared baseline behavior drift rather than page-specific defects.
+- Move the table-filter outside-click dismissal and notification-trigger unread-state items from `Ready To Implement` to `Implemented Pending Review` once the shared implementation, targeted Docker tests, and WSL build check pass.
 
 
 ## Risks / Questions
@@ -173,3 +182,6 @@
 - This session could not rerun the targeted UI Reference feature suite because both available verification paths were blocked locally: Docker daemon unavailable, host PHP missing `mbstring`.
 - This session also could not complete the staging deploy step because the documented `platform-prod-wsl` helper path depends on WSL/SSH configuration that is not available from the current Windows execution environment.
 - Manual visual review is still required for the refreshed icon-led sortable-header treatment, and the remaining functional Batch A blocker is still the separate outside-click filter dismissal issue already in the ready queue.
+- This session also could not complete the follow-up staging deploy step for worklog `2-A-0007` because the Codex shell cannot see the installed `Ubuntu` WSL distro or the WSL-only SSH alias even though the user-side interactive shell can.
+- The sortable-header issue is no longer an open blocker; the remaining open review blockers are the table-filter outside-click dismissal and the unread notification-trigger treatment.
+- Another manual review pass is now required for the refreshed table-filter outside-click dismissal and the unread notification-trigger treatment before `UI Reference Validation` and `Batch A Exit Criteria` can be closed.

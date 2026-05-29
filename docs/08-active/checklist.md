@@ -171,7 +171,7 @@ Checklist:
 
 * [x] Table baseline
   Status: passed review
-  Note: active sort-state visibility refreshed again in worklog `2-A-0007`; pending manual review.
+  Note: active sort-state visibility from worklog `2-A-0007` is approved; filter outside-click dismissal was refreshed in worklog `2-A-0008` and is pending manual review.
   - page title/subtitle row
   - optional stats row
   - control row structure
@@ -240,6 +240,7 @@ Checklist:
   Status: passed review
 * [x] Header baseline
   Status: passed review
+  Note: notification-trigger unread-state treatment refreshed in worklog `2-A-0008`; pending manual review.
 * [x] Account Menu baseline
   Status: passed review
 * [x] Mobile Nav Dock baseline

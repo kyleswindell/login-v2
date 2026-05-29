@@ -128,11 +128,33 @@ const initFilterPanels = () => {
             toggle.setAttribute('aria-expanded', panel.classList.contains('hidden') ? 'false' : 'true');
         };
 
+        const setOpen = (open) => {
+            panel.classList.toggle('hidden', !open);
+            syncExpandedState();
+        };
+
         syncExpandedState();
 
         toggle.addEventListener('click', () => {
-            panel.classList.toggle('hidden');
-            syncExpandedState();
+            setOpen(panel.classList.contains('hidden'));
+        });
+
+        document.addEventListener('click', (event) => {
+            if (panel.classList.contains('hidden')) {
+                return;
+            }
+
+            if (toggle.contains(event.target) || panel.contains(event.target)) {
+                return;
+            }
+
+            setOpen(false);
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !panel.classList.contains('hidden')) {
+                setOpen(false);
+            }
         });
     });
 };
@@ -1092,6 +1114,8 @@ if (realtimeRoot) {
 
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     const userId = realtimeRoot.dataset.userId;
+    const notificationTrigger = document.querySelector('[data-notification-trigger]');
+    const notificationTriggerLabel = document.querySelector('[data-notification-trigger-label]');
     const triggerSummary = document.querySelector('[data-notification-trigger-summary]');
     const panelSummary = document.querySelector('[data-notification-panel-summary]');
     const previewList = document.querySelector('[data-notification-preview-list]');
@@ -1133,7 +1157,23 @@ if (realtimeRoot) {
         .replaceAll('"', '&quot;')
         .replaceAll("'", '&#039;');
 
+    const syncNotificationTriggerState = (unreadCount) => {
+        if (!notificationTrigger) {
+            return;
+        }
+
+        const hasUnread = unreadCount > 0;
+        notificationTrigger.dataset.notificationTriggerUnread = hasUnread ? 'true' : 'false';
+        notificationTrigger.title = hasUnread ? `${unreadCount} unread notifications` : 'Notifications';
+
+        if (notificationTriggerLabel) {
+            notificationTriggerLabel.textContent = hasUnread ? `${unreadCount} unread notifications` : 'No unread notifications';
+        }
+    };
+
     const updateUnreadSummaries = (unreadCount) => {
+        syncNotificationTriggerState(unreadCount);
+
         if (triggerSummary) {
             triggerSummary.textContent = `${unreadCount}`;
         }

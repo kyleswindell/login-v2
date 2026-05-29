@@ -1,13 +1,12 @@
 # Change Queue
 
 ## Ready To Implement
-- [ ] Make the table filter pop-up close when the page is clicked outside the pop-up shell instead of staying open after outside interaction.
-- [ ] Make the header notification trigger read as distinctly unread in both light and dark mode instead of staying too monotone and easy to miss, especially on the light-mode shell.
 
 ## In Progress
 
 ## Implemented Pending Review
-- [x] Replaced the badge-style sortable-header treatment with an icon-led active-sort indicator so unsorted columns show a neutral sort glyph and the active column shows a directional arrow with clearer emphasis.
+- [x] Restored outside-click dismissal for the table filter pop-up so clicking the page outside the pop-up shell closes it consistently again, while keeping the current toggle path intact.
+- [x] Updated the header notification trigger unread state so the full control now carries the unread treatment in both light and dark mode: tinted button shell, matching unread-accent bell icon, and a stronger unread count badge while the zero-unread state remains subdued.
 
 ## Blocked
 
@@ -30,5 +29,6 @@
 - [x] Retuned dark-mode toast backgrounds across all semantic colorways so they are fully opaque and visibly darker, using the newly approved darker direction for each toast/alert family (for example, info aligned closer to `#2f4e51`) while keeping the current overlay placement intact.
 - [x] Made the current table filter button perform the expected filter-panel toggle/action instead of remaining inert.
 - [x] Added automatic timeout dismissal for toast pop-ups after a short interval in the 15-20 second range while preserving manual dismiss behavior.
+- [x] Replaced the badge-style sortable-header treatment with an icon-led active-sort indicator so unsorted columns show a neutral sort glyph and the active column shows a directional arrow with clearer emphasis.
 
 ## Closed

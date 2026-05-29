@@ -160,6 +160,38 @@ class PlatformNotificationsTest extends TestCase
         $this->assertNull($otherNotification->fresh()->read_at);
     }
 
+    public function test_notification_trigger_uses_unread_state_treatment_when_unread_notifications_exist(): void
+    {
+        $user = $this->actingAsPlatformSuperAdmin();
+
+        PlatformNotification::query()->create([
+            'uuid' => (string) fake()->uuid(),
+            'notifiable_type' => User::class,
+            'notifiable_id' => $user->id,
+            'module_key' => 'platform',
+            'severity' => 'notice',
+            'title' => 'Unread notification',
+            'body' => 'Unread body.',
+        ]);
+
+        $this->get('/platform/notifications')
+            ->assertOk()
+            ->assertSee('class="ui-notification-trigger"', false)
+            ->assertSee('data-notification-trigger-unread="true"', false)
+            ->assertSee('1 unread notifications', false)
+            ->assertSee('class="ui-notification-trigger-badge"', false);
+    }
+
+    public function test_notification_trigger_uses_subdued_state_when_no_unread_notifications_exist(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/notifications')
+            ->assertOk()
+            ->assertSee('data-notification-trigger-unread="false"', false)
+            ->assertSee('No unread notifications', false);
+    }
+
     public function test_authorized_users_can_dismiss_a_notification(): void
     {
         $user = $this->actingAsPlatformSuperAdmin();

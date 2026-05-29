@@ -6,6 +6,7 @@ Use this as the root entry point for App 2.0 docs.
 
 Canonical root for all active documentation under `docs/` except `docs/_archive/`.
 
+- Canonical decision records live in [01-decisions/index.md](01-decisions/index.md).
 - Canonical standards live in [02-standards/index.md](02-standards/index.md).
 - Canonical architecture lives in [03-architecture/index.md](03-architecture/index.md).
 - Canonical feature behavior lives in [04-features/index.md](04-features/index.md).
@@ -14,5 +15,5 @@ Canonical root for all active documentation under `docs/` except `docs/_archive/
 - Canonical planning lives in [07-planning/index.md](07-planning/index.md).
 - Canonical operational procedures live in [10-runbooks/index.md](10-runbooks/index.md).
 - Non-canonical support/reference notes live in [09-reference/index.md](09-reference/index.md).
-- AI workflow notes live in [11-ai/workflows/Active Batch Workflow.md](11-ai/workflows/Active%20Batch%20Workflow.md).
+- AI workflow governance notes live in [11-ai/index.md](11-ai/index.md).
 - Historical pre-migration content lives in `docs/_archive/` and is excluded from active doc updates unless explicitly requested.

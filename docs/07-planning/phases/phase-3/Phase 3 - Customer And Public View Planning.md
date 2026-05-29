@@ -8,6 +8,10 @@ Plan Phase 3: customer/public-facing foundations that must exist before broad co
 
 This note is the active planning surface for customer/public route ownership, visibility models, events-driven public business presentation, and Microsoft Graph email delivery foundations.
 
+Brochure-site authoring and publishing blueprinting now has a dedicated planning companion:
+
+* [Phase 3 - Brochure Subsystem Hybrid Delivery Planning](Phase%203%20-%20Brochure%20Subsystem%20Hybrid%20Delivery%20Planning.md)
+
 ## Implementation Status
 
 Current status:
@@ -83,7 +87,8 @@ Phase 3 should establish:
 8. outward-facing module rendering conventions
 9. events as the first outward-facing business module proof
 10. data API and query contracts for Phase 4/Phase 5 integration with legacy website connectors
-11. Microsoft Graph email sending foundation with platform defaults, tenant overrides, per-feature alias mapping, and notice preference policy
+11. brochure-site authoring, publish-contract, and portable delivery direction
+12. Microsoft Graph email sending foundation with platform defaults, tenant overrides, per-feature alias mapping, and notice preference policy
 
 ## Microsoft Graph Email Delivery Foundation
 
@@ -202,9 +207,10 @@ Phase 3 can close when:
 
 * [Phase 3 Index](Phase%203%20Index.md)
 * [Phase 3 - Implementation Batch 1](Phase%203%20-%20Implementation%20Batch%201.md)
+* [Phase 3 - Brochure Subsystem Hybrid Delivery Planning](Phase%203%20-%20Brochure%20Subsystem%20Hybrid%20Delivery%20Planning.md)
 * [Phase 3 - Events And Legacy Website Publishing Planning](Phase%203%20-%20Events%20And%20Legacy%20Website%20Publishing%20Planning.md)
 * [Phase 3 - Microsoft Graph Email Sending Planning](Phase%203%20-%20Microsoft%20Graph%20Email%20Sending%20Planning.md)
 * [Phase 3 - OAuth And Customer Access Mode Planning](Phase%203%20-%20OAuth%20And%20Customer%20Access%20Mode%20Planning.md)
-* [Phase 4 - Remaining Core Module Planning]../phase-/Phase  - Remaining Core Module Planning.md
-* [Phase 2 - Final Stack And UI System Planning]../phase-/Phase  - Final Stack And UI System Planning.md
+* [Phase 4 - Remaining Core Module Planning](../phase-4/Phase%204%20-%20Remaining%20Core%20Module%20Planning.md)
+* [Phase 2 - Final Stack And UI System Planning](../phase-2/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
 * [Feature Roadmap](../../roadmap.md)

@@ -11,7 +11,8 @@ Login App 2.0 is the planned Laravel-based replacement foundation for the curren
 * One central platform database.
 * One separate PostgreSQL database and role per tenant.
 * Arbitrary tenant admin domains from day one.
-* Public websites handled separately through legacy hosting first and Astro/Tailwind rebuilds later.
+* Laravel-native brochure authoring and publishing with a portable public-delivery contract.
+* Public brochure delivery may begin in Laravel and later move to Astro/Tailwind without changing the authoring model.
 
 ## Key Domains
 

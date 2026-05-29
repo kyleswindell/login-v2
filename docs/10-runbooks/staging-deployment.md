@@ -18,6 +18,29 @@ The current staging runtime is:
 
 ### From your local machine
 
+Canonical local invocation from Windows PowerShell:
+
+```powershell
+wsl -d Ubuntu -- bash -lc 'cd "/mnt/c/Users/kswin/Desktop/Work 2023/8. Login V2" && TARGET_BRANCH=main bash scripts/deploy-staging-remote.sh'
+```
+
+Use this as the default agent/operator deploy path when working from Windows and the repo lives on the Windows filesystem.
+
+Assumptions:
+
+* WSL distro: `Ubuntu`
+* the repo is available at `/mnt/c/Users/kswin/Desktop/Work 2023/8. Login V2`
+* the SSH alias `platform-prod-wsl` is configured inside the Ubuntu environment
+* Docker is not required for the deploy helper itself, but may still be required separately for local verification
+
+For a review branch instead of `main`:
+
+```powershell
+wsl -d Ubuntu -- bash -lc 'cd "/mnt/c/Users/kswin/Desktop/Work 2023/8. Login V2" && TARGET_BRANCH=feature/[batch-or-review-branch] bash scripts/deploy-staging-remote.sh'
+```
+
+Equivalent command once already inside Ubuntu:
+
 Use the local helper:
 
 ```bash
@@ -156,6 +179,7 @@ Recommended workflow when a batch or phase needs rendered UI review before final
 Key constraint:
 
 * staging is a single shared environment, so only one non-main review branch should own staging at a time
+* advisory scope claims do not override this; staging review ownership is still single-branch and must be coordinated explicitly
 
 Recommended naming:
 

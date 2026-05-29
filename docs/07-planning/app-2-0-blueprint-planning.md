@@ -23,7 +23,9 @@ Architecture and server policy extracted from this note now live in:
 12. Tenant panel authentication and minimal dashboard.
 13. Module policy model.
 14. Page/block/article/media content foundation.
-15. Publish job and Astro build hook.
+15. Brochure publish contract and publication pipeline.
+16. Integrated Laravel brochure delivery adapter.
+17. Astro delivery adapter and build hook.
 
 ## Related
 

@@ -20,6 +20,12 @@ The active batch workspace is:
 
 This directory represents the current batch state and must be used for all batch-related tracking.
 
+Concurrency rule:
+
+- `/docs/08-active/` is a singleton active workspace
+- concurrent `batch-start` or `work-batch` execution is not supported under the current model, even when separate Git worktrees exist
+- use separate worktrees for other writable tasks only when those tasks do not require shared `/docs/08-active/` ownership at the same time
+
 ### Structure
 
 /docs/08-active/
@@ -105,7 +111,8 @@ Sections:
 - Closed
 
 Owned by:
-- `batch-update-manual-review-status`
+- `work-batch` for implementation-state transitions on targeted `Ready To Implement` items only
+- `batch-update-manual-review-status` for review-state transitions and review-driven queue maintenance
 
 ---
 
@@ -172,7 +179,7 @@ Responsibilities:
 - update notes.md
 - annotate checklist.md (not complete)
 - update review.md with factual status only
-- optionally commit/push/deploy when ready for manual review
+- commit/push/deploy when the pass is review-ready and manual visual review is required
 
 Rules:
 - do not expand scope
@@ -265,8 +272,17 @@ Rules:
 ## Change Queue Rules
 
 - initialized empty by `batch-start`
-- populated and advanced by `batch-update-manual-review-status`
+- populated by `batch-update-manual-review-status`
 - implemented items are worked by `work-batch`
+- `work-batch` may move targeted items only through implementation states:
+  - `Ready To Implement`
+  - `In Progress`
+  - `Implemented Pending Review`
+  - `Blocked`
+  - `Deferred`
+- `batch-update-manual-review-status` owns review-state transitions such as:
+  - `Passed Review`
+  - `Closed`
 - contains only actionable items
 - issues move through these sections only:
   - `Ready To Implement`
@@ -290,7 +306,9 @@ Rules:
 - one commit = one concern
 - no unrelated files
 - commit only when work is scoped and ready
-- deploy only when manual review is required
+- when a `work-batch` pass is review-ready and manual visual review is required, commit, push, and deployment are required parts of that workflow step
+- do not stop for a second approval if the user explicitly requested the active `work-batch` step
+- stop only if a documented deployment precondition is missing or the canonical deploy path is unavailable from the current execution environment
 
 ---
 

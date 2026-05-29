@@ -9,7 +9,8 @@ Read only from:
 - `/docs/08-active/checklist.md`
 - `/docs/08-active/review.md`
 - `/docs/08-active/notes.md`
-- `/docs/08-active/worklog.md`
+- `/docs/08-active/worklogs/index.md`
+- supporting `/docs/08-active/worklogs/worklog-<phase>-<batch>-####.md` files when needed for current-pass context
 - `/docs/08-active/change-queue.md`
 
 Reference:
@@ -36,13 +37,22 @@ Produce a clean, implementation-ready prompt for the next `Work Batch` pass that
 - Use `change-queue.md` as the primary driver for next-step fixes
 - Use `review.md` to understand current blockers and review state
 - Use `checklist.md` to avoid repeating already-completed work
-- Use `notes.md` and `worklog.md` for supporting context only
+- Use `notes.md` and `/worklogs/` for supporting context only
 - Do NOT invent new scope
 - Do NOT escalate Tier boundaries
 - Do NOT include unrelated cleanup
 - Keep the prompt direct, specific, and grouped by implementation goals
 - Prefer outcome-based instructions over implementation micromanagement
 - If a queued issue reflects a standards ambiguity rather than implementation work, call that out instead of forcing a work-batch prompt
+
+## Stop Conditions
+
+Stop and report instead of generating a work prompt if:
+
+- no active batch is loaded
+- `change-queue.md` has no actionable items and the batch state does not indicate remaining implementation work
+- the available `/docs/08-active/` state is too incomplete to identify a safe next pass
+- the next apparent action is a review-only or standards decision rather than batch implementation work
 
 ---
 
@@ -146,7 +156,7 @@ Focus only on the following items:
 Rules:
 - Stay within current batch scope
 - <other necessary constraints>
-- Update /docs/08-active/worklog.md, notes.md, review.md, and checklist.md to reflect actual progress
+- Update /docs/08-active/worklogs/, notes.md, review.md, and checklist.md to reflect actual progress
 
 Output:
 1. files changed

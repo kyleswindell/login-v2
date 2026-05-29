@@ -23,12 +23,14 @@ Feature behavior only. Architecture structure, operational runbooks, and impleme
 
 ## Drafted Contracts
 
+- [Brochure Sites Authoring And Publishing](brochure/brochure-sites-authoring-and-publishing.md)
 - [Calendar And CalendarEntry Contract](calendar/calendar-and-calendar-entry-contract.md)
 - [Inter-Tenant Messaging Contract](tenants/inter-tenant-messaging-contract.md)
 
 ## Domain Groups
 
 - `auth/`
+- `brochure/`
 - `users/`
 - `tenants/`
 - `logging/`
@@ -51,6 +53,8 @@ Feature behavior only. Architecture structure, operational runbooks, and impleme
 
 - Implemented: [Login Authentication Flow](../05-flows/login-authentication-flow.md)
 - Planned: [Account Password Change Flow](../05-flows/account-password-change-flow.md)
+- Planned: [Brochure Astro Delivery Flow](../05-flows/brochure-astro-delivery-flow.md)
+- Planned: [Brochure Integrated Delivery Flow](../05-flows/brochure-integrated-delivery-flow.md)
 - Planned: [Dashboard Customization Flow](../05-flows/dashboard-customization-flow.md)
 - Planned: [Notification Read And Dismiss Flow](../05-flows/notification-read-and-dismiss-flow.md)
 - Planned: [Customer Access And OAuth Flow](../05-flows/customer-access-and-oauth-flow.md)

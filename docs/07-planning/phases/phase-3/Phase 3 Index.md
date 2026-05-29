@@ -22,12 +22,16 @@ Current focus:
 * define feature-based sender-alias routing plus user preference and mandatory notice rules
 * define module-level and record-level customer visibility toggles
 * define interim legacy website JSON publishing compatibility direction
+* define brochure-site authoring and publishing on a portable contract that can start with Laravel delivery and later support Astro delivery
 * separate platform-owned publishing integrations from tenant-operated business data workflows
 
 ## Planning Notes
 
 * [Phase 3 - Customer And Public View Planning](Phase%203%20-%20Customer%20And%20Public%20View%20Planning.md)
 * [Phase 3 - Implementation Batch 1](Phase%203%20-%20Implementation%20Batch%201.md)
+* [Phase 3 - Implementation Batch 2](Phase%203%20-%20Implementation%20Batch%202.md)
+* [Phase 3 - Brochure Batch 2 Implementation Prep](Phase%203%20-%20Brochure%20Batch%202%20Implementation%20Prep.md)
+* [Phase 3 - Brochure Subsystem Hybrid Delivery Planning](Phase%203%20-%20Brochure%20Subsystem%20Hybrid%20Delivery%20Planning.md)
 * [Phase 3 - Events And Legacy Website Publishing Planning](Phase%203%20-%20Events%20And%20Legacy%20Website%20Publishing%20Planning.md)
 * [Phase 3 - Microsoft Graph Email Sending Planning](Phase%203%20-%20Microsoft%20Graph%20Email%20Sending%20Planning.md)
 * [Phase 3 - OAuth And Customer Access Mode Planning](Phase%203%20-%20OAuth%20And%20Customer%20Access%20Mode%20Planning.md)

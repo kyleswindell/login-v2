@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "description": "Advisory writable-session scope claims only. This file is not a lock and does not make concurrent shared-folder writes safe.",
+  "claims": []
+}

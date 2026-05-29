@@ -18,6 +18,7 @@ Keep documentation accurate as application behavior changes.
 - Use ADRs for meaningful architecture decisions and release notes for rollout context.
 - When a planned system becomes implemented, review both the canonical system doc and the linked planning note for current implementation status accuracy.
 - Confirm that planning notes and canonical system docs link to each other so the implementation state is discoverable through the graph.
+- Keep decisions in canonical owner notes by default, and elevate them into `01-decisions/` only when they are cross-cutting, durable, superseding, or require explicit lifecycle status.
 
 ## Review Questions
 
@@ -25,6 +26,7 @@ Keep documentation accurate as application behavior changes.
 - Does this change alter how an admin, tenant, or public website user interacts with the app?
 - Does this change alter database schema, sync payloads, permissions, or tenant configuration?
 - Does this change need a release note or ADR?
+- If it needs an ADR, is the decision cross-cutting or durable enough that future readers will need explicit rationale and status outside the owner note?
 - Does the canonical system doc now need an updated implementation status section?
 - Does the related planning note still reflect the current implementation state accurately?
 

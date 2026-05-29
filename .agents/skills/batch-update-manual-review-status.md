@@ -25,6 +25,16 @@ Convert manual review feedback into structured batch state updates and maintain 
   - confirmed fixes
   - deferred items
 
+## Stop Conditions
+
+Stop and ask for clarification if:
+
+- the human review feedback is ambiguous about pass versus fail
+- a referenced checklist item cannot be matched to a current top-level checklist item
+- a finding cannot be mapped safely into the current change-queue lifecycle
+- the feedback mixes approval and new-finding signals in a way that would require guessing the intended state transition
+- the request is actually asking for implementation work rather than review-state mutation
+
 ## Execution
 
 ### 1. Update change queue

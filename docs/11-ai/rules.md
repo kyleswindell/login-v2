@@ -11,4 +11,4 @@
 
 ## Workflow Reference
 
-- [workflows/Active Batch Workflow.md](workflows/Active%20Batch%20Workflow.md)
+- [Canonical Active Batch Workflow](../10-runbooks/batch-workflow.md)

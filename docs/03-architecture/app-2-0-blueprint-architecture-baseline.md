@@ -15,7 +15,9 @@ Capture architecture baseline extracted from initial blueprint planning.
 - Apache + PHP-FPM on the production VPS
 - one Laravel codebase with isolated tenant databases and roles
 - arbitrary tenant admin domains from day one
-- Astro + Tailwind for future public website rebuilds
+- Laravel-native brochure authoring and publishing with a portable delivery contract
+- integrated Laravel brochure delivery supported first
+- Astro + Tailwind supported later as a public delivery adapter where needed
 
 ## Domain Model
 

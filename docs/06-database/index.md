@@ -13,6 +13,7 @@ Schema and data contracts only. Feature behavior, architecture rationale, operat
 ## Feature Data Contracts
 
 - [Auth And RBAC](feature-contracts/auth-and-rbac.md)
+- [Brochure Sites Data Contract](feature-contracts/brochure-sites.md)
 - [Notifications And Settings](feature-contracts/notifications-and-settings.md)
 - [Event And Error Logging](feature-contracts/logging.md)
 - [Dashboard Layout](feature-contracts/dashboard-layout.md)

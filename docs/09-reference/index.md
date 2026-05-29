@@ -20,10 +20,12 @@ Support and research notes only. This branch does not define canonical implement
 - [Phase 2 Stack And UI System Notes](architecture/phase-2-stack-and-ui-system-notes.md)
 - [Phase 1 Platform Foundation Research Notes](architecture/phase-1-platform-foundation-research-notes.md)
 - [App 2.0 Logging DB Columns Research](architecture/app-2-0-logging-db-columns-research.md)
+- [Laravel Brochure Handoff Packet](laravel-brochure-handoff-packet/README.md)
 
 ## UI Support Notes
 
 - [UI Index](ui/index.md)
+- [UI UX Third Party Reference Sites](ui/UI%20UX%20Third%20Party%20Reference%20Sites.md)
 - [UI UX Source Of Truth Support Notes](ui/UI%20UX%20Source%20Of%20Truth%20Support%20Notes.md)
 - [UI UX External System Review And Baseline Matrix](ui/UI%20UX%20External%20System%20Review%20And%20Baseline%20Matrix.md)
 - [UI UX Component Coverage Matrix](ui/UI%20UX%20Component%20Coverage%20Matrix.md)

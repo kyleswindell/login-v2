@@ -19,6 +19,10 @@ Planning sequence and delivery intent only. This branch does not own final archi
 - [App 2.0 Blueprint Planning](app-2-0-blueprint-planning.md)
 - [App 2.0 Blueprint Initial Build Order](app-2-0-blueprint-initial-build-order.md)
 
+## Brochure Planning
+
+- [Phase 3 - Brochure Subsystem Hybrid Delivery Planning](phases/phase-3/Phase%203%20-%20Brochure%20Subsystem%20Hybrid%20Delivery%20Planning.md)
+
 ## Related Reference Notes
 
 - [Modern Commenting Standards Research](../09-reference/documentation/Modern%20Commenting%20Standards%20Research.md)

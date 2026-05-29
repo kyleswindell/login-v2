@@ -36,6 +36,20 @@ Ignore `/docs/_archive/`.
 - `change-queue.md` is reserved for review findings, follow-up items, and blocked/discovered work
 - Do NOT create queue items from batch scope or deliverables during batch start
 
+## Concurrency Preflight
+
+Before writing:
+
+- confirm this session is the only writable owner of the shared `/docs/08-active/` workspace
+- confirm another `batch-start` or `work-batch` session is not already active elsewhere
+- confirm current branch and worktree path
+- check `.agents/session-scope-claims.json` for conflicting advisory claims when available
+
+Stop if:
+- another writable session already owns the active batch workspace
+- the current worktree/branch ownership is unclear
+- the session is not allowed to take singleton ownership of `/docs/08-active/`
+
 ---
 
 ## Steps

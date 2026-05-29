@@ -134,6 +134,8 @@ Features:
 * customer login and session model
 * public/customer route and visibility contracts
 * customer/public shell and navigation baseline
+* brochure-site authoring and publishing foundation
+* portable brochure publish contract with integrated Laravel delivery first and Astro-compatible delivery adapter later
 * OAuth sign-in foundations for Google and Microsoft account providers
 * per-tenant customer access modes (`disabled`, `invite_only`, `open_enrollment`)
 * customer company multi-user identity model for strict ownership-based access
@@ -148,6 +150,7 @@ Working planning note:
 
 * [Phase 3 - Customer And Public View Planning](phases/phase-3/Phase 3 - Customer And Public View Planning.md)
 * [Phase 3 - Implementation Batch 1](phases/phase-3/Phase 3 - Implementation Batch 1.md)
+* [Phase 3 - Brochure Subsystem Hybrid Delivery Planning](phases/phase-3/Phase 3 - Brochure Subsystem Hybrid Delivery Planning.md)
 * [Phase 3 - Events And Legacy Website Publishing Planning](phases/phase-3/Phase 3 - Events And Legacy Website Publishing Planning.md)
 * [Phase 3 - Microsoft Graph Email Sending Planning](phases/phase-3/Phase 3 - Microsoft Graph Email Sending Planning.md)
 * [Phase 3 - OAuth And Customer Access Mode Planning](phases/phase-3/Phase 3 - OAuth And Customer Access Mode Planning.md)

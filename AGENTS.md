@@ -26,6 +26,7 @@ This repository contains Login App 2.0, a Laravel-based platform intended to rep
 
 ### Branch Responsibilities
 
+- `01-decisions` → ADRs and elevated decision records only  
 - `02-standards` → rules only  
 - `03-architecture` → system structure only  
 - `04-features` → behavior only  
@@ -60,9 +61,13 @@ Always respect branch ownership. Do not duplicate or reassign responsibility acr
 
 - Only modify files directly required for the current scope.
 - Do not include unrelated changes in commits.
-- If unrelated issues are found:
+- If unrelated issues are found during active batch implementation work:
   - record them in `/docs/08-active/notes.md`
   - do not fix them immediately
+- If unrelated issues are found during review-only governance or documentation audit work:
+  - record them in the active review file under `docs/11-ai/active-doc-reviews/`
+  - update the review ledger entry if the finding changes the audit status
+  - do not push them into `/docs/08-active/` unless they belong to the current active batch
 
 - Prefer minimal, explicit changes over broad rewrites.
 - Maintain consistency with existing naming, tokens, and patterns.
@@ -71,16 +76,21 @@ Always respect branch ownership. Do not duplicate or reassign responsibility acr
 
 ## Git and Deployment Rules
 
-- Follow `docs/10-runbooks/git-batch-commit-workflow.md` for all commits.
-- Commits must:
+- Follow `docs/10-runbooks/git-batch-commit-workflow.md` for active batch execution commits only.
+- Active batch commits must:
   - map to a single batch and a single concern
   - include only files touched for that scope
 
-- Use batch checkpoints:
+- Use batch checkpoints for active batch execution:
   - batch initialized
   - implementation save points
   - review-ready
   - finalized
+
+- For non-batch review or governance work:
+  - keep one commit scoped to one review, sync pass, or governance concern
+  - include only files directly required for that review or governance update
+  - do not force batch checkpoint naming onto review-only work
 
 - Only commit when the work is scoped, intentional, and reviewable.
 
@@ -94,6 +104,12 @@ Always respect branch ownership. Do not duplicate or reassign responsibility acr
   - implementation
   - review
 - Do not combine review and implementation in the same step.
+- Before executing a batch workflow step, explicitly state which workflow is being entered.
+- If a batch workflow step was explicitly requested by the user, it may be executed without an extra confirmation step.
+- If a batch workflow step is only inferred from the conversation and it will modify `/docs/08-active/`, canonical docs, or code, ask for confirmation before executing it.
+- Read-only analysis, workflow interpretation, and prompt generation do not require confirmation.
+- After completing a batch workflow step, report which workflow was executed, which files were updated, and what state changed.
+- Review-only audit work must use `docs/11-ai/active-doc-reviews/` as its canonical artifact path and must not be treated as active batch workflow execution unless the user explicitly switches into a batch workflow step.
 
 ---
 
@@ -105,10 +121,89 @@ Always respect branch ownership. Do not duplicate or reassign responsibility acr
   - `batch-update-manual-review-status`
   - `batch-review-and-finalize`
 
+- Required workflow notice format before execution:
+  - name the workflow step being executed
+  - name the file scope that will be modified
+  - if the step is inferred, request confirmation before making changes
+
+- Required workflow completion notice after execution:
+  - name the workflow step that completed
+  - summarize the files updated
+  - summarize the resulting state change
+
 - Do not:
   - skip batch initialization
   - mix multiple batches
   - introduce Tier 2 or Tier 3 work into a Tier 1 batch
+
+---
+
+## Review-Only Governance Work
+
+- Use review files under `docs/11-ai/active-doc-reviews/` for non-batch documentation and agent-governance audits.
+- Use the review ledger at `docs/11-ai/active-doc-reviews/index.md` to track actual review and implementation status.
+- Keep review, implementation, and re-review as separate steps even when they happen in the same broader session.
+- Do not store review-only governance state in `/docs/08-active/` unless the review is explicitly about the current active batch workspace.
+- When implementing a review-only fix, update the scoped review file and ledger entry in the same work cycle.
+
+---
+
+## Concurrency Support Matrix
+
+- Supported: one writable session in one working tree.
+- Supported: multiple read-only planning, audit, or review sessions in the same folder while one writer owns edits.
+- Supported: multiple writable sessions only when each writable session has its own branch and its own worktree.
+- Not supported: concurrent `batch-start` or `work-batch` execution against the same shared `/docs/08-active/` workspace.
+- Not supported: multiple writable sessions editing the same working tree folder at the same time.
+- Not supported: concurrent review-ledger final writes without serialization, because `doc-review-####` and `doc-sync-####` IDs are sequential and the shared index is a collision point.
+- Staging review ownership is single-branch at a time; only one non-`main` review branch should own staging during manual QA.
+
+Coordination notes:
+
+- worktree isolation is the real safety boundary for concurrent writable work
+- advisory scope claims are coordination aids only and do not guarantee protection
+- use `.agents/session-scope-claims.json` only as a lightweight visibility layer, not as a lock
+
+---
+
+## Automation Policy
+
+Default rule:
+
+- if the next step is unclear, stop and ask
+
+Automation tiers:
+
+- Tier A: always allowed
+  - read-only analysis
+  - workflow interpretation
+  - prompt generation
+  - standards and source review
+- Tier B: allowed within the active scoped workflow
+  - narrow in-scope updates that the current workflow explicitly owns
+  - matching review-ledger or active-workspace state updates required by that workflow
+  - targeted verification tied directly to that workflow
+- Tier C: explicit approval or workflow-specific authorization required
+  - deploy, publish, or other external-state changes
+  - new dependencies
+  - infrastructure, auth, database, or architecture changes
+  - destructive resets, archive moves, or workspace-clearing steps
+- Tier D: stop and ask
+  - scope ambiguity
+  - ownership ambiguity
+  - conflicting standards or source inputs
+  - multiple plausible implementation directions with materially different outcomes
+
+Continuation rule:
+
+- continue automatically only while scope, risk, and ownership remain unchanged inside the current workflow
+- if the next action increases risk or changes workflow type, stop and ask unless the user already requested that exact workflow step
+
+Workflow-specific authorization note:
+
+- an explicitly requested batch workflow step authorizes the normal actions that workflow requires when its own completion criteria are met
+- for `work-batch`, that includes scoped commit, push, and canonical staging deployment when the pass is review-ready and manual visual review is required
+- do not stop for a second approval in that case unless a documented deployment precondition is missing or the workflow would need to improvise an unapproved execution path
 
 ---
 

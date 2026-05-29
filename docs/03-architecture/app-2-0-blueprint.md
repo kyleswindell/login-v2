@@ -29,5 +29,6 @@ Tenant resolution order:
 - [Architecture Index](index.md)
 - [Platform Boundary](platform-boundary.md)
 - [Stack Overview](stack-overview.md)
+- [Brochure Sites Subsystem](subsystems/brochure-sites-subsystem.md)
 - [App 2.0 Blueprint Initial Build Order](../07-planning/app-2-0-blueprint-initial-build-order.md)
 - [Platform Production Server Policy](../02-standards/security/platform-production-server-policy.md)

@@ -27,6 +27,7 @@ Structure and architecture ownership only. Behavior, flow steps, schema details,
 
 - [Core Platform Layer Model](subsystems/core-platform-layer-model.md)
 - [Application Structure](subsystems/application-structure.md)
+- [Brochure Sites Subsystem](subsystems/brochure-sites-subsystem.md)
 - [Current Repo Structure](subsystems/current-repo-structure.md)
 - [Final Stack And UI Boundary](subsystems/final-stack-and-ui-boundary.md)
 - [Phase 2 Stack And UI Architecture Decisions](subsystems/phase-2-stack-and-ui-architecture-decisions.md)

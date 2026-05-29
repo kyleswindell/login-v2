@@ -45,6 +45,17 @@ Implications:
 
 ## Supported Operating Modes
 
+### Support Matrix
+
+| Mode | Supported | Notes |
+|---|---|---|
+| Shared folder, single writer | Yes | default safe mode |
+| Shared folder, multiple read-only sessions | Yes | one writer only |
+| Separate branches plus separate worktrees, multiple writers | Yes | each writer gets isolated worktree |
+| Concurrent `batch-start` / `work-batch` on shared `/docs/08-active/` | No | current active workspace is singleton |
+| Concurrent review-ledger final writes without serialization | No | sequential IDs and shared index can collide |
+| Multiple non-`main` staging review branches at once | No | staging has one active owner at a time |
+
 ### Mode A — Shared Folder, Single Writer
 
 Use this as the default workflow.
@@ -80,6 +91,20 @@ Best fit:
 * implementation work plus documentation work that both must edit files concurrently
 * two unrelated writable tasks that cannot wait on each other
 
+### Codex App Worktree Path
+
+When using the Codex app, prefer the app's built-in Worktree mode and Handoff flow as the first-class path for writable isolation.
+
+Important limitation:
+
+* one branch may only be checked out in one worktree at a time
+
+Use manual `git worktree` commands as the fallback path when:
+
+* the Codex app worktree flow is unavailable
+* the repo is being operated outside the Codex app
+* a manual Git workflow is explicitly preferred for the session
+
 ### Mode C — Multi-Machine Branch Workflow
 
 When sessions are split across machines, GitHub remains the source of truth.
@@ -102,6 +127,7 @@ Before any session starts editing:
 4. confirm the last stable commit or push point that this session can rely on
 5. confirm whether another writable session is already active for this same folder
 6. confirm the scope this session owns before making edits
+7. if this session will write, confirm whether an advisory scope claim already exists in `.agents/session-scope-claims.json`
 
 If any of these are unclear, do not start writing.
 
@@ -162,6 +188,34 @@ If used, keep it lightweight:
 * expected close-out or handoff time
 
 Do not rely on this as protection. It documents intent only.
+
+Canonical advisory claim state for this repo:
+
+* `.agents/session-scope-claims.json`
+
+Canonical advisory workflow note:
+
+* [Advisory Session Scope Claims](advisory-session-scope-claims.md)
+
+Use that file only for visibility:
+
+* it is not a lock
+* it does not make same-folder concurrent writes safe
+* stale claims must be released or corrected when a writable session closes out
+
+## Review Ledger Concurrency Rule
+
+The review ledger has its own collision risk because:
+
+* `doc-review-####` and `doc-sync-####` IDs are sequential
+* `docs/11-ai/active-doc-reviews/index.md` is a shared registry file
+
+Supported review-writing rule:
+
+* multiple review writers may work in separate worktrees
+* final review-file creation and ledger update must be serialized
+
+Until a different ID-allocation model is adopted, do not treat concurrent review-ledger final writes as safe in one shared folder.
 
 ## Worktree And Docker Compose Setup
 
@@ -234,7 +288,7 @@ Even with isolated worktrees these files are frequently edited by more than one 
 * `routes/web.php` — every batch that adds routes touches this file; keep each branch's additions in separate route blocks to make the merge mechanical
 * `app/Providers/AppServiceProvider.php` — service registrations, gates, and widget registrations accumulate here
 * `docs/07-planning/phases/phase-X/Phase X Index.md` — both batches update implementation status sections
-* `docs/08-active/phase-X-development-log.md` — both batches append log entries; append-only merges are usually conflict-free if entries are dated
+* `docs/08-active/worklogs/worklog-<phase>-<batch>-####.md` and `docs/08-active/worklogs/index.md` — active batch history and its shared index are append/update points that require intentional merge handling
 
 ## Before Initial Commit
 
@@ -276,5 +330,6 @@ Unsafe:
 
 * [Runbook Index](index.md)
 * [Git Remote And Multi-Device Workflow](git-remote-and-multi-device-workflow.md)
+* [Advisory Session Scope Claims](advisory-session-scope-claims.md)
 * [Implementation Status And Development Sync Standard](../02-standards/documentation/Implementation%20Status%20And%20Development%20Sync%20Standard.md)
 * Codex Working Rules | [Codex Working Rules](../00-start-here.md)

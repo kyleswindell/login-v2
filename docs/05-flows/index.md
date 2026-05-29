@@ -17,6 +17,8 @@ Execution sequence documentation only. This branch does not own feature contract
 ## Planned Flows
 
 - [Account Password Change Flow](account-password-change-flow.md)
+- [Brochure Astro Delivery Flow](brochure-astro-delivery-flow.md)
+- [Brochure Integrated Delivery Flow](brochure-integrated-delivery-flow.md)
 - [Dashboard Customization Flow](dashboard-customization-flow.md)
 - [Notification Read And Dismiss Flow](notification-read-and-dismiss-flow.md)
 - [Tenant Provisioning Flow](tenant-provisioning-flow.md)

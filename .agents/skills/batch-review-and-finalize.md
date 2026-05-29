@@ -122,7 +122,18 @@ Do NOT include unrelated files.
 
 Move `/docs/08-active/` contents to:
 
-/docs/11-ai/_archive/batches/<date-name>/
+`/docs/11-ai/_archive/batches/<YYYY-MM-DD>-phase-<phase-number>-batch-<batch-identifier>/`
+
+Archive naming rules:
+
+- use the current local date in `YYYY-MM-DD`
+- use a normalized lowercase batch identifier from `batch.md`
+- preserve one archive directory per finalized batch close-out
+
+Stop if:
+- the target archive directory already exists
+- the batch identifier cannot be derived safely from the active batch state
+- the archive move or copy does not complete cleanly
 
 Preserve:
 - `batch.md`

@@ -7,6 +7,8 @@ Execute the currently loaded batch in `/docs/08-active/`.
 - `/docs/08-active/batch.md`
 - `/docs/08-active/checklist.md`
 - `/docs/08-active/change-queue.md`
+- `/docs/08-active/review.md`
+- `/docs/08-active/notes.md`
 - `/docs/08-active/worklogs/index.md`
 
 ## Rules
@@ -20,8 +22,23 @@ Execute the currently loaded batch in `/docs/08-active/`.
 - Do NOT mark checklist items as complete
 - Do NOT archive or reset `/docs/08-active/`
 - Follow `docs/10-runbooks/git-batch-commit-workflow.md` for all commits
+- Follow `docs/10-runbooks/deployment.md` and `docs/10-runbooks/staging-deployment.md` for staging deployment behavior when manual review output is required
 - Base batch deliverables are tracked in `batch.md` and `checklist.md`
 - `change-queue.md` is reserved for review findings, follow-up items, and blocked or discovered work
+
+## Concurrency Preflight
+
+Before writing:
+
+- confirm this session is the intended writable owner of the current batch workspace
+- confirm current branch and worktree path
+- confirm another writable session is not already executing `batch-start` or `work-batch` for the same `/docs/08-active/` state
+- check `.agents/session-scope-claims.json` for conflicting advisory claims when available
+
+Stop if:
+- writable ownership of `/docs/08-active/` is unclear
+- another session already owns the same active batch scope
+- the current worktree/branch context is inconsistent with the intended writable task
 
 ---
 
@@ -31,6 +48,8 @@ Execute the currently loaded batch in `/docs/08-active/`.
 - Read `batch.md`
 - Read `checklist.md`
 - Read `change-queue.md`
+- Read `review.md`
+- Read `notes.md`
 - Read `/docs/08-active/worklogs/index.md`
 - Use them as the source of truth for scope, deliverables, and queued implementation work
 
@@ -168,8 +187,13 @@ then:
 - stage only scoped files
 - commit using `docs/10-runbooks/git-batch-commit-workflow.md`
 - push the commit
-- deploy/pull to server
+- deploy using the canonical staging deployment workflow in `docs/10-runbooks/staging-deployment.md`
 - record commit and deployment details in the worklog
+
+Deployment preconditions:
+- the pass is actually reviewable
+- the required deployment path is available from the current execution environment
+- if the deployment path or privileges are unavailable, STOP after push and report the missing precondition instead of improvising a deploy path
 
 Do NOT:
 - include unrelated files

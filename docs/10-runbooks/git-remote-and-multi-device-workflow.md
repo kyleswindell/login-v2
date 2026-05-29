@@ -71,6 +71,13 @@ When multiple sessions must both write:
 * use a separate git worktree per writable task
 * treat GitHub as the synchronization point before merge or handoff
 
+When using the Codex app:
+
+* prefer the app's built-in Worktree mode as the first-class writable-isolation path
+* treat manual `git worktree` as the fallback path
+* remember that one branch may only be checked out in one worktree at a time
+* coordinate owned scope separately from worktree creation; worktrees provide isolation, not claim visibility
+
 A manual checkout or lock file may be used only as an advisory note. It does not protect files from concurrent local edits.
 
 ## Agent Delivery Flow

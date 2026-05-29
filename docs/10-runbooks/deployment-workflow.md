@@ -104,6 +104,12 @@ The server script currently runs the in-place staging deploy workflow inside `/v
 
 The local helper currently shells into `platform-prod-wsl` and executes that server script remotely.
 
+Canonical Windows-side invocation:
+
+```powershell
+wsl -d Ubuntu -- bash -lc 'cd "/mnt/c/Users/kswin/Desktop/Work 2023/8. Login V2" && TARGET_BRANCH=main bash scripts/deploy-staging-remote.sh'
+```
+
 This is the current pragmatic automation layer while the app is still iterating quickly on staging.
 
 The staging helper now also supports previewing a non-main branch by passing `TARGET_BRANCH=<branch>` before invoking the helper. This supports manual visual review on staging before a batch or phase is promoted to `main`.

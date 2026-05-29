@@ -12,6 +12,7 @@ Applies to all active documentation in `docs/` and excludes `docs/_archive/`.
 
 ## Branch Ownership Rules
 
+- `01-decisions/` owns ADRs and elevated decision records only.
 - `02-standards/` owns rules and conventions only.
 - `03-architecture/` owns system structure and boundaries only.
 - `04-features/` owns feature behavior and contracts only.

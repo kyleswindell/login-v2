@@ -116,6 +116,29 @@ Use links intentionally:
 - `09-reference/`: non-authoritative support material.
 - `11-ai/`: AI-assistance instructions and checklists.
 
+## Decision Record Elevation Rule
+
+Keep a decision in its canonical owner note by default.
+
+Elevate a decision into `01-decisions/` as an ADR when one or more of the following are true:
+
+- it changes or locks behavior across multiple canonical branches, subsystems, or phases
+- it sets or changes a long-lived architecture, product, governance, or delivery rule
+- it supersedes, deprecates, or replaces an earlier accepted decision
+- future contributors are likely to need durable rationale beyond the current-state description in an owner note
+- the decision needs explicit lifecycle state such as `Proposed`, `Accepted`, `Deprecated`, or `Superseded`
+
+Keep the decision in the owner note only when all of the following are true:
+
+- it is local to one canonical owner note or one narrowly scoped implementation area
+- it mainly explains current implementation rather than establishing a reusable governing rule
+- changing it later would not create confusion outside that local owner context
+
+Use this split consistently:
+
+- canonical owner docs describe current truth
+- ADRs describe durable decision rationale, status, and consequences
+
 ## Docs Travel With Code
 
 When changing behavior, ask:
@@ -125,6 +148,7 @@ When changing behavior, ask:
 - Does a tenant-aware rule change?
 - Does a module interface, table, option, or endpoint change?
 - Does an agent/Codex workflow need an updated rule?
+- Does this introduce or change a cross-cutting decision that should be elevated into `01-decisions/`?
 
 If yes, update or create the relevant documentation note before considering the work complete.
 

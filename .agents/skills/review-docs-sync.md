@@ -22,6 +22,11 @@ The request should indicate:
 - implementation area, system, or batch
 - or default to current `/docs/08-active/` context
 
+Stop if:
+- neither a target area nor active batch context exists
+- the requested scope is so broad that it would require a repo-wide audit in one pass
+- the request is for a standards or governance review rather than implementation-versus-doc drift review
+
 ---
 
 ## Scope
@@ -43,6 +48,16 @@ If batch context exists:
 Exclude:
 - `/docs/_archive/`
 
+Write:
+- one `docs/11-ai/active-doc-reviews/doc-sync-####.md` review file
+- the matching row in `docs/11-ai/active-doc-reviews/index.md`
+
+Do NOT write:
+- canonical docs
+- planning notes
+- active batch state files outside evidence gathering
+- any file outside `docs/11-ai/active-doc-reviews/`
+
 ---
 
 ## Rules
@@ -63,6 +78,7 @@ Exclude:
   - update the existing review file
   - increment `Review Pass`
   - update the existing index row
+- If the requested target is missing, or the scope expands beyond one implementation area or active batch, STOP and narrow it before continuing
 
 ---
 

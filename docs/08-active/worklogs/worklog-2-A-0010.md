@@ -57,11 +57,12 @@ Conduct the active `work-batch` pass for the current notification change-queue i
 
 ## Commit / Deploy Status
 
-- Commit: No
-- Deploy: No
+- Commit: Yes
+- Deploy: Yes
 
 ## Notes
 
 - This pass stayed inside the shared notification shell/dropdown implementation and reused the existing semantic variable families rather than introducing a new notification pattern.
 - Docker verification passed for `PlatformNotificationsTest` (10 tests / 41 assertions).
 - The WSL `npm run build` path completed successfully for this pass.
+- Review-ready commit `0ae0844` was pushed to `main`, and the canonical staging deployment helper completed successfully for that commit.

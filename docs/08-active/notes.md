@@ -1,6 +1,7 @@
 # Notes
 
 ## Findings
+- The canonical staging deploy succeeded for the current notification review-fix pass after pushing commit `0ae0844`, so the refreshed dropdown/trigger surface is available for manual review on staging.
 - Worklog `2-A-0010` replaced the hard-coded notification preview severity pills with token-backed pill styling so the dropdown labels inherit the shared light/dark semantic contrast instead of washed-out ad hoc violet/sky text.
 - Worklog `2-A-0010` retuned unread emphasis away from the prior blue accent by using a stronger notice-family badge/icon treatment while keeping the trigger shell closer to a neutral menu button.
 - Worklog `2-A-0010` removed the always-on unread-state ring effect from the notification trigger and reserved stronger emphasis for actual hover and focus states.

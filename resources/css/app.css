@@ -940,7 +940,7 @@
     }
 
     .ui-table-sort {
-        @apply inline-flex items-center gap-2 rounded-md px-2 py-1 text-left text-[0.7rem] font-semibold uppercase tracking-[0.18em] transition;
+        @apply inline-flex items-center gap-2 rounded-full border border-transparent px-2.5 py-1 text-left text-[0.7rem] font-semibold uppercase tracking-[0.18em] transition;
         color: var(--ui-text-muted);
     }
 
@@ -951,11 +951,28 @@
 
     .ui-table-sort.is-active {
         color: var(--ui-text-strong);
+        border-color: color-mix(in srgb, var(--ui-action-info-border) 80%, transparent);
+        background-color: color-mix(in srgb, var(--ui-action-info-bg) 60%, transparent);
+        box-shadow: 0 0 0 1px color-mix(in srgb, var(--ui-action-info-border) 32%, transparent);
     }
 
     .ui-table-sort-indicator {
-        @apply text-[0.6rem] font-bold;
+        @apply inline-flex items-center justify-center rounded-full border border-transparent px-2 py-0.5 text-[0.58rem] font-bold;
         color: var(--ui-text-secondary);
+        background-color: color-mix(in srgb, var(--ui-surface-elevated) 88%, transparent);
+    }
+
+    .ui-table-sort-state {
+        @apply inline-flex items-center justify-center rounded-full border border-transparent px-2 py-0.5 text-[0.58rem] font-bold;
+        color: var(--ui-text-secondary);
+        background-color: color-mix(in srgb, var(--ui-border-default) 24%, transparent);
+    }
+
+    .ui-table-sort.is-active .ui-table-sort-state,
+    .ui-table-sort.is-active .ui-table-sort-indicator {
+        color: var(--ui-action-info-text);
+        border-color: color-mix(in srgb, var(--ui-action-info-border) 75%, transparent);
+        background-color: color-mix(in srgb, var(--ui-action-info-bg-hover) 68%, transparent);
     }
 
     .ui-table-row {

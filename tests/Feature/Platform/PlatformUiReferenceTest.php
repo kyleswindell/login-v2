@@ -45,7 +45,10 @@ class PlatformUiReferenceTest extends TestCase
             ->assertOk()
             ->assertSee('Policies')
             ->assertSee('Settings')
-            ->assertSee('Export');
+            ->assertSee('Export')
+            ->assertSee('Sorted', false)
+            ->assertSee('aria-sort="descending"', false)
+            ->assertSee('aria-sort="ascending"', false);
 
         $this->get('/platform/ui-reference/patterns/overlays-feedback')
             ->assertOk()

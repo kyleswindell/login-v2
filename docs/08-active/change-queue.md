@@ -5,12 +5,7 @@
 ## In Progress
 
 ## Implemented Pending Review
-- [x] Restored desktop sticky behavior for the custom-sidebar host so the Documentation Vault sidebar container itself remains sticky again instead of only the inner repository-tree card sticking.
-- [x] Refined the shared select/dropdown indicator spacing again so the overall right-side offset is not excessive and the dropdown arrow remains visually centered.
-- [x] Made selectable-group selected-state styling update dynamically on click so the stronger focused-style emphasis is added and removed live instead of only appearing from the initial server-rendered state.
-- [x] Retuned dark-mode toast backgrounds across all semantic colorways so they are fully opaque and visibly darker, using the newly approved darker direction for each toast/alert family (for example, info aligned closer to `#2f4e51`) while keeping the current overlay placement intact.
-- [x] Made the current table filter button perform the expected filter-panel toggle/action instead of remaining inert.
-- [x] Added automatic timeout dismissal for toast pop-ups after a short interval in the 15-20 second range while preserving manual dismiss behavior.
+- [x] Added a clearer active-sort indicator to sortable table headers so the current sorted column is visually obvious and the active sort direction is explicit.
 
 ## Blocked
 
@@ -27,5 +22,11 @@
 - [x] Removed the stray border from the neutral ghost button so ghost semantic variants render consistently.
 - [x] Shifted the dark-mode primary semantic background toward `#1d95d873` and retuned related border, text, and state colors to match.
 - [x] Shifted the dark-mode info semantic background toward `#6ef3ff66` and retuned related border, text, and state colors to match.
+- [x] Restored desktop sticky behavior for the custom-sidebar host so the Documentation Vault sidebar container itself remains sticky again instead of only the inner repository-tree card sticking.
+- [x] Refined the shared select/dropdown indicator spacing again so the overall right-side offset is not excessive and the dropdown arrow remains visually centered.
+- [x] Made selectable-group selected-state styling update dynamically on click so the stronger focused-style emphasis is added and removed live instead of only appearing from the initial server-rendered state.
+- [x] Retuned dark-mode toast backgrounds across all semantic colorways so they are fully opaque and visibly darker, using the newly approved darker direction for each toast/alert family (for example, info aligned closer to `#2f4e51`) while keeping the current overlay placement intact.
+- [x] Made the current table filter button perform the expected filter-panel toggle/action instead of remaining inert.
+- [x] Added automatic timeout dismissal for toast pop-ups after a short interval in the 15-20 second range while preserving manual dismiss behavior.
 
 ## Closed

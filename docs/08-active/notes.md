@@ -59,6 +59,10 @@
 - The table no-reload correction stayed inside the existing server-rendered tables route by replacing the current root with fetched HTML and reusing the canonical table loading overlay instead of introducing a new client-side table model.
 - The current ready follow-up items also stayed inside existing Batch A implementation points: the custom-sidebar host, shared select styling, selectable-group state syncing, existing table filter panel, and generated-toast demo behavior all accepted the required corrections without introducing a new pattern decision.
 - The darker toast pass remained implementation-only because it reused the existing semantic toast surfaces and overlay mount rather than adding a new notification behavior or token family.
+- Manual review approved the latest implemented pending-review items covering the custom-sidebar sticky host, shared select indicator alignment, live selectable-group sync, darker dark-mode toast backgrounds, table filter toggle behavior, and generated-toast timeout dismissal.
+- Manual review found that the current sortable table headers still need a stronger active-state treatment so the sorted column is immediately identifiable and the current sort direction is obvious without relying on subtle label changes alone.
+- The sortable-header follow-up pass now adds an explicit `Sorted` state tag, stronger active-chip styling, and `aria-sort` on active headers across the workspace, audit, and error table reference surfaces.
+- Automated verification could not be completed in this session because Docker is not reachable from this environment and the host PHP runtime is missing the `mbstring` extension required to boot Laravel tests.
 
 
 ## Decisions
@@ -117,6 +121,9 @@
 - Add delegated selectable-group state syncing in shared UI Reference JS so selected emphasis updates live on click for both radio and checkbox review surfaces.
 - Keep the table filter interaction on the existing hidden filter-panel path by removing the always-hidden shared CSS behavior and using class-based hidden state instead.
 - Limit timeout-based auto-dismiss to generated toast pop-ups so the static baseline stack remains available for inspection while overlay-style demo toasts clear themselves after roughly sixteen seconds.
+- Move the six latest implemented pending-review items into `Passed Review` based on manual approval, but keep Batch A open because the table baseline still needs a clearer active sort indicator.
+- Treat the missing active sort-state visibility as Batch A table-baseline implementation drift inside the existing sortable-header treatment rather than a new Tier 2 pattern or standards decision.
+- Keep the active sort-state remediation inside the existing shared sortable-header treatment and apply it consistently across all UI Reference table baselines rather than inventing per-table variants.
 
 
 ## Risks / Questions
@@ -150,3 +157,6 @@
 - Manual visual re-review is still required for the retuned sticky host, select indicator alignment, and darker toast backgrounds because those changes are primarily presentation-level corrections.
 - Automated feature tests still do not exercise the generated-toast timeout path or the live selectable-group state sync directly, so those behaviors remain browser-review dependent even after verification.
 - Host-side `npm run build` is not currently usable in this workspace because the local Node install is on unsupported WSL1; Docker feature verification passed, and deploy-time Vite build remains the practical build check for this pass.
+- The sortable table header visibility fix is now implemented and awaiting manual review before `UI Reference Validation` and `Batch A Exit Criteria` can be closed.
+- Another manual review pass is now required for the refreshed sortable table header treatment before `UI Reference Validation` and `Batch A Exit Criteria` can be closed.
+- This session could not rerun the targeted UI Reference feature suite because both available verification paths were blocked locally: Docker daemon unavailable, host PHP missing `mbstring`.

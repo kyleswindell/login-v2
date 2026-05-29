@@ -163,6 +163,14 @@
 
                                         <div class="mt-4 space-y-3" data-notification-preview-list>
                                             @forelse ($recentNotifications as $notification)
+                                                @php($notificationSeveritySemantic = match ($notification->severity) {
+                                                    'info' => 'info',
+                                                    'success' => 'success',
+                                                    'notice' => 'notice',
+                                                    'warning' => 'warning',
+                                                    'error', 'urgent' => 'danger',
+                                                    default => 'neutral',
+                                                })
                                                 <a
                                                     href="{{ $notification->action_url ?: route('platform.administration.notifications.index') }}"
                                                     wire:navigate
@@ -172,17 +180,13 @@
                                                 >
                                                     <div class="flex items-center gap-2">
                                                         @if (! $notification->read_at)
-                                                            <span class="inline-flex rounded-full bg-slate-700/70 px-2.5 py-1 text-[11px] font-medium text-slate-200">Unread</span>
+                                                            <span class="ui-notification-preview-pill ui-notification-preview-pill-unread" data-notification-preview-unread>Unread</span>
                                                         @endif
 
-                                                        <span @class([
-                                                            'inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.15em]',
-                                                            'bg-slate-700/60 text-slate-200' => $notification->severity === 'info',
-                                                            'bg-emerald-500/15 text-emerald-300' => $notification->severity === 'success',
-                                                            'bg-violet-500/15 text-violet-300' => $notification->severity === 'notice',
-                                                            'bg-amber-500/15 text-amber-300' => $notification->severity === 'warning',
-                                                            'bg-rose-500/15 text-rose-300' => in_array($notification->severity, ['error', 'urgent'], true),
-                                                        ])>
+                                                        <span
+                                                            class="ui-notification-preview-pill ui-notification-preview-pill-{{ $notificationSeveritySemantic }}"
+                                                            data-notification-preview-severity="{{ $notificationSeveritySemantic }}"
+                                                        >
                                                             {{ $notification->severity }}
                                                         </span>
 

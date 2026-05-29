@@ -954,17 +954,20 @@
     }
 
     .ui-notification-trigger:focus-visible {
-        outline: 2px solid color-mix(in srgb, var(--ui-action-info-border-hover) 72%, transparent);
+        outline: 2px solid color-mix(in srgb, var(--ui-action-outline-notice-border) 72%, transparent);
         outline-offset: 2px;
     }
 
     .ui-notification-trigger[data-notification-trigger-unread='true'] {
-        border-color: color-mix(in srgb, var(--ui-action-info-border-hover) 46%, var(--ui-border-default) 54%);
-        background-color: color-mix(in srgb, var(--ui-surface-elevated) 92%, var(--ui-action-info-bg-hover) 8%);
+        border-color: color-mix(in srgb, var(--ui-action-neutral-border-hover) 82%, transparent);
+        background-color: color-mix(in srgb, var(--ui-surface-elevated) 96%, var(--ui-action-soft-neutral-bg-hover) 4%);
         color: var(--ui-text-strong);
-        box-shadow:
-            0 0 0 1px color-mix(in srgb, var(--ui-action-info-border) 24%, transparent),
-            0 16px 34px color-mix(in srgb, var(--ui-shadow-color) 16%, transparent);
+        box-shadow: 0 14px 28px color-mix(in srgb, var(--ui-shadow-color) 14%, transparent);
+    }
+
+    .ui-notification-trigger[data-notification-trigger-unread='true']:hover {
+        border-color: color-mix(in srgb, var(--ui-action-outline-notice-border) 48%, var(--ui-action-neutral-border-hover) 52%);
+        background-color: color-mix(in srgb, var(--ui-surface-elevated) 90%, var(--ui-action-soft-notice-bg-hover) 10%);
     }
 
     .ui-notification-trigger-icon {
@@ -973,21 +976,56 @@
     }
 
     .ui-notification-trigger[data-notification-trigger-unread='true'] .ui-notification-trigger-icon {
-        color: var(--ui-action-info-border-hover);
+        color: var(--ui-action-outline-notice-text);
     }
 
     .ui-notification-trigger-badge {
         @apply absolute -right-1.5 -top-1.5 min-w-[1.5rem] rounded-full px-1.5 py-0.5 text-center text-[10px] font-semibold leading-none transition;
-        border: 1px solid rgb(14 165 233);
-        background-color: rgb(14 165 233);
-        color: rgb(248 250 252);
-        box-shadow: 0 8px 20px color-mix(in srgb, var(--ui-shadow-color) 16%, transparent);
+        border: 1px solid var(--ui-status-notice-solid-bg);
+        background-color: var(--ui-status-notice-solid-bg);
+        color: var(--ui-status-solid-text);
+        box-shadow: 0 8px 18px color-mix(in srgb, var(--ui-shadow-color) 18%, transparent);
     }
 
-    html[data-theme-resolved='dark'] .ui-notification-trigger-badge {
-        border-color: rgb(167 249 255 / 0.88);
-        background-color: rgb(110 243 255 / 0.94);
-        color: rgb(8 47 73);
+    .ui-notification-preview-pill {
+        @apply inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.15em];
+        border-color: color-mix(in srgb, currentColor 18%, transparent);
+    }
+
+    .ui-notification-preview-pill-unread {
+        background-color: color-mix(in srgb, var(--ui-status-neutral-bg) 82%, var(--ui-surface) 18%);
+        color: var(--ui-text-secondary);
+        border-color: color-mix(in srgb, var(--ui-border-default) 82%, transparent);
+    }
+
+    .ui-notification-preview-pill-neutral {
+        background-color: var(--ui-status-neutral-bg);
+        color: var(--ui-status-neutral-text);
+    }
+
+    .ui-notification-preview-pill-info {
+        background-color: var(--ui-status-info-bg);
+        color: var(--ui-status-info-text);
+    }
+
+    .ui-notification-preview-pill-success {
+        background-color: var(--ui-status-success-bg);
+        color: var(--ui-status-success-text);
+    }
+
+    .ui-notification-preview-pill-notice {
+        background-color: var(--ui-status-notice-bg);
+        color: var(--ui-status-notice-text);
+    }
+
+    .ui-notification-preview-pill-warning {
+        background-color: var(--ui-status-warning-bg);
+        color: var(--ui-status-warning-text);
+    }
+
+    .ui-notification-preview-pill-danger {
+        background-color: var(--ui-status-danger-bg);
+        color: var(--ui-status-danger-text);
     }
 
     .ui-table-sort {

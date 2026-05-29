@@ -5,8 +5,9 @@
 ## In Progress
 
 ## Implemented Pending Review
-- [x] Restored outside-click dismissal for the table filter pop-up so clicking the page outside the pop-up shell closes it consistently again, while keeping the current toggle path intact.
-- [x] Updated the header notification trigger unread state so the full control now carries the unread treatment in both light and dark mode: tinted button shell, matching unread-accent bell icon, and a stronger unread count badge while the zero-unread state remains subdued.
+- [ ] Retune the light-mode notification dropdown severity labels so the pills read clearly against the light card backgrounds; keep the existing semantic color mapping, but darken the fill/text contrast enough that `notice`, `info`, and related label batches no longer wash out in the light shell.
+- [ ] Rework the unread notification visual treatment again so unread state does not rely so heavily on the current primary blue direction; keep the unread signal distinct, but reduce the way the blue blends into the surrounding shell/background.
+- [ ] Audit the main notification trigger highlight / hover-outline treatment and remove or soften any always-on visual ring that makes the control read as pre-hovered when it should only show that emphasis intentionally.
 
 ## Blocked
 
@@ -14,6 +15,7 @@
 - [ ] Record Phase 2 follow-up scope for a full UI standards pass across existing views and elements in a later Phase 2 batch.
 
 ## Passed Review
+- [x] Added a visible `Mark all as read` action to the notifications pop-out / dropdown surface so the quick-access menu supports the same bulk-clear path as the full notifications view.
 - [x] Added visible icon + text button examples to the UI Reference `Buttons + icons` surface so the library demonstrates canonical text-bearing action buttons alongside icon-only controls.
 - [x] Replaced table pagination and rows-per-page full-page reloads with the existing in-place table refresh path plus the canonical table loading state where feasible inside the current Batch A table baseline, without broad table-system redesign.
 - [x] Changed the dark-mode table drawer close control to the neutral outline button treatment so the button keeps a visible border and matches the drawer/modal action baseline.
@@ -30,5 +32,8 @@
 - [x] Made the current table filter button perform the expected filter-panel toggle/action instead of remaining inert.
 - [x] Added automatic timeout dismissal for toast pop-ups after a short interval in the 15-20 second range while preserving manual dismiss behavior.
 - [x] Replaced the badge-style sortable-header treatment with an icon-led active-sort indicator so unsorted columns show a neutral sort glyph and the active column shows a directional arrow with clearer emphasis.
+- [x] Restored outside-click dismissal for the table filter pop-up so clicking the page outside the pop-up shell closes it consistently again, while keeping the current toggle path intact.
 
 ## Closed
+- [x] Increase the unread count badge opacity/contrast on the header notification trigger, especially in dark mode where the current badge background is still too transparent.
+- [x] Rework the header notification trigger unread-state treatment to follow an established menu-button-plus-badge direction instead of relying mainly on tinting the bell/control shell; keep the trigger close to a standard menu button and let the numeric unread badge carry the primary unread signal.

@@ -180,6 +180,9 @@ class PlatformNotificationsTest extends TestCase
             ->assertSee('data-notification-trigger-unread="true"', false)
             ->assertSee('data-notification-trigger-badge-hidden="false"', false)
             ->assertSee('data-notification-mark-all-enabled="true"', false)
+            ->assertSee('data-notification-preview-unread', false)
+            ->assertSee('data-notification-preview-severity="notice"', false)
+            ->assertSee('class="ui-notification-preview-pill ui-notification-preview-pill-notice"', false)
             ->assertSee('1 unread notifications', false)
             ->assertSee('Mark all as read', false)
             ->assertSee('class="ui-notification-trigger-badge"', false);

@@ -171,7 +171,7 @@ Checklist:
 
 * [x] Table baseline
   Status: passed review
-  Note: active sort-state visibility from worklog `2-A-0007` is approved; filter outside-click dismissal was refreshed in worklog `2-A-0008` and is pending manual review.
+  Note: active sort-state visibility from worklog `2-A-0007` is approved; filter outside-click dismissal from worklog `2-A-0008` is approved.
   - page title/subtitle row
   - optional stats row
   - control row structure
@@ -238,9 +238,9 @@ Checklist:
 
 * [x] Sidebar baseline
   Status: passed review
-* [x] Header baseline
-  Status: passed review
-  Note: notification-trigger unread-state treatment refreshed in worklog `2-A-0008`; pending manual review.
+* [ ] Header baseline
+  Status: implemented (pending manual review)
+  Note: worklog `2-A-0010` retuned the light-mode notification pills, shifted unread emphasis away from the prior blue treatment, and softened the resting trigger outline; the refreshed header surface still requires manual visual re-review.
 * [x] Account Menu baseline
   Status: passed review
 * [x] Mobile Nav Dock baseline

@@ -1,6 +1,19 @@
 # Notes
 
 ## Findings
+- Worklog `2-A-0010` replaced the hard-coded notification preview severity pills with token-backed pill styling so the dropdown labels inherit the shared light/dark semantic contrast instead of washed-out ad hoc violet/sky text.
+- Worklog `2-A-0010` retuned unread emphasis away from the prior blue accent by using a stronger notice-family badge/icon treatment while keeping the trigger shell closer to a neutral menu button.
+- Worklog `2-A-0010` removed the always-on unread-state ring effect from the notification trigger and reserved stronger emphasis for actual hover and focus states.
+- Docker verification passed for `PlatformNotificationsTest` after the shared notification trigger/dropdown retune (10 tests / 41 assertions).
+- The validated WSL Ubuntu build path succeeded again for the notification visual retune; the trailing `wsl: Failed to translate 'G:\Program Files\Git\cmd'` message still appeared after the successful Vite build and did not block artifacts.
+- Manual review approved the `Mark all as read` path as working as intended, so that item no longer belongs in `Implemented Pending Review`.
+- Manual review still found the unread notification visual treatment too blended into the surrounding shell, with the current primary-blue direction reading too close to the background.
+- Manual review also raised concern that the main notification trigger may still be carrying too much highlight / outline emphasis around the icon in its resting unread state.
+- Manual review confirmed that the three current notification dropdown/trigger queue items were already implemented by worklog `2-A-0009`, so the queue state needed correction from `Ready To Implement` to `Implemented Pending Review`.
+- Manual review also found that the light-mode notification dropdown severity labels are still too light against the current light card backgrounds, especially for softer semantic batches like `notice` and `info`.
+- Worklog `2-A-0009` implemented the remaining header notification review items inside the shared shell surface: the notifications pop-out now exposes a visible `Mark all as read` action, the zero-unread state hides the numeric badge, and unread emphasis now relies on a stronger badge plus a more neutral menu-button shell.
+- Docker verification passed for `PlatformNotificationsTest` and `PlatformUiReferenceTest` after the shared notification trigger/dropdown changes (17 tests / 78 assertions).
+- The validated WSL Ubuntu frontend build path also succeeded for this pass; the trailing `wsl: Failed to translate 'G:\Program Files\Git\cmd'` message appeared after a successful Vite build and did not block artifact generation.
 - Manual review approved the latest change-queue items for visible icon + text button examples in the UI Reference, in-place table pagination/page-size refresh behavior, and the dark-mode drawer close outline treatment; those items no longer require re-review.
 - The current Batch A implementation surface already existed, but it had material Tier 1 gaps: missing checkbox/radio/switch coverage, no visible utility primitives section, and a status validation example using a non-contract `solid` badge variant.
 - Core platform tables and dashboard controls were only partially aligned with Tier 1 shared primitives; this pass moved key surfaces toward the canonical actions/badges/input controls already in the app.
@@ -72,9 +85,23 @@
 - The two remaining ready change-queue items were both centralized implementation drift in existing shared surfaces: table filter outside-click dismissal in `resources/js/app.js` and unread-state visibility in the shared header notification trigger.
 - Docker verification passed for the remaining queue pass after correcting the container test path, covering both `PlatformNotificationsTest` and `PlatformUiReferenceTest` in one targeted run.
 - The Windows-host `npm run build` path is still unreliable in this shell because the native Tailwind bindings do not load cleanly here, but the same Vite build succeeds through the validated WSL Ubuntu path.
+- Manual review approved the restored outside-click dismissal for the table filter pop-up.
+- A follow-up review of third-party guidance points toward a standard menu-button-plus-badge treatment for the notification trigger: keep the trigger closer to a normal menu button and let the numeric badge carry the primary unread signal, rather than relying mainly on tinting the bell/control shell.
 
 
 ## Decisions
+- Keep the current fix inside the shared notification surface by replacing only the preview-pill styling and unread trigger accent treatment rather than introducing a new notification component or token family.
+- Reuse the existing notice semantic family for unread emphasis so the trigger stops leaning on the current primary-blue direction while staying distinct from danger/error messaging.
+- Remove the unread-state outer ring treatment from the resting trigger and let hover/focus provide the stronger affordance instead of making unread state look pre-hovered.
+- Close the two older `Implemented Pending Review` notification items for badge opacity and menu-button-plus-badge direction because the current `Ready To Implement` items now supersede them with more precise visual follow-up scope.
+- Move the `Mark all as read` queue item from `Implemented Pending Review` to `Passed Review` based on explicit manual approval.
+- Re-open the unread-state follow-up with a stricter visual direction: reduce the current primary-blue dependence and separate unread state more clearly from the background.
+- Add a distinct follow-up item to evaluate the main notification trigger highlight / outline treatment so the resting control does not look pre-hovered unless that emphasis is intentional.
+- Correct the change-queue lifecycle so the three worklog `2-A-0009` notification items sit in `Implemented Pending Review` until a human re-review clears them.
+- Add a new `Ready To Implement` follow-up for the light-mode notification dropdown severity-label contrast issue rather than folding it into the already-implemented worklog `2-A-0009` items.
+- Keep the zero-unread notification state visually subdued by hiding the numeric badge and disabling the quick-access bulk-read action when there is nothing unread.
+- Reuse the existing `platform.notifications.mark-all-read` route in the notifications pop-out rather than introducing a second bulk-clear path.
+- Reduce unread-state shell tinting in the shared notification trigger and let the badge/icon carry the primary unread emphasis so the control reads more like a standard menu button plus badge.
 - Move the approved icon + text button examples, in-place table refresh behavior, and drawer close outline treatment items from `Implemented Pending Review` to `Passed Review`; keep Batch A in `PARTIAL` because other manual-review issues remain open.
 - Keep Batch A scoped to implementation changes in the app/UI surface and do not modify canonical planning or standards docs during this pass.
 - Treat the badge `solid` variant as out of Batch A contract scope and normalize Tier 1 badge examples to base/outline only.
@@ -142,9 +169,13 @@
 - Move the sortable-header follow-up item from `Implemented Pending Review` to `Passed Review` based on confirmed approval in both themes, while leaving the unrelated table-filter and notification-trigger findings open for the next work pass.
 - Keep the final two Batch A implementation fixes centralized in the shared JS/layout layer instead of patching individual table or page surfaces, because both issues are shared baseline behavior drift rather than page-specific defects.
 - Move the table-filter outside-click dismissal and notification-trigger unread-state items from `Ready To Implement` to `Implemented Pending Review` once the shared implementation, targeted Docker tests, and WSL build check pass.
+- Move the approved table-filter outside-click dismissal item from `Implemented Pending Review` to `Passed Review`.
+- Re-open the header notification trigger follow-up as a new ready queue with a tighter direction: add `Mark all as read`, strengthen the unread badge itself, and reduce reliance on control-shell tinting in favor of a clearer menu-button-plus-badge pattern.
 
 
 ## Risks / Questions
+- Another manual visual review pass is still required for the refreshed notification dropdown/trigger surface before these three queue items can move beyond `Implemented Pending Review`.
+- Manual functional review is now passing for the `Mark all as read` path, but another manual visual review pass is still required for the refreshed header notification trigger/pop-out surface before `UI Reference Validation` and `Batch A Exit Criteria` can close.
 - Manual visual review is still required for hover/focus/active states, overlay focus return, shell navigation behavior, and responsive layout behavior.
 - Manual functional validation is still required before the batch can be finalized, even though the implementation surface is now ready for that review pass.
 - Docker verification was re-run after this final UI Reference cleanup pass and the targeted suite remained green.
@@ -183,5 +214,6 @@
 - This session also could not complete the staging deploy step because the documented `platform-prod-wsl` helper path depends on WSL/SSH configuration that is not available from the current Windows execution environment.
 - Manual visual review is still required for the refreshed icon-led sortable-header treatment, and the remaining functional Batch A blocker is still the separate outside-click filter dismissal issue already in the ready queue.
 - This session also could not complete the follow-up staging deploy step for worklog `2-A-0007` because the Codex shell cannot see the installed `Ubuntu` WSL distro or the WSL-only SSH alias even though the user-side interactive shell can.
-- The sortable-header issue is no longer an open blocker; the remaining open review blockers are the table-filter outside-click dismissal and the unread notification-trigger treatment.
-- Another manual review pass is now required for the refreshed table-filter outside-click dismissal and the unread notification-trigger treatment before `UI Reference Validation` and `Batch A Exit Criteria` can be closed.
+- The sortable-header issue is no longer an open blocker, and the table-filter outside-click dismissal issue is now closed as well; the remaining active review blocker is the unread notification-trigger/pop-out refinement pass.
+- Another manual review pass will still be required for the notification-trigger follow-up before `UI Reference Validation` and `Batch A Exit Criteria` can be closed.
+- The table-filter outside-click issue is now closed; the remaining active Batch A blocker is the notification trigger/pop-out refinement pass.

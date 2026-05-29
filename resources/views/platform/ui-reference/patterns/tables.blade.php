@@ -14,18 +14,22 @@
             string $currentSort,
             string $currentDirection,
             string $column,
-            string $defaultDirection = 'asc',
-            string $ascendingLabel = 'A-Z',
-            string $descendingLabel = 'Z-A'
+            string $defaultDirection = 'asc'
         ): array {
             $active = $currentSort === $column;
+            $nextDirection = $active && $currentDirection === 'asc' ? 'desc' : 'asc';
+            $initialDirection = $active ? $currentDirection : $defaultDirection;
 
             return [
                 'active' => $active,
-                'next' => $active && $currentDirection === 'asc' ? 'desc' : 'asc',
-                'indicator' => $active
-                    ? ($currentDirection === 'asc' ? $ascendingLabel : $descendingLabel)
-                    : ($defaultDirection === 'asc' ? $ascendingLabel : $descendingLabel),
+                'aria' => $active ? ($currentDirection === 'asc' ? 'ascending' : 'descending') : null,
+                'next' => $nextDirection,
+                'icon_component' => $active
+                    ? ($currentDirection === 'asc' ? 'heroicon-o-arrow-small-up' : 'heroicon-o-arrow-small-down')
+                    : 'heroicon-o-arrows-up-down',
+                'sr_label' => $active
+                    ? 'Sorted '.($currentDirection === 'asc' ? 'ascending' : 'descending').'. Activate to sort '.($nextDirection === 'asc' ? 'ascending' : 'descending').'.'
+                    : 'Not currently sorted. Activate to sort '.($initialDirection === 'asc' ? 'ascending' : 'descending').'.',
             ];
         };
     @endphp
@@ -156,43 +160,43 @@
                         <tr class="text-left text-xs uppercase tracking-[0.2em] text-slate-500">
                             @php($workspaceNameSort = $sortMeta($workspaceSort, $workspaceDirection, 'name'))
                             @php($workspaceOwnerSort = $sortMeta($workspaceSort, $workspaceDirection, 'owner'))
-                            @php($workspacePolicySort = $sortMeta($workspaceSort, $workspaceDirection, 'policy_count', 'desc', 'Low-High', 'High-Low'))
-                            @php($workspaceUpdatedSort = $sortMeta($workspaceSort, $workspaceDirection, 'updated_at_timestamp', 'desc', 'Oldest', 'Newest'))
-                            <th class="px-5 py-3" @if ($workspaceNameSort['active']) aria-sort="{{ $workspaceDirection === 'asc' ? 'ascending' : 'descending' }}" @endif>
+                            @php($workspacePolicySort = $sortMeta($workspaceSort, $workspaceDirection, 'policy_count', 'desc'))
+                            @php($workspaceUpdatedSort = $sortMeta($workspaceSort, $workspaceDirection, 'updated_at_timestamp', 'desc'))
+                            <th class="px-5 py-3" @if ($workspaceNameSort['aria']) aria-sort="{{ $workspaceNameSort['aria'] }}" @endif>
                                 <a href="{{ $tablesUrl(['workspace_sort' => 'name', 'workspace_direction' => $workspaceNameSort['next'], 'workspace_page' => 1], '#workspace-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $workspaceNameSort['active']])>
                                     <span>Name</span>
-                                    @if ($workspaceNameSort['active'])
-                                        <span class="ui-table-sort-state">Sorted</span>
-                                    @endif
-                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $workspaceNameSort['indicator'] }}</span>
+                                    <span class="sr-only">{{ $workspaceNameSort['sr_label'] }}</span>
+                                    <span class="ui-table-sort-icon" aria-hidden="true">
+                                        <x-dynamic-component :component="$workspaceNameSort['icon_component']" class="h-3.5 w-3.5" />
+                                    </span>
                                 </a>
                             </th>
-                            <th class="px-5 py-3" @if ($workspaceOwnerSort['active']) aria-sort="{{ $workspaceDirection === 'asc' ? 'ascending' : 'descending' }}" @endif>
+                            <th class="px-5 py-3" @if ($workspaceOwnerSort['aria']) aria-sort="{{ $workspaceOwnerSort['aria'] }}" @endif>
                                 <a href="{{ $tablesUrl(['workspace_sort' => 'owner', 'workspace_direction' => $workspaceOwnerSort['next'], 'workspace_page' => 1], '#workspace-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $workspaceOwnerSort['active']])>
                                     <span>Owner</span>
-                                    @if ($workspaceOwnerSort['active'])
-                                        <span class="ui-table-sort-state">Sorted</span>
-                                    @endif
-                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $workspaceOwnerSort['indicator'] }}</span>
+                                    <span class="sr-only">{{ $workspaceOwnerSort['sr_label'] }}</span>
+                                    <span class="ui-table-sort-icon" aria-hidden="true">
+                                        <x-dynamic-component :component="$workspaceOwnerSort['icon_component']" class="h-3.5 w-3.5" />
+                                    </span>
                                 </a>
                             </th>
-                            <th class="px-5 py-3" @if ($workspacePolicySort['active']) aria-sort="{{ $workspaceDirection === 'asc' ? 'ascending' : 'descending' }}" @endif>
+                            <th class="px-5 py-3" @if ($workspacePolicySort['aria']) aria-sort="{{ $workspacePolicySort['aria'] }}" @endif>
                                 <a href="{{ $tablesUrl(['workspace_sort' => 'policy_count', 'workspace_direction' => $workspacePolicySort['next'], 'workspace_page' => 1], '#workspace-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $workspacePolicySort['active']])>
                                     <span>Policies</span>
-                                    @if ($workspacePolicySort['active'])
-                                        <span class="ui-table-sort-state">Sorted</span>
-                                    @endif
-                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $workspacePolicySort['indicator'] }}</span>
+                                    <span class="sr-only">{{ $workspacePolicySort['sr_label'] }}</span>
+                                    <span class="ui-table-sort-icon" aria-hidden="true">
+                                        <x-dynamic-component :component="$workspacePolicySort['icon_component']" class="h-3.5 w-3.5" />
+                                    </span>
                                 </a>
                             </th>
                             <th class="px-5 py-3">Status</th>
-                            <th class="px-5 py-3" @if ($workspaceUpdatedSort['active']) aria-sort="{{ $workspaceDirection === 'asc' ? 'ascending' : 'descending' }}" @endif>
+                            <th class="px-5 py-3" @if ($workspaceUpdatedSort['aria']) aria-sort="{{ $workspaceUpdatedSort['aria'] }}" @endif>
                                 <a href="{{ $tablesUrl(['workspace_sort' => 'updated_at_timestamp', 'workspace_direction' => $workspaceUpdatedSort['next'], 'workspace_page' => 1], '#workspace-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $workspaceUpdatedSort['active']])>
                                     <span>Updated</span>
-                                    @if ($workspaceUpdatedSort['active'])
-                                        <span class="ui-table-sort-state">Sorted</span>
-                                    @endif
-                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $workspaceUpdatedSort['indicator'] }}</span>
+                                    <span class="sr-only">{{ $workspaceUpdatedSort['sr_label'] }}</span>
+                                    <span class="ui-table-sort-icon" aria-hidden="true">
+                                        <x-dynamic-component :component="$workspaceUpdatedSort['icon_component']" class="h-3.5 w-3.5" />
+                                    </span>
                                 </a>
                             </th>
                             <th class="px-5 py-3 sr-only">Actions</th>
@@ -422,46 +426,46 @@
                 <table class="min-w-[920px] w-full divide-y divide-slate-800">
                     <thead class="bg-slate-900">
                         <tr class="text-left text-xs uppercase tracking-[0.2em] text-slate-500">
-                            @php($auditOccurredSort = $sortMeta($auditSort, $auditDirection, 'occurred_at_timestamp', 'desc', 'Oldest', 'Newest'))
+                            @php($auditOccurredSort = $sortMeta($auditSort, $auditDirection, 'occurred_at_timestamp', 'desc'))
                             @php($auditEventSort = $sortMeta($auditSort, $auditDirection, 'event_type'))
                             @php($auditActorSort = $sortMeta($auditSort, $auditDirection, 'actor_label'))
                             @php($auditRouteSort = $sortMeta($auditSort, $auditDirection, 'route'))
-                            <th class="px-5 py-3" @if ($auditOccurredSort['active']) aria-sort="{{ $auditDirection === 'asc' ? 'ascending' : 'descending' }}" @endif>
+                            <th class="px-5 py-3" @if ($auditOccurredSort['aria']) aria-sort="{{ $auditOccurredSort['aria'] }}" @endif>
                                 <a href="{{ $tablesUrl(['audit_sort' => 'occurred_at_timestamp', 'audit_direction' => $auditOccurredSort['next'], 'audit_page' => 1], '#audit-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $auditOccurredSort['active']])>
                                     <span>Occurred</span>
-                                    @if ($auditOccurredSort['active'])
-                                        <span class="ui-table-sort-state">Sorted</span>
-                                    @endif
-                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $auditOccurredSort['indicator'] }}</span>
+                                    <span class="sr-only">{{ $auditOccurredSort['sr_label'] }}</span>
+                                    <span class="ui-table-sort-icon" aria-hidden="true">
+                                        <x-dynamic-component :component="$auditOccurredSort['icon_component']" class="h-3.5 w-3.5" />
+                                    </span>
                                 </a>
                             </th>
-                            <th class="px-5 py-3" @if ($auditEventSort['active']) aria-sort="{{ $auditDirection === 'asc' ? 'ascending' : 'descending' }}" @endif>
+                            <th class="px-5 py-3" @if ($auditEventSort['aria']) aria-sort="{{ $auditEventSort['aria'] }}" @endif>
                                 <a href="{{ $tablesUrl(['audit_sort' => 'event_type', 'audit_direction' => $auditEventSort['next'], 'audit_page' => 1], '#audit-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $auditEventSort['active']])>
                                     <span>Event</span>
-                                    @if ($auditEventSort['active'])
-                                        <span class="ui-table-sort-state">Sorted</span>
-                                    @endif
-                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $auditEventSort['indicator'] }}</span>
+                                    <span class="sr-only">{{ $auditEventSort['sr_label'] }}</span>
+                                    <span class="ui-table-sort-icon" aria-hidden="true">
+                                        <x-dynamic-component :component="$auditEventSort['icon_component']" class="h-3.5 w-3.5" />
+                                    </span>
                                 </a>
                             </th>
-                            <th class="px-5 py-3" @if ($auditActorSort['active']) aria-sort="{{ $auditDirection === 'asc' ? 'ascending' : 'descending' }}" @endif>
+                            <th class="px-5 py-3" @if ($auditActorSort['aria']) aria-sort="{{ $auditActorSort['aria'] }}" @endif>
                                 <a href="{{ $tablesUrl(['audit_sort' => 'actor_label', 'audit_direction' => $auditActorSort['next'], 'audit_page' => 1], '#audit-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $auditActorSort['active']])>
                                     <span>Actor</span>
-                                    @if ($auditActorSort['active'])
-                                        <span class="ui-table-sort-state">Sorted</span>
-                                    @endif
-                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $auditActorSort['indicator'] }}</span>
+                                    <span class="sr-only">{{ $auditActorSort['sr_label'] }}</span>
+                                    <span class="ui-table-sort-icon" aria-hidden="true">
+                                        <x-dynamic-component :component="$auditActorSort['icon_component']" class="h-3.5 w-3.5" />
+                                    </span>
                                 </a>
                             </th>
                             <th class="px-5 py-3">Result</th>
                             <th class="px-5 py-3">Severity</th>
-                            <th class="px-5 py-3" @if ($auditRouteSort['active']) aria-sort="{{ $auditDirection === 'asc' ? 'ascending' : 'descending' }}" @endif>
+                            <th class="px-5 py-3" @if ($auditRouteSort['aria']) aria-sort="{{ $auditRouteSort['aria'] }}" @endif>
                                 <a href="{{ $tablesUrl(['audit_sort' => 'route', 'audit_direction' => $auditRouteSort['next'], 'audit_page' => 1], '#audit-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $auditRouteSort['active']])>
                                     <span>Route</span>
-                                    @if ($auditRouteSort['active'])
-                                        <span class="ui-table-sort-state">Sorted</span>
-                                    @endif
-                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $auditRouteSort['indicator'] }}</span>
+                                    <span class="sr-only">{{ $auditRouteSort['sr_label'] }}</span>
+                                    <span class="ui-table-sort-icon" aria-hidden="true">
+                                        <x-dynamic-component :component="$auditRouteSort['icon_component']" class="h-3.5 w-3.5" />
+                                    </span>
                                 </a>
                             </th>
                             <th class="px-5 py-3 sr-only">Actions</th>
@@ -632,46 +636,46 @@
                 <table class="min-w-[920px] w-full divide-y divide-slate-800">
                     <thead class="bg-slate-900">
                         <tr class="text-left text-xs uppercase tracking-[0.2em] text-slate-500">
-                            @php($errorOccurredSort = $sortMeta($errorSort, $errorDirection, 'occurred_at_timestamp', 'desc', 'Oldest', 'Newest'))
+                            @php($errorOccurredSort = $sortMeta($errorSort, $errorDirection, 'occurred_at_timestamp', 'desc'))
                             @php($errorMessageSort = $sortMeta($errorSort, $errorDirection, 'message'))
                             @php($errorExceptionSort = $sortMeta($errorSort, $errorDirection, 'exception_class'))
                             @php($errorRequestSort = $sortMeta($errorSort, $errorDirection, 'request_id'))
-                            <th class="px-5 py-3" @if ($errorOccurredSort['active']) aria-sort="{{ $errorDirection === 'asc' ? 'ascending' : 'descending' }}" @endif>
+                            <th class="px-5 py-3" @if ($errorOccurredSort['aria']) aria-sort="{{ $errorOccurredSort['aria'] }}" @endif>
                                 <a href="{{ $tablesUrl(['error_sort' => 'occurred_at_timestamp', 'error_direction' => $errorOccurredSort['next'], 'error_page' => 1], '#error-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $errorOccurredSort['active']])>
                                     <span>Occurred</span>
-                                    @if ($errorOccurredSort['active'])
-                                        <span class="ui-table-sort-state">Sorted</span>
-                                    @endif
-                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $errorOccurredSort['indicator'] }}</span>
+                                    <span class="sr-only">{{ $errorOccurredSort['sr_label'] }}</span>
+                                    <span class="ui-table-sort-icon" aria-hidden="true">
+                                        <x-dynamic-component :component="$errorOccurredSort['icon_component']" class="h-3.5 w-3.5" />
+                                    </span>
                                 </a>
                             </th>
-                            <th class="px-5 py-3" @if ($errorMessageSort['active']) aria-sort="{{ $errorDirection === 'asc' ? 'ascending' : 'descending' }}" @endif>
+                            <th class="px-5 py-3" @if ($errorMessageSort['aria']) aria-sort="{{ $errorMessageSort['aria'] }}" @endif>
                                 <a href="{{ $tablesUrl(['error_sort' => 'message', 'error_direction' => $errorMessageSort['next'], 'error_page' => 1], '#error-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $errorMessageSort['active']])>
                                     <span>Message</span>
-                                    @if ($errorMessageSort['active'])
-                                        <span class="ui-table-sort-state">Sorted</span>
-                                    @endif
-                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $errorMessageSort['indicator'] }}</span>
+                                    <span class="sr-only">{{ $errorMessageSort['sr_label'] }}</span>
+                                    <span class="ui-table-sort-icon" aria-hidden="true">
+                                        <x-dynamic-component :component="$errorMessageSort['icon_component']" class="h-3.5 w-3.5" />
+                                    </span>
                                 </a>
                             </th>
-                            <th class="px-5 py-3" @if ($errorExceptionSort['active']) aria-sort="{{ $errorDirection === 'asc' ? 'ascending' : 'descending' }}" @endif>
+                            <th class="px-5 py-3" @if ($errorExceptionSort['aria']) aria-sort="{{ $errorExceptionSort['aria'] }}" @endif>
                                 <a href="{{ $tablesUrl(['error_sort' => 'exception_class', 'error_direction' => $errorExceptionSort['next'], 'error_page' => 1], '#error-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $errorExceptionSort['active']])>
                                     <span>Exception</span>
-                                    @if ($errorExceptionSort['active'])
-                                        <span class="ui-table-sort-state">Sorted</span>
-                                    @endif
-                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $errorExceptionSort['indicator'] }}</span>
+                                    <span class="sr-only">{{ $errorExceptionSort['sr_label'] }}</span>
+                                    <span class="ui-table-sort-icon" aria-hidden="true">
+                                        <x-dynamic-component :component="$errorExceptionSort['icon_component']" class="h-3.5 w-3.5" />
+                                    </span>
                                 </a>
                             </th>
                             <th class="px-5 py-3">Severity</th>
                             <th class="px-5 py-3">Environment</th>
-                            <th class="px-5 py-3" @if ($errorRequestSort['active']) aria-sort="{{ $errorDirection === 'asc' ? 'ascending' : 'descending' }}" @endif>
+                            <th class="px-5 py-3" @if ($errorRequestSort['aria']) aria-sort="{{ $errorRequestSort['aria'] }}" @endif>
                                 <a href="{{ $tablesUrl(['error_sort' => 'request_id', 'error_direction' => $errorRequestSort['next'], 'error_page' => 1], '#error-table-baseline') }}" @class(['ui-table-sort', 'is-active' => $errorRequestSort['active']])>
                                     <span>Request</span>
-                                    @if ($errorRequestSort['active'])
-                                        <span class="ui-table-sort-state">Sorted</span>
-                                    @endif
-                                    <span class="ui-table-sort-indicator" aria-hidden="true">{{ $errorRequestSort['indicator'] }}</span>
+                                    <span class="sr-only">{{ $errorRequestSort['sr_label'] }}</span>
+                                    <span class="ui-table-sort-icon" aria-hidden="true">
+                                        <x-dynamic-component :component="$errorRequestSort['icon_component']" class="h-3.5 w-3.5" />
+                                    </span>
                                 </a>
                             </th>
                             <th class="px-5 py-3 sr-only">Actions</th>

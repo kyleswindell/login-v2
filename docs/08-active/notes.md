@@ -61,9 +61,13 @@
 - The darker toast pass remained implementation-only because it reused the existing semantic toast surfaces and overlay mount rather than adding a new notification behavior or token family.
 - Manual review approved the latest implemented pending-review items covering the custom-sidebar sticky host, shared select indicator alignment, live selectable-group sync, darker dark-mode toast backgrounds, table filter toggle behavior, and generated-toast timeout dismissal.
 - Manual review found that the current sortable table headers still need a stronger active-state treatment so the sorted column is immediately identifiable and the current sort direction is obvious without relying on subtle label changes alone.
+- Manual review found that the current table filter pop-up does not close when the page is clicked outside the pop-up shell.
+- Manual review found that the header notification trigger still looks too monotone to clearly signal unread notifications, especially on the light-mode shell where the current bell-plus-count treatment does not stand out enough.
 - The sortable-header follow-up pass now adds an explicit `Sorted` state tag, stronger active-chip styling, and `aria-sort` on active headers across the workspace, audit, and error table reference surfaces.
 - Automated verification could not be completed in this session because Docker is not reachable from this environment and the host PHP runtime is missing the `mbstring` extension required to boot Laravel tests.
 - The reviewable sort-state implementation was pushed to `main` as commit `e55cc4b`, but the staging deploy helper could not run from this Windows session because WSL is unavailable here and the documented SSH aliases are not resolvable outside the expected local deployment environment.
+- Manual review of the deployed sort-state pass confirmed that the first remediation was functionally correct but visually too badge-like; the follow-up pass should move to a more standard neutral-sort glyph plus directional active-arrow treatment.
+- Docker verification passed again for `PlatformUiReferenceTest` after replacing the badge-style sort-state treatment with the icon-led sortable-header pattern.
 
 
 ## Decisions
@@ -125,7 +129,10 @@
 - Move the six latest implemented pending-review items into `Passed Review` based on manual approval, but keep Batch A open because the table baseline still needs a clearer active sort indicator.
 - Treat the missing active sort-state visibility as Batch A table-baseline implementation drift inside the existing sortable-header treatment rather than a new Tier 2 pattern or standards decision.
 - Keep the active sort-state remediation inside the existing shared sortable-header treatment and apply it consistently across all UI Reference table baselines rather than inventing per-table variants.
+- Treat the missing table-filter outside-click dismissal as Batch A table-baseline implementation drift inside the existing filter-panel behavior rather than a new pattern or standards decision.
+- Treat the weak notification-trigger unread-state distinction as Batch A shell/navigation implementation drift inside the existing header notification control rather than a new component or standards decision.
 - Record the current pass as pushed but not deployed, and require the next manual-review operator to deploy `main` from the configured staging environment before reviewing the remote surface.
+- Replace the sortable-header `Sorted` badge and tiny text token with a full-width trigger, neutral unsorted arrow glyph, and directional active arrow so the interaction matches common accessible table-sort patterns more closely.
 
 
 ## Risks / Questions
@@ -161,5 +168,8 @@
 - Host-side `npm run build` is not currently usable in this workspace because the local Node install is on unsupported WSL1; Docker feature verification passed, and deploy-time Vite build remains the practical build check for this pass.
 - The sortable table header visibility fix is now implemented and awaiting manual review before `UI Reference Validation` and `Batch A Exit Criteria` can be closed.
 - Another manual review pass is now required for the refreshed sortable table header treatment before `UI Reference Validation` and `Batch A Exit Criteria` can be closed.
+- Another implementation pass is now required for table-filter outside-click dismissal before manual functional review can pass again.
+- Another implementation pass is now required for the header notification trigger unread-state treatment before manual visual review can pass again.
 - This session could not rerun the targeted UI Reference feature suite because both available verification paths were blocked locally: Docker daemon unavailable, host PHP missing `mbstring`.
 - This session also could not complete the staging deploy step because the documented `platform-prod-wsl` helper path depends on WSL/SSH configuration that is not available from the current Windows execution environment.
+- Manual visual review is still required for the refreshed icon-led sortable-header treatment, and the remaining functional Batch A blocker is still the separate outside-click filter dismissal issue already in the ready queue.

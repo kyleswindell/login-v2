@@ -46,7 +46,10 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Policies')
             ->assertSee('Settings')
             ->assertSee('Export')
-            ->assertSee('Sorted', false)
+            ->assertSee('ui-table-sort-icon', false)
+            ->assertDontSee('ui-table-sort-state', false)
+            ->assertSee('Sorted descending. Activate to sort ascending.')
+            ->assertSee('Sorted ascending. Activate to sort descending.')
             ->assertSee('aria-sort="descending"', false)
             ->assertSee('aria-sort="ascending"', false);
 

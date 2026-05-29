@@ -1,11 +1,13 @@
 # Change Queue
 
 ## Ready To Implement
+- [ ] Make the table filter pop-up close when the page is clicked outside the pop-up shell instead of staying open after outside interaction.
+- [ ] Make the header notification trigger read as distinctly unread in both light and dark mode instead of staying too monotone and easy to miss, especially on the light-mode shell.
 
 ## In Progress
 
 ## Implemented Pending Review
-- [x] Added a clearer active-sort indicator to sortable table headers so the current sorted column is visually obvious and the active sort direction is explicit.
+- [x] Replaced the badge-style sortable-header treatment with an icon-led active-sort indicator so unsorted columns show a neutral sort glyph and the active column shows a directional arrow with clearer emphasis.
 
 ## Blocked
 

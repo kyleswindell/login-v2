@@ -171,7 +171,7 @@ Checklist:
 
 * [x] Table baseline
   Status: passed review
-  Note: active sort-state visibility refreshed in worklog `2-A-0006`; pending manual review.
+  Note: active sort-state visibility refreshed again in worklog `2-A-0007`; pending manual review.
   - page title/subtitle row
   - optional stats row
   - control row structure

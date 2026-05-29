@@ -34,7 +34,7 @@ Continue the active Batch A work-batch cycle and replace the current sortable-he
 - Made the sortable header trigger span the full available header width with clearer active emphasis and focus-visible treatment.
 - Kept `aria-sort` on the active header cell and added screen-reader copy that announces current direction and the next sort action.
 - Updated the targeted UI Reference feature test to validate the new icon-based sort treatment and active sort semantics.
-- Re-ran the targeted Docker feature suite successfully and deployed the refreshed pass to staging for manual review.
+- Re-ran the targeted Docker feature suite successfully and pushed the refreshed pass to `main` for manual review.
 
 ## Checklist Impact
 
@@ -56,9 +56,10 @@ Continue the active Batch A work-batch cycle and replace the current sortable-he
 ## Commit / Deploy Status
 
 - Commit: Yes
-- Deploy: Yes
+- Deploy: No
 
 ## Notes
 
 - This pass stayed inside the existing Batch A table-baseline scope and did not introduce a new table pattern, token family, or feature behavior.
 - The visual direction follows common accessible sortable-table patterns: active `aria-sort` semantics, a distinct unsorted glyph, and a directional active arrow instead of a status badge.
+- The validated PowerShell-to-WSL deploy command still cannot run from this Codex shell because the sandboxed environment cannot see the installed `Ubuntu` distro or the WSL-only SSH alias, so staging deployment still needs to be executed from the interactive local shell.

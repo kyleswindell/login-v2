@@ -48,6 +48,7 @@ Continue the active Batch A work-batch cycle and resolve the remaining ready cha
 
 - Docker-based verification could not run in this session because the Docker daemon is not reachable from the current environment.
 - Host-side Laravel test execution could not run because the local PHP runtime is missing the `mbstring` extension required during framework boot.
+- The documented staging deploy helper could not run from this session because WSL is not available here and the expected SSH alias path is not configured in this Windows environment.
 
 ## Deferred Items
 
@@ -55,9 +56,10 @@ Continue the active Batch A work-batch cycle and resolve the remaining ready cha
 
 ## Commit / Deploy Status
 
-- Commit: No
+- Commit: Yes
 - Deploy: No
 
 ## Notes
 
 - This pass stayed inside the existing Batch A sortable-header treatment and did not introduce a new table pattern, token family, or pagination model.
+- The implementation was pushed to `main` as commit `e55cc4b`, but staging still needs to be deployed from the configured deployment environment before remote manual review can proceed.

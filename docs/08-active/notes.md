@@ -63,6 +63,7 @@
 - Manual review found that the current sortable table headers still need a stronger active-state treatment so the sorted column is immediately identifiable and the current sort direction is obvious without relying on subtle label changes alone.
 - The sortable-header follow-up pass now adds an explicit `Sorted` state tag, stronger active-chip styling, and `aria-sort` on active headers across the workspace, audit, and error table reference surfaces.
 - Automated verification could not be completed in this session because Docker is not reachable from this environment and the host PHP runtime is missing the `mbstring` extension required to boot Laravel tests.
+- The reviewable sort-state implementation was pushed to `main` as commit `e55cc4b`, but the staging deploy helper could not run from this Windows session because WSL is unavailable here and the documented SSH aliases are not resolvable outside the expected local deployment environment.
 
 
 ## Decisions
@@ -124,6 +125,7 @@
 - Move the six latest implemented pending-review items into `Passed Review` based on manual approval, but keep Batch A open because the table baseline still needs a clearer active sort indicator.
 - Treat the missing active sort-state visibility as Batch A table-baseline implementation drift inside the existing sortable-header treatment rather than a new Tier 2 pattern or standards decision.
 - Keep the active sort-state remediation inside the existing shared sortable-header treatment and apply it consistently across all UI Reference table baselines rather than inventing per-table variants.
+- Record the current pass as pushed but not deployed, and require the next manual-review operator to deploy `main` from the configured staging environment before reviewing the remote surface.
 
 
 ## Risks / Questions
@@ -160,3 +162,4 @@
 - The sortable table header visibility fix is now implemented and awaiting manual review before `UI Reference Validation` and `Batch A Exit Criteria` can be closed.
 - Another manual review pass is now required for the refreshed sortable table header treatment before `UI Reference Validation` and `Batch A Exit Criteria` can be closed.
 - This session could not rerun the targeted UI Reference feature suite because both available verification paths were blocked locally: Docker daemon unavailable, host PHP missing `mbstring`.
+- This session also could not complete the staging deploy step because the documented `platform-prod-wsl` helper path depends on WSL/SSH configuration that is not available from the current Windows execution environment.

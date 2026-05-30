@@ -46,6 +46,9 @@ Always respect branch ownership. Do not duplicate or reassign responsibility acr
 - It is the only location where active batch state is stored.
 - Only batch workflows (`batch-start`, `work-batch`, `batch-update-manual-review-status`, `batch-review-and-finalize`) may modify it.
 - Do not manually alter its structure outside those workflows.
+- Active `change-queue.md` items should use stable queue IDs in the format `P<phase>-<batch>-CQ-###`.
+- Keep exploratory review discussion in chat until an agent normalizes it into concise queue language.
+- When discussing an existing queue item in chat, reference its queue ID when available.
 
 ---
 

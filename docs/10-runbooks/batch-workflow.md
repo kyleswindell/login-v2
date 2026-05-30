@@ -132,7 +132,14 @@ Manual-review classification rule:
 Queue item format:
 - keep the main queue line as one concise actionable bullet
 - exploratory discussion belongs in chat first and must be normalized before it enters the queue
+- every active item in `Ready To Implement`, `In Progress`, or `Implemented Pending Review` should carry a stable `ID:` line using:
+  - `P<phase>-<batch>-CQ-###`
+  - example: `P2-A-CQ-001`
+- the `ID:` line is the stable identity of the item and must not change when the item moves between queue sections
+- if an item is reopened or refined, track that separately with `Iteration:` when needed instead of changing the ID
 - when helpful, add short continuation lines directly below the item:
+  - `ID:`
+  - `Iteration:`
   - `Scope:`
   - `Path Coverage:`
   - `Implemented in:`
@@ -220,7 +227,9 @@ Rules:
   - toast or overlay variants
   - full-index or detail views for the same system
 - if one of those paths is intentionally not updated in the pass, record it explicitly as a follow-up item instead of implying full surface completion
+- preserve existing `ID:` lines when moving items between sections
 - preserve existing queue metadata lines when moving items between sections
+- assign the next sequential queue ID when a new active queue item is created and no stable ID already exists
 - add or update `Implemented in:` when that improves traceability for a targeted item
 
 ---
@@ -244,6 +253,8 @@ Rules:
   - new finding
 - treat exploratory chat or review commentary as source material, not as queue-ready text
 - normalize new findings into concise implementation-ready queue language before writing them into `change-queue.md`
+- preserve existing `ID:` lines for mapped items
+- assign the next sequential queue ID when a truly new queue item is created
 - do not reopen an `Implemented Pending Review` item unless the review evidence directly maps to that same item's scoped implemented outcome
 - if the review reveals a separate gap on an uncovered path, keep the existing item pending review and open a new `Ready To Implement` item for the uncovered gap
 

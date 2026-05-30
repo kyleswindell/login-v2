@@ -156,7 +156,9 @@ For each targeted item:
 - use `In Progress` only if work started but did not complete in this pass
 - record outcome in the current worklog
 - if a parallel render/update path for the same targeted surface is discovered and not fixed in the same pass, add a separate follow-up queue item before calling the pass review-ready
+- preserve existing `ID:` lines when moving targeted items between queue sections
 - preserve existing queue metadata lines such as `Scope:`, `Path Coverage:`, `Follow-up To:`, and `Supersedes:` when moving items
+- assign the next sequential queue ID in the current batch if a new active item is created and no stable ID already exists
 - add or update `Implemented in:` with the current worklog ID when that improves traceability for the targeted item
 
 Do NOT set any item to:
@@ -167,6 +169,7 @@ If new issues are discovered:
 - add them to the appropriate section in `change-queue.md`
 - keep new adjacent findings separate from already-implemented targeted items unless the new finding directly proves the targeted item's own outcome failed
 - write new findings as concise implementation-ready queue items, not as copied chat fragments or long exploratory notes
+- include an `ID:` line on each new active queue item
 
 Do NOT remove existing items unless they were explicitly resolved in this pass and their status is updated accordingly.
 

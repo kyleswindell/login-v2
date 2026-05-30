@@ -59,12 +59,14 @@ Rules:
 - Treat a new adjacent finding as a new queue item by default
 - Normalize exploratory or conversational review input into concise implementation-ready queue language before writing it into `change-queue.md`
 - Do not paste long chat commentary verbatim into the queue
+- Preserve existing `ID:` lines for any item that is being moved rather than replaced
 - Move items from:
   - `Implemented Pending Review` → `Passed Review` if confirmed
   - `Implemented Pending Review` → back to `Ready To Implement` only if the review evidence directly shows that same item's scoped implemented outcome failed
 - Move items from `Passed Review` → `Closed` if no further action is required
 - Move items to `Deferred` if out of scope
 - If review finds an uncovered parallel path or adjacent gap on the same broad surface, keep the implemented item in `Implemented Pending Review` and add a separate `Ready To Implement` follow-up item
+- Assign the next sequential queue ID in the current batch to each truly new queue item
 - Add `Follow-up To:` or `Path Coverage:` continuation lines when they materially improve traceability for a new finding
 - Do NOT delete items; only move them between sections
 

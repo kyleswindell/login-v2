@@ -35,7 +35,8 @@ Produce a clean, implementation-ready prompt for the next `Work Batch` pass that
 ## Rules
 - Work only from the currently loaded active batch
 - Use `change-queue.md` as the primary driver for next-step fixes
-- Treat queue-item headline bullets as the actionable units; use continuation lines such as `Scope:`, `Path Coverage:`, `Implemented in:`, `Follow-up To:`, and `Supersedes:` as support context only
+- Refer to queue items by `ID:` when available
+- Treat queue-item headline bullets as the actionable units; use continuation lines such as `ID:`, `Iteration:`, `Scope:`, `Path Coverage:`, `Implemented in:`, `Follow-up To:`, and `Supersedes:` as support context only
 - Use `review.md` to understand current blockers and review state
 - Use `checklist.md` to avoid repeating already-completed work
 - Use `notes.md` and `/worklogs/` for supporting context only

@@ -142,7 +142,7 @@
                                             </div>
 
                                             <div class="flex flex-wrap items-center gap-2">
-                                                <form method="POST" action="{{ route('platform.notifications.mark-all-read') }}">
+                                                <form method="POST" action="{{ route('platform.notifications.mark-all-read') }}" data-notification-mark-all-form>
                                                     @csrf
                                                     <button
                                                         type="submit"

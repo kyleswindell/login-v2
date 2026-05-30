@@ -160,6 +160,31 @@ class PlatformNotificationsTest extends TestCase
         $this->assertNull($otherNotification->fresh()->read_at);
     }
 
+    public function test_mark_all_read_returns_json_for_runtime_updates(): void
+    {
+        $user = $this->actingAsPlatformSuperAdmin();
+
+        $ownedNotification = PlatformNotification::query()->create([
+            'uuid' => (string) fake()->uuid(),
+            'notifiable_type' => User::class,
+            'notifiable_id' => $user->id,
+            'module_key' => 'platform',
+            'severity' => 'notice',
+            'title' => 'Unread notification',
+            'body' => 'Unread body.',
+        ]);
+
+        $this->postJson('/platform/notifications/mark-all-read')
+            ->assertOk()
+            ->assertJson([
+                'status' => 'All notifications marked as read.',
+                'unread_count' => 0,
+                'marked_notification_ids' => [$ownedNotification->id],
+            ]);
+
+        $this->assertNotNull($ownedNotification->fresh()->read_at);
+    }
+
     public function test_notification_trigger_uses_unread_state_treatment_when_unread_notifications_exist(): void
     {
         $user = $this->actingAsPlatformSuperAdmin();
@@ -180,6 +205,7 @@ class PlatformNotificationsTest extends TestCase
             ->assertSee('data-notification-trigger-unread="true"', false)
             ->assertSee('data-notification-trigger-badge-hidden="false"', false)
             ->assertSee('data-notification-mark-all-enabled="true"', false)
+            ->assertSee('data-notification-mark-all-form', false)
             ->assertSee('data-notification-preview-unread', false)
             ->assertSee('data-notification-preview-item-unread="true"', false)
             ->assertSee('data-notification-preview-severity="notice"', false)

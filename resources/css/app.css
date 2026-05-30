@@ -960,21 +960,21 @@
 
     .ui-notification-trigger[data-notification-trigger-unread='true'] {
         border-color: color-mix(in srgb, var(--ui-action-outline-danger-border) 72%, transparent);
-        background-color: color-mix(in srgb, var(--ui-surface-elevated) 84%, var(--ui-action-outline-danger-bg-hover) 16%);
+        background-color: color-mix(in srgb, var(--ui-surface-elevated) 88%, var(--ui-action-outline-danger-bg-hover) 12%);
         color: var(--ui-action-outline-danger-text);
         box-shadow:
-            0 14px 28px color-mix(in srgb, var(--ui-shadow-color) 16%, transparent),
-            0 0 0 1px color-mix(in srgb, var(--ui-action-outline-danger-border) 20%, transparent),
-            0 0 24px color-mix(in srgb, var(--ui-action-outline-danger-border) 18%, transparent);
+            0 12px 24px color-mix(in srgb, var(--ui-shadow-color) 14%, transparent),
+            0 0 0 1px color-mix(in srgb, var(--ui-action-outline-danger-border) 16%, transparent),
+            0 0 10px color-mix(in srgb, var(--ui-action-outline-danger-border) 10%, transparent);
     }
 
     .ui-notification-trigger[data-notification-trigger-unread='true']:hover {
         border-color: color-mix(in srgb, var(--ui-action-outline-danger-border) 84%, transparent);
-        background-color: color-mix(in srgb, var(--ui-surface-elevated) 76%, var(--ui-action-outline-danger-bg-hover) 24%);
+        background-color: color-mix(in srgb, var(--ui-surface-elevated) 80%, var(--ui-action-outline-danger-bg-hover) 20%);
         box-shadow:
-            0 16px 30px color-mix(in srgb, var(--ui-shadow-color) 18%, transparent),
-            0 0 0 1px color-mix(in srgb, var(--ui-action-outline-danger-border) 28%, transparent),
-            0 0 28px color-mix(in srgb, var(--ui-action-outline-danger-border) 24%, transparent);
+            0 14px 28px color-mix(in srgb, var(--ui-shadow-color) 16%, transparent),
+            0 0 0 1px color-mix(in srgb, var(--ui-action-outline-danger-border) 22%, transparent),
+            0 0 14px color-mix(in srgb, var(--ui-action-outline-danger-border) 14%, transparent);
     }
 
     .ui-notification-trigger-icon {
@@ -992,8 +992,8 @@
         background-color: var(--ui-status-danger-solid-bg);
         color: var(--ui-status-solid-text);
         box-shadow:
-            0 8px 18px color-mix(in srgb, var(--ui-shadow-color) 20%, transparent),
-            0 0 18px color-mix(in srgb, var(--ui-status-danger-solid-bg) 22%, transparent);
+            0 6px 16px color-mix(in srgb, var(--ui-shadow-color) 16%, transparent),
+            0 0 10px color-mix(in srgb, var(--ui-status-danger-solid-bg) 12%, transparent);
     }
 
     .ui-notification-preview-item {

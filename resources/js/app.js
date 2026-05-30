@@ -1118,6 +1118,7 @@ if (realtimeRoot) {
     const notificationTriggerLabel = document.querySelector('[data-notification-trigger-label]');
     const triggerSummary = document.querySelector('[data-notification-trigger-summary]');
     const markAllButton = document.querySelector('[data-notification-mark-all]');
+    const markAllForm = document.querySelector('[data-notification-mark-all-form]');
     const panelSummary = document.querySelector('[data-notification-panel-summary]');
     const previewList = document.querySelector('[data-notification-preview-list]');
     const previewEmptyState = document.querySelector('[data-notification-preview-empty-state]');
@@ -1251,8 +1252,8 @@ if (realtimeRoot) {
         : '';
 
     const readBadge = (notification) => notification.read_at
-        ? '<span class="inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300">Read</span>'
-        : '<span class="inline-flex rounded-full bg-slate-700/70 px-3 py-1 text-xs font-medium text-slate-200">Unread</span>';
+        ? '<span class="inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300" data-notification-read-badge="true">Read</span>'
+        : '<span class="inline-flex rounded-full bg-slate-700/70 px-3 py-1 text-xs font-medium text-slate-200" data-notification-read-badge="false">Unread</span>';
 
     const createPreviewMarkup = (notification) => `
         <a
@@ -1277,7 +1278,7 @@ if (realtimeRoot) {
             <div class="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
                 <div class="min-w-0 flex-1">
                     <div class="flex flex-wrap items-center gap-2" data-notification-badges>
-                        <span class="inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] ${severityClasses(notification.severity)}">
+                        <span class="inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] ${severityClasses(notification.severity)}" data-notification-severity-badge>
                             ${escapeHtml(notification.severity)}
                         </span>
                         ${readBadge(notification)}
@@ -1297,7 +1298,7 @@ if (realtimeRoot) {
                 </div>
                 <div class="flex flex-wrap gap-3" data-notification-actions>
                     ${notification.read_at ? '' : `
-                        <form method="POST" action="${escapeHtml(notification.mark_read_url)}">
+                        <form method="POST" action="${escapeHtml(notification.mark_read_url)}" data-notification-mark-read-form>
                             <input type="hidden" name="_token" value="${escapeHtml(csrfToken || '')}">
                             <button type="submit" class="ui-action ui-action-success">
                                 Mark read
@@ -1359,6 +1360,72 @@ if (realtimeRoot) {
         inboxList.insertAdjacentHTML('afterbegin', createInboxMarkup(notification));
     };
 
+    const markPreviewItemReadLocally = (item) => {
+        if (!(item instanceof HTMLElement)) {
+            return;
+        }
+
+        item.dataset.notificationPreviewItemUnread = 'false';
+        item.classList.remove('ui-notification-preview-item-unread');
+        item.querySelector('[data-notification-preview-unread]')?.remove();
+    };
+
+    const markInboxCardReadLocally = (card) => {
+        if (!(card instanceof HTMLElement)) {
+            return;
+        }
+
+        card.querySelectorAll('[data-notification-mark-read-form]').forEach((form) => form.remove());
+
+        const badges = card.querySelector('[data-notification-badges]');
+
+        if (!(badges instanceof HTMLElement)) {
+            return;
+        }
+
+        const readBadgeElement = badges.querySelector('[data-notification-read-badge]');
+
+        if (readBadgeElement instanceof HTMLElement) {
+            readBadgeElement.className = 'inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300';
+            readBadgeElement.dataset.notificationReadBadge = 'true';
+            readBadgeElement.textContent = 'Read';
+            return;
+        }
+
+        const severityBadge = badges.querySelector('[data-notification-severity-badge]');
+        const badge = document.createElement('span');
+        badge.className = 'inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300';
+        badge.dataset.notificationReadBadge = 'true';
+        badge.textContent = 'Read';
+
+        if (severityBadge?.nextSibling) {
+            badges.insertBefore(badge, severityBadge.nextSibling);
+            return;
+        }
+
+        badges.append(badge);
+    };
+
+    const markNotificationsReadLocally = (notificationIds = []) => {
+        const ids = new Set(notificationIds.map((id) => String(id)));
+
+        previewList?.querySelectorAll('[data-notification-id]').forEach((item) => {
+            if (ids.size > 0 && !ids.has(item.dataset.notificationId || '')) {
+                return;
+            }
+
+            markPreviewItemReadLocally(item);
+        });
+
+        inboxList?.querySelectorAll('[data-notification-id]').forEach((card) => {
+            if (ids.size > 0 && !ids.has(card.dataset.notificationId || '')) {
+                return;
+            }
+
+            markInboxCardReadLocally(card);
+        });
+    };
+
     const createToast = (notification) => {
         if (!toastContainer) {
             return;
@@ -1407,6 +1474,49 @@ if (realtimeRoot) {
             createToast(notification);
         }
     };
+
+    if (markAllForm && markAllButton && csrfToken) {
+        markAllForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            if (markAllButton.disabled) {
+                return;
+            }
+
+            const originalLabel = markAllButton.textContent;
+            markAllButton.disabled = true;
+            markAllButton.textContent = 'Updating...';
+
+            try {
+                const response = await window.fetch(markAllForm.action, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                        'X-CSRF-TOKEN': csrfToken,
+                        Accept: 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                    body: new URLSearchParams(new FormData(markAllForm)).toString(),
+                    credentials: 'same-origin',
+                });
+
+                if (!response.ok) {
+                    markAllForm.submit();
+                    return;
+                }
+
+                const payload = await response.json();
+                updateUnreadSummaries(payload.unread_count ?? 0);
+                markNotificationsReadLocally(payload.marked_notification_ids ?? []);
+            } catch (error) {
+                markAllForm.submit();
+                return;
+            } finally {
+                markAllButton.textContent = originalLabel;
+                markAllButton.disabled = markAllButton.dataset.notificationMarkAllEnabled !== 'true';
+            }
+        });
+    }
 
     echo.private(`App.Models.User.${userId}`)
         .listen('.notification.created', (event) => {

@@ -2,7 +2,7 @@
 
 Use this file as the agent-managed canonical queue for active-batch implementation work.
 
-Rules:
+### Rules:
 - Discuss exploratory review findings in chat first; only normalized implementation-ready items belong here.
 - Active items in `Ready To Implement`, `In Progress`, and `Implemented Pending Review` use stable `ID:` values in the format `P<phase>-<batch>-CQ-###`.
 - Keep `Iteration:` separate from the stable ID when an item is reopened or refined.
@@ -11,24 +11,20 @@ Rules:
 ## Ready To Implement
 
 ## In Progress
-
-## Implemented Pending Review
-- [ ] Rework the notification trigger unread state around a danger/red direction so unread notifications are unmistakable at a glance; use a danger-outline bell treatment, a danger badge, and allow the stronger icon glow/emphasis to return only when unread items exist.
+- [ ] Retune the unread notification trigger emphasis so it still reads clearly at a glance without the current oversized or overly luminous glow effect around the bell control.
   ID: P2-A-CQ-001
+  Iteration: 2
   Scope: notification trigger shell, bell icon, unread badge
   Path Coverage: server-rendered header trigger
-  Implemented in: worklog `2-A-0011`
-- [ ] Add a clearer unread-vs-read distinction inside the notifications pop-out list so unread rows do not read like recently read items; use a stronger unread background/shell treatment in addition to the existing labels.
-  ID: P2-A-CQ-002
-  Scope: notification preview row treatment
-  Path Coverage: server-rendered dropdown rows
-  Implemented in: worklog `2-A-0011`
-- [ ] Align the realtime notification renderer with the current shared notification classes so newly generated notifications use the same updated severity pills and unread styling immediately in the bell dropdown and toast surface, without requiring a page refresh.
-  ID: P2-A-CQ-003
-  Scope: shared realtime notification renderer
-  Path Coverage: realtime dropdown injection, realtime toast rendering
-  Follow-up To: P2-A-CQ-001, P2-A-CQ-002
-  Implemented in: worklog `2-A-0012`
+  Implemented in: worklog `2-A-0013`
+- [ ] Make the header notification `Mark all as read` action update in place instead of causing a full page refresh; preserve the unread counts, dropdown rows, and trigger state through the shared notification runtime without a full navigation.
+  ID: P2-A-CQ-004
+  Scope: bulk mark-all-read interaction
+  Path Coverage: header notification dropdown action
+  Follow-up To: P2-A-CQ-001, P2-A-CQ-002, P2-A-CQ-003
+  Implemented in: worklog `2-A-0013`
+
+## Implemented Pending Review
 
 ## Blocked
 
@@ -36,6 +32,17 @@ Rules:
 - [ ] Record Phase 2 follow-up scope for a full UI standards pass across existing views and elements in a later Phase 2 batch.
 
 ## Passed Review
+- [x] Added a clearer unread-vs-read distinction inside the notifications pop-out list so unread rows do not read like recently read items; use a stronger unread background/shell treatment in addition to the existing labels.
+  ID: P2-A-CQ-002
+  Scope: notification preview row treatment
+  Path Coverage: server-rendered dropdown rows
+  Implemented in: worklog `2-A-0011`
+- [x] Aligned the realtime notification renderer with the current shared notification classes so newly generated notifications use the same updated severity pills and unread styling immediately in the bell dropdown and toast surface, without requiring a page refresh.
+  ID: P2-A-CQ-003
+  Scope: shared realtime notification renderer
+  Path Coverage: realtime dropdown injection, realtime toast rendering
+  Follow-up To: P2-A-CQ-001, P2-A-CQ-002
+  Implemented in: worklog `2-A-0012`
 - [x] Retuned the light-mode notification dropdown severity labels so the pills read clearly against the light card backgrounds while keeping the existing semantic color mapping.
 - [x] Added a visible `Mark all as read` action to the notifications pop-out / dropdown surface so the quick-access menu supports the same bulk-clear path as the full notifications view.
 - [x] Added visible icon + text button examples to the UI Reference `Buttons + icons` surface so the library demonstrates canonical text-bearing action buttons alongside icon-only controls.

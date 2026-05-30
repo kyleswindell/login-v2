@@ -1,6 +1,14 @@
 # Notes
 
 ## Findings
+- Worklog `2-A-0013` retunes the unread trigger glow to reduce the oversized luminous halo effect while preserving the danger/unread direction on the bell control.
+- Worklog `2-A-0013` also intercepts the header notification `Mark all as read` action so the dropdown updates in place through the shared notification runtime instead of forcing a full page refresh.
+- Docker verification passed for `PlatformNotificationsTest` after the header notification interaction/glow pass.
+- The validated WSL Ubuntu build path succeeded again for the header notification interaction/glow pass; the trailing `wsl: Failed to translate 'G:\Program Files\Git\cmd'` message still appeared after the successful Vite build and did not block artifacts.
+- Manual review approved `P2-A-CQ-002`, confirming the stronger unread-row shell treatment now separates unread notification rows clearly from recent read rows.
+- Manual review approved `P2-A-CQ-003`, confirming the realtime dropdown/toast renderer now matches the shared notification classes without requiring a page refresh.
+- Manual review still found `P2-A-CQ-001` too visually aggressive because the unread bell glow remains too strong and decorative for the dashboard shell.
+- Manual review also found that the header notification `Mark all as read` action still performs a full page refresh instead of updating the shared notification runtime in place.
 - The canonical staging deploy succeeded for worklog `2-A-0012` after pushing commit `97459c9`, so the realtime notification dropdown/toast parity fix is now available for manual review on staging.
 - Worklog `2-A-0012` aligned the realtime notification dropdown and toast renderer with the shared notification preview pill classes so newly generated notifications no longer rely on the older inline badge styling path.
 - Worklog `2-A-0012` also adds a local dashboard notification dispatch path so generated test notifications update the current page immediately instead of relying only on the broadcast round-trip.
@@ -104,6 +112,10 @@
 
 
 ## Decisions
+- Move `P2-A-CQ-001` and `P2-A-CQ-004` into `In Progress` for worklog `2-A-0013`; do not move them into `Implemented Pending Review` until the canonical staging deploy completes and the surface is actually reviewable.
+- Move `P2-A-CQ-002` and `P2-A-CQ-003` from `Implemented Pending Review` to `Passed Review` based on manual approval.
+- Move `P2-A-CQ-001` back to `Ready To Implement` because the current unread trigger glow still fails the intended professional-dashboard visual target.
+- Add `P2-A-CQ-004` as a new header-notification follow-up item for making `Mark all as read` update in place instead of causing a full page refresh.
 - Move `P2-A-CQ-003` from `Ready To Implement` to `Implemented Pending Review` because worklog `2-A-0012` implemented the realtime dropdown/toast renderer parity fix.
 - Add stable queue IDs to the active notification items in `change-queue.md` and keep iteration history separate from the ID so future chat, review, and implementation passes can refer to the same items deterministically.
 - Normalize the three current notification queue items with lightweight metadata lines so the remaining unread-state work is traceable by scope, path coverage, and originating worklog without changing the underlying queue state.

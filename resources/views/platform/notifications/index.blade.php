@@ -41,14 +41,14 @@
                                     'bg-violet-500/15 text-violet-300' => $notification->severity === 'notice',
                                     'bg-amber-500/15 text-amber-300' => $notification->severity === 'warning',
                                     'bg-rose-500/15 text-rose-300' => in_array($notification->severity, ['error', 'urgent'], true),
-                                ])>
+                                ]) data-notification-severity-badge>
                                     {{ $notification->severity }}
                                 </span>
 
                                 @if ($notification->read_at)
-                                    <span class="inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300">Read</span>
+                                    <span class="inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300" data-notification-read-badge="true">Read</span>
                                 @else
-                                    <span class="inline-flex rounded-full bg-slate-700/60 px-3 py-1 text-xs font-medium text-slate-200">Unread</span>
+                                    <span class="inline-flex rounded-full bg-slate-700/60 px-3 py-1 text-xs font-medium text-slate-200" data-notification-read-badge="false">Unread</span>
                                 @endif
 
                                 @if ($notification->dismissed_at)
@@ -75,7 +75,7 @@
 
                         <div class="flex flex-wrap gap-3" data-notification-actions>
                             @if (! $notification->read_at)
-                                <form method="POST" action="{{ route('platform.notifications.mark-read', $notification) }}">
+                                <form method="POST" action="{{ route('platform.notifications.mark-read', $notification) }}" data-notification-mark-read-form>
                                     @csrf
                                     <button type="submit" class="ui-action ui-action-success">
                                         Mark read

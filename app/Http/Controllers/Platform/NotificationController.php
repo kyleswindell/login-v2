@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Platform;
 use App\Http\Controllers\Controller;
 use App\Models\PlatformNotification;
 use App\Platform\Notifications\NotificationService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
@@ -46,15 +48,24 @@ class NotificationController extends Controller
         return back()->with('status', 'Notification dismissed.');
     }
 
-    public function markAllRead(NotificationService $notificationService): RedirectResponse
+    public function markAllRead(Request $request, NotificationService $notificationService): RedirectResponse|JsonResponse
     {
         $this->authorize('view-platform-notifications');
 
-        PlatformNotification::query()
+        $notifications = PlatformNotification::query()
             ->visibleTo(auth()->user())
             ->whereNull('read_at')
-            ->get()
-            ->each(fn (PlatformNotification $notification) => $notificationService->markAsRead($notification));
+            ->get();
+
+        $notifications->each(fn (PlatformNotification $notification) => $notificationService->markAsRead($notification));
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'status' => 'All notifications marked as read.',
+                'unread_count' => 0,
+                'marked_notification_ids' => $notifications->pluck('id')->all(),
+            ]);
+        }
 
         return back()->with('status', 'All notifications marked as read.');
     }

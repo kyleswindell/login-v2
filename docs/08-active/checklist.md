@@ -240,7 +240,7 @@ Checklist:
   Status: passed review
 * [ ] Header baseline
   Status: implemented (pending manual review)
-  Note: manual review approved the worklog `2-A-0010` light-mode notification pill contrast, worklog `2-A-0011` added the danger/red unread trigger treatment plus stronger unread-row separation, and worklog `2-A-0012` aligned the realtime dropdown/toast renderer; the shared header surface still requires manual visual re-review.
+  Note: manual review approved the worklog `2-A-0010` light-mode notification pill contrast, approved the worklog `2-A-0011` unread-row treatment, and approved the worklog `2-A-0012` realtime dropdown/toast parity fix; worklog `2-A-0013` now retunes the unread trigger glow and adds an in-place `Mark all as read` interaction, pending deploy and another header-surface review pass.
 * [x] Account Menu baseline
   Status: passed review
 * [x] Mobile Nav Dock baseline
@@ -326,7 +326,7 @@ Checklist:
 Batch A is complete only if:
 
 * [ ] Batch A Exit Criteria
-  Status: not implemented
+  Status: implemented (pending manual review)
   - all Tier 1 checklist items are complete
   - no Tier 2 patterns are mixed into Tier 1 scope
   - standards terminology matches current canonical docs

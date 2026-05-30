@@ -57,12 +57,12 @@ Conduct the active `work-batch` pass for the current notification unread-treatme
 
 ## Commit / Deploy Status
 
-- Commit: Pending
-- Deploy: Pending
+- Commit: Yes
+- Deploy: Yes
 
 ## Notes
 
 - This pass stayed inside the shared notification shell/dropdown implementation and reused the existing semantic variable families rather than introducing a new notification pattern.
 - Docker verification passed for `PlatformNotificationsTest` (10 tests / 45 assertions).
 - The WSL `npm run build` path completed successfully for this pass.
-- Commit and deployment details will be recorded once the review-ready CPD steps complete.
+- Review-ready commit `63be5bb` was pushed to `main`, and the canonical staging deployment helper completed successfully for that commit.

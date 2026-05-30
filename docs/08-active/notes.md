@@ -1,6 +1,7 @@
 # Notes
 
 ## Findings
+- The canonical staging deploy succeeded for worklog `2-A-0011` after pushing commit `63be5bb`, so the refreshed unread trigger and dropdown-row treatment are now available for manual review on staging.
 - Worklog `2-A-0011` reworked the shared notification trigger around a danger/red unread direction so the bell uses danger-outline emphasis, the unread badge uses danger styling, and the stronger glow returns only when unread items exist.
 - Worklog `2-A-0011` also added a stronger unread-row shell treatment in the notifications pop-out so unread items no longer rely on the label alone for distinction from recent read rows.
 - Docker verification passed for `PlatformNotificationsTest` after the unread notification retune (10 tests / 45 assertions).
@@ -188,7 +189,6 @@
 
 ## Risks / Questions
 - Another manual visual review pass is still required for the worklog `2-A-0011` danger/red unread trigger and unread-row treatment before `Header baseline`, `UI Reference Validation`, and `Batch A Exit Criteria` can close.
-- Another implementation pass is now required for the notification unread trigger and unread-row treatment before the header surface can return to manual visual review.
 - Another manual visual review pass is still required for the refreshed notification dropdown/trigger surface before these three queue items can move beyond `Implemented Pending Review`.
 - Manual functional review is now passing for the `Mark all as read` path, but another manual visual review pass is still required for the refreshed header notification trigger/pop-out surface before `UI Reference Validation` and `Batch A Exit Criteria` can close.
 - Manual visual review is still required for hover/focus/active states, overlay focus return, shell navigation behavior, and responsive layout behavior.

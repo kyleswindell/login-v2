@@ -1,6 +1,7 @@
 # Notes
 
 ## Findings
+- The canonical staging deploy succeeded for worklog `2-A-0012` after pushing commit `97459c9`, so the realtime notification dropdown/toast parity fix is now available for manual review on staging.
 - Worklog `2-A-0012` aligned the realtime notification dropdown and toast renderer with the shared notification preview pill classes so newly generated notifications no longer rely on the older inline badge styling path.
 - Worklog `2-A-0012` also adds a local dashboard notification dispatch path so generated test notifications update the current page immediately instead of relying only on the broadcast round-trip.
 - Manual review found that freshly generated notifications still render old badge styling in the bell dropdown and toast surface until the page is refreshed, which indicates the realtime JS renderer is not using the current shared notification classes.

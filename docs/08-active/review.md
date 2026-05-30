@@ -9,7 +9,7 @@ PARTIAL
 - Worklog `2-A-0011` also added a stronger unread-row shell treatment in the notifications pop-out; that implementation is still pending manual visual review.
 - Worklog `2-A-0012` aligned the realtime notification dropdown and toast renderer with the shared notification classes; manual visual review still needs to confirm live generated notifications now match the reviewed server-rendered surface immediately.
 - Phase 2 still needs a separate later-batch full UI standards pass across existing views and elements before overall close-out.
-- Worklog `2-A-0012` now carries the current notification realtime-renderer follow-up pass and still needs manual re-review on staging before Batch A can move forward.
+- Worklog `2-A-0012` now carries the current notification realtime-renderer follow-up pass, is deployed to staging, and still needs manual re-review there before Batch A can move forward.
 - Docker remains the canonical verification path for this repo because the host shell does not provide the same Laravel runtime/dependency surface.
 
 

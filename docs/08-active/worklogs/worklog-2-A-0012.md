@@ -62,9 +62,9 @@ Conduct the active `work-batch` pass for the remaining realtime notification ren
 ## Commit / Deploy Status
 
 - Commit: Yes
-- Deploy: Pending
+- Deploy: Yes
 
 ## Notes
 
 - This pass stayed inside the shared notification runtime surface and did not widen the work into the full notifications index styling.
-- This pass is being committed and pushed for review as a scoped realtime notification parity update; canonical staging deployment remains pending.
+- Commit `97459c9` was pushed to `main`, and the canonical staging deploy completed successfully for manual review.

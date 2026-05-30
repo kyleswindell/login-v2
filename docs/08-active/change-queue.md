@@ -1,12 +1,22 @@
 # Change Queue
 
 ## Ready To Implement
+- [ ] Align the realtime notification renderer with the current shared notification classes so newly generated notifications use the same updated severity pills and unread styling immediately in the bell dropdown and toast surface, without requiring a page refresh.
+  Scope: shared realtime notification renderer
+  Path Coverage: realtime dropdown injection, realtime toast rendering
+  Follow-up To: worklog `2-A-0011`
 
 ## In Progress
 
 ## Implemented Pending Review
 - [ ] Rework the notification trigger unread state around a danger/red direction so unread notifications are unmistakable at a glance; use a danger-outline bell treatment, a danger badge, and allow the stronger icon glow/emphasis to return only when unread items exist.
+  Scope: notification trigger shell, bell icon, unread badge
+  Path Coverage: server-rendered header trigger
+  Implemented in: worklog `2-A-0011`
 - [ ] Add a clearer unread-vs-read distinction inside the notifications pop-out list so unread rows do not read like recently read items; use a stronger unread background/shell treatment in addition to the existing labels.
+  Scope: notification preview row treatment
+  Path Coverage: server-rendered dropdown rows
+  Implemented in: worklog `2-A-0011`
 
 ## Blocked
 

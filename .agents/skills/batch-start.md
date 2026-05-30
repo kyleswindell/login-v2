@@ -124,6 +124,10 @@ Keep `batch.md` limited to current-batch execution context only.
   - `Deferred`
   - `Passed Review`
   - `Closed`
+- Future queue items should follow the documented minimal format:
+  - one concise actionable bullet
+  - optional continuation lines such as `Scope:`, `Path Coverage:`, `Implemented in:`, `Follow-up To:`, and `Supersedes:` when they improve traceability
+- Do NOT preload exploratory commentary or batch-scope prose into the queue template
 - Set `review.md` to an initial batch review state that is not finalized
 
 Initial review state must make clear:

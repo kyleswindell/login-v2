@@ -1,6 +1,8 @@
 # Notes
 
 ## Findings
+- Manual review found that freshly generated notifications still render old badge styling in the bell dropdown and toast surface until the page is refreshed, which indicates the realtime JS renderer is not using the current shared notification classes.
+- Read-only inspection confirmed the discrepancy is in `resources/js/app.js`, where the realtime `createPreviewMarkup` and `createToast` templates still emit older inline severity/unread badge markup while the server-rendered Blade surface already uses the updated shared notification classes.
 - The canonical staging deploy succeeded for worklog `2-A-0011` after pushing commit `63be5bb`, so the refreshed unread trigger and dropdown-row treatment are now available for manual review on staging.
 - Worklog `2-A-0011` reworked the shared notification trigger around a danger/red unread direction so the bell uses danger-outline emphasis, the unread badge uses danger styling, and the stronger glow returns only when unread items exist.
 - Worklog `2-A-0011` also added a stronger unread-row shell treatment in the notifications pop-out so unread items no longer rely on the label alone for distinction from recent read rows.
@@ -99,6 +101,9 @@
 
 
 ## Decisions
+- Normalize the three current notification queue items with lightweight metadata lines so the remaining unread-state work is traceable by scope, path coverage, and originating worklog without changing the underlying queue state.
+- Keep the two worklog `2-A-0011` notification items in `Implemented Pending Review` because they were implemented in the prior pass and the stale realtime notification markup is a separate follow-up item rather than evidence that those two implementation items were never completed.
+- Add a dedicated `Ready To Implement` follow-up for realtime notification renderer parity so newly generated notifications match the same shared classes already used by the refreshed server-rendered surface.
 - Move the two active unread-state follow-up items from `Ready To Implement` to `Implemented Pending Review` because worklog `2-A-0011` implemented the shared trigger and dropdown-row retune.
 - Move the approved light-mode notification pill-contrast item from `Implemented Pending Review` to `Passed Review`.
 - Close the two older pending-review items for blue unread retuning and resting trigger-outline softening because the current follow-up now replaces them with an explicit danger/red unread-trigger direction.
@@ -188,6 +193,7 @@
 
 
 ## Risks / Questions
+- Another implementation pass is now required for the realtime notification renderer before the header notification surface can return to manual visual review.
 - Another manual visual review pass is still required for the worklog `2-A-0011` danger/red unread trigger and unread-row treatment before `Header baseline`, `UI Reference Validation`, and `Batch A Exit Criteria` can close.
 - Another manual visual review pass is still required for the refreshed notification dropdown/trigger surface before these three queue items can move beyond `Implemented Pending Review`.
 - Manual functional review is now passing for the `Mark all as read` path, but another manual visual review pass is still required for the refreshed header notification trigger/pop-out surface before `UI Reference Validation` and `Batch A Exit Criteria` can close.

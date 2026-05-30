@@ -114,6 +114,33 @@ Owned by:
 - `work-batch` for implementation-state transitions on targeted `Ready To Implement` items only
 - `batch-update-manual-review-status` for review-state transitions and review-driven queue maintenance
 
+Queue-state rules:
+- `Ready To Implement` contains items that still require implementation work
+- `Implemented Pending Review` contains items that were implemented in a completed work pass and are awaiting human confirmation
+- a new adjacent finding on the same broad surface does not, by itself, prove an existing `Implemented Pending Review` item failed
+- move an item from `Implemented Pending Review` back to `Ready To Implement` only when manual review directly shows that the same item's implemented outcome failed
+- if manual review finds a separate uncovered path or adjacent gap, keep the implemented item in `Implemented Pending Review` and add a new `Ready To Implement` follow-up item instead
+
+Manual-review classification rule:
+- every review finding must be classified as one of:
+  - confirmation of an existing implemented item
+  - failure of an existing implemented item
+  - new finding
+- `batch-update-manual-review-status` must make that classification explicitly before moving queue items
+- if the finding cannot be classified safely, stop and ask instead of guessing the queue transition
+
+Queue item format:
+- keep the main queue line as one concise actionable bullet
+- exploratory discussion belongs in chat first and must be normalized before it enters the queue
+- when helpful, add short continuation lines directly below the item:
+  - `Scope:`
+  - `Path Coverage:`
+  - `Implemented in:`
+  - `Follow-up To:`
+  - `Supersedes:`
+- use continuation lines for traceability only; do not turn `change-queue.md` into a conversation log
+- if a new finding comes from a longer review discussion, rewrite it into concise implementation-ready language before adding it to `Ready To Implement`
+
 ---
 
 ### /worklogs/
@@ -186,6 +213,15 @@ Rules:
 - set checklist `Status` only
 - do not mark checklist items complete
 - do not finalize batch
+- for shared UI or system surfaces, identify the relevant render/update paths before calling the pass review-ready
+- examples of parallel paths include:
+  - server-rendered markup
+  - realtime or client-injected markup
+  - toast or overlay variants
+  - full-index or detail views for the same system
+- if one of those paths is intentionally not updated in the pass, record it explicitly as a follow-up item instead of implying full surface completion
+- preserve existing queue metadata lines when moving items between sections
+- add or update `Implemented in:` when that improves traceability for a targeted item
 
 ---
 
@@ -200,6 +236,16 @@ Responsibilities:
 - update review.md
 - update checklist.md (`passed review` checkbox authority)
 - confirm which items require additional work
+
+Rules:
+- classify each review finding before changing queue state:
+  - existing item confirmed
+  - existing item failed
+  - new finding
+- treat exploratory chat or review commentary as source material, not as queue-ready text
+- normalize new findings into concise implementation-ready queue language before writing them into `change-queue.md`
+- do not reopen an `Implemented Pending Review` item unless the review evidence directly maps to that same item's scoped implemented outcome
+- if the review reveals a separate gap on an uncovered path, keep the existing item pending review and open a new `Ready To Implement` item for the uncovered gap
 
 ---
 

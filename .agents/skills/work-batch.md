@@ -61,6 +61,9 @@ Stop if:
 - Do not fix adjacent issues unless they block the batch
 - If base batch implementation work remains, complete that before processing `change-queue.md`
 - Once base batch implementation work is complete, process `change-queue.md` items in `Ready To Implement`
+- For a targeted shared UI/system surface, identify the relevant render/update paths before implementing
+  - examples: server-rendered markup, realtime/client-injected markup, toast/overlay variants, related full-index surfaces
+  - do not assume one path represents the whole shared surface unless the batch docs already make that boundary explicit
 
 ---
 
@@ -152,6 +155,9 @@ For each targeted item:
   - `Deferred`
 - use `In Progress` only if work started but did not complete in this pass
 - record outcome in the current worklog
+- if a parallel render/update path for the same targeted surface is discovered and not fixed in the same pass, add a separate follow-up queue item before calling the pass review-ready
+- preserve existing queue metadata lines such as `Scope:`, `Path Coverage:`, `Follow-up To:`, and `Supersedes:` when moving items
+- add or update `Implemented in:` with the current worklog ID when that improves traceability for the targeted item
 
 Do NOT set any item to:
 - `Passed Review`
@@ -159,6 +165,8 @@ Do NOT set any item to:
 
 If new issues are discovered:
 - add them to the appropriate section in `change-queue.md`
+- keep new adjacent findings separate from already-implemented targeted items unless the new finding directly proves the targeted item's own outcome failed
+- write new findings as concise implementation-ready queue items, not as copied chat fragments or long exploratory notes
 
 Do NOT remove existing items unless they were explicitly resolved in this pass and their status is updated accordingly.
 

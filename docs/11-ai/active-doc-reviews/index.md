@@ -34,6 +34,7 @@ Tracks in-progress and recently completed document review passes.
 | doc-review-0017  | 2026-05-29 | `docs/07-planning/phases/phase-3/Phase 3 - Implementation Batch 2.md`, `docs/07-planning/phases/phase-3/Phase 3 - Brochure Batch 2 Implementation Prep.md` | Docs Review | IMPLEMENTED_PENDING_REVIEW  | implemented                    | Narrowed the brochure batch notes back to planning ownership and routed exact design detail to canonical docs |
 | doc-review-0018  | 2026-05-29 | `docs/09-reference/laravel-brochure-handoff-packet/` | Docs Review | IMPLEMENTED_PENDING_REVIEW  | implemented                    | Replaced legacy packet source claims and broken wiki-style packet links with valid current references |
 | doc-review-0019  | 2026-05-30 | `docs/07-planning/phases/phase-2/Phase 2 - Implementation Batch B.md` and related Batch B prep references | Docs Review | IMPLEMENTED_PENDING_REVIEW  | implemented                    | Added a dedicated Batch B prep note and tightened Batch B scope, audit guidance, and planning navigation |
+| doc-review-0021  | 2026-05-30 | `docs/10-runbooks/batch-workflow.md` and the active change-queue workflow skills | Docs Review | IMPLEMENTED_PENDING_REVIEW  | implemented                    | Added explicit queue-transition classification, shared-surface parity rules, chat-to-queue normalization, and a lightweight queue-item format |
 
 ---
 

@@ -27,6 +27,10 @@ Links to Phase 2 batch sequencing notes only.
 - [Batch 9](../../phases/phase-2/Phase%202%20-%20Implementation%20Batch%209.md)
 - [Batch 10](../../phases/phase-2/Phase%202%20-%20Implementation%20Batch%2010.md)
 
+## Batch Prep
+
+- [Batch B Prep](../../phases/phase-2/Phase%202%20-%20Batch%20B%20Implementation%20Prep.md)
+
 ## Related
 
 - [Batches Index](../index.md)

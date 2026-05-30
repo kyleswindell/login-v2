@@ -115,21 +115,35 @@ Reason:
 * app shell decisions affect every screen
 * setup shell should wait for module manifest decisions
 
-## Current Recommendation
+## Batch B Readiness Notes
 
-Phase 2 Batch 2 should not rebuild the whole UI.
+Current Batch B direction should not reopen the older "platform-users first" proof recommendation as the main active sequence.
 
-Recommended next scope:
+Batch B should instead focus on:
 
-* implement the platform-users Filament migration slice first
-* preserve settings and notifications as custom Blade/Echo surfaces behind target administration routes
-* keep operational log daily navigation on `/platform/operations/*`, including setup cards, while final direct Filament route ownership is decided
-* retire proof-only routing from long-term phase intent after shared admin migration behavior is stable
+* dashboard shared-surface convergence
+* app shell layout and navigation parity
+* setup and settings shell parity
+* shell-owned notification preview framing parity
+* shared Tier 2 pattern adoption where those surfaces already need it
+
+Batch B should explicitly avoid:
+
+* platform-users migration ownership changes
+* notifications-inbox feature redesign
+* docs-vault migration
+* broad panel-topology decisions
+* final `/console` proof-route retirement decisions
+
+Batch B implementation-prep detail now lives in:
+
+* [Phase 2 - Batch B Implementation Prep](Phase%202%20-%20Batch%20B%20Implementation%20Prep.md)
 
 ## Related
 
 * [Phase 2 Index](Phase%202%20Index.md)
 * [Phase 2 - Route And Panel Ownership Map](Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md)
 * [Phase 2 - Implementation Batch 1](Phase%202%20-%20Implementation%20Batch%201.md)
+* [Phase 2 - Batch B Implementation Prep](Phase%202%20-%20Batch%20B%20Implementation%20Prep.md)
 * [Final Stack And UI Design Spec](../../../03-architecture/subsystems/final-stack-and-ui-boundary.md)
 * [UI Design System Standards](../../../02-standards/ui/UI Design System Standards.md)

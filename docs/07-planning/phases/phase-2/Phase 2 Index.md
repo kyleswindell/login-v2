@@ -53,6 +53,7 @@ Current focus:
 * [Phase 2 - Implementation Batch 7](Phase%202%20-%20Implementation%20Batch%207.md)
 * [Phase 2 - Implementation Batch A](Phase%202%20-%20Implementation%20Batch%20A.md)
 * [Phase 2 - Implementation Batch B](Phase%202%20-%20Implementation%20Batch%20B.md)
+* [Phase 2 - Batch B Implementation Prep](Phase%202%20-%20Batch%20B%20Implementation%20Prep.md)
 * [Phase 2 - Implementation Batch E](Phase%202%20-%20Implementation%20Batch%20E.md)
 * [Phase 2 - Implementation Batch C](Phase%202%20-%20Implementation%20Batch%20C.md)
 * [Phase 2 - Implementation Batch D](Phase%202%20-%20Implementation%20Batch%20D.md)

@@ -174,8 +174,12 @@
                                                 <a
                                                     href="{{ $notification->action_url ?: route('platform.administration.notifications.index') }}"
                                                     wire:navigate
-                                                    class="block rounded-md border border-slate-800 bg-slate-950/80 px-4 py-4 transition hover:border-slate-600 hover:bg-slate-950"
+                                                    @class([
+                                                        'ui-notification-preview-item',
+                                                        'ui-notification-preview-item-unread' => ! $notification->read_at,
+                                                    ])
                                                     data-notification-preview-item
+                                                    data-notification-preview-item-unread="{{ ! $notification->read_at ? 'true' : 'false' }}"
                                                     data-notification-id="{{ $notification->id }}"
                                                 >
                                                     <div class="flex items-center gap-2">

@@ -181,7 +181,9 @@ class PlatformNotificationsTest extends TestCase
             ->assertSee('data-notification-trigger-badge-hidden="false"', false)
             ->assertSee('data-notification-mark-all-enabled="true"', false)
             ->assertSee('data-notification-preview-unread', false)
+            ->assertSee('data-notification-preview-item-unread="true"', false)
             ->assertSee('data-notification-preview-severity="notice"', false)
+            ->assertSee('class="ui-notification-preview-item ui-notification-preview-item-unread"', false)
             ->assertSee('class="ui-notification-preview-pill ui-notification-preview-pill-notice"', false)
             ->assertSee('1 unread notifications', false)
             ->assertSee('Mark all as read', false)
@@ -190,13 +192,26 @@ class PlatformNotificationsTest extends TestCase
 
     public function test_notification_trigger_uses_subdued_state_when_no_unread_notifications_exist(): void
     {
-        $this->actingAsPlatformSuperAdmin();
+        $user = $this->actingAsPlatformSuperAdmin();
+
+        PlatformNotification::query()->create([
+            'uuid' => (string) fake()->uuid(),
+            'notifiable_type' => User::class,
+            'notifiable_id' => $user->id,
+            'module_key' => 'platform',
+            'severity' => 'info',
+            'title' => 'Already read notification',
+            'body' => 'Read body.',
+            'read_at' => now(),
+        ]);
 
         $this->get('/platform/notifications')
             ->assertOk()
             ->assertSee('data-notification-trigger-unread="false"', false)
             ->assertSee('data-notification-trigger-badge-hidden="true"', false)
             ->assertSee('data-notification-mark-all-enabled="false"', false)
+            ->assertSee('data-notification-preview-item-unread="false"', false)
+            ->assertDontSee('ui-notification-preview-item-unread', false)
             ->assertSee('No unread notifications', false);
     }
 

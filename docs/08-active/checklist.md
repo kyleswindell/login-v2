@@ -240,7 +240,7 @@ Checklist:
   Status: passed review
 * [ ] Header baseline
   Status: implemented (pending manual review)
-  Note: worklog `2-A-0010` retuned the light-mode notification pills, shifted unread emphasis away from the prior blue treatment, and softened the resting trigger outline; the refreshed header surface still requires manual visual re-review.
+  Note: manual review approved the worklog `2-A-0010` light-mode notification pill contrast, and worklog `2-A-0011` now adds the danger/red unread trigger treatment plus stronger unread-row separation; the shared header surface still requires manual visual re-review.
 * [x] Account Menu baseline
   Status: passed review
 * [x] Mobile Nav Dock baseline

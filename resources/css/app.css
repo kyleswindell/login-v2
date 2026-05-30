@@ -954,20 +954,27 @@
     }
 
     .ui-notification-trigger:focus-visible {
-        outline: 2px solid color-mix(in srgb, var(--ui-action-outline-notice-border) 72%, transparent);
+        outline: 2px solid color-mix(in srgb, var(--ui-action-outline-danger-border) 72%, transparent);
         outline-offset: 2px;
     }
 
     .ui-notification-trigger[data-notification-trigger-unread='true'] {
-        border-color: color-mix(in srgb, var(--ui-action-neutral-border-hover) 82%, transparent);
-        background-color: color-mix(in srgb, var(--ui-surface-elevated) 96%, var(--ui-action-soft-neutral-bg-hover) 4%);
-        color: var(--ui-text-strong);
-        box-shadow: 0 14px 28px color-mix(in srgb, var(--ui-shadow-color) 14%, transparent);
+        border-color: color-mix(in srgb, var(--ui-action-outline-danger-border) 72%, transparent);
+        background-color: color-mix(in srgb, var(--ui-surface-elevated) 84%, var(--ui-action-outline-danger-bg-hover) 16%);
+        color: var(--ui-action-outline-danger-text);
+        box-shadow:
+            0 14px 28px color-mix(in srgb, var(--ui-shadow-color) 16%, transparent),
+            0 0 0 1px color-mix(in srgb, var(--ui-action-outline-danger-border) 20%, transparent),
+            0 0 24px color-mix(in srgb, var(--ui-action-outline-danger-border) 18%, transparent);
     }
 
     .ui-notification-trigger[data-notification-trigger-unread='true']:hover {
-        border-color: color-mix(in srgb, var(--ui-action-outline-notice-border) 48%, var(--ui-action-neutral-border-hover) 52%);
-        background-color: color-mix(in srgb, var(--ui-surface-elevated) 90%, var(--ui-action-soft-notice-bg-hover) 10%);
+        border-color: color-mix(in srgb, var(--ui-action-outline-danger-border) 84%, transparent);
+        background-color: color-mix(in srgb, var(--ui-surface-elevated) 76%, var(--ui-action-outline-danger-bg-hover) 24%);
+        box-shadow:
+            0 16px 30px color-mix(in srgb, var(--ui-shadow-color) 18%, transparent),
+            0 0 0 1px color-mix(in srgb, var(--ui-action-outline-danger-border) 28%, transparent),
+            0 0 28px color-mix(in srgb, var(--ui-action-outline-danger-border) 24%, transparent);
     }
 
     .ui-notification-trigger-icon {
@@ -976,15 +983,42 @@
     }
 
     .ui-notification-trigger[data-notification-trigger-unread='true'] .ui-notification-trigger-icon {
-        color: var(--ui-action-outline-notice-text);
+        color: var(--ui-action-outline-danger-text);
     }
 
     .ui-notification-trigger-badge {
         @apply absolute -right-1.5 -top-1.5 min-w-[1.5rem] rounded-full px-1.5 py-0.5 text-center text-[10px] font-semibold leading-none transition;
-        border: 1px solid var(--ui-status-notice-solid-bg);
-        background-color: var(--ui-status-notice-solid-bg);
+        border: 1px solid var(--ui-status-danger-solid-bg);
+        background-color: var(--ui-status-danger-solid-bg);
         color: var(--ui-status-solid-text);
-        box-shadow: 0 8px 18px color-mix(in srgb, var(--ui-shadow-color) 18%, transparent);
+        box-shadow:
+            0 8px 18px color-mix(in srgb, var(--ui-shadow-color) 20%, transparent),
+            0 0 18px color-mix(in srgb, var(--ui-status-danger-solid-bg) 22%, transparent);
+    }
+
+    .ui-notification-preview-item {
+        @apply block rounded-md border px-4 py-4 transition;
+        border-color: color-mix(in srgb, var(--ui-border-default) 74%, transparent);
+        background-color: color-mix(in srgb, var(--ui-surface-elevated) 94%, transparent);
+        box-shadow: 0 10px 24px color-mix(in srgb, var(--ui-shadow-color) 8%, transparent);
+    }
+
+    .ui-notification-preview-item:hover {
+        border-color: color-mix(in srgb, var(--ui-action-neutral-border-hover) 70%, transparent);
+        background-color: color-mix(in srgb, var(--ui-action-neutral-bg-hover) 76%, var(--ui-surface-elevated) 24%);
+    }
+
+    .ui-notification-preview-item-unread {
+        border-color: color-mix(in srgb, var(--ui-action-outline-danger-border) 44%, var(--ui-border-default) 56%);
+        background-color: color-mix(in srgb, var(--ui-surface-elevated) 72%, var(--ui-action-soft-danger-bg) 28%);
+        box-shadow:
+            inset 3px 0 0 color-mix(in srgb, var(--ui-status-danger-solid-bg) 72%, transparent),
+            0 12px 26px color-mix(in srgb, var(--ui-shadow-color) 10%, transparent);
+    }
+
+    .ui-notification-preview-item-unread:hover {
+        border-color: color-mix(in srgb, var(--ui-action-outline-danger-border) 62%, var(--ui-border-default) 38%);
+        background-color: color-mix(in srgb, var(--ui-surface-elevated) 62%, var(--ui-action-soft-danger-bg-hover) 38%);
     }
 
     .ui-notification-preview-pill {
@@ -993,9 +1027,9 @@
     }
 
     .ui-notification-preview-pill-unread {
-        background-color: color-mix(in srgb, var(--ui-status-neutral-bg) 82%, var(--ui-surface) 18%);
-        color: var(--ui-text-secondary);
-        border-color: color-mix(in srgb, var(--ui-border-default) 82%, transparent);
+        background-color: color-mix(in srgb, var(--ui-action-soft-danger-bg) 92%, var(--ui-surface-elevated) 8%);
+        color: var(--ui-action-outline-danger-text);
+        border-color: color-mix(in srgb, var(--ui-action-outline-danger-border) 55%, transparent);
     }
 
     .ui-notification-preview-pill-neutral {

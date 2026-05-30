@@ -1,6 +1,13 @@
 # Notes
 
 ## Findings
+- Worklog `2-A-0011` reworked the shared notification trigger around a danger/red unread direction so the bell uses danger-outline emphasis, the unread badge uses danger styling, and the stronger glow returns only when unread items exist.
+- Worklog `2-A-0011` also added a stronger unread-row shell treatment in the notifications pop-out so unread items no longer rely on the label alone for distinction from recent read rows.
+- Docker verification passed for `PlatformNotificationsTest` after the unread notification retune (10 tests / 45 assertions).
+- The validated WSL Ubuntu build path succeeded again for the notification unread retune; the trailing `wsl: Failed to translate 'G:\Program Files\Git\cmd'` message still appeared after the successful Vite build and did not block artifacts.
+- Manual review approved the light-mode notification severity-pill contrast change from worklog `2-A-0010`; that item no longer belongs in `Implemented Pending Review`.
+- Manual review still found the unread notification trigger too blended into the surrounding shell, and the next pass now needs an explicit danger/red unread direction rather than another softer blue or neutral accent.
+- Manual review also found that unread notifications in the pop-out list still need a stronger unread-vs-read row distinction than the current label treatment alone provides.
 - The canonical staging deploy succeeded for the current notification review-fix pass after pushing commit `0ae0844`, so the refreshed dropdown/trigger surface is available for manual review on staging.
 - Worklog `2-A-0010` replaced the hard-coded notification preview severity pills with token-backed pill styling so the dropdown labels inherit the shared light/dark semantic contrast instead of washed-out ad hoc violet/sky text.
 - Worklog `2-A-0010` retuned unread emphasis away from the prior blue accent by using a stronger notice-family badge/icon treatment while keeping the trigger shell closer to a neutral menu button.
@@ -91,6 +98,11 @@
 
 
 ## Decisions
+- Move the two active unread-state follow-up items from `Ready To Implement` to `Implemented Pending Review` because worklog `2-A-0011` implemented the shared trigger and dropdown-row retune.
+- Move the approved light-mode notification pill-contrast item from `Implemented Pending Review` to `Passed Review`.
+- Close the two older pending-review items for blue unread retuning and resting trigger-outline softening because the current follow-up now replaces them with an explicit danger/red unread-trigger direction.
+- Drive the next unread-state pass from a danger treatment instead of the prior primary-blue/notice direction: unread bell uses a danger-outline emphasis, unread badge uses danger styling, and stronger glow returns only when unread items exist.
+- Add a separate active follow-up for unread-row separation inside the notification pop-out so unread items gain a stronger background/shell distinction from recent read items.
 - Keep the current fix inside the shared notification surface by replacing only the preview-pill styling and unread trigger accent treatment rather than introducing a new notification component or token family.
 - Reuse the existing notice semantic family for unread emphasis so the trigger stops leaning on the current primary-blue direction while staying distinct from danger/error messaging.
 - Remove the unread-state outer ring treatment from the resting trigger and let hover/focus provide the stronger affordance instead of making unread state look pre-hovered.
@@ -175,6 +187,8 @@
 
 
 ## Risks / Questions
+- Another manual visual review pass is still required for the worklog `2-A-0011` danger/red unread trigger and unread-row treatment before `Header baseline`, `UI Reference Validation`, and `Batch A Exit Criteria` can close.
+- Another implementation pass is now required for the notification unread trigger and unread-row treatment before the header surface can return to manual visual review.
 - Another manual visual review pass is still required for the refreshed notification dropdown/trigger surface before these three queue items can move beyond `Implemented Pending Review`.
 - Manual functional review is now passing for the `Mark all as read` path, but another manual visual review pass is still required for the refreshed header notification trigger/pop-out surface before `UI Reference Validation` and `Batch A Exit Criteria` can close.
 - Manual visual review is still required for hover/focus/active states, overlay focus return, shell navigation behavior, and responsive layout behavior.

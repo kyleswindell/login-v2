@@ -50,9 +50,9 @@ Execute the active `work-batch` pass for the remaining header notification ready
 
 ## Change Queue Impact
 
-- Moved `P2-A-CQ-001` from `Ready To Implement` to `In Progress`.
-- Moved `P2-A-CQ-004` from `Ready To Implement` to `In Progress`.
-- The two targeted queue items stay out of `Implemented Pending Review` until the canonical staging deploy completes.
+- Moved `P2-A-CQ-001` from `Ready To Implement` through `In Progress` to `Implemented Pending Review`.
+- Moved `P2-A-CQ-004` from `Ready To Implement` through `In Progress` to `Implemented Pending Review`.
+- No new queue items were added in this pass.
 
 ## Issues Found
 
@@ -64,10 +64,10 @@ Execute the active `work-batch` pass for the remaining header notification ready
 
 ## Commit / Deploy Status
 
-- Commit: Pending
-- Deploy: Pending
+- Commit: Yes
+- Deploy: Yes
 
 ## Notes
 
 - This pass stayed inside the shared header notification surface and did not widen into unrelated notification feature behavior.
-- Commit and deployment details will be recorded once the review-ready CPD steps complete.
+- Commit `a84a01e` was pushed to `main`, and the canonical staging deploy completed successfully for manual review.

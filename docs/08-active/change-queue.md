@@ -11,6 +11,8 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 ## Ready To Implement
 
 ## In Progress
+
+## Implemented Pending Review
 - [ ] Retune the unread notification trigger emphasis so it still reads clearly at a glance without the current oversized or overly luminous glow effect around the bell control.
   ID: P2-A-CQ-001
   Iteration: 2
@@ -23,8 +25,6 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Path Coverage: header notification dropdown action
   Follow-up To: P2-A-CQ-001, P2-A-CQ-002, P2-A-CQ-003
   Implemented in: worklog `2-A-0013`
-
-## Implemented Pending Review
 
 ## Blocked
 

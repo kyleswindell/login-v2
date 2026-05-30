@@ -1,6 +1,7 @@
 # Notes
 
 ## Findings
+- The canonical staging deploy succeeded for worklog `2-A-0013` after pushing commit `a84a01e`, so the header notification glow retune and in-place `Mark all as read` behavior are now available for manual review on staging.
 - Worklog `2-A-0013` retunes the unread trigger glow to reduce the oversized luminous halo effect while preserving the danger/unread direction on the bell control.
 - Worklog `2-A-0013` also intercepts the header notification `Mark all as read` action so the dropdown updates in place through the shared notification runtime instead of forcing a full page refresh.
 - Docker verification passed for `PlatformNotificationsTest` after the header notification interaction/glow pass.
@@ -112,7 +113,7 @@
 
 
 ## Decisions
-- Move `P2-A-CQ-001` and `P2-A-CQ-004` into `In Progress` for worklog `2-A-0013`; do not move them into `Implemented Pending Review` until the canonical staging deploy completes and the surface is actually reviewable.
+- Move `P2-A-CQ-001` and `P2-A-CQ-004` from `In Progress` to `Implemented Pending Review` because worklog `2-A-0013` is now deployed to the required staging review surface.
 - Move `P2-A-CQ-002` and `P2-A-CQ-003` from `Implemented Pending Review` to `Passed Review` based on manual approval.
 - Move `P2-A-CQ-001` back to `Ready To Implement` because the current unread trigger glow still fails the intended professional-dashboard visual target.
 - Add `P2-A-CQ-004` as a new header-notification follow-up item for making `Mark all as read` update in place instead of causing a full page refresh.

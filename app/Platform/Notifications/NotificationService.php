@@ -67,6 +67,14 @@ class NotificationService
         return $notification;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
+    public function payloadFor(PlatformNotification $notification): array
+    {
+        return $this->payload($notification);
+    }
+
     private function broadcastCreated(PlatformNotification $notification): void
     {
         $userId = $this->broadcastUserId($notification);

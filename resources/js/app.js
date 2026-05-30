@@ -1211,9 +1211,40 @@ if (realtimeRoot) {
         }
     };
 
-    const unreadBadge = (notification) => notification.read_at
+    const severitySemantic = (severity) => {
+        switch (severity) {
+            case 'info':
+                return 'info';
+            case 'success':
+                return 'success';
+            case 'notice':
+                return 'notice';
+            case 'warning':
+                return 'warning';
+            case 'error':
+            case 'urgent':
+                return 'danger';
+            default:
+                return 'neutral';
+        }
+    };
+
+    const unreadPreviewBadge = (notification) => notification.read_at
         ? ''
-        : '<span class="inline-flex rounded-full bg-slate-700/70 px-2.5 py-1 text-[11px] font-medium text-slate-200">Unread</span>';
+        : '<span class="ui-notification-preview-pill ui-notification-preview-pill-unread" data-notification-preview-unread>Unread</span>';
+
+    const severityPreviewBadge = (notification) => {
+        const semantic = severitySemantic(notification.severity);
+
+        return `
+            <span
+                class="ui-notification-preview-pill ui-notification-preview-pill-${semantic}"
+                data-notification-preview-severity="${semantic}"
+            >
+                ${escapeHtml(notification.severity)}
+            </span>
+        `;
+    };
 
     const dismissedBadge = (notification) => notification.dismissed_at
         ? '<span class="inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-400">Dismissed</span>'
@@ -1226,15 +1257,14 @@ if (realtimeRoot) {
     const createPreviewMarkup = (notification) => `
         <a
             href="${escapeHtml(notification.action_url || indexUrl)}"
-            class="block rounded-md border border-slate-800 bg-slate-950/80 px-4 py-4 transition hover:border-slate-600 hover:bg-slate-950"
+            class="ui-notification-preview-item${notification.read_at ? '' : ' ui-notification-preview-item-unread'}"
             data-notification-preview-item
+            data-notification-preview-item-unread="${notification.read_at ? 'false' : 'true'}"
             data-notification-id="${notification.id}"
         >
             <div class="flex items-center gap-2">
-                ${unreadBadge(notification)}
-                <span class="inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.15em] ${severityClasses(notification.severity)}">
-                    ${escapeHtml(notification.severity)}
-                </span>
+                ${unreadPreviewBadge(notification)}
+                ${severityPreviewBadge(notification)}
                 <span class="ml-auto text-xs text-slate-500">${escapeHtml(notification.created_at_label || '')}</span>
             </div>
             <p class="mt-3 text-sm font-semibold text-white">${escapeHtml(notification.title)}</p>
@@ -1334,13 +1364,17 @@ if (realtimeRoot) {
             return;
         }
 
+        const existing = toastContainer.querySelector(`[data-notification-toast-id="${notification.id}"]`);
+        existing?.remove();
+
         const toast = document.createElement('a');
         toast.href = notification.action_url || indexUrl;
+        toast.dataset.notificationToastId = `${notification.id}`;
         toast.className = 'pointer-events-auto block rounded-md border border-slate-800 bg-slate-900/95 px-4 py-4 shadow-2xl shadow-black/40 transition hover:border-slate-600';
         toast.innerHTML = `
             <div class="flex items-start gap-3">
-                <div class="mt-0.5 inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.15em] ${severityClasses(notification.severity)}">
-                    ${escapeHtml(notification.severity)}
+                <div class="mt-0.5">
+                    ${severityPreviewBadge(notification)}
                 </div>
                 <div class="min-w-0 flex-1">
                     <p class="text-sm font-semibold text-white">${escapeHtml(notification.title)}</p>
@@ -1381,4 +1415,14 @@ if (realtimeRoot) {
         .listen('.notification.updated', (event) => {
             applyNotification(event.notification, { toast: false });
         });
+
+    window.addEventListener('platform-notification-created', (event) => {
+        const notification = event.detail?.notification;
+
+        if (!notification) {
+            return;
+        }
+
+        applyNotification(notification, { toast: true });
+    });
 }

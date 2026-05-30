@@ -1,6 +1,8 @@
 # Notes
 
 ## Findings
+- Worklog `2-A-0012` aligned the realtime notification dropdown and toast renderer with the shared notification preview pill classes so newly generated notifications no longer rely on the older inline badge styling path.
+- Worklog `2-A-0012` also adds a local dashboard notification dispatch path so generated test notifications update the current page immediately instead of relying only on the broadcast round-trip.
 - Manual review found that freshly generated notifications still render old badge styling in the bell dropdown and toast surface until the page is refreshed, which indicates the realtime JS renderer is not using the current shared notification classes.
 - Read-only inspection confirmed the discrepancy is in `resources/js/app.js`, where the realtime `createPreviewMarkup` and `createToast` templates still emit older inline severity/unread badge markup while the server-rendered Blade surface already uses the updated shared notification classes.
 - The canonical staging deploy succeeded for worklog `2-A-0011` after pushing commit `63be5bb`, so the refreshed unread trigger and dropdown-row treatment are now available for manual review on staging.
@@ -101,6 +103,8 @@
 
 
 ## Decisions
+- Move `P2-A-CQ-003` from `Ready To Implement` to `Implemented Pending Review` because worklog `2-A-0012` implemented the realtime dropdown/toast renderer parity fix.
+- Add stable queue IDs to the active notification items in `change-queue.md` and keep iteration history separate from the ID so future chat, review, and implementation passes can refer to the same items deterministically.
 - Normalize the three current notification queue items with lightweight metadata lines so the remaining unread-state work is traceable by scope, path coverage, and originating worklog without changing the underlying queue state.
 - Keep the two worklog `2-A-0011` notification items in `Implemented Pending Review` because they were implemented in the prior pass and the stale realtime notification markup is a separate follow-up item rather than evidence that those two implementation items were never completed.
 - Add a dedicated `Ready To Implement` follow-up for realtime notification renderer parity so newly generated notifications match the same shared classes already used by the refreshed server-rendered surface.

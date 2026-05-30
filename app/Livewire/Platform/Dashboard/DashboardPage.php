@@ -109,7 +109,7 @@ class DashboardPage extends Component
         }
 
         $notificationService = app(NotificationService::class);
-        $notificationService->sendTo(
+        $notification = $notificationService->sendTo(
             notifiable: $user,
             moduleKey: 'development',
             title: 'Test notification',
@@ -118,6 +118,8 @@ class DashboardPage extends Component
             actionUrl: route('platform.administration.notifications.index'),
             metadata: ['source' => 'dashboard-development-tools'],
         );
+
+        $this->dispatch('platform-notification-created', notification: $notificationService->payloadFor($notification));
     }
 
     private function persistLayout(): void

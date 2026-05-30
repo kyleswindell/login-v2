@@ -28,7 +28,7 @@ class DevelopmentToolsWidget extends Widget implements RendersOnDashboard
         }
 
         $notificationService = app(NotificationService::class);
-        $notificationService->sendTo(
+        $notification = $notificationService->sendTo(
             notifiable: $user,
             moduleKey: 'development',
             title: 'Test notification',
@@ -38,7 +38,7 @@ class DevelopmentToolsWidget extends Widget implements RendersOnDashboard
             metadata: ['source' => 'dashboard-development-tools'],
         );
 
-        session()->flash('status', 'Test notification generated and delivered to your inbox.');
+        $this->dispatch('platform-notification-created', notification: $notificationService->payloadFor($notification));
     }
 
     public function getDashboardView(): string

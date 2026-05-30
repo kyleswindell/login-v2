@@ -158,7 +158,8 @@ class PlatformDashboardTest extends TestCase
 
         Livewire::actingAs($user)
             ->test(DashboardPage::class)
-            ->call('generateTestNotification');
+            ->call('generateTestNotification')
+            ->assertDispatched('platform-notification-created');
 
         $this->assertDatabaseHas('notifications', [
             'notifiable_type' => User::class,
@@ -206,4 +207,3 @@ class PlatformDashboardTest extends TestCase
         $this->post('/dashboard/test-notification')->assertNotFound();
     }
 }
-

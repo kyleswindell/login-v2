@@ -9,11 +9,6 @@ Rules:
 - Continuation lines such as `Scope:`, `Path Coverage:`, `Implemented in:`, `Follow-up To:`, and `Supersedes:` are for traceability only.
 
 ## Ready To Implement
-- [ ] Align the realtime notification renderer with the current shared notification classes so newly generated notifications use the same updated severity pills and unread styling immediately in the bell dropdown and toast surface, without requiring a page refresh.
-  ID: P2-A-CQ-003
-  Scope: shared realtime notification renderer
-  Path Coverage: realtime dropdown injection, realtime toast rendering
-  Follow-up To: P2-A-CQ-001, P2-A-CQ-002
 
 ## In Progress
 
@@ -28,6 +23,12 @@ Rules:
   Scope: notification preview row treatment
   Path Coverage: server-rendered dropdown rows
   Implemented in: worklog `2-A-0011`
+- [ ] Align the realtime notification renderer with the current shared notification classes so newly generated notifications use the same updated severity pills and unread styling immediately in the bell dropdown and toast surface, without requiring a page refresh.
+  ID: P2-A-CQ-003
+  Scope: shared realtime notification renderer
+  Path Coverage: realtime dropdown injection, realtime toast rendering
+  Follow-up To: P2-A-CQ-001, P2-A-CQ-002
+  Implemented in: worklog `2-A-0012`
 
 ## Blocked
 

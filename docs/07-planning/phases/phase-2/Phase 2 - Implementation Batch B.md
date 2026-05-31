@@ -299,3 +299,5 @@ Across the required UI Reference pages and archetype proofs, Batch B review shou
 * [Phase 2 - UI Surface Disposition Audit](Phase%202%20-%20UI%20Surface%20Disposition%20Audit.md)
 * [Tier 2 Pattern Library Checklist](../../../02-standards/ui/components/Tier%202%20Pattern%20Library%20Checklist.md)
 * [UI UX Contract Rollout Tracker](../../../09-reference/ui/UI%20UX%20Contract%20Rollout%20Tracker.md)
+* [Phase 2 Batch B - Internal Shell Family Rule Matrix](../../../09-reference/ui/Phase%202%20Batch%20B%20-%20Internal%20Shell%20Family%20Rule%20Matrix.md)
+* [Phase 2 Batch B - Page And Module Archetype Matrix](../../../09-reference/ui/Phase%202%20Batch%20B%20-%20Page%20And%20Module%20Archetype%20Matrix.md)

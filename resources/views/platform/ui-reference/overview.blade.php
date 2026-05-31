@@ -17,8 +17,8 @@
             </article>
             <article class="ui-card">
                 <p class="ui-kicker">Pattern Standards</p>
-                <h2 class="ui-card-title mt-2">Complex Behavior</h2>
-                <p class="ui-card-copy">Table, overlay, and navigation pages show complete interaction standards (filtering, pagination, drawers, toasts, mobile nav).</p>
+                <h2 class="ui-card-title mt-2">Tier 2 Library</h2>
+                <p class="ui-card-copy">Form, data, navigation, table, layout, and archetype pages now carry the reusable Tier 2 proof coverage Batch B needs to leave behind.</p>
             </article>
             <article class="ui-card">
                 <p class="ui-kicker">Review Workflow</p>
@@ -39,6 +39,42 @@
                 <li>7. Toast and inline alert feedback</li>
                 <li>8. Sidebar, account-menu behavior, and layout scaffolding</li>
             </ul>
+        </section>
+
+        <section class="ui-card">
+            <h2 class="ui-card-title">Batch B Tier 2 Coverage</h2>
+            <div class="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                <a wire:navigate href="{{ route('platform.ui-reference.patterns.forms') }}" class="rounded-lg border border-slate-800 bg-slate-950/70 p-4 transition hover:border-slate-600 hover:bg-slate-900">
+                    <p class="ui-kicker">Form Patterns</p>
+                    <h3 class="mt-2 text-base font-semibold text-white">Form Group Through Validation Summary</h3>
+                    <p class="mt-2 text-sm text-slate-400">Reusable form scaffolding built from the Tier 1 controls and feedback baseline.</p>
+                </a>
+                <a wire:navigate href="{{ route('platform.ui-reference.patterns.data-content') }}" class="rounded-lg border border-slate-800 bg-slate-950/70 p-4 transition hover:border-slate-600 hover:bg-slate-900">
+                    <p class="ui-kicker">Data + Content</p>
+                    <h3 class="mt-2 text-base font-semibold text-white">Read-only, summary, and empty-state patterns</h3>
+                    <p class="mt-2 text-sm text-slate-400">Shared content blocks, stat cards, key-value displays, and list rows.</p>
+                </a>
+                <a wire:navigate href="{{ route('platform.ui-reference.patterns.navigation') }}" class="rounded-lg border border-slate-800 bg-slate-950/70 p-4 transition hover:border-slate-600 hover:bg-slate-900">
+                    <p class="ui-kicker">Navigation + Actions</p>
+                    <h3 class="mt-2 text-base font-semibold text-white">Page header, sub-navigation, grouped actions</h3>
+                    <p class="mt-2 text-sm text-slate-400">Pattern-level proof for page title/action rows, section navigation, and compact action menus.</p>
+                </a>
+                <a wire:navigate href="{{ route('platform.ui-reference.patterns.tables') }}" class="rounded-lg border border-slate-800 bg-slate-950/70 p-4 transition hover:border-slate-600 hover:bg-slate-900">
+                    <p class="ui-kicker">Enhanced Data Table</p>
+                    <h3 class="mt-2 text-base font-semibold text-white">Search, filter, sort, pagination, drawers</h3>
+                    <p class="mt-2 text-sm text-slate-400">Advanced table proof for internal operator surfaces without feature coupling.</p>
+                </a>
+                <a wire:navigate href="{{ route('platform.ui-reference.patterns.layout') }}" class="rounded-lg border border-slate-800 bg-slate-950/70 p-4 transition hover:border-slate-600 hover:bg-slate-900">
+                    <p class="ui-kicker">Layout + Dashboard</p>
+                    <h3 class="mt-2 text-base font-semibold text-white">Dashboard grid and section-block proof</h3>
+                    <p class="mt-2 text-sm text-slate-400">Shared dashboard-shell and content-structure rules for internal pages.</p>
+                </a>
+                <a wire:navigate href="{{ route('platform.ui-reference.patterns.archetypes') }}" class="rounded-lg border border-slate-800 bg-slate-950/70 p-4 transition hover:border-slate-600 hover:bg-slate-900">
+                    <p class="ui-kicker">Archetype Proofs</p>
+                    <h3 class="mt-2 text-base font-semibold text-white">Dashboard, list, detail, form, setup, settings, account</h3>
+                    <p class="mt-2 text-sm text-slate-400">Batch B review targets for the reusable internal app-scaffolding contract.</p>
+                </a>
+            </div>
         </section>
 
         <section class="ui-card">

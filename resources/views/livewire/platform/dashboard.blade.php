@@ -1,30 +1,25 @@
 <section class="flex flex-1 flex-col gap-6">
 
         {{-- Page header --}}
-        <div class="flex items-start justify-between gap-4">
-            <div>
-                <h1 class="ui-page-header-title">Dashboard</h1>
-                <p class="ui-page-header-copy">Welcome back, {{ auth()->user()->name ?? auth()->user()->email }}.</p>
-            </div>
-
-            <div class="flex items-center gap-2 flex-shrink-0">
+        <x-ui.patterns.page-title-actions-row
+            title="Dashboard"
+            description="Welcome back, {{ auth()->user()->name ?? auth()->user()->email }}."
+        >
+            <x-slot:actions>
                 @if ($isEditing)
-                    <button
+                    <x-ui.button
+                        variant="ghost"
                         wire:click="resetLayout"
                         wire:confirm="Reset your dashboard to the default layout?"
-                        class="ui-action ui-action-ghost"
                     >
                         Reset
-                    </button>
+                    </x-ui.button>
                 @endif
 
-                <button
+                <x-ui.button
+                    :semantic="$isEditing ? 'success' : 'neutral'"
+                    :variant="$isEditing ? 'base' : 'outline'"
                     wire:click="toggleLock"
-                    @class([
-                        'ui-action gap-2',
-                        'ui-action-success' => $isEditing,
-                        'ui-action-outline' => ! $isEditing,
-                    ])
                 >
                     @if ($isEditing)
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -37,9 +32,9 @@
                         </svg>
                         Customize
                     @endif
-                </button>
-            </div>
-        </div>
+                </x-ui.button>
+            </x-slot:actions>
+        </x-ui.patterns.page-title-actions-row>
 
         {{-- Widget grid --}}
         <div
@@ -66,16 +61,17 @@
                                         <path d="M7 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm6 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM7 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm6 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM7 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm6 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
                                     </svg>
                                 </span>
-                                    <button
+                                    <x-ui.button
                                         wire:click="toggleWidgetVisibility('{{ $slot['widget_key'] }}')"
-                                        class="ui-action ui-action-ghost ui-action-xs"
+                                        variant="ghost"
+                                        size="xs"
                                         title="Hide widget"
                                     >
-                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                    </svg>
-                                </button>
+                                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        </svg>
+                                    </x-ui.button>
                             </div>
                             <div class="pointer-events-none select-none opacity-90">
                                 {!! $slot['renderedHtml'] !!}
@@ -98,15 +94,16 @@
                             <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-500">Hidden Widgets</p>
                             <div class="flex flex-wrap gap-2">
                                 @foreach ($hiddenSlots as $slot)
-                                    <button
+                                    <x-ui.button
                                         wire:click="toggleWidgetVisibility('{{ $slot['widget_key'] }}')"
-                                        class="ui-action ui-action-outline ui-action-xs"
+                                        variant="outline"
+                                        size="xs"
                                     >
                                         <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>
                                         </svg>
                                         {{ $slot['widget_key'] }}
-                                    </button>
+                                    </x-ui.button>
                                 @endforeach
                             </div>
                         </div>

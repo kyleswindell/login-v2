@@ -21,9 +21,9 @@ class PlatformUiReferenceTest extends TestCase
             ->assertOk()
             ->assertSee('UI Reference Workspace')
             ->assertSee('ui-card', false)
-            ->assertSee('Components / Actions')
-            ->assertSee('Patterns / Tables')
-            ->assertSee('Patterns / Navigation');
+            ->assertSee('Form Patterns')
+            ->assertSee('Data + Content')
+            ->assertSee('Archetype Proofs');
     }
 
     public function test_authorized_users_can_view_tier_one_forms_and_navigation_reference_surfaces(): void
@@ -44,11 +44,42 @@ class PlatformUiReferenceTest extends TestCase
 
         $this->get('/platform/ui-reference/patterns/navigation')
             ->assertOk()
-            ->assertSee('Layout And Scaffolding')
-            ->assertSee('Grid Baseline');
+            ->assertSee('Sub-navigation Bar')
+            ->assertSee('Dropdown Action Menu')
+            ->assertSee('Search And Filter Bar')
+            ->assertSee('data-ui-pattern="page-title-actions-row"', false)
+            ->assertSee('data-ui-pattern="sub-navigation-bar"', false)
+            ->assertSee('data-ui-pattern="dropdown-action-menu"', false);
+
+        $this->get('/platform/ui-reference/patterns/forms')
+            ->assertOk()
+            ->assertSee('Validation Summary and Form Actions')
+            ->assertSee('data-ui-pattern="form-section"', false)
+            ->assertSee('data-ui-pattern="validation-summary"', false);
+
+        $this->get('/platform/ui-reference/patterns/data-content')
+            ->assertOk()
+            ->assertSee('Data And Content Patterns')
+            ->assertSee('data-ui-pattern="stat-card"', false)
+            ->assertSee('Support Runbook')
+            ->assertSee('data-ui-pattern="empty-state"', false);
+
+        $this->get('/platform/ui-reference/patterns/layout')
+            ->assertOk()
+            ->assertSee('Layout And Dashboard Patterns')
+            ->assertSee('data-ui-pattern="dashboard-grid"', false)
+            ->assertSee('data-ui-pattern="content-section-block"', false);
+
+        $this->get('/platform/ui-reference/patterns/archetypes')
+            ->assertOk()
+            ->assertSee('Archetype Proofs')
+            ->assertSee('Create / Edit Form')
+            ->assertSee('Settings')
+            ->assertSee('Account / Profile');
 
         $this->get('/platform/ui-reference/patterns/tables?workspace_sort=policy_count&workspace_direction=desc&audit_sort=event_type&audit_direction=asc&error_sort=message&error_direction=asc')
             ->assertOk()
+            ->assertSee('Enhanced Data Table')
             ->assertSee('Policies')
             ->assertSee('Settings')
             ->assertSee('Export')

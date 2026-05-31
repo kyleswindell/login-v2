@@ -4,12 +4,12 @@
 PARTIAL
 
 ## Issues
-- Tier 1 library hardening is implemented but still awaiting manual review on staging.
+No implementation defects are currently recorded from automated validation. A combined manual review pass is now required for the Batch B Tier 2 pattern pages, live proof surfaces, and handoff artifacts.
 
 ## Required Fixes
-None yet. Review findings should be added after manual review of the promoted Tier 1 proof surfaces.
+None yet. Manual review has not been completed for the Batch B pattern/archetype implementation pass.
 
 ## Manual Review
 
-Visual: Not started  
-Functional: Not started
+Visual: Pending combined Batch B review  
+Functional: Pending combined Batch B review

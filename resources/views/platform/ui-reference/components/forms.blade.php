@@ -65,13 +65,12 @@
         <section class="ui-card">
             <p class="ui-kicker">Validation Block</p>
             <div class="mt-4 grid gap-5 lg:grid-cols-2">
-                <div class="ui-inline-alert ui-inline-alert-danger" role="alert" aria-live="polite">
-                    <h2 class="text-sm font-semibold uppercase tracking-[0.15em]">Form Validation Errors</h2>
-                    <ul class="mt-2 list-disc space-y-1 pl-4 text-sm">
+                <x-ui.inline-alert semantic="danger" title="Form Validation Errors">
+                    <ul class="list-disc space-y-1 pl-4 text-sm">
                         <li>Workspace name is required.</li>
                         <li>Owner scope must be selected.</li>
                     </ul>
-                </div>
+                </x-ui.inline-alert>
 
                 <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
                     <label class="block">
@@ -83,9 +82,9 @@
             </div>
 
             <div class="mt-5 flex flex-wrap items-center gap-3">
-                <button type="button" class="ui-action ui-action-ghost">Cancel</button>
-                <button type="button" class="ui-action ui-action-danger">Delete</button>
-                <button type="submit" class="ui-action ui-action-primary">Save Workspace</button>
+                <x-ui.button variant="ghost">Cancel</x-ui.button>
+                <x-ui.button semantic="danger">Delete</x-ui.button>
+                <x-ui.button type="submit" semantic="primary">Save Workspace</x-ui.button>
             </div>
         </section>
 

@@ -4,74 +4,80 @@
     </x-slot:sidebar>
 
     <section class="flex flex-1 flex-col gap-6">
-        <div>
-            <h1 class="ui-page-header-title">Platform General</h1>
-            <p class="ui-page-header-copy">Configure the platform display name, default timezone, and locale.</p>
-        </div>
+        <x-ui.patterns.page-title-actions-row
+            title="Platform General"
+            description="Configure the platform display name, default timezone, and locale."
+        />
+
+        @include('platform.settings._general-tabs', ['generalTab' => 'general'])
 
         @if (session('success'))
-            <div class="rounded-md border border-emerald-500/30 bg-emerald-500/10 px-5 py-4 text-sm font-medium text-emerald-300">
+            <x-ui.inline-alert semantic="success" title="General settings saved">
                 {{ session('success') }}
-            </div>
+            </x-ui.inline-alert>
         @endif
 
-        <form method="POST" action="{{ route('platform.settings.general.update') }}" class="rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
+        <form method="POST" action="{{ route('platform.settings.general.update') }}" class="space-y-6">
             @csrf
 
-            <div class="grid gap-6 md:grid-cols-2">
-                <div>
-                    <label for="display_name" class="block text-sm font-semibold text-slate-200">Display Name</label>
-                    <p class="mt-1 text-xs text-slate-500">The name shown in the platform header and emails.</p>
-                    <input
-                        id="display_name"
-                        type="text"
-                        name="display_name"
-                        value="{{ old('display_name', $displayName) }}"
-                        class="mt-3 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0"
+            <x-ui.patterns.form-section
+                title="General Platform Defaults"
+                description="These fields establish the baseline shell-facing identity and localization defaults for the internal app."
+                kicker="Settings archetype proof"
+            >
+                <div class="grid gap-6 md:grid-cols-2">
+                    <x-ui.patterns.form-group
+                        for="display_name"
+                        label="Display Name"
+                        helper="The name shown in the platform header and emails."
+                        :error="$errors->first('display_name')"
                     >
-                    @error('display_name')
-                        <p class="mt-2 text-xs text-rose-400">{{ $message }}</p>
-                    @enderror
+                        <input
+                            id="display_name"
+                            type="text"
+                            name="display_name"
+                            value="{{ old('display_name', $displayName) }}"
+                            class="ui-input w-full"
+                        >
+                    </x-ui.patterns.form-group>
+
+                    <x-ui.patterns.form-group
+                        for="timezone"
+                        label="Default Timezone"
+                        helper="Used for display formatting where no user timezone is set."
+                        :error="$errors->first('timezone')"
+                    >
+                        <input
+                            id="timezone"
+                            type="text"
+                            name="timezone"
+                            value="{{ old('timezone', $timezone) }}"
+                            placeholder="e.g. America/New_York"
+                            class="ui-input w-full"
+                        >
+                    </x-ui.patterns.form-group>
+
+                    <x-ui.patterns.form-group
+                        for="locale"
+                        label="Default Locale"
+                        helper="Used for formatting numbers, dates, and currency."
+                        :error="$errors->first('locale')"
+                    >
+                        <input
+                            id="locale"
+                            type="text"
+                            name="locale"
+                            value="{{ old('locale', $locale) }}"
+                            placeholder="e.g. en"
+                            class="ui-input w-full"
+                        >
+                    </x-ui.patterns.form-group>
                 </div>
 
-                <div>
-                    <label for="timezone" class="block text-sm font-semibold text-slate-200">Default Timezone</label>
-                    <p class="mt-1 text-xs text-slate-500">Used for display formatting where no user timezone is set.</p>
-                    <input
-                        id="timezone"
-                        type="text"
-                        name="timezone"
-                        value="{{ old('timezone', $timezone) }}"
-                        placeholder="e.g. America/New_York"
-                        class="mt-3 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0"
-                    >
-                    @error('timezone')
-                        <p class="mt-2 text-xs text-rose-400">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div>
-                    <label for="locale" class="block text-sm font-semibold text-slate-200">Default Locale</label>
-                    <p class="mt-1 text-xs text-slate-500">Used for formatting numbers, dates, and currency.</p>
-                    <input
-                        id="locale"
-                        type="text"
-                        name="locale"
-                        value="{{ old('locale', $locale) }}"
-                        placeholder="e.g. en"
-                        class="mt-3 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0"
-                    >
-                    @error('locale')
-                        <p class="mt-2 text-xs text-rose-400">{{ $message }}</p>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="mt-8 border-t border-slate-800 pt-6">
-                <button type="submit" class="rounded-md bg-slate-700/60 px-6 py-3 text-sm font-semibold text-slate-200 ring-1 ring-slate-500/40 transition hover:bg-slate-700/80 hover:text-white">
-                    Save General Settings
-                </button>
-            </div>
+                <x-ui.patterns.form-actions-bar class="mt-6">
+                    <x-ui.button type="submit" semantic="primary">Save General Settings</x-ui.button>
+                </x-ui.patterns.form-actions-bar>
+            </x-ui.patterns.form-section>
         </form>
     </section>
 </x-layouts.app>

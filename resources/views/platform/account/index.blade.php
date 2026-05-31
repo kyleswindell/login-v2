@@ -1,29 +1,28 @@
 <x-layouts.app title="My Account">
     <section class="w-full space-y-6">
-        <div>
-            <h1 class="ui-page-header-title">My Account</h1>
-            <p class="ui-page-header-copy">Manage your profile identity and personal preferences.</p>
-        </div>
+        <x-ui.patterns.page-title-actions-row
+            title="My Account"
+            description="Manage your profile identity and personal preferences."
+        >
+            <x-slot:actions>
+                <x-ui.button :href="route('platform.account.settings')" variant="outline">Edit Profile</x-ui.button>
+                <x-ui.button :href="route('platform.account.preferences')" semantic="primary">Preferences</x-ui.button>
+            </x-slot:actions>
+        </x-ui.patterns.page-title-actions-row>
 
-        <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30">
-            <dl class="grid gap-5 sm:grid-cols-2">
-                <div>
-                    <dt class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Name</dt>
-                    <dd class="mt-2 text-sm text-slate-100">{{ $user->name }}</dd>
-                </div>
-                <div>
-                    <dt class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Email</dt>
-                    <dd class="mt-2 text-sm text-slate-100">{{ $user->email }}</dd>
-                </div>
-                <div>
-                    <dt class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Phone</dt>
-                    <dd class="mt-2 text-sm text-slate-100">{{ $user->phone ?: 'Not set' }}</dd>
-                </div>
-                <div>
-                    <dt class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Timezone</dt>
-                    <dd class="mt-2 text-sm text-slate-100">{{ $user->timezone ?: 'Not set' }}</dd>
-                </div>
-            </dl>
-        </div>
+        <x-ui.patterns.content-section-block
+            title="Profile Summary"
+            description="Read-only account detail uses the shared key-value display rather than bespoke field stacks."
+            kicker="Account archetype proof"
+        >
+            <x-ui.patterns.key-value-display
+                :items="[
+                    ['label' => 'Name', 'value' => e($user->name)],
+                    ['label' => 'Email', 'value' => e($user->email)],
+                    ['label' => 'Phone', 'value' => e($user->phone ?: 'Not set')],
+                    ['label' => 'Timezone', 'value' => e($user->timezone ?: 'Not set')],
+                ]"
+            />
+        </x-ui.patterns.content-section-block>
     </section>
 </x-layouts.app>

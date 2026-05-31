@@ -143,6 +143,13 @@ Batch B should leave behind reviewable artifacts, not only implemented proof sur
 * UI reference examples for every required Tier 2 pattern implemented in the batch
 * proof coverage for the Tier 1 Blade-component promotions that Batch B normalizes first
 
+Current Batch B support-artifact targets:
+
+* [Phase 2 Batch B - Internal Shell Family Rule Matrix](../../../09-reference/ui/Phase%202%20Batch%20B%20-%20Internal%20Shell%20Family%20Rule%20Matrix.md)
+* [Phase 2 Batch B - Page And Module Archetype Matrix](../../../09-reference/ui/Phase%202%20Batch%20B%20-%20Page%20And%20Module%20Archetype%20Matrix.md)
+* [Phase 2 Batch B - Setup And Settings Registration Field Contract](../../../09-reference/ui/Phase%202%20Batch%20B%20-%20Setup%20And%20Settings%20Registration%20Field%20Contract.md)
+* [Phase 2 Batch B - Future Module UI Ownership Declaration Field Contract](../../../09-reference/ui/Phase%202%20Batch%20B%20-%20Future%20Module%20UI%20Ownership%20Declaration%20Field%20Contract.md)
+
 ## Proof-Page Matrix
 
 Batch B should leave behind an explicit proof-page map so manual review can find each required pattern and archetype intentionally.

@@ -1,69 +1,62 @@
 <x-layouts.app title="Account Settings">
     <section class="w-full space-y-6">
-        <div>
-            <h1 class="ui-page-header-title">Account Settings</h1>
-            <p class="ui-page-header-copy">Update your profile details and security credentials.</p>
-        </div>
+        <x-ui.patterns.page-title-actions-row
+            title="Account Settings"
+            description="Update your profile details and security credentials."
+        />
 
         @if (session('success'))
-            <div class="rounded-md border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
+            <x-ui.inline-alert semantic="success" title="Account settings saved">
                 {{ session('success') }}
-            </div>
+            </x-ui.inline-alert>
         @endif
 
         @if ($errors->any())
-            <div class="rounded-md border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">
-                <ul class="space-y-1">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
+            <x-ui.patterns.validation-summary :errors="$errors->all()" />
         @endif
 
-        <form method="POST" action="{{ route('platform.account.settings.update') }}" class="rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30">
+        <form method="POST" action="{{ route('platform.account.settings.update') }}" class="space-y-6">
             @csrf
 
-            <div class="grid gap-5 sm:grid-cols-2">
-                <div class="sm:col-span-2">
-                    <label for="name" class="block text-sm font-semibold text-slate-200">Name</label>
-                    <input id="name" name="name" type="text" value="{{ old('name', $user->name) }}" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-slate-100 focus:border-slate-500 focus:outline-none">
+            <x-ui.patterns.form-section
+                title="Profile Details"
+                description="Shared identity fields align to the same grouped form contract used elsewhere in the internal app."
+                kicker="Account archetype proof"
+            >
+                <div class="grid gap-5 sm:grid-cols-2">
+                    <x-ui.patterns.form-group class="sm:col-span-2" for="name" label="Name">
+                        <input id="name" name="name" type="text" value="{{ old('name', $user->name) }}" class="ui-input w-full">
+                    </x-ui.patterns.form-group>
+                    <x-ui.patterns.form-group class="sm:col-span-2" for="email" label="Email">
+                        <input id="email" name="email" type="email" value="{{ old('email', $user->email) }}" class="ui-input w-full">
+                    </x-ui.patterns.form-group>
+                    <x-ui.patterns.form-group class="sm:col-span-2" for="phone" label="Phone">
+                        <input id="phone" name="phone" type="text" value="{{ old('phone', $user->phone) }}" class="ui-input w-full">
+                    </x-ui.patterns.form-group>
                 </div>
-                <div class="sm:col-span-2">
-                    <label for="email" class="block text-sm font-semibold text-slate-200">Email</label>
-                    <input id="email" name="email" type="email" value="{{ old('email', $user->email) }}" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-slate-100 focus:border-slate-500 focus:outline-none">
-                </div>
-                <div class="sm:col-span-2">
-                    <label for="phone" class="block text-sm font-semibold text-slate-200">Phone</label>
-                    <input id="phone" name="phone" type="text" value="{{ old('phone', $user->phone) }}" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-slate-100 focus:border-slate-500 focus:outline-none">
-                </div>
-            </div>
+            </x-ui.patterns.form-section>
 
-            <div class="mt-8 border-t border-slate-800 pt-6">
-                <p class="text-sm font-semibold text-white">Password & Security</p>
-                <p class="mt-1 text-xs text-slate-500">Provide your current password to set a new password.</p>
-
-                <div class="mt-5 grid gap-5 sm:grid-cols-2">
-                    <div class="sm:col-span-2">
-                        <label for="current_password" class="block text-sm font-semibold text-slate-200">Current Password</label>
-                        <input id="current_password" name="current_password" type="password" autocomplete="current-password" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-slate-100 focus:border-slate-500 focus:outline-none">
-                    </div>
-                    <div>
-                        <label for="new_password" class="block text-sm font-semibold text-slate-200">New Password</label>
-                        <input id="new_password" name="new_password" type="password" autocomplete="new-password" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-slate-100 focus:border-slate-500 focus:outline-none">
-                    </div>
-                    <div>
-                        <label for="new_password_confirmation" class="block text-sm font-semibold text-slate-200">Confirm New Password</label>
-                        <input id="new_password_confirmation" name="new_password_confirmation" type="password" autocomplete="new-password" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-slate-100 focus:border-slate-500 focus:outline-none">
-                    </div>
+            <x-ui.patterns.form-section
+                title="Password And Security"
+                description="Provide your current password to set a new password."
+                kicker="Credential update"
+            >
+                <div class="grid gap-5 sm:grid-cols-2">
+                    <x-ui.patterns.form-group class="sm:col-span-2" for="current_password" label="Current Password">
+                        <input id="current_password" name="current_password" type="password" autocomplete="current-password" class="ui-input w-full">
+                    </x-ui.patterns.form-group>
+                    <x-ui.patterns.form-group for="new_password" label="New Password">
+                        <input id="new_password" name="new_password" type="password" autocomplete="new-password" class="ui-input w-full">
+                    </x-ui.patterns.form-group>
+                    <x-ui.patterns.form-group for="new_password_confirmation" label="Confirm New Password">
+                        <input id="new_password_confirmation" name="new_password_confirmation" type="password" autocomplete="new-password" class="ui-input w-full">
+                    </x-ui.patterns.form-group>
                 </div>
-            </div>
 
-            <div class="mt-6">
-                <button type="submit" class="inline-flex rounded-md border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:text-white">
-                    Save Settings
-                </button>
-            </div>
+                <x-ui.patterns.form-actions-bar class="mt-6">
+                    <x-ui.button type="submit" semantic="primary">Save Settings</x-ui.button>
+                </x-ui.patterns.form-actions-bar>
+            </x-ui.patterns.form-section>
         </form>
     </section>
 </x-layouts.app>

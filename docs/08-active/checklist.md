@@ -1,8 +1,8 @@
 # Checklist
 
 ## Tier 1 Library Hardening
-- [ ] Tier 1 Library Hardening
-  Status: implemented (pending manual review)
+- [x] Tier 1 Library Hardening
+  Status: implemented
   - Button and Icon Button promoted to canonical Blade entry points
   - Toast and Inline Alert promoted to canonical Blade entry points
   - Drawer and Modal promoted to canonical Blade entry points
@@ -10,7 +10,7 @@
 
 ## Required Tier 2 Pattern Implementation
 - [ ] Required Tier 2 Pattern Implementation
-  Status: not implemented
+  Status: implemented (pending manual review)
   - Form Group
   - Form Section
   - Inline Form Row
@@ -30,7 +30,7 @@
 
 ## Internal Shell Family Standards
 - [ ] Internal Shell Family Standards
-  Status: not implemented
+  Status: implemented (pending manual review)
   - dashboard shell standards are explicit
   - app shell standards are explicit
   - setup shell standards are explicit
@@ -39,7 +39,7 @@
 
 ## Page And Module Archetypes
 - [ ] Page And Module Archetypes
-  Status: not implemented
+  Status: implemented (pending manual review)
   - dashboard/overview archetype is explicit
   - list/index archetype is explicit
   - detail/read-only archetype is explicit
@@ -49,21 +49,21 @@
 
 ## Dashboard And Summary Conventions
 - [ ] Dashboard And Summary Conventions
-  Status: not implemented
+  Status: implemented (pending manual review)
   - dashboard widget-shell conventions are explicit
   - summary/stat-card conventions are explicit
   - dashboard grid usage is explicit and reviewable
 
 ## Registration And Ownership Handoff
 - [ ] Registration And Ownership Handoff
-  Status: not implemented
+  Status: implemented (pending manual review)
   - setup/settings registration field contract is explicit
   - future-module UI ownership declaration field contract is explicit
   - handoff artifacts are reviewable for later phases
 
 ## Proof Surface Coverage
 - [ ] Proof Surface Coverage
-  Status: not implemented
+  Status: implemented (pending manual review)
   - Tier 1 proof pages exist for actions, feedback, and overlays
   - Tier 2 pattern pages are easy to locate and review intentionally
   - archetype proof coverage exists for dashboard, list/index, detail/read-only, create/edit form, setup, settings, and account/profile where applicable
@@ -71,13 +71,13 @@
 
 ## Route And Navigation Cleanup Boundary
 - [ ] Route And Navigation Cleanup Boundary
-  Status: not implemented
+  Status: implemented (pending manual review)
   - cleanup remains shell-visible and inside current ownership notes
   - no blocked panel-topology or auth-boundary decisions are introduced
 
 ## Validation Readiness
 - [ ] Validation Readiness
-  Status: not implemented
+  Status: implemented (pending manual review)
   - desktop and mobile validation surfaces are explicit
   - promoted Tier 1 candidates are reviewable through canonical entry points
   - touched Tier 2 patterns are reviewable through intentional proof surfaces
@@ -85,7 +85,7 @@
 
 ## Batch B Exit Criteria
 - [ ] Batch B Exit Criteria
-  Status: not implemented
+  Status: implemented (pending manual review)
   - promoted Tier 1 Blade-component candidates are implemented before dependent Tier 2 compositions close
   - required Tier 2 patterns are implemented and visible in UI Reference
   - internal shell/scaffolding outputs are explicit enough for future module work to consume

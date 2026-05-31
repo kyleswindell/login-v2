@@ -102,6 +102,20 @@ class UiReferenceController extends Controller
         return $this->renderSection('patterns.tables', $this->tablePagePayload($request));
     }
 
+    public function formsPatterns(Request $request): View
+    {
+        $this->authorizeSuperAdmin($request);
+
+        return $this->renderSection('patterns.forms');
+    }
+
+    public function dataContent(Request $request): View
+    {
+        $this->authorizeSuperAdmin($request);
+
+        return $this->renderSection('patterns.data-content');
+    }
+
     public function overlays(Request $request): View
     {
         $this->authorizeSuperAdmin($request);
@@ -114,6 +128,20 @@ class UiReferenceController extends Controller
         $this->authorizeSuperAdmin($request);
 
         return $this->renderSection('patterns.navigation');
+    }
+
+    public function layout(Request $request): View
+    {
+        $this->authorizeSuperAdmin($request);
+
+        return $this->renderSection('patterns.layout');
+    }
+
+    public function archetypes(Request $request): View
+    {
+        $this->authorizeSuperAdmin($request);
+
+        return $this->renderSection('patterns.archetypes');
     }
 
     public function showAuditSample(Request $request, string $sample): JsonResponse

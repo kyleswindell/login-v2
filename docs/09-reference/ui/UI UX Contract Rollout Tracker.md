@@ -21,13 +21,20 @@ Track each contract with:
 
 ## Current Tier 1 Snapshot
 
-- Buttons And Icon Buttons: visual/reference `Ready For Review` / implementation-form promotion `Planned In Batch B`
+- Buttons And Icon Buttons: visual/reference `Ready For Review` / implementation-form promotion `Implemented In Batch B`
 - Badges And Status: `Locked` baseline / production rollout `In Progress`
 - Inputs Textarea Select: visual/reference `Ready For Review` / wrapper-contract clarity `In Progress`
 - Table Baseline: visual/reference `Ready For Review` / Tier 1 boundary revalidation `In Progress`
-- Drawer And Modal: visual/reference `Ready For Review` / implementation-form promotion `Planned In Batch B`
-- Toast And Inline Alert: visual/reference `Ready For Review` / implementation-form promotion `Planned In Batch B`
+- Drawer And Modal: visual/reference `Ready For Review` / implementation-form promotion `Implemented In Batch B`
+- Toast And Inline Alert: visual/reference `Ready For Review` / implementation-form promotion `Implemented In Batch B`
 - Sidebar And Account Menu: visual/reference `Ready For Review` / wrapper-contract clarity `In Progress`
+
+## Current Batch B Snapshot
+
+- Tier 1 promoted Blade entry points are implemented and deployed for review
+- required Tier 2 pattern pages now exist in UI Reference for forms, data/content, navigation/actions, tables, layout/dashboard, and archetype proofs
+- first live consumption proofs are active on dashboard, account, and settings-general surfaces
+- internal shell, archetype, registration, and UI-ownership handoff artifacts now exist in `09-reference/ui/`
 
 Important note:
 

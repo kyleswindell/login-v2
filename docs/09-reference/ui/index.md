@@ -19,6 +19,10 @@ UI support and tracking notes only.
 - [UI UX Contract Rollout Tracker](UI%20UX%20Contract%20Rollout%20Tracker.md)
 - [UI UX Tier 1 UI Reference Implementation Checklist](UI%20UX%20Tier%201%20UI%20Reference%20Implementation%20Checklist.md)
 - [UI UX Status And Badge Production Rollout Checklist](UI%20UX%20Status%20And%20Badge%20Production%20Rollout%20Checklist.md)
+- [Phase 2 Batch B - Internal Shell Family Rule Matrix](Phase%202%20Batch%20B%20-%20Internal%20Shell%20Family%20Rule%20Matrix.md)
+- [Phase 2 Batch B - Page And Module Archetype Matrix](Phase%202%20Batch%20B%20-%20Page%20And%20Module%20Archetype%20Matrix.md)
+- [Phase 2 Batch B - Setup And Settings Registration Field Contract](Phase%202%20Batch%20B%20-%20Setup%20And%20Settings%20Registration%20Field%20Contract.md)
+- [Phase 2 Batch B - Future Module UI Ownership Declaration Field Contract](Phase%202%20Batch%20B%20-%20Future%20Module%20UI%20Ownership%20Declaration%20Field%20Contract.md)
 
 ## Related
 

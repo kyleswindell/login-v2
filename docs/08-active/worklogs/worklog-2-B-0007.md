@@ -10,6 +10,13 @@ Lock dashboard summary, header, and widget-shell conventions so the dashboard be
 - dashboard summary/stat-card proof coverage
 - dashboard grid proof alignment
 
+## Files Changed
+
+- `resources/views/livewire/platform/dashboard.blade.php`
+- `resources/views/platform/ui-reference/patterns/layout.blade.php`
+- `resources/views/platform/ui-reference/patterns/archetypes.blade.php`
+- `tests/Feature/Platform/PlatformDashboardTest.php`
+
 ## Work Completed
 
 - updated the live dashboard page header to use the canonical Tier 2 page-title/actions row
@@ -20,7 +27,23 @@ Lock dashboard summary, header, and widget-shell conventions so the dashboard be
 
 - `Dashboard And Summary Conventions` -> implemented (pending manual review)
 
+## Change Queue Impact
+
+- No change queue items were created or processed in this pass.
+
+## Issues Found
+
+- None in scope during implementation or verification.
+
+## Deferred Items
+
+- manual visual review of the live dashboard header/action row and widget-shell parity
+
 ## Commit / Deploy Status
 
-- Commit: Pending combined Batch B implementation commit
-- Deploy: Pending combined Batch B implementation deploy
+- Commit: `a741f9b` (`feat(batch-b): build tier 2 pattern proof surfaces`)
+- Deploy: Yes, canonical staging deploy completed on `main`
+
+## Notes
+
+- Dashboard widget behavior was intentionally left unchanged; only the shared presentation/scaffolding layer was normalized.

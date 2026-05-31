@@ -11,6 +11,7 @@
   - table/advanced data patterns
   - layout/dashboard patterns
   - archetype proofs
+- Batch B passes `2-B-0002` through `2-B-0010` are now deployed to staging on `main` and ready for one combined manual review pass.
 - First live consumption proofs now use the new Tier 2 building blocks on:
   - `/dashboard`
   - `/platform/settings/general`

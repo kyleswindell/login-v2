@@ -44,33 +44,37 @@
                     <x-ui.patterns.form-group
                         for="timezone"
                         label="Default Timezone"
-                        helper="Used for display formatting where no user timezone is set."
+                        helper="Filter the approved timezone list, then choose the platform default used when no user preference is set."
                         :error="$errors->first('timezone')"
                     >
-                        <input
+                        <x-ui.searchable-select
                             id="timezone"
-                            type="text"
                             name="timezone"
-                            value="{{ old('timezone', $timezone) }}"
-                            placeholder="e.g. America/New_York"
-                            class="ui-input w-full"
-                        >
+                            :options="$timezoneOptions"
+                            :selected="old('timezone', $timezone)"
+                            placeholder="Choose a timezone"
+                            search-placeholder="Search timezones"
+                            :required="true"
+                            :invalid="$errors->has('timezone')"
+                        />
                     </x-ui.patterns.form-group>
 
                     <x-ui.patterns.form-group
                         for="locale"
                         label="Default Locale"
-                        helper="Used for formatting numbers, dates, and currency."
+                        helper="Locale stays option-backed so formatting defaults come from the approved app locale set."
                         :error="$errors->first('locale')"
                     >
-                        <input
+                        <x-ui.searchable-select
                             id="locale"
-                            type="text"
                             name="locale"
-                            value="{{ old('locale', $locale) }}"
-                            placeholder="e.g. en"
-                            class="ui-input w-full"
-                        >
+                            :options="$localeOptions"
+                            :selected="old('locale', $locale)"
+                            placeholder="Choose a locale"
+                            search-placeholder="Search locales"
+                            :required="true"
+                            :invalid="$errors->has('locale')"
+                        />
                     </x-ui.patterns.form-group>
                 </div>
 

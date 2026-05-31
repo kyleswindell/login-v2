@@ -35,7 +35,10 @@ class PlatformSettingsTest extends TestCase
     {
         $this->actingAsPlatformSuperAdmin();
 
-        $this->get('/platform/settings/general')->assertOk()->assertSee('Platform General');
+        $this->get('/platform/settings/general')
+            ->assertOk()
+            ->assertSee('Platform General')
+            ->assertSee('data-ui-component="searchable-select"', false);
         $this->get('/platform/settings/general/company-information')->assertOk()->assertSee('Company Information');
         $this->get('/platform/settings/general/localization')->assertOk()->assertSee('Localization');
         $this->get('/platform/settings/general/email')->assertOk()->assertSee('Email');
@@ -125,6 +128,17 @@ class PlatformSettingsTest extends TestCase
             'timezone' => 'Not/ATimezone',
             'locale' => 'en',
         ])->assertSessionHasErrors(['timezone']);
+    }
+
+    public function test_general_settings_validation_rejects_invalid_locale_option(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->post('/platform/settings/general', [
+            'display_name' => 'Test',
+            'timezone' => 'America/New_York',
+            'locale' => 'not-real',
+        ])->assertSessionHasErrors(['locale']);
     }
 
     public function test_general_settings_validation_rejects_missing_display_name(): void

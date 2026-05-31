@@ -24,11 +24,27 @@
                 kicker="Account archetype proof"
             >
                 <div class="grid gap-5 sm:grid-cols-2">
-                    <x-ui.patterns.form-group for="timezone" label="Timezone">
-                        <input id="timezone" name="timezone" type="text" value="{{ old('timezone', $user->timezone) }}" class="ui-input w-full">
+                    <x-ui.patterns.form-group for="timezone" label="Timezone" helper="Choose from the approved timezone list instead of typing a raw identifier.">
+                        <x-ui.searchable-select
+                            id="timezone"
+                            name="timezone"
+                            :options="$timezoneOptions"
+                            :selected="old('timezone', $user->timezone)"
+                            placeholder="Choose a timezone"
+                            search-placeholder="Search timezones"
+                            :invalid="$errors->has('timezone')"
+                        />
                     </x-ui.patterns.form-group>
-                    <x-ui.patterns.form-group for="default_language" label="Default Language">
-                        <input id="default_language" name="default_language" type="text" value="{{ old('default_language', $user->default_language) }}" class="ui-input w-full">
+                    <x-ui.patterns.form-group for="default_language" label="Default Language" helper="Language defaults should come from the approved locale list used across shared account and settings forms.">
+                        <x-ui.searchable-select
+                            id="default_language"
+                            name="default_language"
+                            :options="$localeOptions"
+                            :selected="old('default_language', $user->default_language)"
+                            placeholder="Choose a language"
+                            search-placeholder="Search languages"
+                            :invalid="$errors->has('default_language')"
+                        />
                     </x-ui.patterns.form-group>
                     <x-ui.patterns.form-group for="theme_preference" label="Theme Mode">
                         <select id="theme_preference" name="theme_preference" class="ui-select w-full">

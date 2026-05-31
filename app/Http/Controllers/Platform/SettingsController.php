@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Platform;
 use App\Http\Controllers\Controller;
 use App\Platform\Logging\PlatformLogger;
 use App\Platform\Settings\SettingsService;
+use App\Support\UiOptionCatalog;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -25,6 +26,8 @@ class SettingsController extends Controller
             'displayName' => $this->settings->get('general', 'display_name', config('app.name')),
             'timezone' => $this->settings->get('general', 'timezone', config('app.timezone')),
             'locale' => $this->settings->get('general', 'locale', config('app.locale')),
+            'timezoneOptions' => UiOptionCatalog::timezoneOptions(),
+            'localeOptions' => UiOptionCatalog::localeOptions(),
         ]);
     }
 
@@ -35,7 +38,7 @@ class SettingsController extends Controller
         $validated = $request->validate([
             'display_name' => ['required', 'string', 'max:100'],
             'timezone' => ['required', 'string', 'timezone'],
-            'locale' => ['required', 'string', 'max:10'],
+            'locale' => ['required', Rule::in(UiOptionCatalog::localeValues())],
         ]);
 
         $userId = $request->user()->id;

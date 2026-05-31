@@ -53,7 +53,7 @@
                 </x-ui.patterns.content-section-block>
 
                 <x-ui.patterns.content-section-block title="Create / Edit Form" description="Stack validation summary, sectioned fields, and a dedicated actions bar." kicker="Archetype">
-                    <x-ui.patterns.validation-summary :errors="['Display name is required.', 'Timezone must be valid.']" />
+                    <x-ui.patterns.validation-summary :errors="['Display name is required.', 'Support email must be a valid address.']" />
                 </x-ui.patterns.content-section-block>
             </div>
 

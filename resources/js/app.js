@@ -209,6 +209,114 @@ const initSelectableOptionStates = () => {
     syncSelectableOptionStates(document);
 };
 
+const initSearchableSelects = () => {
+    document.querySelectorAll('[data-ui-searchable-select]').forEach((root) => {
+        if (root.dataset.uiSearchableSelectInit === '1') {
+            return;
+        }
+
+        const filterInput = root.querySelector('[data-ui-searchable-select-filter]');
+        const select = root.querySelector('[data-ui-searchable-select-list]');
+        const count = root.querySelector('[data-ui-searchable-select-count]');
+
+        if (!(filterInput instanceof HTMLInputElement) || !(select instanceof HTMLSelectElement)) {
+            return;
+        }
+
+        root.dataset.uiSearchableSelectInit = '1';
+
+        const emptyLabel = root.dataset.uiSearchableSelectEmptyLabel || 'No matching options';
+        const originalOptions = Array.from(select.options).map((option) => ({
+            value: option.value,
+            label: option.textContent || '',
+            disabled: option.disabled,
+            placeholder: option.dataset.uiSearchableSelectPlaceholder === 'true',
+        }));
+        const totalOptions = originalOptions.filter((option) => !option.placeholder).length;
+
+        const updateCount = (visibleCount) => {
+            if (!(count instanceof HTMLElement)) {
+                return;
+            }
+
+            count.textContent = filterInput.value.trim() === ''
+                ? `${totalOptions} options available`
+                : `${visibleCount} of ${totalOptions} options shown`;
+        };
+
+        const renderOptions = () => {
+            const query = filterInput.value.trim().toLowerCase();
+            const currentValue = select.value;
+            const matchedOptions = originalOptions.filter((option) => {
+                if (option.placeholder) {
+                    return true;
+                }
+
+                const haystack = `${option.label} ${option.value}`.toLowerCase();
+
+                return query === '' || haystack.includes(query);
+            });
+            const hasCurrentMatch = matchedOptions.some((option) => option.value === currentValue);
+            let visibleCount = 0;
+
+            select.innerHTML = '';
+
+            if (!hasCurrentMatch && currentValue !== '') {
+                const currentOption = originalOptions.find((option) => option.value === currentValue && !option.placeholder);
+
+                if (currentOption) {
+                    const preservedOption = new Option(
+                        `${currentOption.label} (current selection)`,
+                        currentOption.value,
+                        true,
+                        true,
+                    );
+
+                    select.add(preservedOption);
+                }
+            }
+
+            matchedOptions.forEach((option) => {
+                const nextOption = new Option(option.label, option.value, false, hasCurrentMatch && option.value === currentValue);
+
+                if (option.disabled) {
+                    nextOption.disabled = true;
+                }
+
+                if (option.placeholder) {
+                    nextOption.dataset.uiSearchableSelectPlaceholder = 'true';
+                } else {
+                    visibleCount += 1;
+                }
+
+                select.add(nextOption);
+            });
+
+            if (visibleCount === 0) {
+                const emptyOption = new Option(emptyLabel, '', false, false);
+                emptyOption.disabled = true;
+                select.add(emptyOption);
+            }
+
+            updateCount(visibleCount);
+        };
+
+        filterInput.addEventListener('input', renderOptions);
+        filterInput.addEventListener('keydown', (event) => {
+            if (event.key !== 'Escape') {
+                return;
+            }
+
+            filterInput.value = '';
+            renderOptions();
+            filterInput.blur();
+        });
+        select.addEventListener('change', renderOptions);
+
+        updateCount(totalOptions);
+    });
+};
+
 const initTableSearchInputs = () => {
     document.querySelectorAll('[data-table-search-form]').forEach((form) => {
         if (form.dataset.tableSearchInit === '1') {
@@ -1088,6 +1196,8 @@ document.addEventListener('DOMContentLoaded', initTableSearchInputs);
 document.addEventListener('livewire:navigated', initTableSearchInputs);
 document.addEventListener('DOMContentLoaded', initSelectableOptionStates);
 document.addEventListener('livewire:navigated', initSelectableOptionStates);
+document.addEventListener('DOMContentLoaded', initSearchableSelects);
+document.addEventListener('livewire:navigated', initSearchableSelects);
 document.addEventListener('DOMContentLoaded', initErrorLogDrawer);
 document.addEventListener('livewire:navigated', initErrorLogDrawer);
 document.addEventListener('DOMContentLoaded', initAuditLogDrawer);

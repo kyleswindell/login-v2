@@ -1111,6 +1111,24 @@
         @apply py-2;
     }
 
+    .ui-searchable-select {
+        @apply space-y-3;
+    }
+
+    .ui-searchable-select-icon {
+        @apply pointer-events-none absolute inset-y-0 left-0 inline-flex w-10 items-center justify-center;
+        color: var(--ui-text-muted);
+    }
+
+    .ui-searchable-select-filter {
+        @apply pl-10;
+    }
+
+    .ui-searchable-select-count {
+        @apply text-xs;
+        color: var(--ui-text-muted);
+    }
+
     .ui-selectable-option {
         @apply rounded-lg border px-4 py-3 transition;
         border-color: var(--ui-border-default);

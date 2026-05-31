@@ -1,3 +1,9 @@
+@php
+    $supportRunbookLink = new \Illuminate\Support\HtmlString(
+        '<a href="#" class="ui-link" onclick="event.preventDefault()">Open documentation</a>'
+    );
+@endphp
+
 <x-layouts.app title="UI Reference · Data And Content Patterns">
     <x-slot:sidebar>
         @include('platform.ui-reference.partials.sidebar', ['currentSection' => $currentSection ?? 'patterns.data-content'])
@@ -9,6 +15,10 @@
             description="Reusable Tier 2 patterns for summaries, read-only displays, empty states, and list rows."
             kicker="Tier 2B"
         />
+
+        <x-ui.inline-alert semantic="notice" title="How to read this proof">
+            These examples show the expected content shape for read-only summaries and fallback states. Values should render as plain text by default, with trusted linked content called out intentionally instead of leaking raw markup into the page.
+        </x-ui.inline-alert>
 
         <x-ui.patterns.content-section-block
             title="Stat Cards"
@@ -54,7 +64,7 @@
                         ['label' => 'Owner', 'value' => 'Platform Administrator'],
                         ['label' => 'Timezone', 'value' => 'America/New_York'],
                         ['label' => 'Theme', 'value' => 'System'],
-                        ['label' => 'Support Runbook', 'value' => '<a href=\"#\" class=\"ui-link\" onclick=\"event.preventDefault()\">Open documentation</a>'],
+                        ['label' => 'Support Runbook', 'value' => $supportRunbookLink],
                     ]"
                 />
             </x-ui.patterns.content-section-block>

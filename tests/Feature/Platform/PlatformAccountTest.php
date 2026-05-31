@@ -34,7 +34,8 @@ class PlatformAccountTest extends TestCase
         $this->get('/account/preferences')
             ->assertOk()
             ->assertSee('Account Preferences')
-            ->assertSee('Personal Defaults');
+            ->assertSee('Personal Defaults')
+            ->assertSee('data-ui-component="searchable-select"', false);
     }
 
     public function test_account_settings_can_be_updated(): void
@@ -75,5 +76,18 @@ class PlatformAccountTest extends TestCase
         $this->assertSame('America/New_York', $user->timezone);
         $this->assertSame('en', $user->default_language);
         $this->assertSame('light', $user->theme_preference);
+    }
+
+    public function test_account_preferences_reject_invalid_language_option(): void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user)
+            ->post('/account/preferences', [
+                'timezone' => 'America/New_York',
+                'default_language' => 'invalid-language',
+                'theme_preference' => 'light',
+            ])
+            ->assertSessionHasErrors(['default_language']);
     }
 }

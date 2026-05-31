@@ -15,6 +15,10 @@
             </x-slot:actions>
         </x-ui.patterns.page-title-actions-row>
 
+        <x-ui.inline-alert semantic="notice" title="How to read this proof">
+            Use option-backed selectors when the acceptable values are known up front, such as locale and timezone. Keep validator-heavy examples on fields the user truly types free-form, such as email addresses and phone numbers.
+        </x-ui.inline-alert>
+
         <x-ui.patterns.form-section
             title="Form Group and Form Section"
             description="Use form sections to group related fields under a shared heading, then wrap each field in a canonical form group."
@@ -48,18 +52,48 @@
                 <x-ui.patterns.inline-form-row
                     for="inline-timezone"
                     label="Default Timezone"
-                    helper="Used for display formatting when a user preference is missing."
+                    helper="Filter the approved timezone list, then choose the default from the option-backed selector."
                 >
-                    <input id="inline-timezone" type="text" value="America/New_York" class="ui-input w-full" />
+                    <x-ui.searchable-select
+                        id="inline-timezone"
+                        name="inline_timezone"
+                        :options="App\Support\UiOptionCatalog::timezoneOptions()"
+                        selected="America/New_York"
+                        placeholder="Choose a timezone"
+                        search-placeholder="Search timezones"
+                    />
                 </x-ui.patterns.inline-form-row>
 
                 <x-ui.patterns.inline-form-row
                     for="inline-locale"
                     label="Default Locale"
-                    helper="Locale drives numeric and currency formatting."
-                    error="Locale must be a valid ISO language code."
+                    helper="Locale drives numeric and currency formatting and should come from the approved locale set."
                 >
-                    <input id="inline-locale" type="text" value="" placeholder="e.g. en" aria-invalid="true" class="ui-input w-full" />
+                    <x-ui.searchable-select
+                        id="inline-locale"
+                        name="inline_locale"
+                        :options="App\Support\UiOptionCatalog::localeOptions()"
+                        selected="en"
+                        placeholder="Choose a locale"
+                        search-placeholder="Search locales"
+                    />
+                </x-ui.patterns.inline-form-row>
+
+                <x-ui.patterns.inline-form-row
+                    for="inline-support-email"
+                    label="Support Email"
+                    helper="Use validator-driven copy on fields the operator actually types by hand."
+                    error="Enter a valid email address for escalation notices."
+                >
+                    <input id="inline-support-email" type="email" value="ops@" aria-invalid="true" class="ui-input w-full" />
+                </x-ui.patterns.inline-form-row>
+
+                <x-ui.patterns.inline-form-row
+                    for="inline-support-phone"
+                    label="Support Phone"
+                    helper="Phone numbers and extensions stay free-entry, but validation should still enforce the accepted dialing format."
+                >
+                    <input id="inline-support-phone" type="tel" value="" placeholder="e.g. (555) 867-5309 x204" class="ui-input w-full" />
                 </x-ui.patterns.inline-form-row>
             </div>
         </x-ui.patterns.content-section-block>

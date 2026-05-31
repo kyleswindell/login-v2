@@ -16,7 +16,18 @@
         <div>
             <dt class="ui-pattern-key-value-label">{{ $item['label'] ?? '' }}</dt>
             <dd class="ui-pattern-key-value-value">
-                {!! $item['value'] ?? '' !!}
+                @php
+                    $value = $item['value'] ?? '';
+                    $renderAsHtml = (bool) ($item['html'] ?? false);
+                @endphp
+
+                @if ($value instanceof \Illuminate\Contracts\Support\Htmlable)
+                    {!! $value->toHtml() !!}
+                @elseif ($renderAsHtml)
+                    {!! $value !!}
+                @else
+                    {{ $value }}
+                @endif
             </dd>
         </div>
     @endforeach

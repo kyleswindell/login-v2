@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Platform;
 
 use App\Http\Controllers\Controller;
+use App\Support\UiOptionCatalog;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -53,6 +54,8 @@ class AccountController extends Controller
     {
         return view('platform.account.preferences', [
             'user' => $request->user(),
+            'timezoneOptions' => UiOptionCatalog::timezoneOptions(),
+            'localeOptions' => UiOptionCatalog::localeOptions(),
         ]);
     }
 
@@ -60,7 +63,7 @@ class AccountController extends Controller
     {
         $validated = $request->validate([
             'timezone' => ['nullable', 'string', 'timezone'],
-            'default_language' => ['nullable', 'string', 'max:10'],
+            'default_language' => ['nullable', Rule::in(UiOptionCatalog::localeValues())],
             'theme_preference' => ['nullable', Rule::in(['system', 'dark', 'light'])],
         ]);
 

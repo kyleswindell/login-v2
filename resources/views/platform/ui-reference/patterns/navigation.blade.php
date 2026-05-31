@@ -22,6 +22,10 @@
             </x-slot:actions>
         </x-ui.patterns.page-title-actions-row>
 
+        <x-ui.inline-alert semantic="notice" title="How to read this proof">
+            These patterns define structural action and navigation contracts. The examples below show what each control row is responsible for, but they do not imply remote autocomplete or bespoke menu behavior unless that note appears directly in the proof.
+        </x-ui.inline-alert>
+
         <x-ui.patterns.content-section-block
             title="Sub-navigation Bar"
             description="Use sub-navigation only for peer content areas that already belong to the same internal shell family."
@@ -64,24 +68,32 @@
                 description="Search, filter, and reset controls should align as one reusable control row above list or table content."
                 kicker="Operator controls"
             >
-                <x-ui.patterns.search-filter-bar>
-                    <label class="relative block w-full max-w-sm">
-                        <span class="sr-only">Search records</span>
-                        <span class="pointer-events-none absolute inset-y-0 left-0 inline-flex w-9 items-center justify-center text-slate-500">
-                            <x-heroicon-o-magnifying-glass class="h-4 w-4" aria-hidden="true" />
-                        </span>
-                        <input type="text" placeholder="Search name or owner" class="ui-input w-full pl-9" />
-                    </label>
-                    <select class="ui-select w-full sm:w-56">
-                        <option>Any owner</option>
-                        <option>Platform Team</option>
-                        <option>Security</option>
-                    </select>
-                    <x-slot:actions>
-                        <x-ui.button variant="ghost">Reset</x-ui.button>
-                        <x-ui.button semantic="primary">Apply</x-ui.button>
-                    </x-slot:actions>
-                </x-ui.patterns.search-filter-bar>
+                <div class="space-y-4">
+                    <x-ui.patterns.search-filter-bar>
+                        <label class="relative block w-full max-w-sm">
+                            <span class="sr-only">Search records</span>
+                            <span class="pointer-events-none absolute inset-y-0 left-0 inline-flex w-9 items-center justify-center text-slate-500">
+                                <x-heroicon-o-magnifying-glass class="h-4 w-4" aria-hidden="true" />
+                            </span>
+                            <input type="text" placeholder="Search name or owner" class="ui-input w-full pl-9" />
+                        </label>
+                        <select class="ui-select w-full sm:w-56">
+                            <option>Any owner</option>
+                            <option>Platform Team</option>
+                            <option>Security</option>
+                        </select>
+                        <x-slot:actions>
+                            <x-ui.button variant="ghost">Reset</x-ui.button>
+                            <x-ui.button semantic="primary">Apply</x-ui.button>
+                        </x-slot:actions>
+                    </x-ui.patterns.search-filter-bar>
+
+                    <div class="grid gap-3 md:grid-cols-3 text-sm text-slate-300">
+                        <p><span class="font-semibold text-slate-100">Search field:</span> models free-entry keyword search across the current list or table surface.</p>
+                        <p><span class="font-semibold text-slate-100">Owner filter:</span> models a known-option narrowing control; use the searchable selector baseline only when the option set becomes too long for a simple select.</p>
+                        <p><span class="font-semibold text-slate-100">Reset / Apply:</span> demonstrate shared action placement and intent, not live query execution on this proof page.</p>
+                    </div>
+                </div>
             </x-ui.patterns.content-section-block>
         </div>
 

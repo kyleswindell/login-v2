@@ -17,6 +17,7 @@ Define canonical per-component acceptance contracts for Tier 1 and beyond.
 - [Tier 1 - Shell Navigation Contract](Tier%201%20-%20Shell%20Navigation%20Contract.md)
 - [Tier 1 - Utility Primitives Contract](Tier%201%20-%20Utility%20Primitives%20Contract.md)
 - [Tier 1 - Layout And Scaffolding Contract](Tier%201%20-%20Layout%20And%20Scaffolding%20Contract.md)
+- [Tier 1 - Consumption And Composition Contract](Tier%201%20-%20Consumption%20And%20Composition%20Contract.md)
 
 ## Related
 

@@ -61,6 +61,11 @@ Stop if:
 - Do not fix adjacent issues unless they block the batch
 - If base batch implementation work remains, complete that before processing `change-queue.md`
 - Once base batch implementation work is complete, process `change-queue.md` items in `Ready To Implement`
+- If the pass builds Tier 2 patterns or feature UI from Tier 1, complete a Tier 1 consumption preflight before coding:
+  - identify the exact Tier 1 building blocks being consumed
+  - name whether each one is a `Blade component`, `Class/markup contract`, or `Hybrid`
+  - confirm the canonical entry point is explicit in current standards/reference material
+  - stop and record a blocker if the needed Tier 1 item is represented only by demo-state markup or otherwise behaves like a `Missing abstraction`
 - For a targeted shared UI/system surface, identify the relevant render/update paths before implementing
   - examples: server-rendered markup, realtime/client-injected markup, toast/overlay variants, related full-index surfaces
   - do not assume one path represents the whole shared surface unless the batch docs already make that boundary explicit
@@ -156,6 +161,8 @@ For each targeted item:
 - use `In Progress` only if work started but did not complete in this pass
 - record outcome in the current worklog
 - if a parallel render/update path for the same targeted surface is discovered and not fixed in the same pass, add a separate follow-up queue item before calling the pass review-ready
+- use `Implemented Pending Review` only when the item is actually reviewable at the end of the pass; if manual review depends on staging or another deployed surface, that means commit, push, and the required deploy all completed successfully
+- if implementation is complete but the required deploy cannot be completed in the same pass, do not leave the item in `Implemented Pending Review`; record the deploy gap in the worklog/review state and use `Blocked` when the pass ends with a real deployment blocker
 - preserve existing `ID:` lines when moving targeted items between queue sections
 - preserve existing queue metadata lines such as `Scope:`, `Path Coverage:`, `Follow-up To:`, and `Supersedes:` when moving items
 - assign the next sequential queue ID in the current batch if a new active item is created and no stable ID already exists
@@ -200,6 +207,7 @@ then:
 - push the commit
 - deploy using the canonical staging deployment workflow in `docs/10-runbooks/staging-deployment.md`
 - record commit and deployment details in the worklog
+- move targeted queue items to `Implemented Pending Review` only after the deploy succeeds when that deploy is required for review
 
 Deployment preconditions:
 - the pass is actually reviewable
@@ -232,11 +240,13 @@ A work pass is complete only when:
 - `notes.md` reflects findings
 - `checklist.md` is annotated
 - targeted `change-queue.md` items are updated to an implementation outcome state
+- those queue outcomes match the real reviewability state of the pass, including deploy status when review depends on a deployed surface
 
 If visual review is required:
 - commit must be created
 - changes must be pushed
 - deployment must be completed
+- targeted queue items cannot remain in `Implemented Pending Review` unless that deployment completed
 
 ---
 

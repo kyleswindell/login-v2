@@ -116,7 +116,9 @@ Owned by:
 
 Queue-state rules:
 - `Ready To Implement` contains items that still require implementation work
-- `Implemented Pending Review` contains items that were implemented in a completed work pass and are awaiting human confirmation
+- `Implemented Pending Review` contains items that were implemented in a completed work pass, are available on the required review surface, and are awaiting human confirmation
+- if deployment is required for review, do not move an item into `Implemented Pending Review` until commit, push, and the canonical deploy all succeed
+- if implementation is complete but the required deploy fails or cannot be completed, record that deploy gap in the worklog/review state and keep the queue item out of `Implemented Pending Review`
 - a new adjacent finding on the same broad surface does not, by itself, prove an existing `Implemented Pending Review` item failed
 - move an item from `Implemented Pending Review` back to `Ready To Implement` only when manual review directly shows that the same item's implemented outcome failed
 - if manual review finds a separate uncovered path or adjacent gap, keep the implemented item in `Implemented Pending Review` and add a new `Ready To Implement` follow-up item instead
@@ -220,6 +222,7 @@ Rules:
 - set checklist `Status` only
 - do not mark checklist items complete
 - do not finalize batch
+- if the pass builds Tier 2 patterns or feature UI from existing Tier 1 work, complete a Tier 1 consumption preflight before coding
 - for shared UI or system surfaces, identify the relevant render/update paths before calling the pass review-ready
 - examples of parallel paths include:
   - server-rendered markup
@@ -231,6 +234,16 @@ Rules:
 - preserve existing queue metadata lines when moving items between sections
 - assign the next sequential queue ID when a new active queue item is created and no stable ID already exists
 - add or update `Implemented in:` when that improves traceability for a targeted item
+- if a targeted item needs staging or another deploy-backed review surface, treat deploy completion as part of the implementation outcome before moving that item into `Implemented Pending Review`
+
+Tier 1 consumption preflight:
+- identify the exact Tier 1 building blocks the pass depends on
+- name whether each one is consumed as:
+  - `Blade component`
+  - `Class/markup contract`
+  - `Hybrid`
+- confirm the canonical entry point is explicit in current standards/reference material
+- if the needed Tier 1 item is represented only by demo-only snapshot markup or otherwise has a `Missing abstraction`, stop and record the gap instead of improvising a Tier 2 or feature-level substitute
 
 ---
 
@@ -251,12 +264,16 @@ Rules:
   - existing item confirmed
   - existing item failed
   - new finding
+- when the user provides clear manual-review feedback that can be mapped safely, that feedback is sufficient authorization to execute `batch-update-manual-review-status`; do not require an extra confirmation step just because `/docs/08-active/` will be updated
+- `Implemented Pending Review` assumes the relevant implementation is already deployed to the review surface when deployment is required
 - treat exploratory chat or review commentary as source material, not as queue-ready text
 - normalize new findings into concise implementation-ready queue language before writing them into `change-queue.md`
 - preserve existing `ID:` lines for mapped items
 - assign the next sequential queue ID when a truly new queue item is created
 - do not reopen an `Implemented Pending Review` item unless the review evidence directly maps to that same item's scoped implemented outcome
 - if the review reveals a separate gap on an uncovered path, keep the existing item pending review and open a new `Ready To Implement` item for the uncovered gap
+- if an item is known to be undeployed on the required review surface, do not process it as pending review until that deploy gap is resolved
+- stop only when the review input is ambiguous, cannot be mapped safely, or requires a new decision about how the finding should be represented
 
 ---
 
@@ -340,6 +357,7 @@ Rules:
 - `batch-update-manual-review-status` owns review-state transitions such as:
   - `Passed Review`
   - `Closed`
+- `Implemented Pending Review` is valid only when the item is actually reviewable on the required surface; if deployment is required, that means the deploy already succeeded
 - contains only actionable items
 - issues move through these sections only:
   - `Ready To Implement`
@@ -364,6 +382,7 @@ Rules:
 - no unrelated files
 - commit only when work is scoped and ready
 - when a `work-batch` pass is review-ready and manual visual review is required, commit, push, and deployment are required parts of that workflow step
+- if deployment is required for review and the deploy does not complete, the pass is not review-ready and targeted queue items must not be left in `Implemented Pending Review`
 - do not stop for a second approval if the user explicitly requested the active `work-batch` step
 - stop only if a documented deployment precondition is missing or the canonical deploy path is unavailable from the current execution environment
 

@@ -17,6 +17,16 @@ This document defines the canonical scope and intent for Tier 1 - Drawer And Mod
 - When not to use: large multi-step flows requiring full page context.
 - Interaction intent summary: preserve task continuity while preventing accidental destructive actions.
 
+### 2A. Implementation Form Decision
+
+- Current implementation form: `Class/markup contract`
+- Intended long-term direction: `promote to Blade component`
+- Canonical consumption direction:
+  - callers should configure purpose, title, severity tone where applicable, dismissal controls, and action regions through a stable overlay API rather than ad hoc shell-local markup
+- Transitional rule:
+  - until the Blade entry point exists, the existing overlay markup contract remains valid
+  - however, new work must preserve the canonical dialog shell structure instead of introducing parallel modal or drawer wrappers
+
 ### 3. Visual Rules
 
 - Token usage (color, spacing, type, radius, elevation): elevated containers with consistent header/action regions.
@@ -53,6 +63,7 @@ This document defines the canonical scope and intent for Tier 1 - Drawer And Mod
 - Anti-pattern 1: modal without keyboard close path
 - Anti-pattern 2: drawer with no focus target on open
 - Anti-pattern 3: destructive action without explicit consequence language
+- Anti-pattern 4: one-off overlay shells that bypass the canonical modal/drawer structure
 
 
 ## Related

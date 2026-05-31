@@ -8,6 +8,10 @@ Define the implementation checklist for true Tier 1 UI primitives and baseline s
 
 This checklist is the implementation-facing companion to the Tier 1 taxonomy, UI design system standards, and current Tier 1 component contracts.
 
+It must also stay aligned with:
+
+* [Tier 1 - Consumption And Composition Contract](../contracts/Tier%201%20-%20Consumption%20And%20Composition%20Contract.md)
+
 ## Tier Boundary
 
 ### Tier 1 Definition
@@ -57,6 +61,25 @@ The following are Tier 2 or higher and are excluded from this checklist:
 * Tier 1 components must use canonical tokens and current naming conventions
 * Tier 1 components must support the required interaction states for their role
 * Tier 1 components must be visible and testable in the UI reference workspace where applicable
+* Tier 1 components must define a reusable consumption model before Tier 2 or feature work should depend on them
+
+## Consumption And Composition Requirements
+
+Every Tier 1 item must be reviewable not only visually, but also as a reusable building block.
+
+At minimum, each Tier 1 item must have:
+
+* a named role in common language
+* an approved descriptor set
+* a declared implementation form:
+  * `Blade component`
+  * `Class/markup contract`
+  * `Hybrid`
+  * `Missing abstraction`
+* a canonical usage example
+* explicit anti-drift expectations for Tier 2 and feature consumers
+
+Tier 1 is not considered fully ready merely because UI Reference looks correct. It must also be consumable without forcing downstream work to copy snapshot markup or recreate styling from scratch.
 
 ## Tier 1A: Primitive Components
 
@@ -170,19 +193,17 @@ Checklist:
 
 * [ ] Table baseline
   Status: not implemented
-  - page title/subtitle row
-  - optional stats row
-  - control row structure
-  - rows selector
-  - search placement
-  - filter toggle placement
-  - filter reset path
-  - row action baseline
-  - loading state
-  - empty state inside table baseline
-  - result summary
-  - pagination controls inside table baseline
+  - semantic table container
+  - deterministic header row and body row structure
+  - row hover and readability treatment
+  - nested control focus visibility where controls exist
+  - loading and empty/no-match presentation through the baseline table surface
+  - horizontal overflow containment on narrow widths
   - variant policy: not variant-bearing
+
+Boundary note:
+
+* richer search/filter/sort orchestration, bulk actions, rows selectors, result summaries, and enhanced pagination-control assemblies belong to Tier 2 patterns rather than the Tier 1 table baseline
 
 ### Drawer And Modal Baseline
 
@@ -318,6 +339,19 @@ Checklist:
   - required states are shown
   - interactions can be manually tested
 
+## Library Readiness Validation
+
+Tier 1 must also be validated as a consumable library layer.
+
+Checklist:
+
+* [ ] Library Readiness Validation
+  Status: not implemented
+  - every Tier 1 item has an explicit implementation-form classification
+  - every Tier 1 item has a canonical usage example
+  - Tier 1 items intended for reuse are not represented only by demo-state snapshots
+  - downstream Tier 2 and feature work can identify the correct Tier 1 building block without guessing
+
 ## Batch A Exit Criteria
 
 Batch A is complete only if:
@@ -328,6 +362,7 @@ Batch A is complete only if:
   - no Tier 2 patterns are mixed into Tier 1 scope
   - standards terminology matches current canonical docs
   - UI reference validation is complete
+  - library readiness validation is complete
   - manual visual review = PASS
   - manual functional validation = PASS
 
@@ -337,3 +372,4 @@ Batch A is complete only if:
 * [UI UX Component Library Standards](UI%20UX%20Component%20Library%20Standards.md)
 * [UI Design System Standards](../UI%20Design%20System%20Standards.md)
 * [Component Contracts Index](../contracts/Component%20Contracts%20Index.md)
+* [Tier 1 - Consumption And Composition Contract](../contracts/Tier%201%20-%20Consumption%20And%20Composition%20Contract.md)

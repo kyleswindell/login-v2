@@ -12,6 +12,7 @@ Canonical UI standards references:
 
 - [UI Design System Standards](../../02-standards/ui/UI%20Design%20System%20Standards.md)
 - [Component Contracts Index](../../02-standards/ui/contracts/Component%20Contracts%20Index.md)
+- [Tier 1 - Consumption And Composition Contract](../../02-standards/ui/contracts/Tier%201%20-%20Consumption%20And%20Composition%20Contract.md)
 
 ## Implementation Status
 
@@ -20,7 +21,18 @@ Current status:
 - Tier 1 views are implemented in `/platform/ui-reference`
 - acceptance contracts are filled for the seven Tier 1 component groups
 - matrix rows are set to `Ready For Review`
-- final lock gates remain visual QA and accessibility verification sign-off
+- final lock gates remain visual QA, accessibility verification, and library-readiness sign-off
+
+## Important Limitation
+
+This checklist proves UI Reference coverage and visible state behavior.
+
+It does **not** by itself prove that Tier 1 is simple to consume as a reusable library. That question must be validated separately through the Tier 1 consumption/composition model.
+
+Minimal automation policy:
+
+- automated tests may confirm that canonical Tier 1 reference routes and known entry points still exist
+- automated tests must not be treated as proof of full library ergonomics or abstraction quality
 
 ## Checklist
 
@@ -79,6 +91,15 @@ Current status:
 - [x] light and dark theme parity
 - [x] responsive behavior at desktop/mobile breakpoints
 - [x] accessibility proof: toggle semantics, focus order, escape close behavior expectations
+
+## Library-Readiness Companion Checks
+
+Use this checklist alongside the canonical Tier 1 consumption contract.
+
+- [ ] each Tier 1 reference surface points to a clear reusable entry point
+- [ ] state snapshots are distinguishable from canonical production usage examples
+- [ ] class/markup contracts are documented where no Blade component exists
+- [ ] UI Reference is not being treated as the only definition of how a Tier 1 item is consumed
 
 ## Related
 

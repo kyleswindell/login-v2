@@ -12,10 +12,27 @@ This document defines the canonical scope and intent for Tier 1 - Table Baseline
 
 ### 2. Intent And Theory
 
-- Primary use case: Dense data review with structured filters and deterministic paging.
-- When to use: Operational lists, audit/error logs, workspace configuration indexes.
-- When not to use: Small one-off lists where cards are more readable.
-- Interaction intent summary: predictable scan, filter, and navigate loops.
+- Primary use case: Baseline semantic table rendering for structured data with predictable scan behavior.
+- When to use: Operational lists, audit/error logs, workspace configuration indexes that need a native table baseline.
+- When not to use: richer filter, sort, bulk-action, or advanced-control experiences that have crossed into Tier 2 pattern territory.
+- Interaction intent summary: preserve readable, semantic tabular structure as the primitive baseline; advanced data-grid orchestration belongs to a higher tier.
+
+### 2A. Tier Boundary Decision
+
+- Current implementation form: `Hybrid`
+- Intended long-term direction: `revalidate Tier 1 boundary`
+- Tier 1 table baseline includes:
+  - semantic table container
+  - header row and body row structure
+  - row hover/readability treatment
+  - empty state slot
+  - horizontal overflow containment on narrow widths
+- Tier 1 table baseline does not own:
+  - advanced filter panel orchestration
+  - rich sort control treatment as a reusable interaction pattern
+  - bulk action workflows
+  - enhanced pagination or data-grid control assemblies
+- Those richer interaction layers should be treated as Tier 2 patterns, not assumed to be part of the primitive baseline.
 
 ### 3. Visual Rules
 
@@ -28,9 +45,9 @@ This document defines the canonical scope and intent for Tier 1 - Table Baseline
 ### 4. Behavior Rules
 
 - Default behavior: tabular rendering with deterministic column headers.
-- Hover/focus/active behavior: row hover highlight and explicit action button focus.
-- Disabled/loading behavior: pagination controls can render disabled state.
-- Error/warning/success behavior (if applicable): empty and no-match states included.
+- Hover/focus/active behavior: row hover highlight and explicit focus on nested controls.
+- Disabled/loading behavior: any nested controls may render disabled state, but advanced control orchestration is outside the Tier 1 baseline.
+- Error/warning/success behavior (if applicable): empty and no-match states may be rendered through a simple table-adjacent content slot.
 - Responsive behavior (desktop/tablet/mobile): horizontal overflow wrapper on narrow widths.
 
 ### 5. Accessibility Requirements
@@ -50,9 +67,9 @@ This document defines the canonical scope and intent for Tier 1 - Table Baseline
 
 ### 7. Anti-Patterns
 
-- Anti-pattern 1: hidden filter state with no reset path
-- Anti-pattern 2: pagination without rows-per-page control
-- Anti-pattern 3: non-semantic div-based table replacement for primary data grids
+- Anti-pattern 1: treating an enhanced filter/sort toolbar as if it were part of the primitive table contract
+- Anti-pattern 2: non-semantic div-based table replacement for primary data grids
+- Anti-pattern 3: assuming Tier 1 table baseline alone solves richer Tier 2 data-grid interaction needs
 
 
 ## Related

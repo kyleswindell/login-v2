@@ -27,6 +27,8 @@ Phase 3 should support planning and interface contracts for:
 * Sign in with Google (Gmail/Google Workspace identities)
 * Sign in with Microsoft (Outlook.com and Microsoft Entra/Microsoft 365 identities)
 
+The contract should remain extensible enough to add other major providers later without changing the enrollment, authorization, or customer-company ownership model.
+
 Target usage:
 
 * customer-facing sign-in where enabled by tenant policy
@@ -51,6 +53,20 @@ Required modes:
    * public self-registration available
    * optional approval workflow by tenant policy
 
+## Customer Account Creation Pathways
+
+Phase 3 should standardize the allowed customer account-entry models, even if the exact UX is refined later.
+
+Required pathways to define:
+
+* tenant-created account with staff-managed credential bootstrap
+* tenant-created invitation flow
+* invitation-only customer access with acceptance link flow
+* open self-registration
+* code- or invite-based registration where tenant policy requires gated enrollment without full staff-side account creation
+
+Each tenant should be able to select which pathways are allowed within the customer access mode and provider policies defined above.
+
 Each tenant must be able to switch between these modes via setup/settings GUI without code changes.
 
 ## OAuth Policy Controls
@@ -71,6 +87,7 @@ Tenant should define local policy within platform limits:
 * provider allowlist by sign-in surface (customer, staff)
 * whether local-password login is enabled alongside OAuth
 * default mode for new customer users (invited only vs self-enrolled)
+* which customer account-creation pathways are allowed (`staff_created`, `invited`, `self_registered`, `code_based`)
 
 ## Customer Company And Multi-User Model
 
@@ -126,6 +143,7 @@ This ordering prevents accidental access due to module-level toggles without own
 * customer access mode selector (`disabled`, `invite_only`, `open_enrollment`)
 * provider toggles (Google, Microsoft)
 * provider-by-surface policy (customer vs staff)
+* customer account-creation pathway policy
 * invite policy defaults and approval requirements
 * customer company membership and role defaults
 * module customer-visibility defaults
@@ -143,6 +161,7 @@ Each module with customer-facing potential should define:
 
 * all three customer access modes are documented and represented in setup/settings contracts
 * OAuth provider scope and policy boundaries are documented for Google and Microsoft
+* customer account-creation and enrollment pathways are documented and represented in setup/settings contracts
 * customer company and multi-user membership model is documented
 * customer-capable modules have both module-level and record-level visibility contracts
 * strict ownership-based authorization ordering is documented
@@ -160,5 +179,5 @@ Not in this note:
 * [Phase 3 Index](Phase%203%20Index.md)
 * [Phase 3 - Customer And Public View Planning](Phase%203%20-%20Customer%20And%20Public%20View%20Planning.md)
 * [Phase 3 - Implementation Batch 1](Phase%203%20-%20Implementation%20Batch%201.md)
-* [Phase 4 - Remaining Core Module Planning]../phase-/Phase  - Remaining Core Module Planning.md
+* [Phase 4 - Remaining Core Module Planning](../phase-4/Phase%204%20-%20Remaining%20Core%20Module%20Planning.md)
 * [Feature Roadmap](../../roadmap.md)

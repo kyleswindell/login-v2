@@ -112,7 +112,10 @@ Features:
 * finalize app shell/navigation strategy for persistent panel behavior
 * introduce final UI framework patterns (Filament/Livewire where intended)
 * establish design system baseline (layout, components, interaction patterns, responsive behavior)
-* standardize page and module scaffolding for future phase development
+* complete the Tier 2 reusable pattern library needed for internal application surfaces before broad module expansion
+* standardize internal shell families for dashboard, setup, settings, account/profile, and shared app framing
+* standardize page and module scaffolding for future phase development, including dashboard widget shells, list/detail/form/setup/settings archetypes, and empty/loading/error handling expectations
+* define setup/settings registration conventions and future-module UI ownership declaration requirements
 * lock frontend architecture decisions before broad module expansion
 
 Working planning note:
@@ -132,17 +135,19 @@ Introduce customer/public-facing foundations early enough that outward-facing co
 Features:
 
 * customer login and session model
+* customer account-creation and enrollment standards
 * public/customer route and visibility contracts
 * customer/public shell and navigation baseline
 * brochure-site authoring and publishing foundation
 * portable brochure publish contract with integrated Laravel delivery first and Astro-compatible delivery adapter later
-* OAuth sign-in foundations for Google and Microsoft account providers
+* OAuth sign-in foundations for Google and Microsoft account providers, with a policy model that can expand to other major providers later without changing the customer/staff auth contract
 * per-tenant customer access modes (`disabled`, `invite_only`, `open_enrollment`)
+* invitation-only, tenant-created, self-registration, and code/invite-based account creation pathways as planning milestones
 * customer company multi-user identity model for strict ownership-based access
 * module-level and record-level customer visibility contracts
 * outward-facing module rendering patterns
 * events/public business event presentation
-* Microsoft Graph email delivery foundation for transactional and automated notices
+* shared app-mailer configuration and outbound email foundation, with Microsoft Graph as the first required provider contract
 * platform-configured default sender accounts and aliases with tenant override support
 * feature-based sender-alias routing and per-user email preference policy (opt-in and mandatory classes)
 

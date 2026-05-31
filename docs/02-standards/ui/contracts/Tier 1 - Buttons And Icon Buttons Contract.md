@@ -17,6 +17,17 @@ This document defines the canonical scope and intent for Tier 1 - Buttons And Ic
 - When not to use: Navigation links, passive status display, long-form content links.
 - Interaction intent summary: Preserve consistent action hierarchy and predictable affordance across themes and breakpoints.
 
+### 2A. Implementation Form Decision
+
+- Current implementation form: `Class/markup contract`
+- Intended long-term direction: `promote to Blade component`
+- Canonical consumption direction:
+  - downstream callers should think in descriptors first: semantic, variant, size, loading, disabled, icon-only
+  - the long-term canonical entry point should be a Blade API that maps those descriptors to the current Tier 1 styling and behavior
+- Transitional rule:
+  - until the Blade entry point exists, the documented class contract remains valid
+  - new Tier 2 or feature work must not invent alternate action wrapper structures beyond the canonical button or icon-button markup
+
 ### 3. Visual Rules
 
 - Token usage (color, spacing, type, radius, elevation): semantic action tokens map through the current design system classes:
@@ -70,6 +81,7 @@ This document defines the canonical scope and intent for Tier 1 - Buttons And Ic
 - Anti-pattern 1: icon-only button without `aria-label`
 - Anti-pattern 2: color-only differentiation between destructive and neutral actions
 - Anti-pattern 3: placing two competing primary actions in one action row
+- Anti-pattern 4: recreating button semantics from raw utilities or shell-local classes when the canonical action contract should be used
 
 
 ## Related

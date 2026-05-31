@@ -18,6 +18,8 @@ Convert manual review feedback into structured batch state updates and maintain 
 - Do not modify canonical docs or code
 - Only update `/docs/08-active/`
 - Treat human review feedback as source input
+- Treat clear, mappable manual-review feedback as sufficient authorization to execute this workflow; do not pause just to confirm that review-state mutation should happen
+- Treat `Implemented Pending Review` as a deployed, reviewable state when deployment is required for the relevant surface
 - Keep exploratory review discussion in chat until it can be normalized safely into queue language
 - Do not modify or delete existing worklog files
 - Do not overwrite historical entries
@@ -34,6 +36,8 @@ Stop and ask for clarification if:
 - a referenced checklist item cannot be matched to a current top-level checklist item
 - a finding cannot be mapped safely into the current change-queue lifecycle
 - the feedback mixes approval and new-finding signals in a way that would require guessing the intended state transition
+- the requested review-state change depends on an item that is known to be undeployed on the required review surface
+- the update would require a new decision about scope or wording that the user has not actually made yet
 - the request is actually asking for implementation work rather than review-state mutation
 
 ## Execution
@@ -66,6 +70,7 @@ Rules:
 - Move items from `Passed Review` → `Closed` if no further action is required
 - Move items to `Deferred` if out of scope
 - If review finds an uncovered parallel path or adjacent gap on the same broad surface, keep the implemented item in `Implemented Pending Review` and add a separate `Ready To Implement` follow-up item
+- Do not process an undeployed item as `Implemented Pending Review`; if the deploy gap is known, stop for clarification or correct the queue state only when the request explicitly asks for that bookkeeping correction
 - Assign the next sequential queue ID in the current batch to each truly new queue item
 - Add `Follow-up To:` or `Path Coverage:` continuation lines when they materially improve traceability for a new finding
 - Do NOT delete items; only move them between sections

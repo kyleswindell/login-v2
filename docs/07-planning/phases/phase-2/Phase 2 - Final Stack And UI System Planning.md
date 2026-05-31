@@ -4,7 +4,7 @@ This document defines the canonical scope and intent for Phase 2 - Final Stack A
 
 ## Purpose
 
-Define Phase 2 sequencing for UI system completion, component library implementation, and platform surface convergence before Phase 3 and Phase 4 expansion.
+Define Phase 2 sequencing for Tier 1 library hardening, UI system completion, component library implementation, and platform surface convergence before Phase 3 and Phase 4 expansion.
 
 ## Planning Scope
 
@@ -23,11 +23,40 @@ Define Phase 2 sequencing for UI system completion, component library implementa
 - Batch C, Batch D, Batch 9, and Batch 10 are preserved as deferred placeholders only
 - staging deploy and visual QA belong to Batch E close-out sequencing
 
+## Phase 2 Deliverable Direction
+
+Phase 2 must leave behind a reusable internal UI system rather than only polished current pages.
+
+The required outputs for the active Phase 2 lane are:
+
+- Tier 1 primitives and baselines completed and reviewable
+- remaining Tier 1 library hardening completed for the promoted action, feedback, and overlay entry points before broader Tier 2 reuse depends on them
+- Tier 2 reusable internal pattern library completed for the current internal app surface set
+- internal shell family standards defined for:
+  - app shell
+  - dashboard shell
+  - setup shell
+  - settings shell
+  - account/profile shell
+- reusable page/module scaffolding archetypes defined for:
+  - dashboard and overview surfaces
+  - list/index surfaces
+  - detail/read-only surfaces
+  - create/edit form surfaces
+  - setup/configuration surfaces
+  - settings surfaces
+- dashboard widget shell and summary/stat-card conventions established
+- setup/settings registration conventions established for future modules
+- future-module UI ownership declaration requirements established
+- UI reference examples and validation surfaces updated for the relevant Tier 1 and Tier 2 outputs
+
+These outputs exist to make later Phase 3 and Phase 4 work additive instead of forcing those phases to invent shared UI structure while building feature behavior.
+
 ## Sequencing Plan
 
 1. Finalize the rebuilt UI batch sequence and mark Batch 7 as removed from active execution.
 2. Complete Batch A for Tier 1 components and UI reference implementation.
-3. Complete Batch B for Tier 2 patterns and platform surface adoption.
+3. Complete Batch B, starting with the remaining Tier 1 library hardening pass and then the Tier 2 internal library, internal shell/scaffolding standards, and proof-surface adoption.
 4. Complete Batch E staging deploy and visual QA close-out.
 5. Preserve deferred placeholders for future-phase assignment without executing them in Phase 2.
 6. Confirm Phase 3 and Phase 4 scaffolding handoff readiness.
@@ -36,8 +65,27 @@ Define Phase 2 sequencing for UI system completion, component library implementa
 ## Dependency Rules
 
 - Batch A completion is required before Batch B starts.
+- the Batch B Tier 1 hardening lane must complete before the dependent Tier 2 compositions are treated as complete
 - Batch B completion is required before Batch E starts.
 - Phase 3 and Phase 4 start only after Phase 2 handoff checklist is complete.
+
+## Phase 3 And Phase 4 Handoff Expectations
+
+Before later phases begin, Phase 2 should already have established:
+
+- the internal shell/navigation direction
+- the internal reusable Tier 2 pattern library needed for staff-facing surfaces
+- the internal page/module scaffolding standards future modules will consume
+- the dashboard widget-shell and summary-shell rules later modules can reuse
+- the setup/settings registration conventions later modules must follow
+- the UI ownership declaration matrix requirements future module plans must complete before coding
+- the concrete handoff artifacts that describe those rules in reviewable form:
+  - shell-family rule matrix
+  - page/module archetype matrix
+  - setup/settings registration field contract
+  - future-module UI ownership declaration field contract
+
+Phase 2 should not defer these internal app-surface foundations into later feature phases, because Phase 3 and Phase 4 both assume they already exist.
 
 ## Exit Criteria
 

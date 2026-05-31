@@ -17,6 +17,34 @@ This document defines the canonical scope and intent for Tier 1 - Input Controls
 - When not to use: One-click action triggers that do not collect or change field state.
 - Interaction intent summary: predictable field behavior with clear validation and assistive context.
 
+### 2A. Implementation Form Decision
+
+- Current implementation form: `Class/markup contract`
+- Intended long-term direction: `keep as class/markup contract` for native controls, with a clearer wrapper contract
+- Canonical wrapper contract:
+  - text input / textarea / select:
+    - field wrapper
+    - visible label
+    - control element
+    - optional helper copy
+    - optional error copy
+  - checkbox:
+    - selectable row wrapper
+    - native checkbox control
+    - visible option label
+    - optional helper copy
+  - radio group:
+    - fieldset wrapper
+    - legend or screen-reader-only group label
+    - repeated selectable option rows
+    - optional group-level helper or error copy
+  - switch / toggle:
+    - row wrapper with visible setting label
+    - optional helper copy
+    - native switch input with track/thumb structure
+- Transitional rule:
+  - UI Reference may demonstrate review states, but snapshot examples do not replace the required wrapper structure above
+
 ### 3. Visual Rules
 
 - Token usage (color, spacing, type, radius, elevation): shared form field and control tokens with clear label/helper/error hierarchy.
@@ -53,6 +81,7 @@ This document defines the canonical scope and intent for Tier 1 - Input Controls
 - Anti-pattern 1: missing visible labels
 - Anti-pattern 2: errors shown without field association
 - Anti-pattern 3: disabled fields or controls with unreadable contrast
+- Anti-pattern 4: copying large form example blocks when only the canonical field wrapper contract is needed
 
 
 ## Related

@@ -4,9 +4,9 @@ This document defines the canonical scope and intent for Phase 3 - Microsoft Gra
 
 ## Purpose
 
-Define the Phase 3 implementation plan for Microsoft Graph email sending as the shared outbound email foundation before broad Phase 4 module rollout.
+Define the Phase 3 implementation plan for shared outbound app-mailer configuration, with Microsoft Graph email sending as the first required provider foundation before broad Phase 4 module rollout.
 
-This note covers setup procedures, sender-account ownership boundaries, feature-level sender alias mapping, notice preference policy, mandatory notice classes, and initial use cases.
+This note covers setup procedures, provider and mailer direction, sender-account ownership boundaries, feature-level sender alias mapping, notice preference policy, mandatory notice classes, and initial use cases.
 
 ## Implementation Status
 
@@ -26,6 +26,7 @@ Graph email must be available before broad module rollout so module teams do not
 
 Phase 3 should establish the shared contract for:
 
+* application mailer configuration direction
 * account verification emails
 * new notification digests and alerts
 * periodic reports
@@ -164,6 +165,7 @@ Preference model requirements:
 
 ### Platform setup/settings
 
+* outbound mailer provider configuration model
 * Graph app registration metadata and credential references
 * sender account registry and alias registry
 * global fallback sender rules
@@ -186,6 +188,7 @@ Preference model requirements:
 
 ## Phase 3 Acceptance Criteria
 
+* application mailer configuration direction is explicit and compatible with Microsoft Graph as the first required provider
 * Graph send path is implemented and queue-backed
 * platform and tenant sender accounts are configurable through GUI setup
 * feature-based sender alias routing resolves correctly
@@ -206,5 +209,5 @@ Not in current scope:
 * [Phase 3 Index](Phase%203%20Index.md)
 * [Phase 3 - Customer And Public View Planning](Phase%203%20-%20Customer%20And%20Public%20View%20Planning.md)
 * [Phase 3 - Implementation Batch 1](Phase%203%20-%20Implementation%20Batch%201.md)
-* [Phase 4 - Remaining Core Module Planning]../phase-/Phase  - Remaining Core Module Planning.md
+* [Phase 4 - Remaining Core Module Planning](../phase-4/Phase%204%20-%20Remaining%20Core%20Module%20Planning.md)
 * [Feature Roadmap](../../roadmap.md)

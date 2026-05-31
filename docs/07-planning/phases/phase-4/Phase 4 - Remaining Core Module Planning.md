@@ -14,7 +14,7 @@ Current status:
 
 * Phase 4 planning has started
 * module and interaction mapping drafted from V1 references
-* implementation is blocked on final `/console` retirement path selection and remaining Phase 2 close-out details
+* implementation is blocked on the remaining Phase 2 UI-system handoff outputs and Phase 3 customer/public foundation contracts
 * Phase 4 module contracts now inherit Phase 2 Batch 6 requirements for optional schema installation direction and UI ownership declaration matrices
 * no Phase 4 module implementation has started yet
 
@@ -86,6 +86,14 @@ Planning default based on Phase 2 UI docs:
 * Filament-first for CRUD-heavy internal/admin module management surfaces
 * hybrid Filament plus Livewire/custom UI for workflow-heavy modules such as Projects, Tasks, Support, and Reports
 * custom/public UI remains outside Filament for customer-facing or public submission flows
+
+Phase 4 should also assume the following Phase 2 outputs already exist before module coding begins:
+
+* internal shell-family standards
+* reusable page/module scaffolding archetypes
+* setup/settings registration conventions
+* dashboard widget-shell and summary-shell rules where modules expose internal summaries
+* future-module UI ownership declaration requirements
 
 Detailed module-by-module guidance lives in:
 
@@ -196,12 +204,16 @@ Phase 4 implementation should not start until Phase 2 confirms:
 * final route/panel/UI ownership decisions
 * module scaffolding standard and design-system baseline
 * setup/settings registration pattern for new modules
+* internal shell-family standards for staff-facing surfaces
+* reusable page/module scaffolding archetypes for list/detail/form/setup/settings surfaces
+* dashboard widget-shell and stat/summary-shell conventions for internal module summary surfaces
 
 And until Phase 3 confirms:
 
 * customer/public shell and auth direction
 * outward-facing module integration contract
 * Graph email delivery foundation contract, including sender-alias routing and notice-class policy
+* customer account-creation and enrollment policy vocabulary
 
 Additional inherited contracts from Phase 2 Batch 6:
 
@@ -223,6 +235,6 @@ Phase 4 can close when:
 * [Phase 4 Index](Phase%204%20Index.md)
 * [Phase 4 - Implementation Batch 1](Phase%204%20-%20Implementation%20Batch%201.md)
 * [Phase 4 - UI Ownership And PostgreSQL Schema Map](Phase%204%20-%20UI%20Ownership%20And%20PostgreSQL%20Schema%20Map.md)
-* [Phase 3 - Customer And Public View Planning]../phase-/Phase  - Customer And Public View Planning.md
-* [Phase 2 - Final Stack And UI System Planning]../phase-/Phase  - Final Stack And UI System Planning.md
+* [Phase 3 - Customer And Public View Planning](../phase-3/Phase%203%20-%20Customer%20And%20Public%20View%20Planning.md)
+* [Phase 2 - Final Stack And UI System Planning](../phase-2/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
 * [Feature Roadmap](../../roadmap.md)

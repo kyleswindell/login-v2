@@ -17,6 +17,18 @@ This document defines the canonical scope and intent for Tier 1 - Toast And Inli
 - When not to use: persistent long-form instructional content.
 - Interaction intent summary: fast feedback with semantic severity and predictable dismissal model.
 
+### 2A. Implementation Form Decision
+
+- Current implementation form: `Class/markup contract`
+- Intended long-term direction: `promote to Blade component`
+- Canonical consumption direction:
+  - callers should declare feedback role first: toast or inline alert
+  - callers should then declare descriptors such as semantic severity, dismissibility, title/summary, and supporting message
+  - the long-term canonical entry point should be a Blade API that normalizes role, semantics, and accessibility defaults
+- Transitional rule:
+  - the existing class/markup contract remains valid until the Blade entry point exists
+  - downstream work must not create shell-local feedback wrappers that duplicate toast or inline-alert behavior outside the canonical contract
+
 ### 3. Visual Rules
 
 - Token usage (color, spacing, type, radius, elevation): semantic severity tokens shared with actions/status.
@@ -57,6 +69,7 @@ This document defines the canonical scope and intent for Tier 1 - Toast And Inli
 - Anti-pattern 1: toast with no severity distinction
 - Anti-pattern 2: auto-dismiss critical error before user acknowledgement
 - Anti-pattern 3: inline alert copy without clear action guidance
+- Anti-pattern 4: inventing page-local feedback shells when the canonical toast/inline-alert contract already fits
 
 
 ## Related

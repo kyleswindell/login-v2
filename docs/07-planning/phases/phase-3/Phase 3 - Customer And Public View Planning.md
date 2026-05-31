@@ -48,6 +48,7 @@ Establish customer/public-facing contracts early enough that:
 
 * outward-facing event and business-module views are part of initial design rather than retrofitted later
 * portal and public visibility rules are defined before core-module expansion
+* customer account-creation and enrollment models are established before customer-capable modules start inventing their own access flows
 * tenant email-delivery behavior is built on one configurable Microsoft Graph foundation before module-specific automation grows
 * legacy JSON publishing support can be added cleanly where business continuity requires it
 * platform-controlled integrations and tenant-operated workflows remain clearly separated
@@ -80,15 +81,30 @@ Phase 3 should establish:
 1. customer and public route ownership model
 2. customer/public shell and navigation baseline
 3. public versus customer-authenticated visibility contracts
-4. OAuth sign-in policy contracts (Google and Microsoft providers)
+4. OAuth sign-in policy contracts (Google and Microsoft providers first, with an extensible policy model for additional major providers later)
 5. per-tenant customer access mode contracts (`disabled`, `invite_only`, `open_enrollment`)
-6. customer company multi-user authorization model
-7. module-level and record-level customer visibility contracts
-8. outward-facing module rendering conventions
-9. events as the first outward-facing business module proof
-10. data API and query contracts for Phase 4/Phase 5 integration with legacy website connectors
-11. brochure-site authoring, publish-contract, and portable delivery direction
-12. Microsoft Graph email sending foundation with platform defaults, tenant overrides, per-feature alias mapping, and notice preference policy
+6. customer account-creation and enrollment standards, including tenant-created/invited, self-registration, invitation-only, and code/invite-based acceptance pathways
+7. customer company multi-user authorization model
+8. module-level and record-level customer visibility contracts
+9. outward-facing module rendering conventions
+10. events as the first outward-facing business module proof
+11. data API and query contracts for Phase 4/Phase 5 integration with legacy website connectors
+12. brochure-site authoring, publish-contract, and portable delivery direction
+13. shared app-mailer configuration and Microsoft Graph email sending foundation with platform defaults, tenant overrides, per-feature alias mapping, and notice preference policy
+
+## Customer Account Creation And Enrollment Standards
+
+Phase 3 should establish the shared contract for how customer-capable surfaces gain accounts.
+
+Required pathways to define now:
+
+* tenant-created accounts
+* tenant-invited accounts
+* invitation-only customer access
+* open self-registration where tenant policy allows it
+* code- or invite-based acceptance paths when a tenant requires controlled enrollment without full manual account creation
+
+These pathways are planning milestones, not final UX decisions. Phase 3 should lock the allowed contract set and policy vocabulary so later modules do not invent incompatible account-entry models.
 
 ## Microsoft Graph Email Delivery Foundation
 
@@ -96,6 +112,7 @@ Phase 3 should establish one shared email-delivery foundation for all transactio
 
 Required baseline:
 
+* application mailer configuration model and provider-abstraction direction for transactional outbound email
 * Microsoft Graph-backed outbound mail transport for transactional application email
 * GUI setup for platform-managed default sender accounts and aliases
 * GUI setup for tenant-managed sender accounts and aliases when tenants choose custom domain mailboxes
@@ -148,8 +165,10 @@ Phase 3 should define explicit contracts for:
 OAuth and access-mode baseline:
 
 * support Google and Microsoft OAuth provider contracts for allowed sign-in surfaces
+* keep the provider-policy contract extensible enough to add other major providers later without changing the customer/staff access-mode model
 * per-tenant customer auth mode must be configurable as `disabled`, `invite_only`, or `open_enrollment`
 * customer login mode must be enforceable independently from staff login mode
+* customer account-creation pathways must be configurable independently from the OAuth provider choice
 
 Customer company baseline:
 
@@ -193,6 +212,7 @@ Phase 3 implementation should not start until Phase 2 confirms:
 * which surfaces remain custom versus Filament-owned
 * platform-to-tenant access handoff direction and mandatory audit events
 * UI ownership declaration matrix requirements for future module plans
+* internal shell-family, page/module scaffolding, and setup/settings registration standards are explicit enough that customer/public shells can be designed as a deliberate extension rather than an ad hoc exception
 
 ## Exit Criteria
 

@@ -1,7 +1,7 @@
 # Document Review 0021
 
 ## Review Pass
-2
+4
 
 ## Target
 `AGENTS.md`, `docs/10-runbooks/batch-workflow.md`, `.agents/skills/batch-start.md`, `.agents/skills/work-batch.md`, `.agents/skills/batch-update-manual-review-status.md`, and `.agents/skills/batch-generate-work-prompt.md`
@@ -13,7 +13,7 @@ Document Review
 IMPLEMENTED_PENDING_REVIEW
 
 ## Purpose
-Tighten the batch queue/workflow rules so implemented items are not reopened incorrectly when manual review finds a separate adjacent gap, shared UI systems are not treated as review-ready while parallel render paths remain out of parity, and the queue layout stays agent-managed and implementation-ready instead of becoming a scratchpad for exploratory review discussion. This second pass also adds stable queue IDs and clarifies how live `change-queue.md` files should introduce and preserve them.
+Tighten the batch queue/workflow rules so implemented items are not reopened incorrectly when manual review finds a separate adjacent gap, shared UI systems are not treated as review-ready while parallel render paths remain out of parity, and the queue layout stays agent-managed and implementation-ready instead of becoming a scratchpad for exploratory review discussion. This review also adds stable queue IDs, clarifies how live `change-queue.md` files should introduce and preserve them, closes the deploy-readiness gap so `Implemented Pending Review` only applies once the required review surface is actually live, and now fixes the execution-threshold gap so clear manual-review feedback authorizes `batch-update-manual-review-status` without a redundant second confirmation step.
 
 ## Scope
 - `AGENTS.md`
@@ -67,12 +67,28 @@ Tighten the batch queue/workflow rules so implemented items are not reopened inc
 - constraints: Keep IDs lightweight and human-readable; do not encode iteration history directly into the stable ID.
 - decision state: resolved
 
+### Finding 6
+- type: deploy-readiness-gap
+- location: `AGENTS.md:39-45`, `docs/10-runbooks/batch-workflow.md:119-122`, `.agents/skills/work-batch.md:151-207`, `.agents/skills/batch-update-manual-review-status.md:10-18`
+- issue: The workflow still allowed agents to move queue items into `Implemented Pending Review` after code/commit work but before the required staging deploy completed. That makes items appear reviewable even though the review surface is not yet live.
+- required action: Define `Implemented Pending Review` as a deployed reviewable state, require `work-batch` to keep deploy-required items out of that section until commit/push/deploy all succeed, and make the manual-review skill halt if someone tries to process undeployed items as review-ready.
+- constraints: Keep the existing queue lifecycle sections; do not invent a new intermediate queue section just for deploy-pending state in this pass.
+- decision state: resolved
+
+### Finding 7
+- type: review-authorization-threshold-gap
+- location: `AGENTS.md:95-110`, `docs/10-runbooks/batch-workflow.md:246-262`, `.agents/skills/batch-update-manual-review-status.md:12-40`
+- issue: The current workflow still encouraged agents to pause and ask for confirmation before running `batch-update-manual-review-status` even after the user had already provided clear, mappable manual-review feedback. That creates unnecessary interruption and makes review-state mutation feel optional when no real decision remains.
+- required action: Explicitly define clear manual-review feedback as sufficient authorization for `batch-update-manual-review-status`, and reserve stop/ask behavior for ambiguity, unsafe finding mapping, undeployed review targets, or genuinely new scope/wording decisions.
+- constraints: Keep the existing singleton active-workspace protections; do not broaden this into general permission to mutate `/docs/08-active/` without regard to workflow boundaries.
+- decision state: resolved
+
 ## Summary
 - The queue-state mistake came from underdefined transition semantics, not from missing lifecycle sections.
 - The implementation scoping mistake came from underdefined shared-surface parity expectations, not from missing deployment or checklist rules.
 - The queue also needed a clearer item format and an explicit chat-to-queue normalization boundary so exploratory discussion does not become queue-state drift.
 - The queue also needed stable item identity so chat, manual review, and implementation passes can refer to the same finding without relying on prose matching.
-- The updated runbook, AGENTS rules, and skills now force explicit review-finding classification, shared-surface parity checks, stable queue IDs, and normalized queue-item structure.
+- The updated runbook, AGENTS rules, and skills now force explicit review-finding classification, shared-surface parity checks, stable queue IDs, normalized queue-item structure, deploy-gated review readiness, and automatic review-state execution once manual-review feedback is clear enough to map safely.
 
 ## Unresolved Decisions
 - none
@@ -88,6 +104,8 @@ implemented
 - the queue has a documented minimal item format that supports implementation traceability without becoming a heavy schema
 - exploratory review discussion is kept in chat until the agent normalizes it into concise queue language
 - active queue items use stable IDs and preserve them across queue-state transitions
+- queue items are not moved into `Implemented Pending Review` until the required review surface is actually deployed and reviewable
+- clear mappable manual-review feedback triggers `batch-update-manual-review-status` directly without a redundant second confirmation request
 
 ## Resolution Notes
 - Updated `AGENTS.md` to require stable queue IDs for active `change-queue.md` items and to prefer queue-ID references in chat.
@@ -100,4 +118,7 @@ implemented
 - Updated `.agents/skills/batch-update-manual-review-status.md` to classify review findings explicitly, reopen implemented items only when the same item's scoped outcome failed, and normalize exploratory chat into concise queue language instead of copying it verbatim.
 - Updated `.agents/skills/batch-update-manual-review-status.md` to preserve IDs for mapped items and assign new IDs to truly new findings.
 - Updated `.agents/skills/batch-generate-work-prompt.md` so queue IDs and metadata are treated as support context rather than separate actionable items.
+- Updated `AGENTS.md`, `docs/10-runbooks/batch-workflow.md`, and the batch workflow skills so deploy-required queue items stay out of `Implemented Pending Review` until the canonical review surface is actually live.
+- Updated `.agents/skills/batch-update-manual-review-status.md` to halt on attempts to process undeployed items as if they were already pending review.
+- Updated `AGENTS.md`, `docs/10-runbooks/batch-workflow.md`, and `.agents/skills/batch-update-manual-review-status.md` so clear manual-review feedback is treated as sufficient authorization for queue-state mutation without an extra confirmation step.
 - Re-review is still required before this governance correction can be closed.

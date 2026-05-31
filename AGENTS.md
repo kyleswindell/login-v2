@@ -47,6 +47,7 @@ Always respect branch ownership. Do not duplicate or reassign responsibility acr
 - Only batch workflows (`batch-start`, `work-batch`, `batch-update-manual-review-status`, `batch-review-and-finalize`) may modify it.
 - Do not manually alter its structure outside those workflows.
 - Active `change-queue.md` items should use stable queue IDs in the format `P<phase>-<batch>-CQ-###`.
+- `Implemented Pending Review` is reserved for queue items that are actually reviewable on the required review surface; if deployment is required for review, the item does not belong there until that deploy succeeds.
 - Keep exploratory review discussion in chat until an agent normalizes it into concise queue language.
 - When discussing an existing queue item in chat, reference its queue ID when available.
 
@@ -110,6 +111,7 @@ Always respect branch ownership. Do not duplicate or reassign responsibility acr
 - Before executing a batch workflow step, explicitly state which workflow is being entered.
 - If a batch workflow step was explicitly requested by the user, it may be executed without an extra confirmation step.
 - If a batch workflow step is only inferred from the conversation and it will modify `/docs/08-active/`, canonical docs, or code, ask for confirmation before executing it.
+- Exception: when the user provides clear manual-review feedback that unambiguously maps to existing active-batch items or to a concise new finding, that feedback itself authorizes `batch-update-manual-review-status`; do not stop just to confirm that the review-status skill should be executed.
 - Read-only analysis, workflow interpretation, and prompt generation do not require confirmation.
 - After completing a batch workflow step, report which workflow was executed, which files were updated, and what state changed.
 - Review-only audit work must use `docs/11-ai/active-doc-reviews/` as its canonical artifact path and must not be treated as active batch workflow execution unless the user explicitly switches into a batch workflow step.
@@ -128,6 +130,7 @@ Always respect branch ownership. Do not duplicate or reassign responsibility acr
   - name the workflow step being executed
   - name the file scope that will be modified
   - if the step is inferred, request confirmation before making changes
+- For `batch-update-manual-review-status`, clear mappable manual-review feedback counts as sufficient authorization even when the step is inferred from the review conversation; only stop if the finding mapping or requested state change is ambiguous.
 
 - Required workflow completion notice after execution:
   - name the workflow step that completed

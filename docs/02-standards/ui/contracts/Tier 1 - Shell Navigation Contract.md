@@ -17,6 +17,29 @@ This document defines the canonical scope and intent for Tier 1 - Shell Navigati
 - When not to use: in-page secondary filters or tab content swapping.
 - Interaction intent summary: one coherent navigation model across desktop and mobile.
 
+### 2A. Implementation Form Decision
+
+- Current implementation form: `Hybrid`
+- Intended long-term direction: `keep as hybrid with clearer wrapper contract`
+- Canonical shell regions:
+  - sidebar:
+    - brand / workspace identity region
+    - primary navigation group region
+    - optional secondary/support navigation region
+  - header:
+    - page-context region
+    - global utility/action region
+    - notification/account control region
+  - account menu:
+    - trigger control
+    - menu surface
+    - grouped account/session actions
+  - mobile dock:
+    - compact primary destination row
+    - active destination indicator
+- Transitional rule:
+  - shell-level templates may continue to own the composition, but downstream work must treat the region structure and behavior rules here as the contract rather than copying shell-local markup opportunistically
+
 ### 3. Visual Rules
 
 - Token usage (color, spacing, type, radius, elevation): persistent header and sidebar surfaces with active route emphasis.
@@ -53,6 +76,7 @@ This document defines the canonical scope and intent for Tier 1 - Shell Navigati
 - Anti-pattern 1: showing toggle in desktop widths where sidebar is fixed-open
 - Anti-pattern 2: leaving mobile menu open after route navigation
 - Anti-pattern 3: exposing multiple sidebar contexts simultaneously on mobile
+- Anti-pattern 4: rebuilding shell navigation affordances outside the declared sidebar/header/account-menu/mobile-dock regions
 
 
 ## Related

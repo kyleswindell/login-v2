@@ -121,11 +121,10 @@ Current Batch B direction should not reopen the older "platform-users first" pro
 
 Batch B should instead focus on:
 
-* dashboard shared-surface convergence
-* app shell layout and navigation parity
-* setup and settings shell parity
+* the required internal Tier 2 library contract defined in the Batch B planning set
+* dashboard, app shell, setup, settings, and account/profile proof-surface parity
 * shell-owned notification preview framing parity
-* shared Tier 2 pattern adoption where those surfaces already need it
+* the shell/scaffolding handoff artifacts later phases will inherit
 
 Batch B should explicitly avoid:
 

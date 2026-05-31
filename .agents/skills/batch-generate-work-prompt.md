@@ -89,6 +89,7 @@ The generated prompt should include:
 - short goal line
 - instruction to execute the Work Batch workflow
 - grouped implementation sections based on queued items
+- a Tier 1 consumption reminder when the queued work clearly depends on Tier 1 building blocks
 - explicit exclusions to prevent drift
 - `/docs/08-active/` update requirement
 - commit/push/deploy requirement only if the pass is intended to produce a reviewable result
@@ -98,8 +99,9 @@ Include commit/push/deploy instructions only when:
 - the requested work is expected to result in a visual/functional reviewable pass
 - the queue items are implementation fixes, not exploratory work
 - no unresolved blocker prevents reviewable output
+- the pass is expected to complete the required deploy so queue items can actually become reviewable at the end of the workflow
 
-If not appropriate, explicitly omit commit/deploy from the generated prompt.
+If not appropriate, explicitly omit commit/deploy from the generated prompt and call out the deployment/reviewability blocker when relevant.
 
 ---
 

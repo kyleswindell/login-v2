@@ -74,8 +74,8 @@ Execute the first Batch B implementation pass with Tier 1 library hardening firs
 
 ## Commit / Deploy Status
 
-- Commit: pending
-- Deploy: pending
+- Commit: `1c18d19` (`feat(batch-b): harden tier 1 blade entry points`)
+- Deploy: Yes, canonical staging deploy completed on `main`
 
 ## Notes
 

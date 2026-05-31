@@ -2,6 +2,7 @@
 
 ## Findings
 - Promoted Tier 1 entry points are now implemented as canonical Blade components for buttons, icon buttons, inline alerts, toasts, drawers, and modals.
+- Batch B pass `2-B-0001` is deployed to staging on `main` and ready for manual review.
 
 ## Decisions
 - Batch B starts with Tier 1 library hardening for the promoted Blade-component candidates before broader Tier 2 implementation continues.

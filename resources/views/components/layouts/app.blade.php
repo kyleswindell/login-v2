@@ -144,15 +144,15 @@
                                             <div class="flex flex-wrap items-center gap-2">
                                                 <form method="POST" action="{{ route('platform.notifications.mark-all-read') }}" data-notification-mark-all-form>
                                                     @csrf
-                                                    <button
+                                                    <x-ui.button
                                                         type="submit"
-                                                        class="ui-action ui-action-xs"
+                                                        size="xs"
+                                                        :disabled="$unreadNotificationCount === 0"
                                                         data-notification-mark-all
                                                         data-notification-mark-all-enabled="{{ $unreadNotificationCount > 0 ? 'true' : 'false' }}"
-                                                        @disabled($unreadNotificationCount === 0)
                                                     >
                                                         Mark all as read
-                                                    </button>
+                                                    </x-ui.button>
                                                 </form>
 
                                                 <a href="{{ route('platform.administration.notifications.index') }}" wire:navigate class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-300 transition hover:text-white">

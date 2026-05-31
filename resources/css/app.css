@@ -524,6 +524,13 @@
         box-shadow: 0 20px 40px color-mix(in srgb, var(--ui-shadow-color) 45%, transparent);
     }
 
+    .ui-modal-panel {
+        @apply w-full rounded-xl border p-6 shadow-2xl;
+        border-color: var(--ui-border-strong);
+        background-color: color-mix(in srgb, var(--ui-surface-elevated) 96%, transparent);
+        box-shadow: 0 20px 40px color-mix(in srgb, var(--ui-shadow-color) 45%, transparent);
+    }
+
     .ui-page-header-title {
         @apply text-3xl font-semibold;
         color: var(--ui-text-strong);
@@ -633,6 +640,12 @@
 
     .ui-inline-alert {
         @apply rounded-lg border px-4 py-3 text-sm;
+    }
+
+    .ui-inline-alert-neutral {
+        border-color: var(--ui-border-default);
+        background-color: color-mix(in srgb, var(--ui-surface-elevated) 92%, transparent);
+        color: var(--ui-text-strong);
     }
 
     .ui-inline-alert-info {

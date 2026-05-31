@@ -30,6 +30,12 @@ class PlatformUiReferenceTest extends TestCase
     {
         $this->actingAsPlatformSuperAdmin();
 
+        $this->get('/platform/ui-reference/components/actions')
+            ->assertOk()
+            ->assertSee('Buttons And Icon Buttons')
+            ->assertSee('data-ui-component="button"', false)
+            ->assertSee('data-ui-component="icon-button"', false);
+
         $this->get('/platform/ui-reference/components/forms')
             ->assertOk()
             ->assertSee('Selectable Controls')
@@ -57,6 +63,10 @@ class PlatformUiReferenceTest extends TestCase
             ->assertOk()
             ->assertSee('Toast Baseline')
             ->assertSee('Generate Example Toast')
+            ->assertSee('data-ui-component="inline-alert"', false)
+            ->assertSee('data-ui-component="toast"', false)
+            ->assertSee('data-ui-component="drawer"', false)
+            ->assertSee('data-ui-component="modal"', false)
             ->assertSee('data-ui-demo-toast-generated-stack', false)
             ->assertSee('data-ui-demo-toast-generated-overlay', false);
     }

@@ -12,13 +12,13 @@
                 <p class="text-sm font-medium text-white">Generate Test Notification</p>
                 <p class="text-xs text-slate-400">Create a test notification to verify notification delivery and display.</p>
             </div>
-            <button
-                type="button"
+            <x-ui.button
+                semantic="primary"
                 wire:click="generateTestNotification"
-                class="ui-action ui-action-primary flex-shrink-0"
+                class="flex-shrink-0"
             >
                 Generate
-            </button>
+            </x-ui.button>
         </div>
     </div>
 </section>

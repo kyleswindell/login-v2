@@ -56,6 +56,22 @@ Related docs:
 
 This is intentionally not a full user-management or password-reset system yet. Filament panel authentication and tenant-specific authentication should be added after the platform/tenant boundary is clearer.
 
+## Planned Security Baseline For Future Expansion
+
+When OAuth, customer access, and tenant-facing sign-in are added, the baseline behavior should remain:
+
+* federated sign-in is not enough by itself to grant authorization
+* external identities must resolve through tenant policy, local account state, and company membership checks before session issuance
+* matching email alone must not auto-link an external provider to an existing account
+* enterprise tenants must be able to stay invitation-only even when external providers are enabled
+* Microsoft work-account sign-in may be restricted to a specific connected Microsoft Entra tenant where tenant policy requires it
+* MFA must be explicitly required or validated for protected surfaces; using Microsoft or Google as the sign-in provider does not by itself guarantee MFA
+* privileged surfaces and privileged actions should support step-up authentication
+
+## Related Security Standards
+
+* [Identity And Account Security Standards](../../02-standards/security/Identity%20And%20Account%20Security%20Standards.md)
+
 ## Related
 
 * [Features Index](../index.md)

@@ -60,6 +60,10 @@ Always respect branch ownership. Do not duplicate or reassign responsibility acr
 - When implementing a planned system, update canonical docs and related planning notes in the same work cycle.
 - Planning notes must reflect current implementation status.
 - Canonical system docs and planning notes must remain linked.
+- If a reviewed batch or phase changes parent planning truth but the current workflow does not own those planning files directly, run the scoped docs sync path in the same work cycle:
+  - `review-docs-sync`
+  - `implement-docs-sync-fix`
+- Use that docs sync path for roadmap, phase-index, deferment, and parent planning-status synchronization instead of broadening active batch lifecycle skills beyond their owned scope.
 
 ---
 

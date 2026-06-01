@@ -152,13 +152,18 @@ Recommended workflow for planned phase work:
 3. `/phase-batch-development` creates an implementation-ready delivery plan when the batch still needs a concrete build slice.
 4. `/phase-batch-implementation` performs the scoped code and doc changes, runs tests, and prepares a review handoff.
 5. `/phase-batch-review` compares the implementation against the batch note, canonical docs, tests, and diff. If clean, it commits and pushes. If not, it reports findings and returns the batch to implementation.
-6. `/phase-batch-close-out` finalizes the reviewed and approved batch, syncs deferments and scope updates into parent phase planning docs, and marks the batch complete.
-7. `/phase-close-out` performs full phase finalization after relevant batch close-outs are complete.
+6. `/phase-batch-close-out` finalizes the reviewed and approved batch, determines whether the reviewed batch changed parent planning truth, and when it did, runs the scoped docs sync path against the owning planning docs before the batch is treated as fully synchronized:
+   - `review-docs-sync`
+   - `implement-docs-sync-fix`
+   Typical targets include the current phase index, parent phase notes, deferment lanes, and other directly affected planning docs.
+7. `/phase-close-out` performs full phase finalization after relevant batch close-outs are complete and uses the same scoped docs sync path when phase-wide status, roadmap state, or forward deferments changed:
+   - `review-docs-sync`
+   - `implement-docs-sync-fix`
 
 Sign-off rules:
 
 * implementation completion is not the same as sign-off
-* a batch should not be marked complete until review passes and phase-batch-close-out updates the docs
+* a batch should not be marked complete until review passes and phase-batch-close-out updates the docs through the scoped docs sync workflow when parent planning truth changed
 * a phase should not be marked complete until intended batches are batch-closed-out or explicitly deferred forward
 * deferments discovered during review or close-out must be written into the appropriate future batch, future phase, or future-planning note
 

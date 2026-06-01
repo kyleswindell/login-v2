@@ -11,6 +11,18 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 - Exploratory review discussion stays in chat until it is normalized into concise queue language.
 
 ## Ready To Implement
+- [ ] Refine the Tier 1 searchable dropdown-select baseline so the shared searchable control matches the canonical select-field shell across spacing, typography, trigger/menu border treatment, and Inputs And Forms proof coverage while still presenting one integrated searchable dropdown with one intentional current-selection treatment.
+  ID: P2-B-CQ-001
+  Iteration: 4
+  Scope: Tier 1 searchable dropdown-select baseline, select-family visual parity, current-selection treatment, shared Inputs And Forms dropdown standard
+  Path Coverage: `/platform/ui-reference/patterns/forms`, shared `inline-form-row` and `searchable-select` entry points, `/platform/settings/general`, `/account/preferences`
+  Implemented in: `2-B-0016`
+- [ ] Refine the Tier 1 action and menu-item component-library suite so supported menus also define the canonical current-item/selected-item state alongside the shared colorway contract; grouped-action and future consumer menus should not improvise their own current-item styling.
+  ID: P2-B-CQ-014
+  Iteration: 2
+  Scope: Tier 1 action/menu-item colorway suite, current-item menu state, shared semantic/ghost action treatment, supported standard colorway proof coverage
+  Path Coverage: shared Tier 1 action and menu-item entry points, supported standard colorway proofs, grouped-action UI Reference proof surfaces that validate the suite
+  Implemented in: `2-B-0015`
 - [ ] Correct the shared dashboard row-span rendering so multi-row widgets actually render at the documented taller heights instead of collapsing to a single-row card; `1x2` and `2x2` proofs should visibly honor row-span height as part of the reusable widget span model.
   ID: P2-B-CQ-005
   Iteration: 2
@@ -24,23 +36,6 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 ## In Progress
 
 ## Implemented Pending Review
-- [ ] Establish the Tier 1 searchable dropdown-select baseline so locale/timezone pickers consume one intentional shared control instead of a stacked search-plus-dropdown composition; remove duplicate caret indicators, present one unambiguous current-selection state inside the open menu, and keep the bounded integrated selector behavior.
-  ID: P2-B-CQ-001
-  Iteration: 3
-  Scope: Tier 1 searchable dropdown-select baseline, localization selector adoption, shared trigger/menu affordances, selected-state clarity
-  Path Coverage: `/platform/ui-reference/patterns/forms`, `/platform/settings/general`, `/account/preferences`, shared `searchable-select` entry point
-  Implemented in: `2-B-0016`
-- [ ] Establish the Tier 1 action and menu-item component-library colorway suite across all supported standard colorways before any narrower dropdown or account-menu consumer retunes proceed; define the canonical action/menu variant contract and prove it at the shared entry points instead of solving those consumers with one-off overrides.
-  ID: P2-B-CQ-014
-  Scope: Tier 1 action/menu-item colorway suite, shared semantic/ghost action treatment, supported standard colorway proof coverage
-  Path Coverage: shared Tier 1 action and menu-item entry points, supported standard colorway proofs, grouped-action UI Reference proof surfaces that validate the suite
-  Implemented in: `2-B-0015`
-- [ ] Complete the Tier 1 ghost action variant parity pass so neutral ghost uses the same borderless baseline as the semantic ghost variants inside the shared action/menu-item suite; close this parity gap before downstream menu consumers are retuned.
-  ID: P2-B-CQ-016
-  Scope: Tier 1 ghost action variant parity, supported colorway suite consistency, light/dark consistency
-  Path Coverage: shared `ui-action-ghost` primitive, supported standard colorway proofs, UI Reference action proofs, all consuming ghost-action surfaces
-  Follow-up To: P2-B-CQ-014
-  Implemented in: `2-B-0015`
 - [ ] Normalize the Tier 2 proof-note treatment so explanatory library guidance is presented through one clearly defined shared notice style instead of a mix of subtle in-card text blocks and stronger top-of-page notices; proof-only notes should read clearly as library guidance rather than component UI, and the treatment should be used consistently wherever intended behavior or scope needs explanation.
   ID: P2-B-CQ-003
   Iteration: 2
@@ -94,6 +89,12 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 ## Deferred
 
 ## Passed Review
+- [x] Complete the Tier 1 ghost action variant parity pass so neutral ghost uses the same borderless baseline as the semantic ghost variants inside the shared action/menu-item suite; close this parity gap before downstream menu consumers are retuned.
+  ID: P2-B-CQ-016
+  Scope: Tier 1 ghost action variant parity, supported colorway suite consistency, light/dark consistency
+  Path Coverage: shared `ui-action-ghost` primitive, supported standard colorway proofs, UI Reference action proofs, all consuming ghost-action surfaces
+  Follow-up To: P2-B-CQ-014
+  Implemented in: `2-B-0015`
 - [x] Repair the `Key Value Display` read-only detail proof so linked/value content renders correctly instead of leaking broken inline markup into the UI Reference output.
   ID: P2-B-CQ-002
   Scope: Tier 2 data/content patterns, read-only detail proof
@@ -112,4 +113,3 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Implemented in: `2-B-0013`
 
 ## Closed
-

@@ -90,6 +90,13 @@
   - standardizing the supported menu-item colorways on the existing action semantic token family instead of page-local menu link overrides
   - updating the Tier 1 actions proof page and the grouped-action proof surfaces so the shared action/menu-item suite is reviewable with current queue-ID targeting
   - removing the neutral ghost border treatment so neutral ghost now uses the same borderless baseline as the semantic ghost variants
+- The latest follow-up manual review on the searchable-select and dropdown menu surfaces found that `P2-B-CQ-001` still fails the intended Tier 1 Inputs And Forms contract:
+  - the searchable-select trigger and open menu still drift from the canonical select baseline on spacing, typography, and outer border treatment
+  - the forms proof still reads too much like a localization-only selector fix instead of an explicit shared searchable dropdown standard for Inputs And Forms
+  - the next pass should validate the searchable dropdown standard directly on the Form Patterns and Inline Form Row timezone proofs as part of the shared `searchable-select` contract
+- The same follow-up manual review found that `P2-B-CQ-014` still fails the intended Tier 1 menu contract:
+  - the shared action/menu-item suite still does not define how a currently selected or current-context item is shown inside a menu
+  - the `Workspace Actions` grouped dropdown reads closer to the intended canonical direction than the other remaining menu treatments and should anchor the normalization pass instead of preserving three menu styles
 - Batch B pass `2-B-0013` is now deployed to staging on `main` and resolves the latest reopened Batch B review queue by:
   - replacing the previous filter-plus-native-select locale/timezone control with one bounded integrated searchable dropdown-select entry point
   - introducing a shared proof-note wrapper so page-level and section-level library guidance use one clearly defined notice treatment
@@ -133,6 +140,9 @@
 - The remaining action-menu work should now be treated as unfinished Tier 1 library hardening first: establish the supported standard colorway contract for shared action/menu-item primitives before applying the resulting changes to existing Tier 2 dropdown/account consumers.
 - Queue cleanup review confirms `P2-B-CQ-001` and `P2-B-CQ-017` should stay framed as Tier 1 input-baseline work first; their current app/page surfaces are consumer validation coverage, not separate page-local fixes.
 - The searchable-select baseline should use one explicit trigger chevron and one shared selected-option check marker; native select caret chrome does not belong on this composed control.
+- The latest dropdown/menu review is classified as failure of the existing implemented outcomes on `P2-B-CQ-001` and `P2-B-CQ-014`, not as a separate adjacent queue item, so both items should return to `Ready To Implement`.
+- No new change-queue item is required for searchable dropdown menus or current-item menu states; those gaps belong inside the refined scopes of `P2-B-CQ-001` and `P2-B-CQ-014`.
+- Manual review now approves `P2-B-CQ-016` as a passing outcome from Batch B pass `2-B-0015`.
 - Queue cleanup review narrows `P2-B-CQ-014` to the upstream Tier 1 action/menu-item suite, keeps `P2-B-CQ-016` as the remaining Tier 1 ghost-variant parity follow-up inside that suite, and leaves `P2-B-CQ-015` blocked as downstream account-menu adoption until the Tier 1 suite closes.
 - Batch B pass `2-B-0015` keeps `P2-B-CQ-015` blocked on purpose; the account-menu adoption work remains a downstream consumer follow-up and was not folded into the shared suite pass.
 - Queue cleanup review confirms `P2-B-CQ-007` and `P2-B-CQ-008` already reflect the correct Tier 1-before-Tier 2 sequencing and do not need reclassification.
@@ -144,4 +154,3 @@
 - Local Windows verification still is not a reliable Batch B path for this repo:
   - the Windows PHP runtime available in this thread is missing `mbstring`, so feature tests must run in the Docker app container
   - the Windows Vite/Tailwind build path fails on native binary loading, so asset verification currently depends on the canonical WSL build path
-

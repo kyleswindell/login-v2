@@ -2,7 +2,7 @@
     <section class="w-full space-y-6">
         <x-ui.patterns.page-title-actions-row
             title="Account Preferences"
-            description="Set your personal defaults for timezone, language, and theme mode."
+            description="Set your personal timezone, language, and theme defaults using the shared Inputs And Forms control family."
         />
 
         @if (session('success'))
@@ -24,7 +24,7 @@
                 kicker="Account archetype proof"
             >
                 <div class="grid gap-5 sm:grid-cols-2">
-                    <x-ui.patterns.form-group for="timezone" label="Timezone" helper="Choose from the approved timezone list instead of typing a raw identifier.">
+                    <x-ui.patterns.form-group for="timezone" label="Timezone" helper="Choose from the approved timezone list using the shared searchable dropdown standard.">
                         <x-ui.searchable-select
                             id="timezone"
                             name="timezone"
@@ -35,7 +35,7 @@
                             :invalid="$errors->has('timezone')"
                         />
                     </x-ui.patterns.form-group>
-                    <x-ui.patterns.form-group for="default_language" label="Default Language" helper="Language defaults should come from the approved locale list used across shared account and settings forms.">
+                    <x-ui.patterns.form-group for="default_language" label="Default Language" helper="Language defaults should come from the approved locale list and reuse the same shared dropdown shell as timezone.">
                         <x-ui.searchable-select
                             id="default_language"
                             name="default_language"

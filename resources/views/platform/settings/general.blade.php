@@ -6,7 +6,7 @@
     <section class="flex flex-1 flex-col gap-6">
         <x-ui.patterns.page-title-actions-row
             title="Platform General"
-            description="Configure the platform display name, default timezone, and locale."
+            description="Configure the platform display name plus the shared searchable timezone and locale defaults."
         />
 
         @include('platform.settings._general-tabs', ['generalTab' => 'general'])
@@ -44,7 +44,7 @@
                     <x-ui.patterns.form-group
                         for="timezone"
                         label="Default Timezone"
-                        helper="Search the approved timezone list inside the shared selector, then choose the platform default used when no user preference is set."
+                        helper="Search the approved timezone list inside the shared Inputs And Forms dropdown, then choose the platform default used when no user preference is set."
                         :error="$errors->first('timezone')"
                     >
                         <x-ui.searchable-select
@@ -62,7 +62,7 @@
                     <x-ui.patterns.form-group
                         for="locale"
                         label="Default Locale"
-                        helper="Locale stays option-backed so formatting defaults come from the approved app locale set."
+                        helper="Locale stays option-backed and uses the same shared searchable dropdown shell as timezone."
                         :error="$errors->first('locale')"
                     >
                         <x-ui.searchable-select

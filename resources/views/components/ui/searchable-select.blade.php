@@ -69,8 +69,8 @@
     </button>
 
     <div class="ui-searchable-select-panel hidden" data-ui-searchable-select-panel>
-        <label for="{{ $id }}__filter" class="sr-only">{{ $searchLabel }}</label>
-        <div class="relative">
+        <div class="ui-searchable-select-filter-shell">
+            <label for="{{ $id }}__filter" class="sr-only">{{ $searchLabel }}</label>
             <span class="ui-searchable-select-icon">
                 <x-heroicon-o-magnifying-glass class="h-4 w-4" aria-hidden="true" />
             </span>
@@ -79,7 +79,7 @@
                 type="search"
                 value=""
                 placeholder="{{ $searchPlaceholder }}"
-                class="ui-input ui-searchable-select-filter"
+                class="ui-searchable-select-filter"
                 autocomplete="off"
                 data-ui-searchable-select-filter
             >

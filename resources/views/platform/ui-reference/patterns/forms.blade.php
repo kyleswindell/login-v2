@@ -6,7 +6,7 @@
     <section class="flex flex-1 flex-col gap-6">
         <x-ui.patterns.page-title-actions-row
             title="Form Patterns"
-            description="Tier 2 form scaffolding built from the Tier 1 control, alert, and action baselines."
+            description="Tier 2 form scaffolding built from the Tier 1 control, searchable dropdown, alert, and action baselines."
             kicker="Tier 2A"
         >
             <x-slot:actions>
@@ -17,17 +17,19 @@
 
         <x-ui.patterns.proof-review-banner
             :items="[
+                ['id' => 'P2-B-CQ-001', 'note' => 'Review the shared searchable dropdown-select shell here. The trigger, embedded search row, and current-selection state should read as one Inputs And Forms standard instead of a page-local localization fix.'],
                 ['id' => 'P2-B-CQ-003', 'note' => 'Proof-only guidance should use the same clearly defined notice treatment as the rest of the active batch review mode.'],
                 ['id' => 'P2-B-CQ-017', 'note' => 'Internal phone inputs should normalize plain digit entry into the shared baseline phone format instead of expecting manual punctuation.'],
             ]"
             :focus="[
+                'Judge the timezone and locale rows as the canonical Inputs And Forms searchable dropdown standard, not as a localization-only demo.',
                 'Treat the review banner as temporary batch-review context, not permanent component UI.',
                 'Judge the inline explanatory notes as library guidance that should stay visually separate from the component examples themselves.',
             ]"
         />
 
         <x-ui.patterns.proof-note semantic="notice" title="How to read this proof">
-            Use option-backed selectors when the acceptable values are known up front, such as locale and timezone. Keep validator-heavy examples on fields the user truly types free-form, such as email addresses and phone numbers.
+            Use option-backed selectors and the shared searchable dropdown when the acceptable values are known up front, such as locale and timezone. Keep validator-heavy examples on fields the user truly types free-form, such as email addresses and phone numbers.
         </x-ui.patterns.proof-note>
 
         <x-ui.patterns.form-section
@@ -56,12 +58,13 @@
 
         <x-ui.patterns.content-section-block
             title="Inline Form Row"
-            description="When space allows, keep labels and controls aligned horizontally without breaking label associations at narrow widths."
+            description="When space allows, keep labels and controls aligned horizontally without breaking label associations at narrow widths, including the shared searchable dropdown standard for long known-option lists."
             kicker="Responsive row"
         >
             <div class="space-y-4">
                 <x-ui.patterns.proof-review-target
                     :items="[
+                        ['id' => 'P2-B-CQ-001', 'note' => 'This section is the proof target for the shared searchable dropdown-select baseline. Confirm the trigger spacing, typography, menu shell, and single current-selection treatment stay aligned with the canonical select family.'],
                         ['id' => 'P2-B-CQ-003', 'note' => 'This section carries proof-only selector guidance. The review target here is consistent proof-note treatment at the point where reviewers judge the pattern, not only in the page banner.'],
                     ]"
                 />
@@ -69,7 +72,7 @@
                 <x-ui.patterns.inline-form-row
                     for="inline-timezone"
                     label="Default Timezone"
-                    helper="Search the approved timezone list inside the option-backed selector, then choose the default."
+                    helper="Search the approved timezone list inside the shared Inputs And Forms dropdown, then choose the default."
                 >
                     <x-ui.searchable-select
                         id="inline-timezone"
@@ -81,14 +84,14 @@
                     />
                 </x-ui.patterns.inline-form-row>
 
-                <x-ui.patterns.proof-note semantic="notice" title="Selector intent">
-                    This is the canonical integrated searchable selector variant for long known-option lists. Search happens inside the open dropdown, and the option list stays bounded to the viewport instead of stretching off-page.
+                <x-ui.patterns.proof-note semantic="notice" title="Searchable Dropdown Standard">
+                    Use this for long known-option lists that still need quick filtering. The trigger keeps the canonical select shell, search stays inside the open dropdown, and the current selection uses one shared in-menu treatment.
                 </x-ui.patterns.proof-note>
 
                 <x-ui.patterns.inline-form-row
                     for="inline-locale"
                     label="Default Locale"
-                    helper="Locale drives numeric and currency formatting and should come from the approved locale set."
+                    helper="Locale follows the same shared dropdown standard used by timezone and other long known-option lists."
                 >
                     <x-ui.searchable-select
                         id="inline-locale"

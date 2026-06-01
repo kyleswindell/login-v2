@@ -82,8 +82,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-ui-component="searchable-select"', false)
             ->assertSee('data-ui-searchable-select-trigger', false)
             ->assertSee('data-ui-pattern="form-section"', false)
-            ->assertSee('data-ui-pattern="validation-summary"', false)
-            ->assertSee('Selector intent');
+            ->assertSee('data-ui-pattern="validation-summary"', false);
 
         $this->get('/platform/ui-reference/patterns/data-content')
             ->assertOk()

@@ -1342,11 +1342,11 @@
     }
 
     .ui-searchable-select {
-        @apply relative;
+        @apply relative w-full;
     }
 
     .ui-searchable-select-trigger {
-        @apply inline-flex items-center justify-between gap-3 text-left;
+        @apply inline-flex min-h-12 w-full items-center justify-between gap-3 text-left;
         background-image: none;
         padding-right: 1rem;
     }
@@ -1355,11 +1355,22 @@
         @apply min-w-0 flex-1 truncate;
     }
 
+    .ui-searchable-select-trigger[aria-expanded='true'] {
+        border-color: color-mix(in srgb, var(--ui-action-outline-info-border) 72%, var(--ui-border-default));
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--ui-action-info-border-hover) 22%, transparent);
+    }
+
     .ui-searchable-select-panel {
-        @apply absolute left-0 right-0 z-50 mt-2 rounded-lg border p-3 shadow-2xl;
+        @apply absolute left-0 right-0 z-50 mt-2 overflow-hidden rounded-md border shadow-2xl;
         border-color: var(--ui-border-default);
         background-color: var(--ui-surface-elevated);
         box-shadow: 0 24px 40px color-mix(in srgb, var(--ui-shadow-color) 32%, transparent);
+    }
+
+    .ui-searchable-select-filter-shell {
+        @apply relative border-b px-3 py-3;
+        border-color: var(--ui-border-subtle);
+        background-color: color-mix(in srgb, var(--ui-surface-elevated) 90%, var(--ui-surface-muted) 10%);
     }
 
     .ui-searchable-select-icon {
@@ -1368,16 +1379,28 @@
     }
 
     .ui-searchable-select-filter {
-        @apply pl-10;
+        @apply w-full rounded-md border py-2.5 pr-3 pl-10 text-sm transition focus:outline-none;
+        border-color: var(--ui-border-default);
+        background-color: var(--ui-surface-muted);
+        color: var(--ui-text-strong);
+    }
+
+    .ui-searchable-select-filter::placeholder {
+        color: var(--ui-text-muted);
+    }
+
+    .ui-searchable-select-filter:focus {
+        border-color: var(--ui-action-outline-info-border);
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--ui-action-info-border-hover) 22%, transparent);
     }
 
     .ui-searchable-select-options {
-        @apply mt-3 space-y-1 overflow-auto pr-1;
+        @apply space-y-1 overflow-auto p-2 pr-1;
         max-height: min(50vh, 22rem);
     }
 
     .ui-searchable-select-option {
-        @apply flex w-full items-center justify-between gap-3 rounded-md px-3 py-2 text-left text-sm transition;
+        @apply flex w-full items-center justify-between gap-3 rounded-md px-3 py-2.5 text-left text-sm transition;
         color: var(--ui-text-secondary);
     }
 
@@ -1395,7 +1418,7 @@
     }
 
     .ui-searchable-select-empty {
-        @apply rounded-md px-3 py-2 text-sm;
+        @apply rounded-md px-3 py-3 text-sm;
         color: var(--ui-text-muted);
     }
 

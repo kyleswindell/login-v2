@@ -25,19 +25,21 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   ID: P2-B-CQ-017
   Scope: Tier 1 internal phone-input formatting baseline, support-phone proof expectations, reusable phone entry normalization
   Path Coverage: `/platform/ui-reference/patterns/forms`, `/account/settings`, `/platform/settings/general-company-information`, shared phone-input entry points where adopted
+
+## In Progress
+
+## Implemented Pending Review
 - [ ] Establish the Tier 1 action and menu-item component-library colorway suite across all supported standard colorways before any narrower dropdown or account-menu consumer retunes proceed; define the canonical action/menu variant contract and prove it at the shared entry points instead of solving those consumers with one-off overrides.
   ID: P2-B-CQ-014
   Scope: Tier 1 action/menu-item colorway suite, shared semantic/ghost action treatment, supported standard colorway proof coverage
   Path Coverage: shared Tier 1 action and menu-item entry points, supported standard colorway proofs, grouped-action UI Reference proof surfaces that validate the suite
+  Implemented in: `2-B-0015`
 - [ ] Complete the Tier 1 ghost action variant parity pass so neutral ghost uses the same borderless baseline as the semantic ghost variants inside the shared action/menu-item suite; close this parity gap before downstream menu consumers are retuned.
   ID: P2-B-CQ-016
   Scope: Tier 1 ghost action variant parity, supported colorway suite consistency, light/dark consistency
   Path Coverage: shared `ui-action-ghost` primitive, supported standard colorway proofs, UI Reference action proofs, all consuming ghost-action surfaces
   Follow-up To: P2-B-CQ-014
-
-## In Progress
-
-## Implemented Pending Review
+  Implemented in: `2-B-0015`
 - [ ] Normalize the Tier 2 proof-note treatment so explanatory library guidance is presented through one clearly defined shared notice style instead of a mix of subtle in-card text blocks and stronger top-of-page notices; proof-only notes should read clearly as library guidance rather than component UI, and the treatment should be used consistently wherever intended behavior or scope needs explanation.
   ID: P2-B-CQ-003
   Iteration: 2

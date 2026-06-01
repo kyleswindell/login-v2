@@ -80,6 +80,11 @@
   - retargeting the active review banners so they show only the current pending-review queue items on each proof page instead of stale passed-review IDs
   - applying section-level review targeting to the current pending-review proof surfaces for `P2-B-CQ-003`, `P2-B-CQ-004`, `P2-B-CQ-006`, `P2-B-CQ-007`, `P2-B-CQ-008`, `P2-B-CQ-010`, `P2-B-CQ-011`, and `P2-B-CQ-013`
   - preserving `P2-B-CQ-003` as the permanent proof-note contract while using `P2-B-CQ-013` only as temporary batch-review context layered on top of those proof surfaces
+- Batch B pass `2-B-0015` is now deployed to staging on `main` and resolves `P2-B-CQ-014` plus `P2-B-CQ-016` by:
+  - adding a shared `x-ui.menu-item` entry point for grouped-action surfaces
+  - standardizing the supported menu-item colorways on the existing action semantic token family instead of page-local menu link overrides
+  - updating the Tier 1 actions proof page and the grouped-action proof surfaces so the shared action/menu-item suite is reviewable with current queue-ID targeting
+  - removing the neutral ghost border treatment so neutral ghost now uses the same borderless baseline as the semantic ghost variants
 - Batch B pass `2-B-0013` is now deployed to staging on `main` and resolves the latest reopened Batch B review queue by:
   - replacing the previous filter-plus-native-select locale/timezone control with one bounded integrated searchable dropdown-select entry point
   - introducing a shared proof-note wrapper so page-level and section-level library guidance use one clearly defined notice treatment
@@ -123,6 +128,7 @@
 - The remaining action-menu work should now be treated as unfinished Tier 1 library hardening first: establish the supported standard colorway contract for shared action/menu-item primitives before applying the resulting changes to existing Tier 2 dropdown/account consumers.
 - Queue cleanup review confirms `P2-B-CQ-001` and `P2-B-CQ-017` should stay framed as Tier 1 input-baseline work first; their current app/page surfaces are consumer validation coverage, not separate page-local fixes.
 - Queue cleanup review narrows `P2-B-CQ-014` to the upstream Tier 1 action/menu-item suite, keeps `P2-B-CQ-016` as the remaining Tier 1 ghost-variant parity follow-up inside that suite, and leaves `P2-B-CQ-015` blocked as downstream account-menu adoption until the Tier 1 suite closes.
+- Batch B pass `2-B-0015` keeps `P2-B-CQ-015` blocked on purpose; the account-menu adoption work remains a downstream consumer follow-up and was not folded into the shared suite pass.
 - Queue cleanup review confirms `P2-B-CQ-007` and `P2-B-CQ-008` already reflect the correct Tier 1-before-Tier 2 sequencing and do not need reclassification.
 
 ## Risks / Questions

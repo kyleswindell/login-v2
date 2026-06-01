@@ -43,6 +43,7 @@ This document defines the canonical scope and intent for Tier 1 - Shell Navigati
 ### 3. Visual Rules
 
 - Token usage (color, spacing, type, radius, elevation): persistent header and sidebar surfaces with active route emphasis.
+- Grouped shell/account menu actions should consume the shared action/menu-item semantic suite rather than shell-local text-color overrides.
 - Light theme behavior: maintain separator and active state contrast.
 - Dark theme behavior: maintain panel hierarchy with restrained contrast ramps.
 - Density/size variants: desktop sticky sidebar and mobile modal + dock switcher.

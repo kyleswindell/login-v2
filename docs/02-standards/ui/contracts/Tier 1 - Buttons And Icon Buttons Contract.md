@@ -44,6 +44,7 @@ This document defines the canonical scope and intent for Tier 1 - Buttons And Ic
   - `soft` uses the semantic action class with reduced-intensity treatment
   - `outline` uses `ui-action-outline`
   - `ghost` uses `ui-action-ghost`
+- grouped action-menu items reuse the same semantic colorway suite through the shared menu-item entry point rather than one-off link color overrides inside each menu surface
 - Secondary-priority actions use neutral semantic actions with `outline` or `ghost` variants; `secondary` is not a separate token family.
 - Radius uses canonical token names such as `radius-sm`, `radius-md`, and `radius-lg` rather than raw numeric values.
 - Light theme behavior: Preserve stronger contrast than pastel soft variants.
@@ -52,6 +53,7 @@ This document defines the canonical scope and intent for Tier 1 - Buttons And Ic
 - Allowed variants: `base`, `soft`, `outline`, `ghost`.
 - Allowed semantic subset: `primary`, `neutral`, `success`, `warning`, `danger`, `info`, `notice`.
 - Variant constraint: `outline` and `ghost` are neutral-emphasis variants in Tier 1 and must not redefine semantic severity.
+- Ghost parity rule: neutral ghost must use the same borderless low-emphasis baseline as the semantic ghost variants.
 
 ### 4. Behavior Rules
 

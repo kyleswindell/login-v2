@@ -12,6 +12,13 @@
     $allowedSemantics = ['neutral', 'primary', 'success', 'warning', 'danger', 'notice', 'info'];
     $allowedVariants = ['base', 'soft', 'outline', 'ghost'];
     $allowedSizes = ['xs', 'sm', 'md', 'lg', 'xl'];
+    $ghostSizeClasses = [
+        'xs' => '!px-[calc(0.625rem+1px)] !py-[calc(0.375rem+1px)]',
+        'sm' => '!px-[calc(0.75rem+1px)] !py-[calc(0.375rem+1px)]',
+        'md' => '!px-[calc(0.875rem+1px)] !py-[calc(0.5rem+1px)]',
+        'lg' => '!px-[calc(1.125rem+1px)] !py-[calc(0.625rem+1px)]',
+        'xl' => '!px-[calc(1.25rem+1px)] !py-[calc(0.75rem+1px)]',
+    ];
 
     $resolvedSemantic = in_array($semantic, $allowedSemantics, true) ? $semantic : 'neutral';
     $resolvedVariant = in_array($variant, $allowedVariants, true) ? $variant : 'base';
@@ -29,6 +36,11 @@
 
     if ($resolvedSize !== 'md') {
         $classes[] = 'ui-action-'.$resolvedSize;
+    }
+
+    if ($resolvedVariant === 'ghost') {
+        $classes[] = '!border-0 !shadow-none';
+        $classes[] = $ghostSizeClasses[$resolvedSize];
     }
 
     $showInverseSpinner = $loading

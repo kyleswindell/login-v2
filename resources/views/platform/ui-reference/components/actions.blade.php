@@ -9,6 +9,17 @@
             <p class="ui-page-header-copy">Tier 1 contract for action hierarchy, state behavior, and light/dark parity.</p>
         </div>
 
+        <x-ui.patterns.proof-review-banner
+            :items="[
+                ['id' => 'P2-B-CQ-014', 'note' => 'Review the shared action and menu-item colorway suite here before any narrower grouped-menu or account-menu retunes proceed.'],
+                ['id' => 'P2-B-CQ-016', 'note' => 'Neutral ghost should now use the same borderless baseline as the semantic ghost variants across the shared action suite.'],
+            ]"
+            :focus="[
+                'This page is the Tier 1 review surface for the shared action and menu-item entry points.',
+                'Grouped-action pattern pages remain downstream validation surfaces for the same suite rather than separate local overrides.',
+            ]"
+        />
+
         <section class="ui-card">
             <p class="ui-kicker">Semantic Actions</p>
             <div class="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -26,6 +37,13 @@
         <section class="ui-card">
             <p class="ui-kicker">Variant Styles</p>
             <p class="mt-2 text-sm text-slate-400">Soft and outline variants must preserve contrast in both themes.</p>
+            <x-ui.patterns.proof-review-target
+                class="mt-4"
+                :items="[
+                    ['id' => 'P2-B-CQ-014', 'note' => 'Verify the supported semantic colorways and their outline/ghost usage through this shared Tier 1 matrix instead of grouped-menu one-offs.'],
+                    ['id' => 'P2-B-CQ-016', 'note' => 'Neutral ghost should now read as the same borderless low-emphasis treatment as the semantic ghost variants in this matrix.'],
+                ]"
+            />
             <div class="mt-4 space-y-4">
                 <div>
                     <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Soft</p>
@@ -61,6 +79,47 @@
                         <x-ui.button semantic="danger" variant="ghost">Ghost Danger</x-ui.button>
                         <x-ui.button semantic="notice" variant="ghost">Ghost Notice</x-ui.button>
                         <x-ui.button semantic="info" variant="ghost">Ghost Info</x-ui.button>
+                    </div>
+                    <div class="mt-4 grid gap-4 md:grid-cols-2">
+                        <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
+                            <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Neutral Ghost Baseline</p>
+                            <x-ui.button variant="ghost" class="mt-3">Close review</x-ui.button>
+                        </div>
+                        <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
+                            <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Semantic Ghost Parity</p>
+                            <x-ui.button semantic="notice" variant="ghost" class="mt-3">Open reviewer note</x-ui.button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="ui-card">
+            <p class="ui-kicker">Menu Item Colorways</p>
+            <p class="mt-2 text-sm text-slate-400">Grouped-action menus should consume one shared item treatment instead of page-local text color overrides.</p>
+            <x-ui.patterns.proof-review-target
+                class="mt-4"
+                :items="[
+                    ['id' => 'P2-B-CQ-014', 'note' => 'All supported standard colorways should be reviewable here through the shared menu-item entry point before downstream consumers adopt them.'],
+                ]"
+            />
+            <div class="mt-4 grid gap-4 lg:grid-cols-2">
+                <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Standard Menu</p>
+                    <div class="mt-3 rounded-lg border border-slate-800 bg-slate-900/80 p-2">
+                        <x-ui.menu-item href="#" onclick="event.preventDefault()">Neutral action</x-ui.menu-item>
+                        <x-ui.menu-item href="#" semantic="primary" onclick="event.preventDefault()">Primary follow-up</x-ui.menu-item>
+                        <x-ui.menu-item href="#" semantic="success" onclick="event.preventDefault()">Approve queue item</x-ui.menu-item>
+                        <x-ui.menu-item href="#" semantic="notice" onclick="event.preventDefault()">Open reviewer note</x-ui.menu-item>
+                    </div>
+                </div>
+                <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Caution Menu</p>
+                    <div class="mt-3 rounded-lg border border-slate-800 bg-slate-900/80 p-2">
+                        <x-ui.menu-item href="#" semantic="info" onclick="event.preventDefault()">View activity feed</x-ui.menu-item>
+                        <x-ui.menu-item href="#" semantic="warning" onclick="event.preventDefault()">Escalate for review</x-ui.menu-item>
+                        <div class="ui-pattern-dropdown-divider"></div>
+                        <x-ui.menu-item href="#" semantic="danger" onclick="event.preventDefault()">Archive workspace</x-ui.menu-item>
                     </div>
                 </div>
             </div>

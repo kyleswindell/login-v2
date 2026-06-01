@@ -1,8 +1,8 @@
 # Checklist
 
 ## Tier 1 Library Hardening
-- [x] Tier 1 Library Hardening
-  Status: implemented
+- [ ] Tier 1 Library Hardening
+  Status: implemented (pending manual review)
   - Button and Icon Button promoted to canonical Blade entry points
   - Toast and Inline Alert promoted to canonical Blade entry points
   - Drawer and Modal promoted to canonical Blade entry points

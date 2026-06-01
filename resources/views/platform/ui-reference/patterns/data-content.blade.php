@@ -19,6 +19,7 @@
         <x-ui.patterns.proof-review-banner
             :items="[
                 ['id' => 'P2-B-CQ-003', 'note' => 'Proof-only guidance on this page should use the shared notice treatment instead of blending into the component cards.'],
+                ['id' => 'P2-B-CQ-014', 'note' => 'The grouped dropdown on this page should validate the shared action/menu-item colorway suite instead of local text-color exceptions.'],
                 ['id' => 'P2-B-CQ-011', 'note' => 'The shared dropdown action menu still needs targeted review where it appears inside a content-section card.'],
             ]"
             :focus="[
@@ -182,6 +183,7 @@
             <div class="space-y-3">
                 <x-ui.patterns.proof-review-target
                     :items="[
+                        ['id' => 'P2-B-CQ-014', 'note' => 'Review the shared menu-item colorways here inside a content-section-backed list row so grouped actions do not rely on one-off link overrides.'],
                         ['id' => 'P2-B-CQ-011', 'note' => 'Review the shared dropdown menu here inside a content-section-backed list row so clipping and layering are judged where the pattern actually renders under card chrome.'],
                     ]"
                 />
@@ -193,10 +195,10 @@
                 >
                     <x-slot:actions>
                         <x-ui.patterns.dropdown-action-menu label="Open">
-                            <a href="#" class="ui-pattern-dropdown-link" onclick="event.preventDefault()">View contract</a>
-                            <a href="#" class="ui-pattern-dropdown-link" onclick="event.preventDefault()">Review proof surface</a>
+                            <x-ui.menu-item href="#" onclick="event.preventDefault()">View contract</x-ui.menu-item>
+                            <x-ui.menu-item href="#" semantic="notice" onclick="event.preventDefault()">Review proof surface</x-ui.menu-item>
                             <div class="ui-pattern-dropdown-divider"></div>
-                            <a href="#" class="ui-pattern-dropdown-link text-rose-300" onclick="event.preventDefault()">Archive draft</a>
+                            <x-ui.menu-item href="#" semantic="danger" onclick="event.preventDefault()">Archive draft</x-ui.menu-item>
                         </x-ui.patterns.dropdown-action-menu>
                     </x-slot:actions>
                 </x-ui.patterns.data-list-item>

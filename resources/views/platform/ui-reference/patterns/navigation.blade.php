@@ -26,6 +26,8 @@
             :items="[
                 ['id' => 'P2-B-CQ-003', 'note' => 'Proof-only guidance should use one clearly defined shared notice treatment instead of blending into the component examples.'],
                 ['id' => 'P2-B-CQ-004', 'note' => 'Dropdown action menus should dismiss when pointer or focus moves outside the open menu.'],
+                ['id' => 'P2-B-CQ-014', 'note' => 'Grouped-action menus on this page should now consume the shared action/menu-item colorway suite instead of one-off link styling.'],
+                ['id' => 'P2-B-CQ-016', 'note' => 'Neutral ghost actions on this page should match the borderless shared ghost baseline used by the semantic ghost variants.'],
                 ['id' => 'P2-B-CQ-008', 'note' => 'Date-range filtering should stay reviewable as one reusable Tier 2 control row.'],
                 ['id' => 'P2-B-CQ-010', 'note' => 'The sub-navigation active state remains under review for clear readability.'],
                 ['id' => 'P2-B-CQ-011', 'note' => 'Grouped-action menus should render above surrounding cards without clipping.'],
@@ -72,20 +74,22 @@
                         class="w-full"
                         :items="[
                             ['id' => 'P2-B-CQ-004', 'note' => 'This shared dropdown pattern still needs human confirmation that outside-click and focus-away dismissal behave as the default contract.'],
+                            ['id' => 'P2-B-CQ-014', 'note' => 'Review the grouped-action menu items here as consumers of the shared menu-item colorway suite rather than page-local text treatments.'],
+                            ['id' => 'P2-B-CQ-016', 'note' => 'The ghost trigger/reset actions on this page should reflect the shared neutral-ghost parity pass.'],
                             ['id' => 'P2-B-CQ-011', 'note' => 'This same proof card remains the clipping/layering review target; the open panel must render above nearby card chrome and section borders.'],
                         ]"
                     />
 
                     <x-ui.patterns.dropdown-action-menu label="Workspace Actions">
-                        <a href="#" class="ui-pattern-dropdown-link" onclick="event.preventDefault()">View details</a>
-                        <a href="#" class="ui-pattern-dropdown-link" onclick="event.preventDefault()">Open proof surface</a>
+                        <x-ui.menu-item href="#" onclick="event.preventDefault()">View details</x-ui.menu-item>
+                        <x-ui.menu-item href="#" semantic="notice" onclick="event.preventDefault()">Open proof surface</x-ui.menu-item>
                         <div class="ui-pattern-dropdown-divider"></div>
-                        <a href="#" class="ui-pattern-dropdown-link text-rose-300" onclick="event.preventDefault()">Archive workspace</a>
+                        <x-ui.menu-item href="#" semantic="danger" onclick="event.preventDefault()">Archive workspace</x-ui.menu-item>
                     </x-ui.patterns.dropdown-action-menu>
 
                     <x-ui.patterns.dropdown-action-menu label="More" :icon-only="true">
-                        <a href="#" class="ui-pattern-dropdown-link" onclick="event.preventDefault()">Edit labels</a>
-                        <a href="#" class="ui-pattern-dropdown-link" onclick="event.preventDefault()">Export summary</a>
+                        <x-ui.menu-item href="#" semantic="primary" onclick="event.preventDefault()">Edit labels</x-ui.menu-item>
+                        <x-ui.menu-item href="#" semantic="info" onclick="event.preventDefault()">Export summary</x-ui.menu-item>
                     </x-ui.patterns.dropdown-action-menu>
                 </div>
             </x-ui.patterns.content-section-block>

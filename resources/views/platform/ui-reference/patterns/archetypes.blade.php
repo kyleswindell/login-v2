@@ -11,33 +11,66 @@
         />
 
         <div class="space-y-6">
-            <x-ui.patterns.content-section-block title="Dashboard / Overview" description="Page title row, stat grid, and grouped summary sections." kicker="Archetype">
-                <x-ui.patterns.dashboard-grid columns="3">
-                    <x-ui.patterns.stat-card label="Overview blocks" value="3" supporting-text="Summary-first layout." />
-                    <x-ui.patterns.stat-card label="Primary actions" value="2" supporting-text="Header-level actions only." />
-                    <x-ui.patterns.stat-card label="Widget shell" value="Locked" supporting-text="Consistent card framing." />
+            <x-ui.patterns.content-section-block title="Dashboard / Overview" description="Page title row, dashboard grid, explicit widget-shell spans, and grouped summary sections." kicker="Archetype">
+                <x-ui.patterns.dashboard-grid columns="widgets">
+                    <x-ui.patterns.widget-shell title="Overview summary" description="Compact KPI widget." kicker="1x1" span="1x1">
+                        <x-ui.patterns.stat-card label="Overview blocks" value="3" supporting-text="Summary-first layout." />
+                    </x-ui.patterns.widget-shell>
+                    <x-ui.patterns.widget-shell title="Escalation queue" description="Wider queue summary." kicker="2x1" span="2x1">
+                        <div class="grid gap-3 md:grid-cols-2">
+                            <div class="ui-pattern-widget-shell-section">
+                                <p class="ui-pattern-key-value-label">Primary actions</p>
+                                <p class="ui-stat-value mt-3">2</p>
+                            </div>
+                            <div class="ui-pattern-widget-shell-section">
+                                <p class="ui-pattern-key-value-label">Widget shell</p>
+                                <p class="ui-stat-value mt-3">Locked</p>
+                            </div>
+                        </div>
+                    </x-ui.patterns.widget-shell>
                 </x-ui.patterns.dashboard-grid>
             </x-ui.patterns.content-section-block>
 
             <x-ui.patterns.content-section-block title="List / Index" description="Search/filter bar above an enhanced data table or data-list proof." kicker="Archetype">
-                <x-ui.patterns.search-filter-bar>
-                    <label class="relative block w-full max-w-sm">
-                        <span class="sr-only">Search records</span>
-                        <span class="pointer-events-none absolute inset-y-0 left-0 inline-flex w-9 items-center justify-center text-slate-500">
-                            <x-heroicon-o-magnifying-glass class="h-4 w-4" aria-hidden="true" />
-                        </span>
-                        <input type="text" placeholder="Search name or owner" class="ui-input w-full pl-9" />
-                    </label>
-                    <select class="ui-select w-full sm:w-56">
-                        <option>Any status</option>
-                        <option>Active</option>
-                        <option>Review</option>
-                    </select>
-                    <x-slot:actions>
-                        <x-ui.button variant="ghost">Reset</x-ui.button>
-                        <x-ui.button semantic="primary">Apply</x-ui.button>
-                    </x-slot:actions>
-                </x-ui.patterns.search-filter-bar>
+                <div class="space-y-4">
+                    <x-ui.patterns.search-filter-bar>
+                        <label class="relative block w-full max-w-sm">
+                            <span class="sr-only">Search records</span>
+                            <span class="pointer-events-none absolute inset-y-0 left-0 inline-flex w-9 items-center justify-center text-slate-500">
+                                <x-heroicon-o-magnifying-glass class="h-4 w-4" aria-hidden="true" />
+                            </span>
+                            <input type="text" placeholder="Search name or owner" class="ui-input w-full pl-9" />
+                        </label>
+                        <select class="ui-select w-full sm:w-56">
+                            <option>Any status</option>
+                            <option>Active</option>
+                            <option>Review</option>
+                        </select>
+                        <x-slot:actions>
+                            <x-ui.button variant="ghost">Reset</x-ui.button>
+                            <x-ui.button semantic="primary">Apply</x-ui.button>
+                        </x-slot:actions>
+                    </x-ui.patterns.search-filter-bar>
+
+                    <x-ui.patterns.date-range-filter
+                        from-id="archetype-from"
+                        to-id="archetype-to"
+                        from-value="2026-05-01"
+                        to-value="2026-05-31"
+                        preset-id="archetype-preset"
+                        preset-value="last_30_days"
+                        :preset-options="[
+                            'last_7_days' => 'Last 7 days',
+                            'last_30_days' => 'Last 30 days',
+                            'quarter_to_date' => 'Quarter to date',
+                        ]"
+                    >
+                        <x-slot:actions>
+                            <x-ui.button variant="ghost">Clear range</x-ui.button>
+                            <x-ui.button semantic="primary">Apply range</x-ui.button>
+                        </x-slot:actions>
+                    </x-ui.patterns.date-range-filter>
+                </div>
             </x-ui.patterns.content-section-block>
 
             <div class="grid gap-6 xl:grid-cols-2">
@@ -74,12 +107,22 @@
                     </ul>
                 </x-ui.patterns.content-section-block>
 
-                <x-ui.patterns.content-section-block title="Account / Profile" description="Account detail and preferences prove read-only and edit scaffolding reuse without changing feature behavior." kicker="Archetype">
-                    <ul class="space-y-2 text-sm text-slate-300">
-                        <li>1. Profile summaries use key-value display.</li>
-                        <li>2. Preferences use the same form section and action patterns as settings.</li>
-                        <li>3. Shared shell framing remains aligned to the internal app family.</li>
-                    </ul>
+                <x-ui.patterns.content-section-block title="Account / Profile" description="Account detail and preferences prove shared identity summaries and editable scaffolding reuse without changing feature behavior." kicker="Archetype">
+                    <x-ui.patterns.identity-summary-card
+                        name="Jordan Reviewer"
+                        subtitle="Platform operator"
+                        initials="JR"
+                        :meta="['jordan@example.com', 'Platform Team', 'Reviewer']"
+                        status-label="MFA enabled"
+                        status-semantic="notice"
+                    >
+                        <x-ui.patterns.key-value-display
+                            :items="[
+                                ['label' => 'Timezone', 'value' => 'America/New_York'],
+                                ['label' => 'Theme', 'value' => 'System'],
+                            ]"
+                        />
+                    </x-ui.patterns.identity-summary-card>
                 </x-ui.patterns.content-section-block>
             </div>
         </div>

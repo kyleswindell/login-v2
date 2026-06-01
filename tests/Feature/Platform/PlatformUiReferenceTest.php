@@ -38,6 +38,7 @@ class PlatformUiReferenceTest extends TestCase
 
         $this->get('/platform/ui-reference/components/forms')
             ->assertOk()
+            ->assertSee('Date And Time Selection')
             ->assertSee('Selectable Controls')
             ->assertSee('Utility Primitives')
             ->assertSee('Lock after 15 minutes');
@@ -47,6 +48,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Sub-navigation Bar')
             ->assertSee('Dropdown Action Menu')
             ->assertSee('Search And Filter Bar')
+            ->assertSee('data-ui-pattern="date-range-filter"', false)
             ->assertSee('Reset / Apply:')
             ->assertSee('data-ui-pattern="page-title-actions-row"', false)
             ->assertSee('data-ui-pattern="sub-navigation-bar"', false)
@@ -63,6 +65,8 @@ class PlatformUiReferenceTest extends TestCase
         $this->get('/platform/ui-reference/patterns/data-content')
             ->assertOk()
             ->assertSee('Data And Content Patterns')
+            ->assertSee('Identity Summary Card')
+            ->assertSee('data-ui-pattern="identity-summary-card"', false)
             ->assertSee('data-ui-pattern="stat-card"', false)
             ->assertSee('Support Runbook')
             ->assertSee('<a href="#" class="ui-link"', false)
@@ -71,12 +75,15 @@ class PlatformUiReferenceTest extends TestCase
         $this->get('/platform/ui-reference/patterns/layout')
             ->assertOk()
             ->assertSee('Layout And Dashboard Patterns')
+            ->assertSee('Widget sizing contract')
+            ->assertSee('data-ui-pattern="widget-shell"', false)
             ->assertSee('data-ui-pattern="dashboard-grid"', false)
             ->assertSee('data-ui-pattern="content-section-block"', false);
 
         $this->get('/platform/ui-reference/patterns/archetypes')
             ->assertOk()
             ->assertSee('Archetype Proofs')
+            ->assertSee('Apply range')
             ->assertSee('Create / Edit Form')
             ->assertSee('Settings')
             ->assertSee('Account / Profile');

@@ -1,12 +1,9 @@
-<section class="overflow-hidden rounded-lg border border-slate-800 bg-slate-900/70">
-    <div class="flex items-center justify-between gap-3 border-b border-slate-800 px-5 py-4">
-        <div>
-            <h2 class="text-base font-semibold text-white">Recent Audit Activity</h2>
-            <p class="text-sm text-slate-400">Latest 10 platform audit log entries.</p>
-        </div>
-    </div>
-
-    <div class="overflow-x-auto">
+<x-ui.patterns.widget-shell
+    title="Recent Audit Activity"
+    description="Latest 10 platform audit log entries."
+    :meta="['Activity widget']"
+>
+    <div class="overflow-x-auto rounded-lg border border-slate-800">
         <table class="min-w-full divide-y divide-slate-800">
             <thead class="bg-slate-950/70">
                 <tr class="text-left text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
@@ -36,4 +33,4 @@
             </tbody>
         </table>
     </div>
-</section>
+</x-ui.patterns.widget-shell>

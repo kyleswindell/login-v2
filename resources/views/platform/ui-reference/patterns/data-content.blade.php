@@ -55,6 +55,37 @@
 
         <div class="grid gap-6 xl:grid-cols-2">
             <x-ui.patterns.content-section-block
+                title="Identity Summary Card"
+                description="Use identity summary cards when the surface needs avatar, name, status, and supporting metadata before deeper read-only detail."
+                kicker="Identity summary"
+            >
+                <x-ui.patterns.identity-summary-card
+                    name="Alex Operator"
+                    subtitle="Platform super administrator"
+                    initials="AO"
+                    :meta="[
+                        'alex.operator@parasolutions.com',
+                        'Platform Team',
+                        'America/New_York',
+                    ]"
+                    status-label="Verified"
+                    status-semantic="success"
+                >
+                    <x-slot:actions>
+                        <x-ui.button variant="outline" size="sm">Message</x-ui.button>
+                        <x-ui.button semantic="primary" size="sm">Open profile</x-ui.button>
+                    </x-slot:actions>
+
+                    <x-ui.patterns.key-value-display
+                        :items="[
+                            ['label' => 'Default locale', 'value' => 'English (United States)'],
+                            ['label' => 'Last sign-in', 'value' => 'Today at 8:41 AM'],
+                        ]"
+                    />
+                </x-ui.patterns.identity-summary-card>
+            </x-ui.patterns.content-section-block>
+
+            <x-ui.patterns.content-section-block
                 title="Key Value Display"
                 description="Use read-only label/value pairs for account and configuration summaries."
                 kicker="Read-only detail"
@@ -69,23 +100,24 @@
                 />
             </x-ui.patterns.content-section-block>
 
-            <x-ui.patterns.content-section-block
-                title="Empty State"
-                description="Use a strong no-data treatment with one clear next action."
-                kicker="Fallback state"
-            >
-                <x-ui.patterns.empty-state
-                    title="No review tasks assigned"
-                    description="This workspace has no active review tasks yet. Start by assigning the next proof surface."
-                    icon="heroicon-o-inbox-stack"
-                >
-                    <x-slot:actions>
-                        <x-ui.button semantic="primary">Assign Review</x-ui.button>
-                        <x-ui.button variant="ghost">View Queue</x-ui.button>
-                    </x-slot:actions>
-                </x-ui.patterns.empty-state>
-            </x-ui.patterns.content-section-block>
         </div>
+
+        <x-ui.patterns.content-section-block
+            title="Empty State"
+            description="Use a strong no-data treatment with one clear next action."
+            kicker="Fallback state"
+        >
+            <x-ui.patterns.empty-state
+                title="No review tasks assigned"
+                description="This workspace has no active review tasks yet. Start by assigning the next proof surface."
+                icon="heroicon-o-inbox-stack"
+            >
+                <x-slot:actions>
+                    <x-ui.button semantic="primary">Assign Review</x-ui.button>
+                    <x-ui.button variant="ghost">View Queue</x-ui.button>
+                </x-slot:actions>
+            </x-ui.patterns.empty-state>
+        </x-ui.patterns.content-section-block>
 
         <x-ui.patterns.content-section-block
             title="Data List Item"

@@ -33,6 +33,7 @@ This batch is an internal UI-system implementation and proof batch, not a featur
 Batch B may:
 
 * implement the promoted Tier 1 Blade-component candidates that Batch A left directionally defined but not yet normalized
+* lock the Tier 1 native date/date-time baseline before reusable date-range patterns depend on it
 * implement reusable Tier 2 patterns for current internal app surfaces
 * define and prove internal shell-family standards and page/module scaffolding archetypes
 * normalize current dashboard and shell layout behavior only where needed to validate those shared internal patterns
@@ -101,13 +102,16 @@ These patterns are part of the stable internal library Batch B is expected to le
 * Enhanced Data Table
 * Data List Item
 * Stat Card
+* Identity Summary Card
 * Key Value Display
 * Page Title And Actions Row
 * Sub-navigation Bar
 * Empty State
 * Dropdown Action Menu
 * Search And Filter Bar
+* Date Filter / Date Range Pattern
 * Dashboard Grid
+* Widget Shell
 * Content Section Block
 
 ### Conditional Tier 2 patterns
@@ -164,7 +168,7 @@ These patterns stay out of the Batch B contract unless a later planning pass exp
 
 ## Required Deliverables
 
-1. The promoted Tier 1 Blade-component candidates are implemented and represented through reviewable proof coverage before broader Tier 2 implementation closes.
+1. The promoted Tier 1 Blade-component candidates plus the canonical date/date-time selection baseline are implemented and represented through reviewable proof coverage before broader Tier 2 implementation closes.
 2. The Batch B Tier 2 disposition contract is explicit, and the required Tier 2 patterns are implemented and represented in the UI reference.
 3. Internal shell family standards are explicit for dashboard, app shell, setup, settings, and account/profile surfaces.
 4. Reusable page/module scaffolding archetypes are explicit for dashboard/overview, list/detail, form, setup, and settings surfaces.
@@ -198,7 +202,7 @@ These patterns stay out of the Batch B contract unless a later planning pass exp
 This batch is complete when:
 
 * the required internal Tier 2 patterns are implemented and visible in the UI reference
-* the promoted Tier 1 Blade-component candidates are implemented and reviewable before the dependent Tier 2 compositions close
+* the promoted Tier 1 Blade-component candidates plus the native date/date-time baseline are implemented and reviewable before the dependent Tier 2 compositions close
 * internal shell family standards and page/module scaffolding archetypes are explicit enough for future module work to consume
 * the required handoff artifacts for shell families, page/module archetypes, setup/settings registration, and UI ownership declarations are explicit and reviewable
 * touched proof surfaces and excluded surfaces are explicitly documented
@@ -235,6 +239,9 @@ Batch B should provide reviewable proof coverage for the Tier 1 candidates it pr
 * action baseline proof
   * Button
   * Icon Button
+* form-control baseline proof
+  * Date input
+  * Date-time input
 * feedback baseline proof
   * Toast baseline
   * Inline alert baseline
@@ -256,6 +263,7 @@ Batch B should provide reviewable pattern coverage for:
   * Enhanced Data Table
   * Data List Item
   * Stat Card
+  * Identity Summary Card
   * Key Value Display
   * Empty State
   * Content Section Block
@@ -264,8 +272,10 @@ Batch B should provide reviewable pattern coverage for:
   * Sub-navigation Bar
   * Dropdown Action Menu
   * Search And Filter Bar
+  * Date Filter / Date Range Pattern
 * layout patterns
   * Dashboard Grid
+  * Widget Shell
 
 These may expand existing UI Reference pattern pages or introduce new ones, but the final page map must make each required Tier 2 pattern easy to locate and review intentionally.
 

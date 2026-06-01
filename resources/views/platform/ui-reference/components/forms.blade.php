@@ -63,6 +63,24 @@
         </section>
 
         <section class="ui-card">
+            <p class="ui-kicker">Date And Time Selection</p>
+            <p class="mt-2 text-sm text-slate-400">Date and date-time controls stay in the Tier 1 native-control family. Use the shared field wrapper and input styling instead of inventing custom calendar chrome for simple structured date entry.</p>
+            <div class="mt-4 grid gap-5 lg:grid-cols-2">
+                <label class="block">
+                    <span class="ui-control-label">Review Date</span>
+                    <input type="date" value="2026-06-08" class="ui-input mt-2" />
+                    <p class="ui-control-copy">Use for single-date deadlines, publish dates, or schedule anchors.</p>
+                </label>
+
+                <label class="block">
+                    <span class="ui-control-label">Review Window Start</span>
+                    <input type="datetime-local" value="2026-06-08T09:30" class="ui-input mt-2" />
+                    <p class="ui-control-copy">Use date-time only when the workflow truly needs both calendar and time precision.</p>
+                </label>
+            </div>
+        </section>
+
+        <section class="ui-card">
             <p class="ui-kicker">Validation Block</p>
             <div class="mt-4 grid gap-5 lg:grid-cols-2">
                 <x-ui.inline-alert semantic="danger" title="Form Validation Errors">

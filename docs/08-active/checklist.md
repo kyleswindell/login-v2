@@ -19,13 +19,16 @@
   - Enhanced Data Table
   - Data List Item
   - Stat Card
+  - Identity Summary Card
   - Key Value Display
   - Page Title And Actions Row
   - Sub-navigation Bar
   - Empty State
   - Dropdown Action Menu
   - Search And Filter Bar
+  - Date Filter / Date Range Pattern
   - Dashboard Grid
+  - Widget Shell
   - Content Section Block
 
 ## Internal Shell Family Standards
@@ -51,6 +54,7 @@
 - [ ] Dashboard And Summary Conventions
   Status: implemented (pending manual review)
   - dashboard widget-shell conventions are explicit
+  - dashboard widget span model is explicit
   - summary/stat-card conventions are explicit
   - dashboard grid usage is explicit and reviewable
 
@@ -65,7 +69,9 @@
 - [ ] Proof Surface Coverage
   Status: implemented (pending manual review)
   - Tier 1 proof pages exist for actions, feedback, and overlays
+  - Tier 1 date/date-time baseline proof exists on the input/forms reference surface
   - Tier 2 pattern pages are easy to locate and review intentionally
+  - widget-shell, date-range, and identity-summary proofs are explicit on the current reference surfaces
   - archetype proof coverage exists for dashboard, list/index, detail/read-only, create/edit form, setup, settings, and account/profile where applicable
   - page-level state coverage is explicit where required
 

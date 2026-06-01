@@ -1,12 +1,11 @@
-<section class="rounded-lg border border-slate-800 bg-slate-900/70 p-5">
-    <div class="mb-4">
-        <h2 class="text-base font-semibold text-white">Error Health</h2>
-        <p class="text-sm text-slate-400">Recent platform error volume.</p>
-    </div>
-
+<x-ui.patterns.widget-shell
+    title="Error Health"
+    description="Recent platform error volume."
+    :meta="['Summary widget']"
+>
     <div class="grid gap-4 md:grid-cols-3">
         @foreach ($stats as $stat)
-            <article class="rounded-lg border px-4 py-4 {{ match ($stat['tone']) {
+            <article class="ui-pattern-widget-shell-section {{ match ($stat['tone']) {
                 'rose' => 'border-rose-500/30 bg-rose-500/10',
                 'amber' => 'border-amber-500/30 bg-amber-500/10',
                 default => 'border-slate-700 bg-slate-950/70',
@@ -16,4 +15,4 @@
             </article>
         @endforeach
     </div>
-</section>
+</x-ui.patterns.widget-shell>

@@ -20,11 +20,94 @@
             description="The grid defines card spacing and repeatable placement rules only; feature widgets provide the content."
             kicker="Layout baseline"
         >
-            <x-ui.patterns.dashboard-grid columns="3">
-                <x-ui.patterns.stat-card label="Widgets visible" value="4" supporting-text="Current default dashboard arrangement." icon="heroicon-o-squares-2x2" />
-                <x-ui.patterns.stat-card label="Profile tasks" value="2" supporting-text="Actions requiring account attention." trend-label="today" trend-semantic="info" icon="heroicon-o-user-circle" />
-                <x-ui.patterns.stat-card label="Setup gaps" value="0" supporting-text="No unresolved setup scaffold blockers in this proof." trend-label="clear" trend-semantic="success" icon="heroicon-o-check-badge" />
-            </x-ui.patterns.dashboard-grid>
+            <div class="space-y-4">
+                <x-ui.inline-alert semantic="notice" title="Widget sizing contract">
+                    The shared dashboard grid now uses an explicit span model. `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, and `3x2` are all valid proof sizes when the content density stays intentional and the widget still reads as one dashboard summary surface.
+                </x-ui.inline-alert>
+
+                <x-ui.patterns.dashboard-grid columns="widgets">
+                    <x-ui.patterns.widget-shell
+                        title="1x1 Summary"
+                        description="Single-focus metric or quick status."
+                        kicker="Span 1x1"
+                        span="1x1"
+                    >
+                        <x-ui.patterns.stat-card label="Active queues" value="4" supporting-text="Compact summary-only widget." icon="heroicon-o-queue-list" />
+                    </x-ui.patterns.widget-shell>
+
+                    <x-ui.patterns.widget-shell
+                        title="2x1 Wide Summary"
+                        description="Two related signals in one wider row."
+                        kicker="Span 2x1"
+                        span="2x1"
+                    >
+                        <div class="grid gap-3 md:grid-cols-2">
+                            <div class="ui-pattern-widget-shell-section">
+                                <p class="ui-pattern-key-value-label">Open reviews</p>
+                                <p class="ui-stat-value mt-3">12</p>
+                            </div>
+                            <div class="ui-pattern-widget-shell-section">
+                                <p class="ui-pattern-key-value-label">Needs escalation</p>
+                                <p class="ui-stat-value mt-3">2</p>
+                            </div>
+                        </div>
+                    </x-ui.patterns.widget-shell>
+
+                    <x-ui.patterns.widget-shell
+                        title="1x2 Tall List"
+                        description="Vertical room for ordered activity or queue items."
+                        kicker="Span 1x2"
+                        span="1x2"
+                    >
+                        <div class="space-y-3">
+                            <div class="ui-pattern-widget-shell-section is-subtle">Assign reviewer to Settings proof surface</div>
+                            <div class="ui-pattern-widget-shell-section is-subtle">Confirm dashboard widget spacing on mobile</div>
+                            <div class="ui-pattern-widget-shell-section is-subtle">Lock Batch B follow-up routes</div>
+                        </div>
+                    </x-ui.patterns.widget-shell>
+
+                    <x-ui.patterns.widget-shell
+                        title="2x2 Mixed Widget"
+                        description="Header, summary, and a second internal content block can coexist when the widget still reads as one topic."
+                        kicker="Span 2x2"
+                        :meta="['Summary + detail']"
+                        span="2x2"
+                    >
+                        <div class="grid gap-3 md:grid-cols-2">
+                            <div class="ui-pattern-widget-shell-section">
+                                <p class="ui-pattern-key-value-label">Unread notifications</p>
+                                <p class="ui-stat-value mt-3">7</p>
+                            </div>
+                            <div class="ui-pattern-widget-shell-section">
+                                <p class="ui-pattern-key-value-label">Oldest item</p>
+                                <p class="ui-stat-value mt-3">18m</p>
+                            </div>
+                        </div>
+                        <div class="ui-pattern-widget-shell-section">
+                            <p class="ui-control-copy">Use a second internal block only when it deepens the same dashboard subject instead of mixing unrelated content into one card.</p>
+                        </div>
+                    </x-ui.patterns.widget-shell>
+
+                    <x-ui.patterns.widget-shell
+                        title="3x1 Full-Row Surface"
+                        description="Wider widgets are valid when they summarize one dashboard concern that naturally spans the whole row."
+                        kicker="Span 3x1"
+                        span="3x1"
+                    >
+                        <div class="grid gap-3 md:grid-cols-3">
+                            <div class="ui-pattern-widget-shell-section is-subtle">Header actions stay widget-local.</div>
+                            <div class="ui-pattern-widget-shell-section is-subtle">Internal sections may be divided once or twice.</div>
+                            <div class="ui-pattern-widget-shell-section is-subtle">If the widget becomes a full workflow, escalate to a real page.</div>
+                        </div>
+                    </x-ui.patterns.widget-shell>
+                </x-ui.patterns.dashboard-grid>
+
+                <div class="grid gap-3 md:grid-cols-3 text-sm text-slate-300">
+                    <p><span class="font-semibold text-slate-100">Allowed regions:</span> header, title, optional description/meta, primary body, optional footer, and at most a small number of internal sections.</p>
+                    <p><span class="font-semibold text-slate-100">Density rule:</span> widgets may mix summary and detail only when the blocks still belong to one dashboard topic and can be scanned quickly.</p>
+                    <p><span class="font-semibold text-slate-100">Escalation rule:</span> if the content starts requiring multiple workflows, deep forms, or complex drill-down controls, link out to a full page instead of growing the widget further.</p>
+                </div>
+            </div>
         </x-ui.patterns.content-section-block>
 
         <div class="grid gap-6 xl:grid-cols-[1.45fr_minmax(0,1fr)]">
@@ -49,7 +132,7 @@
                 <ul class="space-y-2 text-sm text-slate-300">
                     <li>1. Page title/action row stays outside the first section block.</li>
                     <li>2. Section blocks own internal grouping, not page-level navigation.</li>
-                    <li>3. Dashboard grids host stat cards and widgets without changing shell framing.</li>
+                    <li>3. Dashboard grids host stat cards and widget shells without changing shell framing.</li>
                     <li>4. Responsive stacking must preserve section order before introducing custom breakpoint hacks.</li>
                 </ul>
             </x-ui.patterns.content-section-block>

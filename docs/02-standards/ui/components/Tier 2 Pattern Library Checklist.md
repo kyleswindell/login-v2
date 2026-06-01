@@ -130,6 +130,15 @@ Every Tier 2 pattern entry must define:
 * [ ] accessibility expectations: metric label relationship remains clear to assistive technology
 * [ ] UI Reference requirement: visible in single-card and grouped-card layouts
 
+### Identity Summary Card
+
+* [ ] purpose: standardizes avatar, name, metadata, status, and optional actions for internal account/operator summaries
+* [ ] Tier 1 components used: Section / Panel baseline, Badge baseline, Icon baseline where applicable, Button, Link baseline
+* [ ] minimal interaction behavior: supports identity header, supporting metadata, optional status, and optional follow-up action placement only
+* [ ] required states: default, loading where applicable
+* [ ] accessibility expectations: identity labeling remains explicit and action labels are unambiguous
+* [ ] UI Reference requirement: visible with avatar fallback, metadata, status, and optional action examples
+
 ### Key Value Display
 
 * [ ] purpose: presents label and value pairs in a reusable read-only display pattern
@@ -257,7 +266,7 @@ Every Tier 2 pattern entry must define:
 
 * [ ] purpose: standardizes compact grouped actions behind a trigger control
 * [ ] Tier 1 components used: Button or Icon Button, Link baseline, Divider, Section / Panel baseline
-* [ ] minimal interaction behavior: supports grouped actions, keyboard navigation, and dismissal behavior
+* [ ] minimal interaction behavior: supports grouped actions, keyboard navigation, outside-click and escape dismissal behavior, and unclipped overlay layering
 * [ ] required states: default, open, hover, focus, disabled where applicable
 * [ ] accessibility expectations: menu semantics are present where appropriate and active descendant or focus movement is keyboard safe
 * [ ] UI Reference requirement: visible with grouped and destructive action examples
@@ -281,6 +290,15 @@ Every Tier 2 pattern entry must define:
 * [ ] required states: default, focus, active-filter, disabled, loading where applicable
 * [ ] accessibility expectations: control labels are explicit and active filters are understandable without color alone
 * [ ] UI Reference requirement: visible with search-only and search-plus-filter variants
+
+### Date Filter / Date Range Pattern
+
+* [ ] purpose: standardizes reusable date-based filtering for list, index, and reporting surfaces
+* [ ] Tier 1 components used: input control baseline, Select baseline where applicable, Button, Stack / Flex baseline
+* [ ] minimal interaction behavior: supports explicit start/end date visibility, optional preset selection, and clear/apply actions without feature-specific query logic
+* [ ] required states: default, focus, active-filter, disabled where applicable
+* [ ] accessibility expectations: date controls retain visible labels and the range relationship remains clear across breakpoints
+* [ ] UI Reference requirement: visible with explicit range fields, preset options, and action placement
 
 ### Bulk Action Bar
 
@@ -315,7 +333,7 @@ Every Tier 2 pattern entry must define:
 
 * [ ] purpose: standardizes reusable card-based summary layouts without feature-specific content
 * [ ] Tier 1 components used: Grid baseline, Section / Panel baseline, Badge baseline, Icon baseline where applicable
-* [ ] minimal interaction behavior: supports repeatable responsive placement and spacing rules only
+* [ ] minimal interaction behavior: supports repeatable responsive placement, spacing rules, and an explicit reusable span model for supported widget sizes
 * [ ] required states: default, loading where applicable
 * [ ] accessibility expectations: card grouping and heading hierarchy remain clear
 * [ ] UI Reference requirement: visible in single-row and multi-row examples
@@ -328,6 +346,15 @@ Every Tier 2 pattern entry must define:
 * [ ] required states: default
 * [ ] accessibility expectations: heading hierarchy is preserved
 * [ ] UI Reference requirement: visible with and without supporting text
+
+### Widget Shell
+
+* [ ] purpose: standardizes reusable dashboard widget anatomy and density rules without tying the shell to one module
+* [ ] Tier 1 components used: Section / Panel baseline, Button or Icon Button where applicable, Badge baseline where applicable, Divider, Grid baseline, Stack / Flex baseline
+* [ ] minimal interaction behavior: supports header, title, metadata, local actions, content sections, optional footer, and explicit span variants without feature-specific workflows
+* [ ] required states: default, empty, loading, error where the widget contract requires them
+* [ ] accessibility expectations: widget title hierarchy remains clear and local actions are explicitly labeled
+* [ ] UI Reference requirement: visible with summary, list/activity, mixed-content, and explicit span examples
 
 ## Cross-Cutting System Constraints
 

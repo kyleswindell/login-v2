@@ -6,14 +6,14 @@ This document defines the canonical scope and intent for Tier 1 - Input Controls
 
 ### 1. Component Identity
 
-- Component name: Text Input, Textarea, Select, Checkbox, Radio Group, Switch / Toggle
+- Component name: Text Input, Textarea, Select, Date Input, Date-Time Input, Checkbox, Radio Group, Switch / Toggle
 - Taxonomy path (L1/L2): Inputs And Forms / Inputs
 - Owner: Platform UI baseline owner
 
 ### 2. Intent And Theory
 
 - Primary use case: Capture structured, freeform, and binary/selectable data reliably.
-- When to use: Configuration forms, settings forms, filtering forms, and boolean/choice inputs.
+- When to use: Configuration forms, settings forms, filtering forms, date/date-time entry, and boolean/choice inputs.
 - When not to use: One-click action triggers that do not collect or change field state.
 - Interaction intent summary: predictable field behavior with clear validation and assistive context.
 
@@ -22,6 +22,14 @@ This document defines the canonical scope and intent for Tier 1 - Input Controls
 - Current implementation form: `Class/markup contract`
 - Intended long-term direction: `keep as class/markup contract` for native controls, with a clearer wrapper contract
 - Canonical wrapper contract:
+  - text input / textarea / select:
+  - date input / date-time input:
+    - field wrapper
+    - visible label
+    - native `input[type="date"]` or `input[type="datetime-local"]`
+    - optional helper copy
+    - optional error copy
+    - no custom calendar chrome for the baseline contract
   - text input / textarea / select:
     - field wrapper
     - visible label
@@ -82,6 +90,7 @@ This document defines the canonical scope and intent for Tier 1 - Input Controls
 - Anti-pattern 2: errors shown without field association
 - Anti-pattern 3: disabled fields or controls with unreadable contrast
 - Anti-pattern 4: copying large form example blocks when only the canonical field wrapper contract is needed
+- Anti-pattern 5: replacing simple date/date-time needs with bespoke calendar UI before the native baseline is proven insufficient
 
 
 ## Related

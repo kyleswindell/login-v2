@@ -1,14 +1,11 @@
-<section class="rounded-lg border border-slate-800 bg-slate-900/70 p-5">
-    <div class="mb-4 flex items-center justify-between gap-3">
-        <div>
-            <h2 class="text-base font-semibold text-white">Notifications</h2>
-            <p class="text-sm text-slate-400">Your latest unread platform notifications.</p>
-        </div>
-    </div>
-
+<x-ui.patterns.widget-shell
+    title="Notifications"
+    description="Your latest unread platform notifications."
+    :meta="['Activity widget']"
+>
     <div class="space-y-3">
         @forelse ($notifications as $notification)
-            <article class="flex items-start gap-3 rounded-lg border border-slate-800 bg-slate-950/70 px-4 py-3">
+            <article class="ui-pattern-widget-shell-section flex items-start gap-3">
                 <span class="mt-1 h-2.5 w-2.5 rounded-full {{ match ($notification->severity) {
                     'critical' => 'bg-rose-500',
                     'warning' => 'bg-amber-400',
@@ -31,4 +28,4 @@
             <p class="text-sm text-slate-400">No unread notifications.</p>
         @endforelse
     </div>
-</section>
+</x-ui.patterns.widget-shell>

@@ -11,10 +11,10 @@ This is a support artifact only. Canonical standards remain in `02-standards/`, 
 | Shell family | Header contract | Navigation contract | Primary content contract | Notes |
 | --- | --- | --- | --- | --- |
 | App shell | shared page-title/actions row sits inside the route-owned page content, not inside the shell chrome | shell-level nav remains separate from page-level sub-navigation | route content starts with page title/actions row, then section blocks | shell framing stays structural; feature behavior stays outside |
-| Dashboard shell | page title/actions row leads the surface | shell nav only; widget-level controls stay local to widgets | dashboard grid hosts stat cards and widget shells | dashboard proof is the first staff-facing summary archetype |
+| Dashboard shell | page title/actions row leads the surface | shell nav only; widget-level controls stay local to widgets | dashboard grid hosts stat cards and widget shells with an explicit shared span model | dashboard proof is the first staff-facing summary archetype |
 | Setup shell | page title/actions row plus setup task framing | setup shell nav may expose peer setup areas; sub-navigation only where peer sections already exist | task-entry cards, configuration sections, registration fields stay visually distinct | setup remains task-oriented rather than settings-form-heavy |
 | Settings shell | page title/actions row followed by section navigation where peer settings sections exist | settings shell nav stays separate from form actions | form sections, validation summary, and form actions bar form the default interior contract | registration fields belong inside explicit settings sections |
-| Account/profile shell | page title/actions row leads both read-only and editable surfaces | no extra shell nav required by default; use sub-navigation only if peer account sections expand later | read-only summaries use key-value display; edit surfaces use the settings-style form scaffolding | account/profile should feel like the same internal family, not a separate product |
+| Account/profile shell | page title/actions row leads both read-only and editable surfaces | no extra shell nav required by default; use sub-navigation only if peer account sections expand later | read-only summaries start with identity summary cards and may layer key-value detail beneath them; edit surfaces use the settings-style form scaffolding | account/profile should feel like the same internal family, not a separate product |
 
 ## Shared Rules
 

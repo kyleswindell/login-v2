@@ -23,7 +23,8 @@ class PlatformAccountTest extends TestCase
         $this->get('/account')
             ->assertOk()
             ->assertSee('My Account')
-            ->assertSee('Profile Summary');
+            ->assertSee('Profile Summary')
+            ->assertSee('data-ui-pattern="identity-summary-card"', false);
 
         $this->get('/account/settings')
             ->assertOk()

@@ -93,6 +93,34 @@
                         <p><span class="font-semibold text-slate-100">Owner filter:</span> models a known-option narrowing control; use the searchable selector baseline only when the option set becomes too long for a simple select.</p>
                         <p><span class="font-semibold text-slate-100">Reset / Apply:</span> demonstrate shared action placement and intent, not live query execution on this proof page.</p>
                     </div>
+
+                    <x-ui.patterns.date-range-filter
+                        from-id="reporting-from"
+                        to-id="reporting-to"
+                        from-name="reporting_from"
+                        to-name="reporting_to"
+                        from-value="2026-05-01"
+                        to-value="2026-05-31"
+                        preset-id="reporting-preset"
+                        preset-name="reporting_preset"
+                        preset-value="last_30_days"
+                        :preset-options="[
+                            'last_7_days' => 'Last 7 days',
+                            'last_30_days' => 'Last 30 days',
+                            'quarter_to_date' => 'Quarter to date',
+                        ]"
+                    >
+                        <x-slot:actions>
+                            <x-ui.button variant="ghost">Clear range</x-ui.button>
+                            <x-ui.button semantic="primary">Run report</x-ui.button>
+                        </x-slot:actions>
+                    </x-ui.patterns.date-range-filter>
+
+                    <div class="grid gap-3 md:grid-cols-3 text-sm text-slate-300">
+                        <p><span class="font-semibold text-slate-100">Date baseline:</span> both controls remain native Tier 1 date inputs, so calendar entry stays consistent with the shared input contract.</p>
+                        <p><span class="font-semibold text-slate-100">Preset select:</span> use for common windows such as last 7 or last 30 days, not to replace explicit from/to visibility.</p>
+                        <p><span class="font-semibold text-slate-100">Range actions:</span> keep actions with the range so reporting and list/index surfaces avoid ad hoc date bars.</p>
+                    </div>
                 </div>
             </x-ui.patterns.content-section-block>
         </div>

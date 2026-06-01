@@ -74,21 +74,21 @@
                         class="w-full"
                         :items="[
                             ['id' => 'P2-B-CQ-004', 'note' => 'This shared dropdown pattern still needs human confirmation that outside-click and focus-away dismissal behave as the default contract.'],
-                            ['id' => 'P2-B-CQ-014', 'note' => 'Review the grouped-action menu items here as consumers of the shared menu-item colorway suite rather than page-local text treatments.'],
+                            ['id' => 'P2-B-CQ-014', 'note' => 'Review the grouped-action menu items here as consumers of the shared menu-item colorway suite, including the shared current-item state, rather than page-local text treatments.'],
                             ['id' => 'P2-B-CQ-016', 'note' => 'The ghost trigger/reset actions on this page should reflect the shared neutral-ghost parity pass.'],
                             ['id' => 'P2-B-CQ-011', 'note' => 'This same proof card remains the clipping/layering review target; the open panel must render above nearby card chrome and section borders.'],
                         ]"
                     />
 
                     <x-ui.patterns.dropdown-action-menu label="Workspace Actions">
-                        <x-ui.menu-item href="#" onclick="event.preventDefault()">View details</x-ui.menu-item>
+                        <x-ui.menu-item href="#" current onclick="event.preventDefault()">View details</x-ui.menu-item>
                         <x-ui.menu-item href="#" semantic="notice" onclick="event.preventDefault()">Open proof surface</x-ui.menu-item>
                         <div class="ui-pattern-dropdown-divider"></div>
                         <x-ui.menu-item href="#" semantic="danger" onclick="event.preventDefault()">Archive workspace</x-ui.menu-item>
                     </x-ui.patterns.dropdown-action-menu>
 
                     <x-ui.patterns.dropdown-action-menu label="More" :icon-only="true">
-                        <x-ui.menu-item href="#" semantic="primary" onclick="event.preventDefault()">Edit labels</x-ui.menu-item>
+                        <x-ui.menu-item href="#" semantic="primary" current onclick="event.preventDefault()">Edit labels</x-ui.menu-item>
                         <x-ui.menu-item href="#" semantic="info" onclick="event.preventDefault()">Export summary</x-ui.menu-item>
                     </x-ui.patterns.dropdown-action-menu>
                 </div>

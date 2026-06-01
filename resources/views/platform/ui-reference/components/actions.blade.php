@@ -96,11 +96,11 @@
 
         <section class="ui-card">
             <p class="ui-kicker">Menu Item Colorways</p>
-            <p class="mt-2 text-sm text-slate-400">Grouped-action menus should consume one shared item treatment instead of page-local text color overrides.</p>
+            <p class="mt-2 text-sm text-slate-400">Grouped-action menus should consume one shared item treatment, including the canonical current-item state, instead of page-local text color overrides.</p>
             <x-ui.patterns.proof-review-target
                 class="mt-4"
                 :items="[
-                    ['id' => 'P2-B-CQ-014', 'note' => 'All supported standard colorways should be reviewable here through the shared menu-item entry point before downstream consumers adopt them.'],
+                    ['id' => 'P2-B-CQ-014', 'note' => 'All supported standard colorways, including the shared current-item state, should be reviewable here through the menu-item entry point before downstream consumers adopt them.'],
                 ]"
             />
             <div class="mt-4 grid gap-4 lg:grid-cols-2">
@@ -120,6 +120,18 @@
                         <x-ui.menu-item href="#" semantic="warning" onclick="event.preventDefault()">Escalate for review</x-ui.menu-item>
                         <div class="ui-pattern-dropdown-divider"></div>
                         <x-ui.menu-item href="#" semantic="danger" onclick="event.preventDefault()">Archive workspace</x-ui.menu-item>
+                    </div>
+                </div>
+                <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4 lg:col-span-2">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Current Item States</p>
+                    <div class="mt-3 grid gap-1 rounded-lg border border-slate-800 bg-slate-900/80 p-2 md:grid-cols-2 xl:grid-cols-3">
+                        <x-ui.menu-item href="#" current onclick="event.preventDefault()">Current neutral item</x-ui.menu-item>
+                        <x-ui.menu-item href="#" semantic="primary" current onclick="event.preventDefault()">Current primary item</x-ui.menu-item>
+                        <x-ui.menu-item href="#" semantic="success" current onclick="event.preventDefault()">Current success item</x-ui.menu-item>
+                        <x-ui.menu-item href="#" semantic="warning" current onclick="event.preventDefault()">Current warning item</x-ui.menu-item>
+                        <x-ui.menu-item href="#" semantic="danger" current onclick="event.preventDefault()">Current danger item</x-ui.menu-item>
+                        <x-ui.menu-item href="#" semantic="notice" current onclick="event.preventDefault()">Current notice item</x-ui.menu-item>
+                        <x-ui.menu-item href="#" semantic="info" current onclick="event.preventDefault()">Current info item</x-ui.menu-item>
                     </div>
                 </div>
             </div>

@@ -17,7 +17,10 @@ class PlatformActionMenuSuiteTest extends TestCase
             ->assertOk()
             ->assertSee('P2-B-CQ-014')
             ->assertSee('P2-B-CQ-016')
+            ->assertSee('Current Item States')
             ->assertSee('data-ui-component="menu-item"', false)
+            ->assertSee('data-ui-current="true"', false)
+            ->assertSee('aria-current="true"', false)
             ->assertSee('data-ui-pattern="proof-review-target"', false);
     }
 
@@ -29,11 +32,13 @@ class PlatformActionMenuSuiteTest extends TestCase
             ->assertOk()
             ->assertSee('P2-B-CQ-014')
             ->assertSee('P2-B-CQ-016')
-            ->assertSee('data-ui-component="menu-item"', false);
+            ->assertSee('data-ui-component="menu-item"', false)
+            ->assertSee('data-ui-current="true"', false);
 
         $this->get('/platform/ui-reference/patterns/data-content')
             ->assertOk()
             ->assertSee('P2-B-CQ-014')
-            ->assertSee('data-ui-component="menu-item"', false);
+            ->assertSee('data-ui-component="menu-item"', false)
+            ->assertSee('data-ui-current="true"', false);
     }
 }

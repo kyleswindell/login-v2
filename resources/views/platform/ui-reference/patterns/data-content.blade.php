@@ -183,7 +183,7 @@
             <div class="space-y-3">
                 <x-ui.patterns.proof-review-target
                     :items="[
-                        ['id' => 'P2-B-CQ-014', 'note' => 'Review the shared menu-item colorways here inside a content-section-backed list row so grouped actions do not rely on one-off link overrides.'],
+                        ['id' => 'P2-B-CQ-014', 'note' => 'Review the shared menu-item colorways here inside a content-section-backed list row, including the shared current-item state, so grouped actions do not rely on one-off link overrides.'],
                         ['id' => 'P2-B-CQ-011', 'note' => 'Review the shared dropdown menu here inside a content-section-backed list row so clipping and layering are judged where the pattern actually renders under card chrome.'],
                     ]"
                 />
@@ -195,7 +195,7 @@
                 >
                     <x-slot:actions>
                         <x-ui.patterns.dropdown-action-menu label="Open">
-                            <x-ui.menu-item href="#" onclick="event.preventDefault()">View contract</x-ui.menu-item>
+                            <x-ui.menu-item href="#" current onclick="event.preventDefault()">View contract</x-ui.menu-item>
                             <x-ui.menu-item href="#" semantic="notice" onclick="event.preventDefault()">Review proof surface</x-ui.menu-item>
                             <div class="ui-pattern-dropdown-divider"></div>
                             <x-ui.menu-item href="#" semantic="danger" onclick="event.preventDefault()">Archive draft</x-ui.menu-item>

@@ -88,8 +88,8 @@ Conduct a work batch on all currently open Batch B change-queue items so the rem
 
 ## Commit / Deploy Status
 
-- Commit: pending
-- Deploy: pending
+- Commit: `f72eedf` (`feat(batch-b): complete shared pattern follow-ups`)
+- Deploy: Yes, canonical staging deploy completed on `main`
 
 ## Notes
 

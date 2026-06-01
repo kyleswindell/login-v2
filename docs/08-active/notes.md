@@ -89,9 +89,9 @@
   - adding a shared internal phone formatter so plain ten-digit entry persists as the canonical `(555) 555-5555` baseline across the touched account, company-information, and staff-profile save paths
   - wiring the adopted phone inputs to the shared frontend formatter so raw digit entry normalizes on the proof surface and the live settings/profile forms instead of relying on manual punctuation
   - extending proof and feature coverage so the phone-entry baseline is visible and asserted on the UI Reference forms page plus the touched account/settings/user-management surfaces
-- Batch B pass `2-B-0018` now patches the reopened `P2-B-CQ-005` row-span failure locally by:
+- Batch B pass `2-B-0018` is now deployed to staging on `main` and resolves the reopened `P2-B-CQ-005` row-span failure by:
   - replacing the tall widget span utilities with explicit responsive `grid-column` and `grid-row` declarations so `1x2`, `2x2`, and `3x2` no longer rely on a compiled shorthand placement merge
-  - keeping the queue item in active implementation instead of `Implemented Pending Review` because the current working tree already contains uncommitted active-batch changes from earlier passes, so this fix has not yet been committed, pushed, or deployed to staging for review
+  - publishing the shared widget-span fix to the required review surface so the taller dashboard proofs are available for targeted manual re-review on staging
 - Batch B pass `2-B-0015` is now deployed to staging on `main` and resolves `P2-B-CQ-014` plus `P2-B-CQ-016` by:
   - adding a shared `x-ui.menu-item` entry point for grouped-action surfaces
   - standardizing the supported menu-item colorways on the existing action semantic token family instead of page-local menu link overrides

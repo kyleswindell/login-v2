@@ -23,34 +23,32 @@ Conduct the active Batch B `work-batch` pass on `P2-B-CQ-005`.
 
 - replaced the shared tall widget span utilities with explicit responsive `grid-column` and `grid-row` declarations
 - removed reliance on the compiled shorthand placement path that left the `1x2` and `2x2` widget proofs visually collapsed on the review surface
-- synced the active batch queue, review state, notes, and worklog index so `P2-B-CQ-005` reflects local in-progress implementation rather than a reviewable deployed state
+- synced the active batch queue, review state, notes, and worklog index so `P2-B-CQ-005` reflects its actual reviewable deployed state after the scoped commit, push, and canonical staging deployment completed
 
 ## Checklist Impact
 
 - no checklist section moved to pass in this implementation pass
-- `Dashboard And Summary Conventions`, `Proof Surface Coverage`, `Validation Readiness`, and `Batch B Exit Criteria` remain pending manual review because this row-span fix is not yet deployed to the required review surface
+- `Dashboard And Summary Conventions`, `Proof Surface Coverage`, `Validation Readiness`, and `Batch B Exit Criteria` remain pending targeted manual review on staging
 
 ## Change Queue Impact
 
-- `P2-B-CQ-005` -> in progress
+- `P2-B-CQ-005` -> implemented pending review
 
 ## Issues Found
 
-- the current working tree already contains uncommitted active-batch files from earlier passes, including shared docs state and `resources/css/app.css`, so this pass cannot produce a clean one-concern commit without first serializing that existing work
-- because the fix is not yet committed or pushed, the canonical staging deployment path cannot publish this pass to the required review surface yet
+- the pass initially stalled behind pre-existing uncommitted active-batch changes in shared files, so the one-concern commit and review-surface deployment had to be serialized after those earlier changes were split and committed
 
 ## Deferred Items
 
-- scoped commit, push, and staging deployment for `P2-B-CQ-005` once the pre-existing uncommitted active-batch changes are serialized
 - targeted manual re-review of `P2-B-CQ-005` after that deploy succeeds
 - the blocked downstream account-menu adoption work on `P2-B-CQ-015`
 
 ## Commit / Deploy Status
 
-- Commit: No; blocked by pre-existing uncommitted active-batch changes in shared files required for this pass
-- Deploy: No; staging cannot review the fix until a scoped commit and push exist
+- Commit: Yes; scoped review-ready commit completed for this pass
+- Deploy: Yes; canonical staging deployment completed on `main` for review-backed queue state
 
 ## Notes
 
 - This pass keeps the `P2-B-CQ-005` correction at the shared widget-span contract instead of papering over the proof page with one-off height overrides.
-- The queue item remains in active implementation on purpose because `Implemented Pending Review` is reserved for work that is actually available on the required review surface.
+- Staging is now ready for targeted re-review of `P2-B-CQ-005`.

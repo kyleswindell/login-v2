@@ -24,11 +24,6 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Path Coverage: shared Tier 1 action and menu-item entry points, supported standard colorway proofs, grouped-action UI Reference proof surfaces that validate the suite
   Implemented in: `2-B-0015`
 ## In Progress
-- [ ] Correct the shared dashboard row-span rendering so multi-row widgets actually render at the documented taller heights instead of collapsing to a single-row card; `1x2` and `2x2` proofs should visibly honor row-span height as part of the reusable widget span model.
-  ID: P2-B-CQ-005
-  Iteration: 2
-  Scope: dashboard grid sizing contract, shared row-span rendering, multi-row widget proof behavior
-  Path Coverage: shared `dashboard-grid` pattern, layout/dashboard proof surfaces, widget-shell guidance, `1x2` and `2x2` widget proofs
 
 ## Implemented Pending Review
 - [ ] Normalize the Tier 2 proof-note treatment so explanatory library guidance is presented through one clearly defined shared notice style instead of a mix of subtle in-card text blocks and stronger top-of-page notices; proof-only notes should read clearly as library guidance rather than component UI, and the treatment should be used consistently wherever intended behavior or scope needs explanation.
@@ -43,6 +38,12 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Scope: temporary active-batch proof review mode, full current implemented-pending-review coverage, card-level review targeting, queue-ID visibility accuracy
   Path Coverage: active-batch UI Reference proof pages, all current `Implemented Pending Review` items with visible proof surfaces, relevant component library cards under review, current review-mode entry points
   Implemented in: `2-B-0014`
+- [ ] Correct the shared dashboard row-span rendering so multi-row widgets actually render at the documented taller heights instead of collapsing to a single-row card; `1x2` and `2x2` proofs should visibly honor row-span height as part of the reusable widget span model.
+  ID: P2-B-CQ-005
+  Iteration: 2
+  Scope: dashboard grid sizing contract, shared row-span rendering, multi-row widget proof behavior
+  Path Coverage: shared `dashboard-grid` pattern, layout/dashboard proof surfaces, widget-shell guidance, `1x2` and `2x2` widget proofs
+  Implemented in: `2-B-0018`
 - [ ] Establish the Tier 1 internal phone-input formatting baseline so typed digits auto-normalize to the canonical phone format instead of requiring users to enter punctuation manually; plain ten-digit entry should resolve to `(555) 555-5555` as the baseline expectation wherever the shared internal phone-input pattern is adopted.
   ID: P2-B-CQ-017
   Scope: Tier 1 internal phone-input formatting baseline, support-phone proof expectations, reusable phone entry normalization

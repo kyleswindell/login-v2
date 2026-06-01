@@ -15,12 +15,27 @@
             </x-slot:actions>
         </x-ui.patterns.page-title-actions-row>
 
+        <x-ui.patterns.proof-review-banner
+            :items="[
+                ['id' => 'P2-B-CQ-006', 'note' => 'Widget-shell anatomy and density remain in pending review on the dashboard/layout proof surfaces.'],
+            ]"
+            :focus="[
+                'The current active review target on this page is the widget-shell contract, not the reopened row-span bug tracked separately on P2-B-CQ-005.',
+            ]"
+        />
+
         <x-ui.patterns.content-section-block
             title="Dashboard Grid"
             description="The grid defines card spacing and repeatable placement rules only; feature widgets provide the content."
             kicker="Layout baseline"
         >
             <div class="space-y-4">
+                <x-ui.patterns.proof-review-target
+                    :items="[
+                        ['id' => 'P2-B-CQ-006', 'note' => 'Use this card to review the reusable widget-shell contract: allowed regions, density, and how the widget body stays one dashboard topic even when internal sections are present.'],
+                    ]"
+                />
+
                 <x-ui.inline-alert semantic="notice" title="Widget sizing contract">
                     The shared dashboard grid now uses an explicit span model. `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, and `3x2` are all valid proof sizes when the content density stays intentional and the widget still reads as one dashboard summary surface.
                 </x-ui.inline-alert>

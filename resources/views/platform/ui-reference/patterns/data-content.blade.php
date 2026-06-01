@@ -18,13 +18,12 @@
 
         <x-ui.patterns.proof-review-banner
             :items="[
-                ['id' => 'P2-B-CQ-009', 'note' => 'Identity summary should prove lighter and fuller variants, while staying one family for person and company/entity summaries.'],
-                ['id' => 'P2-B-CQ-012', 'note' => 'Compact metadata rows should read as distinct pieces of information, not one run-on sentence.'],
-                ['id' => 'P2-B-CQ-013', 'note' => 'This page also demonstrates the temporary active-batch review overlay system.'],
+                ['id' => 'P2-B-CQ-003', 'note' => 'Proof-only guidance on this page should use the shared notice treatment instead of blending into the component cards.'],
+                ['id' => 'P2-B-CQ-011', 'note' => 'The shared dropdown action menu still needs targeted review where it appears inside a content-section card.'],
             ]"
             :focus="[
-                'Separate permanent library guidance from temporary review context.',
-                'Check the metadata treatment on both identity summaries and data-list rows.',
+                'Passed items should drop out of the active review overlay once review is complete.',
+                'Only the current pending-review proof surfaces on this page should carry queue-ID targeting.',
             ]"
         />
 
@@ -72,6 +71,12 @@
                 kicker="Identity summary"
             >
                 <div class="space-y-4">
+                    <x-ui.patterns.proof-review-target
+                        :items="[
+                            ['id' => 'P2-B-CQ-003', 'note' => 'This proof-note block remains under review for consistent library-guidance treatment on the card itself. The identity-summary density and metadata items have already passed and should not remain tagged as active review targets.'],
+                        ]"
+                    />
+
                     <x-ui.patterns.proof-note semantic="notice" title="Identity-summary variants">
                         Use the same identity-summary family for compact, standard, and detailed read-only summaries. Promote a separate company/entity component only if the required anatomy diverges beyond mark/avatar, name, metadata, status, and optional actions.
                     </x-ui.patterns.proof-note>
@@ -175,6 +180,12 @@
             kicker="List row"
         >
             <div class="space-y-3">
+                <x-ui.patterns.proof-review-target
+                    :items="[
+                        ['id' => 'P2-B-CQ-011', 'note' => 'Review the shared dropdown menu here inside a content-section-backed list row so clipping and layering are judged where the pattern actually renders under card chrome.'],
+                    ]"
+                />
+
                 <x-ui.patterns.data-list-item
                     title="General Settings Ownership"
                     description="Shared setup and settings registration fields are locked to the internal shell contract."

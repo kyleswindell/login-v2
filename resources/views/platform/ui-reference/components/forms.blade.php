@@ -9,6 +9,15 @@
             <p class="ui-page-header-copy">Tier 1 contract for input, textarea, and select behavior including focus, error, disabled, and assistive context.</p>
         </div>
 
+        <x-ui.patterns.proof-review-banner
+            :items="[
+                ['id' => 'P2-B-CQ-007', 'note' => 'Review the shared Tier 1 date and date-time baseline here; simple structured date entry should stay on the native control family.'],
+            ]"
+            :focus="[
+                'This page remains the Tier 1 control baseline; the current pending-review target on this surface is the date/date-time contract.',
+            ]"
+        />
+
         <section class="ui-card">
             <p class="ui-kicker">Field States</p>
             <form class="mt-4 grid gap-5 lg:grid-cols-2" action="#" method="POST" onsubmit="event.preventDefault()">
@@ -65,6 +74,12 @@
         <section class="ui-card">
             <p class="ui-kicker">Date And Time Selection</p>
             <p class="mt-2 text-sm text-slate-400">Date and date-time controls stay in the Tier 1 native-control family. Use the shared field wrapper and input styling instead of inventing custom calendar chrome for simple structured date entry.</p>
+            <x-ui.patterns.proof-review-target
+                class="mt-4"
+                :items="[
+                    ['id' => 'P2-B-CQ-007', 'note' => 'This card is the review target for the Tier 1 date baseline. Confirm the proof keeps date and date-time entry in the shared native-control family instead of introducing ad hoc calendar UI.'],
+                ]"
+            />
             <div class="mt-4 grid gap-5 lg:grid-cols-2">
                 <label class="block">
                     <span class="ui-control-label">Review Date</span>

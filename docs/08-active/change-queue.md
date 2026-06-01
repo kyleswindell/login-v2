@@ -11,31 +11,49 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 - Exploratory review discussion stays in chat until it is normalized into concise queue language.
 
 ## Ready To Implement
+- [ ] Establish the Tier 1 searchable dropdown-select baseline so locale/timezone pickers consume one intentional shared control instead of a stacked search-plus-dropdown composition; remove duplicate caret indicators, present one unambiguous current-selection state inside the open menu, and keep the bounded integrated selector behavior.
+  ID: P2-B-CQ-001
+  Iteration: 3
+  Scope: Tier 1 searchable dropdown-select baseline, localization selector adoption, shared trigger/menu affordances, selected-state clarity
+  Path Coverage: `/platform/ui-reference/patterns/forms`, `/platform/settings/general`, `/account/preferences`, shared `searchable-select` entry point
+- [ ] Correct the shared dashboard row-span rendering so multi-row widgets actually render at the documented taller heights instead of collapsing to a single-row card; `1x2` and `2x2` proofs should visibly honor row-span height as part of the reusable widget span model.
+  ID: P2-B-CQ-005
+  Iteration: 2
+  Scope: dashboard grid sizing contract, shared row-span rendering, multi-row widget proof behavior
+  Path Coverage: shared `dashboard-grid` pattern, layout/dashboard proof surfaces, widget-shell guidance, `1x2` and `2x2` widget proofs
+- [ ] Establish the Tier 1 internal phone-input formatting baseline so typed digits auto-normalize to the canonical phone format instead of requiring users to enter punctuation manually; plain ten-digit entry should resolve to `(555) 555-5555` as the baseline expectation wherever the shared internal phone-input pattern is adopted.
+  ID: P2-B-CQ-017
+  Scope: Tier 1 internal phone-input formatting baseline, support-phone proof expectations, reusable phone entry normalization
+  Path Coverage: `/platform/ui-reference/patterns/forms`, `/account/settings`, `/platform/settings/general-company-information`, shared phone-input entry points where adopted
+- [ ] Establish the Tier 1 action and menu-item component-library colorway suite across all supported standard colorways before any narrower dropdown or account-menu consumer retunes proceed; define the canonical action/menu variant contract and prove it at the shared entry points instead of solving those consumers with one-off overrides.
+  ID: P2-B-CQ-014
+  Scope: Tier 1 action/menu-item colorway suite, shared semantic/ghost action treatment, supported standard colorway proof coverage
+  Path Coverage: shared Tier 1 action and menu-item entry points, supported standard colorway proofs, grouped-action UI Reference proof surfaces that validate the suite
+- [ ] Complete the Tier 1 ghost action variant parity pass so neutral ghost uses the same borderless baseline as the semantic ghost variants inside the shared action/menu-item suite; close this parity gap before downstream menu consumers are retuned.
+  ID: P2-B-CQ-016
+  Scope: Tier 1 ghost action variant parity, supported colorway suite consistency, light/dark consistency
+  Path Coverage: shared `ui-action-ghost` primitive, supported standard colorway proofs, UI Reference action proofs, all consuming ghost-action surfaces
+  Follow-up To: P2-B-CQ-014
 
 ## In Progress
 
 ## Implemented Pending Review
-- [ ] Retune the locale/timezone selector treatment so the searchable option list stays bounded within the viewport and behaves like one integrated searchable dropdown-select variant rather than a separate search field sitting above an uncapped option list.
-  ID: P2-B-CQ-001
-  Iteration: 2
-  Scope: Tier 2 form patterns, localization defaults, account preference localization fields, shared searchable selector behavior
-  Path Coverage: `/platform/ui-reference/patterns/forms`, `/platform/settings/general`, `/account/preferences`, shared `searchable-select` entry point
-  Implemented in: `2-B-0013`
 - [ ] Normalize the Tier 2 proof-note treatment so explanatory library guidance is presented through one clearly defined shared notice style instead of a mix of subtle in-card text blocks and stronger top-of-page notices; proof-only notes should read clearly as library guidance rather than component UI, and the treatment should be used consistently wherever intended behavior or scope needs explanation.
   ID: P2-B-CQ-003
   Iteration: 2
   Scope: Tier 2 proof-page clarity, shared proof-note styling, explanation of intended behavior and scope
   Path Coverage: `/platform/ui-reference/patterns/*`, related proof surfaces where explanatory notes appear
   Implemented in: `2-B-0013`
+- [ ] Extend the temporary active-batch proof review mode so every current `Implemented Pending Review` item with a visible proof surface is represented accurately on-site through the review layer system; relevant UI component library cards should carry their own scoped review-status badge or inline review alert with the active batch queue ID instead of limiting that context to a page-level banner only, while keeping this batch-only layer separate from the permanent proof-note contract.
+  ID: P2-B-CQ-013
+  Iteration: 2
+  Scope: temporary active-batch proof review mode, full current implemented-pending-review coverage, card-level review targeting, queue-ID visibility accuracy
+  Path Coverage: active-batch UI Reference proof pages, all current `Implemented Pending Review` items with visible proof surfaces, relevant component library cards under review, current review-mode entry points
+  Implemented in: `2-B-0014`
 - [ ] Make the grouped-actions dropdown action menu close when focus or pointer interaction moves outside the open menu, and treat that outside-click dismissal as the shared default behavior for this pattern instead of a page-by-page expectation.
   ID: P2-B-CQ-004
   Scope: Tier 2 dropdown action menu behavior, shared dismissal contract
   Path Coverage: shared `dropdown-action-menu` pattern, current UI Reference grouped-action proofs
-  Implemented in: `2-B-0012`
-- [ ] Expand the dashboard widget layout contract so widget sizing is defined by an explicit reusable span model instead of an overly narrow fixed-size convention; document and prove the allowed grid-span combinations intentionally rather than assuming only `1x1` through `2x2` cards.
-  ID: P2-B-CQ-005
-  Scope: dashboard grid sizing contract, widget shell span rules, dashboard proof coverage
-  Path Coverage: shared `dashboard-grid` pattern, layout/dashboard proof surfaces, widget-shell guidance
   Implemented in: `2-B-0012`
 - [ ] Establish the dashboard widget shell contract explicitly so Batch B defines what a reusable internal widget may contain and how dense it is allowed to become; document the allowed widget regions, content combinations, and fallback states instead of leaving widget structure implied by stat cards alone.
   ID: P2-B-CQ-006
@@ -62,24 +80,13 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Scope: Tier 2 dropdown action menu overlay layering, clipping and stacking behavior
   Path Coverage: shared `dropdown-action-menu` pattern, current grouped-action proofs inside content-section blocks
   Implemented in: `2-B-0012`
-- [ ] Refine the identity summary pattern so it supports multiple density variants instead of one overly busy default card; the current proof should establish lighter and fuller identity-summary options and clarify that the same pattern family can represent either a person or a company/entity summary when the required fields stay structurally similar.
-  ID: P2-B-CQ-009
-  Iteration: 2
-  Scope: Tier 2 identity summary variants, person/company entity-summary flexibility, density guidance
-  Path Coverage: `/platform/ui-reference/patterns/data-content`, `/platform/ui-reference/patterns/archetypes`, `/account`, future operator/customer/company summary surfaces
-  Implemented in: `2-B-0013`
-- [ ] Improve the readability contract for compact metadata groups on Tier 2 summary/list surfaces so adjacent metadata items do not visually collapse into one sentence; establish a clearer separator/grouping treatment and reduce overuse of all-caps metadata where it harms scanability.
-  ID: P2-B-CQ-012
-  Scope: compact metadata readability, separators/grouping, typographic treatment on Tier 2 summaries and list rows
-  Path Coverage: `identity-summary-card`, `data-list-item`, related summary/list proof surfaces
-  Implemented in: `2-B-0013`
-- [ ] Establish an active-batch proof review mode for UI Reference pages so in-development proof surfaces can show temporary review-status context, scoped queue IDs, and reviewer focus notes without baking those review markers into the permanent component library pages.
-  ID: P2-B-CQ-013
-  Scope: temporary proof review overlays, active-batch review context, page-level review targeting for UI Reference
-  Path Coverage: active-batch UI Reference proof pages during Batch B and future design-system review passes
-  Implemented in: `2-B-0013`
 
 ## Blocked
+- [ ] Apply the established Tier 1 action/menu-item suite to the account dropdown navigation options so account-menu links stop using one-off colorways and match the shared ghost action treatment while preserving left-aligned text and current menu layout.
+  ID: P2-B-CQ-015
+  Scope: account-menu action styling, shared ghost action consumption, dropdown option consistency
+  Path Coverage: shared account dropdown in the app shell header, related account-menu proof expectations
+  Follow-up To: P2-B-CQ-014, P2-B-CQ-016
 
 ## Deferred
 
@@ -89,5 +96,16 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Scope: Tier 2 data/content patterns, read-only detail proof
   Path Coverage: `/platform/ui-reference/patterns/data-content`
   Implemented in: `2-B-0011`
+- [x] Refine the identity summary pattern so it supports multiple density variants instead of one overly busy default card; the current proof should establish lighter and fuller identity-summary options and clarify that the same pattern family can represent either a person or a company/entity summary when the required fields stay structurally similar.
+  ID: P2-B-CQ-009
+  Iteration: 2
+  Scope: Tier 2 identity summary variants, person/company entity-summary flexibility, density guidance
+  Path Coverage: `/platform/ui-reference/patterns/data-content`, `/platform/ui-reference/patterns/archetypes`, `/account`, future operator/customer/company summary surfaces
+  Implemented in: `2-B-0013`
+- [x] Improve the readability contract for compact metadata groups on Tier 2 summary/list surfaces so adjacent metadata items do not visually collapse into one sentence; establish a clearer separator/grouping treatment and reduce overuse of all-caps metadata where it harms scanability.
+  ID: P2-B-CQ-012
+  Scope: compact metadata readability, separators/grouping, typographic treatment on Tier 2 summaries and list rows
+  Path Coverage: `identity-summary-card`, `data-list-item`, related summary/list proof surfaces
+  Implemented in: `2-B-0013`
 
 ## Closed

@@ -17,13 +17,11 @@
 
         <x-ui.patterns.proof-review-banner
             :items="[
-                ['id' => 'P2-B-CQ-001', 'note' => 'Verify locale and timezone controls behave as one bounded searchable dropdown-select instead of a separate filter plus long list.'],
                 ['id' => 'P2-B-CQ-003', 'note' => 'Proof-only guidance should use the same clearly defined notice treatment as the rest of the active batch review mode.'],
-                ['id' => 'P2-B-CQ-013', 'note' => 'This page now demonstrates the temporary active-batch review overlay system.'],
             ]"
             :focus="[
                 'Treat the review banner as temporary batch-review context, not permanent component UI.',
-                'Judge the locale/timezone examples as integrated selectors and the email/phone rows as static library proofs.',
+                'Judge the inline explanatory notes as library guidance that should stay visually separate from the component examples themselves.',
             ]"
         />
 
@@ -61,6 +59,12 @@
             kicker="Responsive row"
         >
             <div class="space-y-4">
+                <x-ui.patterns.proof-review-target
+                    :items="[
+                        ['id' => 'P2-B-CQ-003', 'note' => 'This section carries proof-only selector guidance. The review target here is consistent proof-note treatment at the point where reviewers judge the pattern, not only in the page banner.'],
+                    ]"
+                />
+
                 <x-ui.patterns.inline-form-row
                     for="inline-timezone"
                     label="Default Timezone"

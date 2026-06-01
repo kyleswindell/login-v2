@@ -946,6 +946,18 @@
         @apply mt-3 list-disc space-y-1 pl-5 text-sm;
     }
 
+    .ui-pattern-proof-review-target {
+        @apply rounded-xl;
+    }
+
+    .ui-pattern-proof-review-target-badges {
+        @apply flex flex-wrap items-center gap-2;
+    }
+
+    .ui-pattern-proof-review-target-copy {
+        @apply mt-3 space-y-2 text-sm;
+    }
+
     .ui-pattern-enhanced-table {
         @apply min-w-0;
     }

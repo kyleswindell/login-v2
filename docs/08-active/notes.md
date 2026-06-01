@@ -31,6 +31,11 @@
   - the option list is effectively uncapped and can extend off-page
   - the interaction still reads like a separate search field filtering a list instead of one integrated searchable dropdown-select variant
   - the supporting email/phone examples on the form-pattern proof remain static proof examples rather than live validation workflows, so the page should be judged as a library proof unless a later Batch B item explicitly promotes interactive demo-state behavior
+- The next follow-up manual review on `P2-B-CQ-001` found that the current integrated selector treatment still has conflicting dropdown affordances and selected-state cues:
+  - the trigger currently renders duplicate caret/dropdown indicators instead of one clear control affordance
+  - the open menu shows more than one "currently selected" signal for the same option, which makes the selection state read as duplicated rather than intentional
+  - the next pass should establish this as a standalone shared searchable dropdown-select component rather than layering extra search/menu UI on top of a native-select-like composition
+  - this work should coordinate with the broader dropdown/menu variant direction now being tracked alongside `P2-B-CQ-014`, without merging the searchable-selector fix into the action-menu colorway item itself
 - Follow-up manual review on the new identity-summary proof found two additional design gaps:
   - the current default identity-summary card is too busy as a single universal variant and should establish lighter versus fuller density options
   - the same pattern family should likely cover both person and company/entity summaries when the structure is still avatar-or-mark + title + supporting metadata + optional status/actions
@@ -42,15 +47,39 @@
   - Atlassian spacing guidance emphasizes proximity and intentional spacing to show semantic grouping, which supports distinct metadata grouping treatment instead of relying on raw gaps alone
   - Carbon tag guidance supports concise tags for categorical labels, but not for every metadata token; category/status items can use tag-like treatment while dates, owners, and locales should stay readable body metadata
   - Carbon structured-list guidance supports sentence-case row text and stacked hierarchy for read-only data, which points toward either explicit separators or light vertical stacking instead of one dense inline run of metadata
+- Manual review now approves `P2-B-CQ-009` and `P2-B-CQ-012` as passing outcomes from Batch B pass `2-B-0013`.
+- Follow-up manual review on `P2-B-CQ-005` found that the documented widget span model is not yet functioning correctly on the proof surface:
+  - the current `Span 1x2` and `Span 2x2` widget examples still render at a single-row height instead of visibly occupying taller multi-row space
+  - the next pass should treat this as a real row-span rendering failure in the shared dashboard grid/widget implementation, not as a naming or proof-copy issue
 - Follow-up manual review on `P2-B-CQ-003` found that the proof-intent improvements are directionally correct but still inconsistent:
   - the top-of-page `How to read this proof` notice is clear and visibly separate from the component examples
   - the smaller in-card or in-section explanatory notes are not using that same visual notice treatment, so they can still read like part of the component itself instead of library guidance
   - the next pass should normalize one shared proof-note treatment and use it consistently wherever intended behavior, usage bounds, or scope clarification is needed
   - broader ideas like temporary review-status banners, under-review states, or inline change-queue IDs should stay out of the canonical proof contract unless a later review-mode system is intentionally designed for that purpose
+- A new manual-review finding on the Form Patterns support-phone example found that the current phone input still expects punctuation-heavy manual entry:
+  - typing plain digits such as `5555555555` should auto-normalize into the standard internal phone format instead of leaving raw digits in place
+  - Batch B should treat this as a reusable phone-entry formatting requirement for shared internal phone inputs, not just a one-off proof-page placeholder adjustment
+- Follow-up manual review on the remaining action-menu queue found that `P2-B-CQ-014` was framed too narrowly around grouped dropdown fixes:
+  - the next pass must first establish the Tier 1 action/menu-item component-library standard across all supported standard colorways
+  - only after that upstream colorway contract is explicit should the shared dropdown and account-menu consumers be updated
+  - `P2-B-CQ-015` and `P2-B-CQ-016` remain valid downstream follow-ups, but they now depend on the broader `P2-B-CQ-014` standardization pass
 - A later follow-up decision now promotes that separate review-mode idea into its own Batch B item:
   - `P2-B-CQ-013` should establish a temporary active-batch proof review mode for UI Reference pages
   - this mode can surface queue IDs, scoped reviewer focus, and under-review context during active batches
   - it should remain clearly separate from the permanent proof-note contract and should be removable or disableable at batch closeout
+- Follow-up manual review on `P2-B-CQ-013` found that the current review-mode surface is still too page-level:
+  - the existing top-of-page active-batch review banner is useful, but it is not specific enough on its own when several component cards are on the same proof page
+  - the next pass should add either a scoped inline review alert or a status badge/tag directly on the relevant UI component library cards so the affected active-batch queue IDs are visible at the point of review
+  - this remains part of the temporary active-batch review mode rather than a permanent component-library annotation contract
+- A further follow-up review on `P2-B-CQ-013` found that the active-batch review layer also needs explicit full-queue coverage expectations:
+  - the current implementation does not appear to represent every current `Implemented Pending Review` item accurately on the site
+  - the next pass should treat complete and accurate review-layer coverage for the current `Implemented Pending Review` queue as part of the item itself, not as an optional extra where only some proof cards receive queue-ID targeting
+  - where an implemented-pending-review item has a visible proof surface, the review layer should expose that queue ID at the point of review, not only through a shared page banner
+- Batch B pass `2-B-0014` is now deployed to staging on `main` and resolves the reopened `P2-B-CQ-013` review-layer coverage gap by:
+  - adding a reusable scoped review-target callout for temporary active-batch queue-ID tagging on individual proof cards
+  - retargeting the active review banners so they show only the current pending-review queue items on each proof page instead of stale passed-review IDs
+  - applying section-level review targeting to the current pending-review proof surfaces for `P2-B-CQ-003`, `P2-B-CQ-004`, `P2-B-CQ-006`, `P2-B-CQ-007`, `P2-B-CQ-008`, `P2-B-CQ-010`, `P2-B-CQ-011`, and `P2-B-CQ-013`
+  - preserving `P2-B-CQ-003` as the permanent proof-note contract while using `P2-B-CQ-013` only as temporary batch-review context layered on top of those proof surfaces
 - Batch B pass `2-B-0013` is now deployed to staging on `main` and resolves the latest reopened Batch B review queue by:
   - replacing the previous filter-plus-native-select locale/timezone control with one bounded integrated searchable dropdown-select entry point
   - introducing a shared proof-note wrapper so page-level and section-level library guidance use one clearly defined notice treatment
@@ -84,6 +113,17 @@
 - Batch B review-fix pass `2-B-0011` uses a shared option catalog and a small searchable-selector entry point rather than continuing the free-text localization demo pattern.
 - Batch B review-fix pass `2-B-0012` uses shared pattern entry points for widgets, date ranges, and identity summaries rather than extending existing proof pages with more one-off markup.
 - The `identity-summary-card` should stay one pattern family with density/entity variants rather than split immediately into unrelated person and company components, unless later proof work shows their required anatomy diverges materially.
+- `P2-B-CQ-001` should reopen as a standalone shared searchable dropdown-select component pass rather than another local selector polish pass, and that work should be coordinated with the broader dropdown/menu variant direction tracked near `P2-B-CQ-014`.
+- `P2-B-CQ-005` should reopen as a shared dashboard row-span rendering fix because the current taller widget proofs do not actually honor multi-row height yet.
+- `P2-B-CQ-017` should stay a separate form-pattern phone-entry follow-up so the shared internal phone-formatting behavior can be corrected intentionally without being folded into the searchable-selector or dropdown action queue items.
+- `P2-B-CQ-013` should reopen as a refinement of the temporary proof-review mode so queue-ID targeting can appear on the relevant component cards themselves, not only in the page-level active-batch review banner.
+- `P2-B-CQ-013` should also require full and accurate coverage for the current `Implemented Pending Review` queue on visible proof surfaces, so the review layer system is judged by complete on-site coverage rather than by whether a top-of-page banner exists.
+- `P2-B-CQ-003` should remain separate from `P2-B-CQ-013`; proof-note normalization is the permanent shared library-guidance contract, while the active-batch review overlay is temporary batch-only review context. `P2-B-CQ-013` may annotate `P2-B-CQ-003` proof surfaces during active review, but it does not absorb or replace that queue item.
+- `P2-B-CQ-013` review targeting should only identify the current pending-review queue items on each proof surface; once an item passes manual review, its queue ID should drop out of the temporary overlay instead of lingering as stale active-review context.
+- The remaining action-menu work should now be treated as unfinished Tier 1 library hardening first: establish the supported standard colorway contract for shared action/menu-item primitives before applying the resulting changes to existing Tier 2 dropdown/account consumers.
+- Queue cleanup review confirms `P2-B-CQ-001` and `P2-B-CQ-017` should stay framed as Tier 1 input-baseline work first; their current app/page surfaces are consumer validation coverage, not separate page-local fixes.
+- Queue cleanup review narrows `P2-B-CQ-014` to the upstream Tier 1 action/menu-item suite, keeps `P2-B-CQ-016` as the remaining Tier 1 ghost-variant parity follow-up inside that suite, and leaves `P2-B-CQ-015` blocked as downstream account-menu adoption until the Tier 1 suite closes.
+- Queue cleanup review confirms `P2-B-CQ-007` and `P2-B-CQ-008` already reflect the correct Tier 1-before-Tier 2 sequencing and do not need reclassification.
 
 ## Risks / Questions
 - Realtime notification toast rendering remains a feature-level JS path and is intentionally outside this Tier 1 hardening pass.

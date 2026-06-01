@@ -10,8 +10,24 @@
             kicker="Batch B proof surfaces"
         />
 
+        <x-ui.patterns.proof-review-banner
+            :items="[
+                ['id' => 'P2-B-CQ-006', 'note' => 'Dashboard archetypes still participate in widget-shell contract review.'],
+                ['id' => 'P2-B-CQ-008', 'note' => 'List/index archetypes still participate in reusable date-range filter review.'],
+            ]"
+            :focus="[
+                'This page should target only the current pending-review archetype surfaces instead of carrying generic page-level queue context.',
+            ]"
+        />
+
         <div class="space-y-6">
             <x-ui.patterns.content-section-block title="Dashboard / Overview" description="Page title row, dashboard grid, explicit widget-shell spans, and grouped summary sections." kicker="Archetype">
+                <x-ui.patterns.proof-review-target
+                    :items="[
+                        ['id' => 'P2-B-CQ-006', 'note' => 'This dashboard archetype proves the reusable widget-shell contract in a composed page context, so reviewers can judge shell anatomy beyond the standalone layout page.'],
+                    ]"
+                />
+
                 <x-ui.patterns.dashboard-grid columns="widgets">
                     <x-ui.patterns.widget-shell title="Overview summary" description="Compact KPI widget." kicker="1x1" span="1x1">
                         <x-ui.patterns.stat-card label="Overview blocks" value="3" supporting-text="Summary-first layout." />
@@ -33,6 +49,12 @@
 
             <x-ui.patterns.content-section-block title="List / Index" description="Search/filter bar above an enhanced data table or data-list proof." kicker="Archetype">
                 <div class="space-y-4">
+                    <x-ui.patterns.proof-review-target
+                        :items="[
+                            ['id' => 'P2-B-CQ-008', 'note' => 'This list/index archetype remains the composed-page review surface for the shared date-range filter pattern and its action placement.'],
+                        ]"
+                    />
+
                     <x-ui.patterns.search-filter-bar>
                         <label class="relative block w-full max-w-sm">
                             <span class="sr-only">Search records</span>

@@ -25,11 +25,14 @@
         <x-ui.patterns.proof-review-banner
             :items="[
                 ['id' => 'P2-B-CQ-003', 'note' => 'Proof-only guidance should use one clearly defined shared notice treatment instead of blending into the component examples.'],
-                ['id' => 'P2-B-CQ-013', 'note' => 'This page demonstrates the temporary active-batch review overlay system for UI Reference.'],
+                ['id' => 'P2-B-CQ-004', 'note' => 'Dropdown action menus should dismiss when pointer or focus moves outside the open menu.'],
+                ['id' => 'P2-B-CQ-008', 'note' => 'Date-range filtering should stay reviewable as one reusable Tier 2 control row.'],
+                ['id' => 'P2-B-CQ-010', 'note' => 'The sub-navigation active state remains under review for clear readability.'],
+                ['id' => 'P2-B-CQ-011', 'note' => 'Grouped-action menus should render above surrounding cards without clipping.'],
             ]"
             :focus="[
                 'The grouped-action and filter examples are library proofs, not live remote behaviors.',
-                'Section-level intent notes should read as reviewable guidance rather than component chrome.',
+                'Section-level targeting on this page should show which specific navigation/action cards still belong to the current pending-review queue.',
             ]"
         />
 
@@ -42,6 +45,11 @@
             description="Use sub-navigation only for peer content areas that already belong to the same internal shell family."
             kicker="Section navigation"
         >
+            <x-ui.patterns.proof-review-target
+                :items="[
+                    ['id' => 'P2-B-CQ-010', 'note' => 'Review the active-state readability on this proof card itself. The current item should remain clearly legible in both dark and light themes.'],
+                ]"
+            />
             <x-ui.patterns.sub-navigation-bar
                 :items="[
                     ['label' => 'General', 'href' => '#', 'current' => true],
@@ -60,6 +68,14 @@
                 kicker="Grouped actions"
             >
                 <div class="flex flex-wrap items-center gap-3">
+                    <x-ui.patterns.proof-review-target
+                        class="w-full"
+                        :items="[
+                            ['id' => 'P2-B-CQ-004', 'note' => 'This shared dropdown pattern still needs human confirmation that outside-click and focus-away dismissal behave as the default contract.'],
+                            ['id' => 'P2-B-CQ-011', 'note' => 'This same proof card remains the clipping/layering review target; the open panel must render above nearby card chrome and section borders.'],
+                        ]"
+                    />
+
                     <x-ui.patterns.dropdown-action-menu label="Workspace Actions">
                         <a href="#" class="ui-pattern-dropdown-link" onclick="event.preventDefault()">View details</a>
                         <a href="#" class="ui-pattern-dropdown-link" onclick="event.preventDefault()">Open proof surface</a>
@@ -80,6 +96,13 @@
                 kicker="Operator controls"
             >
                 <div class="space-y-4">
+                    <x-ui.patterns.proof-review-target
+                        :items="[
+                            ['id' => 'P2-B-CQ-003', 'note' => 'The explanatory guidance blocks in this card should keep the shared proof-note treatment instead of reading like component chrome.'],
+                            ['id' => 'P2-B-CQ-008', 'note' => 'This card is the review target for the reusable Tier 2 date-range filter pattern and its shared action row.'],
+                        ]"
+                    />
+
                     <x-ui.patterns.search-filter-bar>
                         <label class="relative block w-full max-w-sm">
                             <span class="sr-only">Search records</span>

@@ -645,28 +645,54 @@
         background-color: color-mix(in srgb, var(--ui-surface-elevated) 72%, transparent);
     }
 
-    .ui-pattern-widget-span-1x1 {
-        @apply md:col-span-1 xl:col-span-2;
+    /* Keep widget row and column placement explicit so tall spans render reliably. */
+    @media (min-width: 48rem) {
+        .ui-pattern-widget-span-1x1 {
+            grid-column: span 1 / span 1;
+        }
+
+        .ui-pattern-widget-span-2x1 {
+            grid-column: span 2 / span 2;
+        }
+
+        .ui-pattern-widget-span-1x2 {
+            grid-column: span 1 / span 1;
+        }
+
+        .ui-pattern-widget-span-2x2,
+        .ui-pattern-widget-span-3x1,
+        .ui-pattern-widget-span-3x2 {
+            grid-column: span 2 / span 2;
+        }
     }
 
-    .ui-pattern-widget-span-2x1 {
-        @apply md:col-span-2 xl:col-span-4;
-    }
+    @media (min-width: 80rem) {
+        .ui-pattern-widget-span-1x1 {
+            grid-column: span 2 / span 2;
+        }
 
-    .ui-pattern-widget-span-1x2 {
-        @apply md:col-span-1 xl:col-span-2 xl:row-span-2;
-    }
+        .ui-pattern-widget-span-2x1 {
+            grid-column: span 4 / span 4;
+        }
 
-    .ui-pattern-widget-span-2x2 {
-        @apply md:col-span-2 xl:col-span-4 xl:row-span-2;
-    }
+        .ui-pattern-widget-span-1x2 {
+            grid-column: span 2 / span 2;
+            grid-row: span 2 / span 2;
+        }
 
-    .ui-pattern-widget-span-3x1 {
-        @apply md:col-span-2 xl:col-span-6;
-    }
+        .ui-pattern-widget-span-2x2 {
+            grid-column: span 4 / span 4;
+            grid-row: span 2 / span 2;
+        }
 
-    .ui-pattern-widget-span-3x2 {
-        @apply md:col-span-2 xl:col-span-6 xl:row-span-2;
+        .ui-pattern-widget-span-3x1 {
+            grid-column: span 6 / span 6;
+        }
+
+        .ui-pattern-widget-span-3x2 {
+            grid-column: span 6 / span 6;
+            grid-row: span 2 / span 2;
+        }
     }
 
     .ui-pattern-key-value-display {
@@ -2177,4 +2203,3 @@
         }
     }
 }
-

@@ -89,6 +89,9 @@
   - adding a shared internal phone formatter so plain ten-digit entry persists as the canonical `(555) 555-5555` baseline across the touched account, company-information, and staff-profile save paths
   - wiring the adopted phone inputs to the shared frontend formatter so raw digit entry normalizes on the proof surface and the live settings/profile forms instead of relying on manual punctuation
   - extending proof and feature coverage so the phone-entry baseline is visible and asserted on the UI Reference forms page plus the touched account/settings/user-management surfaces
+- Batch B pass `2-B-0018` now patches the reopened `P2-B-CQ-005` row-span failure locally by:
+  - replacing the tall widget span utilities with explicit responsive `grid-column` and `grid-row` declarations so `1x2`, `2x2`, and `3x2` no longer rely on a compiled shorthand placement merge
+  - keeping the queue item in active implementation instead of `Implemented Pending Review` because the current working tree already contains uncommitted active-batch changes from earlier passes, so this fix has not yet been committed, pushed, or deployed to staging for review
 - Batch B pass `2-B-0015` is now deployed to staging on `main` and resolves `P2-B-CQ-014` plus `P2-B-CQ-016` by:
   - adding a shared `x-ui.menu-item` entry point for grouped-action surfaces
   - standardizing the supported menu-item colorways on the existing action semantic token family instead of page-local menu link overrides
@@ -147,6 +150,7 @@
 - The latest dropdown/menu review is classified as failure of the existing implemented outcomes on `P2-B-CQ-001` and `P2-B-CQ-014`, not as a separate adjacent queue item, so both items should return to `Ready To Implement`.
 - No new change-queue item is required for searchable dropdown menus or current-item menu states; those gaps belong inside the refined scopes of `P2-B-CQ-001` and `P2-B-CQ-014`.
 - Manual review now approves `P2-B-CQ-016` as a passing outcome from Batch B pass `2-B-0015`.
+- Shared dashboard widget span classes should declare responsive row and column placement explicitly instead of relying on combined utility expansion, because the compiled shorthand placement proved unreliable for the tall widget proofs.
 - Queue cleanup review narrows `P2-B-CQ-014` to the upstream Tier 1 action/menu-item suite, keeps `P2-B-CQ-016` as the remaining Tier 1 ghost-variant parity follow-up inside that suite, and leaves `P2-B-CQ-015` blocked as downstream account-menu adoption until the Tier 1 suite closes.
 - Batch B pass `2-B-0015` keeps `P2-B-CQ-015` blocked on purpose; the account-menu adoption work remains a downstream consumer follow-up and was not folded into the shared suite pass.
 - Queue cleanup review confirms `P2-B-CQ-007` and `P2-B-CQ-008` already reflect the correct Tier 1-before-Tier 2 sequencing and do not need reclassification.

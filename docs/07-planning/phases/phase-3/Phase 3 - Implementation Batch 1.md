@@ -21,6 +21,7 @@ Parent planning note:
 
 Deliver the first dependency-safe public/customer slice required before broader Phase 4 module rollout:
 
+* Phase 3 security substrate for outward-facing auth and integrations
 * customer/public route and visibility contract baseline
 * OAuth customer-access mode and provider policy baseline
 * Events admin plus public-view proof
@@ -30,6 +31,8 @@ Deliver the first dependency-safe public/customer slice required before broader 
 
 This batch establishes outward-facing primitives that later modules rely on:
 
+* auth-bearing surface hardening before external identity and Graph rollout
+* secret-backed credential storage before provider-backed integrations become deployable
 * customer/public route ownership
 * public visibility contracts
 * module payload shaping for external consumption
@@ -37,6 +40,10 @@ This batch establishes outward-facing primitives that later modules rely on:
 
 ## In Scope
 
+* login abuse defenses and related security telemetry for auth-bearing surfaces that Phase 3 introduces or expands
+* secret-backed settings and credential-reference model for OAuth and Microsoft Graph credentials
+* security-header/runtime hardening for auth-bearing and provider-backed Phase 3 surfaces
+* production environment checks needed before OAuth and Microsoft Graph paths are considered review-ready
 * public and customer route ownership definitions
 * tenant-configurable customer access mode setup (`disabled`, `invite_only`, `open_enrollment`)
 * OAuth provider policy setup for Google and Microsoft sign-in
@@ -61,6 +68,7 @@ This batch establishes outward-facing primitives that later modules rely on:
 
 ## Required Contracts Before Build
 
+* security substrate contract for login abuse defenses, secret-backed credentials, auth-bearing surface hardening, and production environment checks
 * customer/public/staff/platform visibility model
 * public route namespace and rendering owner
 * OAuth provider contract for Google and Microsoft sign-in
@@ -76,6 +84,7 @@ This batch establishes outward-facing primitives that later modules rely on:
 
 ## Acceptance Criteria
 
+* the Phase 3 security substrate is implemented for the outward-facing auth and integration surfaces introduced by this batch
 * customer access mode switching works for `disabled`, `invite_only`, and `open_enrollment`
 * OAuth provider policy is configurable for Google and Microsoft sign-in
 * customer-company multi-user authorization rules are documented and testable by contract
@@ -89,7 +98,7 @@ This batch establishes outward-facing primitives that later modules rely on:
 
 ## Dependencies
 
-* [Phase 2 - Final Stack And UI System Planning]../phase-/Phase  - Final Stack And UI System Planning.md
+* [Phase 2 - Final Stack And UI System Planning](../phase-2/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
 * [Phase 3 - Events And Legacy Website Publishing Planning](Phase%203%20-%20Events%20And%20Legacy%20Website%20Publishing%20Planning.md)
 * [Phase 3 - Microsoft Graph Email Sending Planning](Phase%203%20-%20Microsoft%20Graph%20Email%20Sending%20Planning.md)
 * [Phase 3 - OAuth And Customer Access Mode Planning](Phase%203%20-%20OAuth%20And%20Customer%20Access%20Mode%20Planning.md)
@@ -100,5 +109,5 @@ This batch establishes outward-facing primitives that later modules rely on:
 
 * [Phase 3 Index](Phase%203%20Index.md)
 * [Feature Roadmap](../../roadmap.md)
-* [Phase 4 - Remaining Core Module Planning]../phase-/Phase  - Remaining Core Module Planning.md
+* [Phase 4 - Remaining Core Module Planning](../phase-4/Phase%204%20-%20Remaining%20Core%20Module%20Planning.md)
 * Development Index

@@ -10,6 +10,11 @@ Phase sequencing hub for planning intent.
 
 Phase-level planning navigation and sequencing only.
 
+Status ownership note:
+
+- each phase index owns its own detailed current status and active-phase sequencing
+- the roadmap should summarize those states rather than track them independently
+
 ## Phases
 
 - [Phase 0](phase-0/Phase 0 Index.md)

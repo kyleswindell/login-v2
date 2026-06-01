@@ -175,6 +175,9 @@ Recommended workflow when a batch or phase needs rendered UI review before final
 7. if approved, merge or promote the approved branch into `main`
 8. redeploy `main` to staging
 9. run `/phase-close-out`
+   - if the approved batch or phase changed roadmap state, phase-index status, deferment placement, or other parent planning truth, execute the scoped docs sync path during close-out:
+     - `review-docs-sync`
+     - `implement-docs-sync-fix`
 
 Key constraint:
 

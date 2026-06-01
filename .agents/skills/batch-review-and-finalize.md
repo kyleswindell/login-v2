@@ -32,6 +32,10 @@ Ignore `/docs/_archive/`.
 - Treat any checklist item not in `passed review` or approved `deferred` state as a blocker
 - Only finalize when manual review gates pass
 - Do NOT modify or rewrite worklog files; they are immutable history
+- Parent planning docs such as roadmap, phase indices, and deferment notes remain outside this workflow's write scope
+- If the reviewed batch changed parent planning truth, hand off after finalize to the scoped docs sync workflow:
+  - `review-docs-sync`
+  - `implement-docs-sync-fix`
 
 ---
 
@@ -183,4 +187,5 @@ Do NOT finalize if:
 5. whether commit was performed  
 6. whether archive was created  
 7. whether `/docs/08-active/` was reset  
-8. remaining issues (if not PASS)
+8. whether parent planning/status docs require scoped docs sync follow-up  
+9. remaining issues (if not PASS)

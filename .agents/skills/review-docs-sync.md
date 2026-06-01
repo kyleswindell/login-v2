@@ -7,6 +7,7 @@ Perform a direct docs sync review and produce structured findings comparing:
 
 - implementation (code, UI Reference, behavior)
 - canonical documentation (standards, contracts, features, architecture)
+- parent planning/status docs when reviewed implementation or approved deferments changed their current truth
 
 This agent:
 - performs the review directly
@@ -20,6 +21,7 @@ This agent:
 
 The request should indicate:
 - implementation area, system, or batch
+- or a tightly scoped parent planning/status surface that must be synchronized to recently reviewed implementation truth
 - or default to current `/docs/08-active/` context
 
 Stop if:
@@ -38,6 +40,7 @@ Read from:
 - `/docs/04-features/`
 - `/docs/05-flows/`
 - `/docs/06-database/`
+- `/docs/07-planning/`
 - `/resources/views/`
 - `/resources/js/`
 - `/app/` (if relevant)
@@ -73,6 +76,7 @@ Do NOT write:
   - ambiguities
   - conflicts
 - Treat implementation as source of truth unless clearly incorrect
+- When the review is triggered by approved batch or phase close-out, also treat the reviewed implementation outcome and approved deferment state as source of truth for affected planning/status docs
 - If the request references an existing `doc-sync-####` file or indicates a re-review:
   - do NOT create a new review file
   - update the existing review file
@@ -162,6 +166,18 @@ Confirm:
 Flag:
 - duplicated ownership
 - conflicting definitions
+
+---
+
+### 9. Planning and Status Synchronization
+Confirm:
+- roadmap summaries, phase indices, and parent planning notes reflect the current reviewed implementation state when that state changed sequencing or progress truth
+- deferments discovered during reviewed close-out are written to the correct future batch, future phase, or linked planning note
+
+Flag:
+- stale roadmap or phase-index status
+- missing deferment handoff
+- parent planning notes that no longer match the reviewed implementation outcome
 
 ---
 

@@ -5,6 +5,8 @@ Implement documentation corrections from a docs sync review file.
 ## Goal
 Apply only the documented fixes from a docs sync review to bring canonical documentation in alignment with current implementation.
 
+This includes parent planning/status synchronization when reviewed implementation or approved deferments changed the current truth of roadmap, phase-index, or linked planning docs.
+
 This agent:
 - performs corrections directly
 - does NOT generate a prompt
@@ -87,6 +89,7 @@ Focus on:
 - enforcing ownership boundaries
 - normalizing terminology
 - aligning structure with implementation
+- synchronizing affected planning/status docs when the review findings explicitly identified roadmap, phase-index, deferment, or parent planning drift
 
 Do NOT:
 - rewrite stable sections unnecessarily
@@ -171,6 +174,7 @@ Confirm:
 - no conflicting terminology introduced
 - no scope expansion occurred
 - unresolved decisions preserved
+- planning/status docs updated by this pass still summarize state at the right level and defer detailed ownership to their canonical parent docs
 
 ---
 

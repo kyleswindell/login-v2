@@ -74,9 +74,10 @@ Resolve the remaining open Batch B review queue by converting the localization s
 
 ## Commit / Deploy Status
 
-- Commit: pending
-- Deploy: pending
+- Commit: `71daef9` (`fix(batch-b): refine proof review surfaces`)
+- Deploy: Yes, canonical staging deploy completed on `main`
 
 ## Notes
 
 - This pass keeps the temporary proof review overlay separate from the permanent library contract so Batch B can use queue-linked review context without turning the canonical UI Reference pages into a long-term review dashboard.
+- Staging is now ready for targeted re-review of `P2-B-CQ-001`, `P2-B-CQ-003`, `P2-B-CQ-009`, `P2-B-CQ-012`, and `P2-B-CQ-013`.

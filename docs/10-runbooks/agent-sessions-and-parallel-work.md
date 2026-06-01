@@ -160,6 +160,13 @@ For `integrate-work-batch-branch`, the owned scope includes `/docs/08-active/`, 
 
 If any of these are unclear, do not start writing.
 
+If a session began as read-only planning, research, review, or audit and later becomes ready to write:
+
+1. stop before editing
+2. confirm whether another writable session already owns the current shared folder
+3. if another writer is active, move the new writable work onto a separate branch and separate worktree or keep the session read-only
+4. do not treat the intent to touch different files as sufficient protection in the same folder
+
 ## Shared-Folder Rules
 
 When multiple sessions use the same folder:
@@ -167,6 +174,7 @@ When multiple sessions use the same folder:
 * only the designated writable session may edit files
 * planning sessions should prefer read-only planning output unless they are the active writer
 * review and audit sessions should report findings, not apply fixes, unless the writable role is explicitly handed over
+* if a planning, research, review, or audit session shifts from read-only to writable while another writer is active, it must stop and move to its own branch/worktree before editing
 * do not treat uncommitted local changes as completed work until the writer closes out or explicitly hands off the state
 * do not split active-batch queue items across same-folder writers by treating `In Progress` or advisory claims as per-item locks
 * when branch-based parallel execution is in use, only the integrator may update `/docs/08-active/` or own shared staging deployment
@@ -354,6 +362,7 @@ For current Login App 2.0 work:
 * keep one writable implementation session in the shared repo folder
 * allow same-folder planning, review, and audit sessions only in read-only mode
 * move planning or documentation into its own branch and worktree only when it must edit concurrently with implementation
+* if a read-only session becomes ready to write while the implementation session is still active, stop and fork that work into its own branch/worktree instead of editing in place
 
 This matches the existing pattern where one implementation agent is active while other sessions prepare future planning, audit contracts, or review current work.
 

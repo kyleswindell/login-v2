@@ -5,6 +5,7 @@ Use this branch for AI workflow governance and execution policy.
 ## Core Documents
 
 - [AI Governance Rules](rules.md)
+- [Agent Instruction Surface Separation](instruction-surface-separation.md)
 - [Canonical Active Batch Workflow](../10-runbooks/batch-workflow.md)
 - [Agent Skill Writing Benchmark](agent-skill-writing-benchmark.md)
 - [Active Document Reviews](active-doc-reviews/index.md)

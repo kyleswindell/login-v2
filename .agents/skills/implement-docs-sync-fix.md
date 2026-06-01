@@ -51,6 +51,8 @@ Exclude:
 - Do NOT introduce new systems or layers
 - Do NOT resolve unresolved decisions unless already implied by canonical docs
 - If a finding is actually a code/UI issue, STOP and route to batch workflow
+- If another writable session already owns this same shared worktree, STOP before editing and require a separate branch and separate worktree or an explicit writable handoff into this session
+- If this sync correction pass began as read-only research, planning, or review in a shared folder, do NOT silently continue into writes while another writer is active
 
 ---
 

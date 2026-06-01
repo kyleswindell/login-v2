@@ -83,6 +83,7 @@ Do NOT write:
   - increment `Review Pass`
   - update the existing index row
 - If the requested target is missing, or the scope expands beyond one implementation area or active batch, STOP and narrow it before continuing
+- If this review began as read-only analysis in a shared folder and now needs to write a review artifact while another writer is already active there, STOP and require a separate branch and separate worktree or keep the session read-only
 
 ---
 

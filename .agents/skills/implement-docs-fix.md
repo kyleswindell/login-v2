@@ -42,6 +42,8 @@ Exclude:
 - Do NOT duplicate rules across docs
 - Do NOT resolve unresolved decisions unless already implied
 - If issue is implementation (code/UI), STOP and route to batch work
+- If another writable session already owns this same shared worktree, STOP before editing and require a separate branch and separate worktree or an explicit writable handoff into this session
+- If this correction pass began as read-only research, planning, or review in a shared folder, do NOT silently continue into writes while another writer is active
 
 ## Execution
 

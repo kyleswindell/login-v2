@@ -64,6 +64,7 @@ When multiple sessions share the same local repo folder:
 
 * one session may edit files
 * other sessions should stay read-only and limit themselves to planning, review, audit, or research
+* if one of those read-only sessions becomes ready to write while the shared-folder writer is still active, it must stop and move to its own branch/worktree before editing
 
 When multiple sessions must both write:
 
@@ -77,6 +78,7 @@ When using the Codex app:
 * treat manual `git worktree` as the fallback path
 * remember that one branch may only be checked out in one worktree at a time
 * coordinate owned scope separately from worktree creation; worktrees provide isolation, not claim visibility
+* if a research or planning session is about to turn into writable docs work, explicitly switch into the separate worktree path instead of continuing to edit in the shared folder
 
 A manual checkout or lock file may be used only as an advisory note. It does not protect files from concurrent local edits.
 

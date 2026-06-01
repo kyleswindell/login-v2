@@ -125,6 +125,9 @@ Always respect branch ownership. Do not duplicate or reassign responsibility acr
 - If a batch workflow step is only inferred from the conversation and it will modify `/docs/08-active/`, canonical docs, or code, ask for confirmation before executing it.
 - Exception: when the user provides clear manual-review feedback that unambiguously maps to existing active-batch items or to a concise new finding, that feedback itself authorizes `batch-update-manual-review-status`; do not stop just to confirm that the review-status skill should be executed.
 - Read-only analysis, workflow interpretation, and prompt generation do not require confirmation.
+- If a read-only planning, research, audit, or review session becomes ready to write while another writable session already owns the current working tree, stop before editing and require either:
+  - a separate branch plus separate worktree for the new writable session
+  - or an explicit handoff of writable ownership into the current session
 - After completing a batch workflow step, report which workflow was executed, which files were updated, and what state changed.
 - Review-only audit work must use `docs/11-ai/active-doc-reviews/` as its canonical artifact path and must not be treated as active batch workflow execution unless the user explicitly switches into a batch workflow step.
 
@@ -168,6 +171,38 @@ Always respect branch ownership. Do not duplicate or reassign responsibility acr
 
 ---
 
+## Agent Instruction Surfaces
+
+- `AGENTS.md` owns persistent repo rules and operating boundaries.
+- `.agents/skills/` owns executable workflow playbooks.
+- canonical `docs/` owns durable product, architecture, planning, database, runbook, and review/governance truth.
+- `.agents/memory/` owns non-canonical repo-local working memory only.
+- `.agents/baselines/` owns exportable generic starter packs.
+- If a memory note becomes a durable repo rule, workflow behavior, canonical system truth, or reusable starter-pack improvement, promote it into the correct owner surface instead of leaving it in memory.
+
+---
+
+## Repo-Local Agent Memory
+
+- `.agents/memory/` is the repo-local home for non-canonical, non-production-facing agent memory.
+- Use `.agents/memory/` for durable agent support material such as:
+  - operator preferences
+  - repo heuristics and recurring gotchas
+  - compressed project-context summaries
+  - non-canonical open loops and handoff notes
+  - ephemeral session summaries that should not live in chat alone
+- Do NOT use `.agents/memory/` for:
+  - canonical product, architecture, planning, database, or runbook truth that belongs in `docs/`
+  - active batch workflow state that belongs in `/docs/08-active/`
+  - worker-branch integration handoff artifacts that belong in `.agents/batch-branch-handoffs/`
+  - secrets, credentials, tokens, raw customer data, or production-only sensitive values
+- If repo-local memory reveals durable system truth, promote that truth into its canonical `docs/` owner rather than treating `.agents/memory/` as the final source of truth.
+- If repo-local memory reveals durable agent operating rules, workflow behavior, or reusable starter-pack improvements, promote them into `AGENTS.md`, the relevant skill file, or `.agents/baselines/` respectively.
+- Keep repo-local memory concise, prunable, and explicitly dated or reviewable when practical.
+- Prefer updating existing memory notes over creating overlapping ones.
+
+---
+
 ## Concurrency Support Matrix
 
 - Supported: one writable session in one working tree.
@@ -185,6 +220,8 @@ Coordination notes:
 - worktree isolation is the real safety boundary for concurrent writable work
 - advisory scope claims are coordination aids only and do not guarantee protection
 - use `.agents/session-scope-claims.json` only as a lightweight visibility layer, not as a lock
+- a session that began read-only must not silently become a same-folder writer while another writable session is active; it must either move to its own branch/worktree or remain read-only
+- writes to `.agents/memory/` are still ordinary repo writes and follow the same one-writer-per-worktree rule
 - for `batch-start` and `work-batch`, the writable claim scope is the whole `/docs/08-active/` workspace; queue item IDs may appear only as descriptive context inside that broader claim
 - use `.agents/batch-branch-handoffs/` for worker-to-integrator handoff artifacts; those files coordinate branch integration but do not replace the singleton ownership of `/docs/08-active/`
 
@@ -221,6 +258,7 @@ Automation tiers:
 Continuation rule:
 
 - continue automatically only while scope, risk, and ownership remain unchanged inside the current workflow
+- crossing from read-only research, planning, audit, or review into writable execution counts as an ownership/risk change when another writer already owns the current working tree; stop and require separate branch/worktree setup or explicit writable handoff before editing
 - if the next action increases risk or changes workflow type, stop and ask unless the user already requested that exact workflow step
 
 Workflow-specific authorization note:

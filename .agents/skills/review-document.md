@@ -81,8 +81,11 @@ Before creating or updating a review record:
 
 Stop if:
 - the intended review scope is already actively claimed by another writable review session
+- another writable session already owns this same shared worktree and this review would require writing a review artifact or ledger row here
 - a concurrent review writer would create or update the shared review ledger at the same time without coordination
 - the review should remain read-only and no review-file write is actually required
+
+If this review began as read-only analysis in a shared folder and now needs to write the review artifact while another writer is active, require a separate branch and separate worktree or keep the session read-only.
 
 ---
 

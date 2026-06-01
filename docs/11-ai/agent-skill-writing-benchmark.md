@@ -25,6 +25,8 @@ Use this operating split:
 | nested/scoped `AGENTS.md` | narrower overrides close to specialized work | domain- or directory-specific rules that should not burden the repo root |
 | `SKILL.md` | task workflow and execution playbook | when to use the workflow, what to read first, ordered steps, stop conditions, outputs |
 | canonical docs | product, architecture, planning, database, and operational truth | durable system knowledge that should be linked, not duplicated |
+| repo-local memory | non-canonical working memory | preferences, heuristics, open loops, short continuity notes that should not become source-of-truth docs |
+| exportable baselines | reusable starter scaffolding | generic starter packs, snippets, and install guidance for other repos |
 | `09-reference/` or support notes | non-canonical background and research | support material that may inform instructions but should not silently replace canonical owners |
 
 The benchmark should preserve this separation. A strong audit does not only ask whether an instruction file is thorough. It asks whether the instruction is living in the correct surface at all.
@@ -68,6 +70,23 @@ Before changing or creating an instruction file, confirm the information belongs
 - expected outputs or state updates
 - failure recovery and escalation behavior for that workflow
 
+### Information That Belongs In Repo-Local Memory
+
+- non-canonical operator preferences
+- repo heuristics and recurring gotchas
+- open loops that outlive a single chat but are not canonical workflow state
+- compact session continuity notes
+
+Repo-local memory should not be the final home for durable execution policy, workflow design, or canonical system truth.
+
+### Information That Belongs In Exportable Baselines
+
+- generic scaffolding that another repo can copy
+- starter skill files for reusable local patterns
+- setup snippets and configuration examples
+
+Exportable baselines should stay generic and should not absorb live repo-specific memory.
+
 ### Information That Should Stay In Canonical Docs
 
 - architecture explanation
@@ -93,6 +112,11 @@ Use these existing owners:
 - durable rationale for broad decisions -> ADRs in `docs/01-decisions/`
 
 Do not add generic files like `roadmap.md`, `implementation_status.md`, `decisions.md`, or `context.md` unless the repo first determines that no canonical branch already owns that responsibility.
+
+For agent-facing non-canonical information:
+
+- repo-local working memory -> `.agents/memory/`
+- exportable starter scaffolding -> `.agents/baselines/`
 
 ## Benchmark For `AGENTS.md`
 
@@ -218,6 +242,21 @@ over:
 - ad hoc status files
 - free-floating “last updated” notes used as the primary history source
 - duplicate delivery ledgers outside canonical owners
+
+## Memory And Baseline Benchmark
+
+Repo-local memory should:
+
+- stay non-canonical
+- stay concise and prunable
+- point outward to canonical owners when needed
+- promote durable rules into `AGENTS.md`, skills, or canonical docs instead of hoarding them
+
+Exportable baselines should:
+
+- remain generic
+- avoid live repo-specific memory
+- include just enough scaffolding and setup guidance for another repo to adopt them intentionally
 
 ## Obsidian And Canonical Docs Constraints
 

@@ -380,6 +380,18 @@ const initSearchableSelects = () => {
     });
 };
 
+const formatPartialInternalPhoneNumber = (digits) => {
+    if (digits.length <= 3) {
+        return `(${digits}`;
+    }
+
+    if (digits.length <= 6) {
+        return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+    }
+
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
+};
+
 const normalizePhoneInputValue = (value) => {
     const normalizedWhitespace = value.trim().replace(/\s+/g, ' ');
 
@@ -393,17 +405,25 @@ const normalizePhoneInputValue = (value) => {
         ? normalizedWhitespace.slice(0, normalizedWhitespace.length - extensionMatch[0].length).trim()
         : normalizedWhitespace;
 
-    let digits = baseValue.replace(/\D+/g, '');
-
-    if (digits.length === 11 && digits.startsWith('1')) {
-        digits = digits.slice(1);
-    }
-
-    if (digits.length !== 10) {
+    if (/[A-Za-z]/.test(baseValue)) {
         return normalizedWhitespace;
     }
 
-    const formatted = `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+    let digits = baseValue.replace(/\D+/g, '');
+
+    if (digits.length > 10 && digits.startsWith('1')) {
+        digits = digits.slice(1);
+    }
+
+    if (digits === '') {
+        return normalizedWhitespace;
+    }
+
+    if (digits.length > 10) {
+        return normalizedWhitespace;
+    }
+
+    const formatted = formatPartialInternalPhoneNumber(digits);
 
     return extension ? `${formatted} x${extension}` : formatted;
 };

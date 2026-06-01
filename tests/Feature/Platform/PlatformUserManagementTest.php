@@ -36,6 +36,16 @@ class PlatformUserManagementTest extends TestCase
             ->assertSee('Platform Users');
     }
 
+    public function test_platform_user_create_surface_uses_shared_phone_input_baseline(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/users/create')
+            ->assertOk()
+            ->assertSee('data-ui-phone-input', false)
+            ->assertSee('placeholder="(555) 555-5555"', false);
+    }
+
     public function test_platform_reviewer_can_view_platform_users_index_and_setup_page_but_not_manage_users(): void
     {
         $this->actingAsPlatformReviewer();

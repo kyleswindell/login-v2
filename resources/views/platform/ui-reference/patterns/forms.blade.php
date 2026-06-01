@@ -115,13 +115,17 @@
                 <x-ui.patterns.inline-form-row
                     for="inline-support-phone"
                     label="Support Phone"
-                    helper="Plain ten-digit entry should auto-format to the internal phone baseline while still allowing standard extensions when needed."
+                    helper="Partial entry should render as `(5`, `(555`, `(555) 5`, then normalize to `(555) 555-5555`; standard extensions remain allowed."
                 >
                     <x-ui.patterns.proof-review-target
                         :items="[
-                            ['id' => 'P2-B-CQ-017', 'note' => 'The shared internal phone-input pattern should auto-normalize raw ten-digit entry to the canonical `(555) 555-5555` format on the proof surface and the consuming settings forms.'],
+                            ['id' => 'P2-B-CQ-017', 'note' => 'The shared internal phone-input pattern should progressively render `(5`, `(555`, `(555) 5`, and then the canonical `(555) 555-5555` format on the proof surface and the consuming settings forms.'],
                         ]"
                     />
+
+                    <x-ui.patterns.proof-note semantic="notice" title="Partial entry contract">
+                        Format from the first typed digit. Keep the area-code wrapper open through the third digit, add the space on the fourth digit, and add the dash only after the sixth digit.
+                    </x-ui.patterns.proof-note>
 
                     <input id="inline-support-phone" type="tel" value="" placeholder="e.g. (555) 867-5309 x204" class="ui-input w-full" data-ui-phone-input inputmode="tel" autocomplete="tel" />
                 </x-ui.patterns.inline-form-row>

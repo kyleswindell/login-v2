@@ -21,7 +21,7 @@ class PlatformUserManagementTest extends TestCase
 
         $this->get('/platform/setup/users')
             ->assertOk()
-            ->assertSee('Platform Users Setup')
+            ->assertSee('Staff Setup')
             ->assertSee('Add Staff Member')
             ->assertSee('Existing Staff')
             ->assertSee('User Settings');
@@ -34,6 +34,27 @@ class PlatformUserManagementTest extends TestCase
         $this->get('/platform/users')
             ->assertOk()
             ->assertSee('Platform Users');
+    }
+
+    public function test_platform_reviewer_can_view_platform_users_index_and_setup_page_but_not_manage_users(): void
+    {
+        $this->actingAsPlatformReviewer();
+
+        $this->get('/platform/users')
+            ->assertOk()
+            ->assertSee('Platform Users');
+
+        $this->get('/platform/setup/users')
+            ->assertOk()
+            ->assertSee('Staff Setup')
+            ->assertSee('Existing Staff')
+            ->assertSee('User Settings')
+            ->assertDontSee('Add Staff Member');
+
+        $this->get('/platform/administration/users')
+            ->assertRedirect('/platform/users');
+
+        $this->get('/platform/users/create')->assertForbidden();
     }
 
     public function test_super_admin_can_view_filament_platform_users_migration_surface(): void

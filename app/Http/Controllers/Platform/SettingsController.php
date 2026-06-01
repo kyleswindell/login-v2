@@ -20,7 +20,7 @@ class SettingsController extends Controller
 
     public function general(): View
     {
-        $this->authorize('manage-platform-settings');
+        $this->authorize('view-platform-settings');
 
         return view('platform.settings.general', [
             'displayName' => $this->settings->get('general', 'display_name', config('app.name')),
@@ -54,7 +54,7 @@ class SettingsController extends Controller
 
     public function generalCompanyInformation(): View
     {
-        $this->authorize('manage-platform-settings');
+        $this->authorize('view-platform-settings');
 
         return view('platform.settings.general-company-information', [
             'companyName' => $this->settings->get('general_company', 'name', config('app.name')),
@@ -88,7 +88,7 @@ class SettingsController extends Controller
 
     public function generalLocalization(): View
     {
-        $this->authorize('manage-platform-settings');
+        $this->authorize('view-platform-settings');
 
         return view('platform.settings.general-localization', [
             'defaultLanguage' => $this->settings->get('general_localization', 'default_language', config('app.locale')),
@@ -122,7 +122,7 @@ class SettingsController extends Controller
 
     public function generalEmail(): View
     {
-        $this->authorize('manage-platform-settings');
+        $this->authorize('view-platform-settings');
 
         return view('platform.settings.general-email', [
             'fromName' => $this->settings->get('general_email', 'from_name', config('app.name')),
@@ -156,7 +156,7 @@ class SettingsController extends Controller
 
     public function generalSystemUpdate(): View
     {
-        $this->authorize('manage-platform-settings');
+        $this->authorize('view-platform-settings');
 
         return view('platform.settings.general-system-update', [
             'updateChannel' => $this->settings->get('general_system_update', 'channel', 'stable'),
@@ -187,7 +187,7 @@ class SettingsController extends Controller
 
     public function generalSystemServerInfo(): View
     {
-        $this->authorize('manage-platform-settings');
+        $this->authorize('view-platform-settings');
 
         return view('platform.settings.general-system-server-info', [
             'appEnvironment' => app()->environment(),
@@ -202,7 +202,7 @@ class SettingsController extends Controller
 
     public function notifications(): View
     {
-        $this->authorize('manage-platform-settings');
+        $this->authorize('view-platform-settings');
 
         return view('platform.settings.notifications', [
             'defaultSeverity' => $this->settings->get('notifications', 'default_severity', 'info'),
@@ -231,7 +231,7 @@ class SettingsController extends Controller
 
     public function auditLogs(): View
     {
-        $this->authorize('manage-platform-settings');
+        $this->authorize('view-platform-settings');
 
         return view('platform.settings.audit-logs', [
             'retentionDays' => $this->settings->get('audit_logs', 'retention_days', 365),
@@ -260,7 +260,7 @@ class SettingsController extends Controller
 
     public function docs(): View
     {
-        $this->authorize('manage-platform-settings');
+        $this->authorize('view-platform-settings');
 
         return view('platform.settings.docs', [
             'accessScope' => $this->settings->get('docs', 'access_scope', 'all_platform_users'),
@@ -284,7 +284,7 @@ class SettingsController extends Controller
 
     public function users(): View
     {
-        $this->authorize('manage-platform-settings');
+        $this->authorize('view-platform-settings');
 
         return view('platform.settings.users', [
             'defaultRole' => $this->settings->get('users', 'default_role', 'platform_operator'),

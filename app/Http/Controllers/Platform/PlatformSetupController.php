@@ -37,7 +37,7 @@ class PlatformSetupController extends Controller
 
     public function users(): View
     {
-        $this->authorize('manage-platform-users');
+        $this->authorize('view-platform-users');
 
         return view('platform.setup.users');
     }

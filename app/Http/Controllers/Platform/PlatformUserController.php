@@ -16,7 +16,7 @@ class PlatformUserController extends Controller
 {
     public function index(): View
     {
-        $this->authorize('manage-platform-users');
+        $this->authorize('view-platform-users');
 
         return view('platform.users.index', [
             'users' => User::query()->with('roles')->orderBy('name')->get(),

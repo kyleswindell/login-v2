@@ -28,7 +28,7 @@ class PlatformSetupPagesTest extends TestCase
             ->assertSee('Error Logs Setup')
             ->assertSee('/platform/operations/error-logs', false)
             ->assertDontSee('/platform/error-logs', false);
-        $this->get('/platform/setup/users')->assertOk()->assertSee('Platform Users Setup');
+        $this->get('/platform/setup/users')->assertOk()->assertSee('Staff Setup');
     }
 
     public function test_platform_admin_can_open_setup_pages_except_super_admin_docs_scope(): void

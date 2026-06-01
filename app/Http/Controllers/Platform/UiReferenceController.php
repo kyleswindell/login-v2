@@ -69,84 +69,84 @@ class UiReferenceController extends Controller
 
     public function index(Request $request): View
     {
-        $this->authorizeSuperAdmin($request);
+        $this->authorize('view-platform-ui-reference');
 
         return $this->renderSection('overview');
     }
 
     public function actions(Request $request): View
     {
-        $this->authorizeSuperAdmin($request);
+        $this->authorize('view-platform-ui-reference');
 
         return $this->renderSection('components.actions');
     }
 
     public function status(Request $request): View
     {
-        $this->authorizeSuperAdmin($request);
+        $this->authorize('view-platform-ui-reference');
 
         return $this->renderSection('components.status');
     }
 
     public function forms(Request $request): View
     {
-        $this->authorizeSuperAdmin($request);
+        $this->authorize('view-platform-ui-reference');
 
         return $this->renderSection('components.forms');
     }
 
     public function tables(Request $request): View
     {
-        $this->authorizeSuperAdmin($request);
+        $this->authorize('view-platform-ui-reference');
 
         return $this->renderSection('patterns.tables', $this->tablePagePayload($request));
     }
 
     public function formsPatterns(Request $request): View
     {
-        $this->authorizeSuperAdmin($request);
+        $this->authorize('view-platform-ui-reference');
 
         return $this->renderSection('patterns.forms');
     }
 
     public function dataContent(Request $request): View
     {
-        $this->authorizeSuperAdmin($request);
+        $this->authorize('view-platform-ui-reference');
 
         return $this->renderSection('patterns.data-content');
     }
 
     public function overlays(Request $request): View
     {
-        $this->authorizeSuperAdmin($request);
+        $this->authorize('view-platform-ui-reference');
 
         return $this->renderSection('patterns.overlays');
     }
 
     public function navigation(Request $request): View
     {
-        $this->authorizeSuperAdmin($request);
+        $this->authorize('view-platform-ui-reference');
 
         return $this->renderSection('patterns.navigation');
     }
 
     public function layout(Request $request): View
     {
-        $this->authorizeSuperAdmin($request);
+        $this->authorize('view-platform-ui-reference');
 
         return $this->renderSection('patterns.layout');
     }
 
     public function archetypes(Request $request): View
     {
-        $this->authorizeSuperAdmin($request);
+        $this->authorize('view-platform-ui-reference');
 
         return $this->renderSection('patterns.archetypes');
     }
 
     public function showAuditSample(Request $request, string $sample): JsonResponse
     {
-        $this->authorizeSuperAdmin($request);
+        $this->authorize('view-platform-ui-reference');
 
         abort_unless(array_key_exists($sample, self::AUDIT_SAMPLES), 404);
 
@@ -180,7 +180,7 @@ class UiReferenceController extends Controller
 
     public function showErrorSample(Request $request, string $sample): JsonResponse
     {
-        $this->authorizeSuperAdmin($request);
+        $this->authorize('view-platform-ui-reference');
 
         abort_unless(array_key_exists($sample, self::ERROR_SAMPLES), 404);
 
@@ -215,11 +215,6 @@ class UiReferenceController extends Controller
                 'source' => 'ui-reference-workspace',
             ],
         ]);
-    }
-
-    private function authorizeSuperAdmin(Request $request): void
-    {
-        abort_unless($request->user()?->hasRole('platform_super_admin') === true, 403);
     }
 
     /**

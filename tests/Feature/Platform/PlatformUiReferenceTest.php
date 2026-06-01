@@ -26,6 +26,15 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Archetype Proofs');
     }
 
+    public function test_platform_reviewer_can_view_ui_reference_workspace(): void
+    {
+        $this->actingAsPlatformReviewer();
+
+        $this->get('/platform/ui-reference')
+            ->assertOk()
+            ->assertSee('UI Reference Workspace');
+    }
+
     public function test_authorized_users_can_view_tier_one_forms_and_navigation_reference_surfaces(): void
     {
         $this->actingAsPlatformSuperAdmin();

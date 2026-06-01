@@ -17,7 +17,7 @@ Current status:
 * header notifications preview is live on staging
 * realtime header notification sync and toast hooks are live on staging
 * Setup sidebar shell interaction and selective feature setup pages are live on staging
-* app-owned `/platform/ui-reference` workspace is implemented as the canonical shell/component baseline review surface (forms, tables, tokens, drawers) and is super-admin-only
+* app-owned `/platform/ui-reference` workspace is implemented as the canonical shell/component baseline review surface (forms, tables, tokens, drawers) and is limited to users with the dedicated review permission
 
 ## Current Implementation
 
@@ -59,6 +59,7 @@ Current gates:
 * docs viewer access is limited to users who can `view-platform-docs`
 * docs viewer access also respects the configured docs access scope
 * the current intended audience can be restricted to platform super admins through settings
+* UI Reference access is limited to users who can `view-platform-ui-reference`
 
 ## Common Workflows
 

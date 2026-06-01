@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function (): void {
     Route::post('/platform/users/{user}/toggle-active', [PlatformUserController::class, 'toggleActive'])->name('platform.users.toggle-active');
 
     Route::get('/platform/administration/users', function () {
-        abort_unless(Gate::allows('manage-platform-users'), 403);
+        abort_unless(Gate::allows('view-platform-users'), 403);
 
         return redirect()->route('platform.users.index');
     })->name('platform.administration.users.index');
@@ -106,7 +106,7 @@ Route::middleware('auth')->group(function (): void {
     Route::post('/platform/settings/users', [SettingsController::class, 'updateUsers'])->name('platform.settings.users.update');
 
     Route::get('/platform/administration/settings', function () {
-        abort_unless(Gate::allows('manage-platform-settings'), 403);
+        abort_unless(Gate::allows('view-platform-settings'), 403);
 
         return redirect()->route('platform.settings.general');
     })->name('platform.administration.settings.index');

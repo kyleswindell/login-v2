@@ -51,9 +51,39 @@ class PlatformSettingsTest extends TestCase
         $this->get('/platform/settings/users')->assertOk()->assertSee('User Defaults');
     }
 
+    public function test_platform_reviewer_can_view_all_settings_pages_but_cannot_update_them(): void
+    {
+        $this->actingAsPlatformReviewer();
+
+        $this->get('/platform/settings/general')->assertOk()->assertSee('Platform General');
+        $this->get('/platform/settings/general/company-information')->assertOk()->assertSee('Company Information');
+        $this->get('/platform/settings/general/localization')->assertOk()->assertSee('Localization');
+        $this->get('/platform/settings/general/email')->assertOk()->assertSee('Email');
+        $this->get('/platform/settings/general/system-update')->assertOk()->assertSee('System Update');
+        $this->get('/platform/settings/general/system-server-info')->assertOk()->assertSee('System/Server Info');
+        $this->get('/platform/settings/notifications')->assertOk()->assertSee('Notification Defaults');
+        $this->get('/platform/settings/audit-logs')->assertOk()->assertSee('Audit Settings');
+        $this->get('/platform/settings/docs')->assertOk()->assertSee('Vault Access');
+        $this->get('/platform/settings/users')->assertOk()->assertSee('User Defaults');
+
+        $this->post('/platform/settings/general', [
+            'display_name' => 'Reviewer Attempt',
+            'timezone' => 'America/New_York',
+            'locale' => 'en',
+        ])->assertForbidden();
+    }
+
     public function test_authorized_users_are_redirected_from_target_settings_route(): void
     {
         $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/administration/settings')
+            ->assertRedirect('/platform/settings/general');
+    }
+
+    public function test_platform_reviewer_is_redirected_from_target_settings_route(): void
+    {
+        $this->actingAsPlatformReviewer();
 
         $this->get('/platform/administration/settings')
             ->assertRedirect('/platform/settings/general');

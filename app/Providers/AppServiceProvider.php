@@ -53,6 +53,11 @@ class AppServiceProvider extends ServiceProvider
             return $user->can('platform.users.manage');
         });
 
+        Gate::define('view-platform-users', function (User $user): bool {
+            return $user->can('platform.users.view')
+                || $user->can('platform.users.manage');
+        });
+
         Gate::define('view-platform-docs', function (User $user): bool {
             if (! $user->can('platform.docs.view')) {
                 return false;
@@ -81,6 +86,15 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('view-platform-error-logs', function (User $user): bool {
             return $user->can('platform.error-logs.view');
+        });
+
+        Gate::define('view-platform-ui-reference', function (User $user): bool {
+            return $user->can('platform.ui-reference.view');
+        });
+
+        Gate::define('view-platform-settings', function (User $user): bool {
+            return $user->can('platform.settings.view')
+                || $user->can('platform.settings.manage');
         });
 
         Gate::define('manage-platform-settings', function (User $user): bool {

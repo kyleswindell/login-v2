@@ -86,14 +86,15 @@ Current authorization model:
 
 * RBAC is the baseline
 * `platform_super_admin` bypasses through a global Gate rule
-* direct UI access to platform user management requires the `manage-platform-users` ability
+* direct read access to platform user list and setup guidance uses the `view-platform-users` ability
+* create, edit, role assignment, and activation changes remain behind the `manage-platform-users` ability
 * direct UI access to notifications and audit logs uses seeded permission-backed gates
 * inactive users are blocked from successful login
 
 Current seeded roles and permissions:
 
-* roles: `platform_super_admin`, `platform_admin`, `platform_operator`
-* permissions: `platform.users.manage`, `platform.docs.view`, `platform.notifications.view`, `platform.audit-logs.view`, `platform.error-logs.view`, `platform.settings.manage`
+* roles: `platform_super_admin`, `platform_admin`, `platform_operator`, `platform_reviewer`
+* permissions: `platform.users.view`, `platform.users.manage`, `platform.ui-reference.view`, `platform.docs.view`, `platform.notifications.view`, `platform.audit-logs.view`, `platform.error-logs.view`, `platform.settings.view`, `platform.settings.manage`
 
 ## Common Workflows
 

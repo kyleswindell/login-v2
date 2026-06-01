@@ -6,17 +6,19 @@
         </div>
 
         <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            <a wire:navigate href="{{ route('platform.users.create') }}" class="group rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30 transition hover:border-slate-600 hover:bg-slate-900">
-                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-300">Create</p>
-                <h2 class="mt-2 text-xl font-semibold text-white">Add Staff Member</h2>
-                <p class="mt-2 text-sm text-slate-400">Create a new platform user and assign initial role access.</p>
-                <p class="mt-4 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 group-hover:text-slate-300">Open create form</p>
-            </a>
+            @can('manage-platform-users')
+                <a wire:navigate href="{{ route('platform.users.create') }}" class="group rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30 transition hover:border-slate-600 hover:bg-slate-900">
+                    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-300">Create</p>
+                    <h2 class="mt-2 text-xl font-semibold text-white">Add Staff Member</h2>
+                    <p class="mt-2 text-sm text-slate-400">Create a new platform user and assign initial role access.</p>
+                    <p class="mt-4 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 group-hover:text-slate-300">Open create form</p>
+                </a>
+            @endcan
 
             <a wire:navigate href="{{ route('platform.users.index') }}" class="group rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30 transition hover:border-slate-600 hover:bg-slate-900">
                 <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-300">Review</p>
                 <h2 class="mt-2 text-xl font-semibold text-white">Existing Staff</h2>
-                <p class="mt-2 text-sm text-slate-400">View all users and open individual records for edit/update workflows.</p>
+                <p class="mt-2 text-sm text-slate-400">Review current staff accounts, role assignments, and access posture.</p>
                 <p class="mt-4 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 group-hover:text-slate-300">Open user list</p>
             </a>
 

@@ -29,4 +29,16 @@ abstract class TestCase extends BaseTestCase
 
         return $user;
     }
+
+    protected function actingAsPlatformReviewer(?User $user = null): User
+    {
+        $user ??= User::factory()->create();
+
+        $this->seed(PlatformRolesAndPermissionsSeeder::class);
+
+        $user->syncRoles(['platform_reviewer']);
+        $this->actingAs($user);
+
+        return $user;
+    }
 }

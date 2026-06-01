@@ -13,11 +13,14 @@ class PlatformRolesAndPermissionsSeeder extends Seeder
      * @var list<string>
      */
     private array $permissions = [
+        'platform.users.view',
         'platform.users.manage',
+        'platform.ui-reference.view',
         'platform.docs.view',
         'platform.notifications.view',
         'platform.audit-logs.view',
         'platform.error-logs.view',
+        'platform.settings.view',
         'platform.settings.manage',
     ];
 
@@ -57,6 +60,21 @@ class PlatformRolesAndPermissionsSeeder extends Seeder
             'platform.notifications.view',
             'platform.audit-logs.view',
             'platform.error-logs.view',
+        ]);
+
+        $platformReviewerRole = Role::query()->firstOrCreate([
+            'name' => 'platform_reviewer',
+            'guard_name' => 'web',
+        ]);
+
+        $platformReviewerRole->syncPermissions([
+            'platform.users.view',
+            'platform.ui-reference.view',
+            'platform.docs.view',
+            'platform.notifications.view',
+            'platform.audit-logs.view',
+            'platform.error-logs.view',
+            'platform.settings.view',
         ]);
 
         app(PermissionRegistrar::class)->forgetCachedPermissions();

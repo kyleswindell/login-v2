@@ -65,6 +65,7 @@ Recommended platform role vocabulary:
 * `platform_super_admin`
 * `platform_admin`
 * `platform_operator`
+* `platform_reviewer`
 
 Tenant roles should be treated as a separate authorization scope even if names are similar.
 
@@ -141,6 +142,8 @@ Recommended RBAC stance:
 Recommended permission naming:
 
 * `platform.users.view`
+* `platform.settings.view`
+* `platform.ui-reference.view`
 * `platform.roles.manage`
 * `platform.tenants.provision`
 * `tenant.dashboard.view`

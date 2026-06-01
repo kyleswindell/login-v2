@@ -1,6 +1,13 @@
 # Notes
 
 ## Findings
+- The provided AI Agent staging review account successfully authenticated to `https://staging.parasolutions.com` and accessed the protected UI Reference workspace for this manual-review pass.
+- Staging manual review now approves `P2-B-CQ-003`, `P2-B-CQ-004`, `P2-B-CQ-005`, `P2-B-CQ-006`, `P2-B-CQ-007`, `P2-B-CQ-008`, `P2-B-CQ-010`, and `P2-B-CQ-011`.
+- The same staging pass reopens `P2-B-CQ-013` as a same-item failure of the temporary review-layer system:
+  - the forms proof still surfaces reopened `P2-B-CQ-017`
+  - the navigation and data/content proofs still surface reopened `P2-B-CQ-014`
+  - the navigation and data/content proofs still surface passed `P2-B-CQ-016`
+  - the layout proof omits current pending-review `P2-B-CQ-005` and does not keep the temporary review context aligned to the live queue state
 - Promoted Tier 1 entry points are now implemented as canonical Blade components for buttons, icon buttons, inline alerts, toasts, drawers, and modals.
 - Batch B pass `2-B-0001` is deployed to staging on `main` and ready for manual review.
 - Manual visual review of the existing Tier 1 UI Reference component surfaces passed for Batch B pass `2-B-0001`.
@@ -135,6 +142,8 @@
   - future-module UI ownership declaration fields
 
 ## Decisions
+- Treat `P2-B-CQ-013` as a same-item failure of the temporary review-layer synchronization contract, not as a new adjacent queue item.
+- Keep `P2-B-CQ-003`, `P2-B-CQ-004`, `P2-B-CQ-005`, `P2-B-CQ-006`, `P2-B-CQ-007`, `P2-B-CQ-008`, `P2-B-CQ-010`, and `P2-B-CQ-011` in passed-review status on their own merits; do not reopen them just because the temporary review overlay is stale.
 - Batch B starts with Tier 1 library hardening for the promoted Blade-component candidates before broader Tier 2 implementation continues.
 - Batch B pass `2-B-0001` uses the existing Tier 1 class contracts as the styling baseline and wraps them in canonical Blade entry points rather than redefining visual rules.
 - Batch B first-pass implementation closes the remaining planned slices in one review-ready pass so manual visual QA can happen against the full internal library/proof surface set instead of piecemeal.
@@ -161,6 +170,7 @@
 - Queue cleanup review confirms `P2-B-CQ-007` and `P2-B-CQ-008` already reflect the correct Tier 1-before-Tier 2 sequencing and do not need reclassification.
 
 ## Risks / Questions
+- Combined Batch B manual review still cannot close while `P2-B-CQ-013` leaves the temporary review layer out of sync with the live queue state on staging.
 - Realtime notification toast rendering remains a feature-level JS path and is intentionally outside this Tier 1 hardening pass.
 - `resources/views/platform/ui-reference/index.blade.php` remains an unused legacy workspace view because the canonical `/platform/ui-reference` route renders `overview.blade.php`; this pass left it untouched to avoid mixing unrelated cleanup into the Batch B implementation lane.
 - Combined Batch B manual review is still required to confirm the newly implemented widget, date-range, identity-summary, dropdown, and sub-navigation changes before the batch can move toward close-out.

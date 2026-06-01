@@ -9,8 +9,8 @@
   - proof coverage exists for the promoted Tier 1 candidates
 
 ## Required Tier 2 Pattern Implementation
-- [ ] Required Tier 2 Pattern Implementation
-  Status: implemented (pending manual review)
+- [x] Required Tier 2 Pattern Implementation
+  Status: implemented
   - Form Group
   - Form Section
   - Inline Form Row
@@ -51,8 +51,8 @@
   - settings archetype is explicit
 
 ## Dashboard And Summary Conventions
-- [ ] Dashboard And Summary Conventions
-  Status: implemented (pending manual review)
+- [x] Dashboard And Summary Conventions
+  Status: implemented
   - dashboard widget-shell conventions are explicit
   - dashboard widget span model is explicit
   - summary/stat-card conventions are explicit

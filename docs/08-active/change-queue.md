@@ -17,6 +17,12 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Scope: Tier 1 searchable dropdown-select baseline, select-family visual parity, current-selection treatment, shared Inputs And Forms dropdown standard
   Path Coverage: `/platform/ui-reference/patterns/forms`, shared `inline-form-row` and `searchable-select` entry points, `/platform/settings/general`, `/account/preferences`
   Implemented in: `2-B-0016`
+- [ ] Resynchronize the temporary active-batch proof review mode so it reflects the live queue state exactly; only current `Implemented Pending Review` items should appear in page banners and scoped card targets, reopened or passed IDs must drop out immediately, and every current pending-review item with a visible proof surface must be tagged accurately at the point of review.
+  ID: P2-B-CQ-013
+  Iteration: 3
+  Scope: temporary active-batch proof review mode, live queue-state synchronization, full current pending-review coverage, stale active-review target removal
+  Path Coverage: active-batch UI Reference proof pages, all current `Implemented Pending Review` items with visible proof surfaces, relevant component library cards under review, current review-mode entry points
+  Implemented in: `2-B-0014`
 - [ ] Refine the Tier 1 action and menu-item component-library suite so supported menus also define the canonical current-item/selected-item state alongside the shared colorway contract; grouped-action and future consumer menus should not improvise their own current-item styling.
   ID: P2-B-CQ-014
   Iteration: 2
@@ -32,54 +38,6 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 ## In Progress
 
 ## Implemented Pending Review
-- [ ] Normalize the Tier 2 proof-note treatment so explanatory library guidance is presented through one clearly defined shared notice style instead of a mix of subtle in-card text blocks and stronger top-of-page notices; proof-only notes should read clearly as library guidance rather than component UI, and the treatment should be used consistently wherever intended behavior or scope needs explanation.
-  ID: P2-B-CQ-003
-  Iteration: 2
-  Scope: Tier 2 proof-page clarity, shared proof-note styling, explanation of intended behavior and scope
-  Path Coverage: `/platform/ui-reference/patterns/*`, related proof surfaces where explanatory notes appear
-  Implemented in: `2-B-0013`
-- [ ] Extend the temporary active-batch proof review mode so every current `Implemented Pending Review` item with a visible proof surface is represented accurately on-site through the review layer system; relevant UI component library cards should carry their own scoped review-status badge or inline review alert with the active batch queue ID instead of limiting that context to a page-level banner only, while keeping this batch-only layer separate from the permanent proof-note contract.
-  ID: P2-B-CQ-013
-  Iteration: 2
-  Scope: temporary active-batch proof review mode, full current implemented-pending-review coverage, card-level review targeting, queue-ID visibility accuracy
-  Path Coverage: active-batch UI Reference proof pages, all current `Implemented Pending Review` items with visible proof surfaces, relevant component library cards under review, current review-mode entry points
-  Implemented in: `2-B-0014`
-- [ ] Correct the shared dashboard row-span rendering so multi-row widgets actually render at the documented taller heights instead of collapsing to a single-row card; `1x2` and `2x2` proofs should visibly honor row-span height as part of the reusable widget span model.
-  ID: P2-B-CQ-005
-  Iteration: 2
-  Scope: dashboard grid sizing contract, shared row-span rendering, multi-row widget proof behavior
-  Path Coverage: shared `dashboard-grid` pattern, layout/dashboard proof surfaces, widget-shell guidance, `1x2` and `2x2` widget proofs
-  Implemented in: `2-B-0018`
-- [ ] Make the grouped-actions dropdown action menu close when focus or pointer interaction moves outside the open menu, and treat that outside-click dismissal as the shared default behavior for this pattern instead of a page-by-page expectation.
-  ID: P2-B-CQ-004
-  Scope: Tier 2 dropdown action menu behavior, shared dismissal contract
-  Path Coverage: shared `dropdown-action-menu` pattern, current UI Reference grouped-action proofs
-  Implemented in: `2-B-0012`
-- [ ] Establish the dashboard widget shell contract explicitly so Batch B defines what a reusable internal widget may contain and how dense it is allowed to become; document the allowed widget regions, content combinations, and fallback states instead of leaving widget structure implied by stat cards alone.
-  ID: P2-B-CQ-006
-  Scope: widget shell anatomy, density constraints, allowed content regions, widget proof coverage
-  Path Coverage: dashboard/layout proof surfaces, widget-shell guidance, related handoff artifacts
-  Implemented in: `2-B-0012`
-- [ ] Establish a canonical Tier 1 date and date-time selection baseline so internal forms stop improvising calendar/date controls ad hoc; define the default control form, validation expectations, and proof coverage for reusable date entry.
-  ID: P2-B-CQ-007
-  Scope: Tier 1 date/date-time input baseline, reusable date selection proof coverage
-  Path Coverage: UI Reference control/forms surfaces, future settings/setup/account form reuse
-  Implemented in: `2-B-0012`
-- [ ] Establish a reusable Tier 2 date-filter and date-range pattern built from the shared date baseline so list/index and reporting surfaces can expose time-based filtering without inventing one-off control rows.
-  ID: P2-B-CQ-008
-  Scope: Tier 2 date filtering controls, range selection pattern, list/report filter reuse
-  Path Coverage: UI Reference navigation/tables/archetype proofs, future reporting/list surfaces
-  Implemented in: `2-B-0012`
-- [ ] Retune the sub-navigation bar active state so the current item is clearly readable in both dark and light mode; use a more visible soft neutral active treatment instead of the current barely perceptible state.
-  ID: P2-B-CQ-010
-  Scope: Tier 2 sub-navigation active-state treatment, shared navigation readability
-  Path Coverage: shared `sub-navigation-bar` pattern, current settings/setup/navigation proofs
-  Implemented in: `2-B-0012`
-- [ ] Fix the grouped-actions dropdown action menu layering so the open panel can render above surrounding cards and containers without being clipped by content-section or card borders.
-  ID: P2-B-CQ-011
-  Scope: Tier 2 dropdown action menu overlay layering, clipping and stacking behavior
-  Path Coverage: shared `dropdown-action-menu` pattern, current grouped-action proofs inside content-section blocks
-  Implemented in: `2-B-0012`
 
 ## Blocked
 - [ ] Apply the established Tier 1 action/menu-item suite to the account dropdown navigation options so account-menu links stop using one-off colorways and match the shared ghost action treatment while preserving left-aligned text and current menu layout.
@@ -91,6 +49,48 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 ## Deferred
 
 ## Passed Review
+- [x] Normalize the Tier 2 proof-note treatment so explanatory library guidance is presented through one clearly defined shared notice style instead of a mix of subtle in-card text blocks and stronger top-of-page notices; proof-only notes should read clearly as library guidance rather than component UI, and the treatment should be used consistently wherever intended behavior or scope needs explanation.
+  ID: P2-B-CQ-003
+  Iteration: 2
+  Scope: Tier 2 proof-page clarity, shared proof-note styling, explanation of intended behavior and scope
+  Path Coverage: `/platform/ui-reference/patterns/*`, related proof surfaces where explanatory notes appear
+  Implemented in: `2-B-0013`
+- [x] Make the grouped-actions dropdown action menu close when focus or pointer interaction moves outside the open menu, and treat that outside-click dismissal as the shared default behavior for this pattern instead of a page-by-page expectation.
+  ID: P2-B-CQ-004
+  Scope: Tier 2 dropdown action menu behavior, shared dismissal contract
+  Path Coverage: shared `dropdown-action-menu` pattern, current UI Reference grouped-action proofs
+  Implemented in: `2-B-0012`
+- [x] Correct the shared dashboard row-span rendering so multi-row widgets actually render at the documented taller heights instead of collapsing to a single-row card; `1x2` and `2x2` proofs should visibly honor row-span height as part of the reusable widget span model.
+  ID: P2-B-CQ-005
+  Iteration: 2
+  Scope: dashboard grid sizing contract, shared row-span rendering, multi-row widget proof behavior
+  Path Coverage: shared `dashboard-grid` pattern, layout/dashboard proof surfaces, widget-shell guidance, `1x2` and `2x2` widget proofs
+  Implemented in: `2-B-0018`
+- [x] Establish the dashboard widget shell contract explicitly so Batch B defines what a reusable internal widget may contain and how dense it is allowed to become; document the allowed widget regions, content combinations, and fallback states instead of leaving widget structure implied by stat cards alone.
+  ID: P2-B-CQ-006
+  Scope: widget shell anatomy, density constraints, allowed content regions, widget proof coverage
+  Path Coverage: dashboard/layout proof surfaces, widget-shell guidance, related handoff artifacts
+  Implemented in: `2-B-0012`
+- [x] Establish a canonical Tier 1 date and date-time selection baseline so internal forms stop improvising calendar/date controls ad hoc; define the default control form, validation expectations, and proof coverage for reusable date entry.
+  ID: P2-B-CQ-007
+  Scope: Tier 1 date/date-time input baseline, reusable date selection proof coverage
+  Path Coverage: UI Reference control/forms surfaces, future settings/setup/account form reuse
+  Implemented in: `2-B-0012`
+- [x] Establish a reusable Tier 2 date-filter and date-range pattern built from the shared date baseline so list/index and reporting surfaces can expose time-based filtering without inventing one-off control rows.
+  ID: P2-B-CQ-008
+  Scope: Tier 2 date filtering controls, range selection pattern, list/report filter reuse
+  Path Coverage: UI Reference navigation/tables/archetype proofs, future reporting/list surfaces
+  Implemented in: `2-B-0012`
+- [x] Retune the sub-navigation bar active state so the current item is clearly readable in both dark and light mode; use a more visible soft neutral active treatment instead of the current barely perceptible state.
+  ID: P2-B-CQ-010
+  Scope: Tier 2 sub-navigation active-state treatment, shared navigation readability
+  Path Coverage: shared `sub-navigation-bar` pattern, current settings/setup/navigation proofs
+  Implemented in: `2-B-0012`
+- [x] Fix the grouped-actions dropdown action menu layering so the open panel can render above surrounding cards and containers without being clipped by content-section or card borders.
+  ID: P2-B-CQ-011
+  Scope: Tier 2 dropdown action menu overlay layering, clipping and stacking behavior
+  Path Coverage: shared `dropdown-action-menu` pattern, current grouped-action proofs inside content-section blocks
+  Implemented in: `2-B-0012`
 - [x] Complete the Tier 1 ghost action variant parity pass so neutral ghost uses the same borderless baseline as the semantic ghost variants inside the shared action/menu-item suite; close this parity gap before downstream menu consumers are retuned.
   ID: P2-B-CQ-016
   Scope: Tier 1 ghost action variant parity, supported colorway suite consistency, light/dark consistency

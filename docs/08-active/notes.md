@@ -1,6 +1,10 @@
 # Notes
 
 ## Findings
+- Batch B pass `2-B-0020` is now deployed to staging on `main` and re-integrates `P2-B-CQ-014` through the branch-based worker path:
+  - cherry-picked worker commit `f57c52221c035b4e2ce565bd7639f2b4fc083f97` onto `main`
+  - republished the shared current-item menu state on the Tier 1 actions proof plus the grouped-action navigation and data/content review surfaces
+  - verified the integrated result in WSL with `DB_CONNECTION=sqlite DB_DATABASE=:memory: ./vendor/bin/phpunit --filter PlatformActionMenuSuiteTest --testdox`
 - Batch B pass `2-B-0019` is now deployed to staging on `main` and re-integrates `P2-B-CQ-001` through the branch-based worker path:
   - cherry-picked worker commit `daa31721f8d715b5a53c1df1536611e9ca3a39fb` onto `main`
   - republished the searchable-dropdown baseline on the forms proof, platform general settings, and account preferences review surfaces
@@ -174,6 +178,7 @@
 - Queue cleanup review confirms `P2-B-CQ-007` and `P2-B-CQ-008` already reflect the correct Tier 1-before-Tier 2 sequencing and do not need reclassification.
 
 ## Risks / Questions
+- `P2-B-CQ-014` is back in `Implemented Pending Review`, but the temporary review-layer regression on `P2-B-CQ-013` still leaves stale queue tags visible on the same navigation and data/content proof surfaces until that overlay pass is corrected.
 - `P2-B-CQ-001` is back in `Implemented Pending Review`, but the temporary review-layer regression on `P2-B-CQ-013` still prevents the active overlay from being treated as authoritative on the same forms proof surface until that queue item closes again.
 - Combined Batch B manual review still cannot close while `P2-B-CQ-013` leaves the temporary review layer out of sync with the live queue state on staging.
 - Realtime notification toast rendering remains a feature-level JS path and is intentionally outside this Tier 1 hardening pass.

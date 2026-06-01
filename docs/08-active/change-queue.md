@@ -22,7 +22,7 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Iteration: 2
   Scope: Tier 1 action/menu-item colorway suite, current-item menu state, shared semantic/ghost action treatment, supported standard colorway proof coverage
   Path Coverage: shared Tier 1 action and menu-item entry points, supported standard colorway proofs, grouped-action UI Reference proof surfaces that validate the suite
-  Implemented in: `2-B-0015`
+  Implemented in: `2-B-0020`
 - [ ] Refine the Tier 1 internal phone-input baseline so formatting begins with the first typed digit instead of waiting for a complete ten-digit value; shared internal phone inputs should progressively render the canonical US national pattern during entry, with an explicit partial-entry display contract and full normalization to `(555) 555-5555` once all digits are present.
   ID: P2-B-CQ-017
   Iteration: 2
@@ -38,6 +38,12 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Scope: Tier 1 searchable dropdown-select baseline, select-family visual parity, current-selection treatment, shared Inputs And Forms dropdown standard
   Path Coverage: `/platform/ui-reference/patterns/forms`, shared `inline-form-row` and `searchable-select` entry points, `/platform/settings/general`, `/account/preferences`
   Implemented in: `2-B-0019`
+- [ ] Refine the Tier 1 action and menu-item component-library suite so supported menus also define the canonical current-item/selected-item state alongside the shared colorway contract; grouped-action and future consumer menus should not improvise their own current-item styling.
+  ID: P2-B-CQ-014
+  Iteration: 2
+  Scope: Tier 1 action/menu-item colorway suite, current-item menu state, shared semantic/ghost action treatment, supported standard colorway proof coverage
+  Path Coverage: shared Tier 1 action and menu-item entry points, supported standard colorway proofs, grouped-action UI Reference proof surfaces that validate the suite
+  Implemented in: `2-B-0020`
 
 ## Blocked
 - [ ] Apply the established Tier 1 action/menu-item suite to the account dropdown navigation options so account-menu links stop using one-off colorways and match the shared ghost action treatment while preserving left-aligned text and current menu layout.

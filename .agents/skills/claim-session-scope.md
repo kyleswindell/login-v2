@@ -33,6 +33,7 @@ Write:
 - Update an existing claim for the same session instead of duplicating it
 - Do NOT use this file for read-only sessions unless visibility is explicitly needed
 - Do NOT treat a claim as protection against conflicting writes
+- If the writable task is `batch-start` or `work-batch`, record the owned scope as the full `/docs/08-active/` workspace; mention CQ item IDs only as descriptive context, not as the actual ownership boundary
 
 ## Stop Conditions
 

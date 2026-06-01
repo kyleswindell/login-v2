@@ -116,6 +116,10 @@ Owned by:
 
 Queue-state rules:
 - `Ready To Implement` contains items that still require implementation work
+- `In Progress` contains the queue item currently claimed by the active `work-batch` pass
+- move a targeted item from `Ready To Implement` to `In Progress` as soon as implementation work begins for that item
+- continue or explicitly reclassify an existing unfinished `In Progress` item before claiming a new `Ready To Implement` item in a later pass
+- complete one claimed queue item at a time; do not move a second independently tracked item into `In Progress` until the current one reaches `Implemented Pending Review`, `Blocked`, or `Deferred`
 - `Implemented Pending Review` contains items that were implemented in a completed work pass, are available on the required review surface, and are awaiting human confirmation
 - if deployment is required for review, do not move an item into `Implemented Pending Review` until commit, push, and the canonical deploy all succeed
 - if implementation is complete but the required deploy fails or cannot be completed, record that deploy gap in the worklog/review state and keep the queue item out of `Implemented Pending Review`
@@ -223,6 +227,9 @@ Rules:
 - do not mark checklist items complete
 - do not finalize batch
 - if the pass builds Tier 2 patterns or feature UI from existing Tier 1 work, complete a Tier 1 consumption preflight before coding
+- treat `In Progress` as the explicit claim marker for the currently targeted queue item
+- if a prior pass left a queue item in `In Progress`, continue or explicitly reclassify that item before selecting a new `Ready To Implement` item
+- when multiple queue items are handled in one pass, claim and complete them sequentially; do not move a second independently tracked item into `In Progress` until the current one reaches an outcome state
 - for shared UI or system surfaces, identify the relevant render/update paths before calling the pass review-ready
 - examples of parallel paths include:
   - server-rendered markup
@@ -354,10 +361,13 @@ Rules:
   - `Implemented Pending Review`
   - `Blocked`
   - `Deferred`
+- `In Progress` is the live claim state for the active `work-batch` owner, not a general backlog bucket
+- if a pass ends with an unfinished `In Progress` item, the next `work-batch` pass must continue or explicitly reclassify that item before starting a new `Ready To Implement` item
 - `batch-update-manual-review-status` owns review-state transitions such as:
   - `Passed Review`
   - `Closed`
 - `Implemented Pending Review` is valid only when the item is actually reviewable on the required surface; if deployment is required, that means the deploy already succeeded
+- do not use queue item state or advisory claims as justification for multiple writers against the same active workspace
 - contains only actionable items
 - issues move through these sections only:
   - `Ready To Implement`

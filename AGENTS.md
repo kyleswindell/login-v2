@@ -47,6 +47,8 @@ Always respect branch ownership. Do not duplicate or reassign responsibility acr
 - Only batch workflows (`batch-start`, `work-batch`, `batch-update-manual-review-status`, `batch-review-and-finalize`) may modify it.
 - Do not manually alter its structure outside those workflows.
 - Active `change-queue.md` items should use stable queue IDs in the format `P<phase>-<batch>-CQ-###`.
+- `In Progress` is the active claim state for the current `work-batch` owner on a targeted queue item.
+- `work-batch` must move a targeted queue item from `Ready To Implement` to `In Progress` when implementation begins, and must move it out of `In Progress` to an outcome state before claiming another queue item unless the pass genuinely stops mid-item.
 - `Implemented Pending Review` is reserved for queue items that are actually reviewable on the required review surface; if deployment is required for review, the item does not belong there until that deploy succeeds.
 - Keep exploratory review discussion in chat until an agent normalizes it into concise queue language.
 - When discussing an existing queue item in chat, reference its queue ID when available.
@@ -161,6 +163,7 @@ Always respect branch ownership. Do not duplicate or reassign responsibility acr
 - Supported: multiple writable sessions only when each writable session has its own branch and its own worktree.
 - Not supported: concurrent `batch-start` or `work-batch` execution against the same shared `/docs/08-active/` workspace.
 - Not supported: multiple writable sessions editing the same working tree folder at the same time.
+- Not supported: splitting active-batch queue items across multiple writers by treating `In Progress` or advisory scope claims as per-item locks inside the same shared `/docs/08-active/` workspace.
 - Not supported: concurrent review-ledger final writes without serialization, because `doc-review-####` and `doc-sync-####` IDs are sequential and the shared index is a collision point.
 - Staging review ownership is single-branch at a time; only one non-`main` review branch should own staging during manual QA.
 
@@ -169,6 +172,7 @@ Coordination notes:
 - worktree isolation is the real safety boundary for concurrent writable work
 - advisory scope claims are coordination aids only and do not guarantee protection
 - use `.agents/session-scope-claims.json` only as a lightweight visibility layer, not as a lock
+- for `batch-start` and `work-batch`, the writable claim scope is the whole `/docs/08-active/` workspace; queue item IDs may appear only as descriptive context inside that broader claim
 
 ---
 

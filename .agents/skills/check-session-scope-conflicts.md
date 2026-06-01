@@ -30,6 +30,7 @@ Do NOT write files.
 - Treat the claim file as advisory only
 - Do NOT assume the absence of a claim means writable safety
 - If the scope overlaps an active claim, report the conflict and stop writable execution until the owner clarifies or releases it
+- If the intended writable task is `batch-start` or `work-batch`, treat any active claim on `/docs/08-active/` as conflicting even when the note mentions a different CQ item
 
 ## Output
 

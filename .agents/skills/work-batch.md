@@ -34,6 +34,7 @@ Before writing:
 - confirm current branch and worktree path
 - confirm another writable session is not already executing `batch-start` or `work-batch` for the same `/docs/08-active/` state
 - check `.agents/session-scope-claims.json` for conflicting advisory claims when available
+- treat active batch execution ownership as ownership of the whole `/docs/08-active/` workspace rather than of an individual queue item
 
 Stop if:
 - writable ownership of `/docs/08-active/` is unclear
@@ -60,7 +61,9 @@ Stop if:
 - Do not start unrelated cleanup
 - Do not fix adjacent issues unless they block the batch
 - If base batch implementation work remains, complete that before processing `change-queue.md`
+- If `change-queue.md` already contains an unfinished `In Progress` item, continue or explicitly reclassify that item before selecting a new `Ready To Implement` item
 - Once base batch implementation work is complete, process `change-queue.md` items in `Ready To Implement`
+- Treat `In Progress` as the explicit claim marker for the currently targeted queue item
 - If the pass builds Tier 2 patterns or feature UI from Tier 1, complete a Tier 1 consumption preflight before coding:
   - identify the exact Tier 1 building blocks being consumed
   - name whether each one is a `Blade component`, `Class/markup contract`, or `Hybrid`
@@ -152,12 +155,14 @@ Update `notes.md` with:
 If base batch implementation is complete, process `change-queue.md` items in `Ready To Implement`.
 
 For each targeted item:
-- move it to `In Progress` when work begins
+- if a prior pass already left that item in `In Progress`, continue or explicitly reclassify it before touching a new queue item
+- move it to `In Progress` before implementation edits tied to that item begin so the queue records the active claim immediately
 - attempt implementation
 - update it to one of:
   - `Implemented Pending Review`
   - `Blocked`
   - `Deferred`
+- finish or explicitly park that claimed item before moving any additional `Ready To Implement` item into `In Progress`
 - use `In Progress` only if work started but did not complete in this pass
 - record outcome in the current worklog
 - if a parallel render/update path for the same targeted surface is discovered and not fixed in the same pass, add a separate follow-up queue item before calling the pass review-ready
@@ -240,6 +245,7 @@ A work pass is complete only when:
 - `notes.md` reflects findings
 - `checklist.md` is annotated
 - targeted `change-queue.md` items are updated to an implementation outcome state
+- any queue item claimed in this pass was moved into `In Progress` before implementation work began
 - those queue outcomes match the real reviewability state of the pass, including deploy status when review depends on a deployed surface
 
 If visual review is required:

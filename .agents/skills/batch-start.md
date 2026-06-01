@@ -128,6 +128,8 @@ Keep `batch.md` limited to current-batch execution context only.
   - the queue is agent-managed and implementation-ready, not a scratchpad
   - exploratory review discussion stays in chat until normalized
   - active queue items use stable IDs in the format `P<phase>-<batch>-CQ-###`
+  - `In Progress` marks the queue item currently claimed by the writable `work-batch` owner
+  - an unfinished `In Progress` item should be continued or explicitly reclassified before a new `Ready To Implement` item is claimed
 - Future queue items should follow the documented minimal format:
   - one concise actionable bullet
   - a stable `ID:` line for active items

@@ -35,6 +35,7 @@ Produce a clean, implementation-ready prompt for the next `Work Batch` pass that
 ## Rules
 - Work only from the currently loaded active batch
 - Use `change-queue.md` as the primary driver for next-step fixes
+- Prioritize unfinished `In Progress` items before new `Ready To Implement` items
 - Refer to queue items by `ID:` when available
 - Treat queue-item headline bullets as the actionable units; use continuation lines such as `ID:`, `Iteration:`, `Scope:`, `Path Coverage:`, `Implemented in:`, `Follow-up To:`, and `Supersedes:` as support context only
 - Use `review.md` to understand current blockers and review state
@@ -45,6 +46,7 @@ Produce a clean, implementation-ready prompt for the next `Work Batch` pass that
 - Do NOT include unrelated cleanup
 - Keep the prompt direct, specific, and grouped by implementation goals
 - Prefer outcome-based instructions over implementation micromanagement
+- When multiple actionable queue items belong in one pass, frame them as sequential queue claims rather than parallel picks
 - If a queued issue reflects a standards ambiguity rather than implementation work, call that out instead of forcing a work-batch prompt
 
 ## Stop Conditions
@@ -77,11 +79,12 @@ Determine:
 
 ### 3. Read change queue
 Prioritize items in this order:
-1. blocking implementation issues
-2. visual review failures
-3. functional review failures
-4. standards-aligned cleanup required for review completion
-5. deferred items must be excluded
+1. existing `In Progress` items that need continuation or explicit reclassification
+2. blocking implementation issues
+3. visual review failures
+4. functional review failures
+5. standards-aligned cleanup required for review completion
+6. deferred items must be excluded
 
 ### 4. Build the next work prompt
 The generated prompt should include:
@@ -89,6 +92,7 @@ The generated prompt should include:
 - short goal line
 - instruction to execute the Work Batch workflow
 - grouped implementation sections based on queued items
+- a reminder to move each targeted queue item into `In Progress` before implementation begins and to close it out before claiming the next item when multiple queue items are included
 - a Tier 1 consumption reminder when the queued work clearly depends on Tier 1 building blocks
 - explicit exclusions to prevent drift
 - `/docs/08-active/` update requirement

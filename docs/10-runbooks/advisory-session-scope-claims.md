@@ -35,6 +35,11 @@ Typical use cases:
 * a writable session is handing work off and should release or correct its claim
 * multiple writable sessions are running in separate worktrees and need lightweight visibility into who owns which scope
 
+For active batch execution:
+
+* `batch-start` and `work-batch` should record the owned scope as the whole `/docs/08-active/` workspace
+* a CQ item ID may be included only as descriptive context about the current focus
+
 ## When Not To Use Advisory Claims
 
 Do not treat advisory claims as a substitute for the actual concurrency model.
@@ -104,6 +109,10 @@ Still required:
 * separate worktrees for concurrent writers
 * serialized review-ledger final writes
 * singleton ownership of `/docs/08-active/` batch-state updates
+
+Not implied:
+
+* a CQ item note inside an advisory claim does not create a supported item-level lock model for shared active-batch execution
 
 ## Related
 

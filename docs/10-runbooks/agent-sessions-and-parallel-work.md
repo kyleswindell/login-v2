@@ -129,6 +129,8 @@ Before any session starts editing:
 6. confirm the scope this session owns before making edits
 7. if this session will write, confirm whether an advisory scope claim already exists in `.agents/session-scope-claims.json`
 
+For `batch-start` or `work-batch`, the owned scope is the whole `/docs/08-active/` workspace. A queue item ID may be recorded as the current focus, but it does not narrow the writable ownership boundary.
+
 If any of these are unclear, do not start writing.
 
 ## Shared-Folder Rules
@@ -139,6 +141,7 @@ When multiple sessions use the same folder:
 * planning sessions should prefer read-only planning output unless they are the active writer
 * review and audit sessions should report findings, not apply fixes, unless the writable role is explicitly handed over
 * do not treat uncommitted local changes as completed work until the writer closes out or explicitly hands off the state
+* do not split active-batch queue items across same-folder writers by treating `In Progress` or advisory claims as per-item locks
 
 ## Delivery Flow And Sign-Off Gates
 
@@ -186,6 +189,12 @@ If used, keep it lightweight:
 * worktree path
 * owned scope
 * expected close-out or handoff time
+
+For active batch execution:
+
+* record the owned scope as `/docs/08-active/`
+* use queue item IDs only as descriptive context about the current focus
+* do not treat a CQ item reference as permission for two writers to divide one active batch workspace
 
 Do not rely on this as protection. It documents intent only.
 

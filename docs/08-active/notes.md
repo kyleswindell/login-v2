@@ -27,6 +27,36 @@
   - establishing the Tier 1 date/date-time baseline and the Tier 2 date-range filter pattern
   - establishing the Tier 2 identity summary card and adopting it on the account/profile proof surface
   - strengthening the shared sub-navigation active state in both dark and light mode
+- Follow-up manual review on `P2-B-CQ-001` found that the locale/timezone selector still needs another pass:
+  - the option list is effectively uncapped and can extend off-page
+  - the interaction still reads like a separate search field filtering a list instead of one integrated searchable dropdown-select variant
+  - the supporting email/phone examples on the form-pattern proof remain static proof examples rather than live validation workflows, so the page should be judged as a library proof unless a later Batch B item explicitly promotes interactive demo-state behavior
+- Follow-up manual review on the new identity-summary proof found two additional design gaps:
+  - the current default identity-summary card is too busy as a single universal variant and should establish lighter versus fuller density options
+  - the same pattern family should likely cover both person and company/entity summaries when the structure is still avatar-or-mark + title + supporting metadata + optional status/actions
+- Follow-up manual review also found a broader metadata readability issue that affects both `identity-summary-card` and `data-list-item`:
+  - compact metadata rows currently read as continuous text because the pieces are only separated by spacing
+  - likely best-practice correction should use clearer grouping cues such as semantic separators, tag-like category treatment where appropriate, or reduced all-caps treatment rather than relying on alternating colors alone
+- Follow-up design guidance review against trusted third-party systems supports the same direction for the reopened identity-summary and metadata issues:
+  - Atlassian typography guidance advises avoiding all-caps for readability except for acronyms, which supports moving compact metadata rows away from all-caps text blocks when they are carrying normal content labels or values
+  - Atlassian spacing guidance emphasizes proximity and intentional spacing to show semantic grouping, which supports distinct metadata grouping treatment instead of relying on raw gaps alone
+  - Carbon tag guidance supports concise tags for categorical labels, but not for every metadata token; category/status items can use tag-like treatment while dates, owners, and locales should stay readable body metadata
+  - Carbon structured-list guidance supports sentence-case row text and stacked hierarchy for read-only data, which points toward either explicit separators or light vertical stacking instead of one dense inline run of metadata
+- Follow-up manual review on `P2-B-CQ-003` found that the proof-intent improvements are directionally correct but still inconsistent:
+  - the top-of-page `How to read this proof` notice is clear and visibly separate from the component examples
+  - the smaller in-card or in-section explanatory notes are not using that same visual notice treatment, so they can still read like part of the component itself instead of library guidance
+  - the next pass should normalize one shared proof-note treatment and use it consistently wherever intended behavior, usage bounds, or scope clarification is needed
+  - broader ideas like temporary review-status banners, under-review states, or inline change-queue IDs should stay out of the canonical proof contract unless a later review-mode system is intentionally designed for that purpose
+- A later follow-up decision now promotes that separate review-mode idea into its own Batch B item:
+  - `P2-B-CQ-013` should establish a temporary active-batch proof review mode for UI Reference pages
+  - this mode can surface queue IDs, scoped reviewer focus, and under-review context during active batches
+  - it should remain clearly separate from the permanent proof-note contract and should be removable or disableable at batch closeout
+- Batch B pass `2-B-0013` is now deployed to staging on `main` and resolves the latest reopened Batch B review queue by:
+  - replacing the previous filter-plus-native-select locale/timezone control with one bounded integrated searchable dropdown-select entry point
+  - introducing a shared proof-note wrapper so page-level and section-level library guidance use one clearly defined notice treatment
+  - adding a temporary active-batch proof review banner pattern with queue IDs and reviewer focus notes on the relevant Tier 2 proof pages
+  - refining the identity-summary family into compact, standard, and detailed proof variants while proving that person and company/entity summaries can share the same family when their anatomy aligns
+  - normalizing compact metadata groups on identity summaries and data-list rows so values use clearer separators and sentence-case readability instead of all-caps spacing alone
 - Batch B passes `2-B-0002` through `2-B-0010` now leave behind a full first-pass Tier 2 proof map in UI Reference:
   - form patterns
   - data/content patterns
@@ -53,6 +83,7 @@
 - Batch B first-pass implementation closes the remaining planned slices in one review-ready pass so manual visual QA can happen against the full internal library/proof surface set instead of piecemeal.
 - Batch B review-fix pass `2-B-0011` uses a shared option catalog and a small searchable-selector entry point rather than continuing the free-text localization demo pattern.
 - Batch B review-fix pass `2-B-0012` uses shared pattern entry points for widgets, date ranges, and identity summaries rather than extending existing proof pages with more one-off markup.
+- The `identity-summary-card` should stay one pattern family with density/entity variants rather than split immediately into unrelated person and company components, unless later proof work shows their required anatomy diverges materially.
 
 ## Risks / Questions
 - Realtime notification toast rendering remains a feature-level JS path and is intentionally outside this Tier 1 hardening pass.

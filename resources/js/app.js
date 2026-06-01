@@ -215,91 +215,133 @@ const initSearchableSelects = () => {
             return;
         }
 
+        const trigger = root.querySelector('[data-ui-searchable-select-trigger]');
+        const triggerText = root.querySelector('[data-ui-searchable-select-trigger-text]');
+        const panel = root.querySelector('[data-ui-searchable-select-panel]');
         const filterInput = root.querySelector('[data-ui-searchable-select-filter]');
-        const select = root.querySelector('[data-ui-searchable-select-list]');
-        const count = root.querySelector('[data-ui-searchable-select-count]');
+        const hiddenInput = root.querySelector('[data-ui-searchable-select-value]');
+        const emptyState = root.querySelector('[data-ui-searchable-select-empty]');
+        const optionButtons = Array.from(root.querySelectorAll('[data-ui-searchable-select-option]'));
 
-        if (!(filterInput instanceof HTMLInputElement) || !(select instanceof HTMLSelectElement)) {
+        if (
+            !(trigger instanceof HTMLButtonElement)
+            || !(panel instanceof HTMLElement)
+            || !(filterInput instanceof HTMLInputElement)
+            || !(hiddenInput instanceof HTMLInputElement)
+            || optionButtons.length === 0
+        ) {
             return;
         }
 
         root.dataset.uiSearchableSelectInit = '1';
 
         const emptyLabel = root.dataset.uiSearchableSelectEmptyLabel || 'No matching options';
-        const originalOptions = Array.from(select.options).map((option) => ({
-            value: option.value,
-            label: option.textContent || '',
-            disabled: option.disabled,
-            placeholder: option.dataset.uiSearchableSelectPlaceholder === 'true',
-        }));
-        const totalOptions = originalOptions.filter((option) => !option.placeholder).length;
+        const placeholder = trigger.dataset.uiSearchableSelectLabel || 'Select an option';
 
-        const updateCount = (visibleCount) => {
-            if (!(count instanceof HTMLElement)) {
-                return;
+        const closePanel = ({ restoreFocus = false, clearSearch = true } = {}) => {
+            panel.classList.add('hidden');
+            trigger.setAttribute('aria-expanded', 'false');
+
+            if (clearSearch && filterInput.value !== '') {
+                filterInput.value = '';
+                renderOptions();
             }
 
-            count.textContent = filterInput.value.trim() === ''
-                ? `${totalOptions} options available`
-                : `${visibleCount} of ${totalOptions} options shown`;
+            if (restoreFocus) {
+                trigger.focus();
+            }
+        };
+
+        const openPanel = () => {
+            panel.classList.remove('hidden');
+            trigger.setAttribute('aria-expanded', 'true');
+            window.requestAnimationFrame(() => {
+                filterInput.focus();
+                filterInput.select();
+            });
+        };
+
+        const syncSelectedState = () => {
+            const selectedValue = hiddenInput.value;
+            const selectedButton = optionButtons.find((option) => option.dataset.value === selectedValue);
+
+            optionButtons.forEach((option) => {
+                const isSelected = option.dataset.value === selectedValue;
+                option.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+
+                const existingIcon = option.querySelector('[data-ui-searchable-select-check]');
+
+                if (isSelected && !existingIcon) {
+                    option.insertAdjacentHTML('beforeend', `
+                        <svg data-ui-searchable-select-check xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 shrink-0" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.25 7.313a1 1 0 0 1-1.42 0L3.29 9.268a1 1 0 1 1 1.414-1.414l4.046 4.045 6.543-6.609a1 1 0 0 1 1.41 0Z" clip-rule="evenodd" />
+                        </svg>
+                    `);
+                }
+
+                if (!isSelected && existingIcon) {
+                    existingIcon.remove();
+                }
+            });
+
+            if (triggerText instanceof HTMLElement) {
+                triggerText.textContent = selectedButton?.dataset.label || placeholder;
+            }
         };
 
         const renderOptions = () => {
             const query = filterInput.value.trim().toLowerCase();
-            const currentValue = select.value;
-            const matchedOptions = originalOptions.filter((option) => {
-                if (option.placeholder) {
-                    return true;
-                }
-
-                const haystack = `${option.label} ${option.value}`.toLowerCase();
-
-                return query === '' || haystack.includes(query);
-            });
-            const hasCurrentMatch = matchedOptions.some((option) => option.value === currentValue);
             let visibleCount = 0;
 
-            select.innerHTML = '';
+            optionButtons.forEach((option) => {
+                const haystack = `${option.dataset.label || ''} ${option.dataset.value || ''}`.toLowerCase();
+                const visible = query === '' || haystack.includes(query);
+                option.classList.toggle('hidden', !visible);
 
-            if (!hasCurrentMatch && currentValue !== '') {
-                const currentOption = originalOptions.find((option) => option.value === currentValue && !option.placeholder);
-
-                if (currentOption) {
-                    const preservedOption = new Option(
-                        `${currentOption.label} (current selection)`,
-                        currentOption.value,
-                        true,
-                        true,
-                    );
-
-                    select.add(preservedOption);
-                }
-            }
-
-            matchedOptions.forEach((option) => {
-                const nextOption = new Option(option.label, option.value, false, hasCurrentMatch && option.value === currentValue);
-
-                if (option.disabled) {
-                    nextOption.disabled = true;
-                }
-
-                if (option.placeholder) {
-                    nextOption.dataset.uiSearchableSelectPlaceholder = 'true';
-                } else {
+                if (visible) {
                     visibleCount += 1;
                 }
-
-                select.add(nextOption);
             });
 
-            if (visibleCount === 0) {
-                const emptyOption = new Option(emptyLabel, '', false, false);
-                emptyOption.disabled = true;
-                select.add(emptyOption);
+            if (!(emptyState instanceof HTMLElement)) {
+                return;
             }
 
-            updateCount(visibleCount);
+            emptyState.classList.toggle('hidden', visibleCount > 0);
+            emptyState.textContent = emptyLabel;
         };
+
+        trigger.addEventListener('click', () => {
+            const isOpen = !panel.classList.contains('hidden');
+
+            if (isOpen) {
+                closePanel({ restoreFocus: false });
+                return;
+            }
+
+            document.querySelectorAll('[data-ui-searchable-select-panel]').forEach((otherPanel) => {
+                if (!(otherPanel instanceof HTMLElement) || otherPanel === panel) {
+                    return;
+                }
+
+                otherPanel.classList.add('hidden');
+                const otherTrigger = otherPanel.parentElement?.querySelector('[data-ui-searchable-select-trigger]');
+
+                if (otherTrigger instanceof HTMLElement) {
+                    otherTrigger.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            openPanel();
+        });
+
+        optionButtons.forEach((option) => {
+            option.addEventListener('click', () => {
+                hiddenInput.value = option.dataset.value || '';
+                syncSelectedState();
+                closePanel({ restoreFocus: true });
+            });
+        });
 
         filterInput.addEventListener('input', renderOptions);
         filterInput.addEventListener('keydown', (event) => {
@@ -307,13 +349,27 @@ const initSearchableSelects = () => {
                 return;
             }
 
-            filterInput.value = '';
-            renderOptions();
-            filterInput.blur();
+            closePanel({ restoreFocus: true });
         });
-        select.addEventListener('change', renderOptions);
 
-        updateCount(totalOptions);
+        document.addEventListener('click', (event) => {
+            if (!(event.target instanceof HTMLElement) || root.contains(event.target)) {
+                return;
+            }
+
+            closePanel();
+        });
+
+        document.addEventListener('focusin', (event) => {
+            if (!(event.target instanceof HTMLElement) || root.contains(event.target)) {
+                return;
+            }
+
+            closePanel();
+        });
+
+        syncSelectedState();
+        renderOptions();
     });
 };
 

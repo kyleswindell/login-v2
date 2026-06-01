@@ -6,16 +6,18 @@
     'meta' => [],
     'statusLabel' => null,
     'statusSemantic' => 'neutral',
+    'variant' => 'standard',
 ])
 
 @php
+    $resolvedVariant = in_array($variant, ['compact', 'standard', 'detailed'], true) ? $variant : 'standard';
     $metaEntries = collect(is_array($meta) ? $meta : [$meta])
         ->filter(fn ($value) => filled($value))
         ->values()
         ->all();
 @endphp
 
-<article {{ $attributes->class(['ui-pattern-identity-summary'])->merge(['data-ui-pattern' => 'identity-summary-card']) }}>
+<article {{ $attributes->class(['ui-pattern-identity-summary', 'ui-pattern-identity-summary-'.$resolvedVariant])->merge(['data-ui-pattern' => 'identity-summary-card']) }}>
     <div class="ui-pattern-identity-summary-main">
         <div class="ui-pattern-identity-summary-avatar" aria-hidden="true">
             @if ($avatarUrl)
@@ -45,9 +47,14 @@
             </div>
 
             @if ($metaEntries !== [])
-                <div class="ui-pattern-identity-summary-meta">
+                <div class="ui-pattern-compact-meta ui-pattern-identity-summary-meta">
                     @foreach ($metaEntries as $entry)
-                        <span>{{ $entry }}</span>
+                        <span class="ui-pattern-compact-meta-item">
+                            @if (! $loop->first)
+                                <span class="ui-pattern-compact-meta-separator" aria-hidden="true">•</span>
+                            @endif
+                            <span>{{ $entry }}</span>
+                        </span>
                     @endforeach
                 </div>
             @endif

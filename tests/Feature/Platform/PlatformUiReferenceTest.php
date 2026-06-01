@@ -48,19 +48,23 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Sub-navigation Bar')
             ->assertSee('Dropdown Action Menu')
             ->assertSee('Search And Filter Bar')
+            ->assertSee('Active Batch Review')
             ->assertSee('data-ui-pattern="date-range-filter"', false)
             ->assertSee('Reset / Apply:')
             ->assertSee('data-ui-pattern="page-title-actions-row"', false)
             ->assertSee('data-ui-pattern="sub-navigation-bar"', false)
-            ->assertSee('data-ui-pattern="dropdown-action-menu"', false);
+            ->assertSee('data-ui-pattern="dropdown-action-menu"', false)
+            ->assertSee('data-ui-component="inline-alert"', false);
 
         $this->get('/platform/ui-reference/patterns/forms')
             ->assertOk()
             ->assertSee('Validation Summary and Form Actions')
             ->assertSee('Support Email')
             ->assertSee('data-ui-component="searchable-select"', false)
+            ->assertSee('data-ui-searchable-select-trigger', false)
             ->assertSee('data-ui-pattern="form-section"', false)
-            ->assertSee('data-ui-pattern="validation-summary"', false);
+            ->assertSee('data-ui-pattern="validation-summary"', false)
+            ->assertSee('Selector intent');
 
         $this->get('/platform/ui-reference/patterns/data-content')
             ->assertOk()
@@ -70,7 +74,9 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-ui-pattern="stat-card"', false)
             ->assertSee('Support Runbook')
             ->assertSee('<a href="#" class="ui-link"', false)
-            ->assertSee('data-ui-pattern="empty-state"', false);
+            ->assertSee('data-ui-pattern="empty-state"', false)
+            ->assertSee('Para Solutions')
+            ->assertSee('Identity-summary variants');
 
         $this->get('/platform/ui-reference/patterns/layout')
             ->assertOk()

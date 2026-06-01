@@ -24,6 +24,7 @@
             kicker="Account archetype proof"
         >
             <x-ui.patterns.identity-summary-card
+                variant="detailed"
                 :name="$user->name"
                 subtitle="Internal account profile"
                 :initials="$initials ?: 'NA'"

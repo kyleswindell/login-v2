@@ -38,7 +38,8 @@ class PlatformSettingsTest extends TestCase
         $this->get('/platform/settings/general')
             ->assertOk()
             ->assertSee('Platform General')
-            ->assertSee('data-ui-component="searchable-select"', false);
+            ->assertSee('data-ui-component="searchable-select"', false)
+            ->assertSee('data-ui-searchable-select-trigger', false);
         $this->get('/platform/settings/general/company-information')->assertOk()->assertSee('Company Information');
         $this->get('/platform/settings/general/localization')->assertOk()->assertSee('Localization');
         $this->get('/platform/settings/general/email')->assertOk()->assertSee('Email');

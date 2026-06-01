@@ -22,9 +22,14 @@
         </div>
 
         @if ($meta !== [])
-            <div class="ui-pattern-data-list-item-meta">
+            <div class="ui-pattern-compact-meta ui-pattern-data-list-item-meta">
                 @foreach ($meta as $entry)
-                    <span>{{ $entry }}</span>
+                    <span class="ui-pattern-compact-meta-item">
+                        @if (! $loop->first)
+                            <span class="ui-pattern-compact-meta-separator" aria-hidden="true">•</span>
+                        @endif
+                        <span>{{ $entry }}</span>
+                    </span>
                 @endforeach
             </div>
         @endif

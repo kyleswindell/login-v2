@@ -15,21 +15,18 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 ## In Progress
 
 ## Implemented Pending Review
-- [ ] Replace the free-text `Default Timezone` and `Default Locale` examples with searchable option-backed selectors on the form-pattern proof and touched localization proof surfaces; keep validator-driven examples on true free-entry fields such as email address and phone number instead of using locale/timezone as text-input validation demos.
+- [ ] Retune the locale/timezone selector treatment so the searchable option list stays bounded within the viewport and behaves like one integrated searchable dropdown-select variant rather than a separate search field sitting above an uncapped option list.
   ID: P2-B-CQ-001
-  Scope: Tier 2 form patterns, localization defaults, account preference localization fields
-  Path Coverage: `/platform/ui-reference/patterns/forms`, `/platform/settings/general`, `/account/preferences`
-  Implemented in: `2-B-0011`
-- [ ] Repair the `Key Value Display` read-only detail proof so linked/value content renders correctly instead of leaking broken inline markup into the UI Reference output.
-  ID: P2-B-CQ-002
-  Scope: Tier 2 data/content patterns, read-only detail proof
-  Path Coverage: `/platform/ui-reference/patterns/data-content`
-  Implemented in: `2-B-0011`
-- [ ] Clarify the Tier 2 proof-page intent so examples read as intentional library demonstrations instead of ambiguous mockups; make the `Search And Filter Bar` proof explicit about what the search input, filter select, and actions represent, and add stronger on-page descriptors where component behavior or scope is otherwise unclear.
+  Iteration: 2
+  Scope: Tier 2 form patterns, localization defaults, account preference localization fields, shared searchable selector behavior
+  Path Coverage: `/platform/ui-reference/patterns/forms`, `/platform/settings/general`, `/account/preferences`, shared `searchable-select` entry point
+  Implemented in: `2-B-0013`
+- [ ] Normalize the Tier 2 proof-note treatment so explanatory library guidance is presented through one clearly defined shared notice style instead of a mix of subtle in-card text blocks and stronger top-of-page notices; proof-only notes should read clearly as library guidance rather than component UI, and the treatment should be used consistently wherever intended behavior or scope needs explanation.
   ID: P2-B-CQ-003
-  Scope: Tier 2 proof-page clarity, search/filter pattern guidance, on-page usage notes
-  Path Coverage: `/platform/ui-reference/patterns/navigation`, related Tier 2 proof pages where intent is unclear
-  Implemented in: `2-B-0011`
+  Iteration: 2
+  Scope: Tier 2 proof-page clarity, shared proof-note styling, explanation of intended behavior and scope
+  Path Coverage: `/platform/ui-reference/patterns/*`, related proof surfaces where explanatory notes appear
+  Implemented in: `2-B-0013`
 - [ ] Make the grouped-actions dropdown action menu close when focus or pointer interaction moves outside the open menu, and treat that outside-click dismissal as the shared default behavior for this pattern instead of a page-by-page expectation.
   ID: P2-B-CQ-004
   Scope: Tier 2 dropdown action menu behavior, shared dismissal contract
@@ -55,11 +52,6 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Scope: Tier 2 date filtering controls, range selection pattern, list/report filter reuse
   Path Coverage: UI Reference navigation/tables/archetype proofs, future reporting/list surfaces
   Implemented in: `2-B-0012`
-- [ ] Establish a reusable Tier 2 profile or identity summary card pattern for internal account/operator summaries so avatar, name, supporting metadata, statuses, and optional actions are standardized instead of assembled ad hoc from key-value or list blocks.
-  ID: P2-B-CQ-009
-  Scope: Tier 2 identity summary pattern, account/profile card anatomy, avatar/meta/action composition
-  Path Coverage: account/profile proofs, future operator/customer summary surfaces
-  Implemented in: `2-B-0012`
 - [ ] Retune the sub-navigation bar active state so the current item is clearly readable in both dark and light mode; use a more visible soft neutral active treatment instead of the current barely perceptible state.
   ID: P2-B-CQ-010
   Scope: Tier 2 sub-navigation active-state treatment, shared navigation readability
@@ -70,11 +62,32 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Scope: Tier 2 dropdown action menu overlay layering, clipping and stacking behavior
   Path Coverage: shared `dropdown-action-menu` pattern, current grouped-action proofs inside content-section blocks
   Implemented in: `2-B-0012`
+- [ ] Refine the identity summary pattern so it supports multiple density variants instead of one overly busy default card; the current proof should establish lighter and fuller identity-summary options and clarify that the same pattern family can represent either a person or a company/entity summary when the required fields stay structurally similar.
+  ID: P2-B-CQ-009
+  Iteration: 2
+  Scope: Tier 2 identity summary variants, person/company entity-summary flexibility, density guidance
+  Path Coverage: `/platform/ui-reference/patterns/data-content`, `/platform/ui-reference/patterns/archetypes`, `/account`, future operator/customer/company summary surfaces
+  Implemented in: `2-B-0013`
+- [ ] Improve the readability contract for compact metadata groups on Tier 2 summary/list surfaces so adjacent metadata items do not visually collapse into one sentence; establish a clearer separator/grouping treatment and reduce overuse of all-caps metadata where it harms scanability.
+  ID: P2-B-CQ-012
+  Scope: compact metadata readability, separators/grouping, typographic treatment on Tier 2 summaries and list rows
+  Path Coverage: `identity-summary-card`, `data-list-item`, related summary/list proof surfaces
+  Implemented in: `2-B-0013`
+- [ ] Establish an active-batch proof review mode for UI Reference pages so in-development proof surfaces can show temporary review-status context, scoped queue IDs, and reviewer focus notes without baking those review markers into the permanent component library pages.
+  ID: P2-B-CQ-013
+  Scope: temporary proof review overlays, active-batch review context, page-level review targeting for UI Reference
+  Path Coverage: active-batch UI Reference proof pages during Batch B and future design-system review passes
+  Implemented in: `2-B-0013`
 
 ## Blocked
 
 ## Deferred
 
 ## Passed Review
+- [x] Repair the `Key Value Display` read-only detail proof so linked/value content renders correctly instead of leaking broken inline markup into the UI Reference output.
+  ID: P2-B-CQ-002
+  Scope: Tier 2 data/content patterns, read-only detail proof
+  Path Coverage: `/platform/ui-reference/patterns/data-content`
+  Implemented in: `2-B-0011`
 
 ## Closed

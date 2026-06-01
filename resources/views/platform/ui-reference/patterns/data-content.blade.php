@@ -16,9 +16,21 @@
             kicker="Tier 2B"
         />
 
-        <x-ui.inline-alert semantic="notice" title="How to read this proof">
+        <x-ui.patterns.proof-review-banner
+            :items="[
+                ['id' => 'P2-B-CQ-009', 'note' => 'Identity summary should prove lighter and fuller variants, while staying one family for person and company/entity summaries.'],
+                ['id' => 'P2-B-CQ-012', 'note' => 'Compact metadata rows should read as distinct pieces of information, not one run-on sentence.'],
+                ['id' => 'P2-B-CQ-013', 'note' => 'This page also demonstrates the temporary active-batch review overlay system.'],
+            ]"
+            :focus="[
+                'Separate permanent library guidance from temporary review context.',
+                'Check the metadata treatment on both identity summaries and data-list rows.',
+            ]"
+        />
+
+        <x-ui.patterns.proof-note semantic="notice" title="How to read this proof">
             These examples show the expected content shape for read-only summaries and fallback states. Values should render as plain text by default, with trusted linked content called out intentionally instead of leaking raw markup into the page.
-        </x-ui.inline-alert>
+        </x-ui.patterns.proof-note>
 
         <x-ui.patterns.content-section-block
             title="Stat Cards"
@@ -59,30 +71,68 @@
                 description="Use identity summary cards when the surface needs avatar, name, status, and supporting metadata before deeper read-only detail."
                 kicker="Identity summary"
             >
-                <x-ui.patterns.identity-summary-card
-                    name="Alex Operator"
-                    subtitle="Platform super administrator"
-                    initials="AO"
-                    :meta="[
-                        'alex.operator@parasolutions.com',
-                        'Platform Team',
-                        'America/New_York',
-                    ]"
-                    status-label="Verified"
-                    status-semantic="success"
-                >
-                    <x-slot:actions>
-                        <x-ui.button variant="outline" size="sm">Message</x-ui.button>
-                        <x-ui.button semantic="primary" size="sm">Open profile</x-ui.button>
-                    </x-slot:actions>
+                <div class="space-y-4">
+                    <x-ui.patterns.proof-note semantic="notice" title="Identity-summary variants">
+                        Use the same identity-summary family for compact, standard, and detailed read-only summaries. Promote a separate company/entity component only if the required anatomy diverges beyond mark/avatar, name, metadata, status, and optional actions.
+                    </x-ui.patterns.proof-note>
 
-                    <x-ui.patterns.key-value-display
-                        :items="[
-                            ['label' => 'Default locale', 'value' => 'English (United States)'],
-                            ['label' => 'Last sign-in', 'value' => 'Today at 8:41 AM'],
+                    <x-ui.patterns.identity-summary-card
+                        variant="compact"
+                        name="Alex Operator"
+                        subtitle="Platform super administrator"
+                        initials="AO"
+                        :meta="[
+                            'alex.operator@parasolutions.com',
+                            'Platform team',
+                            'America/New_York',
                         ]"
+                        status-label="Verified"
+                        status-semantic="success"
                     />
-                </x-ui.patterns.identity-summary-card>
+
+                    <x-ui.patterns.identity-summary-card
+                        name="Para Solutions"
+                        subtitle="Primary internal company profile"
+                        initials="PS"
+                        :meta="[
+                            'Company identity',
+                            'Workspace owner',
+                            'Updated May 31',
+                        ]"
+                        status-label="Active"
+                        status-semantic="notice"
+                    >
+                        <x-slot:actions>
+                            <x-ui.button variant="outline" size="sm">Open record</x-ui.button>
+                        </x-slot:actions>
+                    </x-ui.patterns.identity-summary-card>
+
+                    <x-ui.patterns.identity-summary-card
+                        variant="detailed"
+                        name="Alex Operator"
+                        subtitle="Platform super administrator"
+                        initials="AO"
+                        :meta="[
+                            'alex.operator@parasolutions.com',
+                            'Platform team',
+                            'America/New_York',
+                        ]"
+                        status-label="Verified"
+                        status-semantic="success"
+                    >
+                        <x-slot:actions>
+                            <x-ui.button variant="outline" size="sm">Message</x-ui.button>
+                            <x-ui.button semantic="primary" size="sm">Open profile</x-ui.button>
+                        </x-slot:actions>
+
+                        <x-ui.patterns.key-value-display
+                            :items="[
+                                ['label' => 'Default locale', 'value' => 'English (United States)'],
+                                ['label' => 'Last sign-in', 'value' => 'Today at 8:41 AM'],
+                            ]"
+                        />
+                    </x-ui.patterns.identity-summary-card>
+                </div>
             </x-ui.patterns.content-section-block>
 
             <x-ui.patterns.content-section-block

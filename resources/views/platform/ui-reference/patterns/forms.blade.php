@@ -15,9 +15,21 @@
             </x-slot:actions>
         </x-ui.patterns.page-title-actions-row>
 
-        <x-ui.inline-alert semantic="notice" title="How to read this proof">
+        <x-ui.patterns.proof-review-banner
+            :items="[
+                ['id' => 'P2-B-CQ-001', 'note' => 'Verify locale and timezone controls behave as one bounded searchable dropdown-select instead of a separate filter plus long list.'],
+                ['id' => 'P2-B-CQ-003', 'note' => 'Proof-only guidance should use the same clearly defined notice treatment as the rest of the active batch review mode.'],
+                ['id' => 'P2-B-CQ-013', 'note' => 'This page now demonstrates the temporary active-batch review overlay system.'],
+            ]"
+            :focus="[
+                'Treat the review banner as temporary batch-review context, not permanent component UI.',
+                'Judge the locale/timezone examples as integrated selectors and the email/phone rows as static library proofs.',
+            ]"
+        />
+
+        <x-ui.patterns.proof-note semantic="notice" title="How to read this proof">
             Use option-backed selectors when the acceptable values are known up front, such as locale and timezone. Keep validator-heavy examples on fields the user truly types free-form, such as email addresses and phone numbers.
-        </x-ui.inline-alert>
+        </x-ui.patterns.proof-note>
 
         <x-ui.patterns.form-section
             title="Form Group and Form Section"
@@ -52,7 +64,7 @@
                 <x-ui.patterns.inline-form-row
                     for="inline-timezone"
                     label="Default Timezone"
-                    helper="Filter the approved timezone list, then choose the default from the option-backed selector."
+                    helper="Search the approved timezone list inside the option-backed selector, then choose the default."
                 >
                     <x-ui.searchable-select
                         id="inline-timezone"
@@ -63,6 +75,10 @@
                         search-placeholder="Search timezones"
                     />
                 </x-ui.patterns.inline-form-row>
+
+                <x-ui.patterns.proof-note semantic="notice" title="Selector intent">
+                    This is the canonical integrated searchable selector variant for long known-option lists. Search happens inside the open dropdown, and the option list stays bounded to the viewport instead of stretching off-page.
+                </x-ui.patterns.proof-note>
 
                 <x-ui.patterns.inline-form-row
                     for="inline-locale"

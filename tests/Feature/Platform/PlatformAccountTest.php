@@ -36,7 +36,8 @@ class PlatformAccountTest extends TestCase
             ->assertOk()
             ->assertSee('Account Preferences')
             ->assertSee('Personal Defaults')
-            ->assertSee('data-ui-component="searchable-select"', false);
+            ->assertSee('data-ui-component="searchable-select"', false)
+            ->assertSee('data-ui-searchable-select-trigger', false);
     }
 
     public function test_account_settings_can_be_updated(): void

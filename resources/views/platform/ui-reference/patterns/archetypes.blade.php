@@ -109,10 +109,11 @@
 
                 <x-ui.patterns.content-section-block title="Account / Profile" description="Account detail and preferences prove shared identity summaries and editable scaffolding reuse without changing feature behavior." kicker="Archetype">
                     <x-ui.patterns.identity-summary-card
+                        variant="standard"
                         name="Jordan Reviewer"
                         subtitle="Platform operator"
                         initials="JR"
-                        :meta="['jordan@example.com', 'Platform Team', 'Reviewer']"
+                        :meta="['jordan@example.com', 'Platform team', 'Reviewer role']"
                         status-label="MFA enabled"
                         status-semantic="notice"
                     >

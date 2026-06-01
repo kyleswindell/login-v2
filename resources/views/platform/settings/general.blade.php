@@ -44,7 +44,7 @@
                     <x-ui.patterns.form-group
                         for="timezone"
                         label="Default Timezone"
-                        helper="Filter the approved timezone list, then choose the platform default used when no user preference is set."
+                        helper="Search the approved timezone list inside the shared selector, then choose the platform default used when no user preference is set."
                         :error="$errors->first('timezone')"
                     >
                         <x-ui.searchable-select

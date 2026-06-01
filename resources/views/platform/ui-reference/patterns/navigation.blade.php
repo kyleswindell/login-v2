@@ -22,9 +22,20 @@
             </x-slot:actions>
         </x-ui.patterns.page-title-actions-row>
 
-        <x-ui.inline-alert semantic="notice" title="How to read this proof">
+        <x-ui.patterns.proof-review-banner
+            :items="[
+                ['id' => 'P2-B-CQ-003', 'note' => 'Proof-only guidance should use one clearly defined shared notice treatment instead of blending into the component examples.'],
+                ['id' => 'P2-B-CQ-013', 'note' => 'This page demonstrates the temporary active-batch review overlay system for UI Reference.'],
+            ]"
+            :focus="[
+                'The grouped-action and filter examples are library proofs, not live remote behaviors.',
+                'Section-level intent notes should read as reviewable guidance rather than component chrome.',
+            ]"
+        />
+
+        <x-ui.patterns.proof-note semantic="notice" title="How to read this proof">
             These patterns define structural action and navigation contracts. The examples below show what each control row is responsible for, but they do not imply remote autocomplete or bespoke menu behavior unless that note appears directly in the proof.
-        </x-ui.inline-alert>
+        </x-ui.patterns.proof-note>
 
         <x-ui.patterns.content-section-block
             title="Sub-navigation Bar"
@@ -88,11 +99,13 @@
                         </x-slot:actions>
                     </x-ui.patterns.search-filter-bar>
 
-                    <div class="grid gap-3 md:grid-cols-3 text-sm text-slate-300">
-                        <p><span class="font-semibold text-slate-100">Search field:</span> models free-entry keyword search across the current list or table surface.</p>
-                        <p><span class="font-semibold text-slate-100">Owner filter:</span> models a known-option narrowing control; use the searchable selector baseline only when the option set becomes too long for a simple select.</p>
-                        <p><span class="font-semibold text-slate-100">Reset / Apply:</span> demonstrate shared action placement and intent, not live query execution on this proof page.</p>
-                    </div>
+                    <x-ui.patterns.proof-note semantic="notice" title="Search and filter intent">
+                        <ul class="list-disc space-y-1 pl-5">
+                            <li><span class="font-semibold">Search field:</span> models free-entry keyword search across the current list or table surface.</li>
+                            <li><span class="font-semibold">Owner filter:</span> models a known-option narrowing control; use the searchable selector baseline only when the option set becomes too long for a simple select.</li>
+                            <li><span class="font-semibold">Reset / Apply:</span> demonstrate shared action placement and intent, not live query execution on this proof page.</li>
+                        </ul>
+                    </x-ui.patterns.proof-note>
 
                     <x-ui.patterns.date-range-filter
                         from-id="reporting-from"
@@ -116,11 +129,13 @@
                         </x-slot:actions>
                     </x-ui.patterns.date-range-filter>
 
-                    <div class="grid gap-3 md:grid-cols-3 text-sm text-slate-300">
-                        <p><span class="font-semibold text-slate-100">Date baseline:</span> both controls remain native Tier 1 date inputs, so calendar entry stays consistent with the shared input contract.</p>
-                        <p><span class="font-semibold text-slate-100">Preset select:</span> use for common windows such as last 7 or last 30 days, not to replace explicit from/to visibility.</p>
-                        <p><span class="font-semibold text-slate-100">Range actions:</span> keep actions with the range so reporting and list/index surfaces avoid ad hoc date bars.</p>
-                    </div>
+                    <x-ui.patterns.proof-note semantic="notice" title="Date-range intent">
+                        <ul class="list-disc space-y-1 pl-5">
+                            <li><span class="font-semibold">Date baseline:</span> both controls remain native Tier 1 date inputs, so calendar entry stays consistent with the shared input contract.</li>
+                            <li><span class="font-semibold">Preset select:</span> use for common windows such as last 7 or last 30 days, not to replace explicit from/to visibility.</li>
+                            <li><span class="font-semibold">Range actions:</span> keep actions with the range so reporting and list/index surfaces avoid ad hoc date bars.</li>
+                        </ul>
+                    </x-ui.patterns.proof-note>
                 </div>
             </x-ui.patterns.content-section-block>
         </div>

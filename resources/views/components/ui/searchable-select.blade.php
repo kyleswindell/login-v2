@@ -61,7 +61,11 @@
         <span class="ui-searchable-select-trigger-text" data-ui-searchable-select-trigger-text>
             {{ $selectedLabel }}
         </span>
-        <x-heroicon-o-chevron-up-down class="h-4 w-4 shrink-0" aria-hidden="true" />
+        <x-heroicon-o-chevron-up-down
+            class="h-4 w-4 shrink-0"
+            data-ui-searchable-select-trigger-icon
+            aria-hidden="true"
+        />
     </button>
 
     <div class="ui-searchable-select-panel hidden" data-ui-searchable-select-panel>
@@ -99,7 +103,11 @@
                 >
                     <span>{{ $option['label'] }}</span>
                     @if ($selectedValue === $option['value'])
-                        <x-heroicon-o-check class="h-4 w-4 shrink-0" aria-hidden="true" />
+                        <x-heroicon-o-check
+                            class="h-4 w-4 shrink-0"
+                            data-ui-searchable-select-check
+                            aria-hidden="true"
+                        />
                     @endif
                 </button>
             @endforeach

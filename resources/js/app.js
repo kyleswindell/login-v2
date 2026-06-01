@@ -269,7 +269,8 @@ const initSearchableSelects = () => {
                 const isSelected = option.dataset.value === selectedValue;
                 option.setAttribute('aria-selected', isSelected ? 'true' : 'false');
 
-                const existingIcon = option.querySelector('[data-ui-searchable-select-check]');
+                const existingIcons = Array.from(option.querySelectorAll('[data-ui-searchable-select-check]'));
+                const [existingIcon, ...duplicateIcons] = existingIcons;
 
                 if (isSelected && !existingIcon) {
                     option.insertAdjacentHTML('beforeend', `
@@ -279,8 +280,14 @@ const initSearchableSelects = () => {
                     `);
                 }
 
-                if (!isSelected && existingIcon) {
-                    existingIcon.remove();
+                if (!isSelected) {
+                    existingIcons.forEach((icon) => icon.remove());
+                }
+
+                duplicateIcons.forEach((icon) => icon.remove());
+
+                if (isSelected && existingIcon instanceof HTMLElement) {
+                    option.appendChild(existingIcon);
                 }
             });
 
@@ -1794,3 +1801,4 @@ if (realtimeRoot) {
         applyNotification(notification, { toast: true });
     });
 }
+

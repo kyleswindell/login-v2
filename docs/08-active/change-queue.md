@@ -11,11 +11,6 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 - Exploratory review discussion stays in chat until it is normalized into concise queue language.
 
 ## Ready To Implement
-- [ ] Establish the Tier 1 searchable dropdown-select baseline so locale/timezone pickers consume one intentional shared control instead of a stacked search-plus-dropdown composition; remove duplicate caret indicators, present one unambiguous current-selection state inside the open menu, and keep the bounded integrated selector behavior.
-  ID: P2-B-CQ-001
-  Iteration: 3
-  Scope: Tier 1 searchable dropdown-select baseline, localization selector adoption, shared trigger/menu affordances, selected-state clarity
-  Path Coverage: `/platform/ui-reference/patterns/forms`, `/platform/settings/general`, `/account/preferences`, shared `searchable-select` entry point
 - [ ] Correct the shared dashboard row-span rendering so multi-row widgets actually render at the documented taller heights instead of collapsing to a single-row card; `1x2` and `2x2` proofs should visibly honor row-span height as part of the reusable widget span model.
   ID: P2-B-CQ-005
   Iteration: 2
@@ -29,6 +24,12 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 ## In Progress
 
 ## Implemented Pending Review
+- [ ] Establish the Tier 1 searchable dropdown-select baseline so locale/timezone pickers consume one intentional shared control instead of a stacked search-plus-dropdown composition; remove duplicate caret indicators, present one unambiguous current-selection state inside the open menu, and keep the bounded integrated selector behavior.
+  ID: P2-B-CQ-001
+  Iteration: 3
+  Scope: Tier 1 searchable dropdown-select baseline, localization selector adoption, shared trigger/menu affordances, selected-state clarity
+  Path Coverage: `/platform/ui-reference/patterns/forms`, `/platform/settings/general`, `/account/preferences`, shared `searchable-select` entry point
+  Implemented in: `2-B-0016`
 - [ ] Establish the Tier 1 action and menu-item component-library colorway suite across all supported standard colorways before any narrower dropdown or account-menu consumer retunes proceed; define the canonical action/menu variant contract and prove it at the shared entry points instead of solving those consumers with one-off overrides.
   ID: P2-B-CQ-014
   Scope: Tier 1 action/menu-item colorway suite, shared semantic/ghost action treatment, supported standard colorway proof coverage
@@ -111,3 +112,4 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Implemented in: `2-B-0013`
 
 ## Closed
+

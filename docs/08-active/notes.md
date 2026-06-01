@@ -80,6 +80,11 @@
   - retargeting the active review banners so they show only the current pending-review queue items on each proof page instead of stale passed-review IDs
   - applying section-level review targeting to the current pending-review proof surfaces for `P2-B-CQ-003`, `P2-B-CQ-004`, `P2-B-CQ-006`, `P2-B-CQ-007`, `P2-B-CQ-008`, `P2-B-CQ-010`, `P2-B-CQ-011`, and `P2-B-CQ-013`
   - preserving `P2-B-CQ-003` as the permanent proof-note contract while using `P2-B-CQ-013` only as temporary batch-review context layered on top of those proof surfaces
+- Batch B pass `2-B-0016` is now deployed to staging on `main` and resolves the reopened `P2-B-CQ-001` selector-baseline gap by:
+  - removing the inherited native-select caret treatment from the shared searchable-select trigger so the explicit chevron is the only dropdown affordance
+  - aligning the server-rendered selected-option icon marker with the client-side searchable-select script so the chosen option no longer gains a duplicate check glyph after initialization
+  - hardening the selector script to collapse duplicate selected-state glyphs if markup ever drifts again
+  - adding selector-contract assertions on the UI Reference, platform general settings, and account preferences validation surfaces
 - Batch B pass `2-B-0015` is now deployed to staging on `main` and resolves `P2-B-CQ-014` plus `P2-B-CQ-016` by:
   - adding a shared `x-ui.menu-item` entry point for grouped-action surfaces
   - standardizing the supported menu-item colorways on the existing action semantic token family instead of page-local menu link overrides
@@ -127,6 +132,7 @@
 - `P2-B-CQ-013` review targeting should only identify the current pending-review queue items on each proof surface; once an item passes manual review, its queue ID should drop out of the temporary overlay instead of lingering as stale active-review context.
 - The remaining action-menu work should now be treated as unfinished Tier 1 library hardening first: establish the supported standard colorway contract for shared action/menu-item primitives before applying the resulting changes to existing Tier 2 dropdown/account consumers.
 - Queue cleanup review confirms `P2-B-CQ-001` and `P2-B-CQ-017` should stay framed as Tier 1 input-baseline work first; their current app/page surfaces are consumer validation coverage, not separate page-local fixes.
+- The searchable-select baseline should use one explicit trigger chevron and one shared selected-option check marker; native select caret chrome does not belong on this composed control.
 - Queue cleanup review narrows `P2-B-CQ-014` to the upstream Tier 1 action/menu-item suite, keeps `P2-B-CQ-016` as the remaining Tier 1 ghost-variant parity follow-up inside that suite, and leaves `P2-B-CQ-015` blocked as downstream account-menu adoption until the Tier 1 suite closes.
 - Batch B pass `2-B-0015` keeps `P2-B-CQ-015` blocked on purpose; the account-menu adoption work remains a downstream consumer follow-up and was not folded into the shared suite pass.
 - Queue cleanup review confirms `P2-B-CQ-007` and `P2-B-CQ-008` already reflect the correct Tier 1-before-Tier 2 sequencing and do not need reclassification.
@@ -135,3 +141,7 @@
 - Realtime notification toast rendering remains a feature-level JS path and is intentionally outside this Tier 1 hardening pass.
 - `resources/views/platform/ui-reference/index.blade.php` remains an unused legacy workspace view because the canonical `/platform/ui-reference` route renders `overview.blade.php`; this pass left it untouched to avoid mixing unrelated cleanup into the Batch B implementation lane.
 - Combined Batch B manual review is still required to confirm the newly implemented widget, date-range, identity-summary, dropdown, and sub-navigation changes before the batch can move toward close-out.
+- Local Windows verification still is not a reliable Batch B path for this repo:
+  - the Windows PHP runtime available in this thread is missing `mbstring`, so feature tests must run in the Docker app container
+  - the Windows Vite/Tailwind build path fails on native binary loading, so asset verification currently depends on the canonical WSL build path
+

@@ -1321,6 +1321,8 @@
 
     .ui-searchable-select-trigger {
         @apply inline-flex items-center justify-between gap-3 text-left;
+        background-image: none;
+        padding-right: 1rem;
     }
 
     .ui-searchable-select-trigger-text {
@@ -2175,3 +2177,4 @@
         }
     }
 }
+

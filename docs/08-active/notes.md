@@ -1,6 +1,10 @@
 # Notes
 
 ## Findings
+- Batch B pass `2-B-0021` is now deployed to staging on `main` and re-integrates `P2-B-CQ-017` through the branch-based worker path:
+  - cherry-picked worker commit `adfb0d5401cfafcf581a5a349fd3191d4da7dd10` onto `main`
+  - republished the progressive internal phone-input baseline on the forms proof and shared platform-user review surface
+  - verified the integrated result in WSL with `DB_CONNECTION=sqlite DB_DATABASE=:memory:` overrides for `InternalPhoneFormatterTest`, `InternalPhoneInputContractTest`, and `PlatformUserManagementTest`
 - Batch B pass `2-B-0020` is now deployed to staging on `main` and re-integrates `P2-B-CQ-014` through the branch-based worker path:
   - cherry-picked worker commit `f57c52221c035b4e2ce565bd7639f2b4fc083f97` onto `main`
   - republished the shared current-item menu state on the Tier 1 actions proof plus the grouped-action navigation and data/content review surfaces
@@ -178,6 +182,7 @@
 - Queue cleanup review confirms `P2-B-CQ-007` and `P2-B-CQ-008` already reflect the correct Tier 1-before-Tier 2 sequencing and do not need reclassification.
 
 ## Risks / Questions
+- `P2-B-CQ-017` is back in `Implemented Pending Review`, but the temporary review-layer regression on `P2-B-CQ-013` still leaves stale queue tags visible on the forms proof surface until the overlay pass is corrected.
 - `P2-B-CQ-014` is back in `Implemented Pending Review`, but the temporary review-layer regression on `P2-B-CQ-013` still leaves stale queue tags visible on the same navigation and data/content proof surfaces until that overlay pass is corrected.
 - `P2-B-CQ-001` is back in `Implemented Pending Review`, but the temporary review-layer regression on `P2-B-CQ-013` still prevents the active overlay from being treated as authoritative on the same forms proof surface until that queue item closes again.
 - Combined Batch B manual review still cannot close while `P2-B-CQ-013` leaves the temporary review layer out of sync with the live queue state on staging.

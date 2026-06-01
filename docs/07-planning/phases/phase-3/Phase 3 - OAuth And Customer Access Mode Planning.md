@@ -20,6 +20,14 @@ Parent planning note:
 
 * [Phase 3 - Customer And Public View Planning](Phase%203%20-%20Customer%20And%20Public%20View%20Planning.md)
 
+## Implementation Prerequisites
+
+Before OAuth implementation starts, Phase 3 should deliver these security prerequisites as part of its own earliest implementation lane:
+
+* login abuse defenses for auth-bearing surfaces so customer/public and provider-backed sign-in do not broaden exposure on an unprotected login baseline
+* runtime hardening direction for sessions, cookies, browser protections, and production checks on auth-bearing environments
+* approved secret-backed credential storage and reference model for provider credentials so OAuth implementation does not rely on general-purpose settings rows for production secrets
+
 ## OAuth Provider Scope
 
 Phase 3 should support planning and interface contracts for:
@@ -78,6 +86,7 @@ Platform should define global policy envelopes:
 * which providers are supported globally
 * whether provider is allowed for customer sign-in, staff sign-in, or both
 * mandatory security requirements (MFA, verified email, domain restrictions where needed)
+* which provider credentials and tenant restrictions must resolve through approved secret-backed references before a provider can be considered deployable
 
 ### Tenant controls
 

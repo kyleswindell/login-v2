@@ -52,6 +52,7 @@ Establish customer/public-facing contracts early enough that:
 * tenant email-delivery behavior is built on one configurable Microsoft Graph foundation before module-specific automation grows
 * legacy JSON publishing support can be added cleanly where business continuity requires it
 * platform-controlled integrations and tenant-operated workflows remain clearly separated
+* external identity and Graph implementation are built on a deliberate Phase 3 security substrate instead of on one-off shortcuts
 
 ## Why Phase 3 Must Come Before Broad Module Expansion
 
@@ -213,6 +214,13 @@ Phase 3 implementation should not start until Phase 2 confirms:
 * platform-to-tenant access handoff direction and mandatory audit events
 * UI ownership declaration matrix requirements for future module plans
 * internal shell-family, page/module scaffolding, and setup/settings registration standards are explicit enough that customer/public shells can be designed as a deliberate extension rather than an ad hoc exception
+
+Phase 3 implementation should also wait for the following security prerequisites:
+
+* the first Phase 3 implementation lane defines and delivers the security substrate for outward-facing auth and Graph-bearing integrations
+* login abuse defenses are in place before customer/public or OAuth-enabled auth surfaces broaden exposure
+* the secret-backed settings and credential-reference model needed by OAuth and Microsoft Graph is delivered before provider credentials are treated as deployable
+* auth-bearing Phase 3 surfaces adopt the required runtime hardening and production environment checks before they are treated as review-ready
 
 ## Exit Criteria
 

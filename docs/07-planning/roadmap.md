@@ -14,6 +14,19 @@ V1 documentation is reference-only.
 
 We are not migrating V1 tables or data. We are deciding which capabilities should exist in App 2.0, how they should be separated, and in what order they should be built.
 
+## Roadmap Status Rule
+
+This roadmap is the high-level phase summary, not the detailed progress ledger.
+
+Use the owning phase index as the source of truth for:
+
+* current phase status
+* active scope lock
+* batch-sequence state
+* deferred and future-phase placeholders
+
+Roadmap phase status should summarize, not override, the owning phase index.
+
 ## Planning Anchor
 
 Use this boundary first:
@@ -54,6 +67,11 @@ These V1 areas are reference-only and should not automatically become day-one Ap
 Goal:
 
 Establish the Git, server, and deployment baseline before the core app grows further.
+
+Status:
+
+* complete as the historical deployment/bootstrap baseline
+* current deployment operations and environment execution details are maintained in canonical runbooks
 
 Features:
 
@@ -102,10 +120,10 @@ Complete introduction of the intended long-term stack and UI architecture so fut
 
 Status:
 
-* planning started (2026-04-10)
-* Phase 1 foundation is complete and signed off
-* current implementation uses custom Blade app surfaces while Filament/Livewire remain planned
-* Phase 2 must decide route, panel, shell, design-system, and template direction before Phase 3 customer/public foundation work and Phase 4 module expansion
+* active locked development phase
+* Batch 1-6 are complete; Batch A, Batch B, and Batch E are the remaining active sequence
+* Phase 2 is strictly bounded to UI-system completion and platform-surface convergence
+* feature-specific and non-UI contracts are deferred to future phases unless already declared in the active Phase 2 lock
 
 Features:
 
@@ -132,6 +150,13 @@ Goal:
 
 Introduce customer/public-facing foundations early enough that outward-facing core modules do not require later architectural rework.
 
+Status:
+
+* planning draft
+* implementation not started
+* blocked on Phase 2 close-out
+* current Batch 1 scope includes the security substrate required before OAuth and Microsoft Graph rollout
+
 Features:
 
 * customer login and session model
@@ -150,6 +175,7 @@ Features:
 * shared app-mailer configuration and outbound email foundation, with Microsoft Graph as the first required provider contract
 * platform-configured default sender accounts and aliases with tenant override support
 * feature-based sender-alias routing and per-user email preference policy (opt-in and mandatory classes)
+* security substrate for outward-facing auth and integrations, including login abuse defenses, secret-backed credential storage, auth-bearing surface hardening, and production environment checks required before OAuth and Microsoft Graph rollout
 
 Working planning note:
 
@@ -165,6 +191,12 @@ Working planning note:
 Goal:
 
 Introduce remaining core business modules (V1-inspired core capability set) including setup flows and settings coverage.
+
+Status:
+
+* planning draft
+* implementation not started
+* blocked on Phase 2 close-out and Phase 3 foundation delivery
 
 Features:
 
@@ -186,6 +218,11 @@ Goal:
 
 Begin tenant app rollout only after base-system stability is confirmed, using a clean tenant template database and controlled versioning.
 
+Status:
+
+* not started
+* deferred until core, customer/public, and template-stability prerequisites are complete
+
 Features:
 
 * establish clean tenant template database baseline from completed core system
@@ -199,6 +236,11 @@ Features:
 Goal:
 
 Introduce Parasolutions-only control-plane capabilities after core, customer, and initial tenant rollout foundations are stable.
+
+Status:
+
+* deferred
+* not started
 
 Features:
 
@@ -215,6 +257,11 @@ Goal:
 
 Make the system manageable at scale.
 
+Status:
+
+* deferred
+* not started as an active implementation phase
+
 Features:
 
 * feature/module policy UI
@@ -230,11 +277,18 @@ Features:
   * monitoring panels and dashboards
   * deployment dashboards and release visibility
 
+Phase 7 extends security operations and observability after earlier phases establish the implementation baseline. It does not replace the earlier-phase prerequisites for auth hardening, secure credential storage, or production runtime hardening.
+
 ### Phase 8: Advanced Tenant Products
 
 Goal:
 
 Add optional tenant-facing capability once the platform and content foundations are stable.
+
+Status:
+
+* deferred
+* not started
 
 Examples:
 
@@ -243,24 +297,24 @@ Examples:
 * specialty modules
 * public-site publishing enhancements
 
-## Immediate Documentation Gaps To Fill Before Deep Implementation
+## Current Planning Frontier
 
-These should be documented before the next major build phase:
+Current roadmap attention should stay on the active and near-next planning surfaces:
 
-* final stack and UI architecture specification for Phase 2 is started and must be expanded through Batch 1 decisions
-* route and panel separation strategy
-* customer/public route, shell, and publishing model for Phase 3
-* remaining core-module inventory for Phase 4
-* tenant template database baseline and rollout/versioning runbook for Phase 5
-* deferred platform-management inventory for Phase 6+
+* keep the roadmap synchronized with the owning phase indices instead of treating it as an independent tracker
+* finish the locked Phase 2 A/B/E sequence before absorbing adjacent feature work
+* keep Phase 3 Batch 1 scope synchronized across customer/public, OAuth, Microsoft Graph, and security-substrate planning notes
+* preserve Phase 4 as planning-only until the Phase 2 and Phase 3 handoff conditions are actually met
 
-## Recommended Next Docs
+## Recommended Navigation
 
-1. `docs/03-architecture/app-2-0-blueprint.md`
-2. `docs/07-planning/phases/phase-2/Phase 2 - Final Stack And UI System Planning.md`
-3. `docs/03-architecture/subsystems/final-stack-and-ui-boundary.md`
-4. `docs/07-planning/phases/phase-3/Phase 3 - Customer And Public View Planning.md`
-5. `docs/07-planning/phases/phase-4/Phase 4 - Remaining Core Module Planning.md`
+Use these current planning entry points first:
+
+1. `docs/07-planning/phases/phase-2/Phase 2 Index.md`
+2. `docs/07-planning/phases/phase-3/Phase 3 Index.md`
+3. `docs/07-planning/phases/phase-3/Phase 3 - Implementation Batch 1.md`
+4. `docs/07-planning/phases/phase-4/Phase 4 Index.md`
+5. `docs/07-planning/dependency-map.md`
 
 ## Related
 

@@ -20,6 +20,14 @@ Parent planning note:
 
 * [Phase 3 - Customer And Public View Planning](Phase%203%20-%20Customer%20And%20Public%20View%20Planning.md)
 
+## Implementation Prerequisites
+
+Before Microsoft Graph mail implementation starts, Phase 3 should deliver these security prerequisites in its own implementation sequence:
+
+* approved secret-backed settings and credential-reference model for Graph credentials, certificates, and related sender-account secrets
+* runtime and release-hardening checks for the production/staging environments that will carry authenticated email and secret-backed integrations
+* the required auth-surface hardening where the same shared account and notification surfaces participate in sender-account and identity-related flows
+
 ## Why This Is In Phase 3
 
 Graph email must be available before broad module rollout so module teams do not invent one-off outbound mail behavior.
@@ -43,7 +51,7 @@ Phase 3 should establish the shared contract for:
    * app-only sending for automated platform and module jobs
    * delegated sending only where interactive user-initiated send requires user context
 4. Configure sender mailboxes in Exchange Online (licensed user mailbox or shared mailbox model).
-5. Store credentials securely (certificate or secret via secure secret storage), never in plain settings values.
+5. Store credentials securely (certificate or secret via secure secret storage), never in plain settings values or generic application settings rows.
 6. Implement a queue-backed outbound mail service with retry and dead-letter handling.
 7. Handle Graph throttling using `429` and `Retry-After` behavior with exponential backoff fallback.
 8. Implement provider-level delivery telemetry and message audit links.
@@ -166,7 +174,7 @@ Preference model requirements:
 ### Platform setup/settings
 
 * outbound mailer provider configuration model
-* Graph app registration metadata and credential references
+* Graph app registration metadata and secret-backed credential references
 * sender account registry and alias registry
 * global fallback sender rules
 * default sender mapping by feature key

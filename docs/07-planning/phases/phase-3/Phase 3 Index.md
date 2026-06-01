@@ -18,6 +18,7 @@ Current focus:
 * define per-tenant customer access modes (`disabled`, `invite_only`, `open_enrollment`)
 * define customer company multi-user model for customer-scoped authorization
 * establish Microsoft Graph email sending foundation before core module rollout
+* deliver the Phase 3 security substrate required by outward-facing auth and integration rollout, especially login abuse defenses, secret-backed credential storage, auth-bearing surface hardening, and production environment checks for OAuth and Graph-bearing paths
 * define platform-default and tenant-override sender-account and alias configuration
 * define feature-based sender-alias routing plus user preference and mandatory notice rules
 * define module-level and record-level customer visibility toggles
@@ -61,7 +62,7 @@ Phase 2 close-out
 
 | Agent A (worktree A) | Agent B (worktree B) | Gate |
 |---|---|---|
-| Customer routes + OAuth + access mode + Events proof | Microsoft Graph email service + GUI + queue | Both require Phase 2 close-out; neither stream depends on the other |
+| Customer routes + OAuth + access mode + Events proof | Microsoft Graph email service + GUI + queue | Both require Phase 2 close-out and the Phase 3 security substrate: secret-backed credential storage, login abuse defenses, and auth-bearing surface hardening for OAuth and Graph paths |
 | (merged) Phase 3 Batch 2+ | — | Cannot start until both streams are merged and tests pass |
 
 ### Notes

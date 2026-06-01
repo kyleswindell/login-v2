@@ -10,6 +10,11 @@ Canonical hub for roadmap, phase sequencing, and delivery batches.
 
 Planning sequence and delivery intent only. This branch does not own final architecture structure, feature behavior contracts, schema contracts, or runbook operations.
 
+Status ownership note:
+
+- `roadmap.md` is the high-level summary
+- each phase index is the canonical owner of detailed current phase status, scope lock, and active batch sequence
+
 ## Core Planning
 
 - [Roadmap](roadmap.md)

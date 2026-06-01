@@ -111,6 +111,7 @@ class PlatformUserManagementTest extends TestCase
             ->set('mountedActions.0.data.last_name', 'Operator')
             ->set('mountedActions.0.data.email', 'filament.operator@example.com')
             ->set('mountedActions.0.data.password', 'Password123!')
+            ->set('mountedActions.0.data.phone', '5555555555')
             ->set('mountedActions.0.data.is_active', true)
             ->set('mountedActions.0.data.is_staff_member', true)
             ->set('mountedActions.0.data.roles', ['platform_admin'])
@@ -120,6 +121,7 @@ class PlatformUserManagementTest extends TestCase
         $user = User::query()->where('email', 'filament.operator@example.com')->firstOrFail();
 
         $this->assertSame('Filament Operator', $user->name);
+        $this->assertSame('(555) 555-5555', $user->phone);
         $this->assertTrue(Hash::check('Password123!', $user->password));
         $this->assertTrue($user->is_active);
         $this->assertTrue($user->is_staff_member);
@@ -197,6 +199,7 @@ class PlatformUserManagementTest extends TestCase
             'last_name' => 'User',
             'email' => 'ops@example.com',
             'password' => 'Password123!',
+            'phone' => '5555555555',
             'is_active' => '1',
             'roles' => ['platform_admin'],
         ])->assertRedirect();
@@ -204,6 +207,7 @@ class PlatformUserManagementTest extends TestCase
         $user = User::query()->where('email', 'ops@example.com')->firstOrFail();
 
         $this->assertTrue($user->is_active);
+        $this->assertSame('(555) 555-5555', $user->phone);
         $this->assertTrue($user->hasRole('platform_admin'));
     }
 

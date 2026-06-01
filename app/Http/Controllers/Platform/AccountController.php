@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Platform;
 
 use App\Http\Controllers\Controller;
+use App\Support\InternalPhoneFormatter;
 use App\Support\UiOptionCatalog;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -38,7 +39,7 @@ class AccountController extends Controller
         $request->user()->forceFill([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'phone' => $validated['phone'] ?? null,
+            'phone' => InternalPhoneFormatter::normalize($validated['phone'] ?? null),
         ])->save();
 
         if (! empty($validated['new_password'])) {

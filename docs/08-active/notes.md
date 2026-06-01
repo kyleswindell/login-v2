@@ -85,6 +85,10 @@
   - aligning the server-rendered selected-option icon marker with the client-side searchable-select script so the chosen option no longer gains a duplicate check glyph after initialization
   - hardening the selector script to collapse duplicate selected-state glyphs if markup ever drifts again
   - adding selector-contract assertions on the UI Reference, platform general settings, and account preferences validation surfaces
+- Batch B pass `2-B-0017` is now deployed to staging on `main` and resolves `P2-B-CQ-017` by:
+  - adding a shared internal phone formatter so plain ten-digit entry persists as the canonical `(555) 555-5555` baseline across the touched account, company-information, and staff-profile save paths
+  - wiring the adopted phone inputs to the shared frontend formatter so raw digit entry normalizes on the proof surface and the live settings/profile forms instead of relying on manual punctuation
+  - extending proof and feature coverage so the phone-entry baseline is visible and asserted on the UI Reference forms page plus the touched account/settings/user-management surfaces
 - Batch B pass `2-B-0015` is now deployed to staging on `main` and resolves `P2-B-CQ-014` plus `P2-B-CQ-016` by:
   - adding a shared `x-ui.menu-item` entry point for grouped-action surfaces
   - standardizing the supported menu-item colorways on the existing action semantic token family instead of page-local menu link overrides

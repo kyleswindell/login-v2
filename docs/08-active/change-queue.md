@@ -28,10 +28,6 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Iteration: 2
   Scope: dashboard grid sizing contract, shared row-span rendering, multi-row widget proof behavior
   Path Coverage: shared `dashboard-grid` pattern, layout/dashboard proof surfaces, widget-shell guidance, `1x2` and `2x2` widget proofs
-- [ ] Establish the Tier 1 internal phone-input formatting baseline so typed digits auto-normalize to the canonical phone format instead of requiring users to enter punctuation manually; plain ten-digit entry should resolve to `(555) 555-5555` as the baseline expectation wherever the shared internal phone-input pattern is adopted.
-  ID: P2-B-CQ-017
-  Scope: Tier 1 internal phone-input formatting baseline, support-phone proof expectations, reusable phone entry normalization
-  Path Coverage: `/platform/ui-reference/patterns/forms`, `/account/settings`, `/platform/settings/general-company-information`, shared phone-input entry points where adopted
 
 ## In Progress
 
@@ -48,6 +44,11 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Scope: temporary active-batch proof review mode, full current implemented-pending-review coverage, card-level review targeting, queue-ID visibility accuracy
   Path Coverage: active-batch UI Reference proof pages, all current `Implemented Pending Review` items with visible proof surfaces, relevant component library cards under review, current review-mode entry points
   Implemented in: `2-B-0014`
+- [ ] Establish the Tier 1 internal phone-input formatting baseline so typed digits auto-normalize to the canonical phone format instead of requiring users to enter punctuation manually; plain ten-digit entry should resolve to `(555) 555-5555` as the baseline expectation wherever the shared internal phone-input pattern is adopted.
+  ID: P2-B-CQ-017
+  Scope: Tier 1 internal phone-input formatting baseline, support-phone proof expectations, reusable phone entry normalization
+  Path Coverage: `/platform/ui-reference/patterns/forms`, `/account/settings`, `/platform/settings/general-company-information`, shared phone-input entry points where adopted
+  Implemented in: `2-B-0017`
 - [ ] Make the grouped-actions dropdown action menu close when focus or pointer interaction moves outside the open menu, and treat that outside-click dismissal as the shared default behavior for this pattern instead of a page-by-page expectation.
   ID: P2-B-CQ-004
   Scope: Tier 2 dropdown action menu behavior, shared dismissal contract

@@ -31,7 +31,7 @@
                         <input id="email" name="email" type="email" value="{{ old('email', $user->email) }}" class="ui-input w-full">
                     </x-ui.patterns.form-group>
                     <x-ui.patterns.form-group class="sm:col-span-2" for="phone" label="Phone">
-                        <input id="phone" name="phone" type="text" value="{{ old('phone', $user->phone) }}" class="ui-input w-full">
+                        <input id="phone" name="phone" type="text" value="{{ old('phone', $user->phone) }}" class="ui-input w-full" data-ui-phone-input inputmode="tel" autocomplete="tel" placeholder="(555) 555-5555">
                     </x-ui.patterns.form-group>
                 </div>
             </x-ui.patterns.form-section>

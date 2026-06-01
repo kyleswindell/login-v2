@@ -15,6 +15,7 @@ Current status:
 * implemented in code
 * `/account`, `/account/settings`, and `/account/preferences` are registered authenticated routes
 * current-user profile, password update, and preferences flows are implemented in the app shell
+* account phone entry now uses the shared internal phone-input baseline, so plain ten-digit input is normalized to the canonical `(555) 555-5555` format on save and on the live form surface
 * account surfaces remain custom Blade ownership in the Phase 2 close-out model
 
 Planning source:

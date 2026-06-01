@@ -3,6 +3,7 @@
 namespace Tests\Feature\Platform;
 
 use App\Models\User;
+use App\Platform\Settings\SettingsService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -96,11 +97,22 @@ class PlatformSettingsTest extends TestCase
         $this->post('/platform/settings/general/company-information', [
             'company_name' => 'Para Solutions LLC',
             'company_email' => 'hello@example.com',
-            'company_phone' => '123-456-7890',
+            'company_phone' => '1234567890',
             'company_address' => '123 Main St',
         ])->assertRedirect();
 
         $this->assertDatabaseHas('settings', ['group_key' => 'general_company', 'key' => 'name']);
+        $this->assertSame('(123) 456-7890', app(SettingsService::class)->get('general_company', 'phone'));
+    }
+
+    public function test_company_information_surface_uses_shared_phone_input_baseline(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/settings/general/company-information')
+            ->assertOk()
+            ->assertSee('data-ui-phone-input', false)
+            ->assertSee('placeholder="(555) 555-5555"', false);
     }
 
     public function test_localization_settings_can_be_updated(): void

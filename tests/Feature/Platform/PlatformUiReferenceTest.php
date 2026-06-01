@@ -77,6 +77,8 @@ class PlatformUiReferenceTest extends TestCase
             ->assertOk()
             ->assertSee('Validation Summary and Form Actions')
             ->assertSee('Support Email')
+            ->assertSee('P2-B-CQ-017')
+            ->assertSee('data-ui-phone-input', false)
             ->assertSee('data-ui-component="searchable-select"', false)
             ->assertSee('data-ui-searchable-select-trigger', false)
             ->assertSee('data-ui-pattern="form-section"', false)

@@ -18,6 +18,7 @@
         <x-ui.patterns.proof-review-banner
             :items="[
                 ['id' => 'P2-B-CQ-003', 'note' => 'Proof-only guidance should use the same clearly defined notice treatment as the rest of the active batch review mode.'],
+                ['id' => 'P2-B-CQ-017', 'note' => 'Internal phone inputs should normalize plain digit entry into the shared baseline phone format instead of expecting manual punctuation.'],
             ]"
             :focus="[
                 'Treat the review banner as temporary batch-review context, not permanent component UI.',
@@ -111,9 +112,15 @@
                 <x-ui.patterns.inline-form-row
                     for="inline-support-phone"
                     label="Support Phone"
-                    helper="Phone numbers and extensions stay free-entry, but validation should still enforce the accepted dialing format."
+                    helper="Plain ten-digit entry should auto-format to the internal phone baseline while still allowing standard extensions when needed."
                 >
-                    <input id="inline-support-phone" type="tel" value="" placeholder="e.g. (555) 867-5309 x204" class="ui-input w-full" />
+                    <x-ui.patterns.proof-review-target
+                        :items="[
+                            ['id' => 'P2-B-CQ-017', 'note' => 'The shared internal phone-input pattern should auto-normalize raw ten-digit entry to the canonical `(555) 555-5555` format on the proof surface and the consuming settings forms.'],
+                        ]"
+                    />
+
+                    <input id="inline-support-phone" type="tel" value="" placeholder="e.g. (555) 867-5309 x204" class="ui-input w-full" data-ui-phone-input inputmode="tel" autocomplete="tel" />
                 </x-ui.patterns.inline-form-row>
             </div>
         </x-ui.patterns.content-section-block>

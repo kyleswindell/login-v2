@@ -22,6 +22,7 @@ Current status:
 * direct `/console/platform-users` access is now controlled by `CONSOLE_PROOF_PATHS_ENABLED` (default off) with fallback redirect to `/platform/users`
 * current Blade `/platform/users/*` routes remain compatibility paths for full parity validation
 * Filament create/edit flows persist password changes, role assignments, activation state, and staff profile fields
+* staff profile phone fields now use the shared internal phone-input baseline, so plain ten-digit entry normalizes to the canonical `(555) 555-5555` format across both Blade and Filament user-management surfaces
 * tenant-scoped auth and tenant roles are still deferred
 
 ## Current Implementation

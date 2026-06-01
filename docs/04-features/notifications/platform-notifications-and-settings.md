@@ -40,6 +40,7 @@ Phase 1 currently includes:
 * Settings second-column panel and page set for general, notifications, audit logs, docs, and users
 * a General settings section with pages for platform general, company information, localization, email, system update, and system/server info
 * settings writes routed through `SettingsService` with audit logging
+* company-information phone entry now uses the shared internal phone-input baseline, so plain ten-digit input normalizes to the canonical `(555) 555-5555` format instead of relying on manual punctuation
 
 Current services:
 

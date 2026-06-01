@@ -4,6 +4,7 @@ namespace App\Filament\Resources\PlatformUsers;
 
 use App\Filament\Resources\PlatformUsers\Pages\ManagePlatformUsers;
 use App\Models\User;
+use App\Support\InternalPhoneFormatter;
 use BackedEnum;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\CheckboxList;
@@ -79,7 +80,13 @@ class PlatformUserResource extends Resource
                             ->minValue(0)
                             ->maxValue(999999.99),
                         TextInput::make('phone')
-                            ->maxLength(50),
+                            ->maxLength(50)
+                            ->extraInputAttributes([
+                                'data-ui-phone-input' => 'true',
+                                'inputmode' => 'tel',
+                                'autocomplete' => 'tel',
+                                'placeholder' => '(555) 555-5555',
+                            ]),
                         TextInput::make('facebook')
                             ->maxLength(255),
                         TextInput::make('linkedin')
@@ -239,6 +246,7 @@ class PlatformUserResource extends Resource
     {
         $data['name'] = trim(($data['first_name'] ?? '').' '.($data['last_name'] ?? ''));
         $data['hourly_rate'] = (float) ($data['hourly_rate'] ?? 0);
+        $data['phone'] = InternalPhoneFormatter::normalize($data['phone'] ?? null);
         $data['direction'] = $data['direction'] ?? 'ltr';
         $data['send_welcome_email'] = (bool) ($data['send_welcome_email'] ?? false);
         $data['is_administrator'] = (bool) ($data['is_administrator'] ?? false);

@@ -380,6 +380,56 @@ const initSearchableSelects = () => {
     });
 };
 
+const normalizePhoneInputValue = (value) => {
+    const normalizedWhitespace = value.trim().replace(/\s+/g, ' ');
+
+    if (normalizedWhitespace === '') {
+        return '';
+    }
+
+    const extensionMatch = normalizedWhitespace.match(/(?:ext\.?|extension|x)\s*(\d+)$/i);
+    const extension = extensionMatch ? extensionMatch[1] : '';
+    const baseValue = extensionMatch
+        ? normalizedWhitespace.slice(0, normalizedWhitespace.length - extensionMatch[0].length).trim()
+        : normalizedWhitespace;
+
+    let digits = baseValue.replace(/\D+/g, '');
+
+    if (digits.length === 11 && digits.startsWith('1')) {
+        digits = digits.slice(1);
+    }
+
+    if (digits.length !== 10) {
+        return normalizedWhitespace;
+    }
+
+    const formatted = `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+
+    return extension ? `${formatted} x${extension}` : formatted;
+};
+
+const initInternalPhoneInputs = () => {
+    document.querySelectorAll('[data-ui-phone-input]').forEach((input) => {
+        if (!(input instanceof HTMLInputElement) || input.dataset.uiPhoneInputInit === '1') {
+            return;
+        }
+
+        input.dataset.uiPhoneInputInit = '1';
+
+        const syncFormattedValue = () => {
+            const normalized = normalizePhoneInputValue(input.value);
+
+            if (normalized !== input.value) {
+                input.value = normalized;
+            }
+        };
+
+        input.addEventListener('input', syncFormattedValue);
+        input.addEventListener('blur', syncFormattedValue);
+        syncFormattedValue();
+    });
+};
+
 const closeOpenDropdownActionMenus = (exception = null) => {
     document.querySelectorAll('[data-ui-pattern="dropdown-action-menu"][open]').forEach((menu) => {
         if (exception instanceof HTMLElement && menu === exception) {
@@ -1351,6 +1401,8 @@ document.addEventListener('DOMContentLoaded', initSelectableOptionStates);
 document.addEventListener('livewire:navigated', initSelectableOptionStates);
 document.addEventListener('DOMContentLoaded', initSearchableSelects);
 document.addEventListener('livewire:navigated', initSearchableSelects);
+document.addEventListener('DOMContentLoaded', initInternalPhoneInputs);
+document.addEventListener('livewire:navigated', initInternalPhoneInputs);
 document.addEventListener('DOMContentLoaded', initDropdownActionMenus);
 document.addEventListener('livewire:navigated', initDropdownActionMenus);
 document.addEventListener('DOMContentLoaded', initErrorLogDrawer);
@@ -1801,4 +1853,3 @@ if (realtimeRoot) {
         applyNotification(notification, { toast: true });
     });
 }
-

@@ -56,7 +56,7 @@
 
                 <label class="block">
                     <span class="text-sm font-semibold text-slate-200">Phone</span>
-                    <input type="text" name="phone" value="{{ old('phone', $user?->phone) }}" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100">
+                    <input type="text" name="phone" value="{{ old('phone', $user?->phone) }}" class="mt-2 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100" data-ui-phone-input inputmode="tel" autocomplete="tel" placeholder="(555) 555-5555">
                 </label>
 
                 <label class="block">

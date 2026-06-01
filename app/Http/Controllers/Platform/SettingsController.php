@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Platform;
 use App\Http\Controllers\Controller;
 use App\Platform\Logging\PlatformLogger;
 use App\Platform\Settings\SettingsService;
+use App\Support\InternalPhoneFormatter;
 use App\Support\UiOptionCatalog;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -78,7 +79,12 @@ class SettingsController extends Controller
         $userId = $request->user()->id;
         $this->settings->put('general_company', 'name', $validated['company_name'], updatedBy: $userId);
         $this->settings->put('general_company', 'email', $validated['company_email'] ?? '', updatedBy: $userId);
-        $this->settings->put('general_company', 'phone', $validated['company_phone'] ?? '', updatedBy: $userId);
+        $this->settings->put(
+            'general_company',
+            'phone',
+            InternalPhoneFormatter::normalize($validated['company_phone'] ?? null) ?? '',
+            updatedBy: $userId
+        );
         $this->settings->put('general_company', 'address', $validated['company_address'] ?? '', updatedBy: $userId);
 
         $this->logger->recordEvent('settings.general-company.updated', ['changed_keys' => array_keys($validated)]);

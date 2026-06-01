@@ -50,7 +50,7 @@ class PlatformAccountTest extends TestCase
             ->post('/account/settings', [
                 'name' => 'Updated Name',
                 'email' => 'updated@example.com',
-                'phone' => '555-0102',
+                'phone' => '5555555555',
             ])
             ->assertRedirect();
 
@@ -58,7 +58,18 @@ class PlatformAccountTest extends TestCase
 
         $this->assertSame('Updated Name', $user->name);
         $this->assertSame('updated@example.com', $user->email);
-        $this->assertSame('555-0102', $user->phone);
+        $this->assertSame('(555) 555-5555', $user->phone);
+    }
+
+    public function test_account_settings_surface_uses_shared_phone_input_baseline(): void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user)
+            ->get('/account/settings')
+            ->assertOk()
+            ->assertSee('data-ui-phone-input', false)
+            ->assertSee('placeholder="(555) 555-5555"', false);
     }
 
     public function test_account_preferences_can_be_updated(): void

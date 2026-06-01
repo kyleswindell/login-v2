@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Platform;
 
+use App\Support\InternalPhoneFormatter;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -61,6 +62,7 @@ class UpdatePlatformUserRequest extends FormRequest
         unset($validated['not_staff_member']);
         $validated['name'] = trim(($validated['first_name'] ?? '').' '.($validated['last_name'] ?? ''));
         $validated['hourly_rate'] = (float) ($validated['hourly_rate'] ?? 0);
+        $validated['phone'] = InternalPhoneFormatter::normalize($validated['phone'] ?? null);
         $validated['direction'] = $validated['direction'] ?? 'ltr';
         $validated['send_welcome_email'] = $this->boolean('send_welcome_email');
         $validated['is_administrator'] = $this->boolean('is_administrator');

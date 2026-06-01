@@ -89,6 +89,10 @@
   - adding a shared internal phone formatter so plain ten-digit entry persists as the canonical `(555) 555-5555` baseline across the touched account, company-information, and staff-profile save paths
   - wiring the adopted phone inputs to the shared frontend formatter so raw digit entry normalizes on the proof surface and the live settings/profile forms instead of relying on manual punctuation
   - extending proof and feature coverage so the phone-entry baseline is visible and asserted on the UI Reference forms page plus the touched account/settings/user-management surfaces
+- The latest follow-up manual review on `P2-B-CQ-017` found that the shared phone-input normalizer still defers formatting until a complete ten-digit value exists:
+  - entering `5`, `55`, `555`, and other partial values currently leaves raw digits in place instead of beginning the phone pattern immediately
+  - the next pass should make the display format progress from the first typed digit and keep that behavior consistent across the shared proof surface and adopted live form inputs
+  - trusted third-party references support this direction: `libphonenumber-js` exposes `AsYouType('US')` partial formatting/templates, `intl-tel-input` exposes `formatNumberAsYouType`, and IMask shows that visible placeholders are optional if the team wants a mask-style fill contract
 - Batch B pass `2-B-0018` is now deployed to staging on `main` and resolves the reopened `P2-B-CQ-005` row-span failure by:
   - replacing the tall widget span utilities with explicit responsive `grid-column` and `grid-row` declarations so `1x2`, `2x2`, and `3x2` no longer rely on a compiled shorthand placement merge
   - publishing the shared widget-span fix to the required review surface so the taller dashboard proofs are available for targeted manual re-review on staging
@@ -146,6 +150,7 @@
 - `P2-B-CQ-013` review targeting should only identify the current pending-review queue items on each proof surface; once an item passes manual review, its queue ID should drop out of the temporary overlay instead of lingering as stale active-review context.
 - The remaining action-menu work should now be treated as unfinished Tier 1 library hardening first: establish the supported standard colorway contract for shared action/menu-item primitives before applying the resulting changes to existing Tier 2 dropdown/account consumers.
 - Queue cleanup review confirms `P2-B-CQ-001` and `P2-B-CQ-017` should stay framed as Tier 1 input-baseline work first; their current app/page surfaces are consumer validation coverage, not separate page-local fixes.
+- `P2-B-CQ-017` should reopen as a same-item failure of the shared phone-input interaction contract: persistence-side normalization is acceptable, but the typed-entry experience must format from the first digit instead of waiting for a complete ten-digit value. The next pass should adopt an explicit partial-entry display contract, with visible placeholders optional rather than required.
 - The searchable-select baseline should use one explicit trigger chevron and one shared selected-option check marker; native select caret chrome does not belong on this composed control.
 - The latest dropdown/menu review is classified as failure of the existing implemented outcomes on `P2-B-CQ-001` and `P2-B-CQ-014`, not as a separate adjacent queue item, so both items should return to `Ready To Implement`.
 - No new change-queue item is required for searchable dropdown menus or current-item menu states; those gaps belong inside the refined scopes of `P2-B-CQ-001` and `P2-B-CQ-014`.

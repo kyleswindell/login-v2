@@ -1,6 +1,10 @@
 # Notes
 
 ## Findings
+- Batch B pass `2-B-0019` is now deployed to staging on `main` and re-integrates `P2-B-CQ-001` through the branch-based worker path:
+  - cherry-picked worker commit `daa31721f8d715b5a53c1df1536611e9ca3a39fb` onto `main`
+  - republished the searchable-dropdown baseline on the forms proof, platform general settings, and account preferences review surfaces
+  - verified the integrated result in WSL with `DB_CONNECTION=sqlite DB_DATABASE=:memory: ./vendor/bin/phpunit --filter PlatformUiReferenceTest --testdox`
 - The provided AI Agent staging review account successfully authenticated to `https://staging.parasolutions.com` and accessed the protected UI Reference workspace for this manual-review pass.
 - Staging manual review now approves `P2-B-CQ-003`, `P2-B-CQ-004`, `P2-B-CQ-005`, `P2-B-CQ-006`, `P2-B-CQ-007`, `P2-B-CQ-008`, `P2-B-CQ-010`, and `P2-B-CQ-011`.
 - The same staging pass reopens `P2-B-CQ-013` as a same-item failure of the temporary review-layer system:
@@ -170,6 +174,7 @@
 - Queue cleanup review confirms `P2-B-CQ-007` and `P2-B-CQ-008` already reflect the correct Tier 1-before-Tier 2 sequencing and do not need reclassification.
 
 ## Risks / Questions
+- `P2-B-CQ-001` is back in `Implemented Pending Review`, but the temporary review-layer regression on `P2-B-CQ-013` still prevents the active overlay from being treated as authoritative on the same forms proof surface until that queue item closes again.
 - Combined Batch B manual review still cannot close while `P2-B-CQ-013` leaves the temporary review layer out of sync with the live queue state on staging.
 - Realtime notification toast rendering remains a feature-level JS path and is intentionally outside this Tier 1 hardening pass.
 - `resources/views/platform/ui-reference/index.blade.php` remains an unused legacy workspace view because the canonical `/platform/ui-reference` route renders `overview.blade.php`; this pass left it untouched to avoid mixing unrelated cleanup into the Batch B implementation lane.

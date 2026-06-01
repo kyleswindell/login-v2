@@ -53,18 +53,23 @@ Tracks in-progress and recently completed document review passes.
 | doc-review-0035  | 2026-06-01 | Roadmap status-tracking accuracy against the current phase indices and active development state | Docs Review | CLOSED                      | implemented                    | The roadmap now reflects the active Phase 2 lock, uses consistent phase status summaries, replaces stale next-doc guidance, and points detailed status ownership back to the phase indices; re-review found no remaining scoped drift |
 | doc-review-0036  | 2026-06-01 | Correction of security implementation phase allocation so new work stays in Phase 3 or later rather than reopening completed phases | Docs Review | CLOSED                      | implemented                    | Corrected the prior allocation so completed Phase 0 and Phase 1 notes remain historical, Phase 2 stays untouched, and the new security implementation work now lives in Phase 3 planning and Batch 1 scope; re-review found no remaining scoped drift |
 | doc-review-0037  | 2026-06-01 | Batch lifecycle skills, missing phase lifecycle skill coverage, and runbook ownership for roadmap and phase-status synchronization | Docs Review | CLOSED                      | implemented                    | Mapped parent planning/status synchronization onto the existing docs sync workflows, updated close-out handoff language in the parent runbooks and batch finalize skill, and extended `review-docs-sync` scope to cover `/docs/07-planning/`; re-review found no remaining scoped ownership gap |
+| doc-review-2026-06-01-review-artifact-naming-and-ledger-collision-governance | 2026-06-01 | Review artifact naming and review-ledger collision governance across review skills and concurrency runbooks | Docs Review | CLOSED                      | implemented                    | Re-review confirmed the new date-plus-slug naming rule and serialized ledger guidance are internally consistent across the touched review-skill and concurrency-governance surfaces |
 
 ---
 
 ## Naming Rules
 
-- File names must follow:
-  - `doc-review-####.md`
-  - `doc-sync-####.md`
-- IDs must be:
-  - sequential within each type
-  - zero-padded (0001, 0002, ...)
-- Do NOT reuse or overwrite IDs
+- Legacy historical review artifacts may keep their existing numeric names.
+- New review artifact file names must follow:
+  - `doc-review-YYYY-MM-DD-<slug>.md`
+  - `doc-sync-YYYY-MM-DD-<slug>.md`
+- New review keys in this index should use the filename stem without `.md`.
+- Slugs should be concise, target- or issue-based, and readable in plain text.
+- If a same-day file would reuse the same slug, append an ordinal suffix:
+  - `-2`
+  - `-3`
+- Do NOT reuse or overwrite an existing review artifact filename.
+- Do NOT rename historical numeric artifacts only to force them into the new naming scheme.
 
 ---
 

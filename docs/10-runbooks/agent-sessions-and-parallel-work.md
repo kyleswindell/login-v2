@@ -54,7 +54,7 @@ Implications:
 | Separate branches plus separate worktrees, multiple writers | Yes | each writer gets isolated worktree |
 | Separate worker branches/worktrees plus serialized integration | Yes | worker branches stay out of `/docs/08-active/`; one integrator owns queue state and staging |
 | Concurrent `batch-start` / `work-batch` on shared `/docs/08-active/` | No | current active workspace is singleton |
-| Concurrent review-ledger final writes without serialization | No | sequential IDs and shared index can collide |
+| Concurrent review-ledger final writes without serialization | No | shared index writes and same-day slug collisions still need one final writer |
 | Multiple non-`main` staging review branches at once | No | staging has one active owner at a time |
 
 ### Mode A — Shared Folder, Single Writer
@@ -255,7 +255,8 @@ Use that file only for visibility:
 
 The review ledger has its own collision risk because:
 
-* `doc-review-####` and `doc-sync-####` IDs are sequential
+* review artifacts still share one registry file: `docs/11-ai/active-doc-reviews/index.md`
+* even with date-plus-slug filenames, two writers can still choose the same same-day slug for the same target
 * `docs/11-ai/active-doc-reviews/index.md` is a shared registry file
 
 Supported review-writing rule:
@@ -263,7 +264,7 @@ Supported review-writing rule:
 * multiple review writers may work in separate worktrees
 * final review-file creation and ledger update must be serialized
 
-Until a different ID-allocation model is adopted, do not treat concurrent review-ledger final writes as safe in one shared folder.
+Date-plus-slug filenames reduce path collisions, but they do not make concurrent ledger final writes safe in one shared folder.
 
 ## Worktree And Docker Compose Setup
 

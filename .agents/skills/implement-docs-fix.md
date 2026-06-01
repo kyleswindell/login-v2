@@ -7,16 +7,16 @@ Apply only the documented fixes from an existing review record in `/docs/11-ai/a
 
 ## Required Input
 
-- Review file or ID (e.g. `doc-review-0001`)
+- Review file or ID (e.g. `doc-review-2026-06-01-auth-security-baseline`)
 
 Resolve file via:
 - `/docs/11-ai/active-doc-reviews/index.md`
 
 Stop if:
-- the input is a `doc-sync-####` record
+- the input is a docs sync review record
 - the request is actually asking for docs sync drift correction rather than review-file finding correction
 
-Use `implement-docs-sync-fix.md` for `doc-sync-####` records.
+Use `implement-docs-sync-fix.md` for docs sync review records.
 
 ## Scope
 
@@ -60,7 +60,7 @@ Proceed only if status is:
 - `IMPLEMENTED_PENDING_REVIEW`
 
 Proceed only if the review file is:
-- a `doc-review-####.md` record
+- a `doc-review-*.md` record
 - a documentation or governance review rather than a docs-sync implementation-alignment review
 
 ---
@@ -182,6 +182,6 @@ Confirm:
 
 ## Final Rule
 
-If the input is a `doc-sync-####` record, STOP and route to `implement-docs-sync-fix.md`.
+If the input is a `doc-sync-*.md` record, STOP and route to `implement-docs-sync-fix.md`.
 
 If findings are actually implementation issues, STOP and route to batch workflow.

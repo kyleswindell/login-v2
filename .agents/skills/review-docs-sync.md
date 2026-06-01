@@ -52,7 +52,7 @@ Exclude:
 - `/docs/_archive/`
 
 Write:
-- one `docs/11-ai/active-doc-reviews/doc-sync-####.md` review file
+- one `docs/11-ai/active-doc-reviews/doc-sync-YYYY-MM-DD-<slug>.md` review file for new records
 - the matching row in `docs/11-ai/active-doc-reviews/index.md`
 
 Do NOT write:
@@ -77,7 +77,7 @@ Do NOT write:
   - conflicts
 - Treat implementation as source of truth unless clearly incorrect
 - When the review is triggered by approved batch or phase close-out, also treat the reviewed implementation outcome and approved deferment state as source of truth for affected planning/status docs
-- If the request references an existing `doc-sync-####` file or indicates a re-review:
+- If the request references an existing docs sync review file or indicates a re-review:
   - do NOT create a new review file
   - update the existing review file
   - increment `Review Pass`
@@ -185,11 +185,12 @@ Flag:
 
 Create file:
 
-`/docs/11-ai/active-doc-reviews/doc-sync-####.md`
+`/docs/11-ai/active-doc-reviews/doc-sync-YYYY-MM-DD-<slug>.md`
 
-Determine next ID from:
-
-`/docs/11-ai/active-doc-reviews/index.md`
+For new records:
+- derive the slug from the target or sync issue
+- use the current review date in `YYYY-MM-DD` form
+- if the same-day filename already exists, append `-2`, `-3`, and so on until the filename is unique
 
 ---
 
@@ -261,6 +262,10 @@ Add row:
 - Type = Docs Sync
 - Status = OPEN
 - Implementation Status = not started
+
+For new records:
+- set `ID` to the filename stem
+- preserve legacy numeric IDs unchanged when updating historical rows
 
 ---
 

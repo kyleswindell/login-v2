@@ -17,7 +17,7 @@ This agent:
 
 ## Required Input
 
-- docs sync review file or ID (e.g. `doc-sync-0001`)
+- docs sync review file or ID (e.g. `doc-sync-2026-06-01-phase3-roadmap-sync`)
 
 Resolve file via:
 - `/docs/11-ai/active-doc-reviews/index.md`

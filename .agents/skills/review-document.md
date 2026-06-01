@@ -1,6 +1,6 @@
 # Review Document
 
-Review one documentation target or one tightly related documentation scope and produce a structured `doc-review-####.md` record.
+Review one documentation target or one tightly related documentation scope and produce a structured review record under the date-plus-slug naming convention.
 
 ## Goal
 
@@ -44,7 +44,7 @@ Read:
 - directly relevant governing docs only
 
 Write:
-- one `docs/11-ai/active-doc-reviews/doc-review-####.md` file
+- one `docs/11-ai/active-doc-reviews/doc-review-YYYY-MM-DD-<slug>.md` file for new records
 - the matching row in `docs/11-ai/active-doc-reviews/index.md`
 
 Exclude:
@@ -76,7 +76,7 @@ Do NOT write:
 Before creating or updating a review record:
 
 - confirm current branch and worktree path
-- confirm whether another review writer is already preparing a new `doc-review-####` entry
+- confirm whether another review writer is already preparing a same-day review record with the same intended slug
 - check `.agents/session-scope-claims.json` for conflicting advisory claims when available
 
 Stop if:
@@ -115,14 +115,15 @@ Check for:
 
 ### 4. Determine whether this is a new review or re-review
 
-If the request references an existing `doc-review-####`:
+If the request references an existing review record:
 - update the existing review file
 - increment `Review Pass`
 - update the existing index row
 
 Otherwise:
-- create a new `doc-review-####.md`
-- determine the next sequential ID from the review index
+- create a new `doc-review-YYYY-MM-DD-<slug>.md`
+- derive the slug from the target or issue
+- if that same-day filename already exists, append `-2`, `-3`, and so on until the filename is unique
 - add a new index row
 
 ### 5. Record findings only
@@ -209,6 +210,10 @@ Update `docs/11-ai/active-doc-reviews/index.md` with:
 - concise Notes
 
 Do NOT modify unrelated rows.
+
+For new records:
+- use the filename stem as `ID`
+- preserve legacy numeric IDs unchanged when updating historical rows
 
 ---
 

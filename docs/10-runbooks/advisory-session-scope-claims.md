@@ -40,6 +40,12 @@ For active batch execution:
 * `batch-start` and `work-batch` should record the owned scope as the whole `/docs/08-active/` workspace
 * a CQ item ID may be included only as descriptive context about the current focus
 
+For branch-based parallel batch execution:
+
+* a worker branch claim should record the owned scope as the specific queue-item implementation scope plus its handoff artifact
+* the worker branch claim must not be treated as permission to update `/docs/08-active/`
+* the integrator claim remains the whole `/docs/08-active/` workspace when integration, deploy gating, or review-state sync begins
+
 ## When Not To Use Advisory Claims
 
 Do not treat advisory claims as a substitute for the actual concurrency model.
@@ -109,12 +115,15 @@ Still required:
 * separate worktrees for concurrent writers
 * serialized review-ledger final writes
 * singleton ownership of `/docs/08-active/` batch-state updates
+* singleton integrator ownership of shared staging deployment when branch-based parallel execution is in use
 
 Not implied:
 
 * a CQ item note inside an advisory claim does not create a supported item-level lock model for shared active-batch execution
+* a worker branch claim does not move a queue item through active-workspace states until the integrator performs that sync
 
 ## Related
 
 * [Runbook Index](index.md)
 * [Agent Sessions And Parallel Work](agent-sessions-and-parallel-work.md)
+* [Branch-Based Batch Integration](branch-based-batch-integration.md)

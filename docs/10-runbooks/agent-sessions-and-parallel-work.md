@@ -52,6 +52,7 @@ Implications:
 | Shared folder, single writer | Yes | default safe mode |
 | Shared folder, multiple read-only sessions | Yes | one writer only |
 | Separate branches plus separate worktrees, multiple writers | Yes | each writer gets isolated worktree |
+| Separate worker branches/worktrees plus serialized integration | Yes | worker branches stay out of `/docs/08-active/`; one integrator owns queue state and staging |
 | Concurrent `batch-start` / `work-batch` on shared `/docs/08-active/` | No | current active workspace is singleton |
 | Concurrent review-ledger final writes without serialization | No | sequential IDs and shared index can collide |
 | Multiple non-`main` staging review branches at once | No | staging has one active owner at a time |
@@ -90,6 +91,28 @@ Best fit:
 
 * implementation work plus documentation work that both must edit files concurrently
 * two unrelated writable tasks that cannot wait on each other
+
+### Mode B1 — Parallel Batch Implementation With Serialized Integration
+
+Use this when multiple queue items from the same active batch must be implemented in parallel without letting multiple writers mutate the singleton `/docs/08-active/` workspace.
+
+Required:
+
+1. keep one integrator session as the only writer of `/docs/08-active/`
+2. give each implementation session its own branch and its own worktree
+3. have each worker session implement one queue item at a time and record a handoff artifact in `.agents/batch-branch-handoffs/`
+4. keep worker-branch commits out of `/docs/08-active/`
+5. have the integrator merge or cherry-pick reviewable worker branches one at a time, then update the shared active workspace and staging state
+
+Best fit:
+
+* multiple ready queue items that touch mostly separate code paths
+* batches that benefit from concurrent implementation but still require serialized queue state, review ledgers, and staging ownership
+
+Not allowed:
+
+* workers directly updating `change-queue.md`, `review.md`, or other `/docs/08-active/` files
+* more than one integrator writing `/docs/08-active/` or owning staging at the same time
 
 ### Codex App Worktree Path
 
@@ -131,6 +154,10 @@ Before any session starts editing:
 
 For `batch-start` or `work-batch`, the owned scope is the whole `/docs/08-active/` workspace. A queue item ID may be recorded as the current focus, but it does not narrow the writable ownership boundary.
 
+For `work-batch-branch`, the worker-owned scope is the queue-item implementation plus its handoff artifact. It does not include `/docs/08-active/`.
+
+For `integrate-work-batch-branch`, the owned scope includes `/docs/08-active/`, the integration branch, and any deploy-backed review surface needed to publish the integrated result.
+
 If any of these are unclear, do not start writing.
 
 ## Shared-Folder Rules
@@ -142,6 +169,7 @@ When multiple sessions use the same folder:
 * review and audit sessions should report findings, not apply fixes, unless the writable role is explicitly handed over
 * do not treat uncommitted local changes as completed work until the writer closes out or explicitly hands off the state
 * do not split active-batch queue items across same-folder writers by treating `In Progress` or advisory claims as per-item locks
+* when branch-based parallel execution is in use, only the integrator may update `/docs/08-active/` or own shared staging deployment
 
 ## Delivery Flow And Sign-Off Gates
 
@@ -195,6 +223,12 @@ For active batch execution:
 * record the owned scope as `/docs/08-active/`
 * use queue item IDs only as descriptive context about the current focus
 * do not treat a CQ item reference as permission for two writers to divide one active batch workspace
+
+For branch-based parallel batch execution:
+
+* worker sessions may record queue-item scope and branch ownership in advisory claims
+* worker claims should reference the matching handoff artifact under `.agents/batch-branch-handoffs/`
+* only the integrator claim should cover `/docs/08-active/` or staging ownership
 
 Do not rely on this as protection. It documents intent only.
 
@@ -340,5 +374,6 @@ Unsafe:
 * [Runbook Index](index.md)
 * [Git Remote And Multi-Device Workflow](git-remote-and-multi-device-workflow.md)
 * [Advisory Session Scope Claims](advisory-session-scope-claims.md)
+* [Branch-Based Batch Integration](branch-based-batch-integration.md)
 * [Implementation Status And Development Sync Standard](../02-standards/documentation/Implementation%20Status%20And%20Development%20Sync%20Standard.md)
 * Codex Working Rules | [Codex Working Rules](../00-start-here.md)

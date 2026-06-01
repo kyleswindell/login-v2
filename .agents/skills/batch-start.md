@@ -35,6 +35,7 @@ Ignore `/docs/_archive/`.
 - Base batch deliverables must remain tracked in `batch.md` and `checklist.md`
 - `change-queue.md` is reserved for review findings, follow-up items, and blocked/discovered work
 - Do NOT create queue items from batch scope or deliverables during batch start
+- If later implementation needs parallel worker branches, that branch-based execution may begin only after this singleton batch-start completes and an integrator owns the initialized `/docs/08-active/` workspace
 
 ## Concurrency Preflight
 

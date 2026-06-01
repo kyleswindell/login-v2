@@ -25,6 +25,7 @@ Execute the currently loaded batch in `/docs/08-active/`.
 - Follow `docs/10-runbooks/deployment.md` and `docs/10-runbooks/staging-deployment.md` for staging deployment behavior when manual review output is required
 - Base batch deliverables are tracked in `batch.md` and `checklist.md`
 - `change-queue.md` is reserved for review findings, follow-up items, and blocked or discovered work
+- If the batch needs parallel queue-item implementation across multiple writers, stop and use the branch-based `work-batch-branch` plus `integrate-work-batch-branch` path instead of turning this shared active workspace into a multi-writer flow
 
 ## Concurrency Preflight
 

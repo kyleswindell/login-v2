@@ -27,6 +27,7 @@ Operations procedures only. This branch does not own architecture structure, fea
 - [Staging Deployment](staging-deployment.md)
 - [Git Remote And Multi-Device Workflow](git-remote-and-multi-device-workflow.md)
 - [Agent Sessions And Parallel Work](agent-sessions-and-parallel-work.md)
+- [Branch-Based Batch Integration](branch-based-batch-integration.md)
 - [Advisory Session Scope Claims](advisory-session-scope-claims.md)
 - [Realtime Notifications And Reverb](realtime-notifications-and-reverb.md)
 - [Logging Operations](logging-operations.md)

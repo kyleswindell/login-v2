@@ -24,6 +24,7 @@ Concurrency rule:
 
 - `/docs/08-active/` is a singleton active workspace
 - concurrent `batch-start` or `work-batch` execution is not supported under the current model, even when separate Git worktrees exist
+- branch-based parallel implementation is allowed only when a single integrator owns `/docs/08-active/` and worker branches stay out of the active workspace
 - use separate worktrees for other writable tasks only when those tasks do not require shared `/docs/08-active/` ownership at the same time
 
 ### Structure
@@ -65,6 +66,7 @@ Rules:
   - checkbox = review completion only
   - `Status:` line = implementation state only
 - `work-batch` sets `Status` only
+- `integrate-work-batch-branch` may set `Status` only when syncing worker-branch implementation into the active workspace
 - `batch-update-manual-review-status` is the only authority to check items as complete (`passed review`)
 - `checklist.md` remains the single source of truth for completion
 
@@ -79,6 +81,7 @@ Contains:
 
 Updated by:
 - `work-batch`
+- `integrate-work-batch-branch`
 - `batch-update-manual-review-status`
 
 ---
@@ -92,6 +95,7 @@ Represents:
 
 Owned by:
 - `work-batch` for factual implementation status only
+- `integrate-work-batch-branch` for factual implementation status only when worker branches are being integrated
 - `batch-update-manual-review-status`
 - `batch-review-and-finalize`
 
@@ -112,12 +116,14 @@ Sections:
 
 Owned by:
 - `work-batch` for implementation-state transitions on targeted `Ready To Implement` items only
+- `integrate-work-batch-branch` for implementation-state transitions when the implementation was produced on a worker branch
 - `batch-update-manual-review-status` for review-state transitions and review-driven queue maintenance
 
 Queue-state rules:
 - `Ready To Implement` contains items that still require implementation work
-- `In Progress` contains the queue item currently claimed by the active `work-batch` pass
+- `In Progress` contains the queue item currently claimed by the active `work-batch` pass or by an integrator-recorded active worker-branch assignment
 - move a targeted item from `Ready To Implement` to `In Progress` as soon as implementation work begins for that item
+- in branch-based execution, the integrator records that `In Progress` claim when the worker assignment becomes active
 - continue or explicitly reclassify an existing unfinished `In Progress` item before claiming a new `Ready To Implement` item in a later pass
 - complete one claimed queue item at a time; do not move a second independently tracked item into `In Progress` until the current one reaches `Implemented Pending Review`, `Blocked`, or `Deferred`
 - `Implemented Pending Review` contains items that were implemented in a completed work pass, are available on the required review surface, and are awaiting human confirmation
@@ -254,6 +260,46 @@ Tier 1 consumption preflight:
 
 ---
 
+### 2A. Work Batch Branch
+
+Workflow entry point:
+- `work-batch-branch`
+
+Responsibilities:
+- implement one targeted queue item on a dedicated branch and worktree
+- keep commit scope to that queue item and one concern
+- create or update the branch handoff artifact under `.agents/batch-branch-handoffs/`
+- record validation, files changed, and branch/commit status for the integrator
+
+Rules:
+- do not update `/docs/08-active/` directly
+- do not move queue items between active-workspace sections from a worker branch
+- do not claim more than one queue item at a time per worker branch
+- if additional findings appear, record them in the handoff or chat for integrator normalization instead of editing the shared queue
+- publish enough branch state that the integrator can merge or cherry-pick without re-discovering scope
+
+---
+
+### 2B. Integrate Work Batch Branch
+
+Workflow entry point:
+- `integrate-work-batch-branch`
+
+Responsibilities:
+- review a worker branch handoff artifact
+- merge or cherry-pick one worker branch into the integration branch
+- update `/docs/08-active/` to reflect the integrated implementation state
+- own commit, push, and deploy-backed review-surface publication when required
+
+Rules:
+- one worker branch is integrated at a time
+- the integrator is the only owner allowed to sync `change-queue.md`, `review.md`, `notes.md`, and worklog/index state for branch-based execution
+- the integrator may also record `In Progress` when a worker assignment is formally active and later move that item to its next implementation outcome after integration
+- if deploy-backed review is required, do not move the queue item into `Implemented Pending Review` until the integration commit is pushed and the required deploy succeeds
+- if integration reveals additional conflicts or uncovered scope, record that explicitly before publishing review-ready status
+
+---
+
 ### 3. Manual Review
 
 Workflow entry point:
@@ -287,7 +333,7 @@ Rules:
 ### 4. Additional Work Passes
 
 - driven by change-queue.md
-- executed via `work-batch`
+- executed via `work-batch` or `work-batch-branch`
 - repeat until review issues resolved
 
 ---
@@ -354,14 +400,16 @@ Rules:
 
 - initialized empty by `batch-start`
 - populated by `batch-update-manual-review-status`
-- implemented items are worked by `work-batch`
+- implemented items are worked by `work-batch` or `work-batch-branch`
 - `work-batch` may move targeted items only through implementation states:
   - `Ready To Implement`
   - `In Progress`
   - `Implemented Pending Review`
   - `Blocked`
   - `Deferred`
-- `In Progress` is the live claim state for the active `work-batch` owner, not a general backlog bucket
+- `integrate-work-batch-branch` may move targeted items through those same implementation states when the code was produced on a worker branch and the active workspace is being synchronized by the integrator
+- `In Progress` is the live claim state for the active `work-batch` owner or for an integrator-recorded active worker-branch assignment, not a general backlog bucket
+- in branch-based parallel execution, worker-branch progress is tracked in branch handoff artifacts until the integrator updates the active queue
 - if a pass ends with an unfinished `In Progress` item, the next `work-batch` pass must continue or explicitly reclassify that item before starting a new `Ready To Implement` item
 - `batch-update-manual-review-status` owns review-state transitions such as:
   - `Passed Review`
@@ -410,6 +458,16 @@ Rules:
 - records work
 - annotates checklist
 - does not finalize or approve
+
+### `work-batch-branch`
+- executes one queue item on a dedicated worker branch/worktree
+- records branch handoff state
+- does not update `/docs/08-active/`
+
+### `integrate-work-batch-branch`
+- integrates one worker branch at a time
+- syncs `/docs/08-active/` and deploy-backed reviewability state
+- does not replace manual-review authority
 
 ### `batch-update-manual-review-status`
 - captures review findings

@@ -16,6 +16,7 @@ Integrate one worker branch into the canonical active batch state and shared rev
 
 - This skill is the singleton writer for `/docs/08-active/` in branch-based parallel mode
 - Integrate one queue item at a time
+- Prefer running in the integrator project thread on the local `main` worktree
 - Review the worker handoff before merging
 - Update active workspace state only after the worker changes are actually integrated
 - Own push, staging deploy, and move to `Implemented Pending Review` when reviewability requires deployment
@@ -25,12 +26,14 @@ Integrate one worker branch into the canonical active batch state and shared rev
 Before writing:
 
 - confirm this session owns `/docs/08-active/`
+- confirm this session is the integrator thread/session rather than a worker thread
 - confirm no other integrator is active
 - confirm the worker branch head SHA matches the handoff artifact
 
 Stop if:
 
 - `/docs/08-active/` ownership is unclear
+- the current session is a worker-thread/worktree context instead of the integrator lane
 - the worker handoff is incomplete
 - the integration target or merge base is ambiguous
 

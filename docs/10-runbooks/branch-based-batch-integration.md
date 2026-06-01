@@ -66,7 +66,7 @@ Minimum contents:
 ## Workflow
 
 1. `batch-start` initializes `/docs/08-active/` as usual.
-2. The integrator selects a queue item and creates or confirms the worker branch/worktree.
+2. The integrator may execute `orchestrate-work-batch-branches` to create or attach worker lanes for the selected ready queue items.
 3. The worker executes `work-batch-branch` for that queue item.
 4. The worker commits scoped changes on the worker branch and updates the handoff artifact.
 5. The integrator executes `integrate-work-batch-branch`.
@@ -74,6 +74,49 @@ Minimum contents:
 7. The integrator updates `/docs/08-active/` to reflect the actual implementation outcome.
 8. If the integrated result is review-ready and needs staging, the integrator pushes and deploys it.
 9. `batch-update-manual-review-status` and `batch-review-and-finalize` continue to own review closure and batch close-out.
+
+## Preferred Codex App Orchestration
+
+Preferred path when the Codex app is available:
+
+1. Keep one integrator project thread on the local `main` worktree.
+2. Use `orchestrate-work-batch-branches` to create or attach one worker project thread per assigned queue item in Worktree mode.
+3. Run `work-batch-branch` inside each worker thread.
+4. Use the handoff artifact as the durable worker-to-integrator coordination surface.
+5. Run `integrate-work-batch-branch` only in the integrator thread.
+
+Prefer dedicated worker project threads for long-lived ownership visibility. If the available Codex tooling cannot attach those project threads to the already-provisioned dedicated worktrees, spawned child agents are an acceptable worker fallback only when they are explicitly bound to the assigned dedicated branch/worktree and still complete the full `work-batch-branch` contract:
+
+* implement only the assigned queue item
+* do not edit `/docs/08-active/`
+* run scoped verification
+* create a scoped worker commit when reviewable
+* update the matching handoff artifact
+
+This fallback preserves the real safety boundary when the edits still occur only inside the dedicated worker worktree.
+
+## Operator Entry Point
+
+The operator should not have to hand-author a long orchestration prompt.
+
+Preferred trigger:
+
+* ask the integrator session to execute `orchestrate-work-batch-branches` for the current ready queue items
+* natural-language equivalent accepted in this repo:
+  `Start branch-based parallel batch execution: create separate worker branches/worktrees for the current ready queue items and keep /docs/08-active integrator-owned.`
+
+That workflow should own:
+
+* worker lane creation/attachment
+* worker branch/worktree assignment
+* handoff-file seeding
+* optional worker-start handoff when explicitly requested
+
+The operator should only need to specify exceptions such as:
+
+* which ready queue items to include or exclude
+* whether worker execution should begin immediately or stop after lane setup
+* whether existing worker lanes should be reused
 
 ## Queue Ownership
 

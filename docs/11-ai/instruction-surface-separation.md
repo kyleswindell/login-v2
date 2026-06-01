@@ -24,6 +24,7 @@ That means:
 
 - if it is a durable repo rule, it belongs in `AGENTS.md`
 - if it is a task workflow, it belongs in a skill file
+- if it is a reusable operator trigger for a repeatable workflow, prefer a skill file over a long manually reconstructed prompt
 - if it is canonical system truth, it belongs in `docs/`
 - if it is non-canonical local memory, it belongs in `.agents/memory/`
 - if it is reusable starter scaffolding for other repos, it belongs in `.agents/baselines/`

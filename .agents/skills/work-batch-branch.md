@@ -14,6 +14,7 @@ Implement one assigned change-queue item on a dedicated branch/worktree without 
 
 - Work on one queue item only
 - Use a dedicated branch and dedicated worktree
+- Prefer a dedicated Codex app project thread in Worktree mode when available; otherwise use the assigned dedicated worktree directly, including an explicitly bound spawned child-agent fallback when needed
 - Do NOT update `/docs/08-active/`
 - Do NOT move queue items between sections
 - Update canonical code/docs required by the queue item
@@ -25,6 +26,7 @@ Implement one assigned change-queue item on a dedicated branch/worktree without 
 Before writing:
 
 - confirm current branch and worktree match the assigned queue item
+- confirm this session is the dedicated worker thread/session for that branch/worktree, or a spawned child agent explicitly bound to that same assigned branch/worktree
 - confirm this branch is not the shared integrator branch
 - confirm another worker is not already using the same queue-item branch
 - check `.agents/session-scope-claims.json` for overlapping writable claims when needed
@@ -33,6 +35,7 @@ Stop if:
 
 - the queue item assignment is unclear
 - the branch/worktree is not dedicated to this queue item
+- the current session is still in the integrator thread or in a shared-folder thread without explicit worker worktree isolation
 - the session would need to update `/docs/08-active/` directly
 
 ## Execution

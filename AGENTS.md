@@ -208,7 +208,9 @@ Always respect branch ownership. Do not duplicate or reassign responsibility acr
 - Supported: one writable session in one working tree.
 - Supported: multiple read-only planning, audit, or review sessions in the same folder while one writer owns edits.
 - Supported: multiple writable sessions only when each writable session has its own branch and its own worktree.
+- Supported: multiple Codex app project threads when each writable thread uses its own worktree and owned scope.
 - Supported: parallel queue-item implementation in separate branches/worktrees when a single integrator session serializes `/docs/08-active/` updates, deploy ownership, and final merge/promotion.
+- Supported: spawned child agents for bounded sidecar work inside an already-owned writable context, and as worker executors when they are explicitly bound to the assigned dedicated branch/worktree and complete the full worker contract.
 - Not supported: concurrent `batch-start` or `work-batch` execution against the same shared `/docs/08-active/` workspace.
 - Not supported: multiple writable sessions editing the same working tree folder at the same time.
 - Not supported: splitting active-batch queue items across multiple writers by treating `In Progress` or advisory scope claims as per-item locks inside the same shared `/docs/08-active/` workspace.
@@ -218,6 +220,8 @@ Always respect branch ownership. Do not duplicate or reassign responsibility acr
 Coordination notes:
 
 - worktree isolation is the real safety boundary for concurrent writable work
+- for long-lived parallel CQ execution, prefer one Codex app project thread per worker worktree plus one integrator thread on `main`
+- prefer one Codex app project thread per worker worktree for long-lived ownership visibility, but allow spawned child agents as worker executors when they are explicitly bound to the assigned dedicated branch/worktree, stay out of `/docs/08-active/`, and complete commit plus handoff requirements
 - advisory scope claims are coordination aids only and do not guarantee protection
 - use `.agents/session-scope-claims.json` only as a lightweight visibility layer, not as a lock
 - a session that began read-only must not silently become a same-folder writer while another writable session is active; it must either move to its own branch/worktree or remain read-only

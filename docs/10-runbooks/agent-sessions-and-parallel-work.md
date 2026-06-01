@@ -116,7 +116,38 @@ Not allowed:
 
 ### Codex App Worktree Path
 
-When using the Codex app, prefer the app's built-in Worktree mode and Handoff flow as the first-class path for writable isolation.
+When using the Codex app, prefer the app's built-in Project Thread plus Worktree mode and Handoff flow as the first-class path for writable isolation.
+
+Recommended shape for long-lived parallel writable work:
+
+* one integrator project thread in the local `main` worktree
+* one worker project thread per writable queue item, each created in its own worktree
+* worker threads own implementation and handoff updates only
+* the integrator thread owns `/docs/08-active/`, push, deploy, and final merge/promotion
+
+For branch-based active batch work in this repo, the preferred integrator entrypoint is:
+
+* execute `orchestrate-work-batch-branches` to provision or attach the worker lanes
+
+That keeps the orchestration contract in a skill file instead of forcing the operator to restate worker-start instructions manually.
+
+Use spawned child agents inside a thread for bounded sidecar tasks such as:
+
+* read-only codebase exploration
+* scoped verification
+* narrowly owned implementation on disjoint files inside an already-owned worker thread
+
+If the app tooling cannot attach a real worker project thread to an already-provisioned dedicated worktree, a spawned child agent is an acceptable worker fallback only when all of the following stay true:
+
+* the child agent is explicitly bound to the assigned dedicated branch/worktree
+* it performs queue-item implementation only in that dedicated worktree
+* it does not edit `/docs/08-active/`
+* it completes the full worker lifecycle:
+  * scoped verification
+  * scoped worker commit when reviewable
+  * handoff artifact update to `ready_for_integration` when appropriate
+
+Do not treat unbound child agents or same-session shared-folder writes as equivalent to this fallback.
 
 Important limitation:
 
@@ -127,6 +158,23 @@ Use manual `git worktree` commands as the fallback path when:
 * the Codex app worktree flow is unavailable
 * the repo is being operated outside the Codex app
 * a manual Git workflow is explicitly preferred for the session
+
+### Codex App Settings Baseline
+
+Current baseline for this repo:
+
+* `approval_policy = "on-failure"` is acceptable; keep approvals scoped and do not broaden them just to make multi-agent work easier
+* `sandbox_mode = "workspace-write"` is acceptable; writable isolation comes from separate worktrees, not from broadening sandbox access
+* `desktop.reviewDelivery = "detached"` is acceptable and fits review-heavy workflows
+* `desktop.worktree-keep-count = 5` is currently sufficient for one integrator plus a small number of worker threads
+
+Recommended checks before relying on longer-running background work:
+
+* verify the Codex desktop app can keep running while the machine sleeps or the session is unfocused if you expect multi-hour background work
+* keep browser/plugin notifications enabled enough to notice worker completion and integration-ready handoffs
+* if you begin routinely keeping more than four or five concurrent worker worktrees alive, raise `desktop.worktree-keep-count` intentionally instead of letting the app prune older worktrees unexpectedly
+
+No repo-local setting should assume that background continuation makes same-folder multi-writer edits safe. The branch/worktree ownership rules still apply.
 
 ### Mode C — Multi-Machine Branch Workflow
 

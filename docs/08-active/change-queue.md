@@ -11,27 +11,35 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 - Exploratory review discussion stays in chat until it is normalized into concise queue language.
 
 ## Ready To Implement
+- [ ] Rebuild the Widget Content Standards page from the dashboard widget content standards plan: validate the dashboard grid geometry before finalizing examples, compare the current three-unit model against a four-across model, calibrate one-row height for constrained office-monitor widths, and replace sparse placeholder cards with realistic filled examples that prove content allowances for every supported widget size without clipping, crowding, internal scrolling, or excessive unused space.
+  ID: P2-B-CQ-023
+  Scope: planned widget content standards rework, grid geometry calibration, row-height review, realistic per-size widget examples, constrained viewport validation, content allowance acceptance criteria
+  Path Coverage: `/platform/ui-reference/patterns/widget-content`, shared dashboard-grid/widget-shell geometry where the selected standard requires it, UI Reference navigation/tests for the widget standards page
+  Plan: `docs/08-active/dashboard-widget-content-standards-plan.md`
+  Follow-up To: P2-B-CQ-021
+  Supersedes: P2-B-CQ-021
 
 ## In Progress
 
 ## Implemented Pending Review
+## Blocked
+
+## Deferred
 - [ ] Establish a standalone dashboard widget content standards proof that defines baseline content allowances by supported widget size, considering both declared width and height; the page should document which content regions, density levels, and example content volumes are appropriate for `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, and `3x2` widgets without attempting to define every possible widget content type.
   ID: P2-B-CQ-021
   Scope: dashboard widget content allowances, size-aware density standards, width/height-based content-region guidance, standalone UI Reference component page, future-module widget design baseline
   Path Coverage: new UI Reference widget content standards page, shared widget-shell guidance, dashboard/widget proof navigation, future module dashboard-widget implementation guidance
   Follow-up To: P2-B-CQ-006, P2-B-CQ-018, P2-B-CQ-019
   Implemented in: `2-B-0043`
-- [ ] Trim and refocus the Layout + Dashboard reference page so the dashboard example/demo is the primary page content, with only supporting cards for dashboard configuration, layout behavior, customization state, persistence, and review cues retained below it; widget-specific design examples and standards should move to the standalone widget content standards page instead of remaining mixed into the Layout + Dashboard proof.
+  Superseded By: P2-B-CQ-023
+
+## Passed Review
+- [x] Trim and refocus the Layout + Dashboard reference page so the dashboard example/demo is the primary page content, with only supporting cards for dashboard configuration, layout behavior, customization state, persistence, and review cues retained below it; widget-specific design examples and standards should move to the standalone widget content standards page instead of remaining mixed into the Layout + Dashboard proof.
   ID: P2-B-CQ-022
   Scope: Layout + Dashboard proof simplification, dashboard-demo-first page structure, removal or relocation of widget-specific design explanation, supporting card reduction, standalone widget standards handoff
   Path Coverage: `/platform/ui-reference/patterns/layout`, new widget content standards UI Reference page, related UI Reference navigation/linking for dashboard and widget standards
   Follow-up To: P2-B-CQ-019, P2-B-CQ-021
   Implemented in: `2-B-0043`
-## Blocked
-
-## Deferred
-
-## Passed Review
 - [x] Fix the dashboard grid span contract so widget height is determined by declared grid span, not by neighboring item placement or content height; every allowed `x2` widget must reserve and visibly occupy exactly two row tracks in all review pairings, including `1x2` beside `2x2`, `1x2` beside stacked one-row widgets, and `3x2` directly compared with `3x1`.
   ID: P2-B-CQ-018
   Iteration: 4

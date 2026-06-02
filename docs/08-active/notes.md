@@ -1,6 +1,12 @@
 # Notes
 
 ## Findings
+- Batch B pass `2-B-0035` integrates the four ready worker-lane items back onto `main` and prepares them for staging publication:
+  - `P2-B-CQ-015` now applies the shared action/menu-item suite to the app-shell account dropdown, including outline-neutral theme options, shared current menu-item state, and ghost-danger sign-out treatment
+  - `P2-B-CQ-018` now adds visible multi-row widget span proof coverage for `1x2`, `2x2`, and `3x2` dashboard states on the Layout + Dashboard proof surface
+  - `P2-B-CQ-019` now keeps the dashboard customization proof as a full main-content-width section, protects widget-card internals from smaller-width collisions, and exposes visible insertion/swap feedback while dragging
+  - `P2-B-CQ-020` now establishes a shared soft-card surface palette contract and applies it to the saved-layout preview plus dashboard proof colorways
+  - all four items move to `Implemented Pending Review` and require targeted staging visual review after publication
 - The latest targeted staging review of `P2-B-CQ-019` confirms the current UI Reference proof is still not review-ready:
   - the dashboard example is compressed to accommodate adjacent proof-state support cards instead of demonstrating a true full-width main-content dashboard section
   - the proof widgets can still collide internally at smaller widths, with the current `1x1` examples exposing overlap between badge/meta content and the main signal region
@@ -261,11 +267,10 @@
 - Queue cleanup review confirms `P2-B-CQ-007` and `P2-B-CQ-008` already reflect the correct Tier 1-before-Tier 2 sequencing and do not need reclassification.
 
 ## Risks / Questions
-- Combined Batch B manual review still cannot close until staging manually re-validates `P2-B-CQ-013`.
-- `P2-B-CQ-019` now needs another implementation pass before it can return to targeted staging review; the next pass must preserve a full-width UI Reference dashboard proof, fix smaller-width widget-content collision behavior, and make drag reordering visually legible.
-- `P2-B-CQ-020` now needs a shared soft-card surface palette decision and implementation path so tinted proof cards stop relying on page-local color pairings.
-- `P2-B-CQ-015` is now unblocked and ready for implementation, but it still needs a full account-dropdown consumer pass against the approved shared action/menu-item contract.
-- `P2-B-CQ-018` now needs a visible dashboard/layout proof treatment that makes taller widget states directly judgeable in-context, or the current row-span contract will remain hard to validate visually.
+- Combined Batch B manual review still cannot close until staging manually re-validates `P2-B-CQ-013`, `P2-B-CQ-015`, `P2-B-CQ-018`, `P2-B-CQ-019`, and `P2-B-CQ-020`.
+- `P2-B-CQ-019` and `P2-B-CQ-020` share the Layout + Dashboard proof surface, so targeted manual review should verify the integrated full-width/reorder proof and soft-card colorway treatment together instead of reviewing stale pre-integration screenshots.
+- `P2-B-CQ-015` needs account-dropdown review on the authenticated app shell, including light/dark theme-option states and sign-out treatment.
+- `P2-B-CQ-018` needs direct visual confirmation that multi-row widget height reads clearly in context, not only test confirmation that the labels/classes exist.
 - Realtime notification toast rendering remains a feature-level JS path and is intentionally outside this Tier 1 hardening pass.
 - `resources/views/platform/ui-reference/index.blade.php` remains an unused legacy workspace view because the canonical `/platform/ui-reference` route renders `overview.blade.php`; this pass left it untouched to avoid mixing unrelated cleanup into the Batch B implementation lane.
 - Combined Batch B manual review is still required to confirm the newly implemented widget, date-range, identity-summary, dropdown, and sub-navigation changes before the batch can move toward close-out.

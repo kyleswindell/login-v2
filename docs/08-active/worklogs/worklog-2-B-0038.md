@@ -58,8 +58,8 @@ Run `work-batch` on the current open change queue items: fix multi-row dashboard
 
 ## Commit / Deploy Status
 
-- Commit: Pending
-- Deploy: Pending
+- Commit: Yes (`20a3b90`)
+- Deploy: Yes (`main` deployed to staging after `20a3b90`)
 
 ## Notes
 

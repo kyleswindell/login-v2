@@ -4,6 +4,8 @@
 ])
 
 @php
+    $activeQueueItems = array_flip(\App\Support\ActiveBatchReviewQueue::implementedPendingReviewIds());
+
     $normalizedItems = collect($items)
         ->map(function ($item): array {
             if (is_string($item)) {
@@ -16,6 +18,7 @@
             ];
         })
         ->filter(fn (array $item) => filled($item['id']))
+        ->filter(fn (array $item) => array_key_exists($item['id'], $activeQueueItems))
         ->values()
         ->all();
 @endphp

@@ -11,15 +11,16 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 - Exploratory review discussion stays in chat until it is normalized into concise queue language.
 
 ## Ready To Implement
+
+## In Progress
+
+## Implemented Pending Review
 - [ ] Resynchronize the temporary active-batch proof review mode so it reflects the live queue state exactly; only current `Implemented Pending Review` items should appear in page banners and scoped card targets, reopened or passed IDs must drop out immediately, and every current pending-review item with a visible proof surface must be tagged accurately at the point of review.
   ID: P2-B-CQ-013
   Iteration: 3
   Scope: temporary active-batch proof review mode, live queue-state synchronization, full current pending-review coverage, stale active-review target removal
   Path Coverage: active-batch UI Reference proof pages, all current `Implemented Pending Review` items with visible proof surfaces, relevant component library cards under review, current review-mode entry points
-  Implemented in: `2-B-0014`
-## In Progress
-
-## Implemented Pending Review
+  Implemented in: `2-B-0022`
 - [ ] Refine the Tier 1 searchable dropdown-select baseline so the shared searchable control matches the canonical select-field shell across spacing, typography, trigger/menu border treatment, and Inputs And Forms proof coverage while still presenting one integrated searchable dropdown with one intentional current-selection treatment.
   ID: P2-B-CQ-001
   Iteration: 4

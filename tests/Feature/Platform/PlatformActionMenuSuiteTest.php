@@ -16,7 +16,7 @@ class PlatformActionMenuSuiteTest extends TestCase
         $this->get('/platform/ui-reference/components/actions')
             ->assertOk()
             ->assertSee('P2-B-CQ-014')
-            ->assertSee('P2-B-CQ-016')
+            ->assertDontSee('P2-B-CQ-016')
             ->assertSee('Current Item States')
             ->assertSee('data-ui-component="menu-item"', false)
             ->assertSee('data-ui-current="true"', false)
@@ -31,7 +31,7 @@ class PlatformActionMenuSuiteTest extends TestCase
         $this->get('/platform/ui-reference/patterns/navigation')
             ->assertOk()
             ->assertSee('P2-B-CQ-014')
-            ->assertSee('P2-B-CQ-016')
+            ->assertDontSee('P2-B-CQ-016')
             ->assertSee('data-ui-component="menu-item"', false)
             ->assertSee('data-ui-current="true"', false);
 

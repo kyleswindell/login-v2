@@ -1,6 +1,11 @@
 # Notes
 
 ## Findings
+- Batch B pass `2-B-0022` is now deployed to staging on `main` and reimplements `P2-B-CQ-013` by synchronizing the temporary active-batch overlay to the live queue state:
+  - added `App\Support\ActiveBatchReviewQueue` so the overlay reads the current `Implemented Pending Review` IDs from `docs/08-active/change-queue.md`
+  - filtered the shared page-banner and scoped review-target overlays so only currently pending-review queue IDs remain visible on declared proof surfaces
+  - suppressed empty temporary review overlays on unaffected proof pages instead of leaving stale review chrome in place
+  - verified the updated proof-layer behavior in WSL with `DB_CONNECTION=sqlite DB_DATABASE=:memory:` overrides for `PlatformUiReferenceTest` and `PlatformActionMenuSuiteTest`
 - Batch B pass `2-B-0021` is now deployed to staging on `main` and re-integrates `P2-B-CQ-017` through the branch-based worker path:
   - cherry-picked worker commit `adfb0d5401cfafcf581a5a349fd3191d4da7dd10` onto `main`
   - republished the progressive internal phone-input baseline on the forms proof and shared platform-user review surface
@@ -154,6 +159,7 @@
   - future-module UI ownership declaration fields
 
 ## Decisions
+- `P2-B-CQ-013` should synchronize against the live `Implemented Pending Review` queue at render time and should suppress empty temporary review overlays entirely on proof surfaces that no longer participate in the current pending-review set.
 - Treat `P2-B-CQ-013` as a same-item failure of the temporary review-layer synchronization contract, not as a new adjacent queue item.
 - Keep `P2-B-CQ-003`, `P2-B-CQ-004`, `P2-B-CQ-005`, `P2-B-CQ-006`, `P2-B-CQ-007`, `P2-B-CQ-008`, `P2-B-CQ-010`, and `P2-B-CQ-011` in passed-review status on their own merits; do not reopen them just because the temporary review overlay is stale.
 - Batch B starts with Tier 1 library hardening for the promoted Blade-component candidates before broader Tier 2 implementation continues.
@@ -182,10 +188,7 @@
 - Queue cleanup review confirms `P2-B-CQ-007` and `P2-B-CQ-008` already reflect the correct Tier 1-before-Tier 2 sequencing and do not need reclassification.
 
 ## Risks / Questions
-- `P2-B-CQ-017` is back in `Implemented Pending Review`, but the temporary review-layer regression on `P2-B-CQ-013` still leaves stale queue tags visible on the forms proof surface until the overlay pass is corrected.
-- `P2-B-CQ-014` is back in `Implemented Pending Review`, but the temporary review-layer regression on `P2-B-CQ-013` still leaves stale queue tags visible on the same navigation and data/content proof surfaces until that overlay pass is corrected.
-- `P2-B-CQ-001` is back in `Implemented Pending Review`, but the temporary review-layer regression on `P2-B-CQ-013` still prevents the active overlay from being treated as authoritative on the same forms proof surface until that queue item closes again.
-- Combined Batch B manual review still cannot close while `P2-B-CQ-013` leaves the temporary review layer out of sync with the live queue state on staging.
+- Combined Batch B manual review still cannot close until staging manually re-validates the republished queue items `P2-B-CQ-001`, `P2-B-CQ-013`, `P2-B-CQ-014`, and `P2-B-CQ-017`.
 - Realtime notification toast rendering remains a feature-level JS path and is intentionally outside this Tier 1 hardening pass.
 - `resources/views/platform/ui-reference/index.blade.php` remains an unused legacy workspace view because the canonical `/platform/ui-reference` route renders `overview.blade.php`; this pass left it untouched to avoid mixing unrelated cleanup into the Batch B implementation lane.
 - Combined Batch B manual review is still required to confirm the newly implemented widget, date-range, identity-summary, dropdown, and sub-navigation changes before the batch can move toward close-out.

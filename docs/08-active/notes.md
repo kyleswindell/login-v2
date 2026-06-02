@@ -1,6 +1,11 @@
 # Notes
 
 ## Findings
+- A fresh staging manual-review pass confirms the remaining account dropdown consumer gap on `P2-B-CQ-015`:
+  - the active and hovered theme option still use outdated local option styling instead of the approved shared outline-neutral treatment
+  - the sign-out action still does not use the approved shared ghost-danger treatment
+  - the account-menu text color remains out of parity with the approved shared menu-item contract
+  - because `P2-B-CQ-014` and `P2-B-CQ-016` are now approved, this item is no longer dependency-blocked and should return to `Ready To Implement`
 - Staging manual review now approves the republished worker-integration outcomes for:
   - `P2-B-CQ-001`
   - `P2-B-CQ-014`
@@ -164,6 +169,7 @@
   - future-module UI ownership declaration fields
 
 ## Decisions
+- Move `P2-B-CQ-015` from `Blocked` to `Ready To Implement` because the upstream menu-item suite dependencies are now approved and the remaining account-menu styling gap is confirmed as an existing item failure rather than a new queue item.
 - Move `P2-B-CQ-001`, `P2-B-CQ-014`, and `P2-B-CQ-017` from `Implemented Pending Review` to `Passed Review` based on explicit manual approval.
 - `P2-B-CQ-013` should synchronize against the live `Implemented Pending Review` queue at render time and should suppress empty temporary review overlays entirely on proof surfaces that no longer participate in the current pending-review set.
 - Treat `P2-B-CQ-013` as a same-item failure of the temporary review-layer synchronization contract, not as a new adjacent queue item.
@@ -195,6 +201,7 @@
 
 ## Risks / Questions
 - Combined Batch B manual review still cannot close until staging manually re-validates `P2-B-CQ-013`.
+- `P2-B-CQ-015` is now unblocked and ready for implementation, but it still needs a full account-dropdown consumer pass against the approved shared action/menu-item contract.
 - Realtime notification toast rendering remains a feature-level JS path and is intentionally outside this Tier 1 hardening pass.
 - `resources/views/platform/ui-reference/index.blade.php` remains an unused legacy workspace view because the canonical `/platform/ui-reference` route renders `overview.blade.php`; this pass left it untouched to avoid mixing unrelated cleanup into the Batch B implementation lane.
 - Combined Batch B manual review is still required to confirm the newly implemented widget, date-range, identity-summary, dropdown, and sub-navigation changes before the batch can move toward close-out.

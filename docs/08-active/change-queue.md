@@ -11,6 +11,11 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 - Exploratory review discussion stays in chat until it is normalized into concise queue language.
 
 ## Ready To Implement
+- [ ] Apply the established Tier 1 action/menu-item suite to the account dropdown header menu so the theme-mode options and account actions stop using outdated local option styling; the active and hover theme option should use the shared outline-neutral treatment, the sign-out action should use the shared ghost-danger treatment, and the account-menu text color should match the current shared menu-item contract while preserving the existing layout.
+  ID: P2-B-CQ-015
+  Scope: account-menu action styling, theme-option state styling, shared outline-neutral and ghost-danger consumption, dropdown option typography/color consistency
+  Path Coverage: shared account dropdown in the app shell header, theme-mode option row, account-menu action list, sign-out action treatment
+  Follow-up To: P2-B-CQ-014, P2-B-CQ-016
 
 ## In Progress
 
@@ -23,11 +28,6 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Implemented in: `2-B-0022`
 
 ## Blocked
-- [ ] Apply the established Tier 1 action/menu-item suite to the account dropdown navigation options so account-menu links stop using one-off colorways and match the shared ghost action treatment while preserving left-aligned text and current menu layout.
-  ID: P2-B-CQ-015
-  Scope: account-menu action styling, shared ghost action consumption, dropdown option consistency
-  Path Coverage: shared account dropdown in the app shell header, related account-menu proof expectations
-  Follow-up To: P2-B-CQ-014, P2-B-CQ-016
 
 ## Deferred
 

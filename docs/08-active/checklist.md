@@ -52,9 +52,9 @@
 
 ## Dashboard And Summary Conventions
 - [ ] Dashboard And Summary Conventions
-  Status: review fixes queued
+  Status: implemented (pending manual review)
   - dashboard widget-shell conventions are explicit
-  - dashboard widget span model is explicit but requires a reopened two-row occupancy fix
+  - dashboard widget span model is explicit with two-row occupancy fixes pending manual review
   - summary/stat-card conventions are explicit
   - dashboard grid usage is explicit and reviewable after reopened Layout + Dashboard proof fixes
 

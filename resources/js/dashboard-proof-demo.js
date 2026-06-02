@@ -8,6 +8,8 @@ const defaultProofWidgets = [
         title: 'Operations Summary',
         kicker: '1x1 summary',
         description: 'Compact operational summary with one primary signal.',
+        bodyHeading: 'Daily throughput',
+        bodyCopy: 'Header stays concise while the body explains the metric in plain language.',
         metric: '84%',
         supporting: 'SLA health',
         span: '1x1',
@@ -20,11 +22,13 @@ const defaultProofWidgets = [
         title: 'Review Queue',
         kicker: '2x1 workflow',
         description: 'Wider surface for the current review mix and queue pressure.',
+        bodyHeading: 'Review distribution',
+        bodyCopy: 'Body content can carry supporting context without competing with the widget title.',
         metric: '12',
         supporting: 'Open reviews',
         span: '2x1',
         visible: true,
-        tone: 'notice',
+        tone: 'neutral',
         notes: ['4 awaiting design sign-off', '2 need escalation'],
     },
     {
@@ -32,11 +36,13 @@ const defaultProofWidgets = [
         title: 'Activity Feed',
         kicker: '1x2 tall list',
         description: 'Taller card for stacked activity and sequencing cues.',
+        bodyHeading: 'Activity sequence',
+        bodyCopy: 'This two-row widget must reserve the full second row before any following widget is placed below it.',
         metric: '3',
         supporting: 'Recent actions',
         span: '1x2',
         visible: true,
-        tone: 'success',
+        tone: 'neutral',
         notes: ['Lock widget shell contract', 'Recheck overlay publication', 'Publish menu-item re-review'],
     },
     {
@@ -44,6 +50,8 @@ const defaultProofWidgets = [
         title: 'Notification Mix',
         kicker: '2x2 detail',
         description: 'Mixed summary/detail proof with room for a secondary block.',
+        bodyHeading: 'Notification body detail',
+        bodyCopy: 'The body can include secondary details while the header remains the primary scan target.',
         metric: '7',
         supporting: 'Unread notifications',
         span: '2x2',
@@ -56,11 +64,13 @@ const defaultProofWidgets = [
         title: 'Deploy Readiness',
         kicker: '3x1 full row',
         description: 'Full-row proof for shared deployment and publication signals.',
+        bodyHeading: 'Deployment summary',
+        bodyCopy: 'Full-row widgets still use the default card treatment unless they represent a semantic alert state.',
         metric: '2',
         supporting: 'Pending approvals',
         span: '3x1',
         visible: true,
-        tone: 'danger',
+        tone: 'neutral',
         notes: ['Staging owner assigned', 'Rollback notes current', 'Production hold active'],
     },
     {
@@ -68,22 +78,24 @@ const defaultProofWidgets = [
         title: 'Review Capacity',
         kicker: '3x2 tall surface',
         description: 'Full-width two-row proof that makes the tallest shared widget state reviewable in context.',
+        bodyHeading: 'Reviewer capacity detail',
+        bodyCopy: 'The second row provides related body content without turning the widget into a workflow page.',
         metric: '72%',
         supporting: 'Reviewer availability',
         span: '3x2',
         visible: true,
-        tone: 'notice',
+        tone: 'neutral',
         notes: ['6 open workstreams', 'Oldest blocker: 41m', 'Two-row density remains one dashboard topic'],
     },
 ];
 
 const spanClasses = {
-    '1x1': 'xl:col-span-4',
-    '2x1': 'xl:col-span-8',
-    '1x2': 'xl:col-span-4 xl:row-span-2',
-    '2x2': 'xl:col-span-8 xl:row-span-2',
-    '3x1': 'xl:col-span-12',
-    '3x2': 'xl:col-span-12 xl:row-span-2',
+    '1x1': 'dashboard-proof-widget-span-1x1',
+    '2x1': 'dashboard-proof-widget-span-2x1',
+    '1x2': 'dashboard-proof-widget-span-1x2',
+    '2x2': 'dashboard-proof-widget-span-2x2',
+    '3x1': 'dashboard-proof-widget-span-3x1',
+    '3x2': 'dashboard-proof-widget-span-3x2',
 };
 
 const spanDescriptors = {
@@ -97,9 +109,6 @@ const spanDescriptors = {
 
 const toneClasses = {
     neutral: 'ui-soft-card ui-soft-card-neutral',
-    success: 'ui-soft-card ui-soft-card-success',
-    notice: 'ui-soft-card ui-soft-card-notice',
-    danger: 'ui-soft-card ui-soft-card-danger',
 };
 
 const clearReorderPreview = (scope) => {

@@ -175,10 +175,27 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-dashboard-reorder-surface', false)
             ->assertSee('data-dashboard-proof-saved-layout', false)
             ->assertSee('data-ui-soft-card="saved-layout-preview"', false)
-            ->assertSee('data-ui-soft-card-tone="success"', false)
+            ->assertSee('data-ui-soft-card-tone="neutral"', false)
+            ->assertSee('Header content')
+            ->assertSee('Body content')
+            ->assertSee('dashboard-proof-grid', false)
+            ->assertSee('ui-soft-card-neutral', false)
+            ->assertDontSee('ui-soft-card-success', false)
+            ->assertDontSee('ui-soft-card-notice', false)
+            ->assertDontSee('ui-soft-card-danger', false)
             ->assertSee('ui-soft-card-link', false)
             ->assertSee('ui-soft-card-action', false)
             ->assertSee('data-dashboard-proof-widget', false);
+
+        $proofScript = file_get_contents(resource_path('js/dashboard-proof-demo.js'));
+
+        $this->assertIsString($proofScript);
+        $this->assertStringContainsString('dashboard-proof-widget-span-1x2', $proofScript);
+        $this->assertStringContainsString('dashboard-proof-widget-span-2x2', $proofScript);
+        $this->assertStringContainsString('dashboard-proof-widget-span-3x2', $proofScript);
+        $this->assertStringNotContainsString("tone: 'success'", $proofScript);
+        $this->assertStringNotContainsString("tone: 'notice'", $proofScript);
+        $this->assertStringNotContainsString("tone: 'danger'", $proofScript);
     }
 
     public function test_layout_reference_surface_includes_multi_row_widget_span_proof(): void
@@ -195,7 +212,15 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-dashboard-span-proof', false)
             ->assertSee('data-ui-widget-span="1x2"', false)
             ->assertSee('data-ui-widget-span="2x2"', false)
-            ->assertSee('data-ui-widget-span="3x2"', false);
+            ->assertSee('data-ui-widget-span="3x2"', false)
+            ->assertSee('md:auto-rows-[minmax(11rem,auto)]', false);
+
+        $css = file_get_contents(resource_path('css/app.css'));
+
+        $this->assertIsString($css);
+        $this->assertStringContainsString('.dashboard-proof-widget-span-1x2', $css);
+        $this->assertStringContainsString('.ui-pattern-widget-span-1x2', $css);
+        $this->assertStringContainsString('min-height: calc(22rem + 1rem)', $css);
     }
 
     public function test_standard_users_cannot_view_ui_reference_workspace(): void

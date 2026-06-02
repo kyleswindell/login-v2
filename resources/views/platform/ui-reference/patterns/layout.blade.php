@@ -46,9 +46,9 @@
                     ]"
                 />
 
-                <div class="rounded-2xl border border-sky-500/25 bg-sky-500/10 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-sky-200">Multi-row span proof</p>
-                    <p class="mt-2 text-sm text-slate-200">Review the tall `1x2`, wide `2x2`, and full-row `3x2` examples together. Each two-row widget should be unmistakably taller than the adjacent one-row summaries before this pattern is reused on production dashboards.</p>
+                <div class="ui-soft-card ui-soft-card-neutral p-4">
+                    <p class="ui-soft-card-kicker">Multi-row span proof</p>
+                    <p class="ui-soft-card-body mt-2 text-sm">Review the tall `1x2`, wide `2x2`, and full-row `3x2` examples together. Each two-row widget must reserve and occupy two complete grid rows before this pattern is reused on production dashboards.</p>
                 </div>
 
                 <x-ui.patterns.dashboard-grid columns="widgets" data-dashboard-span-proof>
@@ -179,11 +179,11 @@
                     This proof uses dummy widgets and browser-local saved state so reviewers can exercise the interaction model directly on UI Reference first. The live dashboard should mirror the same lock/unlock, reorder, hide/show, and stable widget-identity layout rules after the proof is approved.
                 </x-ui.inline-alert>
 
-                <div class="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
+                <div class="ui-soft-card ui-soft-card-neutral flex flex-wrap items-center justify-between gap-3 p-4">
                     <div>
-                        <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Interactive proof controls</p>
-                        <h3 class="mt-2 text-lg font-semibold text-white">Locked and unlocked states are reviewable here</h3>
-                        <p class="mt-2 text-sm text-slate-300">Unlock the proof to reorder the dummy widgets, hide one into the restore tray, then lock it again to confirm the saved layout state remains visible.</p>
+                        <p class="ui-soft-card-kicker">Interactive proof controls</p>
+                        <h3 class="ui-soft-card-heading mt-2 text-lg">Locked and unlocked states are reviewable here</h3>
+                        <p class="ui-soft-card-body mt-2 text-sm">Unlock the proof to reorder the dummy widgets, hide one into the restore tray, then lock it again to confirm the saved layout state remains visible.</p>
                     </div>
                     <div class="flex flex-wrap items-center gap-2">
                         <x-ui.button
@@ -200,14 +200,14 @@
 
                 <div class="space-y-4" data-dashboard-proof-main-content>
                         <div
-                            class="grid gap-4 xl:grid-cols-12 xl:auto-rows-[minmax(11rem,auto)]"
+                            class="dashboard-proof-grid grid gap-4"
                             x-ref="visibleGrid"
                             x-bind:data-dashboard-proof-state="editing ? 'editing' : 'locked'"
                             data-dashboard-reorder-surface
                         >
                             <template x-for="widget in visibleWidgets" :key="widget.id">
                                 <article
-                                    class="dashboard-proof-widget-card relative col-span-12 min-w-0 overflow-hidden rounded-2xl border p-4 shadow-sm transition"
+                                    class="dashboard-proof-widget-card relative col-span-12 flex min-w-0 flex-col p-4 transition"
                                     x-bind:class="[spanClass(widget), cardClass(widget), editing ? 'ring-1 ring-emerald-400/25' : '']"
                                     x-bind:data-ui-soft-card-tone="widget.tone"
                                     x-bind:data-proof-widget-id="widget.id"
@@ -247,6 +247,16 @@
                                         </div>
                                     </div>
 
+                                    <div class="ui-soft-card-inset mt-4 px-3 py-3">
+                                        <p class="ui-soft-card-kicker text-[0.68rem]">Header content</p>
+                                        <p class="ui-soft-card-heading mt-2 break-words text-sm" x-text="widget.bodyHeading"></p>
+                                    </div>
+
+                                    <div class="ui-soft-card-inset mt-3 px-3 py-3">
+                                        <p class="ui-soft-card-kicker text-[0.68rem]">Body content</p>
+                                        <p class="ui-soft-card-body mt-2 break-words text-sm" x-text="widget.bodyCopy"></p>
+                                    </div>
+
                                     <div class="mt-4 grid min-w-0 gap-3 2xl:grid-cols-[minmax(0,1fr)_minmax(7rem,9rem)]">
                                         <div class="min-w-0">
                                             <p class="ui-soft-card-kicker" x-text="widget.supporting"></p>
@@ -269,17 +279,17 @@
                         </div>
 
                         <div
-                            class="rounded-2xl border border-slate-800 bg-slate-950/70 p-4"
+                            class="ui-soft-card ui-soft-card-neutral p-4"
                             x-show="editing && hiddenWidgets.length > 0"
                             x-cloak
                         >
-                            <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Hidden widget tray</p>
-                            <p class="mt-2 text-sm text-slate-300">Restore a hidden dummy widget back into the visible proof order without losing its stable identity.</p>
+                            <p class="ui-soft-card-kicker">Hidden widget tray</p>
+                            <p class="ui-soft-card-body mt-2 text-sm">Restore a hidden dummy widget back into the visible proof order without losing its stable identity.</p>
                             <div class="mt-3 flex flex-wrap gap-2">
                                 <template x-for="widget in hiddenWidgets" :key="widget.id">
                                     <button
                                         type="button"
-                                        class="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/80 px-3 py-2 text-sm font-medium text-slate-100 transition hover:border-slate-500"
+                                        class="ui-soft-card-action"
                                         x-on:click="showWidget(widget.id)"
                                     >
                                         <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -294,13 +304,13 @@
                     </div>
 
                     <div class="grid gap-4 xl:grid-cols-3" data-dashboard-proof-support>
-                        <div class="rounded-2xl border border-slate-800 bg-slate-950/70 p-5">
-                            <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Proof state</p>
-                            <h3 class="mt-3 text-lg font-semibold text-white" x-text="editing ? 'Unlocked review state' : 'Locked review state'"></h3>
-                            <p class="mt-2 text-sm text-slate-300" x-text="editing ? 'Drag handles and hide controls are available so the review can confirm behavior directly.' : 'The proof reads as a quiet dashboard surface until customization is intentionally enabled.'"></p>
+                        <div class="ui-soft-card ui-soft-card-neutral p-5">
+                            <p class="ui-soft-card-kicker">Proof state</p>
+                            <h3 class="ui-soft-card-heading mt-3 text-lg" x-text="editing ? 'Unlocked review state' : 'Locked review state'"></h3>
+                            <p class="ui-soft-card-body mt-2 text-sm" x-text="editing ? 'Drag handles and hide controls are available so the review can confirm behavior directly.' : 'The proof reads as a quiet dashboard surface until customization is intentionally enabled.'"></p>
                         </div>
 
-                        <div class="ui-soft-card ui-soft-card-success p-5" data-ui-soft-card="saved-layout-preview" data-ui-soft-card-tone="success">
+                        <div class="ui-soft-card ui-soft-card-neutral p-5" data-ui-soft-card="saved-layout-preview" data-ui-soft-card-tone="neutral">
                             <p class="ui-soft-card-kicker">Saved layout preview</p>
                             <p class="ui-soft-card-body mt-3 text-sm">
                                 This browser-local snapshot stands in for the live per-user persistence contract and makes the current widget order and visibility state directly inspectable during review.
@@ -310,9 +320,9 @@
                             <a href="#dashboard-customization-proof" class="ui-soft-card-action mt-4">Review saved snapshot</a>
                         </div>
 
-                        <div class="rounded-2xl border border-slate-800 bg-slate-950/70 p-5">
-                            <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Review cues</p>
-                            <ul class="mt-3 space-y-2 text-sm text-slate-300">
+                        <div class="ui-soft-card ui-soft-card-neutral p-5">
+                            <p class="ui-soft-card-kicker">Review cues</p>
+                            <ul class="ui-soft-card-body mt-3 space-y-2 text-sm">
                                 <li>1. Unlock the proof and drag at least one widget.</li>
                                 <li>2. Watch the insertion line and swap target before dropping.</li>
                                 <li>3. Hide a widget, confirm it moves into the restore tray, then restore it.</li>

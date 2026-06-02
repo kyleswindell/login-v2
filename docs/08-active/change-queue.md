@@ -11,27 +11,6 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 - Exploratory review discussion stays in chat until it is normalized into concise queue language.
 
 ## Ready To Implement
-- [ ] Fix the multi-row dashboard widget span rendering so `1x2`, `2x2`, and other two-row widgets always reserve and occupy two full grid rows even when another widget is positioned below them; the visible Layout + Dashboard proof must make the two-row height unmistakable and must not allow following widgets to compress or cut off the taller card.
-  ID: P2-B-CQ-018
-  Iteration: 2
-  Scope: enforced dashboard row-span occupancy, non-overlapping dense grid placement, true two-row widget height, visible multi-row proof integrity
-  Path Coverage: `/platform/ui-reference/patterns/layout`, `/platform/ui-reference/patterns/archetypes`, shared dashboard/widget-shell proof surfaces where taller spans should be judged in context
-  Follow-up To: P2-B-CQ-005, P2-B-CQ-006
-  Implemented in: `2-B-0035`
-- [ ] Complete the Layout + Dashboard customization proof after partial approval by preserving the approved full main-content-width dashboard example, save behavior, and drag/reorder preview behavior while adding complete widget-card content examples that include both header/title treatment and body/supporting content treatment in a legible default widget shell.
-  ID: P2-B-CQ-019
-  Iteration: 5
-  Scope: UI Reference-first dashboard customization proof layout, approved full-width dashboard composition, approved save/reorder proof behavior, widget-card header/body content examples, responsive widget-card default integrity
-  Path Coverage: `/platform/ui-reference/patterns/layout` as the canonical review surface, shared dashboard/widget shell layout defaults that affect proof-card content structure, proof drag/reorder interaction model, `/dashboard` only as downstream consumer validation after the proof surface is correct
-  Follow-up To: P2-B-CQ-006, P2-B-CQ-018
-  Implemented in: `2-B-0035`
-- [ ] Replace the non-standard colored widget-card and support-card treatments on the Layout + Dashboard proof with the default light/dark shared card color pattern, reserving special tinted colorways only for intentional alert, notice, status, or semantic states; all saved-layout preview widgets and supporting info cards must use the approved default card treatment unless they explicitly represent one of those semantic states.
-  ID: P2-B-CQ-020
-  Iteration: 2
-  Scope: default shared widget-card palette, default supporting info-card palette, removal of ad hoc/proof-local color treatments, semantic-only tinted card usage, legible header/body/supporting text treatments
-  Path Coverage: shared card/surface primitives or support classes that own default and semantic card presentation, UI Reference Layout + Dashboard proof surfaces, saved-layout preview widgets, supporting proof/info cards on the dashboard proof page
-  Follow-up To: P2-B-CQ-019
-  Implemented in: `2-B-0035`
 ## In Progress
 
 ## Implemented Pending Review
@@ -48,6 +27,27 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Path Coverage: shared account dropdown in the app shell header, theme-mode option row, account-menu action list, sign-out action treatment
   Follow-up To: P2-B-CQ-014, P2-B-CQ-016
   Implemented in: `2-B-0036`
+- [ ] Fix the multi-row dashboard widget span rendering so `1x2`, `2x2`, and other two-row widgets always reserve and occupy two full grid rows even when another widget is positioned below them; the visible Layout + Dashboard proof must make the two-row height unmistakable and must not allow following widgets to compress or cut off the taller card.
+  ID: P2-B-CQ-018
+  Iteration: 2
+  Scope: enforced dashboard row-span occupancy, non-overlapping dense grid placement, true two-row widget height, visible multi-row proof integrity
+  Path Coverage: `/platform/ui-reference/patterns/layout`, `/platform/ui-reference/patterns/archetypes`, shared dashboard/widget-shell proof surfaces where taller spans should be judged in context
+  Follow-up To: P2-B-CQ-005, P2-B-CQ-006
+  Implemented in: `2-B-0038`
+- [ ] Complete the Layout + Dashboard customization proof after partial approval by preserving the approved full main-content-width dashboard example, save behavior, and drag/reorder preview behavior while adding complete widget-card content examples that include both header/title treatment and body/supporting content treatment in a legible default widget shell.
+  ID: P2-B-CQ-019
+  Iteration: 5
+  Scope: UI Reference-first dashboard customization proof layout, approved full-width dashboard composition, approved save/reorder proof behavior, widget-card header/body content examples, responsive widget-card default integrity
+  Path Coverage: `/platform/ui-reference/patterns/layout` as the canonical review surface, shared dashboard/widget shell layout defaults that affect proof-card content structure, proof drag/reorder interaction model, `/dashboard` only as downstream consumer validation after the proof surface is correct
+  Follow-up To: P2-B-CQ-006, P2-B-CQ-018
+  Implemented in: `2-B-0038`
+- [ ] Replace the non-standard colored widget-card and support-card treatments on the Layout + Dashboard proof with the default light/dark shared card color pattern, reserving special tinted colorways only for intentional alert, notice, status, or semantic states; all saved-layout preview widgets and supporting info cards must use the approved default card treatment unless they explicitly represent one of those semantic states.
+  ID: P2-B-CQ-020
+  Iteration: 2
+  Scope: default shared widget-card palette, default supporting info-card palette, removal of ad hoc/proof-local color treatments, semantic-only tinted card usage, legible header/body/supporting text treatments
+  Path Coverage: shared card/surface primitives or support classes that own default and semantic card presentation, UI Reference Layout + Dashboard proof surfaces, saved-layout preview widgets, supporting proof/info cards on the dashboard proof page
+  Follow-up To: P2-B-CQ-019
+  Implemented in: `2-B-0038`
 
 ## Blocked
 

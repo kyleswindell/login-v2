@@ -1,6 +1,11 @@
 # Notes
 
 ## Findings
+- Batch B pass `2-B-0038` implements the reopened Layout + Dashboard queue items:
+  - `P2-B-CQ-018` now uses explicit shared and proof-grid row-span rules with two-row minimum heights so `1x2`, `2x2`, and `3x2` widgets reserve the full two-row space instead of being cut off by following widgets
+  - `P2-B-CQ-019` preserves the approved full-width proof layout, save behavior, and drag/move sorting preview while adding visible widget-card header and body content examples
+  - `P2-B-CQ-020` removes proof-local semantic color treatments from the Layout + Dashboard dummy widgets, saved-layout preview, and support cards so the default light/dark neutral card pattern is used unless a card is intentionally semantic
+  - tests now assert the neutral saved-layout preview, header/body content labels, explicit proof-grid span classes, and two-row minimum-height CSS contract
 - Batch B review-state update `2-B-0037` maps the latest Layout + Dashboard staging feedback back onto existing queue items:
   - `P2-B-CQ-018` fails because `1x2`, `2x2`, and equivalent two-row widgets still do not always reserve two full rows when a following widget occupies the would-be space below them
   - `P2-B-CQ-019` is partially approved: dashboard-associated layout save behavior works, drag/move sorting with preview works, and the dashboard layout example is now appropriately full main-content width
@@ -236,6 +241,7 @@
   - future-module UI ownership declaration fields
 
 ## Decisions
+- Keep the `P2-B-CQ-018`, `P2-B-CQ-019`, and `P2-B-CQ-020` fixes in one work-batch pass because they share the same Layout + Dashboard proof surface and the same dashboard grid/widget-card review contract.
 - Reopen `P2-B-CQ-018` as a same-item failure because the latest review proves the visible multi-row widget proof still does not guarantee true two-row occupancy when following widgets are present.
 - Reopen `P2-B-CQ-019` as a partial approval rather than a full pass: full-width layout composition, save behavior, and drag/reorder preview are accepted, but widget header/body content examples remain required before the item can close.
 - Reopen `P2-B-CQ-020` as a same-item failure because the remaining Layout + Dashboard card-color problem is still the shared/default card palette contract, not a new dashboard-only styling issue.

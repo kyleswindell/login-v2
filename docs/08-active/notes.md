@@ -1,6 +1,11 @@
 # Notes
 
 ## Findings
+- A new manual-review finding opens `P2-B-CQ-019` as an adjacent dashboard customization gap:
+  - the dashboard rearrange interaction does not work as expected on the live dashboard surface
+  - the Layout + Dashboard proof page does not clearly show lock/unlock mode, widget visibility toggling, or widget layout reorganization states
+  - the next pass should restore the customization interaction contract on `/dashboard` and add enough visible proof coverage that reviewers can judge these states intentionally rather than inferring them from copy alone
+  - this is treated as a new follow-up item rather than an automatic reopen of the earlier widget-shell or row-span items because it extends beyond the already-approved height/span contract into live customization behavior and proof-state visibility
 - A new manual-review finding opens `P2-B-CQ-018` as an adjacent proof-coverage gap on the dashboard/widget surface:
   - the shared row-span contract may be implemented, but reviewers still do not have a clearly visible on-page example that demonstrates how a taller multi-row widget actually reads in context
   - the current layout/dashboard proof still leaves multi-row height too inferential, so the next pass should make at least one taller widget state unmistakable on a visible review surface rather than relying on span labels alone
@@ -173,6 +178,7 @@
   - future-module UI ownership declaration fields
 
 ## Decisions
+- Add `P2-B-CQ-019` as a new `Ready To Implement` follow-up item because the latest dashboard feedback combines live customization behavior failure with missing proof coverage for lock/unlock, widget toggling, and reorganization states.
 - Add `P2-B-CQ-018` as a new `Ready To Implement` follow-up item because the latest widget review feedback is about visible proof coverage of taller widget states, not direct proof that the already-approved shared row-span contract regressed.
 - Move `P2-B-CQ-015` from `Blocked` to `Ready To Implement` because the upstream menu-item suite dependencies are now approved and the remaining account-menu styling gap is confirmed as an existing item failure rather than a new queue item.
 - Move `P2-B-CQ-001`, `P2-B-CQ-014`, and `P2-B-CQ-017` from `Implemented Pending Review` to `Passed Review` based on explicit manual approval.
@@ -208,6 +214,7 @@
 - Combined Batch B manual review still cannot close until staging manually re-validates `P2-B-CQ-013`.
 - `P2-B-CQ-015` is now unblocked and ready for implementation, but it still needs a full account-dropdown consumer pass against the approved shared action/menu-item contract.
 - `P2-B-CQ-018` now needs a visible dashboard/layout proof treatment that makes taller widget states directly judgeable in-context, or the current row-span contract will remain hard to validate visually.
+- `P2-B-CQ-019` now needs both live dashboard customization behavior and visible proof-state coverage, or the dashboard interaction contract will remain under-reviewed for this batch.
 - Realtime notification toast rendering remains a feature-level JS path and is intentionally outside this Tier 1 hardening pass.
 - `resources/views/platform/ui-reference/index.blade.php` remains an unused legacy workspace view because the canonical `/platform/ui-reference` route renders `overview.blade.php`; this pass left it untouched to avoid mixing unrelated cleanup into the Batch B implementation lane.
 - Combined Batch B manual review is still required to confirm the newly implemented widget, date-range, identity-summary, dropdown, and sub-navigation changes before the batch can move toward close-out.

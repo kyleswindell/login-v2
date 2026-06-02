@@ -129,8 +129,8 @@ class PlatformUiReferenceTest extends TestCase
         $this->get('/platform/ui-reference/patterns/widget-content')
             ->assertOk()
             ->assertSee('Widget Content Standards')
-            ->assertSee('Content allowance rules')
-            ->assertSee('Supported widget sizes')
+            ->assertSee('Geometry decision')
+            ->assertSee('Filled widget size examples')
             ->assertSee('data-widget-content-standards', false)
             ->assertSee('data-ui-pattern="dashboard-grid"', false)
             ->assertSee('data-ui-pattern="widget-shell"', false);
@@ -220,26 +220,41 @@ class PlatformUiReferenceTest extends TestCase
     public function test_widget_content_reference_surface_includes_size_aware_allowances(): void
     {
         $this->actingAsPlatformSuperAdmin();
-        $this->useActiveBatchReviewIds(['P2-B-CQ-021']);
+        $this->useActiveBatchReviewIds(['P2-B-CQ-023']);
 
         $this->get('/platform/ui-reference/patterns/widget-content')
             ->assertOk()
             ->assertSee('Active Batch Review')
-            ->assertSee('P2-B-CQ-021')
+            ->assertSee('P2-B-CQ-023')
             ->assertSee('Widget Content Standards')
-            ->assertSee('Content allowance rules')
-            ->assertSee('Allowed widget regions')
-            ->assertSee('Size controls content volume')
-            ->assertSee('Use a page for workflows')
+            ->assertSee('Geometry decision')
+            ->assertSee('Four-unit dashboard model')
+            ->assertSee('18rem one-row baseline')
+            ->assertSee('No implicit 3x full row')
+            ->assertSee('Viewport review baseline')
+            ->assertSee('1024px')
+            ->assertSee('1280px')
+            ->assertSee('1366px')
+            ->assertSee('1440px')
+            ->assertSee('1920px')
+            ->assertSee('Filled widget size examples')
             ->assertSee('1x1 Summary')
             ->assertSee('2x1 Wide Summary')
             ->assertSee('1x2 Tall List')
             ->assertSee('2x2 Detail')
-            ->assertSee('3x1 Full Row')
-            ->assertSee('3x2 Tall Surface')
-            ->assertSee('Future module design baseline')
+            ->assertSee('3x1 Wide Summary')
+            ->assertSee('3x2 Rich Summary')
+            ->assertSee('Allowance matrix')
+            ->assertSee('Negative boundary')
+            ->assertSee('Four to six compact timeline/list rows.')
+            ->assertSee('Rich same-topic summary with KPIs, compact visual, list, and footer.')
+            ->assertSee('No internal scroll baseline')
+            ->assertSee('data-widget-geometry-decision', false)
+            ->assertSee('data-widget-viewport-baseline', false)
             ->assertSee('data-widget-content-standards', false)
             ->assertSee('data-widget-content-size-grid', false)
+            ->assertSee('data-widget-allowance-matrix', false)
+            ->assertSee('data-widget-negative-boundary', false)
             ->assertSee('data-widget-content-size="1x1"', false)
             ->assertSee('data-widget-content-size="2x1"', false)
             ->assertSee('data-widget-content-size="1x2"', false)
@@ -251,11 +266,18 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-ui-widget-span="2x2"', false)
             ->assertSee('data-ui-widget-span="3x2"', false)
             ->assertDontSee('ui-soft-card', false)
+            ->assertDontSee('3x1 Full Row')
+            ->assertDontSee('3x2 Tall Surface')
             ->assertDontSee('md:auto-rows-[minmax(11rem,auto)]', false);
 
         $css = file_get_contents(resource_path('css/app.css'));
+        $dashboardGrid = file_get_contents(resource_path('views/components/ui/patterns/dashboard-grid.blade.php'));
 
         $this->assertIsString($css);
+        $this->assertIsString($dashboardGrid);
+        $this->assertStringContainsString("xl:grid-cols-4", $dashboardGrid);
+        $this->assertStringNotContainsString("xl:grid-cols-6", $dashboardGrid);
+        $this->assertStringContainsString('--ui-dashboard-grid-row-size: 18rem', $css);
         $this->assertStringContainsString('--ui-dashboard-grid-row-size: 24rem', $css);
         $this->assertStringContainsString('grid-auto-rows: var(--ui-dashboard-grid-row-size)', $css);
         $this->assertStringContainsString('.dashboard-proof-widget-span-1x2', $css);

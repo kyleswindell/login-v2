@@ -6,7 +6,7 @@
     $columnClasses = match ((string) $columns) {
         '2' => 'md:grid-cols-2',
         '4' => 'md:grid-cols-2 xl:grid-cols-4',
-        'widgets' => 'ui-pattern-dashboard-grid-widgets grid-flow-dense md:grid-cols-2 xl:grid-cols-6',
+        'widgets' => 'ui-pattern-dashboard-grid-widgets grid-flow-dense md:grid-cols-2 xl:grid-cols-4',
         '12' => 'md:grid-cols-2 xl:grid-cols-12',
         default => 'md:grid-cols-2 xl:grid-cols-3',
     };

@@ -1,4 +1,4 @@
-<x-layouts.app title="UI Reference · Widget Content Standards">
+<x-layouts.app title="UI Reference - Widget Content Standards">
     <x-slot:sidebar>
         @include('platform.ui-reference.partials.sidebar', ['currentSection' => $currentSection ?? 'patterns.widget-content'])
     </x-slot:sidebar>
@@ -6,7 +6,7 @@
     <section class="flex flex-1 flex-col gap-6">
         <x-ui.patterns.page-title-actions-row
             title="Widget Content Standards"
-            description="Size-aware content allowance proof for reusable dashboard widgets. These examples define baseline density by width and height without pretending to enumerate every future widget type."
+            description="Size-aware dashboard widget content allowances built from calibrated grid geometry, realistic fill levels, and constrained viewport review."
             kicker="Dashboard widgets"
         >
             <x-slot:actions>
@@ -17,185 +17,324 @@
 
         <x-ui.patterns.proof-review-banner
             :items="[
-                ['id' => 'P2-B-CQ-021', 'note' => 'Review the standalone size-aware widget content allowance standard.'],
+                ['id' => 'P2-B-CQ-023', 'note' => 'Review the rebuilt widget content standards proof for calibrated geometry and realistic per-size content density.'],
             ]"
             :focus="[
-                'Confirm each supported widget size has an explicit baseline for what amount of header, body, metric, list, and footer content can fit before future modules design against it.',
+                'Confirm the four-unit desktop model, 18rem one-row baseline, and filled examples make each supported widget size usable without clipping, internal scrolling, or excessive unused space.',
             ]"
         />
 
         <x-ui.patterns.content-section-block
-            title="Content allowance rules"
-            description="Use these rules before selecting a widget span. The span should be chosen because the content fits that surface, not because the card can be stretched until it fits."
-            kicker="Baseline contract"
+            title="Geometry decision"
+            description="This standards page uses a four-unit desktop proof model before content examples are judged. The prior three-unit proof made small cards too wide and encouraged sparse placeholder content."
+            kicker="Grid calibration"
+            data-widget-geometry-decision
         >
-            <div class="grid gap-4 lg:grid-cols-3">
+            <div class="grid gap-4 lg:grid-cols-4">
                 <div class="ui-card">
-                    <p class="ui-kicker">Regions</p>
-                    <h3 class="ui-card-title mt-3">Allowed widget regions</h3>
-                    <p class="ui-card-copy">A reusable widget may contain a header/title area, optional description/meta, one primary body, optional same-topic detail blocks, and an optional footer action or status row.</p>
+                    <p class="ui-kicker">Selected model</p>
+                    <h3 class="ui-card-title mt-3">Four-unit dashboard model</h3>
+                    <p class="ui-card-copy">At desktop review widths, `1x` is one quarter, `2x` is half width, and `3x` is three quarters of the widget row.</p>
                 </div>
                 <div class="ui-card">
-                    <p class="ui-kicker">Density</p>
-                    <h3 class="ui-card-title mt-3">Size controls content volume</h3>
-                    <p class="ui-card-copy">Small spans must stay summary-first. Two-row or full-row spans may include related detail, but the widget must still scan as one dashboard topic.</p>
+                    <p class="ui-kicker">Row height</p>
+                    <h3 class="ui-card-title mt-3">18rem one-row baseline</h3>
+                    <p class="ui-card-copy">One-row widgets must prove content density inside an 18rem track. Two-row widgets reserve exactly two 18rem tracks plus the grid gap.</p>
                 </div>
                 <div class="ui-card">
-                    <p class="ui-kicker">Escalation</p>
-                    <h3 class="ui-card-title mt-3">Use a page for workflows</h3>
-                    <p class="ui-card-copy">If the content needs forms, tabs, complex filters, multi-step actions, or unrelated subjects, the widget should link to a dedicated page instead of expanding.</p>
+                    <p class="ui-kicker">Full-row handling</p>
+                    <h3 class="ui-card-title mt-3">No implicit 3x full row</h3>
+                    <p class="ui-card-copy">Full-row widgets need a future explicit `4x` contract or a page-specific dashboard composition, not a silent reinterpretation of `3x`.</p>
+                </div>
+                <div class="ui-card">
+                    <p class="ui-kicker">Proof scope</p>
+                    <h3 class="ui-card-title mt-3">Shared standards only</h3>
+                    <p class="ui-card-copy">The Layout + Dashboard customization proof keeps its approved 24rem row-height proof so `x2` span behavior remains visibly obvious.</p>
                 </div>
             </div>
         </x-ui.patterns.content-section-block>
 
         <x-ui.patterns.content-section-block
-            title="Supported widget sizes"
-            description="Each example intentionally uses neutral dashboard styling. Semantic colors remain reserved for alerts, notices, status, or other meaning-bearing states."
-            kicker="Size allowances"
+            title="Viewport review baseline"
+            description="Approve these content allowances only after checking the examples at constrained office-monitor widths and the larger reference monitor width."
+            kicker="Review widths"
+            data-widget-viewport-baseline
+        >
+            <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
+                @foreach (['1024', '1280', '1366', '1440', '1920'] as $width)
+                    <div class="ui-pattern-widget-shell-section">
+                        <p class="ui-pattern-key-value-label">{{ $width }}px</p>
+                        <p class="ui-card-copy mt-2">No clipping, crowding, hidden controls, or internal scroll.</p>
+                    </div>
+                @endforeach
+            </div>
+        </x-ui.patterns.content-section-block>
+
+        <x-ui.patterns.content-section-block
+            title="Filled widget size examples"
+            description="Each example uses neutral widget styling and intentionally realistic content. Semantic color remains reserved for alerts, notices, and status states."
+            kicker="Content allowances"
             data-widget-content-standards
         >
             <x-ui.patterns.dashboard-grid columns="widgets" data-widget-content-size-grid>
                 <x-ui.patterns.widget-shell
                     title="1x1 Summary"
-                    description="One primary signal with brief context."
+                    description="One compact scan target."
                     kicker="Allowance 1x1"
                     span="1x1"
                     data-widget-content-size="1x1"
                 >
-                    <div class="ui-pattern-widget-shell-section">
-                        <p class="ui-pattern-key-value-label">Allowed content</p>
-                        <p class="ui-stat-value mt-3">1 metric</p>
+                    <div class="flex items-end justify-between gap-3">
+                        <div>
+                            <p class="ui-pattern-key-value-label">SLA health</p>
+                            <p class="ui-stat-value">84%</p>
+                        </div>
+                        <span class="rounded-full border px-3 py-1 text-xs font-semibold" style="border-color: var(--ui-border-default); color: var(--ui-text-secondary);">+6%</span>
                     </div>
-                    <p class="ui-card-copy">Use for one title, one value, and one short support line. Avoid lists, multiple metrics, or dense body copy.</p>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-center justify-between gap-3">
+                            <span class="truncate text-[color:var(--ui-text-muted)]">Queue age</span>
+                            <strong class="shrink-0 text-[color:var(--ui-text-strong)]">18m</strong>
+                        </div>
+                        <div class="flex items-center justify-between gap-3">
+                            <span class="truncate text-[color:var(--ui-text-muted)]">Blocked deploys</span>
+                            <strong class="shrink-0 text-[color:var(--ui-text-strong)]">0</strong>
+                        </div>
+                    </div>
+                    <p class="ui-card-copy">Fits title, one metric, one status chip, and two compact support rows.</p>
                 </x-ui.patterns.widget-shell>
 
                 <x-ui.patterns.widget-shell
                     title="2x1 Wide Summary"
-                    description="Two related summary signals across one row."
+                    description="Two to three related summary signals."
                     kicker="Allowance 2x1"
                     span="2x1"
                     data-widget-content-size="2x1"
                 >
-                    <div class="grid gap-3 md:grid-cols-2">
-                        <div class="ui-pattern-widget-shell-section">
-                            <p class="ui-pattern-key-value-label">Primary</p>
-                            <p class="ui-stat-value mt-3">12</p>
+                    <div class="grid gap-3 sm:grid-cols-3">
+                        <div>
+                            <p class="ui-pattern-key-value-label">Open</p>
+                            <p class="ui-stat-value">12</p>
+                            <p class="ui-card-copy">reviews</p>
                         </div>
-                        <div class="ui-pattern-widget-shell-section">
-                            <p class="ui-pattern-key-value-label">Secondary</p>
-                            <p class="ui-stat-value mt-3">2</p>
+                        <div>
+                            <p class="ui-pattern-key-value-label">Escalated</p>
+                            <p class="ui-stat-value">2</p>
+                            <p class="ui-card-copy">owner needed</p>
+                        </div>
+                        <div>
+                            <p class="ui-pattern-key-value-label">Median</p>
+                            <p class="ui-stat-value">31m</p>
+                            <p class="ui-card-copy">age stable</p>
                         </div>
                     </div>
-                    <p class="ui-card-copy">Use for two compact signals or one signal plus a short same-topic explanation.</p>
+                    <div class="grid gap-2 text-sm sm:grid-cols-2">
+                        <div class="rounded-md border px-3 py-2" style="border-color: var(--ui-border-subtle);">4 awaiting design sign-off</div>
+                        <div class="rounded-md border px-3 py-2" style="border-color: var(--ui-border-subtle);">2 need escalation review</div>
+                    </div>
                 </x-ui.patterns.widget-shell>
 
                 <x-ui.patterns.widget-shell
                     title="1x2 Tall List"
-                    description="Vertical room for ordered same-topic items."
+                    description="Narrow vertical list or activity feed."
                     kicker="Allowance 1x2"
                     span="1x2"
                     data-widget-content-size="1x2"
                 >
                     <div class="space-y-3">
-                        <div class="ui-pattern-widget-shell-section is-subtle">One compact list item with one sentence max.</div>
-                        <div class="ui-pattern-widget-shell-section is-subtle">Second compact list item.</div>
-                        <div class="ui-pattern-widget-shell-section is-subtle">Third compact list item.</div>
+                        @foreach ([
+                            ['09:10', 'Lock widget shell contract'],
+                            ['09:24', 'Recheck overlay publication'],
+                            ['09:41', 'Publish menu-item re-review'],
+                            ['10:05', 'Confirm form pattern owner'],
+                            ['10:33', 'Assign dashboard density pass'],
+                            ['10:58', 'Close stale review cue'],
+                        ] as [$time, $label])
+                            <div class="flex gap-3 rounded-md border p-3 text-sm" style="border-color: var(--ui-border-subtle);">
+                                <span class="shrink-0 font-semibold text-[color:var(--ui-text-secondary)]">{{ $time }}</span>
+                                <span class="min-w-0 text-[color:var(--ui-text-strong)]">{{ $label }}</span>
+                            </div>
+                        @endforeach
                     </div>
-                    <p class="ui-card-copy">Use for short ordered lists or activity feeds. Avoid side-by-side content because the width is intentionally narrow.</p>
+                    <p class="ui-card-copy">Fits 4-6 compact same-topic rows. Escalate if each row needs actions, filters, or long copy.</p>
                 </x-ui.patterns.widget-shell>
 
                 <x-ui.patterns.widget-shell
                     title="2x2 Detail"
-                    description="Mixed summary and detail for one dashboard topic."
+                    description="Primary metric plus same-topic detail."
                     kicker="Allowance 2x2"
                     span="2x2"
                     data-widget-content-size="2x2"
                 >
-                    <div class="grid gap-3 md:grid-cols-2">
-                        <div class="ui-pattern-widget-shell-section">
-                            <p class="ui-pattern-key-value-label">Metric</p>
-                            <p class="ui-stat-value mt-3">84%</p>
+                    <div class="grid gap-3 sm:grid-cols-3">
+                        <div>
+                            <p class="ui-pattern-key-value-label">Unread</p>
+                            <p class="ui-stat-value">7</p>
+                            <p class="ui-card-copy">notifications</p>
                         </div>
-                        <div class="ui-pattern-widget-shell-section">
-                            <p class="ui-pattern-key-value-label">Detail</p>
-                            <p class="ui-card-copy">One short explanatory paragraph or equivalent body block.</p>
+                        <div>
+                            <p class="ui-pattern-key-value-label">Routed</p>
+                            <p class="ui-stat-value">3</p>
+                            <p class="ui-card-copy">to operations</p>
+                        </div>
+                        <div>
+                            <p class="ui-pattern-key-value-label">Pinned</p>
+                            <p class="ui-stat-value">1</p>
+                            <p class="ui-card-copy">manual review</p>
                         </div>
                     </div>
-                    <div class="space-y-2">
-                        <div class="ui-pattern-widget-shell-section is-subtle">Same-topic supporting item one.</div>
-                        <div class="ui-pattern-widget-shell-section is-subtle">Same-topic supporting item two.</div>
+                    <div class="grid gap-3 sm:grid-cols-2">
+                        <div class="rounded-md border p-3" style="border-color: var(--ui-border-subtle);">
+                            <p class="ui-pattern-key-value-label">Detail body</p>
+                            <p class="ui-card-copy mt-2">A two-row detail widget can carry one short explanatory paragraph tied to the primary metric.</p>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <div class="rounded-md border px-3 py-2" style="border-color: var(--ui-border-subtle);">Oldest alert: 18m</div>
+                            <div class="rounded-md border px-3 py-2" style="border-color: var(--ui-border-subtle);">3 routed to operations</div>
+                            <div class="rounded-md border px-3 py-2" style="border-color: var(--ui-border-subtle);">1 pinned for manual review</div>
+                        </div>
                     </div>
-                    <p class="ui-card-copy">Use for one primary summary plus a small supporting list or body block.</p>
                 </x-ui.patterns.widget-shell>
 
                 <x-ui.patterns.widget-shell
-                    title="3x1 Full Row"
-                    description="Full-width row for broad summary without second-row detail."
+                    title="3x1 Wide Summary"
+                    description="Three-quarter row summary in the four-unit model."
                     kicker="Allowance 3x1"
                     span="3x1"
                     data-widget-content-size="3x1"
                 >
-                    <div class="grid gap-3 md:grid-cols-3">
-                        <div class="ui-pattern-widget-shell-section is-subtle">Primary summary block.</div>
-                        <div class="ui-pattern-widget-shell-section is-subtle">Secondary summary block.</div>
-                        <div class="ui-pattern-widget-shell-section is-subtle">Tertiary summary block or one action cue.</div>
+                    <div class="grid gap-3 sm:grid-cols-4">
+                        <div>
+                            <p class="ui-pattern-key-value-label">Ready</p>
+                            <p class="ui-stat-value">18</p>
+                            <p class="ui-card-copy">deploys</p>
+                        </div>
+                        <div>
+                            <p class="ui-pattern-key-value-label">Held</p>
+                            <p class="ui-stat-value">3</p>
+                            <p class="ui-card-copy">owner review</p>
+                        </div>
+                        <div>
+                            <p class="ui-pattern-key-value-label">Risk</p>
+                            <p class="ui-stat-value">1</p>
+                            <p class="ui-card-copy">rollback note</p>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <div class="rounded-md border px-3 py-2" style="border-color: var(--ui-border-subtle);">Staging owner assigned</div>
+                            <div class="rounded-md border px-3 py-2" style="border-color: var(--ui-border-subtle);">Production hold active</div>
+                        </div>
                     </div>
-                    <p class="ui-card-copy">Use for horizontal comparison or broad status summaries that do not need stacked detail.</p>
+                    <p class="ui-card-copy">Fits one horizontal same-topic summary. It is not a full-row contract.</p>
                 </x-ui.patterns.widget-shell>
 
                 <x-ui.patterns.widget-shell
-                    title="3x2 Tall Surface"
-                    description="Largest approved dashboard widget surface for one rich topic."
+                    title="3x2 Rich Summary"
+                    description="Largest approved same-topic widget surface in this proof."
                     kicker="Allowance 3x2"
                     span="3x2"
                     data-widget-content-size="3x2"
                 >
-                    <div class="grid gap-3 md:grid-cols-3">
-                        <div class="ui-pattern-widget-shell-section">
+                    <div class="grid gap-3 sm:grid-cols-4">
+                        <div>
                             <p class="ui-pattern-key-value-label">Capacity</p>
-                            <p class="ui-stat-value mt-3">72%</p>
+                            <p class="ui-stat-value">72%</p>
+                            <p class="ui-card-copy">reviewer load</p>
                         </div>
-                        <div class="ui-pattern-widget-shell-section">
-                            <p class="ui-pattern-key-value-label">Open items</p>
-                            <p class="ui-stat-value mt-3">6</p>
+                        <div>
+                            <p class="ui-pattern-key-value-label">Open</p>
+                            <p class="ui-stat-value">6</p>
+                            <p class="ui-card-copy">workstreams</p>
                         </div>
-                        <div class="ui-pattern-widget-shell-section">
+                        <div>
                             <p class="ui-pattern-key-value-label">Oldest</p>
-                            <p class="ui-stat-value mt-3">41m</p>
+                            <p class="ui-stat-value">41m</p>
+                            <p class="ui-card-copy">blocker age</p>
+                        </div>
+                        <div>
+                            <p class="ui-pattern-key-value-label">Owner SLA</p>
+                            <p class="ui-stat-value">92%</p>
+                            <p class="ui-card-copy">on target</p>
                         </div>
                     </div>
-                    <div class="grid gap-3 md:grid-cols-2">
-                        <div class="ui-pattern-widget-shell-section is-subtle">One larger related detail block may occupy the second row.</div>
-                        <div class="ui-pattern-widget-shell-section is-subtle">A short same-topic list or summary may sit beside it.</div>
+                    <div class="grid gap-3 sm:grid-cols-[1.2fr_0.8fr]">
+                        <div class="rounded-md border p-3" style="border-color: var(--ui-border-subtle);">
+                            <p class="ui-pattern-key-value-label">Throughput trend</p>
+                            <div class="mt-4 grid h-24 grid-cols-7 items-end gap-2">
+                                @foreach ([36, 58, 44, 71, 63, 82, 76] as $height)
+                                    <span class="rounded-t" style="height: {{ $height }}%; background-color: color-mix(in srgb, var(--ui-text-muted) 34%, transparent);"></span>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <div class="rounded-md border px-3 py-2" style="border-color: var(--ui-border-subtle);">6 open workstreams</div>
+                            <div class="rounded-md border px-3 py-2" style="border-color: var(--ui-border-subtle);">Oldest blocker: 41m</div>
+                            <div class="rounded-md border px-3 py-2" style="border-color: var(--ui-border-subtle);">Two reviewer gaps</div>
+                            <div class="rounded-md border px-3 py-2" style="border-color: var(--ui-border-subtle);">No production hold</div>
+                        </div>
                     </div>
-                    <p class="ui-card-copy">Use for dense same-topic summaries only. If it needs independent sections, move the content to a full page.</p>
+                    <p class="ui-card-copy">Fits one rich dashboard topic with KPI group, compact visualization, exception list, and one support line.</p>
                 </x-ui.patterns.widget-shell>
             </x-ui.patterns.dashboard-grid>
         </x-ui.patterns.content-section-block>
 
         <x-ui.patterns.content-section-block
-            title="Future module design baseline"
-            description="Module teams should select the smallest widget size that supports the required scan target and supporting detail without clipping, crowding, or adding unrelated workflows."
-            kicker="Implementation guidance"
+            title="Allowance matrix"
+            description="Use this as the future-module starting point. The widget size should be selected by content density, not by stretching a sparse card."
+            kicker="Fits, stretch, escalate"
+            data-widget-allowance-matrix
         >
-            <div class="grid gap-4 lg:grid-cols-2">
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-left text-sm">
+                    <thead class="text-xs uppercase tracking-[0.18em] text-[color:var(--ui-text-secondary)]">
+                        <tr>
+                            <th class="border-b px-3 py-3" style="border-color: var(--ui-border-subtle);">Size</th>
+                            <th class="border-b px-3 py-3" style="border-color: var(--ui-border-subtle);">Fits</th>
+                            <th class="border-b px-3 py-3" style="border-color: var(--ui-border-subtle);">Stretch limit</th>
+                            <th class="border-b px-3 py-3" style="border-color: var(--ui-border-subtle);">Escalate when</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-top text-[color:var(--ui-text-strong)]">
+                        @foreach ([
+                            ['1x1', 'One metric or status, one chip, two support rows.', 'A third support row only if labels are short.', 'It needs a list, actions, or body copy.'],
+                            ['2x1', 'Two or three related metrics plus one compact status strip.', 'One short explanation can replace a metric.', 'It needs stacked detail or independent sections.'],
+                            ['1x2', 'Four to six compact timeline/list rows.', 'One short footer note.', 'Rows need controls, long sentences, or side-by-side layout.'],
+                            ['2x2', 'Metric group, short body block, and same-topic list.', 'Small compact visualization or exception group.', 'It becomes a workflow, form, or mixed-topic card.'],
+                            ['3x1', 'Horizontal same-topic summary across three-quarter width.', 'Four compact columns if labels remain short.', 'It requires full-row ownership or second-row detail.'],
+                            ['3x2', 'Rich same-topic summary with KPIs, compact visual, list, and footer.', 'One dense support area if scan target remains clear.', 'It needs tabs, filters, tables, or unrelated subjects.'],
+                        ] as [$size, $fits, $stretch, $escalate])
+                            <tr>
+                                <th class="border-b px-3 py-3 font-semibold" style="border-color: var(--ui-border-subtle);">{{ $size }}</th>
+                                <td class="border-b px-3 py-3" style="border-color: var(--ui-border-subtle);">{{ $fits }}</td>
+                                <td class="border-b px-3 py-3" style="border-color: var(--ui-border-subtle);">{{ $stretch }}</td>
+                                <td class="border-b px-3 py-3" style="border-color: var(--ui-border-subtle);">{{ $escalate }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </x-ui.patterns.content-section-block>
+
+        <x-ui.patterns.content-section-block
+            title="Negative boundary"
+            description="A widget should not become a miniature page. When content crosses these boundaries, select a larger approved surface or link to a dedicated page."
+            kicker="Escalation rule"
+            data-widget-negative-boundary
+        >
+            <div class="grid gap-4 lg:grid-cols-3">
                 <div class="ui-card">
-                    <p class="ui-kicker">Allowed examples</p>
-                    <ul class="ui-card-copy space-y-2">
-                        <li>1. Summary metric with short support text.</li>
-                        <li>2. Short same-topic list or activity feed in a tall narrow widget.</li>
-                        <li>3. Related metric group plus one explanatory block in a two-row widget.</li>
-                        <li>4. Full-row comparison across two or three compact summary blocks.</li>
-                    </ul>
+                    <p class="ui-kicker">Do not fit by clipping</p>
+                    <h3 class="ui-card-title mt-3">No hidden overflow</h3>
+                    <p class="ui-card-copy">If the declared size cuts off content, reduce the content, choose a larger size, or move the workflow out of the widget.</p>
                 </div>
                 <div class="ui-card">
-                    <p class="ui-kicker">Not allowed by default</p>
-                    <ul class="ui-card-copy space-y-2">
-                        <li>1. Multiple unrelated dashboard subjects in one widget.</li>
-                        <li>2. Embedded create/edit forms or multi-step workflows.</li>
-                        <li>3. Complex filtering, tabs, or table-like controls inside a widget.</li>
-                        <li>4. More content than the declared span can show without scroll, clipping, or visual crowding.</li>
-                    </ul>
+                    <p class="ui-kicker">Do not fit by scrolling</p>
+                    <h3 class="ui-card-title mt-3">No internal scroll baseline</h3>
+                    <p class="ui-card-copy">Baseline dashboard widgets must scan without nested scroll regions. Scrolling needs a separate reviewed exception.</p>
+                </div>
+                <div class="ui-card">
+                    <p class="ui-kicker">Do not mix topics</p>
+                    <h3 class="ui-card-title mt-3">One dashboard subject</h3>
+                    <p class="ui-card-copy">Related metric, body, visual, and list content can coexist. Unrelated subjects should become separate widgets or a page.</p>
                 </div>
             </div>
         </x-ui.patterns.content-section-block>

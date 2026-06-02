@@ -657,7 +657,12 @@
         background-color: color-mix(in srgb, var(--ui-surface-elevated) 72%, transparent);
     }
 
-    .ui-pattern-dashboard-grid-widgets,
+    .ui-pattern-dashboard-grid-widgets {
+        --ui-dashboard-grid-row-size: 18rem;
+        --ui-dashboard-grid-gap: 1rem;
+        align-items: stretch;
+    }
+
     .dashboard-proof-grid {
         --ui-dashboard-grid-row-size: 24rem;
         --ui-dashboard-grid-gap: 1rem;
@@ -819,29 +824,29 @@
         }
 
         .ui-pattern-widget-span-1x1 {
-            grid-column: span 2 / span 2;
+            grid-column: span 1 / span 1;
         }
 
         .ui-pattern-widget-span-2x1 {
-            grid-column: span 4 / span 4;
+            grid-column: span 2 / span 2;
         }
 
         .ui-pattern-widget-span-1x2 {
-            grid-column: span 2 / span 2;
+            grid-column: span 1 / span 1;
             grid-row: span 2 / span 2;
         }
 
         .ui-pattern-widget-span-2x2 {
-            grid-column: span 4 / span 4;
+            grid-column: span 2 / span 2;
             grid-row: span 2 / span 2;
         }
 
         .ui-pattern-widget-span-3x1 {
-            grid-column: span 6 / span 6;
+            grid-column: span 3 / span 3;
         }
 
         .ui-pattern-widget-span-3x2 {
-            grid-column: span 6 / span 6;
+            grid-column: span 3 / span 3;
             grid-row: span 2 / span 2;
         }
     }

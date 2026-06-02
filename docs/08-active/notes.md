@@ -1,6 +1,12 @@
 # Notes
 
 ## Findings
+- Batch B pass `2-B-0044` implements the planned `P2-B-CQ-023` Widget Content Standards rebuild:
+  - the Widget Content Standards page now starts with an explicit geometry decision before presenting content examples
+  - the shared widget standards proof uses a four-unit desktop model where `1x` is one quarter, `2x` is half width, and `3x` is three quarters of the widget row
+  - the shared widget standards proof uses an `18rem` one-row baseline so small widgets are constrained enough to expose real content-density decisions
+  - the approved Layout + Dashboard customization proof keeps its separate `24rem` dashboard proof row-height contract so the already-approved `x2` span review surface remains visually obvious
+  - all supported widget sizes now have realistic filled examples, an allowance matrix, constrained viewport review guidance, and negative boundary rules for clipping, internal scroll, and mixed-topic content
 - Batch B review-state update for the latest Widget Content Standards review:
   - `P2-B-CQ-022` passes manual review; Layout + Dashboard is accepted as dashboard-demo-first with dashboard-specific support cards below it
   - `P2-B-CQ-021` fails manual review because the standards page does not accurately prove content allowances; examples are sparse, leave excessive empty space inside large fixed-height shells, and do not fill even tall or wide widget variants with realistic same-topic content
@@ -277,6 +283,9 @@
   - future-module UI ownership declaration fields
 
 ## Decisions
+- Move `P2-B-CQ-023` from `In Progress` to `Implemented Pending Review` after rebuilding `/platform/ui-reference/patterns/widget-content` from the dashboard widget content standards plan.
+- Select the four-unit model for the Widget Content Standards proof because it creates a stricter, more realistic desktop allowance baseline than the previous three-unit model; full-row behavior should be introduced later as an explicit `4x` contract or page-specific dashboard composition instead of treating `3x` as full row.
+- Split the standards-page widget row baseline from the Layout + Dashboard proof row baseline: `ui-pattern-dashboard-grid-widgets` uses `18rem` for content allowance review, while `dashboard-proof-grid` remains `24rem` for the already-approved span-height proof.
 - Move `P2-B-CQ-022` from `Implemented Pending Review` to `Passed Review` based on explicit manual approval.
 - Treat `P2-B-CQ-021` as superseded by `P2-B-CQ-023` rather than simply reopening the same wording because the failed implementation exposed a missing planning dependency: grid geometry and row-height calibration must be reviewed before the widget content standards page can be accurately rebuilt.
 - Keep the new plan in `/docs/08-active/` because it is active-batch implementation planning for the current failed review item, not durable product/system truth until a reviewed standard is implemented and accepted.
@@ -331,9 +340,9 @@
 - Queue cleanup review confirms `P2-B-CQ-007` and `P2-B-CQ-008` already reflect the correct Tier 1-before-Tier 2 sequencing and do not need reclassification.
 
 ## Risks / Questions
-- Combined Batch B manual review still cannot close until `P2-B-CQ-023` is implemented, deployed, and manually reviewed.
-- `P2-B-CQ-023` must not skip the grid geometry decision; the next pass must explicitly evaluate current three-unit sizing versus four-across sizing and row-height calibration before presenting final content allowances.
-- The current `24rem` row-track size solved the previous span-height bug, but it may be too tall for production widget standards; the next pass needs constrained viewport review before changing shared grid tokens.
+- Combined Batch B manual review still cannot close until `P2-B-CQ-023` is deployed and manually reviewed.
+- `P2-B-CQ-023` needs reviewer confirmation that the four-unit desktop model and `18rem` one-row baseline are acceptable before the page is treated as durable future-module widget content guidance.
+- The current implementation intentionally avoids defining a full-row widget standard; if future dashboard modules need full-row content allowances, a separate `4x` contract or composition-specific rule should be opened after this review.
 - Realtime notification toast rendering remains a feature-level JS path and is intentionally outside this Tier 1 hardening pass.
 - `resources/views/platform/ui-reference/index.blade.php` remains an unused legacy workspace view because the canonical `/platform/ui-reference` route renders `overview.blade.php`; this pass left it untouched to avoid mixing unrelated cleanup into the Batch B implementation lane.
 - Combined Batch B manual review is still required to confirm the newly implemented widget, date-range, identity-summary, dropdown, and sub-navigation changes before the batch can move toward close-out.

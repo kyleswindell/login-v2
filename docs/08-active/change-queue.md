@@ -11,6 +11,10 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 - Exploratory review discussion stays in chat until it is normalized into concise queue language.
 
 ## Ready To Implement
+
+## In Progress
+
+## Implemented Pending Review
 - [ ] Rebuild the Widget Content Standards page from the dashboard widget content standards plan: validate the dashboard grid geometry before finalizing examples, compare the current three-unit model against a four-across model, calibrate one-row height for constrained office-monitor widths, and replace sparse placeholder cards with realistic filled examples that prove content allowances for every supported widget size without clipping, crowding, internal scrolling, or excessive unused space.
   ID: P2-B-CQ-023
   Scope: planned widget content standards rework, grid geometry calibration, row-height review, realistic per-size widget examples, constrained viewport validation, content allowance acceptance criteria
@@ -18,10 +22,7 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Plan: `docs/08-active/dashboard-widget-content-standards-plan.md`
   Follow-up To: P2-B-CQ-021
   Supersedes: P2-B-CQ-021
-
-## In Progress
-
-## Implemented Pending Review
+  Implemented in: `2-B-0044`
 ## Blocked
 
 ## Deferred

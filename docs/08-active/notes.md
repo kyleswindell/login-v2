@@ -1,6 +1,11 @@
 # Notes
 
 ## Findings
+- Batch B pass `2-B-0030` is now integrated on `main` and republished to staging for targeted manual review of `P2-B-CQ-019`:
+  - cherry-picked worker commit `07460a1b30b0fd27a710b7cd17382e116aec7cc4` onto `main` as `9a815ab`
+  - restored the live dashboard customization flow so lock/unlock, widget visibility toggling, and widget reordering persist per user through stable widget-identity layout slots plus validated placement metadata
+  - expanded the Layout + Dashboard proof so locked, unlocked, and saved-layout states are directly reviewable on-page instead of implied only through copy
+  - verified the integrated result in WSL with `DB_CONNECTION=sqlite DB_DATABASE=:memory:` overrides for `PlatformDashboardTest` and the focused layout-proof assertion in `PlatformUiReferenceTest`
 - Batch B pass `2-B-0029` publishes the `P2-B-CQ-013` derived review-overlay manifest hardening work to staging on `main`:
   - the scoped overlay-manifest runtime and workflow updates are now available on the staging review surface
   - targeted manual re-review can now confirm whether passed queue IDs drop out and the remaining pending-review ID set stays aligned after publication
@@ -227,9 +232,9 @@
 
 ## Risks / Questions
 - Combined Batch B manual review still cannot close until staging manually re-validates `P2-B-CQ-013`.
+- `P2-B-CQ-019` now needs targeted staging re-review to confirm the restored dashboard customization states and per-user saved-layout contract behave correctly on the live review surface.
 - `P2-B-CQ-015` is now unblocked and ready for implementation, but it still needs a full account-dropdown consumer pass against the approved shared action/menu-item contract.
 - `P2-B-CQ-018` now needs a visible dashboard/layout proof treatment that makes taller widget states directly judgeable in-context, or the current row-span contract will remain hard to validate visually.
-- `P2-B-CQ-019` now needs both live dashboard customization behavior and a stronger per-user saved-layout contract, or the dashboard interaction contract will remain under-reviewed and under-specified for this batch.
 - Realtime notification toast rendering remains a feature-level JS path and is intentionally outside this Tier 1 hardening pass.
 - `resources/views/platform/ui-reference/index.blade.php` remains an unused legacy workspace view because the canonical `/platform/ui-reference` route renders `overview.blade.php`; this pass left it untouched to avoid mixing unrelated cleanup into the Batch B implementation lane.
 - Combined Batch B manual review is still required to confirm the newly implemented widget, date-range, identity-summary, dropdown, and sub-navigation changes before the batch can move toward close-out.

@@ -21,15 +21,15 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Scope: visible proof coverage for multi-row widget spans, on-page clarity of taller dashboard card states, reviewability of the shared row-span contract
   Path Coverage: `/platform/ui-reference/patterns/layout`, `/platform/ui-reference/patterns/archetypes`, visible dashboard/widget-shell proof surfaces where taller spans should be judged in context
   Follow-up To: P2-B-CQ-005, P2-B-CQ-006
+## In Progress
+
+## Implemented Pending Review
 - [ ] Restore the dashboard customization interaction contract and establish the correct per-user dashboard layout persistence model so lock/unlock, widget visibility toggling, widget reorganization, and saved personalized layout state all work intentionally on the live dashboard path; the Layout + Dashboard reference page should also represent these states clearly enough for review, and the saved layout contract should be based on stable widget identity plus validated placement metadata instead of ambiguous page-local slot assumptions.
   ID: P2-B-CQ-019
   Scope: dashboard customization interaction contract, lock/unlock edit mode, widget visibility toggling, drag/reorder behavior, per-user layout persistence contract, stable widget identity plus placement metadata validation, visible proof coverage for customization states
   Path Coverage: `/dashboard`, `/platform/ui-reference/patterns/layout`, `user_dashboard_layouts` persistence behavior, related dashboard proof surfaces that should demonstrate customization controls, state changes, and saved personalized layout outcomes
   Follow-up To: P2-B-CQ-006, P2-B-CQ-018
-
-## In Progress
-
-## Implemented Pending Review
+  Implemented in: `2-B-0030`
 - [ ] Resynchronize the temporary active-batch proof review mode so it reflects the live queue state exactly; only current `Implemented Pending Review` items should appear in page banners and scoped card targets, reopened or passed IDs must drop out immediately, and every current pending-review item with a visible proof surface must be tagged accurately at the point of review.
   ID: P2-B-CQ-013
   Iteration: 4

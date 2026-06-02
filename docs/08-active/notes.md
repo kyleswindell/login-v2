@@ -1,6 +1,11 @@
 # Notes
 
 ## Findings
+- Batch B review-state update `2-B-0041` records the latest targeted Layout + Dashboard staging feedback:
+  - `P2-B-CQ-013`, `P2-B-CQ-015`, and `P2-B-CQ-020` pass manual review
+  - `P2-B-CQ-018` returns to `Ready To Implement` because the dashboard grid still does not enforce declared row spans as physical row occupancy; `1x2` can visually collapse toward ~1.5 rows beside another `x2` item, and `3x2` can visually match `3x1`
+  - `P2-B-CQ-019` returns to `Ready To Implement` because the proof surface must demonstrate deterministic span comparison groups instead of relying on content flow or incidental neighboring placement
+  - no new queue item is added because the current feedback maps directly to the existing row-span contract and dashboard customization proof items; detailed widget-content allowance standards are acknowledged but intentionally out of scope unless needed to enforce the physical span contract
 - Batch B pass `2-B-0040` implements the reopened Layout + Dashboard review fixes:
   - `P2-B-CQ-018` restores reviewable widget span examples by removing the static full-row utility from the interactive proof cards and preserving explicit `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, and `3x2` span mappings
   - `P2-B-CQ-019` preserves the approved save behavior, drag/move sorting preview, and full main-content-width proof container while keeping header/body widget content inside the correct grid-size examples

@@ -54,9 +54,9 @@
 - [ ] Dashboard And Summary Conventions
   Status: implemented (pending manual review)
   - dashboard widget-shell conventions are explicit
-  - dashboard widget span model is explicit with reopened two-row occupancy review coverage implemented in `2-B-0040`
+  - dashboard widget span model remains open for strict row-track enforcement after `2-B-0040` manual review found `x2` heights are not span-stable
   - summary/stat-card conventions are explicit
-  - dashboard grid usage is explicit and published for targeted review with restored widget grid-size examples and approved default card/surface treatment
+  - dashboard grid usage is explicit, but the proof must be repaired so `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, and `3x2` examples demonstrate deterministic physical spans
 
 ## Registration And Ownership Handoff
 - [ ] Registration And Ownership Handoff

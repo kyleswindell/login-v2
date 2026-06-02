@@ -11,49 +11,49 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 - Exploratory review discussion stays in chat until it is normalized into concise queue language.
 
 ## Ready To Implement
-## In Progress
-
-## Implemented Pending Review
-- [ ] Resynchronize the temporary active-batch proof review mode so it reflects the live queue state exactly; only current `Implemented Pending Review` items should appear in page banners and scoped card targets, reopened or passed IDs must drop out immediately, and every current pending-review item with a visible proof surface must be tagged accurately at the point of review.
-  ID: P2-B-CQ-013
-  Iteration: 4
-  Scope: temporary active-batch proof review mode, derived runtime manifest synchronization, live queue-state alignment, full current pending-review coverage, stale active-review target removal
-  Path Coverage: active-batch UI Reference proof pages, all current `Implemented Pending Review` items with visible proof surfaces, relevant component library cards under review, current review-mode entry points
-  Implemented in: `2-B-0028`
-- [ ] Apply the established Tier 1 action/menu-item suite to the account dropdown header menu so the theme-mode options and account actions stop using outdated local option styling; the active and hover theme option should use the shared outline-neutral treatment, the sign-out action should use the shared ghost-danger treatment, and the account-menu text color should match the current shared menu-item contract while preserving the existing layout.
-  ID: P2-B-CQ-015
-  Iteration: 2
-  Scope: account-menu action styling, theme-option state styling, shared outline-neutral and ghost-danger consumption, dropdown option typography/color consistency
-  Path Coverage: shared account dropdown in the app shell header, theme-mode option row, account-menu action list, sign-out action treatment
-  Follow-up To: P2-B-CQ-014, P2-B-CQ-016
-  Implemented in: `2-B-0036`
-- [ ] Fix the Layout + Dashboard multi-row widget proof so `1x2`, `2x2`, and other two-row widgets are reviewable at their true grid spans; the proof must keep the expected widget width variants in place and must demonstrate that taller widgets reserve and occupy two full rows without being compressed or hidden by following widgets.
+- [ ] Fix the dashboard grid span contract so widget height is determined by declared grid span, not by neighboring item placement or content height; every allowed `x2` widget must reserve and visibly occupy exactly two row tracks in all review pairings, including `1x2` beside `2x2`, `1x2` beside stacked one-row widgets, and `3x2` directly compared with `3x1`.
   ID: P2-B-CQ-018
-  Iteration: 3
-  Scope: enforced dashboard row-span occupancy, non-overlapping dense grid placement, true two-row widget height, visible multi-row proof integrity, reviewable widget-size examples
+  Iteration: 4
+  Scope: strict dashboard grid row-track sizing, span-driven height independent of content, non-overlapping dense grid placement, two-row visual parity across all adjacent pairings, reviewable widget-size examples
   Path Coverage: `/platform/ui-reference/patterns/layout`, `/platform/ui-reference/patterns/archetypes`, shared dashboard/widget-shell proof surfaces where taller spans should be judged in context
   Follow-up To: P2-B-CQ-005, P2-B-CQ-006
   Implemented in: `2-B-0040`
-- [ ] Repair the Layout + Dashboard customization proof after the failed `2-B-0038` pass by preserving the approved save behavior, drag/move sorting preview, and full main-content-width dashboard proof container while restoring correct widget grid-size examples for `1x1`, `2x1`, `1x2`, `2x2`, and `3x1`; each widget example must include legible header/title and body/supporting content without converting every example into a full-row card.
+- [ ] Repair the Layout + Dashboard customization proof so it demonstrates the dashboard grid contract through deterministic comparison groups instead of incidental content flow; the proof must preserve approved save behavior, drag/move sorting preview, and full main-content-width container while showing `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, and `3x2` examples in arrangements that make one-row versus two-row height differences impossible to miss.
   ID: P2-B-CQ-019
-  Iteration: 6
-  Scope: UI Reference-first dashboard customization proof layout, approved full-width dashboard composition, approved save/reorder proof behavior, correct widget grid-size examples, widget-card header/body content examples, responsive widget-card default integrity
+  Iteration: 7
+  Scope: UI Reference-first dashboard customization proof layout, approved full-width dashboard composition, approved save/reorder proof behavior, deterministic widget-span comparison groups, correct widget grid-size examples, legible widget-card header/body content examples
   Path Coverage: `/platform/ui-reference/patterns/layout` as the canonical review surface, shared dashboard/widget shell layout defaults that affect proof-card content structure, proof drag/reorder interaction model, `/dashboard` only as downstream consumer validation after the proof surface is correct
   Follow-up To: P2-B-CQ-006, P2-B-CQ-018
   Implemented in: `2-B-0040`
-- [ ] Remove the unapproved `ui-soft-card*` full-card palette treatment from the Layout + Dashboard proof and return proof widgets, saved-layout preview, support cards, and explanatory proof blocks to the approved default neutral card/surface or existing alert/notice/status treatments; the current-item/menu-state label colorways from Buttons + Icons must not be reused as full dashboard card palettes unless a separate UI Reference proof is explicitly created and approved.
-  ID: P2-B-CQ-020
-  Iteration: 3
-  Scope: default shared widget-card palette, default supporting info-card palette, removal of unapproved `ui-soft-card*` full-card surfaces, semantic-only alert/notice/status usage, legible header/body/supporting text treatments
-  Path Coverage: shared card/surface primitives or support classes that own default and semantic card presentation, UI Reference Layout + Dashboard proof surfaces, saved-layout preview widgets, supporting proof/info cards on the dashboard proof page, UI Reference action/menu current-state labels as a non-card contrast reference
-  Follow-up To: P2-B-CQ-019
-  Implemented in: `2-B-0040`
+## In Progress
+
+## Implemented Pending Review
 
 ## Blocked
 
 ## Deferred
 
 ## Passed Review
+- [x] Resynchronize the temporary active-batch proof review mode so it reflects the live queue state exactly; only current `Implemented Pending Review` items should appear in page banners and scoped card targets, reopened or passed IDs must drop out immediately, and every current pending-review item with a visible proof surface must be tagged accurately at the point of review.
+  ID: P2-B-CQ-013
+  Iteration: 4
+  Scope: temporary active-batch proof review mode, derived runtime manifest synchronization, live queue-state alignment, full current pending-review coverage, stale active-review target removal
+  Path Coverage: active-batch UI Reference proof pages, all current `Implemented Pending Review` items with visible proof surfaces, relevant component library cards under review, current review-mode entry points
+  Implemented in: `2-B-0028`
+- [x] Apply the established Tier 1 action/menu-item suite to the account dropdown header menu so the theme-mode options and account actions stop using outdated local option styling; theme options should use shared ghost-neutral button styling with only the active option marked current/selected, the sign-out action should use the shared ghost-danger treatment, and the account-menu text color should match the current shared menu-item contract while preserving the existing layout.
+  ID: P2-B-CQ-015
+  Iteration: 2
+  Scope: account-menu action styling, theme-option active/hover state styling, shared ghost-neutral and ghost-danger consumption, dropdown option typography/color consistency
+  Path Coverage: shared account dropdown in the app shell header, theme-mode option row, account-menu action list, sign-out action treatment
+  Follow-up To: P2-B-CQ-014, P2-B-CQ-016
+  Implemented in: `2-B-0036`
+- [x] Remove the unapproved `ui-soft-card*` full-card palette treatment from the Layout + Dashboard proof and return proof widgets, saved-layout preview, support cards, and explanatory proof blocks to the approved default neutral card/surface or existing alert/notice/status treatments; the current-item/menu-state label colorways from Buttons + Icons must not be reused as full dashboard card palettes unless a separate UI Reference proof is explicitly created and approved.
+  ID: P2-B-CQ-020
+  Iteration: 3
+  Scope: default shared widget-card palette, default supporting info-card palette, removal of unapproved `ui-soft-card*` full-card surfaces, semantic-only alert/notice/status usage, legible header/body/supporting text treatments
+  Path Coverage: shared card/surface primitives or support classes that own default and semantic card presentation, UI Reference Layout + Dashboard proof surfaces, saved-layout preview widgets, supporting proof/info cards on the dashboard proof page, UI Reference action/menu current-state labels as a non-card contrast reference
+  Follow-up To: P2-B-CQ-019
+  Implemented in: `2-B-0040`
 - [x] Refine the Tier 1 searchable dropdown-select baseline so the shared searchable control matches the canonical select-field shell across spacing, typography, trigger/menu border treatment, and Inputs And Forms proof coverage while still presenting one integrated searchable dropdown with one intentional current-selection treatment.
   ID: P2-B-CQ-001
   Iteration: 4

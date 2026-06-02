@@ -54,9 +54,9 @@
 - [ ] Dashboard And Summary Conventions
   Status: implemented (pending manual review)
   - dashboard widget-shell conventions are explicit
-  - dashboard widget span model is explicit with two-row occupancy fixes pending manual review
+  - dashboard widget span model is explicit, but the Layout + Dashboard proof needs reopened two-row occupancy review coverage after `2-B-0038`
   - summary/stat-card conventions are explicit
-  - dashboard grid usage is explicit and reviewable after reopened Layout + Dashboard proof fixes
+  - dashboard grid usage is explicit, but the proof must restore correct widget grid-size examples and approved default card/surface treatment before this item can close
 
 ## Registration And Ownership Handoff
 - [ ] Registration And Ownership Handoff

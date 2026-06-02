@@ -1,6 +1,11 @@
 # Notes
 
 ## Findings
+- Batch B review-state update `2-B-0039` maps the post-`2-B-0038` Layout + Dashboard review corrections back onto existing queue items:
+  - `P2-B-CQ-018` returns to `Ready To Implement` because the two-row widget occupancy fix is not reviewable while the proof examples have been distorted into full-row cards instead of preserving true `1x2`, `2x2`, and related spans
+  - `P2-B-CQ-019` returns to `Ready To Implement` because the latest pass incorrectly converted widget-size examples into full-row cards; the next pass must preserve the approved save behavior, drag/move sorting preview, and full main-content-width proof container while restoring correct `1x1`, `2x1`, `1x2`, `2x2`, and `3x1` examples with header/body content
+  - `P2-B-CQ-020` returns to `Ready To Implement` because `ui-soft-card*` was confirmed as an unapproved full-card palette family; the current-item/menu-state examples on Buttons + Icons are label/current-row treatments and must not be reused as dashboard/widget card palettes
+  - no new queue item is required because the corrections map directly to the existing row-span proof, dashboard customization proof, and default card/surface palette items
 - Batch B pass `2-B-0038` implements the reopened Layout + Dashboard queue items:
   - `P2-B-CQ-018` now uses explicit shared and proof-grid row-span rules with two-row minimum heights so `1x2`, `2x2`, and `3x2` widgets reserve the full two-row space instead of being cut off by following widgets
   - `P2-B-CQ-019` preserves the approved full-width proof layout, save behavior, and drag/move sorting preview while adding visible widget-card header and body content examples

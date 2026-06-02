@@ -40,7 +40,18 @@
                     The shared dashboard grid now uses an explicit span model. `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, and `3x2` are all valid proof sizes when the content density stays intentional and the widget still reads as one dashboard summary surface.
                 </x-ui.inline-alert>
 
-                <x-ui.patterns.dashboard-grid columns="widgets">
+                <x-ui.patterns.proof-review-target
+                    :items="[
+                        ['id' => 'P2-B-CQ-018', 'note' => 'Use the multi-row examples below to verify that 1x2, 2x2, and 3x2 widgets read as visibly taller dashboard states in context.'],
+                    ]"
+                />
+
+                <div class="rounded-2xl border border-sky-500/25 bg-sky-500/10 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-sky-200">Multi-row span proof</p>
+                    <p class="mt-2 text-sm text-slate-200">Review the tall `1x2`, wide `2x2`, and full-row `3x2` examples together. Each two-row widget should be unmistakably taller than the adjacent one-row summaries before this pattern is reused on production dashboards.</p>
+                </div>
+
+                <x-ui.patterns.dashboard-grid columns="widgets" data-dashboard-span-proof>
                     <x-ui.patterns.widget-shell
                         title="1x1 Summary"
                         description="Single-focus metric or quick status."
@@ -113,6 +124,33 @@
                             <div class="ui-pattern-widget-shell-section is-subtle">Header actions stay widget-local.</div>
                             <div class="ui-pattern-widget-shell-section is-subtle">Internal sections may be divided once or twice.</div>
                             <div class="ui-pattern-widget-shell-section is-subtle">If the widget becomes a full workflow, escalate to a real page.</div>
+                        </div>
+                    </x-ui.patterns.widget-shell>
+
+                    <x-ui.patterns.widget-shell
+                        title="3x2 Review Surface"
+                        description="Full-width two-row proof for dense dashboard states that still summarize one subject."
+                        kicker="Span 3x2"
+                        :meta="['Full width + two rows']"
+                        span="3x2"
+                    >
+                        <div class="grid gap-3 md:grid-cols-3">
+                            <div class="ui-pattern-widget-shell-section">
+                                <p class="ui-pattern-key-value-label">Open workstreams</p>
+                                <p class="ui-stat-value mt-3">6</p>
+                            </div>
+                            <div class="ui-pattern-widget-shell-section">
+                                <p class="ui-pattern-key-value-label">Reviewer capacity</p>
+                                <p class="ui-stat-value mt-3">72%</p>
+                            </div>
+                            <div class="ui-pattern-widget-shell-section">
+                                <p class="ui-pattern-key-value-label">Oldest blocker</p>
+                                <p class="ui-stat-value mt-3">41m</p>
+                            </div>
+                        </div>
+                        <div class="grid gap-3 md:grid-cols-2">
+                            <div class="ui-pattern-widget-shell-section is-subtle">Second-row space supports related detail without turning the widget into a workflow page.</div>
+                            <div class="ui-pattern-widget-shell-section is-subtle">The card should visibly occupy two grid rows beside shorter dashboard summaries.</div>
                         </div>
                     </x-ui.patterns.widget-shell>
                 </x-ui.patterns.dashboard-grid>

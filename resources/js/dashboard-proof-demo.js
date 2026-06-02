@@ -63,6 +63,18 @@ const defaultProofWidgets = [
         tone: 'danger',
         notes: ['Staging owner assigned', 'Rollback notes current', 'Production hold active'],
     },
+    {
+        id: 'review-capacity',
+        title: 'Review Capacity',
+        kicker: '3x2 tall surface',
+        description: 'Full-width two-row proof that makes the tallest shared widget state reviewable in context.',
+        metric: '72%',
+        supporting: 'Reviewer availability',
+        span: '3x2',
+        visible: true,
+        tone: 'notice',
+        notes: ['6 open workstreams', 'Oldest blocker: 41m', 'Two-row density remains one dashboard topic'],
+    },
 ];
 
 const spanClasses = {
@@ -71,6 +83,7 @@ const spanClasses = {
     '1x2': 'xl:col-span-4 xl:row-span-2',
     '2x2': 'xl:col-span-8 xl:row-span-2',
     '3x1': 'xl:col-span-12',
+    '3x2': 'xl:col-span-12 xl:row-span-2',
 };
 
 const spanDescriptors = {
@@ -79,6 +92,7 @@ const spanDescriptors = {
     '1x2': 'Tall two-row widget',
     '2x2': 'Wide two-row detail widget',
     '3x1': 'Full-row summary widget',
+    '3x2': 'Full-row two-row widget',
 };
 
 const toneClasses = {

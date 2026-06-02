@@ -177,6 +177,23 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-dashboard-proof-widget', false);
     }
 
+    public function test_layout_reference_surface_includes_multi_row_widget_span_proof(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/patterns/layout')
+            ->assertOk()
+            ->assertSee('Multi-row span proof')
+            ->assertSee('1x2 Tall List')
+            ->assertSee('2x2 Mixed Widget')
+            ->assertSee('3x2 Review Surface')
+            ->assertSee('Full width + two rows')
+            ->assertSee('data-dashboard-span-proof', false)
+            ->assertSee('data-ui-widget-span="1x2"', false)
+            ->assertSee('data-ui-widget-span="2x2"', false)
+            ->assertSee('data-ui-widget-span="3x2"', false);
+    }
+
     public function test_standard_users_cannot_view_ui_reference_workspace(): void
     {
         $user = User::factory()->create();

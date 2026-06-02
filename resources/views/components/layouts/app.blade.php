@@ -226,44 +226,53 @@
                                     <div class="rounded-md border border-slate-800 bg-slate-950/70 p-2">
                                         <p class="px-2 pb-2 text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">Theme</p>
                                         <div class="grid grid-cols-3 gap-1">
-                                            <button
+                                            <x-ui.button
                                                 type="button"
-                                                class="rounded-md px-2 py-2 text-xs font-semibold text-slate-300 transition hover:bg-slate-800 hover:text-white"
+                                                variant="outline"
+                                                size="xs"
+                                                class="w-full"
                                                 data-theme-mode-toggle
                                                 data-theme-mode="light"
-                                            >Light</button>
-                                            <button
+                                                aria-pressed="{{ $bootThemeMode === 'light' ? 'true' : 'false' }}"
+                                                data-ui-current="{{ $bootThemeMode === 'light' ? 'true' : 'false' }}"
+                                            >Light</x-ui.button>
+                                            <x-ui.button
                                                 type="button"
-                                                class="rounded-md px-2 py-2 text-xs font-semibold text-slate-300 transition hover:bg-slate-800 hover:text-white"
+                                                variant="outline"
+                                                size="xs"
+                                                class="w-full"
                                                 data-theme-mode-toggle
                                                 data-theme-mode="dark"
-                                            >Dark</button>
-                                            <button
+                                                aria-pressed="{{ $bootThemeMode === 'dark' ? 'true' : 'false' }}"
+                                                data-ui-current="{{ $bootThemeMode === 'dark' ? 'true' : 'false' }}"
+                                            >Dark</x-ui.button>
+                                            <x-ui.button
                                                 type="button"
-                                                class="rounded-md px-2 py-2 text-xs font-semibold text-slate-300 transition hover:bg-slate-800 hover:text-white"
+                                                variant="outline"
+                                                size="xs"
+                                                class="w-full"
                                                 data-theme-mode-toggle
                                                 data-theme-mode="system"
-                                            >System</button>
+                                                aria-pressed="{{ $bootThemeMode === 'system' ? 'true' : 'false' }}"
+                                                data-ui-current="{{ $bootThemeMode === 'system' ? 'true' : 'false' }}"
+                                            >System</x-ui.button>
                                         </div>
                                     </div>
 
                                     @foreach ($accountNavigation as $item)
-                                        <a href="{{ route($item['route']) }}" wire:navigate @class([
-                                            'block rounded-md px-4 py-3 text-sm transition',
-                                            'text-slate-200 hover:bg-slate-800 hover:text-white' => ! request()->routeIs(...$item['active']),
-                                            'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => request()->routeIs(...$item['active']),
+                                        <x-ui.menu-item href="{{ route($item['route']) }}" wire:navigate :current="request()->routeIs(...$item['active'])" @class([
                                             'mt-2' => $loop->first,
                                             'mt-1' => ! $loop->first,
                                         ])>
                                             {{ $item['label'] }}
-                                        </a>
+                                        </x-ui.menu-item>
                                     @endforeach
 
                                     <form method="POST" action="{{ route('logout') }}" class="mt-2 border-t border-slate-800 pt-2">
                                         @csrf
-                                        <button type="submit" class="w-full rounded-md px-4 py-3 text-left text-sm font-semibold text-rose-200 transition hover:bg-rose-500/10 hover:text-rose-100">
+                                        <x-ui.button type="submit" semantic="danger" variant="ghost" class="w-full justify-start">
                                             Sign out
-                                        </button>
+                                        </x-ui.button>
                                     </form>
                                 </div>
                             </details>

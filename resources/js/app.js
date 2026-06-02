@@ -51,9 +51,7 @@ const applyThemeMode = (mode, persistLocal = true) => {
     document.querySelectorAll('[data-theme-mode-toggle]').forEach((button) => {
         const isActive = button.dataset.themeMode === normalized;
         button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-        button.classList.toggle('bg-slate-700', isActive);
-        button.classList.toggle('text-white', isActive);
-        button.classList.toggle('text-slate-300', !isActive);
+        button.dataset.uiCurrent = isActive ? 'true' : 'false';
     });
 };
 

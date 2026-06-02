@@ -91,6 +91,35 @@ class PlatformAccountTest extends TestCase
         $this->assertSame('light', $user->theme_preference);
     }
 
+    public function test_header_account_dropdown_consumes_shared_action_and_menu_item_contracts(): void
+    {
+        $user = User::factory()->create([
+            'theme_preference' => 'dark',
+        ]);
+
+        $response = $this->actingAs($user)
+            ->get('/account')
+            ->assertOk()
+            ->assertSee('data-account-menu', false)
+            ->assertSee('data-theme-mode-toggle', false)
+            ->assertSee('data-ui-component="menu-item"', false)
+            ->assertSee('data-ui-current="true"', false)
+            ->assertSee('aria-current="true"', false)
+            ->assertSee('ui-action-outline', false)
+            ->assertSee('ui-action-danger', false)
+            ->assertSee('ui-action-ghost', false);
+
+        $content = $response->getContent();
+
+        preg_match_all('/<button[^>]*data-theme-mode-toggle/', $content, $themeToggles);
+
+        $this->assertCount(3, $themeToggles[0]);
+        $this->assertStringContainsString('data-theme-mode="dark"', $content);
+        $this->assertStringContainsString('aria-pressed="true"', $content);
+        $this->assertStringNotContainsString('rounded-md px-2 py-2 text-xs font-semibold text-slate-300 transition hover:bg-slate-800 hover:text-white', $content);
+        $this->assertStringNotContainsString('hover:bg-rose-500/10 hover:text-rose-100', $content);
+    }
+
     public function test_account_preferences_reject_invalid_language_option(): void
     {
         $user = User::factory()->create();

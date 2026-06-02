@@ -1,6 +1,11 @@
 # Notes
 
 ## Findings
+- Batch B pass `2-B-0040` implements the reopened Layout + Dashboard review fixes:
+  - `P2-B-CQ-018` restores reviewable widget span examples by removing the static full-row utility from the interactive proof cards and preserving explicit `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, and `3x2` span mappings
+  - `P2-B-CQ-019` preserves the approved save behavior, drag/move sorting preview, and full main-content-width proof container while keeping header/body widget content inside the correct grid-size examples
+  - `P2-B-CQ-020` removes the unapproved `ui-soft-card*` full-card palette from CSS, standards, proof markup, and proof tests; the Layout + Dashboard proof now uses existing neutral `ui-card`, `widget-shell`, `widget-shell-section`, `inline-alert`, and proof-note treatments
+  - tests now assert the dashboard proof exposes the saved-layout card, Alpine span binding, shared widget-shell classes, and no `ui-soft-card` output
 - Batch B review-state update `2-B-0039` maps the post-`2-B-0038` Layout + Dashboard review corrections back onto existing queue items:
   - `P2-B-CQ-018` returns to `Ready To Implement` because the two-row widget occupancy fix is not reviewable while the proof examples have been distorted into full-row cards instead of preserving true `1x2`, `2x2`, and related spans
   - `P2-B-CQ-019` returns to `Ready To Implement` because the latest pass incorrectly converted widget-size examples into full-row cards; the next pass must preserve the approved save behavior, drag/move sorting preview, and full main-content-width proof container while restoring correct `1x1`, `2x1`, `1x2`, `2x2`, and `3x1` examples with header/body content

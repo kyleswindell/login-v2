@@ -174,28 +174,30 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-dashboard-proof-widget-card', false)
             ->assertSee('data-dashboard-reorder-surface', false)
             ->assertSee('data-dashboard-proof-saved-layout', false)
-            ->assertSee('data-ui-soft-card="saved-layout-preview"', false)
-            ->assertSee('data-ui-soft-card-tone="neutral"', false)
+            ->assertSee('data-dashboard-proof-saved-layout-card', false)
+            ->assertSee('x-bind:data-dashboard-proof-widget-span="widget.span"', false)
             ->assertSee('Header content')
             ->assertSee('Body content')
             ->assertSee('dashboard-proof-grid', false)
-            ->assertSee('ui-soft-card-neutral', false)
+            ->assertSee('ui-pattern-widget-shell', false)
+            ->assertDontSee('ui-soft-card', false)
+            ->assertDontSee('ui-soft-card-neutral', false)
             ->assertDontSee('ui-soft-card-success', false)
             ->assertDontSee('ui-soft-card-notice', false)
             ->assertDontSee('ui-soft-card-danger', false)
-            ->assertSee('ui-soft-card-link', false)
-            ->assertSee('ui-soft-card-action', false)
             ->assertSee('data-dashboard-proof-widget', false);
 
         $proofScript = file_get_contents(resource_path('js/dashboard-proof-demo.js'));
 
         $this->assertIsString($proofScript);
         $this->assertStringContainsString('dashboard-proof-widget-span-1x2', $proofScript);
+        $this->assertStringContainsString('dashboard-proof-widget-span-2x1', $proofScript);
         $this->assertStringContainsString('dashboard-proof-widget-span-2x2', $proofScript);
-        $this->assertStringContainsString('dashboard-proof-widget-span-3x2', $proofScript);
+        $this->assertStringContainsString('dashboard-proof-widget-span-3x1', $proofScript);
         $this->assertStringNotContainsString("tone: 'success'", $proofScript);
         $this->assertStringNotContainsString("tone: 'notice'", $proofScript);
         $this->assertStringNotContainsString("tone: 'danger'", $proofScript);
+        $this->assertStringNotContainsString('ui-soft-card', $proofScript);
     }
 
     public function test_layout_reference_surface_includes_multi_row_widget_span_proof(): void

@@ -46,10 +46,9 @@
                     ]"
                 />
 
-                <div class="ui-soft-card ui-soft-card-neutral p-4">
-                    <p class="ui-soft-card-kicker">Multi-row span proof</p>
-                    <p class="ui-soft-card-body mt-2 text-sm">Review the tall `1x2`, wide `2x2`, and full-row `3x2` examples together. Each two-row widget must reserve and occupy two complete grid rows before this pattern is reused on production dashboards.</p>
-                </div>
+                <x-ui.patterns.proof-note semantic="neutral" title="Multi-row span proof">
+                    Review the tall `1x2`, wide `2x2`, and full-row `3x2` examples together. Each two-row widget must reserve and occupy two complete grid rows before this pattern is reused on production dashboards.
+                </x-ui.patterns.proof-note>
 
                 <x-ui.patterns.dashboard-grid columns="widgets" data-dashboard-span-proof>
                     <x-ui.patterns.widget-shell
@@ -179,11 +178,11 @@
                     This proof uses dummy widgets and browser-local saved state so reviewers can exercise the interaction model directly on UI Reference first. The live dashboard should mirror the same lock/unlock, reorder, hide/show, and stable widget-identity layout rules after the proof is approved.
                 </x-ui.inline-alert>
 
-                <div class="ui-soft-card ui-soft-card-neutral flex flex-wrap items-center justify-between gap-3 p-4">
+                <div class="ui-card flex flex-wrap items-center justify-between gap-3">
                     <div>
-                        <p class="ui-soft-card-kicker">Interactive proof controls</p>
-                        <h3 class="ui-soft-card-heading mt-2 text-lg">Locked and unlocked states are reviewable here</h3>
-                        <p class="ui-soft-card-body mt-2 text-sm">Unlock the proof to reorder the dummy widgets, hide one into the restore tray, then lock it again to confirm the saved layout state remains visible.</p>
+                        <p class="ui-kicker">Interactive proof controls</p>
+                        <h3 class="ui-card-title mt-2">Locked and unlocked states are reviewable here</h3>
+                        <p class="ui-card-copy">Unlock the proof to reorder the dummy widgets, hide one into the restore tray, then lock it again to confirm the saved layout state remains visible.</p>
                     </div>
                     <div class="flex flex-wrap items-center gap-2">
                         <x-ui.button
@@ -207,26 +206,25 @@
                         >
                             <template x-for="widget in visibleWidgets" :key="widget.id">
                                 <article
-                                    class="dashboard-proof-widget-card relative col-span-12 flex min-w-0 flex-col p-4 transition"
-                                    x-bind:class="[spanClass(widget), cardClass(widget), editing ? 'ring-1 ring-emerald-400/25' : '']"
-                                    x-bind:data-ui-soft-card-tone="widget.tone"
+                                    class="dashboard-proof-widget-card ui-pattern-widget-shell relative min-w-0 transition"
+                                    x-bind:class="[spanClass(widget), editing ? 'ring-1 ring-emerald-400/25' : '']"
                                     x-bind:data-proof-widget-id="widget.id"
-                                    data-ui-soft-card="dashboard-widget"
+                                    x-bind:data-dashboard-proof-widget-span="widget.span"
                                     data-dashboard-proof-widget
                                     data-dashboard-proof-widget-card
                                 >
-                                    <div class="flex items-start justify-between gap-3">
+                                    <div class="ui-pattern-widget-shell-header">
                                         <div class="min-w-0 flex-1 space-y-2">
-                                            <p class="ui-soft-card-kicker text-[0.68rem]" x-text="widget.kicker"></p>
+                                            <p class="ui-kicker" x-text="widget.kicker"></p>
                                             <div>
-                                                <h4 class="ui-soft-card-heading break-words text-lg" x-text="widget.title"></h4>
-                                                <p class="ui-soft-card-body mt-1 break-words text-sm" x-text="widget.description"></p>
+                                                <h4 class="ui-card-title break-words" x-text="widget.title"></h4>
+                                                <p class="ui-card-copy break-words" x-text="widget.description"></p>
                                             </div>
                                         </div>
                                         <div class="flex shrink-0 items-center gap-2" x-show="editing">
                                             <button
                                                 type="button"
-                                                class="dashboard-proof-drag-handle ui-soft-card-icon-button"
+                                                class="dashboard-proof-drag-handle ui-icon-button h-9 w-9"
                                                 title="Drag to reorder"
                                             >
                                                 <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
@@ -235,7 +233,7 @@
                                             </button>
                                             <button
                                                 type="button"
-                                                class="ui-soft-card-icon-button"
+                                                class="ui-icon-button h-9 w-9"
                                                 x-on:click="hideWidget(widget.id)"
                                                 title="Hide widget"
                                             >
@@ -247,49 +245,53 @@
                                         </div>
                                     </div>
 
-                                    <div class="ui-soft-card-inset mt-4 px-3 py-3">
-                                        <p class="ui-soft-card-kicker text-[0.68rem]">Header content</p>
-                                        <p class="ui-soft-card-heading mt-2 break-words text-sm" x-text="widget.bodyHeading"></p>
-                                    </div>
+                                    <div class="ui-pattern-widget-shell-body">
+                                        <div class="grid min-w-0 gap-3 xl:grid-cols-2">
+                                            <div class="ui-pattern-widget-shell-section min-w-0">
+                                                <p class="ui-pattern-key-value-label">Header content</p>
+                                                <p class="ui-card-title mt-2 break-words text-sm" x-text="widget.bodyHeading"></p>
+                                            </div>
 
-                                    <div class="ui-soft-card-inset mt-3 px-3 py-3">
-                                        <p class="ui-soft-card-kicker text-[0.68rem]">Body content</p>
-                                        <p class="ui-soft-card-body mt-2 break-words text-sm" x-text="widget.bodyCopy"></p>
-                                    </div>
-
-                                    <div class="mt-4 grid min-w-0 gap-3 2xl:grid-cols-[minmax(0,1fr)_minmax(7rem,9rem)]">
-                                        <div class="min-w-0">
-                                            <p class="ui-soft-card-kicker" x-text="widget.supporting"></p>
-                                            <p class="ui-soft-card-heading mt-2 break-words text-4xl" x-text="widget.metric"></p>
+                                            <div class="ui-pattern-widget-shell-section min-w-0">
+                                                <p class="ui-pattern-key-value-label">Body content</p>
+                                                <p class="ui-card-copy break-words" x-text="widget.bodyCopy"></p>
+                                            </div>
                                         </div>
-                                        <div class="ui-soft-card-inset min-w-0 px-3 py-2 text-left 2xl:text-right">
-                                            <p class="ui-soft-card-kicker text-[0.68rem]">Span</p>
-                                            <p class="ui-soft-card-heading mt-2 text-sm font-medium" x-text="widget.span"></p>
-                                            <p class="ui-soft-card-body mt-1 break-words text-xs" x-text="spanDescriptor(widget)"></p>
-                                        </div>
-                                    </div>
 
-                                    <div class="mt-4 space-y-2">
-                                        <template x-for="note in widget.notes" :key="note">
-                                            <div class="ui-soft-card-inset px-3 py-2 text-sm break-words" x-text="note"></div>
-                                        </template>
+                                        <div class="grid min-w-0 gap-3 2xl:grid-cols-[minmax(0,1fr)_minmax(7rem,9rem)]">
+                                            <div class="min-w-0">
+                                                <p class="ui-pattern-key-value-label" x-text="widget.supporting"></p>
+                                                <p class="ui-stat-value mt-2 break-words" x-text="widget.metric"></p>
+                                            </div>
+                                            <div class="ui-pattern-widget-shell-section min-w-0 text-left 2xl:text-right">
+                                                <p class="ui-pattern-key-value-label">Span</p>
+                                                <p class="ui-card-title mt-2 text-sm" x-text="widget.span"></p>
+                                                <p class="ui-card-copy break-words text-xs" x-text="spanDescriptor(widget)"></p>
+                                            </div>
+                                        </div>
+
+                                        <div class="space-y-2">
+                                            <template x-for="note in widget.notes" :key="note">
+                                                <div class="ui-pattern-widget-shell-section is-subtle break-words text-sm" x-text="note"></div>
+                                            </template>
+                                        </div>
                                     </div>
                                 </article>
                             </template>
                         </div>
 
                         <div
-                            class="ui-soft-card ui-soft-card-neutral p-4"
+                            class="ui-card"
                             x-show="editing && hiddenWidgets.length > 0"
                             x-cloak
                         >
-                            <p class="ui-soft-card-kicker">Hidden widget tray</p>
-                            <p class="ui-soft-card-body mt-2 text-sm">Restore a hidden dummy widget back into the visible proof order without losing its stable identity.</p>
+                            <p class="ui-kicker">Hidden widget tray</p>
+                            <p class="ui-card-copy">Restore a hidden dummy widget back into the visible proof order without losing its stable identity.</p>
                             <div class="mt-3 flex flex-wrap gap-2">
                                 <template x-for="widget in hiddenWidgets" :key="widget.id">
                                     <button
                                         type="button"
-                                        class="ui-soft-card-action"
+                                        class="ui-action ui-action-ghost !border-0 !shadow-none !px-[calc(0.875rem+1px)] !py-[calc(0.5rem+1px)]"
                                         x-on:click="showWidget(widget.id)"
                                     >
                                         <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -304,25 +306,25 @@
                     </div>
 
                     <div class="grid gap-4 xl:grid-cols-3" data-dashboard-proof-support>
-                        <div class="ui-soft-card ui-soft-card-neutral p-5">
-                            <p class="ui-soft-card-kicker">Proof state</p>
-                            <h3 class="ui-soft-card-heading mt-3 text-lg" x-text="editing ? 'Unlocked review state' : 'Locked review state'"></h3>
-                            <p class="ui-soft-card-body mt-2 text-sm" x-text="editing ? 'Drag handles and hide controls are available so the review can confirm behavior directly.' : 'The proof reads as a quiet dashboard surface until customization is intentionally enabled.'"></p>
+                        <div class="ui-card">
+                            <p class="ui-kicker">Proof state</p>
+                            <h3 class="ui-card-title mt-3" x-text="editing ? 'Unlocked review state' : 'Locked review state'"></h3>
+                            <p class="ui-card-copy" x-text="editing ? 'Drag handles and hide controls are available so the review can confirm behavior directly.' : 'The proof reads as a quiet dashboard surface until customization is intentionally enabled.'"></p>
                         </div>
 
-                        <div class="ui-soft-card ui-soft-card-neutral p-5" data-ui-soft-card="saved-layout-preview" data-ui-soft-card-tone="neutral">
-                            <p class="ui-soft-card-kicker">Saved layout preview</p>
-                            <p class="ui-soft-card-body mt-3 text-sm">
+                        <div class="ui-card" data-dashboard-proof-saved-layout-card>
+                            <p class="ui-kicker">Saved layout preview</p>
+                            <p class="ui-card-copy">
                                 This browser-local snapshot stands in for the live per-user persistence contract and makes the current widget order and visibility state directly inspectable during review.
-                                <a href="{{ route('dashboard') }}" class="ui-soft-card-link">Compare the live dashboard consumer</a>.
+                                <a href="{{ route('dashboard') }}" class="font-semibold underline-offset-4 hover:underline">Compare the live dashboard consumer</a>.
                             </p>
-                            <pre class="ui-soft-card-inset mt-4 overflow-x-auto p-3 text-xs" data-dashboard-proof-saved-layout x-text="savedLayoutPreview()"></pre>
-                            <a href="#dashboard-customization-proof" class="ui-soft-card-action mt-4">Review saved snapshot</a>
+                            <pre class="ui-pattern-widget-shell-section mt-4 overflow-x-auto text-xs" data-dashboard-proof-saved-layout x-text="savedLayoutPreview()"></pre>
+                            <x-ui.button href="#dashboard-customization-proof" variant="ghost" class="mt-4">Review saved snapshot</x-ui.button>
                         </div>
 
-                        <div class="ui-soft-card ui-soft-card-neutral p-5">
-                            <p class="ui-soft-card-kicker">Review cues</p>
-                            <ul class="ui-soft-card-body mt-3 space-y-2 text-sm">
+                        <div class="ui-card">
+                            <p class="ui-kicker">Review cues</p>
+                            <ul class="ui-card-copy space-y-2">
                                 <li>1. Unlock the proof and drag at least one widget.</li>
                                 <li>2. Watch the insertion line and swap target before dropping.</li>
                                 <li>3. Hide a widget, confirm it moves into the restore tray, then restore it.</li>

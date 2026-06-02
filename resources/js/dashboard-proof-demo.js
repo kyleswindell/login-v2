@@ -14,7 +14,6 @@ const defaultProofWidgets = [
         supporting: 'SLA health',
         span: '1x1',
         visible: true,
-        tone: 'neutral',
         notes: ['Queue age stable', 'No blocked deploys'],
     },
     {
@@ -28,7 +27,6 @@ const defaultProofWidgets = [
         supporting: 'Open reviews',
         span: '2x1',
         visible: true,
-        tone: 'neutral',
         notes: ['4 awaiting design sign-off', '2 need escalation'],
     },
     {
@@ -42,7 +40,6 @@ const defaultProofWidgets = [
         supporting: 'Recent actions',
         span: '1x2',
         visible: true,
-        tone: 'neutral',
         notes: ['Lock widget shell contract', 'Recheck overlay publication', 'Publish menu-item re-review'],
     },
     {
@@ -56,7 +53,6 @@ const defaultProofWidgets = [
         supporting: 'Unread notifications',
         span: '2x2',
         visible: true,
-        tone: 'neutral',
         notes: ['Oldest alert: 18m', '3 routed to operations', '1 pinned for manual review'],
     },
     {
@@ -70,7 +66,6 @@ const defaultProofWidgets = [
         supporting: 'Pending approvals',
         span: '3x1',
         visible: true,
-        tone: 'neutral',
         notes: ['Staging owner assigned', 'Rollback notes current', 'Production hold active'],
     },
     {
@@ -84,7 +79,6 @@ const defaultProofWidgets = [
         supporting: 'Reviewer availability',
         span: '3x2',
         visible: true,
-        tone: 'neutral',
         notes: ['6 open workstreams', 'Oldest blocker: 41m', 'Two-row density remains one dashboard topic'],
     },
 ];
@@ -105,10 +99,6 @@ const spanDescriptors = {
     '2x2': 'Wide two-row detail widget',
     '3x1': 'Full-row summary widget',
     '3x2': 'Full-row two-row widget',
-};
-
-const toneClasses = {
-    neutral: 'ui-soft-card ui-soft-card-neutral',
 };
 
 const clearReorderPreview = (scope) => {
@@ -305,10 +295,6 @@ window.dashboardProofDemo = function () {
 
         get hiddenWidgets() {
             return this.widgets.filter((widget) => !widget.visible);
-        },
-
-        cardClass(widget) {
-            return toneClasses[widget.tone] ?? toneClasses.neutral;
         },
 
         spanClass(widget) {

@@ -171,34 +171,6 @@ Use the following ramp rules for Tier 1 non-action surfaces:
 | `info` | blue-600 | blue-500 |
 | `notice` | amber-500 | amber-400 |
 
-#### Soft Card Surfaces
-
-Soft card surfaces are approved for low-emphasis tinted cards that need semantic emphasis without becoming alerts or status badges.
-
-Supported colorways:
-
-- `neutral`
-- `success`
-- `warning`
-- `danger`
-- `info`
-- `notice`
-
-Required pairing contract:
-
-- background, border, heading text, body text, metadata/kicker text, link text, inset surface, and button/control treatments must be defined as one colorway set
-- feature markup must consume the shared `ui-soft-card` and `ui-soft-card-{semantic}` classes rather than composing ad hoc background, heading, body, link, and button utilities
-- headings and primary metrics use the colorway heading token
-- descriptive body copy and secondary notes use the colorway body token
-- links use the colorway link token and hover token
-- buttons and icon controls inside the soft card use the colorway action token set
-- nested code/previews, counters, note rows, and span/detail panels use the colorway inset token set
-- light and dark themes must both preserve WCAG 2.2 AA contrast for normal text and at least 3:1 contrast for visible control borders
-
-Current proof surface:
-
-- `/platform/ui-reference/patterns/layout` uses the soft-card contract for the dashboard customization proof and saved-layout preview
-
 Variant note:
 
 - `base`, `soft`, `outline`, and `ghost` are the only Tier 1 variants

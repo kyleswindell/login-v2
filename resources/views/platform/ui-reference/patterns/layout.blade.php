@@ -6,11 +6,11 @@
     <section class="flex flex-1 flex-col gap-6">
         <x-ui.patterns.page-title-actions-row
             title="Layout And Dashboard Patterns"
-            description="Tier 2 layout proof for content sections, dashboard grids, and shared internal page framing."
+            description="Dashboard configuration, layout behavior, customization state, and saved-layout proof for shared internal dashboard surfaces."
             kicker="Tier 2G"
         >
             <x-slot:actions>
-                <x-ui.button href="#dashboard-customization-proof" variant="outline">Open dashboard proof</x-ui.button>
+                <x-ui.button :href="route('platform.ui-reference.patterns.widget-content')" variant="outline">Open widget standards</x-ui.button>
                 <x-ui.button :href="route('dashboard')" semantic="primary">Compare live dashboard</x-ui.button>
             </x-slot:actions>
         </x-ui.patterns.page-title-actions-row>
@@ -23,174 +23,6 @@
                 'The current active review target on this page is the widget-shell contract, not the reopened row-span bug tracked separately on P2-B-CQ-005.',
             ]"
         />
-
-        <x-ui.patterns.content-section-block
-            title="Dashboard Grid"
-            description="The grid defines card spacing and repeatable placement rules only; feature widgets provide the content."
-            kicker="Layout baseline"
-        >
-            <div class="space-y-4">
-                <x-ui.patterns.proof-review-target
-                    :items="[
-                        ['id' => 'P2-B-CQ-006', 'note' => 'Use this card to review the reusable widget-shell contract: allowed regions, density, and how the widget body stays one dashboard topic even when internal sections are present.'],
-                    ]"
-                />
-
-                <x-ui.inline-alert semantic="notice" title="Widget sizing contract">
-                    The shared dashboard grid now uses an explicit span model. `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, and `3x2` are all valid proof sizes when the content density stays intentional and the widget still reads as one dashboard summary surface.
-                </x-ui.inline-alert>
-
-                <x-ui.patterns.proof-review-target
-                    :items="[
-                        ['id' => 'P2-B-CQ-018', 'note' => 'Use the multi-row examples below to verify that 1x2, 2x2, and 3x2 widgets read as visibly taller dashboard states in context.'],
-                    ]"
-                />
-
-                <x-ui.patterns.proof-note semantic="neutral" title="Multi-row span proof">
-                    Review the deterministic pairings below: `1x2` beside `2x2`, `1x2` beside stacked one-row widgets, and `3x2` directly compared with `3x1`. Each two-row widget must reserve and occupy two complete grid rows before this pattern is reused on production dashboards.
-                </x-ui.patterns.proof-note>
-
-                <x-ui.patterns.dashboard-grid columns="widgets" data-dashboard-span-proof>
-                    <x-ui.patterns.widget-shell
-                        title="1x1 Summary"
-                        description="Single-focus metric or quick status."
-                        kicker="Span 1x1"
-                        span="1x1"
-                    >
-                        <x-ui.patterns.stat-card label="Active queues" value="4" supporting-text="Compact summary-only widget." icon="heroicon-o-queue-list" />
-                    </x-ui.patterns.widget-shell>
-
-                    <x-ui.patterns.widget-shell
-                        title="2x1 Wide Summary"
-                        description="Two related signals in one wider row."
-                        kicker="Span 2x1"
-                        span="2x1"
-                    >
-                        <div class="grid gap-3 md:grid-cols-2">
-                            <div class="ui-pattern-widget-shell-section">
-                                <p class="ui-pattern-key-value-label">Open reviews</p>
-                                <p class="ui-stat-value mt-3">12</p>
-                            </div>
-                            <div class="ui-pattern-widget-shell-section">
-                                <p class="ui-pattern-key-value-label">Needs escalation</p>
-                                <p class="ui-stat-value mt-3">2</p>
-                            </div>
-                        </div>
-                    </x-ui.patterns.widget-shell>
-
-                    <x-ui.patterns.widget-shell
-                        title="1x2 Tall List"
-                        description="Vertical room for ordered activity or queue items."
-                        kicker="Span 1x2"
-                        span="1x2"
-                    >
-                        <div class="space-y-3">
-                            <div class="ui-pattern-widget-shell-section is-subtle">Assign reviewer to Settings proof surface</div>
-                            <div class="ui-pattern-widget-shell-section is-subtle">Confirm dashboard widget spacing on mobile</div>
-                            <div class="ui-pattern-widget-shell-section is-subtle">Lock Batch B follow-up routes</div>
-                        </div>
-                    </x-ui.patterns.widget-shell>
-
-                    <x-ui.patterns.widget-shell
-                        title="2x2 Mixed Widget"
-                        description="Header, summary, and a second internal content block can coexist when the widget still reads as one topic."
-                        kicker="Span 2x2"
-                        :meta="['Summary + detail']"
-                        span="2x2"
-                    >
-                        <div class="grid gap-3 md:grid-cols-2">
-                            <div class="ui-pattern-widget-shell-section">
-                                <p class="ui-pattern-key-value-label">Unread notifications</p>
-                                <p class="ui-stat-value mt-3">7</p>
-                            </div>
-                            <div class="ui-pattern-widget-shell-section">
-                                <p class="ui-pattern-key-value-label">Oldest item</p>
-                                <p class="ui-stat-value mt-3">18m</p>
-                            </div>
-                        </div>
-                        <div class="ui-pattern-widget-shell-section">
-                            <p class="ui-control-copy">Use a second internal block only when it deepens the same dashboard subject instead of mixing unrelated content into one card.</p>
-                        </div>
-                    </x-ui.patterns.widget-shell>
-
-                    <x-ui.patterns.widget-shell
-                        title="1x2 Stack Comparison"
-                        description="Second tall proof beside two independent one-row widgets."
-                        kicker="Span 1x2"
-                        span="1x2"
-                    >
-                        <div class="space-y-3">
-                            <div class="ui-pattern-widget-shell-section is-subtle">Occupies row one beside the first one-row neighbor.</div>
-                            <div class="ui-pattern-widget-shell-section is-subtle">Occupies row two beside the second one-row neighbor.</div>
-                        </div>
-                    </x-ui.patterns.widget-shell>
-
-                    <x-ui.patterns.widget-shell
-                        title="2x1 First Neighbor"
-                        description="One-row widget placed beside the first half of a tall item."
-                        kicker="Span 2x1"
-                        span="2x1"
-                    >
-                        <div class="ui-pattern-widget-shell-section is-subtle">This card must not stretch just because its neighbor is `1x2`.</div>
-                    </x-ui.patterns.widget-shell>
-
-                    <x-ui.patterns.widget-shell
-                        title="2x1 Second Neighbor"
-                        description="Second one-row widget placed below the first neighbor."
-                        kicker="Span 2x1"
-                        span="2x1"
-                    >
-                        <div class="ui-pattern-widget-shell-section is-subtle">This card proves the second occupied row next to the same `1x2` item.</div>
-                    </x-ui.patterns.widget-shell>
-
-                    <x-ui.patterns.widget-shell
-                        title="3x2 Review Surface"
-                        description="Full-width two-row proof for dense dashboard states that still summarize one subject."
-                        kicker="Span 3x2"
-                        :meta="['Full width + two rows']"
-                        span="3x2"
-                    >
-                        <div class="grid gap-3 md:grid-cols-3">
-                            <div class="ui-pattern-widget-shell-section">
-                                <p class="ui-pattern-key-value-label">Open workstreams</p>
-                                <p class="ui-stat-value mt-3">6</p>
-                            </div>
-                            <div class="ui-pattern-widget-shell-section">
-                                <p class="ui-pattern-key-value-label">Reviewer capacity</p>
-                                <p class="ui-stat-value mt-3">72%</p>
-                            </div>
-                            <div class="ui-pattern-widget-shell-section">
-                                <p class="ui-pattern-key-value-label">Oldest blocker</p>
-                                <p class="ui-stat-value mt-3">41m</p>
-                            </div>
-                        </div>
-                        <div class="grid gap-3 md:grid-cols-2">
-                            <div class="ui-pattern-widget-shell-section is-subtle">Second-row space supports related detail without turning the widget into a workflow page.</div>
-                            <div class="ui-pattern-widget-shell-section is-subtle">The card should visibly occupy two grid rows beside shorter dashboard summaries.</div>
-                        </div>
-                    </x-ui.patterns.widget-shell>
-
-                    <x-ui.patterns.widget-shell
-                        title="3x1 Full-Row Surface"
-                        description="One-row full-width comparison immediately after the `3x2` surface."
-                        kicker="Span 3x1"
-                        span="3x1"
-                    >
-                        <div class="grid gap-3 md:grid-cols-3">
-                            <div class="ui-pattern-widget-shell-section is-subtle">Header actions stay widget-local.</div>
-                            <div class="ui-pattern-widget-shell-section is-subtle">Internal sections may be divided once or twice.</div>
-                            <div class="ui-pattern-widget-shell-section is-subtle">If the widget becomes a full workflow, escalate to a real page.</div>
-                        </div>
-                    </x-ui.patterns.widget-shell>
-                </x-ui.patterns.dashboard-grid>
-
-                <div class="grid gap-3 md:grid-cols-3 text-sm text-slate-300">
-                    <p><span class="font-semibold text-slate-100">Allowed regions:</span> header, title, optional description/meta, primary body, optional footer, and at most a small number of internal sections.</p>
-                    <p><span class="font-semibold text-slate-100">Density rule:</span> widgets may mix summary and detail only when the blocks still belong to one dashboard topic and can be scanned quickly.</p>
-                    <p><span class="font-semibold text-slate-100">Escalation rule:</span> if the content starts requiring multiple workflows, deep forms, or complex drill-down controls, link out to a full page instead of growing the widget further.</p>
-                </div>
-            </div>
-        </x-ui.patterns.content-section-block>
 
         <x-ui.patterns.content-section-block
             title="Dashboard customization proof"
@@ -369,32 +201,32 @@
             </div>
         </x-ui.patterns.content-section-block>
 
-        <div class="grid gap-6 xl:grid-cols-[1.45fr_minmax(0,1fr)]">
-            <x-ui.patterns.content-section-block
-                title="Content Section Block"
-                description="Section blocks own title, support copy, and action placement while internal content stays flexible."
-                kicker="Reusable content frame"
-            >
-                <div class="space-y-4">
-                    <p class="text-sm text-slate-300">Use section blocks to group related data, proof summaries, or form scaffolding without reintroducing feature-specific card chrome.</p>
-                    <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4 text-sm text-slate-300">
-                        Nested content remains free to use other Tier 2 patterns such as lists, validation summaries, or key/value displays.
-                    </div>
+        <x-ui.patterns.content-section-block
+            title="Dashboard support boundaries"
+            description="Keep this page focused on dashboard configuration and state behavior. Widget-specific content density standards now live on the standalone Widget Content page."
+            kicker="Dashboard configuration"
+            data-dashboard-support-boundaries
+        >
+            <div class="grid gap-4 lg:grid-cols-3">
+                <div class="ui-card">
+                    <p class="ui-kicker">Layout behavior</p>
+                    <h3 class="ui-card-title mt-3">Grid placement is span-driven</h3>
+                    <p class="ui-card-copy">The dashboard proof should validate lock/unlock, reorder, hide/show, and declared span placement. Widget content density is reviewed separately.</p>
                 </div>
-            </x-ui.patterns.content-section-block>
-
-            <x-ui.patterns.content-section-block
-                title="Shell Family Notes"
-                description="The dashboard, settings, setup, and account surfaces share the same page-header plus section-block scaffolding."
-                kicker="Internal shell family"
-            >
-                <ul class="space-y-2 text-sm text-slate-300">
-                    <li>1. Page title/action row stays outside the first section block.</li>
-                    <li>2. Section blocks own internal grouping, not page-level navigation.</li>
-                    <li>3. Dashboard grids host stat cards and widget shells without changing shell framing.</li>
-                    <li>4. Responsive stacking must preserve section order before introducing custom breakpoint hacks.</li>
-                </ul>
-            </x-ui.patterns.content-section-block>
-        </div>
+                <div class="ui-card">
+                    <p class="ui-kicker">Saved state</p>
+                    <h3 class="ui-card-title mt-3">Persistence uses stable identity</h3>
+                    <p class="ui-card-copy">Saved layout review should focus on visible order, hidden widgets, and restored widget identity rather than changing widget-specific designs.</p>
+                </div>
+                <div class="ui-card">
+                    <p class="ui-kicker">Widget standards</p>
+                    <h3 class="ui-card-title mt-3">Content allowances moved</h3>
+                    <p class="ui-card-copy">
+                        Review size-aware widget content rules on
+                        <a href="{{ route('platform.ui-reference.patterns.widget-content') }}" class="font-semibold underline-offset-4 hover:underline">Widget Content Standards</a>.
+                    </p>
+                </div>
+            </div>
+        </x-ui.patterns.content-section-block>
     </section>
 </x-layouts.app>

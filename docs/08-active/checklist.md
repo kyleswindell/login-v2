@@ -54,9 +54,9 @@
 - [ ] Dashboard And Summary Conventions
   Status: implemented (pending manual review)
   - dashboard widget-shell conventions are explicit
-  - dashboard widget span model now uses strict row-track enforcement after `2-B-0042` and awaits targeted manual review
+  - dashboard widget span model now uses strict row-track enforcement after `2-B-0042` and is approved on staging
   - summary/stat-card conventions are explicit
-  - dashboard grid usage is explicit with deterministic `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, and `3x2` proof comparisons ready for targeted review
+  - dashboard grid usage is explicit with deterministic `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, and `3x2` proof comparisons approved on staging
 
 ## Registration And Ownership Handoff
 - [ ] Registration And Ownership Handoff

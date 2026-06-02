@@ -23,6 +23,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('ui-card', false)
             ->assertSee('Form Patterns')
             ->assertSee('Data + Content')
+            ->assertSee('Widget Content')
             ->assertSee('Archetype Proofs');
     }
 
@@ -115,10 +116,24 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Layout And Dashboard Patterns')
             ->assertDontSee('Active Batch Review')
             ->assertDontSee('P2-B-CQ-006')
-            ->assertSee('Widget sizing contract')
-            ->assertSee('data-ui-pattern="widget-shell"', false)
-            ->assertSee('data-ui-pattern="dashboard-grid"', false)
+            ->assertSee('Dashboard customization proof')
+            ->assertSee('Dashboard support boundaries')
+            ->assertSee('Content allowances moved')
+            ->assertSee('Open widget standards')
+            ->assertDontSee('Widget sizing contract')
+            ->assertDontSee('Multi-row span proof')
+            ->assertSee('data-dashboard-proof-demo', false)
+            ->assertSee('data-dashboard-proof-support', false)
             ->assertSee('data-ui-pattern="content-section-block"', false);
+
+        $this->get('/platform/ui-reference/patterns/widget-content')
+            ->assertOk()
+            ->assertSee('Widget Content Standards')
+            ->assertSee('Content allowance rules')
+            ->assertSee('Supported widget sizes')
+            ->assertSee('data-widget-content-standards', false)
+            ->assertSee('data-ui-pattern="dashboard-grid"', false)
+            ->assertSee('data-ui-pattern="widget-shell"', false);
 
         $this->get('/platform/ui-reference/patterns/archetypes')
             ->assertOk()
@@ -202,27 +217,40 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringNotContainsString('ui-soft-card', $proofScript);
     }
 
-    public function test_layout_reference_surface_includes_multi_row_widget_span_proof(): void
+    public function test_widget_content_reference_surface_includes_size_aware_allowances(): void
     {
         $this->actingAsPlatformSuperAdmin();
+        $this->useActiveBatchReviewIds(['P2-B-CQ-021']);
 
-        $this->get('/platform/ui-reference/patterns/layout')
+        $this->get('/platform/ui-reference/patterns/widget-content')
             ->assertOk()
-            ->assertSee('Multi-row span proof')
+            ->assertSee('Active Batch Review')
+            ->assertSee('P2-B-CQ-021')
+            ->assertSee('Widget Content Standards')
+            ->assertSee('Content allowance rules')
+            ->assertSee('Allowed widget regions')
+            ->assertSee('Size controls content volume')
+            ->assertSee('Use a page for workflows')
+            ->assertSee('1x1 Summary')
+            ->assertSee('2x1 Wide Summary')
             ->assertSee('1x2 Tall List')
-            ->assertSee('2x2 Mixed Widget')
-            ->assertSee('3x2 Review Surface')
-            ->assertSee('1x2 Stack Comparison')
-            ->assertSee('2x1 First Neighbor')
-            ->assertSee('2x1 Second Neighbor')
-            ->assertSee('Span comparison order')
-            ->assertSee('Full width + two rows')
-            ->assertSee('data-dashboard-span-proof', false)
+            ->assertSee('2x2 Detail')
+            ->assertSee('3x1 Full Row')
+            ->assertSee('3x2 Tall Surface')
+            ->assertSee('Future module design baseline')
+            ->assertSee('data-widget-content-standards', false)
+            ->assertSee('data-widget-content-size-grid', false)
+            ->assertSee('data-widget-content-size="1x1"', false)
+            ->assertSee('data-widget-content-size="2x1"', false)
+            ->assertSee('data-widget-content-size="1x2"', false)
+            ->assertSee('data-widget-content-size="2x2"', false)
+            ->assertSee('data-widget-content-size="3x1"', false)
+            ->assertSee('data-widget-content-size="3x2"', false)
             ->assertSee('ui-pattern-dashboard-grid-widgets', false)
-            ->assertSee('data-dashboard-proof-comparison-contract', false)
             ->assertSee('data-ui-widget-span="1x2"', false)
             ->assertSee('data-ui-widget-span="2x2"', false)
             ->assertSee('data-ui-widget-span="3x2"', false)
+            ->assertDontSee('ui-soft-card', false)
             ->assertDontSee('md:auto-rows-[minmax(11rem,auto)]', false);
 
         $css = file_get_contents(resource_path('css/app.css'));

@@ -15,26 +15,37 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 ## In Progress
 
 ## Implemented Pending Review
-- [ ] Fix the dashboard grid span contract so widget height is determined by declared grid span, not by neighboring item placement or content height; every allowed `x2` widget must reserve and visibly occupy exactly two row tracks in all review pairings, including `1x2` beside `2x2`, `1x2` beside stacked one-row widgets, and `3x2` directly compared with `3x1`.
+- [ ] Establish a standalone dashboard widget content standards proof that defines baseline content allowances by supported widget size, considering both declared width and height; the page should document which content regions, density levels, and example content volumes are appropriate for `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, and `3x2` widgets without attempting to define every possible widget content type.
+  ID: P2-B-CQ-021
+  Scope: dashboard widget content allowances, size-aware density standards, width/height-based content-region guidance, standalone UI Reference component page, future-module widget design baseline
+  Path Coverage: new UI Reference widget content standards page, shared widget-shell guidance, dashboard/widget proof navigation, future module dashboard-widget implementation guidance
+  Follow-up To: P2-B-CQ-006, P2-B-CQ-018, P2-B-CQ-019
+  Implemented in: `2-B-0043`
+- [ ] Trim and refocus the Layout + Dashboard reference page so the dashboard example/demo is the primary page content, with only supporting cards for dashboard configuration, layout behavior, customization state, persistence, and review cues retained below it; widget-specific design examples and standards should move to the standalone widget content standards page instead of remaining mixed into the Layout + Dashboard proof.
+  ID: P2-B-CQ-022
+  Scope: Layout + Dashboard proof simplification, dashboard-demo-first page structure, removal or relocation of widget-specific design explanation, supporting card reduction, standalone widget standards handoff
+  Path Coverage: `/platform/ui-reference/patterns/layout`, new widget content standards UI Reference page, related UI Reference navigation/linking for dashboard and widget standards
+  Follow-up To: P2-B-CQ-019, P2-B-CQ-021
+  Implemented in: `2-B-0043`
+## Blocked
+
+## Deferred
+
+## Passed Review
+- [x] Fix the dashboard grid span contract so widget height is determined by declared grid span, not by neighboring item placement or content height; every allowed `x2` widget must reserve and visibly occupy exactly two row tracks in all review pairings, including `1x2` beside `2x2`, `1x2` beside stacked one-row widgets, and `3x2` directly compared with `3x1`.
   ID: P2-B-CQ-018
   Iteration: 4
   Scope: strict dashboard grid row-track sizing, span-driven height independent of content, non-overlapping dense grid placement, two-row visual parity across all adjacent pairings, reviewable widget-size examples
   Path Coverage: `/platform/ui-reference/patterns/layout`, `/platform/ui-reference/patterns/archetypes`, shared dashboard/widget-shell proof surfaces where taller spans should be judged in context
   Follow-up To: P2-B-CQ-005, P2-B-CQ-006
   Implemented in: `2-B-0042`
-- [ ] Repair the Layout + Dashboard customization proof so it demonstrates the dashboard grid contract through deterministic comparison groups instead of incidental content flow; the proof must preserve approved save behavior, drag/move sorting preview, and full main-content-width container while showing `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, and `3x2` examples in arrangements that make one-row versus two-row height differences impossible to miss.
+- [x] Repair the Layout + Dashboard customization proof so it demonstrates the dashboard grid contract through deterministic comparison groups instead of incidental content flow; the proof must preserve approved save behavior, drag/move sorting preview, and full main-content-width container while showing `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, and `3x2` examples in arrangements that make one-row versus two-row height differences impossible to miss.
   ID: P2-B-CQ-019
   Iteration: 7
   Scope: UI Reference-first dashboard customization proof layout, approved full-width dashboard composition, approved save/reorder proof behavior, deterministic widget-span comparison groups, correct widget grid-size examples, legible widget-card header/body content examples
   Path Coverage: `/platform/ui-reference/patterns/layout` as the canonical review surface, shared dashboard/widget shell layout defaults that affect proof-card content structure, proof drag/reorder interaction model, `/dashboard` only as downstream consumer validation after the proof surface is correct
   Follow-up To: P2-B-CQ-006, P2-B-CQ-018
   Implemented in: `2-B-0042`
-
-## Blocked
-
-## Deferred
-
-## Passed Review
 - [x] Resynchronize the temporary active-batch proof review mode so it reflects the live queue state exactly; only current `Implemented Pending Review` items should appear in page banners and scoped card targets, reopened or passed IDs must drop out immediately, and every current pending-review item with a visible proof surface must be tagged accurately at the point of review.
   ID: P2-B-CQ-013
   Iteration: 4

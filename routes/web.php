@@ -122,6 +122,7 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/platform/ui-reference/patterns/overlays-feedback', [UiReferenceController::class, 'overlays'])->name('platform.ui-reference.patterns.overlays');
     Route::get('/platform/ui-reference/patterns/navigation', [UiReferenceController::class, 'navigation'])->name('platform.ui-reference.patterns.navigation');
     Route::get('/platform/ui-reference/patterns/layout', [UiReferenceController::class, 'layout'])->name('platform.ui-reference.patterns.layout');
+    Route::get('/platform/ui-reference/patterns/widget-content', [UiReferenceController::class, 'widgetContent'])->name('platform.ui-reference.patterns.widget-content');
     Route::get('/platform/ui-reference/patterns/archetypes', [UiReferenceController::class, 'archetypes'])->name('platform.ui-reference.patterns.archetypes');
     Route::get('/platform/ui-reference/audit-logs/{sample}', [UiReferenceController::class, 'showAuditSample'])->name('platform.ui-reference.audit-samples.show');
     Route::get('/platform/ui-reference/error-logs/{sample}', [UiReferenceController::class, 'showErrorSample'])->name('platform.ui-reference.error-samples.show');

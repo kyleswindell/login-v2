@@ -1,6 +1,16 @@
 # Notes
 
 ## Findings
+- Batch B pass `2-B-0043` implements the widget standards and Layout + Dashboard cleanup follow-ups:
+  - `P2-B-CQ-021` adds a standalone Widget Content Standards UI Reference page with size-aware allowances for `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, and `3x2` dashboard widgets
+  - `P2-B-CQ-021` keeps the standard intentionally bounded to content regions, density, examples, and escalation rules instead of claiming an exhaustive taxonomy of every future widget content type
+  - `P2-B-CQ-022` trims the Layout + Dashboard page so the dashboard customization proof is the first substantive page section
+  - `P2-B-CQ-022` moves widget-specific design and content-density examples out of Layout + Dashboard and links reviewers to the standalone Widget Content Standards page
+- The latest Layout + Dashboard staging review-state update records:
+  - `P2-B-CQ-018` passes manual review; the dashboard grid span contract now reserves visible row height by declared span rather than neighboring placement
+  - `P2-B-CQ-019` passes manual review; the Layout + Dashboard proof now provides reviewable deterministic widget-size comparisons while preserving the approved save/reorder behavior
+  - `P2-B-CQ-021` opens as a new follow-up to establish standalone dashboard widget content allowances by supported size, including width and height considerations, so future modules have a baseline for what can fit in each widget span
+  - `P2-B-CQ-022` opens as a new follow-up to trim the Layout + Dashboard page, keep the dashboard demo as the primary page content, retain only dashboard configuration/layout/state/persistence support cards, and move widget-specific design standards to the standalone widget standards page
 - Batch B pass `2-B-0042` implements the reopened dashboard span-contract fixes:
   - `P2-B-CQ-018` replaces content-sized dashboard widget rows with a fixed shared row-track contract so one-row and two-row spans are determined by declared widget span instead of neighboring placement or card content height
   - `P2-B-CQ-019` updates the Layout + Dashboard proof with deterministic span comparison language and examples for `1x2` beside `2x2`, `1x2` beside stacked one-row widgets, and `3x2` versus `3x1`
@@ -261,6 +271,11 @@
   - future-module UI ownership declaration fields
 
 ## Decisions
+- Implement `P2-B-CQ-021` and `P2-B-CQ-022` together because both items share the same information-architecture move: widget-specific standards leave Layout + Dashboard and become a standalone UI Reference review surface.
+- Keep Widget Content Standards under the UI Reference pattern standards area and implement it with existing dashboard-grid and widget-shell components rather than introducing a new primitive or palette.
+- Move `P2-B-CQ-018` and `P2-B-CQ-019` from `Implemented Pending Review` to `Passed Review` based on explicit manual approval.
+- Add `P2-B-CQ-021` as a new follow-up rather than reopening the approved span work because the requested widget content allowances define a broader future-module standards baseline.
+- Add `P2-B-CQ-022` as a new follow-up rather than reopening the approved Layout + Dashboard proof because the requested page cleanup changes information architecture and content placement, not the already-approved grid-span behavior.
 - Keep the `P2-B-CQ-018`, `P2-B-CQ-019`, and `P2-B-CQ-020` fixes in one work-batch pass because they share the same Layout + Dashboard proof surface and the same dashboard grid/widget-card review contract.
 - Reopen `P2-B-CQ-018` as a same-item failure because the latest review proves the visible multi-row widget proof still does not guarantee true two-row occupancy when following widgets are present.
 - Reopen `P2-B-CQ-019` as a partial approval rather than a full pass: full-width layout composition, save behavior, and drag/reorder preview are accepted, but widget header/body content examples remain required before the item can close.
@@ -307,9 +322,9 @@
 - Queue cleanup review confirms `P2-B-CQ-007` and `P2-B-CQ-008` already reflect the correct Tier 1-before-Tier 2 sequencing and do not need reclassification.
 
 ## Risks / Questions
-- Combined Batch B manual review still cannot close until staging manually re-validates `P2-B-CQ-018` and `P2-B-CQ-019`.
-- `P2-B-CQ-018` needs direct visual confirmation that fixed row-track sizing makes `1x2`, `2x2`, and `3x2` widgets visibly occupy exactly two rows across the new comparison pairings.
-- `P2-B-CQ-019` needs targeted confirmation that the Layout + Dashboard proof still preserves the approved save/reorder/full-width behavior while the reset/default arrangement demonstrates deterministic widget-size comparisons.
+- Combined Batch B manual review still cannot close until staging manually validates `P2-B-CQ-021` and `P2-B-CQ-022`.
+- `P2-B-CQ-021` needs reviewer confirmation that the new standalone Widget Content Standards page is specific enough for future module teams to design widgets against without being too prescriptive.
+- `P2-B-CQ-022` needs reviewer confirmation that the Layout + Dashboard page now reads as dashboard-demo-first and no longer carries unrelated widget-content standards inline.
 - Realtime notification toast rendering remains a feature-level JS path and is intentionally outside this Tier 1 hardening pass.
 - `resources/views/platform/ui-reference/index.blade.php` remains an unused legacy workspace view because the canonical `/platform/ui-reference` route renders `overview.blade.php`; this pass left it untouched to avoid mixing unrelated cleanup into the Batch B implementation lane.
 - Combined Batch B manual review is still required to confirm the newly implemented widget, date-range, identity-summary, dropdown, and sub-navigation changes before the batch can move toward close-out.

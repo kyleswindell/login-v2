@@ -174,6 +174,10 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-dashboard-proof-widget-card', false)
             ->assertSee('data-dashboard-reorder-surface', false)
             ->assertSee('data-dashboard-proof-saved-layout', false)
+            ->assertSee('data-ui-soft-card="saved-layout-preview"', false)
+            ->assertSee('data-ui-soft-card-tone="success"', false)
+            ->assertSee('ui-soft-card-link', false)
+            ->assertSee('ui-soft-card-action', false)
             ->assertSee('data-dashboard-proof-widget', false);
     }
 

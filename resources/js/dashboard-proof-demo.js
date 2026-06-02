@@ -96,10 +96,10 @@ const spanDescriptors = {
 };
 
 const toneClasses = {
-    neutral: 'border-slate-800 bg-slate-950/70',
-    success: 'border-emerald-500/30 bg-emerald-500/10',
-    notice: 'border-sky-500/30 bg-sky-500/10',
-    danger: 'border-rose-500/30 bg-rose-500/10',
+    neutral: 'ui-soft-card ui-soft-card-neutral',
+    success: 'ui-soft-card ui-soft-card-success',
+    notice: 'ui-soft-card ui-soft-card-notice',
+    danger: 'ui-soft-card ui-soft-card-danger',
 };
 
 const clearReorderPreview = (scope) => {

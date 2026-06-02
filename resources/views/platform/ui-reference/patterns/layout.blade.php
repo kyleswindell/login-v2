@@ -209,22 +209,24 @@
                                 <article
                                     class="dashboard-proof-widget-card relative col-span-12 min-w-0 overflow-hidden rounded-2xl border p-4 shadow-sm transition"
                                     x-bind:class="[spanClass(widget), cardClass(widget), editing ? 'ring-1 ring-emerald-400/25' : '']"
+                                    x-bind:data-ui-soft-card-tone="widget.tone"
                                     x-bind:data-proof-widget-id="widget.id"
+                                    data-ui-soft-card="dashboard-widget"
                                     data-dashboard-proof-widget
                                     data-dashboard-proof-widget-card
                                 >
                                     <div class="flex items-start justify-between gap-3">
                                         <div class="min-w-0 flex-1 space-y-2">
-                                            <p class="text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-slate-400" x-text="widget.kicker"></p>
+                                            <p class="ui-soft-card-kicker text-[0.68rem]" x-text="widget.kicker"></p>
                                             <div>
-                                                <h4 class="break-words text-lg font-semibold text-white" x-text="widget.title"></h4>
-                                                <p class="mt-1 break-words text-sm text-slate-300" x-text="widget.description"></p>
+                                                <h4 class="ui-soft-card-heading break-words text-lg" x-text="widget.title"></h4>
+                                                <p class="ui-soft-card-body mt-1 break-words text-sm" x-text="widget.description"></p>
                                             </div>
                                         </div>
                                         <div class="flex shrink-0 items-center gap-2" x-show="editing">
                                             <button
                                                 type="button"
-                                                class="dashboard-proof-drag-handle inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-700 bg-slate-900/80 text-slate-300 transition hover:border-slate-500 hover:text-white"
+                                                class="dashboard-proof-drag-handle ui-soft-card-icon-button"
                                                 title="Drag to reorder"
                                             >
                                                 <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
@@ -233,7 +235,7 @@
                                             </button>
                                             <button
                                                 type="button"
-                                                class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-700 bg-slate-900/80 text-slate-300 transition hover:border-slate-500 hover:text-white"
+                                                class="ui-soft-card-icon-button"
                                                 x-on:click="hideWidget(widget.id)"
                                                 title="Hide widget"
                                             >
@@ -247,19 +249,19 @@
 
                                     <div class="mt-4 grid min-w-0 gap-3 2xl:grid-cols-[minmax(0,1fr)_minmax(7rem,9rem)]">
                                         <div class="min-w-0">
-                                            <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400" x-text="widget.supporting"></p>
-                                            <p class="mt-2 break-words text-4xl font-semibold text-white" x-text="widget.metric"></p>
+                                            <p class="ui-soft-card-kicker" x-text="widget.supporting"></p>
+                                            <p class="ui-soft-card-heading mt-2 break-words text-4xl" x-text="widget.metric"></p>
                                         </div>
-                                        <div class="min-w-0 rounded-xl border border-white/10 bg-black/10 px-3 py-2 text-left 2xl:text-right">
-                                            <p class="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-slate-400">Span</p>
-                                            <p class="mt-2 text-sm font-medium text-slate-100" x-text="widget.span"></p>
-                                            <p class="mt-1 break-words text-xs text-slate-400" x-text="spanDescriptor(widget)"></p>
+                                        <div class="ui-soft-card-inset min-w-0 px-3 py-2 text-left 2xl:text-right">
+                                            <p class="ui-soft-card-kicker text-[0.68rem]">Span</p>
+                                            <p class="ui-soft-card-heading mt-2 text-sm font-medium" x-text="widget.span"></p>
+                                            <p class="ui-soft-card-body mt-1 break-words text-xs" x-text="spanDescriptor(widget)"></p>
                                         </div>
                                     </div>
 
                                     <div class="mt-4 space-y-2">
                                         <template x-for="note in widget.notes" :key="note">
-                                            <div class="rounded-xl border border-white/10 bg-black/10 px-3 py-2 text-sm text-slate-200 break-words" x-text="note"></div>
+                                            <div class="ui-soft-card-inset px-3 py-2 text-sm break-words" x-text="note"></div>
                                         </template>
                                     </div>
                                 </article>
@@ -298,10 +300,14 @@
                             <p class="mt-2 text-sm text-slate-300" x-text="editing ? 'Drag handles and hide controls are available so the review can confirm behavior directly.' : 'The proof reads as a quiet dashboard surface until customization is intentionally enabled.'"></p>
                         </div>
 
-                        <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-5">
-                            <p class="text-xs font-semibold uppercase tracking-[0.28em] text-emerald-200/80">Saved layout preview</p>
-                            <p class="mt-3 text-sm text-slate-200">This browser-local snapshot stands in for the live per-user persistence contract and makes the current widget order and visibility state directly inspectable during review.</p>
-                            <pre class="mt-4 overflow-x-auto rounded-xl border border-white/10 bg-slate-950/80 p-3 text-xs text-slate-200" data-dashboard-proof-saved-layout x-text="savedLayoutPreview()"></pre>
+                        <div class="ui-soft-card ui-soft-card-success p-5" data-ui-soft-card="saved-layout-preview" data-ui-soft-card-tone="success">
+                            <p class="ui-soft-card-kicker">Saved layout preview</p>
+                            <p class="ui-soft-card-body mt-3 text-sm">
+                                This browser-local snapshot stands in for the live per-user persistence contract and makes the current widget order and visibility state directly inspectable during review.
+                                <a href="{{ route('dashboard') }}" class="ui-soft-card-link">Compare the live dashboard consumer</a>.
+                            </p>
+                            <pre class="ui-soft-card-inset mt-4 overflow-x-auto p-3 text-xs" data-dashboard-proof-saved-layout x-text="savedLayoutPreview()"></pre>
+                            <a href="#dashboard-customization-proof" class="ui-soft-card-action mt-4">Review saved snapshot</a>
                         </div>
 
                         <div class="rounded-2xl border border-slate-800 bg-slate-950/70 p-5">

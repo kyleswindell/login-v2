@@ -46,8 +46,8 @@ Execute `work-batch` for the active change queue item after manual review failed
 - Durable canonical standards sync should wait until manual review accepts the rebuilt proof.
 
 ## Commit / Deploy Status
-- Commit: pending.
-- Deploy: pending.
+- Commit: `ce919ec` (`ui(batch-b): rebuild widget content standards`).
+- Deploy: completed to staging from `origin/main`.
 
 ## Notes
 - Targeted review should focus on `/platform/ui-reference/patterns/widget-content` at 1024, 1280, 1366, 1440, and 1920px widths.

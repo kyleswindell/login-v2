@@ -1,6 +1,11 @@
 # Notes
 
 ## Findings
+- Targeted staging re-review of `P2-B-CQ-019` after `2-B-0030` confirms the current proof still fails the reviewability bar:
+  - the Layout + Dashboard page does not read as materially changed on staging
+  - there is no clearly visible new interface or interactive option set for reviewing dashboard customization states
+  - explanatory copy alone is not sufficient proof coverage for this queue item; the next pass must expose a visibly distinct and directly reviewable customization surface
+  - this is treated as a same-item failure of `P2-B-CQ-019`, not as a new adjacent queue item
 - Batch B pass `2-B-0030` is now integrated on `main` and republished to staging for targeted manual review of `P2-B-CQ-019`:
   - cherry-picked worker commit `07460a1b30b0fd27a710b7cd17382e116aec7cc4` onto `main` as `9a815ab`
   - restored the live dashboard customization flow so lock/unlock, widget visibility toggling, and widget reordering persist per user through stable widget-identity layout slots plus validated placement metadata
@@ -195,6 +200,8 @@
   - future-module UI ownership declaration fields
 
 ## Decisions
+- Reopen `P2-B-CQ-019` as a same-item failure because the current staging proof does not present a visibly distinct or directly reviewable customization interface on the Layout + Dashboard page.
+- Tighten `P2-B-CQ-019` so the next pass must provide visible interactive proof coverage, not just explanatory copy about customization states.
 - `P2-B-CQ-013` should use a derived runtime manifest for the temporary UI Reference review overlay, with the canonical queue file remaining the source of truth and runtime regeneration occurring whenever the source queue hash changes.
 - `work-batch` and `batch-update-manual-review-status` should both treat active-batch review-manifest synchronization as part of the overlay lifecycle whenever queue-state changes affect the temporary review surface.
 - Refine `P2-B-CQ-019` in place instead of creating a new queue item because the per-user saved-layout contract is part of the same dashboard customization failure already tracked under lock/unlock, widget toggling, and reorganization behavior.
@@ -232,7 +239,7 @@
 
 ## Risks / Questions
 - Combined Batch B manual review still cannot close until staging manually re-validates `P2-B-CQ-013`.
-- `P2-B-CQ-019` now needs targeted staging re-review to confirm the restored dashboard customization states and per-user saved-layout contract behave correctly on the live review surface.
+- `P2-B-CQ-019` now needs another implementation pass because the current staging proof still does not present a clearly visible or interactive enough customization surface for review.
 - `P2-B-CQ-015` is now unblocked and ready for implementation, but it still needs a full account-dropdown consumer pass against the approved shared action/menu-item contract.
 - `P2-B-CQ-018` now needs a visible dashboard/layout proof treatment that makes taller widget states directly judgeable in-context, or the current row-span contract will remain hard to validate visually.
 - Realtime notification toast rendering remains a feature-level JS path and is intentionally outside this Tier 1 hardening pass.

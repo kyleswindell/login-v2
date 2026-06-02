@@ -1,6 +1,11 @@
 # Notes
 
 ## Findings
+- Staging manual review now approves the republished worker-integration outcomes for:
+  - `P2-B-CQ-001`
+  - `P2-B-CQ-014`
+  - `P2-B-CQ-017`
+- `P2-B-CQ-013` remains the only item still awaiting targeted staging re-review from the current `Implemented Pending Review` set.
 - Batch B pass `2-B-0022` is now deployed to staging on `main` and reimplements `P2-B-CQ-013` by synchronizing the temporary active-batch overlay to the live queue state:
   - added `App\Support\ActiveBatchReviewQueue` so the overlay reads the current `Implemented Pending Review` IDs from `docs/08-active/change-queue.md`
   - filtered the shared page-banner and scoped review-target overlays so only currently pending-review queue IDs remain visible on declared proof surfaces
@@ -159,6 +164,7 @@
   - future-module UI ownership declaration fields
 
 ## Decisions
+- Move `P2-B-CQ-001`, `P2-B-CQ-014`, and `P2-B-CQ-017` from `Implemented Pending Review` to `Passed Review` based on explicit manual approval.
 - `P2-B-CQ-013` should synchronize against the live `Implemented Pending Review` queue at render time and should suppress empty temporary review overlays entirely on proof surfaces that no longer participate in the current pending-review set.
 - Treat `P2-B-CQ-013` as a same-item failure of the temporary review-layer synchronization contract, not as a new adjacent queue item.
 - Keep `P2-B-CQ-003`, `P2-B-CQ-004`, `P2-B-CQ-005`, `P2-B-CQ-006`, `P2-B-CQ-007`, `P2-B-CQ-008`, `P2-B-CQ-010`, and `P2-B-CQ-011` in passed-review status on their own merits; do not reopen them just because the temporary review overlay is stale.
@@ -188,7 +194,7 @@
 - Queue cleanup review confirms `P2-B-CQ-007` and `P2-B-CQ-008` already reflect the correct Tier 1-before-Tier 2 sequencing and do not need reclassification.
 
 ## Risks / Questions
-- Combined Batch B manual review still cannot close until staging manually re-validates the republished queue items `P2-B-CQ-001`, `P2-B-CQ-013`, `P2-B-CQ-014`, and `P2-B-CQ-017`.
+- Combined Batch B manual review still cannot close until staging manually re-validates `P2-B-CQ-013`.
 - Realtime notification toast rendering remains a feature-level JS path and is intentionally outside this Tier 1 hardening pass.
 - `resources/views/platform/ui-reference/index.blade.php` remains an unused legacy workspace view because the canonical `/platform/ui-reference` route renders `overview.blade.php`; this pass left it untouched to avoid mixing unrelated cleanup into the Batch B implementation lane.
 - Combined Batch B manual review is still required to confirm the newly implemented widget, date-range, identity-summary, dropdown, and sub-navigation changes before the batch can move toward close-out.

@@ -21,24 +21,6 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Scope: temporary active-batch proof review mode, live queue-state synchronization, full current pending-review coverage, stale active-review target removal
   Path Coverage: active-batch UI Reference proof pages, all current `Implemented Pending Review` items with visible proof surfaces, relevant component library cards under review, current review-mode entry points
   Implemented in: `2-B-0022`
-- [ ] Refine the Tier 1 searchable dropdown-select baseline so the shared searchable control matches the canonical select-field shell across spacing, typography, trigger/menu border treatment, and Inputs And Forms proof coverage while still presenting one integrated searchable dropdown with one intentional current-selection treatment.
-  ID: P2-B-CQ-001
-  Iteration: 4
-  Scope: Tier 1 searchable dropdown-select baseline, select-family visual parity, current-selection treatment, shared Inputs And Forms dropdown standard
-  Path Coverage: `/platform/ui-reference/patterns/forms`, shared `inline-form-row` and `searchable-select` entry points, `/platform/settings/general`, `/account/preferences`
-  Implemented in: `2-B-0019`
-- [ ] Refine the Tier 1 action and menu-item component-library suite so supported menus also define the canonical current-item/selected-item state alongside the shared colorway contract; grouped-action and future consumer menus should not improvise their own current-item styling.
-  ID: P2-B-CQ-014
-  Iteration: 2
-  Scope: Tier 1 action/menu-item colorway suite, current-item menu state, shared semantic/ghost action treatment, supported standard colorway proof coverage
-  Path Coverage: shared Tier 1 action and menu-item entry points, supported standard colorway proofs, grouped-action UI Reference proof surfaces that validate the suite
-  Implemented in: `2-B-0020`
-- [ ] Refine the Tier 1 internal phone-input baseline so formatting begins with the first typed digit instead of waiting for a complete ten-digit value; shared internal phone inputs should progressively render the canonical US national pattern during entry, with an explicit partial-entry display contract and full normalization to `(555) 555-5555` once all digits are present.
-  ID: P2-B-CQ-017
-  Iteration: 2
-  Scope: Tier 1 internal phone-input as-you-type formatting baseline, partial-entry display contract, reusable phone entry normalization
-  Path Coverage: `/platform/ui-reference/patterns/forms`, `/account/settings`, `/platform/settings/general-company-information`, shared phone-input entry points where adopted
-  Implemented in: `2-B-0021`
 
 ## Blocked
 - [ ] Apply the established Tier 1 action/menu-item suite to the account dropdown navigation options so account-menu links stop using one-off colorways and match the shared ghost action treatment while preserving left-aligned text and current menu layout.
@@ -50,6 +32,12 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 ## Deferred
 
 ## Passed Review
+- [x] Refine the Tier 1 searchable dropdown-select baseline so the shared searchable control matches the canonical select-field shell across spacing, typography, trigger/menu border treatment, and Inputs And Forms proof coverage while still presenting one integrated searchable dropdown with one intentional current-selection treatment.
+  ID: P2-B-CQ-001
+  Iteration: 4
+  Scope: Tier 1 searchable dropdown-select baseline, select-family visual parity, current-selection treatment, shared Inputs And Forms dropdown standard
+  Path Coverage: `/platform/ui-reference/patterns/forms`, shared `inline-form-row` and `searchable-select` entry points, `/platform/settings/general`, `/account/preferences`
+  Implemented in: `2-B-0019`
 - [x] Normalize the Tier 2 proof-note treatment so explanatory library guidance is presented through one clearly defined shared notice style instead of a mix of subtle in-card text blocks and stronger top-of-page notices; proof-only notes should read clearly as library guidance rather than component UI, and the treatment should be used consistently wherever intended behavior or scope needs explanation.
   ID: P2-B-CQ-003
   Iteration: 2
@@ -98,6 +86,18 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Path Coverage: shared `ui-action-ghost` primitive, supported standard colorway proofs, UI Reference action proofs, all consuming ghost-action surfaces
   Follow-up To: P2-B-CQ-014
   Implemented in: `2-B-0015`
+- [x] Refine the Tier 1 action and menu-item component-library suite so supported menus also define the canonical current-item/selected-item state alongside the shared colorway contract; grouped-action and future consumer menus should not improvise their own current-item styling.
+  ID: P2-B-CQ-014
+  Iteration: 2
+  Scope: Tier 1 action/menu-item colorway suite, current-item menu state, shared semantic/ghost action treatment, supported standard colorway proof coverage
+  Path Coverage: shared Tier 1 action and menu-item entry points, supported standard colorway proofs, grouped-action UI Reference proof surfaces that validate the suite
+  Implemented in: `2-B-0020`
+- [x] Refine the Tier 1 internal phone-input baseline so formatting begins with the first typed digit instead of waiting for a complete ten-digit value; shared internal phone inputs should progressively render the canonical US national pattern during entry, with an explicit partial-entry display contract and full normalization to `(555) 555-5555` once all digits are present.
+  ID: P2-B-CQ-017
+  Iteration: 2
+  Scope: Tier 1 internal phone-input as-you-type formatting baseline, partial-entry display contract, reusable phone entry normalization
+  Path Coverage: `/platform/ui-reference/patterns/forms`, `/account/settings`, `/platform/settings/general-company-information`, shared phone-input entry points where adopted
+  Implemented in: `2-B-0021`
 - [x] Repair the `Key Value Display` read-only detail proof so linked/value content renders correctly instead of leaking broken inline markup into the UI Reference output.
   ID: P2-B-CQ-002
   Scope: Tier 2 data/content patterns, read-only detail proof

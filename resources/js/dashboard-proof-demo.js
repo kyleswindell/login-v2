@@ -1,6 +1,6 @@
 import Sortable from 'sortablejs';
 
-const proofStorageKey = 'ui-reference.dashboard-proof-layout';
+const proofStorageKey = 'ui-reference.dashboard-proof-layout.v2';
 
 const defaultProofWidgets = [
     {

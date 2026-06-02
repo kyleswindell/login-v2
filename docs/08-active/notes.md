@@ -1,6 +1,11 @@
 # Notes
 
 ## Findings
+- Batch B pass `2-B-0042` implements the reopened dashboard span-contract fixes:
+  - `P2-B-CQ-018` replaces content-sized dashboard widget rows with a fixed shared row-track contract so one-row and two-row spans are determined by declared widget span instead of neighboring placement or card content height
+  - `P2-B-CQ-019` updates the Layout + Dashboard proof with deterministic span comparison language and examples for `1x2` beside `2x2`, `1x2` beside stacked one-row widgets, and `3x2` versus `3x1`
+  - the dashboard proof localStorage key is versioned so reviewers who previously saved a failed arrangement start from the new deterministic reset order
+  - local browser inspection was attempted but blocked by local server/process permission issues; WSL build and feature tests passed with the established SQLite test override
 - Batch B review-state update `2-B-0041` records the latest targeted Layout + Dashboard staging feedback:
   - `P2-B-CQ-013`, `P2-B-CQ-015`, and `P2-B-CQ-020` pass manual review
   - `P2-B-CQ-018` returns to `Ready To Implement` because the dashboard grid still does not enforce declared row spans as physical row occupancy; `1x2` can visually collapse toward ~1.5 rows beside another `x2` item, and `3x2` can visually match `3x1`
@@ -302,10 +307,9 @@
 - Queue cleanup review confirms `P2-B-CQ-007` and `P2-B-CQ-008` already reflect the correct Tier 1-before-Tier 2 sequencing and do not need reclassification.
 
 ## Risks / Questions
-- Combined Batch B manual review still cannot close until staging manually re-validates `P2-B-CQ-013`, `P2-B-CQ-015`, `P2-B-CQ-018`, `P2-B-CQ-019`, and `P2-B-CQ-020`.
-- `P2-B-CQ-019` and `P2-B-CQ-020` share the Layout + Dashboard proof surface, so targeted manual review should verify the integrated full-width/reorder proof and soft-card colorway treatment together instead of reviewing stale pre-integration screenshots.
-- `P2-B-CQ-015` needs account-dropdown review on the authenticated app shell, including light/dark theme-option states and sign-out treatment.
-- `P2-B-CQ-018` needs direct visual confirmation that multi-row widget height reads clearly in context, not only test confirmation that the labels/classes exist.
+- Combined Batch B manual review still cannot close until staging manually re-validates `P2-B-CQ-018` and `P2-B-CQ-019`.
+- `P2-B-CQ-018` needs direct visual confirmation that fixed row-track sizing makes `1x2`, `2x2`, and `3x2` widgets visibly occupy exactly two rows across the new comparison pairings.
+- `P2-B-CQ-019` needs targeted confirmation that the Layout + Dashboard proof still preserves the approved save/reorder/full-width behavior while the reset/default arrangement demonstrates deterministic widget-size comparisons.
 - Realtime notification toast rendering remains a feature-level JS path and is intentionally outside this Tier 1 hardening pass.
 - `resources/views/platform/ui-reference/index.blade.php` remains an unused legacy workspace view because the canonical `/platform/ui-reference` route renders `overview.blade.php`; this pass left it untouched to avoid mixing unrelated cleanup into the Batch B implementation lane.
 - Combined Batch B manual review is still required to confirm the newly implemented widget, date-range, identity-summary, dropdown, and sub-navigation changes before the batch can move toward close-out.

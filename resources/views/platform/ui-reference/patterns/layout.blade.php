@@ -47,7 +47,7 @@
                 />
 
                 <x-ui.patterns.proof-note semantic="neutral" title="Multi-row span proof">
-                    Review the tall `1x2`, wide `2x2`, and full-row `3x2` examples together. Each two-row widget must reserve and occupy two complete grid rows before this pattern is reused on production dashboards.
+                    Review the deterministic pairings below: `1x2` beside `2x2`, `1x2` beside stacked one-row widgets, and `3x2` directly compared with `3x1`. Each two-row widget must reserve and occupy two complete grid rows before this pattern is reused on production dashboards.
                 </x-ui.patterns.proof-note>
 
                 <x-ui.patterns.dashboard-grid columns="widgets" data-dashboard-span-proof>
@@ -114,16 +114,33 @@
                     </x-ui.patterns.widget-shell>
 
                     <x-ui.patterns.widget-shell
-                        title="3x1 Full-Row Surface"
-                        description="Wider widgets are valid when they summarize one dashboard concern that naturally spans the whole row."
-                        kicker="Span 3x1"
-                        span="3x1"
+                        title="1x2 Stack Comparison"
+                        description="Second tall proof beside two independent one-row widgets."
+                        kicker="Span 1x2"
+                        span="1x2"
                     >
-                        <div class="grid gap-3 md:grid-cols-3">
-                            <div class="ui-pattern-widget-shell-section is-subtle">Header actions stay widget-local.</div>
-                            <div class="ui-pattern-widget-shell-section is-subtle">Internal sections may be divided once or twice.</div>
-                            <div class="ui-pattern-widget-shell-section is-subtle">If the widget becomes a full workflow, escalate to a real page.</div>
+                        <div class="space-y-3">
+                            <div class="ui-pattern-widget-shell-section is-subtle">Occupies row one beside the first one-row neighbor.</div>
+                            <div class="ui-pattern-widget-shell-section is-subtle">Occupies row two beside the second one-row neighbor.</div>
                         </div>
+                    </x-ui.patterns.widget-shell>
+
+                    <x-ui.patterns.widget-shell
+                        title="2x1 First Neighbor"
+                        description="One-row widget placed beside the first half of a tall item."
+                        kicker="Span 2x1"
+                        span="2x1"
+                    >
+                        <div class="ui-pattern-widget-shell-section is-subtle">This card must not stretch just because its neighbor is `1x2`.</div>
+                    </x-ui.patterns.widget-shell>
+
+                    <x-ui.patterns.widget-shell
+                        title="2x1 Second Neighbor"
+                        description="Second one-row widget placed below the first neighbor."
+                        kicker="Span 2x1"
+                        span="2x1"
+                    >
+                        <div class="ui-pattern-widget-shell-section is-subtle">This card proves the second occupied row next to the same `1x2` item.</div>
                     </x-ui.patterns.widget-shell>
 
                     <x-ui.patterns.widget-shell
@@ -150,6 +167,19 @@
                         <div class="grid gap-3 md:grid-cols-2">
                             <div class="ui-pattern-widget-shell-section is-subtle">Second-row space supports related detail without turning the widget into a workflow page.</div>
                             <div class="ui-pattern-widget-shell-section is-subtle">The card should visibly occupy two grid rows beside shorter dashboard summaries.</div>
+                        </div>
+                    </x-ui.patterns.widget-shell>
+
+                    <x-ui.patterns.widget-shell
+                        title="3x1 Full-Row Surface"
+                        description="One-row full-width comparison immediately after the `3x2` surface."
+                        kicker="Span 3x1"
+                        span="3x1"
+                    >
+                        <div class="grid gap-3 md:grid-cols-3">
+                            <div class="ui-pattern-widget-shell-section is-subtle">Header actions stay widget-local.</div>
+                            <div class="ui-pattern-widget-shell-section is-subtle">Internal sections may be divided once or twice.</div>
+                            <div class="ui-pattern-widget-shell-section is-subtle">If the widget becomes a full workflow, escalate to a real page.</div>
                         </div>
                     </x-ui.patterns.widget-shell>
                 </x-ui.patterns.dashboard-grid>
@@ -198,6 +228,10 @@
                 </div>
 
                 <div class="space-y-4" data-dashboard-proof-main-content>
+                        <x-ui.patterns.proof-note semantic="neutral" title="Span comparison order" data-dashboard-proof-comparison-contract>
+                            Resetting the proof restores a deliberate review order: `1x1` + `2x1`, then `1x2` + `2x2`, then `3x1` followed by `3x2`. The grid size should remain span-driven after drag, hide/show, and lock/unlock interactions.
+                        </x-ui.patterns.proof-note>
+
                         <div
                             class="dashboard-proof-grid grid gap-4"
                             x-ref="visibleGrid"

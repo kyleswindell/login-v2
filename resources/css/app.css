@@ -657,6 +657,13 @@
         background-color: color-mix(in srgb, var(--ui-surface-elevated) 72%, transparent);
     }
 
+    .ui-pattern-dashboard-grid-widgets,
+    .dashboard-proof-grid {
+        --ui-dashboard-grid-row-size: 24rem;
+        --ui-dashboard-grid-gap: 1rem;
+        align-items: stretch;
+    }
+
     .dashboard-sort-chosen {
         outline: 1px solid rgb(52 211 153 / 0.55);
         outline-offset: 3px;
@@ -721,14 +728,23 @@
 
     .dashboard-proof-grid {
         grid-template-columns: repeat(1, minmax(0, 1fr));
-        align-items: stretch;
     }
 
-    /* Keep widget row and column placement explicit so tall spans render reliably. */
+    /* A declared widget span owns physical grid height; content must fit inside that contract. */
     @media (min-width: 48rem) {
+        .ui-pattern-dashboard-grid-widgets,
+        .dashboard-proof-grid {
+            grid-auto-rows: var(--ui-dashboard-grid-row-size);
+        }
+
         .dashboard-proof-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            grid-auto-rows: minmax(11rem, auto);
+        }
+
+        .dashboard-proof-widget-card,
+        .ui-pattern-dashboard-grid-widgets > .ui-pattern-widget-shell {
+            min-block-size: 0;
+            overflow: hidden;
         }
 
         .dashboard-proof-widget-span-1x1,
@@ -762,7 +778,17 @@
         .ui-pattern-widget-span-2x2,
         .ui-pattern-widget-span-3x2 {
             grid-row: span 2 / span 2;
-            min-height: calc(22rem + 1rem);
+            block-size: calc((var(--ui-dashboard-grid-row-size) * 2) + var(--ui-dashboard-grid-gap));
+        }
+
+        .dashboard-proof-widget-span-1x1,
+        .dashboard-proof-widget-span-2x1,
+        .dashboard-proof-widget-span-3x1,
+        .ui-pattern-widget-span-1x1,
+        .ui-pattern-widget-span-2x1,
+        .ui-pattern-widget-span-3x1 {
+            grid-row: span 1 / span 1;
+            block-size: var(--ui-dashboard-grid-row-size);
         }
 
         .ui-pattern-widget-span-2x2,

@@ -194,6 +194,8 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('dashboard-proof-widget-span-2x1', $proofScript);
         $this->assertStringContainsString('dashboard-proof-widget-span-2x2', $proofScript);
         $this->assertStringContainsString('dashboard-proof-widget-span-3x1', $proofScript);
+        $this->assertStringContainsString('dashboard-proof-widget-span-3x2', $proofScript);
+        $this->assertStringContainsString('ui-reference.dashboard-proof-layout.v2', $proofScript);
         $this->assertStringNotContainsString("tone: 'success'", $proofScript);
         $this->assertStringNotContainsString("tone: 'notice'", $proofScript);
         $this->assertStringNotContainsString("tone: 'danger'", $proofScript);
@@ -210,19 +212,29 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('1x2 Tall List')
             ->assertSee('2x2 Mixed Widget')
             ->assertSee('3x2 Review Surface')
+            ->assertSee('1x2 Stack Comparison')
+            ->assertSee('2x1 First Neighbor')
+            ->assertSee('2x1 Second Neighbor')
+            ->assertSee('Span comparison order')
             ->assertSee('Full width + two rows')
             ->assertSee('data-dashboard-span-proof', false)
+            ->assertSee('ui-pattern-dashboard-grid-widgets', false)
+            ->assertSee('data-dashboard-proof-comparison-contract', false)
             ->assertSee('data-ui-widget-span="1x2"', false)
             ->assertSee('data-ui-widget-span="2x2"', false)
             ->assertSee('data-ui-widget-span="3x2"', false)
-            ->assertSee('md:auto-rows-[minmax(11rem,auto)]', false);
+            ->assertDontSee('md:auto-rows-[minmax(11rem,auto)]', false);
 
         $css = file_get_contents(resource_path('css/app.css'));
 
         $this->assertIsString($css);
+        $this->assertStringContainsString('--ui-dashboard-grid-row-size: 24rem', $css);
+        $this->assertStringContainsString('grid-auto-rows: var(--ui-dashboard-grid-row-size)', $css);
         $this->assertStringContainsString('.dashboard-proof-widget-span-1x2', $css);
         $this->assertStringContainsString('.ui-pattern-widget-span-1x2', $css);
-        $this->assertStringContainsString('min-height: calc(22rem + 1rem)', $css);
+        $this->assertStringContainsString('block-size: calc((var(--ui-dashboard-grid-row-size) * 2) + var(--ui-dashboard-grid-gap))', $css);
+        $this->assertStringContainsString('block-size: var(--ui-dashboard-grid-row-size)', $css);
+        $this->assertStringNotContainsString('grid-auto-rows: minmax(11rem, auto)', $css);
     }
 
     public function test_standard_users_cannot_view_ui_reference_workspace(): void

@@ -11,23 +11,24 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 - Exploratory review discussion stays in chat until it is normalized into concise queue language.
 
 ## Ready To Implement
+
+## In Progress
+
+## Implemented Pending Review
 - [ ] Fix the dashboard grid span contract so widget height is determined by declared grid span, not by neighboring item placement or content height; every allowed `x2` widget must reserve and visibly occupy exactly two row tracks in all review pairings, including `1x2` beside `2x2`, `1x2` beside stacked one-row widgets, and `3x2` directly compared with `3x1`.
   ID: P2-B-CQ-018
   Iteration: 4
   Scope: strict dashboard grid row-track sizing, span-driven height independent of content, non-overlapping dense grid placement, two-row visual parity across all adjacent pairings, reviewable widget-size examples
   Path Coverage: `/platform/ui-reference/patterns/layout`, `/platform/ui-reference/patterns/archetypes`, shared dashboard/widget-shell proof surfaces where taller spans should be judged in context
   Follow-up To: P2-B-CQ-005, P2-B-CQ-006
-  Implemented in: `2-B-0040`
+  Implemented in: `2-B-0042`
 - [ ] Repair the Layout + Dashboard customization proof so it demonstrates the dashboard grid contract through deterministic comparison groups instead of incidental content flow; the proof must preserve approved save behavior, drag/move sorting preview, and full main-content-width container while showing `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, and `3x2` examples in arrangements that make one-row versus two-row height differences impossible to miss.
   ID: P2-B-CQ-019
   Iteration: 7
   Scope: UI Reference-first dashboard customization proof layout, approved full-width dashboard composition, approved save/reorder proof behavior, deterministic widget-span comparison groups, correct widget grid-size examples, legible widget-card header/body content examples
   Path Coverage: `/platform/ui-reference/patterns/layout` as the canonical review surface, shared dashboard/widget shell layout defaults that affect proof-card content structure, proof drag/reorder interaction model, `/dashboard` only as downstream consumer validation after the proof surface is correct
   Follow-up To: P2-B-CQ-006, P2-B-CQ-018
-  Implemented in: `2-B-0040`
-## In Progress
-
-## Implemented Pending Review
+  Implemented in: `2-B-0042`
 
 ## Blocked
 

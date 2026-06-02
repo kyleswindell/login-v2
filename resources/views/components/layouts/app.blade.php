@@ -228,7 +228,7 @@
                                         <div class="grid grid-cols-3 gap-1">
                                             <x-ui.button
                                                 type="button"
-                                                variant="outline"
+                                                variant="ghost"
                                                 size="xs"
                                                 class="w-full"
                                                 data-theme-mode-toggle
@@ -238,7 +238,7 @@
                                             >Light</x-ui.button>
                                             <x-ui.button
                                                 type="button"
-                                                variant="outline"
+                                                variant="ghost"
                                                 size="xs"
                                                 class="w-full"
                                                 data-theme-mode-toggle
@@ -248,7 +248,7 @@
                                             >Dark</x-ui.button>
                                             <x-ui.button
                                                 type="button"
-                                                variant="outline"
+                                                variant="ghost"
                                                 size="xs"
                                                 class="w-full"
                                                 data-theme-mode-toggle

@@ -111,9 +111,16 @@ class PlatformAccountTest extends TestCase
 
         $content = $response->getContent();
 
-        preg_match_all('/<button[^>]*data-theme-mode-toggle/', $content, $themeToggles);
+        preg_match_all('/<button[^>]*data-theme-mode-toggle[^>]*>/', $content, $themeToggles);
 
         $this->assertCount(3, $themeToggles[0]);
+        $this->assertSame(1, substr_count(implode("\n", $themeToggles[0]), 'data-ui-current="true"'));
+
+        foreach ($themeToggles[0] as $themeToggle) {
+            $this->assertStringContainsString('ui-action-ghost', $themeToggle);
+            $this->assertStringNotContainsString('ui-action-outline', $themeToggle);
+        }
+
         $this->assertStringContainsString('data-theme-mode="dark"', $content);
         $this->assertStringContainsString('aria-pressed="true"', $content);
         $this->assertStringNotContainsString('rounded-md px-2 py-2 text-xs font-semibold text-slate-300 transition hover:bg-slate-800 hover:text-white', $content);

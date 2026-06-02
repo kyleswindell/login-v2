@@ -1,6 +1,11 @@
 # Notes
 
 ## Findings
+- Batch B pass `2-B-0036` addresses the targeted `P2-B-CQ-015` staging failure:
+  - manual review confirmed the sign-out action is now correct as shared ghost-danger
+  - the theme controls still failed because all three options were changed to the outline button style instead of only marking the active theme option as selected
+  - the fix keeps all theme options as shared ghost-neutral buttons and applies the active/selected treatment only through `data-ui-current="true"`
+  - the account-dropdown test now asserts the theme buttons use ghost styling, do not use outline styling, and expose exactly one current option
 - Batch B pass `2-B-0035` integrates the four ready worker-lane items back onto `main` and prepares them for staging publication:
   - `P2-B-CQ-015` now applies the shared action/menu-item suite to the app-shell account dropdown, including outline-neutral theme options, shared current menu-item state, and ghost-danger sign-out treatment
   - `P2-B-CQ-018` now adds visible multi-row widget span proof coverage for `1x2`, `2x2`, and `3x2` dashboard states on the Layout + Dashboard proof surface

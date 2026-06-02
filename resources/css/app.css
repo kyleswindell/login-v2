@@ -335,6 +335,18 @@
         color: var(--ui-action-ghost-text-hover);
     }
 
+    .ui-action.ui-action-ghost[data-ui-current='true'] {
+        background-color: var(--ui-action-soft-neutral-bg);
+        color: var(--ui-action-soft-neutral-text);
+        outline: 1px solid var(--ui-action-soft-neutral-border);
+        outline-offset: -1px;
+    }
+
+    .ui-action.ui-action-ghost[data-ui-current='true']:hover {
+        background-color: var(--ui-action-soft-neutral-bg-hover);
+        color: var(--ui-action-soft-neutral-text);
+    }
+
     .ui-action-soft {
         @apply shadow-none;
     }

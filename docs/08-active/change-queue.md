@@ -15,15 +15,6 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 ## In Progress
 
 ## Implemented Pending Review
-- [ ] Rebuild the Widget Content Standards area around a content-space unit system instead of semantic content guesses: keep the four-unit dashboard geometry and row-height budget visible, define reusable content-space shapes up to `3x3`, define compact `0.5x0.5` and `1x0.5` status/counter units plus a specialized `4x0.5` dashboard strip, and create standalone size-standard pages so future approved widget-content examples can be added by size without bloating the landing page.
-  ID: P2-B-CQ-023
-  Iteration: 3
-  Scope: content-space unit standards, shape capacity map, px budget explanation, four-unit dashboard geometry, `0.5x0.5`, `1x0.5`, `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, `3x2`, `3x3`, specialized `4x0.5` dashboard status strip, standalone widget-size standards pages, future approved content-example scaffolding, constrained viewport validation
-  Path Coverage: `/platform/ui-reference/patterns/widget-content`, new widget content shape-map and size-standard UI Reference routes/pages, UI Reference navigation/sidebar, shared dashboard-grid/widget-shell geometry where the selected standard requires it, tests for widget content standards routes
-  Plan: `docs/08-active/dashboard-widget-content-standards-plan.md`
-  Follow-up To: P2-B-CQ-021
-  Supersedes: P2-B-CQ-021, P2-B-CQ-024
-  Implemented in: `2-B-0047`
 ## Blocked
 
 ## Deferred
@@ -47,6 +38,15 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Superseded By: P2-B-CQ-023
 
 ## Passed Review
+- [x] Rebuild the Widget Content Standards area around a content-space unit system instead of semantic content guesses: keep the four-unit dashboard geometry and row-height budget visible, define reusable content-space shapes up to `3x3`, define compact `0.5x0.5` and `1x0.5` status/counter units plus a specialized `4x0.5` dashboard strip, and create standalone size-standard pages so future approved widget-content examples can be added by size without bloating the landing page.
+  ID: P2-B-CQ-023
+  Iteration: 3
+  Scope: content-space unit standards, shape capacity map, px budget explanation, four-unit dashboard geometry, `0.5x0.5`, `1x0.5`, `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, `3x2`, `3x3`, specialized `4x0.5` dashboard status strip, standalone widget-size standards pages, future approved content-example scaffolding, constrained viewport validation
+  Path Coverage: `/platform/ui-reference/patterns/widget-content`, new widget content shape-map and size-standard UI Reference routes/pages, UI Reference navigation/sidebar, shared dashboard-grid/widget-shell geometry where the selected standard requires it, tests for widget content standards routes
+  Plan: `docs/08-active/dashboard-widget-content-standards-plan.md`
+  Follow-up To: P2-B-CQ-021
+  Supersedes: P2-B-CQ-021, P2-B-CQ-024
+  Implemented in: `2-B-0047`
 - [x] Trim and refocus the Layout + Dashboard reference page so the dashboard example/demo is the primary page content, with only supporting cards for dashboard configuration, layout behavior, customization state, persistence, and review cues retained below it; widget-specific design examples and standards should move to the standalone widget content standards page instead of remaining mixed into the Layout + Dashboard proof.
   ID: P2-B-CQ-022
   Scope: Layout + Dashboard proof simplification, dashboard-demo-first page structure, removal or relocation of widget-specific design explanation, supporting card reduction, standalone widget standards handoff

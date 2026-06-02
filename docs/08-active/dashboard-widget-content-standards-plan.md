@@ -6,6 +6,23 @@ Plan the rework of the standalone Widget Content Standards page after `P2-B-CQ-0
 
 The failed implementation showed supported spans, but it did not prove realistic content allowances. Most cards used sparse sample content inside large fixed-height shells, especially in `1x2`, `2x2`, and `3x2` examples. Before another implementation pass, the dashboard grid geometry and widget content density must be planned together.
 
+## Updated Direction: Content-Space Units First
+
+The next implementation must stop treating semantic content names such as metric, status chip, support row, list, chart, or paragraph as the primary allowance standard. Those labels are too variable: a "metric" can be compact or large, a "list row" can be one line or three lines, and a "support row" can carry different visual weight. Trying to enumerate every possible widget content type will not produce a durable dashboard standard.
+
+The current standard should instead define reusable **content-space units** first. Concrete widget content examples can be approved later by showing how they consume these units.
+
+Implementation direction:
+
+- Define content-space shapes up to `3x3`.
+- Define compact status/counter shapes, including `0.5x0.5`, `1x0.5`, and a specialized `4x0.5` top-of-dashboard strip made from four `1x0.5` status/counter cards.
+- Keep the widget shell title/kicker plain text and outside the colored content-space measurement blocks.
+- Use the existing Current Item States palette only as internal shape visualization blocks inside neutral cards, not as full-card palettes.
+- Preserve the four-unit dashboard model and `18rem` one-row shell baseline unless implementation proves a more constrained token is required.
+- Show approximate usable content area after widget chrome, padding, and gaps. Example framing: `1 row = 18rem / 288px shell`, then subtract title/header/padding to show the available content-space region.
+
+This makes the standard measurable without overfitting to arbitrary content semantics.
+
 ## Third-Party Review Inputs
 
 - Material Design responsive layout guidance uses breakpoint-driven grids, including 4 columns on small screens, 8 columns around tablet widths, and 12 columns at larger widths. It also distinguishes summary-only content at narrow widths from summary-plus-detail content when screen width allows it. Source: https://m1.material.io/layout/responsive-ui.html
@@ -72,35 +89,64 @@ The next pass should calibrate:
 - Content fill target: examples should use roughly 65-85% of the available content region, with intentional breathing room but no large unused lower half.
 - Overflow rule: widgets must not introduce internal scrolling as a baseline; overflow means the widget size or content allowance is wrong.
 
-## Content Allowance Model
+## Content-Space Allowance Model
 
-Every size needs a realistic filled example and an explicit negative boundary.
+Every size needs a shape-composition proof and an explicit negative boundary. Semantic examples may appear as secondary examples only after the shape capacity is visible.
 
-| Size | Intended allowance | Must show in proof | Not allowed by default |
+| Size | Shape allowance | Must show in proof | Not allowed by default |
 | --- | --- | --- | --- |
-| `1x1` | Compact summary: title, one primary metric/status, one support line, optional small trend/status chip | Dense but readable metric card that uses the slot without nested boxes consuming the whole surface | Lists, multiple unrelated metrics, paragraph-heavy detail |
-| `2x1` | Wide summary: two to three related metrics, mini trend, or compact status strip | Horizontal content that proves the width supports comparison in one row | Tall lists, dense detail blocks, workflow controls |
-| `1x2` | Tall narrow list/activity: four to six compact items or a timeline with statuses | Content that visibly uses the second row with a vertical sequence | Side-by-side layout, wide charts, unrelated groups |
-| `2x2` | Detail summary: primary metric group plus one same-topic list/chart/body block | A filled two-row composition with top summary and lower supporting content | Multi-section workflow page, tables with filters, unrelated panels |
-| `3x1` | Full-row or wide-row summary, depending on selected geometry | Broad single-row scan with three or four related compact blocks | Content that needs a second row to make sense |
-| `3x2` or full-row x2 | Rich same-topic dashboard summary: KPI group, compact visualization/table, and exception list | A genuinely two-row composition with enough related detail to justify the height | Independent sections, complex filters, editable forms |
+| `0.5x0.5` | Tiny status/count atom | Compact color block used only inside status-strip planning | Rich content, labels that need wrapping |
+| `1x0.5` | Compact status/counter item | Half-height item suitable for a top dashboard strip | Paragraphs, lists, charts, multi-action controls |
+| `1x1` | One base content-space unit | A single reusable unit that can later host one approved compact content pattern | Multiple stacked full units, dense lists, paragraph-heavy detail |
+| `2x1` | Two `1x1` units or one horizontal `2x1` unit | Both split and unified compositions | Tall content, second-row detail |
+| `1x2` | Two stacked `1x1` units or one vertical `1x2` unit | Both split and unified vertical compositions | Wide charts or side-by-side content |
+| `2x2` | Four `1x1`, two `2x1`, two `1x2`, or one `2x2` unit | Composition grid that visibly uses the full surface | Unrelated sections, forms, table/filter workflows |
+| `3x1` | Three `1x1`, one `2x1` plus one `1x1`, or one `3x1` unit | Single-row comparison and unified wide compositions | Content that requires a second row |
+| `3x2` | Six `1x1`, three `1x2`, two `3x1`, one `3x2`, or mixed valid combinations | Rich same-topic two-row capacity without whitespace | Independent workflows, complex tables, unrelated panels |
+| `3x3` | Nine `1x1`, three `3x1`, three `1x3` if accepted later, or one `3x3` unit | Upper-bound dashboard module capacity for future standards | Treating it as a general page replacement |
+| `4x0.5` | Four `1x0.5` status/counter cards across the dashboard row | Specialized dashboard-header/status-strip proof | Reusing it as a normal widget body without separate approval |
 
 ## Proof Page Requirements
 
 The reworked Widget Content Standards page must include:
 
 1. A short geometry decision section explaining the selected width model, row height, and breakpoints.
-2. A viewport review note naming the constrained desktop widths used for validation.
-3. A realistic filled example for every supported size.
-4. A per-size allowance table with “fits,” “stretch,” and “escalate to page” guidance.
-5. At least one negative example or boundary note showing when content no longer belongs in a dashboard widget.
-6. No unapproved semantic color palettes for default cards.
-7. No sparse placeholder cards that imply empty area is an acceptable allowance.
+2. A content-space unit system that defines `0.5x0.5`, `1x0.5`, `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, `3x2`, `3x3`, and specialized `4x0.5`.
+3. A px budget explanation showing one-row shell size and approximate usable content area after widget chrome/padding/gaps.
+4. A visual shape map using Current Item States palette blocks inside neutral card shells.
+5. A composition matrix that shows which smaller units may combine into each widget size.
+6. Standalone UI Reference pages/routes for size-specific standards so future approved widget-content examples can grow without bloating the landing page.
+7. A viewport review note naming the constrained desktop widths used for validation.
+8. At least one negative example or boundary note showing when content no longer belongs in a dashboard widget.
+9. No unapproved semantic color palettes for default cards.
+10. No sparse placeholder cards that imply empty area is an acceptable allowance.
+
+## Standalone Page Plan
+
+Create standalone Widget Content standards pages now, even if most pages initially focus on content-space capacity rather than final approved module examples.
+
+Required page structure:
+
+- Widget Content landing page: shape system overview, geometry, px budget, and navigation into size pages.
+- Shape Map page: full content-space unit map up to `3x3`, including compact status units and the `4x0.5` strip.
+- Size pages:
+  - `1x1`
+  - `2x1`
+  - `1x2`
+  - `2x2`
+  - `3x1`
+  - `3x2`
+  - `3x3`
+  - compact status strip / `4x0.5`
+
+The size pages may start as standards scaffolds with shape compositions and accepted/invalid capacity examples. Later batches may add approved real widget-content patterns by size.
 
 ## Acceptance Criteria For Next CQ
 
-- The current failed sparse examples are replaced, not just padded or decorated.
-- The standards page visibly demonstrates content occupying one-row and two-row cards appropriately.
-- The grid geometry is explicitly reviewed and documented before final examples are presented.
-- Tests assert the selected geometry documentation and the presence of realistic per-size examples.
+- The current semantic-content allowance framing is replaced with content-space unit standards.
+- The standards page visibly demonstrates shape capacity and composition rules up to `3x3`, plus compact status/counter units.
+- The specialized `4x0.5` dashboard status strip is represented as four `1x0.5` cards, not as a normal full-card palette.
+- The grid geometry and px budget are explicitly documented before concrete content examples are presented.
+- Standalone size-standard routes/pages exist so future approved widget content examples can be added without overloading the landing page.
+- Tests assert the selected geometry documentation, content-space unit map, standalone page navigation, and key size-specific routes.
 - The implementation remains UI Reference-first and does not change live dashboard feature behavior unless a grid-token decision explicitly requires shared component updates.

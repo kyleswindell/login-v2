@@ -1,6 +1,12 @@
 # Notes
 
 ## Findings
+- Batch B review-state update `2-B-0046` preserves the revised Widget Content Standards implementation direction:
+  - `P2-B-CQ-023` iteration 3 now replaces semantic content allowance guessing with a content-space unit system
+  - the active plan now requires shape definitions through `3x3`, compact `0.5x0.5` and `1x0.5` status/counter units, and a specialized `4x0.5` dashboard strip composed from four `1x0.5` units
+  - the Widget Content landing page should explain geometry, px budget, and shape-unit composition; standalone size-standard pages should exist now so future approved concrete content examples can grow by size later
+  - `P2-B-CQ-024` is superseded by `P2-B-CQ-023` because the `4x0.5` status-strip decision is now part of the current shape-system implementation
+  - `P2-B-CQ-025` is deferred for future approved concrete widget-content catalogs by size after the content-space unit system is reviewed
 - Batch B review-state update `2-B-0045` records the targeted Widget Content Standards staging feedback after `2-B-0044`:
   - `P2-B-CQ-023` returns to `Ready To Implement` because the rebuilt standards proof still clips content and leaves excessive whitespace in specific widget sizes at reviewed widths
   - `1x1` clips its final explanatory sentence at 1024, 1280, 1366, 1440, and 1920px
@@ -289,6 +295,9 @@
   - future-module UI ownership declaration fields
 
 ## Decisions
+- Revise `P2-B-CQ-023` to iteration 3 instead of continuing with the iteration 2 whitespace-only framing because the correct abstraction is content-space capacity, not another pass at enumerating metrics, chips, rows, lists, or paragraphs.
+- Supersede `P2-B-CQ-024` under `P2-B-CQ-023` because the operator direction now explicitly includes compact status units and the specialized `4x0.5` dashboard strip in the current shape-system standard.
+- Add `P2-B-CQ-025` as deferred future work so later batches can add approved concrete widget-content examples by size without blocking the current phase's shape-system implementation.
 - Reopen `P2-B-CQ-023` as iteration 2 rather than creating a new item because the clipping and whitespace defects are direct failures of the current Widget Content Standards proof acceptance criteria.
 - Defer `P2-B-CQ-024` instead of adding it to `Ready To Implement` because the top-of-dashboard `4x1` or `4x0.5` status/stat/counter/header concept is a separate standards decision and not required to correct the current `1x1`, `1x2`, `2x2`, and `3x2` proof defects.
 - Move `P2-B-CQ-023` from `In Progress` to `Implemented Pending Review` after rebuilding `/platform/ui-reference/patterns/widget-content` from the dashboard widget content standards plan.
@@ -348,9 +357,10 @@
 - Queue cleanup review confirms `P2-B-CQ-007` and `P2-B-CQ-008` already reflect the correct Tier 1-before-Tier 2 sequencing and do not need reclassification.
 
 ## Risks / Questions
+- The next `P2-B-CQ-023` pass should not overbuild final approved widget content examples; the review target is the content-space unit system, route/page structure, px budget explanation, and shape composition map.
 - Combined Batch B manual review still cannot close until `P2-B-CQ-023` is corrected, deployed, and manually reviewed.
-- The next `P2-B-CQ-023` implementation should preserve the currently improving direction while tightening content volume: reduce or relocate low-value explanatory copy in `1x1`, prevent list-row clipping in `1x2`, and add real dense same-topic content to `2x2` and `3x2`.
-- `P2-B-CQ-023` still needs reviewer confirmation that the four-unit desktop model and `18rem` one-row baseline are acceptable once the clipping and whitespace issues are corrected.
+- The next `P2-B-CQ-023` implementation should use content-space unit shapes to resolve the old clipping/whitespace problem instead of trying to tune arbitrary text/list/metric examples.
+- `P2-B-CQ-023` still needs reviewer confirmation that the four-unit desktop model, `18rem` one-row baseline, content-space shape map, and standalone size-page structure are acceptable.
 - The current implementation intentionally avoids defining a full-row widget standard; if future dashboard modules need full-row content allowances, a separate `4x` contract or composition-specific rule should be opened after this review.
 - Realtime notification toast rendering remains a feature-level JS path and is intentionally outside this Tier 1 hardening pass.
 - `resources/views/platform/ui-reference/index.blade.php` remains an unused legacy workspace view because the canonical `/platform/ui-reference` route renders `overview.blade.php`; this pass left it untouched to avoid mixing unrelated cleanup into the Batch B implementation lane.

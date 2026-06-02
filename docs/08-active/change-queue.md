@@ -11,14 +11,14 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 - Exploratory review discussion stays in chat until it is normalized into concise queue language.
 
 ## Ready To Implement
-- [ ] Rebuild the Widget Content Standards page from the dashboard widget content standards plan: validate the dashboard grid geometry before finalizing examples, compare the current three-unit model against a four-across model, calibrate one-row height for constrained office-monitor widths, and replace sparse placeholder cards with realistic filled examples that prove content allowances for every supported widget size without clipping, crowding, internal scrolling, or excessive unused space.
+- [ ] Rebuild the Widget Content Standards area around a content-space unit system instead of semantic content guesses: keep the four-unit dashboard geometry and row-height budget visible, define reusable content-space shapes up to `3x3`, define compact `0.5x0.5` and `1x0.5` status/counter units plus a specialized `4x0.5` dashboard strip, and create standalone size-standard pages so future approved widget-content examples can be added by size without bloating the landing page.
   ID: P2-B-CQ-023
-  Iteration: 2
-  Scope: planned widget content standards rework, grid geometry calibration, row-height review, realistic per-size widget examples, constrained viewport validation, content allowance acceptance criteria, correction of 1x1/1x2 clipping at 1024/1280/1366/1440/1920px, stronger filled-content proof for `2x2` and `3x2`
-  Path Coverage: `/platform/ui-reference/patterns/widget-content`, shared dashboard-grid/widget-shell geometry where the selected standard requires it, UI Reference navigation/tests for the widget standards page
+  Iteration: 3
+  Scope: content-space unit standards, shape capacity map, px budget explanation, four-unit dashboard geometry, `0.5x0.5`, `1x0.5`, `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, `3x2`, `3x3`, specialized `4x0.5` dashboard status strip, standalone widget-size standards pages, future approved content-example scaffolding, constrained viewport validation
+  Path Coverage: `/platform/ui-reference/patterns/widget-content`, new widget content shape-map and size-standard UI Reference routes/pages, UI Reference navigation/sidebar, shared dashboard-grid/widget-shell geometry where the selected standard requires it, tests for widget content standards routes
   Plan: `docs/08-active/dashboard-widget-content-standards-plan.md`
   Follow-up To: P2-B-CQ-021
-  Supersedes: P2-B-CQ-021
+  Supersedes: P2-B-CQ-021, P2-B-CQ-024
   Implemented in: `2-B-0044`
 
 ## In Progress
@@ -31,6 +31,12 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   ID: P2-B-CQ-024
   Scope: dashboard full-row/top-header status widget allowance decision, `4x1` versus compact `4x0.5` treatment, default dashboard header/stat/counter component option, deferral boundary between standard widgets and one-off dashboard header surfaces
   Path Coverage: future widget content standards proof, Layout + Dashboard proof if a full-row/header surface is accepted, dashboard/stat/widget conventions docs after approval
+  Follow-up To: P2-B-CQ-023
+  Superseded By: P2-B-CQ-023
+- [ ] Add future approved widget-content example catalogs by size after the content-space unit system is reviewed; each size-standard page should eventually show approved concrete module patterns that consume the unit shapes without redefining the shape system itself.
+  ID: P2-B-CQ-025
+  Scope: future concrete widget content examples by size, approved module-pattern catalog, size-specific examples layered on top of content-space units
+  Path Coverage: standalone Widget Content size-standard pages after `P2-B-CQ-023` approval, future dashboard module implementation references
   Follow-up To: P2-B-CQ-023
 - [ ] Establish a standalone dashboard widget content standards proof that defines baseline content allowances by supported widget size, considering both declared width and height; the page should document which content regions, density levels, and example content volumes are appropriate for `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, and `3x2` widgets without attempting to define every possible widget content type.
   ID: P2-B-CQ-021

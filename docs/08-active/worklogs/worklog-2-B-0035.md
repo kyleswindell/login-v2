@@ -73,8 +73,8 @@ Create worker branches/worktrees for the current ready Batch B queue items, exec
 
 ## Commit / Deploy Status
 
-- Commit: Pending final integration commit on `main`
-- Deploy: Pending staging deployment after push
+- Commit: Yes; scoped worker-lane integration and active-state reconciliation recorded on `main`
+- Deploy: Yes; `main` deployed to staging after push
 
 ## Notes
 

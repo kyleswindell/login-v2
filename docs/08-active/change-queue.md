@@ -16,6 +16,11 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Scope: account-menu action styling, theme-option state styling, shared outline-neutral and ghost-danger consumption, dropdown option typography/color consistency
   Path Coverage: shared account dropdown in the app shell header, theme-mode option row, account-menu action list, sign-out action treatment
   Follow-up To: P2-B-CQ-014, P2-B-CQ-016
+- [ ] Make the multi-row widget span model visually reviewable on a visible dashboard proof surface instead of leaving taller spans inferential; reviewers should be able to see at least one unmistakably taller two-row widget state in context and judge how the shared `1x2`, `2x2`, or `3x2` contract actually presents on-page rather than only reading size labels.
+  ID: P2-B-CQ-018
+  Scope: visible proof coverage for multi-row widget spans, on-page clarity of taller dashboard card states, reviewability of the shared row-span contract
+  Path Coverage: `/platform/ui-reference/patterns/layout`, `/platform/ui-reference/patterns/archetypes`, visible dashboard/widget-shell proof surfaces where taller spans should be judged in context
+  Follow-up To: P2-B-CQ-005, P2-B-CQ-006
 
 ## In Progress
 

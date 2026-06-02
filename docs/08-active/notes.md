@@ -1,6 +1,10 @@
 # Notes
 
 ## Findings
+- A new manual-review finding opens `P2-B-CQ-018` as an adjacent proof-coverage gap on the dashboard/widget surface:
+  - the shared row-span contract may be implemented, but reviewers still do not have a clearly visible on-page example that demonstrates how a taller multi-row widget actually reads in context
+  - the current layout/dashboard proof still leaves multi-row height too inferential, so the next pass should make at least one taller widget state unmistakable on a visible review surface rather than relying on span labels alone
+  - this is treated as a new follow-up item rather than direct evidence that the approved shared row-span implementation item `P2-B-CQ-005` failed again
 - A fresh staging manual-review pass confirms the remaining account dropdown consumer gap on `P2-B-CQ-015`:
   - the active and hovered theme option still use outdated local option styling instead of the approved shared outline-neutral treatment
   - the sign-out action still does not use the approved shared ghost-danger treatment
@@ -169,6 +173,7 @@
   - future-module UI ownership declaration fields
 
 ## Decisions
+- Add `P2-B-CQ-018` as a new `Ready To Implement` follow-up item because the latest widget review feedback is about visible proof coverage of taller widget states, not direct proof that the already-approved shared row-span contract regressed.
 - Move `P2-B-CQ-015` from `Blocked` to `Ready To Implement` because the upstream menu-item suite dependencies are now approved and the remaining account-menu styling gap is confirmed as an existing item failure rather than a new queue item.
 - Move `P2-B-CQ-001`, `P2-B-CQ-014`, and `P2-B-CQ-017` from `Implemented Pending Review` to `Passed Review` based on explicit manual approval.
 - `P2-B-CQ-013` should synchronize against the live `Implemented Pending Review` queue at render time and should suppress empty temporary review overlays entirely on proof surfaces that no longer participate in the current pending-review set.
@@ -202,6 +207,7 @@
 ## Risks / Questions
 - Combined Batch B manual review still cannot close until staging manually re-validates `P2-B-CQ-013`.
 - `P2-B-CQ-015` is now unblocked and ready for implementation, but it still needs a full account-dropdown consumer pass against the approved shared action/menu-item contract.
+- `P2-B-CQ-018` now needs a visible dashboard/layout proof treatment that makes taller widget states directly judgeable in-context, or the current row-span contract will remain hard to validate visually.
 - Realtime notification toast rendering remains a feature-level JS path and is intentionally outside this Tier 1 hardening pass.
 - `resources/views/platform/ui-reference/index.blade.php` remains an unused legacy workspace view because the canonical `/platform/ui-reference` route renders `overview.blade.php`; this pass left it untouched to avoid mixing unrelated cleanup into the Batch B implementation lane.
 - Combined Batch B manual review is still required to confirm the newly implemented widget, date-range, identity-summary, dropdown, and sub-navigation changes before the batch can move toward close-out.

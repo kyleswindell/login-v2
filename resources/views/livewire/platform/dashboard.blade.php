@@ -1,4 +1,4 @@
-<section class="flex flex-1 flex-col gap-6">
+<section class="flex flex-1 flex-col gap-6" data-dashboard-layout-state="{{ $isEditing ? 'editing' : 'locked' }}">
 
         {{-- Page header --}}
         <x-ui.patterns.page-title-actions-row
@@ -35,6 +35,16 @@
                 </x-ui.button>
             </x-slot:actions>
         </x-ui.patterns.page-title-actions-row>
+
+        @if ($isEditing)
+            <x-ui.inline-alert
+                semantic="notice"
+                title="Customization saves to your account"
+                data-dashboard-customization-state="editing"
+            >
+                Drag the visible widgets into the order you want, hide widgets you do not need right now, and lock the dashboard when the layout reads correctly. The saved layout is scoped to your signed-in account and keeps each widget tied to its stable dashboard identity.
+            </x-ui.inline-alert>
+        @endif
 
         {{-- Widget grid --}}
         <div
@@ -90,8 +100,9 @@
                 @endphp
                 @if ($hiddenSlots->isNotEmpty())
                     <div class="col-span-12">
-                        <div class="rounded-lg border border-slate-700/40 bg-slate-800/30 p-4">
+                        <div class="rounded-lg border border-slate-700/40 bg-slate-800/30 p-4" data-dashboard-hidden-widgets>
                             <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-500">Hidden Widgets</p>
+                            <p class="mb-3 text-sm text-slate-300">Hidden widgets stay attached to the same saved layout record for your account and can be restored into the visible order at any time.</p>
                             <div class="flex flex-wrap gap-2">
                                 @foreach ($hiddenSlots as $slot)
                                     <x-ui.button

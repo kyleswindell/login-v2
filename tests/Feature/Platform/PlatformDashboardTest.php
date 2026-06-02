@@ -70,10 +70,10 @@ class PlatformDashboardTest extends TestCase
             'user_id' => $user->id,
             'is_locked' => true,
             'layout' => [
-                ['widget_key' => 'platform_stats', 'position' => 0, 'column_span' => 'full', 'is_visible' => true],
-                ['widget_key' => 'error_health', 'position' => 1, 'column_span' => 6, 'is_visible' => true],
-                ['widget_key' => 'audit_activity', 'position' => 2, 'column_span' => 6, 'is_visible' => true],
-                ['widget_key' => 'notifications_summary', 'position' => 3, 'column_span' => 'full', 'is_visible' => true],
+                ['widget_key' => 'platform_stats', 'position' => 0, 'column_span' => 'full', 'row_span' => 1, 'is_visible' => true],
+                ['widget_key' => 'error_health', 'position' => 1, 'column_span' => 6, 'row_span' => 1, 'is_visible' => true],
+                ['widget_key' => 'audit_activity', 'position' => 2, 'column_span' => 6, 'row_span' => 1, 'is_visible' => true],
+                ['widget_key' => 'notifications_summary', 'position' => 3, 'column_span' => 'full', 'row_span' => 1, 'is_visible' => true],
             ],
         ]);
 
@@ -125,6 +125,9 @@ class PlatformDashboardTest extends TestCase
 
         $component = Livewire::actingAs($user)->test(DashboardPage::class);
 
+        $component->call('toggleLock')
+            ->assertSet('isLocked', false);
+
         $component->call('toggleWidgetVisibility', 'platform_stats');
 
         $layout = UserDashboardLayout::query()->where('user_id', $user->id)->first();
@@ -175,8 +178,8 @@ class PlatformDashboardTest extends TestCase
         $user = User::factory()->create();
 
         $badLayout = [
-            ['widget_key' => 'platform_stats',  'position' => 0, 'column_span' => 'full', 'is_visible' => true],
-            ['widget_key' => 'malicious_widget', 'position' => 1, 'column_span' => 'full', 'is_visible' => true],
+            'platform_stats',
+            'malicious_widget',
         ];
 
         Livewire::actingAs($user)
@@ -190,6 +193,60 @@ class PlatformDashboardTest extends TestCase
         $keys = collect($layout->layout)->pluck('widget_key')->all();
         $this->assertNotContains('malicious_widget', $keys);
         $this->assertContains('platform_stats', $keys);
+    }
+
+    public function test_dashboard_reorder_widgets_rebuilds_visible_order_and_preserves_hidden_widgets(): void
+    {
+        $user = User::factory()->create();
+
+        Livewire::actingAs($user)
+            ->test(DashboardPage::class)
+            ->call('toggleLock')
+            ->call('toggleWidgetVisibility', 'notifications_summary')
+            ->call('reorderWidgets', ['audit_activity', 'platform_stats', 'error_health', 'development_tools']);
+
+        $layout = UserDashboardLayout::query()->where('user_id', $user->id)->first();
+        $this->assertNotNull($layout);
+
+        $orderedKeys = collect($layout->layout)
+            ->sortBy('position')
+            ->pluck('widget_key')
+            ->all();
+
+        $this->assertSame([
+            'audit_activity',
+            'platform_stats',
+            'error_health',
+            'development_tools',
+            'notifications_summary',
+        ], $orderedKeys);
+
+        $hiddenSlot = collect($layout->layout)->firstWhere('widget_key', 'notifications_summary');
+        $this->assertFalse($hiddenSlot['is_visible']);
+    }
+
+    public function test_dashboard_saved_layouts_normalize_invalid_placement_metadata(): void
+    {
+        $user = User::factory()->create();
+
+        UserDashboardLayout::query()->create([
+            'user_id' => $user->id,
+            'is_locked' => true,
+            'layout' => [
+                ['widget_key' => 'platform_stats', 'position' => 0, 'column_span' => 'full', 'row_span' => 99, 'is_visible' => true],
+                ['widget_key' => 'error_health', 'position' => 1, 'column_span' => 5, 'row_span' => 3, 'is_visible' => true],
+                ['widget_key' => 'audit_activity', 'position' => 2, 'column_span' => 6, 'row_span' => 2, 'is_visible' => true],
+            ],
+        ]);
+
+        $component = Livewire::actingAs($user)->test(DashboardPage::class);
+
+        $layout = collect($component->get('widgetLayout'))->keyBy('widget_key');
+
+        $this->assertSame(1, $layout['platform_stats']['row_span']);
+        $this->assertSame(6, $layout['error_health']['column_span']);
+        $this->assertSame(1, $layout['error_health']['row_span']);
+        $this->assertSame(2, $layout['audit_activity']['row_span']);
     }
 
     public function test_dashboard_shows_setup_trigger_for_super_admins(): void

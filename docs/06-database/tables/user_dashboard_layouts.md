@@ -24,6 +24,7 @@ Persist each authenticated user's dashboard widget layout and lock state for the
 - `user_id` is unique so each user has at most one saved dashboard layout row
 - `user_id` references `users.id` and cascades on delete
 - `layout` stores the ordered widget slot payload used by `DashboardPage`
+- each JSON slot is keyed by stable `widget_key` and persists validated placement metadata such as `position`, `column_span`, `row_span`, and `is_visible`
 - `is_locked` defaults to `true`
 
 ## Related

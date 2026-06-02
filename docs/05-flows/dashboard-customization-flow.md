@@ -18,8 +18,8 @@ Define the ordered execution path for user-controlled dashboard customization.
 2. System loads the default layout when no saved layout exists, or the saved layout when one exists.
 3. User enters customization mode from the dashboard toolbar.
 4. User reorders widgets and/or changes widget visibility.
-5. System validates the requested widget state against the current user's permissions.
-6. System persists the updated layout for the current user.
+5. System validates the requested widget state against the current user's permissions and the current widget-registry placement contract.
+6. System persists the updated layout for the current user using stable widget identity plus validated placement metadata.
 7. System returns the dashboard to the updated locked or visible state.
 8. If the user chooses reset, system clears the saved layout and restores the default configuration.
 

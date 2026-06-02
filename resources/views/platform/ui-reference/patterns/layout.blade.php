@@ -125,6 +125,36 @@
             </div>
         </x-ui.patterns.content-section-block>
 
+        <x-ui.patterns.content-section-block
+            title="Dashboard customization proof"
+            description="Use this section to review the live dashboard customization contract before judging the worker-facing `/dashboard` surface."
+            kicker="Customization states"
+        >
+            <div class="space-y-4">
+                <x-ui.inline-alert semantic="notice" title="Saved per-user layout">
+                    The dashboard saves customization per signed-in user. The durable saved state should be keyed by stable widget identity and validated placement metadata, not by page-local placeholder slots that can drift when widget definitions evolve.
+                </x-ui.inline-alert>
+
+                <div class="grid gap-4 xl:grid-cols-3">
+                    <div class="rounded-2xl border border-slate-800 bg-slate-950/70 p-5">
+                        <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Locked state</p>
+                        <h3 class="mt-3 text-lg font-semibold text-white">Review-ready default view</h3>
+                        <p class="mt-2 text-sm text-slate-300">Widget chrome stays quiet until the operator chooses to customize, so the dashboard still reads like an operational summary instead of an editor.</p>
+                    </div>
+                    <div class="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-5">
+                        <p class="text-xs font-semibold uppercase tracking-[0.28em] text-emerald-200/80">Unlocked state</p>
+                        <h3 class="mt-3 text-lg font-semibold text-white">Drag, toggle, then lock</h3>
+                        <p class="mt-2 text-sm text-slate-200">Visible widgets show drag handles, hidden widgets move into a restore tray, and locking the page preserves the personalized order for that user account.</p>
+                    </div>
+                    <div class="rounded-2xl border border-slate-800 bg-slate-950/70 p-5">
+                        <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Persistence contract</p>
+                        <h3 class="mt-3 text-lg font-semibold text-white">Stable widget identity first</h3>
+                        <p class="mt-2 text-sm text-slate-300">Save `widget_key` plus validated placement metadata such as order, span, and visibility. If a widget disappears, changes permission, or regains a default, the next load should reconcile safely instead of trusting stale slot coordinates blindly.</p>
+                    </div>
+                </div>
+            </div>
+        </x-ui.patterns.content-section-block>
+
         <div class="grid gap-6 xl:grid-cols-[1.45fr_minmax(0,1fr)]">
             <x-ui.patterns.content-section-block
                 title="Content Section Block"

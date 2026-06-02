@@ -156,6 +156,17 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-ui-demo-toast-generated-overlay', false);
     }
 
+    public function test_layout_reference_surface_includes_dashboard_customization_proof(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/patterns/layout')
+            ->assertOk()
+            ->assertSee('Dashboard customization proof')
+            ->assertSee('Saved per-user layout')
+            ->assertSee('Stable widget identity first');
+    }
+
     public function test_standard_users_cannot_view_ui_reference_workspace(): void
     {
         $user = User::factory()->create();

@@ -25,26 +25,14 @@ window.dashboardSort = function (initialOrder) {
                 dragClass: 'ring-2 ring-emerald-500/50',
 
                 onEnd: () => {
-                    const newOrder = Array.from(el.querySelectorAll('[data-widget-key]'))
-                        .map((node, index) => ({
-                            widget_key: node.dataset.widgetKey,
-                            position: index,
-                        }));
+                    const orderedVisibleKeys = Array.from(el.querySelectorAll('[data-widget-key]'))
+                        .map((node) => node.dataset.widgetKey)
+                        .filter(Boolean);
 
-                    // Merge new position values into the existing layout array
-                    // so column_span and is_visible values are preserved.
-                    const positionMap = Object.fromEntries(
-                        newOrder.map(({ widget_key, position }) => [widget_key, position])
-                    );
-
-                    // Dispatch to Livewire — the component re-merges with the full layout
-                    // and persists the result.
-                    this.$wire.call('reorderWidgets',
-                        this.$wire.get('widgetLayout').map(slot => ({
-                            ...slot,
-                            position: positionMap[slot.widget_key] ?? slot.position,
-                        }))
-                    );
+                    // Persist only the visible widget identity order.
+                    // Livewire rebuilds the saved layout deterministically so
+                    // hidden widgets and placement metadata remain valid.
+                    this.$wire.call('reorderWidgets', orderedVisibleKeys);
                 },
             });
         },

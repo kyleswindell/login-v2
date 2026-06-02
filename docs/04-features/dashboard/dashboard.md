@@ -34,9 +34,10 @@ Named route: `dashboard`
 ## Feature Rules
 
 * default layout is provided for users without a saved layout
-* user customization persists widget order, visibility, and lock state between sessions
+* user customization persists widget order, visibility, lock state, and validated placement metadata between sessions
 * widget visibility is permission-aware and controlled per signed-in user context
 * module widgets are supported through the shared dashboard extension contract
+* saved layout state is keyed by stable widget identity and reconciled against the current widget registry on load so stale or invalid placement metadata cannot drift silently
 
 Architecture ownership for dashboard subsystem boundaries and registry model lives in:
 
@@ -88,10 +89,11 @@ Data contract ownership for dashboard layout persistence lives in:
 * Changing order or visibility writes to `user_dashboard_layouts` via Livewire actions
 * "Lock Dashboard" button in the toolbar saves state and returns to locked view
 * "Reset to Defaults" button clears the saved layout and reloads the default configuration
+* saved layout state belongs to the signed-in user only; customization on one account does not rewrite another user's dashboard
 
 ### Drag-and-Drop
 
-SortableJS is initialized on the widget grid container when edit mode is active. On drag end, SortableJS dispatches a browser CustomEvent that Livewire's `@this.call('reorderWidgets', layout)` picks up. Livewire writes the new order to the database.
+SortableJS is initialized on the widget grid container when edit mode is active. On drag end, SortableJS sends the ordered visible widget keys back to Livewire, which rebuilds the saved layout deterministically from stable widget identity plus validated placement metadata before writing the result to the database.
 
 JS entry point: `resources/js/dashboard-sort.js`
 

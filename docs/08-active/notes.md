@@ -1,6 +1,15 @@
 # Notes
 
 ## Findings
+- The latest targeted staging review of `P2-B-CQ-019` confirms the current UI Reference proof is still not review-ready:
+  - the dashboard example is compressed to accommodate adjacent proof-state support cards instead of demonstrating a true full-width main-content dashboard section
+  - the proof widgets can still collide internally at smaller widths, with the current `1x1` examples exposing overlap between badge/meta content and the main signal region
+  - lock/unlock and visibility toggling now read correctly, but the unlocked drag interaction still lacks clear insertion or swap feedback, so the reordering contract does not yet read as intentional during review
+  - this remains a same-item failure of `P2-B-CQ-019`, not a new dashboard customization queue item
+- The same review pass also opens a new adjacent shared-surface finding as `P2-B-CQ-020`:
+  - the saved-layout preview card currently uses a tinted surface treatment with illegible heading/body contrast, especially in light mode
+  - this should not remain a page-local dashboard proof fix; the issue points to a missing approved soft-card surface palette with paired background, heading, body text, link, and button treatments per supported colorway
+  - the dashboard saved-layout preview is the first visible consumer proving the gap, but the fix likely belongs in shared T1/T2 surface styling rather than only in the proof page
 - Batch B pass `2-B-0033` now reimplements `P2-B-CQ-019` with the stricter UI Reference-first proof requirement:
   - the Layout + Dashboard page now contains a visibly distinct dummy-widget customization proof instead of descriptive copy alone
   - the proof supports lock/unlock, drag reorder, hide/show, restore, reset, and a readable saved-layout preview using browser-local review state
@@ -210,6 +219,8 @@
   - future-module UI ownership declaration fields
 
 ## Decisions
+- Reopen `P2-B-CQ-019` as a same-item failure because the current UI Reference proof still compresses the dashboard example, allows smaller-width widget-content collisions, and does not provide sufficiently legible drag insertion/swap feedback during reordering.
+- Add `P2-B-CQ-020` as a new `Ready To Implement` follow-up item because the saved-layout preview exposes a broader missing shared soft-card palette contract rather than a dashboard-only local styling bug.
 - Treat the Layout + Dashboard UI Reference page as the canonical first review surface for `P2-B-CQ-019`; the live `/dashboard` page is downstream consumer validation only for this queue item.
 - Do not count decorative customize/lock chrome or drag-style affordances on the live dashboard as proof coverage unless the interaction is demonstrably working and already proven on the UI Reference surface.
 - Reopen `P2-B-CQ-019` as a same-item failure because the current staging proof does not present a visibly distinct or directly reviewable customization interface on the Layout + Dashboard page.
@@ -251,7 +262,8 @@
 
 ## Risks / Questions
 - Combined Batch B manual review still cannot close until staging manually re-validates `P2-B-CQ-013`.
-- `P2-B-CQ-019` now needs targeted staging review of both the UI Reference proof and the live dashboard consumer behavior to confirm the implementation matches the stricter review-surface requirement.
+- `P2-B-CQ-019` now needs another implementation pass before it can return to targeted staging review; the next pass must preserve a full-width UI Reference dashboard proof, fix smaller-width widget-content collision behavior, and make drag reordering visually legible.
+- `P2-B-CQ-020` now needs a shared soft-card surface palette decision and implementation path so tinted proof cards stop relying on page-local color pairings.
 - `P2-B-CQ-015` is now unblocked and ready for implementation, but it still needs a full account-dropdown consumer pass against the approved shared action/menu-item contract.
 - `P2-B-CQ-018` now needs a visible dashboard/layout proof treatment that makes taller widget states directly judgeable in-context, or the current row-span contract will remain hard to validate visually.
 - Realtime notification toast rendering remains a feature-level JS path and is intentionally outside this Tier 1 hardening pass.

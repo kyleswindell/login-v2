@@ -1,5 +1,13 @@
 {
   "version": 1,
   "description": "Advisory writable-session scope claims only. This file is not a lock and does not make concurrent shared-folder writes safe.",
-  "claims": []
+  "claims": [
+    {
+      "session": "integrator-main",
+      "scope": "/docs/08-active/",
+      "branch": "main",
+      "worktree": "C:\\Users\\kswin\\Desktop\\Work 2023\\8. Login V2",
+      "note": "Integrator-owned Batch B active workspace. Worker branches/worktrees are provisioned for P2-B-CQ-015, P2-B-CQ-018, P2-B-CQ-019, and P2-B-CQ-020, but queue-state transitions remain in the integrator lane."
+    }
+  ]
 }

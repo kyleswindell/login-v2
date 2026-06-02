@@ -160,29 +160,30 @@
                     </div>
                 </div>
 
-                <div class="grid gap-4 xl:grid-cols-[1.65fr_minmax(0,1fr)]">
-                    <div class="space-y-4">
+                <div class="space-y-4" data-dashboard-proof-main-content>
                         <div
                             class="grid gap-4 xl:grid-cols-12 xl:auto-rows-[minmax(11rem,auto)]"
                             x-ref="visibleGrid"
                             x-bind:data-dashboard-proof-state="editing ? 'editing' : 'locked'"
+                            data-dashboard-reorder-surface
                         >
                             <template x-for="widget in visibleWidgets" :key="widget.id">
                                 <article
-                                    class="col-span-12 rounded-2xl border p-4 shadow-sm transition"
+                                    class="dashboard-proof-widget-card relative col-span-12 min-w-0 overflow-hidden rounded-2xl border p-4 shadow-sm transition"
                                     x-bind:class="[spanClass(widget), cardClass(widget), editing ? 'ring-1 ring-emerald-400/25' : '']"
                                     x-bind:data-proof-widget-id="widget.id"
                                     data-dashboard-proof-widget
+                                    data-dashboard-proof-widget-card
                                 >
                                     <div class="flex items-start justify-between gap-3">
-                                        <div class="space-y-2">
+                                        <div class="min-w-0 flex-1 space-y-2">
                                             <p class="text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-slate-400" x-text="widget.kicker"></p>
                                             <div>
-                                                <h4 class="text-lg font-semibold text-white" x-text="widget.title"></h4>
-                                                <p class="mt-1 text-sm text-slate-300" x-text="widget.description"></p>
+                                                <h4 class="break-words text-lg font-semibold text-white" x-text="widget.title"></h4>
+                                                <p class="mt-1 break-words text-sm text-slate-300" x-text="widget.description"></p>
                                             </div>
                                         </div>
-                                        <div class="flex items-center gap-2" x-show="editing">
+                                        <div class="flex shrink-0 items-center gap-2" x-show="editing">
                                             <button
                                                 type="button"
                                                 class="dashboard-proof-drag-handle inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-700 bg-slate-900/80 text-slate-300 transition hover:border-slate-500 hover:text-white"
@@ -206,21 +207,21 @@
                                         </div>
                                     </div>
 
-                                    <div class="mt-4 grid gap-3 md:grid-cols-[minmax(0,1fr)_auto]">
-                                        <div>
+                                    <div class="mt-4 grid min-w-0 gap-3 2xl:grid-cols-[minmax(0,1fr)_minmax(7rem,9rem)]">
+                                        <div class="min-w-0">
                                             <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400" x-text="widget.supporting"></p>
-                                            <p class="mt-2 text-4xl font-semibold text-white" x-text="widget.metric"></p>
+                                            <p class="mt-2 break-words text-4xl font-semibold text-white" x-text="widget.metric"></p>
                                         </div>
-                                        <div class="rounded-xl border border-white/10 bg-black/10 px-3 py-2 text-right">
+                                        <div class="min-w-0 rounded-xl border border-white/10 bg-black/10 px-3 py-2 text-left 2xl:text-right">
                                             <p class="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-slate-400">Span</p>
                                             <p class="mt-2 text-sm font-medium text-slate-100" x-text="widget.span"></p>
-                                            <p class="mt-1 text-xs text-slate-400" x-text="spanDescriptor(widget)"></p>
+                                            <p class="mt-1 break-words text-xs text-slate-400" x-text="spanDescriptor(widget)"></p>
                                         </div>
                                     </div>
 
                                     <div class="mt-4 space-y-2">
                                         <template x-for="note in widget.notes" :key="note">
-                                            <div class="rounded-xl border border-white/10 bg-black/10 px-3 py-2 text-sm text-slate-200" x-text="note"></div>
+                                            <div class="rounded-xl border border-white/10 bg-black/10 px-3 py-2 text-sm text-slate-200 break-words" x-text="note"></div>
                                         </template>
                                     </div>
                                 </article>
@@ -252,7 +253,7 @@
                         </div>
                     </div>
 
-                    <div class="space-y-4">
+                    <div class="grid gap-4 xl:grid-cols-3" data-dashboard-proof-support>
                         <div class="rounded-2xl border border-slate-800 bg-slate-950/70 p-5">
                             <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Proof state</p>
                             <h3 class="mt-3 text-lg font-semibold text-white" x-text="editing ? 'Unlocked review state' : 'Locked review state'"></h3>
@@ -269,13 +270,12 @@
                             <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Review cues</p>
                             <ul class="mt-3 space-y-2 text-sm text-slate-300">
                                 <li>1. Unlock the proof and drag at least one widget.</li>
-                                <li>2. Hide a widget, confirm it moves into the restore tray, then restore it.</li>
-                                <li>3. Lock the proof again and verify the visible order remains intact.</li>
-                                <li>4. Compare the resulting state to the live `/dashboard` consumer after the proof is accepted.</li>
+                                <li>2. Watch the insertion line and swap target before dropping.</li>
+                                <li>3. Hide a widget, confirm it moves into the restore tray, then restore it.</li>
+                                <li>4. Lock the proof again and verify the visible order remains intact.</li>
                             </ul>
                         </div>
                     </div>
-                </div>
             </div>
         </x-ui.patterns.content-section-block>
 

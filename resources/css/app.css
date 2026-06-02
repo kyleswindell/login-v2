@@ -645,6 +645,68 @@
         background-color: color-mix(in srgb, var(--ui-surface-elevated) 72%, transparent);
     }
 
+    .dashboard-sort-chosen {
+        outline: 1px solid rgb(52 211 153 / 0.55);
+        outline-offset: 3px;
+    }
+
+    .dashboard-sort-drag {
+        opacity: 0.9;
+        rotate: 0.35deg;
+        box-shadow: 0 22px 44px rgb(0 0 0 / 0.35);
+    }
+
+    .dashboard-sort-ghost {
+        opacity: 0.5;
+        outline: 2px dashed rgb(52 211 153 / 0.75);
+        outline-offset: -4px;
+    }
+
+    .dashboard-reorder-preview {
+        position: relative;
+        isolation: isolate;
+    }
+
+    .dashboard-reorder-preview::before {
+        content: attr(data-reorder-preview);
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        z-index: 30;
+        border-radius: 9999px;
+        border: 1px solid rgb(52 211 153 / 0.55);
+        background: rgb(6 78 59 / 0.92);
+        padding: 0.2rem 0.55rem;
+        color: rgb(209 250 229);
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        line-height: 1;
+        text-transform: uppercase;
+        pointer-events: none;
+    }
+
+    .dashboard-reorder-preview::after {
+        content: '';
+        position: absolute;
+        left: 0.75rem;
+        right: 0.75rem;
+        z-index: 30;
+        height: 0.25rem;
+        border-radius: 9999px;
+        background: linear-gradient(90deg, transparent, rgb(52 211 153), transparent);
+        box-shadow: 0 0 22px rgb(52 211 153 / 0.72);
+        pointer-events: none;
+    }
+
+    .dashboard-reorder-preview[data-reorder-preview='before']::after {
+        top: 0.2rem;
+    }
+
+    .dashboard-reorder-preview[data-reorder-preview='after']::after {
+        bottom: 0.2rem;
+    }
+
     /* Keep widget row and column placement explicit so tall spans render reliably. */
     @media (min-width: 48rem) {
         .ui-pattern-widget-span-1x1 {

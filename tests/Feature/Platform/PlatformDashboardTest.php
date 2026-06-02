@@ -23,6 +23,7 @@ class PlatformDashboardTest extends TestCase
             ->assertSee($user->email)
             ->assertSee('data-ui-pattern="widget-shell"', false)
             ->assertSee('dashboard-widget-grid')
+            ->assertSee('data-dashboard-reorder-surface', false)
             ->assertSee('Customize');
     }
 

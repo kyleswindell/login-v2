@@ -167,7 +167,12 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Customize proof')
             ->assertSee('Hidden widget tray')
             ->assertSee('Saved layout preview')
+            ->assertSee('Watch the insertion line and swap target before dropping.')
             ->assertSee('data-dashboard-proof-demo', false)
+            ->assertSee('data-dashboard-proof-main-content', false)
+            ->assertSee('data-dashboard-proof-support', false)
+            ->assertSee('data-dashboard-proof-widget-card', false)
+            ->assertSee('data-dashboard-reorder-surface', false)
             ->assertSee('data-dashboard-proof-saved-layout', false)
             ->assertSee('data-dashboard-proof-widget', false);
     }

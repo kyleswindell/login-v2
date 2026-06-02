@@ -42,7 +42,7 @@
                 title="Customization saves to your account"
                 data-dashboard-customization-state="editing"
             >
-                Drag the visible widgets into the order you want, hide widgets you do not need right now, and lock the dashboard when the layout reads correctly. The saved layout is scoped to your signed-in account and keeps each widget tied to its stable dashboard identity.
+                Drag the visible widgets into the order you want, use the insertion line and swap target to preview the drop, hide widgets you do not need right now, and lock the dashboard when the layout reads correctly. The saved layout is scoped to your signed-in account and keeps each widget tied to its stable dashboard identity.
             </x-ui.inline-alert>
         @endif
 
@@ -52,10 +52,11 @@
             class="grid grid-cols-12 gap-4"
             x-data="dashboardSort($wire.entangle('isEditing').live)"
             x-init="init()"
+            data-dashboard-reorder-surface
         >
             @foreach ($visibleWidgets as $slot)
                 <div
-                    class="col-span-12
+                    class="relative col-span-12
                         {{ $slot['column_span'] === 'full' ? 'xl:col-span-12' : 'xl:col-span-' . $slot['column_span'] }}"
                     data-widget-key="{{ $slot['widget_key'] }}"
                 >

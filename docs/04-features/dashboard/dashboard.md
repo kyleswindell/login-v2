@@ -90,6 +90,7 @@ Data contract ownership for dashboard layout persistence lives in:
 ### Edit Mode (unlocked)
 
 * Each widget card shows a drag handle (activates SortableJS) and a visibility eye-icon toggle
+* Dragging a widget shows the active swap target and before/after insertion line before the user drops it
 * Changing order or visibility writes to `user_dashboard_layouts` via Livewire actions
 * "Lock Dashboard" button in the toolbar saves state and returns to locked view
 * "Reset to Defaults" button clears the saved layout and reloads the default configuration
@@ -108,8 +109,10 @@ The Layout + Dashboard UI Reference page must prove the dashboard customization 
 Proof requirements:
 
 * dummy widgets are visibly distinct from the live operational widgets
+* the dummy dashboard grid remains a full main-content-width dashboard section; proof-state support cards must sit outside that grid rather than compressing it
+* compact widget cards stack internal metric, badge, and note regions at narrower widths so card internals do not overlap
 * locked and unlocked states are directly reviewable on-page
-* reorder, hide/show, restore, and reset states can be exercised on-page
+* reorder, hide/show, restore, and reset states can be exercised on-page, including visible insertion and swap previews during drag
 * the proof exposes a readable saved-layout preview so the stable widget-identity contract is inspectable during review
 * the proof uses browser-local review state only; it does not replace the live dashboard's per-user persistence contract
 

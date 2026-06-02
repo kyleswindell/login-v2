@@ -1,5 +1,23 @@
 import Sortable from 'sortablejs';
 
+const clearReorderPreview = (scope) => {
+    scope.querySelectorAll('.dashboard-reorder-preview').forEach((node) => {
+        node.classList.remove('dashboard-reorder-preview');
+        node.removeAttribute('data-reorder-preview');
+    });
+};
+
+const markReorderPreview = (event, scope) => {
+    clearReorderPreview(scope);
+
+    if (!(event.related instanceof HTMLElement)) {
+        return;
+    }
+
+    event.related.classList.add('dashboard-reorder-preview');
+    event.related.dataset.reorderPreview = event.willInsertAfter ? 'after' : 'before';
+};
+
 /**
  * Alpine.js data function for dashboard drag-and-drop reordering.
  *
@@ -43,10 +61,20 @@ window.dashboardSort = function (editingState = false) {
             this.sortableInstance = Sortable.create(el, {
                 handle: '.dashboard-drag-handle',
                 animation: 150,
-                ghostClass: 'opacity-40',
-                dragClass: 'ring-2 ring-emerald-500/50',
+                swapThreshold: 0.65,
+                invertSwap: true,
+                invertedSwapThreshold: 0.45,
+                ghostClass: 'dashboard-sort-ghost',
+                chosenClass: 'dashboard-sort-chosen',
+                dragClass: 'dashboard-sort-drag',
+
+                onMove: (event) => {
+                    markReorderPreview(event, el);
+                },
 
                 onEnd: () => {
+                    clearReorderPreview(el);
+
                     const orderedVisibleKeys = Array.from(el.querySelectorAll('[data-widget-key]'))
                         .map((node) => node.dataset.widgetKey)
                         .filter(Boolean);
@@ -55,6 +83,10 @@ window.dashboardSort = function (editingState = false) {
                     // Livewire rebuilds the saved layout deterministically so
                     // hidden widgets and placement metadata remain valid.
                     this.$wire.call('reorderWidgets', orderedVisibleKeys);
+                },
+
+                onUnchoose: () => {
+                    clearReorderPreview(el);
                 },
             });
         },

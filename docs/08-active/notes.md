@@ -1,6 +1,12 @@
 # Notes
 
 ## Findings
+- Batch B review-state update `2-B-0037` maps the latest Layout + Dashboard staging feedback back onto existing queue items:
+  - `P2-B-CQ-018` fails because `1x2`, `2x2`, and equivalent two-row widgets still do not always reserve two full rows when a following widget occupies the would-be space below them
+  - `P2-B-CQ-019` is partially approved: dashboard-associated layout save behavior works, drag/move sorting with preview works, and the dashboard layout example is now appropriately full main-content width
+  - `P2-B-CQ-019` remains open because the proof still needs widget examples with both header/title and body/supporting content treatment
+  - `P2-B-CQ-020` fails because the Layout + Dashboard proof still uses non-standard colored widget-card and support-card treatments, including the saved-layout preview cards, instead of the default light/dark shared card pattern with special colors reserved for alerts, notices, status, or other semantic states
+  - no new queue item is required because the feedback maps to the existing dashboard row-span, dashboard customization proof, and widget/support-card palette items
 - Batch B pass `2-B-0036` addresses the targeted `P2-B-CQ-015` staging failure:
   - manual review confirmed the sign-out action is now correct as shared ghost-danger
   - the theme controls still failed because all three options were changed to the outline button style instead of only marking the active theme option as selected
@@ -230,6 +236,9 @@
   - future-module UI ownership declaration fields
 
 ## Decisions
+- Reopen `P2-B-CQ-018` as a same-item failure because the latest review proves the visible multi-row widget proof still does not guarantee true two-row occupancy when following widgets are present.
+- Reopen `P2-B-CQ-019` as a partial approval rather than a full pass: full-width layout composition, save behavior, and drag/reorder preview are accepted, but widget header/body content examples remain required before the item can close.
+- Reopen `P2-B-CQ-020` as a same-item failure because the remaining Layout + Dashboard card-color problem is still the shared/default card palette contract, not a new dashboard-only styling issue.
 - Reopen `P2-B-CQ-019` as a same-item failure because the current UI Reference proof still compresses the dashboard example, allows smaller-width widget-content collisions, and does not provide sufficiently legible drag insertion/swap feedback during reordering.
 - Add `P2-B-CQ-020` as a new `Ready To Implement` follow-up item because the saved-layout preview exposes a broader missing shared soft-card palette contract rather than a dashboard-only local styling bug.
 - Treat the Layout + Dashboard UI Reference page as the canonical first review surface for `P2-B-CQ-019`; the live `/dashboard` page is downstream consumer validation only for this queue item.

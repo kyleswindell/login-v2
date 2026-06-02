@@ -51,12 +51,12 @@
   - settings archetype is explicit
 
 ## Dashboard And Summary Conventions
-- [x] Dashboard And Summary Conventions
-  Status: implemented
+- [ ] Dashboard And Summary Conventions
+  Status: review fixes queued
   - dashboard widget-shell conventions are explicit
-  - dashboard widget span model is explicit
+  - dashboard widget span model is explicit but requires a reopened two-row occupancy fix
   - summary/stat-card conventions are explicit
-  - dashboard grid usage is explicit and reviewable
+  - dashboard grid usage is explicit and reviewable after reopened Layout + Dashboard proof fixes
 
 ## Registration And Ownership Handoff
 - [ ] Registration And Ownership Handoff

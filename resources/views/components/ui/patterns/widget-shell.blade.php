@@ -19,6 +19,7 @@
         '2x2' => 'ui-pattern-widget-span-2x2',
         '3x1' => 'ui-pattern-widget-span-3x1',
         '3x2' => 'ui-pattern-widget-span-3x2',
+        '3x3' => 'ui-pattern-widget-span-3x3',
         default => null,
     };
 

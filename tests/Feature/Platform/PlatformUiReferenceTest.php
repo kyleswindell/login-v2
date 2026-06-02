@@ -130,8 +130,9 @@ class PlatformUiReferenceTest extends TestCase
             ->assertOk()
             ->assertSee('Widget Content Standards')
             ->assertSee('Geometry decision')
-            ->assertSee('Filled widget size examples')
-            ->assertSee('data-widget-content-standards', false)
+            ->assertSee('Content-space unit system')
+            ->assertSee('data-widget-content-unit-system', false)
+            ->assertSee('data-widget-size-navigation', false)
             ->assertSee('data-ui-pattern="dashboard-grid"', false)
             ->assertSee('data-ui-pattern="widget-shell"', false);
 
@@ -237,35 +238,19 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('1366px')
             ->assertSee('1440px')
             ->assertSee('1920px')
-            ->assertSee('Filled widget size examples')
-            ->assertSee('1x1 Summary')
-            ->assertSee('2x1 Wide Summary')
-            ->assertSee('1x2 Tall List')
-            ->assertSee('2x2 Detail')
-            ->assertSee('3x1 Wide Summary')
-            ->assertSee('3x2 Rich Summary')
-            ->assertSee('Allowance matrix')
-            ->assertSee('Negative boundary')
-            ->assertSee('Four to six compact timeline/list rows.')
-            ->assertSee('Rich same-topic summary with KPIs, compact visual, list, and footer.')
-            ->assertSee('No internal scroll baseline')
+            ->assertSee('Content-space unit system')
+            ->assertSee('Pixel budget')
+            ->assertSee('Size-standard pages')
             ->assertSee('data-widget-geometry-decision', false)
             ->assertSee('data-widget-viewport-baseline', false)
-            ->assertSee('data-widget-content-standards', false)
-            ->assertSee('data-widget-content-size-grid', false)
-            ->assertSee('data-widget-allowance-matrix', false)
-            ->assertSee('data-widget-negative-boundary', false)
-            ->assertSee('data-widget-content-size="1x1"', false)
-            ->assertSee('data-widget-content-size="2x1"', false)
-            ->assertSee('data-widget-content-size="1x2"', false)
-            ->assertSee('data-widget-content-size="2x2"', false)
-            ->assertSee('data-widget-content-size="3x1"', false)
-            ->assertSee('data-widget-content-size="3x2"', false)
-            ->assertSee('ui-pattern-dashboard-grid-widgets', false)
-            ->assertSee('data-ui-widget-span="1x2"', false)
-            ->assertSee('data-ui-widget-span="2x2"', false)
-            ->assertSee('data-ui-widget-span="3x2"', false)
-            ->assertDontSee('ui-soft-card', false)
+            ->assertSee('data-widget-content-unit-system', false)
+            ->assertSee('data-widget-px-budget', false)
+            ->assertSee('data-widget-size-navigation', false)
+            ->assertSee('data-widget-size-nav-item="shape-map"', false)
+            ->assertSee('data-widget-size-nav-item="3x3"', false)
+            ->assertDontSee('Filled widget size examples')
+            ->assertDontSee('Allowance matrix')
+            ->assertDontSee('Negative boundary')
             ->assertDontSee('3x1 Full Row')
             ->assertDontSee('3x2 Tall Surface')
             ->assertDontSee('md:auto-rows-[minmax(11rem,auto)]', false);
@@ -284,7 +269,34 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('.ui-pattern-widget-span-1x2', $css);
         $this->assertStringContainsString('block-size: calc((var(--ui-dashboard-grid-row-size) * 2) + var(--ui-dashboard-grid-gap))', $css);
         $this->assertStringContainsString('block-size: var(--ui-dashboard-grid-row-size)', $css);
+        $this->assertStringContainsString('.ui-pattern-widget-span-3x3', $css);
         $this->assertStringNotContainsString('grid-auto-rows: minmax(11rem, auto)', $css);
+    }
+
+    public function test_widget_content_size_pages_are_accessible(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $sizes = ['shape-map', '1x1', '2x1', '1x2', '2x2', '3x1', '3x2', '3x3', '4x0-5'];
+
+        foreach ($sizes as $size) {
+            $response = $this->get('/platform/ui-reference/patterns/widget-content/'.$size);
+            $response->assertOk();
+
+            if ($size === 'shape-map') {
+                $response->assertSee('data-widget-shape-map', false);
+                $response->assertSee('data-widget-composition-matrix', false);
+            } else {
+                $response->assertSee('data-widget-size-page="'.$size.'"', false);
+                $response->assertSee('data-widget-size-module-scaffold="'.$size.'"', false);
+            }
+        }
+
+        $this->get('/platform/ui-reference/patterns/widget-content/invalid-size')
+            ->assertNotFound();
+
+        $css = file_get_contents(resource_path('css/app.css'));
+        $this->assertStringContainsString('.ui-pattern-widget-span-3x3', $css);
     }
 
     public function test_standard_users_cannot_view_ui_reference_workspace(): void

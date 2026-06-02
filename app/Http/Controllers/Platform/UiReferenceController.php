@@ -137,11 +137,24 @@ class UiReferenceController extends Controller
         return $this->renderSection('patterns.layout');
     }
 
+    private const WIDGET_CONTENT_SUBPAGES = [
+        'shape-map', '1x1', '2x1', '1x2', '2x2', '3x1', '3x2', '3x3', '4x0-5',
+    ];
+
     public function widgetContent(Request $request): View
     {
         $this->authorize('view-platform-ui-reference');
 
         return $this->renderSection('patterns.widget-content');
+    }
+
+    public function widgetContentSubpage(Request $request, string $size): View
+    {
+        $this->authorize('view-platform-ui-reference');
+
+        abort_unless(in_array($size, self::WIDGET_CONTENT_SUBPAGES, true), 404);
+
+        return $this->renderSection('patterns.widget-content.'.$size);
     }
 
     public function archetypes(Request $request): View

@@ -94,14 +94,36 @@
                     <x-layouts.nav-icon icon="settings" />
                     <span>Layout + Dashboard</span>
                 </a>
+                @php $isWidgetContentSection = str_starts_with($currentSection ?? '', 'patterns.widget-content'); @endphp
                 <a wire:navigate href="{{ route('platform.ui-reference.patterns.widget-content') }}" @class([
                     'flex items-center gap-2 rounded-md px-3 py-3 text-sm font-medium transition',
-                    'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => ($currentSection ?? '') === 'patterns.widget-content',
-                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ($currentSection ?? '') !== 'patterns.widget-content',
+                    'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => $isWidgetContentSection,
+                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ! $isWidgetContentSection,
                 ])>
                     <x-layouts.nav-icon icon="settings" />
                     <span>Widget Content</span>
                 </a>
+                @if ($isWidgetContentSection)
+                    <nav class="ml-5 mt-1 flex flex-col gap-1 border-l border-slate-700 pl-3">
+                        @foreach ([
+                            ['shape-map', 'Shape Map'],
+                            ['1x1', '1×1'],
+                            ['2x1', '2×1'],
+                            ['1x2', '1×2'],
+                            ['2x2', '2×2'],
+                            ['3x1', '3×1'],
+                            ['3x2', '3×2'],
+                            ['3x3', '3×3'],
+                            ['4x0-5', '4×0.5 Strip'],
+                        ] as [$slug, $label])
+                            <a wire:navigate href="{{ route('platform.ui-reference.patterns.widget-content.size', ['size' => $slug]) }}" @class([
+                                'rounded-md px-2 py-1.5 text-xs font-medium transition',
+                                'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => ($currentSection ?? '') === 'patterns.widget-content.'.$slug,
+                                'text-slate-400 hover:bg-slate-800 hover:text-white' => ($currentSection ?? '') !== 'patterns.widget-content.'.$slug,
+                            ])>{{ $label }}</a>
+                        @endforeach
+                    </nav>
+                @endif
                 <a wire:navigate href="{{ route('platform.ui-reference.patterns.archetypes') }}" @class([
                     'flex items-center gap-2 rounded-md px-3 py-3 text-sm font-medium transition',
                     'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => ($currentSection ?? '') === 'patterns.archetypes',

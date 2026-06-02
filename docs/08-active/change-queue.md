@@ -11,6 +11,10 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 - Exploratory review discussion stays in chat until it is normalized into concise queue language.
 
 ## Ready To Implement
+
+## In Progress
+
+## Implemented Pending Review
 - [ ] Rebuild the Widget Content Standards area around a content-space unit system instead of semantic content guesses: keep the four-unit dashboard geometry and row-height budget visible, define reusable content-space shapes up to `3x3`, define compact `0.5x0.5` and `1x0.5` status/counter units plus a specialized `4x0.5` dashboard strip, and create standalone size-standard pages so future approved widget-content examples can be added by size without bloating the landing page.
   ID: P2-B-CQ-023
   Iteration: 3
@@ -19,11 +23,7 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Plan: `docs/08-active/dashboard-widget-content-standards-plan.md`
   Follow-up To: P2-B-CQ-021
   Supersedes: P2-B-CQ-021, P2-B-CQ-024
-  Implemented in: `2-B-0044`
-
-## In Progress
-
-## Implemented Pending Review
+  Implemented in: `2-B-0047`
 ## Blocked
 
 ## Deferred

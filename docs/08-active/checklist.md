@@ -2,25 +2,25 @@
 
 ## Staging Deploy
 - [ ] Staging Deploy
-  Status: not implemented
+  Status: implemented (pending manual review)
   - staging deploy is complete for the rebuilt UI lane from Batch A and Batch B
 
 ## Visual QA - Tier 1 Components
 - [ ] Visual QA - Tier 1 Components
-  Status: not implemented
+  Status: implemented (pending manual review)
   - Tier 1 component proof pages visible and correct on staging
   - promoted Tier 1 entry points (Button, Icon Button, Toast, Inline Alert, Drawer, Modal) reviewable through canonical routes
   - UI Reference coverage for Tier 1 actions, feedback, and overlays is complete
 
 ## Visual QA - Tier 2 Patterns
 - [ ] Visual QA - Tier 2 Patterns
-  Status: not implemented
+  Status: implemented (pending manual review)
   - all required Tier 2 pattern pages visible and correct on staging
   - Tier 2 UI Reference coverage is complete and locatable
 
 ## Visual QA - Dashboard And Widget Conventions
 - [ ] Visual QA - Dashboard And Widget Conventions
-  Status: not implemented
+  Status: implemented (pending manual review)
   - dashboard grid and widget shell proofs are visible on staging
   - deterministic widget size comparisons (1x1, 2x1, 1x2, 2x2, 3x1, 3x2) pass visual review
   - widget content standards (content-space unit system) are visible and correct
@@ -28,20 +28,20 @@
 
 ## Visual QA - Shell Families And Archetypes
 - [ ] Visual QA - Shell Families And Archetypes
-  Status: not implemented
+  Status: implemented (pending manual review)
   - app shell, dashboard shell, setup shell, settings shell, and account/profile shell are visible on staging
   - page/module archetype proofs exist for dashboard/overview, list/index, detail/read-only, create/edit form, setup/configuration, settings, and account/profile
 
 ## Visual QA - Setup And Settings Surfaces
 - [ ] Visual QA - Setup And Settings Surfaces
-  Status: not implemented
+  Status: implemented (pending manual review)
   - setup shell and proof surfaces are visible and correct
   - `/platform/settings/*` surfaces used as settings proofs pass visual review
   - `/account`, `/account/settings`, and `/account/preferences` surfaces pass visual review
 
 ## Handoff Readiness
 - [ ] Handoff Readiness
-  Status: not implemented
+  Status: implemented (pending manual review)
   - shell family and page/module archetype naming is usable by Phase 3 and Phase 4 plans
   - setup/settings registration field contract is explicit for future module consumption
   - future-module UI ownership declaration field contract is explicit

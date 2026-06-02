@@ -23,9 +23,9 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Follow-up To: P2-B-CQ-005, P2-B-CQ-006
 - [ ] Restore the dashboard customization interaction contract and establish the correct per-user dashboard layout persistence model so lock/unlock, widget visibility toggling, widget reorganization, and saved personalized layout state all work intentionally on the live dashboard path; the Layout + Dashboard reference page must also expose a clearly visible, genuinely interactive customization proof surface rather than explanatory copy alone, so reviewers can directly exercise or at least unmistakably inspect the locked, unlocked, reorder, and saved-layout states on-page.
   ID: P2-B-CQ-019
-  Iteration: 2
-  Scope: dashboard customization interaction contract, lock/unlock edit mode, widget visibility toggling, drag/reorder behavior, per-user layout persistence contract, stable widget identity plus placement metadata validation, visible interactive proof coverage for customization states
-  Path Coverage: `/dashboard`, `/platform/ui-reference/patterns/layout`, `user_dashboard_layouts` persistence behavior, related dashboard proof surfaces that should demonstrate customization controls, state changes, and saved personalized layout outcomes
+  Iteration: 3
+  Scope: UI Reference-first dashboard customization proof, lock/unlock edit mode, widget visibility toggling, drag/reorder behavior, per-user layout persistence contract, stable widget identity plus placement metadata validation, visible interactive proof coverage for customization states, live dashboard as downstream consumer validation only
+  Path Coverage: `/platform/ui-reference/patterns/layout` as the canonical review surface, optional standalone dashboard proof if needed, `user_dashboard_layouts` persistence behavior, `/dashboard` only as downstream consumer validation after the proof surface is correct
   Follow-up To: P2-B-CQ-006, P2-B-CQ-018
 
 ## In Progress

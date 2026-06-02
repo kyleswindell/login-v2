@@ -1,6 +1,11 @@
 # Notes
 
 ## Findings
+- A follow-up dashboard review clarification now tightens `P2-B-CQ-019` beyond the earlier “visible interactive proof” wording:
+  - the live dashboard currently shows customize/lock chrome and drag-style affordances, but the interaction does not function convincingly enough to count as proof coverage
+  - the live dashboard should not be treated as the primary review surface for this item
+  - the next pass should make the Layout + Dashboard UI Reference page the canonical first review surface with visible, working dummy-widget customization states, while `/dashboard` remains downstream consumer validation
+  - this is still a same-item refinement of `P2-B-CQ-019`, not a new queue item
 - Targeted staging re-review of `P2-B-CQ-019` after `2-B-0030` confirms the current proof still fails the reviewability bar:
   - the Layout + Dashboard page does not read as materially changed on staging
   - there is no clearly visible new interface or interactive option set for reviewing dashboard customization states
@@ -200,6 +205,8 @@
   - future-module UI ownership declaration fields
 
 ## Decisions
+- Treat the Layout + Dashboard UI Reference page as the canonical first review surface for `P2-B-CQ-019`; the live `/dashboard` page is downstream consumer validation only for this queue item.
+- Do not count decorative customize/lock chrome or drag-style affordances on the live dashboard as proof coverage unless the interaction is demonstrably working and already proven on the UI Reference surface.
 - Reopen `P2-B-CQ-019` as a same-item failure because the current staging proof does not present a visibly distinct or directly reviewable customization interface on the Layout + Dashboard page.
 - Tighten `P2-B-CQ-019` so the next pass must provide visible interactive proof coverage, not just explanatory copy about customization states.
 - `P2-B-CQ-013` should use a derived runtime manifest for the temporary UI Reference review overlay, with the canonical queue file remaining the source of truth and runtime regeneration occurring whenever the source queue hash changes.
@@ -239,7 +246,7 @@
 
 ## Risks / Questions
 - Combined Batch B manual review still cannot close until staging manually re-validates `P2-B-CQ-013`.
-- `P2-B-CQ-019` now needs another implementation pass because the current staging proof still does not present a clearly visible or interactive enough customization surface for review.
+- `P2-B-CQ-019` now needs another implementation pass because neither the current UI Reference proof nor the live dashboard consumer surface is reliable enough to serve as the intended customization review target.
 - `P2-B-CQ-015` is now unblocked and ready for implementation, but it still needs a full account-dropdown consumer pass against the approved shared action/menu-item contract.
 - `P2-B-CQ-018` now needs a visible dashboard/layout proof treatment that makes taller widget states directly judgeable in-context, or the current row-span contract will remain hard to validate visually.
 - Realtime notification toast rendering remains a feature-level JS path and is intentionally outside this Tier 1 hardening pass.

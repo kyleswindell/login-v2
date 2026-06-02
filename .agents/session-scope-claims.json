@@ -7,7 +7,7 @@
       "scope": "/docs/08-active/",
       "branch": "main",
       "worktree": "C:\\Users\\kswin\\Desktop\\Work 2023\\8. Login V2",
-      "note": "Integrator-owned Batch B active workspace. Worker branches/worktrees are provisioned for P2-B-CQ-015, P2-B-CQ-018, P2-B-CQ-019, and P2-B-CQ-020, but queue-state transitions remain in the integrator lane."
+      "note": "Integrator-owned Batch E active workspace. Phase 2 close-out validation batch. No worker branches required."
     }
   ]
 }

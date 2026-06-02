@@ -1,6 +1,12 @@
 # Notes
 
 ## Findings
+- Batch B review-state update `2-B-0045` records the targeted Widget Content Standards staging feedback after `2-B-0044`:
+  - `P2-B-CQ-023` returns to `Ready To Implement` because the rebuilt standards proof still clips content and leaves excessive whitespace in specific widget sizes at reviewed widths
+  - `1x1` clips its final explanatory sentence at 1024, 1280, 1366, 1440, and 1920px
+  - `1x2` list/content clips at 1280, 1366, and 1440px, while the current 1024 and 1920 observations are less severe
+  - `2x2 Detail` and `3x2 Rich Summary` still leave significant unused space at 1024, 1280, 1366, 1440, and 1920px, so they do not yet prove realistic two-row content allowances
+  - `P2-B-CQ-024` is added as a deferred decision item for whether a `4x1` or special compact `4x0.5` top-of-dashboard status/stat/counter/header surface belongs in the standard widget set
 - Batch B pass `2-B-0044` implements the planned `P2-B-CQ-023` Widget Content Standards rebuild:
   - the Widget Content Standards page now starts with an explicit geometry decision before presenting content examples
   - the shared widget standards proof uses a four-unit desktop model where `1x` is one quarter, `2x` is half width, and `3x` is three quarters of the widget row
@@ -283,6 +289,8 @@
   - future-module UI ownership declaration fields
 
 ## Decisions
+- Reopen `P2-B-CQ-023` as iteration 2 rather than creating a new item because the clipping and whitespace defects are direct failures of the current Widget Content Standards proof acceptance criteria.
+- Defer `P2-B-CQ-024` instead of adding it to `Ready To Implement` because the top-of-dashboard `4x1` or `4x0.5` status/stat/counter/header concept is a separate standards decision and not required to correct the current `1x1`, `1x2`, `2x2`, and `3x2` proof defects.
 - Move `P2-B-CQ-023` from `In Progress` to `Implemented Pending Review` after rebuilding `/platform/ui-reference/patterns/widget-content` from the dashboard widget content standards plan.
 - Select the four-unit model for the Widget Content Standards proof because it creates a stricter, more realistic desktop allowance baseline than the previous three-unit model; full-row behavior should be introduced later as an explicit `4x` contract or page-specific dashboard composition instead of treating `3x` as full row.
 - Split the standards-page widget row baseline from the Layout + Dashboard proof row baseline: `ui-pattern-dashboard-grid-widgets` uses `18rem` for content allowance review, while `dashboard-proof-grid` remains `24rem` for the already-approved span-height proof.
@@ -340,8 +348,9 @@
 - Queue cleanup review confirms `P2-B-CQ-007` and `P2-B-CQ-008` already reflect the correct Tier 1-before-Tier 2 sequencing and do not need reclassification.
 
 ## Risks / Questions
-- Combined Batch B manual review still cannot close until `P2-B-CQ-023` is deployed and manually reviewed.
-- `P2-B-CQ-023` needs reviewer confirmation that the four-unit desktop model and `18rem` one-row baseline are acceptable before the page is treated as durable future-module widget content guidance.
+- Combined Batch B manual review still cannot close until `P2-B-CQ-023` is corrected, deployed, and manually reviewed.
+- The next `P2-B-CQ-023` implementation should preserve the currently improving direction while tightening content volume: reduce or relocate low-value explanatory copy in `1x1`, prevent list-row clipping in `1x2`, and add real dense same-topic content to `2x2` and `3x2`.
+- `P2-B-CQ-023` still needs reviewer confirmation that the four-unit desktop model and `18rem` one-row baseline are acceptable once the clipping and whitespace issues are corrected.
 - The current implementation intentionally avoids defining a full-row widget standard; if future dashboard modules need full-row content allowances, a separate `4x` contract or composition-specific rule should be opened after this review.
 - Realtime notification toast rendering remains a feature-level JS path and is intentionally outside this Tier 1 hardening pass.
 - `resources/views/platform/ui-reference/index.blade.php` remains an unused legacy workspace view because the canonical `/platform/ui-reference` route renders `overview.blade.php`; this pass left it untouched to avoid mixing unrelated cleanup into the Batch B implementation lane.

@@ -21,7 +21,9 @@ class PlatformDashboardTest extends TestCase
         $this->get('/dashboard')
             ->assertOk()
             ->assertSee($user->email)
-            ->assertSee('data-ui-pattern="widget-shell"', false);
+            ->assertSee('data-ui-pattern="widget-shell"', false)
+            ->assertSee('dashboard-widget-grid')
+            ->assertSee('Customize');
     }
 
     public function test_dashboard_redirects_guests_to_login(): void

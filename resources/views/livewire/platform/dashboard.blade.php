@@ -50,11 +50,8 @@
         <div
             id="dashboard-widget-grid"
             class="grid grid-cols-12 gap-4"
-            @if ($isEditing)
-                data-sortable="true"
-                x-data="dashboardSort(@js(collect($widgetLayout)->pluck('widget_key')->all()))"
-                x-init="init()"
-            @endif
+            x-data="dashboardSort($wire.entangle('isEditing').live)"
+            x-init="init()"
         >
             @foreach ($visibleWidgets as $slot)
                 <div

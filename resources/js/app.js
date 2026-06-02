@@ -4,6 +4,7 @@ import Pusher from 'pusher-js';
 import './setup-sidebar';
 import './table-enhance';
 import './dashboard-sort';
+import './dashboard-proof-demo';
 
 const allowedThemeModes = new Set(['system', 'dark', 'light']);
 

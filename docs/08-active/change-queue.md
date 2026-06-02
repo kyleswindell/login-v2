@@ -21,16 +21,16 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Scope: visible proof coverage for multi-row widget spans, on-page clarity of taller dashboard card states, reviewability of the shared row-span contract
   Path Coverage: `/platform/ui-reference/patterns/layout`, `/platform/ui-reference/patterns/archetypes`, visible dashboard/widget-shell proof surfaces where taller spans should be judged in context
   Follow-up To: P2-B-CQ-005, P2-B-CQ-006
+## In Progress
+
+## Implemented Pending Review
 - [ ] Restore the dashboard customization interaction contract and establish the correct per-user dashboard layout persistence model so lock/unlock, widget visibility toggling, widget reorganization, and saved personalized layout state all work intentionally on the live dashboard path; the Layout + Dashboard reference page must also expose a clearly visible, genuinely interactive customization proof surface rather than explanatory copy alone, so reviewers can directly exercise or at least unmistakably inspect the locked, unlocked, reorder, and saved-layout states on-page.
   ID: P2-B-CQ-019
   Iteration: 3
   Scope: UI Reference-first dashboard customization proof, lock/unlock edit mode, widget visibility toggling, drag/reorder behavior, per-user layout persistence contract, stable widget identity plus placement metadata validation, visible interactive proof coverage for customization states, live dashboard as downstream consumer validation only
   Path Coverage: `/platform/ui-reference/patterns/layout` as the canonical review surface, optional standalone dashboard proof if needed, `user_dashboard_layouts` persistence behavior, `/dashboard` only as downstream consumer validation after the proof surface is correct
   Follow-up To: P2-B-CQ-006, P2-B-CQ-018
-
-## In Progress
-
-## Implemented Pending Review
+  Implemented in: `2-B-0033`
 - [ ] Resynchronize the temporary active-batch proof review mode so it reflects the live queue state exactly; only current `Implemented Pending Review` items should appear in page banners and scoped card targets, reopened or passed IDs must drop out immediately, and every current pending-review item with a visible proof surface must be tagged accurately at the point of review.
   ID: P2-B-CQ-013
   Iteration: 4

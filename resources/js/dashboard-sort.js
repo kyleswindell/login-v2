@@ -3,20 +3,42 @@ import Sortable from 'sortablejs';
 /**
  * Alpine.js data function for dashboard drag-and-drop reordering.
  *
- * The component is initialized on the widget grid and dispatches
- * a Livewire `reorderWidgets` call whenever the user drops a widget.
+ * The controller stays mounted in both locked and editing modes so Livewire
+ * can toggle the sortable instance on demand instead of trying to inject
+ * Alpine behavior only after the grid has already rendered.
  *
  * Usage (see livewire/platform/dashboard.blade.php):
- *   x-data="dashboardSort(initialOrder)"
+ *   x-data="dashboardSort(@entangle('isEditing').live)"
  *   x-init="init()"
  */
-window.dashboardSort = function (initialOrder) {
+window.dashboardSort = function (editingState = false) {
     return {
-        order: initialOrder,
+        editing: editingState,
         sortableInstance: null,
 
         init() {
+            this.$watch('editing', (value) => {
+                this.syncSortable(Boolean(value));
+            });
+
+            this.syncSortable(Boolean(this.editing));
+        },
+
+        syncSortable(enabled) {
             const el = this.$el;
+
+            if (!(el instanceof HTMLElement)) {
+                return;
+            }
+
+            if (!enabled) {
+                this.destroy();
+                return;
+            }
+
+            if (this.sortableInstance) {
+                return;
+            }
 
             this.sortableInstance = Sortable.create(el, {
                 handle: '.dashboard-drag-handle',

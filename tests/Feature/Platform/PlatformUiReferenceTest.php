@@ -164,7 +164,12 @@ class PlatformUiReferenceTest extends TestCase
             ->assertOk()
             ->assertSee('Dashboard customization proof')
             ->assertSee('Saved per-user layout')
-            ->assertSee('Stable widget identity first');
+            ->assertSee('Customize proof')
+            ->assertSee('Hidden widget tray')
+            ->assertSee('Saved layout preview')
+            ->assertSee('data-dashboard-proof-demo', false)
+            ->assertSee('data-dashboard-proof-saved-layout', false)
+            ->assertSee('data-dashboard-proof-widget', false);
     }
 
     public function test_standard_users_cannot_view_ui_reference_workspace(): void

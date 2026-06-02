@@ -1,6 +1,11 @@
 # Notes
 
 ## Findings
+- Batch B pass `2-B-0033` now reimplements `P2-B-CQ-019` with the stricter UI Reference-first proof requirement:
+  - the Layout + Dashboard page now contains a visibly distinct dummy-widget customization proof instead of descriptive copy alone
+  - the proof supports lock/unlock, drag reorder, hide/show, restore, reset, and a readable saved-layout preview using browser-local review state
+  - the live dashboard consumer now keeps the sortable controller mounted across lock-state changes so visible drag/customize chrome aligns to actual interaction behavior
+  - verified in WSL with `npm run build`, `PlatformDashboardTest`, the focused layout-proof assertion, and the full `PlatformUiReferenceTest` suite
 - A follow-up dashboard review clarification now tightens `P2-B-CQ-019` beyond the earlier “visible interactive proof” wording:
   - the live dashboard currently shows customize/lock chrome and drag-style affordances, but the interaction does not function convincingly enough to count as proof coverage
   - the live dashboard should not be treated as the primary review surface for this item
@@ -246,7 +251,7 @@
 
 ## Risks / Questions
 - Combined Batch B manual review still cannot close until staging manually re-validates `P2-B-CQ-013`.
-- `P2-B-CQ-019` now needs another implementation pass because neither the current UI Reference proof nor the live dashboard consumer surface is reliable enough to serve as the intended customization review target.
+- `P2-B-CQ-019` now needs targeted staging review of both the UI Reference proof and the live dashboard consumer behavior to confirm the implementation matches the stricter review-surface requirement.
 - `P2-B-CQ-015` is now unblocked and ready for implementation, but it still needs a full account-dropdown consumer pass against the approved shared action/menu-item contract.
 - `P2-B-CQ-018` now needs a visible dashboard/layout proof treatment that makes taller widget states directly judgeable in-context, or the current row-span contract will remain hard to validate visually.
 - Realtime notification toast rendering remains a feature-level JS path and is intentionally outside this Tier 1 hardening pass.

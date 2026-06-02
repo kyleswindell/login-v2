@@ -6,6 +6,8 @@ This document defines the canonical scope and intent for Dashboard.
 
 The platform dashboard (`/dashboard`) is the primary operational summary surface for authenticated platform staff. It presents a widget grid that surfaces live data from the platform's core subsystems — users, settings, notifications, audit logs, and error logs — with per-user layout customization, widget visibility control, and lock/unlock drag-and-drop positioning.
 
+The canonical first review surface for dashboard customization behavior is the UI Reference Layout + Dashboard proof page, which uses dummy widgets to demonstrate the customization contract directly before the live dashboard consumer is judged.
+
 ## Planning Source
 
 * [Phase 2 - Implementation Batch 11](../../07-planning/phases/phase-2/Phase%202%20-%20Implementation%20Batch%2011.md)
@@ -18,6 +20,7 @@ Current status:
 * model, widget classes, Livewire component, Blade view, and JS delivered
 * dashboard feature test file passes in Docker (`PlatformDashboardTest`)
 * not yet deployed to staging
+* UI Reference proof includes a browser-local dummy-widget customization demo for review of the interaction contract before the live dashboard consumer is judged
 
 Known gaps:
 
@@ -38,6 +41,7 @@ Named route: `dashboard`
 * widget visibility is permission-aware and controlled per signed-in user context
 * module widgets are supported through the shared dashboard extension contract
 * saved layout state is keyed by stable widget identity and reconciled against the current widget registry on load so stale or invalid placement metadata cannot drift silently
+* UI Reference proof state is browser-local and review-only; only the live dashboard writes per-user saved layout rows to `user_dashboard_layouts`
 
 Architecture ownership for dashboard subsystem boundaries and registry model lives in:
 
@@ -96,6 +100,18 @@ Data contract ownership for dashboard layout persistence lives in:
 SortableJS is initialized on the widget grid container when edit mode is active. On drag end, SortableJS sends the ordered visible widget keys back to Livewire, which rebuilds the saved layout deterministically from stable widget identity plus validated placement metadata before writing the result to the database.
 
 JS entry point: `resources/js/dashboard-sort.js`
+
+## Proof Surface
+
+The Layout + Dashboard UI Reference page must prove the dashboard customization contract before the live `/dashboard` consumer is judged.
+
+Proof requirements:
+
+* dummy widgets are visibly distinct from the live operational widgets
+* locked and unlocked states are directly reviewable on-page
+* reorder, hide/show, restore, and reset states can be exercised on-page
+* the proof exposes a readable saved-layout preview so the stable widget-identity contract is inspectable during review
+* the proof uses browser-local review state only; it does not replace the live dashboard's per-user persistence contract
 
 ## Permission Gates
 

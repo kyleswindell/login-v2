@@ -26,6 +26,7 @@ Execute the currently loaded batch in `/docs/08-active/`.
 - Base batch deliverables are tracked in `batch.md` and `checklist.md`
 - `change-queue.md` is reserved for review findings, follow-up items, and blocked or discovered work
 - If the batch needs parallel queue-item implementation across multiple writers, stop and use the branch-based `work-batch-branch` plus `integrate-work-batch-branch` path instead of turning this shared active workspace into a multi-writer flow
+- If the batch uses the temporary active-batch UI Reference review overlay, keep the derived runtime manifest synchronized with the current queue state before the pass is treated as review-ready
 
 ## Concurrency Preflight
 
@@ -173,6 +174,7 @@ For each targeted item:
 - preserve existing queue metadata lines such as `Scope:`, `Path Coverage:`, `Follow-up To:`, and `Supersedes:` when moving items
 - assign the next sequential queue ID in the current batch if a new active item is created and no stable ID already exists
 - add or update `Implemented in:` with the current worklog ID when that improves traceability for the targeted item
+- if the targeted item affects the temporary active-batch UI Reference review overlay, synchronize the derived runtime manifest after queue-state edits and before review-ready verification or publication
 
 Do NOT set any item to:
 - `Passed Review`

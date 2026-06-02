@@ -74,6 +74,7 @@ Rules:
 - Assign the next sequential queue ID in the current batch to each truly new queue item
 - Add `Follow-up To:` or `Path Coverage:` continuation lines when they materially improve traceability for a new finding
 - Do NOT delete items; only move them between sections
+- If the changed queue state affects the temporary active-batch UI Reference review overlay, synchronize the derived runtime manifest in the same workflow step so runtime review IDs are regenerated from the new queue state immediately
 
 ---
 

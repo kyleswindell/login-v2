@@ -1,6 +1,14 @@
 # Notes
 
 ## Findings
+- Batch B pass `2-B-0029` publishes the `P2-B-CQ-013` derived review-overlay manifest hardening work to staging on `main`:
+  - the scoped overlay-manifest runtime and workflow updates are now available on the staging review surface
+  - targeted manual re-review can now confirm whether passed queue IDs drop out and the remaining pending-review ID set stays aligned after publication
+- Batch B pass `2-B-0028` hardens `P2-B-CQ-013` with a derived runtime manifest for the temporary UI Reference review overlay:
+  - the overlay now regenerates its runtime manifest from the canonical queue when the source hash changes instead of depending only on a direct request-time parse path
+  - a dedicated `active-batch-review:sync-manifest` entry point now exists so batch workflows can resynchronize the runtime artifact intentionally after queue changes
+  - UI Reference overlay feature tests no longer depend on whichever IDs happen to be active in the repo-local Batch B queue; they now inject scoped review-ID fixtures and assert the stale-badge cleanup path directly
+  - this improves local/runtime synchronization behavior, but staging publication is still required whenever the staging app tree has not yet received the updated active-batch files
 - A further dashboard customization review/research pass widens `P2-B-CQ-019` beyond visible lock/toggle/reorder behavior into the saved-layout contract itself:
   - the dashboard should save layout on a per-user basis, but the current persisted model is still underdefined for long-term mixed-size widget placement
   - the next implementation pass should treat stable widget identity as the saved reference point and validate persisted placement metadata against the current widget registry instead of relying on ambiguous page-local slot assumptions
@@ -182,6 +190,8 @@
   - future-module UI ownership declaration fields
 
 ## Decisions
+- `P2-B-CQ-013` should use a derived runtime manifest for the temporary UI Reference review overlay, with the canonical queue file remaining the source of truth and runtime regeneration occurring whenever the source queue hash changes.
+- `work-batch` and `batch-update-manual-review-status` should both treat active-batch review-manifest synchronization as part of the overlay lifecycle whenever queue-state changes affect the temporary review surface.
 - Refine `P2-B-CQ-019` in place instead of creating a new queue item because the per-user saved-layout contract is part of the same dashboard customization failure already tracked under lock/unlock, widget toggling, and reorganization behavior.
 - Add `P2-B-CQ-019` as a new `Ready To Implement` follow-up item because the latest dashboard feedback combines live customization behavior failure with missing proof coverage for lock/unlock, widget toggling, and reorganization states.
 - Add `P2-B-CQ-018` as a new `Ready To Implement` follow-up item because the latest widget review feedback is about visible proof coverage of taller widget states, not direct proof that the already-approved shared row-span contract regressed.

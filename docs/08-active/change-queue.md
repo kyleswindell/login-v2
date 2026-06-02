@@ -32,10 +32,10 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 ## Implemented Pending Review
 - [ ] Resynchronize the temporary active-batch proof review mode so it reflects the live queue state exactly; only current `Implemented Pending Review` items should appear in page banners and scoped card targets, reopened or passed IDs must drop out immediately, and every current pending-review item with a visible proof surface must be tagged accurately at the point of review.
   ID: P2-B-CQ-013
-  Iteration: 3
-  Scope: temporary active-batch proof review mode, live queue-state synchronization, full current pending-review coverage, stale active-review target removal
+  Iteration: 4
+  Scope: temporary active-batch proof review mode, derived runtime manifest synchronization, live queue-state alignment, full current pending-review coverage, stale active-review target removal
   Path Coverage: active-batch UI Reference proof pages, all current `Implemented Pending Review` items with visible proof surfaces, relevant component library cards under review, current review-mode entry points
-  Implemented in: `2-B-0022`
+  Implemented in: `2-B-0028`
 
 ## Blocked
 

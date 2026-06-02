@@ -129,6 +129,7 @@ Queue-state rules:
 - `Implemented Pending Review` contains items that were implemented in a completed work pass, are available on the required review surface, and are awaiting human confirmation
 - if deployment is required for review, do not move an item into `Implemented Pending Review` until commit, push, and the canonical deploy all succeed
 - if implementation is complete but the required deploy fails or cannot be completed, record that deploy gap in the worklog/review state and keep the queue item out of `Implemented Pending Review`
+- the temporary active-batch UI Reference overlay may use a derived runtime manifest, but `change-queue.md` remains the canonical source of truth for which queue IDs are currently pending review
 - a new adjacent finding on the same broad surface does not, by itself, prove an existing `Implemented Pending Review` item failed
 - move an item from `Implemented Pending Review` back to `Ready To Implement` only when manual review directly shows that the same item's implemented outcome failed
 - if manual review finds a separate uncovered path or adjacent gap, keep the implemented item in `Implemented Pending Review` and add a new `Ready To Implement` follow-up item instead
@@ -247,6 +248,7 @@ Rules:
 - preserve existing queue metadata lines when moving items between sections
 - assign the next sequential queue ID when a new active queue item is created and no stable ID already exists
 - add or update `Implemented in:` when that improves traceability for a targeted item
+- if the pass changes queue IDs consumed by the temporary active-batch UI Reference review overlay, regenerate the derived runtime manifest from the current queue state before the pass is considered review-ready
 - if a targeted item needs staging or another deploy-backed review surface, treat deploy completion as part of the implementation outcome before moving that item into `Implemented Pending Review`
 
 Tier 1 consumption preflight:
@@ -323,6 +325,7 @@ Rules:
 - normalize new findings into concise implementation-ready queue language before writing them into `change-queue.md`
 - preserve existing `ID:` lines for mapped items
 - assign the next sequential queue ID when a truly new queue item is created
+- if queue IDs consumed by the temporary active-batch UI Reference review overlay changed, regenerate the derived runtime manifest in the same workflow step so the runtime review surface stays aligned with the canonical queue
 - do not reopen an `Implemented Pending Review` item unless the review evidence directly maps to that same item's scoped implemented outcome
 - if the review reveals a separate gap on an uncovered path, keep the existing item pending review and open a new `Ready To Implement` item for the uncovered gap
 - if an item is known to be undeployed on the required review surface, do not process it as pending review until that deploy gap is resolved

@@ -38,10 +38,12 @@ class PlatformUiReferenceTest extends TestCase
     public function test_authorized_users_can_view_tier_one_forms_and_navigation_reference_surfaces(): void
     {
         $this->actingAsPlatformSuperAdmin();
+        $this->useActiveBatchReviewIds(['P2-B-CQ-001', 'P2-B-CQ-014', 'P2-B-CQ-017']);
 
         $this->get('/platform/ui-reference/components/actions')
             ->assertOk()
             ->assertSee('Buttons And Icon Buttons')
+            ->assertSee('P2-B-CQ-014')
             ->assertSee('data-ui-component="button"', false)
             ->assertSee('data-ui-component="icon-button"', false);
 

@@ -12,6 +12,7 @@ class PlatformActionMenuSuiteTest extends TestCase
     public function test_actions_reference_page_exposes_the_shared_action_and_menu_item_review_surface(): void
     {
         $this->actingAsPlatformSuperAdmin();
+        $this->useActiveBatchReviewIds(['P2-B-CQ-014']);
 
         $this->get('/platform/ui-reference/components/actions')
             ->assertOk()
@@ -27,6 +28,7 @@ class PlatformActionMenuSuiteTest extends TestCase
     public function test_grouped_action_proofs_consume_the_shared_menu_item_entry_point(): void
     {
         $this->actingAsPlatformSuperAdmin();
+        $this->useActiveBatchReviewIds(['P2-B-CQ-014']);
 
         $this->get('/platform/ui-reference/patterns/navigation')
             ->assertOk()
@@ -40,5 +42,17 @@ class PlatformActionMenuSuiteTest extends TestCase
             ->assertSee('P2-B-CQ-014')
             ->assertSee('data-ui-component="menu-item"', false)
             ->assertSee('data-ui-current="true"', false);
+    }
+
+    public function test_actions_reference_page_hides_cleared_review_ids_after_manifest_sync(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+        $this->useActiveBatchReviewIds([]);
+
+        $this->get('/platform/ui-reference/components/actions')
+            ->assertOk()
+            ->assertDontSee('Active Batch Review')
+            ->assertDontSee('P2-B-CQ-014')
+            ->assertDontSee('data-ui-pattern="proof-review-target"', false);
     }
 }

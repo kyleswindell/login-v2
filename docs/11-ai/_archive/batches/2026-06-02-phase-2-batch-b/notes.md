@@ -1,0 +1,370 @@
+# Notes
+
+## Findings
+- Batch B review-state update `2-B-0046` preserves the revised Widget Content Standards implementation direction:
+  - `P2-B-CQ-023` iteration 3 now replaces semantic content allowance guessing with a content-space unit system
+  - the active plan now requires shape definitions through `3x3`, compact `0.5x0.5` and `1x0.5` status/counter units, and a specialized `4x0.5` dashboard strip composed from four `1x0.5` units
+  - the Widget Content landing page should explain geometry, px budget, and shape-unit composition; standalone size-standard pages should exist now so future approved concrete content examples can grow by size later
+  - `P2-B-CQ-024` is superseded by `P2-B-CQ-023` because the `4x0.5` status-strip decision is now part of the current shape-system implementation
+  - `P2-B-CQ-025` is deferred for future approved concrete widget-content catalogs by size after the content-space unit system is reviewed
+- Batch B review-state update `2-B-0045` records the targeted Widget Content Standards staging feedback after `2-B-0044`:
+  - `P2-B-CQ-023` returns to `Ready To Implement` because the rebuilt standards proof still clips content and leaves excessive whitespace in specific widget sizes at reviewed widths
+  - `1x1` clips its final explanatory sentence at 1024, 1280, 1366, 1440, and 1920px
+  - `1x2` list/content clips at 1280, 1366, and 1440px, while the current 1024 and 1920 observations are less severe
+  - `2x2 Detail` and `3x2 Rich Summary` still leave significant unused space at 1024, 1280, 1366, 1440, and 1920px, so they do not yet prove realistic two-row content allowances
+  - `P2-B-CQ-024` is added as a deferred decision item for whether a `4x1` or special compact `4x0.5` top-of-dashboard status/stat/counter/header surface belongs in the standard widget set
+- Batch B pass `2-B-0044` implements the planned `P2-B-CQ-023` Widget Content Standards rebuild:
+  - the Widget Content Standards page now starts with an explicit geometry decision before presenting content examples
+  - the shared widget standards proof uses a four-unit desktop model where `1x` is one quarter, `2x` is half width, and `3x` is three quarters of the widget row
+  - the shared widget standards proof uses an `18rem` one-row baseline so small widgets are constrained enough to expose real content-density decisions
+  - the approved Layout + Dashboard customization proof keeps its separate `24rem` dashboard proof row-height contract so the already-approved `x2` span review surface remains visually obvious
+  - all supported widget sizes now have realistic filled examples, an allowance matrix, constrained viewport review guidance, and negative boundary rules for clipping, internal scroll, and mixed-topic content
+- Batch B review-state update for the latest Widget Content Standards review:
+  - `P2-B-CQ-022` passes manual review; Layout + Dashboard is accepted as dashboard-demo-first with dashboard-specific support cards below it
+  - `P2-B-CQ-021` fails manual review because the standards page does not accurately prove content allowances; examples are sparse, leave excessive empty space inside large fixed-height shells, and do not fill even tall or wide widget variants with realistic same-topic content
+  - third-party review confirms the next pass needs a geometry decision before another content-standard implementation: Material uses breakpoint-driven responsive grids; Tableau cautions that dashboard sizing and automatic resizing must be handled intentionally; Microsoft dashboard-card guidance defines explicit card anatomy and space-limited combinations; Carbon emphasizes breakpoint testing and deciding whether grid behavior should prioritize more visible items or more content within each item
+  - `docs/08-active/dashboard-widget-content-standards-plan.md` now records the planning review, current geometry problem, options for three-unit versus four-unit grid direction, row-height calibration needs, viewport baselines, per-size content allowance model, and acceptance criteria
+  - `P2-B-CQ-023` opens as the executable follow-up and supersedes the failed `P2-B-CQ-021` implementation attempt
+- Batch B pass `2-B-0043` implements the widget standards and Layout + Dashboard cleanup follow-ups:
+  - `P2-B-CQ-021` adds a standalone Widget Content Standards UI Reference page with size-aware allowances for `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, and `3x2` dashboard widgets
+  - `P2-B-CQ-021` keeps the standard intentionally bounded to content regions, density, examples, and escalation rules instead of claiming an exhaustive taxonomy of every future widget content type
+  - `P2-B-CQ-022` trims the Layout + Dashboard page so the dashboard customization proof is the first substantive page section
+  - `P2-B-CQ-022` moves widget-specific design and content-density examples out of Layout + Dashboard and links reviewers to the standalone Widget Content Standards page
+- The latest Layout + Dashboard staging review-state update records:
+  - `P2-B-CQ-018` passes manual review; the dashboard grid span contract now reserves visible row height by declared span rather than neighboring placement
+  - `P2-B-CQ-019` passes manual review; the Layout + Dashboard proof now provides reviewable deterministic widget-size comparisons while preserving the approved save/reorder behavior
+  - `P2-B-CQ-021` opens as a new follow-up to establish standalone dashboard widget content allowances by supported size, including width and height considerations, so future modules have a baseline for what can fit in each widget span
+  - `P2-B-CQ-022` opens as a new follow-up to trim the Layout + Dashboard page, keep the dashboard demo as the primary page content, retain only dashboard configuration/layout/state/persistence support cards, and move widget-specific design standards to the standalone widget standards page
+- Batch B pass `2-B-0042` implements the reopened dashboard span-contract fixes:
+  - `P2-B-CQ-018` replaces content-sized dashboard widget rows with a fixed shared row-track contract so one-row and two-row spans are determined by declared widget span instead of neighboring placement or card content height
+  - `P2-B-CQ-019` updates the Layout + Dashboard proof with deterministic span comparison language and examples for `1x2` beside `2x2`, `1x2` beside stacked one-row widgets, and `3x2` versus `3x1`
+  - the dashboard proof localStorage key is versioned so reviewers who previously saved a failed arrangement start from the new deterministic reset order
+  - local browser inspection was attempted but blocked by local server/process permission issues; WSL build and feature tests passed with the established SQLite test override
+- Batch B review-state update `2-B-0041` records the latest targeted Layout + Dashboard staging feedback:
+  - `P2-B-CQ-013`, `P2-B-CQ-015`, and `P2-B-CQ-020` pass manual review
+  - `P2-B-CQ-018` returns to `Ready To Implement` because the dashboard grid still does not enforce declared row spans as physical row occupancy; `1x2` can visually collapse toward ~1.5 rows beside another `x2` item, and `3x2` can visually match `3x1`
+  - `P2-B-CQ-019` returns to `Ready To Implement` because the proof surface must demonstrate deterministic span comparison groups instead of relying on content flow or incidental neighboring placement
+  - no new queue item is added because the current feedback maps directly to the existing row-span contract and dashboard customization proof items; detailed widget-content allowance standards are acknowledged but intentionally out of scope unless needed to enforce the physical span contract
+- Batch B pass `2-B-0040` implements the reopened Layout + Dashboard review fixes:
+  - `P2-B-CQ-018` restores reviewable widget span examples by removing the static full-row utility from the interactive proof cards and preserving explicit `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, and `3x2` span mappings
+  - `P2-B-CQ-019` preserves the approved save behavior, drag/move sorting preview, and full main-content-width proof container while keeping header/body widget content inside the correct grid-size examples
+  - `P2-B-CQ-020` removes the unapproved `ui-soft-card*` full-card palette from CSS, standards, proof markup, and proof tests; the Layout + Dashboard proof now uses existing neutral `ui-card`, `widget-shell`, `widget-shell-section`, `inline-alert`, and proof-note treatments
+  - tests now assert the dashboard proof exposes the saved-layout card, Alpine span binding, shared widget-shell classes, and no `ui-soft-card` output
+- Batch B review-state update `2-B-0039` maps the post-`2-B-0038` Layout + Dashboard review corrections back onto existing queue items:
+  - `P2-B-CQ-018` returns to `Ready To Implement` because the two-row widget occupancy fix is not reviewable while the proof examples have been distorted into full-row cards instead of preserving true `1x2`, `2x2`, and related spans
+  - `P2-B-CQ-019` returns to `Ready To Implement` because the latest pass incorrectly converted widget-size examples into full-row cards; the next pass must preserve the approved save behavior, drag/move sorting preview, and full main-content-width proof container while restoring correct `1x1`, `2x1`, `1x2`, `2x2`, and `3x1` examples with header/body content
+  - `P2-B-CQ-020` returns to `Ready To Implement` because `ui-soft-card*` was confirmed as an unapproved full-card palette family; the current-item/menu-state examples on Buttons + Icons are label/current-row treatments and must not be reused as dashboard/widget card palettes
+  - no new queue item is required because the corrections map directly to the existing row-span proof, dashboard customization proof, and default card/surface palette items
+- Batch B pass `2-B-0038` implements the reopened Layout + Dashboard queue items:
+  - `P2-B-CQ-018` now uses explicit shared and proof-grid row-span rules with two-row minimum heights so `1x2`, `2x2`, and `3x2` widgets reserve the full two-row space instead of being cut off by following widgets
+  - `P2-B-CQ-019` preserves the approved full-width proof layout, save behavior, and drag/move sorting preview while adding visible widget-card header and body content examples
+  - `P2-B-CQ-020` removes proof-local semantic color treatments from the Layout + Dashboard dummy widgets, saved-layout preview, and support cards so the default light/dark neutral card pattern is used unless a card is intentionally semantic
+  - tests now assert the neutral saved-layout preview, header/body content labels, explicit proof-grid span classes, and two-row minimum-height CSS contract
+- Batch B review-state update `2-B-0037` maps the latest Layout + Dashboard staging feedback back onto existing queue items:
+  - `P2-B-CQ-018` fails because `1x2`, `2x2`, and equivalent two-row widgets still do not always reserve two full rows when a following widget occupies the would-be space below them
+  - `P2-B-CQ-019` is partially approved: dashboard-associated layout save behavior works, drag/move sorting with preview works, and the dashboard layout example is now appropriately full main-content width
+  - `P2-B-CQ-019` remains open because the proof still needs widget examples with both header/title and body/supporting content treatment
+  - `P2-B-CQ-020` fails because the Layout + Dashboard proof still uses non-standard colored widget-card and support-card treatments, including the saved-layout preview cards, instead of the default light/dark shared card pattern with special colors reserved for alerts, notices, status, or other semantic states
+  - no new queue item is required because the feedback maps to the existing dashboard row-span, dashboard customization proof, and widget/support-card palette items
+- Batch B pass `2-B-0036` addresses the targeted `P2-B-CQ-015` staging failure:
+  - manual review confirmed the sign-out action is now correct as shared ghost-danger
+  - the theme controls still failed because all three options were changed to the outline button style instead of only marking the active theme option as selected
+  - the fix keeps all theme options as shared ghost-neutral buttons and applies the active/selected treatment only through `data-ui-current="true"`
+  - the account-dropdown test now asserts the theme buttons use ghost styling, do not use outline styling, and expose exactly one current option
+- Batch B pass `2-B-0035` integrates the four ready worker-lane items back onto `main` and prepares them for staging publication:
+  - `P2-B-CQ-015` now applies the shared action/menu-item suite to the app-shell account dropdown, including outline-neutral theme options, shared current menu-item state, and ghost-danger sign-out treatment
+  - `P2-B-CQ-018` now adds visible multi-row widget span proof coverage for `1x2`, `2x2`, and `3x2` dashboard states on the Layout + Dashboard proof surface
+  - `P2-B-CQ-019` now keeps the dashboard customization proof as a full main-content-width section, protects widget-card internals from smaller-width collisions, and exposes visible insertion/swap feedback while dragging
+  - `P2-B-CQ-020` now establishes a shared soft-card surface palette contract and applies it to the saved-layout preview plus dashboard proof colorways
+  - all four items move to `Implemented Pending Review` and require targeted staging visual review after publication
+- The latest targeted staging review of `P2-B-CQ-019` confirms the current UI Reference proof is still not review-ready:
+  - the dashboard example is compressed to accommodate adjacent proof-state support cards instead of demonstrating a true full-width main-content dashboard section
+  - the proof widgets can still collide internally at smaller widths, with the current `1x1` examples exposing overlap between badge/meta content and the main signal region
+  - lock/unlock and visibility toggling now read correctly, but the unlocked drag interaction still lacks clear insertion or swap feedback, so the reordering contract does not yet read as intentional during review
+  - this remains a same-item failure of `P2-B-CQ-019`, not a new dashboard customization queue item
+- The same review pass also opens a new adjacent shared-surface finding as `P2-B-CQ-020`:
+  - the saved-layout preview card currently uses a tinted surface treatment with illegible heading/body contrast, especially in light mode
+  - this should not remain a page-local dashboard proof fix; the issue points to a missing approved soft-card surface palette with paired background, heading, body text, link, and button treatments per supported colorway
+  - the dashboard saved-layout preview is the first visible consumer proving the gap, but the fix likely belongs in shared T1/T2 surface styling rather than only in the proof page
+- Batch B pass `2-B-0033` now reimplements `P2-B-CQ-019` with the stricter UI Reference-first proof requirement:
+  - the Layout + Dashboard page now contains a visibly distinct dummy-widget customization proof instead of descriptive copy alone
+  - the proof supports lock/unlock, drag reorder, hide/show, restore, reset, and a readable saved-layout preview using browser-local review state
+  - the live dashboard consumer now keeps the sortable controller mounted across lock-state changes so visible drag/customize chrome aligns to actual interaction behavior
+  - verified in WSL with `npm run build`, `PlatformDashboardTest`, the focused layout-proof assertion, and the full `PlatformUiReferenceTest` suite
+- A follow-up dashboard review clarification now tightens `P2-B-CQ-019` beyond the earlier “visible interactive proof” wording:
+  - the live dashboard currently shows customize/lock chrome and drag-style affordances, but the interaction does not function convincingly enough to count as proof coverage
+  - the live dashboard should not be treated as the primary review surface for this item
+  - the next pass should make the Layout + Dashboard UI Reference page the canonical first review surface with visible, working dummy-widget customization states, while `/dashboard` remains downstream consumer validation
+  - this is still a same-item refinement of `P2-B-CQ-019`, not a new queue item
+- Targeted staging re-review of `P2-B-CQ-019` after `2-B-0030` confirms the current proof still fails the reviewability bar:
+  - the Layout + Dashboard page does not read as materially changed on staging
+  - there is no clearly visible new interface or interactive option set for reviewing dashboard customization states
+  - explanatory copy alone is not sufficient proof coverage for this queue item; the next pass must expose a visibly distinct and directly reviewable customization surface
+  - this is treated as a same-item failure of `P2-B-CQ-019`, not as a new adjacent queue item
+- Batch B pass `2-B-0030` is now integrated on `main` and republished to staging for targeted manual review of `P2-B-CQ-019`:
+  - cherry-picked worker commit `07460a1b30b0fd27a710b7cd17382e116aec7cc4` onto `main` as `9a815ab`
+  - restored the live dashboard customization flow so lock/unlock, widget visibility toggling, and widget reordering persist per user through stable widget-identity layout slots plus validated placement metadata
+  - expanded the Layout + Dashboard proof so locked, unlocked, and saved-layout states are directly reviewable on-page instead of implied only through copy
+  - verified the integrated result in WSL with `DB_CONNECTION=sqlite DB_DATABASE=:memory:` overrides for `PlatformDashboardTest` and the focused layout-proof assertion in `PlatformUiReferenceTest`
+- Batch B pass `2-B-0029` publishes the `P2-B-CQ-013` derived review-overlay manifest hardening work to staging on `main`:
+  - the scoped overlay-manifest runtime and workflow updates are now available on the staging review surface
+  - targeted manual re-review can now confirm whether passed queue IDs drop out and the remaining pending-review ID set stays aligned after publication
+- Batch B pass `2-B-0028` hardens `P2-B-CQ-013` with a derived runtime manifest for the temporary UI Reference review overlay:
+  - the overlay now regenerates its runtime manifest from the canonical queue when the source hash changes instead of depending only on a direct request-time parse path
+  - a dedicated `active-batch-review:sync-manifest` entry point now exists so batch workflows can resynchronize the runtime artifact intentionally after queue changes
+  - UI Reference overlay feature tests no longer depend on whichever IDs happen to be active in the repo-local Batch B queue; they now inject scoped review-ID fixtures and assert the stale-badge cleanup path directly
+  - this improves local/runtime synchronization behavior, but staging publication is still required whenever the staging app tree has not yet received the updated active-batch files
+- A further dashboard customization review/research pass widens `P2-B-CQ-019` beyond visible lock/toggle/reorder behavior into the saved-layout contract itself:
+  - the dashboard should save layout on a per-user basis, but the current persisted model is still underdefined for long-term mixed-size widget placement
+  - the next implementation pass should treat stable widget identity as the saved reference point and validate persisted placement metadata against the current widget registry instead of relying on ambiguous page-local slot assumptions
+  - this is treated as a scope refinement of the existing dashboard customization item rather than a separate queue item because the persistence model is part of the same lock/toggle/reorder contract failure
+- A new manual-review finding opens `P2-B-CQ-019` as an adjacent dashboard customization gap:
+  - the dashboard rearrange interaction does not work as expected on the live dashboard surface
+  - the Layout + Dashboard proof page does not clearly show lock/unlock mode, widget visibility toggling, or widget layout reorganization states
+  - the next pass should restore the customization interaction contract on `/dashboard` and add enough visible proof coverage that reviewers can judge these states intentionally rather than inferring them from copy alone
+  - this is treated as a new follow-up item rather than an automatic reopen of the earlier widget-shell or row-span items because it extends beyond the already-approved height/span contract into live customization behavior and proof-state visibility
+- A new manual-review finding opens `P2-B-CQ-018` as an adjacent proof-coverage gap on the dashboard/widget surface:
+  - the shared row-span contract may be implemented, but reviewers still do not have a clearly visible on-page example that demonstrates how a taller multi-row widget actually reads in context
+  - the current layout/dashboard proof still leaves multi-row height too inferential, so the next pass should make at least one taller widget state unmistakable on a visible review surface rather than relying on span labels alone
+  - this is treated as a new follow-up item rather than direct evidence that the approved shared row-span implementation item `P2-B-CQ-005` failed again
+- A fresh staging manual-review pass confirms the remaining account dropdown consumer gap on `P2-B-CQ-015`:
+  - the active and hovered theme option still use outdated local option styling instead of the approved shared outline-neutral treatment
+  - the sign-out action still does not use the approved shared ghost-danger treatment
+  - the account-menu text color remains out of parity with the approved shared menu-item contract
+  - because `P2-B-CQ-014` and `P2-B-CQ-016` are now approved, this item is no longer dependency-blocked and should return to `Ready To Implement`
+- Staging manual review now approves the republished worker-integration outcomes for:
+  - `P2-B-CQ-001`
+  - `P2-B-CQ-014`
+  - `P2-B-CQ-017`
+- `P2-B-CQ-013` remains the only item still awaiting targeted staging re-review from the current `Implemented Pending Review` set.
+- Batch B pass `2-B-0022` is now deployed to staging on `main` and reimplements `P2-B-CQ-013` by synchronizing the temporary active-batch overlay to the live queue state:
+  - added `App\Support\ActiveBatchReviewQueue` so the overlay reads the current `Implemented Pending Review` IDs from `docs/08-active/change-queue.md`
+  - filtered the shared page-banner and scoped review-target overlays so only currently pending-review queue IDs remain visible on declared proof surfaces
+  - suppressed empty temporary review overlays on unaffected proof pages instead of leaving stale review chrome in place
+  - verified the updated proof-layer behavior in WSL with `DB_CONNECTION=sqlite DB_DATABASE=:memory:` overrides for `PlatformUiReferenceTest` and `PlatformActionMenuSuiteTest`
+- Batch B pass `2-B-0021` is now deployed to staging on `main` and re-integrates `P2-B-CQ-017` through the branch-based worker path:
+  - cherry-picked worker commit `adfb0d5401cfafcf581a5a349fd3191d4da7dd10` onto `main`
+  - republished the progressive internal phone-input baseline on the forms proof and shared platform-user review surface
+  - verified the integrated result in WSL with `DB_CONNECTION=sqlite DB_DATABASE=:memory:` overrides for `InternalPhoneFormatterTest`, `InternalPhoneInputContractTest`, and `PlatformUserManagementTest`
+- Batch B pass `2-B-0020` is now deployed to staging on `main` and re-integrates `P2-B-CQ-014` through the branch-based worker path:
+  - cherry-picked worker commit `f57c52221c035b4e2ce565bd7639f2b4fc083f97` onto `main`
+  - republished the shared current-item menu state on the Tier 1 actions proof plus the grouped-action navigation and data/content review surfaces
+  - verified the integrated result in WSL with `DB_CONNECTION=sqlite DB_DATABASE=:memory: ./vendor/bin/phpunit --filter PlatformActionMenuSuiteTest --testdox`
+- Batch B pass `2-B-0019` is now deployed to staging on `main` and re-integrates `P2-B-CQ-001` through the branch-based worker path:
+  - cherry-picked worker commit `daa31721f8d715b5a53c1df1536611e9ca3a39fb` onto `main`
+  - republished the searchable-dropdown baseline on the forms proof, platform general settings, and account preferences review surfaces
+  - verified the integrated result in WSL with `DB_CONNECTION=sqlite DB_DATABASE=:memory: ./vendor/bin/phpunit --filter PlatformUiReferenceTest --testdox`
+- The provided AI Agent staging review account successfully authenticated to `https://staging.parasolutions.com` and accessed the protected UI Reference workspace for this manual-review pass.
+- Staging manual review now approves `P2-B-CQ-003`, `P2-B-CQ-004`, `P2-B-CQ-005`, `P2-B-CQ-006`, `P2-B-CQ-007`, `P2-B-CQ-008`, `P2-B-CQ-010`, and `P2-B-CQ-011`.
+- The same staging pass reopens `P2-B-CQ-013` as a same-item failure of the temporary review-layer system:
+  - the forms proof still surfaces reopened `P2-B-CQ-017`
+  - the navigation and data/content proofs still surface reopened `P2-B-CQ-014`
+  - the navigation and data/content proofs still surface passed `P2-B-CQ-016`
+  - the layout proof omits current pending-review `P2-B-CQ-005` and does not keep the temporary review context aligned to the live queue state
+- Promoted Tier 1 entry points are now implemented as canonical Blade components for buttons, icon buttons, inline alerts, toasts, drawers, and modals.
+- Batch B pass `2-B-0001` is deployed to staging on `main` and ready for manual review.
+- Manual visual review of the existing Tier 1 UI Reference component surfaces passed for Batch B pass `2-B-0001`.
+- Combined Batch B manual review found that `Default Timezone` and `Default Locale` are currently modeled incorrectly as free-text validated inputs on the form-pattern and localization proof surfaces; those fields should use searchable option-backed selectors, while validator-driven examples should stay on true free-entry fields like email and phone.
+- Combined Batch B manual review found that the `Key Value Display` read-only detail proof on the data/content pattern page currently leaks broken inline markup instead of rendering the linked support-runbook value correctly.
+- Combined Batch B manual review found a broader proof-clarity issue on the Tier 2 library pages: examples like `Search And Filter Bar` currently read more like static mockups than explicit library proofs, so the next pass should add clearer on-page descriptors about intended behavior, data shape, and usage boundaries.
+- Combined Batch B manual review found that the shared grouped-actions dropdown action menu currently stays open after outside interaction; outside-click dismissal should be part of the shared pattern contract rather than something left to individual proof pages to handle.
+- Combined Batch B manual review also found that the shared grouped-actions dropdown action menu is currently clipped by surrounding card/content-section borders; open panels need to layer above nearby UI instead of being visually cut off by their container.
+- Combined Batch B manual review found that the current dashboard widget sizing direction is under-defined and too narrow; Batch B still needs an intentional reusable span model for dashboard widgets instead of implying only small fixed card sizes.
+- Combined Batch B manual review found that the dashboard widget shell is still only implied through sparse stat-card and proof examples; Batch B still needs an explicit widget-shell contract covering allowed regions, density limits, and content composition rules.
+- Batch B planning review also identified additional missing UI-system building blocks worth standardizing now:
+  - a Tier 1 date/date-time selection baseline
+  - a Tier 2 date-filter/date-range pattern
+  - a Tier 2 profile/identity summary card pattern
+- Combined Batch B manual review found that the shared sub-navigation bar active state is too weak in both dark and light mode; the current item needs a clearer soft neutral emphasis so section navigation reads intentionally.
+- Chart widgets and calendar-specific widget/content patterns were considered in the same review, but remain intentionally out of the current Batch B queue because they are still more tightly coupled to later data and feature contracts.
+- Batch B pass `2-B-0011` is now deployed to staging on `main` and resolves the first combined review findings by:
+  - replacing locale/timezone free-text demos with option-backed searchable selectors on the touched proof and live localization surfaces
+  - repairing the `Key Value Display` proof so trusted link content renders intentionally instead of leaking malformed markup
+  - adding clearer proof-intent notes on the Tier 2 forms, data/content, and navigation pattern pages
+- Batch B pass `2-B-0012` is now deployed to staging on `main` and resolves the remaining currently registered review queue by:
+  - adding shared outside-click / focus-loss dismissal and unclipped overlay layering to the grouped-actions dropdown pattern
+  - defining and proving the widget span model plus the reusable widget shell anatomy on the layout, archetype, and live dashboard surfaces
+  - establishing the Tier 1 date/date-time baseline and the Tier 2 date-range filter pattern
+  - establishing the Tier 2 identity summary card and adopting it on the account/profile proof surface
+  - strengthening the shared sub-navigation active state in both dark and light mode
+- Follow-up manual review on `P2-B-CQ-001` found that the locale/timezone selector still needs another pass:
+  - the option list is effectively uncapped and can extend off-page
+  - the interaction still reads like a separate search field filtering a list instead of one integrated searchable dropdown-select variant
+  - the supporting email/phone examples on the form-pattern proof remain static proof examples rather than live validation workflows, so the page should be judged as a library proof unless a later Batch B item explicitly promotes interactive demo-state behavior
+- The next follow-up manual review on `P2-B-CQ-001` found that the current integrated selector treatment still has conflicting dropdown affordances and selected-state cues:
+  - the trigger currently renders duplicate caret/dropdown indicators instead of one clear control affordance
+  - the open menu shows more than one "currently selected" signal for the same option, which makes the selection state read as duplicated rather than intentional
+  - the next pass should establish this as a standalone shared searchable dropdown-select component rather than layering extra search/menu UI on top of a native-select-like composition
+  - this work should coordinate with the broader dropdown/menu variant direction now being tracked alongside `P2-B-CQ-014`, without merging the searchable-selector fix into the action-menu colorway item itself
+- Follow-up manual review on the new identity-summary proof found two additional design gaps:
+  - the current default identity-summary card is too busy as a single universal variant and should establish lighter versus fuller density options
+  - the same pattern family should likely cover both person and company/entity summaries when the structure is still avatar-or-mark + title + supporting metadata + optional status/actions
+- Follow-up manual review also found a broader metadata readability issue that affects both `identity-summary-card` and `data-list-item`:
+  - compact metadata rows currently read as continuous text because the pieces are only separated by spacing
+  - likely best-practice correction should use clearer grouping cues such as semantic separators, tag-like category treatment where appropriate, or reduced all-caps treatment rather than relying on alternating colors alone
+- Follow-up design guidance review against trusted third-party systems supports the same direction for the reopened identity-summary and metadata issues:
+  - Atlassian typography guidance advises avoiding all-caps for readability except for acronyms, which supports moving compact metadata rows away from all-caps text blocks when they are carrying normal content labels or values
+  - Atlassian spacing guidance emphasizes proximity and intentional spacing to show semantic grouping, which supports distinct metadata grouping treatment instead of relying on raw gaps alone
+  - Carbon tag guidance supports concise tags for categorical labels, but not for every metadata token; category/status items can use tag-like treatment while dates, owners, and locales should stay readable body metadata
+  - Carbon structured-list guidance supports sentence-case row text and stacked hierarchy for read-only data, which points toward either explicit separators or light vertical stacking instead of one dense inline run of metadata
+- Manual review now approves `P2-B-CQ-009` and `P2-B-CQ-012` as passing outcomes from Batch B pass `2-B-0013`.
+- Follow-up manual review on `P2-B-CQ-005` found that the documented widget span model is not yet functioning correctly on the proof surface:
+  - the current `Span 1x2` and `Span 2x2` widget examples still render at a single-row height instead of visibly occupying taller multi-row space
+  - the next pass should treat this as a real row-span rendering failure in the shared dashboard grid/widget implementation, not as a naming or proof-copy issue
+- Follow-up manual review on `P2-B-CQ-003` found that the proof-intent improvements are directionally correct but still inconsistent:
+  - the top-of-page `How to read this proof` notice is clear and visibly separate from the component examples
+  - the smaller in-card or in-section explanatory notes are not using that same visual notice treatment, so they can still read like part of the component itself instead of library guidance
+  - the next pass should normalize one shared proof-note treatment and use it consistently wherever intended behavior, usage bounds, or scope clarification is needed
+  - broader ideas like temporary review-status banners, under-review states, or inline change-queue IDs should stay out of the canonical proof contract unless a later review-mode system is intentionally designed for that purpose
+- A new manual-review finding on the Form Patterns support-phone example found that the current phone input still expects punctuation-heavy manual entry:
+  - typing plain digits such as `5555555555` should auto-normalize into the standard internal phone format instead of leaving raw digits in place
+  - Batch B should treat this as a reusable phone-entry formatting requirement for shared internal phone inputs, not just a one-off proof-page placeholder adjustment
+- Follow-up manual review on the remaining action-menu queue found that `P2-B-CQ-014` was framed too narrowly around grouped dropdown fixes:
+  - the next pass must first establish the Tier 1 action/menu-item component-library standard across all supported standard colorways
+  - only after that upstream colorway contract is explicit should the shared dropdown and account-menu consumers be updated
+  - `P2-B-CQ-015` and `P2-B-CQ-016` remain valid downstream follow-ups, but they now depend on the broader `P2-B-CQ-014` standardization pass
+- A later follow-up decision now promotes that separate review-mode idea into its own Batch B item:
+  - `P2-B-CQ-013` should establish a temporary active-batch proof review mode for UI Reference pages
+  - this mode can surface queue IDs, scoped reviewer focus, and under-review context during active batches
+  - it should remain clearly separate from the permanent proof-note contract and should be removable or disableable at batch closeout
+- Follow-up manual review on `P2-B-CQ-013` found that the current review-mode surface is still too page-level:
+  - the existing top-of-page active-batch review banner is useful, but it is not specific enough on its own when several component cards are on the same proof page
+  - the next pass should add either a scoped inline review alert or a status badge/tag directly on the relevant UI component library cards so the affected active-batch queue IDs are visible at the point of review
+  - this remains part of the temporary active-batch review mode rather than a permanent component-library annotation contract
+- A further follow-up review on `P2-B-CQ-013` found that the active-batch review layer also needs explicit full-queue coverage expectations:
+  - the current implementation does not appear to represent every current `Implemented Pending Review` item accurately on the site
+  - the next pass should treat complete and accurate review-layer coverage for the current `Implemented Pending Review` queue as part of the item itself, not as an optional extra where only some proof cards receive queue-ID targeting
+  - where an implemented-pending-review item has a visible proof surface, the review layer should expose that queue ID at the point of review, not only through a shared page banner
+- Batch B pass `2-B-0014` is now deployed to staging on `main` and resolves the reopened `P2-B-CQ-013` review-layer coverage gap by:
+  - adding a reusable scoped review-target callout for temporary active-batch queue-ID tagging on individual proof cards
+  - retargeting the active review banners so they show only the current pending-review queue items on each proof page instead of stale passed-review IDs
+  - applying section-level review targeting to the current pending-review proof surfaces for `P2-B-CQ-003`, `P2-B-CQ-004`, `P2-B-CQ-006`, `P2-B-CQ-007`, `P2-B-CQ-008`, `P2-B-CQ-010`, `P2-B-CQ-011`, and `P2-B-CQ-013`
+  - preserving `P2-B-CQ-003` as the permanent proof-note contract while using `P2-B-CQ-013` only as temporary batch-review context layered on top of those proof surfaces
+- Batch B pass `2-B-0016` is now deployed to staging on `main` and resolves the reopened `P2-B-CQ-001` selector-baseline gap by:
+  - removing the inherited native-select caret treatment from the shared searchable-select trigger so the explicit chevron is the only dropdown affordance
+  - aligning the server-rendered selected-option icon marker with the client-side searchable-select script so the chosen option no longer gains a duplicate check glyph after initialization
+  - hardening the selector script to collapse duplicate selected-state glyphs if markup ever drifts again
+  - adding selector-contract assertions on the UI Reference, platform general settings, and account preferences validation surfaces
+- Batch B pass `2-B-0017` is now deployed to staging on `main` and resolves `P2-B-CQ-017` by:
+  - adding a shared internal phone formatter so plain ten-digit entry persists as the canonical `(555) 555-5555` baseline across the touched account, company-information, and staff-profile save paths
+  - wiring the adopted phone inputs to the shared frontend formatter so raw digit entry normalizes on the proof surface and the live settings/profile forms instead of relying on manual punctuation
+  - extending proof and feature coverage so the phone-entry baseline is visible and asserted on the UI Reference forms page plus the touched account/settings/user-management surfaces
+- The latest follow-up manual review on `P2-B-CQ-017` found that the shared phone-input normalizer still defers formatting until a complete ten-digit value exists:
+  - entering `5`, `55`, `555`, and other partial values currently leaves raw digits in place instead of beginning the phone pattern immediately
+  - the next pass should make the display format progress from the first typed digit and keep that behavior consistent across the shared proof surface and adopted live form inputs
+  - trusted third-party references support this direction: `libphonenumber-js` exposes `AsYouType('US')` partial formatting/templates, `intl-tel-input` exposes `formatNumberAsYouType`, and IMask shows that visible placeholders are optional if the team wants a mask-style fill contract
+- Batch B pass `2-B-0018` is now deployed to staging on `main` and resolves the reopened `P2-B-CQ-005` row-span failure by:
+  - replacing the tall widget span utilities with explicit responsive `grid-column` and `grid-row` declarations so `1x2`, `2x2`, and `3x2` no longer rely on a compiled shorthand placement merge
+  - publishing the shared widget-span fix to the required review surface so the taller dashboard proofs are available for targeted manual re-review on staging
+- Batch B pass `2-B-0015` is now deployed to staging on `main` and resolves `P2-B-CQ-014` plus `P2-B-CQ-016` by:
+  - adding a shared `x-ui.menu-item` entry point for grouped-action surfaces
+  - standardizing the supported menu-item colorways on the existing action semantic token family instead of page-local menu link overrides
+  - updating the Tier 1 actions proof page and the grouped-action proof surfaces so the shared action/menu-item suite is reviewable with current queue-ID targeting
+  - removing the neutral ghost border treatment so neutral ghost now uses the same borderless baseline as the semantic ghost variants
+- The latest follow-up manual review on the searchable-select and dropdown menu surfaces found that `P2-B-CQ-001` still fails the intended Tier 1 Inputs And Forms contract:
+  - the searchable-select trigger and open menu still drift from the canonical select baseline on spacing, typography, and outer border treatment
+  - the forms proof still reads too much like a localization-only selector fix instead of an explicit shared searchable dropdown standard for Inputs And Forms
+  - the next pass should validate the searchable dropdown standard directly on the Form Patterns and Inline Form Row timezone proofs as part of the shared `searchable-select` contract
+- The same follow-up manual review found that `P2-B-CQ-014` still fails the intended Tier 1 menu contract:
+  - the shared action/menu-item suite still does not define how a currently selected or current-context item is shown inside a menu
+  - the `Workspace Actions` grouped dropdown reads closer to the intended canonical direction than the other remaining menu treatments and should anchor the normalization pass instead of preserving three menu styles
+- Batch B pass `2-B-0013` is now deployed to staging on `main` and resolves the latest reopened Batch B review queue by:
+  - replacing the previous filter-plus-native-select locale/timezone control with one bounded integrated searchable dropdown-select entry point
+  - introducing a shared proof-note wrapper so page-level and section-level library guidance use one clearly defined notice treatment
+  - adding a temporary active-batch proof review banner pattern with queue IDs and reviewer focus notes on the relevant Tier 2 proof pages
+  - refining the identity-summary family into compact, standard, and detailed proof variants while proving that person and company/entity summaries can share the same family when their anatomy aligns
+  - normalizing compact metadata groups on identity summaries and data-list rows so values use clearer separators and sentence-case readability instead of all-caps spacing alone
+- Batch B passes `2-B-0002` through `2-B-0010` now leave behind a full first-pass Tier 2 proof map in UI Reference:
+  - form patterns
+  - data/content patterns
+  - navigation/action patterns
+  - table/advanced data patterns
+  - layout/dashboard patterns
+  - archetype proofs
+- Batch B passes `2-B-0002` through `2-B-0010` are now deployed to staging on `main` and ready for one combined manual review pass.
+- First live consumption proofs now use the new Tier 2 building blocks on:
+  - `/dashboard`
+  - `/platform/settings/general`
+  - `/account`
+  - `/account/settings`
+  - `/account/preferences`
+- Batch B handoff artifacts now exist in `docs/09-reference/ui/` for:
+  - internal shell family rules
+  - page/module archetypes
+  - setup/settings registration fields
+  - future-module UI ownership declaration fields
+
+## Decisions
+- Revise `P2-B-CQ-023` to iteration 3 instead of continuing with the iteration 2 whitespace-only framing because the correct abstraction is content-space capacity, not another pass at enumerating metrics, chips, rows, lists, or paragraphs.
+- Supersede `P2-B-CQ-024` under `P2-B-CQ-023` because the operator direction now explicitly includes compact status units and the specialized `4x0.5` dashboard strip in the current shape-system standard.
+- Add `P2-B-CQ-025` as deferred future work so later batches can add approved concrete widget-content examples by size without blocking the current phase's shape-system implementation.
+- Reopen `P2-B-CQ-023` as iteration 2 rather than creating a new item because the clipping and whitespace defects are direct failures of the current Widget Content Standards proof acceptance criteria.
+- Defer `P2-B-CQ-024` instead of adding it to `Ready To Implement` because the top-of-dashboard `4x1` or `4x0.5` status/stat/counter/header concept is a separate standards decision and not required to correct the current `1x1`, `1x2`, `2x2`, and `3x2` proof defects.
+- Move `P2-B-CQ-023` from `In Progress` to `Implemented Pending Review` after rebuilding `/platform/ui-reference/patterns/widget-content` from the dashboard widget content standards plan.
+- Select the four-unit model for the Widget Content Standards proof because it creates a stricter, more realistic desktop allowance baseline than the previous three-unit model; full-row behavior should be introduced later as an explicit `4x` contract or page-specific dashboard composition instead of treating `3x` as full row.
+- Split the standards-page widget row baseline from the Layout + Dashboard proof row baseline: `ui-pattern-dashboard-grid-widgets` uses `18rem` for content allowance review, while `dashboard-proof-grid` remains `24rem` for the already-approved span-height proof.
+- Move `P2-B-CQ-022` from `Implemented Pending Review` to `Passed Review` based on explicit manual approval.
+- Treat `P2-B-CQ-021` as superseded by `P2-B-CQ-023` rather than simply reopening the same wording because the failed implementation exposed a missing planning dependency: grid geometry and row-height calibration must be reviewed before the widget content standards page can be accurately rebuilt.
+- Keep the new plan in `/docs/08-active/` because it is active-batch implementation planning for the current failed review item, not durable product/system truth until a reviewed standard is implemented and accepted.
+- Implement `P2-B-CQ-021` and `P2-B-CQ-022` together because both items share the same information-architecture move: widget-specific standards leave Layout + Dashboard and become a standalone UI Reference review surface.
+- Keep Widget Content Standards under the UI Reference pattern standards area and implement it with existing dashboard-grid and widget-shell components rather than introducing a new primitive or palette.
+- Move `P2-B-CQ-018` and `P2-B-CQ-019` from `Implemented Pending Review` to `Passed Review` based on explicit manual approval.
+- Add `P2-B-CQ-021` as a new follow-up rather than reopening the approved span work because the requested widget content allowances define a broader future-module standards baseline.
+- Add `P2-B-CQ-022` as a new follow-up rather than reopening the approved Layout + Dashboard proof because the requested page cleanup changes information architecture and content placement, not the already-approved grid-span behavior.
+- Keep the `P2-B-CQ-018`, `P2-B-CQ-019`, and `P2-B-CQ-020` fixes in one work-batch pass because they share the same Layout + Dashboard proof surface and the same dashboard grid/widget-card review contract.
+- Reopen `P2-B-CQ-018` as a same-item failure because the latest review proves the visible multi-row widget proof still does not guarantee true two-row occupancy when following widgets are present.
+- Reopen `P2-B-CQ-019` as a partial approval rather than a full pass: full-width layout composition, save behavior, and drag/reorder preview are accepted, but widget header/body content examples remain required before the item can close.
+- Reopen `P2-B-CQ-020` as a same-item failure because the remaining Layout + Dashboard card-color problem is still the shared/default card palette contract, not a new dashboard-only styling issue.
+- Reopen `P2-B-CQ-019` as a same-item failure because the current UI Reference proof still compresses the dashboard example, allows smaller-width widget-content collisions, and does not provide sufficiently legible drag insertion/swap feedback during reordering.
+- Add `P2-B-CQ-020` as a new `Ready To Implement` follow-up item because the saved-layout preview exposes a broader missing shared soft-card palette contract rather than a dashboard-only local styling bug.
+- Treat the Layout + Dashboard UI Reference page as the canonical first review surface for `P2-B-CQ-019`; the live `/dashboard` page is downstream consumer validation only for this queue item.
+- Do not count decorative customize/lock chrome or drag-style affordances on the live dashboard as proof coverage unless the interaction is demonstrably working and already proven on the UI Reference surface.
+- Reopen `P2-B-CQ-019` as a same-item failure because the current staging proof does not present a visibly distinct or directly reviewable customization interface on the Layout + Dashboard page.
+- Tighten `P2-B-CQ-019` so the next pass must provide visible interactive proof coverage, not just explanatory copy about customization states.
+- `P2-B-CQ-013` should use a derived runtime manifest for the temporary UI Reference review overlay, with the canonical queue file remaining the source of truth and runtime regeneration occurring whenever the source queue hash changes.
+- `work-batch` and `batch-update-manual-review-status` should both treat active-batch review-manifest synchronization as part of the overlay lifecycle whenever queue-state changes affect the temporary review surface.
+- Refine `P2-B-CQ-019` in place instead of creating a new queue item because the per-user saved-layout contract is part of the same dashboard customization failure already tracked under lock/unlock, widget toggling, and reorganization behavior.
+- Add `P2-B-CQ-019` as a new `Ready To Implement` follow-up item because the latest dashboard feedback combines live customization behavior failure with missing proof coverage for lock/unlock, widget toggling, and reorganization states.
+- Add `P2-B-CQ-018` as a new `Ready To Implement` follow-up item because the latest widget review feedback is about visible proof coverage of taller widget states, not direct proof that the already-approved shared row-span contract regressed.
+- Move `P2-B-CQ-015` from `Blocked` to `Ready To Implement` because the upstream menu-item suite dependencies are now approved and the remaining account-menu styling gap is confirmed as an existing item failure rather than a new queue item.
+- Move `P2-B-CQ-001`, `P2-B-CQ-014`, and `P2-B-CQ-017` from `Implemented Pending Review` to `Passed Review` based on explicit manual approval.
+- `P2-B-CQ-013` should synchronize against the live `Implemented Pending Review` queue at render time and should suppress empty temporary review overlays entirely on proof surfaces that no longer participate in the current pending-review set.
+- Treat `P2-B-CQ-013` as a same-item failure of the temporary review-layer synchronization contract, not as a new adjacent queue item.
+- Keep `P2-B-CQ-003`, `P2-B-CQ-004`, `P2-B-CQ-005`, `P2-B-CQ-006`, `P2-B-CQ-007`, `P2-B-CQ-008`, `P2-B-CQ-010`, and `P2-B-CQ-011` in passed-review status on their own merits; do not reopen them just because the temporary review overlay is stale.
+- Batch B starts with Tier 1 library hardening for the promoted Blade-component candidates before broader Tier 2 implementation continues.
+- Batch B pass `2-B-0001` uses the existing Tier 1 class contracts as the styling baseline and wraps them in canonical Blade entry points rather than redefining visual rules.
+- Batch B first-pass implementation closes the remaining planned slices in one review-ready pass so manual visual QA can happen against the full internal library/proof surface set instead of piecemeal.
+- Batch B review-fix pass `2-B-0011` uses a shared option catalog and a small searchable-selector entry point rather than continuing the free-text localization demo pattern.
+- Batch B review-fix pass `2-B-0012` uses shared pattern entry points for widgets, date ranges, and identity summaries rather than extending existing proof pages with more one-off markup.
+- The `identity-summary-card` should stay one pattern family with density/entity variants rather than split immediately into unrelated person and company components, unless later proof work shows their required anatomy diverges materially.
+- `P2-B-CQ-001` should reopen as a standalone shared searchable dropdown-select component pass rather than another local selector polish pass, and that work should be coordinated with the broader dropdown/menu variant direction tracked near `P2-B-CQ-014`.
+- `P2-B-CQ-005` should reopen as a shared dashboard row-span rendering fix because the current taller widget proofs do not actually honor multi-row height yet.
+- `P2-B-CQ-017` should stay a separate form-pattern phone-entry follow-up so the shared internal phone-formatting behavior can be corrected intentionally without being folded into the searchable-selector or dropdown action queue items.
+- `P2-B-CQ-013` should reopen as a refinement of the temporary proof-review mode so queue-ID targeting can appear on the relevant component cards themselves, not only in the page-level active-batch review banner.
+- `P2-B-CQ-013` should also require full and accurate coverage for the current `Implemented Pending Review` queue on visible proof surfaces, so the review layer system is judged by complete on-site coverage rather than by whether a top-of-page banner exists.
+- `P2-B-CQ-003` should remain separate from `P2-B-CQ-013`; proof-note normalization is the permanent shared library-guidance contract, while the active-batch review overlay is temporary batch-only review context. `P2-B-CQ-013` may annotate `P2-B-CQ-003` proof surfaces during active review, but it does not absorb or replace that queue item.
+- `P2-B-CQ-013` review targeting should only identify the current pending-review queue items on each proof surface; once an item passes manual review, its queue ID should drop out of the temporary overlay instead of lingering as stale active-review context.
+- The remaining action-menu work should now be treated as unfinished Tier 1 library hardening first: establish the supported standard colorway contract for shared action/menu-item primitives before applying the resulting changes to existing Tier 2 dropdown/account consumers.
+- Queue cleanup review confirms `P2-B-CQ-001` and `P2-B-CQ-017` should stay framed as Tier 1 input-baseline work first; their current app/page surfaces are consumer validation coverage, not separate page-local fixes.
+- `P2-B-CQ-017` should reopen as a same-item failure of the shared phone-input interaction contract: persistence-side normalization is acceptable, but the typed-entry experience must format from the first digit instead of waiting for a complete ten-digit value. The next pass should adopt an explicit partial-entry display contract, with visible placeholders optional rather than required.
+- The searchable-select baseline should use one explicit trigger chevron and one shared selected-option check marker; native select caret chrome does not belong on this composed control.
+- The latest dropdown/menu review is classified as failure of the existing implemented outcomes on `P2-B-CQ-001` and `P2-B-CQ-014`, not as a separate adjacent queue item, so both items should return to `Ready To Implement`.
+- No new change-queue item is required for searchable dropdown menus or current-item menu states; those gaps belong inside the refined scopes of `P2-B-CQ-001` and `P2-B-CQ-014`.
+- Manual review now approves `P2-B-CQ-016` as a passing outcome from Batch B pass `2-B-0015`.
+- Shared dashboard widget span classes should declare responsive row and column placement explicitly instead of relying on combined utility expansion, because the compiled shorthand placement proved unreliable for the tall widget proofs.
+- Queue cleanup review narrows `P2-B-CQ-014` to the upstream Tier 1 action/menu-item suite, keeps `P2-B-CQ-016` as the remaining Tier 1 ghost-variant parity follow-up inside that suite, and leaves `P2-B-CQ-015` blocked as downstream account-menu adoption until the Tier 1 suite closes.
+- Batch B pass `2-B-0015` keeps `P2-B-CQ-015` blocked on purpose; the account-menu adoption work remains a downstream consumer follow-up and was not folded into the shared suite pass.
+- Queue cleanup review confirms `P2-B-CQ-007` and `P2-B-CQ-008` already reflect the correct Tier 1-before-Tier 2 sequencing and do not need reclassification.
+
+## Risks / Questions
+- The next `P2-B-CQ-023` pass should not overbuild final approved widget content examples; the review target is the content-space unit system, route/page structure, px budget explanation, and shape composition map.
+- Combined Batch B manual review still cannot close until `P2-B-CQ-023` is corrected, deployed, and manually reviewed.
+- The next `P2-B-CQ-023` implementation should use content-space unit shapes to resolve the old clipping/whitespace problem instead of trying to tune arbitrary text/list/metric examples.
+- `P2-B-CQ-023` still needs reviewer confirmation that the four-unit desktop model, `18rem` one-row baseline, content-space shape map, and standalone size-page structure are acceptable.
+- The current implementation intentionally avoids defining a full-row widget standard; if future dashboard modules need full-row content allowances, a separate `4x` contract or composition-specific rule should be opened after this review.
+- Realtime notification toast rendering remains a feature-level JS path and is intentionally outside this Tier 1 hardening pass.
+- `resources/views/platform/ui-reference/index.blade.php` remains an unused legacy workspace view because the canonical `/platform/ui-reference` route renders `overview.blade.php`; this pass left it untouched to avoid mixing unrelated cleanup into the Batch B implementation lane.
+- Combined Batch B manual review is still required to confirm the newly implemented widget, date-range, identity-summary, dropdown, and sub-navigation changes before the batch can move toward close-out.
+- Local Windows verification still is not a reliable Batch B path for this repo:
+  - the Windows PHP runtime available in this thread is missing `mbstring`, so feature tests must run in the Docker app container
+  - the Windows Vite/Tailwind build path fails on native binary loading, so asset verification currently depends on the canonical WSL build path

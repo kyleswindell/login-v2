@@ -54,7 +54,7 @@
 - [ ] Dashboard And Summary Conventions
   Status: implemented (pending manual review)
   - dashboard widget-shell conventions are explicit
-  - dashboard widget content allowances are being reframed as content-space unit standards after `2-B-0046` and remain pending implementation/review
+  - dashboard widget content allowances are now defined as an approved content-space unit system (`P2-B-CQ-023` approved 2026-06-02, `2-B-0047`)
   - dashboard widget span model now uses strict row-track enforcement after `2-B-0042` and is approved on staging
   - summary/stat-card conventions are explicit
   - dashboard grid usage is explicit with deterministic `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, and `3x2` proof comparisons approved on staging

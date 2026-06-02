@@ -18,24 +18,12 @@ Use this file as the agent-managed canonical queue for active-batch implementati
 ## Blocked
 
 ## Deferred
-- [ ] Decide whether the dashboard widget standards need a separate full-row or top-of-dashboard compact status/header widget contract, such as a `4x1` widget or a special `4x0.5` stat/counter/header surface, instead of forcing that shape into the current standard widget content allowance set.
-  ID: P2-B-CQ-024
-  Scope: dashboard full-row/top-header status widget allowance decision, `4x1` versus compact `4x0.5` treatment, default dashboard header/stat/counter component option, deferral boundary between standard widgets and one-off dashboard header surfaces
-  Path Coverage: future widget content standards proof, Layout + Dashboard proof if a full-row/header surface is accepted, dashboard/stat/widget conventions docs after approval
-  Follow-up To: P2-B-CQ-023
-  Superseded By: P2-B-CQ-023
 - [ ] Add future approved widget-content example catalogs by size after the content-space unit system is reviewed; each size-standard page should eventually show approved concrete module patterns that consume the unit shapes without redefining the shape system itself.
   ID: P2-B-CQ-025
   Scope: future concrete widget content examples by size, approved module-pattern catalog, size-specific examples layered on top of content-space units
   Path Coverage: standalone Widget Content size-standard pages after `P2-B-CQ-023` approval, future dashboard module implementation references
   Follow-up To: P2-B-CQ-023
-- [ ] Establish a standalone dashboard widget content standards proof that defines baseline content allowances by supported widget size, considering both declared width and height; the page should document which content regions, density levels, and example content volumes are appropriate for `1x1`, `2x1`, `1x2`, `2x2`, `3x1`, and `3x2` widgets without attempting to define every possible widget content type.
-  ID: P2-B-CQ-021
-  Scope: dashboard widget content allowances, size-aware density standards, width/height-based content-region guidance, standalone UI Reference component page, future-module widget design baseline
-  Path Coverage: new UI Reference widget content standards page, shared widget-shell guidance, dashboard/widget proof navigation, future module dashboard-widget implementation guidance
-  Follow-up To: P2-B-CQ-006, P2-B-CQ-018, P2-B-CQ-019
-  Implemented in: `2-B-0043`
-  Superseded By: P2-B-CQ-023
+  Note: Precondition met — `P2-B-CQ-023` passed review 2026-06-02. Ready to action when concrete module examples are available for review.
 
 ## Passed Review
 - [x] Rebuild the Widget Content Standards area around a content-space unit system instead of semantic content guesses: keep the four-unit dashboard geometry and row-height budget visible, define reusable content-space shapes up to `3x3`, define compact `0.5x0.5` and `1x0.5` status/counter units plus a specialized `4x0.5` dashboard strip, and create standalone size-standard pages so future approved widget-content examples can be added by size without bloating the landing page.
@@ -171,3 +159,5 @@ Use this file as the agent-managed canonical queue for active-batch implementati
   Implemented in: `2-B-0013`
 
 ## Closed
+- Closed: P2-B-CQ-024 — superseded by P2-B-CQ-023; `4x0.5` strip contract resolved within the approved content-space unit system (2026-06-02)
+- Closed: P2-B-CQ-021 — superseded by P2-B-CQ-023; original widget content allowances proof fully replaced and approved (2026-06-02)

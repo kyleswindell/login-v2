@@ -48,8 +48,8 @@ Address targeted manual-review feedback for `P2-B-CQ-015`: sign-out is correct, 
 
 ## Commit / Deploy Status
 
-- Commit: Pending
-- Deploy: Pending
+- Commit: Yes (`6c013a4`)
+- Deploy: Yes (`main` deployed to staging after `6c013a4`)
 
 ## Notes
 

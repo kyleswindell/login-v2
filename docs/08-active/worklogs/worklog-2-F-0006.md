@@ -34,7 +34,7 @@ Fourth review failure for P2-F-CQ-001 (worklog-2-F-0005). Four issues:
 **Fixed P2-F-CQ-011 queue contract in change-queue.md:**
 - Updated title to include all 6 new area categories: breadcrumb, structured list, file uploader, date picker, grid, and tile
 - Expanded Scope to cover all 15 gap series across pass 2 and pass 3 areas
-- Expanded Acceptance from 10 criteria to 27 criteria, with explicit gap ID references for all 30 gaps (G-TABLE-01–03 through G-TILE-01–02)
+- Expanded Acceptance from 10 criteria to 27 criteria, with explicit gap ID references for all 32 gaps (G-TABLE-01–03 through G-TILE-01–02)
 - P2-F-CQ-008 was NOT changed — remains button variant and action label guidance only (G-ACT-01–05, G-LABEL-01–06)
 
 **Corrected dates in worklog-2-F-0005.md:**
@@ -59,7 +59,7 @@ Fourth review failure for P2-F-CQ-001 (worklog-2-F-0005). Four issues:
 
 - [x] P2-F-CQ-001 is in Implemented Pending Review (only)
 - [x] No item is left In Progress (`<!-- none -->`)
-- [x] P2-F-CQ-011 scope and acceptance match every gap routed to it in the Carbon audit (all 15 gap series, 30 gaps)
+- [x] P2-F-CQ-011 scope and acceptance match every gap routed to it in the Carbon audit (all 15 gap series, 32 gaps)
 - [x] P2-F-CQ-008 is still only button/action-label guidance (G-ACT-01–05, G-LABEL-01–06)
 - [x] review.md Pass Summary matches change-queue.md current state (P2-F-CQ-001 Implemented Pending Review after pass 4)
 - [x] worklog dates: 2-F-0003 = 2026-06-03, 2-F-0004 = 2026-06-03, 2-F-0005 = 2026-06-03, 2-F-0006 = 2026-06-03

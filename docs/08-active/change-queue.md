@@ -8,17 +8,6 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 
 ## Ready To Implement
 
-### P2-F-CQ-001 - Carbon contrast audit and starter catalog matrix
-- Status: Ready To Implement
-- Owner: Batch F
-- Scope: Audit the current UI Reference against Carbon-style design-system completeness and produce the authoritative starter catalog matrix before implementation continues.
-- Acceptance:
-  - audit source set includes Carbon documentation site, `carbon-design-system/carbon-website`, `carbon-design-system/carbon`, and `carbon/tree/main/docs`
-  - audit covers actions, buttons, forms, alerts, toasts, notifications, status indicators, badges, selection controls, and starter-page organization
-  - audit treats Carbon as a documentation-depth and completeness benchmark, not as a visual adoption target
-  - starter catalog matrix maps each required starter to intended use, shell family, Tier 2 patterns, required states, UI Reference route, live proof surface, and owning queue item
-  - gaps are normalized into queue language instead of staying as exploratory notes
-
 ### P2-F-CQ-007 - UI Reference starter catalog entry point
 - Status: Ready To Implement
 - Owner: Batch F
@@ -92,6 +81,18 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ## In Progress
 
 ## Implemented Pending Review
+
+### P2-F-CQ-001 - Carbon contrast audit and starter catalog matrix
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Audit the current UI Reference against Carbon-style design-system completeness and produce the authoritative starter catalog matrix before implementation continues.
+- Acceptance:
+  - audit source set includes Carbon documentation site, `carbon-design-system/carbon-website`, `carbon-design-system/carbon`, and `carbon/tree/main/docs`
+  - audit covers actions, buttons, forms, alerts, toasts, notifications, status indicators, badges, selection controls, and starter-page organization
+  - audit treats Carbon as a documentation-depth and completeness benchmark, not as a visual adoption target
+  - starter catalog matrix maps each required starter to intended use, shell family, Tier 2 patterns, required states, UI Reference route, live proof surface, and owning queue item
+  - gaps are normalized into queue language instead of staying as exploratory notes
+- Implemented in: worklog-2-F-0002
 
 ## Blocked
 

@@ -10,14 +10,14 @@
 
 ## UI Reference Starter Catalog
 - [ ] UI Reference Starter Catalog
-  Status: not implemented
-  - Carbon contrast audit is complete
-  - audit source set includes Carbon documentation site, Carbon website source repo, Carbon main repo, and Carbon main docs directory
-  - audit treats Carbon as a completeness benchmark, not a visual adoption target
-  - authoritative starter catalog matrix is documented
-  - required starter examples are visible and locatable in UI Reference
-  - UI Reference navigation exposes the starter catalog intentionally
-  - starter examples are concrete page compositions, not only rule summaries
+  Status: implemented (pending review) — Carbon audit complete; starter catalog matrix documented in worklog-2-F-0002; concrete starters and navigation entry point remain in P2-F-CQ-002 through P2-F-CQ-007
+  - [x] Carbon contrast audit is complete
+  - [x] audit source set includes Carbon documentation site, Carbon website source repo, Carbon main repo, and Carbon main docs directory
+  - [x] audit treats Carbon as a completeness benchmark, not a visual adoption target
+  - [x] authoritative starter catalog matrix is documented
+  - [ ] required starter examples are visible and locatable in UI Reference
+  - [ ] UI Reference navigation exposes the starter catalog intentionally
+  - [ ] starter examples are concrete page compositions, not only rule summaries
 
 ## Design-System Usage Guidance
 - [ ] Design-System Usage Guidance

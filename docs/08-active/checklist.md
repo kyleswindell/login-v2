@@ -12,6 +12,7 @@
 - [ ] UI Reference Starter Catalog
   Status: not implemented
   - Carbon contrast audit is complete
+  - audit source set includes Carbon documentation site, Carbon website source repo, Carbon main repo, and Carbon main docs directory
   - authoritative starter catalog matrix is documented
   - required starter examples are visible and locatable in UI Reference
   - UI Reference navigation exposes the starter catalog intentionally

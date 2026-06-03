@@ -13,6 +13,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 - Owner: Batch F
 - Scope: Audit the current UI Reference against Carbon-style design-system completeness and produce the authoritative starter catalog matrix before implementation continues.
 - Acceptance:
+  - audit source set includes Carbon documentation site, `carbon-design-system/carbon-website`, `carbon-design-system/carbon`, and `carbon/tree/main/docs`
   - audit covers actions, buttons, forms, alerts, toasts, notifications, status indicators, badges, selection controls, and starter-page organization
   - starter catalog matrix maps each required starter to intended use, shell family, Tier 2 patterns, required states, UI Reference route, live proof surface, and owning queue item
   - gaps are normalized into queue language instead of staying as exploratory notes

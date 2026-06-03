@@ -104,6 +104,13 @@ Before implementing the starter catalog, Batch F must run a focused contrast aud
 
 The audit should not copy Carbon as the app standard. It should use Carbon as an external completeness benchmark, then translate relevant findings into Login App 2.0-specific standards, examples, and queue items.
 
+Required Carbon source set:
+
+* Carbon documentation site for current usage guidance: `https://carbondesignsystem.com/`
+* Carbon website source repository for complete docs content: `https://github.com/carbon-design-system/carbon-website`
+* Carbon main repository for component/package implementation, repo docs, examples, and package structure: `https://github.com/carbon-design-system/carbon`
+* Carbon main repository docs directory for repository-level documentation references: `https://github.com/carbon-design-system/carbon/tree/main/docs`
+
 Minimum audit areas:
 
 * actions and common action labels

@@ -7,6 +7,7 @@
 - Existing Batch B artifacts provide the shell-family, archetype, setup/settings registration, and future-module ownership contracts. Batch F should turn those contracts into concrete starter-page examples and proof-surface parity.
 - The required starter set now includes module home, settings, setup/configuration, account/profile, list/index, table-management index, operational log/detail, content browser/split-view, detail/read-only, create/edit, dashboard/module summary, widget examples by module content type, and blocked/empty/unavailable states.
 - Batch F must begin with a Carbon-informed contrast audit so missing usage guidance for buttons, badges, alerts, toasts, notifications, status indicators, forms, action labels, AJAX feedback, and selection controls is mapped before implementation.
+- The Carbon audit should use both the public docs site and the GitHub sources: `carbon-design-system/carbon-website`, `carbon-design-system/carbon`, and `carbon/tree/main/docs`.
 
 ## Implementation Notes
 

@@ -41,7 +41,16 @@
 - Module Home `loading skeleton` changed to `loading` (generic). Skeleton Loader is not yet a locked Tier 2 pattern. Note 6 added to the Notes For Implementing Agents section to route this as a follow-up gap under P2-F-CQ-008.
 - Acceptance Proof Table added to audit findings document to directly evidence each P2-F-CQ-001 acceptance criterion.
 
-## Decisions From worklog-2-F-0004
+## Decisions From worklog-2-F-0005
+
+- Third review failure for P2-F-CQ-001 confirmed: five issues — six missing coverage areas, carbon main repo evidence overstated, gap count inconsistent (47 in table vs 50 in routing/worklog), skeleton loader routing in Starter Catalog Matrix pointing to P2-F-CQ-008 instead of P2-F-CQ-011, review.md stale.
+- Carbon main repo §3 evidence softened. The directory listing of `packages/react/src/components/` was inspected; no README or markdown docs visible in the listing; no individual component file content was opened or read. The claim now reflects inspection depth accurately. This is not a retraction — no consumer docs were found at this inspection depth — but the claim is scoped to what was actually observed.
+- Audit expanded to 23 public pages across 22 areas. Six new areas added: breadcrumb, structured list, file uploader, date picker, 2x grid/layout, tile. MDX source path mapping table updated with 6 new rows.
+- 12 new gaps added (G-BREADCRUMB-01–02, G-STRLIST-01–02, G-FILEUP-01–02, G-DATEPICK-01–02, G-GRID-01–02, G-TILE-01–02). All routed to P2-F-CQ-011. P2-F-CQ-011 now absorbs 32 total gaps across 11 areas.
+- **Total gap count is now 62 gaps across 22 areas.** This is the authoritative count. Acceptance table, routing summary, worklog-2-F-0005, and this notes entry are all consistent at 62/22.
+- Starter Catalog Matrix Note 6 corrected: skeleton loader follow-up now routes to P2-F-CQ-011 (not P2-F-CQ-008, which is button/action-label only).
+- review.md synced: third failure recorded, queue list updated to include P2-F-CQ-009/010/011, pass summary updated.
+- No new queue items were needed; all 12 new gaps route to existing P2-F-CQ-011 without making that item overly broad.
 
 - MDX file name pattern confirmed from GitHub directory listings: each component's public tab maps to a separate `.mdx` file (`usage.mdx`, `style.mdx`, `code.mdx`, `accessibility.mdx`), NOT `index.mdx`. This pattern was confirmed for button and notification via direct directory inspection; confirmed for all other 15 pages via "Edit this page on GitHub" links.
 - Deeper inspection of `packages/react/src/components/` in `carbon-design-system/carbon` (main repo) confirms the original "no supplemental consumer usage guidance" finding. Component subdirectories contain TypeScript/SCSS implementation source only; the README explicitly redirects consumers to carbondesignsystem.com for all usage guidance.

@@ -65,7 +65,7 @@ This index page must:
 
 5. **Blocked/empty/unavailable sub-types must all appear in one starter.** The three sub-types (permission-blocked, no-data, service-unavailable) should be demonstrated as distinct variants within the same starter view so that a single UI Reference route covers all three cases.
 
-6. **Skeleton Loader is not yet a locked Tier 2 pattern.** The `loading` state in the Module Home row must not be implemented using a Skeleton Loader component. Use a generic loading treatment (spinner or inline loading indicator) until Skeleton Loader is confirmed as an implemented Tier 2 pattern. If Skeleton Loader is later locked, P2-F-CQ-002 may adopt it at that time. Track as a follow-up gap under P2-F-CQ-008 (usage guidance standards).
+6. **Skeleton Loader is not yet a locked Tier 2 pattern.** The `loading` state in the Module Home row must not be implemented using a Skeleton Loader component. Use a generic loading treatment (spinner or inline loading indicator) until Skeleton Loader is confirmed as an implemented Tier 2 pattern. If Skeleton Loader is later locked, P2-F-CQ-002 may adopt it at that time. Track as a follow-up gap under P2-F-CQ-011 (data display, navigation, overlays, loading, and inputs — see G-LOAD-01/02).
 
 7. **Proof surface verification notes.** The following proof surfaces have known limitations; implementing agents should treat them as directional analogs, not exact route equivalents:
    - `Content Browser / Split View` → `/platform/ui-reference/audit-logs/{sample}` — this is a planned sample viewer route within the UI Reference itself, not a platform feature route; treat as a UI Reference self-demonstration target; route existence is unconfirmed and should be verified during P2-F-CQ-005 implementation.

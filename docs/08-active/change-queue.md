@@ -8,6 +8,18 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 
 ## Ready To Implement
 
+### P2-F-CQ-001 - Carbon contrast audit and starter catalog matrix
+- Status: Ready To Implement
+- Owner: Batch F
+- Scope: Third correction pass. Six required coverage areas still missing (breadcrumbs, structured list, file uploader, date picker, layout/grid, tile/card). Carbon main repo evidence overstated — claim "no supplemental consumer guidance" made based on directory listing only, not actual file inspection. Gap count inconsistent (acceptance table says 47; routing table has 50). Skeleton Loader follow-up incorrectly routed to P2-F-CQ-008 in matrix. review.md stale.
+- Acceptance:
+  - audit includes sections for all six previously missing areas: breadcrumbs, structured list, file uploader, date picker, layout/grid, tile/card
+  - Carbon main repo claim is accurate and defensible — either concrete file paths inspected, or claim softened to match actual inspection depth
+  - gap total is internally consistent across acceptance table, routing summary, worklog, and notes
+  - Skeleton Loader routing in Starter Catalog Matrix corrected to P2-F-CQ-011 (not P2-F-CQ-008)
+  - review.md reflects current third review failure, corrective pass outcome, and updated queue list
+- Implemented in: worklog-2-F-0002 (initial); worklog-2-F-0003 (correction pass 1); worklog-2-F-0004 (correction pass 2 — depth); worklog-2-F-0005 (correction pass 3 — missing areas + evidence fix)
+
 ### P2-F-CQ-007 - UI Reference starter catalog entry point
 - Status: Ready To Implement
 - Owner: Batch F
@@ -121,16 +133,14 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-001 - Carbon contrast audit and starter catalog matrix
 - Status: Implemented Pending Review
 - Owner: Batch F
-- Scope: Deepen the Carbon contrast audit so it serves as the authoritative design-system completeness benchmark for Batch F.
+- Scope: Third correction pass complete. Six new areas added (breadcrumb, structured list, file uploader, date picker, layout/grid, tile). Carbon main repo evidence softened. Gap count corrected to 62 across 22 areas. Skeleton Loader routing fixed in matrix. review.md synced.
 - Acceptance:
-  - audit source set includes Carbon documentation site, `carbon-design-system/carbon-website`, `carbon-design-system/carbon`, and `carbon/tree/main/docs`
-  - each public doc page used is mapped to its corresponding GitHub MDX source path in carbon-website
-  - audit covers all areas in the required list plus additional areas identified as relevant to Login App 2.0 starters
-  - audit treats Carbon as a documentation-depth and completeness benchmark, not as a visual adoption target
-  - starter catalog matrix proof surfaces are verified as real UI routes or marked as placeholder with follow-up routing
-  - gaps are normalized into queue language; P2-F-CQ-008 routing is reviewed and split if too broad
-  - acceptance proof table includes concrete source paths, not just repo-root inspection results
-- Implemented in: worklog-2-F-0002 (initial); worklog-2-F-0003 (correction pass 1); worklog-2-F-0004 (correction pass 2 — depth)
+  - audit includes sections for all six previously missing areas: breadcrumbs, structured list, file uploader, date picker, layout/grid, tile/card
+  - Carbon main repo claim is accurate and defensible — accurately describes directory-listing-level inspection and scopes the finding accordingly
+  - gap total is internally consistent across acceptance table, routing summary, worklog, and notes (62 gaps, 22 areas)
+  - Skeleton Loader routing in Starter Catalog Matrix corrected to P2-F-CQ-011
+  - review.md reflects third review failure, corrective pass outcome, and updated queue list
+- Implemented in: worklog-2-F-0002 (initial); worklog-2-F-0003 (correction pass 1); worklog-2-F-0004 (correction pass 2 — depth); worklog-2-F-0005 (correction pass 3 — missing areas + evidence fix)
 
 ## Blocked
 

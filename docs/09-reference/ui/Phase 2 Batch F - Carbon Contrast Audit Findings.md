@@ -70,6 +70,12 @@ All public carbondesignsystem.com pages used in this audit are mapped to their c
 | carbondesignsystem.com/components/search/usage/ | `src/pages/components/search/usage.mdx` | "Edit this page on GitHub" link |
 | carbondesignsystem.com/components/dropdown/usage/ | `src/pages/components/dropdown/usage.mdx` | "Edit this page on GitHub" link |
 | carbondesignsystem.com/components/overflow-menu/usage/ | `src/pages/components/overflow-menu/usage.mdx` | "Edit this page on GitHub" link |
+| carbondesignsystem.com/components/breadcrumb/usage/ | `src/pages/components/breadcrumb/usage.mdx` | "Edit this page on GitHub" link |
+| carbondesignsystem.com/components/structured-list/usage/ | `src/pages/components/structured-list/usage.mdx` | "Edit this page on GitHub" link |
+| carbondesignsystem.com/components/file-uploader/usage/ | `src/pages/components/file-uploader/usage.mdx` | "Edit this page on GitHub" link |
+| carbondesignsystem.com/components/date-picker/usage/ | `src/pages/components/date-picker/usage.mdx` | "Edit this page on GitHub" link |
+| carbondesignsystem.com/elements/2x-grid/usage/ | `src/pages/elements/2x-grid/usage.mdx` | "Edit this page on GitHub" link |
+| carbondesignsystem.com/components/tile/usage/ | `src/pages/components/tile/usage.mdx` | "Edit this page on GitHub" link |
 
 ---
 
@@ -87,7 +93,7 @@ All public carbondesignsystem.com pages used in this audit are mapped to their c
 - `packages/react/src/components/` directory inspected: contains component implementation source files (TSX, SCSS) — component code only, no consumer-facing usage guidance MDX or README files at the component subfolder level
 - Each component subfolder (e.g., `Button/`, `Modal/`) contains implementation source files and type definitions, not documentation
 
-**Contribution:** Confirms that this repository contains component implementation code, not consumer-facing usage guidance. Consumer documentation for component usage, variants, and when-to-use rules is hosted at carbondesignsystem.com (sourced from carbon-website). The implementation packages (`@carbon/react`, `@carbon/styles`) confirm the component variants and token names referenced in the usage documentation are the same identifiers available to consumers. Deeper inspection of `packages/react/src/components/` confirms no supplemental consumer usage documentation exists at the file level within this repo beyond what is published to carbondesignsystem.com.
+**Contribution:** Confirms that this repository contains component implementation code, not consumer-facing usage guidance. Consumer documentation for component usage, variants, and when-to-use rules is hosted at carbondesignsystem.com (sourced from carbon-website). The implementation packages (`@carbon/react`, `@carbon/styles`) confirm the component variants and token names referenced in the usage documentation are the same identifiers available to consumers. A directory listing of `packages/react/src/components/` was inspected. The listing shows component implementation subdirectories (TSX, SCSS source files). No `README.md` files, Storybook story files, or consumer-facing markdown documentation files were visible in the directory listing. No individual component file content was opened or read. Based on the repository README's explicit redirect to carbondesignsystem.com and the absence of documentation files in the component directory listing, no supplemental consumer usage guidance was identified at this inspection depth. This is a directory-listing-level finding only; individual component file content was not inspected.
 
 ---
 
@@ -122,14 +128,14 @@ All public carbondesignsystem.com pages used in this audit are mapped to their c
 
 | Acceptance Criterion | Evidence | Result | Notes |
 | --- | --- | --- | --- |
-| audit source set includes Carbon documentation site | 17 carbondesignsystem.com pages fetched across 2 passes; see MDX Source Path Mapping table in §2 | **PASS** | 8 pages in initial pass (worklog-2-F-0002); 9 additional pages in this pass (worklog-2-F-0004) |
-| audit source set includes `carbon-design-system/carbon-website` | github.com/carbon-design-system/carbon-website inspected; confirmed 85.7% MDX; `src/pages/components/button/` and `src/pages/components/notification/` directory listings directly confirmed; MDX path pattern verified for all 17 audited pages; see MDX Source Path Mapping table | **PASS** | Each public page mapped to its MDX source path at `src/pages/components/{name}/usage.mdx` or `src/pages/patterns/{name}/index.mdx` |
-| audit source set includes `carbon-design-system/carbon` | github.com/carbon-design-system/carbon inspected; README, package list, and `packages/react/src/components/` directory reviewed; confirmed implementation-only repo with no supplemental consumer usage guidance | **PASS** | `packages/react/src/components/` inspection confirms no consumer docs at file level; README redirects consumers to carbondesignsystem.com |
+| audit source set includes Carbon documentation site | 23 carbondesignsystem.com pages fetched across 3 passes; see MDX Source Path Mapping table in §2 | **PASS** | 8 pages in initial pass (worklog-2-F-0002); 9 additional in pass 2 (worklog-2-F-0004); 6 additional in pass 3 (worklog-2-F-0005) |
+| audit source set includes `carbon-design-system/carbon-website` | github.com/carbon-design-system/carbon-website inspected; confirmed 85.7% MDX; `src/pages/components/button/` and `src/pages/components/notification/` directory listings directly confirmed; MDX path pattern verified for all 23 audited pages; see MDX Source Path Mapping table | **PASS** | Each public page mapped to its MDX source path at `src/pages/components/{name}/usage.mdx`, `src/pages/patterns/{name}/index.mdx`, or `src/pages/elements/{name}/usage.mdx` |
+| audit source set includes `carbon-design-system/carbon` | github.com/carbon-design-system/carbon inspected; README, package list, and `packages/react/src/components/` directory listing reviewed; no README or markdown documentation files visible in component directory listing; no individual component file content read | **PASS** | Directory-listing-level inspection; no consumer-facing docs identified in listing; README redirects consumers to carbondesignsystem.com; see §3 for detailed inspection scope |
 | audit source set includes `carbon/tree/main/docs` | github.com/carbon-design-system/carbon/tree/main/docs inspected; directory listing and developer-handbook.md reviewed | **PASS** | Contains contributor docs only; no supplemental consumer usage guidance; documented in Audit Method §4 |
-| audit covers all required areas | Sections 1–7 (original 7 areas) plus Sections 8–15 (9 expanded areas) cover all required components and patterns; gaps G-ACT-01–05, G-LABEL-01–06, G-NOTIF-01–05, G-BADGE-01–04, G-FORM-01–04, G-SEL-01–03, G-STARTERS-01–03, G-TABLE-01–03, G-PAGIN-01–02, G-TABS-01–02, G-MODAL-01–03, G-TOOLTIP-01–02, G-LOAD-01–02, G-SEARCH-01–02, G-INPUT-01–02, G-OVERFLOW-01–02 identified | **PASS** | 17 public pages audited; 9 areas added in this correction pass |
+| audit covers all required areas | Sections 1–7 (original 7 areas), Sections 8–16 (9 expanded areas), and Sections 17–22 (6 additional areas: breadcrumb, structured list, file uploader, date picker, 2x grid/layout, tile) cover all required components and patterns; gaps G-ACT-01–05, G-LABEL-01–06, G-NOTIF-01–05, G-BADGE-01–04, G-FORM-01–04, G-SEL-01–03, G-STARTERS-01–03, G-TABLE-01–03, G-PAGIN-01–02, G-TABS-01–02, G-MODAL-01–03, G-TOOLTIP-01–02, G-LOAD-01–02, G-SEARCH-01–02, G-INPUT-01–02, G-OVERFLOW-01–02, G-BREADCRUMB-01–02, G-STRLIST-01–02, G-FILEUP-01–02, G-DATEPICK-01–02, G-GRID-01–02, G-TILE-01–02 identified | **PASS** | 23 public pages audited; 6 additional areas added in correction pass 3 (worklog-2-F-0005) |
 | audit treats Carbon as a completeness benchmark, not a visual adoption target | Framing statement in Audit Method; all findings translated to Login App 2.0-specific language; no IBM design tokens or visual patterns adopted | **PASS** | — |
 | starter catalog matrix maps each required starter to intended use, shell family, Tier 2 patterns, required states, UI Reference route, live proof surface, and owning queue item | All 14 starters mapped in Starter Catalog Matrix doc; proof surface notes updated in worklog-2-F-0004 pass | **PASS** | Weak proof surfaces flagged with notes in matrix; see Note 7 in Starter Catalog Matrix |
-| gaps are normalized into queue language with split routing where required | 47 gaps across 16 areas identified; routed to P2-F-CQ-002 through P2-F-CQ-011; P2-F-CQ-008 scope narrowed; P2-F-CQ-009, P2-F-CQ-010, P2-F-CQ-011 added as new queue items | **PASS** | Gap-to-Queue Routing Summary updated in this pass; P2-F-CQ-008 no longer absorbs all guidance gaps |
+| gaps are normalized into queue language with split routing where required | 62 gaps across 22 areas identified; routed to P2-F-CQ-002 through P2-F-CQ-011; P2-F-CQ-008 scope narrowed; P2-F-CQ-009, P2-F-CQ-010, P2-F-CQ-011 absorb all usage guidance gaps; 12 new gaps (G-BREADCRUMB-01–02, G-STRLIST-01–02, G-FILEUP-01–02, G-DATEPICK-01–02, G-GRID-01–02, G-TILE-01–02) added in correction pass 3, all routed to P2-F-CQ-011 | **PASS** | Gap-to-Queue Routing Summary updated in this pass; see worklog-2-F-0005 |
 
 ---
 
@@ -467,6 +473,114 @@ Carbon specifies that destructive actions (delete, remove) should be separated b
 
 ---
 
+## 17. Breadcrumb
+
+**Source:** `carbondesignsystem.com/components/breadcrumb/usage/` → `src/pages/components/breadcrumb/usage.mdx`
+
+### What Login App 2.0 currently has
+- No formal breadcrumb component standards documented
+- Breadcrumb-style navigation may appear in UI shell or content headers for multi-level views
+
+### Gaps revealed by Carbon audit
+
+**G-BREADCRUMB-01 — No breadcrumb vs progress indicator selection rule**
+Carbon specifies that breadcrumbs are for products with a large amount of content organized in a hierarchy of more than two levels. For multi-step processes, Carbon recommends using a progress indicator instead of a breadcrumb. Login App 2.0 has no documented rule distinguishing when to use a breadcrumb for navigation versus a progress indicator for flow orientation.
+
+**G-BREADCRUMB-02 — Breadcrumb overflow and truncation behavior not documented**
+Carbon specifies that when space is limited, breadcrumbs should truncate using an overflow menu — showing the first and last two page links, with intermediate crumbs condensed. Breadcrumbs should never wrap to a second line. Login App 2.0 has no documented breadcrumb overflow or truncation rule.
+
+---
+
+## 18. Structured List
+
+**Source:** `carbondesignsystem.com/components/structured-list/usage/` → `src/pages/components/structured-list/usage.mdx`
+
+### What Login App 2.0 currently has
+- No formal structured list component standards documented
+- Simple key-value or label-value display patterns appear informally in settings and account views
+
+### Gaps revealed by Carbon audit
+
+**G-STRLIST-01 — No structured list vs data table selection rule**
+Carbon distinguishes: structured list (simple, read-only or single-select data; browsing and reference; no complex row actions); data table (complex content; sortable; multi-action; multi-row selectable). Login App 2.0 has no documented rule for when to use a structured list versus a data table for presenting tabular-style read-only information.
+
+**G-STRLIST-02 — Selectable structured list vs radio group selection rule absent**
+Carbon documents a selectable variant of structured list for presenting mutually exclusive options in an ordered manner (e.g., pricing plan selection). This functions as a single-selection input alternative to a radio group. Login App 2.0 has no guidance for when to use selectable structured list versus a radio button group for list-based selection.
+
+---
+
+## 19. File Uploader
+
+**Source:** `carbondesignsystem.com/components/file-uploader/usage/` → `src/pages/components/file-uploader/usage.mdx`
+
+### What Login App 2.0 currently has
+- No formal file uploader component standards documented
+- File upload inputs appear in some setup and configuration contexts
+
+### Gaps revealed by Carbon audit
+
+**G-FILEUP-01 — No file uploader variant selection rule (button vs drag-and-drop)**
+Carbon defines two file uploader variants: default (click action button that prompts a file selection dialog); drag and drop (drop zone area where files can be dragged directly; also supports click-to-browse as a fallback). Login App 2.0 has no documented rule for which variant to use in which context. Carbon also notes the button variant should not be used in a modal when multiple files are uploaded (files stack vertically).
+
+**G-FILEUP-02 — File uploader size pairing with form fields not documented**
+Carbon specifies that when a file uploader is placed in a form with other inputs, the file uploader button and uploaded file list should use the same height as adjacent form inputs for visual consistency. Login App 2.0 has no documented rule for matching file uploader size to adjacent form field sizes.
+
+---
+
+## 20. Date Picker
+
+**Source:** `carbondesignsystem.com/components/date-picker/usage/` → `src/pages/components/date-picker/usage.mdx`
+
+### What Login App 2.0 currently has
+- No formal date picker component standards documented
+- Date inputs appear in scheduling, filtering, and report generation contexts
+
+### Gaps revealed by Carbon audit
+
+**G-DATEPICK-01 — No date picker variant selection rule (simple input vs calendar vs time picker)**
+Carbon defines three date/time picker variants: simple date input (memorable or approximate dates, no calendar needed — e.g., date of birth, credit card expiry); calendar picker (single or range; use when the user needs to know a date's relationship to other days or when dates are variable — e.g., scheduling); time picker (specific time input). Login App 2.0 has no documented rule for choosing between these variants based on the nature of the date being collected.
+
+**G-DATEPICK-02 — Date format display and locale guidance not documented**
+Carbon recommends showing the expected date format as helper text below the field or inline with the label — not as placeholder text alone (which disappears on input). Carbon also supports locale-based date format reordering via the flatpickr `dateFormat` and `locale` props. Login App 2.0 has no documented guidance for how to communicate date format expectations to users or how to handle locale-specific date ordering.
+
+---
+
+## 21. Layout and Grid
+
+**Source:** `carbondesignsystem.com/elements/2x-grid/usage/` → `src/pages/elements/2x-grid/usage.mdx`
+
+### What Login App 2.0 currently has
+- Tailwind-based utility grid in use
+- No formal grid system selection, gutter mode, or style model guidance documented
+
+### Gaps revealed by Carbon audit
+
+**G-GRID-01 — No gutter mode selection rule for Login App 2.0 page layout contexts**
+Carbon's 2x Grid defines three gutter modes: wide (default, 32px gutters; for separate content pieces with separate destinations; required for labeled form inputs); narrow (16px container hang; for typographic alignment with containers; most common in product implementation); condensed (1px gutters; for tile-heavy dashboards and overview pages). Login App 2.0 has no documented guidance for which gutter mode applies to which page type, shell region, or content density level.
+
+**G-GRID-02 — No grid style model guidance for Login App 2.0**
+Carbon identifies three grid style models: Editorial (centered grid, marketing/low-density); Product and docs (left-aligned, max-width, anticipates left-nav panel — the typical IBM product model); High-density interface (full-width, maximize screen usage for catalogs and data-heavy UIs). Login App 2.0 is a product with a left-nav shell and content areas of varying density, but has no documented guidance on which style model(s) apply to which views.
+
+---
+
+## 22. Tile
+
+**Source:** `carbondesignsystem.com/components/tile/usage/` → `src/pages/components/tile/usage.mdx`
+
+### What Login App 2.0 currently has
+- Tile-like and card-like elements appear in dashboard summary views and module home pages
+- No formal tile or card component standards documented
+
+### Gaps revealed by Carbon audit
+
+**G-TILE-01 — No tile variant selection rule (base vs clickable vs selectable vs expandable)**
+Carbon defines four tile variants: base (high-level content display, static, may contain internal CTAs); clickable (entire tile is a navigation target; no separate internal CTAs allowed); selectable (single-select or multi-select option presentation, like pricing plans); expandable (hide/reveal additional content). Login App 2.0 dashboard and module home views use tile-like elements but there is no documented rule for when each variant applies.
+
+**G-TILE-02 — Tile vs card distinction not documented**
+Carbon explicitly distinguishes tiles (simple, foundational, no pre-set styles, live on the page background plane with no elevation) from cards (complex patterns built on tiles with multiple actions, overflow menus, selectable features, and elevation). Login App 2.0 uses both tile and card metaphors in dashboard views without a documented distinction defining which is appropriate in which context.
+
+---
+
 ## Gap-to-Queue Routing Summary
 
 The following queue items absorb the gaps documented above. P2-F-CQ-008 scope has been narrowed to button and action label guidance only. New queue items P2-F-CQ-009, P2-F-CQ-010, and P2-F-CQ-011 absorb the notification/badge, form/selection, and data display/overlay gaps respectively.
@@ -523,6 +637,18 @@ The following queue items absorb the gaps documented above. P2-F-CQ-008 scope ha
 | G-INPUT-02 | Warning state for dropdown and text inputs not addressed | P2-F-CQ-011 |
 | G-OVERFLOW-01 | Inline action vs overflow menu threshold rule absent | P2-F-CQ-011 |
 | G-OVERFLOW-02 | Destructive action placement in overflow menu undocumented | P2-F-CQ-011 |
+| G-BREADCRUMB-01 | No breadcrumb vs progress indicator selection rule | P2-F-CQ-011 |
+| G-BREADCRUMB-02 | Breadcrumb overflow/truncation behavior not documented | P2-F-CQ-011 |
+| G-STRLIST-01 | No structured list vs data table selection rule | P2-F-CQ-011 |
+| G-STRLIST-02 | Selectable structured list vs radio group selection rule absent | P2-F-CQ-011 |
+| G-FILEUP-01 | No file uploader variant selection rule (button vs drag-and-drop) | P2-F-CQ-011 |
+| G-FILEUP-02 | File uploader size pairing with form fields not documented | P2-F-CQ-011 |
+| G-DATEPICK-01 | No date picker variant selection rule (simple vs calendar vs time) | P2-F-CQ-011 |
+| G-DATEPICK-02 | Date format display and locale guidance not documented | P2-F-CQ-011 |
+| G-GRID-01 | No gutter mode selection rule for page layout contexts | P2-F-CQ-011 |
+| G-GRID-02 | No grid style model guidance for Login App 2.0 | P2-F-CQ-011 |
+| G-TILE-01 | No tile variant selection rule (base vs clickable vs selectable vs expandable) | P2-F-CQ-011 |
+| G-TILE-02 | Tile vs card distinction not documented | P2-F-CQ-011 |
 
 ---
 

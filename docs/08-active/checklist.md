@@ -10,7 +10,7 @@
 
 ## UI Reference Starter Catalog
 - [ ] UI Reference Starter Catalog
-  Status: implemented (pending review) — Carbon audit correction pass 2 complete (worklog-2-F-0004): MDX paths mapped, 9 areas expanded, gap routing split; GitHub sources directly evidenced; acceptance proof table added; skeleton loader language corrected; all P2-F-CQ-001 criteria addressed; concrete starters and navigation entry point remain in P2-F-CQ-002 through P2-F-CQ-007
+  Status: implemented (pending review) — Carbon audit correction pass 3 complete (worklog-2-F-0005): 6 missing coverage areas added (breadcrumb, structured list, file uploader, date picker, layout/grid, tile); carbon main repo evidence softened to match actual inspection depth; gap count corrected from 47 to 62 across 22 areas; skeleton loader routing in matrix corrected to P2-F-CQ-011; review.md synced; all P2-F-CQ-001 criteria addressed; concrete starters and navigation entry point remain in P2-F-CQ-002 through P2-F-CQ-007
   - [x] Carbon contrast audit is complete
   - [x] audit source set includes Carbon documentation site, Carbon website source repo, Carbon main repo, and Carbon main docs directory
   - [x] audit treats Carbon as a completeness benchmark, not a visual adoption target

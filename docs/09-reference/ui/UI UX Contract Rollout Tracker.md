@@ -36,11 +36,19 @@ Track each contract with:
 - first live consumption proofs are active on dashboard, account, and settings-general surfaces
 - internal shell, archetype, registration, and UI-ownership handoff artifacts now exist in `09-reference/ui/`
 
+## Current Batch F Snapshot
+
+- Batch E close-out preflight identified that route and artifact existence is not enough to close Phase 2 handoff readiness
+- Batch F owns the concrete page archetype starter-proof layer for module home, settings, setup/configuration, account/profile, list/index, detail/read-only, create/edit form, and dashboard/module-summary surfaces
+- Batch F should leave UI Reference starter examples that future Phase 3 and Phase 4 module work can consume without inventing page structure
+- staging deploy remains out of scope for Batch F while deployment is disabled pending security incident review
+
 Important note:
 
 - `Ready For Review` or `Locked` visual/reference status does not automatically mean library-readiness
 - implementation-form clarity and consumption-model review must also be satisfied before Tier 1 should be treated as a safe building-block layer for Tier 2
 - where a Tier 1 item is directionally approved but still awaiting Blade-component promotion or wrapper-contract hardening, that remaining work should be tracked explicitly rather than implied by broad production-rollout language
+- route/artifact existence does not automatically mean starter-page readiness; starter examples must be concrete enough for later module implementation to reuse
 
 Supporting inventory:
 

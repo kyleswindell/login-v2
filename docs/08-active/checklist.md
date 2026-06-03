@@ -1,56 +1,58 @@
 # Checklist
 
-## Staging Deploy
-- [ ] Staging Deploy
-  Status: implemented (pending manual review)
-  - staging deploy is complete for the rebuilt UI lane from Batch A and Batch B
+## Batch Initialization
+- [x] Batch Initialization
+  Status: implemented
+  - Batch F planning source exists
+  - active workspace points to Phase 2 Batch F
+  - Batch E close-out is paused until Batch F exits
+  - staging deploy remains out of scope
 
-## Visual QA - Tier 1 Components
-- [ ] Visual QA - Tier 1 Components
-  Status: implemented (pending manual review)
-  - Tier 1 component proof pages visible and correct on staging
-  - promoted Tier 1 entry points (Button, Icon Button, Toast, Inline Alert, Drawer, Modal) reviewable through canonical routes
-  - UI Reference coverage for Tier 1 actions, feedback, and overlays is complete
+## UI Reference Starter Catalog
+- [ ] UI Reference Starter Catalog
+  Status: not implemented
+  - required starter examples are visible and locatable in UI Reference
+  - UI Reference navigation exposes the starter catalog intentionally
+  - starter examples are concrete page compositions, not only rule summaries
 
-## Visual QA - Tier 2 Patterns
-- [ ] Visual QA - Tier 2 Patterns
-  Status: implemented (pending manual review)
-  - all required Tier 2 pattern pages visible and correct on staging
-  - Tier 2 UI Reference coverage is complete and locatable
+## Module Home And Dashboard Summary Starters
+- [ ] Module Home And Dashboard Summary Starters
+  Status: not implemented
+  - module home / overview starter is reviewable
+  - dashboard/module summary starter uses widget-shell and stat-card conventions
+  - empty or next-action state is represented where applicable
 
-## Visual QA - Dashboard And Widget Conventions
-- [ ] Visual QA - Dashboard And Widget Conventions
-  Status: implemented (pending manual review)
-  - dashboard grid and widget shell proofs are visible on staging
-  - deterministic widget size comparisons (1x1, 2x1, 1x2, 2x2, 3x1, 3x2) pass visual review
-  - widget content standards (content-space unit system) are visible and correct
-  - summary/stat-card conventions are explicit and visible
+## Settings And Setup Starters
+- [ ] Settings And Setup Starters
+  Status: not implemented
+  - settings starter demonstrates title/actions, settings navigation, form sections, validation, and form actions
+  - setup/configuration starter demonstrates task-oriented setup framing, setup navigation, registration/config sections, and action placement
+  - current setup/settings proof surfaces are normalized only where needed for starter parity
 
-## Visual QA - Shell Families And Archetypes
-- [ ] Visual QA - Shell Families And Archetypes
-  Status: implemented (pending manual review)
-  - app shell, dashboard shell, setup shell, settings shell, and account/profile shell are visible on staging
-  - page/module archetype proofs exist for dashboard/overview, list/index, detail/read-only, create/edit form, setup/configuration, settings, and account/profile
+## Account/Profile Starters
+- [ ] Account/Profile Starters
+  Status: not implemented
+  - account/profile read-only starter demonstrates identity summary and key-value detail
+  - account/profile editable starter demonstrates settings-style form scaffolding
+  - `/account`, `/account/settings`, and `/account/preferences` remain feature-behavior stable
 
-## Visual QA - Setup And Settings Surfaces
-- [ ] Visual QA - Setup And Settings Surfaces
-  Status: implemented (pending manual review)
-  - setup shell and proof surfaces are visible and correct
-  - `/platform/settings/*` surfaces used as settings proofs pass visual review
-  - `/account`, `/account/settings`, and `/account/preferences` surfaces pass visual review
+## List, Detail, And Form Starters
+- [ ] List, Detail, And Form Starters
+  Status: not implemented
+  - list/index starter demonstrates page title/actions, search/filter, table or list content, and empty state
+  - detail/read-only starter demonstrates section blocks, key-value detail, and action placement
+  - create/edit form starter demonstrates form sections, validation summary, field grouping, and form actions
+
+## Automated Coverage
+- [ ] Automated Coverage
+  Status: not implemented
+  - route tests confirm starter examples are reachable
+  - assertions confirm required starter labels and pattern markers are present
+  - no staging deploy validation is required in this batch
 
 ## Handoff Readiness
 - [ ] Handoff Readiness
-  Status: implemented (pending manual review)
-  - shell family and page/module archetype naming is usable by Phase 3 and Phase 4 plans
-  - setup/settings registration field contract is explicit for future module consumption
-  - future-module UI ownership declaration field contract is explicit
-  - dashboard widget conventions are reusable without reopening Phase 2 design work
-  - permanent/proof surfaces demonstrate standards in context
-
-## Failure Routing And Close-Out
-- [ ] Failure Routing And Close-Out
   Status: not implemented
-  - any failed validation is routed to Batch A, Batch B, or future-phase placeholder (not patched into Batch E)
-  - final readiness decision is explicit
-  - Phase 2 UI convergence lane is confirmed ready for close-out
+  - Phase 3 and Phase 4 can consume the starter catalog without reopening Phase 2 UI decisions
+  - Batch E entry gates remain blocked until Batch F is complete
+  - final Batch F state is explicit before close-out resumes

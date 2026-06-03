@@ -121,7 +121,7 @@ Complete introduction of the intended long-term stack and UI architecture so fut
 Status:
 
 * active locked development phase
-* Batch 1-6 are complete; Batch A, Batch B, and Batch E are the remaining active sequence
+* Batch 1-6, Batch A, and Batch B are complete; Batch F is active for page archetype starter proofs before Batch E close-out resumes
 * Phase 2 is strictly bounded to UI-system completion and platform-surface convergence
 * feature-specific and non-UI contracts are deferred to future phases unless already declared in the active Phase 2 lock
 
@@ -133,6 +133,7 @@ Features:
 * complete the Tier 2 reusable pattern library needed for internal application surfaces before broad module expansion
 * standardize internal shell families for dashboard, setup, settings, account/profile, and shared app framing
 * standardize page and module scaffolding for future phase development, including dashboard widget shells, list/detail/form/setup/settings archetypes, and empty/loading/error handling expectations
+* provide concrete starter-page examples for the reusable page/module archetypes future phases will consume
 * define setup/settings registration conventions and future-module UI ownership declaration requirements
 * lock frontend architecture decisions before broad module expansion
 
@@ -302,7 +303,8 @@ Examples:
 Current roadmap attention should stay on the active and near-next planning surfaces:
 
 * keep the roadmap synchronized with the owning phase indices instead of treating it as an independent tracker
-* finish the locked Phase 2 A/B/E sequence before absorbing adjacent feature work
+* finish Phase 2 Batch F starter-proof implementation before resuming Batch E close-out
+* do not run Phase 2 staging deploy while staging deploy is disabled pending security incident review
 * keep Phase 3 Batch 1 scope synchronized across customer/public, OAuth, Microsoft Graph, and security-substrate planning notes
 * preserve Phase 4 as planning-only until the Phase 2 and Phase 3 handoff conditions are actually met
 

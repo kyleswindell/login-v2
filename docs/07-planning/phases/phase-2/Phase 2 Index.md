@@ -8,16 +8,17 @@ Collect Phase 2 planning notes for UI system completion, component library imple
 
 ## Current Phase Status
 
-Phase 2 is active for UI system completion, component library implementation, and platform surface convergence sequencing.
+Phase 2 is active for final UI-system handoff completion after Batch B implementation and Batch E close-out preflight.
 
 The prior Batch 7 implementation path is invalid and must not be reused. Phase 2 is now strictly bounded to one system layer only: UI system completion and platform surface convergence.
 
 Current focus:
 
-* complete Tier 1 component implementation and UI reference coverage
-* complete Tier 2 pattern definition through implementation-ready planning and adoption scope
-* converge current platform-owned dashboard and shell surfaces onto the locked UI baseline
-* complete staging deploy and visual QA only after UI-system and surface-convergence batches are complete
+* execute Batch F as the active Phase 2 implementation batch for page archetype starter proofs
+* complete UI Reference starter-page coverage for module home, settings, setup/configuration, account/profile, list/index, detail/read-only, create/edit form, and dashboard/module-summary surfaces
+* normalize current permanent/proof surfaces only where needed to validate starter parity
+* pause Batch E final close-out until Batch F is complete
+* avoid staging deploy while deployment is disabled pending security incident review
 * keep `/console` as transitional proof-only routing until the convergence batches explicitly retire remaining dependencies
 * defer feature-specific UI behavior and non-UI contracts to future phases
 
@@ -32,11 +33,12 @@ Current focus:
 | Batch 5 | Complete                                      | users/settings/notifications/operational surface migration |
 | Batch 6 | Complete                                      | phase close-out contracts and Phase 3/4 handoff            |
 | Batch 7 | Removed from active sequence                  | invalid over-bundled batch; replaced by Batch A-E          |
-| Batch A | Planning-ready                                | Tier 1 components and UI reference                         |
-| Batch B | Blocked by Batch A                            | Tier 2 patterns and platform surface adoption              |
+| Batch A | Complete                                      | Tier 1 components and UI reference                         |
+| Batch B | Complete                                      | Tier 2 patterns and platform surface adoption              |
 | Batch C | Deferred to future phase                      | account feature placeholder                                |
 | Batch D | Deferred to future phase                      | notifications feature placeholder                          |
-| Batch E | Blocked by Batch A and Batch B                | visual QA and Phase 2 UI close-out                         |
+| Batch E | Paused pending Batch F                        | visual QA and Phase 2 UI close-out                         |
+| Batch F | Active                                        | page archetype starter proofs and pre-closeout handoff     |
 | Batch 9 | Deferred to future phase                      | messaging foundation placeholder                           |
 | Batch 10 | Deferred to future phase                     | calendar foundation placeholder                            |
 | Batch 11 | Historical delivery record                   | dashboard implementation record; close-out superseded by E |
@@ -55,6 +57,7 @@ Current focus:
 * [Phase 2 - Implementation Batch B](Phase%202%20-%20Implementation%20Batch%20B.md)
 * [Phase 2 - Batch B Implementation Prep](Phase%202%20-%20Batch%20B%20Implementation%20Prep.md)
 * [Phase 2 - Implementation Batch E](Phase%202%20-%20Implementation%20Batch%20E.md)
+* [Phase 2 - Implementation Batch F](Phase%202%20-%20Implementation%20Batch%20F.md)
 * [Phase 2 - Implementation Batch C](Phase%202%20-%20Implementation%20Batch%20C.md)
 * [Phase 2 - Implementation Batch D](Phase%202%20-%20Implementation%20Batch%20D.md)
 * [Phase 2 - Implementation Batch 9](Phase%202%20-%20Implementation%20Batch%209.md)
@@ -64,14 +67,15 @@ Current focus:
 
 ## Multi-Agent Scheduling
 
-Phase 2 active implementation batches use a conservative sequence: Batch A starts the UI-system lane, Batch B depends on Batch A, and Batch E closes the lane after Batch B. Deferred placeholders remain linked here for future phase assignment only.
+Phase 2 active implementation batches use a conservative sequence: Batch A and Batch B are complete, Batch E preflight exposed a starter-proof handoff gap, Batch F now owns that implementation gap, and Batch E resumes only after Batch F exits. Deferred placeholders remain linked here for future phase assignment only.
 
 ### Dependency Graph
 
 ```
-Batch A implementation
-    └─ Batch B implementation
-          └─ Batch E close-out after A/B
+Batch A implementation (complete)
+    └─ Batch B implementation (complete)
+          └─ Batch F starter-proof implementation (active)
+                └─ Batch E close-out after F (paused)
 
 Batch C   (deferred to future phase)
 Batch D   (deferred to future phase)
@@ -84,16 +88,16 @@ Batch 11  (historical dashboard delivery record only)
 
 | Agent A (shared folder, writable) | Agent B (separate worktree, writable) | Gate |
 |---|---|---|
-| Batch A implementation | Batch 11 historical reference review (if needed) | Safe when reference use does not change active scope |
-| Batch B implementation | deferred placeholder refinement | Safe when deferred items remain non-executable placeholders |
-| Batch E staging deploy and QA | deferred placeholder refinement | Safe when close-out work stays limited to UI-system validation |
+| Batch F starter-proof implementation | deferred placeholder refinement | Safe when deferred items remain non-executable placeholders |
+| Batch E staging deploy and QA | deferred placeholder refinement | Only after Batch F is complete and staging deploy is re-enabled |
 
 ### Notes
 
 * Batch 7 is not reusable and remains only as a superseded planning record.
-* Batch A owns Tier 1 components and UI reference only.
-* Batch B owns Tier 2 patterns and platform surface adoption only.
-* Batch E owns visual QA and close-out only.
+* Batch A owns Tier 1 components and UI reference only and is complete.
+* Batch B owns Tier 2 patterns and platform surface adoption only and is complete.
+* Batch F owns page archetype starter proofs and pre-closeout handoff readiness.
+* Batch E owns visual QA and close-out only and must not resume while staging deploy is disabled.
 * Batch C, Batch D, Batch 9, and Batch 10 are preserved as placeholders only and are to be assigned to future phase.
 * See [Agent Sessions And Parallel Work](../../../10-runbooks/agent-sessions-and-parallel-work.md) for setup steps.
 

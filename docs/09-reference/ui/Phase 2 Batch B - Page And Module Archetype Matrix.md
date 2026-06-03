@@ -24,7 +24,24 @@ This is a support artifact only.
 2. Use Tier 2 patterns as building blocks; do not rebuild shell or section semantics inside feature modules.
 3. If a page does not fit an existing archetype, stop and document the gap before improvising new structure.
 
+## Batch F Starter-Proof Follow-Up
+
+Batch B established the archetype vocabulary and proof surface direction. Batch F owns the concrete starter-page examples required before Phase 2 close-out.
+
+Batch F should make the following starter examples reviewable in UI Reference:
+
+- module home / module overview
+- settings page
+- setup / configuration page
+- account/profile read-only page
+- account/profile editable settings or preferences page
+- list / index page
+- detail / read-only page
+- create / edit form page
+- dashboard/module summary surface
+
 ## Related
 
 - [Phase 2 Batch B - Internal Shell Family Rule Matrix](Phase%202%20Batch%20B%20-%20Internal%20Shell%20Family%20Rule%20Matrix.md)
+- [Phase 2 - Implementation Batch F](../../07-planning/phases/phase-2/Phase%202%20-%20Implementation%20Batch%20F.md)
 - [Phase 2 - Batch B Implementation Prep](../../07-planning/phases/phase-2/Phase%202%20-%20Batch%20B%20Implementation%20Prep.md)

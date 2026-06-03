@@ -1,16 +1,19 @@
 # Review
 
 ## Status
-PARTIAL
+NOT_STARTED
 
 ## Issues
-None recorded. Manual visual QA has not been completed. Staging is deployed at `a88e372` and all required surfaces are accessible.
+
+None recorded for Batch F implementation yet.
 
 ## Required Fixes
+
 None recorded.
 
 ## Manual Review
-No final status has been earned. Manual review has not been performed.
 
-Visual: (pending — staging deployed at a88e372, surfaces accessible)
-Functional: (pending)
+No manual review status has been earned. Batch F is initialized for implementation.
+
+Visual: not started
+Functional: not started

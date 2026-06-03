@@ -1,66 +1,70 @@
 # Active Batch
 
 ## Name
-Phase 2 - Implementation Batch E
+Phase 2 - Implementation Batch F
 
 ## Metadata
 - Phase: 2
-- Batch: E
-- Worklog Prefix: `2-E`
+- Batch: F
+- Worklog Prefix: `2-F`
 
 ## Source
-- [Phase 2 - Implementation Batch E](../07-planning/phases/phase-2/Phase%202%20-%20Implementation%20Batch%20E.md)
+- [Phase 2 - Implementation Batch F](../07-planning/phases/phase-2/Phase%202%20-%20Implementation%20Batch%20F.md)
 - [Phase 2 - Final Stack And UI System Planning](../07-planning/phases/phase-2/Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
 
 ## Objective
-Close the rebuilt UI convergence lane with staging deploy and visual QA only. Confirm that the UI foundation delivered through Batch A and Batch B is ready for later Phase 3 and Phase 4 work. Do not introduce new feature behavior, new module implementations, or new UI-system rules.
+Complete the internal page archetype starter-proof layer required before Phase 2 close-out. Turn the existing Tier 1/Tier 2 UI system and Batch B archetype rules into concrete, reviewable starter-page examples that later phases can consume without inventing new visual structure.
 
 ## In Scope
-- staging deploy
-- visual QA
-- final validation against batch deliverables from Batch A and Batch B
-- validation of current permanent/proof surfaces against the established UI standards
-- validation that Phase 2 handoff artifacts are explicit enough for Phase 3 and Phase 4 to consume
-- planning close-out and readiness confirmation
+- UI Reference page archetype starter examples
+- starter-proof coverage for module home, settings, setup/configuration, account/profile, list/index, detail/read-only, create/edit form, and dashboard/module-summary surfaces
+- adoption of existing Tier 1 primitives and Tier 2 patterns inside starter examples
+- limited normalization of current permanent/proof surfaces where needed to validate starter parity
+- UI Reference navigation and automated coverage updates needed to make starter examples locatable and testable
+- documentation updates that synchronize Phase 2 planning, handoff readiness, and Batch E entry gates
 
 ## Out Of Scope
+- staging deploy
 - new feature delivery
-- Tier 3 feature-module implementation
-- new module-specific home pages, settings pages, setup pages, or widgets
-- account feature expansion (Batch C)
-- notifications feature expansion (Batch D)
-- UI rule changes
-- surface redesign during QA
-- unrelated Phase 2 contract work
+- account feature expansion from Batch C
+- notifications feature expansion from Batch D
+- new business modules
+- customer/public shell implementation
+- new UI-system rules unless implementation exposes a documented standards gap
+- broad redesign of existing platform surfaces
+- final Phase 2 close-out decision
 
 ## Deliverables
-1. Staging deploy complete for the rebuilt UI lane
-2. Visual QA recorded for Tier 1 components, Tier 2 patterns, dashboard, shared shell surfaces, setup/settings/account proof surfaces, and UI Reference archetype surfaces
-3. Handoff readiness recorded for shell families, page/module archetypes, dashboard widget conventions, setup/settings registration, and future-module UI ownership declarations
-4. Any failed validation routed back to owning batch or future-phase placeholder (not patched into Batch E scope)
-5. Final readiness decision explicit
+1. UI Reference exposes concrete starter-page examples for the required archetypes
+2. Existing proof surfaces are normalized only where needed to demonstrate starter parity
+3. Automated coverage confirms starter examples are routable and visible
+4. Phase 2 planning and handoff references identify Batch F as the required pre-closeout implementation batch
+5. Batch E entry gates are updated so close-out resumes only after Batch F is complete
+6. Staging deploy remains explicitly out of scope
 
 ## Validation Surface
-Required validation areas:
-- Tier 1 component and UI Reference coverage (Batch A)
-- promoted Tier 1 consumption entry points hardened during Batch B
-- required Tier 2 internal patterns and UI Reference coverage (Batch B)
-- dashboard grid, widget shell, and summary/stat-card conventions
-- internal shell-family standards (app, dashboard, setup, settings, account/profile)
-- page/module archetypes (dashboard/overview, list/index, detail/read-only, create/edit form, setup/configuration, settings, account/profile)
-- setup/settings registration field contract
-- future-module UI ownership declaration field contract
+Required starter proofs:
+- module home / module overview
+- settings page
+- setup / configuration page
+- account / profile read-only page
+- account / profile editable settings or preferences page
+- list / index page
+- detail / read-only page
+- create / edit form page
+- dashboard/module summary surface, including widget-shell and summary/stat-card usage
 
-Required permanent/proof surfaces:
+Priority permanent/proof surfaces:
 - `/platform/ui-reference`
-- `/platform/ui-reference/patterns/*`
 - `/platform/ui-reference/patterns/archetypes`
-- `/dashboard`
-- shared app shell
-- setup shell and existing setup proof surfaces
-- `/platform/settings/*` settings proofs
+- `/platform/ui-reference/patterns/widget-content/*`
+- `/platform/settings/*`
+- `/platform/setup/*`
 - `/account`, `/account/settings`, and `/account/preferences`
+- selected platform-owned list/detail/form proof surfaces where needed for starter parity
 
 ## Entry Gates
 - Batch A: complete
 - Batch B: complete
+- Batch E: paused before final readiness
+- staging deploy: disabled pending security incident review

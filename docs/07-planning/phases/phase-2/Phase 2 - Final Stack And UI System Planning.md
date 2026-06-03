@@ -16,12 +16,15 @@ Define Phase 2 sequencing for Tier 1 library hardening, UI system completion, co
 
 ## Current Status
 
-- Phase 2 planning is active
+- Phase 2 close-out planning is active
 - Batch 6 is complete
 - Batch 7 is invalid and superseded for UI work
-- Batch A-B-E define the active UI convergence lane
+- Batch A and Batch B are complete
+- Batch E close-out preflight exposed a page archetype starter-proof handoff gap
+- Batch F is active as the required pre-closeout implementation batch
+- Batch E is paused until Batch F is complete and staging deploy is re-enabled
 - Batch C, Batch D, Batch 9, and Batch 10 are preserved as deferred placeholders only
-- staging deploy and visual QA belong to Batch E close-out sequencing
+- staging deploy and visual QA belong to Batch E close-out sequencing only after Batch F exits
 
 ## Phase 2 Deliverable Direction
 
@@ -49,24 +52,28 @@ The required outputs for the active Phase 2 lane are:
 - setup/settings registration conventions established for future modules
 - future-module UI ownership declaration requirements established
 - UI reference examples and validation surfaces updated for the relevant Tier 1 and Tier 2 outputs
+- concrete starter-page examples for the reusable page/module archetypes that future phases will consume
 
 These outputs exist to make later Phase 3 and Phase 4 work additive instead of forcing those phases to invent shared UI structure while building feature behavior.
 
 ## Sequencing Plan
 
-1. Finalize the rebuilt UI batch sequence and mark Batch 7 as removed from active execution.
-2. Complete Batch A for Tier 1 components and UI reference implementation.
-3. Complete Batch B, starting with the remaining Tier 1 library hardening pass and then the Tier 2 internal library, internal shell/scaffolding standards, and proof-surface adoption.
-4. Complete Batch E staging deploy and visual QA close-out.
-5. Preserve deferred placeholders for future-phase assignment without executing them in Phase 2.
-6. Confirm Phase 3 and Phase 4 scaffolding handoff readiness.
-7. Mark Phase 2 complete only after gate and dependency checks pass.
+1. Finalize the rebuilt UI batch sequence and mark Batch 7 as removed from active execution. [complete]
+2. Complete Batch A for Tier 1 components and UI reference implementation. [complete]
+3. Complete Batch B, starting with the remaining Tier 1 library hardening pass and then the Tier 2 internal library, internal shell/scaffolding standards, and proof-surface adoption. [complete]
+4. Complete Batch F page archetype starter-proof implementation. [active]
+5. Complete Batch E staging deploy and visual QA close-out after Batch F and security-incident deployment hold resolution. [paused]
+6. Preserve deferred placeholders for future-phase assignment without executing them in Phase 2.
+7. Confirm Phase 3 and Phase 4 scaffolding handoff readiness.
+8. Mark Phase 2 complete only after gate and dependency checks pass.
 
 ## Dependency Rules
 
-- Batch A completion is required before Batch B starts.
-- the Batch B Tier 1 hardening lane must complete before the dependent Tier 2 compositions are treated as complete
-- Batch B completion is required before Batch E starts.
+- Batch A completion is required before Batch B starts. [satisfied]
+- the Batch B Tier 1 hardening lane must complete before the dependent Tier 2 compositions are treated as complete. [satisfied]
+- Batch B completion is required before Batch F starts. [satisfied]
+- Batch F completion is required before Batch E resumes.
+- Batch E staging deploy must not run while staging deploy is disabled pending security incident review.
 - Phase 3 and Phase 4 start only after Phase 2 handoff checklist is complete.
 
 ## Phase 3 And Phase 4 Handoff Expectations
@@ -84,6 +91,7 @@ Before later phases begin, Phase 2 should already have established:
   - page/module archetype matrix
   - setup/settings registration field contract
   - future-module UI ownership declaration field contract
+- the concrete UI Reference starter examples that demonstrate those contracts in full-page context
 
 Phase 2 should not defer these internal app-surface foundations into later feature phases, because Phase 3 and Phase 4 both assume they already exist.
 
@@ -92,6 +100,7 @@ Phase 2 should not defer these internal app-surface foundations into later featu
 Phase 2 can close when:
 
 - all Phase 2 dependency gates are satisfied
+- Batch F starter-proof coverage is complete
 - blocked batches are completed in order
 - staging QA and visual sign-off are recorded
 - Phase 3 and Phase 4 handoff checklist is complete
@@ -113,6 +122,7 @@ Durable architecture decisions are canonicalized in:
 - [Phase 2 - Implementation Batch B](Phase%202%20-%20Implementation%20Batch%20B.md)
 - [Phase 2 - Batch B Implementation Prep](Phase%202%20-%20Batch%20B%20Implementation%20Prep.md)
 - [Phase 2 - Implementation Batch E](Phase%202%20-%20Implementation%20Batch%20E.md)
+- [Phase 2 - Implementation Batch F](Phase%202%20-%20Implementation%20Batch%20F.md)
 - [Phase 2 - Implementation Batch C](Phase%202%20-%20Implementation%20Batch%20C.md)
 - [Phase 2 - Implementation Batch D](Phase%202%20-%20Implementation%20Batch%20D.md)
 - [Phase 2 - Implementation Batch 9](Phase%202%20-%20Implementation%20Batch%209.md)

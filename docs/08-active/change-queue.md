@@ -130,12 +130,20 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 
 ## Implemented Pending Review
 
+<!-- none -->
+
+## Blocked
+
+## Deferred
+
+## Passed Review
+
 ### P2-F-CQ-001 - Carbon contrast audit and starter catalog matrix
-- Status: Implemented Pending Review
+- Status: Passed Review
 - Owner: Batch F
 - Scope: Fifth correction pass (queue wording cleanup) complete. Queue state inconsistency resolved. P2-F-CQ-011 contract expanded and corrected to cover all 15 gap series and all 32 routed gaps. review.md Pass Summary synced. Dates corrected.
 - Acceptance:
-  - P2-F-CQ-001 appears in exactly one queue section (this one)
+  - P2-F-CQ-001 appears in exactly one queue section
   - P2-F-CQ-011 scope and acceptance explicitly cover all 15 gap series: G-TABLE-01–03, G-PAGIN-01–02, G-TABS-01–02, G-MODAL-01–03, G-TOOLTIP-01–02, G-LOAD-01–02, G-SEARCH-01–02, G-INPUT-01–02, G-OVERFLOW-01–02, G-BREADCRUMB-01–02, G-STRLIST-01–02, G-FILEUP-01–02, G-DATEPICK-01–02, G-GRID-01–02, G-TILE-01–02
   - review.md Pass Summary reflects all five correction passes and current state
   - all worklog and index dates are 2026-06-03
@@ -143,9 +151,10 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - P2-F-CQ-008 remains button variant and action label guidance only
   - P2-F-CQ-011 queue wording matches the audit gap definitions
 - Implemented in: worklog-2-F-0002 (initial); worklog-2-F-0003 (correction pass 1); worklog-2-F-0004 (correction pass 2 — depth); worklog-2-F-0005 (correction pass 3 — missing areas + evidence fix); worklog-2-F-0006 (correction pass 4 — queue state reconciliation); worklog-2-F-0007 (correction pass 5 — queue wording cleanup)
+- Review result: Approved on 2026-06-03
 
 ### P2-F-CQ-007 - UI Reference starter catalog entry point
-- Status: Implemented Pending Review
+- Status: Passed Review
 - Owner: Batch F
 - Scope: Added `/platform/ui-reference/patterns/starters` as the discoverable starter catalog entry point, registered sidebar navigation, documented route disposition, and added focused route coverage.
 - Acceptance:
@@ -154,11 +163,6 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - starter catalog lists all 14 required starter examples with owner CQ, target route, required states, and primary patterns
   - route disposition matrix identifies keep/update/add/support-route decisions for current UI Reference routes
 - Implemented in: worklog-2-F-0008
-
-## Blocked
-
-## Deferred
-
-## Passed Review
+- Review result: Approved on 2026-06-03
 
 ## Closed

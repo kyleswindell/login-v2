@@ -43,8 +43,12 @@ PARTIAL
 
 ## Manual Review
 
-Visual: not started
-Functional: not started
+Visual: PARTIAL
+Functional: PARTIAL
+
+- P2-F-CQ-001: PASS — docs/audit review approved; no visual surface required.
+- P2-F-CQ-007: PASS — starter catalog route and navigation approved; focused route test passed.
+- Remaining Batch F items still require implementation before final visual/functional batch review.
 
 ## Pass Summary
 
@@ -71,6 +75,12 @@ Functional: not started
 **P2-F-CQ-007 — Returned to Implemented Pending Review (starter catalog entry point; worklog-2-F-0008)**
 - Added `/platform/ui-reference/patterns/starters`, sidebar navigation, starter ownership mapping, and the route disposition matrix.
 - Focused starter catalog route test passed; full UI Reference test file still has an unrelated widget-content assertion failure.
+
+**P2-F-CQ-001 — Passed Review (2026-06-03)**
+- Approved as the Batch F audit and starter catalog matrix source. Findings are sufficiently broad, queue routing is coherent, and no open scoped fixes remain for this item.
+
+**P2-F-CQ-007 — Passed Review (2026-06-03)**
+- Approved as the UI Reference starter catalog entry point. The route is discoverable from UI Reference navigation, lists all 14 starters with owner routing, and includes route disposition guidance for existing UI Reference views.
 
 **Remaining queue items — Ready To Implement:**
 - P2-F-CQ-002 — Module home and dashboard summary starters

@@ -10,7 +10,7 @@
 
 ## UI Reference Starter Catalog
 - [ ] UI Reference Starter Catalog
-  Status: partially implemented (pending review) — Carbon audit and starter catalog entry point complete through worklog-2-F-0008: P2-F-CQ-001 remains review-ready; `/platform/ui-reference/patterns/starters` is registered; sidebar navigation exposes Starter Catalog; route disposition matrix is documented; concrete starter pages remain in P2-F-CQ-002 through P2-F-CQ-005
+  Status: partially implemented — Carbon audit and starter catalog entry point passed review on 2026-06-03: P2-F-CQ-001 and P2-F-CQ-007 are approved; `/platform/ui-reference/patterns/starters` is registered; sidebar navigation exposes Starter Catalog; route disposition matrix is documented; concrete starter pages remain in P2-F-CQ-002 through P2-F-CQ-005
   - [x] Carbon contrast audit is complete
   - [x] audit source set includes Carbon documentation site, Carbon website source repo, Carbon main repo, and Carbon main docs directory
   - [x] audit treats Carbon as a completeness benchmark, not a visual adoption target

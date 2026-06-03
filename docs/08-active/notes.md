@@ -63,6 +63,12 @@
 - Focused validation passed with `docker compose exec -T app php artisan test tests/Feature/Platform/PlatformUiReferenceTest.php --filter=starter_catalog`.
 - Full `PlatformUiReferenceTest` still has a pre-existing widget-content assertion failure unrelated to this pass: the widget-content route did not contain `data-ui-pattern="dashboard-grid"` when the full file was run.
 
+## Manual Review Decisions - 2026-06-03
+
+- P2-F-CQ-001 approved and moved to Passed Review. The audit and starter catalog matrix are accepted as sufficient planning/routing source material for the remaining Batch F work.
+- P2-F-CQ-007 approved and moved to Passed Review. The starter catalog entry point and route disposition matrix are accepted as sufficient for discovery and implementation routing.
+- Batch F remains PARTIAL because P2-F-CQ-002 through P2-F-CQ-006 and P2-F-CQ-008 through P2-F-CQ-011 remain active.
+
 - Third review failure for P2-F-CQ-001 confirmed: five issues — six missing coverage areas, carbon main repo evidence overstated, gap count inconsistent (47 in table vs 50 in routing/worklog), skeleton loader routing in Starter Catalog Matrix pointing to P2-F-CQ-008 instead of P2-F-CQ-011, review.md stale.
 - Carbon main repo §3 evidence softened. The directory listing of `packages/react/src/components/` was inspected; no README or markdown docs visible in the listing; no individual component file content was opened or read. The claim now reflects inspection depth accurately. This is not a retraction — no consumer docs were found at this inspection depth — but the claim is scoped to what was actually observed.
 - Audit expanded to 23 public pages across 22 areas. Six new areas added: breadcrumb, structured list, file uploader, date picker, 2x grid/layout, tile. MDX source path mapping table updated with 6 new rows.

@@ -68,8 +68,11 @@ Functional: not started
 - Final queue wording cleanup complete: duplicate P2-F-CQ-007 heading removed; P2-F-CQ-011 routed-gap count corrected to 32; P2-F-CQ-011 acceptance wording aligned to the audit definitions; notes/checklist/worklogs synced.
 - P2-F-CQ-001 remains Implemented Pending Review after correction pass 5
 
+**P2-F-CQ-007 — Returned to Implemented Pending Review (starter catalog entry point; worklog-2-F-0008)**
+- Added `/platform/ui-reference/patterns/starters`, sidebar navigation, starter ownership mapping, and the route disposition matrix.
+- Focused starter catalog route test passed; full UI Reference test file still has an unrelated widget-content assertion failure.
+
 **Remaining queue items — Ready To Implement:**
-- P2-F-CQ-007 — UI Reference starter catalog entry point
 - P2-F-CQ-002 — Module home and dashboard summary starters
 - P2-F-CQ-003 — Settings and setup starters
 - P2-F-CQ-004 — Account/profile starters

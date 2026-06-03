@@ -10,13 +10,13 @@
 
 ## UI Reference Starter Catalog
 - [ ] UI Reference Starter Catalog
-  Status: implemented (pending review) — Carbon audit correction pass 5 (queue wording cleanup) complete (worklog-2-F-0007): P2-F-CQ-001 remains review-ready; duplicate queue heading removed; P2-F-CQ-011 contract corrected to cover all 15 gap series and 32 routed gaps with audit-aligned acceptance wording; worklog dates remain corrected; 62 gaps across 22 areas consistent throughout; concrete starters and navigation entry point remain in P2-F-CQ-002 through P2-F-CQ-007
+  Status: partially implemented (pending review) — Carbon audit and starter catalog entry point complete through worklog-2-F-0008: P2-F-CQ-001 remains review-ready; `/platform/ui-reference/patterns/starters` is registered; sidebar navigation exposes Starter Catalog; route disposition matrix is documented; concrete starter pages remain in P2-F-CQ-002 through P2-F-CQ-005
   - [x] Carbon contrast audit is complete
   - [x] audit source set includes Carbon documentation site, Carbon website source repo, Carbon main repo, and Carbon main docs directory
   - [x] audit treats Carbon as a completeness benchmark, not a visual adoption target
   - [x] authoritative starter catalog matrix is documented
-  - [ ] required starter examples are visible and locatable in UI Reference
-  - [ ] UI Reference navigation exposes the starter catalog intentionally
+  - [x] required starter examples are visible and locatable in UI Reference
+  - [x] UI Reference navigation exposes the starter catalog intentionally
   - [ ] starter examples are concrete page compositions, not only rule summaries
 
 ## Design-System Usage Guidance

@@ -157,6 +157,13 @@ class UiReferenceController extends Controller
         return $this->renderSection('patterns.widget-content.'.$size);
     }
 
+    public function starters(Request $request): View
+    {
+        $this->authorize('view-platform-ui-reference');
+
+        return $this->renderSection('patterns.starters');
+    }
+
     public function archetypes(Request $request): View
     {
         $this->authorize('view-platform-ui-reference');

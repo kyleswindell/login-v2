@@ -8,15 +8,6 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 
 ## Ready To Implement
 
-### P2-F-CQ-007 - UI Reference starter catalog entry point
-- Status: Ready To Implement
-- Owner: Batch F
-- Scope: Add or expand the UI Reference starter/archetype surface so future agents can intentionally locate complete starter-page examples.
-- Acceptance:
-  - starter catalog entry is visible from UI Reference navigation
-  - route and tests identify starter examples intentionally
-  - starter content is concrete page composition, not only summary rules
-
 ### P2-F-CQ-002 - Module home and dashboard summary starters
 - Status: Ready To Implement
 - Owner: Batch F
@@ -152,6 +143,17 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - P2-F-CQ-008 remains button variant and action label guidance only
   - P2-F-CQ-011 queue wording matches the audit gap definitions
 - Implemented in: worklog-2-F-0002 (initial); worklog-2-F-0003 (correction pass 1); worklog-2-F-0004 (correction pass 2 — depth); worklog-2-F-0005 (correction pass 3 — missing areas + evidence fix); worklog-2-F-0006 (correction pass 4 — queue state reconciliation); worklog-2-F-0007 (correction pass 5 — queue wording cleanup)
+
+### P2-F-CQ-007 - UI Reference starter catalog entry point
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Added `/platform/ui-reference/patterns/starters` as the discoverable starter catalog entry point, registered sidebar navigation, documented route disposition, and added focused route coverage.
+- Acceptance:
+  - starter catalog entry is visible from UI Reference navigation
+  - route and tests identify starter examples intentionally
+  - starter catalog lists all 14 required starter examples with owner CQ, target route, required states, and primary patterns
+  - route disposition matrix identifies keep/update/add/support-route decisions for current UI Reference routes
+- Implemented in: worklog-2-F-0008
 
 ## Blocked
 

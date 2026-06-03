@@ -24,6 +24,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Form Patterns')
             ->assertSee('Data + Content')
             ->assertSee('Widget Content')
+            ->assertSee('Starter Catalog')
             ->assertSee('Archetype Proofs');
     }
 
@@ -170,6 +171,33 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-ui-component="modal"', false)
             ->assertSee('data-ui-demo-toast-generated-stack', false)
             ->assertSee('data-ui-demo-toast-generated-overlay', false);
+    }
+
+    public function test_starter_catalog_route_is_discoverable_and_maps_batch_f_starters(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/patterns/starters')
+            ->assertOk()
+            ->assertSee('Starter Catalog')
+            ->assertSee('P2-F-CQ-007')
+            ->assertSee('Module Home / Module Overview')
+            ->assertSee('Settings Page')
+            ->assertSee('Account / Profile Editable')
+            ->assertSee('Content Browser / Split View')
+            ->assertSee('Blocked / Empty / Unavailable')
+            ->assertSee('UI Reference Route Disposition Matrix')
+            ->assertSee('data-ui-reference-starter-catalog', false)
+            ->assertSee('data-route-disposition-matrix', false)
+            ->assertSee('data-starter-route="/platform/ui-reference/patterns/starters/module-home"', false)
+            ->assertSee('/platform/ui-reference/patterns/starters/empty-unavailable')
+            ->assertSee('/platform/ui-reference/patterns/widget-content/{size}')
+            ->assertSee('P2-F-CQ-002')
+            ->assertSee('P2-F-CQ-003')
+            ->assertSee('P2-F-CQ-004')
+            ->assertSee('P2-F-CQ-005')
+            ->assertSee('Keep and extend')
+            ->assertSee('Add');
     }
 
     public function test_layout_reference_surface_includes_dashboard_customization_proof(): void

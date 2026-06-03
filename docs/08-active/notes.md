@@ -54,6 +54,15 @@
 - P2-F-CQ-011 now explicitly owns 32 routed gaps across 15 gap series. Acceptance wording was aligned to the audit definitions for table skeleton loading, automatic/manual tablist behavior, modal-vs-page selection, tooltip/toggletip vs definition tooltip, loading overlay choice, search/filter distinction, default/fluid input style, and input warning state.
 - P2-F-CQ-001 remains Implemented Pending Review; no item is In Progress; P2-F-CQ-008 remains button/action-label only.
 
+## Decisions From worklog-2-F-0008
+
+- P2-F-CQ-007 implemented the starter catalog entry point at `/platform/ui-reference/patterns/starters`.
+- UI Reference sidebar now exposes `Starter Catalog` under Pattern Standards.
+- The starter catalog route lists all 14 required Batch F starters with target route, owner queue item, required states, and primary Tier 2 patterns. Individual starter pages remain owned by P2-F-CQ-002 through P2-F-CQ-005.
+- Route disposition is now documented both in the UI Reference route and in `docs/09-reference/ui/Phase 2 Batch F - UI Reference Route Disposition Matrix.md`.
+- Focused validation passed with `docker compose exec -T app php artisan test tests/Feature/Platform/PlatformUiReferenceTest.php --filter=starter_catalog`.
+- Full `PlatformUiReferenceTest` still has a pre-existing widget-content assertion failure unrelated to this pass: the widget-content route did not contain `data-ui-pattern="dashboard-grid"` when the full file was run.
+
 - Third review failure for P2-F-CQ-001 confirmed: five issues — six missing coverage areas, carbon main repo evidence overstated, gap count inconsistent (47 in table vs 50 in routing/worklog), skeleton loader routing in Starter Catalog Matrix pointing to P2-F-CQ-008 instead of P2-F-CQ-011, review.md stale.
 - Carbon main repo §3 evidence softened. The directory listing of `packages/react/src/components/` was inspected; no README or markdown docs visible in the listing; no individual component file content was opened or read. The claim now reflects inspection depth accurately. This is not a retraction — no consumer docs were found at this inspection depth — but the claim is scoped to what was actually observed.
 - Audit expanded to 23 public pages across 22 areas. Six new areas added: breadcrumb, structured list, file uploader, date picker, 2x grid/layout, tile. MDX source path mapping table updated with 6 new rows.

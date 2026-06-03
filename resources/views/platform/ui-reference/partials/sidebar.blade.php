@@ -124,6 +124,14 @@
                         @endforeach
                     </nav>
                 @endif
+                <a wire:navigate href="{{ route('platform.ui-reference.patterns.starters') }}" @class([
+                    'flex items-center gap-2 rounded-md px-3 py-3 text-sm font-medium transition',
+                    'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => ($currentSection ?? '') === 'patterns.starters',
+                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ($currentSection ?? '') !== 'patterns.starters',
+                ])>
+                    <x-layouts.nav-icon icon="docs" />
+                    <span>Starter Catalog</span>
+                </a>
                 <a wire:navigate href="{{ route('platform.ui-reference.patterns.archetypes') }}" @class([
                     'flex items-center gap-2 rounded-md px-3 py-3 text-sm font-medium transition',
                     'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => ($currentSection ?? '') === 'patterns.archetypes',

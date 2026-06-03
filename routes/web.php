@@ -126,6 +126,7 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/platform/ui-reference/patterns/widget-content/{size}', [UiReferenceController::class, 'widgetContentSubpage'])
         ->where('size', 'shape-map|1x1|2x1|1x2|2x2|3x1|3x2|3x3|4x0-5')
         ->name('platform.ui-reference.patterns.widget-content.size');
+    Route::get('/platform/ui-reference/patterns/starters', [UiReferenceController::class, 'starters'])->name('platform.ui-reference.patterns.starters');
     Route::get('/platform/ui-reference/patterns/archetypes', [UiReferenceController::class, 'archetypes'])->name('platform.ui-reference.patterns.archetypes');
     Route::get('/platform/ui-reference/audit-logs/{sample}', [UiReferenceController::class, 'showAuditSample'])->name('platform.ui-reference.audit-samples.show');
     Route::get('/platform/ui-reference/error-logs/{sample}', [UiReferenceController::class, 'showErrorSample'])->name('platform.ui-reference.error-samples.show');

@@ -40,3 +40,16 @@
   - `carbon-design-system/carbon/tree/main/docs`: confirmed contains contributor/developer documentation only (release, testing, developer-handbook, commit conventions); NOT consumer usage guidance; no supplemental audit material.
 - Module Home `loading skeleton` changed to `loading` (generic). Skeleton Loader is not yet a locked Tier 2 pattern. Note 6 added to the Notes For Implementing Agents section to route this as a follow-up gap under P2-F-CQ-008.
 - Acceptance Proof Table added to audit findings document to directly evidence each P2-F-CQ-001 acceptance criterion.
+
+## Decisions From worklog-2-F-0004
+
+- MDX file name pattern confirmed from GitHub directory listings: each component's public tab maps to a separate `.mdx` file (`usage.mdx`, `style.mdx`, `code.mdx`, `accessibility.mdx`), NOT `index.mdx`. This pattern was confirmed for button and notification via direct directory inspection; confirmed for all other 15 pages via "Edit this page on GitHub" links.
+- Deeper inspection of `packages/react/src/components/` in `carbon-design-system/carbon` (main repo) confirms the original "no supplemental consumer usage guidance" finding. Component subdirectories contain TypeScript/SCSS implementation source only; the README explicitly redirects consumers to carbondesignsystem.com for all usage guidance.
+- Audit expanded from 8 to 17 public pages across 7 original + 9 new areas. New areas: data table, pagination, tabs, modal, tooltip, loading, search, dropdown/multiselect/combo box, overflow menu.
+- 20 new gaps added across 9 areas (G-TABLE-01–03, G-PAGIN-01–02, G-TABS-01–02, G-MODAL-01–03, G-TOOLTIP-01–02, G-LOAD-01–02, G-SEARCH-01–02, G-INPUT-01–02, G-OVERFLOW-01–02). Total audit gap count: 50 across 16 areas.
+- P2-F-CQ-008 scope narrowed to button variant and action label guidance only (G-ACT-01–05, G-LABEL-01–06). Three new queue items added:
+  - P2-F-CQ-009: notification, badge, and feedback guidance (G-NOTIF-01–05, G-BADGE-01–04)
+  - P2-F-CQ-010: form field standards and selection control guidance (G-FORM-01–04, G-SEL-01–03)
+  - P2-F-CQ-011: data display, navigation, overlay, loading, and input guidance (G-TABLE-01–03, G-PAGIN-01–02, G-TABS-01–02, G-MODAL-01–03, G-TOOLTIP-01–02, G-LOAD-01–02, G-SEARCH-01–02, G-INPUT-01–02, G-OVERFLOW-01–02)
+- Starter catalog matrix proof surfaces verified and flagged with Note 7. Weak surfaces: `/platform/ui-reference/audit-logs/{sample}` (unconfirmed route — verify during P2-F-CQ-005); `/account (secondary analog)` (profile view, not a pure detail/read-only). Remaining surfaces acceptable with noted caveats.
+- No further coverage passes required for P2-F-CQ-001. The audit is now sufficient as a Phase 2 design-system completeness benchmark.

@@ -10,13 +10,22 @@ PARTIAL
 2. Starter catalog matrix introduced `loading skeleton` in Module Home required states — implies unplanned Skeleton Loader Tier 2 implementation that is not locked
 3. `worklog-2-F-0002` contains stale `Commit: pending` status (artifacts were already committed in that same pass)
 
+**P2-F-CQ-001 second review failure (worklog-2-F-0003):**
+1. Audit does not map public doc pages to corresponding GitHub MDX source paths — confirmation of repo-root relationship is not sufficient; concrete file-level mapping required
+2. Inspection limited to repo roots, READMEs, package lists, and directory listings — no actual source files, examples, stories, or package docs inspected
+3. Claim "no supplemental consumer usage guidance found" is too strong without having inspected package-level READMEs, Storybook stories, or component examples
+4. Audit covers too narrow an area set — missing data table, pagination, tabs, modal, tooltip, loading/progress, search, combo box, multi-select, overflow menu, breadcrumbs, structured list, file uploader, date picker, layout/grid, tile/card
+5. All 27 design-system usage guidance gaps routed to single P2-F-CQ-008 item — scope may be too broad for clean implementation
+6. Some starter matrix proof surfaces are "closest analog" or weak placeholders — not verified as real UI routes
+
 ## Required Fixes
 
-- Inspect and cite actual GitHub source paths from all three required repos
-- Update audit method section to accurately document what each source provides
-- Add acceptance proof table directly evidencing each P2-F-CQ-001 criterion
-- Fix `loading skeleton` language in starter matrix; route skeleton loader as a follow-up gap
-- Note stale commit status in new worklog (historical worklog not modified per skill rules)
+- Map each public Carbon doc page to its GitHub MDX source path in carbon-website
+- Inspect actual component source files, package READMEs, or examples — do not rely only on repo root/README
+- State "not found after inspecting X/Y/Z" explicitly for any source claimed exhausted
+- Expand audit coverage to additional component/pattern areas
+- Review P2-F-CQ-008 scope — recommend splits if too broad
+- Verify each starter matrix proof surface is a real UI route or mark explicitly as placeholder
 
 ## Manual Review
 
@@ -25,11 +34,9 @@ Functional: not started
 
 ## Pass Summary
 
-**P2-F-CQ-001 — Returned to Ready To Implement (review failure), then corrected and returned to Implemented Pending Review (worklog-2-F-0003)**
-- Three issues identified in review failure; all resolved in correction pass
-- Audit findings document updated: per-source GitHub inspection evidence + Acceptance Proof Table added
-- Starter catalog matrix updated: `loading skeleton` → `loading`; Note 6 added for Skeleton Loader gap routing
-- See worklog-2-F-0003 for full correction record
+**P2-F-CQ-001 — Returned to Ready To Implement (second review failure; worklog-2-F-0003)**
+- Second review failure: audit depth insufficient for Phase 2 purpose
+- Six specific issues identified; item reclassified for second correction pass
 
 **Remaining queue items — not yet started:**
 - P2-F-CQ-007 — UI Reference starter catalog entry point

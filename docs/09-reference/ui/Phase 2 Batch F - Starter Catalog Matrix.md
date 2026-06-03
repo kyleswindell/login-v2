@@ -67,6 +67,12 @@ This index page must:
 
 6. **Skeleton Loader is not yet a locked Tier 2 pattern.** The `loading` state in the Module Home row must not be implemented using a Skeleton Loader component. Use a generic loading treatment (spinner or inline loading indicator) until Skeleton Loader is confirmed as an implemented Tier 2 pattern. If Skeleton Loader is later locked, P2-F-CQ-002 may adopt it at that time. Track as a follow-up gap under P2-F-CQ-008 (usage guidance standards).
 
+7. **Proof surface verification notes.** The following proof surfaces have known limitations; implementing agents should treat them as directional analogs, not exact route equivalents:
+   - `Content Browser / Split View` → `/platform/ui-reference/audit-logs/{sample}` — this is a planned sample viewer route within the UI Reference itself, not a platform feature route; treat as a UI Reference self-demonstration target; route existence is unconfirmed and should be verified during P2-F-CQ-005 implementation.
+   - `Detail / Read-Only` → `/account (secondary analog)` — `/account` is the closest live route with key-value detail display, but it is a profile view; it is a secondary analog only and should not be treated as a primary proof of the detail/read-only starter.
+   - `Module Home / Module Overview` and `Dashboard / Module Summary` → both list `/dashboard` as proof surface — this is acceptable since both starters live on the dashboard shell, but the two starters must be visually distinguishable in the UI Reference demonstration.
+   - `List / Index` → `/platform/ui-reference/patterns/tables` — this is an existing UI Reference route; verify route is still active during P2-F-CQ-005 implementation.
+
 ---
 
 ## Related

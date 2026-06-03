@@ -57,17 +57,51 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - create/edit starter includes form sections, validation summary, field grouping, and form actions
   - blocked/empty/unavailable state starter demonstrates permission-blocked, no-data, and unavailable patterns without feature-specific behavior
 
-### P2-F-CQ-008 - Usage guidance standards for actions and feedback
+### P2-F-CQ-008 - Usage guidance standards for button variants and action labels
 - Status: Ready To Implement
 - Owner: Batch F
-- Scope: Establish UI Reference guidance for badge, alert, toast, notification, button, action-label, form-action, AJAX alert, status indicator, and selection-option usage.
+- Scope: Establish UI Reference guidance for button variant selection and action label standards. Scope narrowed from original CQ-008 — notification/badge guidance split to P2-F-CQ-009; form/selection guidance split to P2-F-CQ-010; data display/overlay/loading/input guidance split to P2-F-CQ-011.
 - Acceptance:
   - guidance is Login App 2.0-specific and preserves the existing visual direction
-  - badge, alert, toast, notification, and status color semantics are explicit
-  - standard, soft, ghost, outline, and destructive button usage rules are explicit
-  - form action labels distinguish apply/stay-on-page behavior from submit/complete/return behavior
-  - inline validation, on-page AJAX alerts, toasts, and persisted notifications have clear usage boundaries
-  - same-page AJAX feedback does not imply a full page refresh unless explicitly documented
+  - standard, soft, ghost, outline, and destructive button usage rules are explicit (G-ACT-01–05)
+  - form action labels distinguish apply/stay-on-page behavior from submit/complete/return behavior (G-LABEL-01–06)
+  - per-page "one primary action" rule is documented
+
+### P2-F-CQ-009 - Usage guidance for notifications, badges, and feedback
+- Status: Ready To Implement
+- Owner: Batch F
+- Scope: Establish UI Reference guidance for notification type selection, badge/tag usage, and AJAX/toast feedback patterns. Split from original P2-F-CQ-008 scope.
+- Acceptance:
+  - inline alert vs toast vs callout/banner selection rule is explicit (G-NOTIF-01–05)
+  - badge color semantic mapping is documented (G-BADGE-01–04)
+  - multi-notification stacking and placement rules are covered
+  - guidance is Login App 2.0-specific and does not adopt Carbon visual tokens
+
+### P2-F-CQ-010 - Usage guidance for form field standards and selection controls
+- Status: Ready To Implement
+- Owner: Batch F
+- Scope: Establish UI Reference guidance for form field composition, required/optional marking, validation trigger timing, and selection control choice rules. Split from original P2-F-CQ-008 scope.
+- Acceptance:
+  - required vs optional field marking policy is documented (G-FORM-01–04)
+  - checkbox vs radio vs toggle selection boundary is explicit (G-SEL-01–03)
+  - select vs combo box vs multi-select selection rule is documented
+  - warning field state is covered alongside error and disabled states
+
+### P2-F-CQ-011 - Usage guidance for data display, navigation, overlays, loading, and inputs
+- Status: Ready To Implement
+- Owner: Batch F
+- Scope: Establish UI Reference guidance for the areas identified in the expanded Carbon audit coverage pass: data table variants and toolbar rules; pagination variant selection; tabs variant selection; modal variant and focus-trap requirements; tooltip vs toggletip boundary; loading indicator vs skeleton selection; search scope placement; dropdown/fluid style selection; overflow menu threshold. New gaps G-TABLE-01–03, G-PAGIN-01–02, G-TABS-01–02, G-MODAL-01–03, G-TOOLTIP-01–02, G-LOAD-01–02, G-SEARCH-01–02, G-INPUT-01–02, G-OVERFLOW-01–02 all route to this item.
+- Acceptance:
+  - data table variant selection rule (basic/selectable/expandable) is documented
+  - inline icon button vs overflow menu threshold rule is explicit
+  - pagination vs pagination-nav variant selection rule is documented
+  - line vs contained vs vertical tab variant selection rule is documented
+  - modal variant selection rule (passive/transactional/danger/acknowledgment/progress) is documented
+  - focus-trap accessibility requirement for modals is documented
+  - tooltip vs toggletip usage boundary is explicit
+  - loading spinner vs skeleton selection rule is documented
+  - search scope (global/page/component) placement guidance is explicit
+  - overflow menu destructive action placement rule is documented
 
 ### P2-F-CQ-006 - Batch F docs, tests, and handoff readiness
 - Status: Ready To Implement
@@ -87,15 +121,16 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-001 - Carbon contrast audit and starter catalog matrix
 - Status: Implemented Pending Review
 - Owner: Batch F
-- Scope: Carbon contrast audit and authoritative starter catalog matrix. Correction pass addressed review failure from worklog-2-F-0002.
+- Scope: Deepen the Carbon contrast audit so it serves as the authoritative design-system completeness benchmark for Batch F.
 - Acceptance:
   - audit source set includes Carbon documentation site, `carbon-design-system/carbon-website`, `carbon-design-system/carbon`, and `carbon/tree/main/docs`
-  - audit covers actions, buttons, forms, alerts, toasts, notifications, status indicators, badges, selection controls, and starter-page organization
+  - each public doc page used is mapped to its corresponding GitHub MDX source path in carbon-website
+  - audit covers all areas in the required list plus additional areas identified as relevant to Login App 2.0 starters
   - audit treats Carbon as a documentation-depth and completeness benchmark, not as a visual adoption target
-  - starter catalog matrix maps each required starter to intended use, shell family, Tier 2 patterns, required states, UI Reference route, live proof surface, and owning queue item
-  - gaps are normalized into queue language instead of staying as exploratory notes
-  - acceptance proof table directly evidences each criterion
-- Implemented in: worklog-2-F-0002 (initial); worklog-2-F-0003 (correction pass)
+  - starter catalog matrix proof surfaces are verified as real UI routes or marked as placeholder with follow-up routing
+  - gaps are normalized into queue language; P2-F-CQ-008 routing is reviewed and split if too broad
+  - acceptance proof table includes concrete source paths, not just repo-root inspection results
+- Implemented in: worklog-2-F-0002 (initial); worklog-2-F-0003 (correction pass 1); worklog-2-F-0004 (correction pass 2 — depth)
 
 ## Blocked
 

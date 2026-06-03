@@ -8,17 +8,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 
 ## Ready To Implement
 
-### P2-F-CQ-001 - Carbon contrast audit and starter catalog matrix
-- Status: Ready To Implement
-- Owner: Batch F
-- Scope: Third correction pass. Six required coverage areas still missing (breadcrumbs, structured list, file uploader, date picker, layout/grid, tile/card). Carbon main repo evidence overstated — claim "no supplemental consumer guidance" made based on directory listing only, not actual file inspection. Gap count inconsistent (acceptance table says 47; routing table has 50). Skeleton Loader follow-up incorrectly routed to P2-F-CQ-008 in matrix. review.md stale.
-- Acceptance:
-  - audit includes sections for all six previously missing areas: breadcrumbs, structured list, file uploader, date picker, layout/grid, tile/card
-  - Carbon main repo claim is accurate and defensible — either concrete file paths inspected, or claim softened to match actual inspection depth
-  - gap total is internally consistent across acceptance table, routing summary, worklog, and notes
-  - Skeleton Loader routing in Starter Catalog Matrix corrected to P2-F-CQ-011 (not P2-F-CQ-008)
-  - review.md reflects current third review failure, corrective pass outcome, and updated queue list
-- Implemented in: worklog-2-F-0002 (initial); worklog-2-F-0003 (correction pass 1); worklog-2-F-0004 (correction pass 2 — depth); worklog-2-F-0005 (correction pass 3 — missing areas + evidence fix)
+### P2-F-CQ-007 - UI Reference starter catalog entry point
 
 ### P2-F-CQ-007 - UI Reference starter catalog entry point
 - Status: Ready To Implement
@@ -99,21 +89,38 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - select vs combo box vs multi-select selection rule is documented
   - warning field state is covered alongside error and disabled states
 
-### P2-F-CQ-011 - Usage guidance for data display, navigation, overlays, loading, and inputs
+### P2-F-CQ-011 - Usage guidance for data display, navigation, overlays, loading, inputs, breadcrumb, structured list, file uploader, date picker, grid, and tile
 - Status: Ready To Implement
 - Owner: Batch F
-- Scope: Establish UI Reference guidance for the areas identified in the expanded Carbon audit coverage pass: data table variants and toolbar rules; pagination variant selection; tabs variant selection; modal variant and focus-trap requirements; tooltip vs toggletip boundary; loading indicator vs skeleton selection; search scope placement; dropdown/fluid style selection; overflow menu threshold. New gaps G-TABLE-01–03, G-PAGIN-01–02, G-TABS-01–02, G-MODAL-01–03, G-TOOLTIP-01–02, G-LOAD-01–02, G-SEARCH-01–02, G-INPUT-01–02, G-OVERFLOW-01–02 all route to this item.
+- Scope: Establish UI Reference guidance for all areas identified in the Carbon audit coverage passes (pass 2 and pass 3). Pass 2 areas: data table variants and toolbar rules; pagination variant selection; tabs variant selection; modal variant and focus-trap requirements; tooltip vs toggletip boundary; loading indicator vs skeleton selection; search scope placement; dropdown/fluid style selection; overflow menu threshold. Pass 3 areas: breadcrumb vs progress indicator selection; breadcrumb overflow/truncation; structured list vs data table selection; selectable structured list vs radio group; file uploader variant selection; file uploader size pairing with form fields; date picker variant selection; date format display and locale guidance; gutter mode selection for page layout; grid style model for Login App 2.0; tile variant selection; tile vs card distinction. All 30 gaps from pass 2 and pass 3 route to this item: G-TABLE-01–03, G-PAGIN-01–02, G-TABS-01–02, G-MODAL-01–03, G-TOOLTIP-01–02, G-LOAD-01–02, G-SEARCH-01–02, G-INPUT-01–02, G-OVERFLOW-01–02, G-BREADCRUMB-01–02, G-STRLIST-01–02, G-FILEUP-01–02, G-DATEPICK-01–02, G-GRID-01–02, G-TILE-01–02.
 - Acceptance:
-  - data table variant selection rule (basic/selectable/expandable) is documented
-  - inline icon button vs overflow menu threshold rule is explicit
-  - pagination vs pagination-nav variant selection rule is documented
-  - line vs contained vs vertical tab variant selection rule is documented
-  - modal variant selection rule (passive/transactional/danger/acknowledgment/progress) is documented
-  - focus-trap accessibility requirement for modals is documented
-  - tooltip vs toggletip usage boundary is explicit
-  - loading spinner vs skeleton selection rule is documented
-  - search scope (global/page/component) placement guidance is explicit
-  - overflow menu destructive action placement rule is documented
+  - data table variant selection rule (basic/selectable/expandable) is documented (G-TABLE-01)
+  - inline icon button vs overflow menu threshold rule is explicit (G-TABLE-02, G-OVERFLOW-01)
+  - data table toolbar composition rule for selection/filter/search is documented (G-TABLE-03)
+  - pagination vs pagination-nav variant selection rule is documented (G-PAGIN-01)
+  - pagination page-size options and placement guidance is explicit (G-PAGIN-02)
+  - line vs contained vs vertical tab variant selection rule is documented (G-TABS-01)
+  - tab overflow behavior is documented (G-TABS-02)
+  - modal variant selection rule (passive/transactional/danger/acknowledgment/progress) is documented (G-MODAL-01)
+  - focus-trap accessibility requirement for modals is documented (G-MODAL-02)
+  - modal size selection rule is documented (G-MODAL-03)
+  - tooltip vs toggletip usage boundary is explicit (G-TOOLTIP-01–02)
+  - loading spinner vs skeleton selection rule is documented (G-LOAD-01–02)
+  - search scope (global/page/component) placement guidance is explicit (G-SEARCH-01–02)
+  - dropdown vs fluid dropdown vs multiselect vs combo box selection rule is documented (G-INPUT-01–02)
+  - overflow menu destructive action placement rule is documented (G-OVERFLOW-02)
+  - breadcrumb vs progress indicator selection rule is documented (G-BREADCRUMB-01)
+  - breadcrumb overflow/truncation behavior is documented (G-BREADCRUMB-02)
+  - structured list vs data table selection rule is documented (G-STRLIST-01)
+  - selectable structured list vs radio group boundary is documented (G-STRLIST-02)
+  - file uploader variant selection rule (button vs drag-and-drop) is documented (G-FILEUP-01)
+  - file uploader size pairing with form fields is documented (G-FILEUP-02)
+  - date picker variant selection rule (simple vs calendar vs time) is documented (G-DATEPICK-01)
+  - date format display and locale guidance is documented (G-DATEPICK-02)
+  - gutter mode selection rule for page layout contexts is documented (G-GRID-01)
+  - grid style model for Login App 2.0 is documented (G-GRID-02)
+  - tile variant selection rule (base/clickable/selectable/expandable) is documented (G-TILE-01)
+  - tile vs card distinction is documented (G-TILE-02)
 
 ### P2-F-CQ-006 - Batch F docs, tests, and handoff readiness
 - Status: Ready To Implement
@@ -133,14 +140,15 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-001 - Carbon contrast audit and starter catalog matrix
 - Status: Implemented Pending Review
 - Owner: Batch F
-- Scope: Third correction pass complete. Six new areas added (breadcrumb, structured list, file uploader, date picker, layout/grid, tile). Carbon main repo evidence softened. Gap count corrected to 62 across 22 areas. Skeleton Loader routing fixed in matrix. review.md synced.
+- Scope: Fourth correction pass (queue state reconciliation) complete. Queue state inconsistency resolved. P2-F-CQ-011 contract expanded to cover all 15 gap series. review.md Pass Summary synced. Dates corrected.
 - Acceptance:
-  - audit includes sections for all six previously missing areas: breadcrumbs, structured list, file uploader, date picker, layout/grid, tile/card
-  - Carbon main repo claim is accurate and defensible — accurately describes directory-listing-level inspection and scopes the finding accordingly
-  - gap total is internally consistent across acceptance table, routing summary, worklog, and notes (62 gaps, 22 areas)
-  - Skeleton Loader routing in Starter Catalog Matrix corrected to P2-F-CQ-011
-  - review.md reflects third review failure, corrective pass outcome, and updated queue list
-- Implemented in: worklog-2-F-0002 (initial); worklog-2-F-0003 (correction pass 1); worklog-2-F-0004 (correction pass 2 — depth); worklog-2-F-0005 (correction pass 3 — missing areas + evidence fix)
+  - P2-F-CQ-001 appears in exactly one queue section (this one)
+  - P2-F-CQ-011 scope and acceptance explicitly cover all 15 gap series: G-TABLE-01–03, G-PAGIN-01–02, G-TABS-01–02, G-MODAL-01–03, G-TOOLTIP-01–02, G-LOAD-01–02, G-SEARCH-01–02, G-INPUT-01–02, G-OVERFLOW-01–02, G-BREADCRUMB-01–02, G-STRLIST-01–02, G-FILEUP-01–02, G-DATEPICK-01–02, G-GRID-01–02, G-TILE-01–02
+  - review.md Pass Summary reflects all four correction passes and current state
+  - all worklog and index dates are 2026-06-03
+  - gap count is 62 across 22 areas consistently
+  - P2-F-CQ-008 remains button variant and action label guidance only
+- Implemented in: worklog-2-F-0002 (initial); worklog-2-F-0003 (correction pass 1); worklog-2-F-0004 (correction pass 2 — depth); worklog-2-F-0005 (correction pass 3 — missing areas + evidence fix); worklog-2-F-0006 (correction pass 4 — queue state reconciliation)
 
 ## Blocked
 

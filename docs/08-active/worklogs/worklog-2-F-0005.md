@@ -2,7 +2,7 @@
 
 **Pass:** Correction pass 3 — missing coverage areas, evidence softening, gap count fix, routing correction, review.md sync
 **Queue Item:** P2-F-CQ-001 — Carbon contrast audit and starter catalog matrix
-**Date:** 2026-06-05
+**Date:** 2026-06-03
 **Status:** READY_FOR_REVIEW
 
 ---
@@ -114,3 +114,9 @@ Third review failure for P2-F-CQ-001 (worklog-2-F-0004). Five issues:
 ## Commit
 
 Commit: `docs(batch-f): complete carbon audit coverage`
+
+---
+
+## Date Correction Note
+
+The date field above was corrected from `2026-06-05` to `2026-06-03` in correction pass 4 (worklog-2-F-0006). The original future date was an error. The worklogs/index.md entry for this worklog was corrected at the same time.

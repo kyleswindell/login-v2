@@ -41,7 +41,12 @@
 - Module Home `loading skeleton` changed to `loading` (generic). Skeleton Loader is not yet a locked Tier 2 pattern. Note 6 added to the Notes For Implementing Agents section to route this as a follow-up gap under P2-F-CQ-008.
 - Acceptance Proof Table added to audit findings document to directly evidence each P2-F-CQ-001 acceptance criterion.
 
-## Decisions From worklog-2-F-0005
+## Decisions From worklog-2-F-0006
+
+- Fourth review failure for P2-F-CQ-001 confirmed: four issues — queue state inconsistency (P2-F-CQ-001 in both Ready To Implement and Implemented Pending Review simultaneously), P2-F-CQ-011 contract missing 12 new gaps from pass 3, review.md Pass Summary not reflecting correction pass 3 completion, worklog-2-F-0005 and index entries future-dated 2026-06-05.
+- P2-F-CQ-011 contract is now the authoritative routing target for all 30 gaps across the two expanded audit passes. The queue entry now carries explicit acceptance criteria with gap ID references for all 15 series: G-TABLE-01–03, G-PAGIN-01–02, G-TABS-01–02, G-MODAL-01–03, G-TOOLTIP-01–02, G-LOAD-01–02, G-SEARCH-01–02, G-INPUT-01–02, G-OVERFLOW-01–02, G-BREADCRUMB-01–02, G-STRLIST-01–02, G-FILEUP-01–02, G-DATEPICK-01–02, G-GRID-01–02, G-TILE-01–02. P2-F-CQ-008 remains button/action-label only.
+- Date correction: worklog-2-F-0005 and its index row were incorrectly dated 2026-06-05 (future). Corrected to 2026-06-03 in this pass. worklog-2-F-0003 index entry was also corrected from 2026-06-05 to 2026-06-03. A Date Correction Note was added to worklog-2-F-0005 to make the correction explicit rather than silent.
+- **Active batch state is now internally consistent**: P2-F-CQ-001 is in Implemented Pending Review only; no item is In Progress; P2-F-CQ-011 owns all 30 audit-routed gaps; review.md reflects all four correction passes; all worklog dates are 2026-06-03; gap count is 62 across 22 areas consistently.
 
 - Third review failure for P2-F-CQ-001 confirmed: five issues — six missing coverage areas, carbon main repo evidence overstated, gap count inconsistent (47 in table vs 50 in routing/worklog), skeleton loader routing in Starter Catalog Matrix pointing to P2-F-CQ-008 instead of P2-F-CQ-011, review.md stale.
 - Carbon main repo §3 evidence softened. The directory listing of `packages/react/src/components/` was inspected; no README or markdown docs visible in the listing; no individual component file content was opened or read. The claim now reflects inspection depth accurately. This is not a retraction — no consumer docs were found at this inspection depth — but the claim is scoped to what was actually observed.

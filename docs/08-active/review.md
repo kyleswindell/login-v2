@@ -25,13 +25,18 @@ PARTIAL
 4. Skeleton Loader follow-up incorrectly routed to P2-F-CQ-008 in Starter Catalog Matrix Note 6 — P2-F-CQ-008 is now button/action-label only; loading/skeleton guidance belongs in P2-F-CQ-011
 5. review.md not updated to reflect third failure state, new queue items P2-F-CQ-009/010/011, or corrected remaining queue list
 
+**P2-F-CQ-001 fourth review failure (worklog-2-F-0005):**
+1. Active batch queue state is inconsistent — P2-F-CQ-001 appears in both the "Ready To Implement" section and the "Implemented Pending Review" section of change-queue.md simultaneously; this means the claim/completion cycle did not fully clean up the Ready To Implement entry when moving through In Progress
+2. P2-F-CQ-011 scope and acceptance do not include the 12 new gaps routed to it in correction pass 3 — G-BREADCRUMB-01–02, G-STRLIST-01–02, G-FILEUP-01–02, G-DATEPICK-01–02, G-GRID-01–02, G-TILE-01–02 are documented in the audit findings and assigned to P2-F-CQ-011 in the routing summary, but P2-F-CQ-011's queue entry only lists the original 9 series (G-TABLE through G-OVERFLOW) and has no acceptance criteria for the 6 new areas
+3. review.md Pass Summary reflects only "Returned to Ready To Implement (third review failure)" and does not record correction pass 3 completing or P2-F-CQ-001 returning to Implemented Pending Review
+4. worklog-2-F-0005 and its worklogs/index.md entry are future-dated 2026-06-05; current date is 2026-06-03; worklog-2-F-0003 index entry is also dated 2026-06-05
+
 ## Required Fixes
 
-- Add audit sections for the six missing areas (breadcrumbs, structured list, file uploader, date picker, layout/grid, tile/card) with Login App 2.0-specific gaps and queue routing
-- Fix Carbon main repo evidence: either inspect a concrete file (e.g., `packages/react/README.md` or a component package README) and document the path, or soften the claim to match what was actually inspected
-- Recount all gaps after adding the new areas and make the count consistent across: acceptance table, routing summary, worklog, and notes
-- Update Starter Catalog Matrix Note 6 to route Skeleton Loader follow-up to P2-F-CQ-011 instead of P2-F-CQ-008
-- Update review.md to reflect current state (this document)
+- Fix change-queue.md queue state: P2-F-CQ-001 must appear in exactly one section; remove duplicate; return it to Ready To Implement under the current correction pass scope
+- Update P2-F-CQ-011 scope and acceptance to include all 15 gap series routed to it: G-TABLE-01–03, G-PAGIN-01–02, G-TABS-01–02, G-MODAL-01–03, G-TOOLTIP-01–02, G-LOAD-01–02, G-SEARCH-01–02, G-INPUT-01–02, G-OVERFLOW-01–02, G-BREADCRUMB-01–02, G-STRLIST-01–02, G-FILEUP-01–02, G-DATEPICK-01–02, G-GRID-01–02, G-TILE-01–02
+- Correct future dates in worklog-2-F-0005 and worklogs/index.md (2026-06-05 → 2026-06-03); correct 2-F-0003 index entry date (2026-06-05 → 2026-06-03)
+- Sync review.md Pass Summary to reflect correction pass 3 completed and P2-F-CQ-001 in Implemented Pending Review
 
 ## Manual Review
 
@@ -44,7 +49,19 @@ Functional: not started
 - Third review failure: six coverage areas missing; Carbon main repo claim overstated; gap count inconsistent; skeleton loader routed incorrectly; review.md stale
 - Five specific issues identified; item reclassified for third correction pass
 
-**Remaining queue items — not yet started:**
+**P2-F-CQ-001 — Returned to Implemented Pending Review (correction pass 3; worklog-2-F-0005)**
+- Six new coverage areas added (§17–22: breadcrumb, structured list, file uploader, date picker, layout/grid, tile); 12 new gaps documented; gap count corrected to 62 across 22 areas; Carbon main repo evidence softened; skeleton loader routing fixed in matrix; review.md synced
+- Returned to Implemented Pending Review after correction pass 3
+
+**P2-F-CQ-001 — Returned to Ready To Implement (fourth review failure; worklog-2-F-0005)**
+- Fourth review failure: active batch queue state inconsistent (P2-F-CQ-001 in both Ready To Implement and Implemented Pending Review simultaneously); P2-F-CQ-011 queue contract missing 12 new gaps from pass 3; review.md Pass Summary did not reflect correction pass 3 completion; worklog-2-F-0005 and index entries future-dated 2026-06-05
+- Four specific issues identified; item reclassified for fourth correction pass
+
+**P2-F-CQ-001 — Returned to Implemented Pending Review (correction pass 4; worklog-2-F-0006)**
+- Queue state inconsistency resolved (P2-F-CQ-001 now appears in exactly one section); P2-F-CQ-011 queue contract expanded to include all 15 gap series (G-TABLE-01–03 through G-TILE-01–02); review.md Pass Summary synced; dates corrected in worklog-2-F-0005 and index entries (2026-06-05 → 2026-06-03)
+- P2-F-CQ-001 returned to Implemented Pending Review after correction pass 4
+
+**Remaining queue items — Ready To Implement:**
 - P2-F-CQ-007 — UI Reference starter catalog entry point
 - P2-F-CQ-002 — Module home and dashboard summary starters
 - P2-F-CQ-003 — Settings and setup starters
@@ -53,5 +70,5 @@ Functional: not started
 - P2-F-CQ-008 — Usage guidance standards for button variants and action labels
 - P2-F-CQ-009 — Usage guidance for notifications, badges, and feedback
 - P2-F-CQ-010 — Usage guidance for form field standards and selection controls
-- P2-F-CQ-011 — Usage guidance for data display, navigation, overlays, loading, and inputs
+- P2-F-CQ-011 — Usage guidance for data display, navigation, overlays, loading, inputs, breadcrumb, structured list, file uploader, date picker, grid, and tile
 - P2-F-CQ-006 — Batch F docs, tests, and handoff readiness

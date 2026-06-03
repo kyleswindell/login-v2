@@ -8,6 +8,7 @@
 - The required starter set now includes module home, settings, setup/configuration, account/profile, list/index, table-management index, operational log/detail, content browser/split-view, detail/read-only, create/edit, dashboard/module summary, widget examples by module content type, and blocked/empty/unavailable states.
 - Batch F must begin with a Carbon-informed contrast audit so missing usage guidance for buttons, badges, alerts, toasts, notifications, status indicators, forms, action labels, AJAX feedback, and selection controls is mapped before implementation.
 - The Carbon audit should use both the public docs site and the GitHub sources: `carbon-design-system/carbon-website`, `carbon-design-system/carbon`, and `carbon/tree/main/docs`.
+- Carbon is a documentation-depth and completeness benchmark only. Batch F should not visually copy IBM software or replace the existing Login App 2.0 visual direction.
 
 ## Implementation Notes
 
@@ -16,3 +17,4 @@
 - Normalize existing proof surfaces only where needed to demonstrate the starter contract.
 - Do not expand account, notifications, customer/public, or module-specific behavior.
 - Do not copy Carbon as the app standard; use it as a completeness benchmark and translate relevant findings into Login App 2.0-specific guidance.
+- Translate audit findings into this app's own standards, examples, classes, ready-to-use components, component sets, and starter views.

@@ -30,6 +30,8 @@ Define Phase 2 sequencing for Tier 1 library hardening, UI system completion, co
 
 Phase 2 must leave behind a reusable internal UI system rather than only polished current pages.
 
+The phase is not intended to visually adopt or copy another design system. External systems such as Carbon are completeness benchmarks for documentation depth, usage guidance, variant coverage, and auditability. The final output must remain a Login App 2.0-specific design system library with its own visual direction, implementation classes, ready-to-use components, component sets, and starter views.
+
 The required outputs for the active Phase 2 lane are:
 
 - Tier 1 primitives and baselines completed and reviewable
@@ -53,6 +55,7 @@ The required outputs for the active Phase 2 lane are:
 - future-module UI ownership declaration requirements established
 - UI reference examples and validation surfaces updated for the relevant Tier 1 and Tier 2 outputs
 - concrete starter-page examples for the reusable page/module archetypes that future phases will consume
+- usage guidance that explains when and how to use common UI elements, variants, states, color semantics, action labels, feedback patterns, form behavior, and starter views
 
 These outputs exist to make later Phase 3 and Phase 4 work additive instead of forcing those phases to invent shared UI structure while building feature behavior.
 

@@ -13,6 +13,7 @@
   Status: not implemented
   - Carbon contrast audit is complete
   - audit source set includes Carbon documentation site, Carbon website source repo, Carbon main repo, and Carbon main docs directory
+  - audit treats Carbon as a completeness benchmark, not a visual adoption target
   - authoritative starter catalog matrix is documented
   - required starter examples are visible and locatable in UI Reference
   - UI Reference navigation exposes the starter catalog intentionally
@@ -22,6 +23,7 @@
 - [ ] Design-System Usage Guidance
   Status: not implemented
   - badge, alert, toast, notification, and status color semantics are explicit
+  - guidance preserves the existing Login App 2.0 visual direction
   - standard, soft, ghost, outline, and destructive button usage rules are explicit
   - common action labels and action hierarchy are documented
   - form action labels distinguish apply/stay-on-page from submit/complete/return behavior
@@ -29,6 +31,7 @@
   - same-page AJAX feedback does not imply a full page refresh unless explicitly documented
   - required and optional field marker rules are documented
   - selection option variants and usage rules are documented
+  - required classes, ready-to-use components, component sets, and starter views are identified or queued
 
 ## Module Home And Dashboard Summary Starters
 - [ ] Module Home And Dashboard Summary Starters

@@ -15,6 +15,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 - Acceptance:
   - audit source set includes Carbon documentation site, `carbon-design-system/carbon-website`, `carbon-design-system/carbon`, and `carbon/tree/main/docs`
   - audit covers actions, buttons, forms, alerts, toasts, notifications, status indicators, badges, selection controls, and starter-page organization
+  - audit treats Carbon as a documentation-depth and completeness benchmark, not as a visual adoption target
   - starter catalog matrix maps each required starter to intended use, shell family, Tier 2 patterns, required states, UI Reference route, live proof surface, and owning queue item
   - gaps are normalized into queue language instead of staying as exploratory notes
 
@@ -72,6 +73,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 - Owner: Batch F
 - Scope: Establish UI Reference guidance for badge, alert, toast, notification, button, action-label, form-action, AJAX alert, status indicator, and selection-option usage.
 - Acceptance:
+  - guidance is Login App 2.0-specific and preserves the existing visual direction
   - badge, alert, toast, notification, and status color semantics are explicit
   - standard, soft, ghost, outline, and destructive button usage rules are explicit
   - form action labels distinguish apply/stay-on-page behavior from submit/complete/return behavior

@@ -8,6 +8,8 @@ Complete the internal page archetype starter-proof layer required before Phase 2
 
 Batch F exists because Batch E close-out preflight identified a handoff-readiness gap: Phase 2 planning requires future Phase 3 and Phase 4 work to consume established shell families and page/module scaffolding, but the current UI Reference archetype coverage is not yet sufficient as a concrete starter-page catalog.
 
+Batch F does not adopt Carbon's visual design. Carbon is used only as a completeness benchmark for documentation depth, usage guidance, variants, states, and auditability. Batch F must preserve the existing Login App 2.0 visual direction unless a separate canonical design decision changes it.
+
 ## Planning Owner
 
 * [Phase 2 - Final Stack And UI System Planning](Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
@@ -27,11 +29,14 @@ Turn the existing Tier 1/Tier 2 UI system and Batch B archetype rules into concr
 
 The batch should answer one implementation-readiness question: can a future module plan name a shell family and page/module archetype, then open UI Reference and find a complete starter example for that surface type?
 
+It should also answer one design-system-readiness question: can a future agent audit UI work against Login App-specific guidance for element usage, variants, color semantics, action labels, feedback behavior, form behavior, classes, ready-to-use components, component sets, and starter views without relying on subjective interpretation?
+
 ## In Scope
 
 * UI Reference page archetype starter examples
 * starter-proof coverage for module home, settings, setup/configuration, account/profile, list/index, table-management index, operational log/detail, content browser/split-view, detail/read-only, create/edit form, dashboard/module-summary, and blocked/empty/unavailable state surfaces
 * a Carbon-informed UI Reference audit that identifies missing usage guidance, variants, states, and standard action/feedback rules before starter implementation proceeds
+* translation of audit findings into Login App 2.0-specific examples, standards, classes, reusable components, component sets, and starter views
 * adoption of existing Tier 1 primitives and Tier 2 patterns inside those starter examples
 * limited normalization of current permanent/proof surfaces where needed to validate the starter contract
 * UI Reference navigation and automated coverage updates needed to make starter examples locatable and testable
@@ -46,6 +51,7 @@ The batch should answer one implementation-readiness question: can a future modu
 * new business modules
 * customer/public shell implementation
 * new UI-system rules unless implementation exposes a documented standards gap
+* Carbon visual adoption or IBM product UI cloning
 * broad redesign of existing platform surfaces
 * final Phase 2 close-out decision
 
@@ -102,7 +108,7 @@ Each starter proof should demonstrate:
 
 Before implementing the starter catalog, Batch F must run a focused contrast audit against the Carbon Design System to identify which examples, usage rules, states, and "when to use" guidance are still missing from this app's UI Reference.
 
-The audit should not copy Carbon as the app standard. It should use Carbon as an external completeness benchmark, then translate relevant findings into Login App 2.0-specific standards, examples, and queue items.
+The audit should not copy Carbon as the app standard. It should use Carbon as an external completeness benchmark, then translate relevant findings into Login App 2.0-specific standards, examples, classes, ready-to-use components, component sets, starter views, and queue items.
 
 Required Carbon source set:
 
@@ -137,6 +143,7 @@ Priority alignment surfaces:
 ## Implementation Guardrails
 
 * Use existing Tier 1 primitives and Tier 2 patterns.
+* Preserve the existing Login App 2.0 visual direction unless a separate canonical design decision changes it.
 * Do not create feature-specific workflows to make a starter look complete.
 * Do not treat starter examples as production feature delivery.
 * If a starter cannot be built from existing Tier 1/Tier 2 contracts, document the standards gap before adding new implementation rules.

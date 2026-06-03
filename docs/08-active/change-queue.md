@@ -80,19 +80,22 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 
 ## In Progress
 
+<!-- none -->
+
 ## Implemented Pending Review
 
 ### P2-F-CQ-001 - Carbon contrast audit and starter catalog matrix
 - Status: Implemented Pending Review
 - Owner: Batch F
-- Scope: Audit the current UI Reference against Carbon-style design-system completeness and produce the authoritative starter catalog matrix before implementation continues.
+- Scope: Carbon contrast audit and authoritative starter catalog matrix. Correction pass addressed review failure from worklog-2-F-0002.
 - Acceptance:
   - audit source set includes Carbon documentation site, `carbon-design-system/carbon-website`, `carbon-design-system/carbon`, and `carbon/tree/main/docs`
   - audit covers actions, buttons, forms, alerts, toasts, notifications, status indicators, badges, selection controls, and starter-page organization
   - audit treats Carbon as a documentation-depth and completeness benchmark, not as a visual adoption target
   - starter catalog matrix maps each required starter to intended use, shell family, Tier 2 patterns, required states, UI Reference route, live proof surface, and owning queue item
   - gaps are normalized into queue language instead of staying as exploratory notes
-- Implemented in: worklog-2-F-0002
+  - acceptance proof table directly evidences each criterion
+- Implemented in: worklog-2-F-0002 (initial); worklog-2-F-0003 (correction pass)
 
 ## Blocked
 

@@ -21,7 +21,7 @@ Implementation agents working on any of P2-F-CQ-002 through P2-F-CQ-005 must use
 
 | Starter | Intended Use | Shell Family | Primary Tier 2 Patterns | Required States | UI Reference Route | Live Proof Surface | Owner Queue Item |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Module Home / Module Overview | Entry surface for a feature module; shows module summary, primary stats, and next-action guidance | App shell | Page Title And Actions Row; Content Section Block; Stat Card; Widget Shell | default; empty (no data yet); loading skeleton | `/platform/ui-reference/patterns/starters/module-home` | `/dashboard` (closest analog) | P2-F-CQ-002 |
+| Module Home / Module Overview | Entry surface for a feature module; shows module summary, primary stats, and next-action guidance | App shell | Page Title And Actions Row; Content Section Block; Stat Card; Widget Shell | default; empty (no data yet); loading | `/platform/ui-reference/patterns/starters/module-home` | `/dashboard` (closest analog) | P2-F-CQ-002 |
 | Dashboard / Module Summary | Staff overview surface; hosts widget grid, stat cards, and module summary widgets in the dashboard shell | Dashboard shell | Page Title And Actions Row; Dashboard Grid; Widget Shell; Stat Card | default; empty; widget-error fallback | `/platform/ui-reference/patterns/starters/dashboard-summary` | `/dashboard` | P2-F-CQ-002 |
 | Dashboard Widget Examples By Content Type | Widget size reference by content type (stat, list, chart, operational); demonstrates approved content-type variations per size | Dashboard shell | Widget Shell; Stat Card; Data List Item | default per size variant | `/platform/ui-reference/patterns/widget-content/{size}` (existing) | `/platform/ui-reference/patterns/widget-content` | P2-F-CQ-002 |
 | Settings Page | Per-section settings form; scoped to one settings area with navigation to sibling sections | Settings shell | Page Title And Actions Row; Sub-navigation Bar; Form Section; Form Group; Form Actions Bar; Validation Summary | default; validation error; saved (inline confirmation) | `/platform/ui-reference/patterns/starters/settings` | `/platform/settings/general` | P2-F-CQ-003 |
@@ -64,6 +64,8 @@ This index page must:
 4. **The archetype matrix is vocabulary; this matrix is the catalog.** The [Page And Module Archetype Matrix](Phase%202%20Batch%20B%20-%20Page%20And%20Module%20Archetype%20Matrix.md) defines the 7 archetypes in abstract terms. This starter catalog matrix translates those archetypes into the 14 concrete starters with specific implementation expectations.
 
 5. **Blocked/empty/unavailable sub-types must all appear in one starter.** The three sub-types (permission-blocked, no-data, service-unavailable) should be demonstrated as distinct variants within the same starter view so that a single UI Reference route covers all three cases.
+
+6. **Skeleton Loader is not yet a locked Tier 2 pattern.** The `loading` state in the Module Home row must not be implemented using a Skeleton Loader component. Use a generic loading treatment (spinner or inline loading indicator) until Skeleton Loader is confirmed as an implemented Tier 2 pattern. If Skeleton Loader is later locked, P2-F-CQ-002 may adopt it at that time. Track as a follow-up gap under P2-F-CQ-008 (usage guidance standards).
 
 ---
 

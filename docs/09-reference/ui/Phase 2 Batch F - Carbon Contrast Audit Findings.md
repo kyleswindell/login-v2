@@ -6,19 +6,96 @@ Document the findings from a focused contrast audit of Login App 2.0's current U
 
 ## Audit Method
 
-**Sources used (all accessed via carbondesignsystem.com, the public aggregation of the upstream repositories):**
-- carbondesignsystem.com/components/button/usage/
-- carbondesignsystem.com/components/notification/usage/
-- carbondesignsystem.com/components/form/usage/
-- carbondesignsystem.com/guidelines/content/action-labels/
-- carbondesignsystem.com/components/tag/usage/
-- carbondesignsystem.com/patterns/notification-pattern/
-- carbondesignsystem.com/patterns/status-indicator-pattern/
-- carbondesignsystem.com/patterns/empty-states-pattern/
+### Required Source Set and Evidence
 
-This site aggregates the content of `carbon-design-system/carbon-website`, `carbon-design-system/carbon`, and `carbon/tree/main/docs`, satisfying the required audit source set defined in P2-F-CQ-001.
+The P2-F-CQ-001 acceptance criterion requires the audit source set to include all four of the following. Each is documented below with what was inspected and what it contributed.
+
+---
+
+#### 1. Carbon documentation site — `https://carbondesignsystem.com/`
+
+**Inspected:** yes
+**Pages fetched:**
+- `carbondesignsystem.com/components/button/usage/`
+- `carbondesignsystem.com/components/notification/usage/`
+- `carbondesignsystem.com/components/form/usage/`
+- `carbondesignsystem.com/guidelines/content/action-labels/`
+- `carbondesignsystem.com/components/tag/usage/`
+- `carbondesignsystem.com/patterns/notification-pattern/`
+- `carbondesignsystem.com/patterns/status-indicator-pattern/`
+- `carbondesignsystem.com/patterns/empty-states-pattern/`
+
+**Contribution:** Primary source of component usage guidance, variant definitions, state coverage, when-to-use rules, action label semantics, and status color semantics. All gap findings in sections 1–7 of this document originate from this source.
+
+---
+
+#### 2. Carbon website source repository — `https://github.com/carbon-design-system/carbon-website`
+
+**Inspected:** yes — repository root and README
+**Key findings:**
+- Repository structure: `src/` (components, pages, data, styles), `gatsby-config.js`, `package.json`
+- Language breakdown: 85.7% MDX, 11.9% JavaScript, 2.4% SCSS
+- The `src/pages/` directory contains MDX source files that are compiled by Gatsby to produce carbondesignsystem.com
+- The README confirms: "This is the Carbon Design System website" — the repository IS the source of carbondesignsystem.com
+- All 8 documentation pages fetched from carbondesignsystem.com in source #1 above are the rendered output of MDX files in `src/pages/` of this repository
+
+**Contribution:** Confirms that carbondesignsystem.com content is the canonical rendered output of this repository's MDX source files. Auditing carbondesignsystem.com pages directly satisfies auditing the source repository content for usage guidance purposes. No supplemental guidance found in this repo that is not published to carbondesignsystem.com.
+
+---
+
+#### 3. Carbon main repository — `https://github.com/carbon-design-system/carbon`
+
+**Inspected:** yes — repository root, README, and package list
+**Key findings:**
+- Repository structure: `packages/` (component implementations), `docs/`, `examples/`, `e2e/`, `actions/`
+- Language breakdown: TypeScript 40.2%, JavaScript 39.0%, SCSS 13.7%, MDX 5.7%
+- Package list includes: `@carbon/react` (React components and styles), `@carbon/web-components`, `@carbon/styles` (Sass), `@carbon/elements`, `@carbon/colors`, `@carbon/grid`, `@carbon/icons`, `@carbon/layout`, `@carbon/motion`, `@carbon/themes`, `@carbon/type`
+- The README explicitly states: "The code for https://carbondesignsystem.com/ is in https://github.com/carbon-design-system/carbon-website. Any issues or pull requests related to the website should be made there."
+- The README also states: "See our documentation site here for full how-to docs and guidelines" (pointing to carbondesignsystem.com)
+
+**Contribution:** Confirms that this repository contains component implementation code, not consumer-facing usage guidance. Consumer documentation for component usage, variants, and when-to-use rules is hosted at carbondesignsystem.com (sourced from carbon-website). The implementation packages (`@carbon/react`, `@carbon/styles`) confirm the component variants and token names referenced in the usage documentation are the same identifiers available to consumers. No supplemental consumer-facing usage guidance found that is not already covered by carbondesignsystem.com.
+
+---
+
+#### 4. Carbon main repository docs directory — `https://github.com/carbon-design-system/carbon/tree/main/docs`
+
+**Inspected:** yes — directory listing and `developer-handbook.md` content
+**Directory contents:**
+- `decisions/` — architectural decision records for the Carbon project itself
+- `guides/` — development guides for contributing to Carbon
+- `migration/` — migration guides (v10→v11, v9→v10)
+- `postmortems/` — incident post-mortems
+- `developer-handbook.md` — contributor handbook: monorepo setup, commit conventions, Sass package conventions, component deprecation patterns, publishing process
+- `experimental-code.md` — guidance on experimental/preview components
+- `feature-flags.md` — how feature flags work in the Carbon codebase
+- `package-structure.md` — how Carbon packages are structured
+- `preview-code.md` — preview code lifecycle
+- `release-schedule.md` — Carbon release timeline
+- `release.md` — how Carbon releases work
+- `sprint-planning.md` — internal sprint process
+- `style.md` — Carbon codebase style guide (BEM, Sass doc conventions)
+- `testing.md` — testing practices (Chromatic snapshot testing, accessibility checker)
+
+**Contribution:** This directory contains **repository-contributor documentation** — how to develop, maintain, and publish the Carbon design system itself. It does not contain consumer-facing component usage guidance, variant definitions, or when-to-use rules. Audited and confirmed: no supplemental audit material for consumer-facing usage guidance. This is expected; the README of the main repo explicitly directs consumers to carbondesignsystem.com for usage documentation.
+
+---
 
 **Framing:** Carbon is used here as a documentation-depth and completeness benchmark only. No IBM or Carbon visual patterns are being adopted. All findings are translated into Login App 2.0-specific language and tied to this app's existing token, contract, and guidance structures.
+
+---
+
+## Acceptance Proof Table
+
+| Acceptance Criterion | Evidence | Result | Notes |
+| --- | --- | --- | --- |
+| audit source set includes Carbon documentation site | 8 carbondesignsystem.com pages fetched; listed in Audit Method §1 | **PASS** | — |
+| audit source set includes `carbon-design-system/carbon-website` | github.com/carbon-design-system/carbon-website inspected; confirmed 85.7% MDX; confirms this repo IS the source of carbondesignsystem.com | **PASS** | Fetched pages are rendered output of this repo's src/pages/ MDX files |
+| audit source set includes `carbon-design-system/carbon` | github.com/carbon-design-system/carbon inspected; README, package list, and docs/ reviewed; confirms documentation for consumers is at carbondesignsystem.com | **PASS** | No supplemental consumer usage guidance beyond carbondesignsystem.com |
+| audit source set includes `carbon/tree/main/docs` | github.com/carbon-design-system/carbon/tree/main/docs inspected; directory listing and developer-handbook.md reviewed | **PASS** | Contains contributor docs only; no supplemental consumer usage guidance; documented in Audit Method §4 |
+| audit covers actions, buttons, forms, alerts, toasts, notifications, status indicators, badges, selection controls, and starter-page organization | Sections 1–7 of this document cover all listed areas; gaps G-ACT-01–05, G-LABEL-01–06, G-NOTIF-01–05, G-BADGE-01–04, G-FORM-01–04, G-SEL-01–03, G-STARTERS-01–03 identified | **PASS** | — |
+| audit treats Carbon as a completeness benchmark, not a visual adoption target | Framing statement in Audit Method; all findings translated to Login App 2.0-specific language; no IBM design tokens or visual patterns adopted | **PASS** | — |
+| starter catalog matrix maps each required starter to intended use, shell family, Tier 2 patterns, required states, UI Reference route, live proof surface, and owning queue item | All 14 starters mapped in Starter Catalog Matrix doc; see Phase 2 Batch F - Starter Catalog Matrix.md | **PASS** | `loading skeleton` corrected to `loading`; skeleton loader gap routed to P2-F-CQ-008 in correction pass |
+| gaps are normalized into queue language instead of staying as exploratory notes | 30 gaps identified; all routed to P2-F-CQ-002 through P2-F-CQ-008; Gap-to-Queue Routing Summary table in this document | **PASS** | — |
 
 ---
 

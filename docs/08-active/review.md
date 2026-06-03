@@ -5,11 +5,18 @@ PARTIAL
 
 ## Issues
 
-None recorded.
+**P2-F-CQ-001 review failure (worklog-2-F-0002):**
+1. GitHub source set not directly evidenced — audit findings doc claimed carbondesignsystem.com "aggregates" the required GitHub repos but never directly inspected those repos
+2. Starter catalog matrix introduced `loading skeleton` in Module Home required states — implies unplanned Skeleton Loader Tier 2 implementation that is not locked
+3. `worklog-2-F-0002` contains stale `Commit: pending` status (artifacts were already committed in that same pass)
 
 ## Required Fixes
 
-None recorded.
+- Inspect and cite actual GitHub source paths from all three required repos
+- Update audit method section to accurately document what each source provides
+- Add acceptance proof table directly evidencing each P2-F-CQ-001 criterion
+- Fix `loading skeleton` language in starter matrix; route skeleton loader as a follow-up gap
+- Note stale commit status in new worklog (historical worklog not modified per skill rules)
 
 ## Manual Review
 
@@ -18,12 +25,11 @@ Functional: not started
 
 ## Pass Summary
 
-**P2-F-CQ-001 — Implemented Pending Review (worklog-2-F-0002)**
-- Carbon contrast audit complete; 30 gaps identified, all normalized into queue items
-- Starter catalog matrix documented at `docs/09-reference/ui/Phase 2 Batch F - Starter Catalog Matrix.md`
-- Audit findings documented at `docs/09-reference/ui/Phase 2 Batch F - Carbon Contrast Audit Findings.md`
-- Both files registered in `docs/09-reference/ui/index.md`
-- Review surface: document review in repository — no staging deploy required for this pass
+**P2-F-CQ-001 — Returned to Ready To Implement (review failure), then corrected and returned to Implemented Pending Review (worklog-2-F-0003)**
+- Three issues identified in review failure; all resolved in correction pass
+- Audit findings document updated: per-source GitHub inspection evidence + Acceptance Proof Table added
+- Starter catalog matrix updated: `loading skeleton` → `loading`; Note 6 added for Skeleton Loader gap routing
+- See worklog-2-F-0003 for full correction record
 
 **Remaining queue items — not yet started:**
 - P2-F-CQ-007 — UI Reference starter catalog entry point

@@ -27,3 +27,16 @@
 - 30 gaps identified across 7 areas. All design-system usage guidance gaps (G-ACT-*, G-LABEL-*, G-NOTIF-*, G-BADGE-*, G-FORM-*, G-SEL-*) routed to P2-F-CQ-008. Starter entry point gap (G-STARTERS-01) routed to P2-F-CQ-007. Concrete starter gaps routed to P2-F-CQ-002 through P2-F-CQ-005.
 - Dashboard Widget Examples route `/platform/ui-reference/patterns/widget-content/{size}` already exists. P2-F-CQ-002 should validate and extend rather than replace.
 - No new queue items were needed; all gaps mapped to existing P2-F-CQ-002 through P2-F-CQ-008 entries.
+
+> **Stale commit status in worklog-2-F-0002:** worklog-2-F-0002.md records `Commit: pending (implementation save point for P2-F-CQ-001)`. The artifacts were committed in the same session immediately after the worklog was written (commit `ab914c8`). The worklog file cannot be modified per `batch-update-manual-review-status` skill rules — historical worklog records are not changed. This is a documentation artifact only; the commit completed successfully.
+
+## Decisions From worklog-2-F-0003
+
+- Review failure for P2-F-CQ-001 confirmed: three issues — GitHub source set not directly evidenced; `loading skeleton` in Module Home implied unplanned Skeleton Loader Tier 2; worklog-2-F-0002 stale commit note.
+- Executed `batch-update-manual-review-status` before re-implementing: P2-F-CQ-001 moved back to Ready To Implement; review.md updated with failure findings.
+- All four required GitHub/docs sources directly inspected in this correction pass. Results documented in updated Audit Method section and Acceptance Proof Table in the audit findings document.
+  - `carbon-design-system/carbon-website`: confirmed this repo IS the source for carbondesignsystem.com (85.7% MDX, src/pages/ maps to public URL paths).
+  - `carbon-design-system/carbon` (main repo): confirmed consumer documentation redirects to carbondesignsystem.com; packages contain implementation code; no supplemental consumer usage guidance beyond the public site.
+  - `carbon-design-system/carbon/tree/main/docs`: confirmed contains contributor/developer documentation only (release, testing, developer-handbook, commit conventions); NOT consumer usage guidance; no supplemental audit material.
+- Module Home `loading skeleton` changed to `loading` (generic). Skeleton Loader is not yet a locked Tier 2 pattern. Note 6 added to the Notes For Implementing Agents section to route this as a follow-up gap under P2-F-CQ-008.
+- Acceptance Proof Table added to audit findings document to directly evidence each P2-F-CQ-001 acceptance criterion.

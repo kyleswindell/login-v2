@@ -30,7 +30,8 @@ The batch should answer one implementation-readiness question: can a future modu
 ## In Scope
 
 * UI Reference page archetype starter examples
-* starter-proof coverage for module home, settings, setup/configuration, account/profile, list/index, detail/read-only, create/edit form, and dashboard/module-summary surfaces
+* starter-proof coverage for module home, settings, setup/configuration, account/profile, list/index, table-management index, operational log/detail, content browser/split-view, detail/read-only, create/edit form, dashboard/module-summary, and blocked/empty/unavailable state surfaces
+* a Carbon-informed UI Reference audit that identifies missing usage guidance, variants, states, and standard action/feedback rules before starter implementation proceeds
 * adoption of existing Tier 1 primitives and Tier 2 patterns inside those starter examples
 * limited normalization of current permanent/proof surfaces where needed to validate the starter contract
 * UI Reference navigation and automated coverage updates needed to make starter examples locatable and testable
@@ -58,9 +59,31 @@ Batch F must leave reviewable starter coverage for:
 4. Account / profile read-only page.
 5. Account / profile editable settings or preferences page.
 6. List / index page.
-7. Detail / read-only page.
-8. Create / edit form page.
-9. Dashboard/module summary surface, including widget-shell and summary/stat-card usage.
+7. Table-management index page.
+8. Operational log/detail page.
+9. Content browser / split-view page.
+10. Detail / read-only page.
+11. Create / edit form page.
+12. Dashboard/module summary surface, including widget-shell and summary/stat-card usage.
+13. Dashboard widget size examples by module content type.
+14. Empty / unavailable / permission-blocked page state.
+
+## Required Design-System Usage Guidance
+
+Batch F must also identify and route missing UI Reference usage guidance for:
+
+* badge color utilization
+* alert color utilization
+* toast and notification color utilization
+* button color utilization
+* button variant usage for standard, soft, ghost, and outline colorways
+* common action naming and action hierarchy
+* form action naming, including apply/stay-on-page versus submit/return-or-complete behavior
+* required and optional field marker rules
+* inline validation, page-level AJAX alerts, toast notifications, and persisted notification usage boundaries
+* same-page form submission behavior, including the rule that AJAX-rendered page alerts do not imply a full page refresh
+* status indicator variants and semantic mapping
+* selection option variants and usage rules
 
 ## Starter Proof Requirements
 
@@ -74,6 +97,22 @@ Each starter proof should demonstrate:
 * validation/error placement where forms are involved
 * responsive behavior where layout materially changes
 * route or UI Reference location that reviewers and future agents can find intentionally
+
+## Carbon Contrast Audit
+
+Before implementing the starter catalog, Batch F must run a focused contrast audit against the Carbon Design System to identify which examples, usage rules, states, and "when to use" guidance are still missing from this app's UI Reference.
+
+The audit should not copy Carbon as the app standard. It should use Carbon as an external completeness benchmark, then translate relevant findings into Login App 2.0-specific standards, examples, and queue items.
+
+Minimum audit areas:
+
+* actions and common action labels
+* buttons and button variants
+* forms, field states, required/optional markers, and submission behavior
+* notifications, inline alerts, toasts, and page-level feedback
+* status indicators, badges, and semantic color rules
+* selection controls and option patterns
+* starter-page / page-pattern organization and navigation
 
 ## Permanent / Proof Surface Alignment
 
@@ -100,12 +139,13 @@ Priority alignment surfaces:
 ## Required Deliverables
 
 1. Batch F active workspace is initialized and implementation queue items are ready.
-2. UI Reference exposes concrete starter-page examples for the required archetypes.
-3. Existing proof surfaces are normalized only where needed to demonstrate starter parity.
-4. Automated coverage confirms starter examples are routable and visible.
-5. Phase 2 planning and handoff references identify Batch F as the required pre-closeout implementation batch.
-6. Batch E entry gates are updated so close-out resumes only after Batch F is complete.
-7. Staging deploy remains explicitly out of scope.
+2. Carbon contrast audit identifies missing UI Reference usage guidance and starter coverage.
+3. UI Reference exposes concrete starter-page examples for the required archetypes.
+4. Existing proof surfaces are normalized only where needed to demonstrate starter parity.
+5. Automated coverage confirms starter examples are routable and visible.
+6. Phase 2 planning and handoff references identify Batch F as the required pre-closeout implementation batch.
+7. Batch E entry gates are updated so close-out resumes only after Batch F is complete.
+8. Staging deploy remains explicitly out of scope.
 
 ## Entry Gates
 
@@ -119,6 +159,7 @@ Priority alignment surfaces:
 This batch is complete when:
 
 * every required starter proof is visible and test-covered
+* missing design-system usage guidance has either been implemented in UI Reference or recorded as an explicit follow-up blocker/deferment with owner
 * starter examples demonstrate existing Tier 1/Tier 2 composition rather than feature-specific behavior
 * current proof surfaces used by the starter contract no longer show avoidable visual drift from the standard shell/pattern conventions
 * Phase 3 and Phase 4 can consume the starter catalog without reopening Phase 2 UI decisions

@@ -11,15 +11,30 @@
 ## UI Reference Starter Catalog
 - [ ] UI Reference Starter Catalog
   Status: not implemented
+  - Carbon contrast audit is complete
+  - authoritative starter catalog matrix is documented
   - required starter examples are visible and locatable in UI Reference
   - UI Reference navigation exposes the starter catalog intentionally
   - starter examples are concrete page compositions, not only rule summaries
+
+## Design-System Usage Guidance
+- [ ] Design-System Usage Guidance
+  Status: not implemented
+  - badge, alert, toast, notification, and status color semantics are explicit
+  - standard, soft, ghost, outline, and destructive button usage rules are explicit
+  - common action labels and action hierarchy are documented
+  - form action labels distinguish apply/stay-on-page from submit/complete/return behavior
+  - inline validation, page-level AJAX alerts, toasts, and persisted notifications have clear usage boundaries
+  - same-page AJAX feedback does not imply a full page refresh unless explicitly documented
+  - required and optional field marker rules are documented
+  - selection option variants and usage rules are documented
 
 ## Module Home And Dashboard Summary Starters
 - [ ] Module Home And Dashboard Summary Starters
   Status: not implemented
   - module home / overview starter is reviewable
   - dashboard/module summary starter uses widget-shell and stat-card conventions
+  - dashboard widget examples by module content type are reviewable
   - empty or next-action state is represented where applicable
 
 ## Settings And Setup Starters
@@ -40,8 +55,12 @@
 - [ ] List, Detail, And Form Starters
   Status: not implemented
   - list/index starter demonstrates page title/actions, search/filter, table or list content, and empty state
+  - table-management index starter demonstrates filters, row actions, and empty/bulk-action posture where applicable
+  - operational log/detail starter demonstrates diagnostic read-only hierarchy
+  - content browser/split-view starter demonstrates list/detail browsing structure
   - detail/read-only starter demonstrates section blocks, key-value detail, and action placement
   - create/edit form starter demonstrates form sections, validation summary, field grouping, and form actions
+  - blocked/empty/unavailable state starter demonstrates permission-blocked, no-data, and unavailable patterns without feature-specific behavior
 
 ## Automated Coverage
 - [ ] Automated Coverage

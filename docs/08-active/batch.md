@@ -17,7 +17,8 @@ Complete the internal page archetype starter-proof layer required before Phase 2
 
 ## In Scope
 - UI Reference page archetype starter examples
-- starter-proof coverage for module home, settings, setup/configuration, account/profile, list/index, detail/read-only, create/edit form, and dashboard/module-summary surfaces
+- starter-proof coverage for module home, settings, setup/configuration, account/profile, list/index, table-management index, operational log/detail, content browser/split-view, detail/read-only, create/edit form, dashboard/module-summary, and blocked/empty/unavailable state surfaces
+- Carbon-informed UI Reference audit for missing usage guidance, variants, states, and standard action/feedback rules
 - adoption of existing Tier 1 primitives and Tier 2 patterns inside starter examples
 - limited normalization of current permanent/proof surfaces where needed to validate starter parity
 - UI Reference navigation and automated coverage updates needed to make starter examples locatable and testable
@@ -50,9 +51,14 @@ Required starter proofs:
 - account / profile read-only page
 - account / profile editable settings or preferences page
 - list / index page
+- table-management index page
+- operational log/detail page
+- content browser / split-view page
 - detail / read-only page
 - create / edit form page
 - dashboard/module summary surface, including widget-shell and summary/stat-card usage
+- dashboard widget size examples by module content type
+- empty / unavailable / permission-blocked page state
 
 Priority permanent/proof surfaces:
 - `/platform/ui-reference`

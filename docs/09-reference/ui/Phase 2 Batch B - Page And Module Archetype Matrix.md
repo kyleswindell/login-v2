@@ -36,9 +36,16 @@ Batch F should make the following starter examples reviewable in UI Reference:
 - account/profile read-only page
 - account/profile editable settings or preferences page
 - list / index page
+- table-management index page
+- operational log/detail page
+- content browser / split-view page
 - detail / read-only page
 - create / edit form page
 - dashboard/module summary surface
+- dashboard widget size examples by module content type
+- empty / unavailable / permission-blocked page state
+
+Batch F should also establish or route missing UI Reference usage guidance for action labels, button variants, badge/status colors, alert/toast/notification colors, form required/optional markers, form action behavior, same-page AJAX feedback, and selection controls.
 
 ## Related
 

@@ -32,6 +32,17 @@
             Use option-backed selectors and the shared searchable dropdown when the acceptable values are known up front, such as locale and timezone. Keep validator-heavy examples on fields the user truly types free-form, such as email addresses and phone numbers.
         </x-ui.patterns.proof-note>
 
+        <x-ui.patterns.proof-note semantic="info" title="Form usage guidance">
+            <div data-ui-guidance="form-pattern-usage" data-guidance-id="P2-F-CQ-010">
+                <ul class="list-disc space-y-1 pl-5">
+                    <li><span class="font-semibold">G-FORM-01:</span> required fields are marked in the label and reinforced with helper or validation copy when needed.</li>
+                    <li><span class="font-semibold">G-FORM-03:</span> submit validation belongs in the form-level summary and the affected field group.</li>
+                    <li><span class="font-semibold">G-SEL-02:</span> short exclusive choices stay visible as radio options instead of being hidden in a select menu.</li>
+                    <li><span class="font-semibold">Select / combo box / multi-select:</span> choose the smallest control that makes the option set scannable before saving.</li>
+                </ul>
+            </div>
+        </x-ui.patterns.proof-note>
+
         <x-ui.patterns.form-section
             title="Form Group and Form Section"
             description="Use form sections to group related fields under a shared heading, then wrap each field in a canonical form group."

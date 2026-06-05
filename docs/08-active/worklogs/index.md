@@ -13,3 +13,4 @@
 | 2-F-0009 | READY_FOR_REVIEW | 2026-06-05 | P2-F-CQ-012 UI control module ownership cleanup implemented: `resources/js/ui-controls.js` split into concern modules while preserving selectors, exports, lifecycle registration, build, and focused control-surface tests |
 | 2-F-0010 | READY_FOR_REVIEW | 2026-06-05 | P2-F-CQ-013 UI CSS ownership cleanup implemented: concrete `app.css` ownership map, nearest CSS agent guidance, and Tailwind theme seed extraction with build and focused UI tests passing |
 | 2-F-0011 | READY_FOR_REVIEW | 2026-06-05 | P2-F-CQ-008 button variant and action-label guidance implemented: UI Reference action and navigation surfaces document G-ACT-01 through G-ACT-05 and G-LABEL-01 through G-LABEL-06 |
+| 2-F-0012 | READY_FOR_REVIEW | 2026-06-05 | P2-F-CQ-010 form field and selection-control guidance implemented: UI Reference form surfaces document G-FORM-01 through G-FORM-04, G-SEL-01 through G-SEL-03, and warning field-state coverage |

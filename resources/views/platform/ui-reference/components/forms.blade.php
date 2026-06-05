@@ -18,6 +18,55 @@
             ]"
         />
 
+        <section class="ui-card" data-ui-guidance="form-field-standards" data-guidance-id="P2-F-CQ-010">
+            <p class="ui-kicker">Form Field And Selection Guidance</p>
+            <div class="mt-3 grid gap-4 lg:grid-cols-2">
+                <div>
+                    <h2 class="text-base font-semibold text-slate-100">Field composition rules</h2>
+                    <dl class="mt-3 space-y-3 text-sm text-slate-300">
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-FORM-01 - Required fields</dt>
+                            <dd class="mt-1">Mark required fields in the visible label and describe the requirement in helper text when the reason is not obvious.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-FORM-02 - Optional fields</dt>
+                            <dd class="mt-1">Do not mark every optional field by default. Use optional copy only when omission has a meaningful workflow effect.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-FORM-03 - Validation timing</dt>
+                            <dd class="mt-1">Validate format on blur when helpful, validate required fields on submit, and keep server validation visible in the same field group.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-FORM-04 - Field states</dt>
+                            <dd class="mt-1">Show error, warning, disabled, read-only, and focused states with explicit copy; do not rely on color alone.</dd>
+                        </div>
+                    </dl>
+                </div>
+
+                <div data-ui-guidance="selection-control-usage">
+                    <h2 class="text-base font-semibold text-slate-100">Selection control rules</h2>
+                    <dl class="mt-3 space-y-3 text-sm text-slate-300">
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-SEL-01 - Checkbox</dt>
+                            <dd class="mt-1">Use a checkbox for independent yes/no choices, including multi-select lists where each option stands alone.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-SEL-02 - Radio</dt>
+                            <dd class="mt-1">Use radio controls for one required choice from a short, visible set.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-SEL-03 - Toggle</dt>
+                            <dd class="mt-1">Use a toggle only for immediate on/off settings where the saved state is understandable without another submit action.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-slate-100">Select / combo box / multi-select</dt>
+                            <dd class="mt-1">Use select for short known lists, combo box or searchable select for long known lists, and multi-select only when multiple choices are expected and reviewable before save.</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </section>
+
         <section class="ui-card">
             <p class="ui-kicker">Field States</p>
             <form class="mt-4 grid gap-5 lg:grid-cols-2" action="#" method="POST" onsubmit="event.preventDefault()">
@@ -95,9 +144,9 @@
             </div>
         </section>
 
-        <section class="ui-card">
+        <section class="ui-card" data-ui-guidance="field-state-examples">
             <p class="ui-kicker">Validation Block</p>
-            <div class="mt-4 grid gap-5 lg:grid-cols-2">
+            <div class="mt-4 grid gap-5 lg:grid-cols-3">
                 <x-ui.inline-alert semantic="danger" title="Form Validation Errors">
                     <ul class="list-disc space-y-1 pl-4 text-sm">
                         <li>Workspace name is required.</li>
@@ -110,6 +159,14 @@
                         <span class="ui-control-label">Example Error Field</span>
                         <input aria-invalid="true" aria-describedby="workspace-name-error" type="text" value="" placeholder="Required field" class="ui-input mt-2" />
                         <p id="workspace-name-error" class="ui-control-error">Workspace name cannot be empty.</p>
+                    </label>
+                </div>
+
+                <div class="rounded-lg border border-[color:var(--ui-alert-warning-border)] bg-[color:var(--ui-alert-warning-bg)] p-4">
+                    <label class="block">
+                        <span class="ui-control-label">Example Warning Field</span>
+                        <input aria-describedby="workspace-subdomain-warning" type="text" value="ops" class="ui-input mt-2 border-[color:var(--ui-alert-warning-border)] ring-1 ring-[color:var(--ui-alert-warning-border)]" />
+                        <p id="workspace-subdomain-warning" class="mt-2 text-xs font-medium text-[color:var(--ui-alert-warning-text)]">This subdomain is available, but it is shorter than the recommended naming pattern.</p>
                     </label>
                 </div>
             </div>

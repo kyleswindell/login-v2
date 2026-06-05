@@ -58,16 +58,6 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - multi-notification stacking and placement rules are covered
   - guidance is Login App 2.0-specific and does not adopt Carbon visual tokens
 
-### P2-F-CQ-010 - Usage guidance for form field standards and selection controls
-- Status: Ready To Implement
-- Owner: Batch F
-- Scope: Establish UI Reference guidance for form field composition, required/optional marking, validation trigger timing, and selection control choice rules. Split from original P2-F-CQ-008 scope.
-- Acceptance:
-  - required vs optional field marking policy is documented (G-FORM-01–04)
-  - checkbox vs radio vs toggle selection boundary is explicit (G-SEL-01–03)
-  - select vs combo box vs multi-select selection rule is documented
-  - warning field state is covered alongside error and disabled states
-
 ### P2-F-CQ-011 - Usage guidance for data display, navigation, overlays, loading, inputs, breadcrumb, structured list, file uploader, date picker, grid, and tile
 - Status: Ready To Implement
 - Owner: Batch F
@@ -130,6 +120,17 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - form action labels distinguish apply/stay-on-page behavior from submit/complete/return behavior (G-LABEL-01–06)
   - per-page "one primary action" rule is documented
 - Implemented in: worklog-2-F-0011
+
+### P2-F-CQ-010 - Usage guidance for form field standards and selection controls
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Establish UI Reference guidance for form field composition, required/optional marking, validation trigger timing, and selection control choice rules. Split from original P2-F-CQ-008 scope.
+- Acceptance:
+  - required vs optional field marking policy is documented (G-FORM-01–04)
+  - checkbox vs radio vs toggle selection boundary is explicit (G-SEL-01–03)
+  - select vs combo box vs multi-select selection rule is documented
+  - warning field state is covered alongside error and disabled states
+- Implemented in: worklog-2-F-0012
 
 ### P2-F-CQ-012 - UI control module ownership cleanup
 - Status: Implemented Pending Review

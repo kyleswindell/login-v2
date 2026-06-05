@@ -206,6 +206,35 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('the page title row keeps one primary action');
     }
 
+    public function test_batch_f_form_field_and_selection_control_guidance_is_documented(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/components/forms')
+            ->assertOk()
+            ->assertSee('data-ui-guidance="form-field-standards"', false)
+            ->assertSee('data-guidance-id="P2-F-CQ-010"', false)
+            ->assertSee('G-FORM-01')
+            ->assertSee('G-FORM-02')
+            ->assertSee('G-FORM-03')
+            ->assertSee('G-FORM-04')
+            ->assertSee('error, warning, disabled, read-only, and focused states')
+            ->assertSee('data-ui-guidance="selection-control-usage"', false)
+            ->assertSee('G-SEL-01')
+            ->assertSee('G-SEL-02')
+            ->assertSee('G-SEL-03')
+            ->assertSee('Select / combo box / multi-select')
+            ->assertSee('Example Warning Field')
+            ->assertSee('workspace-subdomain-warning', false);
+
+        $this->get('/platform/ui-reference/patterns/forms')
+            ->assertOk()
+            ->assertSee('data-ui-guidance="form-pattern-usage"', false)
+            ->assertSee('P2-F-CQ-010')
+            ->assertSee('submit validation belongs in the form-level summary')
+            ->assertSee('short exclusive choices stay visible as radio options');
+    }
+
     public function test_starter_catalog_route_is_discoverable_and_maps_batch_f_starters(): void
     {
         $this->actingAsPlatformSuperAdmin();

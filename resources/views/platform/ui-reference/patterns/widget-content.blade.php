@@ -153,6 +153,45 @@
         </x-ui.patterns.content-section-block>
 
         <x-ui.patterns.content-section-block
+            title="Rendered widget proof"
+            description="This compact proof keeps the shared dashboard-grid and widget-shell contracts visible on the standards overview while size-specific examples live on their own pages."
+            kicker="Contract markers"
+            data-widget-contract-proof
+        >
+            <x-ui.patterns.dashboard-grid columns="widgets">
+                <x-ui.patterns.widget-shell
+                    title="1x1 baseline"
+                    description="One compact scan target with header, body, and stable widget-shell chrome."
+                    kicker="Base unit"
+                    span="1x1"
+                >
+                    <div class="ui-pattern-widget-shell-section">
+                        <p class="ui-pattern-key-value-label">Content fit</p>
+                        <p class="ui-card-copy mt-2">Uses the 18rem row baseline without internal scrolling.</p>
+                    </div>
+                </x-ui.patterns.widget-shell>
+
+                <x-ui.patterns.widget-shell
+                    title="2x1 comparison"
+                    description="A wider same-topic surface for side-by-side status or summary content."
+                    kicker="Wide unit"
+                    span="2x1"
+                >
+                    <div class="grid gap-3 sm:grid-cols-2">
+                        <div class="ui-pattern-widget-shell-section">
+                            <p class="ui-pattern-key-value-label">Primary</p>
+                            <p class="ui-card-copy mt-2">One scan target.</p>
+                        </div>
+                        <div class="ui-pattern-widget-shell-section">
+                            <p class="ui-pattern-key-value-label">Secondary</p>
+                            <p class="ui-card-copy mt-2">Related same-topic context.</p>
+                        </div>
+                    </div>
+                </x-ui.patterns.widget-shell>
+            </x-ui.patterns.dashboard-grid>
+        </x-ui.patterns.content-section-block>
+
+        <x-ui.patterns.content-section-block
             title="Size-standard pages"
             description="Each standalone page defines shape capacity, composition rules, and content boundaries for one widget size. Approved concrete module examples will be added to each size page over time."
             kicker="Navigate by size"

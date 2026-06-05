@@ -35,6 +35,16 @@ Applies to all active documentation in `docs/` and excludes `docs/_archive/`.
 - Each branch `index.md` must define scope.
 - Each branch `index.md` must link to all canonical child docs for that branch.
 - Child notes should link back to their parent branch index when applicable.
+- When a large canonical file is split, the original path should remain as a concise hub when inbound links already target it.
+- Split child files must be reachable from the branch index, a local index, or the preserved hub.
+- Folder-level `AGENTS.md` files may provide agent read-scope guidance, but they do not replace human-facing index links.
+
+## File Scope Guardrails
+
+- Do not let one note own multiple canonical responsibilities across branches.
+- Do not append new component families, phase batches, audit areas, or runbook modes to a long file when a focused child file plus index entry would be clearer.
+- Keep research trails and audit evidence in `09-reference/` unless a concise durable rule is promoted into the owning canonical branch.
+- Keep active batch state out of permanent canonical docs until the workflow promotes the durable outcome.
 
 ## Enforcement
 

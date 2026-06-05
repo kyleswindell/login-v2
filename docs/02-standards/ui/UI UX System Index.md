@@ -15,6 +15,8 @@ Provide one canonical index for Login App 2.0 UI/UX rules, tokens, and component
 - [UI UX Iconography Standards](UI%20UX%20Iconography%20Standards.md)
 - [UI UX Component Library Standards](components/UI%20UX%20Component%20Library%20Standards.md)
 - [UI UX Component Taxonomy And Coverage Matrix](components/UI%20UX%20Component%20Taxonomy%20And%20Coverage%20Matrix.md)
+- [Tier 2 Pattern Library Checklist](components/Tier%202%20Pattern%20Library%20Checklist.md)
+- [Tier 2 Pattern Family Index](components/tier-2-patterns/index.md)
 - [UI UX Component Acceptance Contract Template](contracts/UI%20UX%20Component%20Acceptance%20Contract%20Template.md)
 - [Component Contracts Index](contracts/Component%20Contracts%20Index.md)
 

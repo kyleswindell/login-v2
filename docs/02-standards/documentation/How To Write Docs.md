@@ -174,6 +174,26 @@ For vault organization, obey the Obsidian structure guide first:
 - when a planning note drives a system, it should link to the canonical system doc and the canonical system doc should link back to the planning note
 - folder placement alone is not enough; the graph must be built with links
 
+## File Scope And Split Rules
+
+Keep documentation files narrowly scoped enough that a reader can open the file for one clear purpose.
+
+Split a file into indexed child files when one or more of these are true:
+
+- the file owns multiple independently changing topics, component families, phases, or workflow modes
+- the file routinely needs only one section during implementation or review
+- the file grows beyond roughly 2,000 words or 300-400 lines and contains multiple ownership areas
+- new sections would make the file a mixed backlog, research log, standard, and implementation checklist at once
+
+When splitting:
+
+- preserve the original path as a short hub when other docs already link to it
+- create an `index.md` or hub section that lists all child files
+- move only coherent ownership slices into child files
+- keep durable rules in `02-standards/`, behavior in `04-features/`, schema in `06-database/`, planning in `07-planning/`, support/research in `09-reference/`, and operations in `10-runbooks/`
+- update parent indexes in the same change
+- avoid copying the same explanation into each child file; link back to the hub instead
+
 ## Writing Expectations
 
 Inside the note itself:

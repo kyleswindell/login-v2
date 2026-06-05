@@ -173,6 +173,39 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-ui-demo-toast-generated-overlay', false);
     }
 
+    public function test_batch_f_button_variant_and_action_label_guidance_is_documented(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/components/actions')
+            ->assertOk()
+            ->assertSee('data-ui-guidance="action-usage"', false)
+            ->assertSee('data-guidance-id="P2-F-CQ-008"', false)
+            ->assertSee('G-ACT-01')
+            ->assertSee('G-ACT-02')
+            ->assertSee('G-ACT-03')
+            ->assertSee('G-ACT-04')
+            ->assertSee('G-ACT-05')
+            ->assertSee('standard filled treatment')
+            ->assertSee('soft')
+            ->assertSee('ghost')
+            ->assertSee('outline')
+            ->assertSee('danger semantic')
+            ->assertSee('G-LABEL-01')
+            ->assertSee('G-LABEL-06')
+            ->assertSee('Apply when the user stays on the same page')
+            ->assertSee('Delete, Archive, Disable, or Remove');
+
+        $this->get('/platform/ui-reference/patterns/navigation')
+            ->assertOk()
+            ->assertSee('data-ui-guidance="page-action-hierarchy"', false)
+            ->assertSee('G-ACT-01')
+            ->assertSee('G-LABEL-01')
+            ->assertSee('G-LABEL-03')
+            ->assertSee('G-LABEL-06')
+            ->assertSee('the page title row keeps one primary action');
+    }
+
     public function test_starter_catalog_route_is_discoverable_and_maps_batch_f_starters(): void
     {
         $this->actingAsPlatformSuperAdmin();

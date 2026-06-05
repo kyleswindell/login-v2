@@ -42,6 +42,17 @@
             These patterns define structural action and navigation contracts. The examples below show what each control row is responsible for, but they do not imply remote autocomplete or bespoke menu behavior unless that note appears directly in the proof.
         </x-ui.patterns.proof-note>
 
+        <x-ui.patterns.proof-note semantic="info" title="Page action and label guidance">
+            <div data-ui-guidance="page-action-hierarchy" data-guidance-id="P2-F-CQ-008">
+                <ul class="list-disc space-y-1 pl-5">
+                    <li><span class="font-semibold">G-ACT-01:</span> the page title row keeps one primary action; secondary options use ghost, outline, or a grouped menu.</li>
+                    <li><span class="font-semibold">G-LABEL-01:</span> Apply means the user stays on the current page while filters, range choices, or previews update in place.</li>
+                    <li><span class="font-semibold">G-LABEL-03:</span> Submit, Create, Send, and Run report are completion verbs; use them when the action advances or returns from the current task.</li>
+                    <li><span class="font-semibold">G-LABEL-06:</span> destructive verbs stay explicit and use danger styling in the grouped action menu.</li>
+                </ul>
+            </div>
+        </x-ui.patterns.proof-note>
+
         <x-ui.patterns.content-section-block
             title="Sub-navigation Bar"
             description="Use sub-navigation only for peer content areas that already belong to the same internal shell family."

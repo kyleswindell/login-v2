@@ -48,16 +48,6 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - create/edit starter includes form sections, validation summary, field grouping, and form actions
   - blocked/empty/unavailable state starter demonstrates permission-blocked, no-data, and unavailable patterns without feature-specific behavior
 
-### P2-F-CQ-008 - Usage guidance standards for button variants and action labels
-- Status: Ready To Implement
-- Owner: Batch F
-- Scope: Establish UI Reference guidance for button variant selection and action label standards. Scope narrowed from original CQ-008 — notification/badge guidance split to P2-F-CQ-009; form/selection guidance split to P2-F-CQ-010; data display/overlay/loading/input guidance split to P2-F-CQ-011.
-- Acceptance:
-  - guidance is Login App 2.0-specific and preserves the existing visual direction
-  - standard, soft, ghost, outline, and destructive button usage rules are explicit (G-ACT-01–05)
-  - form action labels distinguish apply/stay-on-page behavior from submit/complete/return behavior (G-LABEL-01–06)
-  - per-page "one primary action" rule is documented
-
 ### P2-F-CQ-009 - Usage guidance for notifications, badges, and feedback
 - Status: Ready To Implement
 - Owner: Batch F
@@ -129,6 +119,17 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 <!-- none -->
 
 ## Implemented Pending Review
+
+### P2-F-CQ-008 - Usage guidance standards for button variants and action labels
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Establish UI Reference guidance for button variant selection and action label standards. Scope narrowed from original CQ-008 — notification/badge guidance split to P2-F-CQ-009; form/selection guidance split to P2-F-CQ-010; data display/overlay/loading/input guidance split to P2-F-CQ-011.
+- Acceptance:
+  - guidance is Login App 2.0-specific and preserves the existing visual direction
+  - standard, soft, ghost, outline, and destructive button usage rules are explicit (G-ACT-01–05)
+  - form action labels distinguish apply/stay-on-page behavior from submit/complete/return behavior (G-LABEL-01–06)
+  - per-page "one primary action" rule is documented
+- Implemented in: worklog-2-F-0011
 
 ### P2-F-CQ-012 - UI control module ownership cleanup
 - Status: Implemented Pending Review

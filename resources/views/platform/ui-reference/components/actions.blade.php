@@ -20,6 +20,67 @@
             ]"
         />
 
+        <section class="ui-card" data-ui-guidance="action-usage" data-guidance-id="P2-F-CQ-008">
+            <p class="ui-kicker">Button Variant Usage Guidance</p>
+            <div class="mt-3 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+                <div>
+                    <h2 class="text-base font-semibold text-slate-100">Variant selection rules</h2>
+                    <dl class="mt-3 space-y-3 text-sm text-slate-300">
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-ACT-01 - One primary action</dt>
+                            <dd class="mt-1">Each page, modal, card region, or form action row gets one primary action. Additional actions must reduce emphasis before introducing another primary button.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-ACT-02 - Standard button</dt>
+                            <dd class="mt-1">Use the standard filled treatment for the dominant submit, create, save, or continue action in the current region.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-ACT-03 - Soft button</dt>
+                            <dd class="mt-1">Use soft when the action is important but supportive, such as a status-aware follow-up or review note that should not compete with the primary action.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-ACT-04 - Ghost and outline buttons</dt>
+                            <dd class="mt-1">Use ghost for cancel, close, reset, and low-emphasis navigation. Use outline for a visible alternate path that should remain secondary.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-ACT-05 - Destructive actions</dt>
+                            <dd class="mt-1">Use the danger semantic for delete, archive, disable, and irreversible actions. Do not hide destructive intent behind neutral ghost styling.</dd>
+                        </div>
+                    </dl>
+                </div>
+
+                <div data-ui-guidance="action-labels">
+                    <h2 class="text-base font-semibold text-slate-100">Action label rules</h2>
+                    <dl class="mt-3 space-y-3 text-sm text-slate-300">
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-LABEL-01 - Apply</dt>
+                            <dd class="mt-1">Use Apply when the user stays on the same page and the current list, table, filter, or preview updates in place.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-LABEL-02 - Save</dt>
+                            <dd class="mt-1">Use Save when the user persists edits to the current resource. Pair with Cancel when leaving unsaved changes is possible.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-LABEL-03 - Create / Submit / Send</dt>
+                            <dd class="mt-1">Use a completion verb when the action creates a record, submits a workflow, sends data, or returns the user to the prior task surface.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-LABEL-04 - Cancel / Close</dt>
+                            <dd class="mt-1">Use Cancel for abandoning editable work and Close for dismissing read-only or completed surfaces.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-LABEL-05 - Reset / Clear</dt>
+                            <dd class="mt-1">Use Reset or Clear for removing filters or restoring defaults. These labels must not persist a resource.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-LABEL-06 - Destructive verbs</dt>
+                            <dd class="mt-1">Use Delete, Archive, Disable, or Remove with the target object named nearby and the danger semantic visible.</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </section>
+
         <section class="ui-card">
             <p class="ui-kicker">Semantic Actions</p>
             <div class="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">

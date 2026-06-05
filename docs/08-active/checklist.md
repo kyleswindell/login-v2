@@ -21,12 +21,12 @@
 
 ## Design-System Usage Guidance
 - [ ] Design-System Usage Guidance
-  Status: not implemented — supporting UI control module ownership cleanup is implemented pending review for P2-F-CQ-012; CSS ownership/read-path cleanup is implemented pending review for P2-F-CQ-013; guidance content remains owned by P2-F-CQ-008 through P2-F-CQ-011
+  Status: partially implemented — P2-F-CQ-008 button variant and action-label guidance is implemented pending review; supporting UI control module ownership cleanup is implemented pending review for P2-F-CQ-012; CSS ownership/read-path cleanup is implemented pending review for P2-F-CQ-013; remaining guidance content is owned by P2-F-CQ-009 through P2-F-CQ-011
   - badge, alert, toast, notification, and status color semantics are explicit
   - guidance preserves the existing Login App 2.0 visual direction
-  - standard, soft, ghost, outline, and destructive button usage rules are explicit
-  - common action labels and action hierarchy are documented
-  - form action labels distinguish apply/stay-on-page from submit/complete/return behavior
+  - [x] standard, soft, ghost, outline, and destructive button usage rules are explicit
+  - [x] common action labels and action hierarchy are documented
+  - [x] form action labels distinguish apply/stay-on-page from submit/complete/return behavior
   - inline validation, page-level AJAX alerts, toasts, and persisted notifications have clear usage boundaries
   - same-page AJAX feedback does not imply a full page refresh unless explicitly documented
   - required and optional field marker rules are documented

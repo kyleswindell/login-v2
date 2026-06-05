@@ -48,16 +48,6 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - create/edit starter includes form sections, validation summary, field grouping, and form actions
   - blocked/empty/unavailable state starter demonstrates permission-blocked, no-data, and unavailable patterns without feature-specific behavior
 
-### P2-F-CQ-009 - Usage guidance for notifications, badges, and feedback
-- Status: Ready To Implement
-- Owner: Batch F
-- Scope: Establish UI Reference guidance for notification type selection, badge/tag usage, and AJAX/toast feedback patterns. Split from original P2-F-CQ-008 scope.
-- Acceptance:
-  - inline alert vs toast vs callout/banner selection rule is explicit (G-NOTIF-01–05)
-  - badge color semantic mapping is documented (G-BADGE-01–04)
-  - multi-notification stacking and placement rules are covered
-  - guidance is Login App 2.0-specific and does not adopt Carbon visual tokens
-
 ### P2-F-CQ-011 - Usage guidance for data display, navigation, overlays, loading, inputs, breadcrumb, structured list, file uploader, date picker, grid, and tile
 - Status: Ready To Implement
 - Owner: Batch F
@@ -131,6 +121,17 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - select vs combo box vs multi-select selection rule is documented
   - warning field state is covered alongside error and disabled states
 - Implemented in: worklog-2-F-0012
+
+### P2-F-CQ-009 - Usage guidance for notifications, badges, and feedback
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Establish UI Reference guidance for notification type selection, badge/tag usage, and AJAX/toast feedback patterns. Split from original P2-F-CQ-008 scope.
+- Acceptance:
+  - inline alert vs toast vs callout/banner selection rule is explicit (G-NOTIF-01–05)
+  - badge color semantic mapping is documented (G-BADGE-01–04)
+  - multi-notification stacking and placement rules are covered
+  - guidance is Login App 2.0-specific and does not adopt Carbon visual tokens
+- Implemented in: worklog-2-F-0013
 
 ### P2-F-CQ-012 - UI control module ownership cleanup
 - Status: Implemented Pending Review

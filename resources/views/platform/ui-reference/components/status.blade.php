@@ -9,6 +9,46 @@
             <p class="ui-page-header-copy">Tier 1 contract for semantic status display, emphasis levels, and accessibility-safe contrast.</p>
         </div>
 
+        <section class="ui-card" data-ui-guidance="badge-feedback-semantics" data-guidance-id="P2-F-CQ-009">
+            <p class="ui-kicker">Badge And Status Usage Guidance</p>
+            <div class="mt-3 grid gap-4 lg:grid-cols-2">
+                <div>
+                    <h2 class="text-base font-semibold text-slate-100">Badge semantic mapping</h2>
+                    <dl class="mt-3 space-y-3 text-sm text-slate-300">
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-BADGE-01 - Neutral and info</dt>
+                            <dd class="mt-1">Use neutral for passive metadata and info for contextual facts that do not require action.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-BADGE-02 - Success and notice</dt>
+                            <dd class="mt-1">Use success for completed or healthy states and notice for queued, scheduled, or review-oriented states.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-BADGE-03 - Warning and danger</dt>
+                            <dd class="mt-1">Use warning for degraded or attention-needed states and danger for failed, blocked, destructive, or security-relevant states.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-BADGE-04 - Text-first status</dt>
+                            <dd class="mt-1">Badges must remain text-first. Icon and color reinforce the label but never replace it.</dd>
+                        </div>
+                    </dl>
+                </div>
+
+                <div>
+                    <h2 class="text-base font-semibold text-slate-100">Login App 2.0 boundary</h2>
+                    <p class="mt-3 text-sm text-slate-300">Badge semantics use the existing Login App 2.0 neutral, info, success, notice, warning, and danger set. Carbon is a coverage benchmark only; do not adopt Carbon visual tokens, color names, or component chrome.</p>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <x-ui.badge label="metadata" semantic="neutral" />
+                        <x-ui.badge label="context" semantic="info" />
+                        <x-ui.badge label="healthy" semantic="success" />
+                        <x-ui.badge label="queued review" semantic="notice" />
+                        <x-ui.badge label="needs action" semantic="warning" />
+                        <x-ui.badge label="blocked" semantic="danger" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="ui-card">
             <p class="ui-kicker">Semantic Status</p>
             <div class="mt-4 flex flex-wrap gap-2">

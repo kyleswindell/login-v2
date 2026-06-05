@@ -13,6 +13,47 @@
             <div class="pointer-events-auto flex flex-col gap-3" data-ui-demo-toast-generated-stack aria-live="polite" aria-label="Generated toast stack"></div>
         </div>
 
+        <section class="ui-card" data-ui-guidance="notification-feedback-usage" data-guidance-id="P2-F-CQ-009">
+            <p class="ui-kicker">Notification And Feedback Usage Guidance</p>
+            <div class="mt-3 grid gap-4 lg:grid-cols-2">
+                <div>
+                    <h2 class="text-base font-semibold text-slate-100">Feedback surface selection</h2>
+                    <dl class="mt-3 space-y-3 text-sm text-slate-300">
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-NOTIF-01 - Inline alert</dt>
+                            <dd class="mt-1">Use inline alerts for feedback that belongs inside a form, card, table, or persistent content region.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-NOTIF-02 - Toast</dt>
+                            <dd class="mt-1">Use toasts for transient AJAX feedback after same-page saves, generated reports, background updates, or dismissible confirmations.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-NOTIF-03 - Callout or banner</dt>
+                            <dd class="mt-1">Use a callout or banner when the message applies to the whole page, blocks a workflow, or must remain visible across scroll.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-NOTIF-04 - Severity and live region</dt>
+                            <dd class="mt-1">Use polite live regions for neutral, info, success, and notice feedback; use alert semantics for warning and danger feedback.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-slate-100">G-NOTIF-05 - Stacking and placement</dt>
+                            <dd class="mt-1">Stack toasts from newest to oldest in the top-right feedback region, cap visible messages, and keep inline alerts near the triggering content.</dd>
+                        </div>
+                    </dl>
+                </div>
+
+                <div>
+                    <h2 class="text-base font-semibold text-slate-100">Same-page feedback rules</h2>
+                    <ul class="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-300">
+                        <li>AJAX feedback should not imply a full page refresh unless the action actually navigates or reloads.</li>
+                        <li>Multi-notification stacking must preserve placement, dismiss controls, and live-region behavior.</li>
+                        <li>Persisted notifications belong in the notification center or page content, not only in a transient toast.</li>
+                        <li>Guidance remains Login App 2.0-specific and does not adopt Carbon visual tokens.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
         <section class="ui-card">
             <p class="ui-kicker">Drawer Baseline</p>
             <p class="mt-2 text-sm text-slate-400">Use right-side drawer for contextual details while preserving table context. See live behavior in Table Baselines.</p>

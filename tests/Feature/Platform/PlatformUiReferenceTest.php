@@ -235,6 +235,35 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('short exclusive choices stay visible as radio options');
     }
 
+    public function test_batch_f_notification_badge_and_feedback_guidance_is_documented(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/components/status')
+            ->assertOk()
+            ->assertSee('data-ui-guidance="badge-feedback-semantics"', false)
+            ->assertSee('data-guidance-id="P2-F-CQ-009"', false)
+            ->assertSee('G-BADGE-01')
+            ->assertSee('G-BADGE-02')
+            ->assertSee('G-BADGE-03')
+            ->assertSee('G-BADGE-04')
+            ->assertSee('text-first')
+            ->assertSee('do not adopt Carbon visual tokens');
+
+        $this->get('/platform/ui-reference/patterns/overlays-feedback')
+            ->assertOk()
+            ->assertSee('data-ui-guidance="notification-feedback-usage"', false)
+            ->assertSee('P2-F-CQ-009')
+            ->assertSee('G-NOTIF-01')
+            ->assertSee('G-NOTIF-02')
+            ->assertSee('G-NOTIF-03')
+            ->assertSee('G-NOTIF-04')
+            ->assertSee('G-NOTIF-05')
+            ->assertSee('Stack toasts from newest to oldest')
+            ->assertSee('AJAX feedback should not imply a full page refresh')
+            ->assertSee('Persisted notifications belong in the notification center');
+    }
+
     public function test_starter_catalog_route_is_discoverable_and_maps_batch_f_starters(): void
     {
         $this->actingAsPlatformSuperAdmin();

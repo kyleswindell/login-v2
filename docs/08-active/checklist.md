@@ -21,7 +21,7 @@
 
 ## Design-System Usage Guidance
 - [ ] Design-System Usage Guidance
-  Status: not implemented
+  Status: not implemented — supporting UI control module ownership cleanup is implemented pending review for P2-F-CQ-012; guidance content remains owned by P2-F-CQ-008 through P2-F-CQ-011
   - badge, alert, toast, notification, and status color semantics are explicit
   - guidance preserves the existing Login App 2.0 visual direction
   - standard, soft, ghost, outline, and destructive button usage rules are explicit

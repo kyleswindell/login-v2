@@ -115,19 +115,6 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - tile variant selection rule (base/clickable/selectable/expandable) is documented (G-TILE-01)
   - tile vs card distinction is documented (G-TILE-02)
 
-### P2-F-CQ-012 - UI control module ownership cleanup
-- Status: Ready To Implement
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-010, P2-F-CQ-011
-- Scope: Split `resources/js/ui-controls.js` into smaller control-family modules only where it supports Batch F form, selection, table/search, dropdown, and filter guidance work. Keep runtime behavior unchanged and keep `resources/js/app.js` as the lifecycle registration entry point.
-- Acceptance:
-  - control behavior is grouped by concern rather than one mixed module for all controls
-  - lifecycle registration remains centralized and readable from `resources/js/app.js`
-  - selectors, UI behavior, route behavior, and rendered markup contracts remain unchanged
-  - no notification feature expansion or unrelated shell behavior is introduced
-  - `npm run build` passes
-  - focused UI Reference tests pass for touched control surfaces
-
 ### P2-F-CQ-013 - UI CSS ownership map and first safe extraction boundary
 - Status: Ready To Implement
 - Owner: Batch F
@@ -156,7 +143,19 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 
 ## Implemented Pending Review
 
-<!-- none -->
+### P2-F-CQ-012 - UI control module ownership cleanup
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-010, P2-F-CQ-011
+- Scope: Split `resources/js/ui-controls.js` into smaller control-family modules only where it supports Batch F form, selection, table/search, dropdown, and filter guidance work. Keep runtime behavior unchanged and keep `resources/js/app.js` as the lifecycle registration entry point.
+- Acceptance:
+  - control behavior is grouped by concern rather than one mixed module for all controls
+  - lifecycle registration remains centralized and readable from `resources/js/app.js`
+  - selectors, UI behavior, route behavior, and rendered markup contracts remain unchanged
+  - no notification feature expansion or unrelated shell behavior is introduced
+  - `npm run build` passes
+  - focused UI Reference tests pass for touched control surfaces
+- Implemented in: worklog-2-F-0009
 
 ## Blocked
 

@@ -1,278 +1,78 @@
 # Review Docs Sync
 
-Review documentation against current implementation to identify drift, inconsistency, and missing coverage.
+Review implementation against canonical docs and write a docs-sync review artifact.
 
-## Goal
-Perform a direct docs sync review and produce structured findings comparing:
+## Required Prompt Contract
 
-- implementation (code, UI Reference, behavior)
-- canonical documentation (standards, contracts, features, architecture)
-- parent planning/status docs when reviewed implementation or approved deferments changed their current truth
+- workflow: `review-docs-sync`
+- target ID: implementation area, batch, or existing doc-sync ID
+- allowed file scope: read target implementation/docs; write only `docs/11-ai/active-doc-reviews/`
+- read path: target area, owning canonical docs, active review ledger
+- stop condition: target missing, scope too broad, or review would become implementation
+- validation path: review file plus ledger row only
 
-This agent:
-- performs the review directly
-- does NOT generate a prompt
-- does NOT modify canonical docs
-- writes findings to a review file in `/docs/11-ai/active-doc-reviews/`
-
----
+Use `docs/10-runbooks/agent-token-efficiency.md` for read budgets.
 
 ## Required Input
 
-The request should indicate:
-- implementation area, system, or batch
-- or a tightly scoped parent planning/status surface that must be synchronized to recently reviewed implementation truth
-- or default to current `/docs/08-active/` context
+The request must identify one implementation area, one batch, one parent planning/status sync target, or an existing doc-sync record for re-review.
 
-Stop if:
-- neither a target area nor active batch context exists
-- the requested scope is so broad that it would require a repo-wide audit in one pass
-- the request is for a standards or governance review rather than implementation-versus-doc drift review
+Stop if the request is a standards/governance review rather than implementation-versus-doc drift.
 
----
+## Read Scope
 
-## Scope
+Read only:
 
-Read from:
+- directly relevant code/UI files
+- owning canonical docs under `/docs/02-standards/` through `/docs/07-planning/`
+- `/docs/08-active/` only when the active batch is the target
+- `docs/11-ai/active-doc-reviews/index.md`
 
-- `/docs/02-standards/`
-- `/docs/03-architecture/`
-- `/docs/04-features/`
-- `/docs/05-flows/`
-- `/docs/06-database/`
-- `/docs/07-planning/`
-- `/resources/views/`
-- `/resources/js/`
-- `/app/` (if relevant)
+Exclude `/docs/_archive/`.
 
-If batch context exists:
-- `/docs/08-active/`
+## Write Scope
 
-Exclude:
-- `/docs/_archive/`
+Write only:
 
-Write:
-- one `docs/11-ai/active-doc-reviews/doc-sync-YYYY-MM-DD-<slug>.md` review file for new records
+- `docs/11-ai/active-doc-reviews/doc-sync-YYYY-MM-DD-<slug>.md`
 - the matching row in `docs/11-ai/active-doc-reviews/index.md`
 
-Do NOT write:
-- canonical docs
-- planning notes
-- active batch state files outside evidence gathering
-- any file outside `docs/11-ai/active-doc-reviews/`
+Do not edit implementation, canonical docs, planning notes, or active batch state.
 
----
+## Review Checklist
 
-## Rules
+Check for:
 
-- Do NOT modify files
-- Do NOT propose redesign
-- Do NOT expand scope
-- Do NOT introduce new systems or layers
-- Only identify:
-  - drift
-  - inconsistencies
-  - gaps
-  - ambiguities
-  - conflicts
-- Treat implementation as source of truth unless clearly incorrect
-- When the review is triggered by approved batch or phase close-out, also treat the reviewed implementation outcome and approved deferment state as source of truth for affected planning/status docs
-- If the request references an existing docs sync review file or indicates a re-review:
-  - do NOT create a new review file
-  - update the existing review file
-  - increment `Review Pass`
-  - update the existing index row
-- If the requested target is missing, or the scope expands beyond one implementation area or active batch, STOP and narrow it before continuing
-- If this review began as read-only analysis in a shared folder and now needs to write a review artifact while another writer is already active there, STOP and require a separate branch and separate worktree or keep the session read-only
-
----
-
-## Review Focus
-
-### 1. Standards Alignment
-Confirm:
-- implementation matches UI standards (tokens, variants, semantics)
-- no drift from Tier 1 / Tier 2 rules
-
-Flag:
-- mismatches between implementation and standards
-
----
-
-### 2. Contract Alignment
-Confirm:
-- components behave as defined in Tier 1 contracts
-- allowed variants and states match contracts
-
-Flag:
-- missing or incorrect behavior
-
----
-
-### 3. UI Reference Accuracy
-Confirm:
-- UI Reference reflects real component behavior
-- no mock or outdated examples
-
-Flag:
-- incorrect examples
-- missing coverage
-
----
-
-### 4. Feature Documentation Alignment
-Confirm:
-- feature docs match actual UI/behavior
-
-Flag:
-- outdated descriptions
-- missing features
-
----
-
-### 5. Architecture Alignment
-Confirm:
-- implementation matches documented structure
-- no undocumented patterns
-
-Flag:
-- structure drift
-- ownership inconsistencies
-
----
-
-### 6. Active Batch Alignment
-Confirm:
-- `/docs/08-active/checklist.md` reflects actual implementation state
-
-Flag:
-- incorrect or prematurely completed items
-
----
-
-### 7. Naming and Terminology
-Confirm:
-- canonical naming is consistent across implementation and docs
-
-Flag:
-- legacy terms
-- conflicting terminology
-
----
-
-### 8. Ownership Boundaries
-Confirm:
-- one canonical owner per concern
-
-Flag:
-- duplicated ownership
-- conflicting definitions
-
----
-
-### 9. Planning and Status Synchronization
-Confirm:
-- roadmap summaries, phase indices, and parent planning notes reflect the current reviewed implementation state when that state changed sequencing or progress truth
-- deferments discovered during reviewed close-out are written to the correct future batch, future phase, or linked planning note
-
-Flag:
-- stale roadmap or phase-index status
+- implementation/documentation drift
+- canonical ownership conflicts
+- stale roadmap or phase status when reviewed implementation changed planning truth
 - missing deferment handoff
-- parent planning notes that no longer match the reviewed implementation outcome
+- naming and terminology conflicts
+- UI Reference or contract mismatch when UI is in scope
 
----
+Treat implementation as source of truth unless it clearly violates an owning standard.
+
+## Record Handling
+
+- For a new review, create a date-plus-slug doc-sync file and add one ledger row.
+- For an explicit re-review, update the existing file and ledger row.
+- If no meaningful drift exists, still create or update the record, set status `CLOSED`, and record no findings.
+
+## Stop Conditions
+
+Stop if:
+
+- the target spans unrelated implementation areas
+- a correction is required before review can continue
+- another writer owns the shared review ledger
+- the review needs to become a canonical-doc or code edit
 
 ## Output
 
-Create file:
+Report:
 
-`/docs/11-ai/active-doc-reviews/doc-sync-YYYY-MM-DD-<slug>.md`
-
-For new records:
-- derive the slug from the target or sync issue
-- use the current review date in `YYYY-MM-DD` form
-- if the same-day filename already exists, append `-2`, `-3`, and so on until the filename is unique
-
----
-
-## Output File Structure
-
-# Document Sync Review <ID>
-
-## Review Pass
-1
-
-## Target
-<system or area>
-
-## Review Type
-Docs Sync
-
-## Status
-OPEN
-
-## Purpose
-<short description>
-
-## Scope
-- <paths reviewed>
-
-## Findings
-
-### Finding 1
-- type:
-- location:
-- issue:
-- required action:
-- constraints:
-- decision state:
-
-## Summary
-- standards alignment:
-- contract accuracy:
-- implementation vs docs consistency:
-
-## Unresolved Decisions
-- none
-
-## Implementation Status
-not started
-
-## Exit Criteria
-- no implementation-doc mismatches
-- no ownership conflicts
-- no outdated documentation
-- no missing required coverage
-
-## Resolution Notes
-- none
-
----
-
-## Index Update
-
-Update:
-
-`/docs/11-ai/active-doc-reviews/index.md`
-
-Add row:
-
-- ID
-- Date
-- Target
-- Type = Docs Sync
-- Status = OPEN
-- Implementation Status = not started
-
-For new records:
-- set `ID` to the filename stem
-- preserve legacy numeric IDs unchanged when updating historical rows
-
----
-
-## Final Rule
-
-If no meaningful drift is detected:
-- still create the review file
-- set Status = CLOSED
-- record "no findings" in Resolution Notes
+1. review artifact
+2. ledger row changed
+3. findings or no findings
+4. implementation status
+5. required next workflow, if any

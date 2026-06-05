@@ -1,174 +1,73 @@
 # Generate Batch Work Prompt
 
-Generate a precise next-step batch-work prompt for the currently active batch using the active workspace state.
+Generate a paste-ready prompt for the next active-batch `work-batch` pass.
 
-## Scope
-Read only from:
+## Required Prompt Contract
+
+The generated prompt must include:
+
+- exact workflow name: `work-batch`
+- target ID(s): targeted CQ IDs or base batch task
+- allowed file scope
+- required read path
+- stop condition
+- validation path
+
+Use `docs/10-runbooks/agent-token-efficiency.md` for read-budget rules.
+
+## Read Scope
+
+Read only:
 
 - `/docs/08-active/batch.md`
 - `/docs/08-active/checklist.md`
+- `/docs/08-active/change-queue.md`
 - `/docs/08-active/review.md`
 - `/docs/08-active/notes.md`
 - `/docs/08-active/worklogs/index.md`
-- supporting `/docs/08-active/worklogs/worklog-<phase>-<batch>-####.md` files when needed for current-pass context
-- `/docs/08-active/change-queue.md`
-
-Reference:
-- `/docs/10-runbooks/git-batch-commit-workflow.md`
-- current `Work Batch` skill behavior
+- targeted prior worklogs only when needed
+- `docs/10-runbooks/git-batch-commit-workflow.md` only when commit guidance is relevant
 
 Do not modify files.
 
----
+## Prompt Selection Rules
 
-## Goal
-Produce a clean, implementation-ready prompt for the next `Work Batch` pass that:
-
-- stays within the active batch scope
-- prioritizes unresolved queued issues
-- preserves batch boundaries
-- includes commit/deploy instructions only when appropriate
-- is easy to paste directly to the batch agent
-
----
-
-## Rules
-- Work only from the currently loaded active batch
-- Use `change-queue.md` as the primary driver for next-step fixes
-- Prioritize unfinished `In Progress` items before new `Ready To Implement` items
-- Refer to queue items by `ID:` when available
-- Treat queue-item headline bullets as the actionable units; use continuation lines such as `ID:`, `Iteration:`, `Scope:`, `Path Coverage:`, `Implemented in:`, `Follow-up To:`, and `Supersedes:` as support context only
-- Use `review.md` to understand current blockers and review state
-- Use `checklist.md` to avoid repeating already-completed work
-- Use `notes.md` and `/worklogs/` for supporting context only
-- Do NOT invent new scope
-- Do NOT escalate Tier boundaries
-- Do NOT include unrelated cleanup
-- Keep the prompt direct, specific, and grouped by implementation goals
-- Prefer outcome-based instructions over implementation micromanagement
-- When multiple actionable queue items belong in one pass, frame them as sequential queue claims rather than parallel picks
-- If a queued issue reflects a standards ambiguity rather than implementation work, call that out instead of forcing a work-batch prompt
+- Continue unfinished `In Progress` items before new `Ready To Implement` items.
+- Refer to queue items by stable `ID:` lines.
+- Group tightly coupled CQ items only when they share the same concern and review surface.
+- Exclude deferred, passed, blocked, or review-only decision items.
+- Include commit/push/deploy instructions only when the pass should end with a reviewable surface that requires them.
 
 ## Stop Conditions
 
-Stop and report instead of generating a work prompt if:
+Stop instead of generating a prompt if:
 
 - no active batch is loaded
-- `change-queue.md` has no actionable items and the batch state does not indicate remaining implementation work
-- the available `/docs/08-active/` state is too incomplete to identify a safe next pass
-- the next apparent action is a review-only or standards decision rather than batch implementation work
-
----
-
-## Prompt Construction Logic
-
-### 1. Read active batch context
-Extract:
-- batch name
-- scope
-- out-of-scope boundaries
-- validation surface
-- whether visual/manual review is pending
-
-### 2. Read current progress state
-Determine:
-- what has already been completed
-- what remains unchecked
-- what blockers are still open
-- what has already been confirmed fixed
-
-### 3. Read change queue
-Prioritize items in this order:
-1. existing `In Progress` items that need continuation or explicit reclassification
-2. blocking implementation issues
-3. visual review failures
-4. functional review failures
-5. standards-aligned cleanup required for review completion
-6. deferred items must be excluded
-
-### 4. Build the next work prompt
-The generated prompt should include:
-
-- short goal line
-- instruction to execute the Work Batch workflow
-- grouped implementation sections based on queued items
-- a reminder to move each targeted queue item into `In Progress` before implementation begins and to close it out before claiming the next item when multiple queue items are included
-- a Tier 1 consumption reminder when the queued work clearly depends on Tier 1 building blocks
-- explicit exclusions to prevent drift
-- `/docs/08-active/` update requirement
-- commit/push/deploy requirement only if the pass is intended to produce a reviewable result
-
-### 5. Commit/deploy decision
-Include commit/push/deploy instructions only when:
-- the requested work is expected to result in a visual/functional reviewable pass
-- the queue items are implementation fixes, not exploratory work
-- no unresolved blocker prevents reviewable output
-- the pass is expected to complete the required deploy so queue items can actually become reviewable at the end of the workflow
-
-If not appropriate, explicitly omit commit/deploy from the generated prompt and call out the deployment/reviewability blocker when relevant.
-
----
+- there is no actionable implementation work
+- state is incomplete or contradictory
+- the next action is a review-only or standards decision
+- the required read path would become a broad repo audit
 
 ## Output Format
 
 Return:
 
-### 1. Prompt
-A ready-to-paste batch-work prompt in plain text.
+### Prompt
 
-### 2. Rationale
-Very brief:
-- why these items were prioritized
-- whether commit/deploy was included or omitted
-
-### 3. Deferred Items
-List any queue items intentionally excluded from this prompt because they are:
-- out of scope
-- already resolved
-- standards/review issues rather than work-batch tasks
-
----
-
-## Prompt Style Requirements
-The generated prompt must:
-
-- begin with:
-  `Goal: ...`
-- include:
-  `Execute the Work Batch workflow for the active batch.`
-- use grouped numbered sections when multiple fix clusters exist
-- include a `Rules` section
-- include an `Output` section
-- avoid unnecessary explanation
-- be immediately usable without cleanup
-
----
-
-## Default Output Skeleton
-
-Use this structure unless the active queue clearly requires something else:
+Plain text beginning with:
 
 ```text
-Goal: <short batch goal>
+Goal: <short goal>
 
 Execute the Work Batch workflow for the active batch.
+```
 
-Focus only on the following items:
+The prompt must include `Target IDs`, `Allowed file scope`, `Required read path`, `Stop condition`, `Validation path`, `Rules`, and `Output`.
 
-1) <group 1>
-- <specific outcomes>
+### Rationale
 
-2) <group 2>
-- <specific outcomes>
+Briefly state why these items were selected and whether commit/deploy was included.
 
-Rules:
-- Stay within current batch scope
-- <other necessary constraints>
-- Update /docs/08-active/worklogs/, notes.md, review.md, and checklist.md to reflect actual progress
+### Deferred Items
 
-Output:
-1. files changed
-2. fixes applied
-3. checklist items completed or affected
-4. blockers or remaining issues
-5. whether another work pass is required
+List intentionally excluded queue items and why.

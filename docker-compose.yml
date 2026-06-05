@@ -9,6 +9,7 @@ services:
     working_dir: /var/www/html
     volumes:
       - .:/var/www/html
+      - composer-vendor:/var/www/html/vendor
     ports:
       - "${APP_PORT:-8000}:8000"
     env_file:
@@ -25,6 +26,7 @@ services:
     working_dir: /var/www/html
     volumes:
       - .:/var/www/html
+      - node-modules:/var/www/html/node_modules
     ports:
       - "${VITE_PORT:-5173}:5173"
     command: sh -lc "npm install && npm run dev -- --host 0.0.0.0"
@@ -61,3 +63,5 @@ services:
 volumes:
   postgres-data:
   redis-data:
+  composer-vendor:
+  node-modules:

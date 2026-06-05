@@ -115,19 +115,6 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - tile variant selection rule (base/clickable/selectable/expandable) is documented (G-TILE-01)
   - tile vs card distinction is documented (G-TILE-02)
 
-### P2-F-CQ-013 - UI CSS ownership map and first safe extraction boundary
-- Status: Ready To Implement
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-008, P2-F-CQ-009, P2-F-CQ-010, P2-F-CQ-011
-- Scope: Turn the `resources/css/app.css` read map into concrete UI-standardization ownership sections for Batch F. If a low-risk boundary is clear, extract one cohesive UI section into an imported CSS module without changing visual tokens or behavior.
-- Acceptance:
-  - CSS ownership/read map identifies action/button, form/control, table/data, notification/feedback, dashboard/widget, theme-token, and compatibility-override sections
-  - nearest agent guidance points future UI work to targeted CSS sections instead of broad stylesheet reads
-  - any extraction keeps Tailwind/Vite build behavior stable
-  - no new color, spacing, radius, typography, or component variants are introduced
-  - `npm run build` passes
-  - focused UI Reference tests pass for touched surfaces
-
 ### P2-F-CQ-006 - Batch F docs, tests, and handoff readiness
 - Status: Ready To Implement
 - Owner: Batch F
@@ -156,6 +143,20 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - `npm run build` passes
   - focused UI Reference tests pass for touched control surfaces
 - Implemented in: worklog-2-F-0009
+
+### P2-F-CQ-013 - UI CSS ownership map and first safe extraction boundary
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-008, P2-F-CQ-009, P2-F-CQ-010, P2-F-CQ-011
+- Scope: Turn the `resources/css/app.css` read map into concrete UI-standardization ownership sections for Batch F. If a low-risk boundary is clear, extract one cohesive UI section into an imported CSS module without changing visual tokens or behavior.
+- Acceptance:
+  - CSS ownership/read map identifies action/button, form/control, table/data, notification/feedback, dashboard/widget, theme-token, and compatibility-override sections
+  - nearest agent guidance points future UI work to targeted CSS sections instead of broad stylesheet reads
+  - any extraction keeps Tailwind/Vite build behavior stable
+  - no new color, spacing, radius, typography, or component variants are introduced
+  - `npm run build` passes
+  - focused UI Reference tests pass for touched surfaces
+- Implemented in: worklog-2-F-0010
 
 ## Blocked
 

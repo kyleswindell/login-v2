@@ -6,8 +6,9 @@
 - Staging deploy is explicitly out of scope for Batch F and remains disabled pending security incident review.
 - P2-F-CQ-001 is Passed Review. The Carbon contrast audit, starter catalog matrix, and route disposition matrix are accepted as sufficient routing source material for the remaining Batch F work.
 - P2-F-CQ-007 is Passed Review. `/platform/ui-reference/patterns/starters` is the accepted UI Reference starter catalog entry point.
-- Remaining Ready To Implement items are P2-F-CQ-002, P2-F-CQ-003, P2-F-CQ-004, P2-F-CQ-005, P2-F-CQ-006, P2-F-CQ-008, P2-F-CQ-009, P2-F-CQ-010, P2-F-CQ-011, and P2-F-CQ-013.
+- Remaining Ready To Implement items are P2-F-CQ-002, P2-F-CQ-003, P2-F-CQ-004, P2-F-CQ-005, P2-F-CQ-006, P2-F-CQ-008, P2-F-CQ-009, P2-F-CQ-010, and P2-F-CQ-011.
 - P2-F-CQ-012 is Implemented Pending Review. UI control behavior is split into form/selection, table/search/filter, dropdown, and theme modules while preserving the `resources/js/ui-controls.js` export surface and `resources/js/app.js` lifecycle registration.
+- P2-F-CQ-013 is Implemented Pending Review. `resources/css/app.css` now has a concrete UI ownership map, `resources/css/AGENTS.md` points future CSS work to targeted sections, and the Tailwind theme seed block is extracted to `resources/css/ui/theme-seed.css`.
 - Detailed correction history for P2-F-CQ-001 and P2-F-CQ-007 is preserved in worklog-2-F-0002 through worklog-2-F-0008. Do not duplicate that history in active notes.
 
 ## Current Implementation Guidance
@@ -23,7 +24,7 @@
 - P2-F-CQ-010 owns form field standards and selection control guidance.
 - P2-F-CQ-011 owns the remaining 32 audit-routed usage guidance gaps across data display, navigation, overlays, loading, inputs, breadcrumb, structured list, file uploader, date picker, grid, and tile.
 - P2-F-CQ-012 owns UI control module cleanup only where it supports Batch F form/selection/table/search/dropdown/filter guidance. The implementation is pending local review and should remain behavior-preserving.
-- P2-F-CQ-013 owns CSS section ownership/read-path cleanup and one safe extraction boundary only if the build and visual contracts stay stable.
+- P2-F-CQ-013 owns CSS section ownership/read-path cleanup and one safe extraction boundary only if the build and visual contracts stay stable. The implementation is pending local review and should remain token-preserving.
 
 ## Current Risks And Follow-Ups
 

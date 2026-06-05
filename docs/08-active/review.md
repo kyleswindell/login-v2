@@ -10,6 +10,7 @@ PARTIAL
 - P2-F-CQ-001: PASS. The Carbon audit and starter catalog matrix are accepted as sufficient planning and routing source material for the remaining Batch F work.
 - P2-F-CQ-007: PASS. The UI Reference starter catalog entry point is discoverable, lists the required starter set, and includes route disposition guidance for current UI Reference views.
 - P2-F-CQ-012: IMPLEMENTED PENDING REVIEW. UI control behavior is split into concern-based modules with the existing `resources/js/ui-controls.js` export surface preserved.
+- P2-F-CQ-013: IMPLEMENTED PENDING REVIEW. CSS ownership/read paths are documented, nearest CSS agent guidance is present, and Tailwind theme seed overrides are extracted without token changes.
 - No open required fixes remain for P2-F-CQ-001 or P2-F-CQ-007.
 - Historical pass details are preserved in worklog-2-F-0002 through worklog-2-F-0008 and should not be repeated here.
 
@@ -19,7 +20,7 @@ Visual: PARTIAL
 Functional: PARTIAL
 
 - Passed review: P2-F-CQ-001, P2-F-CQ-007.
-- Pending review: P2-F-CQ-012.
+- Pending review: P2-F-CQ-012, P2-F-CQ-013.
 - Remaining Batch F items still require implementation before final visual and functional batch review.
 
 ## Remaining Queue Items
@@ -33,7 +34,6 @@ Functional: PARTIAL
 - P2-F-CQ-009 - Usage guidance for notifications, badges, and feedback
 - P2-F-CQ-010 - Usage guidance for form field standards and selection controls
 - P2-F-CQ-011 - Usage guidance for data display, navigation, overlays, loading, inputs, breadcrumb, structured list, file uploader, date picker, grid, and tile
-- P2-F-CQ-013 - UI CSS ownership map and first safe extraction boundary
 
 ## Deferred Queue Items
 
@@ -45,6 +45,7 @@ Functional: PARTIAL
 - P2-F-CQ-007 focused validation passed with `docker compose exec -T app php artisan test tests/Feature/Platform/PlatformUiReferenceTest.php --filter=starter_catalog`.
 - Token/SOLID cleanup validation later stabilized the widget-content `data-ui-pattern="dashboard-grid"` coverage and the focused UI Reference + notifications suite passed in Docker.
 - P2-F-CQ-012 validation passed with `npm run build` and focused Docker tests for UI Reference, searchable select, account/settings controls, action menus, audit/error log filter surfaces, and internal phone input contract.
+- P2-F-CQ-013 validation passed with `npm run build` and focused Docker tests for UI Reference, actions, searchable select, account/settings controls, dashboard, and notifications surfaces.
 
 ## Historical Detail
 

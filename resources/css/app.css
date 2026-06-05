@@ -1,11 +1,18 @@
 @import 'tailwindcss';
+@import './ui/theme-seed.css';
 
 /*
-Read map:
-- @theme: Tailwind source scanning and project font/color seed overrides.
-- @layer components: shared UI classes, dashboard/widget patterns, form controls, notifications, table affordances, and motion states.
-- @keyframes: shared animation primitives.
-- @layer base: dark/light theme CSS variables plus compatibility overrides.
+CSS ownership map:
+- Theme seed: imported from ./ui/theme-seed.css; owns Tailwind font and slate seed overrides only.
+- Action/button section: .ui-action*, .btn*, .ui-icon-button, and login-provider action compatibility classes.
+- Form/control section: .ui-pattern-form*, .ui-control*, .ui-switch*, .ui-input, .ui-select, .ui-textarea, .ui-searchable-select*, .ui-selectable-option, .ui-link, .ui-divider, and .ui-spinner.
+- Table/data section: .ui-pattern-key-value*, .ui-pattern-data-list*, .ui-pattern-empty-state*, .ui-pattern-search-filter*, .ui-pattern-date-range*, .ui-pattern-identity-summary*, .ui-pattern-enhanced-table*, .ui-table*, and .ui-pagination-control.
+- Notification/feedback section: .ui-status*, .ui-inline-alert*, .ui-toast*, .ui-notification*, and reduced-motion toast states.
+- Dashboard/widget section: .ui-card*, .ui-stat*, .ui-pattern-stat-card, .ui-pattern-widget*, .ui-pattern-dashboard-grid*, .dashboard-proof*, .dashboard-sort*, and .dashboard-reorder*.
+- Overlay/navigation section: .ui-log-drawer-panel, .ui-modal-panel, .ui-page-header*, .ui-pattern-page-header*, .ui-pattern-content-section*, .ui-pattern-dropdown*, and .ui-pattern-subnav*.
+- Theme-token section: @layer base :root and html[data-theme-resolved='light'] CSS variables.
+- Compatibility-override section: @layer base html/body theme backstops and light-mode Tailwind utility overrides.
+- Animation section: @keyframes ui-spin only.
 
 Use targeted searches for the class family being changed before reading this file broadly.
 */
@@ -14,23 +21,6 @@ Use targeted searches for the class family being changed before reading this fil
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
-
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
-    /* Override slate with neutral grays so dark mode avoids blue undertones. */
-    --color-slate-50: #fafafa;
-    --color-slate-100: #f4f4f5;
-    --color-slate-200: #e4e4e7;
-    --color-slate-300: #d4d4d8;
-    --color-slate-400: #a1a1aa;
-    --color-slate-500: #71717a;
-    --color-slate-600: #52525b;
-    --color-slate-700: #3f3f46;
-    --color-slate-800: #27272a;
-    --color-slate-900: #18181b;
-    --color-slate-950: #09090b;
-}
 
 @layer components {
     .ui-shell-surface {

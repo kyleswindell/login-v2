@@ -115,6 +115,32 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - tile variant selection rule (base/clickable/selectable/expandable) is documented (G-TILE-01)
   - tile vs card distinction is documented (G-TILE-02)
 
+### P2-F-CQ-012 - UI control module ownership cleanup
+- Status: Ready To Implement
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-010, P2-F-CQ-011
+- Scope: Split `resources/js/ui-controls.js` into smaller control-family modules only where it supports Batch F form, selection, table/search, dropdown, and filter guidance work. Keep runtime behavior unchanged and keep `resources/js/app.js` as the lifecycle registration entry point.
+- Acceptance:
+  - control behavior is grouped by concern rather than one mixed module for all controls
+  - lifecycle registration remains centralized and readable from `resources/js/app.js`
+  - selectors, UI behavior, route behavior, and rendered markup contracts remain unchanged
+  - no notification feature expansion or unrelated shell behavior is introduced
+  - `npm run build` passes
+  - focused UI Reference tests pass for touched control surfaces
+
+### P2-F-CQ-013 - UI CSS ownership map and first safe extraction boundary
+- Status: Ready To Implement
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-008, P2-F-CQ-009, P2-F-CQ-010, P2-F-CQ-011
+- Scope: Turn the `resources/css/app.css` read map into concrete UI-standardization ownership sections for Batch F. If a low-risk boundary is clear, extract one cohesive UI section into an imported CSS module without changing visual tokens or behavior.
+- Acceptance:
+  - CSS ownership/read map identifies action/button, form/control, table/data, notification/feedback, dashboard/widget, theme-token, and compatibility-override sections
+  - nearest agent guidance points future UI work to targeted CSS sections instead of broad stylesheet reads
+  - any extraction keeps Tailwind/Vite build behavior stable
+  - no new color, spacing, radius, typography, or component variants are introduced
+  - `npm run build` passes
+  - focused UI Reference tests pass for touched surfaces
+
 ### P2-F-CQ-006 - Batch F docs, tests, and handoff readiness
 - Status: Ready To Implement
 - Owner: Batch F
@@ -135,6 +161,18 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ## Blocked
 
 ## Deferred
+
+### P2-F-CQ-014 - SettingsController settings-update extraction
+- Status: Deferred
+- Owner: Future platform architecture cleanup
+- Scope: Repeated validation/write/logging patterns in `SettingsController` are a SOLID cleanup candidate, but this is backend settings architecture rather than Batch F UI element standardization.
+- Revisit When: P2-F-CQ-003 exposes a settings starter blocker that requires backend refactoring, or a later platform architecture cleanup batch owns settings update flow extraction.
+
+### P2-F-CQ-015 - Realtime notification transport/rendering split
+- Status: Deferred
+- Owner: Future notifications architecture cleanup
+- Scope: `resources/js/realtime-notifications.js` can later split transport setup from notification rendering and local read-state updates, but notifications feature expansion is out of Batch F scope.
+- Revisit When: P2-F-CQ-009 requires runtime notification behavior changes, or a later notifications batch owns realtime client behavior.
 
 ## Passed Review
 

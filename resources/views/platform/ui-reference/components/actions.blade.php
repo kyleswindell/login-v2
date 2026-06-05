@@ -81,6 +81,114 @@
             </div>
         </section>
 
+        <section class="ui-card" data-ui-reference-example="button-variant-contract" data-guidance-id="P2-F-CQ-008">
+            <p class="ui-kicker">T1 Button Reference Examples</p>
+            <h2 class="ui-card-title mt-2">Valid button variants and states</h2>
+            <p class="ui-card-copy">Use these examples as the implementation contract before creating new action treatments. The filled primary example is the only primary action in this region.</p>
+
+            <div class="mt-5 grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Standard</p>
+                    <x-ui.button semantic="primary" class="mt-3">Save Workspace</x-ui.button>
+                    <code class="mt-3 block rounded-md bg-slate-950 px-3 py-2 text-xs text-slate-300">&lt;x-ui.button semantic=&quot;primary&quot;&gt;Save Workspace&lt;/x-ui.button&gt;</code>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Soft</p>
+                    <x-ui.button semantic="notice" variant="soft" class="mt-3">Queue Review</x-ui.button>
+                    <code class="mt-3 block rounded-md bg-slate-950 px-3 py-2 text-xs text-slate-300">&lt;x-ui.button semantic=&quot;notice&quot; variant=&quot;soft&quot;&gt;Queue Review&lt;/x-ui.button&gt;</code>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Ghost</p>
+                    <x-ui.button variant="ghost" class="mt-3">Cancel</x-ui.button>
+                    <code class="mt-3 block rounded-md bg-slate-950 px-3 py-2 text-xs text-slate-300">&lt;x-ui.button variant=&quot;ghost&quot;&gt;Cancel&lt;/x-ui.button&gt;</code>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Outline</p>
+                    <x-ui.button variant="outline" class="mt-3">Open Settings</x-ui.button>
+                    <code class="mt-3 block rounded-md bg-slate-950 px-3 py-2 text-xs text-slate-300">&lt;x-ui.button variant=&quot;outline&quot;&gt;Open Settings&lt;/x-ui.button&gt;</code>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Destructive</p>
+                    <x-ui.button semantic="danger" class="mt-3">Delete Workspace</x-ui.button>
+                    <code class="mt-3 block rounded-md bg-slate-950 px-3 py-2 text-xs text-slate-300">&lt;x-ui.button semantic=&quot;danger&quot;&gt;Delete Workspace&lt;/x-ui.button&gt;</code>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Icon Only</p>
+                    <x-ui.icon-button label="Open filters" class="mt-3">
+                        <x-heroicon-o-funnel class="h-4 w-4" aria-hidden="true" />
+                    </x-ui.icon-button>
+                    <code class="mt-3 block rounded-md bg-slate-950 px-3 py-2 text-xs text-slate-300">&lt;x-ui.icon-button label=&quot;Open filters&quot;&gt;...&lt;/x-ui.icon-button&gt;</code>
+                </article>
+            </div>
+
+            <div class="mt-5 grid gap-4 lg:grid-cols-2" data-ui-reference-example="button-state-contract">
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Supported States</p>
+                    <div class="mt-3 flex flex-wrap items-center gap-3">
+                        <x-ui.button semantic="primary">Default</x-ui.button>
+                        <x-ui.button semantic="primary" class="ring-2 ring-sky-400/50 ring-offset-2 ring-offset-slate-900">Focus</x-ui.button>
+                        <x-ui.button semantic="primary" disabled>Disabled</x-ui.button>
+                        <x-ui.button semantic="primary" loading>Loading</x-ui.button>
+                    </div>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Icon Leading + Grouped Menu</p>
+                    <div class="mt-3 flex flex-wrap items-center gap-3">
+                        <x-ui.button variant="outline">
+                            <x-heroicon-o-arrow-down-tray class="h-4 w-4" aria-hidden="true" />
+                            Export Results
+                        </x-ui.button>
+                        <div class="rounded-lg border border-slate-800 bg-slate-950 p-2">
+                            <x-ui.menu-item href="#" onclick="event.preventDefault()">Open details</x-ui.menu-item>
+                            <x-ui.menu-item href="#" semantic="danger" onclick="event.preventDefault()">Archive workspace</x-ui.menu-item>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="ui-card" data-ui-implementation-guide="actions" data-guidance-id="P2-F-CQ-008">
+            <p class="ui-kicker">Action Implementation Guide</p>
+            <div class="mt-4 overflow-x-auto rounded-lg border border-slate-800">
+                <table class="w-full min-w-[760px] divide-y divide-slate-800 text-left text-sm">
+                    <thead class="bg-slate-900 text-xs uppercase tracking-[0.16em] text-slate-500">
+                        <tr>
+                            <th class="px-4 py-3">Use</th>
+                            <th class="px-4 py-3">Component</th>
+                            <th class="px-4 py-3">Supported contract</th>
+                            <th class="px-4 py-3">Owner routes</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800 text-slate-300">
+                        <tr>
+                            <td class="px-4 py-3 text-white">Button action</td>
+                            <td class="px-4 py-3"><code>x-ui.button</code></td>
+                            <td class="px-4 py-3"><code>semantic</code>: neutral, primary, success, warning, danger, notice, info. <code>variant</code>: standard, soft, ghost, outline. <code>size</code>, <code>disabled</code>, and <code>loading</code> are supported.</td>
+                            <td class="px-4 py-3">/components/actions, /patterns/navigation, /patterns/forms, /patterns/tables</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3 text-white">Icon-only action</td>
+                            <td class="px-4 py-3"><code>x-ui.icon-button</code></td>
+                            <td class="px-4 py-3">Requires a visible accessible <code>label</code>. Use for compact tools such as filter, edit, close, and row utility actions.</td>
+                            <td class="px-4 py-3">/components/actions, /patterns/tables, /patterns/overlays-feedback</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3 text-white">Grouped overflow</td>
+                            <td class="px-4 py-3"><code>x-ui.patterns.dropdown-action-menu</code> + <code>x-ui.menu-item</code></td>
+                            <td class="px-4 py-3">Use after one or two visible secondary actions. Destructive items follow a divider and keep <code>semantic=&quot;danger&quot;</code>.</td>
+                            <td class="px-4 py-3">/patterns/navigation, /patterns/data-content, /patterns/tables</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
         <section class="ui-card">
             <p class="ui-kicker">Semantic Actions</p>
             <div class="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">

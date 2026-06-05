@@ -42,6 +42,40 @@
             </div>
         </section>
 
+        <section class="ui-card" data-ui-reference-example="grid-layout-contract" data-guidance-id="P2-F-CQ-011">
+            <p class="ui-kicker">Concrete Grid And Layout Examples</p>
+            <div class="mt-5 grid gap-5">
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Standard page-section grid</p>
+                    <div class="mt-3 grid gap-4 lg:grid-cols-3">
+                        <div class="rounded-md border border-slate-800 bg-slate-950/70 p-3 text-sm text-slate-300">Summary panel</div>
+                        <div class="rounded-md border border-slate-800 bg-slate-950/70 p-3 text-sm text-slate-300">Primary content</div>
+                        <div class="rounded-md border border-slate-800 bg-slate-950/70 p-3 text-sm text-slate-300">Support content</div>
+                    </div>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Dashboard grid and widget span model</p>
+                    <x-ui.patterns.dashboard-grid columns="3" class="mt-3">
+                        <div class="ui-pattern-widget-shell">
+                            <div class="ui-pattern-widget-shell-header"><p class="ui-card-title">1x1 widget</p></div>
+                            <div class="ui-pattern-widget-shell-body"><p class="ui-card-copy">Default dashboard unit.</p></div>
+                        </div>
+                        <div class="ui-pattern-widget-shell ui-pattern-widget-span-2x1">
+                            <div class="ui-pattern-widget-shell-header"><p class="ui-card-title">2x1 widget</p></div>
+                            <div class="ui-pattern-widget-shell-body"><p class="ui-card-copy">Wide summary composition.</p></div>
+                        </div>
+                    </x-ui.patterns.dashboard-grid>
+                    <p class="mt-3 text-sm text-slate-400">Use the existing dashboard grid and span classes; do not introduce a new grid token scale.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="ui-card" data-ui-implementation-guide="grid-layout" data-guidance-id="P2-F-CQ-011">
+            <p class="ui-kicker">Layout Implementation Guide</p>
+            <p class="ui-card-copy mt-2">Owner route: <code>/platform/ui-reference/patterns/layout</code>. Use page bands and content sections for normal surfaces, <code>x-ui.patterns.dashboard-grid</code> plus <code>ui-pattern-widget-shell</code> for dashboards, and the existing widget span classes for size behavior. Gutter choices should come from the surrounding pattern, not one-off spacing utilities.</p>
+        </section>
+
         <x-ui.patterns.content-section-block
             title="Dashboard customization proof"
             description="Use this UI Reference-first proof to review lock/unlock, reorder, hide/show, and saved-layout behavior on dummy widgets before judging the live dashboard consumer."

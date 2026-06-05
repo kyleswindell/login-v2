@@ -35,6 +35,79 @@
             </div>
         </section>
 
+        <section class="ui-card" data-ui-reference-example="table-pagination-contract" data-guidance-id="P2-F-CQ-011">
+            <p class="ui-kicker">Concrete Table, Pagination, And Loading Examples</p>
+            <div class="mt-5 grid gap-5 xl:grid-cols-2">
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Basic read-only table</p>
+                    <div class="mt-3 overflow-x-auto rounded-md border border-slate-800">
+                        <table class="w-full min-w-[520px] divide-y divide-slate-800 text-sm">
+                            <thead class="bg-slate-900 text-left text-xs uppercase tracking-[0.16em] text-slate-500">
+                                <tr><th class="px-3 py-2">Workspace</th><th class="px-3 py-2">Owner</th><th class="px-3 py-2">Status</th></tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800 text-slate-300">
+                                <tr><td class="px-3 py-2 text-white">North Region</td><td class="px-3 py-2">Platform Team</td><td class="px-3 py-2"><x-ui.badge label="active" semantic="success" /></td></tr>
+                                <tr><td class="px-3 py-2 text-white">Replay Service</td><td class="px-3 py-2">Security</td><td class="px-3 py-2"><x-ui.badge label="review" semantic="notice" /></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Selectable row + overflow action</p>
+                    <div class="mt-3 flex items-center justify-between gap-3 rounded-md border border-slate-800 bg-slate-950/70 px-3 py-3">
+                        <label class="flex items-center gap-3 text-sm text-slate-200">
+                            <input type="checkbox" class="h-4 w-4 rounded border-slate-600 bg-slate-950 text-sky-400 focus:ring-sky-400/40" />
+                            <span>Messaging Queue</span>
+                        </label>
+                        <div class="flex items-center gap-2">
+                            <x-ui.icon-button label="Open queue details">
+                                <x-heroicon-o-eye class="h-4 w-4" aria-hidden="true" />
+                            </x-ui.icon-button>
+                            <x-ui.patterns.dropdown-action-menu label="More row actions" :icon-only="true">
+                                <x-ui.menu-item href="#" onclick="event.preventDefault()">Open detail row</x-ui.menu-item>
+                                <div class="ui-pattern-dropdown-divider"></div>
+                                <x-ui.menu-item href="#" semantic="danger" onclick="event.preventDefault()">Disable queue</x-ui.menu-item>
+                            </x-ui.patterns.dropdown-action-menu>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Table skeleton while loading</p>
+                    <div class="mt-3 space-y-2" aria-label="Loading table rows">
+                        <div class="h-9 rounded-md bg-slate-800/70"></div>
+                        <div class="h-9 rounded-md bg-slate-800/50"></div>
+                        <div class="h-9 rounded-md bg-slate-800/40"></div>
+                    </div>
+                    <p class="mt-3 text-sm text-slate-400">Use skeleton rows when the table shape is known; use empty state only after loading completes.</p>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Pagination placement</p>
+                    <div class="mt-3 flex flex-wrap items-center justify-between gap-3">
+                        <label class="flex items-center gap-2 text-sm text-slate-300">
+                            Rows
+                            <select class="ui-select w-24">
+                                <option>25</option>
+                                <option>50</option>
+                            </select>
+                        </label>
+                        <div class="flex items-center gap-2 text-sm text-slate-300">
+                            <x-ui.button variant="ghost" size="sm">Previous</x-ui.button>
+                            <span>Page 2 of 7</span>
+                            <x-ui.button variant="outline" size="sm">Next</x-ui.button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="ui-card" data-ui-implementation-guide="tables-pagination" data-guidance-id="P2-F-CQ-011">
+            <p class="ui-kicker">Table Implementation Guide</p>
+            <p class="ui-card-copy mt-2">Owner route: <code>/platform/ui-reference/patterns/tables</code>. Use <code>x-ui.patterns.enhanced-data-table</code> for table surfaces that need toolbar, search, filters, sort state, pagination, and row detail. Use <code>x-ui.patterns.dropdown-action-menu</code> for row action overflow and <code>x-ui.badge</code> or <code>x-ui.status</code> for row state display.</p>
+        </section>
+
         <x-ui.patterns.enhanced-data-table
             label="Enhanced Data Table"
             description="Use the enhanced table pattern when the surface needs reusable operator controls above the shared table baseline."

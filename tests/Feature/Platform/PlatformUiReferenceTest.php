@@ -194,16 +194,29 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('G-LABEL-01')
             ->assertSee('G-LABEL-06')
             ->assertSee('Apply when the user stays on the same page')
-            ->assertSee('Delete, Archive, Disable, or Remove');
+            ->assertSee('Delete, Archive, Disable, or Remove')
+            ->assertSee('data-ui-reference-example="button-variant-contract"', false)
+            ->assertSee('data-ui-reference-example="button-state-contract"', false)
+            ->assertSee('data-ui-implementation-guide="actions"', false)
+            ->assertSee('&lt;x-ui.button semantic=&quot;primary&quot;&gt;Save Workspace&lt;/x-ui.button&gt;', false)
+            ->assertSee('&lt;x-ui.button semantic=&quot;notice&quot; variant=&quot;soft&quot;&gt;Queue Review&lt;/x-ui.button&gt;', false)
+            ->assertSee('&lt;x-ui.icon-button label=&quot;Open filters&quot;&gt;...&lt;/x-ui.icon-button&gt;', false)
+            ->assertSee('x-ui.patterns.dropdown-action-menu')
+            ->assertSee('One primary action');
 
         $this->get('/platform/ui-reference/patterns/navigation')
             ->assertOk()
             ->assertSee('data-ui-guidance="page-action-hierarchy"', false)
+            ->assertSee('data-ui-reference-example="t2-action-composition"', false)
             ->assertSee('G-ACT-01')
             ->assertSee('G-LABEL-01')
             ->assertSee('G-LABEL-03')
             ->assertSee('G-LABEL-06')
-            ->assertSee('the page title row keeps one primary action');
+            ->assertSee('the page title row keeps one primary action')
+            ->assertSee('Page-header actions')
+            ->assertSee('Filter actions stay on page')
+            ->assertSee('Form action bar')
+            ->assertSee('Row action overflow');
     }
 
     public function test_batch_f_form_field_and_selection_control_guidance_is_documented(): void
@@ -225,14 +238,29 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('G-SEL-03')
             ->assertSee('Select / combo box / multi-select')
             ->assertSee('Example Warning Field')
-            ->assertSee('workspace-subdomain-warning', false);
+            ->assertSee('workspace-subdomain-warning', false)
+            ->assertSee('data-ui-reference-example="form-field-state-contract"', false)
+            ->assertSee('data-ui-reference-example="selection-control-contract"', false)
+            ->assertSee('data-ui-implementation-guide="forms"', false)
+            ->assertSee('T1 Field Reference Matrix')
+            ->assertSee('Button file uploader')
+            ->assertSee('Searchable select / combo')
+            ->assertSee('Queued gap: multi-select component')
+            ->assertSee('x-ui.searchable-select')
+            ->assertSee('ui-input')
+            ->assertSee('ui-switch');
 
         $this->get('/platform/ui-reference/patterns/forms')
             ->assertOk()
             ->assertSee('data-ui-guidance="form-pattern-usage"', false)
+            ->assertSee('data-ui-reference-example="t2-form-composition"', false)
             ->assertSee('P2-F-CQ-010')
             ->assertSee('submit validation belongs in the form-level summary')
-            ->assertSee('short exclusive choices stay visible as radio options');
+            ->assertSee('short exclusive choices stay visible as radio options')
+            ->assertSee('Settings-style form section')
+            ->assertSee('Compact account/profile form')
+            ->assertSee('Validation summary + field error')
+            ->assertSee('Form action bar');
     }
 
     public function test_batch_f_notification_badge_and_feedback_guidance_is_documented(): void
@@ -248,11 +276,23 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('G-BADGE-03')
             ->assertSee('G-BADGE-04')
             ->assertSee('text-first')
-            ->assertSee('do not adopt Carbon visual tokens');
+            ->assertSee('do not adopt Carbon visual tokens')
+            ->assertSee('data-ui-reference-example="badge-status-contract"', false)
+            ->assertSee('data-ui-implementation-guide="feedback-status"', false)
+            ->assertSee('Base semantic badges')
+            ->assertSee('Outline + no-icon states')
+            ->assertSee('Inline status for dense rows')
+            ->assertSee('List context')
+            ->assertSee('x-ui.badge')
+            ->assertSee('x-ui.status');
 
         $this->get('/platform/ui-reference/patterns/overlays-feedback')
             ->assertOk()
             ->assertSee('data-ui-guidance="notification-feedback-usage"', false)
+            ->assertSee('data-ui-reference-example="feedback-surface-contract"', false)
+            ->assertSee('data-ui-reference-example="toast-stacking-contract"', false)
+            ->assertSee('data-ui-reference-example="notification-center-handoff"', false)
+            ->assertSee('data-ui-implementation-guide="feedback"', false)
             ->assertSee('P2-F-CQ-009')
             ->assertSee('G-NOTIF-01')
             ->assertSee('G-NOTIF-02')
@@ -261,7 +301,11 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('G-NOTIF-05')
             ->assertSee('Stack toasts from newest to oldest')
             ->assertSee('AJAX feedback should not imply a full page refresh')
-            ->assertSee('Persisted notifications belong in the notification center');
+            ->assertSee('Persisted notifications belong in the notification center')
+            ->assertSee('Form validation feedback')
+            ->assertSee('Table/list feedback')
+            ->assertSee('Page-level callout/banner')
+            ->assertSee('Persisted notification handoff');
     }
 
     public function test_batch_f_broader_data_navigation_overlay_loading_and_input_guidance_is_documented(): void
@@ -271,15 +315,23 @@ class PlatformUiReferenceTest extends TestCase
         $this->get('/platform/ui-reference/patterns/tables')
             ->assertOk()
             ->assertSee('data-ui-guidance="table-pagination-usage"', false)
+            ->assertSee('data-ui-reference-example="table-pagination-contract"', false)
+            ->assertSee('data-ui-implementation-guide="tables-pagination"', false)
             ->assertSee('G-TABLE-01')
             ->assertSee('G-TABLE-02')
             ->assertSee('G-TABLE-03')
             ->assertSee('G-PAGIN-01')
-            ->assertSee('G-PAGIN-02');
+            ->assertSee('G-PAGIN-02')
+            ->assertSee('Basic read-only table')
+            ->assertSee('Selectable row + overflow action')
+            ->assertSee('Table skeleton while loading')
+            ->assertSee('Pagination placement');
 
         $this->get('/platform/ui-reference/patterns/navigation')
             ->assertOk()
             ->assertSee('data-ui-guidance="navigation-search-overflow-usage"', false)
+            ->assertSee('data-ui-reference-example="navigation-search-contract"', false)
+            ->assertSee('data-ui-implementation-guide="navigation-search-overflow"', false)
             ->assertSee('G-TABS-01')
             ->assertSee('G-TABS-02')
             ->assertSee('G-SEARCH-01')
@@ -287,42 +339,69 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('G-OVERFLOW-01')
             ->assertSee('G-OVERFLOW-02')
             ->assertSee('G-BREADCRUMB-01')
-            ->assertSee('G-BREADCRUMB-02');
+            ->assertSee('G-BREADCRUMB-02')
+            ->assertSee('Line tabs for peer sections')
+            ->assertSee('Contained tabs for dense panels')
+            ->assertSee('Page search + known filters')
+            ->assertSee('Breadcrumb with middle overflow');
 
         $this->get('/platform/ui-reference/patterns/overlays-feedback')
             ->assertOk()
             ->assertSee('data-ui-guidance="overlay-loading-usage"', false)
+            ->assertSee('data-ui-reference-example="overlay-loading-contract"', false)
+            ->assertSee('data-ui-implementation-guide="overlays-loading"', false)
             ->assertSee('G-MODAL-01')
             ->assertSee('G-MODAL-02')
             ->assertSee('G-MODAL-03')
             ->assertSee('G-TOOLTIP-01')
             ->assertSee('G-TOOLTIP-02')
             ->assertSee('G-LOAD-01')
-            ->assertSee('G-LOAD-02');
+            ->assertSee('G-LOAD-02')
+            ->assertSee('Modal variants')
+            ->assertSee('Tooltip vs toggletip')
+            ->assertSee('Inline loading')
+            ->assertSee('Skeleton loading');
 
         $this->get('/platform/ui-reference/components/forms')
             ->assertOk()
             ->assertSee('data-ui-guidance="input-file-date-usage"', false)
+            ->assertSee('data-ui-reference-example="input-file-date-contract"', false)
+            ->assertSee('data-ui-implementation-guide="inputs-file-date"', false)
             ->assertSee('G-INPUT-01')
             ->assertSee('G-INPUT-02')
             ->assertSee('G-FILEUP-01')
             ->assertSee('G-FILEUP-02')
             ->assertSee('G-DATEPICK-01')
-            ->assertSee('G-DATEPICK-02');
+            ->assertSee('G-DATEPICK-02')
+            ->assertSee('Default width input')
+            ->assertSee('Fluid search input')
+            ->assertSee('Button file uploader')
+            ->assertSee('Date picker family')
+            ->assertSee('Queued gap: calendar range control');
 
         $this->get('/platform/ui-reference/patterns/data-content')
             ->assertOk()
             ->assertSee('data-ui-guidance="structured-list-tile-usage"', false)
+            ->assertSee('data-ui-reference-example="structured-list-tile-contract"', false)
+            ->assertSee('data-ui-implementation-guide="structured-list-tile"', false)
             ->assertSee('G-STRLIST-01')
             ->assertSee('G-STRLIST-02')
             ->assertSee('G-TILE-01')
-            ->assertSee('G-TILE-02');
+            ->assertSee('G-TILE-02')
+            ->assertSee('Structured list for compact comparison')
+            ->assertSee('Selectable structured list')
+            ->assertSee('Tile variants')
+            ->assertSee('Queued component gaps');
 
         $this->get('/platform/ui-reference/patterns/layout')
             ->assertOk()
             ->assertSee('data-ui-guidance="grid-layout-usage"', false)
+            ->assertSee('data-ui-reference-example="grid-layout-contract"', false)
+            ->assertSee('data-ui-implementation-guide="grid-layout"', false)
             ->assertSee('G-GRID-01')
-            ->assertSee('G-GRID-02');
+            ->assertSee('G-GRID-02')
+            ->assertSee('Standard page-section grid')
+            ->assertSee('Dashboard grid and widget span model');
     }
 
     public function test_starter_catalog_route_is_discoverable_and_maps_batch_f_starters(): void

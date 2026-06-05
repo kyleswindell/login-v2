@@ -53,6 +53,72 @@
             </div>
         </x-ui.patterns.proof-note>
 
+        <section class="ui-card" data-ui-reference-example="t2-action-composition" data-guidance-id="P2-F-CQ-008">
+            <p class="ui-kicker">T2 Action Composition Examples</p>
+            <div class="mt-4 grid gap-4 xl:grid-cols-2">
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Page-header actions</p>
+                    <div class="mt-3 flex flex-wrap items-center justify-between gap-3">
+                        <div>
+                            <h2 class="text-base font-semibold text-white">Workspace Settings</h2>
+                            <p class="text-sm text-slate-400">One primary action remains visible; secondary choices reduce emphasis.</p>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <x-ui.button variant="ghost" size="sm">Cancel</x-ui.button>
+                            <x-ui.button variant="outline" size="sm">Preview</x-ui.button>
+                            <x-ui.button semantic="primary" size="sm">Save Workspace</x-ui.button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Filter actions stay on page</p>
+                    <div class="mt-3 flex flex-wrap items-center gap-3">
+                        <input type="search" value="policy" class="ui-input w-full sm:w-56" aria-label="Search current list" />
+                        <select class="ui-select w-full sm:w-44" aria-label="Filter by owner">
+                            <option>Any owner</option>
+                            <option selected>Platform Team</option>
+                        </select>
+                        <x-ui.button variant="ghost">Reset</x-ui.button>
+                        <x-ui.button semantic="primary">Apply</x-ui.button>
+                    </div>
+                    <p class="mt-3 text-sm text-slate-400">Use Apply for same-page filtering and Save/Create/Submit only when the resource or workflow completes.</p>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Form action bar</p>
+                    <div class="mt-3 flex flex-wrap items-center justify-between gap-3">
+                        <x-ui.button variant="ghost">Cancel</x-ui.button>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <x-ui.button semantic="danger" variant="soft">Archive</x-ui.button>
+                            <x-ui.button semantic="primary">Save Workspace</x-ui.button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Row action overflow</p>
+                    <div class="mt-3 flex flex-wrap items-center justify-between gap-3">
+                        <div>
+                            <p class="text-sm font-semibold text-white">North Region Tenant</p>
+                            <p class="text-xs text-slate-500">Two visible actions max; rarer and destructive actions move to overflow.</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <x-ui.icon-button label="Edit tenant">
+                                <x-heroicon-o-pencil-square class="h-4 w-4" aria-hidden="true" />
+                            </x-ui.icon-button>
+                            <x-ui.patterns.dropdown-action-menu label="More tenant actions" :icon-only="true">
+                                <x-ui.menu-item href="#" onclick="event.preventDefault()">View audit trail</x-ui.menu-item>
+                                <x-ui.menu-item href="#" semantic="info" onclick="event.preventDefault()">Export summary</x-ui.menu-item>
+                                <div class="ui-pattern-dropdown-divider"></div>
+                                <x-ui.menu-item href="#" semantic="danger" onclick="event.preventDefault()">Disable tenant</x-ui.menu-item>
+                            </x-ui.patterns.dropdown-action-menu>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
         <section class="ui-card" data-ui-guidance="navigation-search-overflow-usage" data-guidance-id="P2-F-CQ-011">
             <p class="ui-kicker">Navigation, Search, Overflow, And Breadcrumb Guidance</p>
             <div class="mt-3 grid gap-4 lg:grid-cols-2">
@@ -94,6 +160,62 @@
                     </div>
                 </dl>
             </div>
+        </section>
+
+        <section class="ui-card" data-ui-reference-example="navigation-search-contract" data-guidance-id="P2-F-CQ-011">
+            <p class="ui-kicker">Concrete Navigation, Search, Overflow, And Breadcrumb Examples</p>
+            <div class="mt-5 grid gap-5 xl:grid-cols-2">
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Line tabs for peer sections</p>
+                    <div class="mt-3 flex gap-1 border-b border-slate-800">
+                        <button type="button" class="border-b-2 border-sky-400 px-3 py-2 text-sm font-semibold text-white">Overview</button>
+                        <button type="button" class="border-b-2 border-transparent px-3 py-2 text-sm text-slate-400">Activity</button>
+                        <button type="button" class="border-b-2 border-transparent px-3 py-2 text-sm text-slate-400">Settings</button>
+                    </div>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Contained tabs for dense panels</p>
+                    <div class="mt-3 inline-flex rounded-lg border border-slate-800 bg-slate-950 p-1">
+                        <button type="button" class="rounded-md bg-slate-800 px-3 py-2 text-sm font-semibold text-white">Queue</button>
+                        <button type="button" class="rounded-md px-3 py-2 text-sm text-slate-400">History</button>
+                        <button type="button" class="rounded-md px-3 py-2 text-sm text-slate-400">Notes</button>
+                    </div>
+                    <p class="mt-3 text-sm text-slate-400">Queued gap: dedicated tab component with keyboard behavior; these examples document visual and usage boundaries only.</p>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Page search + known filters</p>
+                    <div class="mt-3 flex flex-wrap items-center gap-3">
+                        <input type="search" placeholder="Search workspaces" class="ui-input w-full sm:w-64" />
+                        <select class="ui-select w-full sm:w-44">
+                            <option>Any status</option>
+                            <option>Needs review</option>
+                        </select>
+                        <x-ui.button variant="ghost">Clear</x-ui.button>
+                        <x-ui.button semantic="primary">Apply</x-ui.button>
+                    </div>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Breadcrumb with middle overflow</p>
+                    <nav class="mt-3 flex flex-wrap items-center gap-2 text-sm text-slate-300" aria-label="Breadcrumb">
+                        <a href="#" onclick="event.preventDefault()" class="ui-link">Dashboard</a>
+                        <span>/</span>
+                        <button type="button" class="ui-icon-button h-8 w-8" aria-label="Show hidden ancestors">
+                            <x-heroicon-o-ellipsis-horizontal class="h-4 w-4" aria-hidden="true" />
+                        </button>
+                        <span>/</span>
+                        <span class="font-semibold text-white">Workspace Settings</span>
+                    </nav>
+                    <p class="mt-3 text-sm text-slate-400">Use breadcrumb for location, not workflow progress.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="ui-card" data-ui-implementation-guide="navigation-search-overflow" data-guidance-id="P2-F-CQ-011">
+            <p class="ui-kicker">Navigation Implementation Guide</p>
+            <p class="ui-card-copy mt-2">Owner route: <code>/platform/ui-reference/patterns/navigation</code>. Use <code>x-ui.patterns.sub-navigation-bar</code> for peer shell sections, <code>x-ui.patterns.search-filter-bar</code> for page-local search/filter rows, <code>x-ui.patterns.dropdown-action-menu</code> for overflow, and native links/buttons for breadcrumb until a dedicated breadcrumb component is queued and implemented.</p>
         </section>
 
         <x-ui.patterns.content-section-block

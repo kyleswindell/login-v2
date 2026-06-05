@@ -57,67 +57,51 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - Phase 2 docs reflect Batch F implementation status
   - Batch E remains the post-F close-out path and staging deploy remains out of scope
 
-### P2-F-CQ-008 - Usage guidance standards for button variants and action labels
-- Status: Ready To Implement
-- Owner: Batch F
-- Scope: Rework the current note-only button/action guidance into concrete, referenceable T1 and T2 UI Reference examples. The page must reduce implementation guesswork for later development by showing valid component usage, variants, states, and action-label patterns in context.
-- Review Finding:
-  - Manual review rejected the current implementation because the T1/T2 pages mostly list G-* notes above existing examples instead of providing valid reference examples for component types, variants, states, and implementation usage.
-- Acceptance:
-  - T1 button examples show standard, soft, ghost, outline, and destructive usage as concrete component examples, not only explanatory notes (G-ACT-01–05)
-  - action examples include default, focus, disabled, loading, icon-leading, icon-only, destructive, and grouped-menu states where supported by existing components
-  - T2 action examples show page-header actions, form actions, table/list row actions, and grouped overflow actions using the same rules
-  - action-label examples distinguish apply/stay-on-page behavior from submit/complete/return behavior in concrete form/filter/page contexts (G-LABEL-01–06)
-  - implementation guidance identifies the component names, supported props/variants/semantics, required wrapper patterns, and owner routes for reuse
-  - per-page "one primary action" rule is visible in examples and documented
-
-### P2-F-CQ-010 - Usage guidance for form field standards and selection controls
-- Status: Ready To Implement
-- Owner: Batch F
-- Scope: Rework the current note-only form/selection guidance into concrete, referenceable T1 and T2 UI Reference examples for fields, field states, validation, and selection controls.
-- Review Finding:
-  - Manual review rejected the current implementation because it documents rules but does not provide enough component examples and implementation guidance to minimize later developer guesswork.
-- Acceptance:
-  - T1 examples show required, optional, helper, error, warning, disabled, read-only, focused, textarea, select, date, date-time, file, checkbox, radio, toggle, searchable select/combo, and multi-select guidance using existing components or clearly marked queued gaps
-  - T2 form examples show field groups, form sections, inline rows, validation summary, form action bar, settings-style forms, and compact account/profile form usage
-  - required vs optional field marking policy is demonstrated in examples, not only documented (G-FORM-01–04)
-  - checkbox vs radio vs toggle selection boundary is demonstrated with concrete examples (G-SEL-01–03)
-  - select vs combo box vs multi-select selection rule is demonstrated with component usage guidance
-  - implementation guidance identifies component names, supported props/attributes, required classes/wrappers, validation placement, and owner routes for reuse
-
-### P2-F-CQ-009 - Usage guidance for notifications, badges, and feedback
-- Status: Ready To Implement
-- Owner: Batch F
-- Scope: Rework the current note-only notification/badge/feedback guidance into concrete, referenceable T1 and T2 UI Reference examples for badges, statuses, inline alerts, toasts, banners/callouts, persisted notifications, and AJAX feedback.
-- Review Finding:
-  - Manual review rejected the current implementation because it documents rules but does not provide enough referenceable examples for component types, variants, and usage/implementation expectations.
-- Acceptance:
-  - badge/status examples show semantic mappings, base/outline variants, icon/no-icon states, table/list context, and text-first status usage (G-BADGE-01–04)
-  - feedback examples show inline alert, toast, callout/banner, page-level alert, persisted notification, and AJAX same-page feedback boundaries as concrete examples (G-NOTIF-01–05)
-  - stacking and placement examples demonstrate multi-toast behavior and inline-vs-page placement without adding unrelated runtime notification features
-  - T2 examples show form validation feedback, table/list feedback, dashboard/page feedback, and notification-center handoff expectations
-  - implementation guidance identifies component names, supported semantics/variants, live-region expectations, wrapper/data attributes, and owner routes for reuse
-  - guidance remains Login App 2.0-specific and does not adopt Carbon visual tokens
-
-### P2-F-CQ-011 - Usage guidance for data display, navigation, overlays, loading, inputs, breadcrumb, structured list, file uploader, date picker, grid, and tile
-- Status: Ready To Implement
-- Owner: Batch F
-- Scope: Rework the current note-only broader guidance into concrete, referenceable T1 and T2 UI Reference examples across the routed pass 2/pass 3 component and pattern families.
-- Review Finding:
-  - Manual review rejected the current implementation because all 32 G-* gaps are represented mostly as notes/matrices, not as referenceable component/pattern examples with variants, states, and implementation guidance.
-- Acceptance:
-  - table, pagination, tabs, modal, tooltip/toggletip, loading, search/filter, input, overflow, breadcrumb, structured-list, file-uploader, date-picker, grid, and tile guidance is demonstrated through concrete examples where existing components/patterns exist
-  - examples cover the documented variants and states for all 32 routed gaps: G-TABLE-01–03, G-PAGIN-01–02, G-TABS-01–02, G-MODAL-01–03, G-TOOLTIP-01–02, G-LOAD-01–02, G-SEARCH-01–02, G-INPUT-01–02, G-OVERFLOW-01–02, G-BREADCRUMB-01–02, G-STRLIST-01–02, G-FILEUP-01–02, G-DATEPICK-01–02, G-GRID-01–02, G-TILE-01–02
-  - missing component families are clearly identified as queued gaps instead of implied as implemented
-  - T1 pages show component primitives and supported variants/states; T2 pages show real pattern compositions and usage boundaries
-  - implementation guidance identifies component names, data attributes, wrappers, route ownership, and expected usage boundaries for reuse
-  - examples preserve Login App 2.0 visual direction and do not introduce Carbon visual tokens
-
 ## In Progress
 
 <!-- none -->
 
 ## Implemented Pending Review
+
+### P2-F-CQ-008 - Usage guidance standards for button variants and action labels
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Reworked button/action guidance into concrete T1/T2 UI Reference examples for button variants, states, labels, one-primary-action rule, grouped menus, and implementation ownership.
+- Acceptance:
+  - T1 examples show standard, soft, ghost, outline, destructive, icon-leading, icon-only, disabled, focus, and loading states
+  - T2 examples show page-header, filter, form action bar, and row-overflow action placement
+  - implementation guide identifies `x-ui.button`, `x-ui.icon-button`, `x-ui.menu-item`, supported props/variants/semantics, and owner routes
+- Implemented in: worklog-2-F-0015
+
+### P2-F-CQ-010 - Usage guidance for form field standards and selection controls
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Reworked form/selection guidance into concrete T1/T2 examples for field states, native controls, validation placement, selection boundaries, searchable select, and queued gaps.
+- Acceptance:
+  - T1 examples show required, optional, helper, error, warning, disabled, read-only, focused, textarea, select, date, date-time, file, checkbox, radio, toggle, searchable select/combo, and queued multi-select guidance
+  - T2 examples show form sections, inline rows, validation summary, settings-style forms, compact account/profile forms, and form action bars
+  - implementation guide identifies `x-ui.patterns.form-group`, `ui-input`, `ui-select`, `ui-textarea`, `ui-switch`, `x-ui.searchable-select`, validation placement, and owner routes
+- Implemented in: worklog-2-F-0015
+
+### P2-F-CQ-009 - Usage guidance for notifications, badges, and feedback
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Reworked notification/badge/feedback guidance into concrete T1/T2 examples for badges, statuses, inline alerts, toasts, page feedback, persisted notification handoff, and implementation ownership.
+- Acceptance:
+  - badge/status examples show semantic mappings, base/outline variants, icon/no-icon states, table/list context, and text-first usage
+  - feedback examples show form validation, table/list, page-level warning, toast stacking, AJAX same-page feedback, and notification-center handoff
+  - implementation guide identifies `x-ui.badge`, `x-ui.status`, `x-ui.inline-alert`, `x-ui.toast`, live-region expectations, wrapper/data hooks, and owner routes
+- Implemented in: worklog-2-F-0015
+
+### P2-F-CQ-011 - Usage guidance for data display, navigation, overlays, loading, inputs, breadcrumb, structured list, file uploader, date picker, grid, and tile
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Reworked broader guidance into concrete T1/T2 examples across routed table, pagination, tabs, modal, tooltip/toggletip, loading, search/filter, input, overflow, breadcrumb, structured-list, file-uploader, date-picker, grid, and tile surfaces.
+- Acceptance:
+  - examples cover all 32 routed gap IDs through concrete owner-route examples and implementation guides
+  - missing component families are explicitly marked as queued gaps instead of implied as implemented
+  - examples preserve Login App 2.0 visual direction and identify component names, data attributes, wrappers, route ownership, and usage boundaries
+- Implemented in: worklog-2-F-0015
 
 ### P2-F-CQ-012 - UI control module ownership cleanup
 - Status: Implemented Pending Review

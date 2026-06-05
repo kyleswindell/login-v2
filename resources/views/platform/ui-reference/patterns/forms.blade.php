@@ -43,6 +43,76 @@
             </div>
         </x-ui.patterns.proof-note>
 
+        <section class="ui-card" data-ui-reference-example="t2-form-composition" data-guidance-id="P2-F-CQ-010">
+            <p class="ui-kicker">T2 Form Composition Examples</p>
+            <div class="mt-5 grid gap-5 xl:grid-cols-2">
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Settings-style form section</p>
+                    <form class="mt-3 grid gap-4" action="#" method="POST" onsubmit="event.preventDefault()">
+                        <x-ui.patterns.form-group for="settings-workspace-title" label="Workspace Title" helper="Shown in internal page headers." required>
+                            <input id="settings-workspace-title" type="text" value="Platform Operations" class="ui-input w-full" />
+                        </x-ui.patterns.form-group>
+                        <x-ui.patterns.form-group for="settings-default-owner" label="Default Owner" helper="Short known lists use select.">
+                            <select id="settings-default-owner" class="ui-select w-full">
+                                <option>Platform Team</option>
+                                <option>Security Team</option>
+                            </select>
+                        </x-ui.patterns.form-group>
+                    </form>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Compact account/profile form</p>
+                    <form class="mt-3 grid gap-4" action="#" method="POST" onsubmit="event.preventDefault()">
+                        <x-ui.patterns.inline-form-row for="account-display-name" label="Display Name" helper="Compact profile rows keep labels visible.">
+                            <input id="account-display-name" type="text" value="Alex Operator" class="ui-input w-full" />
+                        </x-ui.patterns.inline-form-row>
+                        <x-ui.patterns.inline-form-row for="account-timezone" label="Timezone" helper="Long known list uses searchable select.">
+                            <x-ui.searchable-select
+                                id="account-timezone"
+                                name="account_timezone"
+                                :options="App\Support\UiOptionCatalog::timezoneOptions()"
+                                selected="America/New_York"
+                                placeholder="Choose a timezone"
+                                search-placeholder="Search timezones"
+                            />
+                        </x-ui.patterns.inline-form-row>
+                    </form>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Validation summary + field error</p>
+                    <div class="mt-3 space-y-4">
+                        <x-ui.patterns.validation-summary
+                            title="Review the fields below"
+                            :errors="[
+                                'Support email must be complete.',
+                                'Owner scope must be selected.',
+                            ]"
+                        />
+                        <x-ui.patterns.form-group for="composition-support-email" label="Support Email" error="Enter a valid support email address." required>
+                            <input id="composition-support-email" type="email" value="ops@" aria-invalid="true" class="ui-input w-full" />
+                        </x-ui.patterns.form-group>
+                    </div>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Form action bar</p>
+                    <div class="mt-3">
+                        <x-ui.patterns.form-actions-bar>
+                            <x-slot:leading>
+                                <x-ui.button variant="ghost">Cancel</x-ui.button>
+                            </x-slot:leading>
+
+                            <x-ui.button semantic="danger" variant="soft">Archive</x-ui.button>
+                            <x-ui.button semantic="primary">Save Workspace</x-ui.button>
+                        </x-ui.patterns.form-actions-bar>
+                    </div>
+                    <p class="mt-3 text-sm text-slate-400">One primary save action sits at the end; destructive secondary actions stay lower emphasis unless confirmation is active.</p>
+                </article>
+            </div>
+        </section>
+
         <x-ui.patterns.form-section
             title="Form Group and Form Section"
             description="Use form sections to group related fields under a shared heading, then wrap each field in a canonical form group."

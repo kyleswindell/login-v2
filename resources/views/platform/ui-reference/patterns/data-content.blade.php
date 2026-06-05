@@ -59,6 +59,61 @@
             </div>
         </section>
 
+        <section class="ui-card" data-ui-reference-example="structured-list-tile-contract" data-guidance-id="P2-F-CQ-011">
+            <p class="ui-kicker">Concrete Structured List And Tile Examples</p>
+            <div class="mt-5 grid gap-5 xl:grid-cols-2">
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Structured list for compact comparison</p>
+                    <dl class="mt-3 divide-y divide-slate-800 rounded-md border border-slate-800 bg-slate-950/70 text-sm">
+                        <div class="grid gap-2 px-3 py-3 sm:grid-cols-3"><dt class="text-slate-500">Owner</dt><dd class="text-white sm:col-span-2">Platform Team</dd></div>
+                        <div class="grid gap-2 px-3 py-3 sm:grid-cols-3"><dt class="text-slate-500">Timezone</dt><dd class="text-white sm:col-span-2">America/New_York</dd></div>
+                        <div class="grid gap-2 px-3 py-3 sm:grid-cols-3"><dt class="text-slate-500">Status</dt><dd class="sm:col-span-2"><x-ui.badge label="active" semantic="success" /></dd></div>
+                    </dl>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Selectable structured list</p>
+                    <fieldset class="mt-3 space-y-3">
+                        <legend class="sr-only">Choose support route</legend>
+                        <label class="ui-selectable-option is-selected flex items-start gap-3 text-sm text-slate-200">
+                            <input type="radio" checked name="support-route" class="mt-1 h-4 w-4 border-slate-600 bg-slate-950 text-sky-400 focus:ring-sky-400/40" />
+                            <span><span class="block font-semibold text-white">Platform escalation</span><span class="block text-xs text-slate-500">24-hour review with audit context.</span></span>
+                        </label>
+                        <label class="ui-selectable-option flex items-start gap-3 text-sm text-slate-200">
+                            <input type="radio" name="support-route" class="mt-1 h-4 w-4 border-slate-600 bg-slate-950 text-sky-400 focus:ring-sky-400/40" />
+                            <span><span class="block font-semibold text-white">Security escalation</span><span class="block text-xs text-slate-500">Immediate review for blocked authentication.</span></span>
+                        </label>
+                    </fieldset>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Tile variants</p>
+                    <div class="mt-3 grid gap-3 sm:grid-cols-2">
+                        <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-3"><p class="font-semibold text-white">Base tile</p><p class="text-xs text-slate-500">Static summary.</p></div>
+                        <a href="#" onclick="event.preventDefault()" class="rounded-lg border border-sky-500/40 bg-slate-950/70 p-3 hover:border-sky-400"><p class="font-semibold text-white">Clickable tile</p><p class="text-xs text-slate-500">Navigation target.</p></a>
+                        <label class="ui-selectable-option flex items-start gap-3 text-sm text-slate-200">
+                            <input type="checkbox" checked class="mt-1 h-4 w-4 rounded border-slate-600 bg-slate-950 text-sky-400" />
+                            <span><span class="block font-semibold text-white">Selectable tile</span><span class="block text-xs text-slate-500">Choice set with metadata.</span></span>
+                        </label>
+                        <details class="rounded-lg border border-slate-800 bg-slate-950/70 p-3 text-sm text-slate-300">
+                            <summary class="cursor-pointer font-semibold text-white">Expandable tile</summary>
+                            <p class="mt-2 text-xs text-slate-500">Use only when details must stay in context.</p>
+                        </details>
+                    </div>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Queued component gaps</p>
+                    <p class="mt-3 text-sm text-slate-300">No dedicated structured-list or tile Blade component exists yet. Use these examples as the reference contract and queue a component extraction only after multiple consumers need the same anatomy.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="ui-card" data-ui-implementation-guide="structured-list-tile" data-guidance-id="P2-F-CQ-011">
+            <p class="ui-kicker">Data Content Implementation Guide</p>
+            <p class="ui-card-copy mt-2">Owner route: <code>/platform/ui-reference/patterns/data-content</code>. Use <code>x-ui.patterns.key-value-display</code>, <code>x-ui.patterns.data-list-item</code>, <code>x-ui.patterns.identity-summary-card</code>, and local structured-list/tile markup until dedicated components are introduced. Use data tables instead when sorting, filtering, or column alignment is the core task.</p>
+        </section>
+
         <x-ui.patterns.content-section-block
             title="Stat Cards"
             description="Use stat cards for small metric summaries with optional trend or support copy."

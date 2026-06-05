@@ -21,7 +21,7 @@
 
 ## Design-System Usage Guidance
 - [ ] Design-System Usage Guidance
-  Status: implemented (pending manual review) — manual review rejected P2-F-CQ-008 through P2-F-CQ-011 as too note-heavy; the next implementation pass must convert guidance into concrete T1/T2 component examples, variants, states, and implementation guidance while P2-F-CQ-012 and P2-F-CQ-013 remain implemented pending review
+  Status: implemented (pending manual review) — correction pass 2-F-0015 reworked P2-F-CQ-008 through P2-F-CQ-011 from note-heavy guidance into concrete T1/T2 component examples, variants, states, queued-gap markers, and implementation guides; P2-F-CQ-012 and P2-F-CQ-013 also remain implemented pending review
   - [x] badge, alert, toast, notification, and status color semantics are explicit
   - [x] guidance preserves the existing Login App 2.0 visual direction
   - [x] standard, soft, ghost, outline, and destructive button usage rules are explicit
@@ -32,6 +32,7 @@
   - [x] required and optional field marker rules are documented
   - [x] selection option variants and usage rules are documented
   - [x] required classes, ready-to-use components, component sets, and starter views are identified or queued
+  - [x] concrete T1/T2 reference examples and implementation guides are present for actions, forms, feedback, data, navigation, overlays, loading, inputs, and layout guidance
 
 ## Module Home And Dashboard Summary Starters
 - [ ] Module Home And Dashboard Summary Starters

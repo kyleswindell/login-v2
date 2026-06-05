@@ -67,6 +67,182 @@
             </div>
         </section>
 
+        <section class="ui-card" data-ui-reference-example="form-field-state-contract" data-guidance-id="P2-F-CQ-010">
+            <p class="ui-kicker">T1 Field Reference Matrix</p>
+            <h2 class="ui-card-title mt-2">Field states and native control families</h2>
+            <p class="ui-card-copy">These examples show the shared field wrapper, visible label policy, helper copy, validation copy, disabled/read-only treatment, and native input choices that later pages should reuse.</p>
+
+            <div class="mt-5 grid gap-5 lg:grid-cols-2">
+                <label class="block rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <span class="ui-control-label">Workspace Name <span class="text-red-300">*</span></span>
+                    <input type="text" value="Platform Operations" class="ui-input mt-2" />
+                    <span class="ui-control-copy">Required field. Use the asterisk only for required fields.</span>
+                    <code class="mt-3 block rounded-md bg-slate-950 px-3 py-2 text-xs text-slate-300">class=&quot;ui-input&quot; + required label marker</code>
+                </label>
+
+                <label class="block rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <span class="ui-control-label">Reference Note <span class="font-normal text-slate-500">(optional)</span></span>
+                    <input type="text" placeholder="Add internal note" class="ui-input mt-2" />
+                    <span class="ui-control-copy">Optional copy appears only when omission changes the workflow.</span>
+                </label>
+
+                <label class="block rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <span class="ui-control-label">Focused Field</span>
+                    <input type="text" value="Visible keyboard focus" class="ui-input mt-2 ring-2 ring-sky-400/50 ring-offset-2 ring-offset-slate-900" />
+                    <span class="ui-control-copy">Focus examples must be visible in dark and light themes.</span>
+                </label>
+
+                <label class="block rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <span class="ui-control-label">Read-only Identifier</span>
+                    <input type="text" value="workspace-ops-001" readonly class="ui-input mt-2" />
+                    <span class="ui-control-copy">Read-only means selectable text, not an editable field.</span>
+                </label>
+
+                <label class="block rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <span class="ui-control-label">Disabled Policy Field</span>
+                    <input type="text" value="Locked by tenant policy" disabled class="ui-input mt-2" />
+                    <span class="ui-control-copy">Disabled controls remain readable but cannot be submitted as a choice.</span>
+                </label>
+
+                <label class="block rounded-lg border border-[color:var(--ui-alert-danger-border)] bg-[color:var(--ui-alert-danger-bg)] p-4">
+                    <span class="ui-control-label">Support Email <span class="text-red-300">*</span></span>
+                    <input type="email" value="ops@" aria-invalid="true" aria-describedby="t1-email-error" class="ui-input mt-2" />
+                    <span id="t1-email-error" class="ui-control-error">Enter a complete email address before saving.</span>
+                </label>
+
+                <label class="block rounded-lg border border-[color:var(--ui-alert-warning-border)] bg-[color:var(--ui-alert-warning-bg)] p-4">
+                    <span class="ui-control-label">Subdomain</span>
+                    <input type="text" value="ops" aria-describedby="t1-subdomain-warning" class="ui-input mt-2 border-[color:var(--ui-alert-warning-border)] ring-1 ring-[color:var(--ui-alert-warning-border)]" />
+                    <span id="t1-subdomain-warning" class="mt-2 block text-xs font-medium text-[color:var(--ui-alert-warning-text)]">Valid but short. Prefer a clearer tenant subdomain.</span>
+                </label>
+
+                <label class="block rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <span class="ui-control-label">Description</span>
+                    <textarea rows="4" class="ui-textarea mt-2">Textarea uses the shared control label and helper copy.</textarea>
+                    <span class="ui-control-copy">Use textarea for multi-line free entry only.</span>
+                </label>
+
+                <label class="block rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <span class="ui-control-label">Owner Scope</span>
+                    <select class="ui-select mt-2">
+                        <option>Platform Administrator</option>
+                        <option>Base Operator</option>
+                    </select>
+                    <span class="ui-control-copy">Use select for short known lists.</span>
+                </label>
+
+                <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <span class="ui-control-label">Attachment</span>
+                    <input type="file" class="ui-input mt-2" />
+                    <p class="ui-control-copy">Button uploader baseline for one-off attachments. Drag-drop uploader remains a queued gap for bulk upload surfaces.</p>
+                </div>
+
+                <label class="block rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <span class="ui-control-label">Review Date</span>
+                    <input type="date" value="2026-06-08" class="ui-input mt-2" />
+                    <span class="ui-control-copy">Use native date for single-date entry.</span>
+                </label>
+
+                <label class="block rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <span class="ui-control-label">Review Starts</span>
+                    <input type="datetime-local" value="2026-06-08T09:30" class="ui-input mt-2" />
+                    <span class="ui-control-copy">Use date-time only when time precision matters.</span>
+                </label>
+            </div>
+        </section>
+
+        <section class="ui-card" data-ui-reference-example="selection-control-contract" data-guidance-id="P2-F-CQ-010">
+            <p class="ui-kicker">T1 Selection Control Examples</p>
+            <div class="mt-5 grid gap-5 lg:grid-cols-2">
+                <fieldset class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <legend class="ui-control-label">Checkbox: independent choices</legend>
+                    <label class="mt-3 flex items-start gap-3 text-sm text-slate-200">
+                        <input type="checkbox" checked class="mt-0.5 h-4 w-4 rounded border-slate-600 bg-slate-950 text-sky-400 focus:ring-sky-400/40" />
+                        <span>Email me when review notes are added.</span>
+                    </label>
+                    <label class="mt-2 flex items-start gap-3 text-sm text-slate-200">
+                        <input type="checkbox" class="mt-0.5 h-4 w-4 rounded border-slate-600 bg-slate-950 text-sky-400 focus:ring-sky-400/40" />
+                        <span>Include archived records.</span>
+                    </label>
+                </fieldset>
+
+                <fieldset class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <legend class="ui-control-label">Radio: one visible required choice</legend>
+                    <label class="mt-3 flex items-center gap-3 text-sm text-slate-200">
+                        <input type="radio" checked name="t1-review-mode" class="h-4 w-4 border-slate-600 bg-slate-950 text-sky-400 focus:ring-sky-400/40" />
+                        <span>Guided review</span>
+                    </label>
+                    <label class="mt-2 flex items-center gap-3 text-sm text-slate-200">
+                        <input type="radio" name="t1-review-mode" class="h-4 w-4 border-slate-600 bg-slate-950 text-sky-400 focus:ring-sky-400/40" />
+                        <span>Manual review</span>
+                    </label>
+                </fieldset>
+
+                <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="ui-control-label">Toggle: immediate setting</p>
+                    <label class="mt-3 flex items-center justify-between gap-4 rounded-lg border border-slate-800 bg-slate-950/70 px-4 py-3">
+                        <span class="text-sm text-slate-200">Lock session after inactivity</span>
+                        <span class="ui-switch">
+                            <input type="checkbox" checked role="switch" aria-label="Lock session after inactivity" class="ui-switch-input" />
+                            <span class="ui-switch-track"></span>
+                            <span class="ui-switch-thumb"></span>
+                        </span>
+                    </label>
+                </div>
+
+                <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="ui-control-label">Searchable select / combo</p>
+                    <div class="mt-3">
+                        <x-ui.searchable-select
+                            id="component-timezone-example"
+                            name="component_timezone_example"
+                            :options="App\Support\UiOptionCatalog::timezoneOptions()"
+                            selected="America/New_York"
+                            placeholder="Choose a timezone"
+                            search-placeholder="Search timezones"
+                        />
+                    </div>
+                    <p class="ui-control-copy">Use <code>x-ui.searchable-select</code> for long known-option lists. Queued gap: multi-select component for multiple reviewable choices.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="ui-card" data-ui-implementation-guide="forms" data-guidance-id="P2-F-CQ-010">
+            <p class="ui-kicker">Form Implementation Guide</p>
+            <div class="mt-4 overflow-x-auto rounded-lg border border-slate-800">
+                <table class="w-full min-w-[780px] divide-y divide-slate-800 text-left text-sm">
+                    <thead class="bg-slate-900 text-xs uppercase tracking-[0.16em] text-slate-500">
+                        <tr>
+                            <th class="px-4 py-3">Use</th>
+                            <th class="px-4 py-3">Component or class</th>
+                            <th class="px-4 py-3">Placement contract</th>
+                            <th class="px-4 py-3">Owner routes</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800 text-slate-300">
+                        <tr>
+                            <td class="px-4 py-3 text-white">Field wrapper</td>
+                            <td class="px-4 py-3"><code>x-ui.patterns.form-group</code>, <code>ui-control-label</code>, <code>ui-control-copy</code>, <code>ui-control-error</code></td>
+                            <td class="px-4 py-3">Label first, control second, helper or validation below. Field errors stay in the same group as the affected input.</td>
+                            <td class="px-4 py-3">/components/forms, /patterns/forms</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3 text-white">Text controls</td>
+                            <td class="px-4 py-3"><code>ui-input</code>, <code>ui-textarea</code>, <code>ui-select</code></td>
+                            <td class="px-4 py-3">Use native type attributes for email, tel, date, datetime-local, and file before introducing custom controls.</td>
+                            <td class="px-4 py-3">/components/forms, /patterns/navigation</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3 text-white">Selection controls</td>
+                            <td class="px-4 py-3"><code>input[type=checkbox]</code>, <code>input[type=radio]</code>, <code>ui-switch</code>, <code>x-ui.searchable-select</code></td>
+                            <td class="px-4 py-3">Checkbox for independent choices, radio for short exclusive choices, toggle for immediate on/off settings, searchable select for long known lists.</td>
+                            <td class="px-4 py-3">/components/forms, /patterns/forms</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
         <section class="ui-card" data-ui-guidance="input-file-date-usage" data-guidance-id="P2-F-CQ-011">
             <p class="ui-kicker">Input, File, And Date Guidance</p>
             <div class="mt-3 grid gap-4 lg:grid-cols-3">
@@ -103,6 +279,43 @@
                     </div>
                 </dl>
             </div>
+        </section>
+
+        <section class="ui-card" data-ui-reference-example="input-file-date-contract" data-guidance-id="P2-F-CQ-011">
+            <p class="ui-kicker">Concrete Input, File, And Date Examples</p>
+            <div class="mt-5 grid gap-5 lg:grid-cols-2">
+                <label class="block rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <span class="ui-control-label">Default width input</span>
+                    <input type="text" value="Default form field" class="ui-input mt-2 max-w-md" />
+                    <span class="ui-control-copy">Default width belongs inside normal form groups.</span>
+                </label>
+
+                <label class="block rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <span class="ui-control-label">Fluid search input</span>
+                    <input type="search" value="Full-row search" class="ui-input mt-2 w-full" />
+                    <span class="ui-control-copy">Fluid input is allowed when the layout owns the full row.</span>
+                </label>
+
+                <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <span class="ui-control-label">Button file uploader</span>
+                    <input type="file" class="ui-input mt-2" />
+                    <p class="ui-control-copy">Use for one-off attachments. Queued gap: drag-and-drop uploader for bulk upload and repeated file management.</p>
+                </div>
+
+                <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <span class="ui-control-label">Date picker family</span>
+                    <div class="mt-2 grid gap-3 sm:grid-cols-2">
+                        <input type="date" value="2026-06-08" class="ui-input" aria-label="Review date" />
+                        <input type="datetime-local" value="2026-06-08T09:30" class="ui-input" aria-label="Review date and time" />
+                    </div>
+                    <p class="ui-control-copy">Native date/date-time are the current T1 implementation. Queued gap: calendar range control for comparison-heavy reporting.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="ui-card" data-ui-implementation-guide="inputs-file-date" data-guidance-id="P2-F-CQ-011">
+            <p class="ui-kicker">Input Implementation Guide</p>
+            <p class="ui-card-copy mt-2">Owner route: <code>/platform/ui-reference/components/forms</code>. Use <code>ui-input</code>, <code>ui-textarea</code>, and <code>ui-select</code> with native HTML types before creating a custom control. File drag-drop, calendar range picker, and multi-select remain queued gaps until a consumer needs the behavior and component contract.</p>
         </section>
 
         <section class="ui-card">

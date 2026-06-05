@@ -54,6 +54,101 @@
             </div>
         </section>
 
+        <section class="ui-card" data-ui-reference-example="feedback-surface-contract" data-guidance-id="P2-F-CQ-009">
+            <p class="ui-kicker">T2 Feedback Surface Examples</p>
+            <div class="mt-5 grid gap-5 xl:grid-cols-2">
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Form validation feedback</p>
+                    <div class="mt-3 space-y-3">
+                        <x-ui.inline-alert semantic="danger" title="Review required fields">
+                            Support email and owner scope must be fixed before saving.
+                        </x-ui.inline-alert>
+                        <label class="block">
+                            <span class="ui-control-label">Support Email</span>
+                            <input type="email" value="ops@" aria-invalid="true" class="ui-input mt-2" />
+                            <span class="ui-control-error">Enter a complete email address.</span>
+                        </label>
+                    </div>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Table/list feedback</p>
+                    <div class="mt-3 space-y-3">
+                        <x-ui.inline-alert semantic="info" title="Filters applied">
+                            Showing active workspace rows owned by Platform Team.
+                        </x-ui.inline-alert>
+                        <div class="flex flex-wrap items-center justify-between gap-3 rounded-md border border-slate-800 bg-slate-950/70 px-3 py-2">
+                            <span class="text-sm text-white">North Region Tenant</span>
+                            <x-ui.badge label="synced" semantic="success" />
+                        </div>
+                    </div>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Page-level callout/banner</p>
+                    <div class="mt-3">
+                        <x-ui.inline-alert semantic="warning" title="Security review required">
+                            This page-level warning remains visible until the operator resolves the blocking review item.
+                        </x-ui.inline-alert>
+                    </div>
+                    <p class="mt-3 text-sm text-slate-400">Use page-level feedback when the message affects the whole surface, not a single field.</p>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">AJAX same-page toast stack</p>
+                    <div class="mt-3 flex flex-col gap-3" aria-live="polite" data-ui-reference-example="toast-stacking-contract">
+                        <x-ui.toast semantic="success" title="Saved" data-ui-demo-toast>
+                            Notification digest preferences updated without leaving the page.
+                        </x-ui.toast>
+                        <x-ui.toast semantic="info" title="Generated" data-ui-demo-toast>
+                            Export is being prepared. A persisted notification will appear when it is ready.
+                        </x-ui.toast>
+                    </div>
+                </article>
+            </div>
+
+            <div class="mt-5 rounded-lg border border-slate-800 bg-slate-900/70 p-4" data-ui-reference-example="notification-center-handoff">
+                <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Persisted notification handoff</p>
+                <p class="mt-3 text-sm text-slate-300">Transient toast confirms the same-page action. Durable messages such as export completion, security review, or background failure also appear in the notification center or page content so they remain available after dismissal.</p>
+            </div>
+        </section>
+
+        <section class="ui-card" data-ui-implementation-guide="feedback" data-guidance-id="P2-F-CQ-009">
+            <p class="ui-kicker">Feedback Implementation Guide</p>
+            <div class="mt-4 overflow-x-auto rounded-lg border border-slate-800">
+                <table class="w-full min-w-[780px] divide-y divide-slate-800 text-left text-sm">
+                    <thead class="bg-slate-900 text-xs uppercase tracking-[0.16em] text-slate-500">
+                        <tr>
+                            <th class="px-4 py-3">Use</th>
+                            <th class="px-4 py-3">Component or hook</th>
+                            <th class="px-4 py-3">Live-region and placement</th>
+                            <th class="px-4 py-3">Owner routes</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800 text-slate-300">
+                        <tr>
+                            <td class="px-4 py-3 text-white">Inline/page alert</td>
+                            <td class="px-4 py-3"><code>x-ui.inline-alert</code></td>
+                            <td class="px-4 py-3">Place next to the triggering content or at page top for whole-page blockers. Warning/danger can use assertive alert semantics.</td>
+                            <td class="px-4 py-3">/patterns/overlays-feedback, /patterns/forms, /patterns/tables</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3 text-white">Transient toast</td>
+                            <td class="px-4 py-3"><code>x-ui.toast</code>, <code>data-ui-demo-toast-stack</code></td>
+                            <td class="px-4 py-3">Stack newest to oldest in the top-right region. Use polite live regions for non-critical same-page feedback.</td>
+                            <td class="px-4 py-3">/patterns/overlays-feedback</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3 text-white">Persisted notification</td>
+                            <td class="px-4 py-3">Notification center consumer</td>
+                            <td class="px-4 py-3">Use when the user may need the message after toast dismissal or page navigation.</td>
+                            <td class="px-4 py-3">Dashboard shell notification center</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
         <section class="ui-card" data-ui-guidance="overlay-loading-usage" data-guidance-id="P2-F-CQ-011">
             <p class="ui-kicker">Overlay, Tooltip, And Loading Guidance</p>
             <div class="mt-3 grid gap-4 lg:grid-cols-3">
@@ -94,6 +189,62 @@
                     </div>
                 </dl>
             </div>
+        </section>
+
+        <section class="ui-card" data-ui-reference-example="overlay-loading-contract" data-guidance-id="P2-F-CQ-011">
+            <p class="ui-kicker">Concrete Overlay, Tooltip, Toggletip, And Loading Examples</p>
+            <div class="mt-5 grid gap-5 xl:grid-cols-2">
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Modal variants</p>
+                    <div class="mt-3 grid gap-3 sm:grid-cols-2">
+                        <x-ui.button variant="outline" data-ui-demo-overlay-open="reference-drawer">Passive/detail drawer</x-ui.button>
+                        <x-ui.button semantic="primary" data-ui-demo-overlay-open="reference-modal">Transactional modal</x-ui.button>
+                        <x-ui.button semantic="danger" data-ui-demo-overlay-open="reference-modal">Danger confirmation</x-ui.button>
+                        <x-ui.button semantic="notice" variant="soft">Queued gap: progress modal</x-ui.button>
+                    </div>
+                    <p class="mt-3 text-sm text-slate-400">Use the existing drawer/modal components; progress modal is queued until a blocking-task consumer exists.</p>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Tooltip vs toggletip</p>
+                    <div class="mt-3 flex flex-wrap items-center gap-4">
+                        <div class="group relative inline-flex">
+                            <button type="button" class="ui-icon-button" aria-describedby="tooltip-reference-example">
+                                <x-heroicon-o-question-mark-circle class="h-4 w-4" aria-hidden="true" />
+                            </button>
+                            <span id="tooltip-reference-example" role="tooltip" class="pointer-events-none absolute left-1/2 top-full z-10 mt-2 hidden -translate-x-1/2 whitespace-nowrap rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-xs text-slate-200 shadow-xl group-hover:block">
+                                Short non-interactive help
+                            </span>
+                        </div>
+                        <details class="rounded-lg border border-slate-800 bg-slate-950/70 px-3 py-2 text-sm text-slate-300">
+                            <summary class="cursor-pointer font-semibold text-white">Toggletip</summary>
+                            <p class="mt-2 max-w-sm">Use for focusable or dismissible explanatory content that must remain available after click.</p>
+                        </details>
+                    </div>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Inline loading</p>
+                    <div class="mt-3 flex items-center gap-3 text-sm text-slate-300">
+                        <span class="ui-spinner" aria-hidden="true"></span>
+                        <span>Saving notification preferences...</span>
+                    </div>
+                </article>
+
+                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Skeleton loading</p>
+                    <div class="mt-3 space-y-2" aria-label="Loading content block">
+                        <div class="h-4 w-2/3 rounded bg-slate-800"></div>
+                        <div class="h-4 w-full rounded bg-slate-800/70"></div>
+                        <div class="h-4 w-5/6 rounded bg-slate-800/50"></div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="ui-card" data-ui-implementation-guide="overlays-loading" data-guidance-id="P2-F-CQ-011">
+            <p class="ui-kicker">Overlay Implementation Guide</p>
+            <p class="ui-card-copy mt-2">Owner route: <code>/platform/ui-reference/patterns/overlays-feedback</code>. Use <code>x-ui.drawer</code> for contextual side panels, <code>x-ui.modal</code> for blocking decisions, <code>ui-spinner</code> for short indeterminate inline actions, and skeleton blocks only where the final content shape is known. Use <code>data-ui-demo-overlay-open</code> and <code>data-ui-demo-overlay</code> only for the UI Reference proof hooks.</p>
         </section>
 
         <section class="ui-card">

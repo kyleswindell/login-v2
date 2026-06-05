@@ -21,7 +21,7 @@
 
 ## Design-System Usage Guidance
 - [ ] Design-System Usage Guidance
-  Status: partially implemented — P2-F-CQ-008 through P2-F-CQ-011 usage guidance content is implemented pending review; supporting UI control module ownership cleanup is implemented pending review for P2-F-CQ-012; CSS ownership/read-path cleanup is implemented pending review for P2-F-CQ-013; remaining ready-to-use starter coverage stays queued in P2-F-CQ-002 through P2-F-CQ-006
+  Status: implemented (pending manual review) — manual review rejected P2-F-CQ-008 through P2-F-CQ-011 as too note-heavy; the next implementation pass must convert guidance into concrete T1/T2 component examples, variants, states, and implementation guidance while P2-F-CQ-012 and P2-F-CQ-013 remain implemented pending review
   - [x] badge, alert, toast, notification, and status color semantics are explicit
   - [x] guidance preserves the existing Login App 2.0 visual direction
   - [x] standard, soft, ghost, outline, and destructive button usage rules are explicit

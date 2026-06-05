@@ -57,82 +57,67 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - Phase 2 docs reflect Batch F implementation status
   - Batch E remains the post-F close-out path and staging deploy remains out of scope
 
+### P2-F-CQ-008 - Usage guidance standards for button variants and action labels
+- Status: Ready To Implement
+- Owner: Batch F
+- Scope: Rework the current note-only button/action guidance into concrete, referenceable T1 and T2 UI Reference examples. The page must reduce implementation guesswork for later development by showing valid component usage, variants, states, and action-label patterns in context.
+- Review Finding:
+  - Manual review rejected the current implementation because the T1/T2 pages mostly list G-* notes above existing examples instead of providing valid reference examples for component types, variants, states, and implementation usage.
+- Acceptance:
+  - T1 button examples show standard, soft, ghost, outline, and destructive usage as concrete component examples, not only explanatory notes (G-ACT-01–05)
+  - action examples include default, focus, disabled, loading, icon-leading, icon-only, destructive, and grouped-menu states where supported by existing components
+  - T2 action examples show page-header actions, form actions, table/list row actions, and grouped overflow actions using the same rules
+  - action-label examples distinguish apply/stay-on-page behavior from submit/complete/return behavior in concrete form/filter/page contexts (G-LABEL-01–06)
+  - implementation guidance identifies the component names, supported props/variants/semantics, required wrapper patterns, and owner routes for reuse
+  - per-page "one primary action" rule is visible in examples and documented
+
+### P2-F-CQ-010 - Usage guidance for form field standards and selection controls
+- Status: Ready To Implement
+- Owner: Batch F
+- Scope: Rework the current note-only form/selection guidance into concrete, referenceable T1 and T2 UI Reference examples for fields, field states, validation, and selection controls.
+- Review Finding:
+  - Manual review rejected the current implementation because it documents rules but does not provide enough component examples and implementation guidance to minimize later developer guesswork.
+- Acceptance:
+  - T1 examples show required, optional, helper, error, warning, disabled, read-only, focused, textarea, select, date, date-time, file, checkbox, radio, toggle, searchable select/combo, and multi-select guidance using existing components or clearly marked queued gaps
+  - T2 form examples show field groups, form sections, inline rows, validation summary, form action bar, settings-style forms, and compact account/profile form usage
+  - required vs optional field marking policy is demonstrated in examples, not only documented (G-FORM-01–04)
+  - checkbox vs radio vs toggle selection boundary is demonstrated with concrete examples (G-SEL-01–03)
+  - select vs combo box vs multi-select selection rule is demonstrated with component usage guidance
+  - implementation guidance identifies component names, supported props/attributes, required classes/wrappers, validation placement, and owner routes for reuse
+
+### P2-F-CQ-009 - Usage guidance for notifications, badges, and feedback
+- Status: Ready To Implement
+- Owner: Batch F
+- Scope: Rework the current note-only notification/badge/feedback guidance into concrete, referenceable T1 and T2 UI Reference examples for badges, statuses, inline alerts, toasts, banners/callouts, persisted notifications, and AJAX feedback.
+- Review Finding:
+  - Manual review rejected the current implementation because it documents rules but does not provide enough referenceable examples for component types, variants, and usage/implementation expectations.
+- Acceptance:
+  - badge/status examples show semantic mappings, base/outline variants, icon/no-icon states, table/list context, and text-first status usage (G-BADGE-01–04)
+  - feedback examples show inline alert, toast, callout/banner, page-level alert, persisted notification, and AJAX same-page feedback boundaries as concrete examples (G-NOTIF-01–05)
+  - stacking and placement examples demonstrate multi-toast behavior and inline-vs-page placement without adding unrelated runtime notification features
+  - T2 examples show form validation feedback, table/list feedback, dashboard/page feedback, and notification-center handoff expectations
+  - implementation guidance identifies component names, supported semantics/variants, live-region expectations, wrapper/data attributes, and owner routes for reuse
+  - guidance remains Login App 2.0-specific and does not adopt Carbon visual tokens
+
+### P2-F-CQ-011 - Usage guidance for data display, navigation, overlays, loading, inputs, breadcrumb, structured list, file uploader, date picker, grid, and tile
+- Status: Ready To Implement
+- Owner: Batch F
+- Scope: Rework the current note-only broader guidance into concrete, referenceable T1 and T2 UI Reference examples across the routed pass 2/pass 3 component and pattern families.
+- Review Finding:
+  - Manual review rejected the current implementation because all 32 G-* gaps are represented mostly as notes/matrices, not as referenceable component/pattern examples with variants, states, and implementation guidance.
+- Acceptance:
+  - table, pagination, tabs, modal, tooltip/toggletip, loading, search/filter, input, overflow, breadcrumb, structured-list, file-uploader, date-picker, grid, and tile guidance is demonstrated through concrete examples where existing components/patterns exist
+  - examples cover the documented variants and states for all 32 routed gaps: G-TABLE-01–03, G-PAGIN-01–02, G-TABS-01–02, G-MODAL-01–03, G-TOOLTIP-01–02, G-LOAD-01–02, G-SEARCH-01–02, G-INPUT-01–02, G-OVERFLOW-01–02, G-BREADCRUMB-01–02, G-STRLIST-01–02, G-FILEUP-01–02, G-DATEPICK-01–02, G-GRID-01–02, G-TILE-01–02
+  - missing component families are clearly identified as queued gaps instead of implied as implemented
+  - T1 pages show component primitives and supported variants/states; T2 pages show real pattern compositions and usage boundaries
+  - implementation guidance identifies component names, data attributes, wrappers, route ownership, and expected usage boundaries for reuse
+  - examples preserve Login App 2.0 visual direction and do not introduce Carbon visual tokens
+
 ## In Progress
 
 <!-- none -->
 
 ## Implemented Pending Review
-
-### P2-F-CQ-008 - Usage guidance standards for button variants and action labels
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Establish UI Reference guidance for button variant selection and action label standards. Scope narrowed from original CQ-008 — notification/badge guidance split to P2-F-CQ-009; form/selection guidance split to P2-F-CQ-010; data display/overlay/loading/input guidance split to P2-F-CQ-011.
-- Acceptance:
-  - guidance is Login App 2.0-specific and preserves the existing visual direction
-  - standard, soft, ghost, outline, and destructive button usage rules are explicit (G-ACT-01–05)
-  - form action labels distinguish apply/stay-on-page behavior from submit/complete/return behavior (G-LABEL-01–06)
-  - per-page "one primary action" rule is documented
-- Implemented in: worklog-2-F-0011
-
-### P2-F-CQ-010 - Usage guidance for form field standards and selection controls
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Establish UI Reference guidance for form field composition, required/optional marking, validation trigger timing, and selection control choice rules. Split from original P2-F-CQ-008 scope.
-- Acceptance:
-  - required vs optional field marking policy is documented (G-FORM-01–04)
-  - checkbox vs radio vs toggle selection boundary is explicit (G-SEL-01–03)
-  - select vs combo box vs multi-select selection rule is documented
-  - warning field state is covered alongside error and disabled states
-- Implemented in: worklog-2-F-0012
-
-### P2-F-CQ-009 - Usage guidance for notifications, badges, and feedback
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Establish UI Reference guidance for notification type selection, badge/tag usage, and AJAX/toast feedback patterns. Split from original P2-F-CQ-008 scope.
-- Acceptance:
-  - inline alert vs toast vs callout/banner selection rule is explicit (G-NOTIF-01–05)
-  - badge color semantic mapping is documented (G-BADGE-01–04)
-  - multi-notification stacking and placement rules are covered
-  - guidance is Login App 2.0-specific and does not adopt Carbon visual tokens
-- Implemented in: worklog-2-F-0013
-
-### P2-F-CQ-011 - Usage guidance for data display, navigation, overlays, loading, inputs, breadcrumb, structured list, file uploader, date picker, grid, and tile
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Establish UI Reference guidance for all areas identified in the Carbon audit coverage passes (pass 2 and pass 3). Pass 2 areas: data table variants and table loading rules; pagination variant selection; tabs variant and behavior selection; modal variant, focus-trap, and modal-vs-page requirements; tooltip vs toggletip and definition-tooltip guidance; loading indicator vs skeleton selection; full-page vs inline loading; search scope placement; search vs filter distinction; input style and warning-state guidance; overflow menu thresholds and destructive action placement. Pass 3 areas: breadcrumb vs progress indicator selection; breadcrumb overflow/truncation; structured list vs data table selection; selectable structured list vs radio group; file uploader variant selection; file uploader size pairing with form fields; date picker variant selection; date format display and locale guidance; gutter mode selection for page layout; grid style model for Login App 2.0; tile variant selection; tile vs card distinction. All 32 gaps from pass 2 and pass 3 route to this item: G-TABLE-01–03, G-PAGIN-01–02, G-TABS-01–02, G-MODAL-01–03, G-TOOLTIP-01–02, G-LOAD-01–02, G-SEARCH-01–02, G-INPUT-01–02, G-OVERFLOW-01–02, G-BREADCRUMB-01–02, G-STRLIST-01–02, G-FILEUP-01–02, G-DATEPICK-01–02, G-GRID-01–02, G-TILE-01–02.
-- Acceptance:
-  - data table variant selection rule (basic/selectable/expandable) is documented (G-TABLE-01)
-  - inline icon button vs overflow menu threshold rule is explicit (G-TABLE-02, G-OVERFLOW-01)
-  - table skeleton loading guidance is documented (G-TABLE-03)
-  - pagination vs pagination-nav variant selection rule is documented (G-PAGIN-01)
-  - pagination page-size options and placement guidance is explicit (G-PAGIN-02)
-  - line vs contained vs vertical tab variant selection rule is documented (G-TABS-01)
-  - automatic vs manual tablist behavior is documented (G-TABS-02)
-  - modal variant selection rule (passive/transactional/danger/acknowledgment/progress) is documented (G-MODAL-01)
-  - focus-trap accessibility requirement for modals is documented (G-MODAL-02)
-  - modal vs dedicated page or side panel selection rule is documented (G-MODAL-03)
-  - tooltip vs toggletip usage boundary is explicit (G-TOOLTIP-01)
-  - definition tooltip guidance is documented (G-TOOLTIP-02)
-  - loading spinner vs skeleton selection rule is documented (G-LOAD-01)
-  - full-page overlay vs inline loading selection is documented (G-LOAD-02)
-  - search scope (global/page/component) placement guidance is explicit (G-SEARCH-01)
-  - search vs filter pattern distinction is documented (G-SEARCH-02)
-  - default vs fluid input styling choice is documented (G-INPUT-01)
-  - input warning state guidance is documented (G-INPUT-02)
-  - overflow menu destructive action placement rule is documented (G-OVERFLOW-02)
-  - breadcrumb vs progress indicator selection rule is documented (G-BREADCRUMB-01)
-  - breadcrumb overflow/truncation behavior is documented (G-BREADCRUMB-02)
-  - structured list vs data table selection rule is documented (G-STRLIST-01)
-  - selectable structured list vs radio group boundary is documented (G-STRLIST-02)
-  - file uploader variant selection rule (button vs drag-and-drop) is documented (G-FILEUP-01)
-  - file uploader size pairing with form fields is documented (G-FILEUP-02)
-  - date picker variant selection rule (simple vs calendar vs time) is documented (G-DATEPICK-01)
-  - date format display and locale guidance is documented (G-DATEPICK-02)
-  - gutter mode selection rule for page layout contexts is documented (G-GRID-01)
-  - grid style model for Login App 2.0 is documented (G-GRID-02)
-  - tile variant selection rule (base/clickable/selectable/expandable) is documented (G-TILE-01)
-  - tile vs card distinction is documented (G-TILE-02)
-- Implemented in: worklog-2-F-0014
 
 ### P2-F-CQ-012 - UI control module ownership cleanup
 - Status: Implemented Pending Review

@@ -1,17 +1,19 @@
 # Branch-Based Batch Integration
 
-This document defines the canonical scope and intent for branch-based parallel batch execution.
+This document defines the canonical scope and intent for branch-based batch execution with serialized integration.
 
 ## Purpose
 
-Allow multiple writable implementation sessions to work on separate change-queue items at the same time without turning `/docs/08-active/` into a multi-writer workspace.
+Allow one isolated runtime worker to implement a change-queue item while a separate integrator owns `/docs/08-active/`, review state, staging, and final merge/promotion.
+
+Multiple runtime workers are an exception, not the default. Use them only after explicit operator approval for a temporary, bounded parallel burst.
 
 ## Core Rule
 
-Parallel implementation is allowed only when:
+Branch-based worker implementation is allowed only when:
 
-* each worker uses its own branch and its own worktree
-* each worker owns one queue item at a time
+* the worker uses its own branch and its own worktree
+* the worker owns one queue item at a time
 * a single integrator session serializes:
   * `/docs/08-active/` updates
   * merge or cherry-pick decisions
@@ -66,7 +68,7 @@ Minimum contents:
 ## Workflow
 
 1. `batch-start` initializes `/docs/08-active/` as usual.
-2. The integrator may execute `orchestrate-work-batch-branches` to create or attach worker lanes for the selected ready queue items.
+2. The integrator may execute `orchestrate-work-batch-branches` to create or attach the worker lane for the selected ready queue item.
 3. The worker executes `work-batch-branch` for that queue item.
 4. The worker commits scoped changes on the worker branch and updates the handoff artifact.
 5. The integrator executes `integrate-work-batch-branch`.
@@ -80,12 +82,12 @@ Minimum contents:
 Preferred path when the Codex app is available:
 
 1. Keep one integrator project thread on the local `main` worktree.
-2. Use `orchestrate-work-batch-branches` to create or attach one worker project thread per assigned queue item in Worktree mode.
-3. Run `work-batch-branch` inside each worker thread.
+2. Use `orchestrate-work-batch-branches` to create or attach one worker project thread for the assigned queue item in Worktree mode.
+3. Run `work-batch-branch` inside the worker thread.
 4. Use the handoff artifact as the durable worker-to-integrator coordination surface.
 5. Run `integrate-work-batch-branch` only in the integrator thread.
 
-Prefer dedicated worker project threads for long-lived ownership visibility. If the available Codex tooling cannot attach those project threads to the already-provisioned dedicated worktrees, spawned child agents are an acceptable worker fallback only when they are explicitly bound to the assigned dedicated branch/worktree and still complete the full `work-batch-branch` contract:
+Prefer a dedicated worker project thread for long-lived ownership visibility. If the available Codex tooling cannot attach that project thread to the already-provisioned dedicated worktree, a spawned child agent is an acceptable worker fallback only when it is explicitly bound to the assigned dedicated branch/worktree and still completes the full `work-batch-branch` contract:
 
 * implement only the assigned queue item
 * do not edit `/docs/08-active/`
@@ -101,9 +103,9 @@ The operator should not have to hand-author a long orchestration prompt.
 
 Preferred trigger:
 
-* ask the integrator session to execute `orchestrate-work-batch-branches` for the current ready queue items
+* ask the integrator session to execute `orchestrate-work-batch-branches` for the current ready queue item
 * natural-language equivalent accepted in this repo:
-  `Start branch-based parallel batch execution: create separate worker branches/worktrees for the current ready queue items and keep /docs/08-active integrator-owned.`
+  `Start branch-based batch execution: create a worker branch/worktree for the current ready queue item and keep /docs/08-active integrator-owned.`
 
 That workflow should own:
 
@@ -115,6 +117,7 @@ That workflow should own:
 The operator should only need to specify exceptions such as:
 
 * which ready queue items to include or exclude
+* whether more than one worker lane is explicitly approved for a temporary burst
 * whether worker execution should begin immediately or stop after lane setup
 * whether existing worker lanes should be reused
 
@@ -122,21 +125,21 @@ The operator should only need to specify exceptions such as:
 
 In this mode:
 
-* workers may discuss or reference queue items
-* workers do not move queue items between active sections in `/docs/08-active/`
+* the worker may discuss or reference queue items
+* worker lanes do not move queue items between active sections in `/docs/08-active/`
 * the integrator records the official transition into:
   * `In Progress`
   * `Implemented Pending Review`
   * `Blocked`
   * `Deferred`
 
-This preserves one canonical queue writer even while implementation happens in parallel branches.
+This preserves one canonical queue writer while implementation happens in an isolated branch.
 
 ## Merge Strategy
 
 Preferred order:
 
-1. cherry-pick or merge worker implementation commits onto the integration branch
+1. cherry-pick or merge the worker implementation commit onto the integration branch
 2. make a separate integrator state-sync commit for `/docs/08-active/` and handoff status when that keeps history clearer
 3. push the integrated branch or `main` according to the active review flow
 
@@ -147,7 +150,7 @@ Do not bundle multiple worker queue items into one shared implementation commit.
 Staging remains single-owner:
 
 * only the integrator deploys the shared review surface
-* multiple worker branches must not each deploy themselves to the same shared staging target at the same time
+* worker branches must not deploy themselves to the same shared staging target
 
 ## Related
 

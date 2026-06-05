@@ -60,7 +60,7 @@ Start from the repository root:
 
 ```bash
 cp .env.example .env
-docker compose run --rm app php artisan key:generate
+docker compose run --rm app sh -lc "composer install && php artisan key:generate"
 docker compose up --build
 ```
 
@@ -78,6 +78,8 @@ The Compose stack includes:
 * `redis`: Redis 7
 * `mailpit`: local email capture
 
+Compose mounts `vendor/` and `node_modules/` as Docker named volumes. That keeps Composer and npm dependency trees out of each checkout or disposable worker worktree while preserving them for the active Compose project. Use `docker compose down --volumes` when intentionally clearing those dependency volumes.
+
 ## Verification Commands
 
 After `docker compose up --build` is running, use a second terminal from the repository root:
@@ -87,6 +89,12 @@ docker compose ps
 docker compose exec app php artisan about
 docker compose exec app php artisan migrate
 docker compose exec app php artisan test
+```
+
+If the stack is not already running and the dependency volume may be empty, run one-off Artisan commands through Composer first:
+
+```bash
+docker compose run --rm app sh -lc "composer install && php artisan test"
 ```
 
 Expected baseline:
@@ -100,6 +108,29 @@ Expected baseline:
 * the default Laravel tests pass
 
 This baseline was verified locally after Docker Desktop WSL integration was enabled.
+
+## Local-First Development Policy
+
+The restored local development stack is the default verification surface for ordinary implementation work.
+
+Use local Docker Compose for:
+
+* scoped feature tests
+* focused UI Reference and platform route checks
+* migrations and seed/data-shape checks
+* frontend build checks when the change affects compiled assets
+* browser review against `localhost` when shared staging is not required
+
+Do not push or deploy to the server just to answer questions that the local stack can answer. Server/staging deployment should be reserved for:
+
+* review-ready checkpoints that need a shared manual review URL
+* fixes that must be revalidated by someone outside the local workstation
+* environment-specific behavior that cannot be proven locally
+* final promotion or close-out paths required by the active workflow
+
+This keeps server commits, deploy work, and workflow write-up overhead focused on reviewable milestones instead of implementation micro-steps.
+
+Local manual review may inspect scoped uncommitted changes on the same working tree. Once that local review accepts a change-queue item or tightly coupled group, create the scoped implementation commit before moving that work to passed review. Shared review still requires the commit, push, and deploy to happen before review begins.
 
 ## Frontend Assets
 

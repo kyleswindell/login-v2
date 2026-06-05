@@ -15,6 +15,7 @@ Define the safe operating model for running multiple agent sessions against Logi
 * active workflow guidance
 * adopted for local same-machine agent sessions
 * no enforcement tooling required by default
+* default active-batch operating shape is one runtime batch worker plus one integrator/doc-review/change-queue writer
 
 ## Core Rule
 
@@ -51,8 +52,9 @@ Implications:
 |---|---|---|
 | Shared folder, single writer | Yes | default safe mode |
 | Shared folder, multiple read-only sessions | Yes | one writer only |
-| Separate branches plus separate worktrees, multiple writers | Yes | each writer gets isolated worktree |
-| Separate worker branches/worktrees plus serialized integration | Yes | worker branches stay out of `/docs/08-active/`; one integrator owns queue state and staging |
+| Separate branches plus separate worktrees, multiple writers | Exception only | use only when the work cannot wait and each writer has isolated scope |
+| One worker branch/worktree plus serialized integration | Yes | default active-batch parallel shape; worker stays out of `/docs/08-active/`; one integrator owns queue state and staging |
+| Multiple worker branches/worktrees plus serialized integration | Exception only | requires explicit operator approval; keep temporary and bounded |
 | Concurrent `batch-start` / `work-batch` on shared `/docs/08-active/` | No | current active workspace is singleton |
 | Concurrent review-ledger final writes without serialization | No | shared index writes and same-day slug collisions still need one final writer |
 | Multiple non-`main` staging review branches at once | No | staging has one active owner at a time |
@@ -78,7 +80,7 @@ Best fit:
 
 ### Mode B — Separate Branches And Separate Worktrees
 
-Use this only when two sessions must both write at the same time.
+Use this only when two sessions must both write at the same time and the work cannot be safely serialized.
 
 Required:
 
@@ -92,22 +94,33 @@ Best fit:
 * implementation work plus documentation work that both must edit files concurrently
 * two unrelated writable tasks that cannot wait on each other
 
+Default constraint:
+
+* for routine repo work, prefer one writable implementation session plus one read-only planning/review session instead of opening multiple writers
+
 ### Mode B1 — Parallel Batch Implementation With Serialized Integration
 
-Use this when multiple queue items from the same active batch must be implemented in parallel without letting multiple writers mutate the singleton `/docs/08-active/` workspace.
+Use this when one queue item from the active batch should be implemented in an isolated runtime worker while a separate integrator keeps ownership of `/docs/08-active/`, review state, and deployment coordination.
+
+Default cap:
+
+* one runtime batch worker
+* one integrator/doc-review/change-queue writer
+
+Multiple runtime workers are an exception, not the default. Use more than one worker only when the operator explicitly approves a temporary parallel burst and the queue items are independent enough to justify the coordination cost.
 
 Required:
 
 1. keep one integrator session as the only writer of `/docs/08-active/`
-2. give each implementation session its own branch and its own worktree
-3. have each worker session implement one queue item at a time and record a handoff artifact in `.agents/batch-branch-handoffs/`
+2. give the runtime worker its own branch and its own worktree
+3. have the worker session implement one queue item at a time and record a handoff artifact in `.agents/batch-branch-handoffs/`
 4. keep worker-branch commits out of `/docs/08-active/`
 5. have the integrator merge or cherry-pick reviewable worker branches one at a time, then update the shared active workspace and staging state
 
 Best fit:
 
-* multiple ready queue items that touch mostly separate code paths
-* batches that benefit from concurrent implementation but still require serialized queue state, review ledgers, and staging ownership
+* one ready queue item that needs runtime implementation while review/change-queue writing continues separately
+* batches where serialized queue state, review ledgers, and staging ownership matter more than maximizing parallel throughput
 
 Not allowed:
 
@@ -121,13 +134,19 @@ When using the Codex app, prefer the app's built-in Project Thread plus Worktree
 Recommended shape for long-lived parallel writable work:
 
 * one integrator project thread in the local `main` worktree
-* one worker project thread per writable queue item, each created in its own worktree
-* worker threads own implementation and handoff updates only
+* one worker project thread for the active runtime queue item, created with Codex app Worktree mode
+* the worker thread owns implementation and handoff updates only
 * the integrator thread owns `/docs/08-active/`, push, deploy, and final merge/promotion
+
+Default lane selection:
+
+1. Use one Codex app project thread in Worktree mode for the current worker lane when the app tooling can create or attach it.
+2. Use manually provisioned Git worktrees only as a fallback when Codex app Worktree mode is unavailable, cannot attach the worker lane, or the operator explicitly requests manual worktrees.
+3. Do not create manual worker worktrees just to make the folder path predictable. Codex-managed worktrees are intentionally created under `$CODEX_HOME/worktrees` and are eligible for Codex cleanup behavior.
 
 For branch-based active batch work in this repo, the preferred integrator entrypoint is:
 
-* execute `orchestrate-work-batch-branches` to provision or attach the worker lanes
+* execute `orchestrate-work-batch-branches` only when a worker lane needs to be provisioned or attached
 
 That keeps the orchestration contract in a skill file instead of forcing the operator to restate worker-start instructions manually.
 
@@ -156,6 +175,7 @@ Important limitation:
 Use manual `git worktree` commands as the fallback path when:
 
 * the Codex app worktree flow is unavailable
+* a Codex-managed worker thread cannot be attached or targeted cleanly
 * the repo is being operated outside the Codex app
 * a manual Git workflow is explicitly preferred for the session
 
@@ -166,15 +186,30 @@ Current baseline for this repo:
 * `approval_policy = "on-failure"` is acceptable; keep approvals scoped and do not broaden them just to make multi-agent work easier
 * `sandbox_mode = "workspace-write"` is acceptable; writable isolation comes from separate worktrees, not from broadening sandbox access
 * `desktop.reviewDelivery = "detached"` is acceptable and fits review-heavy workflows
-* `desktop.worktree-keep-count = 5` is currently sufficient for one integrator plus a small number of worker threads
+* `desktop.worktree-keep-count = 5` is currently sufficient for one integrator plus one Codex-managed worker thread, with room for cleanup overlap
 
 Recommended checks before relying on longer-running background work:
 
 * verify the Codex desktop app can keep running while the machine sleeps or the session is unfocused if you expect multi-hour background work
 * keep browser/plugin notifications enabled enough to notice worker completion and integration-ready handoffs
-* if you begin routinely keeping more than four or five concurrent worker worktrees alive, raise `desktop.worktree-keep-count` intentionally instead of letting the app prune older worktrees unexpectedly
+* if an explicitly approved burst keeps more than one Codex-managed worker worktree alive, raise `desktop.worktree-keep-count` intentionally instead of letting the app prune older worktrees unexpectedly
 
 No repo-local setting should assume that background continuation makes same-folder multi-writer edits safe. The branch/worktree ownership rules still apply.
+
+### Worker Dependency Footprint
+
+The worker lane should stay lightweight by default.
+
+Do not run full dependency installation or a full Docker Compose stack inside the disposable worker worktree unless the queue item genuinely requires local runtime verification there. This repo mounts `vendor/` and `node_modules/` as Docker named volumes to keep dependency trees out of disposable worktree folders, but full Compose runs can still create Docker volumes plus ignored runtime artifacts such as `public/build/` and `storage/` files.
+
+Preferred worker verification order:
+
+1. Use already-available dependencies in the worker worktree when present.
+2. Run scoped static checks, diff checks, targeted file inspection, or tests that do not require installing full dependencies.
+3. Defer full build/test/browser verification to the integrator lane after cherry-pick or to staging after deploy when that is sufficient for review.
+4. Install worker-local dependencies only when the queue item cannot be responsibly handed off without them.
+
+If a worker lane must install dependencies or generate large ignored runtime artifacts, record that in the handoff so cleanup is intentional. For manual fallback worktrees, run `docker compose --project-name <worker-project> down --volumes` when a worker-local Compose stack was used, then remove the worktree with `git worktree remove --force <path>` after integration when those artifacts are no longer needed.
 
 ### Mode C — Multi-Machine Branch Workflow
 
@@ -285,10 +320,10 @@ For active batch execution:
 * use queue item IDs only as descriptive context about the current focus
 * do not treat a CQ item reference as permission for two writers to divide one active batch workspace
 
-For branch-based parallel batch execution:
+For branch-based batch execution with the default one-worker/integrator shape:
 
-* worker sessions may record queue-item scope and branch ownership in advisory claims
-* worker claims should reference the matching handoff artifact under `.agents/batch-branch-handoffs/`
+* the worker session may record queue-item scope and branch ownership in advisory claims
+* the worker claim should reference the matching handoff artifact under `.agents/batch-branch-handoffs/`
 * only the integrator claim should cover `/docs/08-active/` or staging ownership
 
 Do not rely on this as protection. It documents intent only.
@@ -317,14 +352,15 @@ The review ledger has its own collision risk because:
 
 Supported review-writing rule:
 
-* multiple review writers may work in separate worktrees
+* one doc-review/change-queue writer should own final review-file creation and ledger updates
+* additional review sessions should stay read-only unless the operator explicitly hands off write ownership
 * final review-file creation and ledger update must be serialized
 
 Date-plus-slug filenames reduce path collisions, but they do not make concurrent ledger final writes safe in one shared folder.
 
-## Worktree And Docker Compose Setup
+## Manual Worktree And Docker Compose Setup
 
-This section covers the concrete steps for creating a second writable worktree with its own Docker Compose stack. Each worktree gets an isolated working tree and an isolated runtime so two agents can implement simultaneously without sharing files or database state.
+This section covers the fallback path for creating a second writable worktree with its own Docker Compose stack. Prefer Codex app Worktree mode before this manual path when the app can create or attach the worker lane cleanly. Each manual worktree gets an isolated working tree and an isolated runtime so two agents can implement simultaneously without sharing files or database state.
 
 ### Port Convention
 
@@ -343,14 +379,23 @@ Each worktree `.env` must use non-conflicting port values. The docker-compose.ym
 
 From the primary repo root in WSL or Git Bash:
 
+For this repo, manually provisioned worker worktrees must live under the repo-specific worktree root:
+
+```text
+C:\Users\kswin\Desktop\Work 2023\8. Login V2.worktrees
+```
+
+Do not create new worker worktrees directly under `C:\Users\kswin\Desktop\Work 2023`. Existing handoff records may reference older parent-folder worktrees as historical state; do not treat those paths as the current provisioning convention.
+
 ```bash
 # Create a new branch and a separate working directory in one step
-git worktree add ../login-v2-agent-b feature/b-[batch-name]
+mkdir -p "../8. Login V2.worktrees"
+git worktree add "../8. Login V2.worktrees/login-v2-agent-b" feature/b-[batch-name]
 
-cd ../login-v2-agent-b
+cd "../8. Login V2.worktrees/login-v2-agent-b"
 
 # Copy .env from the primary worktree and update port values
-cp ../login-v2/.env .env
+cp "../../8. Login V2/.env" .env
 # Edit .env — change APP_PORT, VITE_PORT, FORWARD_DB_PORT, FORWARD_REDIS_PORT,
 # FORWARD_MAILPIT_PORT, and FORWARD_MAILPIT_DASHBOARD_PORT to B-series values above.
 # DB_DATABASE can stay the same — each stack runs its own Postgres container.
@@ -362,7 +407,7 @@ docker compose --project-name login-v2-b up --build
 docker compose --project-name login-v2-b exec app php artisan migrate
 ```
 
-Open the worktree folder in a separate VS Code window (`File → Open Folder → ../login-v2-agent-b`) so each agent session has its own editor context, terminal history, and file state.
+Open the worktree folder in a separate VS Code window (`File → Open Folder → ../8. Login V2.worktrees/login-v2-agent-b`) so each agent session has its own editor context, terminal history, and file state.
 
 ### Merge Back And Clean Up
 
@@ -378,11 +423,11 @@ docker compose exec app php artisan test
 git push
 
 # Tear down the agent-B stack and remove the worktree
-cd ../login-v2-agent-b
+cd "../8. Login V2.worktrees/login-v2-agent-b"
 docker compose --project-name login-v2-b down --volumes
 
-cd ../login-v2
-git worktree remove ../login-v2-agent-b
+cd "../../8. Login V2"
+git worktree remove "../8. Login V2.worktrees/login-v2-agent-b"
 git branch -d feature/b-[batch-name]
 ```
 
@@ -408,11 +453,12 @@ This repository is already beyond that stage, so separate worktrees are availabl
 For current Login App 2.0 work:
 
 * keep one writable implementation session in the shared repo folder
-* allow same-folder planning, review, and audit sessions only in read-only mode
-* move planning or documentation into its own branch and worktree only when it must edit concurrently with implementation
+* allow one doc-review/change-queue writing session only when it is the designated writer for that workflow state
+* keep other same-folder planning, review, and audit sessions in read-only mode
+* move planning or documentation into its own branch and worktree only when it must edit concurrently with implementation and the operator explicitly accepts the added coordination cost
 * if a read-only session becomes ready to write while the implementation session is still active, stop and fork that work into its own branch/worktree instead of editing in place
 
-This matches the existing pattern where one implementation agent is active while other sessions prepare future planning, audit contracts, or review current work.
+This repo should normally run with one batch work agent and one doc-review/change-queue writer. Broader parallelism is available only as an exception for clearly independent work.
 
 ## Examples
 

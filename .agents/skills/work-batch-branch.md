@@ -20,6 +20,8 @@ Implement one assigned change-queue item on a dedicated branch/worktree without 
 - Update canonical code/docs required by the queue item
 - Record handoff details in `.agents/batch-branch-handoffs/`
 - Keep commits scoped to one queue item and one concern
+- Keep worker worktrees lightweight: do not run full Docker Compose stacks, `composer install`, `npm install`, or `npm ci` in the worker lane unless the queue item genuinely requires local runtime verification there
+- Prefer scoped verification that uses already-available dependencies, static checks, targeted file inspection, or integrator/staging validation after merge when full dependency installation would only create disposable worker artifacts
 
 ## Concurrency Preflight
 
@@ -43,6 +45,9 @@ Stop if:
 1. Read the active batch context and targeted queue item.
 2. Implement only the targeted queue item.
 3. Run scoped verification.
+   - Do not start `docker compose up` in a worker lane by default.
+   - If dependencies are missing and full verification would create Docker volumes, `public/build/`, or large `storage/` artifacts in a disposable worker lane, either use a lighter verification path or record the limitation for the integrator.
+   - If full worker-local dependency installation or Compose usage is necessary, record that in the handoff so cleanup is intentional.
 4. Commit scoped changes on the worker branch.
 5. Update `.agents/batch-branch-handoffs/<queue-id>.md` with:
    - branch
@@ -50,6 +55,7 @@ Stop if:
    - head SHA
    - files changed
    - tests run
+   - generated dependency/runtime artifacts, if any
    - docs sync status
    - merge notes
    - status `ready_for_integration`

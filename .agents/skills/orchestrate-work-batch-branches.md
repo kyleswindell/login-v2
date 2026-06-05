@@ -42,8 +42,11 @@ This skill does NOT:
 
 - Remain the singleton integrator owner of `/docs/08-active/`
 - Treat this as orchestration for `work-batch-branch`, not ordinary `work-batch`
-- Prefer one Codex app project thread per worker queue item in Worktree mode when available
-- Use manually provisioned Git worktrees only as fallback for worktree provisioning
+- Default to one Codex app project thread per worker queue item in Worktree mode when available
+- Do not manually provision Git worktrees when the Codex app can create or attach the worker lane in Worktree mode
+- Use manually provisioned Git worktrees only as fallback when Codex app Worktree mode is unavailable, cannot attach the worker lane cleanly, or the operator explicitly requests manual worktrees
+- Manually provisioned worker worktrees for this repo must live under `C:\Users\kswin\Desktop\Work 2023\8. Login V2.worktrees\`
+- Do not create new worker worktrees directly under `C:\Users\kswin\Desktop\Work 2023`; older handoff paths in `.agents/batch-branch-handoffs/` are historical state, not the current provisioning convention
 - If worker project-thread attachment is unavailable but the dedicated branch/worktree exists, spawned child agents are an acceptable worker fallback only when they are explicitly bound to that assigned branch/worktree and still complete the full worker contract
 - One worker lane per queue item
 - Do not let worker lanes edit `/docs/08-active/`
@@ -71,14 +74,15 @@ Stop if:
 
 1. Read the active batch and identify ready queue items that should receive worker lanes.
 2. For each selected queue item:
-   - determine whether a dedicated branch/worktree already exists
-   - if not, provision a dedicated branch/worktree using the repo naming convention
-   - create or attach a dedicated worker project thread/session when the Codex app supports it
-   - if that attachment is unavailable but the dedicated branch/worktree exists, allow a spawned child-agent fallback only when the child agent will operate explicitly in that assigned branch/worktree
+   - determine whether a dedicated worker lane already exists
+   - create or attach a dedicated Codex app project thread/session in Worktree mode when the Codex app supports it
+   - if Codex app Worktree mode cannot create or attach the worker lane cleanly, provision a dedicated manual branch/worktree under `C:\Users\kswin\Desktop\Work 2023\8. Login V2.worktrees\`
+   - for manual fallback worktrees, use worker folder names in the shape `login-v2-<queue-id-lowercase>` unless the operator assigns a specific name
+   - if app-thread attachment is unavailable but the dedicated manual branch/worktree exists, allow a spawned child-agent fallback only when the child agent will operate explicitly in that assigned branch/worktree
    - seed or update `.agents/batch-branch-handoffs/<queue-id>.md` with:
      - queue ID
      - assigned branch
-     - assigned worktree
+     - assigned worker thread and Codex-managed worktree when using app Worktree mode, or assigned manual worktree path when using the fallback path
      - base SHA
      - status `draft`
      - merge notes stating that `/docs/08-active/` remains integrator-owned
@@ -90,7 +94,7 @@ Stop if:
 When asked to start worker execution, each worker lane should receive the equivalent of:
 
 - execute `work-batch-branch`
-- use the assigned existing branch/worktree
+- use the assigned worker thread/worktree
 - implement the assigned queue item only
 - do not edit `/docs/08-active/`
 - run scoped verification

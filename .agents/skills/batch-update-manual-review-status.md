@@ -20,6 +20,7 @@ Convert manual review feedback into structured batch state updates and maintain 
 - Treat human review feedback as source input
 - Treat clear, mappable manual-review feedback as sufficient authorization to execute this workflow; do not pause just to confirm that review-state mutation should happen
 - Treat `Implemented Pending Review` as a deployed, reviewable state when deployment is required for the relevant surface
+- Treat local development as a valid review surface only when the reviewer inspected the same working tree; accepted local-review work must already have a scoped implementation commit before moving it to `Passed Review`
 - Keep exploratory review discussion in chat until it can be normalized safely into queue language
 - Do not modify or delete existing worklog files
 - Do not overwrite historical entries
@@ -37,6 +38,7 @@ Stop and ask for clarification if:
 - a finding cannot be mapped safely into the current change-queue lifecycle
 - the feedback mixes approval and new-finding signals in a way that would require guessing the intended state transition
 - the requested review-state change depends on an item that is known to be undeployed on the required review surface
+- the requested pass transition depends on locally reviewed implementation that is still uncommitted
 - the update would require a new decision about scope or wording that the user has not actually made yet
 - the request is actually asking for implementation work rather than review-state mutation
 

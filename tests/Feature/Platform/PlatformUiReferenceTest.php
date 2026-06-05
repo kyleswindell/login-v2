@@ -264,6 +264,67 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Persisted notifications belong in the notification center');
     }
 
+    public function test_batch_f_broader_data_navigation_overlay_loading_and_input_guidance_is_documented(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/patterns/tables')
+            ->assertOk()
+            ->assertSee('data-ui-guidance="table-pagination-usage"', false)
+            ->assertSee('G-TABLE-01')
+            ->assertSee('G-TABLE-02')
+            ->assertSee('G-TABLE-03')
+            ->assertSee('G-PAGIN-01')
+            ->assertSee('G-PAGIN-02');
+
+        $this->get('/platform/ui-reference/patterns/navigation')
+            ->assertOk()
+            ->assertSee('data-ui-guidance="navigation-search-overflow-usage"', false)
+            ->assertSee('G-TABS-01')
+            ->assertSee('G-TABS-02')
+            ->assertSee('G-SEARCH-01')
+            ->assertSee('G-SEARCH-02')
+            ->assertSee('G-OVERFLOW-01')
+            ->assertSee('G-OVERFLOW-02')
+            ->assertSee('G-BREADCRUMB-01')
+            ->assertSee('G-BREADCRUMB-02');
+
+        $this->get('/platform/ui-reference/patterns/overlays-feedback')
+            ->assertOk()
+            ->assertSee('data-ui-guidance="overlay-loading-usage"', false)
+            ->assertSee('G-MODAL-01')
+            ->assertSee('G-MODAL-02')
+            ->assertSee('G-MODAL-03')
+            ->assertSee('G-TOOLTIP-01')
+            ->assertSee('G-TOOLTIP-02')
+            ->assertSee('G-LOAD-01')
+            ->assertSee('G-LOAD-02');
+
+        $this->get('/platform/ui-reference/components/forms')
+            ->assertOk()
+            ->assertSee('data-ui-guidance="input-file-date-usage"', false)
+            ->assertSee('G-INPUT-01')
+            ->assertSee('G-INPUT-02')
+            ->assertSee('G-FILEUP-01')
+            ->assertSee('G-FILEUP-02')
+            ->assertSee('G-DATEPICK-01')
+            ->assertSee('G-DATEPICK-02');
+
+        $this->get('/platform/ui-reference/patterns/data-content')
+            ->assertOk()
+            ->assertSee('data-ui-guidance="structured-list-tile-usage"', false)
+            ->assertSee('G-STRLIST-01')
+            ->assertSee('G-STRLIST-02')
+            ->assertSee('G-TILE-01')
+            ->assertSee('G-TILE-02');
+
+        $this->get('/platform/ui-reference/patterns/layout')
+            ->assertOk()
+            ->assertSee('data-ui-guidance="grid-layout-usage"', false)
+            ->assertSee('G-GRID-01')
+            ->assertSee('G-GRID-02');
+    }
+
     public function test_starter_catalog_route_is_discoverable_and_maps_batch_f_starters(): void
     {
         $this->actingAsPlatformSuperAdmin();

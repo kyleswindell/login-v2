@@ -24,6 +24,24 @@
             ]"
         />
 
+        <section class="ui-card" data-ui-guidance="grid-layout-usage" data-guidance-id="P2-F-CQ-011">
+            <p class="ui-kicker">Grid And Layout Guidance</p>
+            <div class="mt-3 grid gap-4 lg:grid-cols-2">
+                <dl class="space-y-3 text-sm text-slate-300">
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-GRID-01 - Gutter mode selection</dt>
+                        <dd class="mt-1">Use tight gutters for dense operator tables and forms, standard gutters for page sections, and wider gutters only for dashboard or split-view layouts that need separation.</dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-GRID-02 - Login App 2.0 grid model</dt>
+                        <dd class="mt-1">Use the existing responsive page bands, dashboard grid, and widget span model; do not replace them with Carbon grid tokens or a new layout scale.</dd>
+                    </div>
+                </dl>
+
+                <p class="text-sm text-slate-300">Grid guidance applies to shared internal platform surfaces: page title regions, form sections, table/list containers, dashboard widgets, and split-view content browsers.</p>
+            </div>
+        </section>
+
         <x-ui.patterns.content-section-block
             title="Dashboard customization proof"
             description="Use this UI Reference-first proof to review lock/unlock, reorder, hide/show, and saved-layout behavior on dummy widgets before judging the live dashboard consumer."

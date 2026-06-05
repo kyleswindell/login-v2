@@ -54,6 +54,48 @@
             </div>
         </section>
 
+        <section class="ui-card" data-ui-guidance="overlay-loading-usage" data-guidance-id="P2-F-CQ-011">
+            <p class="ui-kicker">Overlay, Tooltip, And Loading Guidance</p>
+            <div class="mt-3 grid gap-4 lg:grid-cols-3">
+                <dl class="space-y-3 text-sm text-slate-300">
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-MODAL-01 - Modal variants</dt>
+                        <dd class="mt-1">Use passive modals for read-only notices, transactional modals for decisions, danger modals for destructive confirmation, acknowledgment modals for required confirmation, and progress modals only for blocking tasks.</dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-MODAL-02 - Focus trap</dt>
+                        <dd class="mt-1">Modals must move focus inside on open, trap keyboard focus while open, close through approved exits, and return focus to the trigger.</dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-MODAL-03 - Modal vs page or panel</dt>
+                        <dd class="mt-1">Use a dedicated page or side panel when the task needs deep navigation, large forms, or long-lived context instead of a blocking modal.</dd>
+                    </div>
+                </dl>
+
+                <dl class="space-y-3 text-sm text-slate-300">
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-TOOLTIP-01 - Tooltip vs toggletip</dt>
+                        <dd class="mt-1">Use tooltip for short non-interactive help; use toggletip or disclosure for interactive, focusable, or dismissible explanatory content.</dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-TOOLTIP-02 - Definition tooltip</dt>
+                        <dd class="mt-1">Use definition tooltip behavior only for terms that need concise glossary help and keep the term visible in the source text.</dd>
+                    </div>
+                </dl>
+
+                <dl class="space-y-3 text-sm text-slate-300">
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-LOAD-01 - Spinner vs skeleton</dt>
+                        <dd class="mt-1">Use skeletons when layout shape is known and loading affects structured content; use spinners for short indeterminate actions.</dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-LOAD-02 - Full-page vs inline loading</dt>
+                        <dd class="mt-1">Use full-page loading only for initial route or shell blocking states; use inline loading for local widgets, rows, forms, and panels.</dd>
+                    </div>
+                </dl>
+            </div>
+        </section>
+
         <section class="ui-card">
             <p class="ui-kicker">Drawer Baseline</p>
             <p class="mt-2 text-sm text-slate-400">Use right-side drawer for contextual details while preserving table context. See live behavior in Table Baselines.</p>

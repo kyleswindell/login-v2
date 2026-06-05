@@ -48,43 +48,6 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - create/edit starter includes form sections, validation summary, field grouping, and form actions
   - blocked/empty/unavailable state starter demonstrates permission-blocked, no-data, and unavailable patterns without feature-specific behavior
 
-### P2-F-CQ-011 - Usage guidance for data display, navigation, overlays, loading, inputs, breadcrumb, structured list, file uploader, date picker, grid, and tile
-- Status: Ready To Implement
-- Owner: Batch F
-- Scope: Establish UI Reference guidance for all areas identified in the Carbon audit coverage passes (pass 2 and pass 3). Pass 2 areas: data table variants and table loading rules; pagination variant selection; tabs variant and behavior selection; modal variant, focus-trap, and modal-vs-page requirements; tooltip vs toggletip and definition-tooltip guidance; loading indicator vs skeleton selection; full-page vs inline loading; search scope placement; search vs filter distinction; input style and warning-state guidance; overflow menu thresholds and destructive action placement. Pass 3 areas: breadcrumb vs progress indicator selection; breadcrumb overflow/truncation; structured list vs data table selection; selectable structured list vs radio group; file uploader variant selection; file uploader size pairing with form fields; date picker variant selection; date format display and locale guidance; gutter mode selection for page layout; grid style model for Login App 2.0; tile variant selection; tile vs card distinction. All 32 gaps from pass 2 and pass 3 route to this item: G-TABLE-01–03, G-PAGIN-01–02, G-TABS-01–02, G-MODAL-01–03, G-TOOLTIP-01–02, G-LOAD-01–02, G-SEARCH-01–02, G-INPUT-01–02, G-OVERFLOW-01–02, G-BREADCRUMB-01–02, G-STRLIST-01–02, G-FILEUP-01–02, G-DATEPICK-01–02, G-GRID-01–02, G-TILE-01–02.
-- Acceptance:
-  - data table variant selection rule (basic/selectable/expandable) is documented (G-TABLE-01)
-  - inline icon button vs overflow menu threshold rule is explicit (G-TABLE-02, G-OVERFLOW-01)
-  - table skeleton loading guidance is documented (G-TABLE-03)
-  - pagination vs pagination-nav variant selection rule is documented (G-PAGIN-01)
-  - pagination page-size options and placement guidance is explicit (G-PAGIN-02)
-  - line vs contained vs vertical tab variant selection rule is documented (G-TABS-01)
-  - automatic vs manual tablist behavior is documented (G-TABS-02)
-  - modal variant selection rule (passive/transactional/danger/acknowledgment/progress) is documented (G-MODAL-01)
-  - focus-trap accessibility requirement for modals is documented (G-MODAL-02)
-  - modal vs dedicated page or side panel selection rule is documented (G-MODAL-03)
-  - tooltip vs toggletip usage boundary is explicit (G-TOOLTIP-01)
-  - definition tooltip guidance is documented (G-TOOLTIP-02)
-  - loading spinner vs skeleton selection rule is documented (G-LOAD-01)
-  - full-page overlay vs inline loading selection is documented (G-LOAD-02)
-  - search scope (global/page/component) placement guidance is explicit (G-SEARCH-01)
-  - search vs filter pattern distinction is documented (G-SEARCH-02)
-  - default vs fluid input styling choice is documented (G-INPUT-01)
-  - input warning state guidance is documented (G-INPUT-02)
-  - overflow menu destructive action placement rule is documented (G-OVERFLOW-02)
-  - breadcrumb vs progress indicator selection rule is documented (G-BREADCRUMB-01)
-  - breadcrumb overflow/truncation behavior is documented (G-BREADCRUMB-02)
-  - structured list vs data table selection rule is documented (G-STRLIST-01)
-  - selectable structured list vs radio group boundary is documented (G-STRLIST-02)
-  - file uploader variant selection rule (button vs drag-and-drop) is documented (G-FILEUP-01)
-  - file uploader size pairing with form fields is documented (G-FILEUP-02)
-  - date picker variant selection rule (simple vs calendar vs time) is documented (G-DATEPICK-01)
-  - date format display and locale guidance is documented (G-DATEPICK-02)
-  - gutter mode selection rule for page layout contexts is documented (G-GRID-01)
-  - grid style model for Login App 2.0 is documented (G-GRID-02)
-  - tile variant selection rule (base/clickable/selectable/expandable) is documented (G-TILE-01)
-  - tile vs card distinction is documented (G-TILE-02)
-
 ### P2-F-CQ-006 - Batch F docs, tests, and handoff readiness
 - Status: Ready To Implement
 - Owner: Batch F
@@ -132,6 +95,44 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - multi-notification stacking and placement rules are covered
   - guidance is Login App 2.0-specific and does not adopt Carbon visual tokens
 - Implemented in: worklog-2-F-0013
+
+### P2-F-CQ-011 - Usage guidance for data display, navigation, overlays, loading, inputs, breadcrumb, structured list, file uploader, date picker, grid, and tile
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Establish UI Reference guidance for all areas identified in the Carbon audit coverage passes (pass 2 and pass 3). Pass 2 areas: data table variants and table loading rules; pagination variant selection; tabs variant and behavior selection; modal variant, focus-trap, and modal-vs-page requirements; tooltip vs toggletip and definition-tooltip guidance; loading indicator vs skeleton selection; full-page vs inline loading; search scope placement; search vs filter distinction; input style and warning-state guidance; overflow menu thresholds and destructive action placement. Pass 3 areas: breadcrumb vs progress indicator selection; breadcrumb overflow/truncation; structured list vs data table selection; selectable structured list vs radio group; file uploader variant selection; file uploader size pairing with form fields; date picker variant selection; date format display and locale guidance; gutter mode selection for page layout; grid style model for Login App 2.0; tile variant selection; tile vs card distinction. All 32 gaps from pass 2 and pass 3 route to this item: G-TABLE-01–03, G-PAGIN-01–02, G-TABS-01–02, G-MODAL-01–03, G-TOOLTIP-01–02, G-LOAD-01–02, G-SEARCH-01–02, G-INPUT-01–02, G-OVERFLOW-01–02, G-BREADCRUMB-01–02, G-STRLIST-01–02, G-FILEUP-01–02, G-DATEPICK-01–02, G-GRID-01–02, G-TILE-01–02.
+- Acceptance:
+  - data table variant selection rule (basic/selectable/expandable) is documented (G-TABLE-01)
+  - inline icon button vs overflow menu threshold rule is explicit (G-TABLE-02, G-OVERFLOW-01)
+  - table skeleton loading guidance is documented (G-TABLE-03)
+  - pagination vs pagination-nav variant selection rule is documented (G-PAGIN-01)
+  - pagination page-size options and placement guidance is explicit (G-PAGIN-02)
+  - line vs contained vs vertical tab variant selection rule is documented (G-TABS-01)
+  - automatic vs manual tablist behavior is documented (G-TABS-02)
+  - modal variant selection rule (passive/transactional/danger/acknowledgment/progress) is documented (G-MODAL-01)
+  - focus-trap accessibility requirement for modals is documented (G-MODAL-02)
+  - modal vs dedicated page or side panel selection rule is documented (G-MODAL-03)
+  - tooltip vs toggletip usage boundary is explicit (G-TOOLTIP-01)
+  - definition tooltip guidance is documented (G-TOOLTIP-02)
+  - loading spinner vs skeleton selection rule is documented (G-LOAD-01)
+  - full-page overlay vs inline loading selection is documented (G-LOAD-02)
+  - search scope (global/page/component) placement guidance is explicit (G-SEARCH-01)
+  - search vs filter pattern distinction is documented (G-SEARCH-02)
+  - default vs fluid input styling choice is documented (G-INPUT-01)
+  - input warning state guidance is documented (G-INPUT-02)
+  - overflow menu destructive action placement rule is documented (G-OVERFLOW-02)
+  - breadcrumb vs progress indicator selection rule is documented (G-BREADCRUMB-01)
+  - breadcrumb overflow/truncation behavior is documented (G-BREADCRUMB-02)
+  - structured list vs data table selection rule is documented (G-STRLIST-01)
+  - selectable structured list vs radio group boundary is documented (G-STRLIST-02)
+  - file uploader variant selection rule (button vs drag-and-drop) is documented (G-FILEUP-01)
+  - file uploader size pairing with form fields is documented (G-FILEUP-02)
+  - date picker variant selection rule (simple vs calendar vs time) is documented (G-DATEPICK-01)
+  - date format display and locale guidance is documented (G-DATEPICK-02)
+  - gutter mode selection rule for page layout contexts is documented (G-GRID-01)
+  - grid style model for Login App 2.0 is documented (G-GRID-02)
+  - tile variant selection rule (base/clickable/selectable/expandable) is documented (G-TILE-01)
+  - tile vs card distinction is documented (G-TILE-02)
+- Implemented in: worklog-2-F-0014
 
 ### P2-F-CQ-012 - UI control module ownership cleanup
 - Status: Implemented Pending Review

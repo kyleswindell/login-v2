@@ -67,6 +67,44 @@
             </div>
         </section>
 
+        <section class="ui-card" data-ui-guidance="input-file-date-usage" data-guidance-id="P2-F-CQ-011">
+            <p class="ui-kicker">Input, File, And Date Guidance</p>
+            <div class="mt-3 grid gap-4 lg:grid-cols-3">
+                <dl class="space-y-3 text-sm text-slate-300">
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-INPUT-01 - Default vs fluid inputs</dt>
+                        <dd class="mt-1">Use default input width inside normal form groups; use fluid full-width inputs only when the surrounding layout owns the full row or responsive region.</dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-INPUT-02 - Warning state</dt>
+                        <dd class="mt-1">Use warning state for cautionary but still valid input, pair it with explicit helper copy, and do not reuse error styling unless submission is blocked.</dd>
+                    </div>
+                </dl>
+
+                <dl class="space-y-3 text-sm text-slate-300">
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-FILEUP-01 - File uploader variant</dt>
+                        <dd class="mt-1">Use a button uploader for one-off attachments and drag-and-drop only when bulk upload or repeated file management is the main task.</dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-FILEUP-02 - Uploader sizing</dt>
+                        <dd class="mt-1">Pair file uploader height and density with nearby form fields so upload controls do not dominate compact settings or account forms.</dd>
+                    </div>
+                </dl>
+
+                <dl class="space-y-3 text-sm text-slate-300">
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-DATEPICK-01 - Date picker variant</dt>
+                        <dd class="mt-1">Use simple native date inputs for single dates, calendar/range controls for visible date comparison, and date-time controls only when time precision matters.</dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-DATEPICK-02 - Date format and locale</dt>
+                        <dd class="mt-1">Display saved dates in the user's locale and timezone context, and keep machine-readable values in the native control value.</dd>
+                    </div>
+                </dl>
+            </div>
+        </section>
+
         <section class="ui-card">
             <p class="ui-kicker">Field States</p>
             <form class="mt-4 grid gap-5 lg:grid-cols-2" action="#" method="POST" onsubmit="event.preventDefault()">

@@ -32,6 +32,33 @@
             These examples show the expected content shape for read-only summaries and fallback states. Values should render as plain text by default, with trusted linked content called out intentionally instead of leaking raw markup into the page.
         </x-ui.patterns.proof-note>
 
+        <section class="ui-card" data-ui-guidance="structured-list-tile-usage" data-guidance-id="P2-F-CQ-011">
+            <p class="ui-kicker">Structured List And Tile Guidance</p>
+            <div class="mt-3 grid gap-4 lg:grid-cols-2">
+                <dl class="space-y-3 text-sm text-slate-300">
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-STRLIST-01 - Structured list vs data table</dt>
+                        <dd class="mt-1">Use structured lists for compact comparison of a few attributes; use data tables when users sort, filter, scan many rows, or need column alignment.</dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-STRLIST-02 - Selectable structured list vs radio group</dt>
+                        <dd class="mt-1">Use selectable structured lists when each option needs rich metadata; use radio groups for short exclusive choices with simple labels.</dd>
+                    </div>
+                </dl>
+
+                <dl class="space-y-3 text-sm text-slate-300">
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-TILE-01 - Tile variants</dt>
+                        <dd class="mt-1">Use base tiles for static summaries, clickable tiles for navigation, selectable tiles for choice sets, and expandable tiles only when details must stay in context.</dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-TILE-02 - Tile vs card</dt>
+                        <dd class="mt-1">Use tiles for compact selectable or navigational units; use cards for richer content blocks with headings, metadata, actions, or composed components.</dd>
+                    </div>
+                </dl>
+            </div>
+        </section>
+
         <x-ui.patterns.content-section-block
             title="Stat Cards"
             description="Use stat cards for small metric summaries with optional trend or support copy."

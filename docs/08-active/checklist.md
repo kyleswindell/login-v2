@@ -21,9 +21,9 @@
 
 ## Design-System Usage Guidance
 - [ ] Design-System Usage Guidance
-  Status: partially implemented — P2-F-CQ-008 button variant/action-label guidance, P2-F-CQ-009 notification/badge/feedback guidance, and P2-F-CQ-010 form/selection-control guidance are implemented pending review; supporting UI control module ownership cleanup is implemented pending review for P2-F-CQ-012; CSS ownership/read-path cleanup is implemented pending review for P2-F-CQ-013; remaining guidance content is owned by P2-F-CQ-011
+  Status: partially implemented — P2-F-CQ-008 through P2-F-CQ-011 usage guidance content is implemented pending review; supporting UI control module ownership cleanup is implemented pending review for P2-F-CQ-012; CSS ownership/read-path cleanup is implemented pending review for P2-F-CQ-013; remaining ready-to-use starter coverage stays queued in P2-F-CQ-002 through P2-F-CQ-006
   - [x] badge, alert, toast, notification, and status color semantics are explicit
-  - guidance preserves the existing Login App 2.0 visual direction
+  - [x] guidance preserves the existing Login App 2.0 visual direction
   - [x] standard, soft, ghost, outline, and destructive button usage rules are explicit
   - [x] common action labels and action hierarchy are documented
   - [x] form action labels distinguish apply/stay-on-page from submit/complete/return behavior
@@ -31,7 +31,7 @@
   - [x] same-page AJAX feedback does not imply a full page refresh unless explicitly documented
   - [x] required and optional field marker rules are documented
   - [x] selection option variants and usage rules are documented
-  - required classes, ready-to-use components, component sets, and starter views are identified or queued
+  - [x] required classes, ready-to-use components, component sets, and starter views are identified or queued
 
 ## Module Home And Dashboard Summary Starters
 - [ ] Module Home And Dashboard Summary Starters

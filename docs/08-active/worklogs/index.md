@@ -15,3 +15,4 @@
 | 2-F-0011 | READY_FOR_REVIEW | 2026-06-05 | P2-F-CQ-008 button variant and action-label guidance implemented: UI Reference action and navigation surfaces document G-ACT-01 through G-ACT-05 and G-LABEL-01 through G-LABEL-06 |
 | 2-F-0012 | READY_FOR_REVIEW | 2026-06-05 | P2-F-CQ-010 form field and selection-control guidance implemented: UI Reference form surfaces document G-FORM-01 through G-FORM-04, G-SEL-01 through G-SEL-03, and warning field-state coverage |
 | 2-F-0013 | READY_FOR_REVIEW | 2026-06-05 | P2-F-CQ-009 notification, badge, and feedback guidance implemented: UI Reference status and overlay surfaces document G-NOTIF-01 through G-NOTIF-05 and G-BADGE-01 through G-BADGE-04 |
+| 2-F-0014 | READY_FOR_REVIEW | 2026-06-05 | P2-F-CQ-011 broader usage guidance implemented: UI Reference table, navigation, overlay, form, data-content, and layout surfaces document all 32 routed pass 2/pass 3 gap IDs |

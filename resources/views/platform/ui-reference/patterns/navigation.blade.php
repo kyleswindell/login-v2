@@ -53,6 +53,49 @@
             </div>
         </x-ui.patterns.proof-note>
 
+        <section class="ui-card" data-ui-guidance="navigation-search-overflow-usage" data-guidance-id="P2-F-CQ-011">
+            <p class="ui-kicker">Navigation, Search, Overflow, And Breadcrumb Guidance</p>
+            <div class="mt-3 grid gap-4 lg:grid-cols-2">
+                <dl class="space-y-3 text-sm text-slate-300">
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-TABS-01 - Tab variants</dt>
+                        <dd class="mt-1">Use line tabs for peer sections, contained tabs for dense panels, and vertical tabs only when long labels or nested settings groups need persistent scanability.</dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-TABS-02 - Tablist behavior</dt>
+                        <dd class="mt-1">Use automatic activation for fast local panels; use manual activation when panel changes trigger expensive loading or form state changes.</dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-SEARCH-01 - Search scope</dt>
+                        <dd class="mt-1">Global search belongs in the shell, page search belongs near the page title or table controls, and component search stays inside the dropdown or panel it filters.</dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-SEARCH-02 - Search vs filter</dt>
+                        <dd class="mt-1">Search handles free-entry keywords; filters handle known dimensions and should sit beside Apply, Reset, or Clear controls.</dd>
+                    </div>
+                </dl>
+
+                <dl class="space-y-3 text-sm text-slate-300">
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-OVERFLOW-01 - Overflow threshold</dt>
+                        <dd class="mt-1">Use overflow menus when a row, card, or header has more than two secondary actions or needs rare actions out of the primary scan path.</dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-OVERFLOW-02 - Destructive placement</dt>
+                        <dd class="mt-1">Place destructive overflow actions after a divider, keep danger styling visible, and label the object or consequence nearby.</dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-BREADCRUMB-01 - Breadcrumb vs progress</dt>
+                        <dd class="mt-1">Use breadcrumb for location within information architecture; use progress indicators for ordered task completion.</dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-BREADCRUMB-02 - Overflow and truncation</dt>
+                        <dd class="mt-1">Collapse middle breadcrumb items first, preserve the current page label, and expose hidden ancestors through an accessible overflow control.</dd>
+                    </div>
+                </dl>
+            </div>
+        </section>
+
         <x-ui.patterns.content-section-block
             title="Sub-navigation Bar"
             description="Use sub-navigation only for peer content areas that already belong to the same internal shell family."

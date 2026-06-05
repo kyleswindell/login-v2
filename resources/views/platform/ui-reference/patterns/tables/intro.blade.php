@@ -4,6 +4,37 @@
             kicker="Tier 1 + Tier 2"
         />
 
+        <section class="ui-card" data-ui-guidance="table-pagination-usage" data-guidance-id="P2-F-CQ-011">
+            <p class="ui-kicker">Table And Pagination Guidance</p>
+            <div class="mt-3 grid gap-4 lg:grid-cols-2">
+                <dl class="space-y-3 text-sm text-slate-300">
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-TABLE-01 - Table variants</dt>
+                        <dd class="mt-1">Use a basic table for read-only rows, selectable table when bulk or row selection is required, and expandable/detail rows only when context must stay beside the table.</dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-TABLE-02 - Row action threshold</dt>
+                        <dd class="mt-1">Show one or two common inline icon actions; move three or more actions, uncommon actions, and destructive actions into an overflow menu.</dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-TABLE-03 - Table skeleton loading</dt>
+                        <dd class="mt-1">Use a table skeleton when table shape is known and data is loading; use an empty state only after loading completes with no results.</dd>
+                    </div>
+                </dl>
+
+                <dl class="space-y-3 text-sm text-slate-300">
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-PAGIN-01 - Pagination variant</dt>
+                        <dd class="mt-1">Use full pagination for large managed datasets and compact pagination navigation for short lists or adjacent detail browsing.</dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-slate-100">G-PAGIN-02 - Page size and placement</dt>
+                        <dd class="mt-1">Place page size controls with table pagination, offer only meaningful sizes, and keep pagination below the result set.</dd>
+                    </div>
+                </dl>
+            </div>
+        </section>
+
         <x-ui.patterns.enhanced-data-table
             label="Enhanced Data Table"
             description="Use the enhanced table pattern when the surface needs reusable operator controls above the shared table baseline."

@@ -1,5 +1,15 @@
 @import 'tailwindcss';
 
+/*
+Read map:
+- @theme: Tailwind source scanning and project font/color seed overrides.
+- @layer components: shared UI classes, dashboard/widget patterns, form controls, notifications, table affordances, and motion states.
+- @keyframes: shared animation primitives.
+- @layer base: dark/light theme CSS variables plus compatibility overrides.
+
+Use targeted searches for the class family being changed before reading this file broadly.
+*/
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';

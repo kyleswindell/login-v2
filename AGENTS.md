@@ -50,6 +50,7 @@ Always respect branch ownership. Do not duplicate or reassign responsibility acr
 - `In Progress` is the active claim state for the current `work-batch` owner on a targeted queue item.
 - `work-batch` must move a targeted queue item from `Ready To Implement` to `In Progress` when implementation begins, and must move it out of `In Progress` to an outcome state before claiming another queue item unless the pass genuinely stops mid-item.
 - `Implemented Pending Review` is reserved for queue items that are actually reviewable on the required review surface; if deployment is required for review, the item does not belong there until that deploy succeeds.
+- Local development may be the review surface when the reviewer is inspecting the same working tree, but accepted local-review work must be committed before moving to `Passed Review`.
 - In branch-based parallel execution, `/docs/08-active/` remains a singleton integrator-owned workspace; worker branches may read it for context but must not update it directly.
 - Keep exploratory review discussion in chat until an agent normalizes it into concise queue language.
 - When discussing an existing queue item in chat, reference its queue ID when available.
@@ -91,6 +92,10 @@ Always respect branch ownership. Do not duplicate or reassign responsibility acr
 - Active batch commits must:
   - map to a single batch and a single concern
   - include only files touched for that scope
+- Use the restored local development stack as the default verification surface; do not push or deploy implementation micro-steps to the server when local validation is sufficient.
+- Local development review may inspect uncommitted scoped changes, but accepted queue-item work must be committed before the item is treated as passed review.
+- If staging, server, or another shared surface is required for review, commit, push, and deploy before calling the item reviewable.
+- When one work pass handles multiple change-queue items, the worklog must identify the targeted queue IDs, grouping rationale, affected files by item or tightly coupled group, validation performed, and review surface used.
 
 - Use batch checkpoints for active batch execution:
   - batch initialized
@@ -174,11 +179,24 @@ Always respect branch ownership. Do not duplicate or reassign responsibility acr
 ## Agent Instruction Surfaces
 
 - `AGENTS.md` owns persistent repo rules and operating boundaries.
+- Folder-level `AGENTS.md` files own local read-scope guidance, retrieval boundaries, and agent-only orientation for their folder tree.
 - `.agents/skills/` owns executable workflow playbooks.
 - canonical `docs/` owns durable product, architecture, planning, database, runbook, and review/governance truth.
 - `.agents/memory/` owns non-canonical repo-local working memory only.
 - `.agents/baselines/` owns exportable generic starter packs.
 - If a memory note becomes a durable repo rule, workflow behavior, canonical system truth, or reusable starter-pack improvement, promote it into the correct owner surface instead of leaving it in memory.
+
+---
+
+## Folder-Level Read Scope
+
+- Before broad file traversal, read the nearest applicable folder-level `AGENTS.md`.
+- For work inside `docs/`, read `docs/AGENTS.md` and then the relevant branch-level `AGENTS.md` when one exists before opening long canonical docs.
+- Use folder-level `AGENTS.md` files as agent-only retrieval maps; do not copy their agent-specific language into human-facing canonical docs.
+- Treat Obsidian links as discovery aids, not as permission to load every linked file into context.
+- Prefer indexes, headings, exact queue items, and targeted section reads over whole-branch or whole-repo context loading.
+- Do not read archive folders, long research artifacts, or unrelated workflow history unless the task explicitly requires them.
+- When a folder-level `AGENTS.md` conflicts with this root file, this root file wins.
 
 ---
 
@@ -207,10 +225,12 @@ Always respect branch ownership. Do not duplicate or reassign responsibility acr
 
 - Supported: one writable session in one working tree.
 - Supported: multiple read-only planning, audit, or review sessions in the same folder while one writer owns edits.
-- Supported: multiple writable sessions only when each writable session has its own branch and its own worktree.
-- Supported: multiple Codex app project threads when each writable thread uses its own worktree and owned scope.
-- Supported: parallel queue-item implementation in separate branches/worktrees when a single integrator session serializes `/docs/08-active/` updates, deploy ownership, and final merge/promotion.
-- Supported: spawned child agents for bounded sidecar work inside an already-owned writable context, and as worker executors when they are explicitly bound to the assigned dedicated branch/worktree and complete the full worker contract.
+- Supported by default: one writable runtime batch worker plus one integrator/doc-review/change-queue writer, with the integrator owning `/docs/08-active/`, review state, staging, and final merge/promotion.
+- Supported by exception only: multiple writable sessions when each writable session has its own branch, worktree, and explicitly accepted scope.
+- Supported by exception only: multiple Codex app project threads when each writable thread uses its own worktree and owned scope.
+- Supported by exception only: multiple parallel queue-item workers in separate branches/worktrees when a single integrator session serializes `/docs/08-active/` updates, deploy ownership, and final merge/promotion.
+- Supported by exception only: spawned child agents as worker executors when they are explicitly bound to the assigned dedicated branch/worktree and complete the full worker contract.
+- Supported: spawned child agents for bounded read-only sidecar work inside an already-owned writable context.
 - Not supported: concurrent `batch-start` or `work-batch` execution against the same shared `/docs/08-active/` workspace.
 - Not supported: multiple writable sessions editing the same working tree folder at the same time.
 - Not supported: splitting active-batch queue items across multiple writers by treating `In Progress` or advisory scope claims as per-item locks inside the same shared `/docs/08-active/` workspace.
@@ -220,8 +240,9 @@ Always respect branch ownership. Do not duplicate or reassign responsibility acr
 Coordination notes:
 
 - worktree isolation is the real safety boundary for concurrent writable work
-- for long-lived parallel CQ execution, prefer one Codex app project thread per worker worktree plus one integrator thread on `main`
-- prefer one Codex app project thread per worker worktree for long-lived ownership visibility, but allow spawned child agents as worker executors when they are explicitly bound to the assigned dedicated branch/worktree, stay out of `/docs/08-active/`, and complete commit plus handoff requirements
+- for normal active-batch execution, prefer one runtime worker thread plus one integrator/doc-review/change-queue writer
+- use multiple worker worktrees only after explicit operator approval for a temporary, bounded parallel burst
+- prefer a Codex app project thread for the single worker worktree; use spawned child agents as worker executors only by exception when they are explicitly bound to the assigned dedicated branch/worktree, stay out of `/docs/08-active/`, and complete commit plus handoff requirements
 - advisory scope claims are coordination aids only and do not guarantee protection
 - use `.agents/session-scope-claims.json` only as a lightweight visibility layer, not as a lock
 - a session that began read-only must not silently become a same-folder writer while another writable session is active; it must either move to its own branch/worktree or remain read-only
@@ -268,7 +289,8 @@ Continuation rule:
 Workflow-specific authorization note:
 
 - an explicitly requested batch workflow step authorizes the normal actions that workflow requires when its own completion criteria are met
-- for `work-batch`, that includes scoped commit, push, and canonical staging deployment when the pass is review-ready and manual visual review is required
+- for `work-batch`, local development review does not require push or staging deployment; it does require a scoped commit after accepted local review and before passed-review state
+- for `work-batch`, shared manual visual review includes scoped commit, push, and canonical staging deployment when the pass is review-ready
 - do not stop for a second approval in that case unless a documented deployment precondition is missing or the workflow would need to improvise an unapproved execution path
 
 ---

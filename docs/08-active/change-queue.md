@@ -120,6 +120,21 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - UI shell remains one family with Login-specific header, left panel, and right panel guidance as subsections
   - navigation pages link to T2 pattern composition owners where primitives are consumed
 
+### P2-F-CQ-040 - Foundation Elements concrete example correction pass
+- Status: Ready To Implement
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-025, P2-F-CQ-026, P2-F-CQ-027, P2-F-CQ-028, P2-F-CQ-029, P2-F-CQ-030
+- Scope: Correct the Foundation Elements UI Reference pages so they show concrete built examples, not token lists or prose-only standards. Start with Color because manual review found that page insufficient, then apply the same concrete-example bar to Themes, Spacing, Typography, Icons, Grid, Motion, and Pictograms.
+- Acceptance:
+  - Color page documents and displays Login App theme-layer equivalents for light/base, gray-10-style lower layer, dark/base, and gray-90-style lower layer surfaces
+  - Color page demonstrates stacked surface levels such as base page, muted/layer surface, and nested elevated/default element behavior
+  - Color page demonstrates hover/focus deltas on muted/layer surfaces and states whether defaults are automatic or require explicit theming
+  - Color page includes high-contrast and inverse-token examples, including light components on dark backgrounds and dark shell/header treatment on a light page
+  - Color page replaces the six token namespace cards with actual rendered examples for text, icon, border, surface, action, status, and shadow tokens
+  - canonical Color and Themes docs are updated with the same standards and usage rules
+  - remaining Foundation Elements pages are reviewed against the same "built examples over lists" bar and either corrected or explicitly queued with a narrow follow-up
+  - tests assert rendered example markers and content that would fail if pages regress to token-list-only guidance
+
 ## In Progress
 
 ## Implemented Pending Review

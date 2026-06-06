@@ -6,7 +6,7 @@ PARTIAL
 
 ## Current Review State
 
-- Batch F remains PARTIAL because P2-F-CQ-016 through P2-F-CQ-032 have been implemented pending review, while active Ready To Implement starter and T1 family-depth items remain.
+- Batch F remains PARTIAL because P2-F-CQ-016 through P2-F-CQ-032 have been implemented pending review with open manual-review corrections, while active Ready To Implement starter, foundation correction, and T1 family-depth items remain.
 - P2-F-CQ-001: PASS. The Carbon audit and starter catalog matrix are accepted as sufficient planning and routing source material for the remaining Batch F work.
 - P2-F-CQ-007: PASS. The UI Reference starter catalog entry point is discoverable, lists the required starter set, and includes route disposition guidance for current UI Reference views.
 - P2-F-CQ-008: PASS. Correction pass 2-F-0015 was manually approved on 2026-06-06.
@@ -16,7 +16,8 @@ PARTIAL
 - P2-F-CQ-012: IMPLEMENTED PENDING REVIEW. UI control behavior is split into concern-based modules with the existing `resources/js/ui-controls.js` export surface preserved.
 - P2-F-CQ-013: IMPLEMENTED PENDING REVIEW. CSS ownership/read paths are documented, nearest CSS agent guidance is present, and Tailwind theme seed overrides are extracted without token changes.
 - P2-F-CQ-016 through P2-F-CQ-024: IMPLEMENTED PENDING REVIEW. Worklog 2-F-0016 adds the component catalog, Carbon component disposition matrix, T1 component menu, generated component routes, component-specific pages, and catalog/depth coverage.
-- P2-F-CQ-025 through P2-F-CQ-032: IMPLEMENTED PENDING REVIEW. Worklog 2-F-0017 adds the Foundation Elements layer, canonical element docs, token/theme/spacing/typography/icon guidance, T1 component doc metadata, Multiselect, and UI shell family normalization.
+- P2-F-CQ-025 through P2-F-CQ-032: IMPLEMENTED PENDING REVIEW WITH CORRECTION REQUIRED. Worklog 2-F-0017 adds the Foundation Elements layer, canonical element docs, token/theme/spacing/typography/icon guidance, T1 component doc metadata, Multiselect, and UI shell family normalization, but manual review rejected the Color page depth as token-list-heavy and insufficiently concrete.
+- P2-F-CQ-040: READY TO IMPLEMENT. Manual review follow-up to correct Foundation Elements pages toward concrete built examples, starting with Color and applying the same bar across the layer.
 - No open required fixes remain for P2-F-CQ-001 or P2-F-CQ-007.
 - Historical pass details are preserved in worklog-2-F-0002 through worklog-2-F-0008 and should not be repeated here.
 
@@ -29,7 +30,7 @@ Functional: PENDING
 - Pending review: P2-F-CQ-012, P2-F-CQ-013, P2-F-CQ-016, P2-F-CQ-017, P2-F-CQ-018, P2-F-CQ-019, P2-F-CQ-020, P2-F-CQ-021, P2-F-CQ-022, P2-F-CQ-023, P2-F-CQ-024, P2-F-CQ-025, P2-F-CQ-026, P2-F-CQ-027, P2-F-CQ-028, P2-F-CQ-029, P2-F-CQ-030, P2-F-CQ-031, P2-F-CQ-032.
 - Remaining Batch F items still require implementation before final visual and functional batch review.
 - Review note: manual review should confirm whether worklog 2-F-0016 provides the expected component-specific T1 organization, Carbon completeness mapping, and enough concrete state examples for later developers to use with minimal guesswork.
-- Review note: manual review should confirm whether worklog 2-F-0017 establishes the missing Foundation Elements layer clearly enough for later T1 component-family depth passes to consume without redefining tokens, spacing, typography, iconography, theme, grid, or motion rules.
+- Review note: worklog 2-F-0017 does not yet establish the Foundation Elements layer clearly enough for later T1 component-family depth passes. The Color page lacks rendered theme-layer examples, stacked surface behavior, hover/focus deltas, high-contrast/inverse examples, and concrete token-namespace demonstrations. P2-F-CQ-040 owns the correction.
 
 ## Remaining Queue Items
 
@@ -45,6 +46,7 @@ Functional: PENDING
 - P2-F-CQ-037 - T1 component family depth pass: overlays and help
 - P2-F-CQ-038 - T1 component family depth pass: data display
 - P2-F-CQ-039 - T1 component family depth pass: navigation and shell
+- P2-F-CQ-040 - Foundation Elements concrete example correction pass
 
 ## Deferred Queue Items
 
@@ -66,6 +68,7 @@ Functional: PENDING
 - Worklog 2-F-0016 validation passed with full Docker UI Reference coverage, `npm run build`, docs guardrails, and browser review of the component overview plus representative high-risk T1 component pages. Build and docs guardrails required unsandboxed execution because the sandbox blocked Windows native-binary/Bash access.
 - T1 component overview disposition-column review fix passed focused catalog-route coverage and browser layout verification; categorical badges now stay one line while prose columns wrap.
 - Worklog 2-F-0017 validation passed with full Docker UI Reference coverage, `npm run build`, docs guardrails, and browser review of Foundation Elements overview plus Color, Spacing, Typography, Icons, Multiselect, and UI shell routes. Build and docs guardrails required unsandboxed execution because the sandbox blocked Windows native-binary/Bash access.
+- Manual review on 2026-06-06 found that Worklog 2-F-0017 validation was too shallow for the Foundation Elements goal. Automated checks verified route/content markers, but the Color page still rendered mostly token lists instead of concrete examples of theme layers, high-contrast moments, hover behavior, and token usage.
 
 ## Historical Detail
 

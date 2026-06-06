@@ -7,7 +7,8 @@
         <div>
             <p class="ui-kicker">Foundation Elements</p>
             <h1 class="ui-page-header-title">Foundation Elements</h1>
-            <p class="ui-page-header-copy">The baseline visual system beneath T1 components: grid, color, icons, pictograms, motion, spacing, themes, and typography. Carbon is used as a structure benchmark only; these rules document Login App 2.0 behavior.</p>
+            <p class="ui-page-header-copy">Primitive elements are the lowest-level visual decisions used across the application. They define layout, color, typography, spacing, motion, iconography, pictograms, and themes. Developers should use the tokens, helpers, utilities, and examples shown in this reference instead of creating one-off values.</p>
+            <p class="ui-page-header-copy mt-3">These examples are rendered with the application’s actual CSS and JavaScript. When implementation differs from Carbon, the exception must be documented on the relevant page.</p>
         </div>
 
         <section class="ui-card">
@@ -31,7 +32,7 @@
             <div class="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                     <h2 class="ui-card-title">Foundation Element Inventory</h2>
-                    <p class="ui-card-copy mt-2">Each element has a canonical standard doc, a UI Reference owner route, and a disposition that defines the current implementation state.</p>
+                    <p class="ui-card-copy mt-2">Each element has a canonical standard doc, a UI Reference owner route, and an implementation status that defines the current state.</p>
                 </div>
                 <a wire:navigate href="{{ route('platform.ui-reference.elements.show', ['element' => 'color']) }}" class="ui-link">Review color tokens</a>
             </div>
@@ -47,7 +48,7 @@
                     <thead class="bg-slate-900">
                         <tr class="text-left text-xs uppercase tracking-[0.18em] text-slate-500">
                             <th class="px-4 py-3">Element</th>
-                            <th class="px-4 py-3 whitespace-nowrap">Disposition</th>
+                            <th class="px-4 py-3 whitespace-nowrap">Implementation Status</th>
                             <th class="px-4 py-3">Canonical Doc</th>
                             <th class="px-4 py-3">Purpose</th>
                         </tr>

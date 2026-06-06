@@ -46,16 +46,18 @@
 
 ## Foundation Elements Layer
 - [ ] Foundation Elements Layer
-  Status: correction required — P2-F-CQ-025 through P2-F-CQ-032 added the Foundation Elements catalog/menu/pages, canonical element docs, token/theme/spacing/typography/icon standards, T1 doc-link contract, Multiselect catalog correction, and UI shell family normalization, but manual review found the Color page too token-list-heavy and insufficiently concrete; P2-F-CQ-040 owns the correction
+  Status: implemented pending review — P2-F-CQ-040 through P2-F-CQ-048 replace broad foundation correction scope with page-level live implementation guides for Color, Themes, 2x Grid, Spacing, Typography, Icons, Pictograms, Motion, and Overview/renderer cleanup
   - [x] UI Reference sidebar exposes Foundation Elements before T1 Components
   - [x] Foundation Elements overview explains Foundation Elements, T1 Components, T2 Patterns, and T3 Feature Modules
   - [x] grid, color, icons, pictograms, motion, spacing, themes, and typography have catalog dispositions and owner routes
   - [x] canonical element docs exist under `docs/02-standards/ui/elements/`
   - [x] Carbon comparison notes are kept in `docs/09-reference/ui/`
-  - [ ] Color, Themes, Spacing, Typography, and Icons pages show built examples rather than token-list-only guidance
+  - [x] Color, Themes, Spacing, Typography, and Icons pages show built examples rather than token-list-only guidance
+  - [x] Grid, Pictograms, and Motion pages expose live-guide examples or queued implementation contracts
   - [x] T1 component catalog includes canonical doc metadata and Multiselect
   - [x] UI shell is normalized as one T1 family with header, left panel, and right panel subsections
-  - [ ] P2-F-CQ-040 corrects Foundation Elements example depth before T1 family depth passes begin
+  - [x] P2-F-CQ-040 through P2-F-CQ-048 correct Foundation Elements example depth before T1 family depth passes begin
+  - [ ] manual review confirms Foundation Elements pages are sufficiently concrete for later T1 depth passes
 
 ## Module Home And Dashboard Summary Starters
 - [ ] Module Home And Dashboard Summary Starters

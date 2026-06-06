@@ -2,11 +2,11 @@
 
 ## Purpose
 
-Define spacing scale and ownership rules across components and layout patterns.
+Spacing controls layout rhythm and relationships between UI elements.
 
 ## Current Implementation
 
-Login App uses a Tailwind-compatible, 8px-centered spacing model with smaller increments available for dense UI.
+Login App uses a Tailwind-compatible, 8px-centered spacing model with documented spacing aliases `$spacing-01` through `$spacing-13`.
 
 ## UI Reference Route
 
@@ -14,24 +14,35 @@ Login App uses a Tailwind-compatible, 8px-centered spacing model with smaller in
 
 ## Required Visible Examples
 
-- spacing scale
-- stack and gap wrapper
-- form row
-- action row
-- table cell
-- card grid
+- full spacing scale from `$spacing-01` through `$spacing-13` with rem, px, and utility/helper mapping
+- margin examples for top, right, bottom, left, horizontal, and vertical spacing
+- padding examples for card, form group, section, and dense table contexts
+- stack examples for vertical, horizontal, small, medium, large, form field group, and button group spacing
+- relationship examples for label/input, input/helper, heading/content, card title/body, card/card, and section/section
+- density examples for dense admin table, standard form, and spacious help panel
 
-## Usage Rules
+## Token/Class/API Reference
 
-- Components own internal padding, icon gap, label gap, border, radius, min-height, and typography.
-- Components must not ship with default external margins.
-- Parent layouts own external spacing through gap, stack, grid, action row, form row, or table/list cell patterns.
-- Use spacing to communicate grouping and hierarchy.
+Use spacing tokens, Tailwind spacing utilities, and parent layout helpers such as stack, grid, gap, form row, action row, and dashboard/widget patterns.
 
-## Queued Gaps
+## Usage Guidance
 
-- A named stack/gap helper class set is queued if repeated wrappers become noisy.
+Use spacing tokens for margin, padding, and gaps. Components own internal spacing; parent layouts own external spacing. Smaller spacing indicates close relationship; larger spacing separates sections and creates hierarchy.
+
+Avoid arbitrary pixel values unless a documented exception owns the exact value.
+
+## Accessibility Notes
+
+Spacing must preserve readable grouping, tappable targets, and visible focus outlines. Dense layouts still need enough room for errors, helper text, and keyboard focus.
+
+## Developer Notes
+
+Components must not ship with unpredictable default external margins. Compose external spacing through parent stack, gap, grid, action-row, or form-row patterns.
+
+## Implementation Status
+
+Implemented.
 
 ## Carbon Comparison Notes
 
-Carbon spacing tokens and stack guidance support the same ownership principle: components should not rely on self-owned margins for layout.
+Carbon's spacing scale informs the token structure. Login App keeps its own utility mapping and existing layout conventions.

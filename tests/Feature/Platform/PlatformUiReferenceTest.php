@@ -83,6 +83,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertOk()
             ->assertSee('Foundation Elements')
             ->assertSee('data-ui-reference-element-inventory', false)
+            ->assertSee('Implementation Status')
             ->assertSee('Foundation Elements')
             ->assertSee('T1 Components')
             ->assertSee('T2 Patterns')
@@ -100,10 +101,23 @@ class PlatformUiReferenceTest extends TestCase
                 ->assertOk()
                 ->assertSee('data-ui-reference-foundation-element="'.$element['slug'].'"', false)
                 ->assertSee('data-ui-reference-element-disposition="'.$element['disposition'].'"', false)
+                ->assertSee('data-foundation-section="purpose"', false)
+                ->assertSee('data-foundation-section="implementation-status"', false)
+                ->assertSee('data-foundation-section="live-examples"', false)
+                ->assertSee('data-foundation-section="token-class-api-reference"', false)
+                ->assertSee('data-foundation-section="usage-guidance"', false)
+                ->assertSee('data-foundation-section="accessibility-notes"', false)
+                ->assertSee('data-foundation-section="developer-notes"', false)
+                ->assertSee('data-foundation-section="related-implementation-links"', false)
                 ->assertSee($element['label'])
                 ->assertSee($element['doc_path'])
                 ->assertSee($element['carbon_comparison']);
         }
+
+        $this->get('/platform/ui-reference/elements/2x-grid')
+            ->assertOk()
+            ->assertSee('data-ui-reference-foundation-element="grid"', false)
+            ->assertSee('2x Grid');
 
         $this->get('/platform/ui-reference/elements/not-an-element')
             ->assertNotFound();
@@ -115,48 +129,83 @@ class PlatformUiReferenceTest extends TestCase
 
         $this->get('/platform/ui-reference/elements/color')
             ->assertOk()
-            ->assertSee('Color Token Namespaces')
-            ->assertSee('--ui-text-strong')
-            ->assertSee('--ui-action-primary-bg')
-            ->assertSee('--ui-status-success-bg')
-            ->assertSee('text-primary never means the primary action color')
-            ->assertSee('Light mode token sample')
-            ->assertSee('Dark mode token sample');
+            ->assertSee('data-color-example="theme-aware-swatches"', false)
+            ->assertSee('data-color-example="rendered-token-examples"', false)
+            ->assertSee('data-color-example="stacked-surface-levels"', false)
+            ->assertSee('data-color-example="hover-delta"', false)
+            ->assertSee('data-color-example="common-app-examples"', false)
+            ->assertSee('data-color-example="inverse-moment"', false)
+            ->assertSee('Use role-based tokens, not raw hex values')
+            ->assertSee('Focus states are required');
 
         $this->get('/platform/ui-reference/elements/themes')
             ->assertOk()
-            ->assertSee('Theme Token Inheritance')
-            ->assertSee('Resolved dark theme')
-            ->assertSee('Resolved light theme');
+            ->assertSee('data-theme-example="theme-matrix"', false)
+            ->assertSee('data-theme-example="component-preview-matrix"', false)
+            ->assertSee('data-theme-example="layer-inheritance"', false)
+            ->assertSee('data-theme-example="inline-theme-examples"', false)
+            ->assertSee('data-theme-example="approved-overrides"', false)
+            ->assertSee('Themes change token values, not token roles');
+
+        $this->get('/platform/ui-reference/elements/grid')
+            ->assertOk()
+            ->assertSee('data-grid-example="responsive-grid-visualizer"', false)
+            ->assertSee('data-grid-example="breakpoint-examples"', false)
+            ->assertSee('data-grid-example="column-span-examples"', false)
+            ->assertSee('data-grid-example="gutter-padding-margin-examples"', false)
+            ->assertSee('data-grid-example="fluid-fixed-hybrid"', false)
+            ->assertSee('data-grid-example="app-scaffold"', false)
+            ->assertSee('320px')
+            ->assertSee('672px')
+            ->assertSee('1056px')
+            ->assertSee('1312px')
+            ->assertSee('1584px');
 
         $this->get('/platform/ui-reference/elements/spacing')
             ->assertOk()
-            ->assertSee('Spacing Scale And Ownership')
-            ->assertSee('Tailwind-compatible, 8px-centered spacing model')
-            ->assertSee('Components own internal padding')
-            ->assertSee('Parent layouts own external spacing')
-            ->assertSee('Table cell');
+            ->assertSee('data-spacing-example="spacing-scale"', false)
+            ->assertSee('data-spacing-example="margin-padding-examples"', false)
+            ->assertSee('data-spacing-example="stack-examples"', false)
+            ->assertSee('data-spacing-example="relationship-density-examples"', false)
+            ->assertSee('$spacing-13')
+            ->assertSee('Components own internal spacing');
 
         $this->get('/platform/ui-reference/elements/typography')
             ->assertOk()
-            ->assertSee('Typography Roles')
-            ->assertSee('Page title')
-            ->assertSee('Section title')
-            ->assertSee('Card title')
-            ->assertSee('Table header')
-            ->assertSee('Field label')
-            ->assertSee('Helper text')
-            ->assertSee('Error text')
-            ->assertSee('code text');
+            ->assertSee('data-typography-example="font-specimens"', false)
+            ->assertSee('data-typography-example="type-scale"', false)
+            ->assertSee('data-typography-example="type-role-examples"', false)
+            ->assertSee('data-typography-example="productive-content-examples"', false)
+            ->assertSee('data-typography-example="productive-vs-expressive"', false)
+            ->assertSee('Productive type is the default');
 
         $this->get('/platform/ui-reference/elements/icons')
             ->assertOk()
-            ->assertSee('Heroicon Usage')
-            ->assertSee('16px inline icon')
-            ->assertSee('20px action icon')
-            ->assertSee('44px touch target')
-            ->assertSee('Icon and text center-align')
-            ->assertSee('decorative vs semantic');
+            ->assertSee('data-icons-example="approved-heroicons-list"', false)
+            ->assertSee('data-icons-example="icon-size-matrix"', false)
+            ->assertSee('data-icons-example="icon-with-text"', false)
+            ->assertSee('data-icons-example="icon-only-controls"', false)
+            ->assertSee('data-icons-example="status-decorative-meaningful"', false)
+            ->assertSee('44px')
+            ->assertSee('Heroicons remain the default app icon library');
+
+        $this->get('/platform/ui-reference/elements/pictograms')
+            ->assertOk()
+            ->assertSee('data-pictograms-example="queued-library"', false)
+            ->assertSee('data-pictograms-example="size-examples"', false)
+            ->assertSee('data-pictograms-example="productive-expressive-comparison"', false)
+            ->assertSee('data-pictograms-example="container-clearance-theme"', false)
+            ->assertSee('data-pictograms-example="app-usage-examples"', false)
+            ->assertSee('Do not import Carbon pictograms');
+
+        $this->get('/platform/ui-reference/elements/motion')
+            ->assertOk()
+            ->assertSee('data-motion-example="easing-demos"', false)
+            ->assertSee('data-motion-example="common-ui-motion"', false)
+            ->assertSee('data-motion-example="duration-examples"', false)
+            ->assertSee('data-motion-example="reduced-motion-preview"', false)
+            ->assertSee('data-motion-example="do-dont-samples"', false)
+            ->assertSee('prefers-reduced-motion');
     }
 
     public function test_carbon_aligned_tier_one_component_depth_pages_are_documented(): void

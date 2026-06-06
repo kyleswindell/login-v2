@@ -42,8 +42,10 @@
                             @if ($element['disposition'] !== 'Implemented')
                                 <span class="rounded-full border border-slate-700 px-1.5 py-0.5 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-slate-500">
                                     {{ match ($element['disposition']) {
-                                        'Partially Implemented' => 'Partial',
-                                        'Queued Gap' => 'Gap',
+                                        'Partial' => 'Partial',
+                                        'Needs audit' => 'Audit',
+                                        'Deprecated' => 'Deprecated',
+                                        'App-specific exception' => 'Exception',
                                         default => 'Gate',
                                     } }}
                                 </span>

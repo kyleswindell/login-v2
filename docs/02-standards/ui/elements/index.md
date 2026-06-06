@@ -1,17 +1,10 @@
 # Foundation Elements Standards
 
-Foundation Elements are the baseline layer beneath Tier 1 components. They define the visual and behavioral primitives used by components, patterns, and feature modules.
+Foundation Elements are the baseline visual system beneath Tier 1 components. They define layout, color, typography, spacing, motion, iconography, pictograms, and themes before components or patterns compose them.
 
-## Element Set
+## UI Reference Route
 
-- [Grid](grid.md)
-- [Color](color.md)
-- [Icons](icons.md)
-- [Pictograms](pictograms.md)
-- [Motion](motion.md)
-- [Spacing](spacing.md)
-- [Themes](themes.md)
-- [Typography](typography.md)
+`/platform/ui-reference/elements`
 
 ## Tier Relationship
 
@@ -20,10 +13,32 @@ Foundation Elements are the baseline layer beneath Tier 1 components. They defin
 - Tier 2 patterns compose Tier 1 components into reusable page and workflow structures.
 - Tier 3 feature modules compose approved lower tiers into app-specific behavior.
 
-## UI Reference Requirement
+## Page Contract
 
-Each Foundation Element must have a UI Reference route that displays final Login App examples, not only prose. The route must link back to its canonical standard doc.
+Every Foundation Element UI Reference page must answer what the element looks like in Login App 2.0, what token/class/helper/component to use, when to use it, what to avoid, and what accessibility constraints apply.
+
+Each page must visibly include:
+
+- Purpose
+- Live examples rendered with app CSS/JS
+- Token/class/API reference
+- Usage guidance
+- Accessibility notes
+- Developer notes
+- Related implementation links
+- Implementation status
+
+## Element Set
+
+- [2x Grid](grid.md)
+- [Color](color.md)
+- [Icons](icons.md)
+- [Pictograms](pictograms.md)
+- [Motion](motion.md)
+- [Spacing](spacing.md)
+- [Themes](themes.md)
+- [Typography](typography.md)
 
 ## Carbon Comparison
 
-Carbon is a completeness and organization benchmark only. Login App standards must not copy Carbon visual tokens, IBM-specific assets, or Carbon component chrome without a separate decision record.
+Carbon is a completeness and organization benchmark only. Login App standards must not copy Carbon visual tokens, IBM-specific assets, icons, pictograms, spacing, or component chrome without a separate decision record.

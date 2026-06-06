@@ -13,7 +13,8 @@
             <article class="ui-card">
                 <p class="ui-kicker">Component Library</p>
                 <h2 class="ui-card-title mt-2">Tier 1 Components</h2>
-                <p class="ui-card-copy">Buttons, status badges, and form controls are separated into focused views so each state can be reviewed consistently.</p>
+                <p class="ui-card-copy">Component pages are catalog-driven and Carbon-aligned for inventory completeness, while Login App 2.0 keeps its own visual and behavior standards.</p>
+                <a wire:navigate href="{{ route('platform.ui-reference.components.overview') }}" class="ui-link mt-3 inline-flex">Open T1 component catalog</a>
             </article>
             <article class="ui-card">
                 <p class="ui-kicker">Pattern Standards</p>
@@ -29,16 +30,20 @@
 
         <section class="ui-card">
             <h2 class="ui-card-title">Current Tier 1 Scope</h2>
-            <ul class="mt-4 space-y-2 text-sm text-slate-300">
-                <li>1. Buttons and icon buttons</li>
-                <li>2. Badges and status indicators</li>
-                <li>3. Inputs, textareas, selects, checkboxes, radios, and switches</li>
-                <li>4. Utility primitives: divider, tooltip, spinner, icon, label, and link</li>
-                <li>5. Table standards (general + log table)</li>
-                <li>6. Drawer and modal behavior</li>
-                <li>7. Toast and inline alert feedback</li>
-                <li>8. Sidebar, account-menu behavior, and layout scaffolding</li>
-            </ul>
+            <p class="ui-card-copy mt-2">The primary T1 review surface is now the component catalog. Legacy grouped pages remain available only as index and compatibility surfaces.</p>
+            <div class="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-4" data-ui-reference-catalog-summary>
+                @foreach ([
+                    ['label' => 'Implement T1 Page', 'count' => collect($componentCatalog)->where('disposition', 'Implement T1 Page')->count()],
+                    ['label' => 'Represent As T2 Pattern', 'count' => collect($componentCatalog)->where('disposition', 'Represent As T2 Pattern')->count()],
+                    ['label' => 'Queued Gap', 'count' => collect($componentCatalog)->where('disposition', 'Queued Gap')->count()],
+                    ['label' => 'Not Applicable Yet', 'count' => collect($componentCatalog)->where('disposition', 'Not Applicable Yet')->count()],
+                ] as $metric)
+                    <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
+                        <p class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">{{ $metric['label'] }}</p>
+                        <p class="mt-2 text-2xl font-semibold text-white">{{ $metric['count'] }}</p>
+                    </div>
+                @endforeach
+            </div>
         </section>
 
         <section class="ui-card">

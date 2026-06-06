@@ -20,8 +20,8 @@
   - [ ] starter examples are concrete page compositions, not only rule summaries
 
 ## Design-System Usage Guidance
-- [ ] Design-System Usage Guidance
-  Status: implemented (pending manual review) — correction pass 2-F-0015 reworked P2-F-CQ-008 through P2-F-CQ-011 from note-heavy guidance into concrete T1/T2 component examples, variants, states, queued-gap markers, and implementation guides; P2-F-CQ-012 and P2-F-CQ-013 also remain implemented pending review
+- [x] Design-System Usage Guidance
+  Status: passed review — P2-F-CQ-008 through P2-F-CQ-011 were manually approved on 2026-06-06; follow-up pass 2-F-0016 realigned the accepted examples into a component-specific T1 library structure
   - [x] badge, alert, toast, notification, and status color semantics are explicit
   - [x] guidance preserves the existing Login App 2.0 visual direction
   - [x] standard, soft, ghost, outline, and destructive button usage rules are explicit
@@ -33,6 +33,16 @@
   - [x] selection option variants and usage rules are documented
   - [x] required classes, ready-to-use components, component sets, and starter views are identified or queued
   - [x] concrete T1/T2 reference examples and implementation guides are present for actions, forms, feedback, data, navigation, overlays, loading, inputs, and layout guidance
+
+## Carbon-Aligned T1 Component Library
+- [ ] Carbon-Aligned T1 Component Library
+  Status: implemented pending review — P2-F-CQ-016 through P2-F-CQ-024 added the component catalog, full disposition matrix, generated T1 component routes, catalog sidebar, focused high-risk state pages, and automated route/content coverage
+  - [x] every reviewed Carbon component has a Login App 2.0 disposition and owner route
+  - [x] sidebar and overview are generated from the same component catalog source
+  - [x] legacy combined T1 routes remain available as index/compatibility surfaces, not primary navigation
+  - [x] number input, radio button, checkbox, pagination, structured list, tabs, menu, and UI shell pages include focused state/depth coverage
+  - [x] AI label, code snippet, and other low-applicability items have explicit queued or gated treatment
+  - [ ] manual review confirms the component-specific organization is sufficiently clear for later development
 
 ## Module Home And Dashboard Summary Starters
 - [ ] Module Home And Dashboard Summary Starters

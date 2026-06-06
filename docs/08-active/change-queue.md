@@ -59,49 +59,96 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 
 ## In Progress
 
-<!-- none -->
-
 ## Implemented Pending Review
 
-### P2-F-CQ-008 - Usage guidance standards for button variants and action labels
+### P2-F-CQ-016 - Carbon component inventory and T1 disposition map
 - Status: Implemented Pending Review
 - Owner: Batch F
-- Scope: Reworked button/action guidance into concrete T1/T2 UI Reference examples for button variants, states, labels, one-primary-action rule, grouped menus, and implementation ownership.
+- Scope: Create a UI Reference inventory matrix for the full Carbon component list and classify each component for Login App 2.0 as `Implement T1 Page`, `Represent As T2 Pattern`, `Queued Gap`, or `Not Applicable Yet`.
 - Acceptance:
-  - T1 examples show standard, soft, ghost, outline, destructive, icon-leading, icon-only, disabled, focus, and loading states
-  - T2 examples show page-header, filter, form action bar, and row-overflow action placement
-  - implementation guide identifies `x-ui.button`, `x-ui.icon-button`, `x-ui.menu-item`, supported props/variants/semantics, and owner routes
-- Implemented in: worklog-2-F-0015
+  - every Carbon component named in the review plan has a Login App 2.0 disposition
+  - each disposition identifies the owner route or trigger condition
+  - Carbon remains a completeness benchmark only and does not introduce Carbon visual tokens
+- Implemented in: worklog-2-F-0016
 
-### P2-F-CQ-010 - Usage guidance for form field standards and selection controls
+### P2-F-CQ-017 - UI Reference T1 component menu architecture
 - Status: Implemented Pending Review
 - Owner: Batch F
-- Scope: Reworked form/selection guidance into concrete T1/T2 examples for field states, native controls, validation placement, selection boundaries, searchable select, and queued gaps.
+- Scope: Replace the three combined Component Library links with a catalog-driven expandable T1 Components menu and keep T2 Pattern Standards separate.
 - Acceptance:
-  - T1 examples show required, optional, helper, error, warning, disabled, read-only, focused, textarea, select, date, date-time, file, checkbox, radio, toggle, searchable select/combo, and queued multi-select guidance
-  - T2 examples show form sections, inline rows, validation summary, settings-style forms, compact account/profile forms, and form action bars
-  - implementation guide identifies `x-ui.patterns.form-group`, `ui-input`, `ui-select`, `ui-textarea`, `ui-switch`, `x-ui.searchable-select`, validation placement, and owner routes
-- Implemented in: worklog-2-F-0015
+  - sidebar and overview consume one component catalog source
+  - tests prove cataloged T1 entries appear in navigation and are routable
+  - legacy combined routes are no longer the primary navigation surface
+- Implemented in: worklog-2-F-0016
 
-### P2-F-CQ-009 - Usage guidance for notifications, badges, and feedback
+### P2-F-CQ-018 - Split existing combined T1 pages
 - Status: Implemented Pending Review
 - Owner: Batch F
-- Scope: Reworked notification/badge/feedback guidance into concrete T1/T2 examples for badges, statuses, inline alerts, toasts, page feedback, persisted notification handoff, and implementation ownership.
+- Scope: Add primary T1 pages for existing primitives currently combined across actions, status, forms, overlays, and utility examples.
 - Acceptance:
-  - badge/status examples show semantic mappings, base/outline variants, icon/no-icon states, table/list context, and text-first usage
-  - feedback examples show form validation, table/list, page-level warning, toast stacking, AJAX same-page feedback, and notification-center handoff
-  - implementation guide identifies `x-ui.badge`, `x-ui.status`, `x-ui.inline-alert`, `x-ui.toast`, live-region expectations, wrapper/data hooks, and owner routes
-- Implemented in: worklog-2-F-0015
+  - component pages exist for button, icon button, menu item, badge/tag, status, text input, textarea, select, checkbox, radio button, toggle, searchable select, date input, file input, link, divider, icon, tooltip, toggletip, loading/spinner, modal, drawer, and notification
+  - notifications may remain grouped as one T1 page for inline, toast, actionable, callout/banner, and persisted handoff
+  - T2 pages compose or link to T1 owners instead of acting as the only primitive owner
+- Implemented in: worklog-2-F-0016
 
-### P2-F-CQ-011 - Usage guidance for data display, navigation, overlays, loading, inputs, breadcrumb, structured list, file uploader, date picker, grid, and tile
+### P2-F-CQ-019 - Missing input/control components
 - Status: Implemented Pending Review
 - Owner: Batch F
-- Scope: Reworked broader guidance into concrete T1/T2 examples across routed table, pagination, tabs, modal, tooltip/toggletip, loading, search/filter, input, overflow, breadcrumb, structured-list, file-uploader, date-picker, grid, and tile surfaces.
+- Scope: Add missing input/control component pages for number input, slider, dropdown, search, progress bar, and progress indicator.
 - Acceptance:
-  - examples cover all 32 routed gap IDs through concrete owner-route examples and implementation guides
-  - missing component families are explicitly marked as queued gaps instead of implied as implemented
-  - examples preserve Login App 2.0 visual direction and identify component names, data attributes, wrappers, route ownership, and usage boundaries
-- Implemented in: worklog-2-F-0015
+  - number input includes default/fluid variants, stepper controls, min/max/step guidance, error/warning inline status icon, disabled, read-only, focus, and keyboard behavior
+  - each missing control has concrete examples or an explicit queued implementation contract
+- Implemented in: worklog-2-F-0016
+
+### P2-F-CQ-020 - Selection component depth pass
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Expand checkbox and radio button representation into separate T1 pages with usage boundaries and states.
+- Acceptance:
+  - radio shows vertical/horizontal groups, selected/unselected, focus, disabled, read-only, error, warning, helper text, group states, and single-select-only rule
+  - checkbox shows independent choice, multi-select group, checked/unchecked/indeterminate where supported or queued, disabled, read-only, error, and warning
+  - checkbox vs radio usage is demonstrated, not only described
+- Implemented in: worklog-2-F-0016
+
+### P2-F-CQ-021 - Data display T1 expansion
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Add dedicated T1 pages or dispositions for data table, pagination, structured list, list, contained list, tile, and tree view.
+- Acceptance:
+  - structured list includes default/selectable, condensed/default density, hang/flush alignment where supported, selected/focus/disabled/skeleton states
+  - pagination includes full pagination, compact nav, page-size selector, overflow, disabled prev/next, size pairings, and placement below related content
+  - T2 Data + Content and Tables consume/link to T1 owners instead of owning primitive standards
+- Implemented in: worklog-2-F-0016
+
+### P2-F-CQ-022 - Navigation/action primitives depth pass
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Add or deepen breadcrumb, tabs, menu, menu buttons, content switcher, popover, accordion, and UI shell header/left/right T1 pages.
+- Acceptance:
+  - tabs include line, contained, vertical, icon-leading, icon-only, overflow/scroll, selected/focus/disabled, and tab-vs-progress/comparison guidance
+  - menu includes action items, sizing, alignment, selected/current, disabled, danger, dividers, submenu boundary, keyboard/mouse expectations
+  - Navigation + Actions becomes a T2 composition page only
+- Implemented in: worklog-2-F-0016
+
+### P2-F-CQ-023 - Low-applicability Carbon items and future gates
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Decide and document Login-specific treatment for AI label and code snippet and ensure no Carbon component remains unmapped.
+- Acceptance:
+  - AI label and code snippet have explicit dispositions and trigger conditions
+  - speculative UI is not built for low-applicability components
+  - no Carbon component is silently ignored
+- Implemented in: worklog-2-F-0016
+
+### P2-F-CQ-024 - T1 route, test, docs, and handoff cleanup
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Add route/sidebar/catalog tests, update overview/checklist/active docs, and validate the full T1 component reference update.
+- Acceptance:
+  - every T1 sidebar route has automated coverage
+  - overview and active docs reflect the new T1 component library model
+  - focused UI Reference tests, build, docs guardrails, and browser review pass
+- Implemented in: worklog-2-F-0016
 
 ### P2-F-CQ-012 - UI control module ownership cleanup
 - Status: Implemented Pending Review
@@ -148,6 +195,38 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 - Revisit When: P2-F-CQ-009 requires runtime notification behavior changes, or a later notifications batch owns realtime client behavior.
 
 ## Passed Review
+
+### P2-F-CQ-008 - Usage guidance standards for button variants and action labels
+- Status: Passed Review
+- Owner: Batch F
+- Scope: Reworked button/action guidance into concrete T1/T2 UI Reference examples for button variants, states, labels, one-primary-action rule, grouped menus, and implementation ownership.
+- Implemented in: worklog-2-F-0015
+- Review result: Approved on 2026-06-06
+- Follow-up: P2-F-CQ-016 through P2-F-CQ-024 realign the accepted examples into a component-specific T1 library structure.
+
+### P2-F-CQ-009 - Usage guidance for notifications, badges, and feedback
+- Status: Passed Review
+- Owner: Batch F
+- Scope: Reworked notification/badge/feedback guidance into concrete T1/T2 examples for badges, statuses, inline alerts, toasts, page feedback, persisted notification handoff, and implementation ownership.
+- Implemented in: worklog-2-F-0015
+- Review result: Approved on 2026-06-06
+- Follow-up: P2-F-CQ-016 through P2-F-CQ-024 keep notifications grouped but move the broader T1 library toward component-specific pages.
+
+### P2-F-CQ-010 - Usage guidance for form field standards and selection controls
+- Status: Passed Review
+- Owner: Batch F
+- Scope: Reworked form/selection guidance into concrete T1/T2 examples for field states, native controls, validation placement, selection boundaries, searchable select, and queued gaps.
+- Implemented in: worklog-2-F-0015
+- Review result: Approved on 2026-06-06
+- Follow-up: P2-F-CQ-016 through P2-F-CQ-024 split accepted form/control examples into component-specific T1 pages.
+
+### P2-F-CQ-011 - Usage guidance for data display, navigation, overlays, loading, inputs, breadcrumb, structured list, file uploader, date picker, grid, and tile
+- Status: Passed Review
+- Owner: Batch F
+- Scope: Reworked broader guidance into concrete T1/T2 examples across routed table, pagination, tabs, modal, tooltip/toggletip, loading, search/filter, input, overflow, breadcrumb, structured-list, file-uploader, date-picker, grid, and tile surfaces.
+- Implemented in: worklog-2-F-0015
+- Review result: Approved on 2026-06-06
+- Follow-up: P2-F-CQ-016 through P2-F-CQ-024 split accepted broader examples into component-specific T1 pages and disposition gaps.
 
 ### P2-F-CQ-001 - Carbon contrast audit and starter catalog matrix
 - Status: Passed Review

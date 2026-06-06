@@ -6,15 +6,16 @@ PARTIAL
 
 ## Current Review State
 
-- Batch F remains PARTIAL because P2-F-CQ-008 through P2-F-CQ-011 have been corrected and returned to Implemented Pending Review, while active Ready To Implement starter items remain.
+- Batch F remains PARTIAL because P2-F-CQ-016 through P2-F-CQ-024 have been implemented pending review, while active Ready To Implement starter items remain.
 - P2-F-CQ-001: PASS. The Carbon audit and starter catalog matrix are accepted as sufficient planning and routing source material for the remaining Batch F work.
 - P2-F-CQ-007: PASS. The UI Reference starter catalog entry point is discoverable, lists the required starter set, and includes route disposition guidance for current UI Reference views.
-- P2-F-CQ-008: IMPLEMENTED PENDING REVIEW. Correction pass 2-F-0015 added concrete T1/T2 button, action, grouped-menu, state, label, and implementation examples.
-- P2-F-CQ-009: IMPLEMENTED PENDING REVIEW. Correction pass 2-F-0015 added concrete T1/T2 badge, status, alert, toast, callout/banner, persisted-notification, AJAX feedback, and implementation examples.
-- P2-F-CQ-010: IMPLEMENTED PENDING REVIEW. Correction pass 2-F-0015 added concrete T1/T2 field, validation, state, selection-control, searchable-select/combo, queued multi-select, and implementation examples.
-- P2-F-CQ-011: IMPLEMENTED PENDING REVIEW. Correction pass 2-F-0015 added concrete examples across routed table, pagination, tabs, modal, tooltip/toggletip, loading, search/filter, input, overflow, breadcrumb, structured-list, file-uploader, date-picker, grid, and tile surfaces.
+- P2-F-CQ-008: PASS. Correction pass 2-F-0015 was manually approved on 2026-06-06.
+- P2-F-CQ-009: PASS. Correction pass 2-F-0015 was manually approved on 2026-06-06.
+- P2-F-CQ-010: PASS. Correction pass 2-F-0015 was manually approved on 2026-06-06.
+- P2-F-CQ-011: PASS. Correction pass 2-F-0015 was manually approved on 2026-06-06.
 - P2-F-CQ-012: IMPLEMENTED PENDING REVIEW. UI control behavior is split into concern-based modules with the existing `resources/js/ui-controls.js` export surface preserved.
 - P2-F-CQ-013: IMPLEMENTED PENDING REVIEW. CSS ownership/read paths are documented, nearest CSS agent guidance is present, and Tailwind theme seed overrides are extracted without token changes.
+- P2-F-CQ-016 through P2-F-CQ-024: IMPLEMENTED PENDING REVIEW. Worklog 2-F-0016 adds the component catalog, Carbon component disposition matrix, T1 component menu, generated component routes, component-specific pages, and catalog/depth coverage.
 - No open required fixes remain for P2-F-CQ-001 or P2-F-CQ-007.
 - Historical pass details are preserved in worklog-2-F-0002 through worklog-2-F-0008 and should not be repeated here.
 
@@ -23,10 +24,10 @@ PARTIAL
 Visual: PENDING
 Functional: PENDING
 
-- Passed review: P2-F-CQ-001, P2-F-CQ-007.
-- Pending review: P2-F-CQ-008, P2-F-CQ-009, P2-F-CQ-010, P2-F-CQ-011, P2-F-CQ-012, P2-F-CQ-013.
+- Passed review: P2-F-CQ-001, P2-F-CQ-007, P2-F-CQ-008, P2-F-CQ-009, P2-F-CQ-010, P2-F-CQ-011.
+- Pending review: P2-F-CQ-012, P2-F-CQ-013, P2-F-CQ-016, P2-F-CQ-017, P2-F-CQ-018, P2-F-CQ-019, P2-F-CQ-020, P2-F-CQ-021, P2-F-CQ-022, P2-F-CQ-023, P2-F-CQ-024.
 - Remaining Batch F items still require implementation before final visual and functional batch review.
-- Review note: manual review should confirm whether correction pass 2-F-0015 now provides enough valid, referenceable T1/T2 component examples, variants, states, usage boundaries, and implementation guidance to minimize later developer guesswork.
+- Review note: manual review should confirm whether worklog 2-F-0016 provides the expected component-specific T1 organization, Carbon completeness mapping, and enough concrete state examples for later developers to use with minimal guesswork.
 
 ## Remaining Queue Items
 
@@ -53,6 +54,7 @@ Functional: PENDING
 - P2-F-CQ-011 validation passed with focused and full Docker UI Reference test coverage, `npm run build`, and docs guardrails.
 - Manual review later rejected P2-F-CQ-008 through P2-F-CQ-011 despite passing automated marker coverage because the implementation verified note presence rather than concrete reference examples and usage surfaces.
 - Correction pass 2-F-0015 validation passed with focused Docker UI Reference coverage, local browser route checks, `npm run build`, and docs guardrails. Automated coverage now asserts concrete example and implementation-guide markers for P2-F-CQ-008 through P2-F-CQ-011.
+- Worklog 2-F-0016 validation passed with full Docker UI Reference coverage, `npm run build`, docs guardrails, and browser review of the component overview plus representative high-risk T1 component pages. Build and docs guardrails required unsandboxed execution because the sandbox blocked Windows native-binary/Bash access.
 
 ## Historical Detail
 

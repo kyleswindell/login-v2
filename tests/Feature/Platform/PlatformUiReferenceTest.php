@@ -3,6 +3,7 @@
 namespace Tests\Feature\Platform;
 
 use App\Models\User;
+use App\Platform\UiReference\UiReferenceComponentCatalog;
 use Database\Seeders\PlatformRolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Permission;
@@ -23,9 +24,126 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('ui-card', false)
             ->assertSee('Form Patterns')
             ->assertSee('Data + Content')
+            ->assertSee('T1 Components')
+            ->assertSee('Number input')
+            ->assertSee('Structured list')
             ->assertSee('Widget Content')
             ->assertSee('Starter Catalog')
             ->assertSee('Archetype Proofs');
+    }
+
+    public function test_tier_one_component_catalog_routes_are_discoverable(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $catalog = app(UiReferenceComponentCatalog::class)->primaryPages();
+
+        $overview = $this->get('/platform/ui-reference/components')
+            ->assertOk()
+            ->assertSee('T1 Component Library')
+            ->assertSee('data-ui-reference-component-inventory', false);
+
+        foreach ($catalog as $component) {
+            $overview
+                ->assertSee($component['label'])
+                ->assertSee('/platform/ui-reference/components/'.$component['slug'])
+                ->assertSee($component['disposition']);
+
+            $this->get('/platform/ui-reference/components/'.$component['slug'])
+                ->assertOk()
+                ->assertSee('data-ui-reference-t1-component="'.$component['slug'].'"', false)
+                ->assertSee('data-ui-reference-component-disposition="'.$component['disposition'].'"', false)
+                ->assertSee($component['label'])
+                ->assertSee($component['owner_route'])
+                ->assertSee($component['disposition']);
+        }
+
+        $this->get('/platform/ui-reference/components/not-a-component')
+            ->assertNotFound();
+    }
+
+    public function test_carbon_aligned_tier_one_component_depth_pages_are_documented(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/components/number-input')
+            ->assertOk()
+            ->assertSee('Default number input')
+            ->assertSee('Fluid number input')
+            ->assertSee('Stepper controls')
+            ->assertSee('min="0"', false)
+            ->assertSee('max="4"', false)
+            ->assertSee('step="1"', false)
+            ->assertSee('Error with inline status icon')
+            ->assertSee('Warning with inline status icon')
+            ->assertSee('Disabled')
+            ->assertSee('Read-only')
+            ->assertSee('Focus')
+            ->assertSee('Keyboard behavior');
+
+        $this->get('/platform/ui-reference/components/radio-button')
+            ->assertOk()
+            ->assertSee('Vertical group')
+            ->assertSee('Horizontal group')
+            ->assertSee('selected')
+            ->assertSee('unselected')
+            ->assertSee('Error group state')
+            ->assertSee('Warning and helper text')
+            ->assertSee('Disabled and read-only')
+            ->assertSee('single-select only')
+            ->assertSee('Use checkbox groups for multi-select choices');
+
+        $this->get('/platform/ui-reference/components/checkbox')
+            ->assertOk()
+            ->assertSee('Independent choice')
+            ->assertSee('Multi-select group')
+            ->assertSee('Checked, unchecked, indeterminate')
+            ->assertSee('Disabled and read-only')
+            ->assertSee('Error and warning')
+            ->assertSee('Use radio buttons when exactly one visible option must be selected');
+
+        $this->get('/platform/ui-reference/components/pagination')
+            ->assertOk()
+            ->assertSee('Full pagination with page-size selector')
+            ->assertSee('Compact nav')
+            ->assertSee('Overflow')
+            ->assertSee('disabled prev/next')
+            ->assertSee('Size pairings')
+            ->assertSee('below related content');
+
+        $this->get('/platform/ui-reference/components/structured-list')
+            ->assertOk()
+            ->assertSee('Default structured list')
+            ->assertSee('Selectable structured list')
+            ->assertSee('Condensed density')
+            ->assertSee('Hang alignment')
+            ->assertSee('Flush alignment')
+            ->assertSee('Selected, focus, disabled, and skeleton states');
+
+        $this->get('/platform/ui-reference/components/tabs')
+            ->assertOk()
+            ->assertSee('Line tabs')
+            ->assertSee('Contained tabs')
+            ->assertSee('Vertical tabs')
+            ->assertSee('Line tabs with icon')
+            ->assertSee('Icon-only line tabs')
+            ->assertSee('Overflow / scroll tabs')
+            ->assertSee('tab-vs-progress/comparison guidance');
+
+        $this->get('/platform/ui-reference/components/menu')
+            ->assertOk()
+            ->assertSee('Action items, sizing, and alignment')
+            ->assertSee('Current item')
+            ->assertSee('Disabled item')
+            ->assertSee('Delete workspace')
+            ->assertSee('Keyboard and submenu boundary');
+
+        foreach (['ui-shell-header', 'ui-shell-left-panel', 'ui-shell-right-panel'] as $shellComponent) {
+            $this->get('/platform/ui-reference/components/'.$shellComponent)
+                ->assertOk()
+                ->assertSee('UI Shell Disposition')
+                ->assertSee('T2 navigation and layout surfaces');
+        }
     }
 
     public function test_platform_reviewer_can_view_ui_reference_workspace(): void

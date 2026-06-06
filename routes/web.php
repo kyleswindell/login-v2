@@ -116,6 +116,8 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/platform/ui-reference/components/actions', [UiReferenceController::class, 'actions'])->name('platform.ui-reference.components.actions');
     Route::get('/platform/ui-reference/components/status', [UiReferenceController::class, 'status'])->name('platform.ui-reference.components.status');
     Route::get('/platform/ui-reference/components/forms', [UiReferenceController::class, 'forms'])->name('platform.ui-reference.components.forms');
+    Route::get('/platform/ui-reference/components', [UiReferenceController::class, 'componentsOverview'])->name('platform.ui-reference.components.overview');
+    Route::get('/platform/ui-reference/components/{component}', [UiReferenceController::class, 'component'])->name('platform.ui-reference.components.show');
     Route::get('/platform/ui-reference/patterns/tables', [UiReferenceController::class, 'tables'])->name('platform.ui-reference.patterns.tables');
     Route::get('/platform/ui-reference/patterns/forms', [UiReferenceController::class, 'formsPatterns'])->name('platform.ui-reference.patterns.forms');
     Route::get('/platform/ui-reference/patterns/data-content', [UiReferenceController::class, 'dataContent'])->name('platform.ui-reference.patterns.data-content');

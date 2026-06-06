@@ -9,6 +9,7 @@ Provide one canonical index for Login App 2.0 UI/UX rules, tokens, and component
 ## Canonical Notes
 
 - [UI UX Source Of Truth And Decision Log](UI%20UX%20Source%20Of%20Truth%20And%20Decision%20Log.md)
+- [Foundation Elements Standards](elements/index.md)
 - [UI UX Foundations And Theming Standards](UI%20UX%20Foundations%20And%20Theming%20Standards.md)
 - [UI UX Color Token Standards](tokens/UI%20UX%20Color%20Token%20Standards.md)
 - [UI UX Typography Standards](UI%20UX%20Typography%20Standards.md)
@@ -38,3 +39,4 @@ Provide one canonical index for Login App 2.0 UI/UX rules, tokens, and component
 - [UI UX Contract Rollout Tracker](../../09-reference/ui/UI%20UX%20Contract%20Rollout%20Tracker.md)
 - [UI UX Tier 1 UI Reference Implementation Checklist](../../09-reference/ui/UI%20UX%20Tier%201%20UI%20Reference%20Implementation%20Checklist.md)
 - [UI UX Status And Badge Production Rollout Checklist](../../09-reference/ui/UI%20UX%20Status%20And%20Badge%20Production%20Rollout%20Checklist.md)
+- [Phase 2 Batch F - Foundation Elements Carbon Comparison Notes](../../09-reference/ui/Phase%202%20Batch%20F%20-%20Foundation%20Elements%20Carbon%20Comparison%20Notes.md)

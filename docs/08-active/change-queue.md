@@ -57,9 +57,165 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - Phase 2 docs reflect Batch F implementation status
   - Batch E remains the post-F close-out path and staging deploy remains out of scope
 
+### P2-F-CQ-033 - T1 component family depth pass: actions
+- Status: Ready To Implement
+- Owner: Batch F
+- Scope: Deepen Button, Menu, Menu buttons, and Link T1 pages after Foundation Elements and T1 contracts are accepted.
+- Acceptance:
+  - canonical docs and UI Reference examples are updated together
+  - each page shows actual variants, states, spacing behavior, implementation owner, and queued gaps
+  - tests include component-specific assertions for the implemented action-family pages
+
+### P2-F-CQ-034 - T1 component family depth pass: inputs
+- Status: Ready To Implement
+- Owner: Batch F
+- Scope: Deepen Text input, Textarea, Number input, Select, Dropdown, Multiselect, Search, Date picker, File uploader, and Slider T1 pages.
+- Acceptance:
+  - input docs and UI Reference examples apply Foundation Element color, spacing, typography, icon, and theme rules
+  - examples include default, variant, focus, hover-capable, disabled, read-only, validation, and loading states where applicable
+  - queued gaps remain explicit where final component behavior is not yet implemented
+
+### P2-F-CQ-035 - T1 component family depth pass: selection controls
+- Status: Ready To Implement
+- Owner: Batch F
+- Scope: Deepen Checkbox, Radio button, Toggle, and Content switcher T1 pages.
+- Acceptance:
+  - checkbox versus radio usage is visually demonstrated
+  - selection group states, orientation variants, disabled/read-only states, validation states, and helper text are represented
+  - content switcher remains queued or receives concrete examples according to accepted app need
+
+### P2-F-CQ-036 - T1 component family depth pass: feedback and loading
+- Status: Ready To Implement
+- Owner: Batch F
+- Scope: Deepen Notification, Tag, AI label, Inline loading, Loading, Progress bar, and Progress indicator T1 pages.
+- Acceptance:
+  - semantic status and loading examples use current token standards
+  - AI label remains gated unless a real AI-assisted feature exists
+  - loading and progress pages distinguish spinner, inline loading, skeleton, determinate, and step-progress expectations
+
+### P2-F-CQ-037 - T1 component family depth pass: overlays and help
+- Status: Ready To Implement
+- Owner: Batch F
+- Scope: Deepen Accordion, Modal, Popover, Tooltip, and Toggletip T1 pages.
+- Acceptance:
+  - overlay/help docs and UI Reference examples distinguish blocking, contextual, non-interactive, and interactive disclosure
+  - examples show focus, hover, disabled, open/closed, dismiss, and reduced-motion expectations where applicable
+  - popover remains queued unless a concrete consumer exists
+
+### P2-F-CQ-038 - T1 component family depth pass: data display
+- Status: Ready To Implement
+- Owner: Batch F
+- Scope: Deepen Data table, Pagination, Structured list, List, Contained list, Tile, and Tree view T1 pages.
+- Acceptance:
+  - data display pages show concrete variants, states, spacing behavior, and T2 consumption links
+  - pagination and structured-list coverage remains visual and implementation-oriented
+  - queued data-display gaps include trigger conditions
+
+### P2-F-CQ-039 - T1 component family depth pass: navigation and shell
+- Status: Ready To Implement
+- Owner: Batch F
+- Scope: Deepen Breadcrumb, Tabs, and UI shell T1 pages.
+- Acceptance:
+  - tabs include line, contained, vertical, icon-leading, icon-only, overflow/scroll, selected, focus, and disabled states
+  - UI shell remains one family with Login-specific header, left panel, and right panel guidance as subsections
+  - navigation pages link to T2 pattern composition owners where primitives are consumed
+
 ## In Progress
 
 ## Implemented Pending Review
+
+### P2-F-CQ-025 - Foundation Elements inventory and UI Reference menu
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Add a Foundation Elements dropdown and catalog-driven UI Reference pages for overview, grid, color, icons, pictograms, motion, spacing, themes, and typography.
+- Acceptance:
+  - UI Reference sidebar shows Foundation Elements as its own category before T1 Components
+  - overview explains Foundation Elements versus T1 Components, T2 Patterns, and T3 Feature Modules
+  - each element page has a disposition of Implemented, Partially Implemented, Queued Gap, or Not Applicable Yet
+  - existing CSS tokens and standards docs are mapped before new token work
+  - tests prove every element route is reachable and appears in sidebar navigation
+- Implemented in: worklog-2-F-0017
+
+### P2-F-CQ-026 - Foundation Elements documentation model
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Create canonical element-level standards under `docs/02-standards/ui/elements/` and non-canonical Carbon comparison notes under `docs/09-reference/ui/`.
+- Acceptance:
+  - each element doc defines Login App standards and includes purpose, current implementation, UI Reference route, required visible examples, usage rules, queued gaps, and Carbon comparison notes
+  - Carbon comparison/source notes live in `docs/09-reference/ui/`, not as canonical rules
+  - UI Reference element pages link to the canonical docs
+  - existing document library can surface the docs through its current docs route
+- Implemented in: worklog-2-F-0017
+
+### P2-F-CQ-027 - Color and theme token audit
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Audit and document the existing token model for text, icon, border, surface, action, status, and shadow namespaces without broad renaming.
+- Acceptance:
+  - clarify that text-primary means primary content hierarchy, not primary blue action color
+  - map current tokens such as `--ui-text-strong` as accepted aliases or preferred terminology
+  - Color page displays actual app tokens in light and dark mode
+  - Themes page displays theme behavior and token inheritance
+  - no arbitrary hard-coded component colors are introduced
+- Implemented in: worklog-2-F-0017
+
+### P2-F-CQ-028 - Spacing and grid foundation standard
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Define the app's 2x/8px-compatible spacing and grid foundation decision and expose it in UI Reference.
+- Acceptance:
+  - document the Tailwind-compatible, 8px-centered spacing model
+  - define spacing scale and show it visually in UI Reference
+  - define grid, page, and content-region examples
+  - establish that components own internal spacing and parent layouts own external spacing
+  - UI Reference shows approved stack/gap, form row, action row, table cell, card grid, and dashboard/widget spacing examples or owner references
+- Implemented in: worklog-2-F-0017
+
+### P2-F-CQ-029 - Typography foundation standard
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Define and display typography roles for page title, section title, card title, table header, body, muted text, label, helper text, error text, and code text.
+- Acceptance:
+  - UI Reference Typography page displays each required type role using final app styling
+  - type color uses text tokens, not action tokens
+  - component pages are contracted to apply typography rules directly in examples
+  - tests assert the Typography page exposes required roles
+- Implemented in: worklog-2-F-0017
+
+### P2-F-CQ-030 - Iconography, pictograms, and motion foundation standard
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Document Heroicons usage, pictogram disposition, and motion rules for hover/focus, loading, overlays, notifications, and reduced motion.
+- Acceptance:
+  - Heroicons remain the default app icon library unless a later ADR changes it
+  - Icon page documents size, color, touch target, icon/text alignment, decorative versus semantic icons, and common usage posture
+  - Pictograms are queued with trigger conditions and Carbon pictograms are not imported
+  - Motion page documents hover/focus transitions, loading motion, toast/drawer/modal motion, and reduced-motion behavior
+  - UI Reference shows built examples, not prose only
+- Implemented in: worklog-2-F-0017
+
+### P2-F-CQ-031 - T1 component doc and UI Reference display contract
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Add canonical doc metadata to the T1 component catalog and create the standard quality bar for implemented T1 component pages.
+- Acceptance:
+  - component catalog includes `doc_path` and `doc_route`
+  - every T1 page links to its canonical doc and every canonical T1 doc links back to the UI Reference route
+  - implemented T1 pages have a required display contract covering default, variants/colors, focus, disabled, hover-capable default state, semantic states, loading/read-only states where applicable, spacing, implementation owner, and queued gaps
+  - generic scaffold content is allowed only for queued or not-applicable dispositions
+  - tests assert implemented pages link to canonical docs
+- Implemented in: worklog-2-F-0017
+
+### P2-F-CQ-032 - Carbon inventory correction before T1 deepening
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Correct component inventory mismatches before deeper T1 family work.
+- Acceptance:
+  - add Multiselect to the T1 catalog with explicit disposition
+  - normalize Carbon UI shell as one family while preserving Login-specific header, left panel, and right panel guidance as subsections
+  - update overview, sidebar, tests, and docs links
+  - no Carbon component remains unmapped
+- Implemented in: worklog-2-F-0017
 
 ### P2-F-CQ-016 - Carbon component inventory and T1 disposition map
 - Status: Implemented Pending Review

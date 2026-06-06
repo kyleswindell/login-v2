@@ -44,6 +44,19 @@
   - [x] AI label, code snippet, and other low-applicability items have explicit queued or gated treatment
   - [ ] manual review confirms the component-specific organization is sufficiently clear for later development
 
+## Foundation Elements Layer
+- [ ] Foundation Elements Layer
+  Status: implemented pending review — P2-F-CQ-025 through P2-F-CQ-032 added the Foundation Elements catalog/menu/pages, canonical element docs, token/theme/spacing/typography/icon standards, T1 doc-link contract, Multiselect catalog correction, and UI shell family normalization
+  - [x] UI Reference sidebar exposes Foundation Elements before T1 Components
+  - [x] Foundation Elements overview explains Foundation Elements, T1 Components, T2 Patterns, and T3 Feature Modules
+  - [x] grid, color, icons, pictograms, motion, spacing, themes, and typography have catalog dispositions and owner routes
+  - [x] canonical element docs exist under `docs/02-standards/ui/elements/`
+  - [x] Carbon comparison notes are kept in `docs/09-reference/ui/`
+  - [x] Color, Themes, Spacing, Typography, and Icons pages show built examples and focused test coverage
+  - [x] T1 component catalog includes canonical doc metadata and Multiselect
+  - [x] UI shell is normalized as one T1 family with header, left panel, and right panel subsections
+  - [ ] manual review confirms the Foundation Elements layer is sufficiently clear before T1 family depth passes begin
+
 ## Module Home And Dashboard Summary Starters
 - [ ] Module Home And Dashboard Summary Starters
   Status: not implemented

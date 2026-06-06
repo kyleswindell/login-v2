@@ -4,6 +4,7 @@ namespace Tests\Feature\Platform;
 
 use App\Models\User;
 use App\Platform\UiReference\UiReferenceComponentCatalog;
+use App\Platform\UiReference\UiReferenceElementCatalog;
 use Database\Seeders\PlatformRolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Permission;
@@ -22,6 +23,10 @@ class PlatformUiReferenceTest extends TestCase
             ->assertOk()
             ->assertSee('UI Reference Workspace')
             ->assertSee('ui-card', false)
+            ->assertSee('Foundation Elements')
+            ->assertSee('Grid')
+            ->assertSee('Color')
+            ->assertSee('Typography')
             ->assertSee('Form Patterns')
             ->assertSee('Data + Content')
             ->assertSee('T1 Components')
@@ -42,14 +47,16 @@ class PlatformUiReferenceTest extends TestCase
             ->assertOk()
             ->assertSee('T1 Component Library')
             ->assertSee('data-ui-reference-component-inventory', false)
-            ->assertSee('min-w-[1120px] table-fixed', false)
+            ->assertSee('min-w-[1240px] table-fixed', false)
             ->assertSee('w-[13.5rem]', false)
+            ->assertSee('Canonical Doc')
             ->assertSee('inline-flex items-center whitespace-nowrap rounded-full', false);
 
         foreach ($catalog as $component) {
             $overview
                 ->assertSee($component['label'])
                 ->assertSee('/platform/ui-reference/components/'.$component['slug'])
+                ->assertSee($component['doc_path'])
                 ->assertSee($component['disposition']);
 
             $this->get('/platform/ui-reference/components/'.$component['slug'])
@@ -58,11 +65,98 @@ class PlatformUiReferenceTest extends TestCase
                 ->assertSee('data-ui-reference-component-disposition="'.$component['disposition'].'"', false)
                 ->assertSee($component['label'])
                 ->assertSee($component['owner_route'])
+                ->assertSee($component['doc_path'])
                 ->assertSee($component['disposition']);
         }
 
         $this->get('/platform/ui-reference/components/not-a-component')
             ->assertNotFound();
+    }
+
+    public function test_foundation_element_catalog_routes_are_discoverable(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $catalog = app(UiReferenceElementCatalog::class)->all();
+
+        $overview = $this->get('/platform/ui-reference/elements')
+            ->assertOk()
+            ->assertSee('Foundation Elements')
+            ->assertSee('data-ui-reference-element-inventory', false)
+            ->assertSee('Foundation Elements')
+            ->assertSee('T1 Components')
+            ->assertSee('T2 Patterns')
+            ->assertSee('T3 Feature Modules')
+            ->assertSee('Canonical Doc');
+
+        foreach ($catalog as $element) {
+            $overview
+                ->assertSee($element['label'])
+                ->assertSee('/platform/ui-reference/elements/'.$element['slug'])
+                ->assertSee($element['doc_path'])
+                ->assertSee($element['disposition']);
+
+            $this->get('/platform/ui-reference/elements/'.$element['slug'])
+                ->assertOk()
+                ->assertSee('data-ui-reference-foundation-element="'.$element['slug'].'"', false)
+                ->assertSee('data-ui-reference-element-disposition="'.$element['disposition'].'"', false)
+                ->assertSee($element['label'])
+                ->assertSee($element['doc_path'])
+                ->assertSee($element['carbon_comparison']);
+        }
+
+        $this->get('/platform/ui-reference/elements/not-an-element')
+            ->assertNotFound();
+    }
+
+    public function test_foundation_element_pages_expose_required_examples(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/elements/color')
+            ->assertOk()
+            ->assertSee('Color Token Namespaces')
+            ->assertSee('--ui-text-strong')
+            ->assertSee('--ui-action-primary-bg')
+            ->assertSee('--ui-status-success-bg')
+            ->assertSee('text-primary never means the primary action color')
+            ->assertSee('Light mode token sample')
+            ->assertSee('Dark mode token sample');
+
+        $this->get('/platform/ui-reference/elements/themes')
+            ->assertOk()
+            ->assertSee('Theme Token Inheritance')
+            ->assertSee('Resolved dark theme')
+            ->assertSee('Resolved light theme');
+
+        $this->get('/platform/ui-reference/elements/spacing')
+            ->assertOk()
+            ->assertSee('Spacing Scale And Ownership')
+            ->assertSee('Tailwind-compatible, 8px-centered spacing model')
+            ->assertSee('Components own internal padding')
+            ->assertSee('Parent layouts own external spacing')
+            ->assertSee('Table cell');
+
+        $this->get('/platform/ui-reference/elements/typography')
+            ->assertOk()
+            ->assertSee('Typography Roles')
+            ->assertSee('Page title')
+            ->assertSee('Section title')
+            ->assertSee('Card title')
+            ->assertSee('Table header')
+            ->assertSee('Field label')
+            ->assertSee('Helper text')
+            ->assertSee('Error text')
+            ->assertSee('code text');
+
+        $this->get('/platform/ui-reference/elements/icons')
+            ->assertOk()
+            ->assertSee('Heroicon Usage')
+            ->assertSee('16px inline icon')
+            ->assertSee('20px action icon')
+            ->assertSee('44px touch target')
+            ->assertSee('Icon and text center-align')
+            ->assertSee('decorative vs semantic');
     }
 
     public function test_carbon_aligned_tier_one_component_depth_pages_are_documented(): void
@@ -141,11 +235,19 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Delete workspace')
             ->assertSee('Keyboard and submenu boundary');
 
-        foreach (['ui-shell-header', 'ui-shell-left-panel', 'ui-shell-right-panel'] as $shellComponent) {
-            $this->get('/platform/ui-reference/components/'.$shellComponent)
+        $this->get('/platform/ui-reference/components/ui-shell')
+            ->assertOk()
+            ->assertSee('UI Shell Disposition')
+            ->assertSee('Header content')
+            ->assertSee('Left panel')
+            ->assertSee('Right panel')
+            ->assertSee('T2 navigation and layout surfaces');
+
+        foreach (['ui-shell-header', 'ui-shell-left-panel', 'ui-shell-right-panel'] as $shellAlias) {
+            $this->get('/platform/ui-reference/components/'.$shellAlias)
                 ->assertOk()
-                ->assertSee('UI Shell Disposition')
-                ->assertSee('T2 navigation and layout surfaces');
+                ->assertSee('data-ui-reference-t1-component="ui-shell"', false)
+                ->assertSee('UI Shell Disposition');
         }
     }
 

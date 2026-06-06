@@ -9,6 +9,8 @@
 - Remaining Ready To Implement items are P2-F-CQ-002, P2-F-CQ-003, P2-F-CQ-004, P2-F-CQ-005, and P2-F-CQ-006.
 - P2-F-CQ-008, P2-F-CQ-009, P2-F-CQ-010, and P2-F-CQ-011 are Passed Review as of 2026-06-06. Correction pass 2-F-0015 was accepted, with follow-up scope normalized into P2-F-CQ-016 through P2-F-CQ-024.
 - P2-F-CQ-016 through P2-F-CQ-024 are Implemented Pending Review. Worklog 2-F-0016 added the Carbon-aligned component inventory, T1 component catalog/sidebar, generated component routes, component-specific pages, focused high-risk state matrices, and automated coverage.
+- P2-F-CQ-025 through P2-F-CQ-032 are Implemented Pending Review. Worklog 2-F-0017 added the Foundation Elements catalog/sidebar/pages, canonical element docs, non-canonical Carbon comparison notes, token/theme/spacing/typography/icon standards, T1 component doc-link contract, Multiselect catalog correction, and UI shell family normalization.
+- P2-F-CQ-033 through P2-F-CQ-039 are Ready To Implement as the follow-on T1 component family depth passes after the Foundation Elements layer is manually accepted.
 - P2-F-CQ-012 is Implemented Pending Review. UI control behavior is split into form/selection, table/search/filter, dropdown, and theme modules while preserving the `resources/js/ui-controls.js` export surface and `resources/js/app.js` lifecycle registration.
 - P2-F-CQ-013 is Implemented Pending Review. `resources/css/app.css` now has a concrete UI ownership map, `resources/css/AGENTS.md` points future CSS work to targeted sections, and the Tailwind theme seed block is extracted to `resources/css/ui/theme-seed.css`.
 - Detailed correction history for P2-F-CQ-001 and P2-F-CQ-007 is preserved in worklog-2-F-0002 through worklog-2-F-0008. Do not duplicate that history in active notes.
@@ -22,6 +24,7 @@
 - Carbon remains a documentation-depth and completeness benchmark only. Do not visually copy IBM software or replace the existing Login App 2.0 visual direction.
 - Translate audit findings into Login App 2.0-specific standards, examples, classes, ready-to-use components, component sets, and starter views.
 - P2-F-CQ-016 through P2-F-CQ-024 own the component-specific T1 realignment requested after P2-F-CQ-008 through P2-F-CQ-011 passed review. Treat the catalog as the owner for T1 component dispositions, routes, and primary review surfaces.
+- P2-F-CQ-025 through P2-F-CQ-032 establish Foundation Elements beneath T1 Components. Future component deepening should consume those standards for tokens, spacing, typography, iconography, themes, grid, and motion rather than restating them per component.
 - Keep examples within existing Login App 2.0 visual direction. Do not create reference photo examples, broad accessibility test suites, Carbon visual token adoption, or unrelated runtime feature expansion.
 - Installation/implementation guidance means local component usage guidance: component names, props/attributes, required classes/wrappers, data attributes, owner routes, and expected usage boundaries.
 - P2-F-CQ-012 owns UI control module cleanup only where it supports Batch F form/selection/table/search/dropdown/filter guidance. The implementation is pending local review and should remain behavior-preserving.
@@ -33,4 +36,5 @@
 - SettingsController update-flow extraction and realtime notification transport/rendering cleanup are deferred out of Batch F unless the current UI starter/guidance work exposes a direct blocker.
 - Future work passes should read the targeted queue item first, then open only the specific source/reference files needed for that item.
 - Manual review should now focus on whether P2-F-CQ-016 through P2-F-CQ-024 provide a sufficiently organized component-specific T1 library and whether any generated component pages need deeper concrete examples before the remaining starter work resumes.
+- Manual review should also confirm whether P2-F-CQ-025 through P2-F-CQ-032 provide enough foundation-layer clarity to begin the family depth passes P2-F-CQ-033 through P2-F-CQ-039.
 - Worklogs remain the immutable history location for detailed pass notes, failed review attempts, and correction narratives.

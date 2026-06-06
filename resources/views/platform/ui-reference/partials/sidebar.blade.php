@@ -14,6 +14,47 @@
         </nav>
 
         <div class="mt-4 border-t border-slate-800 pt-4">
+            @php $isElementSection = str_starts_with($currentSection ?? '', 'elements.'); @endphp
+            <details class="group" open>
+                <summary class="flex cursor-pointer list-none items-center justify-between rounded-md px-2 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 transition hover:bg-slate-800/70 hover:text-slate-300">
+                    <span>Foundation Elements</span>
+                    <span class="text-slate-500 transition group-open:rotate-180">v</span>
+                </summary>
+
+                <nav class="mt-2 space-y-1" data-ui-reference-element-sidebar>
+                    <a wire:navigate href="{{ route('platform.ui-reference.elements.overview') }}" @class([
+                        'flex items-center gap-2 rounded-md px-3 py-2.5 text-sm font-medium transition',
+                        'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => ($currentSection ?? '') === 'elements.overview',
+                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ($currentSection ?? '') !== 'elements.overview',
+                    ])>
+                        <x-layouts.nav-icon icon="docs" />
+                        <span>Overview</span>
+                    </a>
+
+                    @foreach (($elementCatalog ?? []) as $element)
+                        @php $isActiveElement = ($currentSection ?? '') === 'elements.'.$element['slug']; @endphp
+                        <a wire:navigate href="{{ route('platform.ui-reference.elements.show', ['element' => $element['slug']]) }}" @class([
+                            'flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm font-medium transition',
+                            'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => $isActiveElement,
+                            'text-slate-300 hover:bg-slate-800 hover:text-white' => ! $isActiveElement,
+                        ]) data-ui-reference-element-sidebar-item="{{ $element['slug'] }}">
+                            <span>{{ $element['label'] }}</span>
+                            @if ($element['disposition'] !== 'Implemented')
+                                <span class="rounded-full border border-slate-700 px-1.5 py-0.5 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-slate-500">
+                                    {{ match ($element['disposition']) {
+                                        'Partially Implemented' => 'Partial',
+                                        'Queued Gap' => 'Gap',
+                                        default => 'Gate',
+                                    } }}
+                                </span>
+                            @endif
+                        </a>
+                    @endforeach
+                </nav>
+            </details>
+        </div>
+
+        <div class="mt-4 border-t border-slate-800 pt-4">
             @php $isComponentSection = str_starts_with($currentSection ?? '', 'components.'); @endphp
             <details class="group" open>
                 <summary class="flex cursor-pointer list-none items-center justify-between rounded-md px-2 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 transition hover:bg-slate-800/70 hover:text-slate-300">

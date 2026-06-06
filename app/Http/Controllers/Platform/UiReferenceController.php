@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Platform;
 
 use App\Http\Controllers\Controller;
 use App\Platform\UiReference\UiReferenceComponentCatalog;
+use App\Platform\UiReference\UiReferenceElementCatalog;
 use App\Platform\UiReference\UiReferenceSamples;
 use App\Platform\UiReference\UiReferenceTables;
 use Illuminate\Contracts\View\View;
@@ -16,6 +17,7 @@ class UiReferenceController extends Controller
         private readonly UiReferenceSamples $samples,
         private readonly UiReferenceTables $tables,
         private readonly UiReferenceComponentCatalog $components,
+        private readonly UiReferenceElementCatalog $elements,
     ) {}
 
     public function index(Request $request): View
@@ -44,6 +46,27 @@ class UiReferenceController extends Controller
         $this->authorize('view-platform-ui-reference');
 
         return $this->renderSection('components.forms');
+    }
+
+    public function elementsOverview(Request $request): View
+    {
+        $this->authorize('view-platform-ui-reference');
+
+        return $this->renderSection('elements.overview');
+    }
+
+    public function element(Request $request, string $element): View
+    {
+        $this->authorize('view-platform-ui-reference');
+
+        $elementDefinition = $this->elements->find($element);
+
+        abort_unless($elementDefinition !== null, 404);
+
+        return $this->renderSection('elements.show', [
+            'catalogElement' => $elementDefinition,
+            'currentSection' => 'elements.'.$elementDefinition['slug'],
+        ]);
     }
 
     public function componentsOverview(Request $request): View
@@ -168,6 +191,7 @@ class UiReferenceController extends Controller
     {
         return view('platform.ui-reference.'.$section, [
             'currentSection' => $section,
+            'elementCatalog' => $this->elements->all(),
             'componentCatalog' => $this->components->primaryPages(),
             'componentGroups' => $this->components->grouped(),
             ...$data,

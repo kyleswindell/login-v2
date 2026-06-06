@@ -33,12 +33,13 @@
             </div>
 
             <div class="mt-5 overflow-x-auto rounded-lg border border-slate-800 bg-slate-950/60">
-                <table class="w-full min-w-[1120px] table-fixed divide-y divide-slate-800">
+                <table class="w-full min-w-[1240px] table-fixed divide-y divide-slate-800">
                     <colgroup>
                         <col class="w-[11rem]">
                         <col class="w-[12rem]">
                         <col class="w-[13.5rem]">
                         <col class="w-[20rem]">
+                        <col class="w-[18rem]">
                         <col>
                     </colgroup>
                     <thead class="bg-slate-900">
@@ -47,6 +48,7 @@
                             <th class="px-4 py-3">Login App Group</th>
                             <th class="px-4 py-3 whitespace-nowrap">Disposition</th>
                             <th class="px-4 py-3">Owner Route</th>
+                            <th class="px-4 py-3">Canonical Doc</th>
                             <th class="px-4 py-3">Implementation Scope</th>
                         </tr>
                     </thead>
@@ -64,6 +66,9 @@
                                     @else
                                         <a wire:navigate href="{{ $component['owner_route'] }}" class="text-sky-300 hover:text-sky-200">{{ $component['owner_route'] }}</a>
                                     @endif
+                                </td>
+                                <td class="px-4 py-3 break-words">
+                                    <a wire:navigate href="{{ route('platform.docs.index', ['path' => $component['doc_path']]) }}" class="text-sky-300 hover:text-sky-200">{{ $component['doc_path'] }}</a>
                                 </td>
                                 <td class="px-4 py-3 whitespace-normal">{{ $component['summary'] }}</td>
                             </tr>

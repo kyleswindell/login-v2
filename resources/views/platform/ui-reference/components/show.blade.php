@@ -46,6 +46,13 @@
                             <dd class="mt-1 font-medium text-slate-200">{{ $catalogComponent['route_name'] }}</dd>
                         </div>
                         <div>
+                            <dt class="text-slate-500">Canonical doc</dt>
+                            <dd class="mt-1 break-all font-medium text-slate-200">
+                                <a wire:navigate href="{{ route('platform.docs.index', ['path' => $catalogComponent['doc_path']]) }}" class="ui-link">Open {{ $catalogComponent['label'] }} standard</a>
+                                <span class="mt-1 block text-xs text-slate-500">{{ $catalogComponent['doc_path'] }}</span>
+                            </dd>
+                        </div>
+                        <div>
                             <dt class="text-slate-500">Status</dt>
                             <dd class="mt-1 font-medium text-slate-200">{{ $catalogComponent['disposition'] }}</dd>
                         </div>
@@ -250,7 +257,7 @@
                     </div>
                 </div>
             </section>
-        @elseif (in_array($slug, ['ui-shell-header', 'ui-shell-left-panel', 'ui-shell-right-panel'], true))
+        @elseif ($slug === 'ui-shell')
             <section class="ui-card" data-ui-reference-example="ui-shell-disposition">
                 <h2 class="ui-card-title">UI Shell Disposition</h2>
                 <p class="ui-card-copy mt-2">UI shell pieces remain visible in the T1 catalog so they are not silently ignored, but composition ownership belongs to T2 navigation and layout surfaces unless a standalone primitive emerges.</p>

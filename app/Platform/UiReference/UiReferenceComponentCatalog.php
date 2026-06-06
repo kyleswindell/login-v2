@@ -42,7 +42,7 @@ class UiReferenceComponentCatalog
     public function find(string $slug): ?array
     {
         foreach ($this->components() as $component) {
-            if ($component['slug'] === $slug) {
+            if ($component['slug'] === $slug || in_array($slug, $component['aliases'], true)) {
                 return $component;
             }
         }
@@ -76,6 +76,7 @@ class UiReferenceComponentCatalog
             $this->component('menu', 'Menu', 'Actions', 'Implement T1 Page', 'Disclosure list of contextual actions.', ['enabled', 'hover', 'focus', 'selected/current', 'danger', 'disabled', 'divider', 'submenu boundary'], ['Use x-ui.menu-item and dropdown-action-menu.']),
             $this->component('menu-buttons', 'Menu buttons', 'Actions', 'Implement T1 Page', 'Button-triggered menus and overflow triggers.', ['text trigger', 'icon-only trigger', 'split/combo queued'], ['Use for grouped secondary actions.']),
             $this->component('modal', 'Modal', 'Overlays', 'Implement T1 Page', 'Blocking dialog for decisions and confirmations.', ['passive', 'transactional', 'danger', 'acknowledgment queued', 'progress queued'], ['Use x-ui.modal for blocking decisions.']),
+            $this->component('multiselect', 'Multiselect', 'Inputs', 'Queued Gap', 'Multiple known-option selection control.', ['queued', 'tagged values queued', 'filtering queued'], ['Use checkbox groups for small visible sets until a dedicated multiselect consumer exists.', 'Do not substitute radio or native select when multiple values are required.']),
             $this->component('notification', 'Notification', 'Feedback and loading', 'Implement T1 Page', 'Grouped notification family for inline alerts, toasts, banners, actionable feedback, and persisted handoff.', ['inline', 'toast', 'page banner', 'actionable', 'persisted handoff'], ['Keep notification family grouped.']),
             $this->component('number-input', 'Number input', 'Inputs', 'Implement T1 Page', 'Numeric input with increment/decrement controls.', ['default', 'fluid', 'min/max/step', 'error icon', 'warning icon', 'disabled', 'read-only', 'focus'], ['Use for small relative numeric adjustments. Use text input or slider for wide ranges.']),
             $this->component('pagination', 'Pagination', 'Data display', 'Implement T1 Page', 'Full pagination and compact pagination navigation.', ['full', 'compact nav', 'page size', 'overflow', 'disabled prev/next', 'small', 'medium', 'large'], ['Place below related content. Match table density where possible.']),
@@ -95,9 +96,7 @@ class UiReferenceComponentCatalog
             $this->component('toggletip', 'Toggletip', 'Overlays', 'Implement T1 Page', 'Focusable explanatory disclosure.', ['closed', 'open', 'focus', 'dismissible'], ['Use for interactive explanatory content.']),
             $this->component('tooltip', 'Tooltip', 'Overlays', 'Implement T1 Page', 'Short non-interactive hover/focus help.', ['hover', 'focus', 'definition'], ['Do not put interactive content in a tooltip.']),
             $this->component('tree-view', 'Tree view', 'Data display', 'Queued Gap', 'Hierarchical navigation or data browsing.', ['collapsed queued', 'expanded queued', 'selected queued'], ['Trigger only when hierarchical content needs in-page browsing.']),
-            $this->component('ui-shell-header', 'UI shell header', 'Shell', 'Represent As T2 Pattern', 'Application header, account menu, notifications, and global actions.', ['desktop', 'mobile', 'account menu', 'notification handoff'], ['T2 layout/navigation pages own shell composition.'], '/platform/ui-reference/patterns/navigation'),
-            $this->component('ui-shell-left-panel', 'UI shell left panel', 'Shell', 'Represent As T2 Pattern', 'Primary sidebar and section navigation shell.', ['expanded', 'collapsed queued', 'active route'], ['T2 navigation/layout pages own shell composition.'], '/platform/ui-reference/patterns/navigation'),
-            $this->component('ui-shell-right-panel', 'UI shell right panel', 'Shell', 'Queued Gap', 'Right-side supplemental shell panel.', ['queued'], ['Trigger when app shell needs persistent right-side context beyond drawers.']),
+            $this->component('ui-shell', 'UI shell', 'Shell', 'Represent As T2 Pattern', 'Application shell family covering header, left navigation, right panel disposition, account menu, notification handoff, and global actions.', ['header', 'left panel', 'right panel queued', 'desktop', 'mobile', 'account menu', 'notification handoff'], ['T2 layout/navigation pages own shell composition.', 'Header, left panel, and right panel remain Login-specific subsections of the UI shell family.'], '/platform/ui-reference/patterns/navigation', ['ui-shell-header', 'ui-shell-left-panel', 'ui-shell-right-panel']),
         ];
     }
 
@@ -116,7 +115,10 @@ class UiReferenceComponentCatalog
         array $states,
         array $guidance,
         ?string $ownerRoute = null,
+        array $aliases = [],
     ): array {
+        $docPath = '02-standards/ui/components/tier-1/'.$slug.'.md';
+
         return [
             'slug' => $slug,
             'label' => $label,
@@ -126,7 +128,10 @@ class UiReferenceComponentCatalog
             'states' => $states,
             'guidance' => $guidance,
             'owner_route' => $ownerRoute ?? '/platform/ui-reference/components/'.$slug,
+            'doc_path' => $docPath,
+            'doc_route' => '/platform/docs?path='.rawurlencode($docPath),
             'route_name' => 'platform.ui-reference.components.show',
+            'aliases' => $aliases,
         ];
     }
 }

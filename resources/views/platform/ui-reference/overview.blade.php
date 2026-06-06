@@ -11,6 +11,12 @@
 
         <div class="grid gap-4 xl:grid-cols-3">
             <article class="ui-card">
+                <p class="ui-kicker">Foundation Layer</p>
+                <h2 class="ui-card-title mt-2">Foundation Elements</h2>
+                <p class="ui-card-copy">Token, grid, spacing, typography, iconography, motion, and theme standards that T1 components consume rather than redefine.</p>
+                <a wire:navigate href="{{ route('platform.ui-reference.elements.overview') }}" class="ui-link mt-3 inline-flex">Open foundation element catalog</a>
+            </article>
+            <article class="ui-card">
                 <p class="ui-kicker">Component Library</p>
                 <h2 class="ui-card-title mt-2">Tier 1 Components</h2>
                 <p class="ui-card-copy">Component pages are catalog-driven and Carbon-aligned for inventory completeness, while Login App 2.0 keeps its own visual and behavior standards.</p>
@@ -27,6 +33,23 @@
                 <p class="ui-card-copy">Each component must prove light/dark parity, responsive behavior, and accessibility states before matrix status can be locked.</p>
             </article>
         </div>
+
+        <section class="ui-card">
+            <h2 class="ui-card-title">System Hierarchy</h2>
+            <div class="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                @foreach ([
+                    ['label' => 'Foundation Elements', 'copy' => 'Tokens, grid, spacing, typography, iconography, motion, and themes.'],
+                    ['label' => 'T1 Components', 'copy' => 'Buttons, inputs, tabs, notifications, tables, overlays, and other primitive UI.'],
+                    ['label' => 'T2 Patterns', 'copy' => 'Reusable compositions built from T1 owners, including forms, navigation, data, and overlays.'],
+                    ['label' => 'T3 Feature Modules', 'copy' => 'App-specific workflows that consume the shared lower tiers.'],
+                ] as $tier)
+                    <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
+                        <p class="text-sm font-semibold text-white">{{ $tier['label'] }}</p>
+                        <p class="mt-2 text-sm text-slate-400">{{ $tier['copy'] }}</p>
+                    </div>
+                @endforeach
+            </div>
+        </section>
 
         <section class="ui-card">
             <h2 class="ui-card-title">Current Tier 1 Scope</h2>

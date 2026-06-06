@@ -6,7 +6,7 @@ Motion guides, clarifies, or confirms state change without adding decorative fri
 
 ## Current Implementation
 
-Login App uses app CSS transitions and JavaScript-driven UI behavior for hover/focus, dropdowns, modals, toasts, accordions, panels, table changes, and loading states.
+Login App uses CSS transitions and component behavior for hover/focus, dropdowns, modals, toasts, accordions, panels, table changes, and loading states.
 
 ## UI Reference Route
 
@@ -14,35 +14,31 @@ Login App uses app CSS transitions and JavaScript-driven UI behavior for hover/f
 
 ## Required Visible Examples
 
-- productive standard, productive entrance, and productive exit motion
-- expressive standard, expressive entrance, and expressive exit motion
-- dropdown open, modal enter/exit, toast, accordion/collapse, side panel, table sort/reorder, and loading/skeleton transition examples
-- duration examples for small, medium, large, productive, and expressive movement
-- reduced-motion preview or static comparison
+- productive and expressive easing demos
+- component motion previews for dropdown, modal, toast, accordion/collapse, side panel, table sort/reorder, and skeleton-to-content transition
+- reduced-motion preview
 - do/don't samples for subtle entrance, clear exit, no bounce, no decorative spin, and no long delay
 
 ## Token/Class/API Reference
 
-Use approved CSS transition utilities, app component behavior, and `prefers-reduced-motion` media handling. Component-specific motion belongs to the component or pattern owner.
+Use approved CSS transition utilities and component-owned motion behavior. New motion must respect `prefers-reduced-motion`.
 
 ## Usage Guidance
 
-Productive motion is the default for normal app interactions. Expressive motion is reserved for important or high-attention moments. Use entrance easing when adding content, exit easing when removing content, and standard easing when an element remains visible.
-
-Avoid bounce, stretch, sudden stops, excessive distance, decorative spin, and long animations.
+Productive motion is the default. Expressive motion requires a high-attention moment and explicit owner. Use entrance easing when adding UI and exit easing when removing UI.
 
 ## Accessibility Notes
 
-Respect `prefers-reduced-motion`. Non-essential motion should be removed, shortened, or replaced when reduced motion is active.
+Reduced-motion users must retain equivalent state visibility and feedback. Motion must not be the only signal of meaning.
 
 ## Developer Notes
 
-Do not delay content usability for animation. Any new motion behavior must include reduced-motion handling and should be represented in UI Reference before reuse.
+Avoid bounce, decorative spin, sudden stops, excessive distance, and long animations. Do not delay content usability for animation.
 
 ## Implementation Status
 
-Partial.
+Guide status: Implemented. System maturity: Partial.
 
 ## Carbon Comparison Notes
 
-Carbon's productive/expressive motion split informs classification. Login App keeps its own durations, easing, and implementation details.
+Carbon's productive/expressive split informs classification. Login App keeps restrained app-specific motion.

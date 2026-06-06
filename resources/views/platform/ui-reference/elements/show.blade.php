@@ -8,9 +8,9 @@
         $examplePartial = 'platform.ui-reference.elements.examples.'.$slug;
     @endphp
 
-    <section class="flex min-w-0 flex-1 flex-col gap-6" data-ui-reference-foundation-element="{{ $slug }}" data-ui-reference-element-disposition="{{ $catalogElement['status'] }}">
+    <section class="flex min-w-0 flex-1 flex-col gap-6" data-ui-reference-foundation-element="{{ $slug }}" data-ui-reference-element-disposition="{{ $catalogElement['guide_status'] }}" data-ui-reference-element-system-status="{{ $catalogElement['system_status'] }}">
         <div>
-            <p class="ui-kicker">Foundation Element - {{ $catalogElement['status'] }}</p>
+            <p class="ui-kicker">Foundation Element - {{ $catalogElement['guide_status'] }}</p>
             <h1 class="ui-page-header-title">{{ $catalogElement['label'] }}</h1>
             <p class="ui-page-header-copy">{{ $catalogElement['summary'] }}</p>
         </div>
@@ -27,8 +27,10 @@
                     </div>
                 </div>
                 <aside class="rounded-lg border border-slate-800 bg-slate-950/70 p-4" data-foundation-section="implementation-status">
-                    <p class="ui-kicker">Implementation Status</p>
-                    <p class="mt-3 text-2xl font-semibold text-white">{{ $catalogElement['status'] }}</p>
+                    <p class="ui-kicker">Guide Status</p>
+                    <p class="mt-3 text-2xl font-semibold text-white">{{ $catalogElement['guide_status'] }}</p>
+                    <p class="mt-3 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">System Maturity</p>
+                    <p class="mt-1 text-sm font-semibold text-slate-300">{{ $catalogElement['system_status'] }}</p>
                     <a wire:navigate href="{{ route('platform.docs.index', ['path' => $catalogElement['doc_path']]) }}" class="ui-link mt-3 inline-flex">Open canonical doc</a>
                     <p class="mt-3 break-all text-xs text-slate-500">{{ $catalogElement['doc_path'] }}</p>
                 </aside>

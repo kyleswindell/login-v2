@@ -83,7 +83,8 @@ class PlatformUiReferenceTest extends TestCase
             ->assertOk()
             ->assertSee('Foundation Elements')
             ->assertSee('data-ui-reference-element-inventory', false)
-            ->assertSee('Implementation Status')
+            ->assertSee('Guide Status')
+            ->assertSee('System Maturity')
             ->assertSee('Foundation Elements')
             ->assertSee('T1 Components')
             ->assertSee('T2 Patterns')
@@ -101,6 +102,7 @@ class PlatformUiReferenceTest extends TestCase
                 ->assertOk()
                 ->assertSee('data-ui-reference-foundation-element="'.$element['slug'].'"', false)
                 ->assertSee('data-ui-reference-element-disposition="'.$element['disposition'].'"', false)
+                ->assertSee('data-ui-reference-element-system-status="'.$element['system_status'].'"', false)
                 ->assertSee('data-foundation-section="purpose"', false)
                 ->assertSee('data-foundation-section="implementation-status"', false)
                 ->assertSee('data-foundation-section="live-examples"', false)
@@ -111,6 +113,8 @@ class PlatformUiReferenceTest extends TestCase
                 ->assertSee('data-foundation-section="related-implementation-links"', false)
                 ->assertSee($element['label'])
                 ->assertSee($element['doc_path'])
+                ->assertSee($element['guide_status'])
+                ->assertSee($element['system_status'])
                 ->assertSee($element['carbon_comparison']);
         }
 
@@ -129,23 +133,34 @@ class PlatformUiReferenceTest extends TestCase
 
         $this->get('/platform/ui-reference/elements/color')
             ->assertOk()
-            ->assertSee('data-color-example="theme-aware-swatches"', false)
-            ->assertSee('data-color-example="rendered-token-examples"', false)
-            ->assertSee('data-color-example="stacked-surface-levels"', false)
-            ->assertSee('data-color-example="hover-delta"', false)
-            ->assertSee('data-color-example="common-app-examples"', false)
-            ->assertSee('data-color-example="inverse-moment"', false)
-            ->assertSee('Use role-based tokens, not raw hex values')
-            ->assertSee('Focus states are required');
+            ->assertSee('data-color-example="full-palette"', false)
+            ->assertSee('data-color-example="token-role-groups"', false)
+            ->assertSee('data-color-example="state-token-contract"', false)
+            ->assertSee('data-color-example="theme-layering-model"', false)
+            ->assertSee('data-color-example="common-app-states"', false)
+            ->assertSee('data-color-example="high-contrast-inverse"', false)
+            ->assertSee('Neutral ramp')
+            ->assertSee('Blue/action ramp')
+            ->assertSee('Active')
+            ->assertSee('Selected')
+            ->assertSee('Focus')
+            ->assertSee('Disabled')
+            ->assertSee('ui-inline-alert-success', false)
+            ->assertSee('one-step selected and two-step active model');
 
         $this->get('/platform/ui-reference/elements/themes')
             ->assertOk()
+            ->assertSee('data-theme-example="theme-terms"', false)
             ->assertSee('data-theme-example="theme-matrix"', false)
+            ->assertSee('data-theme-example="token-role-value-matrix"', false)
             ->assertSee('data-theme-example="component-preview-matrix"', false)
-            ->assertSee('data-theme-example="layer-inheritance"', false)
-            ->assertSee('data-theme-example="inline-theme-examples"', false)
-            ->assertSee('data-theme-example="approved-overrides"', false)
-            ->assertSee('Themes change token values, not token roles');
+            ->assertSee('data-theme-example="token-categories"', false)
+            ->assertSee('Theme')
+            ->assertSee('Token')
+            ->assertSee('Role')
+            ->assertSee('Value')
+            ->assertSee('High-contrast and inverse examples are owned by the')
+            ->assertDontSee('data-theme-example="inline-theme-examples"', false);
 
         $this->get('/platform/ui-reference/elements/grid')
             ->assertOk()
@@ -176,8 +191,13 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-typography-example="type-scale"', false)
             ->assertSee('data-typography-example="type-role-examples"', false)
             ->assertSee('data-typography-example="productive-content-examples"', false)
-            ->assertSee('data-typography-example="productive-vs-expressive"', false)
-            ->assertSee('Productive type is the default');
+            ->assertSee('data-typography-example="weight-examples"', false)
+            ->assertSee('data-typography-example="type-color-examples"', false)
+            ->assertSee('Light 300')
+            ->assertSee('Regular 400')
+            ->assertSee('Semibold 600')
+            ->assertSee('Color is not decoration')
+            ->assertSee('ui-control-error', false);
 
         $this->get('/platform/ui-reference/elements/icons')
             ->assertOk()
@@ -187,24 +207,32 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-icons-example="icon-only-controls"', false)
             ->assertSee('data-icons-example="status-decorative-meaningful"', false)
             ->assertSee('44px')
-            ->assertSee('Heroicons remain the default app icon library');
+            ->assertSee('16px and 20px icons are optimized')
+            ->assertSee('ui-status-inline-success', false)
+            ->assertSee('Heroicons remain the approved UI icon library');
 
         $this->get('/platform/ui-reference/elements/pictograms')
             ->assertOk()
-            ->assertSee('data-pictograms-example="queued-library"', false)
-            ->assertSee('data-pictograms-example="size-examples"', false)
+            ->assertSee('data-pictograms-example="asset-disposition"', false)
+            ->assertSee('data-pictograms-example="candidate-library-audit"', false)
+            ->assertSee('data-pictograms-example="size-clearance-examples"', false)
             ->assertSee('data-pictograms-example="productive-expressive-comparison"', false)
-            ->assertSee('data-pictograms-example="container-clearance-theme"', false)
-            ->assertSee('data-pictograms-example="app-usage-examples"', false)
-            ->assertSee('Do not import Carbon pictograms');
+            ->assertSee('data-pictograms-example="trigger-conditions"', false)
+            ->assertSee('Current decision')
+            ->assertSee('Candidate Library Audit')
+            ->assertSee('Do not import Carbon pictograms')
+            ->assertSee('App-specific SVG primitives');
 
         $this->get('/platform/ui-reference/elements/motion')
             ->assertOk()
             ->assertSee('data-motion-example="easing-demos"', false)
-            ->assertSee('data-motion-example="common-ui-motion"', false)
-            ->assertSee('data-motion-example="duration-examples"', false)
+            ->assertSee('data-motion-example="component-motion-previews"', false)
+            ->assertSee('data-motion-example="skeleton-transition"', false)
             ->assertSee('data-motion-example="reduced-motion-preview"', false)
             ->assertSee('data-motion-example="do-dont-samples"', false)
+            ->assertSee('Dropdown open')
+            ->assertSee('Modal enter / exit')
+            ->assertSee('Accordion / collapse')
             ->assertSee('prefers-reduced-motion');
     }
 

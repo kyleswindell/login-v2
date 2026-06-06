@@ -2,9 +2,18 @@
     <section class="ui-card" data-typography-example="font-specimens">
         <h2 class="ui-card-title">Font Family Specimens</h2>
         <div class="mt-5 grid gap-4 xl:grid-cols-3">
-            <article class="rounded-lg border border-slate-800 bg-slate-950/70 p-4"><p class="text-sm font-semibold text-white">Sans</p><p class="mt-3 text-xl text-slate-100">Productive admin interface text</p></article>
-            <article class="rounded-lg border border-slate-800 bg-slate-950/70 p-4"><p class="text-sm font-semibold text-white">Mono</p><code class="mt-3 block text-sm text-slate-200">--ui-text-strong</code></article>
-            <article class="rounded-lg border border-slate-800 bg-slate-950/70 p-4"><p class="text-sm font-semibold text-white">Serif</p><p class="mt-3 text-sm text-slate-400">Not currently used in product UI.</p></article>
+            <article class="rounded-lg border p-4" style="border-color: var(--ui-border-default); background: var(--ui-surface-elevated); color: var(--ui-text-strong);">
+                <p class="text-sm font-semibold">Sans</p>
+                <p class="mt-3 text-xl">Productive admin interface text</p>
+            </article>
+            <article class="rounded-lg border p-4" style="border-color: var(--ui-border-default); background: var(--ui-surface-elevated); color: var(--ui-text-strong);">
+                <p class="text-sm font-semibold">Mono</p>
+                <code class="mt-3 block text-sm" style="color: var(--ui-text-secondary);">--ui-text-strong</code>
+            </article>
+            <article class="rounded-lg border p-4" style="border-color: var(--ui-border-default); background: var(--ui-surface-elevated); color: var(--ui-text-secondary);">
+                <p class="text-sm font-semibold" style="color: var(--ui-text-strong);">Serif</p>
+                <p class="mt-3 text-sm">Not currently used in product UI.</p>
+            </article>
         </div>
     </section>
 
@@ -13,8 +22,8 @@
         <div class="mt-5 space-y-3">
             @foreach ([12, 14, 16, 18, 20, 24, 28, 32] as $size)
                 <div class="grid grid-cols-[5rem_minmax(0,1fr)] items-baseline gap-4">
-                    <span class="font-mono text-xs text-slate-500">{{ $size }}px</span>
-                    <p class="text-slate-200" style="font-size: {{ $size }}px;">{{ $size }}px productive type sample</p>
+                    <span class="font-mono text-xs" style="color: var(--ui-text-muted);">{{ $size }}px</span>
+                    <p style="font-size: {{ $size }}px; color: var(--ui-text-strong);">{{ $size }}px productive type sample</p>
                 </div>
             @endforeach
         </div>
@@ -23,19 +32,19 @@
     <section class="ui-card" data-typography-example="type-role-examples">
         <h2 class="ui-card-title">Type Role Examples</h2>
         <div class="mt-5 grid gap-4 xl:grid-cols-2">
-            <article class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
+            <article class="rounded-lg border p-4" style="border-color: var(--ui-border-default); background: var(--ui-surface-elevated);">
                 <h1 class="ui-page-header-title">Page title</h1>
                 <h2 class="ui-card-title mt-4">Section heading</h2>
-                <h3 class="mt-3 text-base font-semibold text-white">Subsection heading</h3>
-                <p class="mt-3 text-sm text-slate-300">Body text uses neutral content color.</p>
-                <p class="mt-1 text-xs text-slate-500">Caption text</p>
+                <h3 class="mt-3 text-base font-semibold" style="color: var(--ui-text-strong);">Subsection heading</h3>
+                <p class="mt-3 text-sm" style="color: var(--ui-text-secondary);">Body text uses neutral content color.</p>
+                <p class="mt-1 text-xs" style="color: var(--ui-text-muted);">Caption text</p>
             </article>
-            <article class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                <label class="text-sm font-semibold text-slate-100" for="type-field">Label</label>
+            <article class="rounded-lg border p-4" style="border-color: var(--ui-border-default); background: var(--ui-surface-elevated);">
+                <label class="ui-control-label" for="type-field">Label</label>
                 <input id="type-field" class="ui-input mt-2" value="Typography field">
-                <p class="mt-1 text-sm text-slate-400">Helper text</p>
-                <p class="mt-1 text-sm text-rose-200">Error text</p>
-                <code class="mt-3 block rounded border border-slate-800 bg-slate-950 p-3 text-sm text-slate-200">Code / mono text</code>
+                <p class="ui-control-copy">Helper text</p>
+                <p class="ui-control-error">Error text</p>
+                <code class="mt-3 block rounded border p-3 text-sm" style="border-color: var(--ui-border-default); background: var(--ui-surface); color: var(--ui-text-secondary);">Code / mono text</code>
             </article>
         </div>
     </section>
@@ -43,26 +52,61 @@
     <section class="ui-card" data-typography-example="productive-content-examples">
         <h2 class="ui-card-title">Productive Content Examples</h2>
         <div class="mt-5 grid gap-4 xl:grid-cols-3">
-            <article class="rounded-lg border border-slate-800 bg-slate-950/70 p-4"><p class="text-lg font-semibold text-white">Settings form</p><p class="mt-2 text-sm text-slate-400">Compact hierarchy for repeated admin tasks.</p><button class="ui-button ui-button-primary mt-4" type="button">Save settings</button></article>
-            <article class="rounded-lg border border-slate-800 bg-slate-950/70 p-4"><p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Table header</p><p class="mt-3 text-sm text-slate-200">Table cell</p><a href="#" class="ui-link mt-3 inline-flex">Link text</a></article>
-            <article class="rounded-lg border border-slate-800 bg-slate-950/70 p-4"><p class="text-base font-semibold text-white">Notification</p><p class="mt-2 text-sm text-slate-300">Inline validation and feedback use semantic copy but neutral structure.</p></article>
+            <article class="rounded-lg border p-4" style="border-color: var(--ui-border-default); background: var(--ui-surface-elevated); color: var(--ui-text-strong);">
+                <p class="text-lg font-semibold">Settings form</p>
+                <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">Compact hierarchy for repeated admin tasks.</p>
+                <button class="ui-button ui-button-primary mt-4" type="button">Save settings</button>
+            </article>
+            <article class="rounded-lg border p-4" style="border-color: var(--ui-border-default); background: var(--ui-surface-elevated); color: var(--ui-text-strong);">
+                <p class="text-xs font-semibold uppercase tracking-[0.18em]" style="color: var(--ui-text-muted);">Table header</p>
+                <p class="mt-3 text-sm" style="color: var(--ui-text-secondary);">Table cell</p>
+                <a href="#" class="ui-link mt-3 inline-flex">Link text</a>
+            </article>
+            <article class="ui-inline-alert flex items-start gap-3 ui-inline-alert-info">
+                <x-heroicon-o-information-circle class="h-5 w-5 shrink-0" />
+                <div><p class="font-semibold">Notification</p><p class="mt-1 text-sm">Inline validation and feedback use semantic copy but token-backed structure.</p></div>
+            </article>
         </div>
     </section>
 
-    <section class="ui-card" data-typography-example="productive-vs-expressive">
-        <h2 class="ui-card-title">Productive Vs Expressive</h2>
-        <div class="mt-5 grid gap-4 xl:grid-cols-2">
-            <article class="rounded-lg border border-emerald-500/40 bg-emerald-500/10 p-4"><p class="text-base font-semibold text-emerald-100">Productive type: allowed by default</p><p class="mt-2 text-sm text-emerald-200">Use for app pages, dense admin UI, forms, tables, and workflow screens.</p></article>
-            <article class="rounded-lg border border-amber-500/40 bg-amber-500/10 p-4"><p class="text-2xl font-semibold text-amber-100">Expressive type</p><p class="mt-2 text-sm text-amber-200">Not for admin/product UI unless a landing, onboarding, or marketing-style page owns it.</p></article>
-        </div>
-    </section>
-
-    <section class="ui-card" data-typography-example="weight-color-examples">
-        <h2 class="ui-card-title">Weight And Color Examples</h2>
+    <section class="ui-card" data-typography-example="weight-examples">
+        <h2 class="ui-card-title">Weights And Italic</h2>
+        <p class="ui-card-copy mt-2">Use semibold for headings and short emphasis. Do not use semibold for long body copy. Italic is limited to short emphasis such as terms, titles, captions, or technical distinctions.</p>
         <div class="mt-5 grid gap-4 xl:grid-cols-3">
-            <article class="rounded-lg border border-slate-800 bg-slate-950/70 p-4"><p class="font-normal text-slate-200">Regular body</p><p class="mt-2 font-semibold text-white">Semibold heading/emphasis</p><p class="mt-2 italic text-slate-400">Italic only for limited emphasis</p></article>
-            <article class="rounded-lg border border-slate-800 bg-slate-950/70 p-4"><p class="text-slate-100">Primary text</p><p class="mt-2 text-slate-400">Secondary text</p><p class="mt-2 text-slate-500">Placeholder / disabled text</p></article>
-            <article class="rounded-lg border border-slate-800 bg-slate-950/70 p-4"><a href="#" class="ui-link">Link text</a><p class="mt-2 text-rose-200">Error/helper text</p><p class="mt-2 text-slate-500">Disabled text</p></article>
+            <article class="rounded-lg border p-4" style="border-color: var(--ui-border-default); background: var(--ui-surface-elevated); color: var(--ui-text-strong);">
+                <p class="font-light">Light 300</p>
+                <p class="mt-2 font-normal">Regular 400</p>
+                <p class="mt-2 font-semibold">Semibold 600</p>
+            </article>
+            <article class="rounded-lg border p-4" style="border-color: var(--ui-border-default); background: var(--ui-surface-elevated); color: var(--ui-text-strong);">
+                <p class="font-light italic">Light italic 300</p>
+                <p class="mt-2 font-normal italic">Regular italic 400</p>
+                <p class="mt-2 font-semibold italic">Semibold italic 600</p>
+            </article>
+            <article class="rounded-lg border p-4" style="border-color: var(--ui-border-default); background: var(--ui-surface-elevated); color: var(--ui-text-secondary);">
+                <p class="font-semibold" style="color: var(--ui-text-strong);">Hierarchy note</p>
+                <p class="mt-2 text-sm">A larger regular heading can outrank smaller semibold text. Size, weight, and role must be balanced.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="ui-card" data-typography-example="type-color-examples">
+        <h2 class="ui-card-title">Type Color</h2>
+        <div class="mt-5 grid gap-4 xl:grid-cols-3">
+            <article class="rounded-lg border p-4" style="border-color: var(--ui-border-default); background: var(--ui-surface-elevated);">
+                <p style="color: var(--ui-text-strong);">Neutral color for text</p>
+                <p class="mt-2" style="color: var(--ui-text-secondary);">Secondary text has clear hierarchy.</p>
+                <p class="mt-2" style="color: var(--ui-action-disabled-text);">Placeholder / disabled text is lower emphasis.</p>
+            </article>
+            <article class="rounded-lg border p-4" style="border-color: var(--ui-alert-warning-border); background: var(--ui-alert-warning-bg); color: var(--ui-alert-warning-text);">
+                <p class="font-semibold">Color is not decoration</p>
+                <p class="mt-2 text-sm">Use colored text only for semantic links, actions, warnings, alerts, and code highlights.</p>
+            </article>
+            <article class="rounded-lg border p-4" style="border-color: var(--ui-border-default); background: var(--ui-surface-elevated);">
+                <a href="#" class="ui-link inline-flex items-center gap-2"><x-heroicon-o-arrow-down-tray class="h-4 w-4" />Link with icon</a>
+                <p class="ui-status-inline ui-status-inline-danger mt-3"><x-heroicon-o-x-circle class="h-4 w-4" />Oops, something went wrong.</p>
+                <code class="mt-3 block rounded px-2 py-1 text-sm" style="background: var(--ui-surface); color: var(--ui-text-secondary);">Code snippet with highlighted token</code>
+            </article>
         </div>
     </section>
 </div>

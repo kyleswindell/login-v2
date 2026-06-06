@@ -175,6 +175,117 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - tests assert all element pages expose shared sections and overview status links
 - Implemented in: worklog-2-F-0018
 
+### P2-F-CQ-049 - Foundation guide status vs system maturity correction
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-040 through P2-F-CQ-048
+- Scope: Split Foundation Element catalog status into guide readiness and underlying system maturity.
+- Acceptance:
+  - catalog exposes `guide_status` and `system_status`
+  - overview and element pages show guide readiness first and system maturity separately
+  - badges no longer imply complete guide pages are only partial because app-wide enforcement is still maturing
+- Implemented in: worklog-2-F-0019
+
+### P2-F-CQ-050 - Color palette and state-token contract
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-040, P2-F-CQ-049
+- Scope: Add full Login App palette display and explicit app state-token contract for active, selected, hover, focus, disabled, inverse, and high-contrast states.
+- Acceptance:
+  - Color page displays neutral ramp, blue/action ramp, support colors, token role groups, and state contract examples
+  - Carbon one-step/two-step state logic is documented as comparison guidance only
+  - focus token is represented with an app-owned variable
+- Implemented in: worklog-2-F-0019
+
+### P2-F-CQ-051 - Color page live example correction
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-040, P2-F-CQ-050
+- Scope: Replace dark-only hard-coded Color examples with app-token-backed examples for palette, layering, states, alerts, form fields, selected rows, icon buttons, links, destructive actions, and high-contrast moments.
+- Acceptance:
+  - light and dark layer examples are visible
+  - high-contrast moments belong to Color, not Themes
+  - token-backed alerts, form fields, selected rows, links, icon buttons, and destructive actions are rendered
+  - tests fail if Color regresses to token-list-only or text-only content
+- Implemented in: worklog-2-F-0019
+
+### P2-F-CQ-052 - Shared status, alert, text, and icon token repair
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-050, P2-F-CQ-051
+- Scope: Repair Foundation examples to use supported app status, alert, text, icon, helper, placeholder/disabled, and focus tokens/classes in light and dark mode.
+- Acceptance:
+  - Foundation examples use `ui-status-pill`, `ui-status-inline-*`, `ui-inline-alert-*`, `ui-control-*`, `ui-link`, `ui-input`, and token variables where applicable
+  - `--ui-focus-ring` is available in light and dark resolved themes
+  - Color, Icons, and Typography pages no longer depend on dark-only Tailwind text/status colors
+- Implemented in: worklog-2-F-0019
+
+### P2-F-CQ-053 - Themes page refocus
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-041, P2-F-CQ-051
+- Scope: Refocus Themes on token role/value inheritance and remove high-contrast ownership from the Themes page.
+- Acceptance:
+  - Themes page explains Theme, Token, Role, and Value
+  - Themes page shows applied token role/value matrix and component previews
+  - Themes page links high-contrast and inverse guidance to Color
+  - Themes page does not own interaction-state or high-contrast examples
+- Implemented in: worklog-2-F-0019
+
+### P2-F-CQ-054 - Icons page correction
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-045, P2-F-CQ-052
+- Scope: Correct Icons examples for token-aware color, text alignment, icon sizes, icon-only states, status/decorative/meaningful examples, and 44px hit target.
+- Acceptance:
+  - leading, trailing, inline link, button, and menu-item examples align icons and labels
+  - 16px/20px and 24px/32px guidance is visible
+  - status icons use app token-backed status classes
+  - Heroicons remains the approved default library
+- Implemented in: worklog-2-F-0019
+
+### P2-F-CQ-055 - Typography page correction
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-044, P2-F-CQ-052
+- Scope: Correct Typography examples for weights, italic, type color, alert/status color, hierarchy, and light/dark readable text.
+- Acceptance:
+  - Light 300, Regular 400, Semibold 600, and italic examples are visible
+  - type color examples distinguish neutral text, disabled/placeholder text, links/actions, semantic alerts, and code
+  - examples use app tokens and shared app classes instead of hard-coded dark-mode-only color classes
+- Implemented in: worklog-2-F-0019
+
+### P2-F-CQ-056 - Motion page live demonstration correction
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-047
+- Scope: Replace static Motion cards with component-like previews and reduced-motion guidance.
+- Acceptance:
+  - Motion page includes dropdown, modal, toast, accordion/collapse, side panel, table sort/reorder, skeleton-to-content, reduced-motion, and do/don't examples
+  - examples demonstrate actual motion or interactive states rather than static labels only
+- Implemented in: worklog-2-F-0019
+
+### P2-F-CQ-057 - Pictogram relevance and asset library audit
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-046
+- Scope: Audit pictogram relevance and candidate asset-library paths without importing assets.
+- Acceptance:
+  - Pictograms page documents current disposition, trigger conditions, candidate options, licensing/dependency concerns, and recommended next action
+  - no Carbon pictograms or third-party assets are imported
+- Implemented in: worklog-2-F-0019
+
+### P2-F-CQ-058 - Foundation correction tests, docs, and handoff
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-049 through P2-F-CQ-057
+- Scope: Update canonical docs, tests, active batch docs, validation notes, and handoff state for the second Foundation Elements correction pass.
+- Acceptance:
+  - canonical docs for Color, Themes, Icons, Typography, Motion, and Pictograms match the corrected pages
+  - focused UI Reference tests cover palette, states, status split, theme terms, icon alignment, typography weights/type color, motion previews, and pictogram audit
+  - full UI Reference tests, build, docs guardrails, and browser review pass
+- Implemented in: worklog-2-F-0019
+
 ### P2-F-CQ-025 - Foundation Elements inventory and UI Reference menu
 - Status: Implemented Pending Review
 - Owner: Batch F
@@ -390,7 +501,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-033 - T1 component family depth pass: actions
 - Status: Blocked
 - Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-048 pending manual review
+- Blocked By: P2-F-CQ-040 through P2-F-CQ-058 pending manual review
 - Scope: Deepen Button, Menu, Menu buttons, and Link T1 pages after Foundation Elements and T1 contracts are accepted.
 - Acceptance:
   - canonical docs and UI Reference examples are updated together
@@ -400,7 +511,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-034 - T1 component family depth pass: inputs
 - Status: Blocked
 - Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-048 pending manual review
+- Blocked By: P2-F-CQ-040 through P2-F-CQ-058 pending manual review
 - Scope: Deepen Text input, Textarea, Number input, Select, Dropdown, Multiselect, Search, Date picker, File uploader, and Slider T1 pages.
 - Acceptance:
   - input docs and UI Reference examples apply Foundation Element color, spacing, typography, icon, and theme rules
@@ -410,7 +521,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-035 - T1 component family depth pass: selection controls
 - Status: Blocked
 - Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-048 pending manual review
+- Blocked By: P2-F-CQ-040 through P2-F-CQ-058 pending manual review
 - Scope: Deepen Checkbox, Radio button, Toggle, and Content switcher T1 pages.
 - Acceptance:
   - checkbox versus radio usage is visually demonstrated
@@ -420,7 +531,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-036 - T1 component family depth pass: feedback and loading
 - Status: Blocked
 - Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-048 pending manual review
+- Blocked By: P2-F-CQ-040 through P2-F-CQ-058 pending manual review
 - Scope: Deepen Notification, Tag, AI label, Inline loading, Loading, Progress bar, and Progress indicator T1 pages.
 - Acceptance:
   - semantic status and loading examples use current token standards
@@ -430,7 +541,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-037 - T1 component family depth pass: overlays and help
 - Status: Blocked
 - Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-048 pending manual review
+- Blocked By: P2-F-CQ-040 through P2-F-CQ-058 pending manual review
 - Scope: Deepen Accordion, Modal, Popover, Tooltip, and Toggletip T1 pages.
 - Acceptance:
   - overlay/help docs and UI Reference examples distinguish blocking, contextual, non-interactive, and interactive disclosure
@@ -440,7 +551,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-038 - T1 component family depth pass: data display
 - Status: Blocked
 - Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-048 pending manual review
+- Blocked By: P2-F-CQ-040 through P2-F-CQ-058 pending manual review
 - Scope: Deepen Data table, Pagination, Structured list, List, Contained list, Tile, and Tree view T1 pages.
 - Acceptance:
   - data display pages show concrete variants, states, spacing behavior, and T2 consumption links
@@ -450,7 +561,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-039 - T1 component family depth pass: navigation and shell
 - Status: Blocked
 - Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-048 pending manual review
+- Blocked By: P2-F-CQ-040 through P2-F-CQ-058 pending manual review
 - Scope: Deepen Breadcrumb, Tabs, and UI shell T1 pages.
 - Acceptance:
   - tabs include line, contained, vertical, icon-leading, icon-only, overflow/scroll, selected, focus, and disabled states

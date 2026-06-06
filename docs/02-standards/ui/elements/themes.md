@@ -2,11 +2,11 @@
 
 ## Purpose
 
-Themes assign visual values to stable token roles so the same UI can render across light, muted, dark, and inverse contexts.
+Themes assign visual values to stable token roles so the same component markup can render across app default, light, muted-light, dark, and dark-base contexts.
 
 ## Current Implementation
 
-Login App 2.0 resolves theme behavior through root and scoped CSS variables for surfaces, text, borders, icons, actions, status, focus, and shadows.
+Login App 2.0 resolves theme behavior through root and scoped CSS variables for color, spacing, typography, and component/global roles.
 
 ## UI Reference Route
 
@@ -14,35 +14,33 @@ Login App 2.0 resolves theme behavior through root and scoped CSS variables for 
 
 ## Required Visible Examples
 
-- static theme matrix for app default, White-equivalent, Gray 10-equivalent, Gray 90-equivalent, and Gray 100-equivalent contexts
-- comparison cards for page background, layer, field, text, border, icon, link, focus, and support colors
-- component preview matrix for button, form field, select/dropdown, table, card, modal, notification, and icon button
-- layering examples for card on page, dropdown on card, modal on overlay, and nested panels
-- inline theme examples for light page with dark shell/header, dark panel inside light page, and high-contrast moment
-- approved custom token override table with reason, owner, and source file
+- theme terms: Theme, Token, Role, Value
+- applied matrix for app default, White-equivalent, Gray 10-equivalent, Gray 90-equivalent, and Gray 100-equivalent contexts
+- token role/value table showing the same roles across light and dark values
+- component preview matrix for button, icon button, form field, table row, and notification
+- token categories: Color, Spacing, Typography, Global/component-specific
+- link to Color for high-contrast and inverse moments
 
 ## Token/Class/API Reference
 
-Theme work should use scoped CSS variables, app surface classes, and component classes. Example owner files include `resources/css/app.css`, `resources/css/ui/theme-seed.css`, and UI Reference element example partials.
+Use stable token roles and resolved theme values. Do not change a role between themes. Component classes must consume theme-aware tokens rather than hard-coded theme-specific values.
 
 ## Usage Guidance
 
-Themes change token values, not token roles. Components must use theme-aware tokens for background, text, border, icon, focus, and support states.
-
-Avoid hard-coded component colors and undocumented scoped overrides.
+Themes change token values, not token roles. A custom theme starts from the default token map and overrides approved values with documented owner, reason, and source file.
 
 ## Accessibility Notes
 
-Every component must preserve focus visibility, semantic status meaning, and text/icon contrast across supported theme contexts.
+Every supported theme must preserve contrast, focus visibility, semantic feedback meaning, and usable disabled states.
 
 ## Developer Notes
 
-Custom theme overrides must be documented with a reason, owner, and file location. Inline high-contrast moments are allowed only when they use approved inverse or scoped tokens.
+Themes do not own interaction-state or high-contrast rules; those are Color rules. Themes own token role/value inheritance and theme-wide override governance.
 
 ## Implementation Status
 
-Partial.
+Guide status: Implemented. System maturity: Partial.
 
 ## Carbon Comparison Notes
 
-Carbon's White, Gray 10, Gray 90, and Gray 100 themes inform the page structure. Login App uses equivalent app-defined contexts rather than Carbon values.
+Carbon's theme terms and four-theme model inform organization. Login App uses equivalent contexts and app-owned values, not Carbon Sass configuration.

@@ -46,7 +46,7 @@
 
 ## Foundation Elements Layer
 - [ ] Foundation Elements Layer
-  Status: implemented pending review — P2-F-CQ-040 through P2-F-CQ-048 replace broad foundation correction scope with page-level live implementation guides for Color, Themes, 2x Grid, Spacing, Typography, Icons, Pictograms, Motion, and Overview/renderer cleanup
+  Status: implemented pending review — P2-F-CQ-040 through P2-F-CQ-058 replace broad foundation correction scope with page-level live implementation guides, then correct status labeling, token-backed Color/Themes/Icons/Typography/Motion/Pictograms examples, and Foundation correction tests/docs
   - [x] UI Reference sidebar exposes Foundation Elements before T1 Components
   - [x] Foundation Elements overview explains Foundation Elements, T1 Components, T2 Patterns, and T3 Feature Modules
   - [x] grid, color, icons, pictograms, motion, spacing, themes, and typography have catalog dispositions and owner routes
@@ -54,9 +54,13 @@
   - [x] Carbon comparison notes are kept in `docs/09-reference/ui/`
   - [x] Color, Themes, Spacing, Typography, and Icons pages show built examples rather than token-list-only guidance
   - [x] Grid, Pictograms, and Motion pages expose live-guide examples or queued implementation contracts
+  - [x] guide status and system maturity are shown separately
+  - [x] Color page shows full palette, interaction states, layering, and high-contrast moments
+  - [x] Themes page owns token role/value inheritance and links high-contrast guidance to Color
+  - [x] Icons, Typography, Motion, and Pictograms pages use token-backed examples or explicit audit disposition
   - [x] T1 component catalog includes canonical doc metadata and Multiselect
   - [x] UI shell is normalized as one T1 family with header, left panel, and right panel subsections
-  - [x] P2-F-CQ-040 through P2-F-CQ-048 correct Foundation Elements example depth before T1 family depth passes begin
+  - [x] P2-F-CQ-040 through P2-F-CQ-058 correct Foundation Elements example depth before T1 family depth passes begin
   - [ ] manual review confirms Foundation Elements pages are sufficiently concrete for later T1 depth passes
 
 ## Module Home And Dashboard Summary Starters

@@ -28,6 +28,11 @@ Each page must visibly include:
 - Related implementation links
 - Implementation status
 
+Foundation pages distinguish two status values:
+
+- Guide status: whether the UI Reference page is complete enough to use as a live implementation guide.
+- System maturity: whether the underlying primitive is fully tokenized, enforced, tested, and adopted across the app.
+
 ## Element Set
 
 - [2x Grid](grid.md)

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Icons communicate actions, status, or meaning at a glance inside dense product UI.
+Icons communicate actions, status, navigation, and affordances at a glance inside dense product UI.
 
 ## Current Implementation
 
@@ -14,37 +14,33 @@ Heroicons remain the approved UI icon library unless a later decision record cha
 
 ## Required Visible Examples
 
-- approved Heroicons table with name, category, size options, usage notes, and helper/import reference
-- size examples for 16px, 20px, 24px, and 32px
-- icon with text examples for leading icon, trailing icon, inline link, button, and menu item
-- icon-only controls for default, hover, active, focus, disabled, and loading where used
-- status icons for error, warning, success, info, and in-progress
-- decorative versus meaningful icon examples
-- icon-only button with tooltip/access name
-- 44px or 48px hit target demonstration
+- approved Heroicons table with category, size, and helper reference
+- size matrix for 16px, 20px, 24px, and 32px icons
+- icon-with-text examples for leading, trailing, inline link, button, and menu item
+- icon-only controls for default, hover, active, focus, disabled, and loading states
+- status, decorative, and meaningful icon examples
+- 44px icon-only hit target
 
 ## Token/Class/API Reference
 
-Use Heroicons through existing Blade/icon helpers, app button/menu/link classes, and token-aware icon color. Example helpers include `x-layouts.nav-icon` and Heroicon SVG use in Blade components.
+Icons should use `currentColor` through app classes, text tokens, action tokens, or status tokens. Use `x-heroicon-*` components and app control classes rather than importing a second icon set.
 
 ## Usage Guidance
 
-Use 16px icons for most dense UI. Use 20px, 24px, or 32px only when surrounding layout requires a larger visual symbol. Icons should be monochrome, theme-aware, and match paired text unless semantic meaning requires a status color.
-
-Avoid decorative icons that do not add meaning.
+Use 16px and 20px icons with 14px and 16px text. Use 24px and 32px only for larger controls, panels, or visual anchors. Icons paired with text must align vertically centered with the label.
 
 ## Accessibility Notes
 
-Interactive icon controls need a minimum 44px target. Decorative icons must be hidden from screen readers. Meaningful icons and icon-only buttons need accessible labels.
+Decorative icons must be hidden from assistive tech. Meaningful icons and icon-only buttons need accessible names. Interactive icon controls need at least a 44px target.
 
 ## Developer Notes
 
-Add padding around icons to meet target size instead of scaling icons unnecessarily. Do not import Carbon icons without a separate decision record.
+Do not import Carbon icons without a separate decision record. Do not use icons as decoration when they do not add meaning.
 
 ## Implementation Status
 
-Implemented.
+Guide status: Implemented. System maturity: Partial.
 
 ## Carbon Comparison Notes
 
-Carbon icon usage informs sizing and accessibility expectations. Login App uses Heroicons, not Carbon icons.
+Carbon informs icon sizing, pairing, and accessibility expectations. Login App uses Heroicons and app token colors.

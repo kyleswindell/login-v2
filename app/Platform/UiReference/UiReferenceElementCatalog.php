@@ -35,7 +35,8 @@ class UiReferenceElementCatalog
             $this->element(
                 slug: 'color',
                 label: 'Color',
-                status: 'Implemented',
+                guideStatus: 'Implemented',
+                systemStatus: 'Implemented',
                 purpose: 'Color controls visual roles for content hierarchy, surfaces, fields, borders, links, actions, statuses, focus, loading, and high-contrast moments.',
                 summary: 'Semantic color tokens for text, icons, borders, surfaces, actions, statuses, and shadows.',
                 liveExamples: ['theme-aware swatches', 'token groups', 'layering model', 'interaction states', 'semantic support colors', 'contrast moments', 'common app examples'],
@@ -74,7 +75,8 @@ class UiReferenceElementCatalog
             $this->element(
                 slug: 'themes',
                 label: 'Themes',
-                status: 'Implemented',
+                guideStatus: 'Implemented',
+                systemStatus: 'Partial',
                 purpose: 'Themes change token values while preserving token roles across light, dark, inline, inverse, and high-contrast contexts.',
                 summary: 'Light and dark token inheritance for surfaces, text, borders, actions, and statuses.',
                 liveExamples: ['theme matrix', 'component preview matrix', 'layer inheritance', 'inline theme examples', 'approved overrides'],
@@ -109,7 +111,8 @@ class UiReferenceElementCatalog
             $this->element(
                 slug: 'grid',
                 label: '2x Grid',
-                status: 'Partial',
+                guideStatus: 'Implemented',
+                systemStatus: 'Partial',
                 purpose: '2x Grid controls page-level structure, responsive regions, column spans, gutters, and app shell alignment.',
                 summary: 'Responsive page, section, dashboard, and widget geometry.',
                 liveExamples: ['responsive grid visualizer', 'breakpoint examples', 'column spans', 'gutter examples', 'padding and margin alignment', 'fluid fixed hybrid regions', 'app scaffold'],
@@ -144,7 +147,8 @@ class UiReferenceElementCatalog
             $this->element(
                 slug: 'spacing',
                 label: 'Spacing',
-                status: 'Partial',
+                guideStatus: 'Implemented',
+                systemStatus: 'Partial',
                 purpose: 'Spacing controls layout rhythm, component padding, content relationships, density, and visual hierarchy.',
                 summary: 'Component internal spacing and parent-owned layout spacing.',
                 liveExamples: ['spacing scale', 'margin examples', 'padding examples', 'stack examples', 'relationship examples', 'density examples'],
@@ -180,7 +184,8 @@ class UiReferenceElementCatalog
             $this->element(
                 slug: 'typography',
                 label: 'Typography',
-                status: 'Partial',
+                guideStatus: 'Implemented',
+                systemStatus: 'Partial',
                 purpose: 'Typography controls readable hierarchy, role-based text styling, labels, helper text, validation, captions, links, and code.',
                 summary: 'Type roles, hierarchy, text color, labels, helper copy, and code text.',
                 liveExamples: ['font specimens', 'type scale', 'type roles', 'productive examples', 'weight examples', 'color examples', 'content examples'],
@@ -217,7 +222,8 @@ class UiReferenceElementCatalog
             $this->element(
                 slug: 'icons',
                 label: 'Icons',
-                status: 'Partial',
+                guideStatus: 'Implemented',
+                systemStatus: 'Partial',
                 purpose: 'Icons communicate actions, status, navigation, and affordances at dense UI scale.',
                 summary: 'Heroicons-backed UI icon usage for actions, navigation, statuses, and affordances.',
                 liveExamples: ['approved Heroicons table', 'icon sizes', 'icon with text', 'icon-only controls', 'status icons', 'decorative versus meaningful', 'hit target demo'],
@@ -253,7 +259,8 @@ class UiReferenceElementCatalog
             $this->element(
                 slug: 'pictograms',
                 label: 'Pictograms',
-                status: 'Needs audit',
+                guideStatus: 'Implemented',
+                systemStatus: 'Needs audit',
                 purpose: 'Pictograms are larger illustrative assets for empty, onboarding, help, or explanatory moments; they are not UI icons.',
                 summary: 'Large illustrative symbols for empty states, onboarding, or expressive content.',
                 liveExamples: ['queued library disposition', 'size examples', 'productive vs expressive comparison', 'container examples', 'clearance demo', 'theme background examples', 'app usage examples'],
@@ -288,7 +295,8 @@ class UiReferenceElementCatalog
             $this->element(
                 slug: 'motion',
                 label: 'Motion',
-                status: 'Partial',
+                guideStatus: 'Implemented',
+                systemStatus: 'Partial',
                 purpose: 'Motion clarifies state change for hover, focus, overlays, loading, feedback, and reduced-motion contexts.',
                 summary: 'Transitions and reduced-motion behavior for hover, focus, overlays, loading, and feedback.',
                 liveExamples: ['productive easing demos', 'expressive easing demos', 'common UI motion examples', 'duration examples', 'reduced motion preview', 'do and do not samples'],
@@ -339,7 +347,8 @@ class UiReferenceElementCatalog
     private function element(
         string $slug,
         string $label,
-        string $status,
+        string $guideStatus,
+        string $systemStatus,
         string $purpose,
         string $summary,
         array $liveExamples,
@@ -356,8 +365,10 @@ class UiReferenceElementCatalog
         return [
             'slug' => $slug,
             'label' => $label,
-            'disposition' => $status,
-            'status' => $status,
+            'disposition' => $guideStatus,
+            'status' => $guideStatus,
+            'guide_status' => $guideStatus,
+            'system_status' => $systemStatus,
             'purpose' => $purpose,
             'summary' => $summary,
             'visible_examples' => $liveExamples,

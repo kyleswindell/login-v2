@@ -1,28 +1,39 @@
 <div class="space-y-6">
-    <section class="ui-card" data-pictograms-example="queued-library">
-        <h2 class="ui-card-title">Approved Pictogram Library Disposition</h2>
-        <p class="ui-card-copy mt-2">No pictogram asset library is approved yet. The table documents the trigger conditions a future decision must satisfy.</p>
-        <div class="mt-5 overflow-x-auto rounded-lg border border-slate-800 bg-slate-950/60">
-            <table class="w-full min-w-[760px] divide-y divide-slate-800 text-sm">
-                <thead class="bg-slate-900 text-left text-xs uppercase tracking-[0.18em] text-slate-500">
-                    <tr><th class="px-4 py-3">Type</th><th class="px-4 py-3">Disposition</th><th class="px-4 py-3">Usage Context</th></tr>
+    <section class="ui-card" data-pictograms-example="asset-disposition">
+        <h2 class="ui-card-title">Pictogram Disposition</h2>
+        <p class="ui-card-copy mt-2">Pictograms remain an audited future asset category. Login App does not import Carbon pictograms or any third-party illustration library in this pass.</p>
+        <div class="mt-5 grid gap-4 xl:grid-cols-3">
+            <article class="ui-inline-alert flex items-start gap-3 ui-inline-alert-info"><x-heroicon-o-information-circle class="h-5 w-5 shrink-0" /><div><p class="font-semibold">Current decision</p><p class="mt-1 text-sm">Keep queued until a real empty-state, onboarding, feature-card, or help-surface consumer exists.</p></div></article>
+            <article class="ui-inline-alert flex items-start gap-3 ui-inline-alert-warning"><x-heroicon-o-exclamation-triangle class="h-5 w-5 shrink-0" /><div><p class="font-semibold">Dependency gate</p><p class="mt-1 text-sm">Any imported asset library requires licensing review and a separate decision record.</p></div></article>
+            <article class="ui-inline-alert flex items-start gap-3 ui-inline-alert-danger"><x-heroicon-o-x-circle class="h-5 w-5 shrink-0" /><div><p class="font-semibold">Not allowed</p><p class="mt-1 text-sm">Do not import Carbon pictograms, unreviewed SVG packs, or decorative illustrations ad hoc.</p></div></article>
+        </div>
+    </section>
+
+    <section class="ui-card" data-pictograms-example="candidate-library-audit">
+        <h2 class="ui-card-title">Candidate Library Audit</h2>
+        <div class="mt-5 overflow-x-auto rounded-lg border" style="border-color: var(--ui-border-default); background: var(--ui-surface-elevated);">
+            <table class="w-full min-w-[920px] divide-y text-sm" style="border-color: var(--ui-border-default);">
+                <thead class="text-left text-xs uppercase tracking-[0.18em]" style="color: var(--ui-text-muted);">
+                    <tr><th class="px-4 py-3">Option</th><th class="px-4 py-3">Fit</th><th class="px-4 py-3">Risk</th><th class="px-4 py-3">Recommendation</th></tr>
                 </thead>
-                <tbody class="divide-y divide-slate-800 text-slate-300">
-                    <tr><td class="px-4 py-3">Productive pictograms</td><td class="px-4 py-3">Queued Gap</td><td class="px-4 py-3">Empty states, onboarding, feature cards, help panels.</td></tr>
-                    <tr><td class="px-4 py-3">Expressive pictograms</td><td class="px-4 py-3">Needs audit</td><td class="px-4 py-3">High-presence moments only; not admin/product UI by default.</td></tr>
-                    <tr><td class="px-4 py-3">Carbon pictograms</td><td class="px-4 py-3">Not imported</td><td class="px-4 py-3">Requires separate decision record.</td></tr>
+                <tbody class="divide-y" style="border-color: var(--ui-border-default); color: var(--ui-text-secondary);">
+                    <tr><td class="px-4 py-3 font-semibold" style="color: var(--ui-text-strong);">Keep queued</td><td class="px-4 py-3">Best fit until a concrete app surface needs pictograms.</td><td class="px-4 py-3">No asset coverage yet.</td><td class="px-4 py-3">Recommended default.</td></tr>
+                    <tr><td class="px-4 py-3 font-semibold" style="color: var(--ui-text-strong);">Carbon pictograms</td><td class="px-4 py-3">Strong category match to Carbon structure.</td><td class="px-4 py-3">Would import IBM visual language and require ADR.</td><td class="px-4 py-3">Do not adopt without decision record.</td></tr>
+                    <tr><td class="px-4 py-3 font-semibold" style="color: var(--ui-text-strong);">unDraw / illustration packs</td><td class="px-4 py-3">Useful for broad empty states.</td><td class="px-4 py-3">License and style fit must be reviewed; may feel marketing-heavy.</td><td class="px-4 py-3">Audit only if onboarding/help surfaces need it.</td></tr>
+                    <tr><td class="px-4 py-3 font-semibold" style="color: var(--ui-text-strong);">Iconoir / open icon sets</td><td class="px-4 py-3">May supplement icons, not true pictograms.</td><td class="px-4 py-3">Could duplicate Heroicons and blur icon/pictogram boundary.</td><td class="px-4 py-3">Not recommended for pictograms.</td></tr>
+                    <tr><td class="px-4 py-3 font-semibold" style="color: var(--ui-text-strong);">App-specific SVG primitives</td><td class="px-4 py-3">Best long-term fit for Login visual language.</td><td class="px-4 py-3">Requires design ownership.</td><td class="px-4 py-3">Use when a real feature module needs repeated illustrations.</td></tr>
                 </tbody>
             </table>
         </div>
     </section>
 
-    <section class="ui-card" data-pictograms-example="size-examples">
-        <h2 class="ui-card-title">Size Examples</h2>
+    <section class="ui-card" data-pictograms-example="size-clearance-examples">
+        <h2 class="ui-card-title">Size And Clearance Examples</h2>
         <div class="mt-5 flex flex-wrap items-end gap-5">
             @foreach ([48, 64, 80, 96, 128] as $size)
                 <div class="text-center">
-                    <div class="grid place-items-center rounded-lg border border-slate-700 bg-slate-950 text-slate-300" style="width: {{ $size }}px; height: {{ $size }}px;">{{ $size }}</div>
-                    <p class="mt-2 text-xs text-slate-500">{{ $size }}px</p>
+                    <div class="grid place-items-center rounded-lg border" style="width: {{ $size }}px; height: {{ $size }}px; border-color: var(--ui-border-default); background: var(--ui-surface-elevated); color: var(--ui-text-secondary);">{{ $size }}</div>
+                    <p class="mt-2 text-xs" style="color: var(--ui-text-muted);">{{ $size }}px</p>
                 </div>
             @endforeach
         </div>
@@ -31,29 +42,19 @@
     <section class="ui-card" data-pictograms-example="productive-expressive-comparison">
         <h2 class="ui-card-title">Productive Vs Expressive Comparison</h2>
         <div class="mt-5 grid gap-4 xl:grid-cols-3">
-            <article class="rounded-lg border border-slate-800 bg-slate-950/70 p-4"><div class="grid h-16 w-16 place-items-center rounded-lg border border-slate-700 text-slate-300">P</div><p class="mt-3 font-semibold text-white">Productive empty state</p><p class="mt-2 text-sm text-slate-400">Default future direction.</p></article>
-            <article class="rounded-lg border border-slate-800 bg-slate-950/70 p-4"><div class="grid h-20 w-20 place-items-center rounded-lg border border-sky-500/40 bg-sky-500/10 text-sky-100">P</div><p class="mt-3 font-semibold text-white">Productive card illustration</p><p class="mt-2 text-sm text-slate-400">Supportive but restrained.</p></article>
-            <article class="rounded-lg border border-amber-500/40 bg-amber-500/10 p-4"><div class="grid h-24 w-24 place-items-center rounded-xl border border-amber-400/40 text-amber-100">E</div><p class="mt-3 font-semibold text-amber-100">Expressive hero moment</p><p class="mt-2 text-sm text-amber-200">Do not overuse expressive pictograms.</p></article>
+            <article class="rounded-lg border p-4" style="border-color: var(--ui-border-default); background: var(--ui-surface-elevated); color: var(--ui-text-strong);"><div class="grid h-16 w-16 place-items-center rounded-lg border" style="border-color: var(--ui-border-default); color: var(--ui-text-secondary);">P</div><p class="mt-3 font-semibold">Productive empty state</p><p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">Default future direction.</p></article>
+            <article class="rounded-lg border p-4" style="border-color: var(--ui-action-soft-primary-border); background: var(--ui-action-soft-primary-bg); color: var(--ui-action-soft-primary-text);"><div class="grid h-20 w-20 place-items-center rounded-lg border" style="border-color: var(--ui-action-soft-primary-border);">P</div><p class="mt-3 font-semibold">Productive card illustration</p><p class="mt-2 text-sm">Supportive but restrained.</p></article>
+            <article class="ui-inline-alert flex items-start gap-3 ui-inline-alert-warning"><div><p class="font-semibold">Expressive hero moment</p><p class="mt-1 text-sm">High-presence visuals require design ownership and should not be used by default in admin UI.</p></div></article>
         </div>
     </section>
 
-    <section class="ui-card" data-pictograms-example="container-clearance-theme">
-        <h2 class="ui-card-title">Containers, Clearance, And Theme Contexts</h2>
-        <div class="mt-5 grid gap-4 xl:grid-cols-4">
-            <article class="rounded-lg border border-slate-800 bg-slate-950/70 p-4"><div class="grid h-16 w-16 place-items-center text-slate-300">No container</div><p class="mt-3 text-sm text-slate-400">Allowed when background contrast is sufficient.</p></article>
-            <article class="rounded-lg border border-slate-800 bg-slate-950/70 p-4"><div class="grid h-16 w-16 place-items-center rounded-full border border-slate-700 text-slate-300">Circle</div><p class="mt-3 text-sm text-slate-400">Circle container with clearance.</p></article>
-            <article class="rounded-lg border border-slate-800 bg-slate-950/70 p-4"><div class="grid h-16 w-16 place-items-center rounded-lg border border-slate-700 text-slate-300">Square</div><p class="mt-3 text-sm text-slate-400">Square container with padding.</p></article>
-            <article class="rounded-lg border border-rose-500/40 bg-rose-500/10 p-4"><div class="grid h-12 w-12 place-items-center overflow-hidden rounded border border-rose-400 text-rose-100">Crop</div><p class="mt-3 text-sm text-rose-200">Incorrect cropping/collapsed spacing.</p></article>
-        </div>
-    </section>
-
-    <section class="ui-card" data-pictograms-example="app-usage-examples">
-        <h2 class="ui-card-title">App Usage Examples</h2>
+    <section class="ui-card" data-pictograms-example="trigger-conditions">
+        <h2 class="ui-card-title">Trigger Conditions</h2>
         <div class="mt-5 grid gap-4 xl:grid-cols-5">
             @foreach (['Empty state', 'Onboarding panel', 'Feature card', 'Help section', 'No results'] as $label)
-                <article class="rounded-lg border border-slate-800 bg-slate-950/70 p-4 text-center">
-                    <div class="mx-auto grid h-16 w-16 place-items-center rounded-lg border border-slate-700 text-slate-300">?</div>
-                    <p class="mt-3 text-sm font-semibold text-white">{{ $label }}</p>
+                <article class="rounded-lg border p-4 text-center" style="border-color: var(--ui-border-default); background: var(--ui-surface-elevated); color: var(--ui-text-strong);">
+                    <div class="mx-auto grid h-16 w-16 place-items-center rounded-lg border" style="border-color: var(--ui-border-default); color: var(--ui-text-secondary);">?</div>
+                    <p class="mt-3 text-sm font-semibold">{{ $label }}</p>
                 </article>
             @endforeach
         </div>

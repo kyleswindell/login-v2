@@ -2,11 +2,11 @@
 
 ## Purpose
 
-Typography defines readable hierarchy, roles, weights, color use, and code text treatment across product UI.
+Typography defines readable hierarchy, roles, weights, color use, emphasis, and code text treatment across product UI.
 
 ## Current Implementation
 
-Login App uses app CSS and Tailwind-compatible typography utilities for page titles, headings, body text, labels, helper text, error text, table text, button text, links, and code.
+Login App uses app CSS and Tailwind-compatible utilities for page titles, headings, body text, labels, helper text, error text, tables, buttons, links, and code.
 
 ## UI Reference Route
 
@@ -14,36 +14,33 @@ Login App uses app CSS and Tailwind-compatible typography utilities for page tit
 
 ## Required Visible Examples
 
-- app font specimens for Sans and Mono, with Serif omitted unless the app adopts it
+- app font specimens for Sans and Mono, with Serif documented as not currently used
 - type scale for 12, 14, 16, 18, 20, 24, 28, and 32px
-- roles for page title, section heading, subsection heading, body, label, helper, error, caption, mono/code, table header, table cell, button text, and link text
-- productive examples for admin page title, settings form, data table, empty state, notification, and inline validation
-- expressive example only as an app-specific exception with “not for admin/product UI” guidance
-- regular and semibold weights, with light/italic only when actually used
-- color examples for primary, secondary, placeholder, link, error/helper, and disabled text
+- role examples for page title, section heading, subsection heading, body, label, helper, error, caption, mono/code, table header, table cell, button text, and link text
+- productive UI examples for settings form, table, notification, and inline validation
+- Light 300, Regular 400, Semibold 600, and limited italic examples
+- type color examples for neutral text, disabled/placeholder text, links/actions, semantic alerts, and code
 
 ## Token/Class/API Reference
 
-Use app typography roles, text token utilities, component classes, and code/mono classes. Text color must use text tokens, not action tokens.
+Use text tokens such as `--ui-text-strong`, `--ui-text-secondary`, `--ui-text-muted`, `--ui-action-disabled-text`, `--ui-link-text`, and semantic alert/status tokens.
 
 ## Usage Guidance
 
-Use typography tokens by role. Productive type is the default for app UI. Use neutral color for running text and blue for links/actions. Use semibold for headings and emphasis, not long body copy.
-
-Avoid choosing font size, weight, line height, or color by visual guessing.
+Use typography by role, not visual guessing. Productive type is the default for app UI. Use semibold for headings and short emphasis, not long body copy. Italic is limited to short emphasis such as terms, titles, captions, or technical distinctions.
 
 ## Accessibility Notes
 
-Typography must maintain legibility, contrast, predictable hierarchy, and sufficient line height. Error and helper text must remain associated with the relevant field.
+Running text must remain neutral, legible, and high contrast. Colored type must carry semantic meaning or link/action affordance, not decoration.
 
 ## Developer Notes
 
-Component pages should apply typography rules directly in rendered examples instead of restating prose-only recommendations.
+Type color is part of the color system. Do not use arbitrary colored text for visual interest.
 
 ## Implementation Status
 
-Implemented.
+Guide status: Implemented. System maturity: Partial.
 
 ## Carbon Comparison Notes
 
-Carbon's productive/expressive split informs the page structure. Login App keeps its own font stack and visual scale.
+Carbon's productive type, weight, and type-color guidance informs the standard. Login App keeps its own font stack and scale.

@@ -2,11 +2,11 @@
 
 ## Purpose
 
-Pictograms are illustrative assets used to simplify or support larger ideas in empty states, onboarding, help, and feature-introduction surfaces.
+Pictograms are larger illustrative assets used for empty states, onboarding, help, feature cards, and explanatory surfaces. They are not UI icons.
 
 ## Current Implementation
 
-Login App has no approved pictogram library yet. Pictograms remain queued until app-safe assets and usage owners are approved.
+Login App has no approved pictogram library. Pictograms remain an audited future asset category until a concrete feature need triggers an asset decision.
 
 ## UI Reference Route
 
@@ -14,36 +14,32 @@ Login App has no approved pictogram library yet. Pictograms remain queued until 
 
 ## Required Visible Examples
 
-- queued approved-library table with productive/expressive disposition and trigger conditions
-- size examples for 48px, 64px, 80px, 96px, and 128px+
-- productive versus expressive comparison using app-safe placeholder treatment
-- container examples for none, circle, rectangle, correct padding, and incorrect cropping
-- clearance demo and incorrect collapsed spacing
-- light, dark, monochrome, and contrast examples
-- app usage examples for empty state, onboarding panel, feature card, help section, and no results
+- current disposition and dependency gate
+- candidate library audit covering keep queued, Carbon pictograms, illustration packs, open icon sets, and app-specific SVG primitives
+- size and clearance examples
+- productive versus expressive comparison
+- trigger-condition examples for empty state, onboarding panel, feature card, help section, and no results
 
 ## Token/Class/API Reference
 
-Until assets are approved, use placeholder treatment only in UI Reference. Do not add external pictogram packages or Carbon pictograms.
+No pictogram asset API is approved. Placeholder examples must not be treated as production assets.
 
 ## Usage Guidance
 
-Pictograms are not UI icons, button icons, logos, or product lockups. Productive pictograms should be the default once approved. Expressive pictograms should be reserved for high-presence moments.
-
-Avoid cropping, distortion, arbitrary recoloring, unsupported containers, and speculative asset imports.
+Keep pictograms queued until a real app surface needs them. If approved later, productive pictograms should be default; expressive pictograms should be reserved for high-presence moments.
 
 ## Accessibility Notes
 
-Pictograms must remain legible and accessible against their background. Decorative pictograms should be hidden from assistive tech; meaningful pictograms need adjacent text or an accessible label.
+Decorative pictograms should be hidden from assistive tech. Meaningful pictograms need adjacent text or accessible labels and must remain legible against their background.
 
 ## Developer Notes
 
-Do not import Carbon pictograms without a separate decision record. Trigger a pictogram asset decision only when a real empty state, onboarding, help, or feature-card consumer needs the asset.
+Do not import Carbon pictograms, unreviewed SVG packs, or third-party illustration libraries without licensing review and a decision record.
 
 ## Implementation Status
 
-Needs audit.
+Guide status: Implemented. System maturity: Needs audit.
 
 ## Carbon Comparison Notes
 
-Carbon pictogram guidance informs the distinction between icons and illustrations. Login App has not adopted Carbon pictogram assets.
+Carbon pictograms are a useful category reference. Login App has not adopted Carbon pictogram assets.

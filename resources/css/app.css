@@ -1913,6 +1913,7 @@ Use targeted searches for the class family being changed before reading this fil
         --ui-scrollbar-track: rgb(24 24 27 / 0.9);
         --ui-scrollbar-thumb: rgb(82 82 91 / 0.95);
         --ui-scrollbar-thumb-hover: rgb(113 113 122);
+        --ui-focus-ring: rgb(96 165 250);
         --ui-action-disabled-border: rgb(113 113 122 / 0.9);
         --ui-action-disabled-bg: rgb(63 63 70 / 0.55);
         --ui-action-disabled-text: rgb(228 228 231 / 0.92);
@@ -2115,6 +2116,7 @@ Use targeted searches for the class family being changed before reading this fil
         --ui-scrollbar-track: rgb(226 232 240);
         --ui-scrollbar-thumb: rgb(148 163 184);
         --ui-scrollbar-thumb-hover: rgb(100 116 139);
+        --ui-focus-ring: rgb(2 132 199);
         --ui-action-disabled-border: rgb(148 163 184);
         --ui-action-disabled-bg: rgb(226 232 240);
         --ui-action-disabled-text: rgb(71 85 105);

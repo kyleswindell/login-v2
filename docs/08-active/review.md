@@ -55,6 +55,7 @@ Functional: PENDING
 - Manual review later rejected P2-F-CQ-008 through P2-F-CQ-011 despite passing automated marker coverage because the implementation verified note presence rather than concrete reference examples and usage surfaces.
 - Correction pass 2-F-0015 validation passed with focused Docker UI Reference coverage, local browser route checks, `npm run build`, and docs guardrails. Automated coverage now asserts concrete example and implementation-guide markers for P2-F-CQ-008 through P2-F-CQ-011.
 - Worklog 2-F-0016 validation passed with full Docker UI Reference coverage, `npm run build`, docs guardrails, and browser review of the component overview plus representative high-risk T1 component pages. Build and docs guardrails required unsandboxed execution because the sandbox blocked Windows native-binary/Bash access.
+- T1 component overview disposition-column review fix passed focused catalog-route coverage and browser layout verification; categorical badges now stay one line while prose columns wrap.
 
 ## Historical Detail
 

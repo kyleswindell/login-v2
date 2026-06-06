@@ -71,3 +71,9 @@ Implemented the Carbon-aligned T1 expansion as one grouped pass because the side
 - PASS: `npm run build` outside the sandbox after the sandboxed Vite run failed with Windows native-binary `spawn EPERM`.
 - PASS: `npm run lint:docs:guardrails` outside the sandbox after the sandboxed Bash run failed with `E_ACCESSDENIED`; the script exited successfully while still emitting Windows/WSL `rg` path warnings.
 - PASS: Browser review at `/platform/ui-reference/components`, `/platform/ui-reference/components/number-input`, `/platform/ui-reference/components/radio-button`, `/platform/ui-reference/components/structured-list`, `/platform/ui-reference/components/tabs`, and `/platform/ui-reference/components/menu`.
+
+## Review Fix
+
+- Fixed the T1 component overview disposition column so categorical badge labels keep one-line intrinsic sizing while owner route and implementation-scope columns absorb wrapping.
+- Validation passed with `docker compose exec -T app php artisan test tests/Feature/Platform/PlatformUiReferenceTest.php --filter=tier_one_component_catalog`.
+- Browser verification confirmed all 42 disposition badges remain one line; `Represent As T2 Pattern` measured 148px inside a 180px disposition cell with no wrapping failures.

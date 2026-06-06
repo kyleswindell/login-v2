@@ -41,7 +41,10 @@ class PlatformUiReferenceTest extends TestCase
         $overview = $this->get('/platform/ui-reference/components')
             ->assertOk()
             ->assertSee('T1 Component Library')
-            ->assertSee('data-ui-reference-component-inventory', false);
+            ->assertSee('data-ui-reference-component-inventory', false)
+            ->assertSee('min-w-[1120px] table-fixed', false)
+            ->assertSee('w-[13.5rem]', false)
+            ->assertSee('inline-flex items-center whitespace-nowrap rounded-full', false);
 
         foreach ($catalog as $component) {
             $overview

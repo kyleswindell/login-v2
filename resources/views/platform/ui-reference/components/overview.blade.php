@@ -33,12 +33,19 @@
             </div>
 
             <div class="mt-5 overflow-x-auto rounded-lg border border-slate-800 bg-slate-950/60">
-                <table class="w-full min-w-[980px] divide-y divide-slate-800">
+                <table class="w-full min-w-[1120px] table-fixed divide-y divide-slate-800">
+                    <colgroup>
+                        <col class="w-[11rem]">
+                        <col class="w-[12rem]">
+                        <col class="w-[13.5rem]">
+                        <col class="w-[20rem]">
+                        <col>
+                    </colgroup>
                     <thead class="bg-slate-900">
                         <tr class="text-left text-xs uppercase tracking-[0.18em] text-slate-500">
                             <th class="px-4 py-3">Carbon Component</th>
                             <th class="px-4 py-3">Login App Group</th>
-                            <th class="px-4 py-3">Disposition</th>
+                            <th class="px-4 py-3 whitespace-nowrap">Disposition</th>
                             <th class="px-4 py-3">Owner Route</th>
                             <th class="px-4 py-3">Implementation Scope</th>
                         </tr>
@@ -48,17 +55,17 @@
                             <tr data-ui-reference-component-row="{{ $component['slug'] }}">
                                 <td class="px-4 py-3 font-semibold text-white">{{ $component['label'] }}</td>
                                 <td class="px-4 py-3">{{ $component['group'] }}</td>
-                                <td class="px-4 py-3">
-                                    <span class="rounded-full border border-slate-700 px-2 py-1 text-xs font-semibold text-slate-200">{{ $component['disposition'] }}</span>
+                                <td class="px-4 py-3 whitespace-nowrap">
+                                    <span class="inline-flex items-center whitespace-nowrap rounded-full border border-slate-700 px-2 py-1 text-xs font-semibold text-slate-200">{{ $component['disposition'] }}</span>
                                 </td>
-                                <td class="px-4 py-3">
+                                <td class="px-4 py-3 break-words">
                                     @if (str_starts_with($component['owner_route'], '/platform/ui-reference/components/'))
                                         <a wire:navigate href="{{ route('platform.ui-reference.components.show', ['component' => $component['slug']]) }}" class="text-sky-300 hover:text-sky-200">{{ $component['owner_route'] }}</a>
                                     @else
                                         <a wire:navigate href="{{ $component['owner_route'] }}" class="text-sky-300 hover:text-sky-200">{{ $component['owner_route'] }}</a>
                                     @endif
                                 </td>
-                                <td class="px-4 py-3">{{ $component['summary'] }}</td>
+                                <td class="px-4 py-3 whitespace-normal">{{ $component['summary'] }}</td>
                             </tr>
                         @endforeach
                     </tbody>

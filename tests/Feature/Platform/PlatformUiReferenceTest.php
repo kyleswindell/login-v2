@@ -145,6 +145,12 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Selected')
             ->assertSee('Focus')
             ->assertSee('Disabled')
+            ->assertSee('Background: White')
+            ->assertSee('Nested surface: G10')
+            ->assertSee('Background: G90')
+            ->assertSee('Nested surface: G60')
+            ->assertSee('Background: G100')
+            ->assertSee('Nested surface: G70')
             ->assertSee('ui-inline-alert-success', false)
             ->assertSee('one-step selected and two-step active model');
 
@@ -196,6 +202,9 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Light 300')
             ->assertSee('Regular 400')
             ->assertSee('Semibold 600')
+            ->assertSee('5.75rem')
+            ->assertSee('92px')
+            ->assertSee('Scale formula reference')
             ->assertSee('Color is not decoration')
             ->assertSee('ui-control-error', false);
 

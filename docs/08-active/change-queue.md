@@ -286,6 +286,19 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - full UI Reference tests, build, docs guardrails, and browser review pass
 - Implemented in: worklog-2-F-0019
 
+### P2-F-CQ-059 - Foundation final Color layering and Typography scale correction
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-050, P2-F-CQ-051, P2-F-CQ-055
+- Scope: Correct final manual-review gaps on the Foundation Color and Typography pages before Foundation Elements approval.
+- Acceptance:
+  - Color layering model explains light versus dark layer logic in app terms
+  - Color layering examples show nested depth rather than sibling layers
+  - Color layering labels name the actual background color step, not generic layer numbers
+  - Typography type scale renders the full Carbon benchmark scale from 12px through 92px
+  - canonical Color and Typography docs plus focused UI Reference tests match the corrected examples
+- Implemented in: worklog-2-F-0020
+
 ### P2-F-CQ-025 - Foundation Elements inventory and UI Reference menu
 - Status: Implemented Pending Review
 - Owner: Batch F
@@ -501,7 +514,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-033 - T1 component family depth pass: actions
 - Status: Blocked
 - Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-058 pending manual review
+- Blocked By: P2-F-CQ-040 through P2-F-CQ-059 pending manual review
 - Scope: Deepen Button, Menu, Menu buttons, and Link T1 pages after Foundation Elements and T1 contracts are accepted.
 - Acceptance:
   - canonical docs and UI Reference examples are updated together
@@ -511,7 +524,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-034 - T1 component family depth pass: inputs
 - Status: Blocked
 - Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-058 pending manual review
+- Blocked By: P2-F-CQ-040 through P2-F-CQ-059 pending manual review
 - Scope: Deepen Text input, Textarea, Number input, Select, Dropdown, Multiselect, Search, Date picker, File uploader, and Slider T1 pages.
 - Acceptance:
   - input docs and UI Reference examples apply Foundation Element color, spacing, typography, icon, and theme rules
@@ -521,7 +534,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-035 - T1 component family depth pass: selection controls
 - Status: Blocked
 - Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-058 pending manual review
+- Blocked By: P2-F-CQ-040 through P2-F-CQ-059 pending manual review
 - Scope: Deepen Checkbox, Radio button, Toggle, and Content switcher T1 pages.
 - Acceptance:
   - checkbox versus radio usage is visually demonstrated
@@ -531,7 +544,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-036 - T1 component family depth pass: feedback and loading
 - Status: Blocked
 - Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-058 pending manual review
+- Blocked By: P2-F-CQ-040 through P2-F-CQ-059 pending manual review
 - Scope: Deepen Notification, Tag, AI label, Inline loading, Loading, Progress bar, and Progress indicator T1 pages.
 - Acceptance:
   - semantic status and loading examples use current token standards
@@ -541,7 +554,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-037 - T1 component family depth pass: overlays and help
 - Status: Blocked
 - Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-058 pending manual review
+- Blocked By: P2-F-CQ-040 through P2-F-CQ-059 pending manual review
 - Scope: Deepen Accordion, Modal, Popover, Tooltip, and Toggletip T1 pages.
 - Acceptance:
   - overlay/help docs and UI Reference examples distinguish blocking, contextual, non-interactive, and interactive disclosure
@@ -551,7 +564,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-038 - T1 component family depth pass: data display
 - Status: Blocked
 - Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-058 pending manual review
+- Blocked By: P2-F-CQ-040 through P2-F-CQ-059 pending manual review
 - Scope: Deepen Data table, Pagination, Structured list, List, Contained list, Tile, and Tree view T1 pages.
 - Acceptance:
   - data display pages show concrete variants, states, spacing behavior, and T2 consumption links
@@ -561,7 +574,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-039 - T1 component family depth pass: navigation and shell
 - Status: Blocked
 - Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-058 pending manual review
+- Blocked By: P2-F-CQ-040 through P2-F-CQ-059 pending manual review
 - Scope: Deepen Breadcrumb, Tabs, and UI shell T1 pages.
 - Acceptance:
   - tabs include line, contained, vertical, icon-leading, icon-only, overflow/scroll, selected, focus, and disabled states

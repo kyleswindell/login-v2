@@ -15,7 +15,7 @@ Login App uses app CSS and Tailwind-compatible utilities for page titles, headin
 ## Required Visible Examples
 
 - app font specimens for Sans and Mono, with Serif documented as not currently used
-- type scale for 12, 14, 16, 18, 20, 24, 28, and 32px
+- type scale for 12, 14, 16, 18, 20, 24, 28, 32, 36, 42, 48, 54, 60, 68, 76, 84, and 92px
 - role examples for page title, section heading, subsection heading, body, label, helper, error, caption, mono/code, table header, table cell, button text, and link text
 - productive UI examples for settings form, table, notification, and inline validation
 - Light 300, Regular 400, Semibold 600, and limited italic examples
@@ -27,7 +27,7 @@ Use text tokens such as `--ui-text-strong`, `--ui-text-secondary`, `--ui-text-mu
 
 ## Usage Guidance
 
-Use typography by role, not visual guessing. Productive type is the default for app UI. Use semibold for headings and short emphasis, not long body copy. Italic is limited to short emphasis such as terms, titles, captions, or technical distinctions.
+Use typography by role, not visual guessing. Productive type is the default for app UI. The full reference scale is available for completeness, but dense admin/product UI should consume assigned roles before using large expressive sizes. Use semibold for headings and short emphasis, not long body copy. Italic is limited to short emphasis such as terms, titles, captions, or technical distinctions.
 
 ## Accessibility Notes
 
@@ -43,4 +43,4 @@ Guide status: Implemented. System maturity: Partial.
 
 ## Carbon Comparison Notes
 
-Carbon's productive type, weight, and type-color guidance informs the standard. Login App keeps its own font stack and scale.
+Carbon's productive type, scale, weight, and type-color guidance informs the standard. Login App keeps its own font stack and role assignments.

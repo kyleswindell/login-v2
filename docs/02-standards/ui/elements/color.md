@@ -17,7 +17,11 @@ Login App 2.0 uses app-owned CSS variables such as `--ui-text-strong`, `--ui-sur
 - full app palette: neutral ramp, blue/action ramp, and support colors
 - token role groups for text, link, icon, surface, field, border, status, alert, and skeleton/loading
 - enabled, hover, active, selected, focus, and disabled state examples
-- light and dark layering models
+- light and dark layering models with nested depth examples:
+  - White-equivalent: background White, then G10, White, G10
+  - Gray 10-equivalent: background G10, then White, G10, White
+  - Gray 90-equivalent: background G90, then G80, G70, G60
+  - Gray 100-equivalent: background G100, then G90, G80, G70
 - app examples for alerts, form field, selected row, icon button, destructive action, and link
 - high-contrast and inverse moments
 
@@ -27,7 +31,7 @@ Use app token variables and component classes, including `ui-button`, `ui-input`
 
 ## Usage Guidance
 
-Use role-based color tokens, not raw hex values, for components and interaction states. Blue is reserved for primary actions and links. Support colors are reserved for semantic error, warning, success, information, and destructive meaning.
+Use role-based color tokens, not raw hex values, for components and interaction states. Blue is reserved for primary actions and links. Support colors are reserved for semantic error, warning, success, information, and destructive meaning. Light theme layers alternate between White and G10; dark theme layers become one neutral step lighter with each nested depth.
 
 Carbon's selected/active step logic is comparison guidance only. Login App implements state deltas through explicit role tokens and component classes.
 

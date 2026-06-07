@@ -14,10 +14,50 @@
         ['Info', 'var(--ui-status-info-solid-bg)', 'var(--ui-status-solid-text)'],
     ];
     $themeLayers = [
-        ['White-equivalent', '#ffffff', '#f8fafc', '#ffffff', '#f8fafc', '#0f172a'],
-        ['Gray 10-equivalent', '#f8fafc', '#ffffff', '#f8fafc', '#ffffff', '#0f172a'],
-        ['Gray 90-equivalent', '#18181b', '#27272a', '#3f3f46', '#52525b', '#f4f4f5'],
-        ['Gray 100-equivalent', '#09090b', '#18181b', '#27272a', '#3f3f46', '#fafafa'],
+        [
+            'White-equivalent',
+            'Light theme layers alternate between White and G10.',
+            '#0f172a',
+            [
+                ['Background: White', '#ffffff'],
+                ['Nested surface: G10', '#f8fafc'],
+                ['Nested surface: White', '#ffffff'],
+                ['Nested surface: G10', '#f8fafc'],
+            ],
+        ],
+        [
+            'Gray 10-equivalent',
+            'Light theme layers alternate between G10 and White.',
+            '#0f172a',
+            [
+                ['Background: G10', '#f8fafc'],
+                ['Nested surface: White', '#ffffff'],
+                ['Nested surface: G10', '#f8fafc'],
+                ['Nested surface: White', '#ffffff'],
+            ],
+        ],
+        [
+            'Gray 90-equivalent',
+            'Dark theme layers step lighter with each depth.',
+            '#f4f4f5',
+            [
+                ['Background: G90', '#18181b'],
+                ['Nested surface: G80', '#27272a'],
+                ['Nested surface: G70', '#3f3f46'],
+                ['Nested surface: G60', '#52525b'],
+            ],
+        ],
+        [
+            'Gray 100-equivalent',
+            'Dark theme layers step lighter with each depth.',
+            '#fafafa',
+            [
+                ['Background: G100', '#09090b'],
+                ['Nested surface: G90', '#18181b'],
+                ['Nested surface: G80', '#27272a'],
+                ['Nested surface: G70', '#3f3f46'],
+            ],
+        ],
     ];
 @endphp
 
@@ -109,15 +149,28 @@
 
     <section class="ui-card" data-color-example="theme-layering-model">
         <h2 class="ui-card-title">Light And Dark Layering Model</h2>
-        <p class="ui-card-copy mt-2">Light layers alternate between base and low-contrast layers. Dark layers step lighter as depth increases.</p>
-        <div class="mt-5 grid gap-4 xl:grid-cols-4">
-            @foreach ($themeLayers as [$name, $base, $layer1, $layer2, $layer3, $text])
-                <article class="rounded-lg border p-4" style="background: {{ $base }}; color: {{ $text }}; border-color: color-mix(in srgb, {{ $text }} 18%, transparent);">
+        <p class="ui-card-copy mt-2">Colors in the neutral palette stack to create depth and spatial association. Light themes alternate between White and G10 with each added layer; dark themes become one step lighter with each added layer.</p>
+        <div class="mt-5 grid gap-4 xl:grid-cols-2">
+            @foreach ($themeLayers as $themeLayer)
+                @php
+                    [$name, $description, $text, $layers] = $themeLayer;
+                    [$backgroundLabel, $backgroundColor] = $layers[0];
+                    [$firstLabel, $firstColor] = $layers[1];
+                    [$secondLabel, $secondColor] = $layers[2];
+                    [$thirdLabel, $thirdColor] = $layers[3];
+                @endphp
+                <article class="rounded-lg border p-4" style="background: {{ $backgroundColor }}; color: {{ $text }}; border-color: color-mix(in srgb, {{ $text }} 18%, transparent);">
                     <p class="text-sm font-semibold">{{ $name }}</p>
-                    <div class="mt-4 rounded-lg p-3" style="background: {{ $layer1 }};">
-                        Layer 1
-                        <div class="mt-3 rounded-md p-3" style="background: {{ $layer2 }};">Layer 2</div>
-                        <div class="mt-3 rounded-md p-3" style="background: {{ $layer3 }};">Layer 3</div>
+                    <p class="mt-1 text-xs opacity-80">{{ $description }}</p>
+                    <p class="mt-4 text-xs font-semibold">{{ $backgroundLabel }}</p>
+                    <div class="mt-3 rounded-lg border p-4" style="background: {{ $firstColor }}; border-color: color-mix(in srgb, {{ $text }} 18%, transparent);">
+                        <p class="text-xs font-semibold">{{ $firstLabel }}</p>
+                        <div class="mt-4 rounded-md border p-4" style="background: {{ $secondColor }}; border-color: color-mix(in srgb, {{ $text }} 18%, transparent);">
+                            <p class="text-xs font-semibold">{{ $secondLabel }}</p>
+                            <div class="mt-4 rounded p-4" style="background: {{ $thirdColor }};">
+                                <p class="text-xs font-semibold">{{ $thirdLabel }}</p>
+                            </div>
+                        </div>
                     </div>
                 </article>
             @endforeach

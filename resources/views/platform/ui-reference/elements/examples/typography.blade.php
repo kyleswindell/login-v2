@@ -1,3 +1,25 @@
+@php
+    $typeScale = [
+        ['0.75rem', 12],
+        ['0.875rem', 14],
+        ['1rem', 16],
+        ['1.125rem', 18],
+        ['1.25rem', 20],
+        ['1.5rem', 24],
+        ['1.75rem', 28],
+        ['2rem', 32],
+        ['2.25rem', 36],
+        ['2.625rem', 42],
+        ['3rem', 48],
+        ['3.375rem', 54],
+        ['3.75rem', 60],
+        ['4.25rem', 68],
+        ['4.75rem', 76],
+        ['5.25rem', 84],
+        ['5.75rem', 92],
+    ];
+@endphp
+
 <div class="space-y-6">
     <section class="ui-card" data-typography-example="font-specimens">
         <h2 class="ui-card-title">Font Family Specimens</h2>
@@ -19,14 +41,19 @@
 
     <section class="ui-card" data-typography-example="type-scale">
         <h2 class="ui-card-title">Type Scale</h2>
+        <p class="ui-card-copy mt-2">The reference scale follows the Carbon benchmark from 12px through 92px. Product UI should still use assigned type roles rather than choosing sizes by eye.</p>
         <div class="mt-5 space-y-3">
-            @foreach ([12, 14, 16, 18, 20, 24, 28, 32] as $size)
-                <div class="grid grid-cols-[5rem_minmax(0,1fr)] items-baseline gap-4">
-                    <span class="font-mono text-xs" style="color: var(--ui-text-muted);">{{ $size }}px</span>
-                    <p style="font-size: {{ $size }}px; color: var(--ui-text-strong);">{{ $size }}px productive type sample</p>
+            @foreach ($typeScale as [$rem, $size])
+                <div class="grid gap-3 rounded-lg border p-4 lg:grid-cols-[8rem_minmax(0,1fr)] lg:items-center" style="border-color: var(--ui-border-default); background: var(--ui-surface-elevated);">
+                    <div class="font-mono text-xs" style="color: var(--ui-text-muted);">
+                        <p>{{ $rem }}</p>
+                        <p>{{ $size }}px</p>
+                    </div>
+                    <p class="leading-none" style="font-size: {{ $size }}px; color: var(--ui-text-strong);">Aa</p>
                 </div>
             @endforeach
         </div>
+        <p class="mt-4 font-mono text-xs" style="color: var(--ui-text-muted);">Scale formula reference: Xn = Xn-1 + {INT[(n-2)/4] + 1} * 2</p>
     </section>
 
     <section class="ui-card" data-typography-example="type-role-examples">

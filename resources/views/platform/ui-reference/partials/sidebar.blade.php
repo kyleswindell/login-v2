@@ -32,25 +32,55 @@
                     </a>
 
                     @foreach (($elementCatalog ?? []) as $element)
-                        @php $isActiveElement = ($currentSection ?? '') === 'elements.'.$element['slug']; @endphp
-                        <a wire:navigate href="{{ route('platform.ui-reference.elements.show', ['element' => $element['slug']]) }}" @class([
-                            'flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm font-medium transition',
-                            'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => $isActiveElement,
-                            'text-slate-300 hover:bg-slate-800 hover:text-white' => ! $isActiveElement,
-                        ]) data-ui-reference-element-sidebar-item="{{ $element['slug'] }}">
-                            <span>{{ $element['label'] }}</span>
-                            @if ($element['disposition'] !== 'Implemented')
-                                <span class="rounded-full border border-slate-700 px-1.5 py-0.5 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-slate-500">
-                                    {{ match ($element['disposition']) {
-                                        'Partial' => 'Partial',
-                                        'Needs audit' => 'Audit',
-                                        'Deprecated' => 'Deprecated',
-                                        'App-specific exception' => 'Exception',
-                                        default => 'Gate',
-                                    } }}
-                                </span>
-                            @endif
-                        </a>
+                        @php
+                            $isActiveElement = ($currentSection ?? '') === 'elements.'.$element['slug'];
+                            $isColorTokenPage = ($currentSection ?? '') === 'elements.color.tokens';
+                            $isColorElement = $element['slug'] === 'color';
+                        @endphp
+
+                        @if ($isColorElement)
+                            <div class="rounded-md" data-ui-reference-element-sidebar-item="color">
+                                <a wire:navigate href="{{ route('platform.ui-reference.elements.show', ['element' => 'color']) }}" @class([
+                                    'flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm font-medium transition',
+                                    'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => $isActiveElement,
+                                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ! $isActiveElement,
+                                ])>
+                                    <span>{{ $element['label'] }}</span>
+                                </a>
+
+                                <nav class="ml-5 mt-1 space-y-1 border-l border-slate-800 pl-3" data-ui-reference-color-sidebar>
+                                    <a wire:navigate href="{{ route('platform.ui-reference.elements.show', ['element' => 'color']) }}" @class([
+                                        'block rounded-md px-2 py-1.5 text-xs font-medium transition',
+                                        'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => $isActiveElement,
+                                        'text-slate-400 hover:bg-slate-800 hover:text-white' => ! $isActiveElement,
+                                    ]) data-ui-reference-color-sidebar-item="overview">Overview</a>
+                                    <a wire:navigate href="{{ route('platform.ui-reference.elements.color.tokens') }}" @class([
+                                        'block rounded-md px-2 py-1.5 text-xs font-medium transition',
+                                        'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => $isColorTokenPage,
+                                        'text-slate-400 hover:bg-slate-800 hover:text-white' => ! $isColorTokenPage,
+                                    ]) data-ui-reference-color-sidebar-item="token-palette">Token Palette</a>
+                                </nav>
+                            </div>
+                        @else
+                            <a wire:navigate href="{{ route('platform.ui-reference.elements.show', ['element' => $element['slug']]) }}" @class([
+                                'flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm font-medium transition',
+                                'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => $isActiveElement,
+                                'text-slate-300 hover:bg-slate-800 hover:text-white' => ! $isActiveElement,
+                            ]) data-ui-reference-element-sidebar-item="{{ $element['slug'] }}">
+                                <span>{{ $element['label'] }}</span>
+                                @if ($element['disposition'] !== 'Implemented')
+                                    <span class="rounded-full border border-slate-700 px-1.5 py-0.5 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-slate-500">
+                                        {{ match ($element['disposition']) {
+                                            'Partial' => 'Partial',
+                                            'Needs audit' => 'Audit',
+                                            'Deprecated' => 'Deprecated',
+                                            'App-specific exception' => 'Exception',
+                                            default => 'Gate',
+                                        } }}
+                                    </span>
+                                @endif
+                            </a>
+                        @endif
                     @endforeach
                 </nav>
             </details>

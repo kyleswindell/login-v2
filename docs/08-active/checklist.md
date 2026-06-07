@@ -46,7 +46,7 @@
 
 ## Foundation Elements Layer
 - [ ] Foundation Elements Layer
-  Status: implemented pending review — P2-F-CQ-040 through P2-F-CQ-059 replace broad foundation correction scope with page-level live implementation guides, then correct status labeling, token-backed Color/Themes/Icons/Typography/Motion/Pictograms examples, final Color layering/Typography scale gaps, and Foundation correction tests/docs
+  Status: implemented pending review — P2-F-CQ-040 through P2-F-CQ-065 replace broad foundation correction scope with page-level live implementation guides, then correct status labeling, token-backed Color/Themes/Icons/Typography/Motion/Pictograms examples, final Color layering/Typography scale gaps, separate Color Token Palette coverage, and Foundation correction tests/docs
   - [x] UI Reference sidebar exposes Foundation Elements before T1 Components
   - [x] Foundation Elements overview explains Foundation Elements, T1 Components, T2 Patterns, and T3 Feature Modules
   - [x] grid, color, icons, pictograms, motion, spacing, themes, and typography have catalog dispositions and owner routes
@@ -60,7 +60,9 @@
   - [x] Icons, Typography, Motion, and Pictograms pages use token-backed examples or explicit audit disposition
   - [x] T1 component catalog includes canonical doc metadata and Multiselect
   - [x] UI shell is normalized as one T1 family with header, left panel, and right panel subsections
-  - [x] P2-F-CQ-040 through P2-F-CQ-059 correct Foundation Elements example depth before T1 family depth passes begin
+  - [x] Color exposes a separate Token Palette route for Carbon-depth token role coverage
+  - [x] expanded background, layer, field, border, text, link, icon, support/status, focus, skeleton, and syntax namespaces are documented
+  - [x] P2-F-CQ-040 through P2-F-CQ-065 correct Foundation Elements example and token depth before T1 family depth passes begin
   - [ ] manual review confirms Foundation Elements pages are sufficiently concrete for later T1 depth passes
 
 ## Module Home And Dashboard Summary Starters

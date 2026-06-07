@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Platform;
 
 use App\Http\Controllers\Controller;
+use App\Platform\UiReference\UiReferenceColorTokenPalette;
 use App\Platform\UiReference\UiReferenceComponentCatalog;
 use App\Platform\UiReference\UiReferenceElementCatalog;
 use App\Platform\UiReference\UiReferenceSamples;
@@ -18,6 +19,7 @@ class UiReferenceController extends Controller
         private readonly UiReferenceTables $tables,
         private readonly UiReferenceComponentCatalog $components,
         private readonly UiReferenceElementCatalog $elements,
+        private readonly UiReferenceColorTokenPalette $colorTokenPalette,
     ) {}
 
     public function index(Request $request): View
@@ -66,6 +68,18 @@ class UiReferenceController extends Controller
         return $this->renderSection('elements.show', [
             'catalogElement' => $elementDefinition,
             'currentSection' => 'elements.'.$elementDefinition['slug'],
+        ]);
+    }
+
+    public function colorTokens(Request $request): View
+    {
+        $this->authorize('view-platform-ui-reference');
+
+        return $this->renderSection('elements.color-tokens', [
+            'currentSection' => 'elements.color.tokens',
+            'tokenInventory' => $this->colorTokenPalette->inventory(),
+            'tokenFamilies' => $this->colorTokenPalette->families(),
+            'relatedLinks' => $this->colorTokenPalette->relatedLinks(),
         ]);
     }
 

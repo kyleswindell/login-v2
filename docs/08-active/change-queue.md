@@ -299,6 +299,72 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - canonical Color and Typography docs plus focused UI Reference tests match the corrected examples
 - Implemented in: worklog-2-F-0020
 
+### P2-F-CQ-060 - Carbon color token role inventory map
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-050 through P2-F-CQ-059
+- Scope: Map Carbon color-token role families to Login App token dispositions and owner routes.
+- Acceptance:
+  - background, layer, layer accent, field, border, text, link, syntax, icon, support/status, focus, miscellaneous/inverse/skeleton, component tokens, and AI tokens are all mapped
+  - each family is classified as Implemented, Covered By App Alias, Queued Token Gap, or Not Applicable Yet
+  - each family has a Login App owner route
+- Implemented in: worklog-2-F-0021
+
+### P2-F-CQ-061 - Color token palette route and nested navigation
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-060
+- Scope: Add the nested Color Token Palette route and sidebar entry while keeping the existing Color route as the overview page.
+- Acceptance:
+  - `/platform/ui-reference/elements/color` remains the Color Overview
+  - `/platform/ui-reference/elements/color/tokens` is reachable before the generic element catch-all route
+  - Foundation Elements sidebar separates Color Overview and Token Palette
+- Implemented in: worklog-2-F-0021
+
+### P2-F-CQ-062 - App color token namespace expansion
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-060
+- Scope: Add app-owned token namespaces for missing role coverage while preserving existing aliases.
+- Acceptance:
+  - expanded namespaces cover background, layer, layer accent, field, border, text, link, icon, support/status, focus, skeleton/loading, and syntax/code roles
+  - existing surface/text/border/link/spinner/action/status variables remain valid aliases where needed
+  - token values are selected by design role, contrast, state behavior, layer logic, and accessibility rather than copied mechanically
+- Implemented in: worklog-2-F-0021
+
+### P2-F-CQ-063 - Color Token Palette page implementation
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-061, P2-F-CQ-062
+- Scope: Build the Color Token Palette page as a matrix-oriented route separate from the Color Overview.
+- Acceptance:
+  - token rows show family, role, CSS variable, light value, dark value, rendered swatch/example, and Carbon comparison disposition
+  - sections cover background/layer/field, border, text/icon, link, support/status, focus/skeleton, and syntax/code tokens
+  - component and AI token dispositions are documented without crowding the Color Overview
+- Implemented in: worklog-2-F-0021
+
+### P2-F-CQ-064 - Component token adoption audit
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-062
+- Scope: Audit shared T1/T2 CSS classes for expanded role-token adoption without visual redesign.
+- Acceptance:
+  - shared shell/card, field, border, text/icon, link, selected, focus, and spinner examples consume expanded role tokens where appropriate
+  - legacy aliases remain available for compatibility
+  - remaining component-specific token work is explicit future T1 family-depth scope
+- Implemented in: worklog-2-F-0021
+
+### P2-F-CQ-065 - Color token tests, docs, and handoff
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-060 through P2-F-CQ-064
+- Scope: Sync canonical docs, active queue state, worklog, and focused UI Reference tests for the Color Token Palette expansion.
+- Acceptance:
+  - canonical color docs reference the new token-palette route and expanded namespace model
+  - focused UI Reference tests cover nested Color sidebar navigation and every token-family section
+  - T1 family-depth items remain blocked until the Foundation/token correction set passes review unless explicitly waived
+- Implemented in: worklog-2-F-0021
+
 ### P2-F-CQ-025 - Foundation Elements inventory and UI Reference menu
 - Status: Implemented Pending Review
 - Owner: Batch F
@@ -514,7 +580,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-033 - T1 component family depth pass: actions
 - Status: Blocked
 - Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-059 pending manual review
+- Blocked By: P2-F-CQ-040 through P2-F-CQ-065 pending manual review
 - Scope: Deepen Button, Menu, Menu buttons, and Link T1 pages after Foundation Elements and T1 contracts are accepted.
 - Acceptance:
   - canonical docs and UI Reference examples are updated together
@@ -524,7 +590,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-034 - T1 component family depth pass: inputs
 - Status: Blocked
 - Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-059 pending manual review
+- Blocked By: P2-F-CQ-040 through P2-F-CQ-065 pending manual review
 - Scope: Deepen Text input, Textarea, Number input, Select, Dropdown, Multiselect, Search, Date picker, File uploader, and Slider T1 pages.
 - Acceptance:
   - input docs and UI Reference examples apply Foundation Element color, spacing, typography, icon, and theme rules
@@ -534,7 +600,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-035 - T1 component family depth pass: selection controls
 - Status: Blocked
 - Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-059 pending manual review
+- Blocked By: P2-F-CQ-040 through P2-F-CQ-065 pending manual review
 - Scope: Deepen Checkbox, Radio button, Toggle, and Content switcher T1 pages.
 - Acceptance:
   - checkbox versus radio usage is visually demonstrated
@@ -544,7 +610,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-036 - T1 component family depth pass: feedback and loading
 - Status: Blocked
 - Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-059 pending manual review
+- Blocked By: P2-F-CQ-040 through P2-F-CQ-065 pending manual review
 - Scope: Deepen Notification, Tag, AI label, Inline loading, Loading, Progress bar, and Progress indicator T1 pages.
 - Acceptance:
   - semantic status and loading examples use current token standards
@@ -554,7 +620,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-037 - T1 component family depth pass: overlays and help
 - Status: Blocked
 - Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-059 pending manual review
+- Blocked By: P2-F-CQ-040 through P2-F-CQ-065 pending manual review
 - Scope: Deepen Accordion, Modal, Popover, Tooltip, and Toggletip T1 pages.
 - Acceptance:
   - overlay/help docs and UI Reference examples distinguish blocking, contextual, non-interactive, and interactive disclosure
@@ -564,7 +630,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-038 - T1 component family depth pass: data display
 - Status: Blocked
 - Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-059 pending manual review
+- Blocked By: P2-F-CQ-040 through P2-F-CQ-065 pending manual review
 - Scope: Deepen Data table, Pagination, Structured list, List, Contained list, Tile, and Tree view T1 pages.
 - Acceptance:
   - data display pages show concrete variants, states, spacing behavior, and T2 consumption links
@@ -574,7 +640,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-039 - T1 component family depth pass: navigation and shell
 - Status: Blocked
 - Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-059 pending manual review
+- Blocked By: P2-F-CQ-040 through P2-F-CQ-065 pending manual review
 - Scope: Deepen Breadcrumb, Tabs, and UI shell T1 pages.
 - Acceptance:
   - tabs include line, contained, vertical, icon-leading, icon-only, overflow/scroll, selected, focus, and disabled states

@@ -13,7 +13,8 @@
 - P2-F-CQ-040 through P2-F-CQ-048 are Implemented Pending Review. Worklog 2-F-0018 replaces the broad Foundation Elements correction with page-level live implementation guides for Color, Themes, 2x Grid, Spacing, Typography, Icons, Pictograms, Motion, and Overview/renderer cleanup.
 - P2-F-CQ-049 through P2-F-CQ-058 are Implemented Pending Review. Worklog 2-F-0019 corrects status labeling, token-backed Color/Themes/Icons/Typography/Motion/Pictograms examples, shared focus/status/alert usage, docs, tests, and handoff.
 - P2-F-CQ-059 is Implemented Pending Review. Worklog 2-F-0020 corrects the final Color layering and Typography scale review gaps before Foundation Elements approval.
-- P2-F-CQ-033 through P2-F-CQ-039 are Blocked until P2-F-CQ-040 through P2-F-CQ-059 pass manual review, unless the user explicitly waives that sequencing.
+- P2-F-CQ-060 through P2-F-CQ-065 are Implemented Pending Review. Worklog 2-F-0021 adds the separate Color Token Palette route, Carbon-to-Login token family disposition map, expanded app role-token namespaces, component adoption audit, docs, tests, and handoff.
+- P2-F-CQ-033 through P2-F-CQ-039 are Blocked until P2-F-CQ-040 through P2-F-CQ-065 pass manual review, unless the user explicitly waives that sequencing.
 - P2-F-CQ-012 is Implemented Pending Review. UI control behavior is split into form/selection, table/search/filter, dropdown, and theme modules while preserving the `resources/js/ui-controls.js` export surface and `resources/js/app.js` lifecycle registration.
 - P2-F-CQ-013 is Implemented Pending Review. `resources/css/app.css` now has a concrete UI ownership map, `resources/css/AGENTS.md` points future CSS work to targeted sections, and the Tailwind theme seed block is extracted to `resources/css/ui/theme-seed.css`.
 - Detailed correction history for P2-F-CQ-001 and P2-F-CQ-007 is preserved in worklog-2-F-0002 through worklog-2-F-0008. Do not duplicate that history in active notes.
@@ -28,7 +29,8 @@
 - Translate audit findings into Login App 2.0-specific standards, examples, classes, ready-to-use components, component sets, and starter views.
 - P2-F-CQ-016 through P2-F-CQ-024 own the component-specific T1 realignment requested after P2-F-CQ-008 through P2-F-CQ-011 passed review. Treat the catalog as the owner for T1 component dispositions, routes, and primary review surfaces.
 - P2-F-CQ-025 through P2-F-CQ-032 establish Foundation Elements beneath T1 Components. Future component deepening should consume those standards for tokens, spacing, typography, iconography, themes, grid, and motion rather than restating them per component.
-- P2-F-CQ-040 through P2-F-CQ-059 supersede the previous broad Foundation Elements correction item. The accepted bar is page-level: every Foundation page must show rendered examples and applied behaviors, not just token inventories or prose, and examples must use app tokens/classes where they represent app components.
+- P2-F-CQ-040 through P2-F-CQ-065 supersede the previous broad Foundation Elements correction item. The accepted bar is page-level: every Foundation page must show rendered examples and applied behaviors, not just token inventories or prose, and examples must use app tokens/classes where they represent app components.
+- The Color Overview owns palette, layering, state, focus, disabled, inverse, and high-contrast examples. The nested Color Token Palette route owns Carbon-depth token family coverage and app disposition mapping.
 - Keep examples within existing Login App 2.0 visual direction. Do not create reference photo examples, broad accessibility test suites, Carbon visual token adoption, or unrelated runtime feature expansion.
 - Installation/implementation guidance means local component usage guidance: component names, props/attributes, required classes/wrappers, data attributes, owner routes, and expected usage boundaries.
 - P2-F-CQ-012 owns UI control module cleanup only where it supports Batch F form/selection/table/search/dropdown/filter guidance. The implementation is pending local review and should remain behavior-preserving.
@@ -40,5 +42,5 @@
 - SettingsController update-flow extraction and realtime notification transport/rendering cleanup are deferred out of Batch F unless the current UI starter/guidance work exposes a direct blocker.
 - Future work passes should read the targeted queue item first, then open only the specific source/reference files needed for that item.
 - Manual review should now focus on whether P2-F-CQ-016 through P2-F-CQ-024 provide a sufficiently organized component-specific T1 library and whether any generated component pages need deeper concrete examples before the remaining starter work resumes.
-- Do not begin P2-F-CQ-033 through P2-F-CQ-039 until P2-F-CQ-040 through P2-F-CQ-059 pass review or the user explicitly overrides that order.
+- Do not begin P2-F-CQ-033 through P2-F-CQ-039 until P2-F-CQ-040 through P2-F-CQ-065 pass review or the user explicitly overrides that order.
 - Worklogs remain the immutable history location for detailed pass notes, failed review attempts, and correction narratives.

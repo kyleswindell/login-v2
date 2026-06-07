@@ -215,11 +215,57 @@ Usage rules:
 Token categories that must exist in code:
 
 - background
+- layer
+- layer accent
+- field
+- border subtle
+- border strong
 - text
+- link
+- icon
+- support/status
+- focus
+- inverse
+- skeleton/loading
+- syntax/code
+- component aliases
 - border
 - action
 - feedback
-- focus
+
+## Expanded Role Token Namespaces
+
+The UI Reference Color Token Palette route owns the review surface for the expanded color-token matrix:
+
+- `/platform/ui-reference/elements/color/tokens`
+
+The current app-owned namespaces are:
+
+- `--ui-background-*` for page and inverse backgrounds
+- `--ui-layer-*` and `--ui-layer-accent-*` for nested surfaces and surface accents
+- `--ui-field-*` for form and editable controls
+- `--ui-border-subtle-*` and `--ui-border-strong-*` for low-emphasis and structural borders
+- `--ui-text-*`, `--ui-link-*`, and `--ui-icon-*` for content hierarchy and paired icon/text behavior
+- `--ui-support-*` for semantic status meaning
+- `--ui-focus-*` for visible keyboard focus and inverse focus
+- `--ui-skeleton-*` for loading placeholders
+- `--ui-syntax-*` for code examples and future code-snippet coverage
+
+Existing names such as `--ui-surface-*`, `--ui-border-default`, `--ui-text-strong`, `--ui-text-muted`, `--ui-link-text`, `--ui-spinner-*`, and component-specific action/status variables remain accepted aliases while the app migrates to role-family usage.
+
+## Carbon Token Comparison
+
+Carbon's color-token families are used as a completeness benchmark for role coverage: background, layer, layer accent, field, border, text, link, syntax, icon, support/status, focus, inverse, skeleton, component tokens, and AI tokens.
+
+Login App token values should be selected by design role, contrast, state behavior, layer logic, and accessibility first. Carbon values may be used where they are the best fit for those principles. Do not copy Carbon token values blindly or reject them solely because they come from Carbon; align to the design reasoning first and customize later when a clear app-specific reason exists.
+
+Current dispositions:
+
+- background, layer, field, border, text, link, icon, support/status, focus, and skeleton are implemented as app-owned namespaces
+- layer accent, syntax, and some component-token coverage are app aliases or narrow implementation surfaces
+- component-specific tokens remain valid aliases to avoid churn
+- AI tokens are not applicable until Login App ships AI-attributed UI
+- full automated contrast auditing remains a queued validation gap
 
 Implementation target:
 

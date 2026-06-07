@@ -6,7 +6,7 @@ PARTIAL
 
 ## Current Review State
 
-- Batch F remains PARTIAL because P2-F-CQ-016 through P2-F-CQ-059 have been implemented pending review, while active starter items remain and T1 family-depth items are blocked pending Foundation Elements review.
+- Batch F remains PARTIAL because P2-F-CQ-016 through P2-F-CQ-065 have been implemented pending review, while active starter items remain and T1 family-depth items are blocked pending Foundation Elements review.
 - P2-F-CQ-001: PASS. The Carbon audit and starter catalog matrix are accepted as sufficient planning and routing source material for the remaining Batch F work.
 - P2-F-CQ-007: PASS. The UI Reference starter catalog entry point is discoverable, lists the required starter set, and includes route disposition guidance for current UI Reference views.
 - P2-F-CQ-008: PASS. Correction pass 2-F-0015 was manually approved on 2026-06-06.
@@ -20,6 +20,7 @@ PARTIAL
 - P2-F-CQ-040 through P2-F-CQ-048: IMPLEMENTED PENDING REVIEW. Worklog 2-F-0018 replaces the broad Foundation correction with page-level live implementation guides, shared renderer sections, canonical doc updates, and focused route/content coverage.
 - P2-F-CQ-049 through P2-F-CQ-058: IMPLEMENTED PENDING REVIEW. Worklog 2-F-0019 corrects guide/system status labeling, token-backed Color/Themes/Icons/Typography/Motion/Pictograms examples, focus/status/alert usage, canonical docs, and focused tests.
 - P2-F-CQ-059: IMPLEMENTED PENDING REVIEW. Worklog 2-F-0020 corrects the final Foundation Color layering and Typography type-scale review gaps.
+- P2-F-CQ-060 through P2-F-CQ-065: IMPLEMENTED PENDING REVIEW. Worklog 2-F-0021 adds the separate Color Token Palette route, Carbon-to-Login token family disposition map, expanded app role-token namespaces, component adoption audit, docs, focused tests, and handoff.
 - No open required fixes remain for P2-F-CQ-001 or P2-F-CQ-007.
 - Historical pass details are preserved in worklog-2-F-0002 through worklog-2-F-0008 and should not be repeated here.
 
@@ -29,10 +30,10 @@ Visual: PENDING
 Functional: PENDING
 
 - Passed review: P2-F-CQ-001, P2-F-CQ-007, P2-F-CQ-008, P2-F-CQ-009, P2-F-CQ-010, P2-F-CQ-011.
-- Pending review: P2-F-CQ-012, P2-F-CQ-013, P2-F-CQ-016, P2-F-CQ-017, P2-F-CQ-018, P2-F-CQ-019, P2-F-CQ-020, P2-F-CQ-021, P2-F-CQ-022, P2-F-CQ-023, P2-F-CQ-024, P2-F-CQ-025, P2-F-CQ-026, P2-F-CQ-027, P2-F-CQ-028, P2-F-CQ-029, P2-F-CQ-030, P2-F-CQ-031, P2-F-CQ-032, P2-F-CQ-040, P2-F-CQ-041, P2-F-CQ-042, P2-F-CQ-043, P2-F-CQ-044, P2-F-CQ-045, P2-F-CQ-046, P2-F-CQ-047, P2-F-CQ-048, P2-F-CQ-049, P2-F-CQ-050, P2-F-CQ-051, P2-F-CQ-052, P2-F-CQ-053, P2-F-CQ-054, P2-F-CQ-055, P2-F-CQ-056, P2-F-CQ-057, P2-F-CQ-058, P2-F-CQ-059.
+- Pending review: P2-F-CQ-012, P2-F-CQ-013, P2-F-CQ-016, P2-F-CQ-017, P2-F-CQ-018, P2-F-CQ-019, P2-F-CQ-020, P2-F-CQ-021, P2-F-CQ-022, P2-F-CQ-023, P2-F-CQ-024, P2-F-CQ-025, P2-F-CQ-026, P2-F-CQ-027, P2-F-CQ-028, P2-F-CQ-029, P2-F-CQ-030, P2-F-CQ-031, P2-F-CQ-032, P2-F-CQ-040, P2-F-CQ-041, P2-F-CQ-042, P2-F-CQ-043, P2-F-CQ-044, P2-F-CQ-045, P2-F-CQ-046, P2-F-CQ-047, P2-F-CQ-048, P2-F-CQ-049, P2-F-CQ-050, P2-F-CQ-051, P2-F-CQ-052, P2-F-CQ-053, P2-F-CQ-054, P2-F-CQ-055, P2-F-CQ-056, P2-F-CQ-057, P2-F-CQ-058, P2-F-CQ-059, P2-F-CQ-060, P2-F-CQ-061, P2-F-CQ-062, P2-F-CQ-063, P2-F-CQ-064, P2-F-CQ-065.
 - Remaining Batch F items still require implementation before final visual and functional batch review.
 - Review note: manual review should confirm whether worklog 2-F-0016 provides the expected component-specific T1 organization, Carbon completeness mapping, and enough concrete state examples for later developers to use with minimal guesswork.
-- Review note: worklog 2-F-0020 is the newest manual-review surface for Foundation Elements depth. Final review should focus on the corrected Color layering model and Typography scale before P2-F-CQ-033 through P2-F-CQ-039 resume.
+- Review note: worklog 2-F-0021 is the newest manual-review surface for Foundation color-token depth. Final review should focus on `/platform/ui-reference/elements/color/tokens` plus the nested Color sidebar before P2-F-CQ-033 through P2-F-CQ-039 resume.
 
 ## Remaining Queue Items
 
@@ -41,7 +42,7 @@ Functional: PENDING
 - P2-F-CQ-004 - Account/profile starters
 - P2-F-CQ-005 - List, detail, and create/edit starters
 - P2-F-CQ-006 - Batch F docs, tests, and handoff readiness
-Blocked pending P2-F-CQ-040 through P2-F-CQ-059 manual review:
+Blocked pending P2-F-CQ-040 through P2-F-CQ-065 manual review:
 
 - P2-F-CQ-033 - T1 component family depth pass: actions
 - P2-F-CQ-034 - T1 component family depth pass: inputs
@@ -75,6 +76,7 @@ Blocked pending P2-F-CQ-040 through P2-F-CQ-059 manual review:
 - Worklog 2-F-0018 validation passed with focused Foundation coverage, full `tests/Feature/Platform/PlatformUiReferenceTest.php`, `npm run build`, docs guardrails, and browser review of all Foundation Elements routes. Coverage now asserts shared live-guide sections and concrete per-page example markers for Color, Themes, 2x Grid, Spacing, Typography, Icons, Pictograms, and Motion. Browser review also confirmed no horizontal overflow in the in-app browser viewport.
 - Worklog 2-F-0019 validation passed with focused Foundation coverage, full `tests/Feature/Platform/PlatformUiReferenceTest.php`, `npm run build`, and docs guardrails. The in-app browser route review was attempted, but the protected UI Reference routes redirected to `/login` and browser automation login was blocked by the in-app browser virtual clipboard/field-fill limitation; local automated route/content coverage and production build validation are the reviewable surface for this pass.
 - Worklog 2-F-0020 validation passed with focused Foundation coverage, full `tests/Feature/Platform/PlatformUiReferenceTest.php`, `npm run build`, and docs guardrails. Browser route review was attempted for Color and Typography, but the protected UI Reference routes redirected to `/login`; automated route/content coverage and production build validation are the reviewable local surface for this pass.
+- Worklog 2-F-0021 validation passed with focused Foundation coverage, focused Color Token Palette coverage, full `tests/Feature/Platform/PlatformUiReferenceTest.php`, `npm run build`, and docs guardrails. Browser route review was attempted for `/platform/ui-reference/elements/color/tokens`, but the protected UI Reference route redirected to `/login`; automated authenticated route/content coverage and production build validation are the reviewable local surface for this pass.
 
 ## Historical Detail
 

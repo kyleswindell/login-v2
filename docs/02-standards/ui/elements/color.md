@@ -12,6 +12,8 @@ Login App 2.0 uses app-owned CSS variables such as `--ui-text-strong`, `--ui-sur
 
 `/platform/ui-reference/elements/color`
 
+Token palette matrix: `/platform/ui-reference/elements/color/tokens`
+
 ## Required Visible Examples
 
 - full app palette: neutral ramp, blue/action ramp, and support colors
@@ -28,6 +30,8 @@ Login App 2.0 uses app-owned CSS variables such as `--ui-text-strong`, `--ui-sur
 ## Token/Class/API Reference
 
 Use app token variables and component classes, including `ui-button`, `ui-input`, `ui-inline-alert-*`, `ui-status-pill`, `ui-status-inline-*`, `ui-link`, and focus-visible treatment backed by `--ui-focus-ring`.
+
+The Color Token Palette route owns the full role-family matrix for background, layer, layer accent, field, border, text, link, syntax, icon, support/status, focus, inverse, skeleton/loading, component aliases, and AI-token disposition.
 
 ## Usage Guidance
 
@@ -49,4 +53,6 @@ Guide status: Implemented. System maturity: Implemented.
 
 ## Carbon Comparison Notes
 
-Carbon informs palette organization, layer logic, selected/active/focus state vocabulary, and high-contrast treatment. Login App keeps its own palette values and token names.
+Carbon informs palette organization, layer logic, selected/active/focus state vocabulary, high-contrast treatment, and token-family completeness. Login App keeps app-owned token names and chooses values by design role, contrast, state behavior, layer logic, and accessibility first.
+
+Carbon color values may be used when they are the best fit for those principles. They should not be copied blindly or rejected solely because they are Carbon values.

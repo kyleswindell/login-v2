@@ -26,6 +26,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Foundation Elements')
             ->assertSee('Grid')
             ->assertSee('Color')
+            ->assertSee('Token Palette')
             ->assertSee('Typography')
             ->assertSee('Form Patterns')
             ->assertSee('Data + Content')
@@ -117,6 +118,15 @@ class PlatformUiReferenceTest extends TestCase
                 ->assertSee($element['system_status'])
                 ->assertSee($element['carbon_comparison']);
         }
+
+        $this->get('/platform/ui-reference/elements/color/tokens')
+            ->assertOk()
+            ->assertSee('data-ui-reference-foundation-element="color"', false)
+            ->assertSee('data-ui-reference-color-token-palette', false)
+            ->assertSee('data-ui-reference-color-sidebar', false)
+            ->assertSee('data-ui-reference-color-sidebar-item="overview"', false)
+            ->assertSee('data-ui-reference-color-sidebar-item="token-palette"', false)
+            ->assertSee('Color Token Palette');
 
         $this->get('/platform/ui-reference/elements/2x-grid')
             ->assertOk()
@@ -243,6 +253,47 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Modal enter / exit')
             ->assertSee('Accordion / collapse')
             ->assertSee('prefers-reduced-motion');
+    }
+
+    public function test_color_token_palette_exposes_role_family_matrix(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/elements/color/tokens')
+            ->assertOk()
+            ->assertSee('data-ui-reference-color-token-palette', false)
+            ->assertSee('data-color-token-section="inventory-map"', false)
+            ->assertSee('data-color-token-section="background-layer-field"', false)
+            ->assertSee('data-color-token-section="border"', false)
+            ->assertSee('data-color-token-section="text-icon"', false)
+            ->assertSee('data-color-token-section="link"', false)
+            ->assertSee('data-color-token-section="support-status"', false)
+            ->assertSee('data-color-token-section="focus-skeleton"', false)
+            ->assertSee('data-color-token-section="syntax-code"', false)
+            ->assertSee('data-color-token-section="component-ai-disposition"', false)
+            ->assertSee('Background')
+            ->assertSee('Layer accent')
+            ->assertSee('Component tokens')
+            ->assertSee('AI tokens')
+            ->assertSee('Implemented')
+            ->assertSee('Covered By App Alias')
+            ->assertSee('Queued Token Gap')
+            ->assertSee('Not Applicable Yet')
+            ->assertSee('--ui-background')
+            ->assertSee('--ui-layer-01')
+            ->assertSee('--ui-layer-accent-01')
+            ->assertSee('--ui-field-01')
+            ->assertSee('--ui-border-subtle-01')
+            ->assertSee('--ui-border-strong-01')
+            ->assertSee('--ui-text-primary')
+            ->assertSee('--ui-text-placeholder')
+            ->assertSee('--ui-icon-primary')
+            ->assertSee('--ui-link-primary')
+            ->assertSee('--ui-support-error')
+            ->assertSee('--ui-focus')
+            ->assertSee('--ui-skeleton-background')
+            ->assertSee('--ui-syntax-keyword')
+            ->assertSee('data-color-token-family="syntax-code"', false);
     }
 
     public function test_carbon_aligned_tier_one_component_depth_pages_are_documented(): void

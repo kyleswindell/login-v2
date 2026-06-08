@@ -57,406 +57,72 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - Phase 2 docs reflect Batch F implementation status
   - Batch E remains the post-F close-out path and staging deploy remains out of scope
 
+### P2-F-CQ-033 - T1 component family depth pass: actions
+- Status: Ready To Implement
+- Owner: Batch F
+- Scope: Deepen Button, Menu, Menu buttons, and Link T1 pages after Foundation Elements and T1 contracts are accepted.
+- Acceptance:
+  - canonical docs and UI Reference examples are updated together
+  - each page shows actual variants, states, spacing behavior, implementation owner, and queued gaps
+  - tests include component-specific assertions for the implemented action-family pages
+
+### P2-F-CQ-034 - T1 component family depth pass: inputs
+- Status: Ready To Implement
+- Owner: Batch F
+- Scope: Deepen Text input, Textarea, Number input, Select, Dropdown, Multiselect, Search, Date picker, File uploader, and Slider T1 pages.
+- Acceptance:
+  - input docs and UI Reference examples apply Foundation Element color, spacing, typography, icon, and theme rules
+  - examples include default, variant, focus, hover-capable, disabled, read-only, validation, and loading states where applicable
+  - queued gaps remain explicit where final component behavior is not yet implemented
+
+### P2-F-CQ-035 - T1 component family depth pass: selection controls
+- Status: Ready To Implement
+- Owner: Batch F
+- Scope: Deepen Checkbox, Radio button, Toggle, and Content switcher T1 pages.
+- Acceptance:
+  - checkbox versus radio usage is visually demonstrated
+  - selection group states, orientation variants, disabled/read-only states, validation states, and helper text are represented
+  - content switcher remains queued or receives concrete examples according to accepted app need
+
+### P2-F-CQ-036 - T1 component family depth pass: feedback and loading
+- Status: Ready To Implement
+- Owner: Batch F
+- Scope: Deepen Notification, Tag, AI label, Inline loading, Loading, Progress bar, and Progress indicator T1 pages.
+- Acceptance:
+  - semantic status and loading examples use current token standards
+  - AI label remains gated unless a real AI-assisted feature exists
+  - loading and progress pages distinguish spinner, inline loading, skeleton, determinate, and step-progress expectations
+
+### P2-F-CQ-037 - T1 component family depth pass: overlays and help
+- Status: Ready To Implement
+- Owner: Batch F
+- Scope: Deepen Accordion, Modal, Popover, Tooltip, and Toggletip T1 pages.
+- Acceptance:
+  - overlay/help docs and UI Reference examples distinguish blocking, contextual, non-interactive, and interactive disclosure
+  - examples show focus, hover, disabled, open/closed, dismiss, and reduced-motion expectations where applicable
+  - popover remains queued unless a concrete consumer exists
+
+### P2-F-CQ-038 - T1 component family depth pass: data display
+- Status: Ready To Implement
+- Owner: Batch F
+- Scope: Deepen Data table, Pagination, Structured list, List, Contained list, Tile, and Tree view T1 pages.
+- Acceptance:
+  - data display pages show concrete variants, states, spacing behavior, and T2 consumption links
+  - pagination and structured-list coverage remains visual and implementation-oriented
+  - queued data-display gaps include trigger conditions
+
+### P2-F-CQ-039 - T1 component family depth pass: navigation and shell
+- Status: Ready To Implement
+- Owner: Batch F
+- Scope: Deepen Breadcrumb, Tabs, and UI shell T1 pages.
+- Acceptance:
+  - tabs include line, contained, vertical, icon-leading, icon-only, overflow/scroll, selected, focus, and disabled states
+  - UI shell remains one family with Login-specific header, left panel, and right panel guidance as subsections
+  - navigation pages link to T2 pattern composition owners where primitives are consumed
+
 ## In Progress
 
 ## Implemented Pending Review
-
-### P2-F-CQ-040 - Foundation Color page live implementation guide
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-025, P2-F-CQ-026, P2-F-CQ-027
-- Scope: Correct the Foundation Color UI Reference page so it shows concrete rendered examples of Login App color tokens, theme contexts, state behavior, semantic colors, and high-contrast moments.
-- Acceptance:
-  - theme-aware swatches cover app default, White-equivalent, Gray 10-equivalent, Gray 90-equivalent, and Gray 100-equivalent contexts
-  - rendered examples cover background, layer, field, border, text, link, icon, support/status, focus, and skeleton/loading token groups
-  - stacked surface, hover/focus delta, common component, and high-contrast examples are visible
-  - `docs/02-standards/ui/elements/color.md` documents the same rules
-  - tests assert rendered examples rather than token strings only
-- Implemented in: worklog-2-F-0018
-
-### P2-F-CQ-041 - Foundation Themes page live implementation guide
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-025, P2-F-CQ-026, P2-F-CQ-027
-- Scope: Correct the Foundation Themes UI Reference page with concrete theme matrices, component previews, layer examples, inline theme examples, and documented overrides.
-- Acceptance:
-  - page displays theme matrix, component preview matrix, layer inheritance, inline theme examples, and approved override table
-  - page states that themes change token values, not token roles
-  - `docs/02-standards/ui/elements/themes.md` documents the same rules
-  - tests assert theme matrix, component previews, inline theme rule, and override table
-- Implemented in: worklog-2-F-0018
-
-### P2-F-CQ-042 - Foundation 2x Grid page live implementation guide
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-025, P2-F-CQ-026, P2-F-CQ-028
-- Scope: Correct the Foundation Grid UI Reference page and label it as 2x Grid while keeping `/platform/ui-reference/elements/grid` and supporting `/platform/ui-reference/elements/2x-grid`.
-- Acceptance:
-  - page displays responsive grid visualizer, breakpoints, column spans, gutter/padding/margin examples, fluid/fixed/hybrid examples, and app scaffold
-  - page includes grid usage warnings and Carbon breakpoint test targets
-  - `docs/02-standards/ui/elements/grid.md` documents the same rules
-  - tests assert breakpoints, spans, scaffold, and alias route
-- Implemented in: worklog-2-F-0018
-
-### P2-F-CQ-043 - Foundation Spacing page live implementation guide
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-025, P2-F-CQ-026, P2-F-CQ-028
-- Scope: Correct the Foundation Spacing UI Reference page with a full live spacing scale, applied margin/padding/stack examples, relationship examples, density examples, and external-spacing ownership rules.
-- Acceptance:
-  - page displays `$spacing-01` through `$spacing-13` with rem, px, and utility/helper mapping
-  - page displays margin, padding, stack, relationship, and density examples
-  - page states that components own internal spacing and parent layouts own external spacing
-  - `docs/02-standards/ui/elements/spacing.md` documents the same rules
-  - tests assert scale table, applied examples, and no-default-external-margin rule
-- Implemented in: worklog-2-F-0018
-
-### P2-F-CQ-044 - Foundation Typography page live implementation guide
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-025, P2-F-CQ-026, P2-F-CQ-029
-- Scope: Correct the Foundation Typography UI Reference page with rendered font specimens, scale, role examples, productive UI examples, limited expressive guidance, weights, and text color examples.
-- Acceptance:
-  - page displays required type roles using final app styling
-  - page displays productive content examples and states productive type is the default for app UI
-  - page avoids adopting unsupported serif/expressive typography as normal product UI
-  - `docs/02-standards/ui/elements/typography.md` documents the same rules
-  - tests assert roles and applied UI examples
-- Implemented in: worklog-2-F-0018
-
-### P2-F-CQ-045 - Foundation Icons page live implementation guide
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-025, P2-F-CQ-026, P2-F-CQ-030
-- Scope: Correct the Foundation Icons UI Reference page with concrete Heroicons usage, sizing, text alignment, icon-only states, semantic/decorative examples, and hit target guidance.
-- Acceptance:
-  - page displays approved Heroicons table, size matrix, icon-with-text examples, icon-only controls, status icons, semantic/decorative examples, and 44px target example
-  - page states Heroicons remain the approved icon library
-  - `docs/02-standards/ui/elements/icons.md` documents the same rules
-  - tests assert size matrix, hit target, semantic/decorative examples, and Heroicons dependency rule
-- Implemented in: worklog-2-F-0018
-
-### P2-F-CQ-046 - Foundation Pictograms page live implementation guide
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-025, P2-F-CQ-026, P2-F-CQ-030
-- Scope: Correct the Foundation Pictograms UI Reference page as a queued app-specific guide with placeholder examples, trigger conditions, sizing, clearance, container, and no-import rules.
-- Acceptance:
-  - pictograms remain queued because no real app pictogram library exists
-  - page displays queued library, size, productive/expressive, container/clearance/theme, and app usage examples
-  - page states Carbon pictograms must not be imported without a separate decision record
-  - `docs/02-standards/ui/elements/pictograms.md` documents the same rules
-  - tests assert queued status, trigger conditions, size/clearance examples, and no-import rule
-- Implemented in: worklog-2-F-0018
-
-### P2-F-CQ-047 - Foundation Motion page live implementation guide
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-025, P2-F-CQ-026, P2-F-CQ-030
-- Scope: Correct the Foundation Motion UI Reference page with productive/expressive examples, common UI motion examples, duration examples, reduced-motion guidance, and do/don't samples.
-- Acceptance:
-  - page displays easing demos, common UI motion, duration examples, reduced-motion preview, and do/don't samples
-  - page states productive motion is default and `prefers-reduced-motion` must be respected
-  - `docs/02-standards/ui/elements/motion.md` documents the same rules
-  - tests assert motion categories, common UI examples, reduced-motion rule, and do/don't samples
-- Implemented in: worklog-2-F-0018
-
-### P2-F-CQ-048 - Foundation Elements overview and renderer cleanup
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-025, P2-F-CQ-026
-- Scope: Update Foundation Elements overview and renderer so repeated page sections are catalog/config-driven and all Foundation pages expose the shared live-guide contract.
-- Acceptance:
-  - overview includes status table for all Foundation Elements and links each element route and canonical doc
-  - overview states Foundation Elements feed T1, T1 feeds T2, and T2 feeds T3
-  - repeated page sections are rendered consistently from catalog metadata where practical
-  - status vocabulary is consistent: Implemented, Partial, Needs audit, Deprecated, App-specific exception
-  - `docs/02-standards/ui/elements/index.md` documents the shared contract
-  - tests assert all element pages expose shared sections and overview status links
-- Implemented in: worklog-2-F-0018
-
-### P2-F-CQ-049 - Foundation guide status vs system maturity correction
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-040 through P2-F-CQ-048
-- Scope: Split Foundation Element catalog status into guide readiness and underlying system maturity.
-- Acceptance:
-  - catalog exposes `guide_status` and `system_status`
-  - overview and element pages show guide readiness first and system maturity separately
-  - badges no longer imply complete guide pages are only partial because app-wide enforcement is still maturing
-- Implemented in: worklog-2-F-0019
-
-### P2-F-CQ-050 - Color palette and state-token contract
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-040, P2-F-CQ-049
-- Scope: Add full Login App palette display and explicit app state-token contract for active, selected, hover, focus, disabled, inverse, and high-contrast states.
-- Acceptance:
-  - Color page displays neutral ramp, blue/action ramp, support colors, token role groups, and state contract examples
-  - Carbon one-step/two-step state logic is documented as comparison guidance only
-  - focus token is represented with an app-owned variable
-- Implemented in: worklog-2-F-0019
-
-### P2-F-CQ-051 - Color page live example correction
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-040, P2-F-CQ-050
-- Scope: Replace dark-only hard-coded Color examples with app-token-backed examples for palette, layering, states, alerts, form fields, selected rows, icon buttons, links, destructive actions, and high-contrast moments.
-- Acceptance:
-  - light and dark layer examples are visible
-  - high-contrast moments belong to Color, not Themes
-  - token-backed alerts, form fields, selected rows, links, icon buttons, and destructive actions are rendered
-  - tests fail if Color regresses to token-list-only or text-only content
-- Implemented in: worklog-2-F-0019
-
-### P2-F-CQ-052 - Shared status, alert, text, and icon token repair
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-050, P2-F-CQ-051
-- Scope: Repair Foundation examples to use supported app status, alert, text, icon, helper, placeholder/disabled, and focus tokens/classes in light and dark mode.
-- Acceptance:
-  - Foundation examples use `ui-status-pill`, `ui-status-inline-*`, `ui-inline-alert-*`, `ui-control-*`, `ui-link`, `ui-input`, and token variables where applicable
-  - `--ui-focus-ring` is available in light and dark resolved themes
-  - Color, Icons, and Typography pages no longer depend on dark-only Tailwind text/status colors
-- Implemented in: worklog-2-F-0019
-
-### P2-F-CQ-053 - Themes page refocus
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-041, P2-F-CQ-051
-- Scope: Refocus Themes on token role/value inheritance and remove high-contrast ownership from the Themes page.
-- Acceptance:
-  - Themes page explains Theme, Token, Role, and Value
-  - Themes page shows applied token role/value matrix and component previews
-  - Themes page links high-contrast and inverse guidance to Color
-  - Themes page does not own interaction-state or high-contrast examples
-- Implemented in: worklog-2-F-0019
-
-### P2-F-CQ-054 - Icons page correction
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-045, P2-F-CQ-052
-- Scope: Correct Icons examples for token-aware color, text alignment, icon sizes, icon-only states, status/decorative/meaningful examples, and 44px hit target.
-- Acceptance:
-  - leading, trailing, inline link, button, and menu-item examples align icons and labels
-  - 16px/20px and 24px/32px guidance is visible
-  - status icons use app token-backed status classes
-  - Heroicons remains the approved default library
-- Implemented in: worklog-2-F-0019
-
-### P2-F-CQ-055 - Typography page correction
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-044, P2-F-CQ-052
-- Scope: Correct Typography examples for weights, italic, type color, alert/status color, hierarchy, and light/dark readable text.
-- Acceptance:
-  - Light 300, Regular 400, Semibold 600, and italic examples are visible
-  - type color examples distinguish neutral text, disabled/placeholder text, links/actions, semantic alerts, and code
-  - examples use app tokens and shared app classes instead of hard-coded dark-mode-only color classes
-- Implemented in: worklog-2-F-0019
-
-### P2-F-CQ-056 - Motion page live demonstration correction
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-047
-- Scope: Replace static Motion cards with component-like previews and reduced-motion guidance.
-- Acceptance:
-  - Motion page includes dropdown, modal, toast, accordion/collapse, side panel, table sort/reorder, skeleton-to-content, reduced-motion, and do/don't examples
-  - examples demonstrate actual motion or interactive states rather than static labels only
-- Implemented in: worklog-2-F-0019
-
-### P2-F-CQ-057 - Pictogram relevance and asset library audit
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-046
-- Scope: Audit pictogram relevance and candidate asset-library paths without importing assets.
-- Acceptance:
-  - Pictograms page documents current disposition, trigger conditions, candidate options, licensing/dependency concerns, and recommended next action
-  - no Carbon pictograms or third-party assets are imported
-- Implemented in: worklog-2-F-0019
-
-### P2-F-CQ-058 - Foundation correction tests, docs, and handoff
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-049 through P2-F-CQ-057
-- Scope: Update canonical docs, tests, active batch docs, validation notes, and handoff state for the second Foundation Elements correction pass.
-- Acceptance:
-  - canonical docs for Color, Themes, Icons, Typography, Motion, and Pictograms match the corrected pages
-  - focused UI Reference tests cover palette, states, status split, theme terms, icon alignment, typography weights/type color, motion previews, and pictogram audit
-  - full UI Reference tests, build, docs guardrails, and browser review pass
-- Implemented in: worklog-2-F-0019
-
-### P2-F-CQ-059 - Foundation final Color layering and Typography scale correction
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-050, P2-F-CQ-051, P2-F-CQ-055
-- Scope: Correct final manual-review gaps on the Foundation Color and Typography pages before Foundation Elements approval.
-- Acceptance:
-  - Color layering model explains light versus dark layer logic in app terms
-  - Color layering examples show nested depth rather than sibling layers
-  - Color layering labels name the actual background color step, not generic layer numbers
-  - Typography type scale renders the full Carbon benchmark scale from 12px through 92px
-  - canonical Color and Typography docs plus focused UI Reference tests match the corrected examples
-- Implemented in: worklog-2-F-0020
-
-### P2-F-CQ-060 - Carbon color token role inventory map
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-050 through P2-F-CQ-059
-- Scope: Map Carbon color-token role families to Login App token dispositions and owner routes.
-- Acceptance:
-  - background, layer, layer accent, field, border, text, link, syntax, icon, support/status, focus, miscellaneous/inverse/skeleton, component tokens, and AI tokens are all mapped
-  - each family is classified as Implemented, Covered By App Alias, Queued Token Gap, or Not Applicable Yet
-  - each family has a Login App owner route
-- Implemented in: worklog-2-F-0021
-
-### P2-F-CQ-061 - Color token palette route and nested navigation
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-060
-- Scope: Add the nested Color Token Palette route and sidebar entry while keeping the existing Color route as the overview page.
-- Acceptance:
-  - `/platform/ui-reference/elements/color` remains the Color Overview
-  - `/platform/ui-reference/elements/color/tokens` is reachable before the generic element catch-all route
-  - Foundation Elements sidebar separates Color Overview and Token Palette
-- Implemented in: worklog-2-F-0021
-
-### P2-F-CQ-062 - App color token namespace expansion
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-060
-- Scope: Add app-owned token namespaces for missing role coverage while preserving existing aliases.
-- Acceptance:
-  - expanded namespaces cover background, layer, layer accent, field, border, text, link, icon, support/status, focus, skeleton/loading, and syntax/code roles
-  - existing surface/text/border/link/spinner/action/status variables remain valid aliases where needed
-  - token values are selected by design role, contrast, state behavior, layer logic, and accessibility rather than copied mechanically
-- Implemented in: worklog-2-F-0021
-
-### P2-F-CQ-063 - Color Token Palette page implementation
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-061, P2-F-CQ-062
-- Scope: Build the Color Token Palette page as a matrix-oriented route separate from the Color Overview.
-- Acceptance:
-  - token rows show family, role, CSS variable, light value, dark value, rendered swatch/example, and Carbon comparison disposition
-  - sections cover background/layer/field, border, text/icon, link, support/status, focus/skeleton, and syntax/code tokens
-  - component and AI token dispositions are documented without crowding the Color Overview
-- Implemented in: worklog-2-F-0021
-
-### P2-F-CQ-064 - Component token adoption audit
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-062
-- Scope: Audit shared T1/T2 CSS classes for expanded role-token adoption without visual redesign.
-- Acceptance:
-  - shared shell/card, field, border, text/icon, link, selected, focus, and spinner examples consume expanded role tokens where appropriate
-  - legacy aliases remain available for compatibility
-  - remaining component-specific token work is explicit future T1 family-depth scope
-- Implemented in: worklog-2-F-0021
-
-### P2-F-CQ-065 - Color token tests, docs, and handoff
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-060 through P2-F-CQ-064
-- Scope: Sync canonical docs, active queue state, worklog, and focused UI Reference tests for the Color Token Palette expansion.
-- Acceptance:
-  - canonical color docs reference the new token-palette route and expanded namespace model
-  - focused UI Reference tests cover nested Color sidebar navigation and every token-family section
-  - T1 family-depth items remain blocked until the Foundation/token correction set passes review unless explicitly waived
-- Implemented in: worklog-2-F-0021
-
-### P2-F-CQ-025 - Foundation Elements inventory and UI Reference menu
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Add a Foundation Elements dropdown and catalog-driven UI Reference pages for overview, grid, color, icons, pictograms, motion, spacing, themes, and typography.
-- Acceptance:
-  - UI Reference sidebar shows Foundation Elements as its own category before T1 Components
-  - overview explains Foundation Elements versus T1 Components, T2 Patterns, and T3 Feature Modules
-  - each element page has a disposition of Implemented, Partially Implemented, Queued Gap, or Not Applicable Yet
-  - existing CSS tokens and standards docs are mapped before new token work
-  - tests prove every element route is reachable and appears in sidebar navigation
-- Implemented in: worklog-2-F-0017
-
-### P2-F-CQ-026 - Foundation Elements documentation model
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Create canonical element-level standards under `docs/02-standards/ui/elements/` and non-canonical Carbon comparison notes under `docs/09-reference/ui/`.
-- Acceptance:
-  - each element doc defines Login App standards and includes purpose, current implementation, UI Reference route, required visible examples, usage rules, queued gaps, and Carbon comparison notes
-  - Carbon comparison/source notes live in `docs/09-reference/ui/`, not as canonical rules
-  - UI Reference element pages link to the canonical docs
-  - existing document library can surface the docs through its current docs route
-- Implemented in: worklog-2-F-0017
-
-### P2-F-CQ-027 - Color and theme token audit
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Audit and document the existing token model for text, icon, border, surface, action, status, and shadow namespaces without broad renaming.
-- Acceptance:
-  - clarify that text-primary means primary content hierarchy, not primary blue action color
-  - map current tokens such as `--ui-text-strong` as accepted aliases or preferred terminology
-  - Color page displays actual app tokens in light and dark mode
-  - Themes page displays theme behavior and token inheritance
-  - no arbitrary hard-coded component colors are introduced
-- Implemented in: worklog-2-F-0017
-
-### P2-F-CQ-028 - Spacing and grid foundation standard
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Define the app's 2x/8px-compatible spacing and grid foundation decision and expose it in UI Reference.
-- Acceptance:
-  - document the Tailwind-compatible, 8px-centered spacing model
-  - define spacing scale and show it visually in UI Reference
-  - define grid, page, and content-region examples
-  - establish that components own internal spacing and parent layouts own external spacing
-  - UI Reference shows approved stack/gap, form row, action row, table cell, card grid, and dashboard/widget spacing examples or owner references
-- Implemented in: worklog-2-F-0017
-
-### P2-F-CQ-029 - Typography foundation standard
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Define and display typography roles for page title, section title, card title, table header, body, muted text, label, helper text, error text, and code text.
-- Acceptance:
-  - UI Reference Typography page displays each required type role using final app styling
-  - type color uses text tokens, not action tokens
-  - component pages are contracted to apply typography rules directly in examples
-  - tests assert the Typography page exposes required roles
-- Implemented in: worklog-2-F-0017
-
-### P2-F-CQ-030 - Iconography, pictograms, and motion foundation standard
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Document Heroicons usage, pictogram disposition, and motion rules for hover/focus, loading, overlays, notifications, and reduced motion.
-- Acceptance:
-  - Heroicons remain the default app icon library unless a later ADR changes it
-  - Icon page documents size, color, touch target, icon/text alignment, decorative versus semantic icons, and common usage posture
-  - Pictograms are queued with trigger conditions and Carbon pictograms are not imported
-  - Motion page documents hover/focus transitions, loading motion, toast/drawer/modal motion, and reduced-motion behavior
-  - UI Reference shows built examples, not prose only
-- Implemented in: worklog-2-F-0017
-
-### P2-F-CQ-031 - T1 component doc and UI Reference display contract
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Add canonical doc metadata to the T1 component catalog and create the standard quality bar for implemented T1 component pages.
-- Acceptance:
-  - component catalog includes `doc_path` and `doc_route`
-  - every T1 page links to its canonical doc and every canonical T1 doc links back to the UI Reference route
-  - implemented T1 pages have a required display contract covering default, variants/colors, focus, disabled, hover-capable default state, semantic states, loading/read-only states where applicable, spacing, implementation owner, and queued gaps
-  - generic scaffold content is allowed only for queued or not-applicable dispositions
-  - tests assert implemented pages link to canonical docs
-- Implemented in: worklog-2-F-0017
-
-### P2-F-CQ-032 - Carbon inventory correction before T1 deepening
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Correct component inventory mismatches before deeper T1 family work.
-- Acceptance:
-  - add Multiselect to the T1 catalog with explicit disposition
-  - normalize Carbon UI shell as one family while preserving Login-specific header, left panel, and right panel guidance as subsections
-  - update overview, sidebar, tests, and docs links
-  - no Carbon component remains unmapped
-- Implemented in: worklog-2-F-0017
 
 ### P2-F-CQ-016 - Carbon component inventory and T1 disposition map
 - Status: Implemented Pending Review
@@ -577,76 +243,6 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 
 ## Blocked
 
-### P2-F-CQ-033 - T1 component family depth pass: actions
-- Status: Blocked
-- Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-065 pending manual review
-- Scope: Deepen Button, Menu, Menu buttons, and Link T1 pages after Foundation Elements and T1 contracts are accepted.
-- Acceptance:
-  - canonical docs and UI Reference examples are updated together
-  - each page shows actual variants, states, spacing behavior, implementation owner, and queued gaps
-  - tests include component-specific assertions for the implemented action-family pages
-
-### P2-F-CQ-034 - T1 component family depth pass: inputs
-- Status: Blocked
-- Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-065 pending manual review
-- Scope: Deepen Text input, Textarea, Number input, Select, Dropdown, Multiselect, Search, Date picker, File uploader, and Slider T1 pages.
-- Acceptance:
-  - input docs and UI Reference examples apply Foundation Element color, spacing, typography, icon, and theme rules
-  - examples include default, variant, focus, hover-capable, disabled, read-only, validation, and loading states where applicable
-  - queued gaps remain explicit where final component behavior is not yet implemented
-
-### P2-F-CQ-035 - T1 component family depth pass: selection controls
-- Status: Blocked
-- Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-065 pending manual review
-- Scope: Deepen Checkbox, Radio button, Toggle, and Content switcher T1 pages.
-- Acceptance:
-  - checkbox versus radio usage is visually demonstrated
-  - selection group states, orientation variants, disabled/read-only states, validation states, and helper text are represented
-  - content switcher remains queued or receives concrete examples according to accepted app need
-
-### P2-F-CQ-036 - T1 component family depth pass: feedback and loading
-- Status: Blocked
-- Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-065 pending manual review
-- Scope: Deepen Notification, Tag, AI label, Inline loading, Loading, Progress bar, and Progress indicator T1 pages.
-- Acceptance:
-  - semantic status and loading examples use current token standards
-  - AI label remains gated unless a real AI-assisted feature exists
-  - loading and progress pages distinguish spinner, inline loading, skeleton, determinate, and step-progress expectations
-
-### P2-F-CQ-037 - T1 component family depth pass: overlays and help
-- Status: Blocked
-- Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-065 pending manual review
-- Scope: Deepen Accordion, Modal, Popover, Tooltip, and Toggletip T1 pages.
-- Acceptance:
-  - overlay/help docs and UI Reference examples distinguish blocking, contextual, non-interactive, and interactive disclosure
-  - examples show focus, hover, disabled, open/closed, dismiss, and reduced-motion expectations where applicable
-  - popover remains queued unless a concrete consumer exists
-
-### P2-F-CQ-038 - T1 component family depth pass: data display
-- Status: Blocked
-- Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-065 pending manual review
-- Scope: Deepen Data table, Pagination, Structured list, List, Contained list, Tile, and Tree view T1 pages.
-- Acceptance:
-  - data display pages show concrete variants, states, spacing behavior, and T2 consumption links
-  - pagination and structured-list coverage remains visual and implementation-oriented
-  - queued data-display gaps include trigger conditions
-
-### P2-F-CQ-039 - T1 component family depth pass: navigation and shell
-- Status: Blocked
-- Owner: Batch F
-- Blocked By: P2-F-CQ-040 through P2-F-CQ-065 pending manual review
-- Scope: Deepen Breadcrumb, Tabs, and UI shell T1 pages.
-- Acceptance:
-  - tabs include line, contained, vertical, icon-leading, icon-only, overflow/scroll, selected, focus, and disabled states
-  - UI shell remains one family with Login-specific header, left panel, and right panel guidance as subsections
-  - navigation pages link to T2 pattern composition owners where primitives are consumed
-
 ## Deferred
 
 ### P2-F-CQ-014 - SettingsController settings-update extraction
@@ -662,6 +258,437 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 - Revisit When: P2-F-CQ-009 requires runtime notification behavior changes, or a later notifications batch owns realtime client behavior.
 
 ## Passed Review
+
+### P2-F-CQ-040 - Foundation Color page live implementation guide
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-025, P2-F-CQ-026, P2-F-CQ-027
+- Scope: Correct the Foundation Color UI Reference page so it shows concrete rendered examples of Login App color tokens, theme contexts, state behavior, semantic colors, and high-contrast moments.
+- Acceptance:
+  - theme-aware swatches cover app default, White-equivalent, Gray 10-equivalent, Gray 90-equivalent, and Gray 100-equivalent contexts
+  - rendered examples cover background, layer, field, border, text, link, icon, support/status, focus, and skeleton/loading token groups
+  - stacked surface, hover/focus delta, common component, and high-contrast examples are visible
+  - `docs/02-standards/ui/elements/color.md` documents the same rules
+  - tests assert rendered examples rather than token strings only
+- Implemented in: worklog-2-F-0018
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-041 - Foundation Themes page live implementation guide
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-025, P2-F-CQ-026, P2-F-CQ-027
+- Scope: Correct the Foundation Themes UI Reference page with concrete theme matrices, component previews, layer examples, inline theme examples, and documented overrides.
+- Acceptance:
+  - page displays theme matrix, component preview matrix, layer inheritance, inline theme examples, and approved override table
+  - page states that themes change token values, not token roles
+  - `docs/02-standards/ui/elements/themes.md` documents the same rules
+  - tests assert theme matrix, component previews, inline theme rule, and override table
+- Implemented in: worklog-2-F-0018
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-042 - Foundation 2x Grid page live implementation guide
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-025, P2-F-CQ-026, P2-F-CQ-028
+- Scope: Correct the Foundation Grid UI Reference page and label it as 2x Grid while keeping `/platform/ui-reference/elements/grid` and supporting `/platform/ui-reference/elements/2x-grid`.
+- Acceptance:
+  - page displays responsive grid visualizer, breakpoints, column spans, gutter/padding/margin examples, fluid/fixed/hybrid examples, and app scaffold
+  - page includes grid usage warnings and Carbon breakpoint test targets
+  - `docs/02-standards/ui/elements/grid.md` documents the same rules
+  - tests assert breakpoints, spans, scaffold, and alias route
+- Implemented in: worklog-2-F-0018
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-043 - Foundation Spacing page live implementation guide
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-025, P2-F-CQ-026, P2-F-CQ-028
+- Scope: Correct the Foundation Spacing UI Reference page with a full live spacing scale, applied margin/padding/stack examples, relationship examples, density examples, and external-spacing ownership rules.
+- Acceptance:
+  - page displays `$spacing-01` through `$spacing-13` with rem, px, and utility/helper mapping
+  - page displays margin, padding, stack, relationship, and density examples
+  - page states that components own internal spacing and parent layouts own external spacing
+  - `docs/02-standards/ui/elements/spacing.md` documents the same rules
+  - tests assert scale table, applied examples, and no-default-external-margin rule
+- Implemented in: worklog-2-F-0018
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-044 - Foundation Typography page live implementation guide
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-025, P2-F-CQ-026, P2-F-CQ-029
+- Scope: Correct the Foundation Typography UI Reference page with rendered font specimens, scale, role examples, productive UI examples, limited expressive guidance, weights, and text color examples.
+- Acceptance:
+  - page displays required type roles using final app styling
+  - page displays productive content examples and states productive type is the default for app UI
+  - page avoids adopting unsupported serif/expressive typography as normal product UI
+  - `docs/02-standards/ui/elements/typography.md` documents the same rules
+  - tests assert roles and applied UI examples
+- Implemented in: worklog-2-F-0018
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-045 - Foundation Icons page live implementation guide
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-025, P2-F-CQ-026, P2-F-CQ-030
+- Scope: Correct the Foundation Icons UI Reference page with concrete Heroicons usage, sizing, text alignment, icon-only states, semantic/decorative examples, and hit target guidance.
+- Acceptance:
+  - page displays approved Heroicons table, size matrix, icon-with-text examples, icon-only controls, status icons, semantic/decorative examples, and 44px target example
+  - page states Heroicons remain the approved icon library
+  - `docs/02-standards/ui/elements/icons.md` documents the same rules
+  - tests assert size matrix, hit target, semantic/decorative examples, and Heroicons dependency rule
+- Implemented in: worklog-2-F-0018
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-046 - Foundation Pictograms page live implementation guide
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-025, P2-F-CQ-026, P2-F-CQ-030
+- Scope: Correct the Foundation Pictograms UI Reference page as a queued app-specific guide with placeholder examples, trigger conditions, sizing, clearance, container, and no-import rules.
+- Acceptance:
+  - pictograms remain queued because no real app pictogram library exists
+  - page displays queued library, size, productive/expressive, container/clearance/theme, and app usage examples
+  - page states Carbon pictograms must not be imported without a separate decision record
+  - `docs/02-standards/ui/elements/pictograms.md` documents the same rules
+  - tests assert queued status, trigger conditions, size/clearance examples, and no-import rule
+- Implemented in: worklog-2-F-0018
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-047 - Foundation Motion page live implementation guide
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-025, P2-F-CQ-026, P2-F-CQ-030
+- Scope: Correct the Foundation Motion UI Reference page with productive/expressive examples, common UI motion examples, duration examples, reduced-motion guidance, and do/don't samples.
+- Acceptance:
+  - page displays easing demos, common UI motion, duration examples, reduced-motion preview, and do/don't samples
+  - page states productive motion is default and `prefers-reduced-motion` must be respected
+  - `docs/02-standards/ui/elements/motion.md` documents the same rules
+  - tests assert motion categories, common UI examples, reduced-motion rule, and do/don't samples
+- Implemented in: worklog-2-F-0018
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-048 - Foundation Elements overview and renderer cleanup
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-025, P2-F-CQ-026
+- Scope: Update Foundation Elements overview and renderer so repeated page sections are catalog/config-driven and all Foundation pages expose the shared live-guide contract.
+- Acceptance:
+  - overview includes status table for all Foundation Elements and links each element route and canonical doc
+  - overview states Foundation Elements feed T1, T1 feeds T2, and T2 feeds T3
+  - repeated page sections are rendered consistently from catalog metadata where practical
+  - status vocabulary is consistent: Implemented, Partial, Needs audit, Deprecated, App-specific exception
+  - `docs/02-standards/ui/elements/index.md` documents the shared contract
+  - tests assert all element pages expose shared sections and overview status links
+- Implemented in: worklog-2-F-0018
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-049 - Foundation guide status vs system maturity correction
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-040 through P2-F-CQ-048
+- Scope: Split Foundation Element catalog status into guide readiness and underlying system maturity.
+- Acceptance:
+  - catalog exposes `guide_status` and `system_status`
+  - overview and element pages show guide readiness first and system maturity separately
+  - badges no longer imply complete guide pages are only partial because app-wide enforcement is still maturing
+- Implemented in: worklog-2-F-0019
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-050 - Color palette and state-token contract
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-040, P2-F-CQ-049
+- Scope: Add full Login App palette display and explicit app state-token contract for active, selected, hover, focus, disabled, inverse, and high-contrast states.
+- Acceptance:
+  - Color page displays neutral ramp, blue/action ramp, support colors, token role groups, and state contract examples
+  - Carbon one-step/two-step state logic is documented as comparison guidance only
+  - focus token is represented with an app-owned variable
+- Implemented in: worklog-2-F-0019
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-051 - Color page live example correction
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-040, P2-F-CQ-050
+- Scope: Replace dark-only hard-coded Color examples with app-token-backed examples for palette, layering, states, alerts, form fields, selected rows, icon buttons, links, destructive actions, and high-contrast moments.
+- Acceptance:
+  - light and dark layer examples are visible
+  - high-contrast moments belong to Color, not Themes
+  - token-backed alerts, form fields, selected rows, links, icon buttons, and destructive actions are rendered
+  - tests fail if Color regresses to token-list-only or text-only content
+- Implemented in: worklog-2-F-0019
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-052 - Shared status, alert, text, and icon token repair
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-050, P2-F-CQ-051
+- Scope: Repair Foundation examples to use supported app status, alert, text, icon, helper, placeholder/disabled, and focus tokens/classes in light and dark mode.
+- Acceptance:
+  - Foundation examples use `ui-status-pill`, `ui-status-inline-*`, `ui-inline-alert-*`, `ui-control-*`, `ui-link`, `ui-input`, and token variables where applicable
+  - `--ui-focus-ring` is available in light and dark resolved themes
+  - Color, Icons, and Typography pages no longer depend on dark-only Tailwind text/status colors
+- Implemented in: worklog-2-F-0019
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-053 - Themes page refocus
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-041, P2-F-CQ-051
+- Scope: Refocus Themes on token role/value inheritance and remove high-contrast ownership from the Themes page.
+- Acceptance:
+  - Themes page explains Theme, Token, Role, and Value
+  - Themes page shows applied token role/value matrix and component previews
+  - Themes page links high-contrast and inverse guidance to Color
+  - Themes page does not own interaction-state or high-contrast examples
+- Implemented in: worklog-2-F-0019
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-054 - Icons page correction
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-045, P2-F-CQ-052
+- Scope: Correct Icons examples for token-aware color, text alignment, icon sizes, icon-only states, status/decorative/meaningful examples, and 44px hit target.
+- Acceptance:
+  - leading, trailing, inline link, button, and menu-item examples align icons and labels
+  - 16px/20px and 24px/32px guidance is visible
+  - status icons use app token-backed status classes
+  - Heroicons remains the approved default library
+- Implemented in: worklog-2-F-0019
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-055 - Typography page correction
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-044, P2-F-CQ-052
+- Scope: Correct Typography examples for weights, italic, type color, alert/status color, hierarchy, and light/dark readable text.
+- Acceptance:
+  - Light 300, Regular 400, Semibold 600, and italic examples are visible
+  - type color examples distinguish neutral text, disabled/placeholder text, links/actions, semantic alerts, and code
+  - examples use app tokens and shared app classes instead of hard-coded dark-mode-only color classes
+- Implemented in: worklog-2-F-0019
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-056 - Motion page live demonstration correction
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-047
+- Scope: Replace static Motion cards with component-like previews and reduced-motion guidance.
+- Acceptance:
+  - Motion page includes dropdown, modal, toast, accordion/collapse, side panel, table sort/reorder, skeleton-to-content, reduced-motion, and do/don't examples
+  - examples demonstrate actual motion or interactive states rather than static labels only
+- Implemented in: worklog-2-F-0019
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-057 - Pictogram relevance and asset library audit
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-046
+- Scope: Audit pictogram relevance and candidate asset-library paths without importing assets.
+- Acceptance:
+  - Pictograms page documents current disposition, trigger conditions, candidate options, licensing/dependency concerns, and recommended next action
+  - no Carbon pictograms or third-party assets are imported
+- Implemented in: worklog-2-F-0019
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-058 - Foundation correction tests, docs, and handoff
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-049 through P2-F-CQ-057
+- Scope: Update canonical docs, tests, active batch docs, validation notes, and handoff state for the second Foundation Elements correction pass.
+- Acceptance:
+  - canonical docs for Color, Themes, Icons, Typography, Motion, and Pictograms match the corrected pages
+  - focused UI Reference tests cover palette, states, status split, theme terms, icon alignment, typography weights/type color, motion previews, and pictogram audit
+  - full UI Reference tests, build, docs guardrails, and browser review pass
+- Implemented in: worklog-2-F-0019
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-059 - Foundation final Color layering and Typography scale correction
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-050, P2-F-CQ-051, P2-F-CQ-055
+- Scope: Correct final manual-review gaps on the Foundation Color and Typography pages before Foundation Elements approval.
+- Acceptance:
+  - Color layering model explains light versus dark layer logic in app terms
+  - Color layering examples show nested depth rather than sibling layers
+  - Color layering labels name the actual background color step, not generic layer numbers
+  - Typography type scale renders the full Carbon benchmark scale from 12px through 92px
+  - canonical Color and Typography docs plus focused UI Reference tests match the corrected examples
+- Implemented in: worklog-2-F-0020
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-060 - Carbon color token role inventory map
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-050 through P2-F-CQ-059
+- Scope: Map Carbon color-token role families to Login App token dispositions and owner routes.
+- Acceptance:
+  - background, layer, layer accent, field, border, text, link, syntax, icon, support/status, focus, miscellaneous/inverse/skeleton, component tokens, and AI tokens are all mapped
+  - each family is classified as Implemented, Covered By App Alias, Queued Token Gap, or Not Applicable Yet
+  - each family has a Login App owner route
+- Implemented in: worklog-2-F-0021
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-061 - Color token palette route and nested navigation
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-060
+- Scope: Add the nested Color Token Palette route and sidebar entry while keeping the existing Color route as the overview page.
+- Acceptance:
+  - `/platform/ui-reference/elements/color` remains the Color Overview
+  - `/platform/ui-reference/elements/color/tokens` is reachable before the generic element catch-all route
+  - Foundation Elements sidebar separates Color Overview and Token Palette
+- Implemented in: worklog-2-F-0021
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-062 - App color token namespace expansion
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-060
+- Scope: Add app-owned token namespaces for missing role coverage while preserving existing aliases.
+- Acceptance:
+  - expanded namespaces cover background, layer, layer accent, field, border, text, link, icon, support/status, focus, skeleton/loading, and syntax/code roles
+  - existing surface/text/border/link/spinner/action/status variables remain valid aliases where needed
+  - token values are selected by design role, contrast, state behavior, layer logic, and accessibility rather than copied mechanically
+- Implemented in: worklog-2-F-0021
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-063 - Color Token Palette page implementation
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-061, P2-F-CQ-062
+- Scope: Build the Color Token Palette page as a matrix-oriented route separate from the Color Overview.
+- Acceptance:
+  - token rows show family, role, CSS variable, light value, dark value, rendered swatch/example, and Carbon comparison disposition
+  - sections cover background/layer/field, border, text/icon, link, support/status, focus/skeleton, and syntax/code tokens
+  - component and AI token dispositions are documented without crowding the Color Overview
+- Implemented in: worklog-2-F-0021
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-064 - Component token adoption audit
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-062
+- Scope: Audit shared T1/T2 CSS classes for expanded role-token adoption without visual redesign.
+- Acceptance:
+  - shared shell/card, field, border, text/icon, link, selected, focus, and spinner examples consume expanded role tokens where appropriate
+  - legacy aliases remain available for compatibility
+  - remaining component-specific token work is explicit future T1 family-depth scope
+- Implemented in: worklog-2-F-0021
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-065 - Color token tests, docs, and handoff
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-060 through P2-F-CQ-064
+- Scope: Sync canonical docs, active queue state, worklog, and focused UI Reference tests for the Color Token Palette expansion.
+- Acceptance:
+  - canonical color docs reference the new token-palette route and expanded namespace model
+  - focused UI Reference tests cover nested Color sidebar navigation and every token-family section
+  - T1 family-depth items remain blocked until the Foundation/token correction set passes review unless explicitly waived
+- Implemented in: worklog-2-F-0021
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-025 - Foundation Elements inventory and UI Reference menu
+- Status: Passed Review
+- Owner: Batch F
+- Scope: Add a Foundation Elements dropdown and catalog-driven UI Reference pages for overview, grid, color, icons, pictograms, motion, spacing, themes, and typography.
+- Acceptance:
+  - UI Reference sidebar shows Foundation Elements as its own category before T1 Components
+  - overview explains Foundation Elements versus T1 Components, T2 Patterns, and T3 Feature Modules
+  - each element page has a disposition of Implemented, Partially Implemented, Queued Gap, or Not Applicable Yet
+  - existing CSS tokens and standards docs are mapped before new token work
+  - tests prove every element route is reachable and appears in sidebar navigation
+- Implemented in: worklog-2-F-0017
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-026 - Foundation Elements documentation model
+- Status: Passed Review
+- Owner: Batch F
+- Scope: Create canonical element-level standards under `docs/02-standards/ui/elements/` and non-canonical Carbon comparison notes under `docs/09-reference/ui/`.
+- Acceptance:
+  - each element doc defines Login App standards and includes purpose, current implementation, UI Reference route, required visible examples, usage rules, queued gaps, and Carbon comparison notes
+  - Carbon comparison/source notes live in `docs/09-reference/ui/`, not as canonical rules
+  - UI Reference element pages link to the canonical docs
+  - existing document library can surface the docs through its current docs route
+- Implemented in: worklog-2-F-0017
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-027 - Color and theme token audit
+- Status: Passed Review
+- Owner: Batch F
+- Scope: Audit and document the existing token model for text, icon, border, surface, action, status, and shadow namespaces without broad renaming.
+- Acceptance:
+  - clarify that text-primary means primary content hierarchy, not primary blue action color
+  - map current tokens such as `--ui-text-strong` as accepted aliases or preferred terminology
+  - Color page displays actual app tokens in light and dark mode
+  - Themes page displays theme behavior and token inheritance
+  - no arbitrary hard-coded component colors are introduced
+- Implemented in: worklog-2-F-0017
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-028 - Spacing and grid foundation standard
+- Status: Passed Review
+- Owner: Batch F
+- Scope: Define the app's 2x/8px-compatible spacing and grid foundation decision and expose it in UI Reference.
+- Acceptance:
+  - document the Tailwind-compatible, 8px-centered spacing model
+  - define spacing scale and show it visually in UI Reference
+  - define grid, page, and content-region examples
+  - establish that components own internal spacing and parent layouts own external spacing
+  - UI Reference shows approved stack/gap, form row, action row, table cell, card grid, and dashboard/widget spacing examples or owner references
+- Implemented in: worklog-2-F-0017
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-029 - Typography foundation standard
+- Status: Passed Review
+- Owner: Batch F
+- Scope: Define and display typography roles for page title, section title, card title, table header, body, muted text, label, helper text, error text, and code text.
+- Acceptance:
+  - UI Reference Typography page displays each required type role using final app styling
+  - type color uses text tokens, not action tokens
+  - component pages are contracted to apply typography rules directly in examples
+  - tests assert the Typography page exposes required roles
+- Implemented in: worklog-2-F-0017
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-030 - Iconography, pictograms, and motion foundation standard
+- Status: Passed Review
+- Owner: Batch F
+- Scope: Document Heroicons usage, pictogram disposition, and motion rules for hover/focus, loading, overlays, notifications, and reduced motion.
+- Acceptance:
+  - Heroicons remain the default app icon library unless a later ADR changes it
+  - Icon page documents size, color, touch target, icon/text alignment, decorative versus semantic icons, and common usage posture
+  - Pictograms are queued with trigger conditions and Carbon pictograms are not imported
+  - Motion page documents hover/focus transitions, loading motion, toast/drawer/modal motion, and reduced-motion behavior
+  - UI Reference shows built examples, not prose only
+- Implemented in: worklog-2-F-0017
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-031 - T1 component doc and UI Reference display contract
+- Status: Passed Review
+- Owner: Batch F
+- Scope: Add canonical doc metadata to the T1 component catalog and create the standard quality bar for implemented T1 component pages.
+- Acceptance:
+  - component catalog includes `doc_path` and `doc_route`
+  - every T1 page links to its canonical doc and every canonical T1 doc links back to the UI Reference route
+  - implemented T1 pages have a required display contract covering default, variants/colors, focus, disabled, hover-capable default state, semantic states, loading/read-only states where applicable, spacing, implementation owner, and queued gaps
+  - generic scaffold content is allowed only for queued or not-applicable dispositions
+  - tests assert implemented pages link to canonical docs
+- Implemented in: worklog-2-F-0017
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-032 - Carbon inventory correction before T1 deepening
+- Status: Passed Review
+- Owner: Batch F
+- Scope: Correct component inventory mismatches before deeper T1 family work.
+- Acceptance:
+  - add Multiselect to the T1 catalog with explicit disposition
+  - normalize Carbon UI shell as one family while preserving Login-specific header, left panel, and right panel guidance as subsections
+  - update overview, sidebar, tests, and docs links
+  - no Carbon component remains unmapped
+- Implemented in: worklog-2-F-0017
+- Review result: Approved on 2026-06-08
 
 ### P2-F-CQ-008 - Usage guidance standards for button variants and action labels
 - Status: Passed Review

@@ -64,7 +64,7 @@
 <div class="space-y-6">
     <section class="ui-card" data-color-example="full-palette">
         <h2 class="ui-card-title">Full App Palette</h2>
-        <p class="ui-card-copy mt-2">Palette swatches show app-owned values used to resolve semantic tokens. These are not Carbon color tokens.</p>
+        <p class="ui-card-copy mt-2">Palette swatches show app-owned values used to resolve semantic tokens.</p>
 
         <div class="mt-5 space-y-5">
             <div>
@@ -129,7 +129,7 @@
 
     <section class="ui-card" data-color-example="state-token-contract">
         <h2 class="ui-card-title">Interaction State Token Contract</h2>
-        <p class="ui-card-copy mt-2">Carbon's one-step selected and two-step active model is used as comparison guidance. Login App maps that logic to explicit role tokens and component classes instead of IBM palette values.</p>
+        <p class="ui-card-copy mt-2">Selected and active states use explicit role tokens and component classes so state changes remain predictable across themes.</p>
         <div class="mt-5 grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
             @foreach ([
                 ['Enabled', 'var(--ui-action-neutral-bg)', 'var(--ui-action-neutral-border)', 'var(--ui-action-neutral-text)', 'Base token value.'],

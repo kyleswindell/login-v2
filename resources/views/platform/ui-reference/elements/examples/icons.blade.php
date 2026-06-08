@@ -1,7 +1,7 @@
 <div class="space-y-6">
     <section class="ui-card" data-icons-example="approved-heroicons-list">
         <h2 class="ui-card-title">Approved Icon Library</h2>
-        <p class="ui-card-copy mt-2">Heroicons remain the approved UI icon library. Carbon icons are not imported.</p>
+        <p class="ui-card-copy mt-2">Heroicons remain the approved UI icon library. Do not import another icon set without a decision record.</p>
         <div class="mt-5 overflow-x-auto rounded-lg border" style="border-color: var(--ui-border-default); background: var(--ui-surface-elevated);">
             <table class="w-full min-w-[760px] divide-y text-sm" style="border-color: var(--ui-border-default);">
                 <thead class="text-left text-xs uppercase tracking-[0.18em]" style="color: var(--ui-text-muted);">

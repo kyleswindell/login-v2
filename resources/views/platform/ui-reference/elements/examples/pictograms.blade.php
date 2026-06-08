@@ -1,11 +1,11 @@
 <div class="space-y-6">
     <section class="ui-card" data-pictograms-example="asset-disposition">
         <h2 class="ui-card-title">Pictogram Disposition</h2>
-        <p class="ui-card-copy mt-2">Pictograms remain an audited future asset category. Login App does not import Carbon pictograms or any third-party illustration library in this pass.</p>
+        <p class="ui-card-copy mt-2">Pictograms remain an audited future asset category. Login App does not import third-party illustration libraries in this pass.</p>
         <div class="mt-5 grid gap-4 xl:grid-cols-3">
             <article class="ui-inline-alert flex items-start gap-3 ui-inline-alert-info"><x-heroicon-o-information-circle class="h-5 w-5 shrink-0" /><div><p class="font-semibold">Current decision</p><p class="mt-1 text-sm">Keep queued until a real empty-state, onboarding, feature-card, or help-surface consumer exists.</p></div></article>
             <article class="ui-inline-alert flex items-start gap-3 ui-inline-alert-warning"><x-heroicon-o-exclamation-triangle class="h-5 w-5 shrink-0" /><div><p class="font-semibold">Dependency gate</p><p class="mt-1 text-sm">Any imported asset library requires licensing review and a separate decision record.</p></div></article>
-            <article class="ui-inline-alert flex items-start gap-3 ui-inline-alert-danger"><x-heroicon-o-x-circle class="h-5 w-5 shrink-0" /><div><p class="font-semibold">Not allowed</p><p class="mt-1 text-sm">Do not import Carbon pictograms, unreviewed SVG packs, or decorative illustrations ad hoc.</p></div></article>
+            <article class="ui-inline-alert flex items-start gap-3 ui-inline-alert-danger"><x-heroicon-o-x-circle class="h-5 w-5 shrink-0" /><div><p class="font-semibold">Not allowed</p><p class="mt-1 text-sm">Do not import unreviewed SVG packs or decorative illustrations ad hoc.</p></div></article>
         </div>
     </section>
 
@@ -18,7 +18,7 @@
                 </thead>
                 <tbody class="divide-y" style="border-color: var(--ui-border-default); color: var(--ui-text-secondary);">
                     <tr><td class="px-4 py-3 font-semibold" style="color: var(--ui-text-strong);">Keep queued</td><td class="px-4 py-3">Best fit until a concrete app surface needs pictograms.</td><td class="px-4 py-3">No asset coverage yet.</td><td class="px-4 py-3">Recommended default.</td></tr>
-                    <tr><td class="px-4 py-3 font-semibold" style="color: var(--ui-text-strong);">Carbon pictograms</td><td class="px-4 py-3">Strong category match to Carbon structure.</td><td class="px-4 py-3">Would import IBM visual language and require ADR.</td><td class="px-4 py-3">Do not adopt without decision record.</td></tr>
+                    <tr><td class="px-4 py-3 font-semibold" style="color: var(--ui-text-strong);">External pictogram set</td><td class="px-4 py-3">Could accelerate a complete asset category.</td><td class="px-4 py-3">May import another visual language and require ADR.</td><td class="px-4 py-3">Do not adopt without decision record.</td></tr>
                     <tr><td class="px-4 py-3 font-semibold" style="color: var(--ui-text-strong);">unDraw / illustration packs</td><td class="px-4 py-3">Useful for broad empty states.</td><td class="px-4 py-3">License and style fit must be reviewed; may feel marketing-heavy.</td><td class="px-4 py-3">Audit only if onboarding/help surfaces need it.</td></tr>
                     <tr><td class="px-4 py-3 font-semibold" style="color: var(--ui-text-strong);">Iconoir / open icon sets</td><td class="px-4 py-3">May supplement icons, not true pictograms.</td><td class="px-4 py-3">Could duplicate Heroicons and blur icon/pictogram boundary.</td><td class="px-4 py-3">Not recommended for pictograms.</td></tr>
                     <tr><td class="px-4 py-3 font-semibold" style="color: var(--ui-text-strong);">App-specific SVG primitives</td><td class="px-4 py-3">Best long-term fit for Login visual language.</td><td class="px-4 py-3">Requires design ownership.</td><td class="px-4 py-3">Use when a real feature module needs repeated illustrations.</td></tr>

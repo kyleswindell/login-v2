@@ -116,7 +116,8 @@ class PlatformUiReferenceTest extends TestCase
                 ->assertSee($element['doc_path'])
                 ->assertSee($element['guide_status'])
                 ->assertSee($element['system_status'])
-                ->assertSee($element['carbon_comparison']);
+                ->assertSee('Standard Reference Notes')
+                ->assertSee('This page defines the current Login App expectation for '.$element['label']);
         }
 
         $this->get('/platform/ui-reference/elements/color/tokens')
@@ -162,7 +163,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Background: G100')
             ->assertSee('Nested surface: G70')
             ->assertSee('ui-inline-alert-success', false)
-            ->assertSee('one-step selected and two-step active model');
+            ->assertSee('Selected and active states use explicit role tokens');
 
         $this->get('/platform/ui-reference/elements/themes')
             ->assertOk()
@@ -239,7 +240,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-pictograms-example="trigger-conditions"', false)
             ->assertSee('Current decision')
             ->assertSee('Candidate Library Audit')
-            ->assertSee('Do not import Carbon pictograms')
+            ->assertSee('Do not import unapproved pictograms')
             ->assertSee('App-specific SVG primitives');
 
         $this->get('/platform/ui-reference/elements/motion')

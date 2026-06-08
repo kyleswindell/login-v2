@@ -22,17 +22,17 @@
                     <p class="ui-card-copy mt-2">{{ $catalogElement['purpose'] }}</p>
                     <div class="mt-4 flex flex-wrap gap-2" aria-label="Required live example coverage">
                         @foreach ($catalogElement['live_examples'] as $example)
-                            <span class="rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-300">{{ $example }}</span>
+                            <span class="rounded-full border px-3 py-1 text-xs font-semibold" style="border-color: var(--ui-border-strong-01); background: var(--ui-layer-02); color: var(--ui-text-primary);">{{ $example }}</span>
                         @endforeach
                     </div>
                 </div>
-                <aside class="rounded-lg border border-slate-800 bg-slate-950/70 p-4" data-foundation-section="implementation-status">
+                <aside class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background: var(--ui-layer-01);" data-foundation-section="implementation-status">
                     <p class="ui-kicker">Guide Status</p>
-                    <p class="mt-3 text-2xl font-semibold text-white">{{ $catalogElement['guide_status'] }}</p>
-                    <p class="mt-3 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">System Maturity</p>
-                    <p class="mt-1 text-sm font-semibold text-slate-300">{{ $catalogElement['system_status'] }}</p>
+                    <p class="mt-3 text-2xl font-semibold" style="color: var(--ui-text-primary);">{{ $catalogElement['guide_status'] }}</p>
+                    <p class="mt-3 text-xs font-semibold uppercase tracking-[0.16em]" style="color: var(--ui-text-helper);">System Maturity</p>
+                    <p class="mt-1 text-sm font-semibold" style="color: var(--ui-text-secondary);">{{ $catalogElement['system_status'] }}</p>
                     <a wire:navigate href="{{ route('platform.docs.index', ['path' => $catalogElement['doc_path']]) }}" class="ui-link mt-3 inline-flex">Open canonical doc</a>
-                    <p class="mt-3 break-all text-xs text-slate-500">{{ $catalogElement['doc_path'] }}</p>
+                    <p class="mt-3 break-all text-xs" style="color: var(--ui-text-helper);">{{ $catalogElement['doc_path'] }}</p>
                 </aside>
             </div>
         </section>
@@ -44,29 +44,29 @@
         <section class="ui-card" data-foundation-section="token-class-api-reference">
             <h2 class="ui-card-title">Token / Class / API Reference</h2>
             <p class="ui-card-copy mt-2">Use these app-owned tokens, CSS variables, helpers, utilities, or components when building this primitive. Token names are labels beside rendered examples, not substitutes for rendering the final UI.</p>
-            <div class="mt-5 w-full max-w-full overflow-x-auto rounded-lg border border-slate-800 bg-slate-950/60">
-                <table class="w-full table-auto divide-y divide-slate-800 lg:min-w-[920px] lg:table-fixed">
+            <div class="mt-5 w-full max-w-full overflow-x-auto rounded-lg border" style="border-color: var(--ui-border-subtle-01); background: var(--ui-layer-01);">
+                <table class="w-full table-auto divide-y lg:min-w-[920px] lg:table-fixed" style="border-color: var(--ui-border-subtle-01);">
                     <colgroup>
                         <col class="lg:w-[13rem]">
                         <col class="lg:w-[19rem]">
                         <col class="lg:w-[18rem]">
                         <col>
                     </colgroup>
-                    <thead class="bg-slate-900">
-                        <tr class="text-left text-xs uppercase tracking-[0.18em] text-slate-500">
+                    <thead style="background: var(--ui-layer-accent-01);">
+                        <tr class="text-left text-xs uppercase tracking-[0.18em]" style="color: var(--ui-text-helper);">
                             <th class="px-4 py-3">Token / Role</th>
                             <th class="px-4 py-3">Variable</th>
                             <th class="px-4 py-3">Class / Helper / API</th>
                             <th class="px-4 py-3">Example Usage</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-slate-800 text-sm text-slate-300">
+                    <tbody class="divide-y text-sm" style="border-color: var(--ui-border-subtle-01); color: var(--ui-text-secondary);">
                         @foreach ($catalogElement['token_reference'] as $reference)
                             <tr>
-                                <td class="px-4 py-3 font-semibold text-white">{{ $reference['name'] }}</td>
-                                <td class="px-4 py-3 font-mono text-xs text-slate-300">{{ $reference['variable'] }}</td>
+                                <td class="px-4 py-3 font-semibold" style="color: var(--ui-text-primary);">{{ $reference['name'] }}</td>
+                                <td class="px-4 py-3 font-mono text-xs" style="color: var(--ui-text-secondary);">{{ $reference['variable'] }}</td>
                                 <td class="px-4 py-3">{{ $reference['api'] }}</td>
-                                <td class="px-4 py-3 font-mono text-xs text-slate-300">{{ $reference['example'] }}</td>
+                                <td class="px-4 py-3 font-mono text-xs" style="color: var(--ui-text-secondary);">{{ $reference['example'] }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -77,7 +77,7 @@
         <section class="grid gap-4 xl:grid-cols-3">
             <article class="ui-card" data-foundation-section="usage-guidance">
                 <h2 class="ui-card-title">Usage Guidance</h2>
-                <ul class="mt-4 space-y-3 text-sm text-slate-300">
+                <ul class="mt-4 space-y-3 text-sm" style="color: var(--ui-text-secondary);">
                     @foreach ($catalogElement['usage_guidance'] as $item)
                         <li>{{ $item }}</li>
                     @endforeach
@@ -86,7 +86,7 @@
 
             <article class="ui-card" data-foundation-section="accessibility-notes">
                 <h2 class="ui-card-title">Accessibility Notes</h2>
-                <ul class="mt-4 space-y-3 text-sm text-slate-300">
+                <ul class="mt-4 space-y-3 text-sm" style="color: var(--ui-text-secondary);">
                     @foreach ($catalogElement['accessibility_notes'] as $item)
                         <li>{{ $item }}</li>
                     @endforeach
@@ -95,7 +95,7 @@
 
             <article class="ui-card" data-foundation-section="developer-notes">
                 <h2 class="ui-card-title">Developer Notes</h2>
-                <ul class="mt-4 space-y-3 text-sm text-slate-300">
+                <ul class="mt-4 space-y-3 text-sm" style="color: var(--ui-text-secondary);">
                     @foreach ($catalogElement['developer_notes'] as $item)
                         <li>{{ $item }}</li>
                     @endforeach
@@ -109,13 +109,14 @@
                     <h2 class="ui-card-title">Related Implementation Links</h2>
                     <div class="mt-4 flex flex-wrap gap-3">
                         @foreach ($catalogElement['related_links'] as $link)
+                            @continue(str_contains($link['label'], 'Carbon') || str_contains($link['href'], 'carbondesignsystem.com'))
                             <a wire:navigate href="{{ $link['href'] }}" class="ui-link">{{ $link['label'] }}</a>
                         @endforeach
                     </div>
                 </div>
-                <aside class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                    <p class="ui-kicker">Carbon Source Reference</p>
-                    <p class="mt-3 text-sm text-slate-300">{{ $catalogElement['carbon_comparison'] }}</p>
+                <aside class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background: var(--ui-layer-01);">
+                    <p class="ui-kicker">Standard Reference Notes</p>
+                    <p class="mt-3 text-sm" style="color: var(--ui-text-secondary);">This page defines the current Login App expectation for {{ $catalogElement['label'] }}. Use the visible examples, canonical doc, and related implementation links as the app standard.</p>
                 </aside>
             </div>
         </section>

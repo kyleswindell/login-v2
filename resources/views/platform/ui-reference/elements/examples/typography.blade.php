@@ -41,7 +41,7 @@
 
     <section class="ui-card" data-typography-example="type-scale">
         <h2 class="ui-card-title">Type Scale</h2>
-        <p class="ui-card-copy mt-2">The reference scale follows the Carbon benchmark from 12px through 92px. Product UI should still use assigned type roles rather than choosing sizes by eye.</p>
+        <p class="ui-card-copy mt-2">The reference scale runs from 12px through 92px. Product UI should still use assigned type roles rather than choosing sizes by eye.</p>
         <div class="mt-5 space-y-3">
             @foreach ($typeScale as [$rem, $size])
                 <div class="grid gap-3 rounded-lg border p-4 lg:grid-cols-[8rem_minmax(0,1fr)] lg:items-center" style="border-color: var(--ui-border-default); background: var(--ui-surface-elevated);">

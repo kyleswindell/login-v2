@@ -132,8 +132,8 @@ class UiReferenceElementCatalog
                 ],
                 developerNotes: [
                     'Use grid for page-level structure; use spacing tokens for local relationships inside components.',
-                    'Do not assume Bootstrap or ad hoc row/column layouts are Carbon-aligned.',
-                    'Test at 320px, 672px, 1056px, 1312px, and 1584px when Carbon alignment matters.',
+                    'Do not assume Bootstrap or ad hoc row/column layouts satisfy the app grid standard.',
+                    'Test at 320px, 672px, 1056px, 1312px, and 1584px when grid alignment matters.',
                 ],
                 related: [
                     ['label' => 'Spacing element', 'href' => '/platform/ui-reference/elements/spacing'],
@@ -246,7 +246,7 @@ class UiReferenceElementCatalog
                     'Heroicons remain the default app icon library.',
                     'Use 16px icons for dense UI; use larger sizes only when the layout requires it.',
                     'Icons are monochrome and theme-aware through currentColor.',
-                    'Do not import Carbon icons without a separate decision record.',
+                    'Do not import another icon set without a separate decision record.',
                 ],
                 related: [
                     ['label' => 'T1 Button', 'href' => '/platform/ui-reference/components/button'],
@@ -267,7 +267,7 @@ class UiReferenceElementCatalog
                 tokens: [
                     ['name' => 'Minimum pictogram', 'variable' => '48px minimum', 'api' => 'queued asset class', 'example' => 'empty-state pictogram at 64px'],
                     ['name' => 'Large empty state', 'variable' => '96px to 128px+', 'api' => 'queued illustrative asset', 'example' => 'no-results panel visual'],
-                    ['name' => 'Asset source', 'variable' => 'not approved', 'api' => 'future ADR required', 'example' => 'Do not import Carbon pictograms.'],
+                    ['name' => 'Asset source', 'variable' => 'not approved', 'api' => 'future ADR required', 'example' => 'Do not import unapproved pictograms.'],
                 ],
                 usage: [
                     'Use when: empty, onboarding, blocked, or explanatory states need a larger visual anchor.',
@@ -282,7 +282,7 @@ class UiReferenceElementCatalog
                 developerNotes: [
                     'Pictograms remain queued until a real feature requires an asset decision.',
                     'Use productive pictograms by default if an asset library is approved later.',
-                    'Do not crop, distort, recolor arbitrarily, or import Carbon pictograms without a decision record.',
+                    'Do not crop, distort, recolor arbitrarily, or import pictograms without a decision record.',
                 ],
                 related: [
                     ['label' => 'Empty state pattern', 'href' => '/platform/ui-reference/patterns/data-content'],

@@ -65,8 +65,8 @@ class UiReferenceElementCatalog
                     'State tokens are not static decoration; hover, active, selected, focus, and disabled states must remain state-specific.',
                 ],
                 related: [
-                    ['label' => 'T1 Button', 'href' => '/platform/ui-reference/components/button'],
-                    ['label' => 'T1 Notification', 'href' => '/platform/ui-reference/components/notification'],
+                    ['label' => 'Button component', 'href' => '/platform/ui-reference/components/button'],
+                    ['label' => 'Notification component', 'href' => '/platform/ui-reference/components/notification'],
                     ['label' => 'Canonical color doc', 'href' => '/platform/docs?path=02-standards%2Fui%2Felements%2Fcolor.md'],
                     ['label' => 'Carbon color overview', 'href' => 'https://carbondesignsystem.com/elements/color/overview/'],
                 ],
@@ -249,8 +249,8 @@ class UiReferenceElementCatalog
                     'Do not import another icon set without a separate decision record.',
                 ],
                 related: [
-                    ['label' => 'T1 Button', 'href' => '/platform/ui-reference/components/button'],
-                    ['label' => 'T1 Notification', 'href' => '/platform/ui-reference/components/notification'],
+                    ['label' => 'Button component', 'href' => '/platform/ui-reference/components/button'],
+                    ['label' => 'Notification component', 'href' => '/platform/ui-reference/components/notification'],
                     ['label' => 'Canonical icons doc', 'href' => '/platform/docs?path=02-standards%2Fui%2Felements%2Ficons.md'],
                     ['label' => 'Carbon icons usage', 'href' => 'https://carbondesignsystem.com/elements/icons/usage/'],
                 ],

@@ -111,13 +111,21 @@ Required behavior:
 
 ## Component Documentation Requirements
 
-Every component standard must include:
+Every Component standard and UI Reference page must include:
 
-1. base example
-2. light and dark variant
-3. disabled/hover/focus/active states
-4. responsive example
-5. accessibility notes
+1. purpose
+2. use when
+3. do not use when
+4. live examples rendered with application code
+5. app-approved variants
+6. required states
+7. anatomy
+8. behavior
+9. accessibility requirements
+10. content guidance
+11. developer implementation details
+12. related Components and Patterns
+13. implementation status
 
 Documentation expectation:
 
@@ -126,6 +134,14 @@ Documentation expectation:
 2. behavior rules
 3. concrete implementation example(s)
 4. anti-patterns where relevant
+
+Component UI Reference pages are working implementation guides, not screenshots and not Carbon documentation clones. They must answer what the component looks like in Login App 2.0, which tokens/classes/helpers/components to use, when to use it, what to avoid, and which accessibility constraints apply.
+
+## Foundation Element Dependency
+
+Foundation Elements are mandatory inputs for Component, Pattern, and later feature UI work. Components must consume approved Element standards for color tokens, spacing, grid, typography, icons, motion, and themes instead of redefining those decisions locally.
+
+Do not hard-code component colors, one-off spacing, local typography, local icon sources, or custom motion timing where a Foundation Element standard exists.
 
 Per-component contract resources:
 

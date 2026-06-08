@@ -30,7 +30,10 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Typography')
             ->assertSee('Form Patterns')
             ->assertSee('Data + Content')
-            ->assertSee('T1 Components')
+            ->assertSee('Components')
+            ->assertSee('Patterns')
+            ->assertDontSee('T1 Components')
+            ->assertDontSee('Pattern Standards')
             ->assertSee('Number input')
             ->assertSee('Structured list')
             ->assertSee('Widget Content')
@@ -46,11 +49,18 @@ class PlatformUiReferenceTest extends TestCase
 
         $overview = $this->get('/platform/ui-reference/components')
             ->assertOk()
-            ->assertSee('T1 Component Library')
+            ->assertSee('Components')
+            ->assertSee('Components are reusable UI building blocks')
+            ->assertSee('data-ui-reference-component-foundation-dependency', false)
+            ->assertSee('data-ui-reference-component-priority-buckets', false)
+            ->assertSee('data-ui-reference-component-status-legend', false)
             ->assertSee('data-ui-reference-component-inventory', false)
-            ->assertSee('min-w-[1240px] table-fixed', false)
+            ->assertSee('min-w-[1320px] table-fixed', false)
             ->assertSee('w-[13.5rem]', false)
             ->assertSee('Canonical Doc')
+            ->assertSee('Implement Component Page')
+            ->assertSee('Represent As Pattern')
+            ->assertSee('Foundation Elements')
             ->assertSee('inline-flex items-center whitespace-nowrap rounded-full', false);
 
         foreach ($catalog as $component) {
@@ -58,16 +68,39 @@ class PlatformUiReferenceTest extends TestCase
                 ->assertSee($component['label'])
                 ->assertSee('/platform/ui-reference/components/'.$component['slug'])
                 ->assertSee($component['doc_path'])
-                ->assertSee($component['disposition']);
+                ->assertSee($component['priority']);
 
-            $this->get('/platform/ui-reference/components/'.$component['slug'])
+            $componentPage = $this->get('/platform/ui-reference/components/'.$component['slug'])
                 ->assertOk()
+                ->assertSee('data-ui-reference-component="'.$component['slug'].'"', false)
                 ->assertSee('data-ui-reference-t1-component="'.$component['slug'].'"', false)
                 ->assertSee('data-ui-reference-component-disposition="'.$component['disposition'].'"', false)
+                ->assertSee('data-ui-reference-component-status="'.$component['status'].'"', false)
+                ->assertSee('data-component-section="purpose"', false)
+                ->assertSee('data-component-section="use-when"', false)
+                ->assertSee('data-component-section="do-not-use-when"', false)
+                ->assertSee('data-component-section="live-examples"', false)
+                ->assertSee('data-component-section="variants"', false)
+                ->assertSee('data-component-section="states"', false)
+                ->assertSee('data-component-section="anatomy"', false)
+                ->assertSee('data-component-section="behavior"', false)
+                ->assertSee('data-component-section="accessibility"', false)
+                ->assertSee('data-component-section="content-guidance"', false)
+                ->assertSee('data-component-section="developer-implementation"', false)
+                ->assertSee('data-component-section="related-components-and-patterns"', false)
+                ->assertSee('data-component-section="implementation-status"', false)
+                ->assertSee('data-component-section="foundation-elements-used"', false)
                 ->assertSee($component['label'])
                 ->assertSee($component['owner_route'])
                 ->assertSee($component['doc_path'])
-                ->assertSee($component['disposition']);
+                ->assertSee($component['status'])
+                ->assertSee('This page shows the approved application implementation of this component');
+
+            if ($component['disposition'] === 'Implement T1 Page') {
+                $componentPage->assertSee('data-ui-reference-example="'.$component['slug'].'-shared-live-example"', false);
+            } else {
+                $componentPage->assertSee('data-ui-reference-example="'.$component['slug'].'-queued-trigger"', false);
+            }
         }
 
         $this->get('/platform/ui-reference/components/not-a-component')
@@ -87,8 +120,8 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Guide Status')
             ->assertSee('System Maturity')
             ->assertSee('Foundation Elements')
-            ->assertSee('T1 Components')
-            ->assertSee('T2 Patterns')
+            ->assertSee('Components')
+            ->assertSee('Patterns')
             ->assertSee('T3 Feature Modules')
             ->assertSee('Canonical Doc');
 

@@ -6,7 +6,7 @@
     <section class="flex flex-1 flex-col gap-6">
         <div>
             <h1 class="ui-page-header-title">UI Reference Workspace</h1>
-            <p class="ui-page-header-copy">Canonical UI/UX implementation workspace for Tier 1 components, behavior standards, and interaction proofs.</p>
+            <p class="ui-page-header-copy">Canonical UI/UX implementation workspace for Foundation Elements, Components, Patterns, behavior standards, and interaction proofs.</p>
         </div>
 
         <div class="grid gap-4 xl:grid-cols-3">
@@ -18,14 +18,14 @@
             </article>
             <article class="ui-card">
                 <p class="ui-kicker">Component Library</p>
-                <h2 class="ui-card-title mt-2">Tier 1 Components</h2>
+                <h2 class="ui-card-title mt-2">Components</h2>
                 <p class="ui-card-copy">Component pages are catalog-driven and Carbon-aligned for inventory completeness, while Login App 2.0 keeps its own visual and behavior standards.</p>
-                <a wire:navigate href="{{ route('platform.ui-reference.components.overview') }}" class="ui-link mt-3 inline-flex">Open T1 component catalog</a>
+                <a wire:navigate href="{{ route('platform.ui-reference.components.overview') }}" class="ui-link mt-3 inline-flex">Open component catalog</a>
             </article>
             <article class="ui-card">
-                <p class="ui-kicker">Pattern Standards</p>
-                <h2 class="ui-card-title mt-2">Tier 2 Library</h2>
-                <p class="ui-card-copy">Form, data, navigation, table, layout, and archetype pages now carry the reusable Tier 2 proof coverage Batch B needs to leave behind.</p>
+                <p class="ui-kicker">Patterns</p>
+                <h2 class="ui-card-title mt-2">Pattern Library</h2>
+                <p class="ui-card-copy">Form, data, navigation, table, layout, and archetype pages carry reusable composition proof coverage built from Components.</p>
             </article>
             <article class="ui-card">
                 <p class="ui-kicker">Review Workflow</p>
@@ -39,8 +39,8 @@
             <div class="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                 @foreach ([
                     ['label' => 'Foundation Elements', 'copy' => 'Tokens, grid, spacing, typography, iconography, motion, and themes.'],
-                    ['label' => 'T1 Components', 'copy' => 'Buttons, inputs, tabs, notifications, tables, overlays, and other primitive UI.'],
-                    ['label' => 'T2 Patterns', 'copy' => 'Reusable compositions built from T1 owners, including forms, navigation, data, and overlays.'],
+                    ['label' => 'Components', 'copy' => 'Tier 1 primitives: buttons, inputs, tabs, notifications, tables, overlays, and other baseline UI.'],
+                    ['label' => 'Patterns', 'copy' => 'Tier 2 reusable compositions built from Component owners, including forms, navigation, data, and overlays.'],
                     ['label' => 'T3 Feature Modules', 'copy' => 'App-specific workflows that consume the shared lower tiers.'],
                 ] as $tier)
                     <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
@@ -52,12 +52,12 @@
         </section>
 
         <section class="ui-card">
-            <h2 class="ui-card-title">Current Tier 1 Scope</h2>
-            <p class="ui-card-copy mt-2">The primary T1 review surface is now the component catalog. Legacy grouped pages remain available only as index and compatibility surfaces.</p>
+            <h2 class="ui-card-title">Current Component Scope</h2>
+            <p class="ui-card-copy mt-2">The primary Component review surface is now the component catalog. Legacy grouped pages remain available only as index and compatibility surfaces.</p>
             <div class="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-4" data-ui-reference-catalog-summary>
                 @foreach ([
-                    ['label' => 'Implement T1 Page', 'count' => collect($componentCatalog)->where('disposition', 'Implement T1 Page')->count()],
-                    ['label' => 'Represent As T2 Pattern', 'count' => collect($componentCatalog)->where('disposition', 'Represent As T2 Pattern')->count()],
+                    ['label' => 'Implement Component Page', 'count' => collect($componentCatalog)->where('disposition', 'Implement T1 Page')->count()],
+                    ['label' => 'Represent As Pattern', 'count' => collect($componentCatalog)->where('disposition', 'Represent As T2 Pattern')->count()],
                     ['label' => 'Queued Gap', 'count' => collect($componentCatalog)->where('disposition', 'Queued Gap')->count()],
                     ['label' => 'Not Applicable Yet', 'count' => collect($componentCatalog)->where('disposition', 'Not Applicable Yet')->count()],
                 ] as $metric)
@@ -70,7 +70,7 @@
         </section>
 
         <section class="ui-card">
-            <h2 class="ui-card-title">Batch B Tier 2 Coverage</h2>
+            <h2 class="ui-card-title">Pattern Coverage</h2>
             <div class="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                 <a wire:navigate href="{{ route('platform.ui-reference.patterns.forms') }}" class="rounded-lg border border-slate-800 bg-slate-950/70 p-4 transition hover:border-slate-600 hover:bg-slate-900">
                     <p class="ui-kicker">Form Patterns</p>
@@ -106,8 +106,8 @@
         </section>
 
         <section class="ui-card">
-            <h2 class="ui-card-title">Tier 1 Implementation Checklist</h2>
-            <p class="ui-card-copy mt-2">Use this checklist to validate each Tier 1 component in `/platform/ui-reference` before moving matrix rows from `Ready For Review` to `Locked`.</p>
+            <h2 class="ui-card-title">Component Implementation Checklist</h2>
+            <p class="ui-card-copy mt-2">Use this checklist to validate each Component in `/platform/ui-reference` before moving matrix rows from `Ready For Review` to `Locked`.</p>
 
             <div class="mt-4 overflow-x-auto rounded-lg border border-slate-800 bg-slate-900/70">
                 <table class="min-w-[920px] w-full divide-y divide-slate-800">

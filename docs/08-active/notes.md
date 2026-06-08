@@ -14,6 +14,7 @@
 - P2-F-CQ-049 through P2-F-CQ-058 are Passed Review as of 2026-06-08. Worklog 2-F-0019 corrected status labeling, token-backed Color/Themes/Icons/Typography/Motion/Pictograms examples, shared focus/status/alert usage, docs, tests, and handoff.
 - P2-F-CQ-059 is Passed Review as of 2026-06-08. Worklog 2-F-0020 corrected the final Color layering and Typography scale review gaps before Foundation Elements approval.
 - P2-F-CQ-060 through P2-F-CQ-065 are Passed Review as of 2026-06-08. Worklog 2-F-0021 added the separate Color Token Palette route, token family disposition map, expanded app role-token namespaces, component adoption audit, docs, tests, and handoff.
+- P2-F-CQ-066 through P2-F-CQ-070 are Implemented Pending Review. Worklog 2-F-0022 adopts the Component UI Reference requirements into canonical docs, corrects visible menu terminology to Components/Patterns, expands the component catalog metadata, updates the Components index, and adds the shared Component page contract scaffold.
 - P2-F-CQ-033 through P2-F-CQ-039 are Ready To Implement now that Foundation Elements have passed manual review.
 - P2-F-CQ-012 is Implemented Pending Review. UI control behavior is split into form/selection, table/search/filter, dropdown, and theme modules while preserving the `resources/js/ui-controls.js` export surface and `resources/js/app.js` lifecycle registration.
 - P2-F-CQ-013 is Implemented Pending Review. `resources/css/app.css` now has a concrete UI ownership map, `resources/css/AGENTS.md` points future CSS work to targeted sections, and the Tailwind theme seed block is extracted to `resources/css/ui/theme-seed.css`.
@@ -42,5 +43,5 @@
 - SettingsController update-flow extraction and realtime notification transport/rendering cleanup are deferred out of Batch F unless the current UI starter/guidance work exposes a direct blocker.
 - Future work passes should read the targeted queue item first, then open only the specific source/reference files needed for that item.
 - Manual review should now focus on whether P2-F-CQ-016 through P2-F-CQ-024 provide a sufficiently organized component-specific T1 library and whether any generated component pages need deeper concrete examples before the remaining starter work resumes.
-- P2-F-CQ-033 through P2-F-CQ-039 should now proceed sequentially by family, using the approved Foundation Elements standards as the baseline for color, spacing, typography, iconography, motion, themes, and grid.
+- P2-F-CQ-033 through P2-F-CQ-039 should proceed sequentially by family after P2-F-CQ-066 through P2-F-CQ-070 pass review, using the approved Foundation Elements and shared Component page contract as the baseline.
 - Worklogs remain the immutable history location for detailed pass notes, failed review attempts, and correction narratives.

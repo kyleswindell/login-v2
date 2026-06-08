@@ -118,20 +118,248 @@ class UiReferenceComponentCatalog
         array $aliases = [],
     ): array {
         $docPath = '02-standards/ui/components/tier-1/'.$slug.'.md';
+        $priority = $this->priorityFor($slug);
+        $status = match ($disposition) {
+            'Implement T1 Page' => 'Implemented - pending manual review',
+            'Represent As T2 Pattern' => 'App-specific exception',
+            'Queued Gap' => 'Deferred',
+            'Not Applicable Yet' => 'Do not implement',
+            default => 'Partial',
+        };
+        $owner = $ownerRoute ?? '/platform/ui-reference/components/'.$slug;
 
         return [
             'slug' => $slug,
             'label' => $label,
             'group' => $group,
+            'category' => $group,
+            'priority' => $priority,
+            'priority_label' => match ($priority) {
+                'A' => 'Tier A - Baseline app development',
+                'B' => 'Tier B - Common reusable component',
+                default => 'Tier C - Contextual or deferred',
+            },
+            'status' => $status,
             'disposition' => $disposition,
             'summary' => $summary,
+            'purpose' => $summary,
+            'use_when' => $guidance,
+            'do_not_use_when' => $this->avoidanceFor($slug, $disposition),
+            'variants' => $this->variantsFor($states),
             'states' => $states,
+            'anatomy' => $this->anatomyFor($slug),
+            'behavior' => $this->behaviorFor($slug, $disposition),
+            'accessibility' => $this->accessibilityFor($slug, $disposition),
+            'content_guidance' => $this->contentGuidanceFor($slug),
+            'developer_api' => $this->developerApiFor($slug, $owner),
+            'related' => $this->relatedFor($slug, $group),
+            'foundation_elements' => $this->foundationElementsFor($slug),
+            'queued_gaps' => $this->queuedGapsFor($slug, $disposition, $guidance),
             'guidance' => $guidance,
-            'owner_route' => $ownerRoute ?? '/platform/ui-reference/components/'.$slug,
+            'owner_route' => $owner,
+            'source_owner' => $owner,
             'doc_path' => $docPath,
             'doc_route' => '/platform/docs?path='.rawurlencode($docPath),
             'route_name' => 'platform.ui-reference.components.show',
             'aliases' => $aliases,
         ];
+    }
+
+    private function priorityFor(string $slug): string
+    {
+        return match ($slug) {
+            'button', 'link', 'text-input', 'select', 'checkbox', 'radio-button', 'toggle', 'form', 'tag', 'notification', 'loading', 'inline-loading', 'tooltip', 'modal', 'data-table', 'pagination', 'search', 'ui-shell', 'breadcrumb' => 'A',
+            'accordion', 'code-snippet', 'contained-list', 'content-switcher', 'dropdown', 'file-uploader', 'list', 'menu', 'menu-buttons', 'multiselect', 'number-input', 'progress-bar', 'progress-indicator', 'tabs', 'tile', 'toggletip' => 'B',
+            default => 'C',
+        };
+    }
+
+    /**
+     * @param array<int, string> $states
+     *
+     * @return array<int, string>
+     */
+    private function variantsFor(array $states): array
+    {
+        return array_values(array_slice($states, 0, min(count($states), 6)));
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function avoidanceFor(string $slug, string $disposition): array
+    {
+        if ($disposition === 'Represent As T2 Pattern') {
+            return ['Do not duplicate this as a local primitive. Use the linked Pattern owner for composition behavior.'];
+        }
+
+        if (in_array($disposition, ['Queued Gap', 'Not Applicable Yet'], true)) {
+            return ['Do not build speculative UI for this component until the trigger condition is met.'];
+        }
+
+        return match ($slug) {
+            'button' => ['Do not use buttons for navigation that should be a link.', 'Do not create local button colors or sizes.'],
+            'link' => ['Do not use `href="#"` for commands. Use a button for state-changing actions.'],
+            'checkbox' => ['Do not use checkboxes for mutually exclusive choices. Use radio buttons.'],
+            'radio-button' => ['Do not use radio buttons for independent or multi-select choices.'],
+            'modal' => ['Do not use modals for long repeated workflows or non-blocking contextual detail.'],
+            'data-table' => ['Do not use data tables as a spreadsheet replacement or for simple content lists.'],
+            default => ['Do not create one-off markup, colors, spacing, or behavior outside this component contract.'],
+        };
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function anatomyFor(string $slug): array
+    {
+        return match ($slug) {
+            'button', 'menu-buttons' => ['container', 'label', 'optional icon', 'loading indicator'],
+            'text-input', 'select', 'dropdown', 'number-input', 'date-picker', 'file-uploader', 'search', 'slider', 'multiselect' => ['label', 'control', 'helper text', 'validation message', 'optional status icon'],
+            'checkbox', 'radio-button', 'toggle', 'content-switcher' => ['group label', 'option control', 'option label', 'helper or validation message'],
+            'notification' => ['status icon', 'title', 'message', 'action', 'dismiss control'],
+            'modal' => ['backdrop', 'dialog container', 'header', 'body', 'footer actions', 'close control'],
+            'data-table' => ['caption/title', 'toolbar', 'header row', 'body rows', 'row actions', 'pagination'],
+            'ui-shell' => ['header', 'left panel', 'main content', 'account menu', 'utility actions'],
+            default => ['container', 'label or title', 'content', 'state indicator', 'optional action'],
+        };
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function behaviorFor(string $slug, string $disposition): array
+    {
+        if (in_array($disposition, ['Queued Gap', 'Not Applicable Yet'], true)) {
+            return ['Behavior remains gated until a product consumer creates a concrete implementation need.'];
+        }
+
+        return match ($slug) {
+            'modal' => ['Move focus into the dialog when opened.', 'Trap focus while open.', 'Return focus to the invoking control on close.'],
+            'menu', 'menu-buttons' => ['Open from an accessible trigger.', 'Close on selection, Escape, outside click, or focus loss according to the app contract.'],
+            'data-table' => ['Keep sort, filter, row action, loading, empty, and pagination behavior predictable.'],
+            'tabs' => ['Selected tab controls one nearby panel. Do not use tabs for progress steps.'],
+            default => ['Support documented click, keyboard, focus, disabled, loading, responsive, and validation behavior where applicable.'],
+        };
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function accessibilityFor(string $slug, string $disposition): array
+    {
+        if (in_array($disposition, ['Queued Gap', 'Not Applicable Yet'], true)) {
+            return ['Do not mark complete until keyboard, focus, screen reader, and contrast behavior is defined.'];
+        }
+
+        return match ($slug) {
+            'button', 'menu-buttons' => ['Icon-only controls require an accessible label and visible tooltip.', 'Focus-visible state is required.'],
+            'tooltip' => ['Tooltip content is non-interactive and must be available on focus, not only hover.'],
+            'notification', 'tag' => ['Do not rely on color alone; include text and icon/semantic treatment where meaningful.'],
+            'modal' => ['Use dialog semantics, focus trap, Escape behavior, and return focus.'],
+            default => ['Provide visible focus, keyboard access, readable contrast, semantic naming, and non-color-only meaning where applicable.'],
+        };
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function contentGuidanceFor(string $slug): array
+    {
+        return match ($slug) {
+            'button' => ['Use concise verb-led labels that describe the action outcome.'],
+            'notification' => ['Use a short title, clear message, and actionable recovery copy for errors.'],
+            'text-input', 'select', 'dropdown', 'number-input' => ['Labels are required unless a documented accessibility exception exists.', 'Placeholder text is not a replacement for labels.'],
+            default => ['Use sentence case, clear labels, and copy that describes the component outcome or state.'],
+        };
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function developerApiFor(string $slug, string $owner): array
+    {
+        return [
+            'owner_route' => $owner,
+            'blade' => match ($slug) {
+                'button' => 'x-ui.button',
+                'modal' => 'x-ui.modal',
+                'tag' => 'x-ui.badge',
+                'menu' => 'x-ui.menu-item / x-ui.patterns.dropdown-action-menu',
+                default => 'Catalog owner route documents the approved markup or queued implementation contract.',
+            },
+            'tokens' => 'Use Foundation Element tokens for color, spacing, typography, iconography, motion, and theme behavior.',
+            'example' => '<!-- Use the documented owner route and canonical component contract for implementation. -->',
+        ];
+    }
+
+    /**
+     * @return array<int, array{label: string, href: string}>
+     */
+    private function relatedFor(string $slug, string $group): array
+    {
+        $links = [
+            ['label' => 'Components overview', 'href' => '/platform/ui-reference/components'],
+            ['label' => 'Patterns', 'href' => '/platform/ui-reference/patterns/forms'],
+        ];
+
+        if ($group === 'Actions') {
+            $links[] = ['label' => 'Navigation patterns', 'href' => '/platform/ui-reference/patterns/navigation'];
+        }
+
+        if (in_array($group, ['Inputs', 'Selection controls', 'Form structure'], true)) {
+            $links[] = ['label' => 'Form patterns', 'href' => '/platform/ui-reference/patterns/forms'];
+        }
+
+        if ($group === 'Data display') {
+            $links[] = ['label' => 'Table patterns', 'href' => '/platform/ui-reference/patterns/tables'];
+        }
+
+        return $links;
+    }
+
+    /**
+     * @return array<int, array{label: string, href: string}>
+     */
+    private function foundationElementsFor(string $slug): array
+    {
+        $elements = [
+            ['label' => 'Color', 'href' => '/platform/ui-reference/elements/color'],
+            ['label' => 'Spacing', 'href' => '/platform/ui-reference/elements/spacing'],
+            ['label' => 'Typography', 'href' => '/platform/ui-reference/elements/typography'],
+            ['label' => 'Themes', 'href' => '/platform/ui-reference/elements/themes'],
+        ];
+
+        if (in_array($slug, ['button', 'menu', 'menu-buttons', 'notification', 'tooltip', 'toggletip', 'search', 'ui-shell'], true)) {
+            $elements[] = ['label' => 'Icons', 'href' => '/platform/ui-reference/elements/icons'];
+        }
+
+        if (in_array($slug, ['modal', 'notification', 'loading', 'inline-loading', 'progress-bar', 'progress-indicator', 'accordion', 'tabs', 'ui-shell'], true)) {
+            $elements[] = ['label' => 'Motion', 'href' => '/platform/ui-reference/elements/motion'];
+        }
+
+        if (in_array($slug, ['data-table', 'structured-list', 'tile', 'ui-shell'], true)) {
+            $elements[] = ['label' => '2x Grid', 'href' => '/platform/ui-reference/elements/grid'];
+        }
+
+        return $elements;
+    }
+
+    /**
+     * @param array<int, string> $guidance
+     *
+     * @return array<int, string>
+     */
+    private function queuedGapsFor(string $slug, string $disposition, array $guidance): array
+    {
+        if (in_array($disposition, ['Queued Gap', 'Not Applicable Yet'], true)) {
+            return $guidance;
+        }
+
+        return match ($slug) {
+            'ui-shell' => ['Right panel remains queued until a persistent right-side context is required.'],
+            'checkbox' => ['Indeterminate state requires a supported parent/child selection consumer before production use.'],
+            default => [],
+        };
     }
 }

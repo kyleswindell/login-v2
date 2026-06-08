@@ -9,17 +9,174 @@
         $implementationPages = ['button', 'tag', 'text-input', 'select', 'date-picker', 'dropdown', 'file-uploader', 'search', 'link', 'tile', 'toggle', 'modal', 'notification', 'inline-loading', 'loading', 'tooltip', 'toggletip', 'menu-buttons', 'data-table', 'accordion', 'breadcrumb'];
     @endphp
 
-    <section class="flex flex-1 flex-col gap-6" data-ui-reference-t1-component="{{ $slug }}" data-ui-reference-component-disposition="{{ $catalogComponent['disposition'] }}">
+    <section class="flex flex-1 flex-col gap-6" data-ui-reference-component="{{ $slug }}" data-ui-reference-t1-component="{{ $slug }}" data-ui-reference-component-disposition="{{ $catalogComponent['disposition'] }}" data-ui-reference-component-status="{{ $catalogComponent['status'] }}">
         <div>
             <p class="ui-kicker">{{ $catalogComponent['group'] }} - {{ $catalogComponent['disposition'] }}</p>
             <h1 class="ui-page-header-title">{{ $catalogComponent['label'] }}</h1>
             <p class="ui-page-header-copy">{{ $catalogComponent['summary'] }}</p>
+            <p class="ui-page-header-copy mt-3">This page shows the approved application implementation of this component. Use the documented variants, states, and helper APIs shown here. If a feature requires behavior not represented here, update the component contract or compose a higher-level Pattern instead of modifying the component locally.</p>
         </div>
+
+        <section class="ui-card" data-component-section="purpose">
+            <div class="grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(18rem,0.6fr)]">
+                <div>
+                    <p class="ui-kicker">Purpose</p>
+                    <h2 class="ui-card-title mt-2">{{ $catalogComponent['label'] }} contract</h2>
+                    <p class="ui-card-copy mt-2">{{ $catalogComponent['purpose'] }}</p>
+                </div>
+                <aside class="rounded-lg border border-slate-800 bg-slate-950/70 p-4" data-component-section="implementation-status">
+                    <p class="ui-kicker">Implementation Status</p>
+                    <p class="mt-2 text-base font-semibold text-white">{{ $catalogComponent['status'] }}</p>
+                    <p class="mt-2 text-sm text-slate-400">{{ $catalogComponent['priority_label'] }}</p>
+                </aside>
+            </div>
+        </section>
+
+        <section class="grid gap-4 xl:grid-cols-2">
+            <article class="ui-card" data-component-section="use-when">
+                <h2 class="ui-card-title">Use when</h2>
+                <ul class="mt-4 space-y-2 text-sm text-slate-300">
+                    @foreach ($catalogComponent['use_when'] as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </article>
+            <article class="ui-card" data-component-section="do-not-use-when">
+                <h2 class="ui-card-title">Do not use when</h2>
+                <ul class="mt-4 space-y-2 text-sm text-slate-300">
+                    @foreach ($catalogComponent['do_not_use_when'] as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </article>
+        </section>
 
         <section class="ui-card">
             <div class="grid gap-5 xl:grid-cols-[minmax(0,1.5fr)_minmax(18rem,0.5fr)]">
                 <div>
-                    <h2 class="ui-card-title">Component Contract</h2>
+                    <h2 class="ui-card-title">Variants And States</h2>
+                    <div class="mt-4" data-component-section="variants">
+                        <p class="text-sm font-semibold text-slate-100">Variants</p>
+                        <div class="mt-2 flex flex-wrap gap-2">
+                            @foreach ($catalogComponent['variants'] as $variant)
+                                <span class="rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-300">{{ $variant }}</span>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="mt-5" data-component-section="states">
+                        <p class="text-sm font-semibold text-slate-100">States</p>
+                        <div class="mt-2 flex flex-wrap gap-2">
+                            @foreach ($catalogComponent['states'] as $state)
+                                <span class="rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-300">{{ $state }}</span>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="mt-5 grid gap-4 md:grid-cols-2">
+                        <div data-component-section="anatomy">
+                            <p class="text-sm font-semibold text-slate-100">Anatomy</p>
+                            <ul class="mt-2 space-y-1 text-sm text-slate-300">
+                                @foreach ($catalogComponent['anatomy'] as $part)
+                                    <li>{{ $part }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <div data-component-section="behavior">
+                            <p class="text-sm font-semibold text-slate-100">Behavior</p>
+                            <ul class="mt-2 space-y-1 text-sm text-slate-300">
+                                @foreach ($catalogComponent['behavior'] as $behavior)
+                                    <li>{{ $behavior }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <aside class="rounded-lg border border-slate-800 bg-slate-950/70 p-4" data-component-section="developer-implementation">
+                    <p class="ui-kicker">Developer Implementation</p>
+                    <dl class="mt-3 space-y-3 text-sm">
+                        @foreach ($catalogComponent['developer_api'] as $term => $value)
+                            <div>
+                                <dt class="text-slate-500">{{ Str::headline($term) }}</dt>
+                                <dd class="mt-1 break-all font-medium text-slate-200">{{ $value }}</dd>
+                            </div>
+                        @endforeach
+                    </dl>
+                </aside>
+            </div>
+        </section>
+
+        <section class="grid gap-4 xl:grid-cols-2">
+            <article class="ui-card" data-component-section="accessibility">
+                <h2 class="ui-card-title">Accessibility requirements</h2>
+                <ul class="mt-4 space-y-2 text-sm text-slate-300">
+                    @foreach ($catalogComponent['accessibility'] as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </article>
+            <article class="ui-card" data-component-section="content-guidance">
+                <h2 class="ui-card-title">Content guidance</h2>
+                <ul class="mt-4 space-y-2 text-sm text-slate-300">
+                    @foreach ($catalogComponent['content_guidance'] as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </article>
+        </section>
+
+        <section class="ui-card" data-component-section="foundation-elements-used">
+            <h2 class="ui-card-title">Foundation Elements Used</h2>
+            <p class="ui-card-copy mt-2">Component design must consume approved Foundation Elements rather than redefine color, spacing, typography, iconography, motion, grid, or theme behavior locally.</p>
+            <div class="mt-4 flex flex-wrap gap-2">
+                @foreach ($catalogComponent['foundation_elements'] as $element)
+                    <a wire:navigate href="{{ $element['href'] }}" class="rounded-full border border-slate-700 bg-slate-950 px-3 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-slate-500 hover:text-white">{{ $element['label'] }}</a>
+                @endforeach
+            </div>
+        </section>
+
+        <section class="ui-card" data-component-section="related-components-and-patterns">
+            <h2 class="ui-card-title">Related Components And Patterns</h2>
+            <div class="mt-4 flex flex-wrap gap-2">
+                @foreach ($catalogComponent['related'] as $related)
+                    <a wire:navigate href="{{ $related['href'] }}" class="rounded-full border border-slate-700 bg-slate-950 px-3 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-slate-500 hover:text-white">{{ $related['label'] }}</a>
+                @endforeach
+            </div>
+        </section>
+
+        <section class="ui-card" data-component-section="live-examples">
+            <div class="flex flex-col gap-2 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                    <h2 class="ui-card-title">Live Examples</h2>
+                    <p class="ui-card-copy mt-2">Rendered examples use current app classes and approved Foundation Element dependencies. Family-depth passes will replace any scaffolded example with the final component API and full state matrix.</p>
+                </div>
+                <span class="rounded-full border border-slate-700 px-2 py-1 text-xs font-semibold text-slate-300">{{ $catalogComponent['status'] }}</span>
+            </div>
+            @if ($catalogComponent['disposition'] === 'Implement T1 Page')
+                <div class="mt-5 grid gap-4 xl:grid-cols-3" data-ui-reference-example="{{ $slug }}-shared-live-example">
+                    <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
+                        <p class="text-sm font-semibold text-white">Default</p>
+                        <p class="mt-2 text-sm text-slate-300">Baseline implementation state for {{ strtolower($catalogComponent['label']) }}.</p>
+                    </div>
+                    <div class="rounded-lg border border-sky-400 bg-slate-950/70 p-4 ring-2 ring-sky-400">
+                        <p class="text-sm font-semibold text-white">Focus-visible</p>
+                        <p class="mt-2 text-sm text-slate-300">Visible focus ring and keyboard order must be reviewed.</p>
+                    </div>
+                    <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4 opacity-60">
+                        <p class="text-sm font-semibold text-white">Disabled / unavailable</p>
+                        <p class="mt-2 text-sm text-slate-300">Disabled treatment must preserve label readability and explanatory copy.</p>
+                    </div>
+                </div>
+            @else
+                <div class="mt-5 rounded-lg border border-slate-800 bg-slate-950/70 p-4" data-ui-reference-example="{{ $slug }}-queued-trigger">
+                    <p class="text-sm font-semibold text-white">Trigger condition</p>
+                    <p class="mt-2 text-sm text-slate-300">{{ $catalogComponent['queued_gaps'][0] ?? 'Queue a component implementation when a feature requires this primitive.' }}</p>
+                </div>
+            @endif
+        </section>
+
+        <section class="ui-card">
+            <div class="grid gap-5 xl:grid-cols-[minmax(0,1.5fr)_minmax(18rem,0.5fr)]">
+                <div>
+                    <h2 class="ui-card-title">Legacy Contract Summary</h2>
                     <div class="mt-4 flex flex-wrap gap-2">
                         @foreach ($catalogComponent['states'] as $state)
                             <span class="rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-300">{{ $state }}</span>
@@ -268,7 +425,7 @@
                 </div>
             </section>
         @elseif (in_array($slug, $implementationPages, true))
-            <section class="ui-card" data-ui-reference-example="component-reference-contract">
+            <section class="ui-card" data-ui-reference-example="{{ $slug }}-reference-contract">
                 <h2 class="ui-card-title">{{ $catalogComponent['label'] }} Reference Examples</h2>
                 <div class="mt-5 grid gap-4 xl:grid-cols-3">
                     <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
@@ -288,7 +445,7 @@
         @else
             <section class="ui-card" data-ui-reference-example="queued-gap-contract">
                 <h2 class="ui-card-title">Queued Implementation Contract</h2>
-                <p class="ui-card-copy mt-2">This Carbon-mapped item is intentionally visible in the Login App 2.0 catalog, but it does not receive speculative component chrome until a product consumer creates a concrete need.</p>
+                <p class="ui-card-copy mt-2">This item is intentionally visible in the Login App 2.0 catalog, but it does not receive speculative component chrome until a product consumer creates a concrete need.</p>
                 <div class="mt-5 rounded-lg border border-slate-800 bg-slate-950/70 p-4">
                     <p class="text-sm font-semibold text-white">Trigger condition</p>
                     <p class="mt-2 text-sm text-slate-300">{{ $catalogComponent['guidance'][0] ?? 'Queue a component implementation when a feature requires this primitive.' }}</p>

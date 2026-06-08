@@ -6,7 +6,7 @@ PARTIAL
 
 ## Current Review State
 
-- Batch F remains PARTIAL because active starter items and T1 family-depth items remain ready to implement after Foundation Elements passed review.
+- Batch F remains PARTIAL because active starter items remain ready to implement and component family-depth items should wait for the Component page scaffold review to pass.
 - P2-F-CQ-001: PASS. The Carbon audit and starter catalog matrix are accepted as sufficient planning and routing source material for the remaining Batch F work.
 - P2-F-CQ-007: PASS. The UI Reference starter catalog entry point is discoverable, lists the required starter set, and includes route disposition guidance for current UI Reference views.
 - P2-F-CQ-008: PASS. Correction pass 2-F-0015 was manually approved on 2026-06-06.
@@ -21,6 +21,7 @@ PARTIAL
 - P2-F-CQ-049 through P2-F-CQ-058: PASS. Guide/system status labeling, token-backed examples, focus/status/alert usage, canonical docs, and focused tests were manually approved on 2026-06-08.
 - P2-F-CQ-059: PASS. Final Foundation Color layering and Typography type-scale corrections were manually approved on 2026-06-08.
 - P2-F-CQ-060 through P2-F-CQ-065: PASS. Separate Color Token Palette route, token family disposition map, expanded role-token namespaces, component adoption audit, docs, and focused tests were manually approved on 2026-06-08.
+- P2-F-CQ-066 through P2-F-CQ-070: IMPLEMENTED PENDING REVIEW. Worklog 2-F-0022 adopts the Component UI Reference requirements into canonical docs, corrects visible menu terminology to Components/Patterns, expands component catalog metadata, updates the Components index, and adds the shared Component page scaffold.
 - No open required fixes remain for P2-F-CQ-001 or P2-F-CQ-007.
 - Historical pass details are preserved in worklog-2-F-0002 through worklog-2-F-0008 and should not be repeated here.
 
@@ -30,10 +31,10 @@ Visual: PENDING
 Functional: PENDING
 
 - Passed review: P2-F-CQ-001, P2-F-CQ-007, P2-F-CQ-008, P2-F-CQ-009, P2-F-CQ-010, P2-F-CQ-011, P2-F-CQ-025 through P2-F-CQ-032, and P2-F-CQ-040 through P2-F-CQ-065.
-- Pending review: P2-F-CQ-012, P2-F-CQ-013, and P2-F-CQ-016 through P2-F-CQ-024.
+- Pending review: P2-F-CQ-012, P2-F-CQ-013, P2-F-CQ-016 through P2-F-CQ-024, and P2-F-CQ-066 through P2-F-CQ-070.
 - Remaining Batch F items still require implementation before final visual and functional batch review.
 - Review note: manual review should confirm whether worklog 2-F-0016 provides the expected component-specific T1 organization, Carbon completeness mapping, and enough concrete state examples for later developers to use with minimal guesswork.
-- Review note: Foundation Elements are approved and P2-F-CQ-033 through P2-F-CQ-039 may now proceed sequentially.
+- Review note: Foundation Elements are approved. P2-F-CQ-033 through P2-F-CQ-039 should proceed sequentially after the P2-F-CQ-066 through P2-F-CQ-070 Component scaffold contract passes review.
 
 ## Remaining Queue Items
 
@@ -75,6 +76,7 @@ Functional: PENDING
 - Worklog 2-F-0019 validation passed with focused Foundation coverage, full `tests/Feature/Platform/PlatformUiReferenceTest.php`, `npm run build`, and docs guardrails. The in-app browser route review was attempted, but the protected UI Reference routes redirected to `/login` and browser automation login was blocked by the in-app browser virtual clipboard/field-fill limitation; local automated route/content coverage and production build validation are the reviewable surface for this pass.
 - Worklog 2-F-0020 validation passed with focused Foundation coverage, full `tests/Feature/Platform/PlatformUiReferenceTest.php`, `npm run build`, and docs guardrails. Browser route review was attempted for Color and Typography, but the protected UI Reference routes redirected to `/login`; automated route/content coverage and production build validation are the reviewable local surface for this pass.
 - Worklog 2-F-0021 validation passed with focused Foundation coverage, focused Color Token Palette coverage, full `tests/Feature/Platform/PlatformUiReferenceTest.php`, `npm run build`, and docs guardrails. Browser route review was attempted for `/platform/ui-reference/elements/color/tokens`, but the protected UI Reference route redirected to `/login`; automated authenticated route/content coverage and production build validation are the reviewable local surface for this pass.
+- Worklog 2-F-0022 validation passed with focused component coverage, full `tests/Feature/Platform/PlatformUiReferenceTest.php`, `npm run build`, and docs guardrails. Browser route review was attempted for `/platform/ui-reference/components`, but the protected UI Reference route redirected to `/login`; automated authenticated route/content coverage and production build validation are the reviewable local surface for this pass.
 
 ## Historical Detail
 

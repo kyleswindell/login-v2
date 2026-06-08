@@ -60,6 +60,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-033 - T1 component family depth pass: actions
 - Status: Ready To Implement
 - Owner: Batch F
+- Depends On: P2-F-CQ-066 through P2-F-CQ-070
 - Scope: Deepen Button, Menu, Menu buttons, and Link T1 pages after Foundation Elements and T1 contracts are accepted.
 - Acceptance:
   - canonical docs and UI Reference examples are updated together
@@ -69,6 +70,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-034 - T1 component family depth pass: inputs
 - Status: Ready To Implement
 - Owner: Batch F
+- Depends On: P2-F-CQ-066 through P2-F-CQ-070
 - Scope: Deepen Text input, Textarea, Number input, Select, Dropdown, Multiselect, Search, Date picker, File uploader, and Slider T1 pages.
 - Acceptance:
   - input docs and UI Reference examples apply Foundation Element color, spacing, typography, icon, and theme rules
@@ -78,6 +80,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-035 - T1 component family depth pass: selection controls
 - Status: Ready To Implement
 - Owner: Batch F
+- Depends On: P2-F-CQ-066 through P2-F-CQ-070
 - Scope: Deepen Checkbox, Radio button, Toggle, and Content switcher T1 pages.
 - Acceptance:
   - checkbox versus radio usage is visually demonstrated
@@ -87,6 +90,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-036 - T1 component family depth pass: feedback and loading
 - Status: Ready To Implement
 - Owner: Batch F
+- Depends On: P2-F-CQ-066 through P2-F-CQ-070
 - Scope: Deepen Notification, Tag, AI label, Inline loading, Loading, Progress bar, and Progress indicator T1 pages.
 - Acceptance:
   - semantic status and loading examples use current token standards
@@ -96,6 +100,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-037 - T1 component family depth pass: overlays and help
 - Status: Ready To Implement
 - Owner: Batch F
+- Depends On: P2-F-CQ-066 through P2-F-CQ-070
 - Scope: Deepen Accordion, Modal, Popover, Tooltip, and Toggletip T1 pages.
 - Acceptance:
   - overlay/help docs and UI Reference examples distinguish blocking, contextual, non-interactive, and interactive disclosure
@@ -105,6 +110,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-038 - T1 component family depth pass: data display
 - Status: Ready To Implement
 - Owner: Batch F
+- Depends On: P2-F-CQ-066 through P2-F-CQ-070
 - Scope: Deepen Data table, Pagination, Structured list, List, Contained list, Tile, and Tree view T1 pages.
 - Acceptance:
   - data display pages show concrete variants, states, spacing behavior, and T2 consumption links
@@ -114,6 +120,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ### P2-F-CQ-039 - T1 component family depth pass: navigation and shell
 - Status: Ready To Implement
 - Owner: Batch F
+- Depends On: P2-F-CQ-066 through P2-F-CQ-070
 - Scope: Deepen Breadcrumb, Tabs, and UI shell T1 pages.
 - Acceptance:
   - tabs include line, contained, vertical, icon-leading, icon-only, overflow/scroll, selected, focus, and disabled states
@@ -123,6 +130,59 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 ## In Progress
 
 ## Implemented Pending Review
+
+### P2-F-CQ-066 - Component UI Reference terminology and menu correction
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Rename UI Reference menu labels from tier-coded labels to product-facing Components and Patterns labels while preserving tier hierarchy in explanatory copy.
+- Acceptance:
+  - primary sidebar shows `Components` and `Patterns`, not `T1 Components` or `Pattern Standards`
+  - overview copy uses Components and Patterns as the visible library labels
+  - legacy grouped component links remain compatibility/index surfaces only
+  - tests assert menu terminology and route reachability
+- Implemented in: worklog-2-F-0022
+
+### P2-F-CQ-067 - Component requirements adoption into canonical docs
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Distill the downloaded Component UI Reference requirements into canonical component standards and non-canonical Carbon reference notes.
+- Acceptance:
+  - canonical component docs define the required Component page contract
+  - Carbon source/comparison notes are stored as reference support, not app rules
+  - Foundation Elements are documented as mandatory inputs for Component, Pattern, and later feature UI work
+- Implemented in: worklog-2-F-0022
+
+### P2-F-CQ-068 - Component catalog metadata and shared renderer contract
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Expand the component catalog data model and shared renderer so component pages can consistently display purpose, guidance, states, anatomy, behavior, accessibility, developer API, related links, and status.
+- Acceptance:
+  - catalog entries expose priority, category, status, page-contract metadata, related owners, queued gaps, and Foundation Element dependencies
+  - flat `/platform/ui-reference/components/{component}` routes remain canonical
+  - route aliases are not introduced in this pass
+- Implemented in: worklog-2-F-0022
+
+### P2-F-CQ-069 - Component overview, category, and priority surfaces
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Update the Components index with app-owned intro text, priority buckets, status legend, disposition matrix, canonical docs, and Foundation Element links.
+- Acceptance:
+  - index presents Components as reusable app building blocks
+  - priority buckets A, B, and C are visible and generated from catalog data
+  - disposition matrix uses app-owned wording rather than Carbon-oriented ownership language
+  - Foundation Elements dependency is visible on the index
+- Implemented in: worklog-2-F-0022
+
+### P2-F-CQ-070 - Component page scaffold contract for all catalog entries
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Replace generic component stubs with a shared Component page scaffold for all catalog entries, including queued/deferred entries.
+- Acceptance:
+  - every component page includes required shared section markers
+  - every page links to canonical docs and related Foundation Elements
+  - implemented pages expose page-specific live examples or explicit family-depth pending status
+  - queued/deferred pages show trigger conditions rather than speculative complete UI
+- Implemented in: worklog-2-F-0022
 
 ### P2-F-CQ-016 - Carbon component inventory and T1 disposition map
 - Status: Implemented Pending Review

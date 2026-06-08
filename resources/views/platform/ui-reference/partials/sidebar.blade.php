@@ -90,7 +90,7 @@
             @php $isComponentSection = str_starts_with($currentSection ?? '', 'components.'); @endphp
             <details class="group" open>
                 <summary class="flex cursor-pointer list-none items-center justify-between rounded-md px-2 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 transition hover:bg-slate-800/70 hover:text-slate-300">
-                    <span>T1 Components</span>
+                    <span>Components</span>
                     <span class="text-slate-500 transition group-open:rotate-180">v</span>
                 </summary>
 
@@ -140,7 +140,7 @@
         </div>
 
         <div class="mt-4 border-t border-slate-800 pt-4">
-            <p class="px-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Pattern Standards</p>
+            <p class="px-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Patterns</p>
             <nav class="mt-2 space-y-1">
                 <a wire:navigate href="{{ route('platform.ui-reference.patterns.forms') }}" @class([
                     'flex items-center gap-2 rounded-md px-3 py-3 text-sm font-medium transition',

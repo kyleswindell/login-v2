@@ -36,12 +36,16 @@
 
 ## Carbon-Aligned T1 Component Library
 - [ ] Carbon-Aligned T1 Component Library
-  Status: implemented pending review — P2-F-CQ-016 through P2-F-CQ-024 added the component catalog, full disposition matrix, generated T1 component routes, catalog sidebar, focused high-risk state pages, and automated route/content coverage
+  Status: implemented pending review — P2-F-CQ-016 through P2-F-CQ-024 added the component catalog, full disposition matrix, generated component routes, catalog sidebar, focused high-risk state pages, and automated route/content coverage; P2-F-CQ-066 through P2-F-CQ-070 add the adopted Component page requirements, product-facing Components/Patterns terminology, catalog metadata, overview priority surfaces, and shared page scaffold
   - [x] every reviewed Carbon component has a Login App 2.0 disposition and owner route
   - [x] sidebar and overview are generated from the same component catalog source
   - [x] legacy combined T1 routes remain available as index/compatibility surfaces, not primary navigation
   - [x] number input, radio button, checkbox, pagination, structured list, tabs, menu, and UI shell pages include focused state/depth coverage
   - [x] AI label, code snippet, and other low-applicability items have explicit queued or gated treatment
+  - [x] UI Reference menu uses Components and Patterns as product-facing labels
+  - [x] Component page contract is adopted into canonical component standards
+  - [x] every component route exposes shared purpose, use/avoid, live examples, variants, states, anatomy, behavior, accessibility, content, developer, related, status, and Foundation Element sections
+  - [x] Components index exposes priority buckets, status legend, canonical docs, and Foundation Element dependencies
   - [ ] manual review confirms the component-specific organization is sufficiently clear for later development
 
 ## Foundation Elements Layer

@@ -16,8 +16,8 @@
             <div class="mt-5 grid gap-4 xl:grid-cols-4">
                 @foreach ([
                     ['Foundation Elements', 'Tokens, grid, spacing, typography, iconography, motion, and themes.'],
-                    ['T1 Components', 'Buttons, inputs, feedback, tables, tabs, and other primitive UI controls.'],
-                    ['T2 Patterns', 'Forms, navigation compositions, data layouts, overlays, and reusable page sections.'],
+                    ['Components', 'Tier 1 primitives: buttons, inputs, feedback, tables, tabs, and other primitive UI controls.'],
+                    ['Patterns', 'Tier 2 forms, navigation compositions, data layouts, overlays, and reusable page sections.'],
                     ['T3 Feature Modules', 'App-specific workflows composed from approved lower tiers.'],
                 ] as [$title, $copy])
                     <article class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background: var(--ui-layer-01);">

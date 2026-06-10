@@ -24,12 +24,14 @@ This skill owns orchestration only:
 - worker thread/session assignment
 - handoff artifact seeding or reconciliation
 - advisory claim visibility updates when needed
+- provisioning-only retirement handling while no worker execution skill is available
 
 This skill does NOT:
 
 - implement queue items itself
 - move queue items through `/docs/08-active/`
 - integrate worker results
+- start branch-worker implementation until a replacement worker workflow exists
 
 ## Required Inputs
 
@@ -41,7 +43,7 @@ This skill does NOT:
 ## Rules
 
 - Remain the singleton integrator owner of `/docs/08-active/`
-- Treat this as orchestration for `work-batch-branch`, not ordinary `work-batch`
+- Treat this as provisioning-only orchestration. The former `work-batch-branch` worker skill is retired and must not be invoked.
 - Default to one Codex app project thread per worker queue item in Worktree mode when available
 - Do not manually provision Git worktrees when the Codex app can create or attach the worker lane in Worktree mode
 - Use manually provisioned Git worktrees only as fallback when Codex app Worktree mode is unavailable, cannot attach the worker lane cleanly, or the operator explicitly requests manual worktrees
@@ -87,28 +89,16 @@ Stop if:
      - status `draft`
      - merge notes stating that `/docs/08-active/` remains integrator-owned
 3. Update `.agents/session-scope-claims.json` only as a lightweight visibility layer when needed.
-4. Start worker execution only if explicitly requested as part of the same orchestration pass.
+4. Do not start worker execution from this skill until a replacement worker workflow is defined.
 
 ## Worker Start Contract
 
-When asked to start worker execution, each worker lane should receive the equivalent of:
-
-- execute `work-batch-branch`
-- use the assigned worker thread/worktree
-- implement the assigned queue item only
-- do not edit `/docs/08-active/`
-- run scoped verification
-- commit scoped changes
-- update the matching handoff artifact to `ready_for_integration`
-
-Do not require the human operator to manually rewrite this contract each time. The orchestrator should derive and apply it from this workflow.
-
-If a spawned child-agent fallback is used instead of a dedicated worker project thread, the orchestrator must report that explicitly in its output instead of treating the fallback as invisible.
+The former `work-batch-branch` worker contract is retired. If the operator asks to start branch-worker execution, stop and request a replacement worker workflow instead of improvising one from this orchestration skill.
 
 ## Output
 
 1. worker lanes created or attached
 2. branch/worktree assignment per queue item
-3. worker execution started or not started
+3. worker execution not started because the worker skill is retired
 4. handoff artifacts seeded or updated
 5. blockers or follow-up needed before integration

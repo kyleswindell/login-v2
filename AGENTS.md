@@ -144,7 +144,6 @@ Always respect branch ownership. Do not duplicate or reassign responsibility acr
 - Always execute batch work through:
   - `batch-start`
   - `work-batch`
-  - `work-batch-branch`
   - `integrate-work-batch-branch`
   - `batch-update-manual-review-status`
   - `batch-review-and-finalize`

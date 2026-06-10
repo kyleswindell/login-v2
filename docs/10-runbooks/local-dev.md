@@ -70,6 +70,20 @@ Default local URLs:
 * Vite dev server: `http://localhost:5173`
 * Mailpit dashboard: `http://localhost:8025`
 
+Before authenticated local browser review, run:
+
+```bash
+docker compose exec app php artisan local:ready
+```
+
+or, when using local PHP/npm directly:
+
+```bash
+npm run local:ready
+```
+
+This command normalizes `public/hot` to `http://localhost:5173`, checks the local app and Vite endpoints, and upserts the review user `test@example.com` / `password` with platform review/admin access. After Docker database resets, rerun this command instead of manually recreating the user or rewriting `public/hot`.
+
 The Compose stack includes:
 
 * `app`: PHP 8.3 CLI container running Laravel's local server
@@ -142,6 +156,8 @@ npm run build
 ```
 
 If local Windows/WSL Node tooling is unreliable, prefer handling Node through Docker Compose once the local development stack is finalized.
+
+For browser-review asset troubleshooting, use [Local Browser Review Setup](local-browser-review.md). Agents should not repeatedly move `public/hot`, cache-bust Vite modules, or restart the Node service during ordinary UI iteration.
 
 ## Notes
 

@@ -14,6 +14,7 @@ Operations procedures only. This branch does not own architecture structure, fea
 
 - [Deployment](deployment.md)
 - [Local Dev](local-dev.md)
+- [Local Browser Review Setup](local-browser-review.md)
 - [Backup](backup.md)
 - [Cron](cron.md)
 

@@ -32,11 +32,18 @@ Do not modify files.
 
 ## Prompt Selection Rules
 
+- Generate `work-batch` prompts only when the user asks for an implementation prompt or the active-batch workflow state clearly needs the next executable pass. Methodology, review, diagnosis, and "what should we do?" discussion should remain read-only unless the user asks to proceed.
 - Continue unfinished `In Progress` items before new `Ready To Implement` items.
 - Refer to queue items by stable `ID:` lines.
 - Group tightly coupled CQ items only when they share the same concern and review surface.
+- For large grouped CQ passes, include the grouping rationale and validation strategy before implementation begins.
 - Exclude deferred, passed, blocked, or review-only decision items.
 - Include commit/push/deploy instructions only when the pass should end with a reviewable surface that requires them.
+- Validation path must name the narrowest proof that covers the targeted behavior first.
+- Do not specify broad test files, full suites, builds, docs guardrails, or browser review as default validation unless the queue item, affected shared contract, or final review gate requires them.
+- Validation matrix: docs/instruction-only work gets docs guardrails or targeted text checks; single UI route/component/partial work gets a named `--filter` test plus source assertions; shared lifecycle/global CSS/catalog/route work gets focused tests plus build/browser review; final batch review may use full integration files when justified.
+- For UI Reference work, prefer named test filters for the touched route/component/partial. Treat `tests/Feature/Platform/PlatformUiReferenceTest.php` as broad integration coverage and include the full file only when catalog, routing, sidebar lifecycle, or cross-route behavior is in scope.
+- If broad validation is included, the prompt must state why it is required and whether it is an iterative check or a final regression gate.
 
 ## Stop Conditions
 

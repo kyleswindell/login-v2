@@ -128,6 +128,7 @@ Always respect branch ownership. Do not duplicate or reassign responsibility acr
 - Before executing a batch workflow step, explicitly state which workflow is being entered.
 - If a batch workflow step was explicitly requested by the user, it may be executed without an extra confirmation step.
 - If a batch workflow step is only inferred from the conversation and it will modify `/docs/08-active/`, canonical docs, or code, ask for confirmation before executing it.
+- Do not enter `work-batch` from methodology, review, diagnosis, planning, or "what should we do?" discussion. Treat those prompts as read-only unless the user explicitly says to implement, execute `work-batch`, or provides a paste-ready work-batch prompt.
 - Exception: when the user provides clear manual-review feedback that unambiguously maps to existing active-batch items or to a concise new finding, that feedback itself authorizes `batch-update-manual-review-status`; do not stop just to confirm that the review-status skill should be executed.
 - Read-only analysis, workflow interpretation, and prompt generation do not require confirmation.
 - If a read-only planning, research, audit, or review session becomes ready to write while another writable session already owns the current working tree, stop before editing and require either:

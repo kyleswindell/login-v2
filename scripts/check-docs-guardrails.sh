@@ -5,15 +5,40 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
 
 failures=0
+search() {
+    local pattern="$1"
+    local target="$2"
+
+    if command -v rg >/dev/null 2>&1; then
+        if [[ "$target" == "docs" ]]; then
+            rg -n -P "$pattern" docs --glob '!docs/_archive/**' || true
+        else
+            rg -n -P "$pattern" "$target" || true
+        fi
+        return
+    fi
+
+    if command -v grep >/dev/null 2>&1; then
+        if [[ "$target" == "docs" ]]; then
+            grep -RInP --exclude-dir=_archive "$pattern" docs || true
+        else
+            grep -nP "$pattern" "$target" || true
+        fi
+        return
+    fi
+
+    echo "Docs guardrail check failed: neither rg nor grep is available." >&2
+    exit 2
+}
 
 check_pattern() {
     local label="$1"
     local pattern="$2"
 
     local docs_matches=""
-    docs_matches="$(rg -n -P "$pattern" docs --glob '!docs/_archive/**' || true)"
+    docs_matches="$(search "$pattern" docs)"
     local root_matches=""
-    root_matches="$(rg -n -P "$pattern" AGENTS.md || true)"
+    root_matches="$(search "$pattern" AGENTS.md)"
 
     if [[ -n "$docs_matches" || -n "$root_matches" ]]; then
         echo "[FAIL] ${label}"

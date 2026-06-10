@@ -6,7 +6,8 @@
     "scripts": {
         "build": "vite build",
         "dev": "vite",
-        "lint:docs:guardrails": "bash scripts/check-docs-guardrails.sh"
+        "lint:docs:guardrails": "node scripts/check-docs-guardrails.mjs",
+        "local:ready": "php artisan local:ready"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",

@@ -13,6 +13,7 @@
 /public/js/filament/
 /public/storage
 /storage/*.key
+/storage/review.sqlite
 /storage/pail
 /storage/app/private/
 /storage/framework/cache/data/

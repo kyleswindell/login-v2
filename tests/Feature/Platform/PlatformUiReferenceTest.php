@@ -1604,6 +1604,7 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringNotContainsString('title="', $tooltipView);
         $this->assertStringContainsString('aria-describedby', $iconButtonView);
         $this->assertStringContainsString('data-ui-tooltip-caret', $iconButtonView);
+        $this->assertStringContainsString('text="You need admin access to delete this workspace." placement="top" size="multi"', $tooltipExamples);
         $this->assertStringContainsString('.ui-tooltip-content', $buttonCss);
         $this->assertStringContainsString('.ui-tooltip-caret', $buttonCss);
         $this->assertStringContainsString('max-inline-size: 13rem;', $buttonCss);

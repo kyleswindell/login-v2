@@ -134,7 +134,7 @@
                 </div>
                 <div class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-tooltip-state-proof="disabled-wrapper">
                     <p class="mb-3 text-sm font-semibold" style="color: var(--ui-text-primary);">Disabled-control explanation</p>
-                    <x-ui.tooltip text="You need admin access to delete this workspace." placement="top" open>
+                    <x-ui.tooltip text="You need admin access to delete this workspace." placement="top" size="multi" open>
                         <span tabindex="0">
                             <x-ui.button semantic="danger" size="sm" disabled>Delete workspace</x-ui.button>
                         </span>

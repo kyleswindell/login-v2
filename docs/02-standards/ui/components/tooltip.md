@@ -182,7 +182,7 @@ Carbon alignment note: Carbon distinguishes tooltips from toggletips and popover
 Native disabled controls usually cannot receive focus, so the tooltip trigger must be a focusable wrapper or adjacent explanation trigger when the UI Reference proves the pattern.
 
 ```blade
-<x-ui.tooltip text="You need admin access to delete this workspace." placement="top">
+<x-ui.tooltip text="You need admin access to delete this workspace." placement="top" size="multi">
     <span class="ui-tooltip__disabled-trigger" tabindex="0">
         <x-ui.button semantic="danger" type="button" disabled>
             Delete workspace

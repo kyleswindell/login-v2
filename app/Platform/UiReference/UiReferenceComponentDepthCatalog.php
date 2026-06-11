@@ -75,7 +75,7 @@ class UiReferenceComponentDepthCatalog
             'ai-label' => $this->doNotImplement('ai-label', 'AI label', 'AI label is not implemented until an approved AI-assisted feature exists.'),
 
             'modal' => $this->overlay('modal', 'Modal', 'Modal interrupts the current page for a required decision or contained task.', 'modal', ['Confirmation dialog', 'Form modal', 'Read-only detail', 'Destructive action', 'Wizard deferred']),
-            'tooltip' => $this->overlay('tooltip', 'Tooltip', 'Tooltip provides short non-interactive help on hover or focus.', 'tooltip', ['Icon-only button tooltip', 'Definition tooltip', 'Disabled-control explanation pattern']),
+            'tooltip' => $this->tooltipComponent(),
             'toggletip' => $this->overlay('toggletip', 'Toggletip', 'Toggletip provides focusable, dismissible contextual help.', 'toggletip', ['Contextual help', 'Dismissible rich help', 'Form assistance']),
             'popover' => $this->popoverComponent(),
 
@@ -575,6 +575,57 @@ class UiReferenceComponentDepthCatalog
         ], [
             'Default, hover, focus-visible, active/pressed, disabled, and loading where applicable.',
             'Danger state is reserved for destructive actions with clear labels.',
+        ]);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function tooltipComponent(): array
+    {
+        return array_replace($this->correctedImplemented('tooltip', 'Tooltip', 'Tooltip provides short non-interactive help on hover or focus.', [
+            $this->exampleFromSample('Icon-only button tooltip', 'Icon-only controls expose concise one- or two-word help on hover and focus.', ['type' => 'tooltip', 'items' => [
+                ['title' => 'Refresh data', 'placement' => 'top'],
+            ]], []),
+            $this->exampleFromSample('Definition tooltip', 'Definition terms use dotted underline treatment and concise sentence-copy help.', ['type' => 'tooltip', 'items' => [
+                ['title' => 'A workspace groups users, roles, and settings for one account.', 'placement' => 'top'],
+            ]], []),
+            $this->exampleFromSample('Placement and alignment', 'Top, right, bottom, left, start, center, and end placements are demonstrated with the installed component.', ['type' => 'tooltip', 'items' => [
+                ['title' => 'Placement example', 'placement' => 'auto'],
+            ]], []),
+        ], ['UI trigger', 'caret tip', 'tooltip container', 'definition trigger', 'non-interactive text'], [
+            'Use for short optional help on hover and focus.',
+            'Use for icon-only controls that need a concise visible description.',
+            'Use for definition terms with short glossary copy.',
+        ], [
+            'Do not put essential task instructions in a tooltip.',
+            'Do not place links, buttons, form controls, or interactive content in a tooltip.',
+            'Do not use Tooltip where Toggletip, Popover, helper text, or Modal is the correct surface.',
+        ], [
+            'Closed',
+            'Open on hover',
+            'Open on focus',
+            'Escape dismissal',
+            'Definition hover/focus',
+        ], [
+            'Hovering or focusing the trigger opens the tooltip.',
+            'The tooltip remains associated with the trigger through `aria-describedby`.',
+            'Escape closes the tooltip without moving focus.',
+            'Auto placement keeps the tooltip in view where supported; mobile auto placement resolves below the trigger.',
+        ], [
+            'Icon-only tooltip copy should be concise, usually one or two words.',
+            'Definition tooltip copy should be sentence case and punctuated.',
+            'Tooltip copy is optional help, not required instructions.',
+        ], [
+            'Tooltip content is non-focusable and non-interactive.',
+            'Triggers remain keyboard reachable and visibly focused.',
+            'The caret and container point to the trigger without obscuring essential nearby content.',
+            'Reduced motion disables tooltip transitions.',
+        ]), [
+            'status' => 'Implemented - pending manual review',
+            'current_decision' => 'Tooltip now uses a component-owned overlay surface with caret, sizing, placement, alignment, accessible description, and hover/focus/Escape behavior.',
+            'live_examples_layout' => 'flexible-matrix',
+            'live_examples_view' => 'platform.ui-reference.components.live-examples.tooltip',
         ]);
     }
 

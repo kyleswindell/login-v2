@@ -15,6 +15,7 @@
     $isLink = filled($href) && ! $disabled;
     $accessibleLabel = $ariaLabel ?? $label ?? $tooltip ?? 'Icon button';
     $tooltipText = $tooltip ?? $label;
+    $tooltipId = filled($tooltip) ? 'ui-tooltip-'.Str::uuid() : null;
     $semanticMap = [
         'primary' => ['primary', 'base'],
         'secondary' => ['secondary', 'base'],
@@ -47,17 +48,24 @@
 
 @if (filled($tooltip))
     <span
-        class="relative inline-flex group"
+        class="ui-tooltip"
         data-ui-component="tooltip"
+        data-ui-tooltip
+        data-ui-tooltip-kind="default"
         data-ui-tooltip-placement="top"
+        data-ui-tooltip-resolved-placement="top"
+        data-ui-tooltip-align="center"
+        data-ui-tooltip-size="single"
+        data-ui-tooltip-state="closed"
     >
-        <span data-ui-tooltip-trigger>
+        <span class="ui-tooltip-trigger" data-ui-tooltip-trigger>
 @endif
 
 @if ($isLink)
     <a
         href="{{ $href }}"
         aria-label="{{ $accessibleLabel }}"
+        @if (filled($tooltipId)) aria-describedby="{{ $tooltipId }}" @endif
         @if (filled($tooltipText) && blank($tooltip)) title="{{ $tooltipText }}" @endif
         {{ $attributes->class($classes)->merge(['data-ui-component' => 'icon-button']) }}
     >
@@ -71,6 +79,7 @@
     <button
         type="{{ $type }}"
         aria-label="{{ $accessibleLabel }}"
+        @if (filled($tooltipId)) aria-describedby="{{ $tooltipId }}" @endif
         @if (filled($tooltipText) && blank($tooltip)) title="{{ $tooltipText }}" @endif
         @if ($loading) aria-busy="true" @endif
         @disabled($isDisabled)
@@ -89,13 +98,17 @@
 @if (filled($tooltip))
         </span>
         <span
+            id="{{ $tooltipId }}"
             role="tooltip"
-            class="pointer-events-none absolute z-40 hidden max-w-xs rounded-md px-2 py-1 text-xs shadow-lg group-hover:block group-focus-within:block"
-            style="background-color: var(--ui-background-inverse); color: var(--ui-text-inverse);"
+            class="ui-tooltip-content"
+            aria-hidden="true"
             data-ui-tooltip-content
+            data-ui-tooltip-id="{{ $tooltipId }}"
             data-ui-tooltip-state="closed"
+            hidden
         >
             {{ $tooltipText }}
+            <span class="ui-tooltip-caret" aria-hidden="true" data-ui-tooltip-caret></span>
         </span>
     </span>
 @endif

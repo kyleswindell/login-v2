@@ -18,6 +18,7 @@ import {
     initTableSearchInputs,
     initTabs,
     initThemeModeControls,
+    initTooltips,
     initTreeViews,
     refreshThemeMode,
 } from './ui-controls';
@@ -52,6 +53,7 @@ const lifecycleInitializers = [
     initMenus,
     initMultiselects,
     initPopovers,
+    initTooltips,
     initSliders,
     initTreeViews,
     initTabs,

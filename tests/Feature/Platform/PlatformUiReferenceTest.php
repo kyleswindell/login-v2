@@ -1027,6 +1027,7 @@ class PlatformUiReferenceTest extends TestCase
             'link' => ['Inline content link', 'External/help link', 'Navigation link', 'Icon trailing', 'Unavailable treatment', 'data-ui-reference-sample-type="links"'],
             'menu' => ['Contextual action menu', 'Row action menu', 'Danger item', 'Divided groups', 'Submenu boundary', 'data-ui-reference-sample-type="menu"'],
             'menu-buttons' => ['Variant purpose matrix', 'Base options', 'Trigger style matrix', 'Size scale', 'Placement and width behavior', 'States and keyboard behavior', 'data-component-live-layout="menu-buttons-matrix"'],
+            'tooltip' => ['Anatomy', 'Placement and alignment', 'Sizing and structure', 'Behavior and accessibility', 'Content', 'Related overlays', 'data-component-live-layout="tooltip-matrix"'],
             'text-input' => ['Login form field', 'Settings form field', 'Validation field', 'Read-only field', 'Disabled field', 'data-ui-reference-sample-type="field"'],
             'number-input' => ['Min/max/step', 'Increment/decrement', 'Error/warning icon', 'Compact/fluid', 'data-ui-reference-sample-type="field"'],
             'checkbox' => ['Independent choice', 'Multi-select group', 'Settings group', 'Validation group', 'Selected and unselected', 'data-ui-reference-sample-type="selection"'],
@@ -1050,7 +1051,7 @@ class PlatformUiReferenceTest extends TestCase
                 ->assertSee('ui-code-snippet', false)
                 ->assertDontSee('Family-depth implementation pending');
 
-            if (in_array($slug, ['button', 'menu-buttons'], true)) {
+            if (in_array($slug, ['button', 'menu-buttons', 'tooltip'], true)) {
                 $response
                     ->assertSee('data-ui-reference-live-examples-layout="flexible-matrix"', false)
                     ->assertDontSee('Live Examples Card');
@@ -1070,7 +1071,7 @@ class PlatformUiReferenceTest extends TestCase
     {
         $this->actingAsPlatformSuperAdmin();
 
-        foreach (['breadcrumb', 'tabs', 'menu', 'code-snippet', 'button'] as $slug) {
+        foreach (['breadcrumb', 'tabs', 'menu', 'code-snippet', 'button', 'tooltip'] as $slug) {
             $response = $this->get('/platform/ui-reference/components/'.$slug)
                 ->assertOk()
                 ->assertSee('data-component-section="developer-code-example"', false)
@@ -1080,7 +1081,7 @@ class PlatformUiReferenceTest extends TestCase
                 ->assertDontSee('Current location, keyboard navigation, focus order, responsive collapse, overflow, and skip-link/focus expectations')
                 ->assertDontSee('Default, hover-capable, focus-visible, disabled, read-only, helper, error, warning, and loading where applicable.');
 
-            if ($slug === 'button') {
+            if (in_array($slug, ['button', 'tooltip'], true)) {
                 $response
                     ->assertSee('Implemented - pending manual review')
                     ->assertSee('data-ui-reference-live-examples-layout="flexible-matrix"', false);
@@ -1520,6 +1521,105 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertIsString($menuButtonsStandard);
         $this->assertStringContainsString('x-heroicon-o-chevron-down', $menuView);
         $this->assertStringContainsString('any approved secondary trigger must consume `--ui-action-secondary-*`', $menuButtonsStandard);
+    }
+
+    public function test_tooltip_component_recovery_page_renders_required_examples(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $response = $this->get('/platform/ui-reference/components/tooltip');
+
+        $response
+            ->assertOk()
+            ->assertSee('x-ui.tooltip')
+            ->assertSee('data-ui-reference-live-examples-layout="flexible-matrix"', false)
+            ->assertSee('data-component-live-layout="tooltip-matrix"', false)
+            ->assertSee('Anatomy')
+            ->assertSee('Placement and alignment')
+            ->assertSee('Sizing and structure')
+            ->assertSee('Behavior and accessibility')
+            ->assertSee('Related overlays')
+            ->assertSee('UI trigger')
+            ->assertSee('Caret tip')
+            ->assertSee('Container')
+            ->assertSee('data-tooltip-anatomy-part="caret"', false)
+            ->assertSee('data-ui-tooltip-caret', false)
+            ->assertSee('data-ui-tooltip-placement="auto"', false)
+            ->assertSee('data-tooltip-placement-proof="top"', false)
+            ->assertSee('data-tooltip-placement-proof="right"', false)
+            ->assertSee('data-tooltip-placement-proof="bottom"', false)
+            ->assertSee('data-tooltip-placement-proof="left"', false)
+            ->assertSee('data-tooltip-alignment-proof="start"', false)
+            ->assertSee('data-tooltip-alignment-proof="center"', false)
+            ->assertSee('data-tooltip-alignment-proof="end"', false)
+            ->assertSee('data-tooltip-size-proof="single"', false)
+            ->assertSee('data-tooltip-size-proof="multi"', false)
+            ->assertSee('data-tooltip-size-proof="definition"', false)
+            ->assertSee('data-ui-tooltip-size="single"', false)
+            ->assertSee('data-ui-tooltip-size="multi"', false)
+            ->assertSee('data-ui-tooltip-size="definition"', false)
+            ->assertSee('ui-tooltip-definition-trigger', false)
+            ->assertSee('data-tooltip-state-proof="closed"', false)
+            ->assertSee('data-tooltip-state-proof="focus"', false)
+            ->assertSee('data-tooltip-state-proof="disabled-wrapper"', false)
+            ->assertSee('aria-describedby=', false)
+            ->assertSee('data-ui-tooltip-state="open"', false)
+            ->assertSee('data-ui-tooltip-state="closed"', false)
+            ->assertSee('Refresh data')
+            ->assertSee('A workspace groups users, roles, and settings for one account.')
+            ->assertSee('You need admin access to delete this workspace.')
+            ->assertSee('Toggletip')
+            ->assertSee('Popover')
+            ->assertSee('Modal')
+            ->assertSee('Helper text')
+            ->assertDontSee('Family-depth implementation pending')
+            ->assertDontSee('data-bs-toggle="tooltip"', false)
+            ->assertDontSee('bootstrap-tooltip');
+
+        $tooltipView = file_get_contents(resource_path('views/components/ui/tooltip.blade.php'));
+        $iconButtonView = file_get_contents(resource_path('views/components/ui/icon-button.blade.php'));
+        $tooltipExamples = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/tooltip.blade.php'));
+        $buttonCss = file_get_contents(resource_path('css/app.css'));
+        $tooltipsJs = file_get_contents(resource_path('js/ui-controls/tooltips.js'));
+        $uiControlsJs = file_get_contents(resource_path('js/ui-controls.js'));
+        $appJs = file_get_contents(resource_path('js/app.js'));
+        $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
+        $tooltipStandard = file_get_contents(base_path('docs/02-standards/ui/components/tooltip.md'));
+
+        $this->assertIsString($tooltipView);
+        $this->assertIsString($iconButtonView);
+        $this->assertIsString($tooltipExamples);
+        $this->assertIsString($buttonCss);
+        $this->assertIsString($tooltipsJs);
+        $this->assertIsString($uiControlsJs);
+        $this->assertIsString($appJs);
+        $this->assertIsString($catalog);
+        $this->assertIsString($tooltipStandard);
+
+        $this->assertStringContainsString("'placement' => 'auto'", $tooltipView);
+        $this->assertStringContainsString("'align' => 'center'", $tooltipView);
+        $this->assertStringContainsString("'open' => false", $tooltipView);
+        $this->assertStringContainsString('data-ui-tooltip-caret', $tooltipView);
+        $this->assertStringContainsString('data-ui-tooltip-resolved-placement', $tooltipView);
+        $this->assertStringNotContainsString('title="', $tooltipView);
+        $this->assertStringContainsString('aria-describedby', $iconButtonView);
+        $this->assertStringContainsString('data-ui-tooltip-caret', $iconButtonView);
+        $this->assertStringContainsString('.ui-tooltip-content', $buttonCss);
+        $this->assertStringContainsString('.ui-tooltip-caret', $buttonCss);
+        $this->assertStringContainsString('max-inline-size: 13rem;', $buttonCss);
+        $this->assertStringContainsString('max-inline-size: 18rem;', $buttonCss);
+        $this->assertStringContainsString('max-inline-size: 11rem;', $buttonCss);
+        $this->assertStringContainsString('width: 0.375rem;', $buttonCss);
+        $this->assertStringContainsString('initTooltips', $tooltipsJs);
+        $this->assertStringContainsString('aria-describedby', $tooltipsJs);
+        $this->assertStringContainsString("event.key !== 'Escape'", $tooltipsJs);
+        $this->assertStringContainsString('window.innerWidth < 640', $tooltipsJs);
+        $this->assertStringContainsString('fitsViewport', $tooltipsJs);
+        $this->assertStringContainsString('export { initTooltips }', $uiControlsJs);
+        $this->assertStringContainsString('initTooltips', $appJs);
+        $this->assertStringContainsString("'live_examples_view' => 'platform.ui-reference.components.live-examples.tooltip'", $catalog);
+        $this->assertStringContainsString('Tooltip now uses a component-owned overlay surface with caret, sizing, placement, alignment, accessible description, and hover/focus/Escape behavior.', $catalog);
+        $this->assertStringContainsString('Caret tip', $tooltipStandard);
     }
 
     public function test_date_picker_component_page_renders_installed_api_examples(): void

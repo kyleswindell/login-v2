@@ -11,4 +11,5 @@ export { initSliders } from './ui-controls/sliders';
 export { initTableSearchInputs } from './ui-controls/table-search';
 export { initTabs } from './ui-controls/tabs';
 export { initThemeModeControls, refreshThemeMode } from './ui-controls/theme-mode';
+export { initTooltips } from './ui-controls/tooltips';
 export { initTreeViews } from './ui-controls/tree-views';

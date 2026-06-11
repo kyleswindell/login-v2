@@ -87,10 +87,13 @@ Canonical API owner: `/platform/ui-reference/components/tooltip`. Use this Compo
 
 Tooltip is the installed Login App 2.0 non-interactive help overlay API. It owns short descriptive copy, hover/focus opening, Escape dismissal, positioning, tooltip surface styling, accessible description linkage, reduced-motion behavior, and icon-only/definition tooltip patterns. It does not own interactive disclosure, required content, persistent messages, menus, form validation, popovers, modal decisions, or page layout.
 
+Tooltip anatomy: UI trigger, Caret tip, and Container.
+
 ### 1.1. Canonical API responsibilities:
 
 - Render short non-interactive help through `x-ui.tooltip`.
 - Associate tooltip text with the trigger as a description, not as the trigger’s primary name.
+- Render a caret tip that visually associates the tooltip container with the trigger.
 - Open on hover and keyboard focus.
 - Close on blur, pointer leave, Escape, or disabled/unavailable trigger state according to the installed behavior.
 - Keep focus on the trigger; tooltip content must not receive focus.
@@ -210,8 +213,11 @@ Use this pattern only when a visible disabled state needs a short explanation. F
 | `text`                                      | `string / null`     | `null`                     | Short non-interactive help text                 | Required unless tooltip content slot is provided                                      | Preferred API for simple tooltip copy.                                                                                          |
 | Default slot                                | `Htmlable / string` | none                       | Exactly one trigger element or approved wrapper | Yes                                                                                   | The trigger must be focusable unless using an approved disabled-control wrapper.                                                |
 | Tooltip content slot                        | `string / null`     | `null`                     | Short inline text only                          | Required only when `text` is omitted                                                  | Do not include focusable or interactive elements.                                                                               |
-| `placement`                                 | `string`            | `top`                      | `top`, `right`, `bottom`, `left`                | No                                                                                    | Use logical placement where supported by the implementation. Collision behavior is component-owned.                             |
-| `align`                                     | `string`            | `center`                   | `start`, `center`, `end`                        | No                                                                                    | Gated unless source and UI Reference prove alignment behavior.                                                                  |
+| `placement`                                 | `string`            | `auto`                     | `auto`, `top`, `right`, `bottom`, `left`        | No                                                                                    | Auto placement is component-owned; mobile auto placement resolves below the trigger.                                             |
+| `align`                                     | `string`            | `center`                   | `start`, `center`, `end`                        | No                                                                                    | Aligns the container and caret to keep the tooltip in view and attached to the trigger.                                          |
+| `size`                                      | `string`            | `auto`                     | `auto`, `single`, `multi`, `definition`         | No                                                                                    | Single-line, multi-line, and definition sizing follow Tooltip structure rules.                                                   |
+| `kind`                                      | `string`            | `default`                  | `default`, `definition`                         | No                                                                                    | Definition applies dotted underline trigger treatment and definition sizing.                                                     |
+| `open`                                      | `bool`              | `false`                    | `true`, `false`                                 | No                                                                                    | UI Reference proof state only unless a product surface explicitly owns an initially open tooltip.                                |
 | `openDelay` / `open-delay` / `int / null`   | source default      | Approved millisecond value | No                                              | Gated unless source exposes timing as public API. Do not create local delay behavior. |                                                                                                                                 |
 | `closeDelay` / `close-delay` / `int / null` | source default      | Approved millisecond value | No                                              | Gated unless source exposes timing as public API.                                     |                                                                                                                                 |
 | `disabled`                                  | `bool`              | `false`                    | `true`, `false`                                 | No                                                                                    | Disables tooltip behavior, not necessarily the trigger.                                                                         |
@@ -227,8 +233,12 @@ Any prop not listed here is not public. If a feature needs another option, updat
 | `data-ui-component="tooltip"`                             | Implemented when emitted | Component | Identifies the root component for testing and diagnostics.                                |
 | `data-ui-tooltip-trigger`                                 | Implemented when emitted | Component | Identifies the trigger for component-owned behavior.                                      |
 | `data-ui-tooltip-content`                                 | Implemented when emitted | Component | Identifies the tooltip surface for component-owned behavior.                              |
+| `data-ui-tooltip-caret`                                   | Implemented when emitted | Component | Identifies the caret tip that associates the container to the trigger.                    |
 | `data-ui-tooltip-state="open / closed"`                   | Implemented when emitted | Component | Exposes open/closed state for tests and component-owned styling only.                     |
-| `data-ui-tooltip-placement="top / right / bottom / left"` | Implemented when emitted | Component | Exposes placement for tests and component-owned styling only.                             |
+| `data-ui-tooltip-placement="auto / top / right / bottom / left"` | Implemented when emitted | Component | Exposes requested placement for tests and component-owned styling only.           |
+| `data-ui-tooltip-resolved-placement`                      | Implemented when emitted | Component | Exposes resolved placement after auto/collision handling.                                |
+| `data-ui-tooltip-align="start / center / end"`            | Implemented when emitted | Component | Exposes alignment for tests and component-owned styling only.                            |
+| `data-ui-tooltip-size="single / multi / definition"`      | Implemented when emitted | Component | Exposes sizing contract for tests and component-owned styling only.                      |
 | Feature-local data attributes                             | Not allowed              | none      | Do not create local tooltip state, positioning, timing, or dismissal behavior attributes. |
 
 ## 5. Allowed variants, options, and modifiers

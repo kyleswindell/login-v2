@@ -1049,7 +1049,7 @@ class PlatformUiReferenceTest extends TestCase
             'tooltip' => ['Anatomy', 'Placement and alignment', 'Sizing and structure', 'Behavior and accessibility', 'Content', 'Related overlays', 'data-component-live-layout="tooltip-matrix"'],
             'text-input' => ['Login form field', 'Settings form field', 'Validation field', 'Read-only field', 'Disabled field', 'data-ui-reference-sample-type="field"'],
             'number-input' => ['Min/max/step', 'Increment/decrement', 'Error/warning icon', 'Compact/fluid', 'data-ui-reference-sample-type="field"'],
-            'checkbox' => ['Independent choice', 'Multi-select group', 'Settings group', 'Validation group', 'Selected and unselected', 'data-ui-reference-sample-type="selection"'],
+            'checkbox' => ['Independent choice', 'Multi-select group', 'Nested group', 'Group states', 'Overflow and alignment', 'data-component-live-layout="checkbox-matrix"'],
             'radio-button' => ['Vertical radio group', 'Horizontal radio group', 'Selected/unselected', 'Validation group', 'data-ui-reference-sample-type="selection"'],
             'notification' => ['Form validation error', 'Record saved', 'API failure', 'Background job completed', 'Maintenance notice', 'data-ui-reference-sample-type="alert"'],
             'modal' => ['Confirmation dialog', 'Form modal', 'Read-only detail', 'Destructive action', 'Wizard deferred', 'data-ui-component="modal-preview"'],
@@ -1071,7 +1071,7 @@ class PlatformUiReferenceTest extends TestCase
                 ->assertSee('ui-code-snippet', false)
                 ->assertDontSee('Family-depth implementation pending');
 
-            if (in_array($slug, ['button', 'menu-buttons', 'tooltip'], true)) {
+            if (in_array($slug, ['button', 'menu-buttons', 'tooltip', 'checkbox'], true)) {
                 $response
                     ->assertSee('data-ui-reference-live-examples-layout="flexible-matrix"', false)
                     ->assertDontSee('Live Examples Card');
@@ -1832,6 +1832,58 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('x-ui.content-switcher', $standard);
     }
 
+    public function test_checkbox_component_page_renders_installed_api_examples(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/components/checkbox')
+            ->assertOk()
+            ->assertSee('x-ui.checkbox / x-ui.checkbox-group')
+            ->assertSee('Independent choice')
+            ->assertSee('Multi-select group')
+            ->assertSee('States')
+            ->assertSee('Group states')
+            ->assertSee('Nested group')
+            ->assertSee('Overflow and alignment')
+            ->assertSee('data-component-live-layout="checkbox-matrix"', false)
+            ->assertSee('data-ui-checkbox-group', false)
+            ->assertSee('data-ui-checkbox-nested-group', false)
+            ->assertSee('data-ui-checkbox-parent', false)
+            ->assertSee('data-ui-checkbox-child', false)
+            ->assertSee('data-ui-checkbox-input', false)
+            ->assertSee('aria-checked="mixed"', false)
+            ->assertDontSee('Selected and unselected')
+            ->assertDontSee('Component-specific API pending correction')
+            ->assertDontSee('Family-depth implementation pending');
+
+        $checkboxView = file_get_contents(resource_path('views/components/ui/checkbox.blade.php'));
+        $checkboxGroupView = file_get_contents(resource_path('views/components/ui/checkbox-group.blade.php'));
+        $checkboxExamples = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/checkbox.blade.php'));
+        $checkboxCss = file_get_contents(resource_path('css/app.css'));
+        $checkboxScript = file_get_contents(resource_path('js/ui-controls/checkboxes.js'));
+        $uiControls = file_get_contents(resource_path('js/ui-controls.js'));
+        $appJs = file_get_contents(resource_path('js/app.js'));
+        $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
+        $standard = file_get_contents(base_path('docs/02-standards/ui/components/checkbox.md'));
+
+        $this->assertStringContainsString('data-ui-checkbox-input', $checkboxView);
+        $this->assertStringContainsString('data-ui-checkbox-root', $checkboxView);
+        $this->assertStringContainsString('data-ui-checkbox-nested-group', $checkboxGroupView);
+        $this->assertStringContainsString('data-ui-checkbox-parent', $checkboxGroupView);
+        $this->assertStringContainsString('data-ui-checkbox-child', $checkboxGroupView);
+        $this->assertStringContainsString('data-component-live-layout="checkbox-matrix"', $checkboxExamples);
+        $this->assertStringContainsString('Indeterminate appears only as a parent state', $checkboxExamples);
+        $this->assertStringContainsString('.ui-checkbox-input:indeterminate + .ui-checkbox-box', $checkboxCss);
+        $this->assertStringContainsString('.ui-checkbox-group.ui-checkbox-invalid .ui-checkbox-box', $checkboxCss);
+        $this->assertStringContainsString('export function initCheckboxes(root = document)', $checkboxScript);
+        $this->assertStringContainsString('syncParentFromChildren(group, parentRoot)', $checkboxScript);
+        $this->assertStringContainsString('export { initCheckboxes }', $uiControls);
+        $this->assertStringContainsString('initCheckboxes', $appJs);
+        $this->assertStringContainsString('\'checkbox\' => $this->checkboxComponent()', $catalog);
+        $this->assertStringContainsString('initCheckboxes exported from resources/js/ui-controls/checkboxes.js', $catalog);
+        $this->assertStringContainsString('Parent/child indeterminate', $standard);
+    }
+
     public function test_popover_component_page_renders_interactive_tip_and_trigger_examples(): void
     {
         $this->actingAsPlatformSuperAdmin();
@@ -2117,9 +2169,12 @@ class PlatformUiReferenceTest extends TestCase
             'checkbox' => [
                 'x-ui.checkbox / x-ui.checkbox-group',
                 'data-ui-checkbox-group',
+                'data-ui-checkbox-nested-group',
+                'initCheckboxes exported from resources/js/ui-controls/checkboxes.js',
                 'Independent choice',
                 'Multi-select group',
-                'Validation group',
+                'Nested group',
+                'Group states',
             ],
             'text-input' => [
                 'Native input[type=text/email/password/search/url/tel] with ui-field and ui-text-input classes',

@@ -272,9 +272,9 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 - Scope: Audit and prove the Checkbox standard against the installed API.
 - Acceptance:
   - source/API is confirmed as `x-ui.checkbox` / `x-ui.checkbox-group`
-  - page renders independent choice, multi-select group, settings group, validation group, checked/unchecked/indeterminate, disabled, read-only, error, and warning examples
-  - tests assert source/API markers, state proof, and no generic fallback
-- Implemented in: worklog-2-F-0044
+  - page renders independent choice, multi-select group, state matrix, group states, nested parent/child mixed state, overflow, and alignment examples
+  - tests assert source/API markers, nested behavior hooks, state proof, and no generic fallback
+- Implemented in: worklog-2-F-0053
 
 ### P2-F-CQ-154 - Text input component source/API and proof recovery
 - Status: Implemented Pending Review

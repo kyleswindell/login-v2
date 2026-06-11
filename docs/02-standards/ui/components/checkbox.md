@@ -2,8 +2,8 @@
 title: Checkbox
 slug: checkbox
 api_layer: Component API
-status: implemented-pending-correction
-system_maturity: partial
+status: implemented-pending-review
+system_maturity: implemented
 category: selection-controls
 priority: tier-a-baseline-app-development
 ui_reference_route: /platform/ui-reference/components/checkbox
@@ -12,10 +12,14 @@ source_owner: /platform/ui-reference/components/checkbox
 blade_api:
   - x-ui.checkbox
   - x-ui.checkbox-group
-javascript_api: []
+javascript_api:
+  - initCheckboxes
 source_files:
   - resources/views/components/ui/checkbox.blade.php
   - resources/views/components/ui/checkbox-group.blade.php
+  - resources/js/ui-controls/checkboxes.js
+  - resources/js/ui-controls.js
+  - resources/js/app.js
   - resources/css/app.css
 foundation_elements:
   - color
@@ -126,11 +130,11 @@ Checkbox is the installed Login App 2.0 selection-control API for zero-or-more c
 | Source owner                 | `/platform/ui-reference/components/checkbox`                                                                                          |
 | Blade API                    | `x-ui.checkbox`; `x-ui.checkbox-group`                                                                                                |
 | JavaScript API               | None required for baseline selected/unselected behavior                                                                               |
-| Source files                 | `resources/views/components/ui/checkbox.blade.php`; `resources/views/components/ui/checkbox-group.blade.php`; `resources/css/app.css` |
+| Source files                 | `resources/views/components/ui/checkbox.blade.php`; `resources/views/components/ui/checkbox-group.blade.php`; `resources/js/ui-controls/checkboxes.js`; `resources/css/app.css` |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, Icons where validation/status icons are rendered                                          |
 | Carbon benchmark             | Carbon Checkbox usage, style, and accessibility guidance                                                                              |
 
-`Approved API` means the checkbox UI exists or is represented in the UI Reference Library, but the page, canonical docs, public API, and tests must be corrected so the component is documented as a real zero-or-more selection API instead of a generic form-control placeholder.
+`Implemented Pending Review` means the checkbox UI is installed as a real zero-or-more selection API and is awaiting manual UI Reference approval.
 
 ## 3. Installed standard
 
@@ -287,9 +291,9 @@ Checkbox does not have app-approved decorative visual variants. The installed AP
 | -------------------------- | -------------- | --------------------------------------------------------------- | ----------------------------------- | ------------------------------------------------------------------------ |
 | Independent checkbox       | Usage mode     | Implemented / required proof                                    | `x-ui.checkbox`                     | One choice can be selected independently of nearby controls.             |
 | Multi-select group         | Usage mode     | Implemented / required proof                                    | `x-ui.checkbox-group`               | Users can select zero, one, or many options from a visible set.          |
-| Settings group             | Usage mode     | Implemented / required proof                                    | `x-ui.checkbox-group` with `helper` | App preferences are grouped under one visible label.                     |
 | Validation group           | Usage mode     | Implemented / required proof                                    | `error`, `warning`, `required`      | A form needs group-level validation or warning copy.                     |
-| Parent/child indeterminate | State/modifier | Implemented / required proof if the API exposes `indeterminate` | `indeterminate`                     | Parent summary represents some selected children.                        |
+| Group states               | Usage mode     | Implemented / required proof                                    | `helper`, `disabled`, `readonly`, `error`, `warning` | Group state applies to all relevant options with one group message. |
+| Parent/child indeterminate | State/modifier | Implemented / required proof                                    | nested option `children`; `initCheckboxes` | Parent summary represents selected children and owns the mixed state. |
 | Vertical group             | Layout option  | Implemented                                                     | `orientation="vertical"`            | Default group layout for readability.                                    |
 | Horizontal group           | Layout option  | Implemented only when proven; otherwise Deferred                | `orientation="horizontal"`          | Short predictable sets where row order remains clear.                    |
 | AI label presence          | Modifier       | Deferred / gated                                                | Not public                          | Do not render unless AI Label and an approved AI-assisted feature exist. |
@@ -315,7 +319,7 @@ Do not document Carbon-only variants or AI presence as implemented unless Login 
 | Success                | Not applicable by default                                            | Use Notification, Tag, or status text when successful submission needs confirmation.                                              |
 | Empty                  | Not applicable                                                       | Do not render an empty checkbox group.                                                                                            |
 
-States must be represented through the installed Component API and token-backed classes. Do not create state-only local CSS outside the API.
+States must be represented through the installed Component API and token-backed classes. Do not create state-only local CSS outside the API. Indeterminate must not be presented as a standalone checkbox variant; it is a parent state for nested checkbox groups or another owner-approved bulk selection pattern.
 
 ## 7. Token, class, and helper usage
 
@@ -501,12 +505,12 @@ The Checkbox page may use tabs, grouped examples, state matrices, or comparison 
 
 | Required proof                   | Rendered behavior                                                                                          | Variants/options shown                                                                                  |
 | -------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| Independent choice               | One setting can be toggled without affecting nearby choices.                                               | Unselected, selected, focus-visible, disabled, read-only, helper text, validation.                      |
-| Multi-select group               | Several visible choices can be selected at the same time under one group label.                            | Vertical group, selected/unselected mix, group helper text, group disabled/read-only states.            |
-| Settings group                   | Grouped app preferences with concise helper text and save-required behavior.                               | Default group, warning treatment, selected preferences, parent-owned external spacing.                  |
-| Validation group                 | Required acknowledgement or group validation shows visible error recovery.                                 | Error state, warning state, required acknowledgement, group-level helper/error association.             |
-| Parent-child indeterminate group | Parent checkbox summarizes child selections and displays mixed state when only some children are selected. | Indeterminate, nested options, selected children, unselected children, disabled child where applicable. |
-| Checkbox vs nearby controls      | Visual comparison clarifies Checkbox vs Radio button vs Toggle.                                            | Checkbox for zero-or-more, Radio button for exactly one, Toggle for immediate on/off.                   |
+| Independent choice               | One setting can be toggled without affecting nearby choices.                                               | Unselected, selected, helper text.                                                                      |
+| Multi-select group               | Several visible choices can be selected at the same time under one group label.                            | Vertical group, selected/unselected mix, group helper text.                                             |
+| State matrix                     | Individual state treatments are visible without turning each state into a separate live variant.           | Focus, disabled, read-only, error with message, warning with message, selected and unselected bases.    |
+| Group states                     | Helper, disabled, read-only, error, and warning states apply to the group without repeating messages.      | Group label, helper text, one error/warning message below the group, option-level highlighting.         |
+| Parent-child indeterminate group | Parent checkbox summarizes child selections and displays mixed state when only some children are selected. | Nested options, selected children, unselected children, parent checked/unchecked/mixed sync.            |
+| Overflow and alignment           | Long labels wrap instead of truncating and align from the top of the checkbox control.                     | Long wrapping label, vertical default, horizontal short-label group.                                    |
 
 ### 15.1. Required component contract display
 
@@ -515,7 +519,7 @@ The Checkbox page may use tabs, grouped examples, state matrices, or comparison 
 - Installed API and canonical Blade calls.
 - Props/options for individual checkbox and checkbox group.
 - Anatomy: group, group label, checkbox input/control, label, helper text, error/warning text, nested child items.
-- States: unselected, selected, indeterminate, hover, focus-visible, disabled, read-only, error, warning, helper text, group-level validation.
+- States: unselected, selected, parent indeterminate, hover, focus-visible, disabled, read-only, error, warning, helper text, group-level validation.
 - Behavior: pointer, keyboard, focus, group, validation, nested/indeterminate, wrapping, and responsive behavior.
 - Accessibility requirements.
 - Content guidance.
@@ -559,8 +563,8 @@ The page must render production code examples, not placeholders:
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The page does not show `Component-specific API pending correction` as the example call.
-- The page renders independent, multi-select, settings, validation, parent-child indeterminate, and nearby-control comparison examples.
-- The page distinguishes Checkbox from Radio button and Toggle.
+- The page renders independent, multi-select, state matrix, group state, parent-child indeterminate, overflow, and alignment examples.
+- The page distinguishes Checkbox from Radio button and Toggle through the written use/do-not-use contract; live examples belong to the Checkbox API only.
 - The page shows unselected, selected, indeterminate, focus-visible, disabled, read-only, error, warning, helper, and group-level validation states.
 - The page includes accessible group semantics guidance for `fieldset` and `legend`.
 - The page includes keyboard expectations: Tab/Shift+Tab for focus navigation and Space to toggle.
@@ -579,9 +583,10 @@ $response->assertSee('x-ui.checkbox');
 $response->assertSee('x-ui.checkbox-group');
 $response->assertSee('Independent choice');
 $response->assertSee('Multi-select group');
-$response->assertSee('Settings group');
-$response->assertSee('Validation group');
-$response->assertSee('Parent-child indeterminate group');
+$response->assertSee('States');
+$response->assertSee('Group states');
+$response->assertSee('Nested group');
+$response->assertSee('Overflow and alignment');
 $response->assertSee('unselected');
 $response->assertSee('selected');
 $response->assertSee('indeterminate');

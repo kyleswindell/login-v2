@@ -47,12 +47,7 @@ class UiReferenceComponentDepthCatalog
             'multiselect' => $this->multiselectComponent(),
             'slider' => $this->sliderComponent(),
 
-            'checkbox' => $this->selection('checkbox', 'Checkbox', 'Checkbox supports independent choices and multi-select groups.', 'checkbox', [
-                ['Independent choice', 'One setting can be toggled without affecting nearby choices.'],
-                ['Multi-select group', 'Several choices can be selected at the same time.'],
-                ['Settings group', 'Grouped app preferences with helper text.'],
-                ['Validation group', 'Required acknowledgement or group validation.'],
-            ]),
+            'checkbox' => $this->checkboxComponent(),
             'radio-button' => $this->selection('radio-button', 'Radio button', 'Radio buttons choose exactly one option from a visible set.', 'radio', [
                 ['Vertical radio group', 'Default layout for readable single-choice groups.'],
                 ['Horizontal radio group', 'Compact peer choices with short labels.'],
@@ -1451,6 +1446,77 @@ class UiReferenceComponentDepthCatalog
     }
 
     /**
+     * @return array<string, mixed>
+     */
+    private function checkboxComponent(): array
+    {
+        return array_replace($this->implemented('checkbox', 'Checkbox', 'Checkbox supports independent choices, visible zero-or-more choice groups, and parent-child mixed state where hierarchy is required.', [
+            [
+                'Independent choice',
+                'One setting can be toggled without affecting nearby choices.',
+                'selection',
+                [['type' => 'checkbox', 'title' => 'Independent choice']],
+                [
+                    $this->variant('Unselected', 'selection', [['type' => 'checkbox', 'title' => 'Unselected']]),
+                    $this->variant('Selected', 'selection', [['type' => 'checkbox', 'title' => 'Selected']]),
+                ],
+            ],
+            [
+                'Multi-select group',
+                'Several choices can be selected at the same time under one visible group label.',
+                'selection',
+                [['type' => 'checkbox', 'title' => 'Multi-select group']],
+                [
+                    $this->variant('Vertical group', 'selection', [['type' => 'checkbox', 'title' => 'Vertical group']]),
+                    $this->variant('Horizontal group', 'selection', [['type' => 'checkbox', 'title' => 'Horizontal group']]),
+                ],
+            ],
+            [
+                'Nested group',
+                'Parent choices summarize and control child choices with native mixed state.',
+                'selection',
+                [['type' => 'checkbox', 'title' => 'Nested group']],
+                [
+                    $this->variant('Parent mixed state', 'selection', [['type' => 'checkbox', 'title' => 'Parent mixed state']]),
+                    $this->variant('Child selection sync', 'selection', [['type' => 'checkbox', 'title' => 'Child selection sync']]),
+                ],
+            ],
+            [
+                'Group states',
+                'Helper, disabled, read-only, error, and warning states apply to the group without repeating messages per option.',
+                'selection',
+                [['type' => 'checkbox', 'title' => 'Group states']],
+                [
+                    $this->variant('Helper text', 'selection', [['type' => 'checkbox', 'title' => 'Helper text']]),
+                    $this->variant('Error message', 'selection', [['type' => 'checkbox', 'title' => 'Error message']]),
+                    $this->variant('Warning message', 'selection', [['type' => 'checkbox', 'title' => 'Warning message']]),
+                ],
+            ],
+            [
+                'Overflow and alignment',
+                'Long labels wrap below their own label text with the checkbox top aligned to the first line.',
+                'selection',
+                [['type' => 'checkbox', 'title' => 'Overflow and alignment']],
+                [
+                    $this->variant('Long wrapping label', 'selection', [['type' => 'checkbox', 'title' => 'Long wrapping label']]),
+                    $this->variant('Horizontal short labels', 'selection', [['type' => 'checkbox', 'title' => 'Horizontal short labels']]),
+                ],
+            ],
+        ], ['group label', 'native checkbox input/control', 'option label', 'helper text', 'single group validation message', 'nested children'], [
+            'Use when users choose zero or more options from a visible set.',
+            'Use a nested checkbox group only when a parent/child relationship is real and the parent can select all children.',
+        ], [
+            'Do not use standalone indeterminate checkboxes; mixed state belongs to parent-child or owner-approved bulk selection.',
+            'Do not truncate checkbox labels or hide small visible option sets in menus.',
+        ], [
+            'Unselected, selected, parent mixed, focus, disabled, read-only, error, warning, helper text, group-level validation, and wrapping labels.',
+        ]), [
+            'live_examples_view' => 'platform.ui-reference.components.live-examples.checkbox',
+            'live_examples_layout' => 'flexible-matrix',
+        ]);
+    }
+
+    /**
      * @param array<int, array{0: string, 1: string}> $scenarios
      *
      * @return array<string, mixed>
@@ -1854,6 +1920,7 @@ class UiReferenceComponentDepthCatalog
                 'accordion' => 'initAccordions exported from resources/js/ui-controls/accordions.js',
                 'dropdown' => 'initDropdowns exported from resources/js/ui-controls/dropdowns.js',
                 'content-switcher' => 'initContentSwitchers exported from resources/js/ui-controls/content-switchers.js',
+                'checkbox' => 'initCheckboxes exported from resources/js/ui-controls/checkboxes.js',
                 'file-uploader', 'number-input', 'select', 'radio-button', 'toggle', 'inline-loading', 'loading', 'progress-bar', 'progress-indicator', 'tag', 'structured-list', 'tile', 'link', 'pagination', 'search', 'text-input', 'textarea' => 'No dedicated JavaScript controller required for the installed baseline API.',
                 'tooltip', 'toggletip' => 'initDisclosureHelpers exported from resources/js/ui-controls.js where richer dismissal behavior is needed.',
                 'multiselect' => 'initMultiselects exported from resources/js/ui-controls/multiselects.js',
@@ -1875,6 +1942,7 @@ class UiReferenceComponentDepthCatalog
                 'file-uploader' => 'ui-field, ui-field-label, ui-input, data-ui-file-uploader',
                 'number-input' => 'ui-field, ui-field-label, ui-input',
                 'select' => 'ui-field, ui-field-label, ui-select',
+                'checkbox' => 'ui-checkbox, ui-checkbox-group, ui-checkbox-box, data-ui-checkbox-input, data-ui-checkbox-nested-group',
                 'radio-button' => 'ui-checkbox-group, ui-radio, ui-control-label',
                 'toggle' => 'ui-switch, ui-switch-input, ui-switch-track, ui-switch-thumb',
                 'content-switcher' => 'ui-content-switcher, ui-content-switcher-list, ui-content-switcher-option, ui-content-switcher-panel',

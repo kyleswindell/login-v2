@@ -6,6 +6,7 @@ import './dashboard-proof-demo';
 
 import {
     initAccordions,
+    initCheckboxes,
     initContentSwitchers,
     initDropdownActionMenus,
     initFilterPanels,
@@ -52,6 +53,7 @@ const lifecycleInitializers = [
     initInternalPhoneInputs,
     initDropdownActionMenus,
     initMenus,
+    initCheckboxes,
     initMultiselects,
     initPopovers,
     initTooltips,

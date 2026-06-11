@@ -31,8 +31,9 @@
         'ui-checkbox-warning-state' => (bool) $warning && ! $error,
     ]) }}
     data-ui-checkbox
+    data-ui-checkbox-root
     @if($readonly) data-ui-checkbox-readonly @endif
-    @if($indeterminate) data-ui-checkbox-indeterminate @endif
+    @if($indeterminate) data-ui-checkbox-indeterminate="true" @endif
 >
     <label class="ui-checkbox-control" for="{{ $checkboxId }}">
         <input
@@ -44,6 +45,7 @@
             @checked($checked)
             @disabled($disabled)
             @required($required)
+            data-ui-checkbox-input
             @if($readonly) aria-readonly="true" onclick="return false;" @endif
             @if($indeterminate) aria-checked="mixed" @endif
             @if($error) aria-invalid="true" @endif

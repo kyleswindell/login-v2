@@ -385,7 +385,7 @@ Do not hard-code link color, separator spacing, focus ring, typography size, men
 - When the current page is listed, it is the last item and is plain text with `aria-current="page"`.
 - Overflow starts after four listed page links, or five when the current page is listed, unless the installed component exposes a reviewed override.
 - Overflow keeps useful parent context and final page context visible at larger widths, with middle links in a menu.
-- Small breakpoints collapse overflow examples to the overflow trigger followed by one final breadcrumb.
+- Small breakpoints collapse overflow examples to the overflow trigger followed by one final breadcrumb, and the overflow menu must contain the prior breadcrumb links that were hidden at that breakpoint.
 - The overflow trigger opens a menu and closes on Escape, outside click, or the installed Menu/Menu buttons dismissal behavior.
 - Breadcrumbs must remain single-line. Use overflow/truncation before wrapping.
 - Parent Patterns own external spacing, page header composition, shell placement, and responsive breakpoints.
@@ -437,7 +437,7 @@ Do not hard-code link color, separator spacing, focus ring, typography size, men
 - The overflow trigger needs an accessible name such as `More breadcrumbs`.
 - The overflow trigger uses `aria-haspopup="menu"` and synchronized `aria-expanded` when the installed Menu/Menu buttons API uses those attributes.
 - The overflow trigger must be reachable in the tab order when overflow is rendered.
-- Overflow menu links must be keyboard reachable and activate like normal links.
+- Overflow menu links must render through the installed Menu item contract, be keyboard reachable, and activate like normal links.
 - Escape closes the overflow menu through the installed Menu/Menu buttons behavior.
 - Focus behavior for overflow open/close must follow the Menu/Menu buttons accessibility contract.
 - Do not hide required navigation context behind hover-only UI.

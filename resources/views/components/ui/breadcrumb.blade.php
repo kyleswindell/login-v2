@@ -44,6 +44,7 @@
 
     $hiddenItems = collect();
     $visibleItems = $normalizedItems;
+    $compactOverflowItems = collect();
 
     $truncateAfter = is_numeric($maxVisible) && (int) $maxVisible > 0
         ? (int) $maxVisible
@@ -56,6 +57,10 @@
         $tail = $normalizedItems->slice(-$tailCount)->values();
         $hiddenItems = $normalizedItems->slice($headCount, max(0, $normalizedItems->count() - $headCount - $tailCount))->values();
         $visibleItems = $head->concat($tail)->values();
+    }
+
+    if ($overflow && $normalizedItems->count() > 1) {
+        $compactOverflowItems = $normalizedItems->slice(0, -1)->filter(fn ($item) => ! $item['current'])->values();
     }
 @endphp
 
@@ -86,11 +91,34 @@
                         data-ui-breadcrumb-overflow-trigger
                         data-ui-menu-trigger
                     >
-                        <span aria-hidden="true">...</span>
+                        <x-heroicon-o-ellipsis-horizontal class="h-4 w-4" aria-hidden="true" />
                     </button>
-                    <div class="ui-menu ui-menu-sm ui-menu-align-bottom-start" role="menu" @if (! $menuOpen) hidden @endif data-ui-menu>
+                    <div
+                        class="ui-menu ui-menu-sm ui-menu-align-bottom-start ui-breadcrumb-overflow-menu"
+                        role="menu"
+                        data-ui-menu
+                        data-ui-menu-panel
+                        data-ui-menu-placement="bottom-start"
+                        data-ui-menu-size="sm"
+                        @if (! $menuOpen) hidden @endif
+                    >
                         @foreach ($hiddenItems as $hiddenItem)
-                            <a href="{{ $hiddenItem['href'] }}" class="ui-menu-item" role="menuitem">{{ $hiddenItem['label'] }}</a>
+                            <x-ui.menu-item
+                                href="{{ $hiddenItem['href'] }}"
+                                size="sm"
+                                class="ui-breadcrumb-overflow-desktop-item"
+                            >
+                                {{ $hiddenItem['label'] }}
+                            </x-ui.menu-item>
+                        @endforeach
+                        @foreach ($compactOverflowItems as $compactItem)
+                            <x-ui.menu-item
+                                href="{{ $compactItem['href'] }}"
+                                size="sm"
+                                class="ui-breadcrumb-overflow-compact-item"
+                            >
+                                {{ $compactItem['label'] }}
+                            </x-ui.menu-item>
                         @endforeach
                     </div>
                 </li>

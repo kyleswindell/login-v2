@@ -14,7 +14,7 @@ const openMenu = (trigger, menu) => {
 
 const getEnabledMenuItems = (menu) => Array.from(
     menu.querySelectorAll('[role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]'),
-).filter((item) => !item.matches(':disabled, [aria-disabled="true"]') && !item.closest('[hidden]'));
+).filter((item) => !item.matches(':disabled, [aria-disabled="true"]') && !item.closest('[hidden]') && item.getClientRects().length > 0);
 
 const openSubmenu = (trigger, panel) => {
     trigger.setAttribute('aria-expanded', 'true');

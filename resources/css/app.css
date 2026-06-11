@@ -1916,9 +1916,19 @@ Use targeted searches for the class family being changed before reading this fil
         color: var(--ui-icon-primary);
     }
 
+    .ui-breadcrumb-overflow-menu {
+        max-inline-size: min(18rem, calc(100vw - 2rem));
+    }
+
+    .ui-breadcrumb .ui-breadcrumb-overflow-compact-item {
+        display: none !important;
+    }
+
     @media (max-width: 640px) {
         .ui-breadcrumb[data-ui-breadcrumb-overflow='true'] .ui-breadcrumb-list {
             justify-content: flex-start;
+            max-inline-size: 100%;
+            overflow: visible;
         }
 
         .ui-breadcrumb[data-ui-breadcrumb-overflow='true'] .ui-breadcrumb-item:not(.ui-breadcrumb-overflow):not(:last-child) {
@@ -1940,6 +1950,14 @@ Use targeted searches for the class family being changed before reading this fil
         .ui-breadcrumb[data-ui-breadcrumb-overflow='true'] .ui-breadcrumb-link,
         .ui-breadcrumb[data-ui-breadcrumb-overflow='true'] .ui-breadcrumb-current {
             max-inline-size: min(12rem, calc(100vw - 7rem));
+        }
+
+        .ui-breadcrumb[data-ui-breadcrumb-overflow='true'] .ui-breadcrumb-overflow-desktop-item {
+            display: none !important;
+        }
+
+        .ui-breadcrumb[data-ui-breadcrumb-overflow='true'] .ui-breadcrumb-overflow-compact-item {
+            display: flex !important;
         }
     }
 

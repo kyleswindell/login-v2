@@ -1138,6 +1138,11 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('aria-haspopup="menu"', false)
             ->assertSee('aria-expanded="false"', false)
             ->assertSee('data-ui-menu', false)
+            ->assertSee('data-ui-menu-panel', false)
+            ->assertSee('data-ui-menu-item', false)
+            ->assertSee('ui-breadcrumb-overflow-menu', false)
+            ->assertSee('ui-breadcrumb-overflow-desktop-item', false)
+            ->assertSee('ui-breadcrumb-overflow-compact-item', false)
             ->assertSee('aria-current="page"', false)
             ->assertSee('Tenant admin')
             ->assertSeeInOrder(['Platform', 'Operations', 'Security settings', 'Domain rules'])
@@ -1155,7 +1160,7 @@ class PlatformUiReferenceTest extends TestCase
             $this->assertStringNotContainsString('aria-expanded="true"', $triggerMarkup);
         }
 
-        preg_match_all('/<div[^>]*class="ui-menu ui-menu-sm ui-menu-align-bottom-start"[^>]*data-ui-menu[^>]*>/s', $response->getContent(), $overflowMenus);
+        preg_match_all('/<div[^>]*class="[^"]*ui-menu[^"]*ui-menu-sm[^"]*ui-menu-align-bottom-start[^"]*ui-breadcrumb-overflow-menu[^"]*"[^>]*data-ui-menu[^>]*>/s', $response->getContent(), $overflowMenus);
 
         $this->assertNotEmpty($overflowMenus[0]);
 
@@ -1164,14 +1169,25 @@ class PlatformUiReferenceTest extends TestCase
         }
 
         $breadcrumbCatalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
+        $breadcrumbView = file_get_contents(resource_path('views/components/ui/breadcrumb.blade.php'));
         $breadcrumbCss = file_get_contents(resource_path('css/app.css'));
+        $menuScript = file_get_contents(resource_path('js/ui-controls/menus.js'));
 
         $this->assertIsString($breadcrumbCatalog);
+        $this->assertIsString($breadcrumbView);
         $this->assertIsString($breadcrumbCss);
+        $this->assertIsString($menuScript);
         $this->assertStringNotContainsString("'menu_open' => true", $breadcrumbCatalog);
+        $this->assertStringContainsString('<x-ui.menu-item', $breadcrumbView);
+        $this->assertStringContainsString('heroicon-o-ellipsis-horizontal', $breadcrumbView);
+        $this->assertStringContainsString('data-ui-menu-panel', $breadcrumbView);
+        $this->assertStringContainsString('ui-breadcrumb-overflow-compact-item', $breadcrumbView);
         $this->assertStringContainsString(".ui-breadcrumb[data-ui-breadcrumb-overflow='true'] .ui-breadcrumb-overflow", $breadcrumbCss);
         $this->assertStringContainsString(".ui-breadcrumb[data-ui-breadcrumb-overflow='true'] .ui-breadcrumb-item:not(.ui-breadcrumb-overflow):not(:last-child)", $breadcrumbCss);
+        $this->assertStringContainsString('.ui-breadcrumb .ui-breadcrumb-overflow-compact-item', $breadcrumbCss);
+        $this->assertStringContainsString('.ui-breadcrumb[data-ui-breadcrumb-overflow=\'true\'] .ui-breadcrumb-overflow-desktop-item', $breadcrumbCss);
         $this->assertStringContainsString('calc(100vw - 7rem)', $breadcrumbCss);
+        $this->assertStringContainsString('item.getClientRects().length > 0', $menuScript);
     }
 
     public function test_tabs_component_recovery_page_renders_required_examples(): void

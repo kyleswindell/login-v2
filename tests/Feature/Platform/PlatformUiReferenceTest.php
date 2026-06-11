@@ -855,9 +855,11 @@ class PlatformUiReferenceTest extends TestCase
 
         $accordionScript = file_get_contents(resource_path('js/ui-controls/accordions.js'));
         $accordionCss = file_get_contents(resource_path('css/app.css'));
+        $flushExample = file_get_contents(resource_path('views/platform/ui-reference/components/examples/accordion-variant-flush.blade.php'));
 
         $this->assertIsString($accordionScript);
         $this->assertIsString($accordionCss);
+        $this->assertIsString($flushExample);
         $this->assertStringContainsString('prefers-reduced-motion: reduce', $accordionScript);
         $this->assertStringContainsString('initAccordions = (root = document)', $accordionScript);
         $this->assertStringContainsString('data-ui-accordion-focus', $accordionScript);
@@ -870,6 +872,7 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('inline-size: calc(100% + 2rem);', $accordionCss);
         $this->assertStringContainsString('margin-inline: -1rem;', $accordionCss);
         $this->assertStringContainsString('.ui-accordion-contained', $accordionCss);
+        $this->assertStringNotContainsString('border-y py-2', $flushExample);
         $this->assertMatchesRegularExpression('/\.ui-accordion\s*\{\s*@apply overflow-hidden;\s*background-color: transparent;/s', $accordionCss);
         $this->assertDoesNotMatchRegularExpression('/\.ui-accordion\s*\{[^}]*rounded[^}]*border/s', $accordionCss);
         $this->assertStringNotContainsString('.ui-accordion-panel {'."\n".'        @apply border-t;', $accordionCss);

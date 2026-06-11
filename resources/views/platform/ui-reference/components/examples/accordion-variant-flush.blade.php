@@ -14,6 +14,6 @@
     ];
 @endphp
 
-<div class="max-w-sm border-y py-2" style="border-color: var(--ui-border-subtle-01);">
+<div class="max-w-sm">
     <x-ui.accordion id="accordion-variant-flush-example" alignment="flush" :items="$items" />
 </div>

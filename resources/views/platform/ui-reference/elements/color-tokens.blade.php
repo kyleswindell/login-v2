@@ -109,7 +109,7 @@
             <div class="mt-5 grid gap-4 xl:grid-cols-2">
                 <article class="rounded-lg border p-4" style="border-color: var(--ui-border-default); background: var(--ui-layer-01); color: var(--ui-text-primary);">
                     <p class="text-sm font-semibold">Component tokens</p>
-                    <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">Login App currently uses T1 component classes backed by role tokens. A separate component-token layer is queued only if component-specific overrides become too complex for role tokens.</p>
+                    <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">Login App currently uses Component classes backed by role tokens. A separate component-token layer is queued only if component-specific overrides become too complex for role tokens.</p>
                 </article>
                 <article class="rounded-lg border p-4" style="border-color: var(--ui-border-default); background: var(--ui-layer-01); color: var(--ui-text-primary);">
                     <p class="text-sm font-semibold">AI tokens</p>

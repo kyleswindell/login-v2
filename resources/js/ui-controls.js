@@ -1,7 +1,14 @@
+export { initAccordions } from './ui-controls/accordions';
 export { initDropdownActionMenus } from './ui-controls/dropdown-action-menus';
 export { initFilterPanels } from './ui-controls/filter-panels';
 export { initInternalPhoneInputs } from './ui-controls/phone-inputs';
+export { initMenus } from './ui-controls/menus';
+export { initMultiselects } from './ui-controls/multiselects';
+export { initPopovers } from './ui-controls/popovers';
 export { initSearchableSelects } from './ui-controls/searchable-selects';
 export { initSelectableOptionStates } from './ui-controls/selectable-options';
+export { initSliders } from './ui-controls/sliders';
 export { initTableSearchInputs } from './ui-controls/table-search';
+export { initTabs } from './ui-controls/tabs';
 export { initThemeModeControls, refreshThemeMode } from './ui-controls/theme-mode';
+export { initTreeViews } from './ui-controls/tree-views';

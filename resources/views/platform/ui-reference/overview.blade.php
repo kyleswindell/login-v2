@@ -13,7 +13,7 @@
             <article class="ui-card">
                 <p class="ui-kicker">Foundation Layer</p>
                 <h2 class="ui-card-title mt-2">Foundation Elements</h2>
-                <p class="ui-card-copy">Token, grid, spacing, typography, iconography, motion, and theme standards that T1 components consume rather than redefine.</p>
+                <p class="ui-card-copy">Token, grid, spacing, typography, iconography, motion, and theme standards that Components consume rather than redefine.</p>
                 <a wire:navigate href="{{ route('platform.ui-reference.elements.overview') }}" class="ui-link mt-3 inline-flex">Open foundation element catalog</a>
             </article>
             <article class="ui-card">
@@ -43,9 +43,9 @@
                     ['label' => 'Patterns', 'copy' => 'Tier 2 reusable compositions built from Component owners, including forms, navigation, data, and overlays.'],
                     ['label' => 'T3 Feature Modules', 'copy' => 'App-specific workflows that consume the shared lower tiers.'],
                 ] as $tier)
-                    <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                        <p class="text-sm font-semibold text-white">{{ $tier['label'] }}</p>
-                        <p class="mt-2 text-sm text-slate-400">{{ $tier['copy'] }}</p>
+                    <div class="ui-reference-subtle-surface p-4">
+                        <p class="text-sm font-semibold ui-reference-text-strong">{{ $tier['label'] }}</p>
+                        <p class="mt-2 text-sm ui-reference-text-muted">{{ $tier['copy'] }}</p>
                     </div>
                 @endforeach
             </div>
@@ -56,14 +56,14 @@
             <p class="ui-card-copy mt-2">The primary Component review surface is now the component catalog. Legacy grouped pages remain available only as index and compatibility surfaces.</p>
             <div class="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-4" data-ui-reference-catalog-summary>
                 @foreach ([
-                    ['label' => 'Implement Component Page', 'count' => collect($componentCatalog)->where('disposition', 'Implement T1 Page')->count()],
-                    ['label' => 'Represent As Pattern', 'count' => collect($componentCatalog)->where('disposition', 'Represent As T2 Pattern')->count()],
+                    ['label' => 'Implement Component Page', 'count' => collect($componentCatalog)->where('disposition', 'Implement Component Page')->count()],
+                    ['label' => 'Represent As Pattern', 'count' => collect($componentCatalog)->where('disposition', 'Represent As Pattern')->count()],
                     ['label' => 'Queued Gap', 'count' => collect($componentCatalog)->where('disposition', 'Queued Gap')->count()],
                     ['label' => 'Not Applicable Yet', 'count' => collect($componentCatalog)->where('disposition', 'Not Applicable Yet')->count()],
                 ] as $metric)
-                    <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                        <p class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">{{ $metric['label'] }}</p>
-                        <p class="mt-2 text-2xl font-semibold text-white">{{ $metric['count'] }}</p>
+                    <div class="ui-reference-subtle-surface p-4">
+                        <p class="text-xs font-semibold uppercase tracking-[0.16em] ui-reference-text-muted">{{ $metric['label'] }}</p>
+                        <p class="mt-2 text-2xl font-semibold ui-reference-text-strong">{{ $metric['count'] }}</p>
                     </div>
                 @endforeach
             </div>
@@ -72,35 +72,35 @@
         <section class="ui-card">
             <h2 class="ui-card-title">Pattern Coverage</h2>
             <div class="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                <a wire:navigate href="{{ route('platform.ui-reference.patterns.forms') }}" class="rounded-lg border border-slate-800 bg-slate-950/70 p-4 transition hover:border-slate-600 hover:bg-slate-900">
+                <a wire:navigate href="{{ route('platform.ui-reference.patterns.forms') }}" class="ui-reference-interactive-surface p-4">
                     <p class="ui-kicker">Form Patterns</p>
-                    <h3 class="mt-2 text-base font-semibold text-white">Form Group Through Validation Summary</h3>
-                    <p class="mt-2 text-sm text-slate-400">Reusable form scaffolding built from the Tier 1 controls and feedback baseline.</p>
+                    <h3 class="mt-2 text-base font-semibold ui-reference-text-strong">Form Group Through Validation Summary</h3>
+                    <p class="mt-2 text-sm ui-reference-text-muted">Reusable form scaffolding built from the Tier 1 controls and feedback baseline.</p>
                 </a>
-                <a wire:navigate href="{{ route('platform.ui-reference.patterns.data-content') }}" class="rounded-lg border border-slate-800 bg-slate-950/70 p-4 transition hover:border-slate-600 hover:bg-slate-900">
+                <a wire:navigate href="{{ route('platform.ui-reference.patterns.data-content') }}" class="ui-reference-interactive-surface p-4">
                     <p class="ui-kicker">Data + Content</p>
-                    <h3 class="mt-2 text-base font-semibold text-white">Read-only, summary, and empty-state patterns</h3>
-                    <p class="mt-2 text-sm text-slate-400">Shared content blocks, stat cards, key-value displays, and list rows.</p>
+                    <h3 class="mt-2 text-base font-semibold ui-reference-text-strong">Read-only, summary, and empty-state patterns</h3>
+                    <p class="mt-2 text-sm ui-reference-text-muted">Shared content blocks, stat cards, key-value displays, and list rows.</p>
                 </a>
-                <a wire:navigate href="{{ route('platform.ui-reference.patterns.navigation') }}" class="rounded-lg border border-slate-800 bg-slate-950/70 p-4 transition hover:border-slate-600 hover:bg-slate-900">
+                <a wire:navigate href="{{ route('platform.ui-reference.patterns.navigation') }}" class="ui-reference-interactive-surface p-4">
                     <p class="ui-kicker">Navigation + Actions</p>
-                    <h3 class="mt-2 text-base font-semibold text-white">Page header, sub-navigation, grouped actions</h3>
-                    <p class="mt-2 text-sm text-slate-400">Pattern-level proof for page title/action rows, section navigation, and compact action menus.</p>
+                    <h3 class="mt-2 text-base font-semibold ui-reference-text-strong">Page header, sub-navigation, grouped actions</h3>
+                    <p class="mt-2 text-sm ui-reference-text-muted">Pattern-level proof for page title/action rows, section navigation, and compact action menus.</p>
                 </a>
-                <a wire:navigate href="{{ route('platform.ui-reference.patterns.tables') }}" class="rounded-lg border border-slate-800 bg-slate-950/70 p-4 transition hover:border-slate-600 hover:bg-slate-900">
+                <a wire:navigate href="{{ route('platform.ui-reference.patterns.tables') }}" class="ui-reference-interactive-surface p-4">
                     <p class="ui-kicker">Enhanced Data Table</p>
-                    <h3 class="mt-2 text-base font-semibold text-white">Search, filter, sort, pagination, drawers</h3>
-                    <p class="mt-2 text-sm text-slate-400">Advanced table proof for internal operator surfaces without feature coupling.</p>
+                    <h3 class="mt-2 text-base font-semibold ui-reference-text-strong">Search, filter, sort, pagination, drawers</h3>
+                    <p class="mt-2 text-sm ui-reference-text-muted">Advanced table proof for internal operator surfaces without feature coupling.</p>
                 </a>
-                <a wire:navigate href="{{ route('platform.ui-reference.patterns.layout') }}" class="rounded-lg border border-slate-800 bg-slate-950/70 p-4 transition hover:border-slate-600 hover:bg-slate-900">
+                <a wire:navigate href="{{ route('platform.ui-reference.patterns.layout') }}" class="ui-reference-interactive-surface p-4">
                     <p class="ui-kicker">Layout + Dashboard</p>
-                    <h3 class="mt-2 text-base font-semibold text-white">Dashboard grid and section-block proof</h3>
-                    <p class="mt-2 text-sm text-slate-400">Shared dashboard-shell and content-structure rules for internal pages.</p>
+                    <h3 class="mt-2 text-base font-semibold ui-reference-text-strong">Dashboard grid and section-block proof</h3>
+                    <p class="mt-2 text-sm ui-reference-text-muted">Shared dashboard-shell and content-structure rules for internal pages.</p>
                 </a>
-                <a wire:navigate href="{{ route('platform.ui-reference.patterns.archetypes') }}" class="rounded-lg border border-slate-800 bg-slate-950/70 p-4 transition hover:border-slate-600 hover:bg-slate-900">
+                <a wire:navigate href="{{ route('platform.ui-reference.patterns.archetypes') }}" class="ui-reference-interactive-surface p-4">
                     <p class="ui-kicker">Archetype Proofs</p>
-                    <h3 class="mt-2 text-base font-semibold text-white">Dashboard, list, detail, form, setup, settings, account</h3>
-                    <p class="mt-2 text-sm text-slate-400">Batch B review targets for the reusable internal app-scaffolding contract.</p>
+                    <h3 class="mt-2 text-base font-semibold ui-reference-text-strong">Dashboard, list, detail, form, setup, settings, account</h3>
+                    <p class="mt-2 text-sm ui-reference-text-muted">Batch B review targets for the reusable internal app-scaffolding contract.</p>
                 </a>
             </div>
         </section>
@@ -109,10 +109,10 @@
             <h2 class="ui-card-title">Component Implementation Checklist</h2>
             <p class="ui-card-copy mt-2">Use this checklist to validate each Component in `/platform/ui-reference` before moving matrix rows from `Ready For Review` to `Locked`.</p>
 
-            <div class="mt-4 overflow-x-auto rounded-lg border border-slate-800 bg-slate-900/70">
-                <table class="min-w-[920px] w-full divide-y divide-slate-800">
-                    <thead class="bg-slate-900">
-                        <tr class="text-left text-xs uppercase tracking-[0.2em] text-slate-500">
+            <div class="mt-4 ui-reference-table-shell overflow-x-auto">
+                <table class="min-w-[920px] w-full ui-reference-table-body">
+                    <thead class="ui-reference-table-head">
+                        <tr class="text-left text-xs uppercase tracking-[0.2em] ui-reference-text-muted">
                             <th class="px-4 py-3">Component Group</th>
                             <th class="px-4 py-3">UI Reference View</th>
                             <th class="px-4 py-3">States</th>
@@ -121,74 +121,74 @@
                             <th class="px-4 py-3">A11y</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-slate-800 text-sm text-slate-200">
+                    <tbody class="ui-reference-table-body text-sm ui-reference-text-strong">
                         <tr>
-                            <td class="px-4 py-3 text-white">Buttons + Icon Buttons</td>
-                            <td class="px-4 py-3"><a wire:navigate href="{{ route('platform.ui-reference.components.actions') }}" class="text-sky-300 hover:text-sky-200">Components / Actions</a></td>
+                            <td class="px-4 py-3 ui-reference-text-strong">Buttons + Icon Buttons</td>
+                            <td class="px-4 py-3"><a wire:navigate href="{{ route('platform.ui-reference.components.actions') }}" class="ui-link">Components / Actions</a></td>
                             <td class="px-4 py-3">default, hover, focus, active, disabled, loading</td>
                             <td class="px-4 py-3">light/dark parity required</td>
                             <td class="px-4 py-3">stack + wrap verified</td>
                             <td class="px-4 py-3">label + focus visible</td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-3 text-white">Badges + Status</td>
-                            <td class="px-4 py-3"><a wire:navigate href="{{ route('platform.ui-reference.components.status') }}" class="text-sky-300 hover:text-sky-200">Components / Status</a></td>
+                            <td class="px-4 py-3 ui-reference-text-strong">Badges + Status</td>
+                            <td class="px-4 py-3"><a wire:navigate href="{{ route('platform.ui-reference.components.status') }}" class="ui-link">Components / Status</a></td>
                             <td class="px-4 py-3">semantic, base, outline, inline status</td>
                             <td class="px-4 py-3">contrast-safe tokens</td>
                             <td class="px-4 py-3">table + inline display</td>
                             <td class="px-4 py-3">not color-only signal</td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-3 text-white">Inputs + Forms</td>
-                            <td class="px-4 py-3"><a wire:navigate href="{{ route('platform.ui-reference.components.forms') }}" class="text-sky-300 hover:text-sky-200">Components / Forms</a></td>
+                            <td class="px-4 py-3 ui-reference-text-strong">Inputs + Forms</td>
+                            <td class="px-4 py-3"><a wire:navigate href="{{ route('platform.ui-reference.components.forms') }}" class="ui-link">Components / Forms</a></td>
                             <td class="px-4 py-3">default, focus, error, readonly, disabled, selected</td>
                             <td class="px-4 py-3">light/dark parity required</td>
                             <td class="px-4 py-3">single + 2-col layouts</td>
                             <td class="px-4 py-3">labels + error links</td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-3 text-white">Utility Primitives</td>
-                            <td class="px-4 py-3"><a wire:navigate href="{{ route('platform.ui-reference.components.forms') }}" class="text-sky-300 hover:text-sky-200">Components / Forms</a></td>
+                            <td class="px-4 py-3 ui-reference-text-strong">Utility Primitives</td>
+                            <td class="px-4 py-3"><a wire:navigate href="{{ route('platform.ui-reference.components.forms') }}" class="ui-link">Components / Forms</a></td>
                             <td class="px-4 py-3">default, hover, focus, loading</td>
                             <td class="px-4 py-3">token-aligned utility states</td>
                             <td class="px-4 py-3">inline + wrapped examples</td>
                             <td class="px-4 py-3">labels + tooltip semantics</td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-3 text-white">Table Baseline</td>
-                            <td class="px-4 py-3"><a wire:navigate href="{{ route('platform.ui-reference.patterns.tables') }}" class="text-sky-300 hover:text-sky-200">Patterns / Tables</a></td>
+                            <td class="px-4 py-3 ui-reference-text-strong">Table Baseline</td>
+                            <td class="px-4 py-3"><a wire:navigate href="{{ route('platform.ui-reference.patterns.tables') }}" class="ui-link">Patterns / Tables</a></td>
                             <td class="px-4 py-3">filters, rows/page, paging, empty, row action</td>
                             <td class="px-4 py-3">light/dark parity required</td>
                             <td class="px-4 py-3">overflow wrappers</td>
                             <td class="px-4 py-3">table semantics + keyboard</td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-3 text-white">Drawer + Modal</td>
-                            <td class="px-4 py-3"><a wire:navigate href="{{ route('platform.ui-reference.patterns.overlays') }}" class="text-sky-300 hover:text-sky-200">Patterns / Overlays</a></td>
+                            <td class="px-4 py-3 ui-reference-text-strong">Drawer + Modal</td>
+                            <td class="px-4 py-3"><a wire:navigate href="{{ route('platform.ui-reference.patterns.overlays') }}" class="ui-link">Patterns / Overlays</a></td>
                             <td class="px-4 py-3">open, close, focus return, danger confirm</td>
                             <td class="px-4 py-3">theme-safe layering</td>
                             <td class="px-4 py-3">mobile panel fit</td>
                             <td class="px-4 py-3">escape + aria-modal</td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-3 text-white">Toast + Inline Alert</td>
-                            <td class="px-4 py-3"><a wire:navigate href="{{ route('platform.ui-reference.patterns.overlays') }}" class="text-sky-300 hover:text-sky-200">Patterns / Overlays</a></td>
+                            <td class="px-4 py-3 ui-reference-text-strong">Toast + Inline Alert</td>
+                            <td class="px-4 py-3"><a wire:navigate href="{{ route('platform.ui-reference.patterns.overlays') }}" class="ui-link">Patterns / Overlays</a></td>
                             <td class="px-4 py-3">info, success, warning, danger, dismiss</td>
                             <td class="px-4 py-3">semantic token map</td>
                             <td class="px-4 py-3">stack behavior</td>
                             <td class="px-4 py-3">live region + role</td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-3 text-white">Sidebar + Account Menu</td>
-                            <td class="px-4 py-3"><a wire:navigate href="{{ route('platform.ui-reference.patterns.navigation') }}" class="text-sky-300 hover:text-sky-200">Patterns / Navigation</a></td>
+                            <td class="px-4 py-3 ui-reference-text-strong">Sidebar + Account Menu</td>
+                            <td class="px-4 py-3"><a wire:navigate href="{{ route('platform.ui-reference.patterns.navigation') }}" class="ui-link">Patterns / Navigation</a></td>
                             <td class="px-4 py-3">open/close, active route, context switch</td>
                             <td class="px-4 py-3">theme-safe shell</td>
                             <td class="px-4 py-3">desktop + mobile modal</td>
                             <td class="px-4 py-3">escape + focus order</td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-3 text-white">Layout + Scaffolding</td>
-                            <td class="px-4 py-3"><a wire:navigate href="{{ route('platform.ui-reference.patterns.navigation') }}" class="text-sky-300 hover:text-sky-200">Patterns / Navigation</a></td>
+                            <td class="px-4 py-3 ui-reference-text-strong">Layout + Scaffolding</td>
+                            <td class="px-4 py-3"><a wire:navigate href="{{ route('platform.ui-reference.patterns.navigation') }}" class="ui-link">Patterns / Navigation</a></td>
                             <td class="px-4 py-3">passive structural baseline</td>
                             <td class="px-4 py-3">spacing and panel tokens</td>
                             <td class="px-4 py-3">container + grid collapse</td>

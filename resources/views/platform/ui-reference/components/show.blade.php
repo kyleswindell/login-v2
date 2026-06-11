@@ -5,452 +5,284 @@
 
     @php
         $slug = $catalogComponent['slug'];
-        $ownerRoute = $catalogComponent['owner_route'];
-        $implementationPages = ['button', 'tag', 'text-input', 'select', 'date-picker', 'dropdown', 'file-uploader', 'search', 'link', 'tile', 'toggle', 'modal', 'notification', 'inline-loading', 'loading', 'tooltip', 'toggletip', 'menu-buttons', 'data-table', 'accordion', 'breadcrumb'];
+        $examples = $catalogComponent['live_examples'] ?? [];
+        $firstExample = $examples[0]['id'] ?? 'example';
     @endphp
 
     <section class="flex flex-1 flex-col gap-6" data-ui-reference-component="{{ $slug }}" data-ui-reference-t1-component="{{ $slug }}" data-ui-reference-component-disposition="{{ $catalogComponent['disposition'] }}" data-ui-reference-component-status="{{ $catalogComponent['status'] }}">
         <div>
-            <p class="ui-kicker">{{ $catalogComponent['group'] }} - {{ $catalogComponent['disposition'] }}</p>
+            <p class="ui-kicker">{{ $catalogComponent['group'] }} - {{ $catalogComponent['priority_label'] }}</p>
             <h1 class="ui-page-header-title">{{ $catalogComponent['label'] }}</h1>
             <p class="ui-page-header-copy">{{ $catalogComponent['summary'] }}</p>
-            <p class="ui-page-header-copy mt-3">This page shows the approved application implementation of this component. Use the documented variants, states, and helper APIs shown here. If a feature requires behavior not represented here, update the component contract or compose a higher-level Pattern instead of modifying the component locally.</p>
+            <p class="ui-page-header-copy mt-3">Use this page to see what the component looks like in the app, when to use it, how it behaves, and which Foundation Elements it consumes. If a feature needs behavior that is not represented here, update this contract or compose a higher-level Pattern instead of creating local one-off UI.</p>
         </div>
 
-        <section class="ui-card" data-component-section="purpose">
-            <div class="grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(18rem,0.6fr)]">
+        <section class="ui-card" data-component-card="purpose" data-component-section="purpose">
+            <div class="grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(18rem,0.55fr)]">
                 <div>
-                    <p class="ui-kicker">Purpose</p>
-                    <h2 class="ui-card-title mt-2">{{ $catalogComponent['label'] }} contract</h2>
+                    <div class="flex flex-wrap items-center gap-3">
+                        <p class="ui-kicker">Component overview</p>
+                        <span class="inline-flex items-center whitespace-nowrap rounded-full border px-2.5 py-1 text-xs font-semibold" style="border-color: var(--ui-border-subtle-01); color: var(--ui-text-secondary);">{{ $catalogComponent['status'] }}</span>
+                    </div>
+                    <h2 class="ui-card-title mt-2">{{ $catalogComponent['label'] }}</h2>
                     <p class="ui-card-copy mt-2">{{ $catalogComponent['purpose'] }}</p>
+                    <p class="mt-4 text-sm leading-6" style="color: var(--ui-text-secondary);">{{ $catalogComponent['current_decision'] }}</p>
                 </div>
-                <aside class="rounded-lg border border-slate-800 bg-slate-950/70 p-4" data-component-section="implementation-status">
-                    <p class="ui-kicker">Implementation Status</p>
-                    <p class="mt-2 text-base font-semibold text-white">{{ $catalogComponent['status'] }}</p>
-                    <p class="mt-2 text-sm text-slate-400">{{ $catalogComponent['priority_label'] }}</p>
+                <aside class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-component-section="implementation-status">
+                    <p class="ui-kicker">Implementation status</p>
+                    <dl class="mt-3 space-y-3 text-sm">
+                        <div>
+                            <dt style="color: var(--ui-text-helper);">Category</dt>
+                            <dd class="mt-1 font-semibold" style="color: var(--ui-text-primary);">{{ $catalogComponent['category'] }}</dd>
+                        </div>
+                        <div>
+                            <dt style="color: var(--ui-text-helper);">Source ownership</dt>
+                            <dd class="mt-1 break-all font-semibold" style="color: var(--ui-text-primary);">{{ $catalogComponent['source_owner'] }}</dd>
+                        </div>
+                        <div>
+                            <dt style="color: var(--ui-text-helper);">Canonical doc</dt>
+                            <dd class="mt-1 break-all font-semibold">
+                                <a wire:navigate href="{{ route('platform.docs.index', ['path' => $catalogComponent['doc_path']]) }}" class="ui-link">{{ $catalogComponent['doc_path'] }}</a>
+                            </dd>
+                        </div>
+                    </dl>
+                    <p class="mt-4 text-xs leading-5" style="color: var(--ui-text-helper);">{{ $catalogComponent['carbon_parity_note'] }}</p>
+                    @if (filled($catalogComponent['feature_flag_note'] ?? null))
+                        <p class="mt-3 text-xs leading-5" style="color: var(--ui-text-helper);">{{ $catalogComponent['feature_flag_note'] }}</p>
+                    @endif
                 </aside>
             </div>
         </section>
 
-        <section class="grid gap-4 xl:grid-cols-2">
-            <article class="ui-card" data-component-section="use-when">
-                <h2 class="ui-card-title">Use when</h2>
-                <ul class="mt-4 space-y-2 text-sm text-slate-300">
-                    @foreach ($catalogComponent['use_when'] as $item)
-                        <li>{{ $item }}</li>
-                    @endforeach
-                </ul>
-            </article>
-            <article class="ui-card" data-component-section="do-not-use-when">
-                <h2 class="ui-card-title">Do not use when</h2>
-                <ul class="mt-4 space-y-2 text-sm text-slate-300">
-                    @foreach ($catalogComponent['do_not_use_when'] as $item)
-                        <li>{{ $item }}</li>
-                    @endforeach
-                </ul>
-            </article>
+        <section class="ui-card" data-component-card="use-cases">
+            <p class="ui-kicker">Usage boundary</p>
+            <h2 class="ui-card-title mt-2">Use cases</h2>
+            <div class="mt-5 grid gap-4 xl:grid-cols-2">
+                <article class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-component-section="use-when">
+                    <h3 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Use when</h3>
+                    <ul class="mt-3 space-y-2 text-sm leading-6" style="color: var(--ui-text-secondary);">
+                        @foreach ($catalogComponent['use_when'] as $item)
+                            <li>{{ $item }}</li>
+                        @endforeach
+                    </ul>
+                </article>
+                <article class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-component-section="do-not-use-when">
+                    <h3 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Do not use when</h3>
+                    <ul class="mt-3 space-y-2 text-sm leading-6" style="color: var(--ui-text-secondary);">
+                        @foreach ($catalogComponent['do_not_use_when'] as $item)
+                            <li>{{ $item }}</li>
+                        @endforeach
+                    </ul>
+                </article>
+            </div>
         </section>
 
-        <section class="ui-card">
-            <div class="grid gap-5 xl:grid-cols-[minmax(0,1.5fr)_minmax(18rem,0.5fr)]">
-                <div>
-                    <h2 class="ui-card-title">Variants And States</h2>
-                    <div class="mt-4" data-component-section="variants">
-                        <p class="text-sm font-semibold text-slate-100">Variants</p>
-                        <div class="mt-2 flex flex-wrap gap-2">
-                            @foreach ($catalogComponent['variants'] as $variant)
-                                <span class="rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-300">{{ $variant }}</span>
-                            @endforeach
-                        </div>
+        <section class="ui-card" data-component-card="component-contract">
+            <p class="ui-kicker">Implementation rules</p>
+            <h2 class="ui-card-title mt-2">Component contract</h2>
+            <p class="ui-card-copy mt-2">Use these requirements when building, reviewing, or composing this component.</p>
+
+            <div class="mt-5 grid gap-4 xl:grid-cols-2">
+                <article class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-component-section="anatomy">
+                    <h3 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Anatomy</h3>
+                    <ul class="mt-3 space-y-2 text-sm leading-6" style="color: var(--ui-text-secondary);">
+                        @foreach ($catalogComponent['anatomy'] as $part)
+                            <li>{{ $part }}</li>
+                        @endforeach
+                    </ul>
+                </article>
+                <article class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-component-section="states">
+                    <h3 class="text-sm font-semibold" style="color: var(--ui-text-primary);">States</h3>
+                    <div class="mt-3 flex flex-wrap gap-2">
+                        @foreach ($catalogComponent['states'] as $state)
+                            <span class="inline-flex items-center whitespace-nowrap rounded-full border px-2.5 py-1 text-xs font-semibold" style="border-color: var(--ui-border-subtle-01); color: var(--ui-text-secondary); background-color: var(--ui-layer-01);">{{ $state }}</span>
+                        @endforeach
                     </div>
-                    <div class="mt-5" data-component-section="states">
-                        <p class="text-sm font-semibold text-slate-100">States</p>
-                        <div class="mt-2 flex flex-wrap gap-2">
-                            @foreach ($catalogComponent['states'] as $state)
-                                <span class="rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-300">{{ $state }}</span>
-                            @endforeach
-                        </div>
-                    </div>
-                    <div class="mt-5 grid gap-4 md:grid-cols-2">
-                        <div data-component-section="anatomy">
-                            <p class="text-sm font-semibold text-slate-100">Anatomy</p>
-                            <ul class="mt-2 space-y-1 text-sm text-slate-300">
-                                @foreach ($catalogComponent['anatomy'] as $part)
-                                    <li>{{ $part }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        <div data-component-section="behavior">
-                            <p class="text-sm font-semibold text-slate-100">Behavior</p>
-                            <ul class="mt-2 space-y-1 text-sm text-slate-300">
-                                @foreach ($catalogComponent['behavior'] as $behavior)
-                                    <li>{{ $behavior }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <aside class="rounded-lg border border-slate-800 bg-slate-950/70 p-4" data-component-section="developer-implementation">
-                    <p class="ui-kicker">Developer Implementation</p>
+                </article>
+            </div>
+
+            <div class="mt-4 grid gap-4 xl:grid-cols-2">
+                <article class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-component-section="behavior">
+                    <h3 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Behavior</h3>
+                    <ul class="mt-3 space-y-2 text-sm leading-6" style="color: var(--ui-text-secondary);">
+                        @foreach ($catalogComponent['behavior'] as $behavior)
+                            <li>{{ $behavior }}</li>
+                        @endforeach
+                    </ul>
+                </article>
+                <article class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-component-section="developer-implementation">
+                    <h3 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Developer implementation</h3>
                     <dl class="mt-3 space-y-3 text-sm">
                         @foreach ($catalogComponent['developer_api'] as $term => $value)
                             <div>
-                                <dt class="text-slate-500">{{ Str::headline($term) }}</dt>
-                                <dd class="mt-1 break-all font-medium text-slate-200">{{ $value }}</dd>
+                                <dt style="color: var(--ui-text-helper);">{{ Str::headline($term) }}</dt>
+                                <dd class="mt-1 font-medium" style="color: var(--ui-text-primary);">
+                                    @if ($term === 'example')
+                                        @php
+                                            $developerExampleMarkup = $catalogComponent['developer_api_example_markup'] ?? ($slug === 'accordion' ? '<span class="ui-code-token-punctuation">&lt;</span><span class="ui-code-token-keyword">x-ui.accordion</span> <span class="ui-code-token-property">:items</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"$items"</span> <span class="ui-code-token-punctuation">/&gt;</span>' : null);
+                                        @endphp
+                                        <pre class="ui-code-snippet mt-2" data-component-section="developer-code-example"><code>{!! $developerExampleMarkup ?? e($value) !!}</code></pre>
+                                    @else
+                                        <span class="break-words">{{ $value }}</span>
+                                    @endif
+                                </dd>
                             </div>
                         @endforeach
                     </dl>
-                </aside>
+                    <div class="mt-4" data-component-section="foundation-elements-used">
+                        <p class="text-xs font-semibold uppercase tracking-[0.14em]" style="color: var(--ui-text-helper);">Foundation Elements used</p>
+                        <div class="mt-2 flex flex-wrap gap-2">
+                            @foreach ($catalogComponent['foundation_elements'] as $element)
+                                <a wire:navigate href="{{ $element['href'] }}" class="ui-link text-xs font-semibold">{{ $element['label'] }}</a>
+                            @endforeach
+                        </div>
+                    </div>
+                </article>
+                <article class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-component-section="content-guidance">
+                    <h3 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Content guidance</h3>
+                    <ul class="mt-3 space-y-2 text-sm leading-6" style="color: var(--ui-text-secondary);">
+                        @foreach ($catalogComponent['content_guidance'] as $item)
+                            <li>{{ $item }}</li>
+                        @endforeach
+                    </ul>
+                </article>
+                <article class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-component-section="accessibility">
+                    <h3 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Accessibility requirements</h3>
+                    <ul class="mt-3 space-y-2 text-sm leading-6" style="color: var(--ui-text-secondary);">
+                        @foreach ($catalogComponent['accessibility'] as $item)
+                            <li>{{ $item }}</li>
+                        @endforeach
+                    </ul>
+                </article>
             </div>
         </section>
 
-        <section class="grid gap-4 xl:grid-cols-2">
-            <article class="ui-card" data-component-section="accessibility">
-                <h2 class="ui-card-title">Accessibility requirements</h2>
-                <ul class="mt-4 space-y-2 text-sm text-slate-300">
-                    @foreach ($catalogComponent['accessibility'] as $item)
-                        <li>{{ $item }}</li>
-                    @endforeach
-                </ul>
-            </article>
-            <article class="ui-card" data-component-section="content-guidance">
-                <h2 class="ui-card-title">Content guidance</h2>
-                <ul class="mt-4 space-y-2 text-sm text-slate-300">
-                    @foreach ($catalogComponent['content_guidance'] as $item)
-                        <li>{{ $item }}</li>
-                    @endforeach
-                </ul>
-            </article>
-        </section>
-
-        <section class="ui-card" data-component-section="foundation-elements-used">
-            <h2 class="ui-card-title">Foundation Elements Used</h2>
-            <p class="ui-card-copy mt-2">Component design must consume approved Foundation Elements rather than redefine color, spacing, typography, iconography, motion, grid, or theme behavior locally.</p>
-            <div class="mt-4 flex flex-wrap gap-2">
-                @foreach ($catalogComponent['foundation_elements'] as $element)
-                    <a wire:navigate href="{{ $element['href'] }}" class="rounded-full border border-slate-700 bg-slate-950 px-3 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-slate-500 hover:text-white">{{ $element['label'] }}</a>
-                @endforeach
-            </div>
-        </section>
-
-        <section class="ui-card" data-component-section="related-components-and-patterns">
-            <h2 class="ui-card-title">Related Components And Patterns</h2>
-            <div class="mt-4 flex flex-wrap gap-2">
-                @foreach ($catalogComponent['related'] as $related)
-                    <a wire:navigate href="{{ $related['href'] }}" class="rounded-full border border-slate-700 bg-slate-950 px-3 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-slate-500 hover:text-white">{{ $related['label'] }}</a>
-                @endforeach
-            </div>
-        </section>
-
-        <section class="ui-card" data-component-section="live-examples">
+        <section class="ui-card" data-component-card="live-examples" data-component-section="live-examples">
             <div class="flex flex-col gap-2 lg:flex-row lg:items-end lg:justify-between">
                 <div>
-                    <h2 class="ui-card-title">Live Examples</h2>
-                    <p class="ui-card-copy mt-2">Rendered examples use current app classes and approved Foundation Element dependencies. Family-depth passes will replace any scaffolded example with the final component API and full state matrix.</p>
+                    <p class="ui-kicker">Rendered scenarios</p>
+                    <h2 class="ui-card-title mt-2">Live examples</h2>
+                    <p class="ui-card-copy mt-2">Each tab is a base usage scenario. Variants are shown inside the scenario they affect.</p>
                 </div>
-                <span class="rounded-full border border-slate-700 px-2 py-1 text-xs font-semibold text-slate-300">{{ $catalogComponent['status'] }}</span>
+                <span class="inline-flex items-center whitespace-nowrap rounded-full border px-2.5 py-1 text-xs font-semibold" style="border-color: var(--ui-border-subtle-01); color: var(--ui-text-secondary);">{{ $catalogComponent['status'] }}</span>
             </div>
-            @if ($catalogComponent['disposition'] === 'Implement T1 Page')
-                <div class="mt-5 grid gap-4 xl:grid-cols-3" data-ui-reference-example="{{ $slug }}-shared-live-example">
-                    <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                        <p class="text-sm font-semibold text-white">Default</p>
-                        <p class="mt-2 text-sm text-slate-300">Baseline implementation state for {{ strtolower($catalogComponent['label']) }}.</p>
-                    </div>
-                    <div class="rounded-lg border border-sky-400 bg-slate-950/70 p-4 ring-2 ring-sky-400">
-                        <p class="text-sm font-semibold text-white">Focus-visible</p>
-                        <p class="mt-2 text-sm text-slate-300">Visible focus ring and keyboard order must be reviewed.</p>
-                    </div>
-                    <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4 opacity-60">
-                        <p class="text-sm font-semibold text-white">Disabled / unavailable</p>
-                        <p class="mt-2 text-sm text-slate-300">Disabled treatment must preserve label readability and explanatory copy.</p>
-                    </div>
+
+            @if (filled($catalogComponent['live_examples_view'] ?? null) && view()->exists($catalogComponent['live_examples_view']))
+                <div class="mt-5" data-ui-reference-live-examples-layout="{{ $catalogComponent['live_examples_layout'] ?? 'custom' }}">
+                    @include($catalogComponent['live_examples_view'], ['catalogComponent' => $catalogComponent])
                 </div>
             @else
-                <div class="mt-5 rounded-lg border border-slate-800 bg-slate-950/70 p-4" data-ui-reference-example="{{ $slug }}-queued-trigger">
-                    <p class="text-sm font-semibold text-white">Trigger condition</p>
-                    <p class="mt-2 text-sm text-slate-300">{{ $catalogComponent['queued_gaps'][0] ?? 'Queue a component implementation when a feature requires this primitive.' }}</p>
+            <div class="mt-5" data-ui-reference-tabs data-ui-reference-component-tabs="{{ $slug }}">
+                <div class="flex flex-wrap gap-2" role="tablist" aria-label="{{ $catalogComponent['label'] }} live examples">
+                    @foreach ($examples as $example)
+                        @php
+                            $tabId = $slug.'-'.$example['id'].'-tab';
+                            $panelId = $slug.'-'.$example['id'].'-panel';
+                        @endphp
+                        <button
+                            id="{{ $tabId }}"
+                            type="button"
+                            class="ui-reference-tab"
+                            role="tab"
+                            aria-selected="{{ $example['id'] === $firstExample ? 'true' : 'false' }}"
+                            aria-controls="{{ $panelId }}"
+                            tabindex="{{ $example['id'] === $firstExample ? '0' : '-1' }}"
+                            data-ui-reference-live-example-tab="{{ $example['id'] }}"
+                        >
+                            {{ $example['title'] }}
+                        </button>
+                    @endforeach
                 </div>
+
+                @foreach ($examples as $example)
+                    @php
+                        $tabId = $slug.'-'.$example['id'].'-tab';
+                        $panelId = $slug.'-'.$example['id'].'-panel';
+                    @endphp
+                    <article
+                        id="{{ $panelId }}"
+                        class="mt-5 rounded-lg border p-4"
+                        style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);"
+                        role="tabpanel"
+                        aria-labelledby="{{ $tabId }}"
+                        data-ui-reference-live-example-panel="{{ $example['id'] }}"
+                        @if ($example['id'] !== $firstExample) hidden @endif
+                    >
+                        <div class="grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(18rem,0.45fr)]">
+                            <div>
+                                <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">{{ $example['title'] }}</h3>
+                                <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">{{ $example['description'] }}</p>
+                            </div>
+                            @if (! empty($example['context_notes']))
+                                <aside class="rounded-lg border p-3" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);">
+                                    <p class="text-xs font-semibold uppercase tracking-[0.14em]" style="color: var(--ui-text-helper);">Context notes</p>
+                                    <ul class="mt-2 space-y-2 text-sm leading-5" style="color: var(--ui-text-secondary);">
+                                        @foreach ($example['context_notes'] as $note)
+                                            <li>{{ $note }}</li>
+                                        @endforeach
+                                    </ul>
+                                </aside>
+                            @endif
+                        </div>
+
+                        <div class="mt-5" data-ui-reference-live-example="{{ $example['id'] }}">
+                            @if (filled($example['view'] ?? null) && view()->exists($example['view']))
+                                @include($example['view'])
+                            @elseif (! empty($example['sample'] ?? null))
+                                @include('platform.ui-reference.components.examples.sample', ['sample' => $example['sample']])
+                            @else
+                                <div class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);">
+                                    <p class="text-sm font-semibold" style="color: var(--ui-text-primary);">Component-specific correction pending</p>
+                                    <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">{{ $example['description'] }}</p>
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="mt-5 rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-component-section="variants-for-example">
+                            <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Variants for this example</h4>
+                            <div class="mt-3 grid gap-3 md:grid-cols-2">
+                                @foreach ($example['variants'] ?? [] as $variant)
+                                    <div
+                                        @class([
+                                            'rounded-md border p-3',
+                                            'md:col-span-2' => (($variant['sample']['type'] ?? null) === 'breadcrumb'),
+                                        ])
+                                        style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);"
+                                    >
+                                        <div class="flex flex-wrap items-center gap-2">
+                                            <p class="text-sm font-semibold" style="color: var(--ui-text-primary);">{{ $variant['label'] }}</p>
+                                            <span class="inline-flex items-center whitespace-nowrap rounded-full border px-2 py-0.5 text-[0.68rem] font-semibold" style="border-color: var(--ui-border-subtle-01); color: var(--ui-text-secondary);">{{ $variant['status'] ?? 'Supported' }}</span>
+                                        </div>
+                                        @if (filled($variant['view'] ?? null) && view()->exists($variant['view']))
+                                            <div class="mt-3" data-ui-reference-variant-example="{{ Str::slug($variant['label']) }}">
+                                                @include($variant['view'])
+                                            </div>
+                                        @elseif (! empty($variant['sample'] ?? null))
+                                            <div class="mt-3" data-ui-reference-variant-example="{{ Str::slug($variant['label']) }}">
+                                                @include('platform.ui-reference.components.examples.sample', ['sample' => $variant['sample']])
+                                            </div>
+                                        @endif
+                                        @if (filled($variant['notes'] ?? null))
+                                            <p class="mt-2 text-xs leading-5" style="color: var(--ui-text-helper);">{{ $variant['notes'] }}</p>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </article>
+                @endforeach
+            </div>
             @endif
         </section>
 
-        <section class="ui-card">
-            <div class="grid gap-5 xl:grid-cols-[minmax(0,1.5fr)_minmax(18rem,0.5fr)]">
-                <div>
-                    <h2 class="ui-card-title">Legacy Contract Summary</h2>
-                    <div class="mt-4 flex flex-wrap gap-2">
-                        @foreach ($catalogComponent['states'] as $state)
-                            <span class="rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-300">{{ $state }}</span>
-                        @endforeach
-                    </div>
-                    <dl class="mt-5 space-y-3 text-sm text-slate-300">
-                        @foreach ($catalogComponent['guidance'] as $guidance)
-                            <div>
-                                <dt class="font-semibold text-slate-100">Usage rule</dt>
-                                <dd class="mt-1">{{ $guidance }}</dd>
-                            </div>
-                        @endforeach
-                    </dl>
-                </div>
-                <aside class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                    <p class="ui-kicker">Implementation Guide</p>
-                    <dl class="mt-3 space-y-3 text-sm">
-                        <div>
-                            <dt class="text-slate-500">Owner route</dt>
-                            <dd class="mt-1 break-all font-medium text-slate-200">{{ $ownerRoute }}</dd>
-                        </div>
-                        <div>
-                            <dt class="text-slate-500">Route name</dt>
-                            <dd class="mt-1 font-medium text-slate-200">{{ $catalogComponent['route_name'] }}</dd>
-                        </div>
-                        <div>
-                            <dt class="text-slate-500">Canonical doc</dt>
-                            <dd class="mt-1 break-all font-medium text-slate-200">
-                                <a wire:navigate href="{{ route('platform.docs.index', ['path' => $catalogComponent['doc_path']]) }}" class="ui-link">Open {{ $catalogComponent['label'] }} standard</a>
-                                <span class="mt-1 block text-xs text-slate-500">{{ $catalogComponent['doc_path'] }}</span>
-                            </dd>
-                        </div>
-                        <div>
-                            <dt class="text-slate-500">Status</dt>
-                            <dd class="mt-1 font-medium text-slate-200">{{ $catalogComponent['disposition'] }}</dd>
-                        </div>
-                    </dl>
-                </aside>
+        <section class="ui-card" data-component-card="related-components-and-patterns" data-component-section="related-components-and-patterns">
+            <p class="ui-kicker">Composition links</p>
+            <h2 class="ui-card-title mt-2">Related components and patterns</h2>
+            <div class="mt-4 flex flex-wrap gap-2">
+                @foreach ($catalogComponent['related'] as $related)
+                    <a wire:navigate href="{{ $related['href'] }}" class="rounded-full border px-3 py-1.5 text-xs font-semibold transition" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02); color: var(--ui-text-secondary);">{{ $related['label'] }}</a>
+                @endforeach
             </div>
         </section>
-
-        @if ($slug === 'number-input')
-            <section class="ui-card" data-ui-reference-example="number-input-state-matrix">
-                <h2 class="ui-card-title">Number Input State Matrix</h2>
-                <p class="ui-card-copy mt-2">Numeric controls use native number semantics plus visible Stepper controls when small increments are expected. Use <code>min="0"</code>, <code>max="4"</code>, and <code>step="1"</code> style constraints whenever range rules are known.</p>
-                <div class="mt-5 grid gap-4 xl:grid-cols-2">
-                    @foreach ([
-                        ['Default number input', 'Editor(s)', '4', ''],
-                        ['Fluid number input', 'Retry delay minutes', '15', 'w-full'],
-                        ['Disabled', 'Locked seats', '2', 'disabled'],
-                        ['Read-only', 'Current tenants', '12', 'readonly'],
-                        ['Focus', 'Workspace limit', '8', 'autofocus'],
-                    ] as [$title, $label, $value, $state])
-                        <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                            <p class="text-sm font-semibold text-white">{{ $title }}</p>
-                            <label class="mt-4 block text-sm font-medium text-slate-200">{{ $label }}</label>
-                            <div class="mt-2 flex max-w-md items-stretch rounded-md border border-slate-700 bg-slate-950 {{ $state === 'autofocus' ? 'ring-2 ring-sky-400' : '' }}">
-                                <input type="number" min="0" max="4" step="1" value="{{ $value }}" class="ui-input rounded-r-none border-0" @disabled($state === 'disabled') @readonly($state === 'readonly')>
-                                <button type="button" class="border-l border-slate-800 px-3 text-slate-400" aria-label="Decrease">-</button>
-                                <button type="button" class="border-l border-slate-800 px-3 text-slate-200" aria-label="Increase">+</button>
-                            </div>
-                        </div>
-                    @endforeach
-                    <div class="rounded-lg border border-rose-500 bg-rose-950/20 p-4">
-                        <p class="text-sm font-semibold text-white">Error with inline status icon</p>
-                        <label class="mt-4 block text-sm font-medium text-slate-200">Editor(s)</label>
-                        <div class="mt-2 flex max-w-md items-stretch rounded-md border border-rose-500 bg-slate-950">
-                            <input type="number" min="0" max="4" step="1" value="5" aria-invalid="true" class="ui-input rounded-r-none border-0">
-                            <span class="grid place-items-center border-l border-rose-500 px-3 text-rose-300" aria-hidden="true">!</span>
-                            <button type="button" class="border-l border-slate-800 px-3 text-slate-400" aria-label="Decrease">-</button>
-                            <button type="button" class="border-l border-slate-800 px-3 text-slate-200" aria-label="Increase">+</button>
-                        </div>
-                        <p class="mt-2 text-sm text-rose-200">Enter a valid number (maximum of 4).</p>
-                    </div>
-                    <div class="rounded-lg border border-amber-500 bg-amber-950/20 p-4">
-                        <p class="text-sm font-semibold text-white">Warning with inline status icon</p>
-                        <label class="mt-4 block text-sm font-medium text-slate-200">Retry attempts</label>
-                        <div class="mt-2 flex max-w-md items-stretch rounded-md border border-amber-500 bg-slate-950">
-                            <input type="number" min="0" max="4" step="1" value="4" class="ui-input rounded-r-none border-0">
-                            <span class="grid place-items-center border-l border-amber-500 px-3 text-amber-200" aria-hidden="true">!</span>
-                            <button type="button" class="border-l border-slate-800 px-3 text-slate-400" aria-label="Decrease">-</button>
-                            <button type="button" class="border-l border-slate-800 px-3 text-slate-200" aria-label="Increase">+</button>
-                        </div>
-                        <p class="mt-2 text-sm text-amber-100">Maximum reached. Confirm this is intentional.</p>
-                    </div>
-                </div>
-                <div class="mt-5 rounded-lg border border-slate-800 bg-slate-950/70 p-4 text-sm text-slate-300">
-                    <p class="font-semibold text-slate-100">Keyboard behavior</p>
-                    <p class="mt-1">Tab moves into the input, ArrowUp and ArrowDown increment by step, Home and End may jump to min/max when the browser provides native support, and typed values validate on blur and submit.</p>
-                </div>
-            </section>
-        @elseif ($slug === 'radio-button')
-            <section class="ui-card" data-ui-reference-example="radio-button-depth-matrix">
-                <h2 class="ui-card-title">Radio Button Depth Matrix</h2>
-                <p class="ui-card-copy mt-2">Radio groups are single-select only. Use checkbox groups for multi-select choices.</p>
-                <div class="mt-5 grid gap-4 xl:grid-cols-2">
-                    <fieldset class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                        <legend class="text-sm font-semibold text-white">Vertical group</legend>
-                        @foreach (['Owner', 'Editor', 'Viewer'] as $role)
-                            <label class="mt-3 flex items-center gap-3 text-sm text-slate-200"><input type="radio" name="role_vertical" @checked($role === 'Editor')> {{ $role }}</label>
-                        @endforeach
-                    </fieldset>
-                    <fieldset class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                        <legend class="text-sm font-semibold text-white">Horizontal group</legend>
-                        <div class="mt-3 flex flex-wrap gap-5">
-                            @foreach (['Daily', 'Weekly', 'Monthly'] as $frequency)
-                                <label class="flex items-center gap-3 text-sm text-slate-200"><input type="radio" name="frequency" @checked($frequency === 'Weekly')> {{ $frequency }}</label>
-                            @endforeach
-                        </div>
-                    </fieldset>
-                    <fieldset class="rounded-lg border border-rose-500 bg-rose-950/20 p-4">
-                        <legend class="text-sm font-semibold text-white">Error group state</legend>
-                        <p class="mt-1 text-sm text-rose-200">Choose one permission level before continuing.</p>
-                        <label class="mt-3 flex items-center gap-3 text-sm text-slate-200"><input type="radio" name="radio_error" aria-invalid="true"> Admin</label>
-                    </fieldset>
-                    <fieldset class="rounded-lg border border-amber-500 bg-amber-950/20 p-4">
-                        <legend class="text-sm font-semibold text-white">Warning and helper text</legend>
-                        <p class="mt-1 text-sm text-amber-100">This changes notification volume for every workspace operator.</p>
-                        <label class="mt-3 flex items-center gap-3 text-sm text-slate-200"><input type="radio" name="radio_warning" checked> Immediate</label>
-                    </fieldset>
-                    <fieldset class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                        <legend class="text-sm font-semibold text-white">Disabled and read-only</legend>
-                        <label class="mt-3 flex items-center gap-3 text-sm text-slate-500"><input type="radio" disabled> Disabled option</label>
-                        <label class="mt-3 flex items-center gap-3 text-sm text-slate-300"><input type="radio" checked readonly> Read-only selected option</label>
-                    </fieldset>
-                    <fieldset class="rounded-lg border border-sky-400 bg-slate-950/70 p-4 ring-2 ring-sky-400">
-                        <legend class="text-sm font-semibold text-white">Focus state</legend>
-                        <label class="mt-3 flex items-center gap-3 text-sm text-slate-200"><input type="radio" checked> Focused selected option</label>
-                    </fieldset>
-                </div>
-            </section>
-        @elseif ($slug === 'checkbox')
-            <section class="ui-card" data-ui-reference-example="checkbox-depth-matrix">
-                <h2 class="ui-card-title">Checkbox Depth Matrix</h2>
-                <p class="ui-card-copy mt-2">Checkboxes represent independent choices or multi-select groups. Use radio buttons when exactly one visible option must be selected.</p>
-                <div class="mt-5 grid gap-4 xl:grid-cols-2">
-                    <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                        <p class="text-sm font-semibold text-white">Independent choice</p>
-                        <label class="mt-3 flex items-center gap-3 text-sm text-slate-200"><input type="checkbox" checked> Remember this browser</label>
-                    </div>
-                    <fieldset class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                        <legend class="text-sm font-semibold text-white">Multi-select group</legend>
-                        @foreach (['Email', 'In-app', 'Slack handoff'] as $channel)
-                            <label class="mt-3 flex items-center gap-3 text-sm text-slate-200"><input type="checkbox" @checked($channel !== 'Slack handoff')> {{ $channel }}</label>
-                        @endforeach
-                    </fieldset>
-                    <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                        <p class="text-sm font-semibold text-white">Checked, unchecked, indeterminate</p>
-                        <label class="mt-3 flex items-center gap-3 text-sm text-slate-200"><input type="checkbox" checked> Checked</label>
-                        <label class="mt-3 flex items-center gap-3 text-sm text-slate-200"><input type="checkbox"> Unchecked</label>
-                        <p class="mt-3 text-sm text-slate-400">Indeterminate state is queued until a supported tree/list selection consumer exists.</p>
-                    </div>
-                    <fieldset class="rounded-lg border border-rose-500 bg-rose-950/20 p-4">
-                        <legend class="text-sm font-semibold text-white">Error and warning</legend>
-                        <label class="mt-3 flex items-center gap-3 text-sm text-slate-200"><input type="checkbox" aria-invalid="true"> I acknowledge the change</label>
-                        <p class="mt-2 text-sm text-rose-200">Required acknowledgment is missing.</p>
-                        <p class="mt-2 text-sm text-amber-100">Warning states must describe impact, not just color the row.</p>
-                    </fieldset>
-                    <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                        <p class="text-sm font-semibold text-white">Disabled and read-only</p>
-                        <label class="mt-3 flex items-center gap-3 text-sm text-slate-500"><input type="checkbox" disabled> Disabled choice</label>
-                        <label class="mt-3 flex items-center gap-3 text-sm text-slate-300"><input type="checkbox" checked readonly> Read-only checked choice</label>
-                    </div>
-                </div>
-            </section>
-        @elseif ($slug === 'pagination')
-            <section class="ui-card" data-ui-reference-example="pagination-depth-matrix">
-                <h2 class="ui-card-title">Pagination Variants</h2>
-                <div class="mt-5 space-y-4">
-                    <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                        <p class="text-sm font-semibold text-white">Full pagination with page-size selector</p>
-                        <div class="mt-3 flex flex-wrap items-center justify-between gap-3 text-sm text-slate-300">
-                            <span>1-25 of 186</span>
-                            <label>Rows per page <select class="ui-input ml-2 w-24"><option>25</option><option>50</option></select></label>
-                            <nav class="flex items-center gap-1" aria-label="Pagination"><button class="ui-button-secondary" disabled>Previous</button><button class="ui-button-secondary">1</button><button class="ui-button-secondary">2</button><span class="px-2">...</span><button class="ui-button-secondary">8</button><button class="ui-button-secondary">Next</button></nav>
-                        </div>
-                    </div>
-                    <div class="grid gap-4 xl:grid-cols-3">
-                        <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4"><p class="font-semibold text-white">Compact nav</p><p class="mt-2 text-sm text-slate-300">Previous / next only for dense panes.</p></div>
-                        <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4"><p class="font-semibold text-white">Overflow</p><p class="mt-2 text-sm text-slate-300">Use an ellipsis when page count exceeds visible width.</p></div>
-                        <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4"><p class="font-semibold text-white">Size pairings</p><p class="mt-2 text-sm text-slate-300">Small, medium, and large controls should match related table density and sit below related content.</p></div>
-                    </div>
-                </div>
-            </section>
-        @elseif ($slug === 'structured-list')
-            <section class="ui-card" data-ui-reference-example="structured-list-depth-matrix">
-                <h2 class="ui-card-title">Structured List Variants</h2>
-                <div class="mt-5 grid gap-4 xl:grid-cols-2">
-                    @foreach (['Default structured list', 'Selectable structured list', 'Condensed density', 'Hang alignment', 'Flush alignment', 'Skeleton state'] as $title)
-                        <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                            <p class="text-sm font-semibold text-white">{{ $title }}</p>
-                            <div class="mt-3 divide-y divide-slate-800 rounded-md border border-slate-800">
-                                <div class="grid grid-cols-[1fr_auto] gap-4 p-3 text-sm"><span class="text-slate-200">Workspace policy</span><span class="text-slate-400">Enabled</span></div>
-                                <div class="grid grid-cols-[1fr_auto] gap-4 p-3 text-sm"><span class="text-slate-200">Review gate</span><span class="text-slate-400">Required</span></div>
-                            </div>
-                            <p class="mt-2 text-xs text-slate-500">Selected, focus, disabled, and skeleton states must be visible before feature adoption.</p>
-                        </div>
-                    @endforeach
-                </div>
-            </section>
-        @elseif ($slug === 'tabs')
-            <section class="ui-card" data-ui-reference-example="tabs-depth-matrix">
-                <h2 class="ui-card-title">Tabs Variants</h2>
-                <div class="mt-5 grid gap-4 xl:grid-cols-2">
-                    @foreach (['Line tabs', 'Contained tabs', 'Vertical tabs', 'Line tabs with icon', 'Icon-only line tabs', 'Overflow / scroll tabs'] as $title)
-                        <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                            <p class="text-sm font-semibold text-white">{{ $title }}</p>
-                            <div class="mt-3 flex flex-wrap gap-2 text-sm">
-                                <span class="border-b-2 border-sky-400 px-3 py-2 text-white">Overview</span>
-                                <span class="px-3 py-2 text-slate-400">Usage</span>
-                                <span class="px-3 py-2 text-slate-500">Disabled</span>
-                            </div>
-                            <p class="mt-3 text-sm text-slate-400">Includes selected, focus, disabled, tab panel, and tab-vs-progress/comparison guidance.</p>
-                        </div>
-                    @endforeach
-                </div>
-            </section>
-        @elseif ($slug === 'menu')
-            <section class="ui-card" data-ui-reference-example="menu-depth-matrix">
-                <h2 class="ui-card-title">Menu Variants</h2>
-                <div class="mt-5 grid gap-4 xl:grid-cols-2">
-                    <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                        <p class="text-sm font-semibold text-white">Action items, sizing, and alignment</p>
-                        <div class="mt-3 w-64 rounded-md border border-slate-700 bg-slate-950 p-1 text-sm">
-                            <button class="block w-full rounded px-3 py-2 text-left text-slate-200">Open details</button>
-                            <button class="block w-full rounded bg-slate-800 px-3 py-2 text-left text-white">Current item</button>
-                            <button class="block w-full rounded px-3 py-2 text-left text-slate-500" disabled>Disabled item</button>
-                            <hr class="my-1 border-slate-800">
-                            <button class="block w-full rounded px-3 py-2 text-left text-rose-200">Delete workspace</button>
-                        </div>
-                    </div>
-                    <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                        <p class="text-sm font-semibold text-white">Keyboard and submenu boundary</p>
-                        <p class="mt-2 text-sm text-slate-300">Arrow keys move between items, Enter activates, Escape closes and returns focus to the trigger. Submenus are a queued boundary until a real nested-action consumer exists.</p>
-                    </div>
-                </div>
-            </section>
-        @elseif ($slug === 'ui-shell')
-            <section class="ui-card" data-ui-reference-example="ui-shell-disposition">
-                <h2 class="ui-card-title">UI Shell Disposition</h2>
-                <p class="ui-card-copy mt-2">UI shell pieces remain visible in the T1 catalog so they are not silently ignored, but composition ownership belongs to T2 navigation and layout surfaces unless a standalone primitive emerges.</p>
-                <div class="mt-5 grid gap-4 xl:grid-cols-3">
-                    <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4"><p class="font-semibold text-white">Header content</p><p class="mt-2 text-sm text-slate-300">Global app heading, account menu, notification handoff, and top-level actions.</p></div>
-                    <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4"><p class="font-semibold text-white">Left panel</p><p class="mt-2 text-sm text-slate-300">Primary app navigation, active route, and section grouping.</p></div>
-                    <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4"><p class="font-semibold text-white">Right panel</p><p class="mt-2 text-sm text-slate-300">Queued gap until persistent right-side context is needed beyond drawers.</p></div>
-                </div>
-            </section>
-        @elseif (in_array($slug, $implementationPages, true))
-            <section class="ui-card" data-ui-reference-example="{{ $slug }}-reference-contract">
-                <h2 class="ui-card-title">{{ $catalogComponent['label'] }} Reference Examples</h2>
-                <div class="mt-5 grid gap-4 xl:grid-cols-3">
-                    <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                        <p class="text-sm font-semibold text-white">Default</p>
-                        <p class="mt-2 text-sm text-slate-300">Baseline implementation state for {{ strtolower($catalogComponent['label']) }}.</p>
-                    </div>
-                    <div class="rounded-lg border border-sky-400 bg-slate-950/70 p-4 ring-2 ring-sky-400">
-                        <p class="text-sm font-semibold text-white">Focus</p>
-                        <p class="mt-2 text-sm text-slate-300">Visible focus ring and keyboard order must be reviewed.</p>
-                    </div>
-                    <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4 opacity-60">
-                        <p class="text-sm font-semibold text-white">Disabled / unavailable</p>
-                        <p class="mt-2 text-sm text-slate-300">Disabled treatment must preserve label readability.</p>
-                    </div>
-                </div>
-            </section>
-        @else
-            <section class="ui-card" data-ui-reference-example="queued-gap-contract">
-                <h2 class="ui-card-title">Queued Implementation Contract</h2>
-                <p class="ui-card-copy mt-2">This item is intentionally visible in the Login App 2.0 catalog, but it does not receive speculative component chrome until a product consumer creates a concrete need.</p>
-                <div class="mt-5 rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                    <p class="text-sm font-semibold text-white">Trigger condition</p>
-                    <p class="mt-2 text-sm text-slate-300">{{ $catalogComponent['guidance'][0] ?? 'Queue a component implementation when a feature requires this primitive.' }}</p>
-                </div>
-            </section>
-        @endif
     </section>
 </x-layouts.app>

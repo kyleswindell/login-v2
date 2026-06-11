@@ -3,13 +3,29 @@
     'type' => 'button',
     'semantic' => 'neutral',
     'current' => false,
+    'selected' => false,
     'disabled' => false,
+    'shortcut' => null,
+    'submenu' => false,
+    'size' => 'md',
+    'state' => null,
+    'selectionType' => null,
+    'title' => null,
 ])
 
 @php
     $allowedSemantics = ['neutral', 'primary', 'success', 'warning', 'danger', 'notice', 'info'];
     $resolvedSemantic = in_array($semantic, $allowedSemantics, true) ? $semantic : 'neutral';
+    $resolvedSize = in_array($size, ['xs', 'sm', 'md', 'lg'], true) ? $size : 'md';
+    $requestedSelectionType = $selectionType === 'multi' ? 'multiple' : $selectionType;
+    $resolvedSelectionType = in_array($requestedSelectionType, ['single', 'multiple'], true) ? $requestedSelectionType : null;
     $isCurrent = (bool) $current;
+    $isSelected = (bool) $selected;
+    $resolvedRole = match ($resolvedSelectionType) {
+        'single' => 'menuitemradio',
+        'multiple' => 'menuitemcheckbox',
+        default => 'menuitem',
+    };
 
     $semanticClasses = [
         'neutral' => 'text-[var(--ui-text-muted)] hover:bg-[var(--ui-surface-muted)] hover:text-[var(--ui-text-strong)] focus-visible:bg-[var(--ui-surface-muted)] focus-visible:text-[var(--ui-text-strong)]',
@@ -32,31 +48,83 @@
     ];
 
     $classes = [
-        'flex w-full items-center gap-2 rounded-md border border-transparent px-3 py-2 text-left text-sm font-medium transition focus-visible:outline-none',
+        'ui-menu-item flex w-full items-center gap-2 rounded-md border border-transparent text-left text-sm font-medium transition focus-visible:outline-none',
+        'ui-menu-item-'.$resolvedSize,
         $isCurrent ? $currentClasses[$resolvedSemantic] : $semanticClasses[$resolvedSemantic],
     ];
+
+    if ($isSelected) {
+        $classes[] = 'is-selected';
+    }
+
+    if (filled($state)) {
+        $classes[] = 'is-'.$state;
+    }
 
     if ($disabled) {
         $classes[] = 'cursor-not-allowed border-transparent bg-transparent text-[var(--ui-action-disabled-text)]';
     }
 
     $isLink = filled($href) && ! $disabled;
+    $stateValue = filled($state)
+        ? $state
+        : ($disabled ? 'disabled' : ($isSelected ? 'selected' : 'default'));
 @endphp
 
 @if ($isLink)
     <a
         href="{{ $href }}"
         @if ($isCurrent) aria-current="true" @endif
-        {{ $attributes->class($classes)->merge(['data-ui-component' => 'menu-item', 'data-ui-current' => $isCurrent ? 'true' : 'false']) }}
+        @if ($resolvedSelectionType) aria-checked="{{ $isSelected ? 'true' : 'false' }}" @endif
+        @if ($submenu) aria-haspopup="menu" aria-expanded="false" @endif
+        @if (filled($title)) title="{{ $title }}" @endif
+        {{ $attributes->class($classes)->merge([
+            'data-ui-component' => 'menu-item',
+            'data-ui-menu-item' => true,
+            'data-ui-menu-item-size' => $resolvedSize,
+            'data-ui-menu-item-state' => $stateValue,
+            'data-ui-menu-submenu-trigger' => $submenu ? true : null,
+            'data-ui-current' => $isCurrent ? 'true' : 'false',
+            'role' => $resolvedRole,
+        ]) }}
     >
-        {{ $slot }}
+        @if ($isSelected)
+            <span class="ui-menu-item-check" aria-hidden="true">✓</span>
+        @endif
+        <span class="ui-menu-item-label">{{ $slot }}</span>
+        @if (filled($shortcut))
+            <kbd class="ui-menu-item-shortcut">{{ $shortcut }}</kbd>
+        @endif
+        @if ($submenu)
+            <span class="ui-menu-item-submenu" aria-hidden="true">›</span>
+        @endif
     </a>
 @else
     <button
         type="{{ $type }}"
         @disabled($disabled)
-        {{ $attributes->class($classes)->merge(['data-ui-component' => 'menu-item', 'data-ui-current' => $isCurrent ? 'true' : 'false']) }}
+        @if ($resolvedSelectionType) aria-checked="{{ $isSelected ? 'true' : 'false' }}" @endif
+        @if ($submenu) aria-haspopup="menu" aria-expanded="false" @endif
+        @if (filled($title)) title="{{ $title }}" @endif
+        {{ $attributes->class($classes)->merge([
+            'data-ui-component' => 'menu-item',
+            'data-ui-menu-item' => true,
+            'data-ui-menu-item-size' => $resolvedSize,
+            'data-ui-menu-item-state' => $stateValue,
+            'data-ui-menu-submenu-trigger' => $submenu ? true : null,
+            'data-ui-current' => $isCurrent ? 'true' : 'false',
+            'role' => $resolvedRole,
+        ]) }}
     >
-        {{ $slot }}
+        @if ($isSelected)
+            <span class="ui-menu-item-check" aria-hidden="true">✓</span>
+        @endif
+        <span class="ui-menu-item-label">{{ $slot }}</span>
+        @if (filled($shortcut))
+            <kbd class="ui-menu-item-shortcut">{{ $shortcut }}</kbd>
+        @endif
+        @if ($submenu)
+            <span class="ui-menu-item-submenu" aria-hidden="true">›</span>
+        @endif
     </button>
 @endif

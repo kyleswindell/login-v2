@@ -7,6 +7,7 @@ use App\Platform\UiReference\UiReferenceComponentCatalog;
 use App\Platform\UiReference\UiReferenceElementCatalog;
 use Database\Seeders\PlatformRolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Blade;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\PermissionRegistrar;
 use Tests\TestCase;
@@ -19,7 +20,7 @@ class PlatformUiReferenceTest extends TestCase
     {
         $this->actingAsPlatformSuperAdmin();
 
-        $this->get('/platform/ui-reference')
+        $response = $this->get('/platform/ui-reference')
             ->assertOk()
             ->assertSee('UI Reference Workspace')
             ->assertSee('ui-card', false)
@@ -28,17 +29,81 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Color')
             ->assertSee('Token Palette')
             ->assertSee('Typography')
+            ->assertSee('Type Sets')
             ->assertSee('Form Patterns')
             ->assertSee('Data + Content')
             ->assertSee('Components')
             ->assertSee('Patterns')
             ->assertDontSee('T1 Components')
             ->assertDontSee('Pattern Standards')
+            ->assertSee('data-ui-reference-element-dropdown="color"', false)
+            ->assertSee('data-ui-reference-element-dropdown="typography"', false)
+            ->assertSee('data-ui-reference-sidebar-disclosure="foundation-elements"', false)
+            ->assertSee('data-ui-reference-sidebar-disclosure="color"', false)
+            ->assertSee('data-ui-reference-sidebar-disclosure="typography"', false)
+            ->assertSee('data-ui-reference-sidebar-disclosure="components"', false)
+            ->assertSee('data-ui-reference-sidebar-disclosure-motion="productive"', false)
+            ->assertSee('data-ui-reference-sidebar-disclosure-trigger', false)
+            ->assertSee('data-ui-reference-sidebar-disclosure-panel', false)
+            ->assertSee('data-ui-reference-sidebar-disclosure-icon', false)
+            ->assertSee('data-ui-reference-sidebar-scroll-owner="shell"', false)
+            ->assertSee('aria-label="UI Reference overview"', false)
+            ->assertSee('aria-label="UI Reference foundation elements"', false)
+            ->assertSee('aria-label="UI Reference components"', false)
+            ->assertSee('aria-label="UI Reference patterns"', false)
+            ->assertSee('aria-current="page"', false)
+            ->assertSee('data-ui-reference-component-sidebar-sort="alphabetical"', false)
+            ->assertDontSee('data-ui-reference-component-sidebar-group=', false)
+            ->assertDontSee('Legacy Index Surfaces')
             ->assertSee('Number input')
             ->assertSee('Structured list')
             ->assertSee('Widget Content')
             ->assertSee('Starter Catalog')
             ->assertSee('Archetype Proofs');
+
+        $content = $response->getContent();
+        $this->assertMatchesRegularExpression('/data-ui-reference-element-dropdown="color"[\s\S]*?data-ui-reference-element-dropdown-open="false"/', $content);
+        $this->assertMatchesRegularExpression('/data-ui-reference-element-dropdown="typography"[\s\S]*?data-ui-reference-element-dropdown-open="false"/', $content);
+        $this->assertMatchesRegularExpression('/data-ui-reference-sidebar-disclosure="foundation-elements"[\s\S]*?data-ui-reference-sidebar-disclosure-state="open"[\s\S]*?aria-expanded="true"[\s\S]*?aria-controls="ui-reference-sidebar-foundation-elements-panel"/', $content);
+        $this->assertMatchesRegularExpression('/data-ui-reference-sidebar-disclosure="color"[\s\S]*?data-ui-reference-sidebar-disclosure-state="closed"[\s\S]*?aria-expanded="false"[\s\S]*?aria-controls="ui-reference-sidebar-color-panel"/', $content);
+        $this->assertMatchesRegularExpression('/data-ui-reference-sidebar-disclosure="typography"[\s\S]*?data-ui-reference-sidebar-disclosure-state="closed"[\s\S]*?aria-expanded="false"[\s\S]*?aria-controls="ui-reference-sidebar-typography-panel"/', $content);
+        $this->assertMatchesRegularExpression('/data-ui-reference-sidebar-disclosure="components"[\s\S]*?data-ui-reference-sidebar-disclosure-state="open"[\s\S]*?aria-expanded="true"[\s\S]*?aria-controls="ui-reference-sidebar-components-panel"/', $content);
+        $sidebarPartial = file_get_contents(resource_path('views/platform/ui-reference/partials/sidebar.blade.php'));
+        $this->assertStringContainsString('ui-reference-sidebar-link', $sidebarPartial);
+        $this->assertStringContainsString('<button', $sidebarPartial);
+        $this->assertStringContainsString('aria-current="page"', $sidebarPartial);
+        $this->assertStringContainsString('x-heroicon-o-chevron-down', $sidebarPartial);
+        $this->assertStringNotContainsString('<details', $sidebarPartial);
+        $this->assertStringNotContainsString('<summary', $sidebarPartial);
+        $this->assertStringNotContainsString('border-slate-', $sidebarPartial);
+        $this->assertStringNotContainsString('bg-slate-', $sidebarPartial);
+        $this->assertStringNotContainsString('text-slate-', $sidebarPartial);
+        $this->assertStringNotContainsString('>v</span>', $sidebarPartial);
+        $this->assertMatchesRegularExpression('/<nav[^>]*data-ui-reference-component-sidebar[^>]*>/', $content, 'Component sidebar nav is missing.');
+
+        preg_match('/<nav[^>]*data-ui-reference-component-sidebar[^>]*>/', $content, $componentSidebarNav);
+        $this->assertStringNotContainsString('overflow-y-auto', $componentSidebarNav[0]);
+        $this->assertStringNotContainsString('max-h-[34rem]', $componentSidebarNav[0]);
+
+        $appCss = file_get_contents(resource_path('css/app.css'));
+        $this->assertStringContainsString('.ui-reference-sidebar-panel', $appCss);
+        $this->assertStringContainsString('.ui-reference-sidebar-link', $appCss);
+        $this->assertStringContainsString('var(--ui-text-secondary)', $appCss);
+        $this->assertStringContainsString('var(--ui-layer-selected-01)', $appCss);
+        $this->assertStringContainsString('max-block-size: calc(100dvh - 7rem)', $appCss);
+        $this->assertStringContainsString('scrollbar-gutter: stable', $appCss);
+        $this->assertStringContainsString('.ui-reference-sidebar-disclosure-trigger:hover', $appCss);
+        $this->assertStringContainsString('.ui-reference-sidebar-disclosure-panel', $appCss);
+        $this->assertStringContainsString(".ui-reference-sidebar-disclosure[data-ui-reference-sidebar-disclosure-state='open'] > .ui-reference-sidebar-disclosure-trigger .ui-reference-sidebar-disclosure-icon", $appCss);
+        $this->assertStringNotContainsString('.ui-reference-sidebar-disclosure[open]', $appCss);
+        $this->assertStringContainsString('prefers-reduced-motion: reduce', $appCss);
+
+        $appJs = file_get_contents(resource_path('js/app.js'));
+        $uiReferenceJs = file_get_contents(resource_path('js/ui-reference.js'));
+        $this->assertStringContainsString('initUiReferenceSidebarDisclosures', $appJs);
+        $this->assertStringContainsString('initializer(document)', $appJs);
+        $this->assertStringContainsString("document.readyState === 'loading'", $appJs);
+        $this->assertStringContainsString('initUiReferenceSidebarDisclosures', $uiReferenceJs);
     }
 
     public function test_tier_one_component_catalog_routes_are_discoverable(): void
@@ -63,6 +128,24 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Foundation Elements')
             ->assertSee('inline-flex items-center whitespace-nowrap rounded-full', false);
 
+        $sidebarContent = $overview->getContent();
+        $lastPosition = -1;
+
+        foreach (collect($catalog)->sortBy('label', SORT_NATURAL | SORT_FLAG_CASE) as $component) {
+            $needle = 'data-ui-reference-component-sidebar-label="'.$component['label'].'"';
+            $position = strpos($sidebarContent, $needle);
+
+            $this->assertNotFalse($position, 'Missing alphabetical sidebar label for '.$component['label'].'.');
+            $this->assertGreaterThan($lastPosition, $position, $component['label'].' is not alphabetized in the component sidebar.');
+
+            $lastPosition = $position;
+        }
+
+        $overview
+            ->assertSee('data-ui-reference-component-sidebar-sort="alphabetical"', false)
+            ->assertDontSee('data-ui-reference-component-sidebar-group=', false)
+            ->assertDontSee('Legacy Index Surfaces');
+
         foreach ($catalog as $component) {
             $overview
                 ->assertSee($component['label'])
@@ -76,11 +159,15 @@ class PlatformUiReferenceTest extends TestCase
                 ->assertSee('data-ui-reference-t1-component="'.$component['slug'].'"', false)
                 ->assertSee('data-ui-reference-component-disposition="'.$component['disposition'].'"', false)
                 ->assertSee('data-ui-reference-component-status="'.$component['status'].'"', false)
+                ->assertSee('data-component-card="purpose"', false)
+                ->assertSee('data-component-card="use-cases"', false)
+                ->assertSee('data-component-card="component-contract"', false)
+                ->assertSee('data-component-card="live-examples"', false)
+                ->assertSee('data-component-card="related-components-and-patterns"', false)
                 ->assertSee('data-component-section="purpose"', false)
                 ->assertSee('data-component-section="use-when"', false)
                 ->assertSee('data-component-section="do-not-use-when"', false)
                 ->assertSee('data-component-section="live-examples"', false)
-                ->assertSee('data-component-section="variants"', false)
                 ->assertSee('data-component-section="states"', false)
                 ->assertSee('data-component-section="anatomy"', false)
                 ->assertSee('data-component-section="behavior"', false)
@@ -94,17 +181,265 @@ class PlatformUiReferenceTest extends TestCase
                 ->assertSee($component['owner_route'])
                 ->assertSee($component['doc_path'])
                 ->assertSee($component['status'])
-                ->assertSee('This page shows the approved application implementation of this component');
+                ->assertSee('Use this page to see what the component looks like in the app')
+                ->assertSee('Component overview')
+                ->assertSee('Usage boundary')
+                ->assertSee('Implementation rules')
+                ->assertSee('Rendered scenarios')
+                ->assertSee('Composition links')
+                ->assertDontSee('Purpose Card')
+                ->assertDontSee('Use Cases Card')
+                ->assertDontSee('Live Examples Card')
+                ->assertDontSee('Legacy Contract Summary')
+                ->assertDontSee($component['label'].' Reference Examples')
+                ->assertDontSee('data-ui-reference-example="'.$component['slug'].'-shared-live-example"', false)
+                ->assertDontSee('data-ui-reference-example="'.$component['slug'].'-queued-trigger"', false);
 
-            if ($component['disposition'] === 'Implement T1 Page') {
-                $componentPage->assertSee('data-ui-reference-example="'.$component['slug'].'-shared-live-example"', false);
+            if (in_array($component['slug'], ['button', 'menu-buttons'], true)) {
+                $componentPage->assertSee('data-ui-reference-live-examples-layout="flexible-matrix"', false);
             } else {
-                $componentPage->assertSee('data-ui-reference-example="'.$component['slug'].'-queued-trigger"', false);
+                $componentPage->assertSee('data-component-section="variants-for-example"', false);
             }
         }
 
         $this->get('/platform/ui-reference/components/not-a-component')
             ->assertNotFound();
+    }
+
+    public function test_ui_standards_docs_use_api_contract_sections(): void
+    {
+        $componentHeadings = [
+            'API summary',
+            'Status and ownership',
+            'Installed standard',
+            'Public API',
+            'Allowed variants, options, and modifiers',
+            'States',
+            'Token, class, and helper usage',
+            'Composition rules',
+            'Selection guidance',
+            'Accessibility contract',
+            'Content contract',
+            'Prohibited usage',
+            'Deferred or gated capabilities',
+            'UI Reference requirements',
+            'Testing and acceptance criteria',
+            'Related APIs',
+            'References',
+        ];
+
+        $elementHeadings = [
+            'API summary',
+            'Status and ownership',
+            'Installed standard',
+            'Token API',
+            'CSS variable API',
+            'Utility class/helper API',
+            'Allowed usage',
+            'Component and pattern consumers',
+            'Theme behavior',
+            'State behavior',
+            'Prohibited usage',
+            'Deferred or gated capabilities',
+            'UI Reference requirements',
+            'Testing and acceptance criteria',
+            'Related APIs',
+            'References',
+        ];
+
+        $patternHeadings = [
+            'API summary',
+            'Status and ownership',
+            'Installed standard',
+            'Pattern API',
+            'Required composition',
+            'Optional composition',
+            'Consumed Element APIs',
+            'Owned Component APIs',
+            'Allowed variants and layout options',
+            'State ownership',
+            'Responsive behavior',
+            'Composition rules',
+            'Selection guidance',
+            'Accessibility contract',
+            'Content contract',
+            'Prohibited usage',
+            'Deferred or gated capabilities',
+            'UI Reference requirements',
+            'Testing and acceptance criteria',
+            'Related APIs',
+            'References',
+        ];
+
+        $this->assertMarkdownFilesContainHeadings(
+            base_path('docs/02-standards/ui/components'),
+            ['AGENTS.md', 'checklist.md', 'family-depth-pages.md', 'index.md', 'UI UX Component Library Standards.md', 'UI UX Component Taxonomy And Coverage Matrix.md'],
+            $componentHeadings
+        );
+
+        $this->assertMarkdownFilesContainHeadings(
+            base_path('docs/02-standards/ui/elements'),
+            ['AGENTS.md', 'index.md'],
+            $elementHeadings
+        );
+
+        $this->assertMarkdownFilesContainHeadings(
+            base_path('docs/02-standards/ui/patterns'),
+            ['AGENTS.md', 'checklist.md', 'index.md'],
+            $patternHeadings
+        );
+
+        $contractsIndexPath = base_path('docs/02-standards/ui/contracts/Component Contracts Index.md');
+
+        if (file_exists($contractsIndexPath)) {
+            $contractsIndex = file_get_contents($contractsIndexPath);
+
+            $this->assertStringContainsString('transitional source material only', $contractsIndex);
+            $this->assertStringContainsString('Canonical UI rules now live', $contractsIndex);
+        } else {
+            $this->assertDirectoryDoesNotExist(base_path('docs/02-standards/ui/contracts'));
+        }
+    }
+
+    public function test_component_public_api_wrappers_render_documented_markers(): void
+    {
+        $items = [
+            ['label' => 'Open', 'href' => '#'],
+            ['label' => 'Archive', 'shortcut' => 'A'],
+            ['divider' => true],
+            ['label' => 'Delete', 'danger' => true],
+        ];
+        $options = [
+            ['label' => 'Owner', 'value' => 'owner'],
+            ['label' => 'Admin', 'value' => 'admin'],
+        ];
+        $rows = [
+            ['title' => 'Tenant status', 'description' => 'Ready for review', 'meta' => 'Active', 'selected' => true],
+        ];
+        $containedItems = [
+            ['title' => 'Domain rules', 'description' => 'Routing policy ready', 'meta' => 'Reviewed', 'href' => '#', 'selected' => true],
+        ];
+        $steps = [
+            ['label' => 'Draft', 'state' => 'complete'],
+            ['label' => 'Review', 'state' => 'current'],
+            ['label' => 'Approve', 'state' => 'upcoming'],
+        ];
+        $treeNodes = [
+            [
+                'id' => 'platform',
+                'label' => 'Platform',
+                'expanded' => true,
+                'children' => [
+                    ['id' => 'security', 'label' => 'Security settings', 'selected' => true],
+                ],
+            ],
+        ];
+
+        $html = Blade::render(<<<'BLADE'
+            <x-ui.link href="#" icon="heroicon-o-arrow-top-right-on-square">Docs</x-ui.link>
+            <x-ui.menu-button :items="$items" label="More actions" open />
+            <x-ui.combo-button :items="$items" label="Run report" open />
+            <x-ui.overflow-menu :items="$items" label="Row actions" open />
+            <x-ui.pagination :current-page="2" :last-page="4" :total="40" :per-page="10" :page-size-options="[10, 25]" />
+            <x-ui.search name="query" label="Search records" value="tenant" />
+            <x-ui.dropdown name="role" label="Role" :options="$options" value="owner" open />
+            <x-ui.file-uploader name="upload" label="Upload evidence" helper="PDF only" />
+            <x-ui.number-input name="seats" label="Seats" value="5" min="1" max="20" />
+            <x-ui.select name="native_role" label="Native role" :options="$options" value="admin" />
+            <x-ui.radio-group name="visibility" label="Visibility" :options="$options" value="owner" />
+            <x-ui.toggle name="enabled" label="Enabled" checked />
+            <x-ui.inline-loading status="loading" label="Saving changes" />
+            <x-ui.progress-bar value="40" label="Import progress" />
+            <x-ui.progress-indicator :steps="$steps" />
+            <x-ui.tag tone="success" icon="heroicon-o-check-circle">Active</x-ui.tag>
+            <x-ui.structured-list :rows="$rows" selectable />
+            <x-ui.contained-list title="Contained workspaces" :items="$containedItems" />
+            <ul class="ui-list ui-list-unordered"><li>Native list API</li></ul>
+            <x-ui.tile title="Workspace" description="Open workspace details" href="#" variant="clickable" />
+            <x-ui.tooltip text="Edit workspace"><x-ui.icon-button label="Edit workspace">✎</x-ui.icon-button></x-ui.tooltip>
+            <x-ui.toggletip label="About tenant domains" open>Domains route users into the tenant workspace.</x-ui.toggletip>
+            <x-ui.multiselect name="roles" label="Roles" :options="$options" :value="['owner']" filterable clearable select-all open />
+            <x-ui.popover label="More context" open>Use popovers for short contextual panels.</x-ui.popover>
+            <x-ui.slider name="retention" label="Retention" value="30" min="0" max="90" show-input />
+            <x-ui.range-slider name-min="min_score" name-max="max_score" label="Score range" value-min="20" value-max="80" show-inputs />
+            <x-ui.tree-view label="Settings tree" :nodes="$treeNodes" selected="security" />
+        BLADE, compact('items', 'options', 'rows', 'containedItems', 'steps', 'treeNodes'));
+
+        foreach ([
+            'data-ui-component="link"',
+            'data-ui-component="menu-button"',
+            'data-ui-component="combo-button"',
+            'data-ui-component="overflow-menu"',
+            'data-ui-component="pagination"',
+            'data-ui-component="search"',
+            'data-ui-component="dropdown"',
+            'data-ui-component="file-uploader"',
+            'data-ui-component="number-input"',
+            'data-ui-component="select"',
+            'data-ui-component="radio-group"',
+            'data-ui-component="radio-button"',
+            'data-ui-component="toggle"',
+            'data-ui-component="inline-loading"',
+            'data-ui-component="progress-bar"',
+            'data-ui-component="progress-indicator"',
+            'data-ui-component="progress-step"',
+            'data-ui-component="tag"',
+            'data-ui-component="structured-list"',
+            'data-ui-component="structured-list-row"',
+            'data-ui-component="contained-list"',
+            'data-ui-component="contained-list-item"',
+            'ui-list',
+            'data-ui-component="tile"',
+            'data-ui-component="tooltip"',
+            'data-ui-component="toggletip"',
+            'data-ui-component="multiselect"',
+            'data-ui-component="popover"',
+            'data-ui-component="slider"',
+            'data-ui-component="range-slider"',
+            'data-ui-component="tree-view"',
+        ] as $marker) {
+            $this->assertStringContainsString($marker, $html);
+        }
+
+        $this->assertStringContainsString('data-ui-menu-trigger', $html);
+        $this->assertStringContainsString('data-ui-dropdown-option', $html);
+        $this->assertStringContainsString('data-ui-pagination-page-size', $html);
+        $this->assertStringContainsString('data-ui-toggletip-panel', $html);
+        $this->assertStringContainsString('data-ui-multiselect-option', $html);
+        $this->assertStringContainsString('data-ui-multiselect-filter', $html);
+        $this->assertStringContainsString('data-ui-multiselect-clear', $html);
+        $this->assertStringContainsString('data-ui-popover-trigger', $html);
+        $this->assertStringContainsString('data-ui-popover-panel', $html);
+        $this->assertStringContainsString('data-ui-popover-close', $html);
+        $this->assertStringContainsString('data-ui-slider-input', $html);
+        $this->assertStringContainsString('data-ui-slider-value', $html);
+        $this->assertStringContainsString('data-ui-slider-thumb', $html);
+        $this->assertStringContainsString('data-ui-slider-state', $html);
+        $this->assertStringContainsString('data-ui-tree-node', $html);
+        $this->assertStringContainsString('data-ui-tree-expanded', $html);
+        $this->assertStringContainsString('data-ui-tree-selected', $html);
+        $this->assertStringContainsString('data-ui-tree-active', $html);
+    }
+
+    private function assertMarkdownFilesContainHeadings(string $directory, array $ignoredFiles, array $headings): void
+    {
+        $files = glob($directory.DIRECTORY_SEPARATOR.'*.md') ?: [];
+
+        foreach ($files as $file) {
+            if (in_array(basename($file), $ignoredFiles, true)) {
+                continue;
+            }
+
+            $contents = file_get_contents($file);
+
+            foreach ($headings as $heading) {
+                $this->assertMatchesRegularExpression(
+                    '/^##\s+(?:\d+(?:\.\d+)*\.\s+)?'.preg_quote($heading, '/').'\r?$/m',
+                    $contents,
+                    basename($file).' is missing the '.$heading.' API-contract section.'
+                );
+            }
+        }
     }
 
     public function test_foundation_element_catalog_routes_are_discoverable(): void
@@ -157,14 +492,35 @@ class PlatformUiReferenceTest extends TestCase
             ->assertOk()
             ->assertSee('data-ui-reference-foundation-element="color"', false)
             ->assertSee('data-ui-reference-color-token-palette', false)
+            ->assertSee('data-ui-reference-element-dropdown="color"', false)
+            ->assertSee('data-ui-reference-element-dropdown-open="true"', false)
+            ->assertSee('data-ui-reference-sidebar-disclosure="color"', false)
+            ->assertSee('aria-controls="ui-reference-sidebar-color-panel"', false)
+            ->assertSee('aria-expanded="true"', false)
+            ->assertSee('data-ui-reference-sidebar-disclosure="color"', false)
             ->assertSee('data-ui-reference-color-sidebar', false)
             ->assertSee('data-ui-reference-color-sidebar-item="overview"', false)
             ->assertSee('data-ui-reference-color-sidebar-item="token-palette"', false)
             ->assertSee('Color Token Palette');
 
+        $this->get('/platform/ui-reference/elements/typography/type-sets')
+            ->assertOk()
+            ->assertSee('data-typography-type-sets-page', false)
+            ->assertSee('data-ui-reference-foundation-element="typography"', false)
+            ->assertSee('data-ui-reference-element-dropdown="typography"', false)
+            ->assertSee('data-ui-reference-element-dropdown-open="true"', false)
+            ->assertSee('data-ui-reference-sidebar-disclosure="typography"', false)
+            ->assertSee('aria-controls="ui-reference-sidebar-typography-panel"', false)
+            ->assertSee('aria-expanded="true"', false)
+            ->assertSee('data-ui-reference-sidebar-disclosure="typography"', false)
+            ->assertSee('data-ui-reference-typography-sidebar', false)
+            ->assertSee('data-ui-reference-typography-sidebar-item="overview"', false)
+            ->assertSee('data-ui-reference-typography-sidebar-item="type-sets"', false)
+            ->assertSee('Type Sets');
+
         $this->get('/platform/ui-reference/elements/2x-grid')
             ->assertOk()
-            ->assertSee('data-ui-reference-foundation-element="grid"', false)
+            ->assertSee('data-ui-reference-foundation-element="2x-grid"', false)
             ->assertSee('2x Grid');
 
         $this->get('/platform/ui-reference/elements/not-an-element')
@@ -212,7 +568,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('High-contrast and inverse examples are owned by the')
             ->assertDontSee('data-theme-example="inline-theme-examples"', false);
 
-        $this->get('/platform/ui-reference/elements/grid')
+        $this->get('/platform/ui-reference/elements/2x-grid')
             ->assertOk()
             ->assertSee('data-grid-example="responsive-grid-visualizer"', false)
             ->assertSee('data-grid-example="breakpoint-examples"', false)
@@ -226,6 +582,11 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('1312px')
             ->assertSee('1584px');
 
+        $this->get('/platform/ui-reference/elements/grid')
+            ->assertOk()
+            ->assertSee('data-ui-reference-foundation-element="2x-grid"', false)
+            ->assertSee('2x Grid');
+
         $this->get('/platform/ui-reference/elements/spacing')
             ->assertOk()
             ->assertSee('data-spacing-example="spacing-scale"', false)
@@ -237,12 +598,14 @@ class PlatformUiReferenceTest extends TestCase
 
         $this->get('/platform/ui-reference/elements/typography')
             ->assertOk()
+            ->assertSee('data-typography-example="type-sets-overview"', false)
             ->assertSee('data-typography-example="font-specimens"', false)
             ->assertSee('data-typography-example="type-scale"', false)
             ->assertSee('data-typography-example="type-role-examples"', false)
             ->assertSee('data-typography-example="productive-content-examples"', false)
             ->assertSee('data-typography-example="weight-examples"', false)
             ->assertSee('data-typography-example="type-color-examples"', false)
+            ->assertSee('data-typography-example="highlighted-code-token"', false)
             ->assertSee('Light 300')
             ->assertSee('Regular 400')
             ->assertSee('Semibold 600')
@@ -250,7 +613,69 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('92px')
             ->assertSee('Scale formula reference')
             ->assertSee('Color is not decoration')
-            ->assertSee('ui-control-error', false);
+            ->assertSee('Code snippet with highlighted token')
+            ->assertSee('ui-code-snippet', false)
+            ->assertSee('ui-code-token-keyword', false)
+            ->assertSee('ui-code-token-property', false)
+            ->assertSee('ui-code-token-string', false)
+            ->assertSee('ui-control-error', false)
+            ->assertSee('/platform/ui-reference/elements/typography/type-sets', false)
+            ->assertSee('Productive Type Set')
+            ->assertSee('Expressive Type Set');
+
+        $typeSets = $this->get('/platform/ui-reference/elements/typography/type-sets')
+            ->assertOk()
+            ->assertSee('data-typography-type-sets-page', false)
+            ->assertSee('data-type-set="productive"', false)
+            ->assertSee('data-type-set="expressive"', false)
+            ->assertSee('data-type-set-example="comparison"', false)
+            ->assertSee('data-type-set-example="blending"', false)
+            ->assertSee('14px productive base')
+            ->assertSee('16px expressive base')
+            ->assertSee('fixed productive headings')
+            ->assertSee('fluid expressive headings')
+            ->assertSee('--ui-type-productive-base-size')
+            ->assertSee('--ui-type-expressive-base-size')
+            ->assertSee('--ui-type-fluid-max')
+            ->assertSee('Expressive form labels')
+            ->assertSee('Expressive table cell text')
+            ->assertSee('IBM Plex adoption')
+            ->assertDontSee('Expressive type is deferred')
+            ->assertDontSee('cds--type-', false)
+            ->assertDontSee('bx--type-', false);
+
+        foreach ([
+            'ui-type-set-productive',
+            'ui-type-set-expressive',
+            'ui-type-productive-label',
+            'ui-type-productive-helper',
+            'ui-type-productive-legal',
+            'ui-type-productive-body-compact',
+            'ui-type-productive-body',
+            'ui-type-productive-heading-compact',
+            'ui-type-productive-heading-01',
+            'ui-type-productive-heading-02',
+            'ui-type-productive-heading-03',
+            'ui-type-productive-heading-04',
+            'ui-type-productive-heading-05',
+            'ui-type-productive-heading-06',
+            'ui-type-expressive-label',
+            'ui-type-expressive-helper',
+            'ui-type-expressive-legal',
+            'ui-type-expressive-body-compact',
+            'ui-type-expressive-body',
+            'ui-type-expressive-heading-compact',
+            'ui-type-expressive-heading-01',
+            'ui-type-expressive-heading-02',
+            'ui-type-expressive-heading-03',
+            'ui-type-expressive-heading-04',
+            'ui-type-expressive-heading-05',
+            'ui-type-expressive-heading-06',
+            'ui-type-expressive-display-01',
+            'ui-type-expressive-display-02',
+        ] as $className) {
+            $typeSets->assertSee($className, false);
+        }
 
         $this->get('/platform/ui-reference/elements/icons')
             ->assertOk()
@@ -279,14 +704,28 @@ class PlatformUiReferenceTest extends TestCase
         $this->get('/platform/ui-reference/elements/motion')
             ->assertOk()
             ->assertSee('data-motion-example="easing-demos"', false)
+            ->assertSee('data-motion-example="expressive-motion-gate"', false)
             ->assertSee('data-motion-example="component-motion-previews"', false)
+            ->assertSee('data-motion-example="pattern-motion-gates"', false)
             ->assertSee('data-motion-example="skeleton-transition"', false)
             ->assertSee('data-motion-example="reduced-motion-preview"', false)
             ->assertSee('data-motion-example="do-dont-samples"', false)
-            ->assertSee('Dropdown open')
-            ->assertSee('Modal enter / exit')
-            ->assertSee('Accordion / collapse')
-            ->assertSee('prefers-reduced-motion');
+            ->assertSee('Productive motion is the installed default')
+            ->assertSee('transition duration-150 ease-out')
+            ->assertSee('Expressive motion is not installed as a general app API')
+            ->assertSee('Gated')
+            ->assertSee('data-motion-owner="component-accordion"', false)
+            ->assertSee('data-ui-component="accordion"', false)
+            ->assertSee('data-motion-owner="component-menu"', false)
+            ->assertSee('data-motion-state="reduced-preview"', false)
+            ->assertSee('prefers-reduced-motion')
+            ->assertSee('/platform/ui-reference/patterns/layout')
+            ->assertDontSee('Expressive standard')
+            ->assertDontSee('Expressive entrance')
+            ->assertDontSee('Expressive exit')
+            ->assertDontSee('Accordion / collapse')
+            ->assertDontSee('<summary class="cursor-pointer text-sm font-semibold">Accordion / collapse</summary>', false)
+            ->assertDontSee('/platform/ui-reference/patterns/app-shell');
     }
 
     public function test_color_token_palette_exposes_role_family_matrix(): void
@@ -330,95 +769,95 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-color-token-family="syntax-code"', false);
     }
 
-    public function test_carbon_aligned_tier_one_component_depth_pages_are_documented(): void
+    public function test_accordion_component_reference_exemplar_uses_approved_scaffold(): void
     {
         $this->actingAsPlatformSuperAdmin();
 
-        $this->get('/platform/ui-reference/components/number-input')
+        $this->get('/platform/ui-reference/components/accordion')
             ->assertOk()
-            ->assertSee('Default number input')
-            ->assertSee('Fluid number input')
-            ->assertSee('Stepper controls')
-            ->assertSee('min="0"', false)
-            ->assertSee('max="4"', false)
-            ->assertSee('step="1"', false)
-            ->assertSee('Error with inline status icon')
-            ->assertSee('Warning with inline status icon')
-            ->assertSee('Disabled')
-            ->assertSee('Read-only')
-            ->assertSee('Focus')
-            ->assertSee('Keyboard behavior');
+            ->assertSee('Use cases')
+            ->assertSee('Component contract')
+            ->assertSee('Live examples')
+            ->assertSee('Related components and patterns')
+            ->assertDontSee('Live Examples Card')
+            ->assertDontSee('Use Cases Card')
+            ->assertDontSee('Purpose Card')
+            ->assertDontSee('Related Components And Patterns Card')
+            ->assertSee('Component overview')
+            ->assertSee('Usage boundary')
+            ->assertSee('Implementation rules')
+            ->assertSee('Rendered scenarios')
+            ->assertSee('Composition links')
+            ->assertSee('data-component-card="purpose"', false)
+            ->assertSee('data-component-card="use-cases"', false)
+            ->assertSee('data-component-card="component-contract"', false)
+            ->assertSee('data-component-card="live-examples"', false)
+            ->assertSee('data-component-card="related-components-and-patterns"', false)
+            ->assertSee('data-component-section="anatomy"', false)
+            ->assertSee('data-component-section="states"', false)
+            ->assertSee('data-component-section="behavior"', false)
+            ->assertSee('data-component-section="developer-implementation"', false)
+            ->assertSee('data-component-section="content-guidance"', false)
+            ->assertSee('data-component-section="accessibility"', false)
+            ->assertSee('x-ui.accordion')
+            ->assertSee('ui-code-snippet', false)
+            ->assertSee('ui-code-token-keyword', false)
+            ->assertSee('ui-code-token-property', false)
+            ->assertSee('initAccordions')
+            ->assertSee('data-ui-component="accordion"', false)
+            ->assertSee('data-ui-accordion-trigger', false)
+            ->assertSee('aria-expanded="true"', false)
+            ->assertSee('aria-controls', false)
+            ->assertSee('Basic accordion')
+            ->assertSee('Multiple independent sections')
+            ->assertSee('Long content accordion')
+            ->assertSee('Accordion inside card or panel')
+            ->assertSee('Form assistance accordion')
+            ->assertSee('Variants for this example')
+            ->assertSee('Compact')
+            ->assertSee('Single-open')
+            ->assertSee('Scrollable panel')
+            ->assertSee('Contained contextual')
+            ->assertSee('data-ui-reference-variant-example="compact"', false)
+            ->assertSee('data-ui-reference-variant-example="single-open"', false)
+            ->assertSee('data-ui-reference-variant-example="scrollable-panel"', false)
+            ->assertSee('data-ui-reference-variant-example="contained-contextual"', false)
+            ->assertSee('data-ui-accordion-mode="single"', false)
+            ->assertSee('data-ui-accordion-panel-open="true"', false)
+            ->assertSee('ui-accordion-compact', false)
+            ->assertSee('ui-accordion-scrollable', false)
+            ->assertSee('panelMaxHeight')
+            ->assertSee('Disabled until integration setup exists')
+            ->assertSee('Users must read the content before continuing')
+            ->assertSee('Click, tap, Enter, and Space toggle the focused trigger')
+            ->assertSee('Use a semantic button for every trigger')
+            ->assertSee('Name the disclosed content directly')
+            ->assertDontSee('Compact&lt;/p&gt;', false)
+            ->assertDontSee('Requires explicit product need')
+            ->assertDontSee('Avoid internal scroll regions unless a specific workflow requires them')
+            ->assertDontSee('>Default<', false)
+            ->assertDontSee('Legacy Contract Summary')
+            ->assertDontSee('Accordion Reference Examples')
+            ->assertDontSee('data-ui-reference-example="accordion-shared-live-example"', false);
 
-        $this->get('/platform/ui-reference/components/radio-button')
-            ->assertOk()
-            ->assertSee('Vertical group')
-            ->assertSee('Horizontal group')
-            ->assertSee('selected')
-            ->assertSee('unselected')
-            ->assertSee('Error group state')
-            ->assertSee('Warning and helper text')
-            ->assertSee('Disabled and read-only')
-            ->assertSee('single-select only')
-            ->assertSee('Use checkbox groups for multi-select choices');
+        $accordionScript = file_get_contents(resource_path('js/ui-controls/accordions.js'));
+        $accordionCss = file_get_contents(resource_path('css/app.css'));
 
-        $this->get('/platform/ui-reference/components/checkbox')
-            ->assertOk()
-            ->assertSee('Independent choice')
-            ->assertSee('Multi-select group')
-            ->assertSee('Checked, unchecked, indeterminate')
-            ->assertSee('Disabled and read-only')
-            ->assertSee('Error and warning')
-            ->assertSee('Use radio buttons when exactly one visible option must be selected');
-
-        $this->get('/platform/ui-reference/components/pagination')
-            ->assertOk()
-            ->assertSee('Full pagination with page-size selector')
-            ->assertSee('Compact nav')
-            ->assertSee('Overflow')
-            ->assertSee('disabled prev/next')
-            ->assertSee('Size pairings')
-            ->assertSee('below related content');
-
-        $this->get('/platform/ui-reference/components/structured-list')
-            ->assertOk()
-            ->assertSee('Default structured list')
-            ->assertSee('Selectable structured list')
-            ->assertSee('Condensed density')
-            ->assertSee('Hang alignment')
-            ->assertSee('Flush alignment')
-            ->assertSee('Selected, focus, disabled, and skeleton states');
-
-        $this->get('/platform/ui-reference/components/tabs')
-            ->assertOk()
-            ->assertSee('Line tabs')
-            ->assertSee('Contained tabs')
-            ->assertSee('Vertical tabs')
-            ->assertSee('Line tabs with icon')
-            ->assertSee('Icon-only line tabs')
-            ->assertSee('Overflow / scroll tabs')
-            ->assertSee('tab-vs-progress/comparison guidance');
-
-        $this->get('/platform/ui-reference/components/menu')
-            ->assertOk()
-            ->assertSee('Action items, sizing, and alignment')
-            ->assertSee('Current item')
-            ->assertSee('Disabled item')
-            ->assertSee('Delete workspace')
-            ->assertSee('Keyboard and submenu boundary');
-
-        $this->get('/platform/ui-reference/components/ui-shell')
-            ->assertOk()
-            ->assertSee('UI Shell Disposition')
-            ->assertSee('Header content')
-            ->assertSee('Left panel')
-            ->assertSee('Right panel')
-            ->assertSee('T2 navigation and layout surfaces');
+        $this->assertIsString($accordionScript);
+        $this->assertIsString($accordionCss);
+        $this->assertStringContainsString('prefers-reduced-motion: reduce', $accordionScript);
+        $this->assertStringContainsString('requestAnimationFrame', $accordionScript);
+        $this->assertStringContainsString('transitionend', $accordionScript);
+        $this->assertStringContainsString("data-ui-accordion-panel-open='false'", $accordionCss);
+        $this->assertStringContainsString('block-size 200ms', $accordionCss);
+        $this->assertStringContainsString('panel.scrollHeight', $accordionScript);
+        $this->assertStringContainsString('@media (prefers-reduced-motion: reduce)', $accordionCss);
 
         foreach (['ui-shell-header', 'ui-shell-left-panel', 'ui-shell-right-panel'] as $shellAlias) {
             $this->get('/platform/ui-reference/components/'.$shellAlias)
                 ->assertOk()
                 ->assertSee('data-ui-reference-t1-component="ui-shell"', false)
-                ->assertSee('UI Shell Disposition');
+                ->assertSee('Implementation rules');
         }
     }
 
@@ -567,6 +1006,714 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-ui-demo-toast-generated-overlay', false);
     }
 
+    public function test_component_family_depth_pages_render_specific_examples_and_variants(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $expectations = [
+            'button' => ['Variant purpose matrix', 'Size scale', 'State matrix', 'Button groups', 'Icon usage', 'Content behavior', 'Token and style roles', 'data-component-live-layout="button-matrix"'],
+            'link' => ['Inline content link', 'External/help link', 'Navigation link', 'Icon trailing', 'Unavailable treatment', 'data-ui-reference-sample-type="links"'],
+            'menu' => ['Contextual action menu', 'Row action menu', 'Danger item', 'Divided groups', 'Submenu boundary', 'data-ui-reference-sample-type="menu"'],
+            'menu-buttons' => ['Variant purpose matrix', 'Base options', 'Trigger style matrix', 'Size scale', 'Placement and width behavior', 'States and keyboard behavior', 'data-component-live-layout="menu-buttons-matrix"'],
+            'text-input' => ['Login form field', 'Settings form field', 'Validation field', 'Read-only field', 'Disabled field', 'data-ui-reference-sample-type="field"'],
+            'number-input' => ['Min/max/step', 'Increment/decrement', 'Error/warning icon', 'Compact/fluid', 'data-ui-reference-sample-type="field"'],
+            'checkbox' => ['Independent choice', 'Multi-select group', 'Settings group', 'Validation group', 'Selected and unselected', 'data-ui-reference-sample-type="selection"'],
+            'radio-button' => ['Vertical radio group', 'Horizontal radio group', 'Selected/unselected', 'Validation group', 'data-ui-reference-sample-type="selection"'],
+            'notification' => ['Form validation error', 'Record saved', 'API failure', 'Background job completed', 'Maintenance notice', 'data-ui-reference-sample-type="alert"'],
+            'modal' => ['Confirmation dialog', 'Form modal', 'Read-only detail', 'Destructive action', 'Wizard deferred', 'data-ui-component="modal-preview"'],
+            'data-table' => ['Basic sortable table', 'Filterable table', 'Row actions', 'Loading', 'Responsive overflow', 'ui-table-row'],
+            'pagination' => ['Full pagination', 'Compact pagination', 'Page-size selector', 'Disabled prev/next', 'Overflow', 'ui-pagination-control'],
+            'tabs' => ['Line tabs', 'Contained tabs', 'Vertical tabs', 'Icon-leading', 'Icon-only', 'Overflow/scroll', 'Disabled', 'data-ui-reference-sample-type="tabs"'],
+            'ui-shell' => ['Header baseline', 'Left panel', 'Account menu', 'Notification/action area', 'Mobile/collapsed behavior', 'Right panel deferred', 'data-ui-reference-sample-type="shell"'],
+            'code-snippet' => ['Single-line code', 'Multi-line code', 'Highlighted syntax tokens', 'ui-code-token-keyword', 'ui-code-token-property', 'ui-code-token-string'],
+        ];
+
+        foreach ($expectations as $slug => $needles) {
+            $response = $this->get('/platform/ui-reference/components/'.$slug)
+                ->assertOk()
+                ->assertSee('data-component-card="purpose"', false)
+                ->assertSee('data-component-card="component-contract"', false)
+                ->assertSee('data-component-card="live-examples"', false)
+                ->assertSee('data-component-section="foundation-elements-used"', false)
+                ->assertSee('ui-code-snippet', false)
+                ->assertDontSee('Family-depth implementation pending');
+
+            if (in_array($slug, ['button', 'menu-buttons'], true)) {
+                $response
+                    ->assertSee('data-ui-reference-live-examples-layout="flexible-matrix"', false)
+                    ->assertDontSee('Live Examples Card');
+            } else {
+                $response
+                    ->assertSee('Variants for this example')
+                    ->assertSee('data-ui-reference-variant-example', false);
+            }
+
+            foreach ($needles as $needle) {
+                $response->assertSee($needle, false);
+            }
+        }
+    }
+
+    public function test_component_recovery_pages_do_not_render_generic_fallback_content(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        foreach (['breadcrumb', 'tabs', 'menu', 'code-snippet', 'button'] as $slug) {
+            $response = $this->get('/platform/ui-reference/components/'.$slug)
+                ->assertOk()
+                ->assertSee('data-component-section="developer-code-example"', false)
+                ->assertDontSee('<!-- Use the documented component contract before adding local markup. -->', false)
+                ->assertDontSee('Use the documented component contract before adding local markup')
+                ->assertDontSee('Family-depth implementation pending')
+                ->assertDontSee('Current location, keyboard navigation, focus order, responsive collapse, overflow, and skip-link/focus expectations')
+                ->assertDontSee('Default, hover-capable, focus-visible, disabled, read-only, helper, error, warning, and loading where applicable.');
+
+            if ($slug === 'button') {
+                $response
+                    ->assertSee('Implemented - pending manual review')
+                    ->assertSee('data-ui-reference-live-examples-layout="flexible-matrix"', false);
+            } else {
+                $response
+                    ->assertSee('Implemented - pending manual review')
+                    ->assertSee('data-ui-reference-variant-example', false);
+            }
+        }
+    }
+
+    public function test_breadcrumb_component_recovery_page_renders_required_examples(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/components/breadcrumb')
+            ->assertOk()
+            ->assertSee('x-ui.breadcrumb')
+            ->assertSee('Small size')
+            ->assertSee('Medium size')
+            ->assertSee('Truncated menu')
+            ->assertSee('Current page listed')
+            ->assertSee('Truncated menu with current page listed')
+            ->assertSee('data-ui-component="breadcrumb"', false)
+            ->assertSee('data-ui-breadcrumb-size="sm"', false)
+            ->assertSee('data-ui-breadcrumb-size="md"', false)
+            ->assertSee('data-ui-breadcrumb-overflow="true"', false)
+            ->assertSee('data-ui-breadcrumb-current-included="false"', false)
+            ->assertSee('data-ui-breadcrumb-current-included="true"', false)
+            ->assertSee('data-ui-breadcrumb-visible-items="4"', false)
+            ->assertSee('data-ui-breadcrumb-visible-items="5"', false)
+            ->assertSee('data-ui-breadcrumb-truncate-after="4"', false)
+            ->assertSee('data-ui-breadcrumb-truncate-after="5"', false)
+            ->assertSee('ui-breadcrumb-trailing', false)
+            ->assertSee('data-ui-menu-trigger', false)
+            ->assertSee('aria-haspopup="menu"', false)
+            ->assertSee('aria-expanded="true"', false)
+            ->assertSee('aria-current="page"', false)
+            ->assertSee('Tenant admin')
+            ->assertSeeInOrder(['Platform', 'Operations', 'Security settings', 'Domain rules'])
+            ->assertSee('Default')
+            ->assertSee('Overflow menu open')
+            ->assertSee('Disabled not applicable')
+            ->assertDontSee('aria-current="page" class="ui-link"', false);
+    }
+
+    public function test_tabs_component_recovery_page_renders_required_examples(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/components/tabs')
+            ->assertOk()
+            ->assertSee('x-ui.tabs')
+            ->assertSee('Line tabs')
+            ->assertSee('Contained tabs')
+            ->assertSee('Vertical tabs')
+            ->assertSee('Scrollable line tabs')
+            ->assertSee('Tabs with icons')
+            ->assertSee('Icon-only tabs')
+            ->assertSee('Secondary labels')
+            ->assertSee('Dismissible tabs')
+            ->assertSee('Dismissible tabs with icons')
+            ->assertSee('Manual activation')
+            ->assertSee('Small breakpoint handoff')
+            ->assertSee('data-ui-component="tabs"', false)
+            ->assertSee('data-ui-tabs-activation="manual"', false)
+            ->assertSee('role="tablist"', false)
+            ->assertSee('role="tabpanel"', false)
+            ->assertSee('Overview panel')
+            ->assertSee('Activity panel')
+            ->assertSee('Settings panel')
+            ->assertSee('Selected')
+            ->assertSee('Unselected')
+            ->assertSee('Focus-visible')
+            ->assertSee('Scrollable')
+            ->assertSee('Dismissible');
+    }
+
+    public function test_menu_component_recovery_page_renders_required_examples(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/components/menu')
+            ->assertOk()
+            ->assertSee('x-ui.menu')
+            ->assertSee('Contextual action menu')
+            ->assertSee('Row action menu')
+            ->assertSee('Grouped and selected menu')
+            ->assertSee('Alignment and RTL')
+            ->assertSee('Extra small')
+            ->assertSee('Small')
+            ->assertSee('Medium')
+            ->assertSee('Large')
+            ->assertSee('Bottom start')
+            ->assertSee('Bottom end')
+            ->assertSee('Top start')
+            ->assertSee('Top end')
+            ->assertSee('RTL mirrored')
+            ->assertSee('Keyboard shortcut')
+            ->assertSee('Submenu boundary')
+            ->assertSee('Single-select')
+            ->assertSee('Multi-select')
+            ->assertSee('Danger hover and focus')
+            ->assertSee('data-ui-component="menu-composition"', false)
+            ->assertSee('data-ui-menu-open="false"', false)
+            ->assertSee('data-ui-menu-trigger', false)
+            ->assertSee('aria-haspopup="menu"', false)
+            ->assertSee('aria-expanded="false"', false)
+            ->assertSee('aria-controls="ui-menu-', false)
+            ->assertSee('data-ui-menu-panel', false)
+            ->assertSee('data-ui-menu-placement="bottom-end"', false)
+            ->assertSee('data-ui-menu-size="xs"', false)
+            ->assertSee('data-ui-menu-proof-panel', false)
+            ->assertSee('Static proof panel uses', false)
+            ->assertSee('without forcing the interactive menu open')
+            ->assertSee('data-ui-component="menu-item"', false)
+            ->assertSee('data-ui-menu-item', false)
+            ->assertSee('data-ui-menu-item-size="xs"', false)
+            ->assertSee('data-ui-menu-item-size="lg"', false)
+            ->assertSee('data-ui-menu-item-state="danger-focus-hover"', false)
+            ->assertSee('ui-menu-item-xs', false)
+            ->assertSee('ui-menu-item-lg', false)
+            ->assertSee('ui-menu-align-bottom-end', false)
+            ->assertSee('role="separator"', false)
+            ->assertSee('role="menuitem"', false)
+            ->assertSee('role="menuitemradio"', false)
+            ->assertSee('role="menuitemcheckbox"', false)
+            ->assertSee('aria-checked="true"', false)
+            ->assertSee('data-ui-menu-submenu-trigger', false)
+            ->assertSee('title="Open the complete workspace audit evidence package"', false)
+            ->assertSee('Open actions for Workspace alpha')
+            ->assertDontSee('data-ui-menu-open="true"', false);
+    }
+
+    public function test_code_snippet_component_recovery_page_renders_required_examples(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/components/code-snippet')
+            ->assertOk()
+            ->assertSee('x-ui.code-snippet')
+            ->assertSee('Single-line code')
+            ->assertSee('Multi-line code')
+            ->assertSee('Highlighted syntax tokens')
+            ->assertSee('Copy ready')
+            ->assertSee('Copied state')
+            ->assertSee('Without copy')
+            ->assertSee('With copy')
+            ->assertSee('Keyword token')
+            ->assertSee('Property token')
+            ->assertSee('String token')
+            ->assertSee('data-ui-component="code-snippet"', false)
+            ->assertSee('data-ui-code-snippet-variant="single"', false)
+            ->assertSee('data-ui-code-snippet-variant="multi"', false)
+            ->assertSee('ui-code-token-keyword', false)
+            ->assertSee('ui-code-token-property', false)
+            ->assertSee('ui-code-token-string', false)
+            ->assertSee('data-ui-code-copy-state="copied"', false);
+    }
+
+    public function test_button_component_recovery_page_renders_required_examples(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/components/button')
+            ->assertOk()
+            ->assertSee('x-ui.button')
+            ->assertSee('x-ui.icon-button')
+            ->assertSee('data-ui-reference-live-examples-layout="flexible-matrix"', false)
+            ->assertSee('data-component-live-layout="button-matrix"', false)
+            ->assertSee('Variant purpose matrix')
+            ->assertSee('Size scale')
+            ->assertSee('State matrix')
+            ->assertSee('Button groups')
+            ->assertSee('Icon usage')
+            ->assertSee('Content behavior')
+            ->assertSee('Token and style roles')
+            ->assertSee('Primary')
+            ->assertSee('Secondary')
+            ->assertSee('Tertiary')
+            ->assertSee('Ghost')
+            ->assertSee('Danger primary')
+            ->assertSee('Danger tertiary')
+            ->assertSee('Danger ghost')
+            ->assertSee('Extra small')
+            ->assertSee('Small')
+            ->assertSee('Medium')
+            ->assertSee('Large productive')
+            ->assertSee('Large expressive')
+            ->assertSee('Extra large')
+            ->assertSee('2XL')
+            ->assertSee('Default')
+            ->assertSee('Hover')
+            ->assertSee('Focus-visible')
+            ->assertSee('Active')
+            ->assertSee('Disabled')
+            ->assertSee('Loading')
+            ->assertSee('Danger hover')
+            ->assertSee('2 buttons with primary')
+            ->assertSee('3 buttons with primary')
+            ->assertSee('No-primary groups')
+            ->assertSee('More than 3 actions')
+            ->assertSee('Menu buttons or Toolbar')
+            ->assertSee('Button icons appear to the right of the label')
+            ->assertSee('icon-only buttons require a tooltip and accessible name')
+            ->assertSee('Danger icon-only is not allowed')
+            ->assertSee('Prefer verb + noun labels')
+            ->assertSee('Use sentence case')
+            ->assertSee('Labels remain left-aligned')
+            ->assertSee('RTL mirrors')
+            ->assertSee('wrap to a second line instead of truncating')
+            ->assertSee('data-ui-component="button"', false)
+            ->assertSee('data-ui-component="icon-button"', false)
+            ->assertSee('data-button-variant-row="danger-ghost"', false)
+            ->assertSee('data-button-size-row="2xl"', false)
+            ->assertSee('ui-action-lg-expressive', false)
+            ->assertSee('ui-action-xl', false)
+            ->assertSee('ui-action-2xl', false)
+            ->assertSee('data-button-group-example="primary-secondary"', false)
+            ->assertSee('data-button-icon-state-row="default"', false)
+            ->assertSee('data-button-icon-state-row="hover"', false)
+            ->assertSee('data-button-icon-state-row="focus-visible"', false)
+            ->assertSee('data-button-icon-state-row="pressed"', false)
+            ->assertSee('data-button-icon-state-row="disabled"', false)
+            ->assertSee('data-button-icon-state-row="loading"', false)
+            ->assertSee('data-button-icon-state-row="danger-prohibited"', false)
+            ->assertSee('data-button-rule="no-danger-icon-only"', false)
+            ->assertSee('is-hover', false)
+            ->assertSee('is-focus', false)
+            ->assertSee('is-active', false)
+            ->assertSee('aria-busy="true"', false)
+            ->assertSee('title="Refresh data"', false)
+            ->assertSee('Icon-only danger prohibited')
+            ->assertDontSee('Family-depth implementation pending');
+    }
+
+    public function test_menu_buttons_component_recovery_page_renders_required_examples(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/components/menu-buttons')
+            ->assertOk()
+            ->assertSee('x-ui.menu-button')
+            ->assertSee('x-ui.combo-button')
+            ->assertSee('x-ui.overflow-menu')
+            ->assertSee('data-ui-reference-live-examples-layout="flexible-matrix"', false)
+            ->assertSee('data-component-live-layout="menu-buttons-matrix"', false)
+            ->assertSee('data-menu-buttons-live-section="variant-purpose-matrix"', false)
+            ->assertSee('data-menu-buttons-live-section="base-options"', false)
+            ->assertSee('data-menu-buttons-live-section="trigger-style-matrix"', false)
+            ->assertSee('data-menu-buttons-live-section="size-scale"', false)
+            ->assertSee('data-menu-buttons-live-section="placement-width"', false)
+            ->assertSee('data-menu-buttons-live-section="states-keyboard"', false)
+            ->assertSee('data-menu-buttons-live-section="content-boundaries"', false)
+            ->assertSee('data-menu-buttons-live-section="developer-implementation"', false)
+            ->assertSee('data-menu-buttons-variant-row="menu-button"', false)
+            ->assertSee('data-menu-buttons-variant-row="combo-button"', false)
+            ->assertSee('data-menu-buttons-variant-row="overflow-menu"', false)
+            ->assertSee('data-menu-buttons-base="menu-button"', false)
+            ->assertSee('data-menu-buttons-base="combo-button"', false)
+            ->assertSee('data-menu-buttons-base="overflow-menu"', false)
+            ->assertSee('data-menu-buttons-trigger-row="primary-menu-button"', false)
+            ->assertSee('data-menu-buttons-trigger-row="tertiary-menu-button"', false)
+            ->assertSee('data-menu-buttons-trigger-row="ghost-menu-button"', false)
+            ->assertSee('data-menu-buttons-trigger-row="combo-primary-only"', false)
+            ->assertSee('data-menu-buttons-trigger-row="overflow-ghost-only"', false)
+            ->assertSee('data-menu-buttons-size-row="extra-small"', false)
+            ->assertSee('data-menu-buttons-size-row="small"', false)
+            ->assertSee('data-menu-buttons-size-row="medium"', false)
+            ->assertSee('data-menu-buttons-size-row="large"', false)
+            ->assertSee('data-ui-component="menu-button"', false)
+            ->assertSee('data-ui-component="combo-button"', false)
+            ->assertSee('data-ui-component="overflow-menu"', false)
+            ->assertSee('data-ui-menu-button-kind="menu"', false)
+            ->assertSee('data-ui-menu-button-kind="combo"', false)
+            ->assertSee('data-ui-menu-button-kind="overflow"', false)
+            ->assertSee('data-ui-menu-open="false"', false)
+            ->assertSee('data-ui-menu-open="true"', false)
+            ->assertSee('data-ui-menu-proof-panel', false)
+            ->assertSee('data-ui-menu-size="xs"', false)
+            ->assertSee('data-ui-menu-size="lg"', false)
+            ->assertSee('data-menu-buttons-size-proof="xs"', false)
+            ->assertSee('data-menu-buttons-size-proof="lg"', false)
+            ->assertSee('data-menu-buttons-width-rule="minimum-160"', false)
+            ->assertSee('data-menu-buttons-width-rule="ghost-exception"', false)
+            ->assertSee('data-menu-buttons-keyboard-rule="aria-expanded"', false)
+            ->assertSee('data-menu-buttons-keyboard-rule="escape"', false)
+            ->assertSee('data-menu-buttons-keyboard-rule="arrows"', false)
+            ->assertSee('data-menu-buttons-keyboard-rule="activate"', false)
+            ->assertSee('data-menu-buttons-boundary="not-value-selection"', false)
+            ->assertSee('data-menu-buttons-boundary="not-rich-content"', false)
+            ->assertSee('aria-haspopup="menu"', false)
+            ->assertSee('aria-expanded="false"', false)
+            ->assertSee('aria-expanded="true"', false)
+            ->assertSee('Menu button')
+            ->assertSee('Combo button')
+            ->assertSee('Overflow menu')
+            ->assertSee('Extra small')
+            ->assertSee('48px / 3rem')
+            ->assertSee('Ghost trigger width follows the button')
+            ->assertSee('Menu buttons are for actions, not value selection')
+            ->assertDontSee('Component-specific API pending correction')
+            ->assertDontSee('Family-depth implementation pending')
+            ->assertDontSee('data-ui-reference-sample-type="menu-button"', false);
+    }
+
+    public function test_date_picker_component_page_renders_installed_api_examples(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/components/date-picker')
+            ->assertOk()
+            ->assertSee('x-ui.date-picker')
+            ->assertSee('Native single date')
+            ->assertSee('Date-time')
+            ->assertSee('Validation date')
+            ->assertSee('Disabled and read-only dates')
+            ->assertSee('Range picker boundary')
+            ->assertSee('Required date')
+            ->assertSee('Bounded date')
+            ->assertSee('Minute step')
+            ->assertSee('Warning state')
+            ->assertSee('Pattern-owned range')
+            ->assertSee('data-ui-component="date-picker"', false)
+            ->assertSee('data-ui-date-picker-type="date"', false)
+            ->assertSee('data-ui-date-picker-type="datetime-local"', false)
+            ->assertSee('aria-invalid="true"', false)
+            ->assertSee('data-ui-field-warning="true"', false)
+            ->assertSee('readonly', false)
+            ->assertSee('disabled', false)
+            ->assertSee('ui-input-date', false)
+            ->assertSee('Date range filter Pattern')
+            ->assertDontSee('Component-specific API pending correction')
+            ->assertDontSee('Family-depth implementation pending');
+    }
+
+    public function test_deferred_component_pages_show_trigger_conditions_instead_of_complete_ui(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $expectations = [
+            'ai-label' => ['Do not implement', 'AI label is not implemented until an approved AI-assisted feature exists', 'Trigger only when a product AI decision record approves AI-assisted behavior'],
+            'content-switcher' => ['Deferred', 'Content switcher remains deferred', 'Use tabs for panel switching today'],
+        ];
+
+        foreach ($expectations as $slug => $needles) {
+            $response = $this->get('/platform/ui-reference/components/'.$slug)
+                ->assertOk()
+                ->assertSee('data-ui-reference-sample-type="deferred"', false)
+                ->assertSee('Trigger conditions')
+                ->assertSee('Variants for this example')
+                ->assertDontSee('Family-depth implementation pending');
+
+            foreach ($needles as $needle) {
+                $response->assertSee($needle);
+            }
+        }
+    }
+
+    public function test_component_api_proof_sync_pages_render_installed_apis(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $expectations = [
+            'contained-list' => [
+                'x-ui.contained-list',
+                'data-ui-component="contained-list"',
+                'data-ui-component="contained-list-item"',
+                'Basic contained list',
+                'Contained list states',
+                'Selected row',
+                'Actionable row',
+                'Loading',
+                'Empty',
+            ],
+            'list' => [
+                'Native ul/ol/li with ui-list classes',
+                'ui-list ui-list-unordered',
+                'ui-list ui-list-ordered',
+                'ui-list-nested',
+                'Ordered list',
+                'Unordered list',
+                'Nested boundary',
+                'Content-only guidance',
+            ],
+            'multiselect' => [
+                'x-ui.multiselect',
+                'data-ui-component="multiselect"',
+                'data-ui-multiselect-option',
+                'data-ui-multiselect-filter',
+                'data-ui-multiselect-clear',
+                'Filterable multiselect',
+                'Validation multiselect',
+                'Disabled and loading multiselect',
+                'Select all',
+            ],
+            'popover' => [
+                'x-ui.popover',
+                'data-ui-component="popover"',
+                'data-ui-popover-trigger',
+                'data-ui-popover-panel',
+                'data-ui-popover-close',
+                'Context popover',
+                'Placement and size',
+                'Disabled trigger',
+            ],
+            'slider' => [
+                'x-ui.slider',
+                'x-ui.range-slider',
+                'data-ui-component="slider"',
+                'data-ui-component="range-slider"',
+                'data-ui-slider-input',
+                'data-ui-slider-value',
+                'data-ui-slider-thumb',
+                'data-ui-slider-state',
+                'Single-value slider',
+                'Range slider',
+                'Validation slider',
+            ],
+            'tree-view' => [
+                'x-ui.tree-view',
+                'data-ui-component="tree-view"',
+                'data-ui-tree-node',
+                'data-ui-tree-expanded',
+                'data-ui-tree-selected',
+                'data-ui-tree-active',
+                'Basic tree view',
+                'Disabled tree item',
+                'Expanded branch',
+                'Selected leaf',
+            ],
+        ];
+
+        foreach ($expectations as $slug => $needles) {
+            $response = $this->get('/platform/ui-reference/components/'.$slug)
+                ->assertOk()
+                ->assertSee('data-component-card="live-examples"', false)
+                ->assertSee('data-component-section="developer-code-example"', false)
+                ->assertDontSee('Component-specific API pending correction')
+                ->assertDontSee('data-ui-reference-sample-type="deferred"', false)
+                ->assertDontSee('Family-depth implementation pending');
+
+            foreach ($needles as $needle) {
+                $response->assertSee($needle, false);
+            }
+        }
+    }
+
+    public function test_remaining_component_recovery_pages_render_canonical_api_proof(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $expectations = [
+            'link' => [
+                'x-ui.link',
+                'data-ui-component="link"',
+                'Inline content link',
+                'External/help link',
+                'Icon trailing',
+                'Visited policy',
+                'aria-disabled="true"',
+                'data-ui-link-visited-policy',
+            ],
+            'pagination' => [
+                'x-ui.pagination',
+                'data-ui-component="pagination"',
+                'data-ui-pagination-page-size',
+                'Full pagination',
+                'Compact pagination',
+                'Page-size selector',
+                'Disabled prev/next',
+            ],
+            'search' => [
+                'x-ui.search',
+                'data-ui-component="search"',
+                'data-ui-search-input',
+                'Page search',
+                'Table search',
+                'Clear action',
+                'Loading/no-results',
+            ],
+            'dropdown' => [
+                'x-ui.dropdown',
+                'data-ui-component="dropdown"',
+                'data-ui-dropdown-trigger',
+                'data-ui-dropdown-option',
+                'Long known-option handoff',
+                'Validation selection',
+            ],
+            'file-uploader' => [
+                'x-ui.file-uploader',
+                'data-ui-component="file-uploader"',
+                'data-ui-file-uploader',
+                'Button upload',
+                'File validation',
+                'Drag-drop deferred',
+            ],
+            'number-input' => [
+                'x-ui.number-input',
+                'data-ui-component="number-input"',
+                'Min/max/step',
+                'Increment/decrement',
+                'Compact/fluid',
+            ],
+            'select' => [
+                'x-ui.select',
+                'data-ui-component="select"',
+                'data-ui-select',
+                'Short native selection',
+                'Validation selection',
+            ],
+            'radio-button' => [
+                'x-ui.radio-button / x-ui.radio-group',
+                'data-ui-component="radio-group"',
+                'data-ui-component="radio-button"',
+                'Vertical radio group',
+                'Horizontal radio group',
+            ],
+            'toggle' => [
+                'x-ui.toggle',
+                'data-ui-component="toggle"',
+                'data-ui-toggle',
+                'Immediate setting',
+                'Disabled setting',
+            ],
+            'inline-loading' => [
+                'x-ui.inline-loading',
+                'data-ui-component="inline-loading"',
+                'data-ui-inline-loading-status',
+                'Button/action pending',
+                'Local save pending',
+            ],
+            'progress-bar' => [
+                'x-ui.progress-bar',
+                'data-ui-component="progress-bar"',
+                'role="progressbar"',
+                'Determinate progress',
+                'Success/error completion',
+            ],
+            'progress-indicator' => [
+                'x-ui.progress-indicator / x-ui.progress-step',
+                'data-ui-component="progress-indicator"',
+                'data-ui-component="progress-step"',
+                'Step flow',
+                'Current/completed/error step',
+            ],
+            'tag' => [
+                'x-ui.tag',
+                'data-ui-component="tag"',
+                'Metadata tag',
+                'Status tag',
+                'Filter/removable tag',
+                'Semantic tag',
+            ],
+            'structured-list' => [
+                'x-ui.structured-list / x-ui.structured-list-row',
+                'data-ui-component="structured-list"',
+                'data-ui-component="structured-list-row"',
+                'Default structured list',
+                'Selectable structured list',
+                'Condensed list',
+            ],
+            'tile' => [
+                'x-ui.tile',
+                'data-ui-component="tile"',
+                'Static tile',
+                'Clickable tile',
+                'Selectable tile',
+            ],
+            'tooltip' => [
+                'x-ui.tooltip',
+                'data-ui-component="tooltip"',
+                'data-ui-tooltip-trigger',
+                'data-ui-tooltip-content',
+                'Icon-only button tooltip',
+                'Definition tooltip',
+            ],
+            'toggletip' => [
+                'x-ui.toggletip',
+                'data-ui-component="toggletip"',
+                'data-ui-toggletip-trigger',
+                'data-ui-toggletip-panel',
+                'data-ui-toggletip-close',
+                'Contextual help',
+                'Dismissible rich help',
+            ],
+            'checkbox' => [
+                'x-ui.checkbox / x-ui.checkbox-group',
+                'data-ui-checkbox-group',
+                'Independent choice',
+                'Multi-select group',
+                'Validation group',
+            ],
+            'text-input' => [
+                'Native input[type=text/email/password/search/url/tel] with ui-field and ui-text-input classes',
+                'data-ui-component="text-input"',
+                'ui-text-input',
+                'Login form field',
+                'Validation field',
+            ],
+            'data-table' => [
+                'x-ui.data-table',
+                'data-ui-data-table',
+                'Basic sortable table',
+                'Filterable table',
+                'Responsive overflow',
+            ],
+            'loading' => [
+                'Native status markup with ui-loading / ui-spinner / ui-skeleton classes',
+                'data-ui-component="loading"',
+                'ui-loading',
+                'ui-spinner',
+                'Skeleton text/card/table',
+            ],
+            'modal' => [
+                'x-ui.modal',
+                'data-ui-component="modal-preview"',
+                'Confirmation dialog',
+                'Form modal',
+                'Destructive action',
+            ],
+            'notification' => [
+                'x-ui.inline-alert / x-ui.toast',
+                'data-ui-component="inline-alert"',
+                'Form validation error',
+                'Record saved',
+                'API failure',
+            ],
+        ];
+
+        foreach ($expectations as $slug => $needles) {
+            $response = $this->get('/platform/ui-reference/components/'.$slug)
+                ->assertOk()
+                ->assertSee('data-component-card="live-examples"', false)
+                ->assertSee('data-component-section="developer-code-example"', false)
+                ->assertDontSee('Component-specific API pending correction')
+                ->assertDontSee('Use the component owner route and app CSS classes documented here')
+                ->assertDontSee('Family-depth implementation pending');
+
+            foreach ($needles as $needle) {
+                $response->assertSee($needle, false);
+            }
+        }
+    }
+
     public function test_batch_f_button_variant_and_action_label_guidance_is_documented(): void
     {
         $this->actingAsPlatformSuperAdmin();
@@ -636,7 +1783,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-ui-reference-example="form-field-state-contract"', false)
             ->assertSee('data-ui-reference-example="selection-control-contract"', false)
             ->assertSee('data-ui-implementation-guide="forms"', false)
-            ->assertSee('T1 Field Reference Matrix')
+            ->assertSee('Component Field Reference Matrix')
             ->assertSee('Button file uploader')
             ->assertSee('Searchable select / combo')
             ->assertSee('Queued gap: multi-select component')

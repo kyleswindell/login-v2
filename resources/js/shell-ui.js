@@ -264,11 +264,7 @@ export const initMobileSidebarDock = () => {
 
             buttons.forEach((button) => {
                 const isActive = button.dataset.mobileDockTarget === selected;
-                button.classList.toggle('bg-slate-700/60', isActive);
-                button.classList.toggle('text-white', isActive);
-                button.classList.toggle('ring-1', isActive);
-                button.classList.toggle('ring-slate-500/40', isActive);
-                button.classList.toggle('text-slate-300', !isActive);
+                button.classList.toggle('is-current', isActive);
                 button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
             });
 

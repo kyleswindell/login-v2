@@ -1,6 +1,45 @@
 import { initFilterPanels, initTableSearchInputs } from './ui-controls';
 import { initAuditLogDrawer, initErrorLogDrawer } from './log-drawers';
 
+export const initUiReferenceSidebarDisclosures = () => {
+    document.querySelectorAll('[data-ui-reference-sidebar-disclosure]').forEach((group) => {
+        const trigger = group.querySelector('[data-ui-reference-sidebar-disclosure-trigger]');
+        const panel = group.querySelector('[data-ui-reference-sidebar-disclosure-panel]');
+
+        if (!(trigger instanceof HTMLButtonElement) || !(panel instanceof HTMLElement)) {
+            return;
+        }
+
+        const setOpen = (open) => {
+            const state = open ? 'open' : 'closed';
+
+            group.dataset.uiReferenceSidebarDisclosureState = state;
+            panel.dataset.uiReferenceSidebarDisclosureState = state;
+            panel.hidden = !open;
+            trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+
+            if (group.hasAttribute('data-ui-reference-element-dropdown')) {
+                group.dataset.uiReferenceElementDropdownOpen = open ? 'true' : 'false';
+            }
+        };
+
+        const initialOpen = group.dataset.uiReferenceSidebarDisclosureState === 'open'
+            || trigger.getAttribute('aria-expanded') === 'true'
+            || !panel.hidden;
+
+        setOpen(initialOpen);
+
+        if (trigger.dataset.uiReferenceSidebarDisclosureInit === '1') {
+            return;
+        }
+
+        trigger.dataset.uiReferenceSidebarDisclosureInit = '1';
+        trigger.addEventListener('click', () => {
+            setOpen(trigger.getAttribute('aria-expanded') !== 'true');
+        });
+    });
+};
+
 export const initUiReferenceTablesRemote = () => {
     const root = document.querySelector('[data-ui-reference-tables-root]');
 
@@ -96,6 +135,66 @@ export const initUiReferenceTablesRemote = () => {
             event.preventDefault();
             replaceRoot(link.href, link.closest('[data-table-section]'));
         });
+    });
+};
+
+export const initUiReferenceComponentTabs = () => {
+    document.querySelectorAll('[data-ui-reference-tabs]').forEach((tabRoot) => {
+        if (tabRoot.dataset.uiReferenceTabsInit === '1') {
+            return;
+        }
+
+        tabRoot.dataset.uiReferenceTabsInit = '1';
+
+        const tabs = Array.from(tabRoot.querySelectorAll('[role="tab"]'));
+        const panels = Array.from(tabRoot.querySelectorAll('[role="tabpanel"]'));
+
+        const activateTab = (activeTab) => {
+            tabs.forEach((tab) => {
+                const isActive = tab === activeTab;
+                const panelId = tab.getAttribute('aria-controls');
+                const panel = panelId ? tabRoot.querySelector(`#${CSS.escape(panelId)}`) : null;
+
+                tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+                tab.tabIndex = isActive ? 0 : -1;
+
+                if (panel instanceof HTMLElement) {
+                    panel.hidden = !isActive;
+                }
+            });
+        };
+
+        tabs.forEach((tab, index) => {
+            tab.addEventListener('click', () => activateTab(tab));
+
+            tab.addEventListener('keydown', (event) => {
+                if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) {
+                    return;
+                }
+
+                event.preventDefault();
+
+                const nextIndex = event.key === 'Home'
+                    ? 0
+                    : event.key === 'End'
+                        ? tabs.length - 1
+                        : event.key === 'ArrowRight'
+                            ? (index + 1) % tabs.length
+                            : (index - 1 + tabs.length) % tabs.length;
+                const nextTab = tabs[nextIndex];
+
+                nextTab?.focus();
+                nextTab && activateTab(nextTab);
+            });
+        });
+
+        panels.forEach((panel, index) => {
+            panel.hidden = index !== 0;
+        });
+
+        if (tabs[0] instanceof HTMLElement) {
+            activateTab(tabs[0]);
+        }
     });
 };
 

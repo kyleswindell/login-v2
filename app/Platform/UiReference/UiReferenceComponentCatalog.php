@@ -21,7 +21,7 @@ class UiReferenceComponentCatalog
     {
         return array_values(array_filter(
             $this->components(),
-            fn (array $component): bool => in_array($component['disposition'], ['Implement T1 Page', 'Queued Gap', 'Represent As T2 Pattern', 'Not Applicable Yet'], true)
+            fn (array $component): bool => in_array($component['disposition'], ['Implement Component Page', 'Queued Gap', 'Represent As Pattern', 'Not Applicable Yet'], true)
         ));
     }
 
@@ -56,47 +56,47 @@ class UiReferenceComponentCatalog
     private function components(): array
     {
         return [
-            $this->component('accordion', 'Accordion', 'Navigation and disclosure', 'Implement T1 Page', 'Disclosure for optional content groups.', ['default', 'expanded', 'collapsed', 'disabled', 'focus'], ['Use for local disclosure. Do not use as primary navigation.']),
+            $this->component('accordion', 'Accordion', 'Navigation and disclosure', 'Implement Component Page', 'Disclosure for optional content groups.', ['default', 'expanded', 'collapsed', 'disabled', 'focus'], ['Use for local disclosure. Do not use as primary navigation.']),
             $this->component('ai-label', 'AI label', 'Low-applicability gates', 'Not Applicable Yet', 'AI-specific explainability marker.', ['queued'], ['Trigger only when an AI-assisted feature exists. Do not build speculative AI chrome.']),
-            $this->component('breadcrumb', 'Breadcrumb', 'Navigation and disclosure', 'Implement T1 Page', 'Location trail for information architecture.', ['default', 'current page', 'middle overflow', 'truncated'], ['Use for location. Do not use for task progress.']),
-            $this->component('button', 'Button', 'Actions', 'Implement T1 Page', 'Primary, secondary, low-emphasis, and destructive actions.', ['standard', 'soft', 'ghost', 'outline', 'danger', 'disabled', 'loading', 'focus'], ['One primary action per region.', 'Use x-ui.button.']),
-            $this->component('checkbox', 'Checkbox', 'Selection controls', 'Implement T1 Page', 'Independent yes/no choices and multi-select groups.', ['unchecked', 'checked', 'indeterminate queued', 'focus', 'disabled', 'read-only', 'error', 'warning'], ['Use for multiple or independent selections.', 'Do not use for one required choice.']),
-            $this->component('code-snippet', 'Code snippet', 'Low-applicability gates', 'Queued Gap', 'Developer-facing code display.', ['single-line queued', 'multi-line queued'], ['Trigger only when docs or integration flows need copyable code examples.']),
-            $this->component('contained-list', 'Contained list', 'Data display', 'Queued Gap', 'Compact list inside constrained panels.', ['default queued', 'actionable queued'], ['Use structured list or data-list item until a constrained-list consumer appears.']),
+            $this->component('breadcrumb', 'Breadcrumb', 'Navigation and disclosure', 'Implement Component Page', 'Location trail for information architecture.', ['default', 'current page', 'middle overflow', 'truncated'], ['Use for location. Do not use for task progress.']),
+            $this->component('button', 'Button', 'Actions', 'Implement Component Page', 'Primary, secondary, low-emphasis, and destructive actions.', ['standard', 'soft', 'ghost', 'outline', 'danger', 'disabled', 'loading', 'focus'], ['One primary action per region.', 'Use x-ui.button.']),
+            $this->component('checkbox', 'Checkbox', 'Selection controls', 'Implement Component Page', 'Independent yes/no choices and multi-select groups.', ['unchecked', 'checked', 'indeterminate queued', 'focus', 'disabled', 'read-only', 'error', 'warning'], ['Use for multiple or independent selections.', 'Do not use for one required choice.']),
+            $this->component('code-snippet', 'Code snippet', 'Low-applicability gates', 'Implement Component Page', 'Developer-facing code display.', ['single-line', 'multi-line', 'copy ready', 'copied', 'highlighted tokens'], ['Use for exact implementation syntax in docs and reference pages.']),
+            $this->component('contained-list', 'Contained list', 'Data display', 'Implement Component Page', 'Compact list inside constrained panels.', ['default', 'actionable', 'selected', 'loading', 'empty', 'disabled'], ['Use inside panels, modals, and cards where a bounded list is clearer than a full table.']),
             $this->component('content-switcher', 'Content switcher', 'Navigation and disclosure', 'Queued Gap', 'Compact peer-view switcher.', ['default queued', 'icon queued'], ['Use tabs for content panels until a switcher-specific need appears.']),
-            $this->component('data-table', 'Data table', 'Data display', 'Implement T1 Page', 'Tabular data with column alignment, sorting, filtering, and row actions.', ['basic', 'selectable', 'sortable', 'loading', 'empty', 'row actions'], ['Use for many rows or sortable/filterable data.', 'T2 table pages compose this owner.']),
-            $this->component('date-picker', 'Date picker', 'Inputs', 'Implement T1 Page', 'Native date and date-time input family, with range picker queued.', ['date', 'date-time', 'range queued', 'error', 'warning', 'disabled', 'read-only'], ['Use native controls for simple date entry.']),
-            $this->component('dropdown', 'Dropdown', 'Inputs', 'Implement T1 Page', 'Known-option dropdown and menu-like selection boundary.', ['default', 'disabled', 'error', 'warning', 'searchable handoff'], ['Use select for short lists and searchable select for long known lists.']),
-            $this->component('file-uploader', 'File uploader', 'Inputs', 'Implement T1 Page', 'Single attachment input with drag-drop uploader queued.', ['button upload', 'disabled', 'error', 'bulk drag-drop queued'], ['Use button upload for one-off attachments.']),
-            $this->component('form', 'Form', 'Form structure', 'Represent As T2 Pattern', 'Form sections, groups, validation, and action bars.', ['section', 'inline row', 'summary', 'actions'], ['T1 field pages own primitives. T2 Form Patterns owns compositions.'], '/platform/ui-reference/patterns/forms'),
-            $this->component('inline-loading', 'Inline loading', 'Feedback and loading', 'Implement T1 Page', 'Small local pending state for same-page actions.', ['spinner with text', 'button loading', 'polite status'], ['Use for short local operations.']),
-            $this->component('link', 'Link', 'Utilities', 'Implement T1 Page', 'Text link treatment for navigation and trusted inline actions.', ['default', 'hover', 'focus', 'visited not styled', 'disabled queued'], ['Use for navigation, not command buttons.']),
-            $this->component('list', 'List', 'Data display', 'Queued Gap', 'Plain ordered/unordered list guidance.', ['ordered', 'unordered', 'nested boundary'], ['Use for text content only; use structured list for comparable rows.']),
-            $this->component('loading', 'Loading', 'Feedback and loading', 'Implement T1 Page', 'Spinner and skeleton loading family.', ['spinner', 'skeleton', 'full-page queued', 'inline'], ['Use skeleton when final shape is known.']),
-            $this->component('menu', 'Menu', 'Actions', 'Implement T1 Page', 'Disclosure list of contextual actions.', ['enabled', 'hover', 'focus', 'selected/current', 'danger', 'disabled', 'divider', 'submenu boundary'], ['Use x-ui.menu-item and dropdown-action-menu.']),
-            $this->component('menu-buttons', 'Menu buttons', 'Actions', 'Implement T1 Page', 'Button-triggered menus and overflow triggers.', ['text trigger', 'icon-only trigger', 'split/combo queued'], ['Use for grouped secondary actions.']),
-            $this->component('modal', 'Modal', 'Overlays', 'Implement T1 Page', 'Blocking dialog for decisions and confirmations.', ['passive', 'transactional', 'danger', 'acknowledgment queued', 'progress queued'], ['Use x-ui.modal for blocking decisions.']),
-            $this->component('multiselect', 'Multiselect', 'Inputs', 'Queued Gap', 'Multiple known-option selection control.', ['queued', 'tagged values queued', 'filtering queued'], ['Use checkbox groups for small visible sets until a dedicated multiselect consumer exists.', 'Do not substitute radio or native select when multiple values are required.']),
-            $this->component('notification', 'Notification', 'Feedback and loading', 'Implement T1 Page', 'Grouped notification family for inline alerts, toasts, banners, actionable feedback, and persisted handoff.', ['inline', 'toast', 'page banner', 'actionable', 'persisted handoff'], ['Keep notification family grouped.']),
-            $this->component('number-input', 'Number input', 'Inputs', 'Implement T1 Page', 'Numeric input with increment/decrement controls.', ['default', 'fluid', 'min/max/step', 'error icon', 'warning icon', 'disabled', 'read-only', 'focus'], ['Use for small relative numeric adjustments. Use text input or slider for wide ranges.']),
-            $this->component('pagination', 'Pagination', 'Data display', 'Implement T1 Page', 'Full pagination and compact pagination navigation.', ['full', 'compact nav', 'page size', 'overflow', 'disabled prev/next', 'small', 'medium', 'large'], ['Place below related content. Match table density where possible.']),
-            $this->component('popover', 'Popover', 'Navigation and disclosure', 'Queued Gap', 'Floating interactive content container.', ['interactive queued', 'placement queued'], ['Use modal/drawer/toggletip until a popover-specific consumer exists.']),
-            $this->component('progress-bar', 'Progress bar', 'Feedback and loading', 'Queued Gap', 'Linear completion meter.', ['determinate queued', 'indeterminate queued'], ['Trigger when long-running workflows need measurable progress.']),
-            $this->component('progress-indicator', 'Progress indicator', 'Feedback and loading', 'Queued Gap', 'Step-by-step workflow progress.', ['horizontal queued', 'vertical queued'], ['Use instead of tabs for linear task progress.']),
-            $this->component('radio-button', 'Radio button', 'Selection controls', 'Implement T1 Page', 'Mutually exclusive single-selection groups.', ['vertical', 'horizontal', 'selected', 'unselected', 'focus', 'disabled', 'read-only', 'error', 'warning'], ['Use for one choice from a visible set. Use checkbox for multi-select.']),
-            $this->component('search', 'Search', 'Inputs', 'Implement T1 Page', 'Keyword search input for page, table, or component scope.', ['page search', 'table search', 'component search', 'clear action', 'loading queued'], ['Search handles free-entry keywords; filters handle known dimensions.']),
-            $this->component('select', 'Select', 'Inputs', 'Implement T1 Page', 'Native select for short known option lists.', ['default', 'focus', 'disabled', 'read-only', 'error', 'warning'], ['Use searchable select for long known lists.']),
-            $this->component('slider', 'Slider', 'Inputs', 'Queued Gap', 'Range selection for large continuous or relative numeric values.', ['single value queued', 'range queued'], ['Trigger when number input would require too many clicks.']),
-            $this->component('structured-list', 'Structured list', 'Data display', 'Implement T1 Page', 'Scannable row comparison and selectable rich options.', ['default', 'selectable', 'condensed', 'hang alignment', 'flush alignment', 'selected', 'focus', 'disabled', 'skeleton'], ['Use data table for sorting/filtering or multiple row selection.']),
-            $this->component('tabs', 'Tabs', 'Navigation and disclosure', 'Implement T1 Page', 'Line, contained, and vertical peer content panels.', ['line', 'contained', 'vertical', 'icon-leading', 'icon-only', 'overflow', 'selected', 'focus', 'disabled'], ['Do not use tabs for progress or comparison tasks.']),
-            $this->component('tag', 'Tag', 'Feedback and loading', 'Implement T1 Page', 'Tag/badge labeling family.', ['base', 'outline', 'semantic', 'removable queued'], ['Use x-ui.badge for current tag/status display.']),
-            $this->component('text-input', 'Text input', 'Inputs', 'Implement T1 Page', 'Single-line free-entry text field.', ['default', 'fluid', 'helper', 'focus', 'error', 'warning', 'disabled', 'read-only'], ['Use native type attributes before custom controls.']),
-            $this->component('tile', 'Tile', 'Data display', 'Implement T1 Page', 'Compact static, clickable, selectable, and expandable blocks.', ['base', 'clickable', 'selectable', 'expandable', 'disabled queued'], ['Use cards for richer composed content.']),
-            $this->component('toggle', 'Toggle', 'Selection controls', 'Implement T1 Page', 'Immediate on/off setting.', ['off', 'on', 'focus', 'disabled', 'read-only queued'], ['Use only when the state is understandable without another submit action.']),
-            $this->component('toggletip', 'Toggletip', 'Overlays', 'Implement T1 Page', 'Focusable explanatory disclosure.', ['closed', 'open', 'focus', 'dismissible'], ['Use for interactive explanatory content.']),
-            $this->component('tooltip', 'Tooltip', 'Overlays', 'Implement T1 Page', 'Short non-interactive hover/focus help.', ['hover', 'focus', 'definition'], ['Do not put interactive content in a tooltip.']),
-            $this->component('tree-view', 'Tree view', 'Data display', 'Queued Gap', 'Hierarchical navigation or data browsing.', ['collapsed queued', 'expanded queued', 'selected queued'], ['Trigger only when hierarchical content needs in-page browsing.']),
-            $this->component('ui-shell', 'UI shell', 'Shell', 'Represent As T2 Pattern', 'Application shell family covering header, left navigation, right panel disposition, account menu, notification handoff, and global actions.', ['header', 'left panel', 'right panel queued', 'desktop', 'mobile', 'account menu', 'notification handoff'], ['T2 layout/navigation pages own shell composition.', 'Header, left panel, and right panel remain Login-specific subsections of the UI shell family.'], '/platform/ui-reference/patterns/navigation', ['ui-shell-header', 'ui-shell-left-panel', 'ui-shell-right-panel']),
+            $this->component('data-table', 'Data table', 'Data display', 'Implement Component Page', 'Tabular data with column alignment, sorting, filtering, and row actions.', ['basic', 'selectable', 'sortable', 'loading', 'empty', 'row actions'], ['Use for many rows or sortable/filterable data.', 'Pattern table pages compose this owner.']),
+            $this->component('date-picker', 'Date picker', 'Inputs', 'Implement Component Page', 'Native date and date-time input family, with range picker queued.', ['date', 'date-time', 'range queued', 'error', 'warning', 'disabled', 'read-only'], ['Use native controls for simple date entry.']),
+            $this->component('dropdown', 'Dropdown', 'Inputs', 'Implement Component Page', 'Known-option dropdown and menu-like selection boundary.', ['default', 'disabled', 'error', 'warning', 'searchable handoff'], ['Use select for short lists and searchable select for long known lists.']),
+            $this->component('file-uploader', 'File uploader', 'Inputs', 'Implement Component Page', 'Single attachment input with drag-drop uploader queued.', ['button upload', 'disabled', 'error', 'bulk drag-drop queued'], ['Use button upload for one-off attachments.']),
+            $this->component('form', 'Form', 'Form structure', 'Represent As Pattern', 'Form sections, groups, validation, and action bars.', ['section', 'inline row', 'summary', 'actions'], ['Component field pages own primitives. Form Patterns own compositions.'], '/platform/ui-reference/patterns/forms'),
+            $this->component('inline-loading', 'Inline loading', 'Feedback and loading', 'Implement Component Page', 'Small local pending state for same-page actions.', ['spinner with text', 'button loading', 'polite status'], ['Use for short local operations.']),
+            $this->component('link', 'Link', 'Utilities', 'Implement Component Page', 'Text link treatment for navigation and trusted inline actions.', ['default', 'hover', 'focus', 'visited not styled', 'disabled queued'], ['Use for navigation, not command buttons.']),
+            $this->component('list', 'List', 'Data display', 'Implement Component Page', 'Plain ordered/unordered list guidance.', ['ordered', 'unordered', 'nested boundary', 'content-only'], ['Use for prose content only; use structured list for comparable rows.']),
+            $this->component('loading', 'Loading', 'Feedback and loading', 'Implement Component Page', 'Spinner and skeleton loading family.', ['spinner', 'skeleton', 'full-page queued', 'inline'], ['Use skeleton when final shape is known.']),
+            $this->component('menu', 'Menu', 'Actions', 'Implement Component Page', 'Disclosure list of contextual actions.', ['enabled', 'hover', 'focus', 'selected/current', 'danger', 'disabled', 'divider', 'submenu boundary'], ['Use x-ui.menu-item and dropdown-action-menu.']),
+            $this->component('menu-buttons', 'Menu buttons', 'Actions', 'Implement Component Page', 'Button-triggered menus and overflow triggers.', ['text trigger', 'icon-only trigger', 'split/combo queued'], ['Use for grouped secondary actions.']),
+            $this->component('modal', 'Modal', 'Overlays', 'Implement Component Page', 'Blocking dialog for decisions and confirmations.', ['passive', 'transactional', 'danger', 'acknowledgment queued', 'progress queued'], ['Use x-ui.modal for blocking decisions.']),
+            $this->component('multiselect', 'Multiselect', 'Inputs', 'Implement Component Page', 'Multiple known-option selection control.', ['selected values', 'filterable', 'clearable', 'select all', 'disabled', 'read-only', 'error', 'warning', 'loading'], ['Use when users must choose multiple values from a known option set.', 'Use checkbox groups for small visible sets.']),
+            $this->component('notification', 'Notification', 'Feedback and loading', 'Implement Component Page', 'Grouped notification family for inline alerts, toasts, banners, actionable feedback, and persisted handoff.', ['inline', 'toast', 'page banner', 'actionable', 'persisted handoff'], ['Keep notification family grouped.']),
+            $this->component('number-input', 'Number input', 'Inputs', 'Implement Component Page', 'Numeric input with increment/decrement controls.', ['default', 'fluid', 'min/max/step', 'error icon', 'warning icon', 'disabled', 'read-only', 'focus'], ['Use for small relative numeric adjustments. Use text input or slider for wide ranges.']),
+            $this->component('pagination', 'Pagination', 'Data display', 'Implement Component Page', 'Full pagination and compact pagination navigation.', ['full', 'compact nav', 'page size', 'overflow', 'disabled prev/next', 'small', 'medium', 'large'], ['Place below related content. Match table density where possible.']),
+            $this->component('popover', 'Popover', 'Navigation and disclosure', 'Implement Component Page', 'Floating interactive content container.', ['closed', 'open', 'focus-visible', 'disabled', 'placement', 'alignment', 'size'], ['Use when short interactive contextual content belongs near its trigger.']),
+            $this->component('progress-bar', 'Progress bar', 'Feedback and loading', 'Implement Component Page', 'Linear completion meter.', ['determinate', 'indeterminate', 'success', 'error', 'loading'], ['Use when long-running workflows need measurable progress.']),
+            $this->component('progress-indicator', 'Progress indicator', 'Feedback and loading', 'Implement Component Page', 'Step-by-step workflow progress.', ['horizontal', 'vertical', 'current', 'complete', 'error', 'upcoming'], ['Use instead of tabs for linear task progress.']),
+            $this->component('radio-button', 'Radio button', 'Selection controls', 'Implement Component Page', 'Mutually exclusive single-selection groups.', ['vertical', 'horizontal', 'selected', 'unselected', 'focus', 'disabled', 'read-only', 'error', 'warning'], ['Use for one choice from a visible set. Use checkbox for multi-select.']),
+            $this->component('search', 'Search', 'Inputs', 'Implement Component Page', 'Keyword search input for page, table, or component scope.', ['page search', 'table search', 'component search', 'clear action', 'loading queued'], ['Search handles free-entry keywords; filters handle known dimensions.']),
+            $this->component('select', 'Select', 'Inputs', 'Implement Component Page', 'Native select for short known option lists.', ['default', 'focus', 'disabled', 'read-only', 'error', 'warning'], ['Use searchable select for long known lists.']),
+            $this->component('slider', 'Slider', 'Inputs', 'Implement Component Page', 'Range selection for large continuous or relative numeric values.', ['single value', 'range', 'value input', 'disabled', 'read-only', 'warning'], ['Use when relative position is more useful than exact entry alone.']),
+            $this->component('structured-list', 'Structured list', 'Data display', 'Implement Component Page', 'Scannable row comparison and selectable rich options.', ['default', 'selectable', 'condensed', 'hang alignment', 'flush alignment', 'selected', 'focus', 'disabled', 'skeleton'], ['Use data table for sorting/filtering or multiple row selection.']),
+            $this->component('tabs', 'Tabs', 'Navigation and disclosure', 'Implement Component Page', 'Line, contained, and vertical peer content panels.', ['line', 'contained', 'vertical', 'icon-leading', 'icon-only', 'overflow', 'selected', 'focus', 'disabled'], ['Do not use tabs for progress or comparison tasks.']),
+            $this->component('tag', 'Tag', 'Feedback and loading', 'Implement Component Page', 'Tag/badge labeling family.', ['base', 'semantic', 'small', 'icon', 'removable'], ['Use x-ui.tag for tag/status display.']),
+            $this->component('text-input', 'Text input', 'Inputs', 'Implement Component Page', 'Single-line free-entry text field.', ['default', 'fluid', 'helper', 'focus', 'error', 'warning', 'disabled', 'read-only'], ['Use native type attributes before custom controls.']),
+            $this->component('tile', 'Tile', 'Data display', 'Implement Component Page', 'Compact static, clickable, selectable, and expandable blocks.', ['base', 'clickable', 'selectable', 'expandable', 'disabled queued'], ['Use cards for richer composed content.']),
+            $this->component('toggle', 'Toggle', 'Selection controls', 'Implement Component Page', 'Immediate on/off setting.', ['off', 'on', 'focus', 'disabled', 'read-only queued'], ['Use only when the state is understandable without another submit action.']),
+            $this->component('toggletip', 'Toggletip', 'Overlays', 'Implement Component Page', 'Focusable explanatory disclosure.', ['closed', 'open', 'focus', 'dismissible'], ['Use for interactive explanatory content.']),
+            $this->component('tooltip', 'Tooltip', 'Overlays', 'Implement Component Page', 'Short non-interactive hover/focus help.', ['hover', 'focus', 'definition'], ['Do not put interactive content in a tooltip.']),
+            $this->component('tree-view', 'Tree view', 'Data display', 'Implement Component Page', 'Hierarchical navigation or data browsing.', ['collapsed', 'expanded', 'selected', 'active', 'disabled', 'branch', 'leaf'], ['Use when hierarchical content needs in-page browsing.']),
+            $this->component('ui-shell', 'UI shell', 'Shell', 'Represent As Pattern', 'Application shell family covering header, left navigation, right panel disposition, account menu, notification handoff, and global actions.', ['header', 'left panel', 'right panel queued', 'desktop', 'mobile', 'account menu', 'notification handoff'], ['Pattern layout/navigation pages own shell composition.', 'Header, left panel, and right panel remain Login-specific subsections of the UI shell family.'], '/platform/ui-reference/patterns/navigation', ['ui-shell-header', 'ui-shell-left-panel', 'ui-shell-right-panel']),
         ];
     }
 
@@ -117,18 +117,18 @@ class UiReferenceComponentCatalog
         ?string $ownerRoute = null,
         array $aliases = [],
     ): array {
-        $docPath = '02-standards/ui/components/tier-1/'.$slug.'.md';
+        $docPath = '02-standards/ui/components/'.$slug.'.md';
         $priority = $this->priorityFor($slug);
         $status = match ($disposition) {
-            'Implement T1 Page' => 'Implemented - pending manual review',
-            'Represent As T2 Pattern' => 'App-specific exception',
+            'Implement Component Page' => 'Implemented - pending manual review',
+            'Represent As Pattern' => 'App-specific exception',
             'Queued Gap' => 'Deferred',
             'Not Applicable Yet' => 'Do not implement',
             default => 'Partial',
         };
         $owner = $ownerRoute ?? '/platform/ui-reference/components/'.$slug;
 
-        return [
+        $component = [
             'slug' => $slug,
             'label' => $label,
             'group' => $group,
@@ -143,6 +143,9 @@ class UiReferenceComponentCatalog
             'disposition' => $disposition,
             'summary' => $summary,
             'purpose' => $summary,
+            'current_decision' => $this->currentDecisionFor($slug, $disposition),
+            'carbon_parity_note' => $this->parityNoteFor($slug, $disposition),
+            'feature_flag_note' => $this->featureFlagNoteFor($slug),
             'use_when' => $guidance,
             'do_not_use_when' => $this->avoidanceFor($slug, $disposition),
             'variants' => $this->variantsFor($states),
@@ -152,6 +155,7 @@ class UiReferenceComponentCatalog
             'accessibility' => $this->accessibilityFor($slug, $disposition),
             'content_guidance' => $this->contentGuidanceFor($slug),
             'developer_api' => $this->developerApiFor($slug, $owner),
+            'live_examples' => $this->liveExamplesFor($slug, $label, $disposition, $states),
             'related' => $this->relatedFor($slug, $group),
             'foundation_elements' => $this->foundationElementsFor($slug),
             'queued_gaps' => $this->queuedGapsFor($slug, $disposition, $guidance),
@@ -163,6 +167,119 @@ class UiReferenceComponentCatalog
             'route_name' => 'platform.ui-reference.components.show',
             'aliases' => $aliases,
         ];
+
+        if ($slug === 'accordion') {
+            $component = array_replace($component, [
+                'purpose' => 'Use accordion to reveal optional supporting content within the current page context.',
+                'current_decision' => 'Accordion is the app-owned disclosure primitive for secondary local detail. It supports multiple panels by default, optional single-open behavior, compact density, contained surfaces, and capped scrollable panels.',
+                'carbon_parity_note' => 'Use this route as the implementation owner for local disclosure. If a feature needs navigation, comparison, or required task steps, use the related component or Pattern owner instead.',
+                'use_when' => [
+                    'Secondary details help the task but are not required to continue.',
+                    'Grouped help, advanced settings, or review notes would otherwise add visual noise.',
+                    'A local section needs optional explanation while the main workflow stays visible.',
+                ],
+                'do_not_use_when' => [
+                    'Users must read the content before continuing, including required instructions or validation errors.',
+                    'The UI is primary navigation, wizard steps, or a progress indicator.',
+                    'Users need to compare all sections at once; use tabs, a structured list, or visible page sections.',
+                ],
+                'states' => ['collapsed', 'expanded', 'hover', 'focus-visible', 'pressed', 'disabled', 'not applicable: read-only', 'not applicable: loading', 'not applicable: validation', 'not applicable: empty'],
+                'variants' => ['contained/contextual', 'compact', 'single-open', 'scrollable panel'],
+                'anatomy' => [
+                    'Group: wraps related accordion items.',
+                    'Item: one trigger and one associated panel.',
+                    'Heading: preserves local document structure.',
+                    'Trigger: native button that owns expanded state.',
+                    'Title: short sentence-case label.',
+                    'Chevron: decorative state indicator.',
+                    'Panel: collapsible content region.',
+                    'Body: optional supporting text or controls.',
+                    'Metadata: optional helper text under the title.',
+                ],
+                'behavior' => [
+                    'Click, tap, Enter, and Space toggle the focused trigger.',
+                    'Focus stays on the trigger after expansion or collapse.',
+                    'Multiple panels can stay open by default; use `mode="single"` when only one section should remain open.',
+                    'Disabled items use native disabled button behavior and cannot expand.',
+                    'Panels wrap inside the available width and must not create horizontal overflow.',
+                    'Open and close motion uses measured panel height and respects reduced-motion preferences.',
+                ],
+                'accessibility' => [
+                    'Use a semantic button for every trigger.',
+                    'Keep `aria-expanded`, `aria-controls`, and panel `id` values in sync.',
+                    'Show a visible focus state on every trigger.',
+                    'Hide decorative chevrons from assistive technology.',
+                    'Keep required instructions, errors, and primary task steps visible outside collapsed panels.',
+                ],
+                'content_guidance' => [
+                    'Write trigger labels in sentence case.',
+                    'Name the disclosed content directly, such as Review history or Advanced settings.',
+                    'Avoid vague labels such as More, Details, or Information.',
+                    'Keep body copy short. Move long workflows to a page section, modal, or Pattern-owned flow.',
+                    'Do not make collapsed content the only explanation for disabled or destructive actions.',
+                ],
+                'developer_api' => [
+                    'owner_route' => $owner,
+                    'blade' => 'x-ui.accordion',
+                    'js_controller' => 'initAccordions exported from resources/js/ui-controls.js',
+                    'data_attributes' => 'data-ui-accordion, data-ui-accordion-trigger, data-ui-accordion-panel',
+                    'props' => 'variant: default|contained; size: default|compact; mode: multiple|single; scrollable: bool; panelMaxHeight: CSS length',
+                    'tokens' => 'Uses Foundation Color, Spacing, Typography, Motion, and Theme tokens through ui-accordion classes.',
+                    'example' => '<x-ui.accordion :items="$items" />',
+                    'source_files' => 'resources/views/components/ui/accordion.blade.php; resources/js/ui-controls/accordions.js; resources/css/app.css',
+                ],
+                'live_examples' => $this->accordionLiveExamples(),
+                'related' => [
+                    ['label' => 'Tabs', 'href' => '/platform/ui-reference/components/tabs'],
+                    ['label' => 'Structured list', 'href' => '/platform/ui-reference/components/structured-list'],
+                    ['label' => 'Modal', 'href' => '/platform/ui-reference/components/modal'],
+                    ['label' => 'Popover', 'href' => '/platform/ui-reference/components/popover'],
+                    ['label' => 'Toggletip', 'href' => '/platform/ui-reference/components/toggletip'],
+                    ['label' => 'Tooltip', 'href' => '/platform/ui-reference/components/tooltip'],
+                    ['label' => 'Help/documentation pattern', 'href' => '/platform/ui-reference/patterns/data-content'],
+                    ['label' => 'Forms/settings patterns', 'href' => '/platform/ui-reference/patterns/forms'],
+                ],
+            ]);
+        }
+
+        if ($slug !== 'accordion') {
+            $depth = (new UiReferenceComponentDepthCatalog())->for($slug);
+
+            if ($depth !== null) {
+                $component = array_replace($component, $depth);
+            }
+        }
+
+        return $component;
+    }
+
+    private function currentDecisionFor(string $slug, string $disposition): string
+    {
+        if ($disposition === 'Represent As Pattern') {
+            return 'Composition ownership belongs to the linked Pattern page; this catalog entry preserves disposition and discoverability.';
+        }
+
+        if (in_array($disposition, ['Queued Gap', 'Not Applicable Yet'], true)) {
+            return 'Do not build speculative UI until the documented trigger condition exists.';
+        }
+
+        return 'Component page is scaffolded for family-depth implementation and must consume approved Foundation Elements.';
+    }
+
+    private function parityNoteFor(string $slug, string $disposition): string
+    {
+        if ($disposition === 'Not Applicable Yet') {
+            return 'Mapped for completeness; not currently part of Login App product behavior.';
+        }
+
+        return 'Login App owns the visual and implementation contract; external systems are used only as completeness benchmarks.';
+    }
+
+    private function featureFlagNoteFor(string $slug): ?string
+    {
+        return in_array($slug, ['menu-buttons', 'modal', 'notification', 'structured-list', 'tile', 'toggle', 'tree-view'], true)
+            ? 'If external feature-flagged behavior is later evaluated, document whether Login App follows that behavior or an app-specific variant.'
+            : null;
     }
 
     private function priorityFor(string $slug): string
@@ -189,7 +306,7 @@ class UiReferenceComponentCatalog
      */
     private function avoidanceFor(string $slug, string $disposition): array
     {
-        if ($disposition === 'Represent As T2 Pattern') {
+        if ($disposition === 'Represent As Pattern') {
             return ['Do not duplicate this as a local primitive. Use the linked Pattern owner for composition behavior.'];
         }
 
@@ -284,12 +401,117 @@ class UiReferenceComponentCatalog
             'blade' => match ($slug) {
                 'button' => 'x-ui.button',
                 'modal' => 'x-ui.modal',
-                'tag' => 'x-ui.badge',
+                'tag' => 'x-ui.tag',
                 'menu' => 'x-ui.menu-item / x-ui.patterns.dropdown-action-menu',
-                default => 'Catalog owner route documents the approved markup or queued implementation contract.',
+            default => 'Catalog owner route documents the approved markup or queued implementation contract.',
             },
             'tokens' => 'Use Foundation Element tokens for color, spacing, typography, iconography, motion, and theme behavior.',
-            'example' => '<!-- Use the documented owner route and canonical component contract for implementation. -->',
+            'example' => 'Component-specific API pending correction.',
+        ];
+    }
+
+    /**
+     * @param array<int, string> $states
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    private function liveExamplesFor(string $slug, string $label, string $disposition, array $states): array
+    {
+        if (in_array($disposition, ['Queued Gap', 'Not Applicable Yet'], true)) {
+            return [[
+                'id' => 'trigger-condition',
+                'title' => 'Trigger condition',
+                'description' => 'This component remains visible in the catalog, but the app does not render speculative component chrome until a product need exists.',
+                'view' => null,
+                'variants' => [
+                    ['label' => 'Deferred', 'status' => 'Deferred', 'notes' => 'No app-approved variant until implementation is queued.'],
+                ],
+            ]];
+        }
+
+        return [[
+            'id' => 'component-correction-pending',
+            'title' => 'Component-specific correction pending',
+            'description' => $label.' will receive production examples during its approved component correction pass.',
+            'view' => null,
+            'variants' => array_map(
+                fn (string $state): array => ['label' => $state, 'status' => 'Pending component correction', 'notes' => 'Listed as catalog coverage; not yet a finished variant example.'],
+                array_slice($states, 0, min(count($states), 4))
+            ),
+        ]];
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function accordionLiveExamples(): array
+    {
+        return [
+            [
+                'id' => 'basic-accordion',
+                'title' => 'Basic accordion',
+                'description' => 'Minimum viable disclosure with one open panel and one collapsed panel.',
+                'view' => 'platform.ui-reference.components.examples.accordion-basic',
+                'context_notes' => [
+                    'Use this as the baseline when optional supporting detail belongs close to the related section.',
+                    'The trigger remains a button and owns the expanded/collapsed state.',
+                ],
+                'variants' => [
+                    ['label' => 'Compact', 'status' => 'Implemented', 'view' => 'platform.ui-reference.components.examples.accordion-variant-compact', 'notes' => 'Use for dense secondary disclosure inside constrained settings or utility panels.'],
+                ],
+            ],
+            [
+                'id' => 'multiple-independent-sections',
+                'title' => 'Multiple independent sections',
+                'description' => 'Independent groups allow more than one optional section to stay open.',
+                'view' => 'platform.ui-reference.components.examples.accordion-multiple',
+                'context_notes' => [
+                    'Use independent sections when users may need to compare nearby optional content.',
+                    'Use the single-open variant when the workflow should keep only one related section open at a time.',
+                ],
+                'variants' => [
+                    ['label' => 'Single-open', 'status' => 'Implemented', 'view' => 'platform.ui-reference.components.examples.accordion-variant-single-open', 'notes' => 'Use when only one related support section should stay open to reduce scan noise.'],
+                ],
+            ],
+            [
+                'id' => 'long-content-accordion',
+                'title' => 'Long content accordion',
+                'description' => 'Wrapped body content demonstrates overflow and readable spacing behavior.',
+                'view' => 'platform.ui-reference.components.examples.accordion-long-content',
+                'context_notes' => [
+                    'Panel content wraps inside the available width.',
+                    'Long workflows should move to a full page or pattern-owned surface.',
+                ],
+                'variants' => [
+                    ['label' => 'Scrollable panel', 'status' => 'Implemented', 'view' => 'platform.ui-reference.components.examples.accordion-variant-scrollable', 'notes' => 'Use with a capped panel height when optional reference content is long but must stay in context.'],
+                ],
+            ],
+            [
+                'id' => 'accordion-inside-card',
+                'title' => 'Accordion inside card or panel',
+                'description' => 'A contextual accordion used inside a bounded surface without redefining card spacing.',
+                'view' => 'platform.ui-reference.components.examples.accordion-card',
+                'context_notes' => [
+                    'Parent layouts own external spacing; Accordion owns only internal item spacing.',
+                    'Nested surfaces must keep layer and border tokens readable in light and dark themes.',
+                ],
+                'variants' => [
+                    ['label' => 'Contained contextual', 'status' => 'Implemented', 'view' => 'platform.ui-reference.components.examples.accordion-variant-contained', 'notes' => 'Allowed when the parent card or panel owns the surrounding context.'],
+                ],
+            ],
+            [
+                'id' => 'form-assistance-accordion',
+                'title' => 'Form assistance accordion',
+                'description' => 'Optional guidance for form settings that should not replace visible labels or validation.',
+                'view' => 'platform.ui-reference.components.examples.accordion-form-assistance',
+                'context_notes' => [
+                    'Use only for secondary explanations. Labels, helper text, and errors remain visible outside the Accordion.',
+                    'Do not hide required instructions or validation recovery steps here.',
+                ],
+                'variants' => [
+                    ['label' => 'Compact assistance disclosure', 'status' => 'Implemented', 'view' => 'platform.ui-reference.components.examples.accordion-variant-compact', 'notes' => 'Allowed for optional form explanation only; visible labels and validation remain outside the Accordion.'],
+                ],
+            ],
         ];
     }
 
@@ -339,7 +561,7 @@ class UiReferenceComponentCatalog
         }
 
         if (in_array($slug, ['data-table', 'structured-list', 'tile', 'ui-shell'], true)) {
-            $elements[] = ['label' => '2x Grid', 'href' => '/platform/ui-reference/elements/grid'];
+            $elements[] = ['label' => '2x Grid', 'href' => '/platform/ui-reference/elements/2x-grid'];
         }
 
         return $elements;

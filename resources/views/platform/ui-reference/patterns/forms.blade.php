@@ -44,7 +44,7 @@
         </x-ui.patterns.proof-note>
 
         <section class="ui-card" data-ui-reference-example="t2-form-composition" data-guidance-id="P2-F-CQ-010">
-            <p class="ui-kicker">T2 Form Composition Examples</p>
+            <p class="ui-kicker">Pattern Form Composition Examples</p>
             <div class="mt-5 grid gap-5 xl:grid-cols-2">
                 <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
                     <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Settings-style form section</p>

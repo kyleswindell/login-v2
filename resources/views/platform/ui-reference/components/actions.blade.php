@@ -24,56 +24,56 @@
             <p class="ui-kicker">Button Variant Usage Guidance</p>
             <div class="mt-3 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
                 <div>
-                    <h2 class="text-base font-semibold text-slate-100">Variant selection rules</h2>
-                    <dl class="mt-3 space-y-3 text-sm text-slate-300">
+                    <h2 class="text-base font-semibold ui-reference-text-strong">Variant selection rules</h2>
+                    <dl class="mt-3 space-y-3 text-sm ui-reference-text">
                         <div>
-                            <dt class="font-semibold text-slate-100">G-ACT-01 - One primary action</dt>
+                            <dt class="font-semibold ui-reference-text-strong">G-ACT-01 - One primary action</dt>
                             <dd class="mt-1">Each page, modal, card region, or form action row gets one primary action. Additional actions must reduce emphasis before introducing another primary button.</dd>
                         </div>
                         <div>
-                            <dt class="font-semibold text-slate-100">G-ACT-02 - Standard button</dt>
+                            <dt class="font-semibold ui-reference-text-strong">G-ACT-02 - Standard button</dt>
                             <dd class="mt-1">Use the standard filled treatment for the dominant submit, create, save, or continue action in the current region.</dd>
                         </div>
                         <div>
-                            <dt class="font-semibold text-slate-100">G-ACT-03 - Soft button</dt>
+                            <dt class="font-semibold ui-reference-text-strong">G-ACT-03 - Soft button</dt>
                             <dd class="mt-1">Use soft when the action is important but supportive, such as a status-aware follow-up or review note that should not compete with the primary action.</dd>
                         </div>
                         <div>
-                            <dt class="font-semibold text-slate-100">G-ACT-04 - Ghost and outline buttons</dt>
+                            <dt class="font-semibold ui-reference-text-strong">G-ACT-04 - Ghost and outline buttons</dt>
                             <dd class="mt-1">Use ghost for cancel, close, reset, and low-emphasis navigation. Use outline for a visible alternate path that should remain secondary.</dd>
                         </div>
                         <div>
-                            <dt class="font-semibold text-slate-100">G-ACT-05 - Destructive actions</dt>
+                            <dt class="font-semibold ui-reference-text-strong">G-ACT-05 - Destructive actions</dt>
                             <dd class="mt-1">Use the danger semantic for delete, archive, disable, and irreversible actions. Do not hide destructive intent behind neutral ghost styling.</dd>
                         </div>
                     </dl>
                 </div>
 
                 <div data-ui-guidance="action-labels">
-                    <h2 class="text-base font-semibold text-slate-100">Action label rules</h2>
-                    <dl class="mt-3 space-y-3 text-sm text-slate-300">
+                    <h2 class="text-base font-semibold ui-reference-text-strong">Action label rules</h2>
+                    <dl class="mt-3 space-y-3 text-sm ui-reference-text">
                         <div>
-                            <dt class="font-semibold text-slate-100">G-LABEL-01 - Apply</dt>
+                            <dt class="font-semibold ui-reference-text-strong">G-LABEL-01 - Apply</dt>
                             <dd class="mt-1">Use Apply when the user stays on the same page and the current list, table, filter, or preview updates in place.</dd>
                         </div>
                         <div>
-                            <dt class="font-semibold text-slate-100">G-LABEL-02 - Save</dt>
+                            <dt class="font-semibold ui-reference-text-strong">G-LABEL-02 - Save</dt>
                             <dd class="mt-1">Use Save when the user persists edits to the current resource. Pair with Cancel when leaving unsaved changes is possible.</dd>
                         </div>
                         <div>
-                            <dt class="font-semibold text-slate-100">G-LABEL-03 - Create / Submit / Send</dt>
+                            <dt class="font-semibold ui-reference-text-strong">G-LABEL-03 - Create / Submit / Send</dt>
                             <dd class="mt-1">Use a completion verb when the action creates a record, submits a workflow, sends data, or returns the user to the prior task surface.</dd>
                         </div>
                         <div>
-                            <dt class="font-semibold text-slate-100">G-LABEL-04 - Cancel / Close</dt>
+                            <dt class="font-semibold ui-reference-text-strong">G-LABEL-04 - Cancel / Close</dt>
                             <dd class="mt-1">Use Cancel for abandoning editable work and Close for dismissing read-only or completed surfaces.</dd>
                         </div>
                         <div>
-                            <dt class="font-semibold text-slate-100">G-LABEL-05 - Reset / Clear</dt>
+                            <dt class="font-semibold ui-reference-text-strong">G-LABEL-05 - Reset / Clear</dt>
                             <dd class="mt-1">Use Reset or Clear for removing filters or restoring defaults. These labels must not persist a resource.</dd>
                         </div>
                         <div>
-                            <dt class="font-semibold text-slate-100">G-LABEL-06 - Destructive verbs</dt>
+                            <dt class="font-semibold ui-reference-text-strong">G-LABEL-06 - Destructive verbs</dt>
                             <dd class="mt-1">Use Delete, Archive, Disable, or Remove with the target object named nearby and the danger semantic visible.</dd>
                         </div>
                     </dl>
@@ -82,69 +82,69 @@
         </section>
 
         <section class="ui-card" data-ui-reference-example="button-variant-contract" data-guidance-id="P2-F-CQ-008">
-            <p class="ui-kicker">T1 Button Reference Examples</p>
+            <p class="ui-kicker">Component Button Reference Examples</p>
             <h2 class="ui-card-title mt-2">Valid button variants and states</h2>
             <p class="ui-card-copy">Use these examples as the implementation contract before creating new action treatments. The filled primary example is the only primary action in this region.</p>
 
             <div class="mt-5 grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
-                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Standard</p>
+                <article class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Standard</p>
                     <x-ui.button semantic="primary" class="mt-3">Save Workspace</x-ui.button>
-                    <code class="mt-3 block rounded-md bg-slate-950 px-3 py-2 text-xs text-slate-300">&lt;x-ui.button semantic=&quot;primary&quot;&gt;Save Workspace&lt;/x-ui.button&gt;</code>
+                    <code class="mt-3 block rounded-md ui-reference-code-surface px-3 py-2 text-xs ui-reference-text">&lt;x-ui.button semantic=&quot;primary&quot;&gt;Save Workspace&lt;/x-ui.button&gt;</code>
                 </article>
 
-                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Soft</p>
+                <article class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Soft</p>
                     <x-ui.button semantic="notice" variant="soft" class="mt-3">Queue Review</x-ui.button>
-                    <code class="mt-3 block rounded-md bg-slate-950 px-3 py-2 text-xs text-slate-300">&lt;x-ui.button semantic=&quot;notice&quot; variant=&quot;soft&quot;&gt;Queue Review&lt;/x-ui.button&gt;</code>
+                    <code class="mt-3 block rounded-md ui-reference-code-surface px-3 py-2 text-xs ui-reference-text">&lt;x-ui.button semantic=&quot;notice&quot; variant=&quot;soft&quot;&gt;Queue Review&lt;/x-ui.button&gt;</code>
                 </article>
 
-                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Ghost</p>
+                <article class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Ghost</p>
                     <x-ui.button variant="ghost" class="mt-3">Cancel</x-ui.button>
-                    <code class="mt-3 block rounded-md bg-slate-950 px-3 py-2 text-xs text-slate-300">&lt;x-ui.button variant=&quot;ghost&quot;&gt;Cancel&lt;/x-ui.button&gt;</code>
+                    <code class="mt-3 block rounded-md ui-reference-code-surface px-3 py-2 text-xs ui-reference-text">&lt;x-ui.button variant=&quot;ghost&quot;&gt;Cancel&lt;/x-ui.button&gt;</code>
                 </article>
 
-                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Outline</p>
+                <article class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Outline</p>
                     <x-ui.button variant="outline" class="mt-3">Open Settings</x-ui.button>
-                    <code class="mt-3 block rounded-md bg-slate-950 px-3 py-2 text-xs text-slate-300">&lt;x-ui.button variant=&quot;outline&quot;&gt;Open Settings&lt;/x-ui.button&gt;</code>
+                    <code class="mt-3 block rounded-md ui-reference-code-surface px-3 py-2 text-xs ui-reference-text">&lt;x-ui.button variant=&quot;outline&quot;&gt;Open Settings&lt;/x-ui.button&gt;</code>
                 </article>
 
-                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Destructive</p>
+                <article class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Destructive</p>
                     <x-ui.button semantic="danger" class="mt-3">Delete Workspace</x-ui.button>
-                    <code class="mt-3 block rounded-md bg-slate-950 px-3 py-2 text-xs text-slate-300">&lt;x-ui.button semantic=&quot;danger&quot;&gt;Delete Workspace&lt;/x-ui.button&gt;</code>
+                    <code class="mt-3 block rounded-md ui-reference-code-surface px-3 py-2 text-xs ui-reference-text">&lt;x-ui.button semantic=&quot;danger&quot;&gt;Delete Workspace&lt;/x-ui.button&gt;</code>
                 </article>
 
-                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Icon Only</p>
+                <article class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Icon Only</p>
                     <x-ui.icon-button label="Open filters" class="mt-3">
                         <x-heroicon-o-funnel class="h-4 w-4" aria-hidden="true" />
                     </x-ui.icon-button>
-                    <code class="mt-3 block rounded-md bg-slate-950 px-3 py-2 text-xs text-slate-300">&lt;x-ui.icon-button label=&quot;Open filters&quot;&gt;...&lt;/x-ui.icon-button&gt;</code>
+                    <code class="mt-3 block rounded-md ui-reference-code-surface px-3 py-2 text-xs ui-reference-text">&lt;x-ui.icon-button label=&quot;Open filters&quot;&gt;...&lt;/x-ui.icon-button&gt;</code>
                 </article>
             </div>
 
             <div class="mt-5 grid gap-4 lg:grid-cols-2" data-ui-reference-example="button-state-contract">
-                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Supported States</p>
+                <article class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Supported States</p>
                     <div class="mt-3 flex flex-wrap items-center gap-3">
                         <x-ui.button semantic="primary">Default</x-ui.button>
-                        <x-ui.button semantic="primary" class="ring-2 ring-sky-400/50 ring-offset-2 ring-offset-slate-900">Focus</x-ui.button>
+                        <x-ui.button semantic="primary" class="ring-2 is-focus">Focus</x-ui.button>
                         <x-ui.button semantic="primary" disabled>Disabled</x-ui.button>
                         <x-ui.button semantic="primary" loading>Loading</x-ui.button>
                     </div>
                 </article>
 
-                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Icon Leading + Grouped Menu</p>
+                <article class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Icon Leading + Grouped Menu</p>
                     <div class="mt-3 flex flex-wrap items-center gap-3">
                         <x-ui.button variant="outline">
                             <x-heroicon-o-arrow-down-tray class="h-4 w-4" aria-hidden="true" />
                             Export Results
                         </x-ui.button>
-                        <div class="rounded-lg border border-slate-800 bg-slate-950 p-2">
+                        <div class="ui-reference-subtle-surface p-2">
                             <x-ui.menu-item href="#" onclick="event.preventDefault()">Open details</x-ui.menu-item>
                             <x-ui.menu-item href="#" semantic="danger" onclick="event.preventDefault()">Archive workspace</x-ui.menu-item>
                         </div>
@@ -155,9 +155,9 @@
 
         <section class="ui-card" data-ui-implementation-guide="actions" data-guidance-id="P2-F-CQ-008">
             <p class="ui-kicker">Action Implementation Guide</p>
-            <div class="mt-4 overflow-x-auto rounded-lg border border-slate-800">
-                <table class="w-full min-w-[760px] divide-y divide-slate-800 text-left text-sm">
-                    <thead class="bg-slate-900 text-xs uppercase tracking-[0.16em] text-slate-500">
+            <div class="mt-4 ui-reference-table-shell overflow-x-auto">
+                <table class="w-full min-w-[760px] text-left text-sm">
+                    <thead class="ui-reference-table-head text-xs uppercase tracking-[0.16em]">
                         <tr>
                             <th class="px-4 py-3">Use</th>
                             <th class="px-4 py-3">Component</th>
@@ -165,21 +165,21 @@
                             <th class="px-4 py-3">Owner routes</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-slate-800 text-slate-300">
+                    <tbody class="ui-reference-table-body">
                         <tr>
-                            <td class="px-4 py-3 text-white">Button action</td>
+                            <td class="px-4 py-3 ui-reference-text-strong">Button action</td>
                             <td class="px-4 py-3"><code>x-ui.button</code></td>
                             <td class="px-4 py-3"><code>semantic</code>: neutral, primary, success, warning, danger, notice, info. <code>variant</code>: standard, soft, ghost, outline. <code>size</code>, <code>disabled</code>, and <code>loading</code> are supported.</td>
                             <td class="px-4 py-3">/components/actions, /patterns/navigation, /patterns/forms, /patterns/tables</td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-3 text-white">Icon-only action</td>
+                            <td class="px-4 py-3 ui-reference-text-strong">Icon-only action</td>
                             <td class="px-4 py-3"><code>x-ui.icon-button</code></td>
                             <td class="px-4 py-3">Requires a visible accessible <code>label</code>. Use for compact tools such as filter, edit, close, and row utility actions.</td>
                             <td class="px-4 py-3">/components/actions, /patterns/tables, /patterns/overlays-feedback</td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-3 text-white">Grouped overflow</td>
+                            <td class="px-4 py-3 ui-reference-text-strong">Grouped overflow</td>
                             <td class="px-4 py-3"><code>x-ui.patterns.dropdown-action-menu</code> + <code>x-ui.menu-item</code></td>
                             <td class="px-4 py-3">Use after one or two visible secondary actions. Destructive items follow a divider and keep <code>semantic=&quot;danger&quot;</code>.</td>
                             <td class="px-4 py-3">/patterns/navigation, /patterns/data-content, /patterns/tables</td>
@@ -205,7 +205,7 @@
 
         <section class="ui-card">
             <p class="ui-kicker">Variant Styles</p>
-            <p class="mt-2 text-sm text-slate-400">Soft and outline variants must preserve contrast in both themes.</p>
+            <p class="mt-2 text-sm ui-reference-text-muted">Soft and outline variants must preserve contrast in both themes.</p>
             <x-ui.patterns.proof-review-target
                 class="mt-4"
                 :items="[
@@ -215,7 +215,7 @@
             />
             <div class="mt-4 space-y-4">
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Soft</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Soft</p>
                     <div class="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                         <x-ui.button variant="soft">Soft Neutral</x-ui.button>
                         <x-ui.button semantic="primary" variant="soft">Soft Primary</x-ui.button>
@@ -227,7 +227,7 @@
                     </div>
                 </div>
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Outline</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Outline</p>
                     <div class="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                         <x-ui.button variant="outline">Outline Neutral</x-ui.button>
                         <x-ui.button semantic="primary" variant="outline">Outline Primary</x-ui.button>
@@ -239,7 +239,7 @@
                     </div>
                 </div>
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Ghost</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Ghost</p>
                     <div class="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                         <x-ui.button variant="ghost">Ghost Neutral</x-ui.button>
                         <x-ui.button semantic="primary" variant="ghost">Ghost Primary</x-ui.button>
@@ -250,12 +250,12 @@
                         <x-ui.button semantic="info" variant="ghost">Ghost Info</x-ui.button>
                     </div>
                     <div class="mt-4 grid gap-4 md:grid-cols-2">
-                        <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                            <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Neutral Ghost Baseline</p>
+                        <div class="ui-reference-subtle-surface p-4">
+                            <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Neutral Ghost Baseline</p>
                             <x-ui.button variant="ghost" class="mt-3">Close review</x-ui.button>
                         </div>
-                        <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                            <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Semantic Ghost Parity</p>
+                        <div class="ui-reference-subtle-surface p-4">
+                            <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Semantic Ghost Parity</p>
                             <x-ui.button semantic="notice" variant="ghost" class="mt-3">Open reviewer note</x-ui.button>
                         </div>
                     </div>
@@ -265,7 +265,7 @@
 
         <section class="ui-card">
             <p class="ui-kicker">Menu Item Colorways</p>
-            <p class="mt-2 text-sm text-slate-400">Grouped-action menus should consume one shared item treatment, including the canonical current-item state, instead of page-local text color overrides.</p>
+            <p class="mt-2 text-sm ui-reference-text-muted">Grouped-action menus should consume one shared item treatment, including the canonical current-item state, instead of page-local text color overrides.</p>
             <x-ui.patterns.proof-review-target
                 class="mt-4"
                 :items="[
@@ -273,27 +273,27 @@
                 ]"
             />
             <div class="mt-4 grid gap-4 lg:grid-cols-2">
-                <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Standard Menu</p>
-                    <div class="mt-3 rounded-lg border border-slate-800 bg-slate-900/80 p-2">
+                <div class="ui-reference-subtle-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Standard Menu</p>
+                    <div class="mt-3 rounded-lg border ui-reference-border ui-reference-subtle-surface p-2">
                         <x-ui.menu-item href="#" onclick="event.preventDefault()">Neutral action</x-ui.menu-item>
                         <x-ui.menu-item href="#" semantic="primary" onclick="event.preventDefault()">Primary follow-up</x-ui.menu-item>
                         <x-ui.menu-item href="#" semantic="success" onclick="event.preventDefault()">Approve queue item</x-ui.menu-item>
                         <x-ui.menu-item href="#" semantic="notice" onclick="event.preventDefault()">Open reviewer note</x-ui.menu-item>
                     </div>
                 </div>
-                <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Caution Menu</p>
-                    <div class="mt-3 rounded-lg border border-slate-800 bg-slate-900/80 p-2">
+                <div class="ui-reference-subtle-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Caution Menu</p>
+                    <div class="mt-3 rounded-lg border ui-reference-border ui-reference-subtle-surface p-2">
                         <x-ui.menu-item href="#" semantic="info" onclick="event.preventDefault()">View activity feed</x-ui.menu-item>
                         <x-ui.menu-item href="#" semantic="warning" onclick="event.preventDefault()">Escalate for review</x-ui.menu-item>
                         <div class="ui-pattern-dropdown-divider"></div>
                         <x-ui.menu-item href="#" semantic="danger" onclick="event.preventDefault()">Archive workspace</x-ui.menu-item>
                     </div>
                 </div>
-                <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-4 lg:col-span-2">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Current Item States</p>
-                    <div class="mt-3 grid gap-1 rounded-lg border border-slate-800 bg-slate-900/80 p-2 md:grid-cols-2 xl:grid-cols-3">
+                <div class="ui-reference-subtle-surface p-4 lg:col-span-2">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Current Item States</p>
+                    <div class="mt-3 grid gap-1 rounded-lg border ui-reference-border ui-reference-subtle-surface p-2 md:grid-cols-2 xl:grid-cols-3">
                         <x-ui.menu-item href="#" current onclick="event.preventDefault()">Current neutral item</x-ui.menu-item>
                         <x-ui.menu-item href="#" semantic="primary" current onclick="event.preventDefault()">Current primary item</x-ui.menu-item>
                         <x-ui.menu-item href="#" semantic="success" current onclick="event.preventDefault()">Current success item</x-ui.menu-item>
@@ -343,59 +343,59 @@
 
         <section class="ui-card">
             <p class="ui-kicker">Review State Matrix</p>
-            <p class="mt-2 text-sm text-slate-400">All required Tier 1 action states are visible here for manual inspection.</p>
+            <p class="mt-2 text-sm ui-reference-text-muted">All required Tier 1 action states are visible here for manual inspection.</p>
             <div class="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Default</p>
+                <div class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Default</p>
                     <x-ui.button semantic="primary" class="mt-3">Primary Action</x-ui.button>
                 </div>
-                <div class="rounded-lg border border-sky-400/40 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Hover Snapshot</p>
+                <div class="rounded-lg border ui-reference-border-strong ui-reference-subtle-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Hover Snapshot</p>
                     <x-ui.button semantic="primary" class="mt-3 border-blue-500/65 bg-blue-600/35 text-blue-50">Primary Action</x-ui.button>
                 </div>
-                <div class="rounded-lg border border-sky-400/40 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Focus Snapshot</p>
-                    <x-ui.button semantic="primary" class="mt-3 ring-2 ring-sky-400/50 ring-offset-2 ring-offset-slate-900">Primary Action</x-ui.button>
+                <div class="rounded-lg border ui-reference-border-strong ui-reference-subtle-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Focus Snapshot</p>
+                    <x-ui.button semantic="primary" class="mt-3 ring-2 is-focus">Primary Action</x-ui.button>
                 </div>
-                <div class="rounded-lg border border-sky-400/40 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Danger Focus Snapshot</p>
-                    <x-ui.button semantic="danger" class="mt-3 ring-2 ring-sky-400/50 ring-offset-2 ring-offset-slate-900">Danger Action</x-ui.button>
+                <div class="rounded-lg border ui-reference-border-strong ui-reference-subtle-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Danger Focus Snapshot</p>
+                    <x-ui.button semantic="danger" class="mt-3 ring-2 is-focus">Danger Action</x-ui.button>
                 </div>
-                <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Active Snapshot</p>
+                <div class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Active Snapshot</p>
                     <x-ui.button semantic="primary" class="mt-3 border-blue-700/70 bg-blue-700/45 text-blue-50">Primary Action</x-ui.button>
                 </div>
-                <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Disabled</p>
+                <div class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Disabled</p>
                     <x-ui.button semantic="primary" class="mt-3" disabled>Primary Action</x-ui.button>
                 </div>
-                <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Loading</p>
+                <div class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Loading</p>
                     <x-ui.button semantic="primary" class="mt-3" loading>Loading</x-ui.button>
                 </div>
             </div>
             <div class="mt-4 grid gap-4 md:grid-cols-2">
-                <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Icon Button Focus</p>
-                    <x-ui.icon-button label="Focused icon action" class="mt-3 ring-2 ring-sky-400/50 ring-offset-2 ring-offset-slate-900">
+                <div class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Icon Button Focus</p>
+                    <x-ui.icon-button label="Focused icon action" class="mt-3 ring-2 is-focus">
                         <x-heroicon-o-funnel class="h-4 w-4" aria-hidden="true" />
                     </x-ui.icon-button>
                 </div>
-                <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Icon Button Disabled</p>
+                <div class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Icon Button Disabled</p>
                     <x-ui.icon-button label="Disabled icon action" class="mt-3" disabled>
                         <x-heroicon-o-funnel class="h-4 w-4" aria-hidden="true" />
                     </x-ui.icon-button>
                 </div>
-                <div class="rounded-lg border border-sky-400/40 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Icon Button Hover Snapshot</p>
-                    <x-ui.icon-button label="Hovered icon action" class="mt-3 border-slate-500 bg-slate-800 text-white shadow-lg shadow-slate-950/40">
+                <div class="rounded-lg border ui-reference-border-strong ui-reference-subtle-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Icon Button Hover Snapshot</p>
+                    <x-ui.icon-button label="Hovered icon action" class="mt-3 is-hover">
                         <x-heroicon-o-funnel class="h-4 w-4" aria-hidden="true" />
                     </x-ui.icon-button>
                 </div>
-                <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Icon Button Active Snapshot</p>
-                    <x-ui.icon-button label="Active icon action" class="mt-3 border-slate-600 bg-slate-950 text-white shadow-inner shadow-black/40">
+                <div class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Icon Button Active Snapshot</p>
+                    <x-ui.icon-button label="Active icon action" class="mt-3 is-active">
                         <x-heroicon-o-funnel class="h-4 w-4" aria-hidden="true" />
                     </x-ui.icon-button>
                 </div>

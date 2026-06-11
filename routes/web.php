@@ -115,6 +115,7 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/platform/ui-reference', [UiReferenceController::class, 'index'])->name('platform.ui-reference.index');
     Route::get('/platform/ui-reference/elements', [UiReferenceController::class, 'elementsOverview'])->name('platform.ui-reference.elements.overview');
     Route::get('/platform/ui-reference/elements/color/tokens', [UiReferenceController::class, 'colorTokens'])->name('platform.ui-reference.elements.color.tokens');
+    Route::get('/platform/ui-reference/elements/typography/type-sets', [UiReferenceController::class, 'typographyTypeSets'])->name('platform.ui-reference.elements.typography.type-sets');
     Route::get('/platform/ui-reference/elements/{element}', [UiReferenceController::class, 'element'])->name('platform.ui-reference.elements.show');
     Route::get('/platform/ui-reference/components/actions', [UiReferenceController::class, 'actions'])->name('platform.ui-reference.components.actions');
     Route::get('/platform/ui-reference/components/status', [UiReferenceController::class, 'status'])->name('platform.ui-reference.components.status');

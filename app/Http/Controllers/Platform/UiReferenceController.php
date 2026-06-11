@@ -8,6 +8,7 @@ use App\Platform\UiReference\UiReferenceComponentCatalog;
 use App\Platform\UiReference\UiReferenceElementCatalog;
 use App\Platform\UiReference\UiReferenceSamples;
 use App\Platform\UiReference\UiReferenceTables;
+use App\Platform\UiReference\UiReferenceTypographyTypeSets;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -20,6 +21,7 @@ class UiReferenceController extends Controller
         private readonly UiReferenceComponentCatalog $components,
         private readonly UiReferenceElementCatalog $elements,
         private readonly UiReferenceColorTokenPalette $colorTokenPalette,
+        private readonly UiReferenceTypographyTypeSets $typographyTypeSets,
     ) {}
 
     public function index(Request $request): View
@@ -80,6 +82,21 @@ class UiReferenceController extends Controller
             'tokenInventory' => $this->colorTokenPalette->inventory(),
             'tokenFamilies' => $this->colorTokenPalette->families(),
             'relatedLinks' => $this->colorTokenPalette->relatedLinks(),
+        ]);
+    }
+
+    public function typographyTypeSets(Request $request): View
+    {
+        $this->authorize('view-platform-ui-reference');
+
+        return $this->renderSection('elements.typography-type-sets', [
+            'currentSection' => 'elements.typography.type-sets',
+            'productiveRows' => $this->typographyTypeSets->productiveRows(),
+            'expressiveRows' => $this->typographyTypeSets->expressiveRows(),
+            'apiRows' => $this->typographyTypeSets->apiRows(),
+            'blendingExamples' => $this->typographyTypeSets->blendingExamples(),
+            'prohibitedUsage' => $this->typographyTypeSets->prohibitedUsage(),
+            'gatedCapabilities' => $this->typographyTypeSets->gatedCapabilities(),
         ]);
     }
 

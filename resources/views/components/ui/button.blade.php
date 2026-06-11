@@ -1,28 +1,54 @@
 @props([
     'href' => null,
     'type' => 'button',
-    'semantic' => 'neutral',
-    'variant' => 'base',
-    'size' => 'md',
+    'semantic' => 'primary',
+    'variant' => null,
+    'size' => 'lg',
     'loading' => false,
     'disabled' => false,
+    'icon' => null,
+    'iconPosition' => 'trailing',
 ])
 
 @php
-    $allowedSemantics = ['neutral', 'primary', 'success', 'warning', 'danger', 'notice', 'info'];
+    $semanticMap = [
+        'primary' => ['primary', 'base'],
+        'secondary' => ['neutral', 'base'],
+        'tertiary' => ['neutral', 'outline'],
+        'ghost' => ['neutral', 'ghost'],
+        'danger' => ['danger', 'base'],
+        'danger-tertiary' => ['danger', 'outline'],
+        'danger-ghost' => ['danger', 'ghost'],
+        // Existing app aliases remain valid while the Component API moves to action hierarchy names.
+        'neutral' => ['neutral', 'base'],
+        'success' => ['success', 'base'],
+        'warning' => ['warning', 'base'],
+        'notice' => ['notice', 'base'],
+        'info' => ['info', 'base'],
+    ];
     $allowedVariants = ['base', 'soft', 'outline', 'ghost'];
-    $allowedSizes = ['xs', 'sm', 'md', 'lg', 'xl'];
+    $sizeMap = [
+        'xs' => 'xs',
+        'sm' => 'sm',
+        'md' => 'md',
+        'lg' => 'lg',
+        'lg-expressive' => 'lg-expressive',
+        'xl' => 'xl',
+        '2xl' => '2xl',
+    ];
     $ghostSizeClasses = [
         'xs' => '!px-[calc(0.625rem+1px)] !py-[calc(0.375rem+1px)]',
         'sm' => '!px-[calc(0.75rem+1px)] !py-[calc(0.375rem+1px)]',
         'md' => '!px-[calc(0.875rem+1px)] !py-[calc(0.5rem+1px)]',
         'lg' => '!px-[calc(1.125rem+1px)] !py-[calc(0.625rem+1px)]',
+        'lg-expressive' => '!px-[calc(1.125rem+1px)] !py-[calc(0.625rem+1px)]',
         'xl' => '!px-[calc(1.25rem+1px)] !py-[calc(0.75rem+1px)]',
+        '2xl' => '!px-[calc(1.5rem+1px)] !py-[calc(1rem+1px)]',
     ];
 
-    $resolvedSemantic = in_array($semantic, $allowedSemantics, true) ? $semantic : 'neutral';
-    $resolvedVariant = in_array($variant, $allowedVariants, true) ? $variant : 'base';
-    $resolvedSize = in_array($size, $allowedSizes, true) ? $size : 'md';
+    [$resolvedSemantic, $semanticVariant] = $semanticMap[$semantic] ?? $semanticMap['primary'];
+    $resolvedVariant = in_array($variant, $allowedVariants, true) ? $variant : $semanticVariant;
+    $resolvedSize = $sizeMap[$size] ?? 'lg';
 
     $classes = ['ui-action'];
 
@@ -48,6 +74,8 @@
         && $resolvedSemantic !== 'neutral';
 
     $isLink = filled($href) && ! $disabled;
+
+    $renderIcon = filled($icon) && $iconPosition === 'trailing';
 @endphp
 
 @if ($isLink)
@@ -58,7 +86,10 @@
         @if ($loading)
             <span @class(['ui-spinner', 'ui-spinner-inverse' => $showInverseSpinner]) aria-hidden="true"></span>
         @endif
-        {{ $slot }}
+        <span class="ui-button-label">{{ $slot }}</span>
+        @if ($renderIcon)
+            <x-dynamic-component :component="$icon" class="ui-button-icon" aria-hidden="true" />
+        @endif
     </a>
 @else
     <button
@@ -70,6 +101,9 @@
         @if ($loading)
             <span @class(['ui-spinner', 'ui-spinner-inverse' => $showInverseSpinner]) aria-hidden="true"></span>
         @endif
-        {{ $slot }}
+        <span class="ui-button-label">{{ $slot }}</span>
+        @if ($renderIcon)
+            <x-dynamic-component :component="$icon" class="ui-button-icon" aria-hidden="true" />
+        @endif
     </button>
 @endif

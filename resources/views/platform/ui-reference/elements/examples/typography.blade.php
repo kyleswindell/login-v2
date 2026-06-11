@@ -21,6 +21,28 @@
 @endphp
 
 <div class="space-y-6">
+    <section class="ui-card" data-typography-example="type-sets-overview">
+        <div class="flex flex-wrap items-start justify-between gap-4">
+            <div>
+                <h2 class="ui-card-title">Type Sets</h2>
+                <p class="ui-card-copy mt-2">Productive and Expressive Type Sets are installed Typography standards. Productive type remains the default for operational app UI; expressive type is available for approved help, docs, onboarding, and high-presence content moments.</p>
+            </div>
+            <a wire:navigate href="{{ route('platform.ui-reference.elements.typography.type-sets') }}" class="ui-link">Open Type Sets</a>
+        </div>
+        <div class="mt-5 grid gap-4 lg:grid-cols-2">
+            <article class="rounded-lg border p-4 ui-type-set-productive" style="border-color: var(--ui-border-default); background: var(--ui-surface-elevated);">
+                <p class="ui-type-productive-label">Productive Type Set</p>
+                <h3 class="ui-type-productive-heading-03 mt-3">Admin page section</h3>
+                <p class="ui-type-productive-body mt-2" style="color: var(--ui-text-secondary);">14px base with fixed role sizes for dense product work.</p>
+            </article>
+            <article class="rounded-lg border p-4 ui-type-set-expressive" style="border-color: var(--ui-border-default); background: var(--ui-surface-elevated);">
+                <p class="ui-type-expressive-label">Expressive Type Set</p>
+                <h3 class="ui-type-expressive-heading-04 mt-3">Helpful introduction</h3>
+                <p class="ui-type-expressive-body mt-2" style="color: var(--ui-text-secondary);">16px base with fixed and fluid roles for selected content moments.</p>
+            </article>
+        </div>
+    </section>
+
     <section class="ui-card" data-typography-example="font-specimens">
         <h2 class="ui-card-title">Font Family Specimens</h2>
         <div class="mt-5 grid gap-4 xl:grid-cols-3">
@@ -129,10 +151,11 @@
                 <p class="font-semibold">Color is not decoration</p>
                 <p class="mt-2 text-sm">Use colored text only for semantic links, actions, warnings, alerts, and code highlights.</p>
             </article>
-            <article class="rounded-lg border p-4" style="border-color: var(--ui-border-default); background: var(--ui-surface-elevated);">
+            <article class="rounded-lg border p-4" data-typography-example="highlighted-code-token" style="border-color: var(--ui-border-default); background: var(--ui-surface-elevated);">
                 <a href="#" class="ui-link inline-flex items-center gap-2"><x-heroicon-o-arrow-down-tray class="h-4 w-4" />Link with icon</a>
                 <p class="ui-status-inline ui-status-inline-danger mt-3"><x-heroicon-o-x-circle class="h-4 w-4" />Oops, something went wrong.</p>
-                <code class="mt-3 block rounded px-2 py-1 text-sm" style="background: var(--ui-surface); color: var(--ui-text-secondary);">Code snippet with highlighted token</code>
+                <p class="mt-4 text-sm font-semibold" style="color: var(--ui-text-primary);">Code snippet with highlighted token</p>
+                <pre class="ui-code-snippet mt-2"><code><span class="ui-code-token-punctuation">&lt;</span><span class="ui-code-token-keyword">p</span> <span class="ui-code-token-property">class</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"ui-text-code"</span><span class="ui-code-token-punctuation">&gt;</span>code snippet<span class="ui-code-token-punctuation">&lt;/</span><span class="ui-code-token-keyword">p</span><span class="ui-code-token-punctuation">&gt;</span></code></pre>
             </article>
         </div>
     </section>

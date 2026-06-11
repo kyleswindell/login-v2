@@ -2,111 +2,106 @@
     @php($viewerTimezone = auth()->user()?->timezone ?: config('app.timezone'))
 
     <section class="flex flex-1 flex-col gap-6">
-        <div class="flex items-start justify-between gap-4 rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
+        <div class="flex items-start justify-between gap-4 ui-platform-surface p-8">
             <div>
-                <p class="text-sm font-medium uppercase tracking-[0.3em] text-slate-300">Platform Management</p>
-                <h1 class="mt-3 text-3xl font-semibold text-white">Error Log Detail</h1>
-                <p class="mt-2 text-slate-400">{{ $log->message }}</p>
+                <p class="text-sm font-medium uppercase tracking-[0.3em] ui-platform-text">Platform Management</p>
+                <h1 class="mt-3 text-3xl font-semibold ui-platform-text-strong">Error Log Detail</h1>
+                <p class="mt-2 ui-platform-text-muted">{{ $log->message }}</p>
             </div>
-            <a wire:navigate href="{{ route('platform.error-logs.index') }}" class="mt-1 shrink-0 rounded-md border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-300 transition hover:border-slate-600 hover:text-white">
+            <a wire:navigate href="{{ route('platform.error-logs.index') }}" class="mt-1 shrink-0 rounded-md ui-platform-border-strong border px-4 py-3 text-sm font-semibold ui-platform-text transition ">
                 ← Back to list
             </a>
         </div>
 
         <div class="grid gap-6 xl:grid-cols-2">
             {{-- Identity and classification --}}
-            <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30">
-                <h2 class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-400">Classification</h2>
+            <div class="ui-platform-surface p-6">
+                <h2 class="text-sm font-semibold uppercase tracking-[0.25em] ui-platform-text-muted">Classification</h2>
                 <dl class="mt-5 space-y-4">
                     <div class="flex flex-col gap-1">
-                        <dt class="text-xs uppercase tracking-[0.2em] text-slate-500">Severity</dt>
+                        <dt class="text-xs uppercase tracking-[0.2em] ui-platform-text-muted">Severity</dt>
                         <dd>
-                            <span @class([
-                                'inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em]',
-                                'bg-slate-500/15 text-slate-300' => $log->severity === 'debug',
-                                'bg-slate-700/60 text-slate-300' => $log->severity === 'info',
-                                'bg-amber-500/15 text-amber-300' => $log->severity === 'warning',
-                                'bg-rose-500/15 text-rose-300' => $log->severity === 'error',
-                                'bg-red-600/20 text-red-300' => $log->severity === 'critical',
-                            ])>
-                                {{ $log->severity }}
-                            </span>
+                            <x-ui.badge
+                                :status="match ($log->severity) { 'warning' => 'warning', 'error', 'critical' => 'danger', 'info' => 'info', default => 'neutral' }"
+                                :label="$log->severity"
+                                :show-icon="false"
+                            />
                         </dd>
                     </div>
                     <div class="flex flex-col gap-1">
-                        <dt class="text-xs uppercase tracking-[0.2em] text-slate-500">Handled</dt>
+                        <dt class="text-xs uppercase tracking-[0.2em] ui-platform-text-muted">Handled</dt>
                         <dd>
                             @if ($log->handled)
-                                <span class="inline-flex rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-emerald-300">Handled</span>
+                                <x-ui.badge label="Handled" semantic="success" :show-icon="false" />
                             @else
-                                <span class="inline-flex rounded-full bg-rose-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-rose-300">Unhandled</span>
+                                <x-ui.badge label="Unhandled" semantic="danger" :show-icon="false" />
                             @endif
                         </dd>
                     </div>
                     <div class="flex flex-col gap-1">
-                        <dt class="text-xs uppercase tracking-[0.2em] text-slate-500">Exception Class</dt>
-                        <dd class="text-sm text-slate-200">{{ $log->exception_class ?? '—' }}</dd>
+                        <dt class="text-xs uppercase tracking-[0.2em] ui-platform-text-muted">Exception Class</dt>
+                        <dd class="text-sm ui-platform-text-strong">{{ $log->exception_class ?? '—' }}</dd>
                     </div>
                     <div class="flex flex-col gap-1">
-                        <dt class="text-xs uppercase tracking-[0.2em] text-slate-500">Error Code</dt>
-                        <dd class="text-sm text-slate-200">{{ $log->error_code ?? '—' }}</dd>
+                        <dt class="text-xs uppercase tracking-[0.2em] ui-platform-text-muted">Error Code</dt>
+                        <dd class="text-sm ui-platform-text-strong">{{ $log->error_code ?? '—' }}</dd>
                     </div>
                     <div class="flex flex-col gap-1">
-                        <dt class="text-xs uppercase tracking-[0.2em] text-slate-500">File</dt>
-                        <dd class="break-all text-sm font-mono text-slate-300">{{ $log->file_path ?? '—' }}{{ $log->line_number ? ':' . $log->line_number : '' }}</dd>
+                        <dt class="text-xs uppercase tracking-[0.2em] ui-platform-text-muted">File</dt>
+                        <dd class="break-all text-sm font-mono ui-platform-text">{{ $log->file_path ?? '—' }}{{ $log->line_number ? ':' . $log->line_number : '' }}</dd>
                     </div>
                     <div class="flex flex-col gap-1">
-                        <dt class="text-xs uppercase tracking-[0.2em] text-slate-500">Fingerprint</dt>
-                        <dd class="break-all text-xs font-mono text-slate-400">{{ $log->fingerprint ?? '—' }}</dd>
+                        <dt class="text-xs uppercase tracking-[0.2em] ui-platform-text-muted">Fingerprint</dt>
+                        <dd class="break-all text-xs font-mono ui-platform-text-muted">{{ $log->fingerprint ?? '—' }}</dd>
                     </div>
                 </dl>
             </div>
 
             {{-- Request context --}}
-            <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30">
-                <h2 class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-400">Request Context</h2>
+            <div class="ui-platform-surface p-6">
+                <h2 class="text-sm font-semibold uppercase tracking-[0.25em] ui-platform-text-muted">Request Context</h2>
                 <dl class="mt-5 space-y-4">
                     <div class="flex flex-col gap-1">
-                        <dt class="text-xs uppercase tracking-[0.2em] text-slate-500">Occurred At</dt>
-                        <dd class="text-sm text-slate-200">{{ $log->occurredAtForTimezone($viewerTimezone)?->format('M j, Y g:i:s A T') ?? '—' }}</dd>
+                        <dt class="text-xs uppercase tracking-[0.2em] ui-platform-text-muted">Occurred At</dt>
+                        <dd class="text-sm ui-platform-text-strong">{{ $log->occurredAtForTimezone($viewerTimezone)?->format('M j, Y g:i:s A T') ?? '—' }}</dd>
                     </div>
                     <div class="flex flex-col gap-1">
-                        <dt class="text-xs uppercase tracking-[0.2em] text-slate-500">Environment</dt>
-                        <dd class="text-sm text-slate-200">{{ $log->environment ?? '—' }}</dd>
+                        <dt class="text-xs uppercase tracking-[0.2em] ui-platform-text-muted">Environment</dt>
+                        <dd class="text-sm ui-platform-text-strong">{{ $log->environment ?? '—' }}</dd>
                     </div>
                     <div class="flex flex-col gap-1">
-                        <dt class="text-xs uppercase tracking-[0.2em] text-slate-500">Route</dt>
-                        <dd class="text-sm text-slate-200">
+                        <dt class="text-xs uppercase tracking-[0.2em] ui-platform-text-muted">Route</dt>
+                        <dd class="text-sm ui-platform-text-strong">
                             @if ($log->route || $log->method)
-                                <span class="mr-2 rounded bg-slate-800 px-2 py-0.5 text-xs font-mono text-slate-400">{{ $log->method }}</span>{{ $log->route }}
+                                <span class="mr-2 rounded ui-platform-code-chip text-xs">{{ $log->method }}</span>{{ $log->route }}
                             @else
                                 —
                             @endif
                         </dd>
                     </div>
                     <div class="flex flex-col gap-1">
-                        <dt class="text-xs uppercase tracking-[0.2em] text-slate-500">Status Code</dt>
-                        <dd class="text-sm text-slate-200">{{ $log->status_code ?? '—' }}</dd>
+                        <dt class="text-xs uppercase tracking-[0.2em] ui-platform-text-muted">Status Code</dt>
+                        <dd class="text-sm ui-platform-text-strong">{{ $log->status_code ?? '—' }}</dd>
                     </div>
                     <div class="flex flex-col gap-1">
-                        <dt class="text-xs uppercase tracking-[0.2em] text-slate-500">Request ID</dt>
-                        <dd class="break-all text-xs font-mono text-slate-400">{{ $log->request_id ?? '—' }}</dd>
+                        <dt class="text-xs uppercase tracking-[0.2em] ui-platform-text-muted">Request ID</dt>
+                        <dd class="break-all text-xs font-mono ui-platform-text-muted">{{ $log->request_id ?? '—' }}</dd>
                     </div>
                     <div class="flex flex-col gap-1">
-                        <dt class="text-xs uppercase tracking-[0.2em] text-slate-500">Trace ID</dt>
-                        <dd class="break-all text-xs font-mono text-slate-400">{{ $log->trace_id ?? '—' }}</dd>
+                        <dt class="text-xs uppercase tracking-[0.2em] ui-platform-text-muted">Trace ID</dt>
+                        <dd class="break-all text-xs font-mono ui-platform-text-muted">{{ $log->trace_id ?? '—' }}</dd>
                     </div>
                     <div class="flex flex-col gap-1">
-                        <dt class="text-xs uppercase tracking-[0.2em] text-slate-500">User / IP</dt>
-                        <dd class="text-sm text-slate-200">{{ $log->user_id ? 'User #' . $log->user_id : 'Guest' }} — {{ $log->ip_address ?? '—' }}</dd>
+                        <dt class="text-xs uppercase tracking-[0.2em] ui-platform-text-muted">User / IP</dt>
+                        <dd class="text-sm ui-platform-text-strong">{{ $log->user_id ? 'User #' . $log->user_id : 'Guest' }} — {{ $log->ip_address ?? '—' }}</dd>
                     </div>
                     <div class="flex flex-col gap-1">
-                        <dt class="text-xs uppercase tracking-[0.2em] text-slate-500">Hostname</dt>
-                        <dd class="text-sm text-slate-200">{{ $log->hostname ?? '—' }}</dd>
+                        <dt class="text-xs uppercase tracking-[0.2em] ui-platform-text-muted">Hostname</dt>
+                        <dd class="text-sm ui-platform-text-strong">{{ $log->hostname ?? '—' }}</dd>
                     </div>
                     <div class="flex flex-col gap-1">
-                        <dt class="text-xs uppercase tracking-[0.2em] text-slate-500">Release Version</dt>
-                        <dd class="text-sm text-slate-200">{{ $log->release_version ?? '—' }}</dd>
+                        <dt class="text-xs uppercase tracking-[0.2em] ui-platform-text-muted">Release Version</dt>
+                        <dd class="text-sm ui-platform-text-strong">{{ $log->release_version ?? '—' }}</dd>
                     </div>
                 </dl>
             </div>
@@ -114,17 +109,17 @@
 
         {{-- Stack trace --}}
         @if ($log->stack_trace)
-            <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30">
-                <h2 class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-400">Stack Trace</h2>
-                <pre class="mt-4 overflow-x-auto rounded-md border border-slate-700 bg-slate-950 p-5 text-xs font-mono leading-relaxed text-slate-300">{{ $log->stack_trace }}</pre>
+            <div class="ui-platform-surface p-6">
+                <h2 class="text-sm font-semibold uppercase tracking-[0.25em] ui-platform-text-muted">Stack Trace</h2>
+                <pre class="mt-4 overflow-x-auto ui-platform-code-surface p-5 text-xs font-mono leading-relaxed ui-platform-text">{{ $log->stack_trace }}</pre>
             </div>
         @endif
 
         {{-- Additional context --}}
         @if ($log->context)
-            <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/30">
-                <h2 class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-400">Context</h2>
-                <pre class="mt-4 overflow-x-auto rounded-md border border-slate-700 bg-slate-950 p-5 text-xs font-mono leading-relaxed text-slate-300">{{ json_encode($log->context, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) }}</pre>
+            <div class="ui-platform-surface p-6">
+                <h2 class="text-sm font-semibold uppercase tracking-[0.25em] ui-platform-text-muted">Context</h2>
+                <pre class="mt-4 overflow-x-auto ui-platform-code-surface p-5 text-xs font-mono leading-relaxed ui-platform-text">{{ json_encode($log->context, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) }}</pre>
             </div>
         @endif
     </section>

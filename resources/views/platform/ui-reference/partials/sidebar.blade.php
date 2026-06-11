@@ -1,242 +1,247 @@
-<aside class="w-full lg:w-72">
-    <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4 shadow-2xl shadow-black/20 lg:sticky lg:top-24">
-        <p class="px-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">UI Reference</p>
+@php
+    $currentSection = $currentSection ?? 'overview';
+    $sidebarLinkClass = fn (bool $active, bool $compact = false) => trim('ui-reference-sidebar-link '.($compact ? 'ui-reference-sidebar-link-compact ' : '').($active ? 'is-current' : ''));
+    $statusBadgeLabel = fn (string $disposition) => match ($disposition) {
+        'Partial' => 'Partial',
+        'Needs audit' => 'Audit',
+        'Deprecated' => 'Deprecated',
+        'App-specific exception' => 'Exception',
+        'Represent As Pattern' => 'Pattern',
+        'Queued Gap' => 'Gap',
+        default => 'Gate',
+    };
+@endphp
 
-        <nav class="mt-3 space-y-1">
-            <a wire:navigate href="{{ route('platform.ui-reference.index') }}" @class([
-                'flex items-center gap-2 rounded-md px-3 py-3 text-sm font-medium transition',
-                'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => ($currentSection ?? 'overview') === 'overview',
-                'text-slate-300 hover:bg-slate-800 hover:text-white' => ($currentSection ?? 'overview') !== 'overview',
-            ])>
+<aside class="w-full lg:w-72 lg:self-start">
+    <div class="ui-reference-sidebar-panel" data-ui-reference-sidebar-scroll-owner="shell">
+        <p class="ui-reference-sidebar-heading">UI Reference</p>
+
+        <nav class="ui-reference-sidebar-nav" aria-label="UI Reference overview">
+            @php $isOverviewCurrent = $currentSection === 'overview'; @endphp
+            <a wire:navigate href="{{ route('platform.ui-reference.index') }}" class="{{ $sidebarLinkClass($isOverviewCurrent) }}" @if ($isOverviewCurrent) aria-current="page" @endif>
                 <x-layouts.nav-icon icon="home" />
                 <span>Overview</span>
             </a>
         </nav>
 
-        <div class="mt-4 border-t border-slate-800 pt-4">
-            @php $isElementSection = str_starts_with($currentSection ?? '', 'elements.'); @endphp
-            <details class="group" open>
-                <summary class="flex cursor-pointer list-none items-center justify-between rounded-md px-2 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 transition hover:bg-slate-800/70 hover:text-slate-300">
-                    <span>Foundation Elements</span>
-                    <span class="text-slate-500 transition group-open:rotate-180">v</span>
-                </summary>
+        <section
+            class="ui-reference-sidebar-section ui-reference-sidebar-disclosure"
+            data-ui-reference-sidebar-disclosure="foundation-elements"
+            data-ui-reference-sidebar-disclosure-motion="productive"
+            data-ui-reference-sidebar-disclosure-state="open"
+        >
+            <button
+                type="button"
+                class="ui-reference-sidebar-disclosure-trigger"
+                aria-expanded="true"
+                aria-controls="ui-reference-sidebar-foundation-elements-panel"
+                data-ui-reference-sidebar-disclosure-trigger
+            >
+                <span>Foundation Elements</span>
+                <x-heroicon-o-chevron-down class="ui-reference-sidebar-disclosure-icon" aria-hidden="true" data-ui-reference-sidebar-disclosure-icon />
+            </button>
 
-                <nav class="mt-2 space-y-1" data-ui-reference-element-sidebar>
-                    <a wire:navigate href="{{ route('platform.ui-reference.elements.overview') }}" @class([
-                        'flex items-center gap-2 rounded-md px-3 py-2.5 text-sm font-medium transition',
-                        'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => ($currentSection ?? '') === 'elements.overview',
-                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ($currentSection ?? '') !== 'elements.overview',
-                    ])>
+            <div
+                id="ui-reference-sidebar-foundation-elements-panel"
+                class="ui-reference-sidebar-disclosure-panel"
+                data-ui-reference-sidebar-disclosure-panel
+                data-ui-reference-sidebar-disclosure-state="open"
+            >
+                <nav class="ui-reference-sidebar-nav" aria-label="UI Reference foundation elements" data-ui-reference-element-sidebar>
+                    @php $isElementsOverviewCurrent = $currentSection === 'elements.overview'; @endphp
+                    <a wire:navigate href="{{ route('platform.ui-reference.elements.overview') }}" class="{{ $sidebarLinkClass($isElementsOverviewCurrent) }}" @if ($isElementsOverviewCurrent) aria-current="page" @endif>
                         <x-layouts.nav-icon icon="docs" />
                         <span>Overview</span>
                     </a>
 
                     @foreach (($elementCatalog ?? []) as $element)
                         @php
-                            $isActiveElement = ($currentSection ?? '') === 'elements.'.$element['slug'];
-                            $isColorTokenPage = ($currentSection ?? '') === 'elements.color.tokens';
+                            $isActiveElement = $currentSection === 'elements.'.$element['slug'];
+                            $isColorTokenPage = $currentSection === 'elements.color.tokens';
+                            $isTypographyTypeSetsPage = $currentSection === 'elements.typography.type-sets';
                             $isColorElement = $element['slug'] === 'color';
+                            $isTypographyElement = $element['slug'] === 'typography';
                         @endphp
 
                         @if ($isColorElement)
-                            <div class="rounded-md" data-ui-reference-element-sidebar-item="color">
-                                <a wire:navigate href="{{ route('platform.ui-reference.elements.show', ['element' => 'color']) }}" @class([
-                                    'flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm font-medium transition',
-                                    'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => $isActiveElement,
-                                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ! $isActiveElement,
-                                ])>
+                            @php $isColorOpen = $isActiveElement || $isColorTokenPage; @endphp
+                            <section
+                                class="ui-reference-sidebar-disclosure"
+                                data-ui-reference-element-sidebar-item="color"
+                                data-ui-reference-element-dropdown="color"
+                                data-ui-reference-element-dropdown-open="{{ $isColorOpen ? 'true' : 'false' }}"
+                                data-ui-reference-sidebar-disclosure="color"
+                                data-ui-reference-sidebar-disclosure-motion="productive"
+                                data-ui-reference-sidebar-disclosure-state="{{ $isColorOpen ? 'open' : 'closed' }}"
+                            >
+                                <button
+                                    type="button"
+                                    class="ui-reference-sidebar-disclosure-trigger ui-reference-sidebar-disclosure-trigger-item {{ $isColorOpen ? 'is-current' : '' }}"
+                                    aria-expanded="{{ $isColorOpen ? 'true' : 'false' }}"
+                                    aria-controls="ui-reference-sidebar-color-panel"
+                                    data-ui-reference-sidebar-disclosure-trigger
+                                >
                                     <span>{{ $element['label'] }}</span>
-                                </a>
+                                    <x-heroicon-o-chevron-down class="ui-reference-sidebar-disclosure-icon" aria-hidden="true" data-ui-reference-sidebar-disclosure-icon />
+                                </button>
 
-                                <nav class="ml-5 mt-1 space-y-1 border-l border-slate-800 pl-3" data-ui-reference-color-sidebar>
-                                    <a wire:navigate href="{{ route('platform.ui-reference.elements.show', ['element' => 'color']) }}" @class([
-                                        'block rounded-md px-2 py-1.5 text-xs font-medium transition',
-                                        'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => $isActiveElement,
-                                        'text-slate-400 hover:bg-slate-800 hover:text-white' => ! $isActiveElement,
-                                    ]) data-ui-reference-color-sidebar-item="overview">Overview</a>
-                                    <a wire:navigate href="{{ route('platform.ui-reference.elements.color.tokens') }}" @class([
-                                        'block rounded-md px-2 py-1.5 text-xs font-medium transition',
-                                        'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => $isColorTokenPage,
-                                        'text-slate-400 hover:bg-slate-800 hover:text-white' => ! $isColorTokenPage,
-                                    ]) data-ui-reference-color-sidebar-item="token-palette">Token Palette</a>
-                                </nav>
-                            </div>
+                                <div
+                                    id="ui-reference-sidebar-color-panel"
+                                    class="ui-reference-sidebar-disclosure-panel"
+                                    data-ui-reference-sidebar-disclosure-panel
+                                    data-ui-reference-sidebar-disclosure-state="{{ $isColorOpen ? 'open' : 'closed' }}"
+                                    @unless ($isColorOpen) hidden @endunless
+                                >
+                                    <nav class="ui-reference-sidebar-nested-nav" aria-label="UI Reference color" data-ui-reference-color-sidebar>
+                                        <a wire:navigate href="{{ route('platform.ui-reference.elements.show', ['element' => 'color']) }}" class="{{ $sidebarLinkClass($isActiveElement, true) }}" data-ui-reference-color-sidebar-item="overview" @if ($isActiveElement) aria-current="page" @endif>Overview</a>
+                                        <a wire:navigate href="{{ route('platform.ui-reference.elements.color.tokens') }}" class="{{ $sidebarLinkClass($isColorTokenPage, true) }}" data-ui-reference-color-sidebar-item="token-palette" @if ($isColorTokenPage) aria-current="page" @endif>Token Palette</a>
+                                    </nav>
+                                </div>
+                            </section>
+                        @elseif ($isTypographyElement)
+                            @php $isTypographyOpen = $isActiveElement || $isTypographyTypeSetsPage; @endphp
+                            <section
+                                class="ui-reference-sidebar-disclosure"
+                                data-ui-reference-element-sidebar-item="typography"
+                                data-ui-reference-element-dropdown="typography"
+                                data-ui-reference-element-dropdown-open="{{ $isTypographyOpen ? 'true' : 'false' }}"
+                                data-ui-reference-sidebar-disclosure="typography"
+                                data-ui-reference-sidebar-disclosure-motion="productive"
+                                data-ui-reference-sidebar-disclosure-state="{{ $isTypographyOpen ? 'open' : 'closed' }}"
+                            >
+                                <button
+                                    type="button"
+                                    class="ui-reference-sidebar-disclosure-trigger ui-reference-sidebar-disclosure-trigger-item {{ $isTypographyOpen ? 'is-current' : '' }}"
+                                    aria-expanded="{{ $isTypographyOpen ? 'true' : 'false' }}"
+                                    aria-controls="ui-reference-sidebar-typography-panel"
+                                    data-ui-reference-sidebar-disclosure-trigger
+                                >
+                                    <span>{{ $element['label'] }}</span>
+                                    <x-heroicon-o-chevron-down class="ui-reference-sidebar-disclosure-icon" aria-hidden="true" data-ui-reference-sidebar-disclosure-icon />
+                                </button>
+
+                                <div
+                                    id="ui-reference-sidebar-typography-panel"
+                                    class="ui-reference-sidebar-disclosure-panel"
+                                    data-ui-reference-sidebar-disclosure-panel
+                                    data-ui-reference-sidebar-disclosure-state="{{ $isTypographyOpen ? 'open' : 'closed' }}"
+                                    @unless ($isTypographyOpen) hidden @endunless
+                                >
+                                    <nav class="ui-reference-sidebar-nested-nav" aria-label="UI Reference typography" data-ui-reference-typography-sidebar>
+                                        <a wire:navigate href="{{ route('platform.ui-reference.elements.show', ['element' => 'typography']) }}" class="{{ $sidebarLinkClass($isActiveElement, true) }}" data-ui-reference-typography-sidebar-item="overview" @if ($isActiveElement) aria-current="page" @endif>Overview</a>
+                                        <a wire:navigate href="{{ route('platform.ui-reference.elements.typography.type-sets') }}" class="{{ $sidebarLinkClass($isTypographyTypeSetsPage, true) }}" data-ui-reference-typography-sidebar-item="type-sets" @if ($isTypographyTypeSetsPage) aria-current="page" @endif>Type Sets</a>
+                                    </nav>
+                                </div>
+                            </section>
                         @else
-                            <a wire:navigate href="{{ route('platform.ui-reference.elements.show', ['element' => $element['slug']]) }}" @class([
-                                'flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm font-medium transition',
-                                'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => $isActiveElement,
-                                'text-slate-300 hover:bg-slate-800 hover:text-white' => ! $isActiveElement,
-                            ]) data-ui-reference-element-sidebar-item="{{ $element['slug'] }}">
+                            <a wire:navigate href="{{ route('platform.ui-reference.elements.show', ['element' => $element['slug']]) }}" class="{{ $sidebarLinkClass($isActiveElement) }}" data-ui-reference-element-sidebar-item="{{ $element['slug'] }}" @if ($isActiveElement) aria-current="page" @endif>
                                 <span>{{ $element['label'] }}</span>
                                 @if ($element['disposition'] !== 'Implemented')
-                                    <span class="rounded-full border border-slate-700 px-1.5 py-0.5 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-slate-500">
-                                        {{ match ($element['disposition']) {
-                                            'Partial' => 'Partial',
-                                            'Needs audit' => 'Audit',
-                                            'Deprecated' => 'Deprecated',
-                                            'App-specific exception' => 'Exception',
-                                            default => 'Gate',
-                                        } }}
-                                    </span>
+                                    <span class="ui-reference-sidebar-badge">{{ $statusBadgeLabel($element['disposition']) }}</span>
                                 @endif
                             </a>
                         @endif
                     @endforeach
                 </nav>
-            </details>
-        </div>
+            </div>
+        </section>
 
-        <div class="mt-4 border-t border-slate-800 pt-4">
-            @php $isComponentSection = str_starts_with($currentSection ?? '', 'components.'); @endphp
-            <details class="group" open>
-                <summary class="flex cursor-pointer list-none items-center justify-between rounded-md px-2 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 transition hover:bg-slate-800/70 hover:text-slate-300">
-                    <span>Components</span>
-                    <span class="text-slate-500 transition group-open:rotate-180">v</span>
-                </summary>
+        <section
+            class="ui-reference-sidebar-section ui-reference-sidebar-disclosure"
+            data-ui-reference-sidebar-disclosure="components"
+            data-ui-reference-sidebar-disclosure-motion="productive"
+            data-ui-reference-sidebar-disclosure-state="open"
+        >
+            <button
+                type="button"
+                class="ui-reference-sidebar-disclosure-trigger"
+                aria-expanded="true"
+                aria-controls="ui-reference-sidebar-components-panel"
+                data-ui-reference-sidebar-disclosure-trigger
+            >
+                <span>Components</span>
+                <x-heroicon-o-chevron-down class="ui-reference-sidebar-disclosure-icon" aria-hidden="true" data-ui-reference-sidebar-disclosure-icon />
+            </button>
 
-                <nav class="mt-2 max-h-[34rem] space-y-3 overflow-y-auto pr-1" data-ui-reference-component-sidebar>
-                    <a wire:navigate href="{{ route('platform.ui-reference.components.overview') }}" @class([
-                        'flex items-center gap-2 rounded-md px-3 py-2.5 text-sm font-medium transition',
-                        'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => ($currentSection ?? '') === 'components.overview',
-                        'text-slate-300 hover:bg-slate-800 hover:text-white' => ($currentSection ?? '') !== 'components.overview',
-                    ])>
+            <div
+                id="ui-reference-sidebar-components-panel"
+                class="ui-reference-sidebar-disclosure-panel"
+                data-ui-reference-sidebar-disclosure-panel
+                data-ui-reference-sidebar-disclosure-state="open"
+            >
+                <nav class="ui-reference-sidebar-nav" aria-label="UI Reference components" data-ui-reference-component-sidebar data-ui-reference-component-sidebar-sort="alphabetical">
+                    @php $isComponentsOverviewCurrent = $currentSection === 'components.overview'; @endphp
+                    <a wire:navigate href="{{ route('platform.ui-reference.components.overview') }}" class="{{ $sidebarLinkClass($isComponentsOverviewCurrent) }}" @if ($isComponentsOverviewCurrent) aria-current="page" @endif>
                         <x-layouts.nav-icon icon="docs" />
                         <span>Overview</span>
                     </a>
 
-                    @foreach (($componentGroups ?? []) as $groupLabel => $components)
-                        <div class="space-y-1" data-ui-reference-component-sidebar-group="{{ Str::slug($groupLabel) }}">
-                            <p class="px-3 text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-slate-600">{{ $groupLabel }}</p>
-                            @foreach ($components as $component)
-                                @php $isActiveComponent = ($currentSection ?? '') === 'components.'.$component['slug']; @endphp
-                                <a wire:navigate href="{{ route('platform.ui-reference.components.show', ['component' => $component['slug']]) }}" @class([
-                                    'flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm font-medium transition',
-                                    'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => $isActiveComponent,
-                                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ! $isActiveComponent,
-                                ]) data-ui-reference-component-sidebar-item="{{ $component['slug'] }}">
-                                    <span>{{ $component['label'] }}</span>
-                                    @if ($component['disposition'] !== 'Implement T1 Page')
-                                        <span class="rounded-full border border-slate-700 px-1.5 py-0.5 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-slate-500">
-                                            {{ match ($component['disposition']) {
-                                                'Represent As T2 Pattern' => 'T2',
-                                                'Queued Gap' => 'Gap',
-                                                default => 'Gate',
-                                            } }}
-                                        </span>
-                                    @endif
-                                </a>
-                            @endforeach
-                        </div>
+                    @foreach (collect($componentCatalog ?? [])->sortBy('label', SORT_NATURAL | SORT_FLAG_CASE) as $component)
+                        @php $isActiveComponent = $currentSection === 'components.'.$component['slug']; @endphp
+                        <a wire:navigate href="{{ route('platform.ui-reference.components.show', ['component' => $component['slug']]) }}" class="{{ $sidebarLinkClass($isActiveComponent) }}" data-ui-reference-component-sidebar-item="{{ $component['slug'] }}" data-ui-reference-component-sidebar-label="{{ $component['label'] }}" @if ($isActiveComponent) aria-current="page" @endif>
+                            <span>{{ $component['label'] }}</span>
+                            @if ($component['disposition'] !== 'Implement Component Page')
+                                <span class="ui-reference-sidebar-badge">{{ $statusBadgeLabel($component['disposition']) }}</span>
+                            @endif
+                        </a>
                     @endforeach
-
-                    <div class="border-t border-slate-800 pt-2">
-                        <p class="px-3 text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-slate-600">Legacy Index Surfaces</p>
-                        <a wire:navigate href="{{ route('platform.ui-reference.components.actions') }}" class="mt-1 block rounded-md px-3 py-1.5 text-xs font-medium text-slate-500 transition hover:bg-slate-800 hover:text-slate-300">Buttons + Icons</a>
-                        <a wire:navigate href="{{ route('platform.ui-reference.components.status') }}" class="block rounded-md px-3 py-1.5 text-xs font-medium text-slate-500 transition hover:bg-slate-800 hover:text-slate-300">Badges + Status</a>
-                        <a wire:navigate href="{{ route('platform.ui-reference.components.forms') }}" class="block rounded-md px-3 py-1.5 text-xs font-medium text-slate-500 transition hover:bg-slate-800 hover:text-slate-300">Inputs + Forms</a>
-                    </div>
                 </nav>
-            </details>
-        </div>
+            </div>
+        </section>
 
-        <div class="mt-4 border-t border-slate-800 pt-4">
-            <p class="px-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Patterns</p>
-            <nav class="mt-2 space-y-1">
-                <a wire:navigate href="{{ route('platform.ui-reference.patterns.forms') }}" @class([
-                    'flex items-center gap-2 rounded-md px-3 py-3 text-sm font-medium transition',
-                    'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => ($currentSection ?? '') === 'patterns.forms',
-                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ($currentSection ?? '') !== 'patterns.forms',
-                ])>
-                    <x-layouts.nav-icon icon="docs" />
-                    <span>Form Patterns</span>
-                </a>
-                <a wire:navigate href="{{ route('platform.ui-reference.patterns.data-content') }}" @class([
-                    'flex items-center gap-2 rounded-md px-3 py-3 text-sm font-medium transition',
-                    'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => ($currentSection ?? '') === 'patterns.data-content',
-                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ($currentSection ?? '') !== 'patterns.data-content',
-                ])>
-                    <x-layouts.nav-icon icon="users" />
-                    <span>Data + Content</span>
-                </a>
-                <a wire:navigate href="{{ route('platform.ui-reference.patterns.tables') }}" @class([
-                    'flex items-center gap-2 rounded-md px-3 py-3 text-sm font-medium transition',
-                    'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => ($currentSection ?? '') === 'patterns.tables',
-                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ($currentSection ?? '') !== 'patterns.tables',
-                ])>
-                    <x-layouts.nav-icon icon="users" />
-                    <span>Table Baselines</span>
-                </a>
-                <a wire:navigate href="{{ route('platform.ui-reference.patterns.overlays') }}" @class([
-                    'flex items-center gap-2 rounded-md px-3 py-3 text-sm font-medium transition',
-                    'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => ($currentSection ?? '') === 'patterns.overlays',
-                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ($currentSection ?? '') !== 'patterns.overlays',
-                ])>
-                    <x-layouts.nav-icon icon="error-log" />
-                    <span>Overlays + Feedback</span>
-                </a>
-                <a wire:navigate href="{{ route('platform.ui-reference.patterns.navigation') }}" @class([
-                    'flex items-center gap-2 rounded-md px-3 py-3 text-sm font-medium transition',
-                    'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => ($currentSection ?? '') === 'patterns.navigation',
-                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ($currentSection ?? '') !== 'patterns.navigation',
-                ])>
-                    <x-layouts.nav-icon icon="home" />
-                    <span>Navigation + Actions</span>
-                </a>
-                <a wire:navigate href="{{ route('platform.ui-reference.patterns.layout') }}" @class([
-                    'flex items-center gap-2 rounded-md px-3 py-3 text-sm font-medium transition',
-                    'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => ($currentSection ?? '') === 'patterns.layout',
-                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ($currentSection ?? '') !== 'patterns.layout',
-                ])>
-                    <x-layouts.nav-icon icon="settings" />
-                    <span>Layout + Dashboard</span>
-                </a>
-                @php $isWidgetContentSection = str_starts_with($currentSection ?? '', 'patterns.widget-content'); @endphp
-                <a wire:navigate href="{{ route('platform.ui-reference.patterns.widget-content') }}" @class([
-                    'flex items-center gap-2 rounded-md px-3 py-3 text-sm font-medium transition',
-                    'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => $isWidgetContentSection,
-                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ! $isWidgetContentSection,
-                ])>
+        <section class="ui-reference-sidebar-section">
+            <p class="ui-reference-sidebar-heading">Patterns</p>
+            <nav class="ui-reference-sidebar-nav" aria-label="UI Reference patterns">
+                @foreach ([
+                    ['patterns.forms', route('platform.ui-reference.patterns.forms'), 'docs', 'Form Patterns'],
+                    ['patterns.data-content', route('platform.ui-reference.patterns.data-content'), 'users', 'Data + Content'],
+                    ['patterns.tables', route('platform.ui-reference.patterns.tables'), 'users', 'Table Baselines'],
+                    ['patterns.overlays', route('platform.ui-reference.patterns.overlays'), 'error-log', 'Overlays + Feedback'],
+                    ['patterns.navigation', route('platform.ui-reference.patterns.navigation'), 'home', 'Navigation + Actions'],
+                    ['patterns.layout', route('platform.ui-reference.patterns.layout'), 'settings', 'Layout + Dashboard'],
+                ] as [$section, $href, $icon, $label])
+                    @php $isPatternCurrent = $currentSection === $section; @endphp
+                    <a wire:navigate href="{{ $href }}" class="{{ $sidebarLinkClass($isPatternCurrent) }}" @if ($isPatternCurrent) aria-current="page" @endif>
+                        <x-layouts.nav-icon :icon="$icon" />
+                        <span>{{ $label }}</span>
+                    </a>
+                @endforeach
+
+                @php $isWidgetContentSection = str_starts_with($currentSection, 'patterns.widget-content'); @endphp
+                <a wire:navigate href="{{ route('platform.ui-reference.patterns.widget-content') }}" class="{{ $sidebarLinkClass($isWidgetContentSection) }}" @if ($currentSection === 'patterns.widget-content') aria-current="page" @endif>
                     <x-layouts.nav-icon icon="settings" />
                     <span>Widget Content</span>
                 </a>
                 @if ($isWidgetContentSection)
-                    <nav class="ml-5 mt-1 flex flex-col gap-1 border-l border-slate-700 pl-3">
+                    <nav class="ui-reference-sidebar-nested-nav" aria-label="UI Reference widget content">
                         @foreach ([
                             ['shape-map', 'Shape Map'],
-                            ['1x1', '1×1'],
-                            ['2x1', '2×1'],
-                            ['1x2', '1×2'],
-                            ['2x2', '2×2'],
-                            ['3x1', '3×1'],
-                            ['3x2', '3×2'],
-                            ['3x3', '3×3'],
-                            ['4x0-5', '4×0.5 Strip'],
+                            ['1x1', '1x1'],
+                            ['2x1', '2x1'],
+                            ['1x2', '1x2'],
+                            ['2x2', '2x2'],
+                            ['3x1', '3x1'],
+                            ['3x2', '3x2'],
+                            ['3x3', '3x3'],
+                            ['4x0-5', '4x0.5 Strip'],
                         ] as [$slug, $label])
-                            <a wire:navigate href="{{ route('platform.ui-reference.patterns.widget-content.size', ['size' => $slug]) }}" @class([
-                                'rounded-md px-2 py-1.5 text-xs font-medium transition',
-                                'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => ($currentSection ?? '') === 'patterns.widget-content.'.$slug,
-                                'text-slate-400 hover:bg-slate-800 hover:text-white' => ($currentSection ?? '') !== 'patterns.widget-content.'.$slug,
-                            ])>{{ $label }}</a>
+                            @php $isWidgetSizeCurrent = $currentSection === 'patterns.widget-content.'.$slug; @endphp
+                            <a wire:navigate href="{{ route('platform.ui-reference.patterns.widget-content.size', ['size' => $slug]) }}" class="{{ $sidebarLinkClass($isWidgetSizeCurrent, true) }}" @if ($isWidgetSizeCurrent) aria-current="page" @endif>{{ $label }}</a>
                         @endforeach
                     </nav>
                 @endif
-                <a wire:navigate href="{{ route('platform.ui-reference.patterns.starters') }}" @class([
-                    'flex items-center gap-2 rounded-md px-3 py-3 text-sm font-medium transition',
-                    'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => ($currentSection ?? '') === 'patterns.starters',
-                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ($currentSection ?? '') !== 'patterns.starters',
-                ])>
-                    <x-layouts.nav-icon icon="docs" />
-                    <span>Starter Catalog</span>
-                </a>
-                <a wire:navigate href="{{ route('platform.ui-reference.patterns.archetypes') }}" @class([
-                    'flex items-center gap-2 rounded-md px-3 py-3 text-sm font-medium transition',
-                    'bg-slate-700/60 text-white ring-1 ring-slate-500/40' => ($currentSection ?? '') === 'patterns.archetypes',
-                    'text-slate-300 hover:bg-slate-800 hover:text-white' => ($currentSection ?? '') !== 'patterns.archetypes',
-                ])>
-                    <x-layouts.nav-icon icon="audit-log" />
-                    <span>Archetype Proofs</span>
-                </a>
+
+                @foreach ([
+                    ['patterns.starters', route('platform.ui-reference.patterns.starters'), 'docs', 'Starter Catalog'],
+                    ['patterns.archetypes', route('platform.ui-reference.patterns.archetypes'), 'audit-log', 'Archetype Proofs'],
+                ] as [$section, $href, $icon, $label])
+                    @php $isPatternCurrent = $currentSection === $section; @endphp
+                    <a wire:navigate href="{{ $href }}" class="{{ $sidebarLinkClass($isPatternCurrent) }}" @if ($isPatternCurrent) aria-current="page" @endif>
+                        <x-layouts.nav-icon :icon="$icon" />
+                        <span>{{ $label }}</span>
+                    </a>
+                @endforeach
             </nav>
-        </div>
+        </section>
     </div>
 </aside>

@@ -95,22 +95,6 @@ export const initRealtimeNotifications = () => {
         }
     };
 
-    const severityClasses = (severity) => {
-        switch (severity) {
-            case 'success':
-                return 'bg-emerald-500/15 text-emerald-300';
-            case 'notice':
-                return 'bg-violet-500/15 text-violet-300';
-            case 'warning':
-                return 'bg-amber-500/15 text-amber-300';
-            case 'error':
-            case 'urgent':
-                return 'bg-rose-500/15 text-rose-300';
-            default:
-                return 'bg-slate-700/60 text-slate-200';
-        }
-    };
-
     const severitySemantic = (severity) => {
         switch (severity) {
             case 'info':
@@ -147,12 +131,12 @@ export const initRealtimeNotifications = () => {
     };
 
     const dismissedBadge = (notification) => notification.dismissed_at
-        ? '<span class="inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-400">Dismissed</span>'
+        ? '<span class="ui-notification-state-badge ui-notification-state-badge-dismissed">Dismissed</span>'
         : '';
 
     const readBadge = (notification) => notification.read_at
-        ? '<span class="inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300" data-notification-read-badge="true">Read</span>'
-        : '<span class="inline-flex rounded-full bg-slate-700/70 px-3 py-1 text-xs font-medium text-slate-200" data-notification-read-badge="false">Unread</span>';
+        ? '<span class="ui-notification-state-badge ui-notification-state-badge-read" data-notification-read-badge="true">Read</span>'
+        : '<span class="ui-notification-state-badge ui-notification-state-badge-unread" data-notification-read-badge="false">Unread</span>';
 
     const createPreviewMarkup = (notification) => `
         <a
@@ -165,27 +149,27 @@ export const initRealtimeNotifications = () => {
             <div class="flex items-center gap-2">
                 ${unreadPreviewBadge(notification)}
                 ${severityPreviewBadge(notification)}
-                <span class="ml-auto text-xs text-slate-500">${escapeHtml(notification.created_at_label || '')}</span>
+                <span class="ui-notification-card-meta ml-auto text-xs">${escapeHtml(notification.created_at_label || '')}</span>
             </div>
-            <p class="mt-3 text-sm font-semibold text-white">${escapeHtml(notification.title)}</p>
-            <p class="mt-1 line-clamp-2 text-sm text-slate-400">${escapeHtml(notification.body)}</p>
+            <p class="ui-notification-card-title mt-3 text-sm font-semibold">${escapeHtml(notification.title)}</p>
+            <p class="ui-notification-card-body mt-1 line-clamp-2 text-sm">${escapeHtml(notification.body)}</p>
         </a>
     `;
 
     const createInboxMarkup = (notification) => `
-        <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/20" data-notification-card data-notification-id="${notification.id}">
+        <article class="ui-notification-card" data-notification-card data-notification-id="${notification.id}">
             <div class="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
                 <div class="min-w-0 flex-1">
                     <div class="flex flex-wrap items-center gap-2" data-notification-badges>
-                        <span class="inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] ${severityClasses(notification.severity)}" data-notification-severity-badge>
+                        <span class="ui-notification-preview-pill ui-notification-preview-pill-${severitySemantic(notification.severity)}" data-notification-severity-badge>
                             ${escapeHtml(notification.severity)}
                         </span>
                         ${readBadge(notification)}
                         ${dismissedBadge(notification)}
                     </div>
-                    <h2 class="mt-4 text-xl font-semibold text-white">${escapeHtml(notification.title)}</h2>
-                    <p class="mt-2 leading-7 text-slate-300">${escapeHtml(notification.body)}</p>
-                    <div class="mt-4 flex flex-wrap gap-4 text-sm text-slate-500">
+                    <h2 class="ui-notification-card-title mt-4 text-xl font-semibold">${escapeHtml(notification.title)}</h2>
+                    <p class="ui-notification-card-body mt-2 leading-7">${escapeHtml(notification.body)}</p>
+                    <div class="ui-notification-card-meta mt-4 flex flex-wrap gap-4 text-sm">
                         <span>Module: ${escapeHtml(notification.module_key)}</span>
                         <span data-notification-created-label>${escapeHtml(notification.created_at_label || '')}</span>
                     </div>
@@ -285,7 +269,7 @@ export const initRealtimeNotifications = () => {
         const readBadgeElement = badges.querySelector('[data-notification-read-badge]');
 
         if (readBadgeElement instanceof HTMLElement) {
-            readBadgeElement.className = 'inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300';
+            readBadgeElement.className = 'ui-notification-state-badge ui-notification-state-badge-read';
             readBadgeElement.dataset.notificationReadBadge = 'true';
             readBadgeElement.textContent = 'Read';
             return;
@@ -293,7 +277,7 @@ export const initRealtimeNotifications = () => {
 
         const severityBadge = badges.querySelector('[data-notification-severity-badge]');
         const badge = document.createElement('span');
-        badge.className = 'inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300';
+        badge.className = 'ui-notification-state-badge ui-notification-state-badge-read';
         badge.dataset.notificationReadBadge = 'true';
         badge.textContent = 'Read';
 
@@ -336,17 +320,17 @@ export const initRealtimeNotifications = () => {
         const toast = document.createElement('a');
         toast.href = notification.action_url || indexUrl;
         toast.dataset.notificationToastId = `${notification.id}`;
-        toast.className = 'pointer-events-auto block rounded-md border border-slate-800 bg-slate-900/95 px-4 py-4 shadow-2xl shadow-black/40 transition hover:border-slate-600';
+        toast.className = 'ui-notification-runtime-toast';
         toast.innerHTML = `
             <div class="flex items-start gap-3">
                 <div class="mt-0.5">
                     ${severityPreviewBadge(notification)}
                 </div>
                 <div class="min-w-0 flex-1">
-                    <p class="text-sm font-semibold text-white">${escapeHtml(notification.title)}</p>
-                    <p class="mt-1 text-sm text-slate-400">${escapeHtml(notification.body)}</p>
+                    <p class="ui-notification-card-title text-sm font-semibold">${escapeHtml(notification.title)}</p>
+                    <p class="ui-notification-card-body mt-1 text-sm">${escapeHtml(notification.body)}</p>
                 </div>
-                <button type="button" class="ml-2 text-slate-500 transition hover:text-slate-200" data-notification-toast-close>×</button>
+                <button type="button" class="ui-notification-runtime-toast-close ml-2 transition" data-notification-toast-close>×</button>
             </div>
         `;
 

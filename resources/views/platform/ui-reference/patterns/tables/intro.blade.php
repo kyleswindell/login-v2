@@ -7,28 +7,28 @@
         <section class="ui-card" data-ui-guidance="table-pagination-usage" data-guidance-id="P2-F-CQ-011">
             <p class="ui-kicker">Table And Pagination Guidance</p>
             <div class="mt-3 grid gap-4 lg:grid-cols-2">
-                <dl class="space-y-3 text-sm text-slate-300">
+                <dl class="space-y-3 text-sm ui-reference-text">
                     <div>
-                        <dt class="font-semibold text-slate-100">G-TABLE-01 - Table variants</dt>
+                        <dt class="font-semibold ui-reference-text-strong">G-TABLE-01 - Table variants</dt>
                         <dd class="mt-1">Use a basic table for read-only rows, selectable table when bulk or row selection is required, and expandable/detail rows only when context must stay beside the table.</dd>
                     </div>
                     <div>
-                        <dt class="font-semibold text-slate-100">G-TABLE-02 - Row action threshold</dt>
+                        <dt class="font-semibold ui-reference-text-strong">G-TABLE-02 - Row action threshold</dt>
                         <dd class="mt-1">Show one or two common inline icon actions; move three or more actions, uncommon actions, and destructive actions into an overflow menu.</dd>
                     </div>
                     <div>
-                        <dt class="font-semibold text-slate-100">G-TABLE-03 - Table skeleton loading</dt>
+                        <dt class="font-semibold ui-reference-text-strong">G-TABLE-03 - Table skeleton loading</dt>
                         <dd class="mt-1">Use a table skeleton when table shape is known and data is loading; use an empty state only after loading completes with no results.</dd>
                     </div>
                 </dl>
 
-                <dl class="space-y-3 text-sm text-slate-300">
+                <dl class="space-y-3 text-sm ui-reference-text">
                     <div>
-                        <dt class="font-semibold text-slate-100">G-PAGIN-01 - Pagination variant</dt>
+                        <dt class="font-semibold ui-reference-text-strong">G-PAGIN-01 - Pagination variant</dt>
                         <dd class="mt-1">Use full pagination for large managed datasets and compact pagination navigation for short lists or adjacent detail browsing.</dd>
                     </div>
                     <div>
-                        <dt class="font-semibold text-slate-100">G-PAGIN-02 - Page size and placement</dt>
+                        <dt class="font-semibold ui-reference-text-strong">G-PAGIN-02 - Page size and placement</dt>
                         <dd class="mt-1">Place page size controls with table pagination, offer only meaningful sizes, and keep pagination below the result set.</dd>
                     </div>
                 </dl>
@@ -38,26 +38,26 @@
         <section class="ui-card" data-ui-reference-example="table-pagination-contract" data-guidance-id="P2-F-CQ-011">
             <p class="ui-kicker">Concrete Table, Pagination, And Loading Examples</p>
             <div class="mt-5 grid gap-5 xl:grid-cols-2">
-                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Basic read-only table</p>
-                    <div class="mt-3 overflow-x-auto rounded-md border border-slate-800">
-                        <table class="w-full min-w-[520px] divide-y divide-slate-800 text-sm">
-                            <thead class="bg-slate-900 text-left text-xs uppercase tracking-[0.16em] text-slate-500">
+                <article class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Basic read-only table</p>
+                    <div class="mt-3 overflow-x-auto rounded-md border ui-reference-border">
+                        <table class="w-full min-w-[520px] ui-reference-table-body text-sm">
+                            <thead class="ui-reference-table-head text-left text-xs uppercase tracking-[0.16em] ui-reference-text-muted">
                                 <tr><th class="px-3 py-2">Workspace</th><th class="px-3 py-2">Owner</th><th class="px-3 py-2">Status</th></tr>
                             </thead>
-                            <tbody class="divide-y divide-slate-800 text-slate-300">
-                                <tr><td class="px-3 py-2 text-white">North Region</td><td class="px-3 py-2">Platform Team</td><td class="px-3 py-2"><x-ui.badge label="active" semantic="success" /></td></tr>
-                                <tr><td class="px-3 py-2 text-white">Replay Service</td><td class="px-3 py-2">Security</td><td class="px-3 py-2"><x-ui.badge label="review" semantic="notice" /></td></tr>
+                            <tbody class="ui-reference-table-body ui-reference-text">
+                                <tr><td class="px-3 py-2 ui-reference-text-strong">North Region</td><td class="px-3 py-2">Platform Team</td><td class="px-3 py-2"><x-ui.badge label="active" semantic="success" /></td></tr>
+                                <tr><td class="px-3 py-2 ui-reference-text-strong">Replay Service</td><td class="px-3 py-2">Security</td><td class="px-3 py-2"><x-ui.badge label="review" semantic="notice" /></td></tr>
                             </tbody>
                         </table>
                     </div>
                 </article>
 
-                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Selectable row + overflow action</p>
-                    <div class="mt-3 flex items-center justify-between gap-3 rounded-md border border-slate-800 bg-slate-950/70 px-3 py-3">
-                        <label class="flex items-center gap-3 text-sm text-slate-200">
-                            <input type="checkbox" class="h-4 w-4 rounded border-slate-600 bg-slate-950 text-sky-400 focus:ring-sky-400/40" />
+                <article class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Selectable row + overflow action</p>
+                    <div class="mt-3 flex items-center justify-between gap-3 ui-reference-subtle-surface px-3 py-3">
+                        <label class="flex items-center gap-3 text-sm ui-reference-text-strong">
+                            <input type="checkbox" class="h-4 w-4 rounded ui-platform-checkbox" />
                             <span>Messaging Queue</span>
                         </label>
                         <div class="flex items-center gap-2">
@@ -73,27 +73,27 @@
                     </div>
                 </article>
 
-                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Table skeleton while loading</p>
+                <article class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Table skeleton while loading</p>
                     <div class="mt-3 space-y-2" aria-label="Loading table rows">
-                        <div class="h-9 rounded-md bg-slate-800/70"></div>
-                        <div class="h-9 rounded-md bg-slate-800/50"></div>
-                        <div class="h-9 rounded-md bg-slate-800/40"></div>
+                        <div class="h-9 rounded-md ui-reference-skeleton-line"></div>
+                        <div class="h-9 rounded-md ui-reference-skeleton-line opacity-75"></div>
+                        <div class="h-9 rounded-md ui-reference-skeleton-line opacity-60"></div>
                     </div>
-                    <p class="mt-3 text-sm text-slate-400">Use skeleton rows when the table shape is known; use empty state only after loading completes.</p>
+                    <p class="mt-3 text-sm ui-reference-text-muted">Use skeleton rows when the table shape is known; use empty state only after loading completes.</p>
                 </article>
 
-                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Pagination placement</p>
+                <article class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Pagination placement</p>
                     <div class="mt-3 flex flex-wrap items-center justify-between gap-3">
-                        <label class="flex items-center gap-2 text-sm text-slate-300">
+                        <label class="flex items-center gap-2 text-sm ui-reference-text">
                             Rows
                             <select class="ui-select w-24">
                                 <option>25</option>
                                 <option>50</option>
                             </select>
                         </label>
-                        <div class="flex items-center gap-2 text-sm text-slate-300">
+                        <div class="flex items-center gap-2 text-sm ui-reference-text">
                             <x-ui.button variant="ghost" size="sm">Previous</x-ui.button>
                             <span>Page 2 of 7</span>
                             <x-ui.button variant="outline" size="sm">Next</x-ui.button>
@@ -116,7 +116,7 @@
                 <x-ui.patterns.search-filter-bar>
                     <label class="relative block w-full max-w-sm">
                         <span class="sr-only">Search workspace rows</span>
-                        <span class="pointer-events-none absolute inset-y-0 left-0 inline-flex w-9 items-center justify-center text-slate-500">
+                        <span class="pointer-events-none absolute inset-y-0 left-0 inline-flex w-9 items-center justify-center ui-reference-text-muted">
                             <x-heroicon-o-magnifying-glass class="h-4 w-4" aria-hidden="true" />
                         </span>
                         <input type="text" value="Active owner filters" class="ui-input w-full pl-9" />
@@ -132,7 +132,7 @@
                 </x-ui.patterns.search-filter-bar>
             </x-slot:toolbar>
 
-            <div class="px-5 py-4 text-sm text-slate-300">
+            <div class="px-5 py-4 text-sm ui-reference-text">
                 The workspace, audit log, and error log examples below are the canonical proof surfaces for sort state, active filters, row actions, empty states, drawer detail views, and responsive pagination controls.
             </div>
         </x-ui.patterns.enhanced-data-table>

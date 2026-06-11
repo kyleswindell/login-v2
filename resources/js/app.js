@@ -5,13 +5,20 @@ import './dashboard-sort';
 import './dashboard-proof-demo';
 
 import {
+    initAccordions,
     initDropdownActionMenus,
     initFilterPanels,
     initInternalPhoneInputs,
+    initMenus,
+    initMultiselects,
+    initPopovers,
     initSearchableSelects,
     initSelectableOptionStates,
+    initSliders,
     initTableSearchInputs,
+    initTabs,
     initThemeModeControls,
+    initTreeViews,
     refreshThemeMode,
 } from './ui-controls';
 import { initAuditLogDrawer, initErrorLogDrawer } from './log-drawers';
@@ -23,31 +30,56 @@ import {
     initNotificationMenus,
     initSidebarToggle,
 } from './shell-ui';
-import { initUiReferenceOverlayDemos, initUiReferenceTablesRemote } from './ui-reference';
+import {
+    initUiReferenceComponentTabs,
+    initUiReferenceOverlayDemos,
+    initUiReferenceSidebarDisclosures,
+    initUiReferenceTablesRemote,
+} from './ui-reference';
 
 const lifecycleInitializers = [
     initNotificationMenus,
     initAccountMenu,
     initDocsTree,
     initMobileSidebarDock,
+    initAccordions,
     initFilterPanels,
     initTableSearchInputs,
     initSelectableOptionStates,
     initSearchableSelects,
     initInternalPhoneInputs,
     initDropdownActionMenus,
+    initMenus,
+    initMultiselects,
+    initPopovers,
+    initSliders,
+    initTreeViews,
+    initTabs,
     initErrorLogDrawer,
     initAuditLogDrawer,
     initSidebarToggle,
     initThemeModeControls,
+    initUiReferenceSidebarDisclosures,
+    initUiReferenceComponentTabs,
     initUiReferenceOverlayDemos,
     initUiReferenceTablesRemote,
     initRealtimeNotifications,
 ];
 
+const runLifecycleInitializer = (initializer) => {
+    initializer(document);
+};
+
 lifecycleInitializers.forEach((initializer) => {
-    document.addEventListener('DOMContentLoaded', initializer);
-    document.addEventListener('livewire:navigated', initializer);
+    const run = () => runLifecycleInitializer(initializer);
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', run, { once: true });
+    } else {
+        run();
+    }
+
+    document.addEventListener('livewire:navigated', run);
 });
 
 document.addEventListener('livewire:navigating', refreshThemeMode);

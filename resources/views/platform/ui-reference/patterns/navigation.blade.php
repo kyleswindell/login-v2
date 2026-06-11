@@ -10,10 +10,10 @@
             kicker="Tier 2C / Tier 2E / Tier 2F"
         >
             <x-slot:context>
-                <div class="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
-                    <span class="rounded-full border border-slate-700 px-3 py-1">dashboard shell</span>
-                    <span class="rounded-full border border-slate-700 px-3 py-1">settings shell</span>
-                    <span class="rounded-full border border-slate-700 px-3 py-1">setup shell</span>
+                <div class="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] ui-reference-text-muted">
+                    <span class="rounded-full border ui-reference-border-strong px-3 py-1">dashboard shell</span>
+                    <span class="rounded-full border ui-reference-border-strong px-3 py-1">settings shell</span>
+                    <span class="rounded-full border ui-reference-border-strong px-3 py-1">setup shell</span>
                 </div>
             </x-slot:context>
             <x-slot:actions>
@@ -54,14 +54,14 @@
         </x-ui.patterns.proof-note>
 
         <section class="ui-card" data-ui-reference-example="t2-action-composition" data-guidance-id="P2-F-CQ-008">
-            <p class="ui-kicker">T2 Action Composition Examples</p>
+            <p class="ui-kicker">Pattern Action Composition Examples</p>
             <div class="mt-4 grid gap-4 xl:grid-cols-2">
-                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Page-header actions</p>
+                <article class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Page-header actions</p>
                     <div class="mt-3 flex flex-wrap items-center justify-between gap-3">
                         <div>
-                            <h2 class="text-base font-semibold text-white">Workspace Settings</h2>
-                            <p class="text-sm text-slate-400">One primary action remains visible; secondary choices reduce emphasis.</p>
+                            <h2 class="text-base font-semibold ui-reference-text-strong">Workspace Settings</h2>
+                            <p class="text-sm ui-reference-text-muted">One primary action remains visible; secondary choices reduce emphasis.</p>
                         </div>
                         <div class="flex flex-wrap items-center gap-2">
                             <x-ui.button variant="ghost" size="sm">Cancel</x-ui.button>
@@ -71,8 +71,8 @@
                     </div>
                 </article>
 
-                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Filter actions stay on page</p>
+                <article class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Filter actions stay on page</p>
                     <div class="mt-3 flex flex-wrap items-center gap-3">
                         <input type="search" value="policy" class="ui-input w-full sm:w-56" aria-label="Search current list" />
                         <select class="ui-select w-full sm:w-44" aria-label="Filter by owner">
@@ -82,11 +82,11 @@
                         <x-ui.button variant="ghost">Reset</x-ui.button>
                         <x-ui.button semantic="primary">Apply</x-ui.button>
                     </div>
-                    <p class="mt-3 text-sm text-slate-400">Use Apply for same-page filtering and Save/Create/Submit only when the resource or workflow completes.</p>
+                    <p class="mt-3 text-sm ui-reference-text-muted">Use Apply for same-page filtering and Save/Create/Submit only when the resource or workflow completes.</p>
                 </article>
 
-                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Form action bar</p>
+                <article class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Form action bar</p>
                     <div class="mt-3 flex flex-wrap items-center justify-between gap-3">
                         <x-ui.button variant="ghost">Cancel</x-ui.button>
                         <div class="flex flex-wrap items-center gap-2">
@@ -96,12 +96,12 @@
                     </div>
                 </article>
 
-                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Row action overflow</p>
+                <article class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Row action overflow</p>
                     <div class="mt-3 flex flex-wrap items-center justify-between gap-3">
                         <div>
-                            <p class="text-sm font-semibold text-white">North Region Tenant</p>
-                            <p class="text-xs text-slate-500">Two visible actions max; rarer and destructive actions move to overflow.</p>
+                            <p class="text-sm font-semibold ui-reference-text-strong">North Region Tenant</p>
+                            <p class="text-xs ui-reference-text-muted">Two visible actions max; rarer and destructive actions move to overflow.</p>
                         </div>
                         <div class="flex items-center gap-2">
                             <x-ui.icon-button label="Edit tenant">
@@ -122,40 +122,40 @@
         <section class="ui-card" data-ui-guidance="navigation-search-overflow-usage" data-guidance-id="P2-F-CQ-011">
             <p class="ui-kicker">Navigation, Search, Overflow, And Breadcrumb Guidance</p>
             <div class="mt-3 grid gap-4 lg:grid-cols-2">
-                <dl class="space-y-3 text-sm text-slate-300">
+                <dl class="space-y-3 text-sm ui-reference-text">
                     <div>
-                        <dt class="font-semibold text-slate-100">G-TABS-01 - Tab variants</dt>
+                        <dt class="font-semibold ui-reference-text-strong">G-TABS-01 - Tab variants</dt>
                         <dd class="mt-1">Use line tabs for peer sections, contained tabs for dense panels, and vertical tabs only when long labels or nested settings groups need persistent scanability.</dd>
                     </div>
                     <div>
-                        <dt class="font-semibold text-slate-100">G-TABS-02 - Tablist behavior</dt>
+                        <dt class="font-semibold ui-reference-text-strong">G-TABS-02 - Tablist behavior</dt>
                         <dd class="mt-1">Use automatic activation for fast local panels; use manual activation when panel changes trigger expensive loading or form state changes.</dd>
                     </div>
                     <div>
-                        <dt class="font-semibold text-slate-100">G-SEARCH-01 - Search scope</dt>
+                        <dt class="font-semibold ui-reference-text-strong">G-SEARCH-01 - Search scope</dt>
                         <dd class="mt-1">Global search belongs in the shell, page search belongs near the page title or table controls, and component search stays inside the dropdown or panel it filters.</dd>
                     </div>
                     <div>
-                        <dt class="font-semibold text-slate-100">G-SEARCH-02 - Search vs filter</dt>
+                        <dt class="font-semibold ui-reference-text-strong">G-SEARCH-02 - Search vs filter</dt>
                         <dd class="mt-1">Search handles free-entry keywords; filters handle known dimensions and should sit beside Apply, Reset, or Clear controls.</dd>
                     </div>
                 </dl>
 
-                <dl class="space-y-3 text-sm text-slate-300">
+                <dl class="space-y-3 text-sm ui-reference-text">
                     <div>
-                        <dt class="font-semibold text-slate-100">G-OVERFLOW-01 - Overflow threshold</dt>
+                        <dt class="font-semibold ui-reference-text-strong">G-OVERFLOW-01 - Overflow threshold</dt>
                         <dd class="mt-1">Use overflow menus when a row, card, or header has more than two secondary actions or needs rare actions out of the primary scan path.</dd>
                     </div>
                     <div>
-                        <dt class="font-semibold text-slate-100">G-OVERFLOW-02 - Destructive placement</dt>
+                        <dt class="font-semibold ui-reference-text-strong">G-OVERFLOW-02 - Destructive placement</dt>
                         <dd class="mt-1">Place destructive overflow actions after a divider, keep danger styling visible, and label the object or consequence nearby.</dd>
                     </div>
                     <div>
-                        <dt class="font-semibold text-slate-100">G-BREADCRUMB-01 - Breadcrumb vs progress</dt>
+                        <dt class="font-semibold ui-reference-text-strong">G-BREADCRUMB-01 - Breadcrumb vs progress</dt>
                         <dd class="mt-1">Use breadcrumb for location within information architecture; use progress indicators for ordered task completion.</dd>
                     </div>
                     <div>
-                        <dt class="font-semibold text-slate-100">G-BREADCRUMB-02 - Overflow and truncation</dt>
+                        <dt class="font-semibold ui-reference-text-strong">G-BREADCRUMB-02 - Overflow and truncation</dt>
                         <dd class="mt-1">Collapse middle breadcrumb items first, preserve the current page label, and expose hidden ancestors through an accessible overflow control.</dd>
                     </div>
                 </dl>
@@ -165,27 +165,27 @@
         <section class="ui-card" data-ui-reference-example="navigation-search-contract" data-guidance-id="P2-F-CQ-011">
             <p class="ui-kicker">Concrete Navigation, Search, Overflow, And Breadcrumb Examples</p>
             <div class="mt-5 grid gap-5 xl:grid-cols-2">
-                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Line tabs for peer sections</p>
-                    <div class="mt-3 flex gap-1 border-b border-slate-800">
-                        <button type="button" class="border-b-2 border-sky-400 px-3 py-2 text-sm font-semibold text-white">Overview</button>
-                        <button type="button" class="border-b-2 border-transparent px-3 py-2 text-sm text-slate-400">Activity</button>
-                        <button type="button" class="border-b-2 border-transparent px-3 py-2 text-sm text-slate-400">Settings</button>
+                <article class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Line tabs for peer sections</p>
+                    <div class="mt-3 flex gap-1 border-b ui-reference-border">
+                        <button type="button" class="border-b-2 ui-reference-border-strong px-3 py-2 text-sm font-semibold ui-reference-text-strong">Overview</button>
+                        <button type="button" class="border-b-2 border-transparent px-3 py-2 text-sm ui-reference-text-muted">Activity</button>
+                        <button type="button" class="border-b-2 border-transparent px-3 py-2 text-sm ui-reference-text-muted">Settings</button>
                     </div>
                 </article>
 
-                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Contained tabs for dense panels</p>
-                    <div class="mt-3 inline-flex rounded-lg border border-slate-800 bg-slate-950 p-1">
-                        <button type="button" class="rounded-md bg-slate-800 px-3 py-2 text-sm font-semibold text-white">Queue</button>
-                        <button type="button" class="rounded-md px-3 py-2 text-sm text-slate-400">History</button>
-                        <button type="button" class="rounded-md px-3 py-2 text-sm text-slate-400">Notes</button>
+                <article class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Contained tabs for dense panels</p>
+                    <div class="mt-3 inline-flex ui-reference-subtle-surface p-1">
+                        <button type="button" class="rounded-md ui-reference-skeleton-line px-3 py-2 text-sm font-semibold ui-reference-text-strong">Queue</button>
+                        <button type="button" class="rounded-md px-3 py-2 text-sm ui-reference-text-muted">History</button>
+                        <button type="button" class="rounded-md px-3 py-2 text-sm ui-reference-text-muted">Notes</button>
                     </div>
-                    <p class="mt-3 text-sm text-slate-400">Queued gap: dedicated tab component with keyboard behavior; these examples document visual and usage boundaries only.</p>
+                    <p class="mt-3 text-sm ui-reference-text-muted">Queued gap: dedicated tab component with keyboard behavior; these examples document visual and usage boundaries only.</p>
                 </article>
 
-                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Page search + known filters</p>
+                <article class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Page search + known filters</p>
                     <div class="mt-3 flex flex-wrap items-center gap-3">
                         <input type="search" placeholder="Search workspaces" class="ui-input w-full sm:w-64" />
                         <select class="ui-select w-full sm:w-44">
@@ -197,18 +197,18 @@
                     </div>
                 </article>
 
-                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Breadcrumb with middle overflow</p>
-                    <nav class="mt-3 flex flex-wrap items-center gap-2 text-sm text-slate-300" aria-label="Breadcrumb">
+                <article class="ui-reference-example-surface p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Breadcrumb with middle overflow</p>
+                    <nav class="mt-3 flex flex-wrap items-center gap-2 text-sm ui-reference-text" aria-label="Breadcrumb">
                         <a href="#" onclick="event.preventDefault()" class="ui-link">Dashboard</a>
                         <span>/</span>
                         <button type="button" class="ui-icon-button h-8 w-8" aria-label="Show hidden ancestors">
                             <x-heroicon-o-ellipsis-horizontal class="h-4 w-4" aria-hidden="true" />
                         </button>
                         <span>/</span>
-                        <span class="font-semibold text-white">Workspace Settings</span>
+                        <span class="font-semibold ui-reference-text-strong">Workspace Settings</span>
                     </nav>
-                    <p class="mt-3 text-sm text-slate-400">Use breadcrumb for location, not workflow progress.</p>
+                    <p class="mt-3 text-sm ui-reference-text-muted">Use breadcrumb for location, not workflow progress.</p>
                 </article>
             </div>
         </section>
@@ -286,7 +286,7 @@
                     <x-ui.patterns.search-filter-bar>
                         <label class="relative block w-full max-w-sm">
                             <span class="sr-only">Search records</span>
-                            <span class="pointer-events-none absolute inset-y-0 left-0 inline-flex w-9 items-center justify-center text-slate-500">
+                            <span class="pointer-events-none absolute inset-y-0 left-0 inline-flex w-9 items-center justify-center ui-reference-text-muted">
                                 <x-heroicon-o-magnifying-glass class="h-4 w-4" aria-hidden="true" />
                             </span>
                             <input type="text" placeholder="Search name or owner" class="ui-input w-full pl-9" />
@@ -349,25 +349,25 @@
             kicker="Shell family rules"
         >
             <div class="grid gap-4 lg:grid-cols-3">
-                <article class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                    <h3 class="text-sm font-semibold uppercase tracking-[0.15em] text-slate-300">Dashboard</h3>
-                    <ul class="mt-3 list-disc space-y-1 pl-4 text-sm text-slate-300">
+                <article class="ui-reference-subtle-surface p-4">
+                    <h3 class="text-sm font-semibold uppercase tracking-[0.15em] ui-reference-text">Dashboard</h3>
+                    <ul class="mt-3 list-disc space-y-1 pl-4 text-sm ui-reference-text">
                         <li>Header title row leads the page.</li>
                         <li>Widget actions stay local to widgets or the page header.</li>
                         <li>Dashboard grid owns summary layout only.</li>
                     </ul>
                 </article>
-                <article class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                    <h3 class="text-sm font-semibold uppercase tracking-[0.15em] text-slate-300">Settings / Setup</h3>
-                    <ul class="mt-3 list-disc space-y-1 pl-4 text-sm text-slate-300">
+                <article class="ui-reference-subtle-surface p-4">
+                    <h3 class="text-sm font-semibold uppercase tracking-[0.15em] ui-reference-text">Settings / Setup</h3>
+                    <ul class="mt-3 list-disc space-y-1 pl-4 text-sm ui-reference-text">
                         <li>Sub-navigation sits below the page title row.</li>
                         <li>Secondary shell navigation stays separate from field-group actions.</li>
                         <li>Registration fields belong inside dedicated content sections.</li>
                     </ul>
                 </article>
-                <article class="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-                    <h3 class="text-sm font-semibold uppercase tracking-[0.15em] text-slate-300">Mobile / Narrow Width</h3>
-                    <ul class="mt-3 list-disc space-y-1 pl-4 text-sm text-slate-300">
+                <article class="ui-reference-subtle-surface p-4">
+                    <h3 class="text-sm font-semibold uppercase tracking-[0.15em] ui-reference-text">Mobile / Narrow Width</h3>
+                    <ul class="mt-3 list-disc space-y-1 pl-4 text-sm ui-reference-text">
                         <li>Header actions wrap before introducing bespoke mobile controls.</li>
                         <li>Sub-navigation remains horizontally scrollable.</li>
                         <li>Grouped action menus must remain keyboard reachable.</li>

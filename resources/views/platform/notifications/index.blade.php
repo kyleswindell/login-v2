@@ -15,51 +15,47 @@
         </div>
 
         @if (session('status'))
-            <div class="rounded-md border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
+            <x-ui.inline-alert semantic="success">
                 {{ session('status') }}
-            </div>
+            </x-ui.inline-alert>
         @endif
 
         <div class="grid gap-4 md:grid-cols-3">
-            <article class="rounded-md border border-slate-800 bg-slate-900/70 p-6">
-                <p class="text-sm uppercase tracking-[0.25em] text-slate-500">Unread</p>
-                <p class="mt-4 text-3xl font-semibold text-white" data-notification-inbox-unread-count>{{ $unreadCount }}</p>
-                <p class="mt-2 text-sm text-slate-400">Notifications still requiring attention</p>
+            <article class="ui-platform-surface p-6">
+                <p class="text-sm uppercase tracking-[0.25em] ui-platform-text-muted">Unread</p>
+                <p class="mt-4 text-3xl font-semibold ui-platform-text-strong" data-notification-inbox-unread-count>{{ $unreadCount }}</p>
+                <p class="mt-2 text-sm ui-platform-text-muted">Notifications still requiring attention</p>
             </article>
         </div>
 
         <div class="space-y-4" data-notification-inbox-list>
             @forelse ($notifications as $notification)
-                <article class="rounded-lg border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-black/20" data-notification-card data-notification-id="{{ $notification->id }}">
+                <article class="ui-platform-surface p-6" data-notification-card data-notification-id="{{ $notification->id }}">
                     <div class="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
                         <div class="min-w-0 flex-1">
                             <div class="flex flex-wrap items-center gap-2" data-notification-badges>
-                                <span @class([
-                                    'inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em]',
-                                    'bg-slate-700/60 text-slate-300' => $notification->severity === 'info',
-                                    'bg-emerald-500/15 text-emerald-300' => $notification->severity === 'success',
-                                    'bg-violet-500/15 text-violet-300' => $notification->severity === 'notice',
-                                    'bg-amber-500/15 text-amber-300' => $notification->severity === 'warning',
-                                    'bg-rose-500/15 text-rose-300' => in_array($notification->severity, ['error', 'urgent'], true),
-                                ]) data-notification-severity-badge>
-                                    {{ $notification->severity }}
-                                </span>
+                                <x-ui.badge
+                                    :label="$notification->severity"
+                                    :semantic="match ($notification->severity) { 'success' => 'success', 'notice' => 'notice', 'warning' => 'warning', 'error', 'urgent' => 'danger', 'info' => 'info', default => 'neutral' }"
+                                    :show-icon="false"
+                                    data-notification-severity-badge
+                                />
 
                                 @if ($notification->read_at)
-                                    <span class="inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300" data-notification-read-badge="true">Read</span>
+                                    <x-ui.badge label="Read" semantic="neutral" :show-icon="false" data-notification-read-badge="true" />
                                 @else
-                                    <span class="inline-flex rounded-full bg-slate-700/60 px-3 py-1 text-xs font-medium text-slate-200" data-notification-read-badge="false">Unread</span>
+                                    <x-ui.badge label="Unread" semantic="notice" :show-icon="false" data-notification-read-badge="false" />
                                 @endif
 
                                 @if ($notification->dismissed_at)
-                                    <span class="inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-400">Dismissed</span>
+                                    <x-ui.badge label="Dismissed" semantic="neutral" variant="outline" :show-icon="false" />
                                 @endif
                             </div>
 
-                            <h2 class="mt-4 text-xl font-semibold text-white">{{ $notification->title }}</h2>
-                            <p class="mt-2 leading-7 text-slate-300">{{ $notification->body }}</p>
+                            <h2 class="mt-4 text-xl font-semibold ui-platform-text-strong">{{ $notification->title }}</h2>
+                            <p class="mt-2 leading-7 ui-platform-text">{{ $notification->body }}</p>
 
-                            <div class="mt-4 flex flex-wrap gap-4 text-sm text-slate-500">
+                            <div class="mt-4 flex flex-wrap gap-4 text-sm ui-platform-text-muted">
                                 <span>Module: {{ $notification->module_key }}</span>
                                 <span data-notification-created-label>{{ $notification->created_at?->format('M j, Y g:i A') }}</span>
                             </div>
@@ -95,7 +91,7 @@
                     </div>
                 </article>
             @empty
-                <div class="rounded-lg border border-dashed border-slate-800 bg-slate-950/40 px-6 py-12 text-center text-slate-500" data-notification-inbox-empty-state>
+                <div class="ui-platform-subtle-surface border-dashed px-6 py-12 text-center ui-platform-text-muted" data-notification-inbox-empty-state>
                     No notifications are available for your account yet.
                 </div>
             @endforelse

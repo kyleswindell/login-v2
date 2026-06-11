@@ -19,10 +19,10 @@
             </button>
         </div>
 
-        <form method="GET" action="{{ route('platform.audit-logs.index') }}" class="hidden rounded-lg border border-slate-800 bg-slate-900/70 p-6" data-filter-panel>
+        <form method="GET" action="{{ route('platform.audit-logs.index') }}" class="ui-platform-surface hidden p-6" data-filter-panel>
             <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                 <label class="block">
-                    <span class="text-sm font-semibold text-slate-200">Event Type</span>
+                    <span class="text-sm font-semibold ui-platform-text-strong">Event Type</span>
                     <select name="event_type" class="ui-select mt-2">
                         <option value="">Any event type</option>
                         @foreach ($eventTypes as $eventType)
@@ -32,7 +32,7 @@
                 </label>
 
                 <label class="block">
-                    <span class="text-sm font-semibold text-slate-200">Actor</span>
+                    <span class="text-sm font-semibold ui-platform-text-strong">Actor</span>
                     <select name="actor_id" class="ui-select mt-2">
                         <option value="">Any actor</option>
                         <option value="system" @selected($filters['actor_id'] === 'system')>System</option>
@@ -45,7 +45,7 @@
                 </label>
 
                 <label class="block">
-                    <span class="text-sm font-semibold text-slate-200">Result</span>
+                    <span class="text-sm font-semibold ui-platform-text-strong">Result</span>
                     <select name="result" class="ui-select mt-2">
                         <option value="">Any result</option>
                         <option value="success" @selected($filters['result'] === 'success')>Success</option>
@@ -54,7 +54,7 @@
                 </label>
 
                 <label class="block">
-                    <span class="text-sm font-semibold text-slate-200">Severity</span>
+                    <span class="text-sm font-semibold ui-platform-text-strong">Severity</span>
                     <select name="severity" class="ui-select mt-2">
                         <option value="">Any severity</option>
                         <option value="info" @selected($filters['severity'] === 'info')>Info</option>
@@ -82,10 +82,10 @@
             </a>
         </div>
 
-        <div class="overflow-hidden rounded-lg border border-slate-800 bg-slate-900/70">
-            <table class="min-w-full divide-y divide-slate-800">
-                <thead class="bg-slate-900">
-                    <tr class="text-left text-xs uppercase tracking-[0.2em] text-slate-500">
+        <div class="ui-platform-table-shell">
+            <table class="min-w-full ui-platform-table-body">
+                <thead class="ui-platform-table-head">
+                    <tr class="text-left text-xs uppercase tracking-[0.2em] ui-platform-text-muted">
                         <th class="px-6 py-4">Occurred</th>
                         <th class="px-6 py-4">Event</th>
                         <th class="px-6 py-4">Actor</th>
@@ -96,22 +96,22 @@
                         <th class="px-6 py-4 sr-only">Actions</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-800">
+                <tbody class="ui-platform-table-body">
                     @forelse ($logs as $log)
-                        <tr class="align-top text-sm text-slate-200 transition hover:bg-slate-950/40 cursor-pointer" data-audit-log-row data-audit-log-url="{{ route('platform.audit-logs.show', $log) }}">
-                            <td class="px-6 py-4 text-slate-400">
+                        <tr class="ui-platform-table-row align-top text-sm transition cursor-pointer" data-audit-log-row data-audit-log-url="{{ route('platform.audit-logs.show', $log) }}">
+                            <td class="px-6 py-4 ui-platform-text-muted">
                                 {{ $log->occurredAtForTimezone($viewerTimezone)?->format('M j, Y g:i A T') ?? '—' }}
                             </td>
                             <td class="px-6 py-4">
-                                <p class="font-semibold text-white">{{ $log->event_type }}</p>
-                                <p class="mt-1 text-xs uppercase tracking-[0.15em] text-slate-500">{{ $log->action }}</p>
+                                <p class="font-semibold ui-platform-text-strong">{{ $log->event_type }}</p>
+                                <p class="mt-1 text-xs uppercase tracking-[0.15em] ui-platform-text-muted">{{ $log->action }}</p>
                             </td>
                             <td class="px-6 py-4">
                                 @if ($log->actorUser)
-                                    <p class="font-semibold text-white">{{ $log->actorUser->name }}</p>
-                                    <p class="mt-1 text-slate-400">{{ $log->actorUser->email }}</p>
+                                    <p class="font-semibold ui-platform-text-strong">{{ $log->actorUser->name }}</p>
+                                    <p class="mt-1 ui-platform-text-muted">{{ $log->actorUser->email }}</p>
                                 @else
-                                    <span class="text-slate-500">System</span>
+                                    <span class="ui-platform-text-muted">System</span>
                                 @endif
                             </td>
                             <td class="px-6 py-4">
@@ -120,11 +120,11 @@
                             <td class="px-6 py-4">
                                 <x-ui.badge :status="$log->severity === 'error' || $log->severity === 'critical' ? 'danger' : $log->severity" :label="$log->severity" :show-icon="false" />
                             </td>
-                            <td class="px-6 py-4 text-slate-400">
+                            <td class="px-6 py-4 ui-platform-text-muted">
                                 <p>{{ $log->route ?? 'n/a' }}</p>
-                                <p class="mt-1 text-xs uppercase tracking-[0.15em] text-slate-500">{{ $log->method ?? 'n/a' }}</p>
+                                <p class="mt-1 text-xs uppercase tracking-[0.15em] ui-platform-text-muted">{{ $log->method ?? 'n/a' }}</p>
                             </td>
-                            <td class="px-6 py-4 text-xs text-slate-500">
+                            <td class="px-6 py-4 text-xs ui-platform-text-muted">
                                 {{ $log->request_id ?? 'n/a' }}
                             </td>
                             <td class="px-6 py-4 text-right">
@@ -135,20 +135,20 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="px-6 py-8 text-center text-sm text-slate-500">No audit log rows match the current filters.</td>
+                            <td colspan="8" class="px-6 py-8 text-center text-sm ui-platform-text-muted">No audit log rows match the current filters.</td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
 
-            <div class="flex flex-wrap items-center justify-between gap-4 border-t border-slate-800 px-6 py-4">
+            <div class="flex flex-wrap items-center justify-between gap-4 border-t ui-platform-border px-6 py-4">
                 <div class="flex items-center gap-3">
                     <form method="GET" action="{{ route('platform.audit-logs.index') }}" class="flex items-center gap-3">
                         <input type="hidden" name="event_type" value="{{ $filters['event_type'] }}">
                         <input type="hidden" name="actor_id" value="{{ $filters['actor_id'] }}">
                         <input type="hidden" name="result" value="{{ $filters['result'] }}">
                         <input type="hidden" name="severity" value="{{ $filters['severity'] }}">
-                        <label class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Rows</label>
+                        <label class="text-xs font-semibold uppercase tracking-[0.2em] ui-platform-text-muted">Rows</label>
                         <select name="per_page" onchange="this.form.submit()" class="ui-select !w-auto px-3 py-2 text-sm">
                             @foreach ([10, 25, 50, 100] as $option)
                                 <option value="{{ $option }}" @selected($perPage === $option)>{{ $option }}</option>
@@ -156,7 +156,7 @@
                         </select>
                     </form>
 
-                    <p class="text-sm text-slate-400">
+                    <p class="text-sm ui-platform-text-muted">
                         Showing {{ $logs->firstItem() ?? 0 }} to {{ $logs->lastItem() ?? 0 }} of {{ $logs->total() }} entries
                     </p>
                 </div>
@@ -167,7 +167,7 @@
                     <a href="{{ $logs->onFirstPage() ? '#' : $logs->url($prevPage) }}" @class([
                         'ui-action ui-action-xs',
                         'ui-action-ghost' => ! $logs->onFirstPage(),
-                        'cursor-not-allowed border-slate-800 text-slate-600' => $logs->onFirstPage(),
+                        'cursor-not-allowed ui-platform-border ui-platform-text-muted opacity-60' => $logs->onFirstPage(),
                     ])>Prev</a>
 
                     <form method="GET" action="{{ route('platform.audit-logs.index') }}">
@@ -186,28 +186,28 @@
                     <a href="{{ $logs->hasMorePages() ? $logs->url($nextPage) : '#' }}" @class([
                         'ui-action ui-action-xs',
                         'ui-action-ghost' => $logs->hasMorePages(),
-                        'cursor-not-allowed border-slate-800 text-slate-600' => ! $logs->hasMorePages(),
+                        'cursor-not-allowed ui-platform-border ui-platform-text-muted opacity-60' => ! $logs->hasMorePages(),
                     ])>Next</a>
                 </div>
             </div>
         </div>
 
-        <div class="fixed inset-0 z-50 hidden bg-black/60" data-audit-log-modal aria-hidden="true">
+        <div class="ui-platform-backdrop fixed inset-0 z-50 hidden" data-audit-log-modal aria-hidden="true">
             <div class="ui-log-drawer-panel" data-log-drawer-panel tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="audit-log-drawer-title">
-                <div class="flex items-start justify-between gap-3 border-b border-slate-800 px-6 py-5">
+                <div class="flex items-start justify-between gap-3 border-b ui-platform-border px-6 py-5">
                     <div>
-                        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">Audit Log Detail</p>
-                        <h2 id="audit-log-drawer-title" class="mt-2 text-2xl font-semibold text-white" data-audit-log-title>—</h2>
-                        <p class="mt-2 text-sm text-slate-400" data-audit-log-subtitle>—</p>
+                        <p class="text-xs font-semibold uppercase tracking-[0.3em] ui-platform-text-muted">Audit Log Detail</p>
+                        <h2 id="audit-log-drawer-title" class="mt-2 text-2xl font-semibold ui-platform-text-strong" data-audit-log-title>—</h2>
+                        <p class="mt-2 text-sm ui-platform-text-muted" data-audit-log-subtitle>—</p>
                     </div>
                     <button type="button" class="ui-action ui-action-ghost" data-audit-log-close>Close</button>
                 </div>
 
                 <div class="overflow-y-auto px-6 py-6">
                     <div class="grid gap-4 md:grid-cols-2">
-                        <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                            <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Summary</h3>
-                            <dl class="mt-3 space-y-2 text-sm text-slate-300">
+                        <div class="ui-platform-surface p-4">
+                            <h3 class="text-xs font-semibold uppercase tracking-[0.2em] ui-platform-text-muted">Summary</h3>
+                            <dl class="mt-3 space-y-2 text-sm ui-platform-text">
                                 <div class="flex items-center justify-between"><dt>Occurred</dt><dd data-audit-log-occurred>—</dd></div>
                                 <div class="flex items-center justify-between"><dt>Result</dt><dd data-audit-log-result>—</dd></div>
                                 <div class="flex items-center justify-between"><dt>Severity</dt><dd data-audit-log-severity>—</dd></div>
@@ -215,18 +215,18 @@
                             </dl>
                         </div>
 
-                        <div class="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                            <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Actor</h3>
-                            <dl class="mt-3 space-y-2 text-sm text-slate-300">
+                        <div class="ui-platform-surface p-4">
+                            <h3 class="text-xs font-semibold uppercase tracking-[0.2em] ui-platform-text-muted">Actor</h3>
+                            <dl class="mt-3 space-y-2 text-sm ui-platform-text">
                                 <div><dt>Name</dt><dd data-audit-log-actor-name>—</dd></div>
                                 <div><dt>Email</dt><dd data-audit-log-actor-email>—</dd></div>
                             </dl>
                         </div>
                     </div>
 
-                    <div class="mt-4 rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                        <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Request Context</h3>
-                        <dl class="mt-3 grid gap-2 text-sm text-slate-300 md:grid-cols-2">
+                    <div class="mt-4 ui-platform-surface p-4">
+                        <h3 class="text-xs font-semibold uppercase tracking-[0.2em] ui-platform-text-muted">Request Context</h3>
+                        <dl class="mt-3 grid gap-2 text-sm ui-platform-text md:grid-cols-2">
                             <div><dt>Route</dt><dd data-audit-log-route>—</dd></div>
                             <div><dt>Method</dt><dd data-audit-log-method>—</dd></div>
                             <div><dt>Request ID</dt><dd class="break-all" data-audit-log-request>—</dd></div>
@@ -236,9 +236,9 @@
                         </dl>
                     </div>
 
-                    <div class="mt-4 rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                        <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Metadata</h3>
-                        <pre class="mt-2 max-h-64 overflow-y-auto whitespace-pre-wrap text-xs text-slate-300" data-audit-log-metadata>—</pre>
+                    <div class="mt-4 ui-platform-surface p-4">
+                        <h3 class="text-xs font-semibold uppercase tracking-[0.2em] ui-platform-text-muted">Metadata</h3>
+                        <pre class="mt-2 max-h-64 overflow-y-auto whitespace-pre-wrap text-xs ui-platform-text" data-audit-log-metadata>—</pre>
                     </div>
                 </div>
             </div>

@@ -34,8 +34,8 @@
 
         <div class="grid gap-4 xl:grid-cols-4">
             @foreach ([
-                ['label' => 'Implement Component Page', 'count' => collect($componentCatalog)->where('disposition', 'Implement T1 Page')->count()],
-                ['label' => 'Represent As Pattern', 'count' => collect($componentCatalog)->where('disposition', 'Represent As T2 Pattern')->count()],
+                ['label' => 'Implement Component Page', 'count' => collect($componentCatalog)->where('disposition', 'Implement Component Page')->count()],
+                ['label' => 'Represent As Pattern', 'count' => collect($componentCatalog)->where('disposition', 'Represent As Pattern')->count()],
                 ['label' => 'Queued Gap', 'count' => collect($componentCatalog)->where('disposition', 'Queued Gap')->count()],
                 ['label' => 'Not Applicable Yet', 'count' => collect($componentCatalog)->where('disposition', 'Not Applicable Yet')->count()],
             ] as $metric)
@@ -121,8 +121,8 @@
                                 <td class="px-4 py-3 whitespace-nowrap">
                                     <span class="inline-flex items-center whitespace-nowrap rounded-full border border-slate-700 px-2 py-1 text-xs font-semibold text-slate-200">
                                         {{ match ($component['disposition']) {
-                                            'Implement T1 Page' => 'Implement Component Page',
-                                            'Represent As T2 Pattern' => 'Represent As Pattern',
+                                            'Implement Component Page' => 'Implement Component Page',
+                                            'Represent As Pattern' => 'Represent As Pattern',
                                             default => $component['disposition'],
                                         } }}
                                     </span>

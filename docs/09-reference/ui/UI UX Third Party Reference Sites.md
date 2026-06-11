@@ -45,7 +45,4 @@ External UI reference links and short usage notes only.
 ## Related
 
 - [UI Support References](index.md)
-- [UI UX Source Of Truth Support Notes](UI%20UX%20Source%20Of%20Truth%20Support%20Notes.md)
-- [UI UX External System Review And Baseline Matrix](UI%20UX%20External%20System%20Review%20And%20Baseline%20Matrix.md)
-- [UI UX System Index](../../02-standards/ui/UI%20UX%20System%20Index.md)
-- [UI Design System Standards](../../02-standards/ui/UI%20Design%20System%20Standards.md)
+- [UI UX System Index](../../02-standards/ui/Index.md)

@@ -1,49 +1,87 @@
-# Foundation Elements Standards
+# Foundation Elements API Standards
 
-Foundation Elements are the baseline visual system beneath Tier 1 components. They define layout, color, typography, spacing, motion, iconography, pictograms, and themes before components or patterns compose them.
+Foundation Elements are the lowest-level UI APIs. They define visual primitives before Components and Patterns compose them.
 
-## UI Reference Route
+Use this index for quick lookup. The owning `elements/{element}.md` file remains the full standard.
+- [1. Element Matrix](#1-element-matrix)
+- [2. API Contract](#2-api-contract)
+- [3. UI Reference Contract](#3-ui-reference-contract)
+- [4. Element Checklist Template](#4-element-checklist-template)
+  - [4.1. Implementation checklist](#41-implementation-checklist)
+  - [4.2. UI Reference proof checklist](#42-ui-reference-proof-checklist)
+- [5. Related](#5-related)
 
-`/platform/ui-reference/elements`
+## 1. Element Matrix
 
-## Tier Relationship
+| Element             | Disposition  | API / token families                                                                        | UI Reference route                             | Primary consumers                                      | Deferred gates                                       |
+| ------------------- | ------------ | ------------------------------------------------------------------------------------------- | ---------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------- |
+| 2x Grid             | Approved API | page grid, responsive columns, content regions, layout alignment                            | `/platform/ui-reference/elements/2x-grid`      | Layout, navigation, data/content, page shells          | None                                                 |
+| Color               | Approved API | background, layer, field, border, text, link, icon, support, focus, skeleton, syntax tokens | `/platform/ui-reference/elements/color`        | All Components and Patterns                            | New role tokens require Color Token Palette update   |
+| Color token palette | Approved API | full color token role matrix                                                                | `/platform/ui-reference/elements/color/tokens` | Component and Pattern token adoption                   | New token families require registry update           |
+| Icons               | Approved API | Heroicons source, sizing, alignment, status icon rules, hit target rules                    | `/platform/ui-reference/elements/icons`        | Buttons, links, menus, status, navigation              | Carbon icons require separate decision               |
+| Motion              | Approved API | productive transition rules, reduced motion, component-owned motion boundaries              | `/platform/ui-reference/elements/motion`       | Accordion, menu, modal, tooltip, loading, notification | Expressive motion remains gated                      |
+| Pictograms          | Deferred API | pictogram disposition, size, clearance, library audit rules                                 | `/platform/ui-reference/elements/pictograms`   | Empty states, onboarding, help surfaces                | Asset library decision required before import        |
+| Spacing             | Approved API | spacing scale, stack, gap, internal/external spacing ownership                              | `/platform/ui-reference/elements/spacing`      | All Components and Patterns                            | Arbitrary spacing exceptions require owner doc       |
+| Themes              | Approved API | theme role/value behavior, light/dark contexts, inline theme rules                          | `/platform/ui-reference/elements/themes`       | All tokenized Components and Patterns                  | New theme override requires documented reason/source |
+| Typography          | Approved API | font stacks, type roles, scale, weights, code text, text color usage                        | `/platform/ui-reference/elements/typography`   | All text-bearing Components and Patterns               | New type roles require Typography standard update    |
+| Typography type sets | Approved API | Productive Type Set, Expressive Type Set, fixed productive headings, fluid expressive headings | `/platform/ui-reference/elements/typography/type-sets` | Components and Patterns that render text hierarchy | IBM Plex adoption and additional display roles remain gated |
 
-- Foundation Elements own tokens, grid, spacing, typography, iconography, motion, and themes.
-- Tier 1 components consume Foundation Elements and define reusable primitives.
-- Tier 2 patterns compose Tier 1 components into reusable page and workflow structures.
-- Tier 3 feature modules compose approved lower tiers into app-specific behavior.
+## 2. API Contract
 
-## Page Contract
+Each Element standard must define:
 
-Every Foundation Element UI Reference page must answer what the element looks like in Login App 2.0, what token/class/helper/component to use, when to use it, what to avoid, and what accessibility constraints apply.
+- API summary
+- status and ownership
+- installed standard
+- token API
+- CSS variable API
+- utility class/helper API
+- allowed usage
+- component and pattern consumers
+- theme behavior
+- state behavior
+- prohibited usage
+- deferred or gated capabilities
+- UI Reference requirements
+- testing and acceptance criteria
+- related APIs
+- references
 
-Each page must visibly include:
+## 3. UI Reference Contract
 
-- Purpose
-- Live examples rendered with app CSS/JS
-- Token/class/API reference
-- Usage guidance
-- Accessibility notes
-- Developer notes
-- Related implementation links
-- Implementation status
+Every Element page must show purpose, live examples, token/class/API references, usage guidance, accessibility notes, developer notes, related implementation links, and implementation disposition.
 
-Foundation pages distinguish two status values:
+Element pages distinguish guide readiness from underlying system maturity when that distinction is useful, but active build/review progress belongs in `docs/08-active/`.
 
-- Guide status: whether the UI Reference page is complete enough to use as a live implementation guide.
-- System maturity: whether the underlying primitive is fully tokenized, enforced, tested, and adopted across the app.
+## 4. Element Checklist Template
 
-## Element Set
+Every Element standard must include `## Implementation and UI Reference Checklist`.
 
-- [2x Grid](grid.md)
-- [Color](color.md)
-- [Icons](icons.md)
-- [Pictograms](pictograms.md)
-- [Motion](motion.md)
-- [Spacing](spacing.md)
-- [Themes](themes.md)
-- [Typography](typography.md)
+### 4.1. Implementation checklist
 
-## Carbon Comparison
+| Requirement                 | Standard expectation                                                                                                |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Public API/source           | Name the approved token families, CSS variables, utility classes, helpers, source files, or explicit deferred gate. |
+| Token/class/helper coverage | List the durable Element API surface that Components and Patterns may consume.                                      |
+| Theme/state behavior        | Define light/dark, interaction, reduced-motion, accessibility, or state rules owned by the Element.                 |
+| Consumers                   | Name the Component and Pattern APIs that must consume this Element.                                                 |
+| Prohibited usage            | State what feature code, Components, and Patterns must not redefine locally.                                        |
+| Tests                       | Define route/content/API assertions that prove the Element contract.                                                |
 
-Carbon is a completeness and organization benchmark only. Login App standards must not copy Carbon visual tokens, IBM-specific assets, icons, pictograms, spacing, or component chrome without a separate decision record.
+### 4.2. UI Reference proof checklist
+
+| Requirement          | Visual proof expectation                                                                                     |
+| -------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Live examples        | Show rendered examples with app CSS/JS, not screenshots only.                                                |
+| Token/API references | Show token/class/helper names and example usage.                                                             |
+| Theme/state examples | Show relevant theme contexts, variants, states, or gated disposition surfaces.                               |
+| Accessibility proof  | Show or document contrast, focus, semantics, hit targets, reduced motion, or equivalent Element constraints. |
+| Related APIs         | Link consuming Components, Patterns, source files, and the canonical standard.                               |
+| Manual review        | Provide enough rendered proof for visual review without opening source code first.                           |
+
+## 5. Related
+
+- [UI Standards Index](../index.md)
+- [UI API Registry](../api-registry.md)
+- [Component API Standards](../components/index.md)
+- [Pattern API Standards](../patterns/index.md)

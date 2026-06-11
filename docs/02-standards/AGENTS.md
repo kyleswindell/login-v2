@@ -18,5 +18,5 @@ Rules only. This branch owns standards for coding, documentation, database, secu
 
 ## Long Files
 
-- `ui/components/Tier 2 Pattern Library Checklist.md` is now a hub. Use its linked `tier-2-patterns/` child files for focused Tier 2 reads.
+- `ui/patterns/checklist.md` is the Pattern hub. Use its linked `ui/patterns/{pattern}.md` files for focused Pattern reads.
 - Documentation research belongs in `docs/09-reference/` unless it has been promoted into a rule here.

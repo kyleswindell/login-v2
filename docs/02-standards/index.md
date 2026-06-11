@@ -1,18 +1,28 @@
 # Standards Index
+- [1. Purpose](#1-purpose)
+- [2. Scope](#2-scope)
+- [3. Canonical Standards](#3-canonical-standards)
+  - [3.1. Coding](#31-coding)
+  - [3.2. Database](#32-database)
+  - [3.3. Security](#33-security)
+  - [3.4. Logging](#34-logging)
+  - [3.5. UI Standards](#35-ui-standards)
+  - [3.6. Documentation Standards](#36-documentation-standards)
+- [4. Related](#4-related)
 
 This index provides canonical navigation and scope for this branch.
 
-## Purpose
+## 1. Purpose
 
 Canonical hub for global implementation and documentation standards.
 
-## Scope
+## 2. Scope
 
 Rules and conventions only. This branch does not own feature behavior, architecture structure, execution flows, schema contracts, planning sequencing, reference research, or operations runbooks.
 
-## Canonical Standards
+## 3. Canonical Standards
 
-### Coding
+### 3.1. Coding
 
 - [Coding Standards](coding/Coding%20Standards.md)
 - [Commenting Standards](coding/Commenting%20Standards.md)
@@ -21,13 +31,13 @@ Rules and conventions only. This branch does not own feature behavior, architect
 - [Testing Standards](coding/Testing%20Standards.md)
 - [Legacy V1 Perfex Module Development Standards](../09-reference/documentation/Legacy%20V1%20Perfex%20Module%20Development%20Standards.md)
 
-### Database
+### 3.2. Database
 
 - [Database Migration Standards](database/Database%20Migration%20Standards.md)
 - [Schema Design Standards](database/Schema%20Design%20Standards.md)
 - [Settings Data Governance Standards](database/Settings%20Data%20Governance%20Standards.md)
 
-### Security
+### 3.3. Security
 
 - [Security Standards](security/Security%20Standards.md)
 - [Identity And Account Security Standards](security/Identity%20And%20Account%20Security%20Standards.md)
@@ -36,37 +46,21 @@ Rules and conventions only. This branch does not own feature behavior, architect
 - [Tenant Safety Standards](security/Tenant%20Safety%20Standards.md)
 - [Platform Production Server Policy](security/platform-production-server-policy.md)
 
-### Logging
+### 3.4. Logging
 
 - [Logging Standards](logging/Logging%20Standards.md)
 
-### UI Standards
+### 3.5. UI Standards
 
-- [UI Design System Standards](ui/UI%20Design%20System%20Standards.md)
-- [UI UX Foundations And Theming Standards](ui/UI%20UX%20Foundations%20And%20Theming%20Standards.md)
-- [UI UX Iconography Standards](ui/UI%20UX%20Iconography%20Standards.md)
-- [UI UX Source Of Truth And Decision Log](ui/UI%20UX%20Source%20Of%20Truth%20And%20Decision%20Log.md)
-- [UI UX System Index](ui/UI%20UX%20System%20Index.md)
-- [UI UX Typography Standards](ui/UI%20UX%20Typography%20Standards.md)
-- [UI UX Component Library Standards](ui/components/UI%20UX%20Component%20Library%20Standards.md)
-- [UI UX Component Taxonomy And Coverage Matrix](ui/components/UI%20UX%20Component%20Taxonomy%20And%20Coverage%20Matrix.md)
-- [Tier 2 Pattern Library Checklist](ui/components/Tier%202%20Pattern%20Library%20Checklist.md)
-- [Tier 2 Pattern Family Index](ui/components/tier-2-patterns/index.md)
-- [Component Contracts Index](ui/contracts/Component%20Contracts%20Index.md)
-- [Tier 1 - Badges And Status Contract](ui/contracts/Tier%201%20-%20Badges%20And%20Status%20Contract.md)
-- [Tier 1 - Buttons And Icon Buttons Contract](ui/contracts/Tier%201%20-%20Buttons%20And%20Icon%20Buttons%20Contract.md)
-- [Tier 1 - Drawer And Modal Contract](ui/contracts/Tier%201%20-%20Drawer%20And%20Modal%20Contract.md)
-- [Tier 1 - Consumption And Composition Contract](ui/contracts/Tier%201%20-%20Consumption%20And%20Composition%20Contract.md)
-- [Tier 1 - Input Controls Contract](ui/contracts/Tier%201%20-%20Input%20Controls%20Contract.md)
-- [Tier 1 - Layout And Scaffolding Contract](ui/contracts/Tier%201%20-%20Layout%20And%20Scaffolding%20Contract.md)
-- [Tier 1 - Shell Navigation Contract](ui/contracts/Tier%201%20-%20Shell%20Navigation%20Contract.md)
-- [Tier 1 - Table Baseline Contract](ui/contracts/Tier%201%20-%20Table%20Baseline%20Contract.md)
-- [Tier 1 - Toast And Inline Alert Contract](ui/contracts/Tier%201%20-%20Toast%20And%20Inline%20Alert%20Contract.md)
-- [Tier 1 - Utility Primitives Contract](ui/contracts/Tier%201%20-%20Utility%20Primitives%20Contract.md)
-- [UI UX Component Acceptance Contract Template](ui/contracts/UI%20UX%20Component%20Acceptance%20Contract%20Template.md)
-- [UI UX Color Token Standards](ui/tokens/UI%20UX%20Color%20Token%20Standards.md)
+- [UI Standards Index](ui/index.md)
+- [UI API Registry](ui/api-registry.md)
+- [Foundation Elements Standards Index](ui/elements/index.md)
+- [Component Standards Index](ui/components/index.md)
+- [Component Implementation Checklist](ui/components/checklist.md)
+- [Pattern Standards Index](ui/patterns/index.md)
+- [Pattern Library Checklist](ui/patterns/checklist.md)
 
-### Documentation Standards
+### 3.6. Documentation Standards
 
 - [How To Write Docs](documentation/How%20To%20Write%20Docs.md)
 - [Implementation Status And Development Sync Standard](documentation/Implementation%20Status%20And%20Development%20Sync%20Standard.md)
@@ -86,6 +80,6 @@ Rules and conventions only. This branch does not own feature behavior, architect
 - [Tutorial Template](documentation/Templates/Tutorial%20Template.md)
 - [Doc Governance](documentation/Doc%20Governance.md)
 
-## Related
+## 4. Related
 
 - [00-start-here](../00-start-here.md)

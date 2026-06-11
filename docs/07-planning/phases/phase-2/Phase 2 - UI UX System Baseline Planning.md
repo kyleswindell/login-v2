@@ -24,9 +24,11 @@ Current status:
 
 ## Canonical Source Notes
 
-- [UI UX Source Of Truth And Decision Log](../../../02-standards/ui/UI UX Source Of Truth And Decision Log.md)
-- [UI UX Foundations And Theming Standards](../../../02-standards/ui/UI UX Foundations And Theming Standards.md)
-- [UI UX Component Library Standards](../../../02-standards/ui/components/UI%20UX%20Component%20Library%20Standards.md)
+- [UI Standards Index](../../../02-standards/ui/index.md)
+- [UI API Registry](../../../02-standards/ui/api-registry.md)
+- [Foundation Elements Standards Index](../../../02-standards/ui/elements/index.md)
+- [Component Standards Index](../../../02-standards/ui/components/index.md)
+- [Pattern Standards Index](../../../02-standards/ui/patterns/index.md)
 
 ## Phase 2 Sequencing
 
@@ -55,15 +57,14 @@ Current status:
 
 Current execution artifacts:
 
-- [UI UX Component Taxonomy And Coverage Matrix](../../../02-standards/ui/components/UI%20UX%20Component%20Taxonomy%20And%20Coverage%20Matrix.md)
-- [UI UX Component Acceptance Contract Template](../../../02-standards/ui/contracts/UI%20UX%20Component%20Acceptance%20Contract%20Template.md)
-- [Component Contracts Index](../../../02-standards/ui/contracts/Component%20Contracts%20Index.md)
-- [UI UX Tier 1 UI Reference Implementation Checklist](../../../09-reference/ui/UI UX Tier 1 UI Reference Implementation Checklist.md)
-- [UI UX Color Token Standards](../../../02-standards/ui/tokens/UI%20UX%20Color%20Token%20Standards.md)
-- [UI UX Typography Standards](../../../02-standards/ui/UI UX Typography Standards.md)
-- [UI UX Iconography Standards](../../../02-standards/ui/UI UX Iconography Standards.md)
+- [UI Standards Index](../../../02-standards/ui/index.md)
+- [UI API Registry](../../../02-standards/ui/api-registry.md)
+- [Foundation Elements Standards Index](../../../02-standards/ui/elements/index.md)
+- [Component Standards Index](../../../02-standards/ui/components/index.md)
+- [Pattern Standards Index](../../../02-standards/ui/patterns/index.md)
+- [UI API Implementation Sync](../../../08-active/ui-implementation-sync.md)
 
 ## Related
 
 - [Phase 2 - Final Stack And UI System Planning](Phase%202%20-%20Final%20Stack%20And%20UI%20System%20Planning.md)
-- [UI Design System Standards](../../../02-standards/ui/UI Design System Standards.md)
+- [UI Standards Index](../../../02-standards/ui/index.md)

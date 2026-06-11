@@ -1286,6 +1286,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Variant purpose matrix')
             ->assertSee('Size scale')
             ->assertSee('State matrix')
+            ->assertSee('Structure measurements')
             ->assertSee('Button groups')
             ->assertSee('Icon usage')
             ->assertSee('Content behavior')
@@ -1326,6 +1327,15 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Gray 80 #393939')
             ->assertSee('Gray 80 hover #4c4c4c')
             ->assertSee('Gray 60 active #6f6f6f')
+            ->assertSee('data-button-live-section="structure-measurements"', false)
+            ->assertSee('data-button-structure-row="button-without-icon-padding-right"', false)
+            ->assertSee('data-button-structure-row="button-with-icon-label-icon-spacing"', false)
+            ->assertSee('data-button-structure-row="ghost-with-icon-label-icon-spacing"', false)
+            ->assertSee('data-button-structure-proof="standard-icon-gap"', false)
+            ->assertSee('data-button-structure-proof="ghost-icon-gap"', false)
+            ->assertSee('$spacing-10')
+            ->assertSee('$spacing-07')
+            ->assertSee('$spacing-03')
             ->assertSee('Prefer verb + noun labels')
             ->assertSee('Use sentence case')
             ->assertSee('Labels remain left-aligned')
@@ -1339,6 +1349,9 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('ui-action-xl', false)
             ->assertSee('ui-action-2xl', false)
             ->assertSee('data-button-group-example="primary-secondary"', false)
+            ->assertSee('data-button-group-width-rule="equal-non-ghost"', false)
+            ->assertSee('data-button-group-order="primary-outside"', false)
+            ->assertSee('data-button-group-overflow-rule="menu-buttons"', false)
             ->assertSee('data-button-icon-state-row="default"', false)
             ->assertSee('data-button-icon-state-row="hover"', false)
             ->assertSee('data-button-icon-state-row="focus-visible"', false)
@@ -1376,6 +1389,14 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('--ui-action-secondary-bg-active: rgb(57 57 57);', $buttonCss);
         $this->assertStringContainsString('.ui-action-secondary:active', $buttonCss);
         $this->assertStringContainsString('.ui-icon-button.ui-action-secondary', $buttonCss);
+        $this->assertStringContainsString('--ui-button-padding-start: 1rem;', $buttonCss);
+        $this->assertStringContainsString('--ui-button-padding-end: 4rem;', $buttonCss);
+        $this->assertStringContainsString('--ui-button-gap: 2rem;', $buttonCss);
+        $this->assertStringContainsString('.ui-action-with-icon', $buttonCss);
+        $this->assertStringContainsString('.ui-button-group-equal', $buttonCss);
+        $this->assertStringContainsString('grid-auto-columns: minmax(0, 1fr);', $buttonCss);
+        $this->assertStringContainsString('Use Button groups only when users need to consider two or three visible actions together.', $buttonStandard);
+        $this->assertStringContainsString('Related non-ghost buttons in a group must be equal width.', $buttonStandard);
         $this->assertStringContainsString('Same role / same Carbon gray value family', $buttonStandard);
         $this->assertStringContainsString('Secondary is a filled gray action role, not a neutral outline/white button.', $colorStandard);
     }

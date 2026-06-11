@@ -36,15 +36,6 @@
         'xl' => 'xl',
         '2xl' => '2xl',
     ];
-    $ghostSizeClasses = [
-        'xs' => '!px-[calc(0.625rem+1px)] !py-[calc(0.375rem+1px)]',
-        'sm' => '!px-[calc(0.75rem+1px)] !py-[calc(0.375rem+1px)]',
-        'md' => '!px-[calc(0.875rem+1px)] !py-[calc(0.5rem+1px)]',
-        'lg' => '!px-[calc(1.125rem+1px)] !py-[calc(0.625rem+1px)]',
-        'lg-expressive' => '!px-[calc(1.125rem+1px)] !py-[calc(0.625rem+1px)]',
-        'xl' => '!px-[calc(1.25rem+1px)] !py-[calc(0.75rem+1px)]',
-        '2xl' => '!px-[calc(1.5rem+1px)] !py-[calc(1rem+1px)]',
-    ];
 
     [$resolvedSemantic, $semanticVariant] = $semanticMap[$semantic] ?? $semanticMap['primary'];
     $resolvedVariant = in_array($variant, $allowedVariants, true) ? $variant : $semanticVariant;
@@ -66,7 +57,6 @@
 
     if ($resolvedVariant === 'ghost') {
         $classes[] = '!border-0 !shadow-none';
-        $classes[] = $ghostSizeClasses[$resolvedSize];
     }
 
     $showInverseSpinner = $loading
@@ -76,6 +66,10 @@
     $isLink = filled($href) && ! $disabled;
 
     $renderIcon = filled($icon) && $iconPosition === 'trailing';
+
+    if ($renderIcon) {
+        $classes[] = 'ui-action-with-icon';
+    }
 @endphp
 
 @if ($isLink)

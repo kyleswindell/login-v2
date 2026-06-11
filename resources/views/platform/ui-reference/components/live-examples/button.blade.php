@@ -36,6 +36,23 @@
         ['More than 3 actions', 'Move actions into Menu buttons or Toolbar instead of expanding a button group.'],
     ];
 
+    $groupMenuItems = [
+        ['label' => 'Export report', 'action' => 'export-report'],
+        ['label' => 'Share link', 'action' => 'share-link'],
+        ['label' => 'Archive workspace', 'action' => 'archive-workspace'],
+    ];
+
+    $structureRows = [
+        ['Button without icon', 'padding-left', '16px / 1rem', '$spacing-05', '--ui-button-padding-start'],
+        ['Button without icon', 'padding-right', '64px / 4rem', '$spacing-10', '--ui-button-padding-end'],
+        ['Button with icon', 'padding-left/right', '16px / 1rem', '$spacing-05', 'ui-action-with-icon'],
+        ['Button with icon', 'label-icon spacing', '32px / 2rem', '$spacing-07', '--ui-button-gap'],
+        ['Ghost with icon', 'label-icon spacing', '8px / 0.5rem', '$spacing-03', 'ui-action-ghost'],
+        ['Icon-only button', 'padding-left/right', '16px / 1rem', '$spacing-05', 'ui-icon-button-*'],
+        ['Icon', 'svg', '16px x 16px', '-', 'ui-button-icon'],
+        ['Expressive icon', 'svg', '20px x 20px', '-', 'ui-action-lg-expressive .ui-button-icon'],
+    ];
+
     $iconStateRows = [
         ['Default', 'Refresh data', 'heroicon-o-arrow-path', 'ghost', null, false, false],
         ['Hover', 'Refresh data hover', 'heroicon-o-arrow-path', 'ghost', 'is-hover', false, false],
@@ -88,7 +105,7 @@
 
     <section class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-button-live-section="size-scale">
         <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Size scale</h3>
-        <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">Do not mix button sizes in button groups. Existing API support covers the current app sizes; larger full-bleed rows document the target treatment for later API completion.</p>
+        <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">Do not mix button sizes in button groups. The installed size classes map to Carbon button heights: 24, 32, 40, 48, 64, and 80px.</p>
         <div class="mt-4 grid gap-3">
             @foreach ($sizeRows as [$label, $height, $purpose, $size, $extraClass])
                 <div class="grid gap-3 rounded-md border p-3 md:grid-cols-[11rem_9rem_minmax(0,1fr)_minmax(14rem,0.7fr)] md:items-center" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-button-size-row="{{ Str::slug($label) }}">
@@ -98,6 +115,45 @@
                     <x-ui.button semantic="primary" :size="$size" @class([$extraClass => filled($extraClass)])>{{ $label }}</x-ui.button>
                 </div>
             @endforeach
+        </div>
+    </section>
+
+    <section class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-button-live-section="structure-measurements">
+        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Structure measurements</h3>
+        <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">Primary, secondary, tertiary, danger primary, and danger tertiary share the same structure. Ghost buttons use equal side padding and a tighter icon gap.</p>
+        <div class="mt-4 overflow-x-auto rounded-lg border" style="border-color: var(--ui-border-subtle-01);">
+            <table class="min-w-full text-left text-sm">
+                <thead style="background-color: var(--ui-layer-accent-01); color: var(--ui-text-secondary);">
+                    <tr>
+                        <th class="px-4 py-3">Structure</th>
+                        <th class="px-4 py-3">Property</th>
+                        <th class="px-4 py-3">Measurement</th>
+                        <th class="px-4 py-3">Carbon token</th>
+                        <th class="px-4 py-3">Login implementation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($structureRows as [$label, $property, $measurement, $token, $implementation])
+                        <tr class="border-t" style="border-color: var(--ui-border-subtle-01);" data-button-structure-row="{{ Str::slug($label.' '.$property) }}">
+                            <td class="px-4 py-3 font-semibold" style="color: var(--ui-text-primary);">{{ $label }}</td>
+                            <td class="px-4 py-3" style="color: var(--ui-text-secondary);">{{ $property }}</td>
+                            <td class="px-4 py-3" style="color: var(--ui-text-secondary);">{{ $measurement }}</td>
+                            <td class="px-4 py-3 font-mono text-xs" style="color: var(--ui-text-secondary);">{{ $token }}</td>
+                            <td class="px-4 py-3 font-mono text-xs" style="color: var(--ui-text-secondary);">{{ $implementation }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-4 grid gap-4 md:grid-cols-2">
+            <div class="rounded-md border p-3" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-button-structure-proof="standard-icon-gap">
+                <p class="mb-3 text-sm font-semibold" style="color: var(--ui-text-primary);">Standard button with icon</p>
+                <x-ui.button semantic="primary" icon="heroicon-o-plus">Create workspace</x-ui.button>
+            </div>
+            <div class="rounded-md border p-3" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-button-structure-proof="ghost-icon-gap">
+                <p class="mb-3 text-sm font-semibold" style="color: var(--ui-text-primary);">Ghost button with icon</p>
+                <x-ui.button semantic="ghost" icon="heroicon-o-arrow-top-right-on-square">Open docs</x-ui.button>
+            </div>
         </div>
     </section>
 
@@ -119,18 +175,22 @@
             <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Button groups</h3>
             <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">Use groups when there are two or three actions to consider. More than three actions belong in Menu buttons or Toolbar.</p>
             <div class="mt-4 space-y-4">
-                <div class="flex flex-wrap gap-3" data-button-group-example="primary-secondary">
-                    <x-ui.button semantic="primary">Save changes</x-ui.button>
+                <div class="ui-button-group-equal" data-button-group-example="primary-secondary" data-button-group-width-rule="equal-non-ghost">
                     <x-ui.button semantic="secondary">Cancel</x-ui.button>
+                    <x-ui.button semantic="primary">Save changes</x-ui.button>
                 </div>
-                <div class="flex flex-wrap gap-3" data-button-group-example="primary-secondary-tertiary">
-                    <x-ui.button semantic="primary">Continue</x-ui.button>
-                    <x-ui.button semantic="secondary">Back</x-ui.button>
+                <div class="ui-button-group-equal" data-button-group-example="primary-secondary-tertiary" data-button-group-order="primary-outside">
                     <x-ui.button semantic="tertiary">Save draft</x-ui.button>
+                    <x-ui.button semantic="secondary">Back</x-ui.button>
+                    <x-ui.button semantic="primary">Continue</x-ui.button>
                 </div>
-                <div class="flex flex-wrap gap-3" data-button-group-example="no-primary">
+                <div class="ui-button-group" data-button-group-example="no-primary">
                     <x-ui.button semantic="tertiary">Filter table</x-ui.button>
                     <x-ui.button semantic="ghost">Clear filters</x-ui.button>
+                </div>
+                <div class="ui-button-group" data-button-group-example="menu-button-handoff" data-button-group-overflow-rule="menu-buttons">
+                    <x-ui.button semantic="primary">Create workspace</x-ui.button>
+                    <x-ui.menu-button label="More actions" type="tertiary" :items="$groupMenuItems" />
                 </div>
                 <ul class="space-y-2 text-sm leading-6" style="color: var(--ui-text-secondary);">
                     @foreach ($groupRows as [$label, $purpose])

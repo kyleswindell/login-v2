@@ -535,10 +535,22 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-action {
-        @apply inline-flex items-center justify-center gap-2 rounded-md border px-3.5 py-2 text-sm font-semibold transition;
+        --ui-button-height: 2.5rem;
+        --ui-button-padding-start: 1rem;
+        --ui-button-padding-end: 4rem;
+        --ui-button-gap: 2rem;
+        @apply inline-flex items-center justify-center rounded-md border text-sm font-semibold transition;
+        min-block-size: var(--ui-button-height);
+        padding-block: 0;
+        padding-inline: var(--ui-button-padding-start) var(--ui-button-padding-end);
+        gap: var(--ui-button-gap);
         border-color: var(--ui-action-secondary-border);
         background-color: var(--ui-action-secondary-bg);
         color: var(--ui-action-secondary-text);
+    }
+
+    .ui-action-with-icon {
+        --ui-button-padding-end: 1rem;
     }
 
     .ui-action:hover {
@@ -655,6 +667,8 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-action-ghost {
+        --ui-button-padding-end: 1rem;
+        --ui-button-gap: 0.5rem;
         border-color: transparent;
         background-color: transparent;
         color: var(--ui-action-ghost-text);
@@ -927,37 +941,74 @@ Use targeted searches for the class family being changed before reading this fil
         background-color: color-mix(in srgb, var(--ui-action-disabled-bg) 92%, var(--ui-text-strong) 8%);
     }
 
+    .ui-button-group {
+        @apply flex flex-wrap items-center;
+        gap: 1rem;
+        margin-inline: 0;
+    }
+
+    .ui-button-group-equal {
+        display: inline-grid;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(0, 1fr);
+        gap: 1rem;
+        inline-size: max-content;
+        max-inline-size: 100%;
+        margin-inline: 0;
+    }
+
+    .ui-button-group-equal .ui-action:not(.ui-action-ghost) {
+        inline-size: 100%;
+        justify-content: flex-start;
+    }
+
+    @media (max-width: 640px) {
+        .ui-button-group-equal {
+            display: grid;
+            grid-auto-flow: row;
+            grid-auto-columns: auto;
+            grid-template-columns: minmax(0, 1fr);
+        }
+    }
+
     .ui-action-xs,
     .btn-xs {
-        @apply rounded px-2.5 py-1.5 text-xs;
+        --ui-button-height: 1.5rem;
+        @apply rounded text-xs;
     }
 
     .ui-action-sm,
     .btn-sm {
-        @apply px-3 py-1.5 text-sm;
+        --ui-button-height: 2rem;
+        @apply text-sm;
     }
 
     .ui-action-md,
     .btn-md {
-        @apply px-3.5 py-2 text-sm;
+        --ui-button-height: 2.5rem;
+        @apply text-sm;
     }
 
     .ui-action-lg,
     .btn-lg {
-        @apply rounded-lg px-4.5 py-2.5 text-base;
+        --ui-button-height: 3rem;
+        @apply rounded-lg text-base;
     }
 
     .ui-action-lg-expressive {
-        @apply min-h-12 rounded-lg px-5 py-2.5 text-base;
+        --ui-button-height: 3rem;
+        @apply rounded-lg text-base;
     }
 
     .ui-action-xl,
     .btn-xl {
-        @apply rounded-lg px-5 py-3 text-base;
+        --ui-button-height: 4rem;
+        @apply rounded-lg text-base;
     }
 
     .ui-action-2xl {
-        @apply min-h-20 rounded-xl px-6 py-4 text-lg;
+        --ui-button-height: 5rem;
+        @apply rounded-xl text-lg;
     }
 
     .ui-button-label {
@@ -968,12 +1019,16 @@ Use targeted searches for the class family being changed before reading this fil
         @apply h-4 w-4 shrink-0;
     }
 
+    .ui-action-lg-expressive .ui-button-icon {
+        @apply h-5 w-5;
+    }
+
     .ui-icon-button-xs {
-        @apply min-h-6 min-w-6 rounded p-1;
+        @apply min-h-6 min-w-12 rounded px-4 py-1;
     }
 
     .ui-icon-button-sm {
-        @apply min-h-8 min-w-8 rounded-md p-1.5;
+        @apply min-h-8 min-w-12 rounded-md px-4 py-1.5;
     }
 
     .ui-icon-button-md,
@@ -981,15 +1036,28 @@ Use targeted searches for the class family being changed before reading this fil
     .ui-icon-button-lg-expressive,
     .ui-icon-button-xl,
     .ui-icon-button-2xl {
-        @apply min-h-11 min-w-11;
+        @apply min-w-12 px-4;
+    }
+
+    .ui-icon-button-md {
+        @apply min-h-10;
+    }
+
+    .ui-icon-button-lg,
+    .ui-icon-button-lg-expressive {
+        @apply min-h-12;
+    }
+
+    .ui-icon-button-lg-expressive .ui-icon-button-icon {
+        @apply h-5 w-5;
     }
 
     .ui-icon-button-xl {
-        @apply rounded-lg;
+        @apply min-h-16 rounded-lg;
     }
 
     .ui-icon-button-2xl {
-        @apply rounded-xl;
+        @apply min-h-20 rounded-xl;
     }
 
     .ui-icon-button-icon {
@@ -1086,7 +1154,7 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-icon-button {
-        @apply inline-flex h-10 w-10 items-center justify-center rounded-md border transition;
+        @apply inline-flex items-center justify-center rounded-md border transition;
         border-color: var(--ui-action-neutral-border);
         background-color: var(--ui-surface-elevated);
         color: var(--ui-text-secondary);

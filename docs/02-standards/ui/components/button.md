@@ -61,6 +61,7 @@ carbon_reference:
   - [4.5. Size contract](#45-size-contract)
   - [4.6. Icon button API](#46-icon-button-api)
   - [4.7. Button group contract](#47-button-group-contract)
+  - [4.8. Structure measurements](#48-structure-measurements)
 - [5. Allowed variants, options, and modifiers](#5-allowed-variants-options-and-modifiers)
 - [6. States](#6-states)
 - [7. Token, class, and helper usage](#7-token-class-and-helper-usage)
@@ -242,13 +243,13 @@ Any prop not listed here is not public. If a feature needs another option, updat
 
 | Size value      | Status                       | Carbon label     | Login App use                                                                 |
 | --------------- | ---------------------------- | ---------------- | ----------------------------------------------------------------------------- |
-| `xs`            | Implemented / required proof | Extra small      | Confined dense layouts where vertical space is limited.                       |
-| `sm`            | Implemented / required proof | Small            | Pair with compact controls or dense table/tool rows.                          |
-| `md`            | Implemented / required proof | Medium           | Pair with standard medium fields and dense forms.                             |
-| `lg`            | Implemented / required proof | Large productive | Default productive app button size for common software UI.                    |
-| `lg-expressive` | Implemented / required proof | Large expressive | High-presence marketing/help/onboarding moments only; not default admin UI.   |
-| `xl`            | Implemented / required proof | Extra large      | Larger component surfaces such as modal/side-panel button bars when approved. |
-| `2xl`           | Implemented / required proof | 2XL              | Full-screen or large overlay moments only when Pattern-owned.                 |
+| `xs`            | Implemented / required proof | Extra small      | 24px / 1.5rem height for confined dense layouts where vertical space is limited. |
+| `sm`            | Implemented / required proof | Small            | 32px / 2rem height for compact controls or dense table/tool rows.             |
+| `md`            | Implemented / required proof | Medium           | 40px / 2.5rem height for standard medium fields and dense forms.              |
+| `lg`            | Implemented / required proof | Large productive | 48px / 3rem height; default productive app button size for common software UI. |
+| `lg-expressive` | Implemented / required proof | Large expressive | 48px / 3rem height with expressive icon sizing for selected non-dense/editorial contexts only. |
+| `xl`            | Implemented / required proof | Extra large      | 64px / 4rem height for full-bleed or larger component surfaces when approved. |
+| `2xl`           | Implemented / required proof | 2XL              | 80px / 5rem height for full-screen or large overlay contexts only when Pattern-owned. |
 
 Do not mix different button sizes in one button group. If a group needs different visual weight, use semantic variants instead of size changes.
 
@@ -277,7 +278,21 @@ Do not mix different button sizes in one button group. If a group needs differen
 
 ### 4.7. Button group contract
 
-There is no standalone public Button group Component API unless `x-ui.button-group` is explicitly installed and documented. Button grouping is usually owned by the parent Pattern, but the Button standard defines allowed combinations.
+There is no standalone public Button group Blade API unless `x-ui.button-group` is explicitly installed and documented. Button grouping is usually owned by the parent Pattern, but the Button standard defines allowed combinations, order, width, and spacing. Use app-owned `ui-button-group` / `ui-button-group-equal` classes when a parent Pattern needs the installed Button group treatment.
+
+Button groups versus Menu buttons:
+
+- Use Button groups only when users need to consider two or three visible actions together.
+- Move more than three actions into Menu buttons, a Toolbar, or another Pattern-owned action surface.
+- Do not keep adding visible buttons to avoid implementing a Menu button or Toolbar.
+
+Button width and order:
+
+- Related non-ghost buttons in a group must be equal width. The shared width is determined by the longest button label.
+- Ghost buttons are excluded from the equal-width requirement.
+- Primary buttons sit on the outside edge of the set; secondary/backing actions sit inside the set.
+- Button group spacing is fixed at 16px / `$spacing-05`; inline margins stay `0`.
+- Button groups use a 1px boundary only when a parent Pattern intentionally creates a fluid grouped control surface.
 
 Recommended groups with a primary action:
 
@@ -303,6 +318,29 @@ Avoid these groups:
 - Tertiary and danger ghost when destructive hierarchy becomes unclear.
 - Mixed button sizes in one group.
 - Randomly adding icons to only some buttons in a group.
+
+### 4.8. Structure measurements
+
+Primary, secondary, tertiary, danger primary, and danger tertiary buttons share the same structure measurements.
+
+| Button structure | Property | px / rem | Carbon spacing token | Login App implementation |
+| ---------------- | -------- | -------- | -------------------- | ------------------------ |
+| Button without icon | padding-left | 16px / 1rem | `$spacing-05` | `--ui-button-padding-start: 1rem` |
+| Button without icon | padding-right | 64px / 4rem | `$spacing-10` | `--ui-button-padding-end: 4rem` |
+| Button with trailing icon | padding-left/right | 16px / 1rem | `$spacing-05` | `ui-action-with-icon` sets both sides to 1rem |
+| Button with trailing icon | label-icon spacing | 32px / 2rem | `$spacing-07` | `--ui-button-gap: 2rem` |
+| Icon-only button | padding-left/right | 16px / 1rem | `$spacing-05` | `x-ui.icon-button` size classes use 1rem inline padding |
+| Icon | svg | 16px x 16px | n/a | `ui-button-icon`, `ui-icon-button-icon` |
+| Expressive icon | svg | 20px x 20px | n/a | `lg-expressive` icon sizing only |
+| Focus | inset shadow | 1px | n/a | Visible focus uses token-backed focus styling and must remain visible in both themes |
+
+Ghost and danger ghost buttons follow the ghost structure:
+
+| Ghost structure | Property | px / rem | Carbon spacing token | Login App implementation |
+| --------------- | -------- | -------- | -------------------- | ------------------------ |
+| Ghost without icon | padding-left/right | 16px / 1rem | `$spacing-05` | `ui-action-ghost` uses equal 1rem inline padding |
+| Ghost with trailing icon | label-icon spacing | 8px / 0.5rem | `$spacing-03` | `ui-action-ghost` sets `--ui-button-gap: 0.5rem` |
+| Ghost icon-only | padding-left/right | 16px / 1rem | `$spacing-05` | `x-ui.icon-button semantic="ghost"` keeps icon-button inline padding |
 
 ## 5. Allowed variants, options, and modifiers
 
@@ -412,6 +450,8 @@ Allowed component classes should use the app-owned `ui-*` namespace documented b
 .ui-button-loading
 .ui-button-icon
 .ui-icon-button
+.ui-button-group
+.ui-button-group-equal
 ```
 
 Feature views must not create `btn-*`, Bootstrap `.btn`, local `button-*`, raw utility clusters, arbitrary hex colors, arbitrary spacing, custom focus rings, or component-local danger treatments for the same UI role.

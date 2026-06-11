@@ -539,9 +539,10 @@ Use targeted searches for the class family being changed before reading this fil
         --ui-button-padding-start: 1rem;
         --ui-button-padding-end: 4rem;
         --ui-button-gap: 2rem;
+        --ui-button-label-line-height: 1.25rem;
         @apply inline-flex items-center justify-center rounded-md border text-sm font-semibold transition;
         min-block-size: var(--ui-button-height);
-        padding-block: 0;
+        padding-block: max(0rem, calc((var(--ui-button-height) - var(--ui-button-label-line-height)) / 2));
         padding-inline: var(--ui-button-padding-start) var(--ui-button-padding-end);
         gap: var(--ui-button-gap);
         border-color: var(--ui-action-secondary-border);
@@ -1190,6 +1191,8 @@ Use targeted searches for the class family being changed before reading this fil
         display: inline-grid;
         grid-auto-flow: column;
         grid-auto-columns: minmax(0, 1fr);
+        grid-auto-rows: minmax(var(--ui-button-height), 1fr);
+        align-items: stretch;
         gap: 1rem;
         inline-size: max-content;
         max-inline-size: 100%;
@@ -1212,7 +1215,9 @@ Use targeted searches for the class family being changed before reading this fil
     .ui-button-group-vertical {
         display: inline-grid;
         grid-auto-flow: row;
+        grid-auto-rows: minmax(var(--ui-button-height), 1fr);
         grid-template-columns: minmax(0, max-content);
+        align-items: stretch;
         gap: 1rem;
         max-inline-size: 100%;
         margin-inline: 0;
@@ -1279,7 +1284,8 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-button-label {
-        @apply min-w-0 whitespace-normal text-left leading-snug;
+        @apply min-w-0 whitespace-normal text-left;
+        line-height: var(--ui-button-label-line-height);
     }
 
     .ui-button-icon {

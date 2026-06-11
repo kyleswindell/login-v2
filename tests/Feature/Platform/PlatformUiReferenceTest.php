@@ -1350,6 +1350,9 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Labels remain left-aligned')
             ->assertSee('RTL mirrors')
             ->assertSee('wrap to a second line instead of truncating')
+            ->assertSee('data-button-content-rule="group-height-follows-tallest"', false)
+            ->assertSee('data-button-content-proof="wrapped-label-second"', false)
+            ->assertSee('data-button-group-height-rule="tallest-label"', false)
             ->assertSee('data-ui-component="button"', false)
             ->assertSee('data-ui-component="icon-button"', false)
             ->assertSee('data-button-variant-row="danger-ghost"', false)
@@ -1413,6 +1416,8 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('--ui-button-padding-start: 1rem;', $buttonCss);
         $this->assertStringContainsString('--ui-button-padding-end: 4rem;', $buttonCss);
         $this->assertStringContainsString('--ui-button-gap: 2rem;', $buttonCss);
+        $this->assertStringContainsString('--ui-button-label-line-height: 1.25rem;', $buttonCss);
+        $this->assertStringContainsString('padding-block: max(0rem, calc((var(--ui-button-height) - var(--ui-button-label-line-height)) / 2));', $buttonCss);
         $this->assertStringContainsString('.ui-action-with-icon', $buttonCss);
         $this->assertStringContainsString('.ui-action-with-icon .ui-button-icon', $buttonCss);
         $this->assertStringContainsString('margin-inline-start: auto;', $buttonCss);
@@ -1430,8 +1435,10 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('.ui-button-group-fluid', $buttonCss);
         $this->assertStringContainsString('.ui-button-group-vertical', $buttonCss);
         $this->assertStringContainsString('grid-auto-columns: minmax(0, 1fr);', $buttonCss);
+        $this->assertStringContainsString('grid-auto-rows: minmax(var(--ui-button-height), 1fr);', $buttonCss);
         $this->assertStringContainsString('Use Button groups only when users need to consider two or three visible actions together.', $buttonStandard);
         $this->assertStringContainsString('Related non-ghost buttons in a group must be equal width.', $buttonStandard);
+        $this->assertStringContainsString('share the tallest required button height when any label wraps to a second line', $buttonStandard);
         $this->assertStringContainsString('The Button UI Reference page should render compact proof examples for horizontal static, horizontal fluid, vertical static, vertical fluid, all-icons, and no-icons groups;', $buttonStandard);
         $this->assertStringContainsString('Always required for icon-only buttons; copy must explain the action if clicked.', $buttonStandard);
         $this->assertStringContainsString('pins the icon to the right padding and lets label-icon space expand', $buttonStandard);

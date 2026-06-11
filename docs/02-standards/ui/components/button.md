@@ -290,6 +290,7 @@ Button groups versus Menu buttons:
 Button width and order:
 
 - Related non-ghost buttons in a group must be equal width. The shared width is determined by the longest button label.
+- Related non-ghost buttons in a group must also share the tallest required button height when any label wraps to a second line. This must work regardless of which button in the group has the wrapped label.
 - Ghost buttons are excluded from the equal-width requirement.
 - Primary buttons sit on the outside edge of the set; secondary/backing actions sit inside the set.
 - Button group spacing is fixed at 16px / `$spacing-05`; inline margins stay `0`.
@@ -337,6 +338,7 @@ Primary, secondary, tertiary, danger primary, and danger tertiary buttons share 
 | ---------------- | -------- | -------- | -------------------- | ------------------------ |
 | Button without icon | padding-left | 16px / 1rem | `$spacing-05` | `--ui-button-padding-start: 1rem` |
 | Button without icon | padding-right | 64px / 4rem | `$spacing-10` | `--ui-button-padding-end: 4rem` |
+| Button with wrapped label | padding-top/bottom | Dynamic from installed size | n/a | `padding-block` is calculated from `--ui-button-height` and `--ui-button-label-line-height`; wrapped labels increase button height instead of compressing vertical spacing |
 | Button with trailing icon | padding-left/right | 16px / 1rem | `$spacing-05` | `ui-action-with-icon` sets both sides to 1rem |
 | Button with trailing icon | label-icon spacing | Dynamic, minimum 32px / 2rem | `$spacing-07` | Non-ghost `ui-action-with-icon` pins the icon to the right padding and lets label-icon space expand |
 | Icon-only button | padding-left/right | 16px / 1rem | `$spacing-05` | `x-ui.icon-button` size classes use 1rem inline padding |

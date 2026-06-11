@@ -292,10 +292,15 @@
                 <li data-button-content-rule="left-align">Labels remain left-aligned when the button is wide.</li>
                 <li data-button-content-rule="rtl">RTL mirrors the button horizontally and right-aligns the label.</li>
                 <li data-button-content-rule="wrap-not-truncate">Long button labels wrap to a second line instead of truncating.</li>
+                <li data-button-content-rule="group-height-follows-tallest">Button groups match the tallest button when any label wraps, regardless of item order.</li>
             </ul>
-            <div class="mt-4 grid gap-3">
+            <div class="mt-4 grid gap-4">
                 <x-ui.button semantic="primary" class="w-full justify-start">Create workspace</x-ui.button>
                 <x-ui.button semantic="tertiary" class="w-56 justify-start whitespace-normal text-left">Send security review request</x-ui.button>
+                <div class="ui-button-group-equal max-w-md" data-button-content-proof="wrapped-label-second" data-button-group-height-rule="tallest-label">
+                    <x-ui.button semantic="secondary">Cancel</x-ui.button>
+                    <x-ui.button semantic="primary">Send security review request</x-ui.button>
+                </div>
             </div>
         </article>
     </section>

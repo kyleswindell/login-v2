@@ -962,6 +962,34 @@ Use targeted searches for the class family being changed before reading this fil
         justify-content: flex-start;
     }
 
+    .ui-button-group-fluid {
+        inline-size: 100%;
+    }
+
+    .ui-button-group-equal.ui-button-group-fluid {
+        display: grid;
+    }
+
+    .ui-button-group-vertical {
+        display: inline-grid;
+        grid-auto-flow: row;
+        grid-template-columns: minmax(0, max-content);
+        gap: 1rem;
+        max-inline-size: 100%;
+        margin-inline: 0;
+    }
+
+    .ui-button-group-vertical.ui-button-group-fluid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        inline-size: 100%;
+    }
+
+    .ui-button-group-vertical .ui-action:not(.ui-action-ghost) {
+        inline-size: 100%;
+        justify-content: flex-start;
+    }
+
     @media (max-width: 640px) {
         .ui-button-group-equal {
             display: grid;

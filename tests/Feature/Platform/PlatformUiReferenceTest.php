@@ -1312,13 +1312,15 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Disabled')
             ->assertSee('Loading')
             ->assertSee('Danger hover')
-            ->assertSee('2 buttons with primary')
-            ->assertSee('3 buttons with primary')
-            ->assertSee('No-primary groups')
+            ->assertSee('Horizontal static')
+            ->assertSee('Horizontal fluid')
+            ->assertSee('Vertical static')
+            ->assertSee('Vertical fluid')
             ->assertSee('More than 3 actions')
             ->assertSee('Menu buttons or Toolbar')
             ->assertSee('Button icons appear to the right of the label')
-            ->assertSee('icon-only buttons require a tooltip and accessible name')
+            ->assertSee('Icon-only buttons use the same state tokens')
+            ->assertSee('always require a tooltip plus an accessible name')
             ->assertSee('Danger icon-only is not allowed')
             ->assertSee('data-button-token-contract="carbon-button-colors"', false)
             ->assertSee('data-button-token-row="secondary"', false)
@@ -1348,18 +1350,25 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('ui-action-lg-expressive', false)
             ->assertSee('ui-action-xl', false)
             ->assertSee('ui-action-2xl', false)
-            ->assertSee('data-button-group-example="primary-secondary"', false)
+            ->assertSee('data-button-group-layout="horizontal-static"', false)
+            ->assertSee('data-button-group-layout="horizontal-fluid"', false)
+            ->assertSee('data-button-group-layout="vertical-static"', false)
+            ->assertSee('data-button-group-layout="vertical-fluid"', false)
+            ->assertSee('data-button-group-example="horizontal-static-no-icons"', false)
+            ->assertSee('data-button-group-example="horizontal-fluid-icons"', false)
+            ->assertSee('data-button-group-example="vertical-static-no-icons"', false)
+            ->assertSee('data-button-group-example="vertical-fluid-icons"', false)
             ->assertSee('data-button-group-width-rule="equal-non-ghost"', false)
-            ->assertSee('data-button-group-order="primary-outside"', false)
-            ->assertSee('data-button-group-overflow-rule="menu-buttons"', false)
-            ->assertSee('data-button-icon-state-row="default"', false)
-            ->assertSee('data-button-icon-state-row="hover"', false)
-            ->assertSee('data-button-icon-state-row="focus-visible"', false)
-            ->assertSee('data-button-icon-state-row="pressed"', false)
-            ->assertSee('data-button-icon-state-row="disabled"', false)
-            ->assertSee('data-button-icon-state-row="loading"', false)
-            ->assertSee('data-button-icon-state-row="danger-prohibited"', false)
+            ->assertSee('data-button-group-icon-rule="all-or-none"', false)
+            ->assertSee('data-button-icon-group="all-icons"', false)
+            ->assertSee('data-button-icon-group="no-icons"', false)
+            ->assertSee('data-button-icon-only-tooltip-rule="always-required"', false)
+            ->assertSee('data-button-icon-only-rule="danger-prohibited"', false)
             ->assertSee('data-button-rule="no-danger-icon-only"', false)
+            ->assertDontSee('data-button-group-overflow-rule="menu-buttons"', false)
+            ->assertDontSee('data-ui-component="menu-button"', false)
+            ->assertDontSee('data-button-icon-state-matrix', false)
+            ->assertDontSee('data-button-icon-state-row="default"', false)
             ->assertSee('is-hover', false)
             ->assertSee('is-focus', false)
             ->assertSee('is-active', false)
@@ -1394,9 +1403,13 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('--ui-button-gap: 2rem;', $buttonCss);
         $this->assertStringContainsString('.ui-action-with-icon', $buttonCss);
         $this->assertStringContainsString('.ui-button-group-equal', $buttonCss);
+        $this->assertStringContainsString('.ui-button-group-fluid', $buttonCss);
+        $this->assertStringContainsString('.ui-button-group-vertical', $buttonCss);
         $this->assertStringContainsString('grid-auto-columns: minmax(0, 1fr);', $buttonCss);
         $this->assertStringContainsString('Use Button groups only when users need to consider two or three visible actions together.', $buttonStandard);
         $this->assertStringContainsString('Related non-ghost buttons in a group must be equal width.', $buttonStandard);
+        $this->assertStringContainsString('The Button UI Reference page should render compact proof examples for horizontal static, horizontal fluid, vertical static, vertical fluid, all-icons, and no-icons groups;', $buttonStandard);
+        $this->assertStringContainsString('Always required for icon-only buttons; copy must explain the action if clicked.', $buttonStandard);
         $this->assertStringContainsString('Same role / same Carbon gray value family', $buttonStandard);
         $this->assertStringContainsString('Secondary is a filled gray action role, not a neutral outline/white button.', $colorStandard);
     }

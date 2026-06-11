@@ -270,7 +270,7 @@ Do not mix different button sizes in one button group. If a group needs differen
 | ---------------- | --------------------------------------------------------------------------------------------- |
 | Visible label    | Not displayed for icon-only button, but the accessible label is required.                     |
 | Accessible name  | Required through `label` or `ariaLabel`.                                                      |
-| Tooltip          | Required when the control has no persistent visible text.                                     |
+| Tooltip          | Always required for icon-only buttons; copy must explain the action if clicked.               |
 | Target size      | Minimum 44px interactive target.                                                              |
 | Icon library     | Heroicons only unless the Icons Element standard is updated.                                  |
 | Danger treatment | Danger icon-only buttons are prohibited for destructive actions. Use a labeled danger button. |
@@ -278,13 +278,14 @@ Do not mix different button sizes in one button group. If a group needs differen
 
 ### 4.7. Button group contract
 
-There is no standalone public Button group Blade API unless `x-ui.button-group` is explicitly installed and documented. Button grouping is usually owned by the parent Pattern, but the Button standard defines allowed combinations, order, width, and spacing. Use app-owned `ui-button-group` / `ui-button-group-equal` classes when a parent Pattern needs the installed Button group treatment.
+There is no standalone public Button group Blade API unless `x-ui.button-group` is explicitly installed and documented. Button grouping is usually owned by the parent Pattern, but the Button standard defines allowed combinations, order, width, spacing, layout direction, and icon consistency. Use app-owned `ui-button-group`, `ui-button-group-equal`, `ui-button-group-fluid`, and `ui-button-group-vertical` classes when a parent Pattern needs the installed Button group treatment.
 
 Button groups versus Menu buttons:
 
 - Use Button groups only when users need to consider two or three visible actions together.
 - Move more than three actions into Menu buttons, a Toolbar, or another Pattern-owned action surface.
 - Do not keep adding visible buttons to avoid implementing a Menu button or Toolbar.
+- Do not render Menu button live examples on the Button page; Menu button examples belong on the Menu buttons component page.
 
 Button width and order:
 
@@ -293,6 +294,15 @@ Button width and order:
 - Primary buttons sit on the outside edge of the set; secondary/backing actions sit inside the set.
 - Button group spacing is fixed at 16px / `$spacing-05`; inline margins stay `0`.
 - Button groups use a 1px boundary only when a parent Pattern intentionally creates a fluid grouped control surface.
+
+Button group layout and icon consistency:
+
+- Button groups may be horizontal or vertical.
+- Static groups size to their content while preserving equal width among related non-ghost buttons.
+- Fluid groups fill the available parent width and keep each non-ghost button on the same width track.
+- Icons are optional in Button groups, but usage must be consistent: either every button in the group has an icon or no button in the group has an icon.
+- Do not add icons to only some buttons in a group.
+- The Button UI Reference page should render compact proof examples for horizontal static, horizontal fluid, vertical static, vertical fluid, all-icons, and no-icons groups; it should not render every allowed combination as a live example.
 
 Recommended groups with a primary action:
 
@@ -452,6 +462,8 @@ Allowed component classes should use the app-owned `ui-*` namespace documented b
 .ui-icon-button
 .ui-button-group
 .ui-button-group-equal
+.ui-button-group-fluid
+.ui-button-group-vertical
 ```
 
 Feature views must not create `btn-*`, Bootstrap `.btn`, local `button-*`, raw utility clusters, arbitrary hex colors, arbitrary spacing, custom focus rings, or component-local danger treatments for the same UI role.
@@ -602,8 +614,8 @@ The Button page is a broad component reference page. It must not be forced into 
 | Modal footer actions     | Confirmation flows keep confirmation and cancellation visible together with Pattern-owned alignment.                | Primary confirmation, Secondary/ghost cancel, Danger confirmation                             |
 | Table row actions        | Dense rows use small lower-emphasis or icon-only actions with accessible labels.                                    | Small buttons, Icon-only default, Icon-only hover, Icon-only focus, Icon-only disabled        |
 | Destructive confirmation | Destructive commands use visible danger labels and an escape path.                                                  | Danger primary, Danger tertiary, Danger ghost; no danger icon-only                            |
-| Button groups            | Recommended two-button, three-button, and no-primary groups render visibly.                                         | Primary groups, no-primary tertiary/ghost groups, danger tertiary group                       |
-| Icon usage               | Labeled trailing icon and icon-only controls render with accessible labels and tooltip requirements.                | Trailing icon, icon-only, minimum target, no danger icon-only rule                            |
+| Button groups            | Horizontal and vertical groups render in static and fluid layouts with equal-width non-ghost buttons.               | Horizontal static, horizontal fluid, vertical static, vertical fluid                          |
+| Icon usage               | Labeled trailing icon, all-icons/no-icons Button group consistency, and icon-only tooltip requirements render.      | Trailing icon, all-icons group, no-icons group, icon-only tooltip, no danger icon-only rule   |
 | Content behavior         | Labels prove verb+noun, sentence case, start alignment, RTL mirroring, and wrap-not-truncate behavior.              | Long label wraps, RTL mirror, no truncation                                                   |
 | Developer implementation | Canonical calls and props render as real code examples.                                                             | `x-ui.button`, `x-ui.icon-button`, supported props, token-backed examples                     |
 
@@ -620,10 +632,11 @@ The page must not display generic fallback/reference sections or placeholder dev
 - The variant purpose matrix renders Primary, Secondary, Tertiary, Ghost, Danger primary, Danger tertiary, and Danger ghost.
 - The size scale renders extra small, small, medium, large productive, large expressive, extra large, and 2XL.
 - The state matrix renders default, hover, focus-visible, active/pressed, disabled, loading, and danger states.
-- Button group examples include approved two-button, three-button, and no-primary combinations.
+- Button group examples include horizontal static, horizontal fluid, vertical static, and vertical fluid layouts.
+- Button group icon examples include all-icons and no-icons groups; mixed icon usage is not shown as valid.
 - Avoided group combinations are documented and not presented as approved.
 - Icon examples include a trailing-icon labeled button and icon-only controls.
-- Icon-only controls include accessible label and tooltip/accessibility text.
+- Icon-only controls include accessible label and tooltip text regardless of icon recognizability.
 - Danger icon-only prohibition is visible.
 - Content examples include verb+noun labels, sentence case, start alignment, RTL mirroring, and wrapping long labels instead of truncation.
 - Developer examples use `x-ui.button` and `x-ui.icon-button`, not placeholder comments or ad hoc markup.
@@ -649,8 +662,13 @@ $response->assertSee('Danger ghost');
 $response->assertSee('Extra small');
 $response->assertSee('Large expressive');
 $response->assertSee('2XL');
-$response->assertSee('Icon-only controls need an accessible label');
+$response->assertSee('data-button-group-layout="horizontal-static"', false);
+$response->assertSee('data-button-group-layout="vertical-fluid"', false);
+$response->assertSee('data-button-group-icon-rule="all-or-none"', false);
+$response->assertSee('Icon-only buttons use the same state tokens');
+$response->assertSee('data-button-icon-only-tooltip-rule="always-required"', false);
 $response->assertSee('Do not use danger icon-only buttons');
+$response->assertDontSee('data-button-group-overflow-rule="menu-buttons"', false);
 $response->assertDontSee('Generic fallback');
 $response->assertDontSee('TODO');
 $response->assertDontSee('btn btn-primary');

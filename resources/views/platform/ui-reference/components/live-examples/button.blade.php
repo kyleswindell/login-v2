@@ -29,17 +29,11 @@
         ['Danger hover', '<x-ui.button semantic="danger" class="is-hover">Delete tenant</x-ui.button>'],
     ];
 
-    $groupRows = [
-        ['2 buttons with primary', 'Primary + secondary, primary + tertiary, primary + ghost, primary + danger tertiary, danger primary + secondary, danger primary + ghost.'],
-        ['3 buttons with primary', 'Primary + secondary + tertiary, primary + secondary + ghost, primary + two secondary, primary + two tertiary, primary + tertiary + danger tertiary.'],
-        ['No-primary groups', 'Two tertiary, tertiary + ghost, two ghost, three tertiary, or two tertiary + one danger tertiary.'],
-        ['More than 3 actions', 'Move actions into Menu buttons or Toolbar instead of expanding a button group.'],
-    ];
-
-    $groupMenuItems = [
-        ['label' => 'Export report', 'action' => 'export-report'],
-        ['label' => 'Share link', 'action' => 'share-link'],
-        ['label' => 'Archive workspace', 'action' => 'archive-workspace'],
+    $groupGuidanceRows = [
+        ['Visible action limit', 'Use Button groups for two or three visible actions only.'],
+        ['More than 3 actions', 'Move actions into Menu buttons or Toolbar instead of expanding a Button group.'],
+        ['Equal width', 'Related non-ghost buttons share the width of the longest label.'],
+        ['Icon consistency', 'Use icons on every button in the group or on none of the buttons.'],
     ];
 
     $structureRows = [
@@ -51,15 +45,6 @@
         ['Icon-only button', 'padding-left/right', '16px / 1rem', '$spacing-05', 'ui-icon-button-*'],
         ['Icon', 'svg', '16px x 16px', '-', 'ui-button-icon'],
         ['Expressive icon', 'svg', '20px x 20px', '-', 'ui-action-lg-expressive .ui-button-icon'],
-    ];
-
-    $iconStateRows = [
-        ['Default', 'Refresh data', 'heroicon-o-arrow-path', 'ghost', null, false, false],
-        ['Hover', 'Refresh data hover', 'heroicon-o-arrow-path', 'ghost', 'is-hover', false, false],
-        ['Focus-visible', 'Refresh data focus', 'heroicon-o-arrow-path', 'ghost', 'is-focus', false, false],
-        ['Pressed', 'Refresh data pressed', 'heroicon-o-arrow-path', 'ghost', 'is-active', false, false],
-        ['Disabled', 'Refresh data disabled', 'heroicon-o-arrow-path', 'ghost', null, true, false],
-        ['Loading', 'Refresh data loading', 'heroicon-o-arrow-path', 'ghost', null, false, true],
     ];
 
     $tokenRows = [
@@ -170,63 +155,75 @@
         </div>
     </section>
 
-    <section class="grid gap-4 xl:grid-cols-2">
-        <article class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-button-live-section="button-groups">
-            <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Button groups</h3>
-            <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">Use groups when there are two or three actions to consider. More than three actions belong in Menu buttons or Toolbar.</p>
-            <div class="mt-4 space-y-4">
-                <div class="ui-button-group-equal" data-button-group-example="primary-secondary" data-button-group-width-rule="equal-non-ghost">
+    <section class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-button-live-section="button-groups">
+        <div class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+            <div>
+                <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Button groups</h3>
+                <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">Use groups when there are two or three actions to consider. More than three actions belong in Menu buttons or Toolbar.</p>
+            </div>
+            <span class="inline-flex w-fit items-center rounded-full border px-2.5 py-1 text-xs font-semibold" style="border-color: var(--ui-border-subtle-01); color: var(--ui-text-secondary);" data-button-group-icon-rule="all-or-none">Icons: all or none</span>
+        </div>
+
+        <div class="mt-4 grid gap-4 xl:grid-cols-2">
+            <article class="rounded-md border p-3" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-button-group-layout="horizontal-static">
+                <p class="mb-3 text-sm font-semibold" style="color: var(--ui-text-primary);">Horizontal static</p>
+                <div class="ui-button-group-equal" data-button-group-example="horizontal-static-no-icons" data-button-group-width-rule="equal-non-ghost" data-button-icon-group="no-icons">
                     <x-ui.button semantic="secondary">Cancel</x-ui.button>
                     <x-ui.button semantic="primary">Save changes</x-ui.button>
                 </div>
-                <div class="ui-button-group-equal" data-button-group-example="primary-secondary-tertiary" data-button-group-order="primary-outside">
-                    <x-ui.button semantic="tertiary">Save draft</x-ui.button>
-                    <x-ui.button semantic="secondary">Back</x-ui.button>
-                    <x-ui.button semantic="primary">Continue</x-ui.button>
-                </div>
-                <div class="ui-button-group" data-button-group-example="no-primary">
-                    <x-ui.button semantic="tertiary">Filter table</x-ui.button>
-                    <x-ui.button semantic="ghost">Clear filters</x-ui.button>
-                </div>
-                <div class="ui-button-group" data-button-group-example="menu-button-handoff" data-button-group-overflow-rule="menu-buttons">
-                    <x-ui.button semantic="primary">Create workspace</x-ui.button>
-                    <x-ui.menu-button label="More actions" type="tertiary" :items="$groupMenuItems" />
-                </div>
-                <ul class="space-y-2 text-sm leading-6" style="color: var(--ui-text-secondary);">
-                    @foreach ($groupRows as [$label, $purpose])
-                        <li><strong style="color: var(--ui-text-primary);">{{ $label }}:</strong> {{ $purpose }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        </article>
+            </article>
 
+            <article class="rounded-md border p-3" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-button-group-layout="horizontal-fluid">
+                <p class="mb-3 text-sm font-semibold" style="color: var(--ui-text-primary);">Horizontal fluid</p>
+                <div class="ui-button-group-equal ui-button-group-fluid" data-button-group-example="horizontal-fluid-icons" data-button-group-width-rule="equal-non-ghost" data-button-icon-group="all-icons">
+                    <x-ui.button semantic="tertiary" icon="heroicon-o-document-duplicate">Duplicate</x-ui.button>
+                    <x-ui.button semantic="secondary" icon="heroicon-o-arrow-uturn-left">Back</x-ui.button>
+                    <x-ui.button semantic="primary" icon="heroicon-o-check">Publish</x-ui.button>
+                </div>
+            </article>
+
+            <article class="rounded-md border p-3" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-button-group-layout="vertical-static">
+                <p class="mb-3 text-sm font-semibold" style="color: var(--ui-text-primary);">Vertical static</p>
+                <div class="ui-button-group-vertical" data-button-group-example="vertical-static-no-icons" data-button-group-width-rule="equal-non-ghost" data-button-icon-group="no-icons">
+                    <x-ui.button semantic="secondary">Go back</x-ui.button>
+                    <x-ui.button semantic="primary">Continue setup</x-ui.button>
+                </div>
+            </article>
+
+            <article class="rounded-md border p-3" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-button-group-layout="vertical-fluid">
+                <p class="mb-3 text-sm font-semibold" style="color: var(--ui-text-primary);">Vertical fluid</p>
+                <div class="ui-button-group-vertical ui-button-group-fluid" data-button-group-example="vertical-fluid-icons" data-button-group-width-rule="equal-non-ghost" data-button-icon-group="all-icons">
+                    <x-ui.button semantic="tertiary" icon="heroicon-o-pencil-square">Edit details</x-ui.button>
+                    <x-ui.button semantic="secondary" icon="heroicon-o-x-mark">Cancel request</x-ui.button>
+                    <x-ui.button semantic="primary" icon="heroicon-o-check-circle">Approve request</x-ui.button>
+                </div>
+            </article>
+        </div>
+
+        <ul class="mt-4 grid gap-2 text-sm leading-6 md:grid-cols-2" style="color: var(--ui-text-secondary);">
+            @foreach ($groupGuidanceRows as [$label, $purpose])
+                <li><strong style="color: var(--ui-text-primary);">{{ $label }}:</strong> {{ $purpose }}</li>
+            @endforeach
+        </ul>
+    </section>
+
+    <section class="grid gap-4 xl:grid-cols-2">
         <article class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-button-live-section="icon-usage">
             <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Icon usage</h3>
-            <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">Icons support recognizable actions. Button icons appear to the right of the label; icon-only buttons require a tooltip and accessible name.</p>
+            <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">Button icons appear to the right of the label. Icon-only buttons use the same state tokens as every other button, and always require a tooltip plus an accessible name.</p>
             <div class="mt-4 flex flex-wrap items-center gap-3">
                 <x-ui.button semantic="primary" icon="heroicon-o-arrow-down-tray">Download report</x-ui.button>
                 <x-ui.button semantic="ghost" icon="heroicon-o-arrow-top-right-on-square">Open docs</x-ui.button>
             </div>
-            <div class="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3" data-button-icon-state-matrix>
-                @foreach ($iconStateRows as [$label, $accessibleLabel, $icon, $semantic, $stateClass, $disabled, $loading])
-                    <div class="rounded-md border p-3" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-button-icon-state-row="{{ Str::slug($label) }}">
-                        <p class="mb-3 text-sm font-semibold" style="color: var(--ui-text-primary);">Icon-only {{ $label }}</p>
-                        <span class="inline-flex items-center gap-2">
-                            <x-ui.icon-button
-                                :icon="$icon"
-                                :label="$accessibleLabel"
-                                :semantic="$semantic"
-                                :disabled="$disabled"
-                                :loading="$loading"
-                                @class([$stateClass => filled($stateClass)])
-                            />
-                            @if ($label === 'Hover')
-                                <span class="rounded-md px-2 py-1 text-xs" style="background-color: var(--ui-layer-inverse); color: var(--ui-text-inverse);">Refresh data</span>
-                            @endif
-                        </span>
-                    </div>
-                @endforeach
-                <div class="rounded-md border p-3" style="border-color: var(--ui-support-error); background-color: var(--ui-layer-02);" data-button-icon-state-row="danger-prohibited">
+            <div class="mt-4 grid gap-3 md:grid-cols-2">
+                <div class="rounded-md border p-3" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-button-icon-only-tooltip-rule="always-required">
+                    <p class="mb-3 text-sm font-semibold" style="color: var(--ui-text-primary);">Icon-only tooltip requirement</p>
+                    <span class="inline-flex items-center gap-2">
+                        <x-ui.icon-button icon="heroicon-o-arrow-path" label="Refresh data" tooltip="Refresh data" semantic="ghost" />
+                        <span class="rounded-md px-2 py-1 text-xs" style="background-color: var(--ui-layer-inverse); color: var(--ui-text-inverse);">Refresh data</span>
+                    </span>
+                </div>
+                <div class="rounded-md border p-3" style="border-color: var(--ui-support-error); background-color: var(--ui-layer-02);" data-button-icon-only-rule="danger-prohibited">
                     <p class="text-sm font-semibold" style="color: var(--ui-text-primary);">Icon-only danger prohibited</p>
                     <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">Do not use danger icon-only buttons for destructive actions. Use a labeled danger button so the destructive consequence is visible in text.</p>
                     <div class="mt-3">
@@ -240,9 +237,7 @@
                 <li data-button-rule="no-danger-icon-only">Danger icon-only is not allowed for destructive actions; use a visible label.</li>
             </ul>
         </article>
-    </section>
 
-    <section class="grid gap-4 xl:grid-cols-2">
         <article class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-button-live-section="content-behavior">
             <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Content behavior</h3>
             <ul class="mt-3 space-y-2 text-sm leading-6" style="color: var(--ui-text-secondary);">
@@ -257,8 +252,10 @@
                 <x-ui.button semantic="tertiary" class="w-56 justify-start whitespace-normal text-left">Send security review request</x-ui.button>
             </div>
         </article>
+    </section>
 
-        <article class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-button-live-section="token-style-roles">
+    <section class="grid gap-4 xl:grid-cols-2">
+        <article class="min-w-0 rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-button-live-section="token-style-roles">
             <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Token and style roles</h3>
             <dl class="mt-3 grid gap-3 text-sm">
                 <div>

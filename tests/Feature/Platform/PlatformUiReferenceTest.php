@@ -53,7 +53,10 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('aria-label="UI Reference patterns"', false)
             ->assertSee('aria-current="page"', false)
             ->assertSee('data-ui-reference-component-sidebar-sort="alphabetical"', false)
+            ->assertSee('data-ui-reference-sidebar-approved="component:accordion"', false)
+            ->assertSee('data-ui-reference-sidebar-approved="component:breadcrumb"', false)
             ->assertSee('data-ui-reference-sidebar-approved="component:button"', false)
+            ->assertSee('data-ui-reference-sidebar-approved="component:menu-buttons"', false)
             ->assertSee('data-ui-reference-sidebar-approved="component:tooltip"', false)
             ->assertDontSee('data-ui-reference-component-sidebar-group=', false)
             ->assertDontSee('Legacy Index Surfaces')
@@ -75,7 +78,7 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('<button', $sidebarPartial);
         $this->assertStringContainsString('aria-current="page"', $sidebarPartial);
         $this->assertStringContainsString('x-heroicon-o-chevron-down', $sidebarPartial);
-        $this->assertStringContainsString('$approvedComponentSlugs = [\'button\', \'tooltip\'];', $sidebarPartial);
+        $this->assertStringContainsString('$approvedComponentSlugs = [\'accordion\', \'breadcrumb\', \'button\', \'menu-buttons\', \'tooltip\'];', $sidebarPartial);
         $this->assertStringContainsString('x-heroicon-o-check-circle', $sidebarPartial);
         $this->assertStringNotContainsString('<details', $sidebarPartial);
         $this->assertStringNotContainsString('<summary', $sidebarPartial);

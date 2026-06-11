@@ -36,7 +36,7 @@
 
 ## Carbon-Aligned T1 Component Library
 - [ ] Carbon-Aligned T1 Component Library
-  Status: partial — P2-F-CQ-066 through P2-F-CQ-073 passed manual review on 2026-06-08; P2-F-CQ-016 through P2-F-CQ-024 and P2-F-CQ-033 through P2-F-CQ-039 are closed as superseded by the current Component API standards, API proof sync, and component-specific recovery queue; P2-F-CQ-077, P2-F-CQ-079, P2-F-CQ-093, P2-F-CQ-128, P2-F-CQ-129, P2-F-CQ-136 through P2-F-CQ-163, and P2-F-CQ-166 through P2-F-CQ-169 are implemented pending review
+  Status: partial — P2-F-CQ-066 through P2-F-CQ-074, P2-F-CQ-079, P2-F-CQ-093, and P2-F-CQ-151 passed manual review; P2-F-CQ-016 through P2-F-CQ-024 and P2-F-CQ-033 through P2-F-CQ-039 are closed as superseded by the current Component API standards, API proof sync, and component-specific recovery queue; P2-F-CQ-075 through P2-F-CQ-078, P2-F-CQ-080, P2-F-CQ-128, P2-F-CQ-129, P2-F-CQ-136 through P2-F-CQ-150, P2-F-CQ-152 through P2-F-CQ-163, and P2-F-CQ-166 through P2-F-CQ-169 are implemented pending review
   - [x] every reviewed Carbon component has a Login App 2.0 disposition and owner route
   - [x] sidebar and overview are generated from the same component catalog source
   - [x] legacy combined T1 routes remain available as index/compatibility surfaces, not primary navigation
@@ -64,7 +64,7 @@
   - [x] UI Reference sidebar dropdowns use productive disclosure motion, reduced-motion handling, chevron state, and one shell scroll owner
   - [x] UI Reference sidebar uses one controlled disclosure API for Foundation Elements, Color, Typography, and Components with no native instant disclosure left in the shared sidebar partial
   - [x] UI Reference sidebar native-disclosure recovery was failed/reopened and replaced with a Navigation Pattern/UI shell correction using token-backed classes, controlled disclosure lifecycle, named nav regions, current-route semantics, and Heroicon chevrons
-  - [ ] component-specific recovery queue P2-F-CQ-077, P2-F-CQ-079, P2-F-CQ-093, and P2-F-CQ-136 through P2-F-CQ-163 is implemented and ready for manual review
+  - [ ] remaining component-specific recovery queue P2-F-CQ-075 through P2-F-CQ-078, P2-F-CQ-080, P2-F-CQ-136 through P2-F-CQ-150, and P2-F-CQ-152 through P2-F-CQ-163 is implemented and ready for manual review
 
 ## Foundation Elements Layer
 - [x] Foundation Elements Layer

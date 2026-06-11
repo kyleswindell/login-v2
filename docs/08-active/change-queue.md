@@ -254,17 +254,6 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - tests assert rendered API markers, interaction states, and no generic fallback
 - Implemented in: worklog-2-F-0044
 
-### P2-F-CQ-151 - Tooltip component API proof and recovery
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-127, P2-F-CQ-129
-- Scope: Prove `x-ui.tooltip` against the Tooltip standard.
-- Acceptance:
-  - page renders icon-only button tooltip, definition tooltip, disabled-control explanation pattern, placement, hover/focus, and non-interactive constraints
-  - developer implementation uses `x-ui.tooltip`
-  - tests assert rendered API markers, accessible naming, placement/state examples, and no generic fallback
-- Implemented in: worklog-2-F-0044
-
 ### P2-F-CQ-152 - Toggletip component API proof and recovery
 - Status: Implemented Pending Review
 - Owner: Batch F
@@ -413,36 +402,6 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - focused tests assert anatomy coverage, sizes, alignment, states, and no generic fallback
   - worklog-2-F-0025 output is corrected rather than treated as accepted final proof
 - Implemented in: worklog-2-F-0041
-
-### P2-F-CQ-079 - Button component correction
-- Status: Implemented Pending Review
-- Unblocked By: P2-F-CQ-077 Menu component correction
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-033, P2-F-CQ-116, P2-F-CQ-129
-- Scope: Correct Button as the broad, matrix-heavy Component page exemplar with full variant, size, state, group, icon, content, and implementation coverage.
-- Acceptance:
-  - Button page renders a variant purpose matrix for primary, secondary, tertiary, ghost, danger primary, danger tertiary, and danger ghost
-  - Button page renders seven size examples, state matrix, recommended groups, icon usage, content behavior, and token/style roles
-  - icon-only hover/focus/disabled/loading/pressed/danger states are represented correctly
-  - developer implementation uses `x-ui.button` and `x-ui.icon-button`
-  - focused tests assert required matrices and no generic fallback
-  - worklog-2-F-0026 output is corrected rather than treated as accepted final proof
-- Implemented in: worklog-2-F-0042
-
-### P2-F-CQ-093 - Menu buttons component correction
-- Status: Implemented Pending Review
-- Unblocked By: P2-F-CQ-079 Button component correction
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-033, P2-F-CQ-122, P2-F-CQ-129
-- Scope: Correct Menu buttons after the installed menu-button, combo-button, and overflow-menu APIs are proven in UI Reference.
-- Acceptance:
-  - Menu button, Combo button, and Overflow menu are represented as distinct base options with normal interactive closed-state examples
-  - size variants cover extra small, small, medium, and large with matching trigger/menu item heights
-  - width behavior documents the 160px menu minimum and ghost button exception
-  - examples are not forced open unless scoped as explicit state/anatomy proof
-  - developer implementation uses `x-ui.menu-button`, `x-ui.combo-button`, and `x-ui.overflow-menu`
-  - focused tests assert rendered API markers, size/width behavior, and no generic fallback
-- Implemented in: worklog-2-F-0043
 
 ### P2-F-CQ-129 - Component recovery review and correction sequencing
 - Status: Implemented Pending Review
@@ -624,19 +583,6 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - Popover remains deferred unless a separate product need installs it
 - Implemented in: worklog-2-F-0033
 
-### P2-F-CQ-074 - Breadcrumb component correction
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-039
-- Scope: Replace generic Breadcrumb depth content with a canonical `x-ui.breadcrumb` primitive, functional overflow menu, small/medium live examples, and rendered nested variants.
-- Acceptance:
-  - Breadcrumb page shows small and medium base examples
-  - variants render truncated menu, current-page-listed, and truncated-menu-with-current-page-listed treatments
-  - default behavior omits the current page link unless the current-page-listed variant is used
-  - developer implementation uses `x-ui.breadcrumb`
-  - focused tests assert overflow menu, current page text, sizing, and no generic fallback
-- Implemented in: worklog-2-F-0025
-
 ### P2-F-CQ-075 - Tabs component correction
 - Status: Implemented Pending Review
 - Owner: Batch F
@@ -748,7 +694,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 
 ### P2-F-CQ-002 - Module home and dashboard summary starters
 - Status: Blocked
-- Blocked Until: Component recovery queue P2-F-CQ-077, P2-F-CQ-079, P2-F-CQ-093, and P2-F-CQ-136 through P2-F-CQ-163 reaches a starter-safe review state.
+- Blocked Until: Remaining component recovery queue P2-F-CQ-075 through P2-F-CQ-078, P2-F-CQ-080, P2-F-CQ-136 through P2-F-CQ-150, and P2-F-CQ-152 through P2-F-CQ-163 reaches a starter-safe review state.
 - Owner: Batch F
 - Scope: Provide starter examples for module home / overview, dashboard/module summary surfaces, and dashboard widget examples by module content type.
 - Acceptance:
@@ -758,7 +704,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 
 ### P2-F-CQ-003 - Settings and setup starters
 - Status: Blocked
-- Blocked Until: Component recovery queue P2-F-CQ-077, P2-F-CQ-079, P2-F-CQ-093, and P2-F-CQ-136 through P2-F-CQ-163 reaches a starter-safe review state.
+- Blocked Until: Remaining component recovery queue P2-F-CQ-075 through P2-F-CQ-078, P2-F-CQ-080, P2-F-CQ-136 through P2-F-CQ-150, and P2-F-CQ-152 through P2-F-CQ-163 reaches a starter-safe review state.
 - Owner: Batch F
 - Scope: Provide complete settings and setup/configuration starter examples and normalize proof surfaces only where needed for starter parity.
 - Acceptance:
@@ -768,7 +714,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 
 ### P2-F-CQ-004 - Account/profile starters
 - Status: Blocked
-- Blocked Until: Component recovery queue P2-F-CQ-077, P2-F-CQ-079, P2-F-CQ-093, and P2-F-CQ-136 through P2-F-CQ-163 reaches a starter-safe review state.
+- Blocked Until: Remaining component recovery queue P2-F-CQ-075 through P2-F-CQ-078, P2-F-CQ-080, P2-F-CQ-136 through P2-F-CQ-150, and P2-F-CQ-152 through P2-F-CQ-163 reaches a starter-safe review state.
 - Owner: Batch F
 - Scope: Provide account/profile read-only and editable starter examples using the existing account proof surfaces and UI Reference catalog.
 - Acceptance:
@@ -778,7 +724,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 
 ### P2-F-CQ-005 - List, detail, and create/edit starters
 - Status: Blocked
-- Blocked Until: Component recovery queue P2-F-CQ-077, P2-F-CQ-079, P2-F-CQ-093, and P2-F-CQ-136 through P2-F-CQ-163 reaches a starter-safe review state.
+- Blocked Until: Remaining component recovery queue P2-F-CQ-075 through P2-F-CQ-078, P2-F-CQ-080, P2-F-CQ-136 through P2-F-CQ-150, and P2-F-CQ-152 through P2-F-CQ-163 reaches a starter-safe review state.
 - Owner: Batch F
 - Scope: Provide starter examples for list/index, table-management index, operational log/detail, content browser/split-view, detail/read-only, create/edit form, and blocked/empty/unavailable page states.
 - Acceptance:
@@ -792,7 +738,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 
 ### P2-F-CQ-006 - Batch F docs, tests, and handoff readiness
 - Status: Blocked
-- Blocked Until: Component recovery queue P2-F-CQ-077, P2-F-CQ-079, P2-F-CQ-093, and P2-F-CQ-136 through P2-F-CQ-163 reaches a starter-safe review state.
+- Blocked Until: Remaining component recovery queue P2-F-CQ-075 through P2-F-CQ-078, P2-F-CQ-080, P2-F-CQ-136 through P2-F-CQ-150, and P2-F-CQ-152 through P2-F-CQ-163 reaches a starter-safe review state.
 - Owner: Batch F
 - Scope: Add automated coverage and synchronize planning/handoff notes after starter implementation.
 - Acceptance:
@@ -815,6 +761,64 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 - Revisit When: P2-F-CQ-009 requires runtime notification behavior changes, or a later notifications batch owns realtime client behavior.
 
 ## Passed Review
+
+### P2-F-CQ-074 - Breadcrumb component correction
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-039
+- Scope: Replace generic Breadcrumb depth content with a canonical `x-ui.breadcrumb` primitive, functional overflow menu, small/medium live examples, and rendered nested variants.
+- Acceptance:
+  - Breadcrumb page shows small and medium base examples
+  - variants render truncated menu, current-page-listed, and truncated-menu-with-current-page-listed treatments
+  - default behavior omits the current page link unless the current-page-listed variant is used
+  - developer implementation uses `x-ui.breadcrumb`
+  - focused tests assert overflow menu, current page text, sizing, and no generic fallback
+- Implemented in: worklog-2-F-0025
+- Review result: Approved on 2026-06-11
+
+### P2-F-CQ-079 - Button component correction
+- Status: Passed Review
+- Unblocked By: P2-F-CQ-077 Menu component correction
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-033, P2-F-CQ-116, P2-F-CQ-129
+- Scope: Correct Button as the broad, matrix-heavy Component page exemplar with full variant, size, state, group, icon, content, and implementation coverage.
+- Acceptance:
+  - Button page renders a variant purpose matrix for primary, secondary, tertiary, ghost, danger primary, danger tertiary, and danger ghost
+  - Button page renders seven size examples, state matrix, recommended groups, icon usage, content behavior, and token/style roles
+  - icon-only hover/focus/disabled/loading/pressed/danger states are represented correctly
+  - developer implementation uses `x-ui.button` and `x-ui.icon-button`
+  - focused tests assert required matrices and no generic fallback
+  - worklog-2-F-0026 output is corrected rather than treated as accepted final proof
+- Implemented in: worklog-2-F-0042
+- Review result: Approved on 2026-06-11
+
+### P2-F-CQ-093 - Menu buttons component correction
+- Status: Passed Review
+- Unblocked By: P2-F-CQ-079 Button component correction
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-033, P2-F-CQ-122, P2-F-CQ-129
+- Scope: Correct Menu buttons after the installed menu-button, combo-button, and overflow-menu APIs are proven in UI Reference.
+- Acceptance:
+  - Menu button, Combo button, and Overflow menu are represented as distinct base options with normal interactive closed-state examples
+  - size variants cover extra small, small, medium, and large with matching trigger/menu item heights
+  - width behavior documents the 160px menu minimum and ghost button exception
+  - examples are not forced open unless scoped as explicit state/anatomy proof
+  - developer implementation uses `x-ui.menu-button`, `x-ui.combo-button`, and `x-ui.overflow-menu`
+  - focused tests assert rendered API markers, size/width behavior, and no generic fallback
+- Implemented in: worklog-2-F-0043
+- Review result: Approved on 2026-06-11
+
+### P2-F-CQ-151 - Tooltip component API proof and recovery
+- Status: Passed Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-127, P2-F-CQ-129
+- Scope: Prove `x-ui.tooltip` against the Tooltip standard.
+- Acceptance:
+  - page renders icon-only button tooltip, definition tooltip, disabled-control explanation pattern, placement, hover/focus, and non-interactive constraints
+  - developer implementation uses `x-ui.tooltip`
+  - tests assert rendered API markers, accessible naming, placement/state examples, and no generic fallback
+- Implemented in: worklog-2-F-0044
+- Review result: Approved on 2026-06-11
 
 ### P2-F-CQ-066 - Component UI Reference terminology and menu correction
 - Status: Passed Review

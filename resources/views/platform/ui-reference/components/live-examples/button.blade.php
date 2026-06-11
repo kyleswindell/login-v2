@@ -44,6 +44,15 @@
         ['Disabled', 'Refresh data disabled', 'heroicon-o-arrow-path', 'ghost', null, true, false],
         ['Loading', 'Refresh data loading', 'heroicon-o-arrow-path', 'ghost', null, false, true],
     ];
+
+    $tokenRows = [
+        ['Primary', '$button-primary / hover / active', '--ui-action-primary-bg / -hover / -active', 'Button-owned action color family.'],
+        ['Secondary', '$button-secondary / hover / active', '--ui-action-secondary-bg / -hover / -active', 'Light: Gray 80 #393939, Gray 80 hover #4c4c4c, Gray 60 active #6f6f6f. Dark uses the corresponding lighter gray secondary family.'],
+        ['Tertiary', '$button-tertiary / hover / active', '--ui-action-tertiary-bg / -hover / -active', 'Transparent default with token-backed border/text and filled interaction states.'],
+        ['Ghost', '$background-hover + $link-primary roles', '--ui-action-ghost-*', 'Transparent low-emphasis trigger with token-backed hover and active treatment.'],
+        ['Danger', '$button-danger-primary / hover / active + $button-danger-secondary', '--ui-action-danger-*', 'Destructive button hierarchy only.'],
+        ['Disabled', '$button-disabled + $text-on-color-disabled', '--ui-action-disabled-*', 'Disabled surface, label, and icon roles.'],
+    ];
 @endphp
 
 <div class="space-y-6" data-component-live-layout="button-matrix">
@@ -205,6 +214,28 @@
                     <dd style="color: var(--ui-text-secondary);">Buttons own internal padding; parent layouts own external gaps and grouping.</dd>
                 </div>
             </dl>
+            <div class="mt-4 overflow-x-auto rounded-lg border" style="border-color: var(--ui-border-subtle-01);" data-button-token-contract="carbon-button-colors">
+                <table class="min-w-full text-left text-xs">
+                    <thead style="background-color: var(--ui-layer-accent-01); color: var(--ui-text-secondary);">
+                        <tr>
+                            <th class="px-3 py-2">Role</th>
+                            <th class="px-3 py-2">Carbon token coverage</th>
+                            <th class="px-3 py-2">Login token owner</th>
+                            <th class="px-3 py-2">Alignment rule</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($tokenRows as [$role, $carbon, $login, $rule])
+                            <tr class="border-t" style="border-color: var(--ui-border-subtle-01);" data-button-token-row="{{ Str::slug($role) }}">
+                                <td class="px-3 py-2 font-semibold" style="color: var(--ui-text-primary);">{{ $role }}</td>
+                                <td class="px-3 py-2 font-mono" style="color: var(--ui-text-secondary);">{{ $carbon }}</td>
+                                <td class="px-3 py-2 font-mono" style="color: var(--ui-text-secondary);">{{ $login }}</td>
+                                <td class="px-3 py-2 leading-5" style="color: var(--ui-text-secondary);">{{ $rule }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
             <x-ui.code-snippet class="mt-4" language="Blade" copyable><span class="ui-code-token-punctuation">&lt;</span><span class="ui-code-token-keyword">x-ui.button</span> <span class="ui-code-token-property">semantic</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"primary"</span> <span class="ui-code-token-property">size</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"lg"</span><span class="ui-code-token-punctuation">&gt;</span>Save changes<span class="ui-code-token-punctuation">&lt;/</span><span class="ui-code-token-keyword">x-ui.button</span><span class="ui-code-token-punctuation">&gt;</span></x-ui.code-snippet>
         </article>
     </section>

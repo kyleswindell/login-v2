@@ -59,7 +59,7 @@
             aria-controls="{{ $panelId }}"
         >
             {{ $triggerLabel }}
-            <span aria-hidden="true">v</span>
+            <x-heroicon-o-chevron-down class="ui-button-icon" aria-hidden="true" />
         </x-ui.button>
     @endif
 

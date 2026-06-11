@@ -381,7 +381,7 @@ Button color alignment must follow the Color Element’s Carbon coverage and val
 | Carbon token / role | Carbon responsibility | Login App token / API | Mapping status | Owner rule |
 | ------------------- | --------------------- | --------------------- | -------------- | ---------- |
 | `$button-primary`, `$button-primary-hover`, `$button-primary-active` | Primary button container and states | `<x-ui.button semantic="primary">`, `--ui-action-primary-*` | Same role / app value unless theme map records same value | Every primary action uses the same Button-owned primary action role. |
-| `$button-secondary`, `$button-secondary-hover`, `$button-secondary-active` | Secondary button container and states | `<x-ui.button semantic="secondary">`, `--ui-action-secondary-*` | Same role / app value unless theme map records same value | Secondary action treatment is consistent in forms, modals, page headers, and table toolbars. |
+| `$button-secondary`, `$button-secondary-hover`, `$button-secondary-active` | Secondary button container and states | `<x-ui.button semantic="secondary">`, `<x-ui.icon-button semantic="secondary">`, `--ui-action-secondary-*` | Same role / same Carbon gray value family | Light theme maps to Gray 80 `#393939`, Gray 80 hover `#4c4c4c`, and Gray 60 active `#6f6f6f`; dark theme maps to the corresponding lighter gray secondary family. Secondary action treatment is consistent in forms, modals, page headers, table toolbars, and Menu button triggers when they consume Button hierarchy. |
 | `$button-tertiary`, `$button-tertiary-hover`, `$button-tertiary-active` | Tertiary button text/border/container states | `<x-ui.button semantic="tertiary">`, `--ui-action-tertiary-*` | Same role / app value unless theme map records same value | Tertiary treatment must not be recreated as local link/button styling. |
 | `$background-hover`, `$link-primary`, `$link-primary-hover` for ghost buttons | Ghost button low-emphasis affordance | `<x-ui.button semantic="ghost">`, `<x-ui.icon-button semantic="ghost">`, `--ui-action-ghost-*` | Same role / app value unless theme map records same value | Ghost buttons and icon buttons share the same Button-owned ghost role. |
 | `$button-danger-primary`, `$button-danger-hover`, `$button-danger-active`, `$button-danger-secondary` | Destructive button hierarchy and states | `semantic="danger"`, `semantic="danger-tertiary"`, `semantic="danger-ghost"`, `--ui-action-danger-*` | Same role / app value unless theme map records same value | Danger roles are destructive only and must not be reused for warning or negative emphasis. |
@@ -396,6 +396,7 @@ Allowed component classes should use the app-owned `ui-*` namespace documented b
 .ui-button
 .ui-button-primary
 .ui-button-secondary
+.ui-action-secondary
 .ui-button-tertiary
 .ui-button-ghost
 .ui-button-danger

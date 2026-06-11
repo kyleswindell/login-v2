@@ -13,7 +13,7 @@
 @php
     $semanticMap = [
         'primary' => ['primary', 'base'],
-        'secondary' => ['neutral', 'base'],
+        'secondary' => ['secondary', 'base'],
         'tertiary' => ['neutral', 'outline'],
         'ghost' => ['neutral', 'ghost'],
         'danger' => ['danger', 'base'],

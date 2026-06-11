@@ -1275,7 +1275,9 @@ class PlatformUiReferenceTest extends TestCase
     {
         $this->actingAsPlatformSuperAdmin();
 
-        $this->get('/platform/ui-reference/components/button')
+        $response = $this->get('/platform/ui-reference/components/button');
+
+        $response
             ->assertOk()
             ->assertSee('x-ui.button')
             ->assertSee('x-ui.icon-button')
@@ -1317,6 +1319,13 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Button icons appear to the right of the label')
             ->assertSee('icon-only buttons require a tooltip and accessible name')
             ->assertSee('Danger icon-only is not allowed')
+            ->assertSee('data-button-token-contract="carbon-button-colors"', false)
+            ->assertSee('data-button-token-row="secondary"', false)
+            ->assertSee('$button-secondary / hover / active')
+            ->assertSee('--ui-action-secondary-bg / -hover / -active')
+            ->assertSee('Gray 80 #393939')
+            ->assertSee('Gray 80 hover #4c4c4c')
+            ->assertSee('Gray 60 active #6f6f6f')
             ->assertSee('Prefer verb + noun labels')
             ->assertSee('Use sentence case')
             ->assertSee('Labels remain left-aligned')
@@ -1345,13 +1354,39 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('title="Refresh data"', false)
             ->assertSee('Icon-only danger prohibited')
             ->assertDontSee('Family-depth implementation pending');
+
+        $buttonView = file_get_contents(resource_path('views/components/ui/button.blade.php'));
+        $iconButtonView = file_get_contents(resource_path('views/components/ui/icon-button.blade.php'));
+        $buttonCss = file_get_contents(resource_path('css/app.css'));
+        $buttonStandard = file_get_contents(base_path('docs/02-standards/ui/components/button.md'));
+        $colorStandard = file_get_contents(base_path('docs/02-standards/ui/elements/color.md'));
+
+        $this->assertIsString($buttonView);
+        $this->assertIsString($iconButtonView);
+        $this->assertIsString($buttonCss);
+        $this->assertIsString($buttonStandard);
+        $this->assertIsString($colorStandard);
+        $this->assertStringContainsString("'secondary' => ['secondary', 'base']", $buttonView);
+        $this->assertStringContainsString("'secondary' => ['secondary', 'base']", $iconButtonView);
+        $this->assertStringContainsString('--ui-action-secondary-bg: rgb(57 57 57);', $buttonCss);
+        $this->assertStringContainsString('--ui-action-secondary-bg-hover: rgb(76 76 76);', $buttonCss);
+        $this->assertStringContainsString('--ui-action-secondary-bg-active: rgb(111 111 111);', $buttonCss);
+        $this->assertStringContainsString('--ui-action-secondary-bg: rgb(111 111 111);', $buttonCss);
+        $this->assertStringContainsString('--ui-action-secondary-bg-hover: rgb(96 96 96);', $buttonCss);
+        $this->assertStringContainsString('--ui-action-secondary-bg-active: rgb(57 57 57);', $buttonCss);
+        $this->assertStringContainsString('.ui-action-secondary:active', $buttonCss);
+        $this->assertStringContainsString('.ui-icon-button.ui-action-secondary', $buttonCss);
+        $this->assertStringContainsString('Same role / same Carbon gray value family', $buttonStandard);
+        $this->assertStringContainsString('Secondary is a filled gray action role, not a neutral outline/white button.', $colorStandard);
     }
 
     public function test_menu_buttons_component_recovery_page_renders_required_examples(): void
     {
         $this->actingAsPlatformSuperAdmin();
 
-        $this->get('/platform/ui-reference/components/menu-buttons')
+        $response = $this->get('/platform/ui-reference/components/menu-buttons');
+
+        $response
             ->assertOk()
             ->assertSee('x-ui.menu-button')
             ->assertSee('x-ui.combo-button')
@@ -1412,9 +1447,18 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('48px / 3rem')
             ->assertSee('Ghost trigger width follows the button')
             ->assertSee('Menu buttons are for actions, not value selection')
+            ->assertSee('Menu button triggers follow Button style guidance')
             ->assertDontSee('Component-specific API pending correction')
             ->assertDontSee('Family-depth implementation pending')
             ->assertDontSee('data-ui-reference-sample-type="menu-button"', false);
+
+        $menuView = file_get_contents(resource_path('views/components/ui/menu.blade.php'));
+        $menuButtonsStandard = file_get_contents(base_path('docs/02-standards/ui/components/menu-buttons.md'));
+
+        $this->assertIsString($menuView);
+        $this->assertIsString($menuButtonsStandard);
+        $this->assertStringContainsString('x-heroicon-o-chevron-down', $menuView);
+        $this->assertStringContainsString('any approved secondary trigger must consume `--ui-action-secondary-*`', $menuButtonsStandard);
     }
 
     public function test_date_picker_component_page_renders_installed_api_examples(): void

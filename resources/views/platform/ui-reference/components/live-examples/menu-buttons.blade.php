@@ -100,7 +100,7 @@
 
     <section class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-menu-buttons-live-section="trigger-style-matrix">
         <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Trigger style matrix</h3>
-        <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">The trigger style communicates action hierarchy. Do not use trigger style as decoration.</p>
+        <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">The trigger style communicates action hierarchy. Do not use trigger style as decoration. Menu button triggers follow Button style guidance and consume the same Button-owned action tokens rather than defining a local menu-trigger palette.</p>
         <div class="mt-4 grid gap-3 lg:grid-cols-2">
             @foreach ($triggerRows as [$label, $purpose, $example])
                 <article class="rounded-md border p-3" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-menu-buttons-trigger-row="{{ Str::slug($label) }}">

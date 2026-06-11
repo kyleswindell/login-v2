@@ -268,6 +268,7 @@ Menu buttons consume Foundation Color, Spacing, Typography, Themes, Motion, and 
 ### 7.4. Token usage requirements:
 
 - Trigger color, border, icon, and focus treatment must come from the Button, Color, Icons, and Themes APIs.
+- Trigger hierarchy must follow Button style guidance exactly: primary menu triggers consume Button primary tokens, tertiary triggers consume Button tertiary tokens, ghost/overflow triggers consume Button ghost tokens, and any approved secondary trigger must consume `--ui-action-secondary-*` rather than local neutral styling.
 - Menu surface, border, shadow, item hover, focus, active, disabled, and danger treatment must use Color and Themes tokens.
 - Menu spacing, item height, padding, and trigger/menu separation must use Spacing tokens.
 - Menu item copy must use Typography tokens.

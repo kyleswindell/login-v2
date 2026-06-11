@@ -547,6 +547,27 @@ Use targeted searches for the class family being changed before reading this fil
         color: var(--ui-action-secondary-text-hover);
     }
 
+    .ui-action-secondary {
+        border-color: var(--ui-action-secondary-border);
+        background-color: var(--ui-action-secondary-bg);
+        color: var(--ui-action-secondary-text);
+    }
+
+    .ui-action-secondary:hover {
+        border-color: var(--ui-action-secondary-border-hover);
+        background-color: var(--ui-action-secondary-bg-hover);
+        color: var(--ui-action-secondary-text-hover);
+    }
+
+    .ui-action:active,
+    .ui-action.is-active,
+    .ui-action-secondary:active,
+    .ui-action-secondary.is-active {
+        border-color: var(--ui-action-secondary-border-active);
+        background-color: var(--ui-action-secondary-bg-active);
+        color: var(--ui-action-secondary-text-active);
+    }
+
     .ui-action-primary {
         border-color: var(--ui-action-primary-border);
         background-color: var(--ui-action-primary-bg);
@@ -557,6 +578,13 @@ Use targeted searches for the class family being changed before reading this fil
         border-color: var(--ui-action-primary-border-hover);
         background-color: var(--ui-action-primary-bg-hover);
         color: var(--ui-action-primary-text-hover);
+    }
+
+    .ui-action-primary:active,
+    .ui-action-primary.is-active {
+        border-color: var(--ui-action-primary-border-active);
+        background-color: var(--ui-action-primary-bg-active);
+        color: var(--ui-action-primary-text-active);
     }
 
     .ui-action-success {
@@ -595,6 +623,13 @@ Use targeted searches for the class family being changed before reading this fil
         color: var(--ui-action-danger-text-hover);
     }
 
+    .ui-action-danger:active,
+    .ui-action-danger.is-active {
+        border-color: var(--ui-action-danger-border-active);
+        background-color: var(--ui-action-danger-bg-active);
+        color: var(--ui-action-danger-text-active);
+    }
+
     .ui-action-notice {
         border-color: var(--ui-action-notice-border);
         background-color: var(--ui-action-notice-bg);
@@ -628,6 +663,13 @@ Use targeted searches for the class family being changed before reading this fil
     .ui-action-ghost:hover {
         background-color: var(--ui-action-ghost-bg-hover);
         color: var(--ui-action-ghost-text-hover);
+    }
+
+    .ui-action-ghost:active,
+    .ui-action-ghost.is-active {
+        border-color: transparent;
+        background-color: var(--ui-action-ghost-bg-active);
+        color: var(--ui-action-ghost-text-active);
     }
 
     .ui-action.ui-action-ghost[data-ui-current='true'] {
@@ -732,6 +774,13 @@ Use targeted searches for the class family being changed before reading this fil
         color: var(--ui-action-tertiary-text-hover);
     }
 
+    .ui-action.ui-action-outline:active,
+    .ui-action.ui-action-outline.is-active {
+        border-color: var(--ui-action-tertiary-border-active);
+        background-color: var(--ui-action-tertiary-bg-active);
+        color: var(--ui-action-tertiary-text-active);
+    }
+
     .ui-action-primary.ui-action-outline {
         border-color: var(--ui-action-outline-primary-border);
         color: var(--ui-action-outline-primary-text);
@@ -769,6 +818,13 @@ Use targeted searches for the class family being changed before reading this fil
         border-color: var(--ui-action-danger-tertiary-border-hover);
         background-color: var(--ui-action-danger-tertiary-bg-hover);
         color: var(--ui-action-danger-tertiary-text-hover);
+    }
+
+    .ui-action-danger.ui-action-outline:active,
+    .ui-action-danger.ui-action-outline.is-active {
+        border-color: var(--ui-action-danger-tertiary-border-active);
+        background-color: var(--ui-action-danger-tertiary-bg-active);
+        color: var(--ui-action-danger-tertiary-text-active);
     }
 
     .ui-action-notice.ui-action-outline {
@@ -832,6 +888,13 @@ Use targeted searches for the class family being changed before reading this fil
         border-color: var(--ui-action-danger-ghost-border-hover);
         background-color: var(--ui-action-danger-ghost-bg-hover);
         color: var(--ui-action-danger-ghost-text-hover);
+    }
+
+    .ui-action-danger.ui-action-ghost:active,
+    .ui-action-danger.ui-action-ghost.is-active {
+        border-color: var(--ui-action-danger-ghost-border-active);
+        background-color: var(--ui-action-danger-ghost-bg-active);
+        color: var(--ui-action-danger-ghost-text-active);
     }
 
     .ui-action-notice.ui-action-ghost {
@@ -1033,6 +1096,63 @@ Use targeted searches for the class family being changed before reading this fil
         border-color: var(--ui-action-neutral-border-hover);
         background-color: var(--ui-action-neutral-bg-hover);
         color: var(--ui-text-strong);
+    }
+
+    .ui-icon-button.ui-action-primary {
+        border-color: var(--ui-action-primary-border);
+        background-color: var(--ui-action-primary-bg);
+        color: var(--ui-action-primary-text);
+    }
+
+    .ui-icon-button.ui-action-primary:hover {
+        border-color: var(--ui-action-primary-border-hover);
+        background-color: var(--ui-action-primary-bg-hover);
+        color: var(--ui-action-primary-text-hover);
+    }
+
+    .ui-icon-button.ui-action-secondary {
+        border-color: var(--ui-action-secondary-border);
+        background-color: var(--ui-action-secondary-bg);
+        color: var(--ui-action-secondary-text);
+    }
+
+    .ui-icon-button.ui-action-secondary:hover {
+        border-color: var(--ui-action-secondary-border-hover);
+        background-color: var(--ui-action-secondary-bg-hover);
+        color: var(--ui-action-secondary-text-hover);
+    }
+
+    .ui-icon-button.ui-action-danger {
+        border-color: var(--ui-action-danger-border);
+        background-color: var(--ui-action-danger-bg);
+        color: var(--ui-action-danger-text);
+    }
+
+    .ui-icon-button.ui-action-danger:hover {
+        border-color: var(--ui-action-danger-border-hover);
+        background-color: var(--ui-action-danger-bg-hover);
+        color: var(--ui-action-danger-text-hover);
+    }
+
+    .ui-icon-button.ui-action-primary:active,
+    .ui-icon-button.ui-action-primary.is-active {
+        border-color: var(--ui-action-primary-border-active);
+        background-color: var(--ui-action-primary-bg-active);
+        color: var(--ui-action-primary-text-active);
+    }
+
+    .ui-icon-button.ui-action-secondary:active,
+    .ui-icon-button.ui-action-secondary.is-active {
+        border-color: var(--ui-action-secondary-border-active);
+        background-color: var(--ui-action-secondary-bg-active);
+        color: var(--ui-action-secondary-text-active);
+    }
+
+    .ui-icon-button.ui-action-danger:active,
+    .ui-icon-button.ui-action-danger.is-active {
+        border-color: var(--ui-action-danger-border-active);
+        background-color: var(--ui-action-danger-bg-active);
+        color: var(--ui-action-danger-text-active);
     }
 
     .ui-icon-button:disabled {
@@ -3950,15 +4070,15 @@ Use targeted searches for the class family being changed before reading this fil
         --ui-action-neutral-border-hover: rgb(113 113 122);
         --ui-action-neutral-bg-hover: rgb(39 39 42 / 0.95);
         --ui-action-neutral-text-hover: rgb(250 250 250);
-        --ui-action-secondary-border: var(--ui-action-neutral-border);
-        --ui-action-secondary-bg: var(--ui-action-neutral-bg);
-        --ui-action-secondary-text: var(--ui-action-neutral-text);
-        --ui-action-secondary-border-hover: var(--ui-action-neutral-border-hover);
-        --ui-action-secondary-bg-hover: var(--ui-action-neutral-bg-hover);
-        --ui-action-secondary-text-hover: var(--ui-action-neutral-text-hover);
-        --ui-action-secondary-border-active: var(--ui-action-secondary-border-hover);
-        --ui-action-secondary-bg-active: var(--ui-action-secondary-bg-hover);
-        --ui-action-secondary-text-active: var(--ui-action-secondary-text-hover);
+        --ui-action-secondary-border: rgb(111 111 111);
+        --ui-action-secondary-bg: rgb(111 111 111);
+        --ui-action-secondary-text: var(--ui-text-on-color);
+        --ui-action-secondary-border-hover: rgb(96 96 96);
+        --ui-action-secondary-bg-hover: rgb(96 96 96);
+        --ui-action-secondary-text-hover: var(--ui-text-on-color);
+        --ui-action-secondary-border-active: rgb(57 57 57);
+        --ui-action-secondary-bg-active: rgb(57 57 57);
+        --ui-action-secondary-text-active: var(--ui-text-on-color);
 
         --ui-action-primary-border: rgb(61 166 229 / 0.62);
         --ui-action-primary-bg: rgb(29 149 216 / 0.45);
@@ -3966,6 +4086,9 @@ Use targeted searches for the class family being changed before reading this fil
         --ui-action-primary-border-hover: rgb(96 197 255 / 0.82);
         --ui-action-primary-bg-hover: rgb(29 149 216 / 0.57);
         --ui-action-primary-text-hover: rgb(239 246 255);
+        --ui-action-primary-border-active: rgb(12 74 110 / 0.9);
+        --ui-action-primary-bg-active: rgb(12 74 110 / 0.72);
+        --ui-action-primary-text-active: rgb(239 246 255);
 
         --ui-action-success-border: rgb(5 150 105 / 0.45);
         --ui-action-success-bg: rgb(5 150 105 / 0.22);
@@ -3987,6 +4110,9 @@ Use targeted searches for the class family being changed before reading this fil
         --ui-action-danger-border-hover: rgb(248 113 113 / 0.74);
         --ui-action-danger-bg-hover: rgb(220 38 38 / 0.38);
         --ui-action-danger-text-hover: rgb(254 242 242);
+        --ui-action-danger-border-active: rgb(127 29 29 / 0.84);
+        --ui-action-danger-bg-active: rgb(127 29 29 / 0.5);
+        --ui-action-danger-text-active: rgb(254 242 242);
 
         --ui-action-notice-border: rgb(124 58 237 / 0.45);
         --ui-action-notice-bg: rgb(124 58 237 / 0.22);
@@ -4005,6 +4131,8 @@ Use targeted searches for the class family being changed before reading this fil
         --ui-action-ghost-text: rgb(212 212 216);
         --ui-action-ghost-bg-hover: rgb(39 39 42 / 0.85);
         --ui-action-ghost-text-hover: rgb(250 250 250);
+        --ui-action-ghost-bg-active: var(--ui-background-active);
+        --ui-action-ghost-text-active: var(--ui-action-ghost-text-hover);
 
         --ui-action-soft-neutral-border: rgb(161 161 170 / 0.4);
         --ui-action-soft-neutral-bg: rgb(82 82 91 / 0.12);
@@ -4386,15 +4514,15 @@ Use targeted searches for the class family being changed before reading this fil
         --ui-action-neutral-border-hover: rgb(148 163 184);
         --ui-action-neutral-bg-hover: rgb(241 245 249);
         --ui-action-neutral-text-hover: rgb(15 23 42);
-        --ui-action-secondary-border: var(--ui-action-neutral-border);
-        --ui-action-secondary-bg: var(--ui-action-neutral-bg);
-        --ui-action-secondary-text: var(--ui-action-neutral-text);
-        --ui-action-secondary-border-hover: var(--ui-action-neutral-border-hover);
-        --ui-action-secondary-bg-hover: var(--ui-action-neutral-bg-hover);
-        --ui-action-secondary-text-hover: var(--ui-action-neutral-text-hover);
-        --ui-action-secondary-border-active: var(--ui-action-secondary-border-hover);
-        --ui-action-secondary-bg-active: var(--ui-action-secondary-bg-hover);
-        --ui-action-secondary-text-active: var(--ui-action-secondary-text-hover);
+        --ui-action-secondary-border: rgb(57 57 57);
+        --ui-action-secondary-bg: rgb(57 57 57);
+        --ui-action-secondary-text: var(--ui-text-on-color);
+        --ui-action-secondary-border-hover: rgb(76 76 76);
+        --ui-action-secondary-bg-hover: rgb(76 76 76);
+        --ui-action-secondary-text-hover: var(--ui-text-on-color);
+        --ui-action-secondary-border-active: rgb(111 111 111);
+        --ui-action-secondary-bg-active: rgb(111 111 111);
+        --ui-action-secondary-text-active: var(--ui-text-on-color);
 
         --ui-action-primary-border: rgb(2 132 199);
         --ui-action-primary-bg: rgb(3 105 161);
@@ -4402,6 +4530,9 @@ Use targeted searches for the class family being changed before reading this fil
         --ui-action-primary-border-hover: rgb(14 116 144);
         --ui-action-primary-bg-hover: rgb(7 89 133);
         --ui-action-primary-text-hover: rgb(248 250 252);
+        --ui-action-primary-border-active: rgb(12 74 110);
+        --ui-action-primary-bg-active: rgb(12 74 110);
+        --ui-action-primary-text-active: rgb(248 250 252);
 
         --ui-action-success-border: rgb(5 150 105);
         --ui-action-success-bg: rgb(4 120 87);
@@ -4423,6 +4554,9 @@ Use targeted searches for the class family being changed before reading this fil
         --ui-action-danger-border-hover: rgb(185 28 28);
         --ui-action-danger-bg-hover: rgb(185 28 28);
         --ui-action-danger-text-hover: rgb(255 241 242);
+        --ui-action-danger-border-active: rgb(127 29 29);
+        --ui-action-danger-bg-active: rgb(127 29 29);
+        --ui-action-danger-text-active: rgb(255 241 242);
 
         --ui-action-notice-border: rgb(124 58 237);
         --ui-action-notice-bg: rgb(109 40 217);
@@ -4441,6 +4575,8 @@ Use targeted searches for the class family being changed before reading this fil
         --ui-action-ghost-text: rgb(71 85 105);
         --ui-action-ghost-bg-hover: rgb(241 245 249);
         --ui-action-ghost-text-hover: rgb(15 23 42);
+        --ui-action-ghost-bg-active: var(--ui-background-active);
+        --ui-action-ghost-text-active: var(--ui-action-ghost-text-hover);
 
         --ui-action-soft-neutral-border: rgb(203 213 225);
         --ui-action-soft-neutral-bg: rgb(248 250 252);

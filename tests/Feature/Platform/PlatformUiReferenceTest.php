@@ -1832,6 +1832,59 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('x-ui.content-switcher', $standard);
     }
 
+    public function test_popover_component_page_renders_interactive_tip_and_trigger_examples(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/components/popover')
+            ->assertOk()
+            ->assertSee('x-ui.popover')
+            ->assertSee('No tip')
+            ->assertSee('Caret tip')
+            ->assertSee('Tab tip')
+            ->assertSee('Placement options')
+            ->assertSee('Overflow content')
+            ->assertSee('Text trigger')
+            ->assertSee('Ghost trigger')
+            ->assertSee('Hover trigger')
+            ->assertSee('Focus trigger')
+            ->assertSee('Disabled trigger')
+            ->assertSee('data-ui-component="popover"', false)
+            ->assertSee('data-ui-popover-tip="none"', false)
+            ->assertSee('data-ui-popover-tip="caret"', false)
+            ->assertSee('data-ui-popover-tip="tab"', false)
+            ->assertSee('data-ui-popover-trigger-kind="icon"', false)
+            ->assertSee('data-ui-popover-trigger-kind="button"', false)
+            ->assertSee('data-ui-popover-trigger-kind="ghost"', false)
+            ->assertSee('data-ui-popover-interaction="hover"', false)
+            ->assertSee('data-ui-popover-interaction="focus"', false)
+            ->assertSee('data-ui-popover-content', false)
+            ->assertSee('aria-expanded="false"', false)
+            ->assertDontSee('Context popover')
+            ->assertDontSee('Placement and size');
+
+        $popoverView = file_get_contents(resource_path('views/components/ui/popover.blade.php'));
+        $popoverScript = file_get_contents(resource_path('js/ui-controls/popovers.js'));
+        $popoverCss = file_get_contents(resource_path('css/app.css'));
+        $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
+        $standard = file_get_contents(base_path('docs/02-standards/ui/components/popover.md'));
+
+        $this->assertStringContainsString("'tip' => 'caret'", $popoverView);
+        $this->assertStringContainsString("'triggerKind' => 'icon'", $popoverView);
+        $this->assertStringContainsString("'interaction' => 'click'", $popoverView);
+        $this->assertStringContainsString('data-ui-popover-tip="{{ $resolvedTip }}"', $popoverView);
+        $this->assertStringContainsString('data-ui-popover-content', $popoverView);
+        $this->assertStringContainsString('data-ui-popover-tip-shape', $popoverView);
+        $this->assertStringContainsString("interaction === 'hover'", $popoverScript);
+        $this->assertStringContainsString("interaction === 'focus'", $popoverScript);
+        $this->assertStringContainsString(".ui-popover[data-ui-popover-tip='tab'] .ui-popover-tip", $popoverCss);
+        $this->assertStringContainsString('overflow-y-auto', $popoverCss);
+        $this->assertStringContainsString("'No tip'", $catalog);
+        $this->assertStringContainsString("'Caret tip'", $catalog);
+        $this->assertStringContainsString("'Tab tip'", $catalog);
+        $this->assertStringContainsString('Trigger button options', $standard);
+    }
+
     public function test_component_api_proof_sync_pages_render_installed_apis(): void
     {
         $this->actingAsPlatformSuperAdmin();
@@ -1875,9 +1928,11 @@ class PlatformUiReferenceTest extends TestCase
                 'data-ui-popover-trigger',
                 'data-ui-popover-panel',
                 'data-ui-popover-close',
-                'Context popover',
-                'Placement and size',
-                'Disabled trigger',
+                'No tip',
+                'Caret tip',
+                'Tab tip',
+                'Placement options',
+                'Overflow content',
             ],
             'slider' => [
                 'x-ui.slider',

@@ -135,6 +135,7 @@
   - public Component API wrapper test verifies installed markers for Link, Menu buttons, Pagination, Search, Dropdown, File uploader, Number input, Select, Radio, Toggle, Inline loading, Progress, Tag, Structured list, Tile, Tooltip, and Toggletip
   - UI registry reconciliation scans verify stale planned routes, deleted token guidance, promoted API dispositions, and active-sync coverage for newly approved target APIs
   - component API proof-sync assertions verify contained list, native list classes, multiselect, popover, slider/range slider, and tree view UI Reference pages render installed APIs instead of local/reference-only markup
+  - popover-focused assertions verify no-tip, caret-tip, tab-tip, placement/alignment, overflow-body, trigger-mode, and closed interactive examples through the installed API
   - component recovery sequencing now has one queued correction/proof item per remaining unresolved Component API or disposition group
   - menu-focused assertions verify closed interactive examples, static item-state proof panels, item sizing, placement, checkable roles, submenu hooks, title text, and no forced-open menu state
   - button-focused assertions verify variant purpose, size, state, group, icon-only, content, and token/style role matrices

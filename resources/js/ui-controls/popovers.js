@@ -34,16 +34,33 @@ export function initPopovers(root = document) {
         }
 
         component.dataset.uiPopoverInitialized = 'true';
+        const interaction = component.dataset.uiPopoverInteraction ?? 'click';
+        const trigger = component.querySelector('[data-ui-popover-trigger]');
 
-        component.querySelector('[data-ui-popover-trigger]')?.addEventListener('click', () => {
-            const trigger = component.querySelector('[data-ui-popover-trigger]');
-
+        trigger?.addEventListener('click', () => {
+            if (interaction !== 'click') {
+                return;
+            }
             if (trigger?.getAttribute('aria-expanded') === 'true') {
                 closePopover(component);
             } else {
                 openPopover(component);
             }
         });
+
+        if (interaction === 'hover') {
+            component.addEventListener('mouseenter', () => openPopover(component));
+            component.addEventListener('mouseleave', () => closePopover(component));
+        }
+
+        if (interaction === 'focus') {
+            trigger?.addEventListener('focus', () => openPopover(component));
+            component.addEventListener('focusout', (event) => {
+                if (!event.relatedTarget || !component.contains(event.relatedTarget)) {
+                    closePopover(component);
+                }
+            });
+        }
 
         component.querySelector('[data-ui-popover-close]')?.addEventListener('click', () => {
             closePopover(component, true);

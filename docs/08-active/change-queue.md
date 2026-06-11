@@ -582,7 +582,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 - Acceptance:
   - `x-ui.tooltip` and `x-ui.toggletip` exist or are explicitly mapped to installed source aliases
   - public wrappers prove hover/focus/click, dismissal, placement, accessible naming, and reduced-motion ownership markers where applicable
-  - Popover remains deferred unless a separate product need installs it
+  - Popover is no longer deferred; it is installed through P2-F-CQ-135/P2-F-CQ-128 and corrected in worklog-2-F-0052
 - Implemented in: worklog-2-F-0033
 
 ### P2-F-CQ-075 - Tabs component correction
@@ -1474,7 +1474,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 - Acceptance:
   - overlay/help docs and UI Reference examples distinguish blocking, contextual, non-interactive, and interactive disclosure
   - examples show focus, hover, disabled, open/closed, dismiss, and reduced-motion expectations where applicable
-  - popover remains queued unless a concrete consumer exists
+  - popover is installed through the later API proof gate; this closed broad-family item no longer owns Popover implementation state
 
 ### P2-F-CQ-038 - T1 component family depth pass: data display
 - Status: Closed

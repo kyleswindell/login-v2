@@ -343,10 +343,21 @@
                         :placement="$item['placement'] ?? 'bottom'"
                         :align="$item['align'] ?? 'start'"
                         :size="$item['size'] ?? 'md'"
+                        :tip="$item['tip'] ?? 'caret'"
+                        :trigger-kind="$item['trigger_kind'] ?? 'icon'"
+                        :trigger-icon="$item['trigger_icon'] ?? 'heroicon-o-information-circle'"
+                        :interaction="$item['interaction'] ?? 'click'"
                         :open="$item['open'] ?? false"
                         :disabled="$item['disabled'] ?? false"
+                        :closeable="$item['closeable'] ?? true"
                     >
+                        @if (filled($item['title'] ?? null))
+                            <x-slot:title>{{ $item['title'] }}</x-slot:title>
+                        @endif
                         {{ $item['body'] ?? 'Short contextual content stays close to the trigger.' }}
+                        @if (filled($item['footer'] ?? null))
+                            <x-slot:footer>{{ $item['footer'] }}</x-slot:footer>
+                        @endif
                     </x-ui.popover>
                 @endforeach
             </div>

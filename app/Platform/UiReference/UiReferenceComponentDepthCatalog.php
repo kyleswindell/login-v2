@@ -992,53 +992,120 @@ class UiReferenceComponentDepthCatalog
     private function popoverComponent(): array
     {
         return $this->correctedImplemented('popover', 'Popover', 'Popover shows short interactive contextual content from a visible trigger.', [
-            $this->exampleFromSample('Context popover', 'A lightweight interactive panel for short supporting detail.', ['type' => 'popover', 'items' => [[
-                'label' => 'Review rules',
-                'body' => 'Use this panel for short contextual detail and keep primary tasks on the page.',
-                'open' => true,
+            $this->exampleFromSample('No tip', 'No-tip popovers are used when the trigger already has a visually defined down state.', ['type' => 'popover', 'items' => [[
+                'label' => 'Workspace details',
+                'title' => 'Workspace details',
+                'body' => 'This popover opens from a full trigger button and does not render a visual tip.',
+                'tip' => 'none',
+                'trigger_kind' => 'button',
             ]]], [
-                $this->sampleVariant('Open', ['type' => 'popover', 'items' => [[
-                    'label' => 'Open popover',
-                    'body' => 'Open state exposes the panel and close control.',
-                    'open' => true,
+                $this->sampleVariant('Text trigger', ['type' => 'popover', 'items' => [[
+                    'label' => 'Review status',
+                    'body' => 'Text triggers are allowed when the trigger needs visible context.',
+                    'tip' => 'none',
+                    'trigger_kind' => 'button',
                 ]]]),
-                $this->sampleVariant('Closed trigger', ['type' => 'popover', 'items' => [[
-                    'label' => 'Closed popover',
-                    'body' => 'The panel remains hidden until opened.',
+                $this->sampleVariant('Ghost trigger', ['type' => 'popover', 'items' => [[
+                    'label' => 'Policy notes',
+                    'body' => 'Ghost triggers can open no-tip popovers when the surrounding control state is already clear.',
+                    'tip' => 'none',
+                    'trigger_kind' => 'ghost',
                 ]]]),
             ]),
-            $this->exampleFromSample('Placement and size', 'Popover placement, alignment, and size are explicit component options.', ['type' => 'popover', 'items' => [[
-                'label' => 'End aligned panel',
-                'body' => 'This panel is end aligned and uses the large size option.',
-                'align' => 'end',
-                'size' => 'lg',
-                'open' => true,
+            $this->exampleFromSample('Caret tip', 'Caret-tip popovers visually associate the floating panel with the trigger.', ['type' => 'popover', 'items' => [[
+                'label' => 'Review help',
+                'title' => 'Review help',
+                'body' => 'The caret tip points from the panel back toward the trigger.',
+                'tip' => 'caret',
+                'trigger_kind' => 'icon',
             ]]], [
-                $this->sampleVariant('Small', ['type' => 'popover', 'items' => [[
-                    'label' => 'Small popover',
-                    'body' => 'Small panels are for concise help.',
-                    'size' => 'sm',
-                    'open' => true,
+                $this->sampleVariant('Top placement', ['type' => 'popover', 'items' => [[
+                    'label' => 'Top popover',
+                    'body' => 'The panel opens above the trigger.',
+                    'tip' => 'caret',
+                    'placement' => 'top',
                 ]]]),
                 $this->sampleVariant('End aligned', ['type' => 'popover', 'items' => [[
                     'label' => 'End aligned',
-                    'body' => 'Alignment follows the trigger context.',
+                    'body' => 'The caret remains associated with the trigger when the panel aligns to the end edge.',
+                    'tip' => 'caret',
                     'align' => 'end',
-                    'open' => true,
                 ]]]),
             ]),
-            $this->exampleFromSample('Disabled trigger', 'Disabled popover triggers stay visible when a dependency may later make help available.', ['type' => 'popover', 'items' => [[
-                'label' => 'Policy details unavailable',
-                'body' => 'Disabled triggers do not reveal a panel.',
-                'disabled' => true,
+            $this->exampleFromSample('Tab tip', 'Tab-tip popovers use a flat tab connector when a broader trigger edge needs visual association.', ['type' => 'popover', 'items' => [[
+                'label' => 'Account summary',
+                'title' => 'Account summary',
+                'body' => 'The tab tip creates a broader connector between the panel and trigger.',
+                'tip' => 'tab',
+                'trigger_kind' => 'button',
             ]]], [
-                $this->sampleVariant('Disabled', ['type' => 'popover', 'items' => [[
-                    'label' => 'Disabled popover',
+                $this->sampleVariant('Center aligned', ['type' => 'popover', 'items' => [[
+                    'label' => 'Center tab',
+                    'body' => 'Tab tips can be centered when the trigger is wider than an icon.',
+                    'tip' => 'tab',
+                    'align' => 'center',
+                    'trigger_kind' => 'button',
+                ]]]),
+                $this->sampleVariant('Large tab panel', ['type' => 'popover', 'items' => [[
+                    'label' => 'Large tab',
+                    'body' => 'Large popovers still keep content concise and local to the trigger.',
+                    'tip' => 'tab',
+                    'size' => 'lg',
+                    'trigger_kind' => 'button',
+                ]]]),
+            ]),
+            $this->exampleFromSample('Placement options', 'Placement examples show top, right, bottom, and left without using locked-open panels.', ['type' => 'popover', 'items' => [
+                ['label' => 'Top', 'body' => 'Top placement opens above the trigger.', 'placement' => 'top'],
+                ['label' => 'Right', 'body' => 'Right placement opens beside the trigger.', 'placement' => 'right'],
+                ['label' => 'Bottom', 'body' => 'Bottom placement is the default.', 'placement' => 'bottom'],
+                ['label' => 'Left', 'body' => 'Left placement opens before the trigger.', 'placement' => 'left'],
+            ]], [
+                $this->sampleVariant('Start alignment', ['type' => 'popover', 'items' => [[
+                    'label' => 'Start aligned',
+                    'body' => 'The panel start edge aligns with the trigger.',
+                    'align' => 'start',
+                    'trigger_kind' => 'button',
+                ]]]),
+                $this->sampleVariant('Center alignment', ['type' => 'popover', 'items' => [[
+                    'label' => 'Center aligned',
+                    'body' => 'The panel centers on the trigger.',
+                    'align' => 'center',
+                    'trigger_kind' => 'button',
+                ]]]),
+                $this->sampleVariant('End alignment', ['type' => 'popover', 'items' => [[
+                    'label' => 'End aligned',
+                    'body' => 'The panel end edge aligns with the trigger.',
+                    'align' => 'end',
+                    'trigger_kind' => 'button',
+                ]]]),
+            ]),
+            $this->exampleFromSample('Overflow content', 'When content must scroll, only the body scrolls while header and footer remain fixed.', ['type' => 'popover', 'items' => [[
+                'label' => 'Activity notes',
+                'title' => 'Activity notes',
+                'body' => 'Recent sync activity, permission changes, review comments, billing updates, notification deliveries, audit records, and retry details stay inside a vertically scrolling body region. Horizontal overflow is not allowed.',
+                'footer' => 'Footer actions remain fixed while the body scrolls.',
+                'size' => 'lg',
+                'trigger_kind' => 'button',
+            ]]], [
+                $this->sampleVariant('Hover trigger', ['type' => 'popover', 'items' => [[
+                    'label' => 'Hover details',
+                    'body' => 'Hover-triggered popovers remain available for disclosure-pattern uses that explicitly allow hover.',
+                    'interaction' => 'hover',
+                    'trigger_kind' => 'ghost',
+                ]]]),
+                $this->sampleVariant('Focus trigger', ['type' => 'popover', 'items' => [[
+                    'label' => 'Focus details',
+                    'body' => 'Focus-triggered popovers open from keyboard focus and close when focus leaves the component.',
+                    'interaction' => 'focus',
+                    'trigger_kind' => 'ghost',
+                ]]]),
+                $this->sampleVariant('Disabled trigger', ['type' => 'popover', 'items' => [[
+                    'label' => 'Policy unavailable',
                     'body' => 'Disabled triggers do not open.',
                     'disabled' => true,
                 ]]]),
             ]),
-        ], ['trigger button', 'panel', 'content region', 'close control', 'placement/alignment marker'], [
+        ], ['trigger button', 'panel', 'tip connector', 'scrollable body region', 'close control', 'placement/alignment marker'], [
             'Use when short interactive contextual content belongs near its trigger.',
             'Use for help that needs a close control or small links/actions.',
         ], [
@@ -1048,6 +1115,9 @@ class UiReferenceComponentDepthCatalog
         ], [
             'Closed',
             'Open',
+            'No tip',
+            'Caret tip',
+            'Tab tip',
             'Focus-visible',
             'Disabled',
             'Placement',
@@ -1055,10 +1125,13 @@ class UiReferenceComponentDepthCatalog
             'Small',
             'Medium',
             'Large',
+            'Overflow content',
         ], [
             'Trigger click opens or closes the panel.',
+            'Approved trigger modes include click, hover, and focus when the disclosure pattern allows them.',
             'Escape or the close control closes the panel and returns focus.',
             'Outside click closes an open panel.',
+            'When overflow is needed, only the body scrolls; header and footer remain fixed.',
         ], [
             'Use concise trigger labels.',
             'Keep panel copy short and task-adjacent.',

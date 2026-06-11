@@ -7,6 +7,7 @@
 - P2-F-CQ-001 is Passed Review. The Carbon contrast audit, starter catalog matrix, and route disposition matrix are accepted as sufficient routing source material for the remaining Batch F work.
 - P2-F-CQ-007 is Passed Review. `/platform/ui-reference/patterns/starters` is the accepted UI Reference starter catalog entry point.
 - P2-F-CQ-128 is Implemented Pending Review. The newly installed/promoted APIs from P2-F-CQ-135 now have UI Reference proof pages using installed APIs instead of local/reference-only markup.
+- Popover proof under P2-F-CQ-128/P2-F-CQ-135 was corrected in worklog 2-F-0052: live examples are interactable by default and now cover no tip, caret tip, tab tip, placement/alignment, overflow body, and trigger modes.
 - P2-F-CQ-129 is Implemented Pending Review. It established the component recovery sequence, added one queued correction/proof item per remaining unresolved Component API or disposition group, and made Menu the first correction target.
 - P2-F-CQ-074, P2-F-CQ-079, P2-F-CQ-093, and P2-F-CQ-151 are Passed Review as of 2026-06-11. Breadcrumb, Button, Menu buttons, and Tooltip are accepted Component recovery pages and are shown as approved in the UI Reference sidebar.
 - P2-F-CQ-077 is Implemented Pending Review. Menu now uses the documented `x-ui.menu` / `x-ui.menu-item` API, examples start closed and interactable by default, and static proof panels demonstrate item states, sizing, placement, checkable roles, submenu hooks, and title behavior without hiding surrounding reference text.

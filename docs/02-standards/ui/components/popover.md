@@ -113,7 +113,7 @@ Use Popover only when content must appear near a trigger and does not justify a 
 | Blade           | `x-ui.popover`                                                                                                     |
 | JavaScript      | `initPopovers` exported from the app UI controls bundle                                                            |
 | Data attributes | `data-ui-popover`, `data-ui-popover-trigger`, `data-ui-popover-panel`, `data-ui-popover-close`                     |
-| Props/options   | `id`, `placement`, `align`, `size`, `caret`, `closeable`, `open`, `disabled`, `label`, `panelLabel`, `strategy`    |
+| Props/options   | `id`, `placement`, `align`, `size`, `tip`, `caret`, `triggerKind`, `triggerIcon`, `interaction`, `closeable`, `open`, `disabled`, `label`, `panelLabel`, `strategy` |
 | CSS namespace   | `ui-popover`, `ui-popover-trigger`, `ui-popover-panel`, `ui-popover-content`, `ui-popover-caret`                   |
 | Source files    | `resources/views/components/ui/popover.blade.php`; `resources/js/ui-controls/popovers.js`; `resources/css/app.css` |
 
@@ -147,8 +147,12 @@ Example call:
 | `placement`  | string | `bottom` | `top`, `right`, `bottom`, `left`, `auto` | Defines preferred panel placement relative to the trigger.           |
 | `align`      | string | `center` | `start`, `center`, `end`                 | Defines panel alignment along the trigger edge.                      |
 | `size`       | string | `md`     | `sm`, `md`, `lg`                         | Defines panel width and padding treatment.                           |
-| `caret`      | bool   | `true`   | `true`, `false`                          | Shows the token-backed caret/tip when the placement supports it.     |
-| `closeable`  | bool   | `false`  | `true`, `false`                          | Adds an internal close button for panels with richer content.        |
+| `tip`        | string | `caret`  | `none`, `caret`, `tab`                   | Defines the visual connector between trigger and panel.              |
+| `caret`      | bool   | `null`   | `true`, `false`, `null`                  | Backward-compatible alias; `false` resolves to `tip="none"`.        |
+| `triggerKind` | string | `icon` | `icon`, `button`, `ghost`                | Defines the rendered trigger shape.                                  |
+| `triggerIcon` | string | `heroicon-o-information-circle` | approved icon component | Icon used by icon trigger mode.                                      |
+| `interaction` | string | `click` | `click`, `hover`, `focus`                | Opens the panel according to the approved disclosure trigger mode.   |
+| `closeable`  | bool   | `true`   | `true`, `false`                          | Adds an internal close button for panels with richer content.        |
 | `open`       | bool   | `false`  | `true`, `false`                          | Initial open state for UI Reference proof or controlled integration. |
 | `disabled`   | bool   | `false`  | `true`, `false`                          | Disables the trigger and prevents the panel from opening.            |
 | `label`      | string | `null`   | accessible trigger label                 | Required when the trigger is icon-only.                              |
@@ -171,6 +175,8 @@ Example call:
 | `data-ui-popover`         | Root    | Popover initialization scope.                      |
 | `data-ui-popover-trigger` | Trigger | Opens, closes, and owns expanded state.            |
 | `data-ui-popover-panel`   | Panel   | Floating panel controlled by the trigger.          |
+| `data-ui-popover-tip`     | Root    | Records `none`, `caret`, or `tab` tip treatment.   |
+| `data-ui-popover-content` | Body    | Scrollable body region when overflow is needed.    |
 | `data-ui-popover-close`   | Control | Closes the panel and returns focus to the trigger. |
 
 ### 4.4. CSS namespace
@@ -198,6 +204,9 @@ Example call:
 
 | Name                   | Type       | Status      | API                                   | Use when                                                                 |
 | ---------------------- | ---------- | ----------- | ------------------------------------- | ------------------------------------------------------------------------ |
+| No tip                 | Variant    | Implemented | `tip="none"`                          | The trigger already has a visually defined down state.                   |
+| Caret tip              | Variant    | Implemented | `tip="caret"`                         | A pointed connector helps associate panel and trigger.                   |
+| Tab tip                | Variant    | Implemented | `tip="tab"`                           | A wider tab connector fits a broader trigger edge.                       |
 | Basic popover          | Variant    | Implemented | default slot content                  | A trigger needs nearby supporting content.                               |
 | Interactive popover    | Variant    | Implemented | focusable controls in panel           | The panel includes limited links, buttons, or simple controls.           |
 | Top placement          | Placement  | Implemented | `placement="top"`                     | The panel should appear above the trigger.                               |
@@ -211,11 +220,13 @@ Example call:
 | Small panel            | Size       | Implemented | `size="sm"`                           | Short supporting text.                                                   |
 | Medium panel           | Size       | Implemented | `size="md"`                           | Default contextual content.                                              |
 | Large panel            | Size       | Implemented | `size="lg"`                           | Richer supporting content that still does not require Modal.             |
-| Caret/tip              | Modifier   | Implemented | `caret`                               | The visual connection to the trigger helps orientation.                  |
-| No caret               | Modifier   | Implemented | `:caret="false"`                      | The panel sits flush with another layout region or trigger group.        |
+| Trigger button         | Trigger    | Implemented | `triggerKind="button"`                | Visible text trigger with button structure is needed.                    |
+| Ghost trigger          | Trigger    | Implemented | `triggerKind="ghost"`                 | Low-emphasis text trigger is appropriate.                                |
+| Icon trigger           | Trigger    | Implemented | `triggerKind="icon"`                  | The default compact trigger has an accessible label.                     |
+| Click interaction      | Trigger    | Implemented | `interaction="click"`                 | Default disclosure behavior.                                             |
+| Hover interaction      | Trigger    | Implemented | `interaction="hover"`                 | The disclosure pattern explicitly allows hover opening.                  |
+| Focus interaction      | Trigger    | Implemented | `interaction="focus"`                 | Keyboard focus should reveal supporting content.                         |
 | Close control          | Modifier   | Implemented | `closeable`                           | The panel contains richer content or needs an explicit dismissal target. |
-| Icon trigger           | Trigger    | Implemented | trigger slot with `x-ui.icon-button`  | The trigger is compact and has an accessible label.                      |
-| Text trigger           | Trigger    | Implemented | trigger slot with `x-ui.button`       | The trigger needs visible context.                                       |
 | Async content          | Capability | Gated       | requires loading/error/retry contract | Use only after loading, error, and retry behavior are documented.        |
 | Rich form content      | Capability | Gated       | requires Pattern review               | Use Modal or a page section unless the content is limited and justified. |
 | Contained list content | Capability | Gated       | requires Contained list approval      | Use only when bounded rows are approved as a child composition.          |
@@ -424,11 +435,12 @@ The Popover UI Reference page must render production examples through the instal
 
 | Required proof           | Rendered behavior                                                                                  | Variants/options shown                                          |
 | ------------------------ | -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| Basic popover            | A text trigger opens a nearby panel with concise supporting content and closes predictably.        | Open, closed, Escape dismissal, outside-click dismissal         |
-| Icon trigger popover     | An icon-button trigger exposes a nearby panel with a required accessible trigger label.            | Icon trigger, focus-visible, accessible name                    |
-| Interactive popover      | Panel contains limited focusable content and returns focus to the trigger after dismissal.         | Close control, internal link/button, focus return               |
-| Placement and alignment  | Examples show top, right, bottom, left, auto, start, center, and end behavior.                     | Placement, alignment, caret/no-caret                            |
-| Size comparison          | Examples show small, medium, and large panels with wrapping content.                               | `size="sm"`, `size="md"`, `size="lg"`                           |
+| No tip                   | A closed text/button trigger opens a nearby panel without a visual connector.                      | `tip="none"`, button and ghost trigger options                  |
+| Caret tip                | A closed trigger opens a panel with a pointed caret connector.                                     | `tip="caret"`, top/bottom alignment behavior                    |
+| Tab tip                  | A closed trigger opens a panel with a wider tab connector.                                        | `tip="tab"`, center/end alignment behavior                      |
+| Placement and alignment  | Examples show top, right, bottom, left, start, center, and end behavior.                           | Placement, alignment, tip behavior                              |
+| Overflow content         | Header/footer stay fixed while only the body region scrolls vertically.                            | `data-ui-popover-content`, large panel, no horizontal overflow  |
+| Trigger button options   | Examples show icon, visible button, ghost, hover, focus, disabled, and click triggers.             | `triggerKind`, `interaction`, disabled                          |
 | Related API boundary     | Comparison explains Popover versus Tooltip, Toggletip, Modal, Menu buttons/Menu, and Dropdown.     | Boundary rules                                                  |
 | Gated capability rows    | Advanced capabilities appear as gated rows with requirements instead of unsupported live controls. | Async content, rich forms, persistent panels, nested popovers   |
 | Developer implementation | Page shows canonical Blade, data attributes, JavaScript initializer, classes, and source owners.   | `x-ui.popover`, `initPopovers`, `data-ui-popover`, `ui-popover` |
@@ -456,11 +468,12 @@ $response->assertSee('x-ui.popover');
 $response->assertSee('initPopovers');
 $response->assertSee('data-ui-popover');
 $response->assertSee('ui-popover');
-$response->assertSee('Basic popover');
-$response->assertSee('Icon trigger popover');
-$response->assertSee('Interactive popover');
-$response->assertSee('Placement and alignment');
-$response->assertSee('Size comparison');
+$response->assertSee('No tip');
+$response->assertSee('Caret tip');
+$response->assertSee('Tab tip');
+$response->assertSee('Placement options');
+$response->assertSee('Overflow content');
+$response->assertSee('Trigger button options');
 $response->assertSee('Gated capability rows');
 $response->assertSee('Use Tooltip');
 $response->assertSee('Use Toggletip');

@@ -36,7 +36,7 @@
 
 ## Carbon-Aligned T1 Component Library
 - [ ] Carbon-Aligned T1 Component Library
-  Status: implemented pending review — P2-F-CQ-016 through P2-F-CQ-024 added the component catalog, full disposition matrix, generated component routes, catalog sidebar, focused high-risk state pages, and automated route/content coverage; P2-F-CQ-066 through P2-F-CQ-070 add the adopted Component page requirements, product-facing Components/Patterns terminology, catalog metadata, overview priority surfaces, and shared page scaffold
+  Status: partial — P2-F-CQ-066 through P2-F-CQ-073 passed manual review on 2026-06-08; P2-F-CQ-016 through P2-F-CQ-024 and P2-F-CQ-033 through P2-F-CQ-039 are closed as superseded by the current Component API standards, API proof sync, and component-specific recovery queue; P2-F-CQ-077, P2-F-CQ-079, P2-F-CQ-093, P2-F-CQ-128, P2-F-CQ-129, P2-F-CQ-136 through P2-F-CQ-163, and P2-F-CQ-166 through P2-F-CQ-169 are implemented pending review
   - [x] every reviewed Carbon component has a Login App 2.0 disposition and owner route
   - [x] sidebar and overview are generated from the same component catalog source
   - [x] legacy combined T1 routes remain available as index/compatibility surfaces, not primary navigation
@@ -44,13 +44,31 @@
   - [x] AI label, code snippet, and other low-applicability items have explicit queued or gated treatment
   - [x] UI Reference menu uses Components and Patterns as product-facing labels
   - [x] Component page contract is adopted into canonical component standards
-  - [x] every component route exposes shared purpose, use/avoid, live examples, variants, states, anatomy, behavior, accessibility, content, developer, related, status, and Foundation Element sections
+  - [x] every component route exposes the approved Purpose, Use Cases, Component Contract, Live Examples, and Related Components and Patterns scaffold
+  - [x] Accordion has a canonical minimal component and exemplar page for manual scaffold approval
   - [x] Components index exposes priority buckets, status legend, canonical docs, and Foundation Element dependencies
-  - [ ] manual review confirms the component-specific organization is sufficiently clear for later development
+  - [x] manual review approves the Accordion scaffold exemplar before broader component family-depth work resumes
+  - [x] remaining action, input, selection, feedback/loading, overlay/help, data-display, navigation, and shell Component pages use the approved scaffold
+  - [x] live examples render sample output and variants for implemented pages; broad components may use approved matrices or full-width live-example sections instead of tab-only examples
+  - [x] deferred Component pages expose trigger conditions and alternatives instead of speculative complete UI
+  - [x] Date picker now has an installed `x-ui.date-picker` API and component-specific UI Reference examples
+  - [x] remaining Component standards docs have clean Markdown tables, correct Tag/Tabs ownership, current Pattern owner routes, and deferred-page placeholder cleanup
+  - [x] standards-defined public Component APIs from P2-F-CQ-122 through P2-F-CQ-127 are installed as public Blade wrappers or mapped to existing source aliases
+  - [x] UI standards navigation separates final API expectations from active implementation tracking through `docs/02-standards/ui/api-registry.md` and `docs/08-active/ui-implementation-sync.md`
+  - [x] UI API standards now require explicit implementation and UI Reference proof checklists, with active per-API progress tracked in `docs/08-active/ui-implementation-sync.md`
+  - [x] UI standards registry and indexes have been reconciled after the numbered standards updates; newly approved target APIs are separated from active implementation progress
+  - [x] newly approved target APIs from updated standards are installed or mapped before UI Reference proof sync resumes
+  - [x] Component UI Reference pages prove the newly installed public APIs instead of local/reference-only markup
+  - [x] component-by-component recovery review sequencing resumes after the API proof sync
+  - [x] UI API Standards Preflight guidance requires related API, checklist, installed source, and live-example review before UI source edits
+  - [x] UI Reference sidebar dropdowns use productive disclosure motion, reduced-motion handling, chevron state, and one shell scroll owner
+  - [x] UI Reference sidebar uses one controlled disclosure API for Foundation Elements, Color, Typography, and Components with no native instant disclosure left in the shared sidebar partial
+  - [x] UI Reference sidebar native-disclosure recovery was failed/reopened and replaced with a Navigation Pattern/UI shell correction using token-backed classes, controlled disclosure lifecycle, named nav regions, current-route semantics, and Heroicon chevrons
+  - [ ] component-specific recovery queue P2-F-CQ-077, P2-F-CQ-079, P2-F-CQ-093, and P2-F-CQ-136 through P2-F-CQ-163 is implemented and ready for manual review
 
 ## Foundation Elements Layer
 - [x] Foundation Elements Layer
-  Status: passed review — P2-F-CQ-025 through P2-F-CQ-032 and P2-F-CQ-040 through P2-F-CQ-065 were manually approved on 2026-06-08; Foundation Elements now provide the accepted baseline for T1 family-depth work
+  Status: passed review baseline with typography update pending review — P2-F-CQ-025 through P2-F-CQ-032 and P2-F-CQ-040 through P2-F-CQ-065 were manually approved on 2026-06-08; P2-F-CQ-164 is implemented pending review to add the now-required Productive and Expressive Typography Type Sets API/proof surface
   - [x] UI Reference sidebar exposes Foundation Elements before T1 Components
   - [x] Foundation Elements overview explains Foundation Elements, T1 Components, T2 Patterns, and T3 Feature Modules
   - [x] grid, color, icons, pictograms, motion, spacing, themes, and typography have catalog dispositions and owner routes
@@ -68,6 +86,7 @@
   - [x] expanded background, layer, field, border, text, link, icon, support/status, focus, skeleton, and syntax namespaces are documented
   - [x] P2-F-CQ-040 through P2-F-CQ-065 correct Foundation Elements example and token depth before T1 family depth passes begin
   - [x] manual review confirms Foundation Elements pages are sufficiently concrete for later T1 depth passes
+  - [x] Typography now exposes Productive and Expressive Type Sets through source classes and a nested Type Sets UI Reference page
 
 ## Module Home And Dashboard Summary Starters
 - [ ] Module Home And Dashboard Summary Starters
@@ -104,10 +123,23 @@
 
 ## Automated Coverage
 - [ ] Automated Coverage
-  Status: not implemented
+  Status: partially implemented
   - route tests confirm starter examples are reachable
   - assertions confirm required starter labels and pattern markers are present
   - no staging deploy validation is required in this batch
+  - component recovery tests now block generic fallback comments and verify Breadcrumb, Tabs, Menu, Code snippet, and Button correction markers
+  - breadcrumb-focused assertions verify trailing omitted-current trails, four/five item overflow rules, and open overflow menu review examples
+  - date-picker-focused assertions verify `x-ui.date-picker`, native date/date-time examples, validation/warning, disabled/read-only, range deferral, and fallback absence
+  - component-standards scans verify table structure, file/slug identity, stale Pattern routes, and stale UI navigation guidance
+  - public Component API wrapper test verifies installed markers for Link, Menu buttons, Pagination, Search, Dropdown, File uploader, Number input, Select, Radio, Toggle, Inline loading, Progress, Tag, Structured list, Tile, Tooltip, and Toggletip
+  - UI registry reconciliation scans verify stale planned routes, deleted token guidance, promoted API dispositions, and active-sync coverage for newly approved target APIs
+  - component API proof-sync assertions verify contained list, native list classes, multiselect, popover, slider/range slider, and tree view UI Reference pages render installed APIs instead of local/reference-only markup
+  - component recovery sequencing now has one queued correction/proof item per remaining unresolved Component API or disposition group
+  - menu-focused assertions verify closed interactive examples, static item-state proof panels, item sizing, placement, checkable roles, submenu hooks, title text, and no forced-open menu state
+  - button-focused assertions verify variant purpose, size, state, group, icon-only, content, and token/style role matrices
+  - menu-buttons-focused assertions verify Menu button, Combo button, Overflow menu, size/width/state/keyboard proof, and canonical developer examples
+  - typography type-set assertions verify nested Typography route, Productive/Expressive matrices, app-owned class names, 14px/16px bases, fixed/fluid heading behavior, blending/prohibited examples, and no Carbon production class API exposure
+  - sidebar assertions verify Color/Typography dropdown state, productive disclosure motion markers, reduced-motion support, chevron open-state markers, native disclosure markup, readable category hover CSS, flat alphabetical Component menu order, one shell scroll owner, and removal of old Component category groups from the primary sidebar
 
 ## Handoff Readiness
 - [ ] Handoff Readiness

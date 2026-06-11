@@ -8,8 +8,747 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 
 ## Ready To Implement
 
+## In Progress
+
+## Implemented Pending Review
+
+### P2-F-CQ-169 - UI Reference sidebar Navigation Pattern correction
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-167, P2-F-CQ-168
+- Manual Review: Failed/reopened after worklog 2-F-0049 because the native disclosure recovery restored dropdown behavior by locking in local `<details>/<summary>` navigation instead of the standards-owned Navigation/UI shell surface.
+- Scope: Correct the UI Reference sidebar as a Navigation Pattern/UI shell surface after the native disclosure recovery left raw utility clusters, native instant disclosure, text glyph chevrons, missing named navigation landmarks, and tests that asserted the workaround as success.
+- Acceptance:
+  - sidebar visual treatment is owned by scoped `ui-reference-sidebar-*` classes in `resources/css/app.css` and consumes `var(--ui-*)` role tokens instead of raw Tailwind color/state clusters in the partial
+  - Foundation Elements, Components, Color, and Typography use button-controlled disclosure with lifecycle initialization, explicit `aria-expanded`, controlled panels, productive motion markers, and reduced-motion handling
+  - sidebar navigation regions have accessible names and active route links expose `aria-current="page"`
+  - disclosure chevrons use approved Heroicons with decorative `aria-hidden="true"` semantics and token-backed rotation state
+  - Components remain a flat alphabetical list, Color/Typography remain nested links, Widget Content subpages remain nested only when active, and old grouped/legacy sidebar surfaces remain absent
+  - route tests reject native `<details>/<summary>`, text glyph chevrons, raw sidebar color utilities, and native-disclosure CSS selectors while asserting the Navigation Pattern contract
+- Implemented in: worklog-2-F-0050
+
+### P2-F-CQ-168 - UI Reference sidebar disclosure consistency correction
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-167
+- Scope: Re-run the UI Reference sidebar menu correction so every sidebar disclosure group uses the approved controlled disclosure behavior instead of leaving native instant `<details>` behavior in the primary menu.
+- Acceptance:
+  - Foundation Elements and Components section groups use the same button/panel disclosure API as Color and Typography
+  - no native `<details>` or `<summary>` disclosure remains in the shared sidebar partial
+  - Foundation Elements and Components remain expanded by default while remaining keyboard-reachable controlled disclosures
+  - route tests assert all four sidebar disclosure groups, productive motion markers, open/closed state markers, no nested Component scrollbar, alphabetical Components, and absence of native disclosure in the sidebar partial
+- Implemented in: worklog-2-F-0048
+
+### P2-F-CQ-167 - UI Reference sidebar dropdown motion and scroll correction
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-165, P2-F-CQ-166
+- Scope: Treat the UI Reference sidebar as a Navigation/Layout Pattern surface and correct the Color/Typography dropdown and sidebar scroll behavior against related Motion, Icon, Accessibility, and Layout standards.
+- Acceptance:
+  - Color and Typography remain independent sidebar dropdowns with explicit disclosure buttons, `aria-expanded`, controlled panels, chevron rotation, productive motion, and reduced-motion handling
+  - sidebar uses one shell scroll owner instead of a nested Component-list scrollbar
+  - Components remain a flat alphabetical list with old Component category groups and legacy combined sidebar links absent from the primary menu
+  - tests assert disclosure/motion markers, reduced-motion source support, chevron open-state markers, no nested Component `overflow-y-auto`, alphabetical order, and stale group absence
+- Implemented in: worklog-2-F-0047
+
+### P2-F-CQ-166 - UI API Standards Preflight enforcement
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-130, P2-F-CQ-131
+- Scope: Add durable agent guidance requiring UI work to start from the owning UI API standard, its table of contents, required implementation sections, related APIs, installed source, and live examples before source edits.
+- Acceptance:
+  - UI standards AGENTS guidance defines the UI API Standards Preflight and requires it in active UI worklogs
+  - resource-side AGENTS files require the same preflight before Blade, UI Reference partial, UI component, CSS, or JS behavior edits
+  - guidance tells agents to stop and queue a standards gap when behavior-heavy UI work lacks sufficient primary or related API guidance
+  - worklog 2-F-0047 includes the required `UI API Standards Preflight` section
+- Implemented in: worklog-2-F-0047
+
+### P2-F-CQ-165 - UI Reference sidebar menu standards correction
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-164
+- Scope: Update the UI Reference sidebar to follow current menu standards by making Color and Typography independent dropdowns and replacing grouped Component menu categories with a flat alphabetical Component list.
+- Acceptance:
+  - Color and Typography render as collapsed dropdown menu items unless their own route or nested route is active
+  - Components sidebar uses one alphabetical list from the Component catalog
+  - old Component category headings and legacy combined sidebar links are removed from the primary menu
+  - route tests assert dropdown state, alphabetical order, and absence of stale sidebar group surfaces
+- Implemented in: worklog-2-F-0046
+- Correction Follow-up: P2-F-CQ-167 adds the missing disclosure motion, reduced-motion behavior, and single sidebar scroll-owner proof.
+
+### P2-F-CQ-164 - Typography type sets source API and UI Reference proof
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-130, P2-F-CQ-131, P2-F-CQ-132
+- Scope: Install the app-owned Productive and Expressive Typography Type Set source API and add a nested UI Reference proof page at `/platform/ui-reference/elements/typography/type-sets`.
+- Acceptance:
+  - app CSS exposes `ui-type-set-productive`, `ui-type-set-expressive`, productive role classes, expressive role classes, display roles, and related CSS variables
+  - Typography sidebar exposes nested `Overview` and `Type Sets` links
+  - `/platform/ui-reference/elements/typography/type-sets` renders Productive and Expressive matrices, comparison examples, blending examples, API matrix, prohibited usage, and gated capabilities
+  - Typography catalog, API registry, Elements index, and active implementation sync no longer describe expressive type as deferred
+  - focused Foundation tests assert route, sidebar, class coverage, 14px/16px bases, fixed/fluid heading behavior, blending/prohibited examples, and no Carbon production class API exposure
+- Implemented in: worklog-2-F-0045
+
+### P2-F-CQ-136 - Link component API proof and recovery
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-122, P2-F-CQ-129
+- Scope: Prove `x-ui.link` against the Link standard and replace local/reference-only examples.
+- Acceptance:
+  - page renders inline, external/help, icon-leading/trailing, focus-visible, hover, visited-policy, and unavailable/deferred link treatments
+  - developer implementation uses `x-ui.link`
+  - tests assert rendered API markers, state examples, content rules, and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-137 - Pagination component API proof and recovery
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-122, P2-F-CQ-129
+- Scope: Prove `x-ui.pagination` against the Pagination standard.
+- Acceptance:
+  - page renders full pagination, compact pagination, page-size selector, overflow, disabled previous/next, and responsive placement examples
+  - developer implementation uses `x-ui.pagination`
+  - tests assert rendered API markers, labels, disabled states, and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-138 - Search component API proof and recovery
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-122, P2-F-CQ-129
+- Scope: Prove `x-ui.search` against the Search standard.
+- Acceptance:
+  - page renders page search, table search, clear action, loading/no-results, disabled/read-only, and gated behavior where applicable
+  - developer implementation uses `x-ui.search`
+  - tests assert rendered API markers, clear/loading hooks, and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-139 - Dropdown component API proof and recovery
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-123, P2-F-CQ-129
+- Scope: Prove `x-ui.dropdown` against the Dropdown standard.
+- Acceptance:
+  - page renders known-option handoff, validation, disabled/read-only, and menu state examples
+  - developer implementation uses `x-ui.dropdown`
+  - tests assert rendered API markers, option hooks, state examples, and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-140 - File uploader component API proof and recovery
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-123, P2-F-CQ-129
+- Scope: Prove `x-ui.file-uploader` against the File uploader standard.
+- Acceptance:
+  - page renders button upload, file validation, disabled state, and drag-drop gated disposition
+  - developer implementation uses `x-ui.file-uploader`
+  - tests assert rendered API markers, validation hooks, deferred drag-drop gate, and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-141 - Number input component API proof and recovery
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-123, P2-F-CQ-129
+- Scope: Prove `x-ui.number-input` against the Number input standard.
+- Acceptance:
+  - page renders min/max/step, increment/decrement, error/warning, disabled/read-only, compact, and fluid examples
+  - developer implementation uses `x-ui.number-input`
+  - tests assert rendered API markers, validation states, and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-142 - Select component API proof and recovery
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-123, P2-F-CQ-129
+- Scope: Prove `x-ui.select` against the Select standard.
+- Acceptance:
+  - page renders native selection, helper text, validation, disabled/read-only, placeholder, and long-option handoff guidance
+  - developer implementation uses `x-ui.select`
+  - tests assert rendered API markers, option states, and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-143 - Radio button component API proof and recovery
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-124, P2-F-CQ-129
+- Scope: Prove `x-ui.radio-button` and `x-ui.radio-group` against the Radio button standard.
+- Acceptance:
+  - page renders vertical/horizontal groups, selected/unselected, disabled/read-only, validation, and helper text examples
+  - developer implementation uses `x-ui.radio-group` and `x-ui.radio-button`
+  - tests assert rendered API markers, group semantics, state examples, and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-144 - Toggle component API proof and recovery
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-124, P2-F-CQ-129
+- Scope: Prove `x-ui.toggle` against the Toggle standard.
+- Acceptance:
+  - page renders immediate setting, disabled setting, read-only/gated state, helper text, on/off, focus, and reduced-motion expectations
+  - developer implementation uses `x-ui.toggle`
+  - tests assert rendered API markers, binary semantics, state examples, and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-145 - Inline loading component API proof and recovery
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-125, P2-F-CQ-129
+- Scope: Prove `x-ui.inline-loading` against the Inline loading standard.
+- Acceptance:
+  - page renders action pending, local save pending, polite status, success/error completion, and reduced-motion behavior
+  - developer implementation uses `x-ui.inline-loading`
+  - tests assert rendered API markers, status semantics, motion handling, and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-146 - Progress bar component API proof and recovery
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-125, P2-F-CQ-129
+- Scope: Prove `x-ui.progress-bar` against the Progress bar standard.
+- Acceptance:
+  - page renders determinate progress, gated indeterminate guidance, success/error completion, label/value, and reduced-motion examples
+  - developer implementation uses `x-ui.progress-bar`
+  - tests assert rendered API markers, ARIA/value attributes, state examples, and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-147 - Progress indicator component API proof and recovery
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-125, P2-F-CQ-129
+- Scope: Prove `x-ui.progress-indicator` and `x-ui.progress-step` against the Progress indicator standard.
+- Acceptance:
+  - page renders step flow, current/completed/error step, horizontal/vertical where supported, disabled/gated states, and content guidance
+  - developer implementation uses `x-ui.progress-indicator` and `x-ui.progress-step`
+  - tests assert rendered API markers, step states, and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-148 - Tag component API proof and recovery
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-125, P2-F-CQ-129
+- Scope: Prove `x-ui.tag` and the Tag/Badge/Status boundary against the Tag standard.
+- Acceptance:
+  - page renders metadata tag, status tag, semantic tag, removable/filter tag where supported, disabled/gated states, and icon use
+  - developer implementation uses `x-ui.tag`
+  - tests assert rendered API markers, boundary language, semantic states, and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-149 - Structured list component API proof and recovery
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-126, P2-F-CQ-129
+- Scope: Prove `x-ui.structured-list` and `x-ui.structured-list-row` against the Structured list standard.
+- Acceptance:
+  - page renders default, selectable, condensed, selected/current, focus, disabled, skeleton/loading, and responsive examples
+  - developer implementation uses `x-ui.structured-list` and `x-ui.structured-list-row`
+  - tests assert rendered API markers, row states, and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-150 - Tile component API proof and recovery
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-126, P2-F-CQ-129
+- Scope: Prove `x-ui.tile` against the Tile standard.
+- Acceptance:
+  - page renders static, clickable, selectable, expandable, disabled/gated, focus, selected, and content-density examples
+  - developer implementation uses `x-ui.tile`
+  - tests assert rendered API markers, interaction states, and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-151 - Tooltip component API proof and recovery
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-127, P2-F-CQ-129
+- Scope: Prove `x-ui.tooltip` against the Tooltip standard.
+- Acceptance:
+  - page renders icon-only button tooltip, definition tooltip, disabled-control explanation pattern, placement, hover/focus, and non-interactive constraints
+  - developer implementation uses `x-ui.tooltip`
+  - tests assert rendered API markers, accessible naming, placement/state examples, and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-152 - Toggletip component API proof and recovery
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-127, P2-F-CQ-129
+- Scope: Prove `x-ui.toggletip` against the Toggletip standard.
+- Acceptance:
+  - page renders contextual help, dismissible rich help, form assistance, placement, click/dismiss behavior, and reduced-motion expectations
+  - developer implementation uses `x-ui.toggletip`
+  - tests assert rendered API markers, trigger/panel/close hooks, accessible naming, and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-153 - Checkbox component source/API and proof recovery
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-129
+- Scope: Audit and prove the Checkbox standard against the installed API.
+- Acceptance:
+  - source/API is confirmed as `x-ui.checkbox` / `x-ui.checkbox-group`
+  - page renders independent choice, multi-select group, settings group, validation group, checked/unchecked/indeterminate, disabled, read-only, error, and warning examples
+  - tests assert source/API markers, state proof, and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-154 - Text input component source/API and proof recovery
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-129
+- Scope: Audit and prove the Text input standard against the installed native-plus-`ui-*` API.
+- Acceptance:
+  - source/API is confirmed as native input with `ui-field`, `ui-input`, and `ui-text-input` classes
+  - page renders login/profile form, settings form, validation field, read-only field, disabled field, helper text, placeholder, and error/warning examples
+  - tests assert source/API markers, state proof, and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-155 - Data table component and Tables Pattern boundary recovery
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-129
+- Scope: Reconcile Data table Component proof with the upcoming table overhaul and Tables Pattern ownership.
+- Acceptance:
+  - current page does not fake final table-toolbar behavior
+  - page renders basic sortable, filterable toolbar handoff, row actions, loading, empty, and responsive overflow examples using installed APIs or explicit gated dispositions
+  - table-toolbar, enhanced data table, and related planned sub-APIs remain registry gaps
+  - tests assert component/pattern boundary, rendered table proof, and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-156 - Loading component source/API and proof recovery
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-129
+- Scope: Audit and prove the Loading standard against installed spinner/skeleton class API.
+- Acceptance:
+  - page renders spinner, skeleton text/card/table, page-region loading, reduced-motion behavior, and component-owned loading boundaries
+  - developer implementation uses the confirmed loading/skeleton class API
+  - tests assert rendered loading markers, reduced-motion proof, and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-157 - Modal component source/API and proof recovery
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-129
+- Scope: Audit and prove the Modal standard against installed API and Overlays Pattern ownership.
+- Acceptance:
+  - source/API is confirmed as `x-ui.modal`
+  - page renders confirmation, form modal, read-only detail, destructive action, wizard gated disposition, focus trap/return, Escape/outside-click rules, and reduced-motion behavior
+  - tests assert modal API markers, accessibility behavior markers, and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-158 - Notification component source/API and proof recovery
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-129
+- Scope: Audit and prove Notification against installed alert/toast/status APIs and Feedback/Notifications Pattern ownership.
+- Acceptance:
+  - page renders form validation error, saved success, API failure, background job completed, maintenance/system notice, dismissible/gated behavior, and token-correct status colors
+  - developer implementation uses the confirmed notification/toast API
+  - tests assert status colors/classes, rendered API markers, and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-159 - AI label deferred disposition proof
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-129
+- Scope: Keep AI label as a clear gated/no-public-API Component disposition unless a product AI decision approves it.
+- Acceptance:
+  - page shows no callable public API
+  - trigger conditions, prohibited local workarounds, and current alternatives are explicit
+  - tests assert deferred disposition rather than fake implemented examples
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-160 - Content switcher deferred disposition proof
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-129
+- Scope: Keep Content switcher as a gated/deferred Component unless a product need approves it, with Tabs as the current alternative.
+- Acceptance:
+  - page shows no callable public API
+  - trigger conditions, prohibited local workarounds, and Tabs alternative are explicit
+  - tests assert deferred disposition rather than fake implemented examples
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-161 - Form represented-by-pattern disposition proof
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-129
+- Scope: Keep Form represented by the Forms Pattern unless a standalone Component API is approved.
+- Acceptance:
+  - Component page does not fake standalone form ownership
+  - Forms Pattern route and form-field/helper boundaries are linked clearly
+  - tests assert represented-by-pattern disposition and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-162 - UI shell represented-by-pattern disposition proof
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-129
+- Scope: Keep UI shell represented by Navigation/Layout Patterns unless a standalone Component API is approved.
+- Acceptance:
+  - Component page does not fake standalone shell ownership
+  - Navigation/Layout Pattern routes and shell sub-API registry gaps are linked clearly
+  - tests assert represented-by-pattern disposition and no generic fallback
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-163 - Component adjacent gap ownership decisions
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-129
+- Scope: Resolve active-sync adjacent gaps that are not yet flat Component standards.
+- Items: Textarea, Searchable select, Divider, Badge/Status, Drawer/Side panel, Form field.
+- Acceptance:
+  - each adjacent gap is assigned to an existing Component, Pattern, Element, planned registry gap, or new queue item
+  - no speculative API is introduced without a standard and route owner
+  - `docs/08-active/ui-implementation-sync.md` and `docs/02-standards/ui/api-registry.md` remain aligned
+- Implemented in: worklog-2-F-0044
+
+### P2-F-CQ-077 - Menu component correction
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-033, P2-F-CQ-129
+- Scope: Replace generic Menu depth content with canonical `x-ui.menu` and `x-ui.menu-item` primitives, rendered anatomy/state examples, sizing, alignment, dividers, shortcuts, submenu boundary, and select/danger states.
+- Acceptance:
+  - Menu page shows contextual action, row action, grouped/selected, and alignment/RTL examples
+  - variants render size, alignment, state, divider, shortcut, submenu, single-select, multi-select, danger, and disabled treatments
+  - live examples render as normal closed/interactable menu controls by default, not forced-open static displays
+  - helper and UI reference text must remain visible and unobscured when menus are closed
+  - developer implementation uses `x-ui.menu`
+  - focused tests assert anatomy coverage, sizes, alignment, states, and no generic fallback
+  - worklog-2-F-0025 output is corrected rather than treated as accepted final proof
+- Implemented in: worklog-2-F-0041
+
+### P2-F-CQ-079 - Button component correction
+- Status: Implemented Pending Review
+- Unblocked By: P2-F-CQ-077 Menu component correction
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-033, P2-F-CQ-116, P2-F-CQ-129
+- Scope: Correct Button as the broad, matrix-heavy Component page exemplar with full variant, size, state, group, icon, content, and implementation coverage.
+- Acceptance:
+  - Button page renders a variant purpose matrix for primary, secondary, tertiary, ghost, danger primary, danger tertiary, and danger ghost
+  - Button page renders seven size examples, state matrix, recommended groups, icon usage, content behavior, and token/style roles
+  - icon-only hover/focus/disabled/loading/pressed/danger states are represented correctly
+  - developer implementation uses `x-ui.button` and `x-ui.icon-button`
+  - focused tests assert required matrices and no generic fallback
+  - worklog-2-F-0026 output is corrected rather than treated as accepted final proof
+- Implemented in: worklog-2-F-0042
+
+### P2-F-CQ-093 - Menu buttons component correction
+- Status: Implemented Pending Review
+- Unblocked By: P2-F-CQ-079 Button component correction
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-033, P2-F-CQ-122, P2-F-CQ-129
+- Scope: Correct Menu buttons after the installed menu-button, combo-button, and overflow-menu APIs are proven in UI Reference.
+- Acceptance:
+  - Menu button, Combo button, and Overflow menu are represented as distinct base options with normal interactive closed-state examples
+  - size variants cover extra small, small, medium, and large with matching trigger/menu item heights
+  - width behavior documents the 160px menu minimum and ghost button exception
+  - examples are not forced open unless scoped as explicit state/anatomy proof
+  - developer implementation uses `x-ui.menu-button`, `x-ui.combo-button`, and `x-ui.overflow-menu`
+  - focused tests assert rendered API markers, size/width behavior, and no generic fallback
+- Implemented in: worklog-2-F-0043
+
+### P2-F-CQ-129 - Component recovery review and correction sequencing
+- Status: Implemented Pending Review
+- Unblocked By: P2-F-CQ-128 Component UI Reference API proof sync
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-128
+- Scope: Resume component-by-component recovery review after the public APIs and UI Reference proof surfaces are in sync.
+- Acceptance:
+  - review order starts with Breadcrumb, Tabs, Menu, Code snippet, and Button
+  - each reviewed page compares standards doc, installed API, rendered UI Reference proof, and focused tests
+  - pages cannot move toward approval unless standards, source, examples, and tests agree
+  - remaining catalog items continue in component route order
+- Recovery Sequence:
+  - Manual review first: Breadcrumb, Tabs, and Code snippet because those pages already have focused recovery output pending review.
+  - Correct next: Menu, Button, and Menu buttons because they have known review blockers.
+  - Continue through the remaining component catalog with one queue item per UI API or tightly bound ownership group.
+- Implemented in: worklog-2-F-0040
+
+### P2-F-CQ-128 - Component UI Reference API proof sync
+- Status: Implemented Pending Review
+- Unblocked By: P2-F-CQ-135 source/API installation pass
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-122 through P2-F-CQ-127 and P2-F-CQ-135
+- Scope: Replace local/reference-only examples on affected Component pages with the installed `x-ui.*` APIs.
+- Acceptance:
+  - affected UI Reference pages render installed APIs instead of native/local stand-ins
+  - developer implementation sections show real canonical calls
+  - rendered examples cover documented states, variants/options, accessibility behavior, and deferred gates
+  - tests fail for generic fallback text, undocumented local markup, or standards/API mismatch
+- Implemented in: worklog-2-F-0039
+
+### P2-F-CQ-135 - Newly approved UI API source installation pass
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-132 through P2-F-CQ-134
+- Scope: Install or expose the public source APIs now declared by the updated standards and registry before UI Reference proof sync resumes.
+- Components: Contained list, List, Multiselect, Popover, Slider, Range slider, Tree view.
+- Acceptance:
+  - `x-ui.contained-list`, `x-ui.contained-list-item`, `x-ui.multiselect`, `x-ui.popover`, `x-ui.slider`, `x-ui.range-slider`, and `x-ui.tree-view` exist or are explicitly mapped to equivalent installed APIs
+  - List has an approved native-plus-class source/API contract with UI Reference proof requirements
+  - source files, public props/options, data attributes, and tests align with each owning standard
+  - no standard is weakened only because source implementation is missing
+  - P2-F-CQ-128 is unblocked once this installation pass is reviewable
+- Implemented in: worklog-2-F-0038
+
+### P2-F-CQ-132 - UI standards registry and index reconciliation
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Reconcile `docs/02-standards/ui/api-registry.md`, UI folder indexes, and UI AGENTS guidance with the current numbered standards docs.
+- Acceptance:
+  - `api-registry.md` reflects target API dispositions from current standards docs
+  - formerly deferred APIs that now define public standards are marked `Approved API`
+  - represented-by-pattern entries remain discoverable without pretending to own standalone Component source
+  - folder indexes match the registry
+  - stale deleted-folder guidance such as `tokens/AGENTS.md` is removed
+
+### P2-F-CQ-133 - Substantial UI standards update audit
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Audit UI standards that changed beyond ToC/numbering for stale routes, malformed tables, source/API mismatches, and old deferred language.
+- Acceptance:
+  - malformed union-type Markdown tables found in promoted standards are corrected with `/` separators
+  - stale planned Pattern routes are normalized to current owner routes or registry-gap language
+  - source/API declarations that do not have matching source are not hidden; they are pushed into active sync/follow-up queue
+  - standards remain target contracts and are not weakened to match missing implementation
+
+### P2-F-CQ-134 - UI implementation sync refresh from updated standards
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Refresh `docs/08-active/ui-implementation-sync.md` from the reconciled registry and create follow-up queue work for approved target APIs whose source/proof is missing.
+- Acceptance:
+  - active sync tracks every registry API or planned gap affected by the standards update
+  - implementation progress remains in `docs/08-active/`, not `docs/02-standards/ui`
+  - missing source APIs are marked as missing/needs install rather than complete
+  - follow-up source installation work is queued before UI Reference proof sync resumes
+
+### P2-F-CQ-130 - UI standards navigation, registry, and implementation tracking correction
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Correct the UI standards navigation model so standards remain final API expectations, `api-registry.md` remains durable API ownership/disposition inventory, and active implementation proof tracking moves into `docs/08-active/`.
+- Acceptance:
+  - `docs/02-standards/ui/index.md` maps Elements, Components, Patterns, the API registry, and developer lookup paths without active progress tracking
+  - `docs/02-standards/ui/api-registry.md` uses policy/disposition statuses only and removes progress statuses such as installed pending review/correction
+  - `elements/index.md`, `components/index.md`, and `patterns/index.md` expose practical matrices for API lookup
+  - UI standards `AGENTS.md` files route agents through indexes plus the API registry and remove stale deleted-file references
+  - active implementation tracking lives in `docs/08-active/ui-implementation-sync.md`
+  - stale `UI UX Typography Standards.md` is salvaged into `elements/typography.md` where needed and removed
+- Implemented in: worklog-2-F-0034
+
+### P2-F-CQ-131 - UI API checklist standardization and implementation sync expansion
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Add explicit per-UI API implementation/proof checklists to Element, Component, and Pattern standards while expanding the active implementation sync tracker to one row per known UI API and planned gap.
+- Acceptance:
+  - `UI API` is defined as the shared term for Foundation Element, Component, and Pattern APIs
+  - standards guidance requires `Implementation and UI Reference Checklist`
+  - each UI API standard includes `Implementation checklist` and `UI Reference proof checklist`
+  - standards use requirement language, not active progress status
+  - `docs/08-active/ui-implementation-sync.md` tracks current implementation/proof/test/review state for every API listed in `api-registry.md`
+  - flat standards files remain the canonical default in this pass
+  - closeout guidance states durable post-Batch implementation status moves to planning, not standards
+- Implemented in: worklog-2-F-0035
+
+### P2-F-CQ-122 - Missing action and navigation component API installation
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-121
+- Scope: Install or expose the public APIs that current action/navigation standards define but source implementation has not fully caught up to.
+- Components: Link, Menu buttons, Pagination, Search.
+- Review Gate: Not eligible for passed review until P2-F-CQ-128 proves installed APIs against current standards and UI Reference pages.
+- Acceptance:
+  - `x-ui.link`, `x-ui.menu-button`, `x-ui.combo-button`, `x-ui.overflow-menu`, `x-ui.pagination`, and `x-ui.search` exist or are explicitly mapped to already-installed differently named APIs
+  - source files and focused tests agree on component markers, state hooks, and public names
+  - no standard is weakened only because the implementation was previously missing
+- Implemented in: worklog-2-F-0033
+
+### P2-F-CQ-123 - Missing input component API installation
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-121
+- Scope: Install or expose missing public input APIs declared by the current standards.
+- Components: Dropdown, File uploader, Number input, Select.
+- Review Gate: Not eligible for passed review until P2-F-CQ-128 proves installed APIs against current standards and UI Reference pages.
+- Acceptance:
+  - `x-ui.dropdown`, `x-ui.file-uploader`, `x-ui.number-input`, and `x-ui.select` exist or are explicitly mapped to installed native-plus-`ui-*` APIs
+  - documented public wrappers render field labels, helper/status text, disabled/read-only/error/warning hooks where applicable
+  - richer behavior remains gated with trigger conditions
+- Implemented in: worklog-2-F-0033
+
+### P2-F-CQ-124 - Missing selection component API installation
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-121
+- Scope: Install or expose selection APIs declared by the current standards.
+- Components: Radio button, Toggle.
+- Review Gate: Not eligible for passed review until P2-F-CQ-128 proves installed APIs against current standards and UI Reference pages.
+- Acceptance:
+  - `x-ui.radio-button`, `x-ui.radio-group`, and `x-ui.toggle` exist or are explicitly mapped to installed native-plus-`ui-*` APIs
+  - public wrappers render documented selected/on/off, disabled, readonly, helper, and validation hooks
+  - read-only/gated semantics are proven without fake unsupported controls
+- Implemented in: worklog-2-F-0033
+
+### P2-F-CQ-125 - Missing feedback and loading component API installation
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-121
+- Scope: Install or expose feedback/loading APIs declared by the current standards.
+- Components: Inline loading, Progress bar, Progress indicator, Tag.
+- Review Gate: Not eligible for passed review until P2-F-CQ-128 proves installed APIs against current standards and UI Reference pages.
+- Acceptance:
+  - `x-ui.inline-loading`, `x-ui.progress-bar`, `x-ui.progress-indicator`, `x-ui.progress-step`, and `x-ui.tag` exist or are explicitly mapped to installed source aliases
+  - Tag owns the Tag/Badge/Status boundary and no longer contains Tabs content
+  - public wrappers render semantic/status/loading examples with token-backed Color, Typography, Icons, and Motion usage
+- Implemented in: worklog-2-F-0033
+
+### P2-F-CQ-126 - Missing data display component API installation
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-121
+- Scope: Install or expose data-display APIs declared by the current standards.
+- Components: Structured list, Tile.
+- Review Gate: Not eligible for passed review until P2-F-CQ-128 proves installed APIs against current standards and UI Reference pages.
+- Acceptance:
+  - `x-ui.structured-list`, `x-ui.structured-list-row`, and `x-ui.tile` exist or are explicitly mapped to installed source aliases
+  - public wrappers render default, selected/current, focus, disabled, density, and responsive markers where applicable
+  - Pattern-owned grouping, filter, table-toolbar, and page-header behavior remains linked to current Pattern owners or the registry
+- Implemented in: worklog-2-F-0033
+
+### P2-F-CQ-127 - Missing overlay and help component API installation
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-121
+- Scope: Install or expose overlay/help APIs declared by the current standards.
+- Components: Tooltip, Toggletip.
+- Review Gate: Not eligible for passed review until P2-F-CQ-128 proves installed APIs against current standards and UI Reference pages.
+- Acceptance:
+  - `x-ui.tooltip` and `x-ui.toggletip` exist or are explicitly mapped to installed source aliases
+  - public wrappers prove hover/focus/click, dismissal, placement, accessible naming, and reduced-motion ownership markers where applicable
+  - Popover remains deferred unless a separate product need installs it
+- Implemented in: worklog-2-F-0033
+
+### P2-F-CQ-074 - Breadcrumb component correction
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-039
+- Scope: Replace generic Breadcrumb depth content with a canonical `x-ui.breadcrumb` primitive, functional overflow menu, small/medium live examples, and rendered nested variants.
+- Acceptance:
+  - Breadcrumb page shows small and medium base examples
+  - variants render truncated menu, current-page-listed, and truncated-menu-with-current-page-listed treatments
+  - default behavior omits the current page link unless the current-page-listed variant is used
+  - developer implementation uses `x-ui.breadcrumb`
+  - focused tests assert overflow menu, current page text, sizing, and no generic fallback
+- Implemented in: worklog-2-F-0025
+
+### P2-F-CQ-075 - Tabs component correction
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-039
+- Scope: Replace generic Tabs depth content with a canonical `x-ui.tabs` primitive, working tab panel switching, and required line/contained/vertical examples plus rendered variants.
+- Acceptance:
+  - Tabs page shows line, contained, and vertical base examples
+  - variants render scrollable tabs, icons, icon-only tabs, secondary labels, dismissible tabs, manual activation, and small-breakpoint handoff
+  - tab panels contain unique scenario content
+  - developer implementation uses `x-ui.tabs`
+  - focused tests assert panel switching markers, required variants, and no generic fallback
+- Implemented in: worklog-2-F-0025
+
+### P2-F-CQ-076 - Component depth recovery audit and generic fallback ban
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-033 through P2-F-CQ-039
+- Scope: Reclassify broad family-depth work as pending correction and add quality assertions that block generic fallback content on implemented component pages.
+- Acceptance:
+  - P2-F-CQ-033 through P2-F-CQ-039 are marked Implemented Pending Correction or closed as superseded after recovery queue creation
+  - corrected component pages do not render generic developer comments, one-sentence state badges, or family-depth fallback panels
+  - uncorrected broad pages no longer claim manual-review-ready completion
+  - tests fail corrected pages that lack rendered scenario/variant examples or real component API examples
+- Implemented in: worklog-2-F-0025
+
+### P2-F-CQ-078 - Code snippet component correction
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-038
+- Scope: Replace generic Code snippet depth content with canonical `x-ui.code-snippet` examples for single-line, multi-line, highlighted syntax tokens, copy-state disposition, and token-backed developer snippets.
+- Acceptance:
+  - Code snippet page renders single-line and multi-line examples
+  - highlighted syntax-token examples use approved Typography and Color token guidance
+  - copy behavior is implemented or explicitly gated with trigger conditions
+  - developer implementation uses `x-ui.code-snippet`
+  - focused tests assert highlighted-token proof and no generic fallback
+- Implemented in: worklog-2-F-0025
+
+### P2-F-CQ-080 - Date picker component correction
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-034
+- Scope: Install `x-ui.date-picker`, update Date picker UI Reference examples to use the canonical API, and correct reviewed standards table/link issues.
+- Acceptance:
+  - Date picker standards API is represented by an installed component
+  - UI Reference examples use the canonical API rather than local native-only markup
+  - single date, date-time, validation, disabled/read-only, and gated range behavior are documented or rendered as appropriate
+  - focused Date picker and component tests pass
+- Implemented in: worklog-2-F-0031
+
+### P2-F-CQ-116 - Component page layout flexibility correction
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Update the Component page requirements so the five-card scaffold remains required, but `Live examples` can use tabs, matrices, comparison grids, state tables, size scales, grouped examples, and full-width sections.
+- Acceptance:
+  - Purpose, Use cases, Component contract, Live examples, and Related components remain the required top-level order
+  - variants are rendered visually but can live in a variant matrix when clearer than nesting under every scenario
+  - broad components can use internal live-example subsections such as variants, sizes, states, groups, icon usage, content behavior, and token/style roles
+  - tests keep stale scaffold labels absent without requiring every component to use tab-only live examples
+- Implemented in: worklog-2-F-0026
+
+### P2-F-CQ-117 - UI standards component and pattern path realignment
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Realign canonical UI standards paths to flat Component, Pattern, and Foundation Element folders and update supporting links/metadata.
+- Acceptance:
+  - Component standards live under `docs/02-standards/ui/components/{component}.md`
+  - Pattern standards live under `docs/02-standards/ui/patterns/{pattern}.md`
+  - Foundation Elements remain under `docs/02-standards/ui/elements/{element}.md`
+  - supporting links, indexes, checklists, and UI Reference metadata no longer point at stale tier folders
+- Implemented in: worklog-2-F-0027
+
+### P2-F-CQ-118 - UI standards API-contract rewrite
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Rewrite Element, Component, and Pattern standards as installed UI API contracts and mark legacy UI contracts as transitional source material.
+- Acceptance:
+  - standards define installed APIs, allowed variants/options/states, prohibited usage, deferred gates, UI Reference requirements, and tests
+  - UI Reference pages remain rendered proof surfaces
+  - legacy contracts are not treated as canonical owner files
+  - docs contract tests and guardrails pass
+- Implemented in: worklog-2-F-0028
+
+### P2-F-CQ-119 - Foundation 2x Grid canonical slug cleanup
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Make `2x-grid` the canonical Foundation Element slug, route, and doc while keeping `grid` only as a compatibility alias.
+- Acceptance:
+  - `docs/02-standards/ui/elements/2x-grid.md` is canonical
+  - duplicate `grid.md` standard is removed
+  - UI Reference route and tests support `2x-grid` while preserving `grid` compatibility where required
+- Implemented in: worklog-2-F-0029
+
+### P2-F-CQ-120 - Motion Foundation Element UI proof correction
+- Status: Implemented Pending Review
+- Owner: Batch F
+- Scope: Correct Motion Foundation Element proof so expressive motion is gated, productive examples use installed APIs/utilities, Pattern routes are current, and reduced-motion proof is visible.
+- Acceptance:
+  - expressive motion renders as gated, not implemented live demos
+  - productive examples use approved classes and installed component APIs where available
+  - Accordion proof uses the canonical accordion API
+  - reduced-motion proof includes visible default/static comparison and `prefers-reduced-motion`
+  - no stale `/patterns/app-shell` route remains
+- Implemented in: worklog-2-F-0030
+
+## Implemented Pending Correction
+
+## Blocked
+
 ### P2-F-CQ-002 - Module home and dashboard summary starters
-- Status: Ready To Implement
+- Status: Blocked
+- Blocked Until: Component recovery queue P2-F-CQ-077, P2-F-CQ-079, P2-F-CQ-093, and P2-F-CQ-136 through P2-F-CQ-163 reaches a starter-safe review state.
 - Owner: Batch F
 - Scope: Provide starter examples for module home / overview, dashboard/module summary surfaces, and dashboard widget examples by module content type.
 - Acceptance:
@@ -18,7 +757,8 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - widget starter examples cover approved content-type examples without introducing feature-specific workflows
 
 ### P2-F-CQ-003 - Settings and setup starters
-- Status: Ready To Implement
+- Status: Blocked
+- Blocked Until: Component recovery queue P2-F-CQ-077, P2-F-CQ-079, P2-F-CQ-093, and P2-F-CQ-136 through P2-F-CQ-163 reaches a starter-safe review state.
 - Owner: Batch F
 - Scope: Provide complete settings and setup/configuration starter examples and normalize proof surfaces only where needed for starter parity.
 - Acceptance:
@@ -27,7 +767,8 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - touched setup/settings proof surfaces preserve existing feature behavior
 
 ### P2-F-CQ-004 - Account/profile starters
-- Status: Ready To Implement
+- Status: Blocked
+- Blocked Until: Component recovery queue P2-F-CQ-077, P2-F-CQ-079, P2-F-CQ-093, and P2-F-CQ-136 through P2-F-CQ-163 reaches a starter-safe review state.
 - Owner: Batch F
 - Scope: Provide account/profile read-only and editable starter examples using the existing account proof surfaces and UI Reference catalog.
 - Acceptance:
@@ -36,7 +777,8 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - account feature behavior remains out of scope
 
 ### P2-F-CQ-005 - List, detail, and create/edit starters
-- Status: Ready To Implement
+- Status: Blocked
+- Blocked Until: Component recovery queue P2-F-CQ-077, P2-F-CQ-079, P2-F-CQ-093, and P2-F-CQ-136 through P2-F-CQ-163 reaches a starter-safe review state.
 - Owner: Batch F
 - Scope: Provide starter examples for list/index, table-management index, operational log/detail, content browser/split-view, detail/read-only, create/edit form, and blocked/empty/unavailable page states.
 - Acceptance:
@@ -49,259 +791,14 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - blocked/empty/unavailable state starter demonstrates permission-blocked, no-data, and unavailable patterns without feature-specific behavior
 
 ### P2-F-CQ-006 - Batch F docs, tests, and handoff readiness
-- Status: Ready To Implement
+- Status: Blocked
+- Blocked Until: Component recovery queue P2-F-CQ-077, P2-F-CQ-079, P2-F-CQ-093, and P2-F-CQ-136 through P2-F-CQ-163 reaches a starter-safe review state.
 - Owner: Batch F
 - Scope: Add automated coverage and synchronize planning/handoff notes after starter implementation.
 - Acceptance:
   - tests verify starter routes and required markers
   - Phase 2 docs reflect Batch F implementation status
   - Batch E remains the post-F close-out path and staging deploy remains out of scope
-
-### P2-F-CQ-033 - T1 component family depth pass: actions
-- Status: Ready To Implement
-- Owner: Batch F
-- Depends On: P2-F-CQ-066 through P2-F-CQ-070
-- Scope: Deepen Button, Menu, Menu buttons, and Link T1 pages after Foundation Elements and T1 contracts are accepted.
-- Acceptance:
-  - canonical docs and UI Reference examples are updated together
-  - each page shows actual variants, states, spacing behavior, implementation owner, and queued gaps
-  - tests include component-specific assertions for the implemented action-family pages
-
-### P2-F-CQ-034 - T1 component family depth pass: inputs
-- Status: Ready To Implement
-- Owner: Batch F
-- Depends On: P2-F-CQ-066 through P2-F-CQ-070
-- Scope: Deepen Text input, Textarea, Number input, Select, Dropdown, Multiselect, Search, Date picker, File uploader, and Slider T1 pages.
-- Acceptance:
-  - input docs and UI Reference examples apply Foundation Element color, spacing, typography, icon, and theme rules
-  - examples include default, variant, focus, hover-capable, disabled, read-only, validation, and loading states where applicable
-  - queued gaps remain explicit where final component behavior is not yet implemented
-
-### P2-F-CQ-035 - T1 component family depth pass: selection controls
-- Status: Ready To Implement
-- Owner: Batch F
-- Depends On: P2-F-CQ-066 through P2-F-CQ-070
-- Scope: Deepen Checkbox, Radio button, Toggle, and Content switcher T1 pages.
-- Acceptance:
-  - checkbox versus radio usage is visually demonstrated
-  - selection group states, orientation variants, disabled/read-only states, validation states, and helper text are represented
-  - content switcher remains queued or receives concrete examples according to accepted app need
-
-### P2-F-CQ-036 - T1 component family depth pass: feedback and loading
-- Status: Ready To Implement
-- Owner: Batch F
-- Depends On: P2-F-CQ-066 through P2-F-CQ-070
-- Scope: Deepen Notification, Tag, AI label, Inline loading, Loading, Progress bar, and Progress indicator T1 pages.
-- Acceptance:
-  - semantic status and loading examples use current token standards
-  - AI label remains gated unless a real AI-assisted feature exists
-  - loading and progress pages distinguish spinner, inline loading, skeleton, determinate, and step-progress expectations
-
-### P2-F-CQ-037 - T1 component family depth pass: overlays and help
-- Status: Ready To Implement
-- Owner: Batch F
-- Depends On: P2-F-CQ-066 through P2-F-CQ-070
-- Scope: Deepen Accordion, Modal, Popover, Tooltip, and Toggletip T1 pages.
-- Acceptance:
-  - overlay/help docs and UI Reference examples distinguish blocking, contextual, non-interactive, and interactive disclosure
-  - examples show focus, hover, disabled, open/closed, dismiss, and reduced-motion expectations where applicable
-  - popover remains queued unless a concrete consumer exists
-
-### P2-F-CQ-038 - T1 component family depth pass: data display
-- Status: Ready To Implement
-- Owner: Batch F
-- Depends On: P2-F-CQ-066 through P2-F-CQ-070
-- Scope: Deepen Data table, Pagination, Structured list, List, Contained list, Tile, and Tree view T1 pages.
-- Acceptance:
-  - data display pages show concrete variants, states, spacing behavior, and T2 consumption links
-  - pagination and structured-list coverage remains visual and implementation-oriented
-  - queued data-display gaps include trigger conditions
-
-### P2-F-CQ-039 - T1 component family depth pass: navigation and shell
-- Status: Ready To Implement
-- Owner: Batch F
-- Depends On: P2-F-CQ-066 through P2-F-CQ-070
-- Scope: Deepen Breadcrumb, Tabs, and UI shell T1 pages.
-- Acceptance:
-  - tabs include line, contained, vertical, icon-leading, icon-only, overflow/scroll, selected, focus, and disabled states
-  - UI shell remains one family with Login-specific header, left panel, and right panel guidance as subsections
-  - navigation pages link to T2 pattern composition owners where primitives are consumed
-
-## In Progress
-
-## Implemented Pending Review
-
-### P2-F-CQ-066 - Component UI Reference terminology and menu correction
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Rename UI Reference menu labels from tier-coded labels to product-facing Components and Patterns labels while preserving tier hierarchy in explanatory copy.
-- Acceptance:
-  - primary sidebar shows `Components` and `Patterns`, not `T1 Components` or `Pattern Standards`
-  - overview copy uses Components and Patterns as the visible library labels
-  - legacy grouped component links remain compatibility/index surfaces only
-  - tests assert menu terminology and route reachability
-- Implemented in: worklog-2-F-0022
-
-### P2-F-CQ-067 - Component requirements adoption into canonical docs
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Distill the downloaded Component UI Reference requirements into canonical component standards and non-canonical Carbon reference notes.
-- Acceptance:
-  - canonical component docs define the required Component page contract
-  - Carbon source/comparison notes are stored as reference support, not app rules
-  - Foundation Elements are documented as mandatory inputs for Component, Pattern, and later feature UI work
-- Implemented in: worklog-2-F-0022
-
-### P2-F-CQ-068 - Component catalog metadata and shared renderer contract
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Expand the component catalog data model and shared renderer so component pages can consistently display purpose, guidance, states, anatomy, behavior, accessibility, developer API, related links, and status.
-- Acceptance:
-  - catalog entries expose priority, category, status, page-contract metadata, related owners, queued gaps, and Foundation Element dependencies
-  - flat `/platform/ui-reference/components/{component}` routes remain canonical
-  - route aliases are not introduced in this pass
-- Implemented in: worklog-2-F-0022
-
-### P2-F-CQ-069 - Component overview, category, and priority surfaces
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Update the Components index with app-owned intro text, priority buckets, status legend, disposition matrix, canonical docs, and Foundation Element links.
-- Acceptance:
-  - index presents Components as reusable app building blocks
-  - priority buckets A, B, and C are visible and generated from catalog data
-  - disposition matrix uses app-owned wording rather than Carbon-oriented ownership language
-  - Foundation Elements dependency is visible on the index
-- Implemented in: worklog-2-F-0022
-
-### P2-F-CQ-070 - Component page scaffold contract for all catalog entries
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Replace generic component stubs with a shared Component page scaffold for all catalog entries, including queued/deferred entries.
-- Acceptance:
-  - every component page includes required shared section markers
-  - every page links to canonical docs and related Foundation Elements
-  - implemented pages expose page-specific live examples or explicit family-depth pending status
-  - queued/deferred pages show trigger conditions rather than speculative complete UI
-- Implemented in: worklog-2-F-0022
-
-### P2-F-CQ-016 - Carbon component inventory and T1 disposition map
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Create a UI Reference inventory matrix for the full Carbon component list and classify each component for Login App 2.0 as `Implement T1 Page`, `Represent As T2 Pattern`, `Queued Gap`, or `Not Applicable Yet`.
-- Acceptance:
-  - every Carbon component named in the review plan has a Login App 2.0 disposition
-  - each disposition identifies the owner route or trigger condition
-  - Carbon remains a completeness benchmark only and does not introduce Carbon visual tokens
-- Implemented in: worklog-2-F-0016
-
-### P2-F-CQ-017 - UI Reference T1 component menu architecture
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Replace the three combined Component Library links with a catalog-driven expandable T1 Components menu and keep T2 Pattern Standards separate.
-- Acceptance:
-  - sidebar and overview consume one component catalog source
-  - tests prove cataloged T1 entries appear in navigation and are routable
-  - legacy combined routes are no longer the primary navigation surface
-- Implemented in: worklog-2-F-0016
-
-### P2-F-CQ-018 - Split existing combined T1 pages
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Add primary T1 pages for existing primitives currently combined across actions, status, forms, overlays, and utility examples.
-- Acceptance:
-  - component pages exist for button, icon button, menu item, badge/tag, status, text input, textarea, select, checkbox, radio button, toggle, searchable select, date input, file input, link, divider, icon, tooltip, toggletip, loading/spinner, modal, drawer, and notification
-  - notifications may remain grouped as one T1 page for inline, toast, actionable, callout/banner, and persisted handoff
-  - T2 pages compose or link to T1 owners instead of acting as the only primitive owner
-- Implemented in: worklog-2-F-0016
-
-### P2-F-CQ-019 - Missing input/control components
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Add missing input/control component pages for number input, slider, dropdown, search, progress bar, and progress indicator.
-- Acceptance:
-  - number input includes default/fluid variants, stepper controls, min/max/step guidance, error/warning inline status icon, disabled, read-only, focus, and keyboard behavior
-  - each missing control has concrete examples or an explicit queued implementation contract
-- Implemented in: worklog-2-F-0016
-
-### P2-F-CQ-020 - Selection component depth pass
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Expand checkbox and radio button representation into separate T1 pages with usage boundaries and states.
-- Acceptance:
-  - radio shows vertical/horizontal groups, selected/unselected, focus, disabled, read-only, error, warning, helper text, group states, and single-select-only rule
-  - checkbox shows independent choice, multi-select group, checked/unchecked/indeterminate where supported or queued, disabled, read-only, error, and warning
-  - checkbox vs radio usage is demonstrated, not only described
-- Implemented in: worklog-2-F-0016
-
-### P2-F-CQ-021 - Data display T1 expansion
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Add dedicated T1 pages or dispositions for data table, pagination, structured list, list, contained list, tile, and tree view.
-- Acceptance:
-  - structured list includes default/selectable, condensed/default density, hang/flush alignment where supported, selected/focus/disabled/skeleton states
-  - pagination includes full pagination, compact nav, page-size selector, overflow, disabled prev/next, size pairings, and placement below related content
-  - T2 Data + Content and Tables consume/link to T1 owners instead of owning primitive standards
-- Implemented in: worklog-2-F-0016
-
-### P2-F-CQ-022 - Navigation/action primitives depth pass
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Add or deepen breadcrumb, tabs, menu, menu buttons, content switcher, popover, accordion, and UI shell header/left/right T1 pages.
-- Acceptance:
-  - tabs include line, contained, vertical, icon-leading, icon-only, overflow/scroll, selected/focus/disabled, and tab-vs-progress/comparison guidance
-  - menu includes action items, sizing, alignment, selected/current, disabled, danger, dividers, submenu boundary, keyboard/mouse expectations
-  - Navigation + Actions becomes a T2 composition page only
-- Implemented in: worklog-2-F-0016
-
-### P2-F-CQ-023 - Low-applicability Carbon items and future gates
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Decide and document Login-specific treatment for AI label and code snippet and ensure no Carbon component remains unmapped.
-- Acceptance:
-  - AI label and code snippet have explicit dispositions and trigger conditions
-  - speculative UI is not built for low-applicability components
-  - no Carbon component is silently ignored
-- Implemented in: worklog-2-F-0016
-
-### P2-F-CQ-024 - T1 route, test, docs, and handoff cleanup
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Scope: Add route/sidebar/catalog tests, update overview/checklist/active docs, and validate the full T1 component reference update.
-- Acceptance:
-  - every T1 sidebar route has automated coverage
-  - overview and active docs reflect the new T1 component library model
-  - focused UI Reference tests, build, docs guardrails, and browser review pass
-- Implemented in: worklog-2-F-0016
-
-### P2-F-CQ-012 - UI control module ownership cleanup
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-010, P2-F-CQ-011
-- Scope: Split `resources/js/ui-controls.js` into smaller control-family modules only where it supports Batch F form, selection, table/search, dropdown, and filter guidance work. Keep runtime behavior unchanged and keep `resources/js/app.js` as the lifecycle registration entry point.
-- Acceptance:
-  - control behavior is grouped by concern rather than one mixed module for all controls
-  - lifecycle registration remains centralized and readable from `resources/js/app.js`
-  - selectors, UI behavior, route behavior, and rendered markup contracts remain unchanged
-  - no notification feature expansion or unrelated shell behavior is introduced
-  - `npm run build` passes
-  - focused UI Reference tests pass for touched control surfaces
-- Implemented in: worklog-2-F-0009
-
-### P2-F-CQ-013 - UI CSS ownership map and first safe extraction boundary
-- Status: Implemented Pending Review
-- Owner: Batch F
-- Follow-up To: P2-F-CQ-008, P2-F-CQ-009, P2-F-CQ-010, P2-F-CQ-011
-- Scope: Turn the `resources/css/app.css` read map into concrete UI-standardization ownership sections for Batch F. If a low-risk boundary is clear, extract one cohesive UI section into an imported CSS module without changing visual tokens or behavior.
-- Acceptance:
-  - CSS ownership/read map identifies action/button, form/control, table/data, notification/feedback, dashboard/widget, theme-token, and compatibility-override sections
-  - nearest agent guidance points future UI work to targeted CSS sections instead of broad stylesheet reads
-  - any extraction keeps Tailwind/Vite build behavior stable
-  - no new color, spacing, radius, typography, or component variants are introduced
-  - `npm run build` passes
-  - focused UI Reference tests pass for touched surfaces
-- Implemented in: worklog-2-F-0010
-
-## Blocked
 
 ## Deferred
 
@@ -318,6 +815,113 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 - Revisit When: P2-F-CQ-009 requires runtime notification behavior changes, or a later notifications batch owns realtime client behavior.
 
 ## Passed Review
+
+### P2-F-CQ-066 - Component UI Reference terminology and menu correction
+- Status: Passed Review
+- Owner: Batch F
+- Scope: Rename UI Reference menu labels from tier-coded labels to product-facing Components and Patterns labels while preserving tier hierarchy in explanatory copy.
+- Acceptance:
+  - primary sidebar shows `Components` and `Patterns`, not `T1 Components` or `Pattern Standards`
+  - overview copy uses Components and Patterns as the visible library labels
+  - legacy grouped component links remain compatibility/index surfaces only
+  - tests assert menu terminology and route reachability
+- Implemented in: worklog-2-F-0022
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-067 - Component requirements adoption into canonical docs
+- Status: Passed Review
+- Owner: Batch F
+- Scope: Distill the downloaded Component UI Reference requirements into canonical component standards and non-canonical Carbon reference notes.
+- Acceptance:
+  - canonical component docs define the required Component page contract
+  - Carbon source/comparison notes are stored as reference support, not app rules
+  - Foundation Elements are documented as mandatory inputs for Component, Pattern, and later feature UI work
+- Implemented in: worklog-2-F-0022
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-068 - Component catalog metadata and shared renderer contract
+- Status: Passed Review
+- Owner: Batch F
+- Scope: Expand the component catalog data model and shared renderer so component pages can consistently display purpose, guidance, states, anatomy, behavior, accessibility, developer API, related links, and status.
+- Acceptance:
+  - catalog entries expose priority, category, status, page-contract metadata, related owners, queued gaps, and Foundation Element dependencies
+  - flat `/platform/ui-reference/components/{component}` routes remain canonical
+  - route aliases are not introduced in this pass
+- Implemented in: worklog-2-F-0022
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-069 - Component overview, category, and priority surfaces
+- Status: Passed Review
+- Owner: Batch F
+- Scope: Update the Components index with app-owned intro text, priority buckets, status legend, disposition matrix, canonical docs, and Foundation Element links.
+- Acceptance:
+  - index presents Components as reusable app building blocks
+  - priority buckets A, B, and C are visible and generated from catalog data
+  - disposition matrix uses app-owned wording rather than Carbon-oriented ownership language
+  - Foundation Elements dependency is visible on the index
+- Implemented in: worklog-2-F-0022
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-070 - Component page scaffold contract for all catalog entries
+- Status: Passed Review
+- Owner: Batch F
+- Scope: Replace generic component fallback rendering with the shared Component page renderer and Foundation Elements dependency section.
+- Acceptance:
+  - every component route renders the required shared section markers
+  - implemented component pages do not pass with generic cards only
+  - deferred/queued components include trigger conditions and do not fake complete UI
+  - every component page links to relevant Foundation Elements
+- Implemented in: worklog-2-F-0022
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-071 - Component page scaffold correction
+- Status: Passed Review
+- Owner: Batch F
+- Scope: Correct the shared Component page scaffold to the approved five-card order and remove stale/duplicated sections.
+- Acceptance:
+  - component pages use Purpose, Use cases, Component contract, Live examples, and Related components and patterns in order
+  - stale `Legacy Contract Summary`, duplicate `{Component} Reference Examples`, and `Live Examples Card` labels are removed
+  - Use cases and Anatomy/States use the required desktop split structure where applicable
+  - Live examples support scenario-specific rendered proof
+- Implemented in: worklog-2-F-0023
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-072 - Accordion component and reference exemplar
+- Status: Passed Review
+- Owner: Batch F
+- Scope: Install or expose the canonical minimal Accordion API and build `/platform/ui-reference/components/accordion` as the approved first Component page exemplar.
+- Acceptance:
+  - Accordion has a canonical component/API instead of reference-only markup
+  - Accordion page renders the approved five-card scaffold
+  - live examples include basic, independent, long-content, inside-card/panel, and form-assistance scenarios
+  - compact, single-open, and scrollable variants render as implemented options where applicable
+  - motion uses approved productive timing and reduced-motion handling
+- Implemented in: worklog-2-F-0023
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-073 - Component scaffold approval gate
+- Status: Passed Review
+- Owner: Batch F
+- Scope: Hold full Component catalog rollout until the Accordion exemplar page shape is manually approved.
+- Acceptance:
+  - Accordion page shape is accepted as the simple component-page baseline
+  - full catalog expansion remains blocked until manual approval
+  - after approval, broad components may still request richer internal live-example layouts where needed
+- Implemented in: worklog-2-F-0023
+- Review result: Approved on 2026-06-08
+
+### P2-F-CQ-121 - Remaining component standards review correction
+- Status: Passed Review
+- Owner: Batch F
+- Scope: Correct remaining Component standards blockers before using them as UI Reference implementation contracts.
+- Acceptance:
+  - malformed Markdown tables are repaired
+  - Tag/Tabs identity is corrected
+  - deferred placeholder example calls are removed
+  - planned Pattern references are normalized to current owner routes or registry gaps
+  - follow-up API installation queue items are scheduled
+- Implemented in: worklog-2-F-0032
+- Review result: Approved on 2026-06-09
 
 ### P2-F-CQ-040 - Foundation Color page live implementation guide
 - Status: Passed Review
@@ -810,3 +1414,208 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 - Review result: Approved on 2026-06-03
 
 ## Closed
+
+### P2-F-CQ-033 - T1 component family depth pass: actions
+- Status: Closed
+- Closed reason: Superseded by P2-F-CQ-128, P2-F-CQ-129, and component-specific recovery queue items.
+- Owner: Batch F
+- Depends On: P2-F-CQ-066 through P2-F-CQ-070
+- Scope: Deepen Button, Menu, Menu buttons, and Link T1 pages after Foundation Elements and T1 contracts are accepted.
+- Acceptance:
+  - canonical docs and UI Reference examples are updated together
+  - each page shows actual variants, states, spacing behavior, implementation owner, and queued gaps
+  - tests include component-specific assertions for the implemented action-family pages
+
+### P2-F-CQ-034 - T1 component family depth pass: inputs
+- Status: Closed
+- Closed reason: Superseded by P2-F-CQ-128, P2-F-CQ-129, and component-specific recovery queue items.
+- Owner: Batch F
+- Depends On: P2-F-CQ-066 through P2-F-CQ-070
+- Scope: Deepen Text input, Textarea, Number input, Select, Dropdown, Multiselect, Search, Date picker, File uploader, and Slider T1 pages.
+- Acceptance:
+  - input docs and UI Reference examples apply Foundation Element color, spacing, typography, icon, and theme rules
+  - examples include default, variant, focus, hover-capable, disabled, read-only, validation, and loading states where applicable
+  - queued gaps remain explicit where final component behavior is not yet implemented
+
+### P2-F-CQ-035 - T1 component family depth pass: selection controls
+- Status: Closed
+- Closed reason: Superseded by P2-F-CQ-128, P2-F-CQ-129, and component-specific recovery queue items.
+- Owner: Batch F
+- Depends On: P2-F-CQ-066 through P2-F-CQ-070
+- Scope: Deepen Checkbox, Radio button, Toggle, and Content switcher T1 pages.
+- Acceptance:
+  - checkbox versus radio usage is visually demonstrated
+  - selection group states, orientation variants, disabled/read-only states, validation states, and helper text are represented
+  - content switcher remains queued or receives concrete examples according to accepted app need
+
+### P2-F-CQ-036 - T1 component family depth pass: feedback and loading
+- Status: Closed
+- Closed reason: Superseded by P2-F-CQ-128, P2-F-CQ-129, and component-specific recovery queue items.
+- Owner: Batch F
+- Depends On: P2-F-CQ-066 through P2-F-CQ-070
+- Scope: Deepen Notification, Tag, AI label, Inline loading, Loading, Progress bar, and Progress indicator T1 pages.
+- Acceptance:
+  - semantic status and loading examples use current token standards
+  - AI label remains gated unless a real AI-assisted feature exists
+  - loading and progress pages distinguish spinner, inline loading, skeleton, determinate, and step-progress expectations
+
+### P2-F-CQ-037 - T1 component family depth pass: overlays and help
+- Status: Closed
+- Closed reason: Superseded by P2-F-CQ-128, P2-F-CQ-129, and component-specific recovery queue items.
+- Owner: Batch F
+- Depends On: P2-F-CQ-066 through P2-F-CQ-070
+- Scope: Deepen Accordion, Modal, Popover, Tooltip, and Toggletip T1 pages.
+- Acceptance:
+  - overlay/help docs and UI Reference examples distinguish blocking, contextual, non-interactive, and interactive disclosure
+  - examples show focus, hover, disabled, open/closed, dismiss, and reduced-motion expectations where applicable
+  - popover remains queued unless a concrete consumer exists
+
+### P2-F-CQ-038 - T1 component family depth pass: data display
+- Status: Closed
+- Closed reason: Superseded by P2-F-CQ-128, P2-F-CQ-129, and component-specific recovery queue items.
+- Owner: Batch F
+- Depends On: P2-F-CQ-066 through P2-F-CQ-070
+- Scope: Deepen Data table, Pagination, Structured list, List, Contained list, Tile, and Tree view T1 pages.
+- Acceptance:
+  - data display pages show concrete variants, states, spacing behavior, and T2 consumption links
+  - pagination and structured-list coverage remains visual and implementation-oriented
+  - queued data-display gaps include trigger conditions
+
+### P2-F-CQ-039 - T1 component family depth pass: navigation and shell
+- Status: Closed
+- Closed reason: Superseded by P2-F-CQ-128, P2-F-CQ-129, and component-specific recovery queue items.
+- Owner: Batch F
+- Depends On: P2-F-CQ-066 through P2-F-CQ-070
+- Scope: Deepen Breadcrumb, Tabs, and UI shell T1 pages.
+- Acceptance:
+  - tabs include line, contained, vertical, icon-leading, icon-only, overflow/scroll, selected, focus, and disabled states
+  - UI shell remains one family with Login-specific header, left panel, and right panel guidance as subsections
+  - navigation pages link to T2 pattern composition owners where primitives are consumed
+
+### P2-F-CQ-016 - Carbon component inventory and T1 disposition map
+- Status: Closed
+- Closed reason: Superseded by later Component UI Reference/API standards work and current component proof/recovery queue items.
+- Owner: Batch F
+- Scope: Create a UI Reference inventory matrix for the full Carbon component list and classify each component for Login App 2.0 as `Implement T1 Page`, `Represent As T2 Pattern`, `Queued Gap`, or `Not Applicable Yet`.
+- Acceptance:
+  - every Carbon component named in the review plan has a Login App 2.0 disposition
+  - each disposition identifies the owner route or trigger condition
+  - Carbon remains a completeness benchmark only and does not introduce Carbon visual tokens
+- Implemented in: worklog-2-F-0016
+
+### P2-F-CQ-017 - UI Reference T1 component menu architecture
+- Status: Closed
+- Closed reason: Superseded by later Component UI Reference/API standards work and current component proof/recovery queue items.
+- Owner: Batch F
+- Scope: Replace the three combined Component Library links with a catalog-driven expandable T1 Components menu and keep T2 Pattern Standards separate.
+- Acceptance:
+  - sidebar and overview consume one component catalog source
+  - tests prove cataloged T1 entries appear in navigation and are routable
+  - legacy combined routes are no longer the primary navigation surface
+- Implemented in: worklog-2-F-0016
+
+### P2-F-CQ-018 - Split existing combined T1 pages
+- Status: Closed
+- Closed reason: Superseded by later Component UI Reference/API standards work and current component proof/recovery queue items.
+- Owner: Batch F
+- Scope: Add primary T1 pages for existing primitives currently combined across actions, status, forms, overlays, and utility examples.
+- Acceptance:
+  - component pages exist for button, icon button, menu item, badge/tag, status, text input, textarea, select, checkbox, radio button, toggle, searchable select, date input, file input, link, divider, icon, tooltip, toggletip, loading/spinner, modal, drawer, and notification
+  - notifications may remain grouped as one T1 page for inline, toast, actionable, callout/banner, and persisted handoff
+  - T2 pages compose or link to T1 owners instead of acting as the only primitive owner
+- Implemented in: worklog-2-F-0016
+
+### P2-F-CQ-019 - Missing input/control components
+- Status: Closed
+- Closed reason: Superseded by later Component UI Reference/API standards work and current component proof/recovery queue items.
+- Owner: Batch F
+- Scope: Add missing input/control component pages for number input, slider, dropdown, search, progress bar, and progress indicator.
+- Acceptance:
+  - number input includes default/fluid variants, stepper controls, min/max/step guidance, error/warning inline status icon, disabled, read-only, focus, and keyboard behavior
+  - each missing control has concrete examples or an explicit queued implementation contract
+- Implemented in: worklog-2-F-0016
+
+### P2-F-CQ-020 - Selection component depth pass
+- Status: Closed
+- Closed reason: Superseded by later Component UI Reference/API standards work and current component proof/recovery queue items.
+- Owner: Batch F
+- Scope: Expand checkbox and radio button representation into separate T1 pages with usage boundaries and states.
+- Acceptance:
+  - radio shows vertical/horizontal groups, selected/unselected, focus, disabled, read-only, error, warning, helper text, group states, and single-select-only rule
+  - checkbox shows independent choice, multi-select group, checked/unchecked/indeterminate where supported or queued, disabled, read-only, error, and warning
+  - checkbox vs radio usage is demonstrated, not only described
+- Implemented in: worklog-2-F-0016
+
+### P2-F-CQ-021 - Data display T1 expansion
+- Status: Closed
+- Closed reason: Superseded by later Component UI Reference/API standards work and current component proof/recovery queue items.
+- Owner: Batch F
+- Scope: Add dedicated T1 pages or dispositions for data table, pagination, structured list, list, contained list, tile, and tree view.
+- Acceptance:
+  - structured list includes default/selectable, condensed/default density, hang/flush alignment where supported, selected/focus/disabled/skeleton states
+  - pagination includes full pagination, compact nav, page-size selector, overflow, disabled prev/next, size pairings, and placement below related content
+  - T2 Data + Content and Tables consume/link to T1 owners instead of owning primitive standards
+- Implemented in: worklog-2-F-0016
+
+### P2-F-CQ-022 - Navigation/action primitives depth pass
+- Status: Closed
+- Closed reason: Superseded by later Component UI Reference/API standards work and current component proof/recovery queue items.
+- Owner: Batch F
+- Scope: Add or deepen breadcrumb, tabs, menu, menu buttons, content switcher, popover, accordion, and UI shell header/left/right T1 pages.
+- Acceptance:
+  - tabs include line, contained, vertical, icon-leading, icon-only, overflow/scroll, selected/focus/disabled, and tab-vs-progress/comparison guidance
+  - menu includes action items, sizing, alignment, selected/current, disabled, danger, dividers, submenu boundary, keyboard/mouse expectations
+  - Navigation + Actions becomes a T2 composition page only
+- Implemented in: worklog-2-F-0016
+
+### P2-F-CQ-023 - Low-applicability Carbon items and future gates
+- Status: Closed
+- Closed reason: Superseded by later Component UI Reference/API standards work and current component proof/recovery queue items.
+- Owner: Batch F
+- Scope: Decide and document Login-specific treatment for AI label and code snippet and ensure no Carbon component remains unmapped.
+- Acceptance:
+  - AI label and code snippet have explicit dispositions and trigger conditions
+  - speculative UI is not built for low-applicability components
+  - no Carbon component is silently ignored
+- Implemented in: worklog-2-F-0016
+
+### P2-F-CQ-024 - T1 route, test, docs, and handoff cleanup
+- Status: Closed
+- Closed reason: Superseded by later Component UI Reference/API standards work and current component proof/recovery queue items.
+- Owner: Batch F
+- Scope: Add route/sidebar/catalog tests, update overview/checklist/active docs, and validate the full T1 component reference update.
+- Acceptance:
+  - every T1 sidebar route has automated coverage
+  - overview and active docs reflect the new T1 component library model
+  - focused UI Reference tests, build, docs guardrails, and browser review pass
+- Implemented in: worklog-2-F-0016
+
+### P2-F-CQ-012 - UI control module ownership cleanup
+- Status: Closed
+- Closed reason: Superseded by later Component UI Reference/API standards work and current component proof/recovery queue items.
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-010, P2-F-CQ-011
+- Scope: Split `resources/js/ui-controls.js` into smaller control-family modules only where it supports Batch F form, selection, table/search, dropdown, and filter guidance work. Keep runtime behavior unchanged and keep `resources/js/app.js` as the lifecycle registration entry point.
+- Acceptance:
+  - control behavior is grouped by concern rather than one mixed module for all controls
+  - lifecycle registration remains centralized and readable from `resources/js/app.js`
+  - selectors, UI behavior, route behavior, and rendered markup contracts remain unchanged
+  - no notification feature expansion or unrelated shell behavior is introduced
+  - `npm run build` passes
+  - focused UI Reference tests pass for touched control surfaces
+- Implemented in: worklog-2-F-0009
+
+### P2-F-CQ-013 - UI CSS ownership map and first safe extraction boundary
+- Status: Closed
+- Closed reason: Superseded by later Component UI Reference/API standards work and current component proof/recovery queue items.
+- Owner: Batch F
+- Follow-up To: P2-F-CQ-008, P2-F-CQ-009, P2-F-CQ-010, P2-F-CQ-011
+- Scope: Turn the `resources/css/app.css` read map into concrete UI-standardization ownership sections for Batch F. If a low-risk boundary is clear, extract one cohesive UI section into an imported CSS module without changing visual tokens or behavior.
+- Acceptance:
+  - CSS ownership/read map identifies action/button, form/control, table/data, notification/feedback, dashboard/widget, theme-token, and compatibility-override sections
+  - nearest agent guidance points future UI work to targeted CSS sections instead of broad stylesheet reads
+  - any extraction keeps Tailwind/Vite build behavior stable
+  - no new color, spacing, radius, typography, or component variants are introduced
+  - `npm run build` passes
+  - focused UI Reference tests pass for touched surfaces
+- Implemented in: worklog-2-F-0010

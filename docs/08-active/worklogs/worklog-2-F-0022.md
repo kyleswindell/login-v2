@@ -41,7 +41,7 @@ These items establish the shared Component page contract required before the exi
 - `resources/views/platform/ui-reference/elements/overview.blade.php`
 - `tests/Feature/Platform/PlatformUiReferenceTest.php`
 - `docs/02-standards/ui/components/UI UX Component Library Standards.md`
-- `docs/02-standards/ui/components/tier-1/index.md`
+- `docs/02-standards/ui/components/index.md`
 - `docs/09-reference/ui/Component UI Reference Library Requirements - Carbon Source Notes.md`
 - `docs/09-reference/ui/index.md`
 - `docs/08-active/change-queue.md`

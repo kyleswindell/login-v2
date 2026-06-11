@@ -23,7 +23,7 @@ Implemented P2-F-CQ-025 through P2-F-CQ-032 as the Foundation Elements layer ben
 - Created canonical element docs under `docs/02-standards/ui/elements/`.
 - Added non-canonical Carbon comparison notes under `docs/09-reference/ui/`.
 - Extended the T1 component catalog with `doc_path` and `doc_route` metadata.
-- Added canonical T1 component doc stubs under `docs/02-standards/ui/components/tier-1/` so UI Reference pages have durable linked expectations.
+- Added canonical Component doc stubs under `docs/02-standards/ui/components/` so UI Reference pages have durable linked expectations.
 - Added Multiselect to the T1 catalog with an explicit queued disposition.
 - Normalized Carbon UI shell into one Login App T1 family while preserving header, left panel, and right panel guidance as subsections and aliases.
 
@@ -41,7 +41,7 @@ Implemented P2-F-CQ-025 through P2-F-CQ-032 as the Foundation Elements layer ben
 - `resources/views/platform/ui-reference/components/show.blade.php`
 - `docs/02-standards/ui/UI UX System Index.md`
 - `docs/02-standards/ui/elements/`
-- `docs/02-standards/ui/components/tier-1/`
+- `docs/02-standards/ui/components/`
 - `docs/09-reference/ui/index.md`
 - `docs/09-reference/ui/Phase 2 Batch F - Foundation Elements Carbon Comparison Notes.md`
 - `tests/Feature/Platform/PlatformUiReferenceTest.php`

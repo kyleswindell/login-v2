@@ -61,7 +61,13 @@ Start from the repository root:
 ```bash
 cp .env.example .env
 docker compose run --rm app sh -lc "composer install && php artisan key:generate"
-docker compose up --build
+docker compose up --build -d
+```
+
+In a host terminal, start Vite:
+
+```bash
+npm run dev:host
 ```
 
 Default local URLs:
@@ -87,10 +93,19 @@ This command normalizes `public/hot` to `http://localhost:5173`, checks the loca
 The Compose stack includes:
 
 * `app`: PHP 8.3 CLI container running Laravel's local server
-* `node`: Node 22 container running Vite
+* `node`: optional Node 22 container running Vite under the `docker-vite` profile
 * `postgres`: PostgreSQL 16
 * `redis`: Redis 7
 * `mailpit`: local email capture
+
+On Windows, the default local review path is to run Vite on the host with `npm run dev:host` instead of using the Docker `node` service. This avoids Docker bind-mount CSS transform hangs while keeping Laravel, PostgreSQL, Redis, and Mailpit in Docker. The host Vite server binds to `0.0.0.0` so the app container can verify it through `host.docker.internal`, while Laravel serves browser asset URLs through `http://localhost:5173`.
+
+Use the Docker Vite service only when explicitly testing the containerized Node path:
+
+```bash
+docker compose --profile docker-vite up node
+docker compose exec app php artisan local:ready --vite-check-url=http://node:5173
+```
 
 Compose mounts `vendor/` and `node_modules/` as Docker named volumes. That keeps Composer and npm dependency trees out of each checkout or disposable worker worktree while preserving them for the active Compose project. Use `docker compose down --volumes` when intentionally clearing those dependency volumes.
 
@@ -156,6 +171,13 @@ npm run build
 ```
 
 If local Windows/WSL Node tooling is unreliable, prefer handling Node through Docker Compose once the local development stack is finalized.
+
+For Windows host browser review, prefer:
+
+```bash
+npm run dev:host
+docker compose exec app php artisan local:ready
+```
 
 For browser-review asset troubleshooting, use [Local Browser Review Setup](local-browser-review.md). Agents should not repeatedly move `public/hot`, cache-bust Vite modules, or restart the Node service during ordinary UI iteration.
 

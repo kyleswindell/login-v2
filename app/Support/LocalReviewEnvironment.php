@@ -13,9 +13,10 @@ class LocalReviewEnvironment
 {
     public const APP_URL = 'http://localhost:8000';
     public const EMAIL = 'test@example.com';
+    public const HTTP_TIMEOUT_SECONDS = 10;
     public const PASSWORD = 'password';
     public const ROLE = 'platform_super_admin';
-    public const VITE_DOCKER_CHECK_URL = 'http://node:5173';
+    public const VITE_DOCKER_CHECK_URL = 'http://host.docker.internal:5173';
     public const VITE_URL = 'http://localhost:5173';
 
     /**
@@ -70,7 +71,8 @@ class LocalReviewEnvironment
                 'message' => "{$appUrl}/login was not checked.",
             ];
         } else {
-            $checks[] = $this->verifyVite($viteCheckUrl, $viteUrl);
+            $checks[] = $this->verifyViteAsset($viteCheckUrl, $viteUrl, 'resources/js/app.js', 'vite js');
+            $checks[] = $this->verifyViteAsset($viteCheckUrl, $viteUrl, 'resources/css/app.css', 'vite css');
             $checks[] = $this->verifyApp($appUrl);
         }
 
@@ -145,7 +147,7 @@ class LocalReviewEnvironment
     /**
      * @return array{name: string, status: string, message: string}
      */
-    private function verifyVite(string $viteCheckUrl, string $viteUrl): array
+    private function verifyViteAsset(string $viteCheckUrl, string $viteUrl, string $assetPath, string $name): array
     {
         $headers = [];
 
@@ -156,8 +158,8 @@ class LocalReviewEnvironment
         }
 
         return $this->verifyUrl(
-            'vite',
-            "{$viteCheckUrl}/resources/js/app.js",
+            $name,
+            "{$viteCheckUrl}/{$assetPath}",
             fn (int $status): bool => $status >= 200 && $status < 300,
             $headers,
         );
@@ -183,7 +185,7 @@ class LocalReviewEnvironment
     private function verifyUrl(string $name, string $url, callable $acceptsStatus, array $headers = []): array
     {
         try {
-            $response = Http::withHeaders($headers)->timeout(3)->get($url);
+            $response = Http::withHeaders($headers)->timeout(self::HTTP_TIMEOUT_SECONDS)->get($url);
             $status = $response->status();
         } catch (Throwable $exception) {
             return [

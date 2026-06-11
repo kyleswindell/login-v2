@@ -19,4 +19,4 @@ Shared UI Reference partials such as sidebar and navigation fragments.
 - Do not add instant disclosure, custom scrolling, or icon behavior without checking the related Motion, Accessibility, Layout, and Icon requirements.
 - Do not run the full UI Reference feature file repeatedly for sidebar-only edits. Run it once at the end only when shared routing/catalog/lifecycle behavior changed or the queue item explicitly requires broad regression coverage.
 - Do not assert route-wide absence of generic HTML such as `<details>` for sidebar-only rules; scope those assertions to this partial or a stable sidebar container.
-- Before authenticated local browser review, run `php artisan local:ready` or `npm run local:ready` instead of manually rewriting `public/hot` or recreating the local review user.
+- Before authenticated local browser review, run host Vite with `npm run dev:host`, then run `docker compose exec app php artisan local:ready` instead of manually rewriting `public/hot` or recreating the local review user.

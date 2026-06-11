@@ -6,6 +6,7 @@
     "scripts": {
         "build": "vite build",
         "dev": "vite",
+        "dev:host": "vite --host 0.0.0.0",
         "lint:docs:guardrails": "node scripts/check-docs-guardrails.mjs",
         "local:ready": "php artisan local:ready"
     },

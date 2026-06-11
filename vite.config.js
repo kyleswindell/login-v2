@@ -11,7 +11,7 @@ export default defineConfig({
         tailwindcss(),
     ],
     server: {
-        allowedHosts: ['localhost', '127.0.0.1', 'node'],
+        allowedHosts: ['localhost', '127.0.0.1', 'host.docker.internal', 'node'],
         watch: {
             ignored: ['**/storage/framework/views/**'],
         },

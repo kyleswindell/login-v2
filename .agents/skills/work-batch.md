@@ -61,7 +61,7 @@ For UI Reference work:
 - Treat `tests/Feature/Platform/PlatformUiReferenceTest.php` as broad integration coverage. It renders many UI Reference routes and can take minutes.
 - For sidebar-only changes, start with the focused sidebar/workspace test filter and source-level assertions for the sidebar partial.
 - Run the full UI Reference test file only after shared catalog/routing/lifecycle changes or as a final justified regression gate.
-- Before authenticated local browser review, run `php artisan local:ready` or `npm run local:ready` so the review user and `public/hot` are normalized. Do not repeatedly restart, cache-bust, or move `public/hot` during iteration; use the local browser review runbook if the readiness command reports a broken service.
+- Before authenticated local browser review, use the host Vite path from `docs/10-runbooks/local-browser-review.md`: run `npm run dev:host`, then `docker compose exec app php artisan local:ready` so the review user and `public/hot` are normalized. Do not repeatedly restart, cache-bust, or move `public/hot` during iteration; use built assets if readiness reports a broken Vite service.
 
 ## Concurrency Preflight
 

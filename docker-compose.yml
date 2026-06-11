@@ -23,13 +23,15 @@ services:
 
   node:
     image: node:22-alpine
+    profiles:
+      - docker-vite
     working_dir: /var/www/html
     volumes:
       - .:/var/www/html
       - node-modules:/var/www/html/node_modules
     ports:
       - "${VITE_PORT:-5173}:5173"
-    command: sh -lc "npm install && npm run dev -- --host 0.0.0.0"
+    command: sh -lc "npm install && (npm run dev -- --host 0.0.0.0 & vite_pid=$$!; sleep 3; printf '%s' 'http://localhost:5173' > public/hot; wait $$vite_pid)"
 
   postgres:
     image: postgres:16-alpine

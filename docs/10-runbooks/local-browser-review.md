@@ -4,7 +4,13 @@ This runbook owns repeatable local browser-review readiness for Laravel, Vite, D
 
 ## Standard Command
 
-From the repository root, with the Docker Compose stack running:
+From the repository root, with the Docker Compose app/services stack running and host Vite started:
+
+```bash
+npm run dev:host
+```
+
+Then run:
 
 ```bash
 docker compose exec app php artisan local:ready
@@ -19,13 +25,32 @@ npm run local:ready
 The readiness command:
 
 - writes `public/hot` as `http://localhost:5173`
-- verifies Vite at `http://localhost:5173/resources/js/app.js` when run on the host, or `http://node:5173/resources/js/app.js` when run inside the Docker app container
+- verifies Vite JavaScript and CSS at `http://localhost:5173` when run on the host
+- verifies host-run Vite JavaScript and CSS through `http://host.docker.internal:5173` when run inside the Docker app container
 - verifies the app login route at `http://localhost:8000/login`
 - upserts `test@example.com` / `password`
 - assigns the `platform_super_admin` role for protected local review routes
 - prints the app URL and credentials
 
 Run it after Docker database resets, local startup, or before authenticated browser review. Do not manually reseed the local user or rewrite `public/hot` unless the command itself is being debugged.
+
+## Vite Mode
+
+Default Windows local review uses host-run Vite, not the Docker `node` service:
+
+```bash
+npm run dev:host
+docker compose exec app php artisan local:ready
+```
+
+The host Vite process binds to `0.0.0.0` so Docker can reach it through `host.docker.internal`, while the browser still loads assets from `http://localhost:5173`.
+
+The Docker `node` service is opt-in under the `docker-vite` profile. Use it only when explicitly testing containerized Node:
+
+```bash
+docker compose --profile docker-vite up node
+docker compose exec app php artisan local:ready --vite-check-url=http://node:5173
+```
 
 ## Asset Mode
 
@@ -49,12 +74,13 @@ If that fallback is needed, record the environment issue once and restore the no
 
 If browser behavior appears stale:
 
-1. Run `php artisan local:ready`.
-2. If Vite fails, restart the Docker `node` service once.
-3. Run `php artisan local:ready` again.
-4. If Vite is still stale or unreachable, switch to built assets only after `npm run build` passes.
+1. Confirm `npm run dev:host` is running.
+2. Run `docker compose exec app php artisan local:ready`.
+3. If Vite JavaScript or CSS fails, restart the host Vite process once.
+4. Run `docker compose exec app php artisan local:ready` again.
+5. If Vite is still stale or unreachable, switch to built assets only after `npm run build` passes.
 
-Do not keep restarting, cache-busting, opening fresh tabs, or moving `public/hot` in loops. Treat repeated stale-module behavior as an environment issue and document the durable fix or blocker.
+Do not keep restarting, cache-busting, opening fresh tabs, or moving `public/hot` in loops. Treat repeated stale-module behavior as an environment issue and use built assets for review until the tooling issue is fixed.
 
 ## Related
 

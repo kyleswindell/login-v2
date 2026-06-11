@@ -26,7 +26,7 @@ Rendered UI Reference workspace. This folder owns UI Reference pages, pattern pr
 - Use source-level assertions for partial-only prohibitions, such as disallowing native disclosure in the sidebar partial.
 - Run the full UI Reference feature file only when the change affects shared catalog data, routes, sidebar lifecycle, generated navigation, cross-route contracts, or a final review gate requires broad regression proof.
 - If authenticated browser review is required, verify whether Laravel is serving built assets or Vite hot assets before debugging UI behavior. A stale Vite module should be handled as an environment issue, not as application behavior.
-- Before authenticated local browser review, run `php artisan local:ready` or `npm run local:ready`. This owns the local review user and `public/hot` normalization; do not repeat ad hoc hot-file moves, cache busting, or Vite restarts during every UI Reference pass.
+- Before authenticated local browser review, run host Vite with `npm run dev:host`, then run `docker compose exec app php artisan local:ready`. This owns the local review user and `public/hot` normalization; do not repeat ad hoc hot-file moves, cache busting, or Vite restarts during every UI Reference pass.
 
 ## Split Guidance
 

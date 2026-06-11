@@ -64,7 +64,7 @@ UI Reference validation guidance:
 - `tests/Feature/Platform/PlatformUiReferenceTest.php` is broad integration coverage across many UI Reference routes and can take minutes.
 - Sidebar-only changes should start with the focused sidebar/workspace test filter and source-level assertions for the sidebar partial.
 - Run the full UI Reference test file only after shared catalog, route, sidebar lifecycle, or cross-route contract changes, or as a final justified regression gate.
-- Before authenticated local browser review, run `php artisan local:ready` or `npm run local:ready` so the review user and `public/hot` are normalized. If readiness reports a broken service, use [Local Browser Review Setup](../local-browser-review.md); do not repeatedly restart, cache-bust, or move `public/hot` during iteration.
+- Before authenticated local browser review, use the host Vite path in [Local Browser Review Setup](../local-browser-review.md): run `npm run dev:host`, then `docker compose exec app php artisan local:ready` so the review user and `public/hot` are normalized. If readiness reports a broken Vite service, use built assets; do not repeatedly restart, cache-bust, or move `public/hot` during iteration.
 
 Worklog compression:
 - record final validation, material caveats, and durable findings only

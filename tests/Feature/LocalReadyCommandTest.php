@@ -7,6 +7,7 @@ use App\Support\LocalReviewEnvironment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -85,5 +86,27 @@ class LocalReadyCommandTest extends TestCase
         $this->assertTrue($user->is_active);
         $this->assertTrue($user->hasRole(LocalReviewEnvironment::ROLE));
         $this->assertTrue($user->can('platform.ui-reference.view'));
+    }
+
+    public function test_it_checks_vite_javascript_css_and_app_routes(): void
+    {
+        Http::fake([
+            'http://node:5173/resources/js/app.js' => Http::response('', 200),
+            'http://node:5173/resources/css/app.css' => Http::response('', 200),
+            'http://localhost:8000/login' => Http::response('', 200),
+        ]);
+
+        $this->artisan('local:ready', [
+            '--hot-path' => $this->hotPath,
+            '--vite-check-url' => 'http://node:5173',
+        ])
+            ->expectsOutputToContain('[ok] vite js:')
+            ->expectsOutputToContain('[ok] vite css:')
+            ->expectsOutputToContain('[ok] app:')
+            ->assertSuccessful();
+
+        Http::assertSent(fn ($request): bool => $request->url() === 'http://node:5173/resources/js/app.js');
+        Http::assertSent(fn ($request): bool => $request->url() === 'http://node:5173/resources/css/app.css');
+        Http::assertSent(fn ($request): bool => $request->url() === 'http://localhost:8000/login');
     }
 }

@@ -609,7 +609,7 @@
         @break
 
         @case('breadcrumb')
-            <div class="w-full min-w-0 overflow-visible rounded-md border px-4 py-3" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);">
+            <div class="w-full max-w-full min-w-0 overflow-visible rounded-md border px-3 py-3 sm:px-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-ui-reference-breadcrumb-sample>
                 <x-ui.breadcrumb
                     :items="$items"
                     :size="$sample['size'] ?? 'md'"

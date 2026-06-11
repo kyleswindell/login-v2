@@ -209,14 +209,14 @@ class UiReferenceComponentDepthCatalog
 
         return $this->correctedImplemented('breadcrumb', 'Breadcrumb', 'Breadcrumbs show a user where the current view sits in the app information architecture.', [
             $this->exampleFromSample('Small size', 'Small breadcrumbs pair with page headers and condensed breakpoints.', ['type' => 'breadcrumb', 'items' => $baseTrail, 'size' => 'sm', 'include_current' => false], [
-                $this->sampleVariant('Truncated menu', ['type' => 'breadcrumb', 'items' => $overflowTrail, 'size' => 'sm', 'overflow' => true, 'include_current' => false, 'menu_open' => true]),
+                $this->sampleVariant('Truncated menu', ['type' => 'breadcrumb', 'items' => $overflowTrail, 'size' => 'sm', 'overflow' => true, 'include_current' => false]),
                 $this->sampleVariant('Current page listed', ['type' => 'breadcrumb', 'items' => $baseTrail, 'size' => 'sm', 'current' => $currentPage]),
-                $this->sampleVariant('Truncated menu with current page listed', ['type' => 'breadcrumb', 'items' => $overflowTrail, 'size' => 'sm', 'overflow' => true, 'current' => $currentPage, 'menu_open' => true]),
+                $this->sampleVariant('Truncated menu with current page listed', ['type' => 'breadcrumb', 'items' => $overflowTrail, 'size' => 'sm', 'overflow' => true, 'current' => $currentPage]),
             ], ['Default trails stop at the previous page unless the current page is unclear without the breadcrumb.']),
             $this->exampleFromSample('Medium size', 'Medium breadcrumbs are the default when there is no page header or when the breadcrumb carries more orientation weight.', ['type' => 'breadcrumb', 'items' => $baseTrail, 'size' => 'md', 'include_current' => false], [
-                $this->sampleVariant('Truncated menu', ['type' => 'breadcrumb', 'items' => $overflowTrail, 'size' => 'md', 'overflow' => true, 'include_current' => false, 'menu_open' => true]),
+                $this->sampleVariant('Truncated menu', ['type' => 'breadcrumb', 'items' => $overflowTrail, 'size' => 'md', 'overflow' => true, 'include_current' => false]),
                 $this->sampleVariant('Current page listed', ['type' => 'breadcrumb', 'items' => $baseTrail, 'size' => 'md', 'current' => $currentPage]),
-                $this->sampleVariant('Truncated menu with current page listed', ['type' => 'breadcrumb', 'items' => $overflowTrail, 'size' => 'md', 'overflow' => true, 'current' => $currentPage, 'menu_open' => true]),
+                $this->sampleVariant('Truncated menu with current page listed', ['type' => 'breadcrumb', 'items' => $overflowTrail, 'size' => 'md', 'overflow' => true, 'current' => $currentPage]),
             ], ['Breadcrumbs never wrap. If the trail is too long, collapse the middle links into the overflow menu.']),
         ], ['navigation landmark', 'ordered list', 'page link', 'separator', 'overflow trigger', 'overflow menu', 'optional current page text'], [
             'Use when users need orientation inside a nested information architecture.',
@@ -237,8 +237,9 @@ class UiReferenceComponentDepthCatalog
         ], [
             'Default trails start at the highest useful parent and stop at the previous page.',
             'When the current page is listed, it is the last item and is plain text with `aria-current`.',
-            'Overflow starts after four listed page links, or five when the current page is listed.',
-            'Overflow keeps the first two breadcrumbs and final two page links visible, with middle links in a menu.',
+            'Overflow uses the installed default threshold unless `maxVisible` is reviewed for a specific layout.',
+            'At larger widths, overflow keeps the first parent breadcrumb as long as possible and exposes hidden middle links in a menu.',
+            'At small widths, overflow compresses to the overflow trigger followed by the final visible breadcrumb.',
             'The overflow trigger opens a menu and closes on Escape or outside click.',
         ], [
             'Keep each page link short and entity-specific.',

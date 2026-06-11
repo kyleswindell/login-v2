@@ -148,7 +148,8 @@ Breadcrumb has a corrected component-specific UI Reference page with canonical a
 - Use small breadcrumbs in page headers, compact regions, and condensed breakpoints.
 - Use medium breadcrumbs when the breadcrumb carries more orientation weight or appears at the top of a page without a page title.
 - Keep breadcrumb text on one line. Use overflow behavior instead of wrapping.
-- When overflow is enabled, keep the first two breadcrumbs and the final two page links visible when possible. Move the middle links into the overflow menu.
+- When overflow is enabled at larger widths, keep the first home/top breadcrumb for as long as possible and preserve final page context when possible. Move middle links into the overflow menu.
+- At small widths, render the overflow control first followed by one final breadcrumb item instead of forcing the row or containing card wider than the viewport.
 - Use the installed Menu/Menu buttons handoff for the overflow trigger and menu behavior.
 - Keep separators visual only. They are not interactive and should not be announced as navigable content.
 - Keep all styling token-backed and theme-aware.
@@ -201,7 +202,7 @@ Use the Blade API instead of hand-building breadcrumb markup in feature views.
 | `overflow`   | `bool`                  | `false`           | `true`, `false`                       | No       | Enables installed overflow behavior for long trails. Do not wrap breadcrumbs.                                                             |
 | `current`    | `array / string / null` | `null`            | Current page item or label            | No       | Include only when title/context is unclear. Render non-interactive with `aria-current="page"`.                                            |
 | `ariaLabel`  | `string`                | `Breadcrumb`      | Short landmark label                  | No       | Override only when more than one breadcrumb navigation landmark appears on the page.                                                      |
-| `maxVisible` | `int / null`            | installed default | positive integer                      | No       | Use only when the visible count needs a reviewed override. Otherwise rely on the default overflow rules.                                  |
+| `maxVisible` | `int / null`            | installed default | positive integer                      | No       | Use only when the visible count needs a reviewed override. Otherwise rely on the default fluid overflow rules.                             |
 | `class`      | `string / null`         | `null`            | layout class passthrough if supported | No       | Parent Patterns own external spacing. Do not use this for local color, typography, or behavior changes.                                   |
 
 Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the UI Reference proof before use.
@@ -383,7 +384,8 @@ Do not hard-code link color, separator spacing, focus ring, typography size, men
 - Default trails start at the highest useful parent and stop at the previous page.
 - When the current page is listed, it is the last item and is plain text with `aria-current="page"`.
 - Overflow starts after four listed page links, or five when the current page is listed, unless the installed component exposes a reviewed override.
-- Overflow keeps the first two breadcrumbs and final two page links visible when possible, with middle links in a menu.
+- Overflow keeps useful parent context and final page context visible at larger widths, with middle links in a menu.
+- Small breakpoints collapse overflow examples to the overflow trigger followed by one final breadcrumb.
 - The overflow trigger opens a menu and closes on Escape, outside click, or the installed Menu/Menu buttons dismissal behavior.
 - Breadcrumbs must remain single-line. Use overflow/truncation before wrapping.
 - Parent Patterns own external spacing, page header composition, shell placement, and responsive breakpoints.
@@ -474,7 +476,7 @@ Do not hard-code link color, separator spacing, focus ring, typography size, men
 | ------------------------------------------------------------------- | ----------- | -------------------------------------------------------------------------- |
 | Path-based breadcrumbs                                              | Deferred    | Requires product-approved session-history behavior and consistency rules.  |
 | Custom separator styles                                             | Deferred    | Requires design/system owner approval and accessibility review.            |
-| Dynamic responsive breadcrumb compression beyond installed overflow | Deferred    | Requires updated component API, tests, and UI Reference proof.             |
+| Dynamic responsive breadcrumb compression beyond installed small-breakpoint overflow | Deferred | Requires updated component API, tests, and UI Reference proof.             |
 | Multiple breadcrumb landmarks on one page                           | Gated       | Requires unique `ariaLabel` values and page-level accessibility review.    |
 | Icon-leading breadcrumb items                                       | Gated       | Requires approved navigation pattern and icon accessibility review.        |
 | Disabled breadcrumb links                                           | Not allowed | Parent items must link to valid destinations; current item is static text. |
@@ -512,8 +514,8 @@ The Breadcrumb page may use a compact matrix layout instead of Accordion-style t
 
 | Required proof        | Rendered behavior                                                                                                       | Options shown                                                                                                                 |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| Small size            | Small breadcrumbs pair with page headers and condensed breakpoints.                                                     | Default small trail; small truncated menu; small with current page listed; small truncated menu with current page listed.     |
-| Medium size           | Medium breadcrumbs are the default when there is no page header or when the breadcrumb carries more orientation weight. | Default medium trail; medium truncated menu; medium with current page listed; medium truncated menu with current page listed. |
+| Small size            | Small breadcrumbs pair with page headers and condensed breakpoints.                                                     | Default small trail; closed interactive truncated menu; small with current page listed; closed interactive truncated menu with current page listed.     |
+| Medium size           | Medium breadcrumbs are the default when there is no page header or when the breadcrumb carries more orientation weight. | Default medium trail; closed interactive truncated menu; medium with current page listed; closed interactive truncated menu with current page listed. |
 | Overflow behavior     | Long trail keeps key ancestors visible and moves middle links into an overflow menu.                                    | First two and final two links visible when possible; middle links in menu; overflow trigger has accessible name.              |
 | Current page behavior | Current page appears only when context requires it and is non-interactive.                                              | `aria-current="page"`; final item static text; no self-link.                                                                  |
 | Single-line behavior  | Long labels or narrow viewports use truncation/overflow rather than wrapping.                                           | No second line; labels remain readable or safely truncated.                                                                   |
@@ -528,6 +530,8 @@ The page must include the installed API, states, options, prohibited usage, defe
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The page renders small and medium breadcrumb examples.
+- Truncated menu examples render closed by default and open through the installed menu trigger behavior.
+- Truncated menu examples have a small-breakpoint handoff that keeps the overflow trigger and final breadcrumb visible without widening the page.
 - The page renders default, overflow/truncated, current page listed, and overflow with current page listed examples for both sizes.
 - Breadcrumb trails render inside a named `nav` landmark.
 - Breadcrumb items render as list items.

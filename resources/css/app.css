@@ -1369,7 +1369,7 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-breadcrumb-list {
-        @apply flex min-w-0 items-center justify-center gap-0 overflow-visible whitespace-nowrap;
+        @apply flex min-w-0 max-w-full items-center justify-start gap-0 overflow-visible whitespace-nowrap;
     }
 
     .ui-breadcrumb-item {
@@ -1391,7 +1391,7 @@ Use targeted searches for the class family being changed before reading this fil
     .ui-breadcrumb-link,
     .ui-breadcrumb-current {
         @apply block truncate font-medium;
-        max-inline-size: 13rem;
+        max-inline-size: min(13rem, 42vw);
     }
 
     .ui-breadcrumb-sm .ui-breadcrumb-link,
@@ -1440,6 +1440,33 @@ Use targeted searches for the class family being changed before reading this fil
         border-color: var(--ui-border-subtle-01);
         background-color: var(--ui-layer-hover-01);
         color: var(--ui-icon-primary);
+    }
+
+    @media (max-width: 640px) {
+        .ui-breadcrumb[data-ui-breadcrumb-overflow='true'] .ui-breadcrumb-list {
+            justify-content: flex-start;
+        }
+
+        .ui-breadcrumb[data-ui-breadcrumb-overflow='true'] .ui-breadcrumb-item:not(.ui-breadcrumb-overflow):not(:last-child) {
+            display: none;
+        }
+
+        .ui-breadcrumb[data-ui-breadcrumb-overflow='true'] .ui-breadcrumb-overflow {
+            order: 0;
+        }
+
+        .ui-breadcrumb[data-ui-breadcrumb-overflow='true'] .ui-breadcrumb-overflow::before {
+            content: none;
+        }
+
+        .ui-breadcrumb[data-ui-breadcrumb-overflow='true'] .ui-breadcrumb-item:last-child {
+            order: 1;
+        }
+
+        .ui-breadcrumb[data-ui-breadcrumb-overflow='true'] .ui-breadcrumb-link,
+        .ui-breadcrumb[data-ui-breadcrumb-overflow='true'] .ui-breadcrumb-current {
+            max-inline-size: min(12rem, calc(100vw - 7rem));
+        }
     }
 
     .ui-menu-composition {

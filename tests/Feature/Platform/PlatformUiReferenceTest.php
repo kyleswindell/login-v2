@@ -1096,7 +1096,9 @@ class PlatformUiReferenceTest extends TestCase
     {
         $this->actingAsPlatformSuperAdmin();
 
-        $this->get('/platform/ui-reference/components/breadcrumb')
+        $response = $this->get('/platform/ui-reference/components/breadcrumb');
+
+        $response
             ->assertOk()
             ->assertSee('x-ui.breadcrumb')
             ->assertSee('Small size')
@@ -1117,7 +1119,8 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('ui-breadcrumb-trailing', false)
             ->assertSee('data-ui-menu-trigger', false)
             ->assertSee('aria-haspopup="menu"', false)
-            ->assertSee('aria-expanded="true"', false)
+            ->assertSee('aria-expanded="false"', false)
+            ->assertSee('data-ui-menu', false)
             ->assertSee('aria-current="page"', false)
             ->assertSee('Tenant admin')
             ->assertSeeInOrder(['Platform', 'Operations', 'Security settings', 'Domain rules'])
@@ -1125,6 +1128,33 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Overflow menu open')
             ->assertSee('Disabled not applicable')
             ->assertDontSee('aria-current="page" class="ui-link"', false);
+
+        preg_match_all('/<button[^>]*data-ui-breadcrumb-overflow-trigger[^>]*>/s', $response->getContent(), $overflowTriggers);
+
+        $this->assertNotEmpty($overflowTriggers[0]);
+
+        foreach ($overflowTriggers[0] as $triggerMarkup) {
+            $this->assertStringContainsString('aria-expanded="false"', $triggerMarkup);
+            $this->assertStringNotContainsString('aria-expanded="true"', $triggerMarkup);
+        }
+
+        preg_match_all('/<div[^>]*class="ui-menu ui-menu-sm ui-menu-align-bottom-start"[^>]*data-ui-menu[^>]*>/s', $response->getContent(), $overflowMenus);
+
+        $this->assertNotEmpty($overflowMenus[0]);
+
+        foreach ($overflowMenus[0] as $menuMarkup) {
+            $this->assertStringContainsString('hidden', $menuMarkup);
+        }
+
+        $breadcrumbCatalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
+        $breadcrumbCss = file_get_contents(resource_path('css/app.css'));
+
+        $this->assertIsString($breadcrumbCatalog);
+        $this->assertIsString($breadcrumbCss);
+        $this->assertStringNotContainsString("'menu_open' => true", $breadcrumbCatalog);
+        $this->assertStringContainsString(".ui-breadcrumb[data-ui-breadcrumb-overflow='true'] .ui-breadcrumb-overflow", $breadcrumbCss);
+        $this->assertStringContainsString(".ui-breadcrumb[data-ui-breadcrumb-overflow='true'] .ui-breadcrumb-item:not(.ui-breadcrumb-overflow):not(:last-child)", $breadcrumbCss);
+        $this->assertStringContainsString('calc(100vw - 7rem)', $breadcrumbCss);
     }
 
     public function test_tabs_component_recovery_page_renders_required_examples(): void

@@ -83,6 +83,8 @@
                     $requestedProofAlign = $sample['align'] ?? 'bottom-start';
                     $proofSize = in_array($requestedProofSize, ['xs', 'sm', 'md', 'lg'], true) ? $requestedProofSize : 'md';
                     $proofAlign = in_array($requestedProofAlign, ['top-start', 'top-end', 'bottom-start', 'bottom-end'], true) ? $requestedProofAlign : 'bottom-start';
+                    $proofItems = collect($items)->reject(fn ($item) => $item['hidden'] ?? false);
+                    $proofReservesSelectionIndicator = $proofItems->contains(fn ($item) => ($item['selected'] ?? false) || filled($item['selection_type'] ?? $item['selectionType'] ?? null));
                 @endphp
                 <div
                     class="ui-menu ui-menu-{{ $proofSize }} ui-menu-proof-panel"
@@ -92,9 +94,60 @@
                     data-ui-menu-size="{{ $proofSize }}"
                     @if ($sample['rtl'] ?? false) dir="rtl" @endif
                 >
-                    @foreach ($items as $item)
+                    @foreach ($proofItems as $item)
+                        @php
+                            $children = collect($item['children'] ?? [])->reject(fn ($child) => $child['hidden'] ?? false);
+                            $hasSubmenu = $children->isNotEmpty() || ($item['submenu'] ?? false);
+                        @endphp
+
                         @if ($item['divider'] ?? false)
                             <div class="ui-menu-divider" role="separator"></div>
+                        @elseif ($children->isNotEmpty())
+                            <div class="ui-menu-submenu-group" data-ui-menu-submenu>
+                                <x-ui.menu-item
+                                    :semantic="($item['danger'] ?? false) ? 'danger' : ($item['semantic'] ?? 'neutral')"
+                                    :current="$item['current'] ?? false"
+                                    :selected="$item['selected'] ?? false"
+                                    :disabled="$item['disabled'] ?? false"
+                                    :shortcut="$item['shortcut'] ?? null"
+                                    submenu
+                                    :size="$proofSize"
+                                    :state="$item['state'] ?? null"
+                                    :selection-type="$item['selection_type'] ?? $item['selectionType'] ?? null"
+                                    :title="$item['title'] ?? null"
+                                    :reserve-indicator="$proofReservesSelectionIndicator"
+                                >
+                                    {{ $item['label'] }}
+                                </x-ui.menu-item>
+
+                                <div
+                                    class="ui-menu ui-menu-{{ $proofSize }} ui-menu-submenu-panel"
+                                    role="menu"
+                                    data-ui-menu-submenu-panel
+                                    data-ui-menu-size="{{ $proofSize }}"
+                                >
+                                    @foreach ($children as $child)
+                                        @if ($child['divider'] ?? false)
+                                            <div class="ui-menu-divider" role="separator"></div>
+                                        @else
+                                            <x-ui.menu-item
+                                                href="{{ $child['href'] ?? null }}"
+                                                :semantic="($child['danger'] ?? false) ? 'danger' : ($child['semantic'] ?? 'neutral')"
+                                                :current="$child['current'] ?? false"
+                                                :selected="$child['selected'] ?? false"
+                                                :disabled="$child['disabled'] ?? false"
+                                                :shortcut="$child['shortcut'] ?? null"
+                                                :size="$proofSize"
+                                                :state="$child['state'] ?? null"
+                                                :selection-type="$child['selection_type'] ?? $child['selectionType'] ?? null"
+                                                :title="$child['title'] ?? null"
+                                            >
+                                                {{ $child['label'] }}
+                                            </x-ui.menu-item>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
                         @else
                             <x-ui.menu-item
                                 href="{{ $item['href'] ?? null }}"
@@ -103,11 +156,12 @@
                                 :selected="$item['selected'] ?? false"
                                 :disabled="$item['disabled'] ?? false"
                                 :shortcut="$item['shortcut'] ?? null"
-                                :submenu="$item['submenu'] ?? false"
+                                :submenu="$hasSubmenu"
                                 :size="$proofSize"
                                 :state="$item['state'] ?? null"
-                                :selection-type="$item['selection_type'] ?? null"
+                                :selection-type="$item['selection_type'] ?? $item['selectionType'] ?? null"
                                 :title="$item['title'] ?? null"
+                                :reserve-indicator="$proofReservesSelectionIndicator"
                             >
                                 {{ $item['label'] }}
                             </x-ui.menu-item>

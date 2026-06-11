@@ -1,5 +1,6 @@
 const closeMenu = (trigger, menu) => {
     trigger.setAttribute('aria-expanded', 'false');
+    closeSubmenus(menu);
     menu.hidden = true;
     trigger.closest('[data-ui-component="menu-composition"]')?.setAttribute('data-ui-menu-open', 'false');
 };
@@ -8,7 +9,34 @@ const openMenu = (trigger, menu) => {
     trigger.setAttribute('aria-expanded', 'true');
     menu.hidden = false;
     trigger.closest('[data-ui-component="menu-composition"]')?.setAttribute('data-ui-menu-open', 'true');
-    menu.querySelector('[role="menuitem"]:not(:disabled), [role="menuitemcheckbox"]:not(:disabled), [role="menuitemradio"]:not(:disabled)')?.focus();
+    getEnabledMenuItems(menu)[0]?.focus();
+};
+
+const getEnabledMenuItems = (menu) => Array.from(
+    menu.querySelectorAll('[role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]'),
+).filter((item) => !item.matches(':disabled, [aria-disabled="true"]') && !item.closest('[hidden]'));
+
+const openSubmenu = (trigger, panel) => {
+    trigger.setAttribute('aria-expanded', 'true');
+    panel.hidden = false;
+    panel.dataset.uiMenuSubmenuOpen = 'true';
+};
+
+const closeSubmenu = (trigger, panel) => {
+    trigger.setAttribute('aria-expanded', 'false');
+    panel.dataset.uiMenuSubmenuOpen = 'false';
+    panel.hidden = true;
+};
+
+const closeSubmenus = (menu) => {
+    menu.querySelectorAll('[data-ui-menu-submenu]').forEach((group) => {
+        const trigger = group.querySelector('[data-ui-menu-submenu-trigger]');
+        const panel = group.querySelector('[data-ui-menu-submenu-panel]');
+
+        if (trigger && panel) {
+            closeSubmenu(trigger, panel);
+        }
+    });
 };
 
 export function initMenus(root = document) {
@@ -25,6 +53,31 @@ export function initMenus(root = document) {
         }
 
         trigger.dataset.uiMenuInitialized = 'true';
+
+        menu.querySelectorAll('[data-ui-menu-submenu]').forEach((group) => {
+            const submenuTrigger = group.querySelector('[data-ui-menu-submenu-trigger]');
+            const submenuPanel = group.querySelector('[data-ui-menu-submenu-panel]');
+
+            if (!submenuTrigger || !submenuPanel || submenuTrigger.dataset.uiMenuSubmenuInitialized === 'true') {
+                return;
+            }
+
+            submenuTrigger.dataset.uiMenuSubmenuInitialized = 'true';
+
+            submenuTrigger.addEventListener('pointerenter', () => openSubmenu(submenuTrigger, submenuPanel));
+            group.addEventListener('pointerleave', () => closeSubmenu(submenuTrigger, submenuPanel));
+            submenuTrigger.addEventListener('focus', () => openSubmenu(submenuTrigger, submenuPanel));
+            submenuTrigger.addEventListener('click', (event) => {
+                event.preventDefault();
+
+                if (submenuPanel.hidden) {
+                    openSubmenu(submenuTrigger, submenuPanel);
+                    getEnabledMenuItems(submenuPanel)[0]?.focus();
+                } else {
+                    closeSubmenu(submenuTrigger, submenuPanel);
+                }
+            });
+        });
 
         trigger.addEventListener('click', (event) => {
             event.preventDefault();
@@ -46,7 +99,8 @@ export function initMenus(root = document) {
         });
 
         menu.addEventListener('keydown', (event) => {
-            const items = Array.from(menu.querySelectorAll('[role="menuitem"]:not(:disabled), [role="menuitemcheckbox"]:not(:disabled), [role="menuitemradio"]:not(:disabled)'));
+            const activeMenu = event.target.closest('[role="menu"]') ?? menu;
+            const items = getEnabledMenuItems(activeMenu);
             const current = event.target.closest('[role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]');
             const index = items.indexOf(current);
             let next = null;
@@ -55,6 +109,32 @@ export function initMenus(root = document) {
                 event.preventDefault();
                 closeMenu(trigger, menu);
                 trigger.focus();
+                return;
+            }
+
+            if (event.key === 'ArrowRight' && current?.hasAttribute('data-ui-menu-submenu-trigger')) {
+                const group = current.closest('[data-ui-menu-submenu]');
+                const submenu = group?.querySelector('[data-ui-menu-submenu-panel]');
+
+                if (submenu) {
+                    event.preventDefault();
+                    openSubmenu(current, submenu);
+                    getEnabledMenuItems(submenu)[0]?.focus();
+                }
+
+                return;
+            }
+
+            if (event.key === 'ArrowLeft' && activeMenu.hasAttribute('data-ui-menu-submenu-panel')) {
+                const group = activeMenu.closest('[data-ui-menu-submenu]');
+                const submenuTrigger = group?.querySelector('[data-ui-menu-submenu-trigger]');
+
+                if (submenuTrigger) {
+                    event.preventDefault();
+                    closeSubmenu(submenuTrigger, activeMenu);
+                    submenuTrigger.focus();
+                }
+
                 return;
             }
 

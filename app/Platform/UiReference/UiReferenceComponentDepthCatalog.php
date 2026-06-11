@@ -356,7 +356,10 @@ class UiReferenceComponentDepthCatalog
         $items = [
             ['label' => 'Open details', 'shortcut' => 'Enter'],
             ['label' => 'Duplicate', 'shortcut' => 'Ctrl+D'],
-            ['label' => 'Move to', 'submenu' => true],
+            ['label' => 'Move to', 'children' => [
+                ['label' => 'Active workspaces'],
+                ['label' => 'Archived workspaces'],
+            ]],
             ['divider' => true],
             ['label' => 'Delete', 'danger' => true, 'state' => 'danger-hover'],
         ];
@@ -392,32 +395,39 @@ class UiReferenceComponentDepthCatalog
                 'Icon-only row triggers need object-specific accessible labels.',
                 'Visible size variants prove item height without leaving overlays open.',
             ]),
-            $this->exampleFromSample('Grouped and selected menu', 'Dividers, selected rows, shortcuts, and submenu indicators keep larger menus scannable.', ['type' => 'menu', 'items' => [
+            $this->exampleFromSample('Grouped and selected menu', 'Dividers, selected rows, shortcuts, selected indicators, title tooltips, and submenu indicators keep larger menus scannable.', ['type' => 'menu', 'items' => [
                 ['label' => 'List view', 'selected' => true, 'selection_type' => 'single'],
-                ['label' => 'Card view'],
+                ['label' => 'Card view', 'selection_type' => 'single'],
+                ['label' => 'Preview details'],
                 ['divider' => true],
-                ['label' => 'Sort by', 'submenu' => true],
+                ['label' => 'Sort by', 'children' => [
+                    ['label' => 'Created date'],
+                    ['label' => 'Workspace owner'],
+                    ['label' => 'Review status'],
+                ]],
                 ['label' => 'Refresh', 'shortcut' => 'R'],
             ], 'trigger_label' => 'View options'], [
-                $this->sampleVariant('Dividers', ['type' => 'menu', 'items' => [['label' => 'Open'], ['divider' => true], ['label' => 'Archive']], 'trigger_label' => 'Grouped menu', 'proof_panel' => true]),
+                $this->sampleVariant('Dividers', ['type' => 'menu', 'items' => [['label' => 'Open'], ['label' => 'Duplicate'], ['divider' => true], ['label' => 'Archive'], ['label' => 'Delete workspace', 'danger' => true]], 'trigger_label' => 'Grouped menu', 'proof_panel' => true]),
+                $this->sampleVariant('Multi-section grouping', ['type' => 'menu', 'items' => [['label' => 'Open'], ['label' => 'Duplicate'], ['divider' => true], ['label' => 'Export'], ['label' => 'Share'], ['divider' => true], ['label' => 'Delete workspace', 'danger' => true]], 'trigger_label' => 'Sectioned menu', 'proof_panel' => true]),
                 $this->sampleVariant('Keyboard shortcut', ['type' => 'menu', 'items' => [['label' => 'Refresh', 'shortcut' => 'R']], 'trigger_label' => 'Shortcut menu', 'proof_panel' => true]),
-                $this->sampleVariant('Submenu boundary', ['type' => 'menu', 'items' => [['label' => 'Move to', 'submenu' => true]], 'trigger_label' => 'Submenu menu', 'proof_panel' => true]),
-                $this->sampleVariant('Single-select', ['type' => 'menu', 'items' => [['label' => 'List view', 'selected' => true, 'selection_type' => 'single'], ['label' => 'Card view', 'selection_type' => 'single']], 'trigger_label' => 'Single select', 'proof_panel' => true]),
+                $this->sampleVariant('Submenu actions', ['type' => 'menu', 'items' => [['label' => 'Move to', 'children' => [['label' => 'Active workspaces'], ['label' => 'Archived workspaces'], ['label' => 'Review queue']]]], 'trigger_label' => 'Submenu menu', 'proof_panel' => true]),
+                $this->sampleVariant('Single-select', ['type' => 'menu', 'items' => [['label' => 'List view', 'selected' => true, 'selection_type' => 'single'], ['label' => 'Card view', 'selection_type' => 'single'], ['label' => 'Preview details']], 'trigger_label' => 'Single select', 'proof_panel' => true]),
                 $this->sampleVariant('Multi-select', ['type' => 'menu', 'items' => [['label' => 'Owner access', 'selected' => true, 'selection_type' => 'multiple'], ['label' => 'Billing access', 'selected' => true, 'selection_type' => 'multiple'], ['label' => 'Audit access', 'selection_type' => 'multiple']], 'trigger_label' => 'Multi select', 'proof_panel' => true]),
                 $this->sampleVariant('Truncated label with title', ['type' => 'menu', 'items' => [['label' => 'Open the complete workspace audit evidence package', 'title' => 'Open the complete workspace audit evidence package']], 'trigger_label' => 'Truncated label', 'proof_panel' => true]),
             ], [
                 'Selected menu items use menuitemradio or menuitemcheckbox roles only for compact command settings.',
-                'Submenus are shown as a one-level boundary, not deep nested behavior.',
+                'Selected and unselected rows reserve the same indicator column so labels stay aligned.',
+                'Submenus are working one-level action groups; deeper nesting remains prohibited.',
             ]),
             $this->exampleFromSample('Alignment and RTL', 'Open menus align to the available space and mirror in RTL contexts.', ['type' => 'menu', 'items' => [['label' => 'Open'], ['label' => 'Export']], 'trigger_label' => 'Aligned menu', 'align' => 'bottom-end'], [
                 $this->sampleVariant('Bottom start', ['type' => 'menu', 'items' => [['label' => 'Open']], 'trigger_label' => 'Bottom start', 'align' => 'bottom-start', 'proof_panel' => true]),
                 $this->sampleVariant('Bottom end', ['type' => 'menu', 'items' => [['label' => 'Open']], 'trigger_label' => 'Bottom end', 'align' => 'bottom-end', 'proof_panel' => true]),
                 $this->sampleVariant('Top start', ['type' => 'menu', 'items' => [['label' => 'Open']], 'trigger_label' => 'Top start', 'align' => 'top-start', 'proof_panel' => true]),
                 $this->sampleVariant('Top end', ['type' => 'menu', 'items' => [['label' => 'Open']], 'trigger_label' => 'Top end', 'align' => 'top-end', 'proof_panel' => true]),
-                $this->sampleVariant('RTL mirrored', ['type' => 'menu', 'items' => [['label' => 'Open'], ['label' => 'Move to', 'submenu' => true]], 'trigger_label' => 'RTL menu', 'rtl' => true, 'proof_panel' => true]),
+                $this->sampleVariant('RTL mirrored', ['type' => 'menu', 'items' => [['label' => 'Open'], ['label' => 'Move to', 'children' => [['label' => 'Review queue'], ['label' => 'Archive']]], ['label' => 'Shortcut action', 'shortcut' => 'Ctrl+K']], 'trigger_label' => 'RTL menu', 'rtl' => true, 'proof_panel' => true]),
             ], [
                 'Placement is exposed as a component data hook for visual and behavior review.',
-                'RTL proof mirrors the trigger and submenu indicator direction inside the same component contract.',
+                'RTL proof mirrors the trigger, menu panel, submenu indicator, submenu placement, and shortcut direction inside the same component contract.',
             ]),
         ], ['trigger', 'menu container', 'action item', 'divider', 'submenu indicator', 'keyboard shortcut', 'selected item', 'danger item'], [
             'Use when several contextual actions belong behind a trigger.',

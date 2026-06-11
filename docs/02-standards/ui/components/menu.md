@@ -112,6 +112,7 @@ Menu is the installed Login App 2.0 contextual action disclosure API. It owns me
 - Support keyboard navigation with arrow keys, Home/End, Enter, Space, and Escape.
 - Return focus to the trigger when the menu closes by Escape or outside dismissal.
 - Support contextual action, row overflow, grouped, selected/checkable, danger, disabled, shortcut, and one-level submenu examples.
+- Reserve the selected/checkable indicator column across mixed selected, unselected, and non-select action rows when a menu includes selected/checkable items.
 - Support approved sizes and placements through component props/classes.
 - Consume Foundation Element APIs for color, spacing, typography, themes, motion, and icons.
 - Prove variants, states, keyboard behavior, alignment, RTL behavior, implementation details, prohibited usage, and deferred gates on the UI Reference page.
@@ -169,6 +170,7 @@ Menu is installed as a Blade component plus JavaScript behavior initializer. The
 - Support one submenu level only.
 - Use keyboard shortcuts as metadata, not as the primary action label.
 - Use selected/checkable item states only for compact command settings, not as a replacement for form selection controls.
+- Keep selected, unselected, and non-select menu item labels aligned when they appear in the same menu.
 - Use approved placements and RTL mirroring; do not create local positioning logic.
 - Parent Patterns own external spacing, table row context, page header grouping, and workflow orchestration.
 
@@ -321,7 +323,8 @@ Any prop not listed here is not public. If a feature needs another option, updat
 | `selected`                                       | `bool`                | `false`  | `true`, `false`                                       | No                               | Use with `selection-type` for checkable command settings.                                     |
 | `selection-type`                                 | `string / null`       | `null`   | `single`, `multi`                                     | Required when `selected` is used | Maps to `menuitemradio` or `menuitemcheckbox` semantics.                                      |
 | `shortcut`                                       | `string / null`       | `null`   | Short key chord text                                  | No                               | Metadata only. Do not use as the action label.                                                |
-| `submenu` / `children` / `array / null` / `null` | One nested item array | No       | One submenu level only. Deeper nesting is prohibited. |                                  |                                                                                               |
+| `submenu`                                        | `bool`                | `false`  | `true`, `false`                                      | No                               | Marks a submenu trigger when slot composition owns the submenu panel. Prefer `children` for array-driven menus. |
+| `children`                                       | `array / null`        | `null`   | One nested item array                                | No                               | One submenu level only. Deeper nesting is prohibited.                                         |
 | `title`                                          | `string / null`       | `null`   | Full label text                                       | No                               | Use for rare truncated labels when the full label must be exposed.                            |
 | `class`                                          | `string / null`       | `null`   | Not for visual overrides                              | No                               | Do not use to create local item states.                                                       |
 
@@ -594,6 +597,7 @@ Feature views must not create local `dropdown-*`, `menu-*`, `overflow-*`, `actio
 - Focus-visible treatment must remain visible in all supported themes and in combined hover/focus states.
 - Meaning must not rely on color alone for selected, disabled, or danger states.
 - Long truncated labels must expose the full label through browser title text or an approved disclosure.
+- RTL menus must mirror the full menu surface, including item direction, shortcut placement, submenu panel side, and submenu caret direction.
 - Permission-impossible actions should be hidden instead of disabled to avoid announcing actions the user can never take.
 - Menus must not be hover-only. Pointer hover may preview item states, but opening and operation must be click and keyboard accessible.
 
@@ -607,6 +611,7 @@ Feature views must not create local `dropdown-*`, `menu-*`, `overflow-*`, `actio
 - Order actions by expected use.
 - Group related actions with dividers.
 - Put destructive actions last and use explicit destructive text.
+- When selected/checkable rows appear with unselected or non-select rows, reserve the same indicator column so labels align consistently.
 - Do not use vague labels such as `More`, `Options`, `Go`, or `Submit` when a specific object/action label is possible.
 - Do not use icon-only triggers with generic labels such as `More options` in row contexts. Include the object context: `Open actions for Acme tenant`.
 - Use shortcut text only for real shortcuts or established command metadata.
@@ -683,8 +688,8 @@ The Menu page is a broad action component reference page. The Live examples card
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
 | Contextual action menu      | A labeled menu button opens object-level actions in predictable order and returns focus on close.                                                       | Enabled item, Hover item, Focus item, Focus and hover, Danger item, Danger hover, Danger hover and focus, Disabled item |
 | Row action menu             | Table/card rows use icon-only overflow triggers with object-specific accessible labels and short menus.                                                 | Divided groups, Extra small, Small, Medium, Large, Icon-only trigger, Disabled item                                     |
-| Grouped and selected menu   | Dividers, selected rows, shortcuts, and submenu indicators keep larger menus scannable.                                                                 | Dividers, Keyboard shortcut, Submenu boundary, Single-select, Multi-select, Selected item                               |
-| Alignment and RTL           | Open menus align to available space and mirror start/end in RTL contexts.                                                                               | Bottom start, Bottom end, Top start, Top end, RTL mirrored                                                              |
+| Grouped and selected menu   | Dividers, selected rows, shortcuts, title tooltips, multi-section groups, and submenu indicators keep larger menus scannable.                            | Dividers, Multi-section grouping, Keyboard shortcut, Submenu actions, Single-select, Multi-select, Selected item, Truncated label with title |
+| Alignment and RTL           | Open menus align to available space and mirror start/end, item direction, shortcut direction, submenu side, and caret direction in RTL contexts.         | Bottom start, Bottom end, Top start, Top end, RTL mirrored                                                              |
 | Size scale                  | Approved item sizes render with matching density and no mixed trigger/item height.                                                                      | Extra small, Small, Medium, Large                                                                                       |
 | State matrix                | Menu item states render with token-backed classes and no local CSS.                                                                                     | Default, Hover, Focus-visible, Focus and hover, Selected, Danger, Disabled, Open, Closed                                |
 | Keyboard behavior           | A developer-facing example documents trigger activation, arrow navigation, Enter/Space activation, Escape close, outside click, and submenu arrows.     | `aria-haspopup`, `aria-expanded`, roving item focus, focus return, one-level submenu                                    |
@@ -707,8 +712,9 @@ The page must show the actual installed API, rendered variants/options, rendered
 - Contextual action menu examples include enabled, hover, focus, focus+hover, danger, danger hover, danger hover+focus, and disabled item states.
 - Row action examples use icon-only overflow triggers with object-specific accessible labels.
 - Row action menus stay short and show divided groups where appropriate.
-- Grouped examples include dividers, shortcut metadata, selected/checkable items, and one-level submenu indicators.
-- Alignment examples include bottom start, bottom end, top start, top end, and RTL mirrored behavior.
+- Grouped examples include dividers, multi-section grouping, shortcut metadata, selected/checkable items, title text for truncated labels, and working one-level submenu actions.
+- Selected/checkable examples prove selected, unselected, and non-select action labels stay aligned through a reserved indicator column.
+- Alignment examples include bottom start, bottom end, top start, top end, and RTL mirrored behavior across the trigger and menu panel.
 - Size examples include extra small, small, medium, and large.
 - Keyboard examples document trigger open, first-item focus, Up/Down navigation, Enter/Space activation, Escape close/focus return, outside click dismissal, and one-level submenu arrow behavior.
 - Disabled items remain visible only when the action may become available later.
@@ -748,7 +754,7 @@ $response->assertSee('Danger hover');
 $response->assertSee('Danger hover and focus');
 $response->assertSee('Single-select');
 $response->assertSee('Multi-select');
-$response->assertSee('Submenu boundary');
+$response->assertSee('Submenu actions');
 $response->assertSee('Bottom start');
 $response->assertSee('Bottom end');
 $response->assertSee('Top start');

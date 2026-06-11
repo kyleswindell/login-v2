@@ -2098,8 +2098,14 @@ Use targeted searches for the class family being changed before reading this fil
 
     .ui-menu-item-check,
     .ui-menu-item-submenu {
-        @apply shrink-0 font-semibold;
+        @apply inline-flex shrink-0 items-center justify-center font-semibold;
+        inline-size: 1rem;
         color: var(--ui-icon-secondary);
+    }
+
+    .ui-menu-item-check-icon,
+    .ui-menu-item-submenu-icon {
+        @apply h-4 w-4;
     }
 
     .ui-menu-item-shortcut {
@@ -2111,6 +2117,39 @@ Use targeted searches for the class family being changed before reading this fil
     .ui-menu-divider {
         margin-block: 0.375rem;
         border-block-start: 1px solid var(--ui-border-subtle-01);
+    }
+
+    .ui-menu-submenu-group {
+        @apply relative;
+    }
+
+    .ui-menu-submenu-panel {
+        @apply absolute z-30;
+        inset-block-start: -0.25rem;
+        inset-inline-start: calc(100% + 0.25rem);
+    }
+
+    .ui-menu-submenu-group:focus-within > .ui-menu-submenu-panel,
+    .ui-menu-submenu-group:hover > .ui-menu-submenu-panel,
+    .ui-menu-submenu-panel[data-ui-menu-submenu-open='true'] {
+        display: grid;
+    }
+
+    .ui-menu-composition-rtl .ui-menu,
+    .ui-menu[dir='rtl'] {
+        direction: rtl;
+        text-align: start;
+    }
+
+    .ui-menu-composition-rtl .ui-menu-submenu-panel,
+    .ui-menu[dir='rtl'] .ui-menu-submenu-panel {
+        inset-inline-start: auto;
+        inset-inline-end: calc(100% + 0.25rem);
+    }
+
+    .ui-menu-composition-rtl .ui-menu-item-submenu-icon,
+    .ui-menu[dir='rtl'] .ui-menu-item-submenu-icon {
+        transform: rotate(180deg);
     }
 
     .ui-tabs {

@@ -24,6 +24,7 @@
     $resolvedTriggerVariant = $triggerVariant ?? ($isIconTrigger ? 'ghost' : 'tertiary');
     $resolvedTriggerIcon = $triggerIcon ?? ($isIconTrigger ? 'heroicon-o-ellipsis-vertical' : null);
     $visibleItems = collect($items)->reject(fn ($item) => $item['hidden'] ?? false);
+    $reservesSelectionIndicator = $visibleItems->contains(fn ($item) => ($item['selected'] ?? false) || filled($item['selection_type'] ?? $item['selectionType'] ?? null));
 @endphp
 
 <div
@@ -74,12 +75,64 @@
         @foreach ($visibleItems as $item)
             @php
                 $isDivider = ($item['divider'] ?? false) || (($item['type'] ?? 'item') === 'divider');
+                $children = collect($item['children'] ?? [])->reject(fn ($child) => $child['hidden'] ?? false);
+                $hasSubmenu = $children->isNotEmpty() || ($item['submenu'] ?? false);
                 $selectionType = $item['selection_type'] ?? $item['selectionType'] ?? null;
                 $resolvedSelectionType = $selectionType === 'multi' ? 'multiple' : $selectionType;
             @endphp
 
             @if ($isDivider)
                 <div class="ui-menu-divider" role="separator"></div>
+            @elseif ($children->isNotEmpty())
+                <div class="ui-menu-submenu-group" data-ui-menu-submenu>
+                    <x-ui.menu-item
+                        :semantic="($item['danger'] ?? false) ? 'danger' : ($item['semantic'] ?? 'neutral')"
+                        :disabled="$item['disabled'] ?? false"
+                        :shortcut="$item['shortcut'] ?? null"
+                        submenu
+                        :size="$resolvedSize"
+                        :state="$item['state'] ?? null"
+                        :title="$item['title'] ?? null"
+                        :reserve-indicator="$reservesSelectionIndicator"
+                    >
+                        {{ $item['label'] }}
+                    </x-ui.menu-item>
+
+                    <div
+                        class="ui-menu ui-menu-{{ $resolvedSize }} ui-menu-submenu-panel"
+                        role="menu"
+                        data-ui-menu-submenu-panel
+                        data-ui-menu-size="{{ $resolvedSize }}"
+                        hidden
+                    >
+                        @foreach ($children as $child)
+                            @php
+                                $childIsDivider = ($child['divider'] ?? false) || (($child['type'] ?? 'item') === 'divider');
+                                $childSelectionType = $child['selection_type'] ?? $child['selectionType'] ?? null;
+                                $resolvedChildSelectionType = $childSelectionType === 'multi' ? 'multiple' : $childSelectionType;
+                            @endphp
+
+                            @if ($childIsDivider)
+                                <div class="ui-menu-divider" role="separator"></div>
+                            @else
+                                <x-ui.menu-item
+                                    href="{{ $child['href'] ?? null }}"
+                                    :semantic="($child['danger'] ?? false) ? 'danger' : ($child['semantic'] ?? 'neutral')"
+                                    :current="$child['current'] ?? false"
+                                    :selected="$child['selected'] ?? false"
+                                    :disabled="$child['disabled'] ?? false"
+                                    :shortcut="$child['shortcut'] ?? null"
+                                    :size="$resolvedSize"
+                                    :state="$child['state'] ?? null"
+                                    :selection-type="$resolvedChildSelectionType"
+                                    :title="$child['title'] ?? null"
+                                >
+                                    {{ $child['label'] }}
+                                </x-ui.menu-item>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
             @else
                 <x-ui.menu-item
                     href="{{ $item['href'] ?? null }}"
@@ -88,11 +141,12 @@
                     :selected="$item['selected'] ?? false"
                     :disabled="$item['disabled'] ?? false"
                     :shortcut="$item['shortcut'] ?? null"
-                    :submenu="$item['submenu'] ?? false"
+                    :submenu="$hasSubmenu"
                     :size="$resolvedSize"
                     :state="$item['state'] ?? null"
                     :selection-type="$resolvedSelectionType"
                     :title="$item['title'] ?? null"
+                    :reserve-indicator="$reservesSelectionIndicator"
                 >
                     {{ $item['label'] }}
                 </x-ui.menu-item>

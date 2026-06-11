@@ -11,6 +11,7 @@
     'state' => null,
     'selectionType' => null,
     'title' => null,
+    'reserveIndicator' => false,
 ])
 
 @php
@@ -21,6 +22,7 @@
     $resolvedSelectionType = in_array($requestedSelectionType, ['single', 'multiple'], true) ? $requestedSelectionType : null;
     $isCurrent = (bool) $current;
     $isSelected = (bool) $selected;
+    $shouldReserveIndicator = (bool) $reserveIndicator || filled($resolvedSelectionType) || $isSelected;
     $resolvedRole = match ($resolvedSelectionType) {
         'single' => 'menuitemradio',
         'multiple' => 'menuitemcheckbox',
@@ -88,15 +90,21 @@
             'role' => $resolvedRole,
         ]) }}
     >
-        @if ($isSelected)
-            <span class="ui-menu-item-check" aria-hidden="true">✓</span>
+        @if ($shouldReserveIndicator)
+            <span class="ui-menu-item-check" aria-hidden="true">
+                @if ($isSelected)
+                    <x-heroicon-o-check class="ui-menu-item-check-icon" />
+                @endif
+            </span>
         @endif
         <span class="ui-menu-item-label">{{ $slot }}</span>
         @if (filled($shortcut))
             <kbd class="ui-menu-item-shortcut">{{ $shortcut }}</kbd>
         @endif
         @if ($submenu)
-            <span class="ui-menu-item-submenu" aria-hidden="true">›</span>
+            <span class="ui-menu-item-submenu" aria-hidden="true">
+                <x-heroicon-o-chevron-right class="ui-menu-item-submenu-icon" />
+            </span>
         @endif
     </a>
 @else
@@ -116,15 +124,21 @@
             'role' => $resolvedRole,
         ]) }}
     >
-        @if ($isSelected)
-            <span class="ui-menu-item-check" aria-hidden="true">✓</span>
+        @if ($shouldReserveIndicator)
+            <span class="ui-menu-item-check" aria-hidden="true">
+                @if ($isSelected)
+                    <x-heroicon-o-check class="ui-menu-item-check-icon" />
+                @endif
+            </span>
         @endif
         <span class="ui-menu-item-label">{{ $slot }}</span>
         @if (filled($shortcut))
             <kbd class="ui-menu-item-shortcut">{{ $shortcut }}</kbd>
         @endif
         @if ($submenu)
-            <span class="ui-menu-item-submenu" aria-hidden="true">›</span>
+            <span class="ui-menu-item-submenu" aria-hidden="true">
+                <x-heroicon-o-chevron-right class="ui-menu-item-submenu-icon" />
+            </span>
         @endif
     </button>
 @endif

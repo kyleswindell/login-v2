@@ -1041,7 +1041,7 @@ class PlatformUiReferenceTest extends TestCase
         $expectations = [
             'button' => ['Variant purpose matrix', 'Size scale', 'State matrix', 'Button groups', 'Icon usage', 'Content behavior', 'Token and style roles', 'data-component-live-layout="button-matrix"'],
             'link' => ['Inline content link', 'External/help link', 'Navigation link', 'Icon trailing', 'Unavailable treatment', 'data-ui-reference-sample-type="links"'],
-            'menu' => ['Contextual action menu', 'Row action menu', 'Danger item', 'Divided groups', 'Submenu boundary', 'data-ui-reference-sample-type="menu"'],
+            'menu' => ['Contextual action menu', 'Row action menu', 'Danger item', 'Divided groups', 'Submenu actions', 'data-ui-reference-sample-type="menu"'],
             'menu-buttons' => ['Variant purpose matrix', 'Base options', 'Trigger style matrix', 'Size scale', 'Placement and width behavior', 'States and keyboard behavior', 'data-component-live-layout="menu-buttons-matrix"'],
             'tooltip' => ['Anatomy', 'Placement and alignment', 'Sizing and structure', 'Behavior and accessibility', 'Content', 'Related overlays', 'data-component-live-layout="tooltip-matrix"'],
             'text-input' => ['Login form field', 'Settings form field', 'Validation field', 'Read-only field', 'Disabled field', 'data-ui-reference-sample-type="field"'],
@@ -1227,9 +1227,13 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Top end')
             ->assertSee('RTL mirrored')
             ->assertSee('Keyboard shortcut')
-            ->assertSee('Submenu boundary')
+            ->assertSee('Submenu actions')
+            ->assertSee('Multi-section grouping')
             ->assertSee('Single-select')
             ->assertSee('Multi-select')
+            ->assertSee('Truncated label with title')
+            ->assertSee('Preview details')
+            ->assertSee('Active workspaces')
             ->assertSee('Danger hover and focus')
             ->assertSee('data-ui-component="menu-composition"', false)
             ->assertSee('data-ui-menu-open="false"', false)
@@ -1257,9 +1261,37 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('role="menuitemcheckbox"', false)
             ->assertSee('aria-checked="true"', false)
             ->assertSee('data-ui-menu-submenu-trigger', false)
+            ->assertSee('data-ui-menu-submenu-panel', false)
+            ->assertSee('ui-menu-submenu-panel', false)
+            ->assertSee('ui-menu-composition-rtl', false)
+            ->assertSee('ui-menu-item-check', false)
+            ->assertSee('ui-menu-item-check-icon', false)
             ->assertSee('title="Open the complete workspace audit evidence package"', false)
             ->assertSee('Open actions for Workspace alpha')
             ->assertDontSee('data-ui-menu-open="true"', false);
+
+        $menuView = file_get_contents(resource_path('views/components/ui/menu.blade.php'));
+        $menuItemView = file_get_contents(resource_path('views/components/ui/menu-item.blade.php'));
+        $menuScript = file_get_contents(resource_path('js/ui-controls/menus.js'));
+        $menuCss = file_get_contents(resource_path('css/app.css'));
+        $menuStandard = file_get_contents(base_path('docs/02-standards/ui/components/menu.md'));
+
+        $this->assertIsString($menuView);
+        $this->assertIsString($menuItemView);
+        $this->assertIsString($menuScript);
+        $this->assertIsString($menuCss);
+        $this->assertIsString($menuStandard);
+        $this->assertStringContainsString('$reservesSelectionIndicator', $menuView);
+        $this->assertStringContainsString('data-ui-menu-submenu-panel', $menuView);
+        $this->assertStringContainsString('reserveIndicator', $menuItemView);
+        $this->assertStringContainsString('heroicon-o-chevron-right', $menuItemView);
+        $this->assertStringContainsString('openSubmenu', $menuScript);
+        $this->assertStringContainsString('ArrowRight', $menuScript);
+        $this->assertStringContainsString('ArrowLeft', $menuScript);
+        $this->assertStringContainsString('.ui-menu-submenu-panel', $menuCss);
+        $this->assertStringContainsString('.ui-menu-composition-rtl .ui-menu', $menuCss);
+        $this->assertStringContainsString('reserve the same indicator column', $menuStandard);
+        $this->assertStringContainsString('RTL menus must mirror the full menu surface', $menuStandard);
     }
 
     public function test_code_snippet_component_recovery_page_renders_required_examples(): void

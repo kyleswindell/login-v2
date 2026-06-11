@@ -18,7 +18,7 @@
     $semanticMap = [
         'primary' => ['primary', 'base'],
         'secondary' => ['secondary', 'base'],
-        'tertiary' => ['neutral', 'outline'],
+        'tertiary' => ['tertiary', 'outline'],
         'ghost' => ['neutral', 'ghost'],
         'danger' => ['danger', 'base'],
         'danger-tertiary' => ['danger', 'outline'],

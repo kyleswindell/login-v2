@@ -1399,6 +1399,8 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertIsString($colorStandard);
         $this->assertStringContainsString("'secondary' => ['secondary', 'base']", $buttonView);
         $this->assertStringContainsString("'secondary' => ['secondary', 'base']", $iconButtonView);
+        $this->assertStringContainsString("'tertiary' => ['tertiary', 'outline']", $buttonView);
+        $this->assertStringContainsString("'tertiary' => ['tertiary', 'outline']", $iconButtonView);
         $this->assertStringContainsString('--ui-action-secondary-bg: rgb(57 57 57);', $buttonCss);
         $this->assertStringContainsString('--ui-action-secondary-bg-hover: rgb(76 76 76);', $buttonCss);
         $this->assertStringContainsString('--ui-action-secondary-bg-active: rgb(111 111 111);', $buttonCss);
@@ -1415,6 +1417,14 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('margin-inline-start: auto;', $buttonCss);
         $this->assertStringContainsString('.ui-action-with-icon.ui-action-ghost .ui-button-icon', $buttonCss);
         $this->assertStringContainsString('margin-inline-start: 0;', $buttonCss);
+        $this->assertStringContainsString('.ui-action-tertiary.ui-action-outline', $buttonCss);
+        $this->assertStringContainsString('--ui-action-tertiary-border: var(--ui-action-outline-primary-border);', $buttonCss);
+        $this->assertStringContainsString('--ui-action-tertiary-text: var(--ui-action-outline-primary-text);', $buttonCss);
+        $this->assertStringContainsString('--ui-action-tertiary-bg-hover: var(--ui-action-primary-bg-hover);', $buttonCss);
+        $this->assertStringContainsString('--ui-action-tertiary-text-hover: var(--ui-text-inverse);', $buttonCss);
+        $this->assertStringContainsString('--ui-action-tertiary-border: var(--ui-background-inverse);', $buttonCss);
+        $this->assertStringContainsString('--ui-action-tertiary-bg-hover: var(--ui-background-inverse);', $buttonCss);
+        $this->assertStringContainsString('--ui-action-tertiary-text-hover: rgb(3 105 161);', $buttonCss);
         $this->assertStringContainsString('.ui-button-group-equal', $buttonCss);
         $this->assertStringContainsString('.ui-button-group-fluid', $buttonCss);
         $this->assertStringContainsString('.ui-button-group-vertical', $buttonCss);
@@ -1425,6 +1435,8 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('Always required for icon-only buttons; copy must explain the action if clicked.', $buttonStandard);
         $this->assertStringContainsString('pins the icon to the right padding and lets label-icon space expand', $buttonStandard);
         $this->assertStringContainsString('data-ui-tooltip-content', $iconButtonView);
+        $this->assertStringContainsString('Tertiary is a primary-color outline role, not neutral outline.', $buttonStandard);
+        $this->assertStringContainsString('Action tertiary must stay mapped to the primary-color Button tertiary role, not neutral outline.', $colorStandard);
         $this->assertStringContainsString('Same role / same Carbon gray value family', $buttonStandard);
         $this->assertStringContainsString('Secondary is a filled gray action role, not a neutral outline/white button.', $colorStandard);
     }

@@ -804,6 +804,33 @@ Use targeted searches for the class family being changed before reading this fil
         color: var(--ui-action-tertiary-text-active);
     }
 
+    .ui-action-tertiary.ui-action-outline {
+        border-color: var(--ui-action-tertiary-border);
+        background-color: var(--ui-action-tertiary-bg);
+        color: var(--ui-action-tertiary-text);
+    }
+
+    .ui-action-tertiary.ui-action-outline:hover {
+        border-color: var(--ui-action-tertiary-border-hover);
+        background-color: var(--ui-action-tertiary-bg-hover);
+        color: var(--ui-action-tertiary-text-hover);
+    }
+
+    .ui-action-tertiary.ui-action-outline:active,
+    .ui-action-tertiary.ui-action-outline.is-active {
+        border-color: var(--ui-action-tertiary-border-active);
+        background-color: var(--ui-action-tertiary-bg-active);
+        color: var(--ui-action-tertiary-text-active);
+    }
+
+    .ui-action-tertiary.ui-action-outline:focus-visible,
+    .ui-action-tertiary.ui-action-outline.is-focus {
+        border-color: var(--ui-focus);
+        background-color: var(--ui-action-tertiary-bg-focus);
+        color: var(--ui-action-tertiary-text-focus);
+        box-shadow: inset 0 0 0 1px var(--ui-focus-inset);
+    }
+
     .ui-action-primary.ui-action-outline {
         border-color: var(--ui-action-outline-primary-border);
         color: var(--ui-action-outline-primary-text);
@@ -4293,15 +4320,17 @@ Use targeted searches for the class family being changed before reading this fil
         --ui-action-outline-danger-border: rgb(248 113 113);
         --ui-action-outline-danger-text: rgb(252 165 165);
         --ui-action-outline-danger-bg-hover: rgb(239 68 68 / 0.16);
-        --ui-action-tertiary-border: var(--ui-action-outline-neutral-border);
+        --ui-action-tertiary-border: var(--ui-background-inverse);
         --ui-action-tertiary-bg: transparent;
-        --ui-action-tertiary-text: var(--ui-action-outline-neutral-text);
-        --ui-action-tertiary-border-hover: var(--ui-action-outline-neutral-border);
-        --ui-action-tertiary-bg-hover: var(--ui-action-outline-neutral-bg-hover);
-        --ui-action-tertiary-text-hover: var(--ui-action-outline-neutral-text);
+        --ui-action-tertiary-text: var(--ui-background-inverse);
+        --ui-action-tertiary-border-hover: var(--ui-background-inverse);
+        --ui-action-tertiary-bg-hover: var(--ui-background-inverse);
+        --ui-action-tertiary-text-hover: rgb(3 105 161);
         --ui-action-tertiary-border-active: var(--ui-action-tertiary-border-hover);
         --ui-action-tertiary-bg-active: var(--ui-action-tertiary-bg-hover);
         --ui-action-tertiary-text-active: var(--ui-action-tertiary-text-hover);
+        --ui-action-tertiary-bg-focus: var(--ui-action-tertiary-bg-hover);
+        --ui-action-tertiary-text-focus: var(--ui-action-tertiary-text-hover);
         --ui-action-danger-tertiary-border: var(--ui-action-outline-danger-border);
         --ui-action-danger-tertiary-bg: transparent;
         --ui-action-danger-tertiary-text: var(--ui-action-outline-danger-text);
@@ -4737,15 +4766,17 @@ Use targeted searches for the class family being changed before reading this fil
         --ui-action-outline-danger-border: rgb(185 28 28);
         --ui-action-outline-danger-text: rgb(153 27 27);
         --ui-action-outline-danger-bg-hover: rgb(254 226 226);
-        --ui-action-tertiary-border: var(--ui-action-outline-neutral-border);
+        --ui-action-tertiary-border: var(--ui-action-outline-primary-border);
         --ui-action-tertiary-bg: transparent;
-        --ui-action-tertiary-text: var(--ui-action-outline-neutral-text);
-        --ui-action-tertiary-border-hover: var(--ui-action-outline-neutral-border);
-        --ui-action-tertiary-bg-hover: var(--ui-action-outline-neutral-bg-hover);
-        --ui-action-tertiary-text-hover: var(--ui-action-outline-neutral-text);
-        --ui-action-tertiary-border-active: var(--ui-action-tertiary-border-hover);
-        --ui-action-tertiary-bg-active: var(--ui-action-tertiary-bg-hover);
-        --ui-action-tertiary-text-active: var(--ui-action-tertiary-text-hover);
+        --ui-action-tertiary-text: var(--ui-action-outline-primary-text);
+        --ui-action-tertiary-border-hover: var(--ui-action-primary-border-hover);
+        --ui-action-tertiary-bg-hover: var(--ui-action-primary-bg-hover);
+        --ui-action-tertiary-text-hover: var(--ui-text-inverse);
+        --ui-action-tertiary-border-active: var(--ui-action-primary-border-active);
+        --ui-action-tertiary-bg-active: var(--ui-action-primary-bg-active);
+        --ui-action-tertiary-text-active: var(--ui-text-inverse);
+        --ui-action-tertiary-bg-focus: var(--ui-action-primary-bg);
+        --ui-action-tertiary-text-focus: var(--ui-text-inverse);
         --ui-action-danger-tertiary-border: var(--ui-action-outline-danger-border);
         --ui-action-danger-tertiary-bg: transparent;
         --ui-action-danger-tertiary-text: var(--ui-action-outline-danger-text);

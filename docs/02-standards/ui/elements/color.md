@@ -228,6 +228,8 @@ Do not rely on color alone for semantic meaning. Use visible text, icons, labels
 | Skeleton/loading  | `--ui-skeleton-*` queued alias / current loading utilities                           | `ui-spinner`, skeleton blocks, loading components                     | `<span class="ui-spinner"></span>`                                                      |
 | Overlay           | `--ui-overlay`, shadow/elevation aliases when installed                              | Modal backdrop, drawer scrim, popover elevation                       | Pattern-owned overlays only.                                                            |
 
+Action tertiary must stay mapped to the primary-color Button tertiary role, not neutral outline. In light and Gray 10 themes, tertiary uses primary border/text by default and primary filled hover/active states with inverse text. In Gray 90/100 themes, tertiary uses white border/text by default and white filled hover/active states with primary-colored text.
+
 Only use Token API rows as installed standards where the variable, helper, class, or component exists in the application. If a token is listed as an alias or queued role and is not yet present in the compiled token map, do not use it in feature code until the token is added and proven on the UI Reference route.
 
 ### 4.1. Token status rules

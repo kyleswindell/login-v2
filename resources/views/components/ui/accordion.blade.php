@@ -2,6 +2,8 @@
     'items' => [],
     'id' => null,
     'variant' => 'default',
+    'alignment' => 'default',
+    'iconAlignment' => 'end',
     'size' => 'default',
     'mode' => 'multiple',
     'scrollable' => false,
@@ -11,6 +13,8 @@
 @php
     $id = $id ?? 'ui-accordion-'.Str::random(8);
     $resolvedVariant = in_array($variant, ['default', 'contained'], true) ? $variant : 'default';
+    $resolvedAlignment = in_array($alignment, ['default', 'flush'], true) ? $alignment : 'default';
+    $resolvedIconAlignment = in_array($iconAlignment, ['end', 'start'], true) ? $iconAlignment : 'end';
     $resolvedSize = in_array($size, ['default', 'compact'], true) ? $size : 'default';
     $resolvedMode = in_array($mode, ['multiple', 'single'], true) ? $mode : 'multiple';
 @endphp
@@ -19,12 +23,16 @@
     {{ $attributes->class([
         'ui-accordion',
         'ui-accordion-contained' => $resolvedVariant === 'contained',
+        'ui-accordion-flush' => $resolvedAlignment === 'flush',
+        'ui-accordion-icon-start' => $resolvedIconAlignment === 'start',
         'ui-accordion-compact' => $resolvedSize === 'compact',
         'ui-accordion-scrollable' => $scrollable,
     ])->merge([
         'data-ui-component' => 'accordion',
         'data-ui-accordion' => $id,
         'data-ui-accordion-mode' => $resolvedMode,
+        'data-ui-accordion-alignment' => $resolvedAlignment,
+        'data-ui-accordion-icon-alignment' => $resolvedIconAlignment,
         'style' => $scrollable ? '--ui-accordion-panel-max-height: '.$panelMaxHeight.';' : null,
     ]) }}
 >
@@ -48,15 +56,18 @@
                     data-ui-accordion-trigger
                     @disabled($isDisabled)
                 >
-                    <span class="min-w-0">
+                    @if ($resolvedIconAlignment === 'start')
+                        <x-heroicon-o-chevron-down class="ui-accordion-icon" aria-hidden="true" />
+                    @endif
+                    <span class="ui-accordion-label">
                         <span class="ui-accordion-title">{{ $item['title'] ?? 'Accordion item' }}</span>
                         @if (filled($item['meta'] ?? null))
                             <span class="ui-accordion-meta">{{ $item['meta'] }}</span>
                         @endif
                     </span>
-                    <svg class="ui-accordion-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.17l3.71-3.94a.75.75 0 1 1 1.08 1.04l-4.25 4.5a.75.75 0 0 1-1.08 0l-4.25-4.5a.75.75 0 0 1 .02-1.06Z" clip-rule="evenodd" />
-                    </svg>
+                    @if ($resolvedIconAlignment === 'end')
+                        <x-heroicon-o-chevron-down class="ui-accordion-icon" aria-hidden="true" />
+                    @endif
                 </button>
             </h3>
 

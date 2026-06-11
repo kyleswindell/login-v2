@@ -815,15 +815,23 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Form assistance accordion')
             ->assertSee('Variants for this example')
             ->assertSee('Compact')
+            ->assertSee('Flush alignment')
+            ->assertSee('Start icon alignment')
             ->assertSee('Single-open')
             ->assertSee('Scrollable panel')
             ->assertSee('Contained contextual')
             ->assertSee('data-ui-reference-variant-example="compact"', false)
+            ->assertSee('data-ui-reference-variant-example="flush-alignment"', false)
+            ->assertSee('data-ui-reference-variant-example="start-icon-alignment"', false)
             ->assertSee('data-ui-reference-variant-example="single-open"', false)
             ->assertSee('data-ui-reference-variant-example="scrollable-panel"', false)
             ->assertSee('data-ui-reference-variant-example="contained-contextual"', false)
+            ->assertSee('data-ui-accordion-alignment="flush"', false)
+            ->assertSee('data-ui-accordion-icon-alignment="start"', false)
             ->assertSee('data-ui-accordion-mode="single"', false)
             ->assertSee('data-ui-accordion-panel-open="true"', false)
+            ->assertSee('ui-accordion-flush', false)
+            ->assertSee('ui-accordion-icon-start', false)
             ->assertSee('ui-accordion-compact', false)
             ->assertSee('ui-accordion-scrollable', false)
             ->assertSee('panelMaxHeight')
@@ -848,6 +856,10 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('prefers-reduced-motion: reduce', $accordionScript);
         $this->assertStringContainsString('requestAnimationFrame', $accordionScript);
         $this->assertStringContainsString('transitionend', $accordionScript);
+        $this->assertStringContainsString('.ui-accordion-flush .ui-accordion-trigger', $accordionCss);
+        $this->assertStringContainsString('.ui-accordion-contained', $accordionCss);
+        $this->assertMatchesRegularExpression('/\.ui-accordion\s*\{\s*@apply overflow-hidden;\s*background-color: transparent;/s', $accordionCss);
+        $this->assertDoesNotMatchRegularExpression('/\.ui-accordion\s*\{[^}]*rounded[^}]*border/s', $accordionCss);
         $this->assertStringContainsString("data-ui-accordion-panel-open='false'", $accordionCss);
         $this->assertStringContainsString('block-size 200ms', $accordionCss);
         $this->assertStringContainsString('panel.scrollHeight', $accordionScript);

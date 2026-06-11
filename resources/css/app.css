@@ -1096,17 +1096,30 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-accordion {
-        @apply overflow-hidden rounded-lg border;
-        border-color: var(--ui-border-subtle-01);
-        background-color: var(--ui-layer-01);
+        @apply overflow-hidden;
+        background-color: transparent;
     }
 
     .ui-accordion-contained {
+        @apply rounded-lg border;
+        border-color: var(--ui-border-subtle-01);
         background-color: var(--ui-layer-02);
     }
 
-    .ui-accordion-item + .ui-accordion-item {
-        border-top: 1px solid var(--ui-border-subtle-01);
+    .ui-accordion-item {
+        border-block-start: 1px solid var(--ui-border-subtle-01);
+    }
+
+    .ui-accordion-item:last-child {
+        border-block-end: 1px solid var(--ui-border-subtle-01);
+    }
+
+    .ui-accordion-contained .ui-accordion-item:first-child {
+        border-block-start: 0;
+    }
+
+    .ui-accordion-contained .ui-accordion-item:last-child {
+        border-block-end: 0;
     }
 
     .ui-accordion-heading {
@@ -1114,13 +1127,22 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-accordion-trigger {
-        @apply flex w-full items-center justify-between gap-4 px-4 py-3 text-left text-sm font-semibold transition;
+        @apply flex w-full items-center gap-4 px-4 py-3 text-left text-sm font-semibold transition;
         color: var(--ui-text-primary);
         background-color: transparent;
     }
 
     .ui-accordion-compact .ui-accordion-trigger {
         @apply px-3 py-2 text-xs;
+    }
+
+    .ui-accordion-flush .ui-accordion-trigger {
+        padding-inline: 0;
+    }
+
+    .ui-accordion-flush .ui-accordion-trigger:hover,
+    .ui-accordion-flush .ui-accordion-trigger:focus-visible {
+        padding-inline: 1rem;
     }
 
     .ui-accordion-trigger:hover {
@@ -1140,7 +1162,11 @@ Use targeted searches for the class family being changed before reading this fil
     .ui-accordion-trigger:disabled {
         cursor: not-allowed;
         color: var(--ui-text-disabled);
-        background-color: var(--ui-layer-01);
+        background-color: transparent;
+    }
+
+    .ui-accordion-label {
+        @apply min-w-0 flex-1;
     }
 
     .ui-accordion-title {
@@ -1165,12 +1191,16 @@ Use targeted searches for the class family being changed before reading this fil
         @apply border-t;
         block-size: auto;
         border-color: var(--ui-border-subtle-01);
-        background-color: var(--ui-layer-02);
+        background-color: transparent;
         opacity: 1;
         overflow: hidden;
         transition:
             block-size 200ms cubic-bezier(0.2, 0, 0.38, 0.9),
             opacity 160ms cubic-bezier(0.2, 0, 0.38, 0.9);
+    }
+
+    .ui-accordion-contained .ui-accordion-panel {
+        background-color: var(--ui-layer-01);
     }
 
     .ui-accordion-panel[data-ui-accordion-panel-open='false'] {

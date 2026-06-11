@@ -133,7 +133,7 @@ Accordion is the installed Login App 2.0 disclosure API. It owns local expand/co
 
 ## 3. Installed standard
 
-Accordion is the app-owned disclosure primitive for secondary local detail. It supports multiple panels by default, optional single-open behavior, compact density, contained surfaces, and capped scrollable panels.
+Accordion is the app-owned disclosure primitive for secondary local detail. It supports multiple panels by default, optional single-open behavior, compact density, flush alignment, whole-accordion icon alignment, contained surfaces, and capped scrollable panels.
 
 ### The installed standard is:
 
@@ -173,6 +173,8 @@ Use the Blade API instead of hand-building accordion markup in feature views.
 | Trigger data attribute    | `data-ui-accordion-trigger`                                  |
 | Panel data attribute      | `data-ui-accordion-panel`                                    |
 | Mode data attribute       | `data-ui-accordion-mode`                                     |
+| Alignment data attribute  | `data-ui-accordion-alignment`                                |
+| Icon data attribute       | `data-ui-accordion-icon-alignment`                           |
 | CSS namespace             | `ui-accordion*`                                              |
 | Component route owner     | `/platform/ui-reference/components/accordion`                |
 
@@ -182,6 +184,8 @@ Use the Blade API instead of hand-building accordion markup in feature views.
 | ---------------- | -------- | ----------------- | ---------------------------------- | -------- | ---------------------------------------------------------------------------- |
 | `items`          | `array`  | none              | Accordion item configuration array | Yes      | Preferred data-driven API. Each item must have a stable id and direct title. |
 | `variant`        | `string` | `default`         | `default`, `contained`             | No       | Use `contained` only inside a bounded parent surface.                        |
+| `alignment`      | `string` | `default`         | `default`, `flush`                 | No       | Use `flush` in smaller side panels or sidebars when rows must align to neighboring rule lines. |
+| `iconAlignment`  | `string` | `end`             | `end`, `start`                     | No       | Use `end` by default. Use `start` only for rare tree-like disclosure surfaces and keep it consistent per page. |
 | `size`           | `string` | `default`         | `default`, `compact`               | No       | Use `compact` only for dense secondary disclosure.                           |
 | `mode`           | `string` | `multiple`        | `multiple`, `single`               | No       | `multiple` allows multiple panels open. `single` keeps only one item open.   |
 | `scrollable`     | `bool`   | `false`           | `true`, `false`                    | No       | App-approved exception for capped secondary reference content.               |
@@ -222,6 +226,8 @@ Do not pass unreviewed interactive workflows, form validation recovery, navigati
 | `data-ui-component="accordion"`               | Root    | Component    | Identifies the rendered UI component family.                          |
 | `data-ui-accordion="{id}"`                    | Root    | Component    | Identifies one accordion group instance.                              |
 | `data-ui-accordion-mode="multiple / single"`  | Root    | Component    | Declares sibling panel behavior.                                      |
+| `data-ui-accordion-alignment="default / flush"` | Root  | Component    | Declares row alignment treatment.                                     |
+| `data-ui-accordion-icon-alignment="end / start"` | Root | Component    | Declares consistent chevron placement for the accordion instance.     |
 | `data-ui-accordion-item`                      | Item    | Component    | Identifies one accordion item.                                        |
 | `data-ui-accordion-trigger`                   | Button  | Component JS | Toggle target for the associated panel.                               |
 | `data-ui-accordion-panel`                     | Panel   | Component JS | Associated collapsible region.                                        |
@@ -240,12 +246,15 @@ Allowed component classes:
 .ui-accordion-item
 .ui-accordion-heading
 .ui-accordion-trigger
+.ui-accordion-label
 .ui-accordion-title
 .ui-accordion-meta
 .ui-accordion-icon
 .ui-accordion-panel
 .ui-accordion-body
 .ui-accordion-contained
+.ui-accordion-flush
+.ui-accordion-icon-start
 .ui-accordion-compact
 .ui-accordion-scrollable
 ```
@@ -283,6 +292,10 @@ Only the variants, options, and modifiers below are allowed for Login App 2.0 fe
 | -------------------- | -------------- | ---------------------------------- | --------------------------------------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | Default              | Variant        | Implemented                        | `variant="default"`                                 | Standard in-page optional disclosure.                                                    | The accordion is visually nested inside a card/panel requiring contained surface treatment.                                     |
 | Contained/contextual | Variant        | Implemented                        | `variant="contained"` or installed contextual class | Accordion sits inside a bounded card, panel, tile-like surface, or settings region.      | The accordion is the primary page structure.                                                                                    |
+| Default alignment    | Alignment      | Implemented                        | `alignment="default"`                               | Standard page content needs divider rows with normal interaction padding.                | A constrained side panel or sidebar needs row content flush to neighboring rule lines.                                          |
+| Flush alignment      | Alignment      | Implemented                        | `alignment="flush"`                                 | Smaller spaces such as side panels or sidebars need title and chevron alignment with nearby rule dividers. | Primary page content benefits from standard row padding.                                                                        |
+| End icon alignment   | Icon alignment | Implemented                        | `iconAlignment="end"`                               | Preferred content and documentation scenario where titles align with surrounding text.   | A rare tree-like disclosure surface needs the chevron before the title.                                                        |
+| Start icon alignment | Icon alignment | Implemented                        | `iconAlignment="start"`                             | Rare tree-like disclosure where the chevron should lead the row label.                  | Pure content, documentation, or pages that already use end-aligned accordions.                                                  |
 | Default density      | Size           | Implemented                        | `size="default"`                                    | Normal content sections and standard admin pages.                                        | Dense side-panel or utility areas.                                                                                              |
 | Compact              | Size           | Implemented                        | `size="compact"`                                    | Dense secondary disclosure inside constrained settings, side panels, or utility regions. | Primary content or large reading areas.                                                                                         |
 | Multiple-open        | Mode           | Implemented                        | `mode="multiple"`                                   | Users may need more than one optional section visible at once.                           | Only one section should remain visible to reduce scan noise.                                                                    |
@@ -411,6 +424,10 @@ Interaction and composition behavior:
 - Panels wrap inside the available width and must not create horizontal overflow.
 - Open and close motion uses measured panel height and respects reduced-motion preferences.
 - Parent layouts own external spacing; Accordion owns only trigger, item, and panel internals.
+- Default Accordion uses divider rules rather than a rounded bordered container.
+- Contained Accordion may use a bounded surface only when the parent context requires that treatment.
+- Flush Accordion sets row title and chevron padding to 0px at rest and adds 16px inline padding for hover and focus-visible interaction states.
+- Icon alignment is selected for the whole accordion instance. Do not alternate start and end icon placement on the same page.
 - Nested interactive controls inside a panel must have enough spacing from the trigger region to avoid accidental collapse.
 
 ## 9. Selection guidance
@@ -594,8 +611,9 @@ Required rendered proof:
 | Basic accordion                | Minimum viable disclosure with one open panel and one collapsed panel.                    | Compact                       |
 | Multiple independent sections  | Independent groups allow more than one optional section to stay open.                     | Single-open                   |
 | Long content accordion         | Wrapped body content demonstrates overflow and readable spacing behavior.                 | Scrollable panel              |
-| Accordion inside card or panel | A contextual accordion used inside a bounded surface without redefining card spacing.     | Contained contextual          |
+| Accordion inside card or panel | A contextual accordion used inside a bounded surface without redefining card spacing.     | Contained contextual, Flush alignment |
 | Form assistance accordion      | Optional guidance for form settings that should not replace visible labels or validation. | Compact assistance disclosure |
+| Icon alignment                 | Whole-accordion chevron placement remains consistent across all rows in an instance.      | End alignment, Start alignment |
 
 ### The UI Reference page must also show:
 
@@ -621,6 +639,9 @@ Required anatomy labels for the UI Reference page:
 - Trigger.
 - Title.
 - Chevron.
+- Icon alignment: end.
+- Icon alignment: start.
+- Flush alignment.
 - Panel.
 - Body.
 - Metadata.
@@ -662,6 +683,8 @@ Required state labels for the UI Reference page:
 - `Long content accordion` demonstrates wrapping and no horizontal overflow.
 - `Scrollable panel` proof renders only as an app-approved secondary reference exception.
 - `Accordion inside card or panel` renders contained/contextual styling inside a parent surface.
+- `Flush alignment` renders `data-ui-accordion-alignment="flush"` and keeps row title and chevron flush to the rule line at rest.
+- `Start icon alignment` renders `data-ui-accordion-icon-alignment="start"` and `ui-accordion-icon-start`.
 - `Form assistance accordion` explicitly states that hidden content does not replace visible labels, helper text, or validation.
 
 ### 16.4. Behavior assertions

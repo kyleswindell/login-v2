@@ -171,7 +171,7 @@ class UiReferenceComponentCatalog
         if ($slug === 'accordion') {
             $component = array_replace($component, [
                 'purpose' => 'Use accordion to reveal optional supporting content within the current page context.',
-                'current_decision' => 'Accordion is the app-owned disclosure primitive for secondary local detail. It supports multiple panels by default, optional single-open behavior, compact density, contained surfaces, and capped scrollable panels.',
+                'current_decision' => 'Accordion is the app-owned disclosure primitive for secondary local detail. It supports multiple panels by default, optional single-open behavior, compact density, flush alignment, consistent icon alignment, contained surfaces, and capped scrollable panels.',
                 'carbon_parity_note' => 'Use this route as the implementation owner for local disclosure. If a feature needs navigation, comparison, or required task steps, use the related component or Pattern owner instead.',
                 'use_when' => [
                     'Secondary details help the task but are not required to continue.',
@@ -184,14 +184,15 @@ class UiReferenceComponentCatalog
                     'Users need to compare all sections at once; use tabs, a structured list, or visible page sections.',
                 ],
                 'states' => ['collapsed', 'expanded', 'hover', 'focus-visible', 'pressed', 'disabled', 'not applicable: read-only', 'not applicable: loading', 'not applicable: validation', 'not applicable: empty'],
-                'variants' => ['contained/contextual', 'compact', 'single-open', 'scrollable panel'],
+                'variants' => ['contained/contextual', 'compact', 'flush alignment', 'icon alignment: start', 'icon alignment: end', 'single-open', 'scrollable panel'],
                 'anatomy' => [
                     'Group: wraps related accordion items.',
                     'Item: one trigger and one associated panel.',
                     'Heading: preserves local document structure.',
                     'Trigger: native button that owns expanded state.',
                     'Title: short sentence-case label.',
-                    'Chevron: decorative state indicator.',
+                    'Chevron: decorative state indicator using end alignment by default.',
+                    'Start icon alignment: rare whole-accordion option for tree-like disclosure.',
                     'Panel: collapsible content region.',
                     'Body: optional supporting text or controls.',
                     'Metadata: optional helper text under the title.',
@@ -202,6 +203,8 @@ class UiReferenceComponentCatalog
                     'Multiple panels can stay open by default; use `mode="single"` when only one section should remain open.',
                     'Disabled items use native disabled button behavior and cannot expand.',
                     'Panels wrap inside the available width and must not create horizontal overflow.',
+                    'Flush alignment starts title and chevron at the rule line and adds horizontal padding only for hover and focus states.',
+                    'Icon placement is consistent per accordion instance and should not alternate within the same page.',
                     'Open and close motion uses measured panel height and respects reduced-motion preferences.',
                 ],
                 'accessibility' => [
@@ -223,7 +226,7 @@ class UiReferenceComponentCatalog
                     'blade' => 'x-ui.accordion',
                     'js_controller' => 'initAccordions exported from resources/js/ui-controls.js',
                     'data_attributes' => 'data-ui-accordion, data-ui-accordion-trigger, data-ui-accordion-panel',
-                    'props' => 'variant: default|contained; size: default|compact; mode: multiple|single; scrollable: bool; panelMaxHeight: CSS length',
+                    'props' => 'variant: default|contained; alignment: default|flush; iconAlignment: end|start; size: default|compact; mode: multiple|single; scrollable: bool; panelMaxHeight: CSS length',
                     'tokens' => 'Uses Foundation Color, Spacing, Typography, Motion, and Theme tokens through ui-accordion classes.',
                     'example' => '<x-ui.accordion :items="$items" />',
                     'source_files' => 'resources/views/components/ui/accordion.blade.php; resources/js/ui-controls/accordions.js; resources/css/app.css',
@@ -458,6 +461,7 @@ class UiReferenceComponentCatalog
                 ],
                 'variants' => [
                     ['label' => 'Compact', 'status' => 'Implemented', 'view' => 'platform.ui-reference.components.examples.accordion-variant-compact', 'notes' => 'Use for dense secondary disclosure inside constrained settings or utility panels.'],
+                    ['label' => 'Start icon alignment', 'status' => 'Implemented', 'view' => 'platform.ui-reference.components.examples.accordion-variant-icon-start', 'notes' => 'Rare whole-accordion option for tree-like disclosure; default end alignment remains preferred.'],
                 ],
             ],
             [
@@ -497,6 +501,7 @@ class UiReferenceComponentCatalog
                 ],
                 'variants' => [
                     ['label' => 'Contained contextual', 'status' => 'Implemented', 'view' => 'platform.ui-reference.components.examples.accordion-variant-contained', 'notes' => 'Allowed when the parent card or panel owns the surrounding context.'],
+                    ['label' => 'Flush alignment', 'status' => 'Implemented', 'view' => 'platform.ui-reference.components.examples.accordion-variant-flush', 'notes' => 'Use in smaller spaces such as side panels or sidebars when title and chevron should align to surrounding rule lines.'],
                 ],
             ],
             [

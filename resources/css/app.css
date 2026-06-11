@@ -551,6 +551,15 @@ Use targeted searches for the class family being changed before reading this fil
 
     .ui-action-with-icon {
         --ui-button-padding-end: 1rem;
+        justify-content: flex-start;
+    }
+
+    .ui-action-with-icon .ui-button-icon {
+        margin-inline-start: auto;
+    }
+
+    .ui-action-with-icon.ui-action-ghost .ui-button-icon {
+        margin-inline-start: 0;
     }
 
     .ui-action:hover {

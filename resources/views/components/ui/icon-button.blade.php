@@ -45,11 +45,20 @@
     }
 @endphp
 
+@if (filled($tooltip))
+    <span
+        class="relative inline-flex group"
+        data-ui-component="tooltip"
+        data-ui-tooltip-placement="top"
+    >
+        <span data-ui-tooltip-trigger>
+@endif
+
 @if ($isLink)
     <a
         href="{{ $href }}"
         aria-label="{{ $accessibleLabel }}"
-        @if (filled($tooltipText)) title="{{ $tooltipText }}" @endif
+        @if (filled($tooltipText) && blank($tooltip)) title="{{ $tooltipText }}" @endif
         {{ $attributes->class($classes)->merge(['data-ui-component' => 'icon-button']) }}
     >
         @if (filled($icon))
@@ -62,7 +71,7 @@
     <button
         type="{{ $type }}"
         aria-label="{{ $accessibleLabel }}"
-        @if (filled($tooltipText)) title="{{ $tooltipText }}" @endif
+        @if (filled($tooltipText) && blank($tooltip)) title="{{ $tooltipText }}" @endif
         @if ($loading) aria-busy="true" @endif
         @disabled($isDisabled)
         {{ $attributes->class($classes)->merge(['data-ui-component' => 'icon-button']) }}
@@ -75,4 +84,18 @@
             {{ $slot }}
         @endif
     </button>
+@endif
+
+@if (filled($tooltip))
+        </span>
+        <span
+            role="tooltip"
+            class="pointer-events-none absolute z-40 hidden max-w-xs rounded-md px-2 py-1 text-xs shadow-lg group-hover:block group-focus-within:block"
+            style="background-color: var(--ui-background-inverse); color: var(--ui-text-inverse);"
+            data-ui-tooltip-content
+            data-ui-tooltip-state="closed"
+        >
+            {{ $tooltipText }}
+        </span>
+    </span>
 @endif

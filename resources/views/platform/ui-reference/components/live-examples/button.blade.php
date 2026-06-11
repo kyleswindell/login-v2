@@ -36,6 +36,23 @@
         ['Icon consistency', 'Use icons on every button in the group or on none of the buttons.'],
     ];
 
+    $approvedPrimaryGroupRows = [
+        ['2 buttons with primary', 'Primary + Secondary; Primary + Tertiary; Primary + Ghost; Primary + Danger tertiary; Danger primary + Secondary; Danger primary + Ghost.'],
+        ['3 buttons with primary', 'Primary + Secondary + Tertiary; Primary + Secondary + Ghost; Primary + 2 Secondary; Primary + 2 Tertiary; Primary + Tertiary + Danger tertiary.'],
+    ];
+
+    $approvedNoPrimaryGroupRows = [
+        ['2 buttons without primary', '2 Tertiary; Tertiary + Ghost; 2 Ghost.'],
+        ['3 buttons without primary', '3 Tertiary; 2 Tertiary + 1 Danger tertiary.'],
+    ];
+
+    $avoidedGroupRows = [
+        'Two high-emphasis buttons in one group.',
+        'Secondary without a primary action.',
+        'Mixed button sizes in one group.',
+        'Icons on only some buttons in a group.',
+    ];
+
     $structureRows = [
         ['Button without icon', 'padding-left', '16px / 1rem', '$spacing-05', '--ui-button-padding-start'],
         ['Button without icon', 'padding-right', '64px / 4rem', '$spacing-10', '--ui-button-padding-end'],
@@ -173,7 +190,7 @@
                 </div>
             </article>
 
-            <article class="rounded-md border p-3" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-button-group-layout="horizontal-fluid">
+            <article class="rounded-md border p-3 xl:col-span-2" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-button-group-layout="horizontal-fluid">
                 <p class="mb-3 text-sm font-semibold" style="color: var(--ui-text-primary);">Horizontal fluid</p>
                 <div class="ui-button-group-equal ui-button-group-fluid" data-button-group-example="horizontal-fluid-icons" data-button-group-width-rule="equal-non-ghost" data-button-icon-group="all-icons">
                     <x-ui.button semantic="tertiary" icon="heroicon-o-document-duplicate">Duplicate</x-ui.button>
@@ -205,6 +222,35 @@
                 <li><strong style="color: var(--ui-text-primary);">{{ $label }}:</strong> {{ $purpose }}</li>
             @endforeach
         </ul>
+
+        <div class="mt-4 grid gap-4 xl:grid-cols-3" data-button-group-written-guidance="approved-combinations">
+            <article class="rounded-md border p-3" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
+                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Approved groups with primary</h4>
+                <ul class="mt-3 space-y-2 text-sm leading-6" style="color: var(--ui-text-secondary);">
+                    @foreach ($approvedPrimaryGroupRows as [$label, $purpose])
+                        <li><strong style="color: var(--ui-text-primary);">{{ $label }}:</strong> {{ $purpose }}</li>
+                    @endforeach
+                </ul>
+            </article>
+
+            <article class="rounded-md border p-3" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
+                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Approved groups without primary</h4>
+                <ul class="mt-3 space-y-2 text-sm leading-6" style="color: var(--ui-text-secondary);">
+                    @foreach ($approvedNoPrimaryGroupRows as [$label, $purpose])
+                        <li><strong style="color: var(--ui-text-primary);">{{ $label }}:</strong> {{ $purpose }}</li>
+                    @endforeach
+                </ul>
+            </article>
+
+            <article class="rounded-md border p-3" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
+                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Avoided group styling</h4>
+                <ul class="mt-3 space-y-2 text-sm leading-6" style="color: var(--ui-text-secondary);">
+                    @foreach ($avoidedGroupRows as $purpose)
+                        <li>{{ $purpose }}</li>
+                    @endforeach
+                </ul>
+            </article>
+        </div>
     </section>
 
     <section class="grid gap-4 xl:grid-cols-2">

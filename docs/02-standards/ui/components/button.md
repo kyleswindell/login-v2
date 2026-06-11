@@ -338,7 +338,7 @@ Primary, secondary, tertiary, danger primary, and danger tertiary buttons share 
 | Button without icon | padding-left | 16px / 1rem | `$spacing-05` | `--ui-button-padding-start: 1rem` |
 | Button without icon | padding-right | 64px / 4rem | `$spacing-10` | `--ui-button-padding-end: 4rem` |
 | Button with trailing icon | padding-left/right | 16px / 1rem | `$spacing-05` | `ui-action-with-icon` sets both sides to 1rem |
-| Button with trailing icon | label-icon spacing | 32px / 2rem | `$spacing-07` | `--ui-button-gap: 2rem` |
+| Button with trailing icon | label-icon spacing | Dynamic, minimum 32px / 2rem | `$spacing-07` | Non-ghost `ui-action-with-icon` pins the icon to the right padding and lets label-icon space expand |
 | Icon-only button | padding-left/right | 16px / 1rem | `$spacing-05` | `x-ui.icon-button` size classes use 1rem inline padding |
 | Icon | svg | 16px x 16px | n/a | `ui-button-icon`, `ui-icon-button-icon` |
 | Expressive icon | svg | 20px x 20px | n/a | `lg-expressive` icon sizing only |

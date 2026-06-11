@@ -1316,6 +1316,12 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Horizontal fluid')
             ->assertSee('Vertical static')
             ->assertSee('Vertical fluid')
+            ->assertSee('Approved groups with primary')
+            ->assertSee('Approved groups without primary')
+            ->assertSee('Avoided group styling')
+            ->assertSee('Primary + Secondary')
+            ->assertSee('Primary + Secondary + Tertiary')
+            ->assertSee('2 Tertiary + 1 Danger tertiary')
             ->assertSee('More than 3 actions')
             ->assertSee('Menu buttons or Toolbar')
             ->assertSee('Button icons appear to the right of the label')
@@ -1363,6 +1369,9 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-button-icon-group="all-icons"', false)
             ->assertSee('data-button-icon-group="no-icons"', false)
             ->assertSee('data-button-icon-only-tooltip-rule="always-required"', false)
+            ->assertSee('data-button-group-written-guidance="approved-combinations"', false)
+            ->assertSee('data-ui-component="tooltip"', false)
+            ->assertSee('data-ui-tooltip-content', false)
             ->assertSee('data-button-icon-only-rule="danger-prohibited"', false)
             ->assertSee('data-button-rule="no-danger-icon-only"', false)
             ->assertDontSee('data-button-group-overflow-rule="menu-buttons"', false)
@@ -1373,7 +1382,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('is-focus', false)
             ->assertSee('is-active', false)
             ->assertSee('aria-busy="true"', false)
-            ->assertSee('title="Refresh data"', false)
+            ->assertDontSee('title="Refresh data"', false)
             ->assertSee('Icon-only danger prohibited')
             ->assertDontSee('Family-depth implementation pending');
 
@@ -1402,6 +1411,10 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('--ui-button-padding-end: 4rem;', $buttonCss);
         $this->assertStringContainsString('--ui-button-gap: 2rem;', $buttonCss);
         $this->assertStringContainsString('.ui-action-with-icon', $buttonCss);
+        $this->assertStringContainsString('.ui-action-with-icon .ui-button-icon', $buttonCss);
+        $this->assertStringContainsString('margin-inline-start: auto;', $buttonCss);
+        $this->assertStringContainsString('.ui-action-with-icon.ui-action-ghost .ui-button-icon', $buttonCss);
+        $this->assertStringContainsString('margin-inline-start: 0;', $buttonCss);
         $this->assertStringContainsString('.ui-button-group-equal', $buttonCss);
         $this->assertStringContainsString('.ui-button-group-fluid', $buttonCss);
         $this->assertStringContainsString('.ui-button-group-vertical', $buttonCss);
@@ -1410,6 +1423,8 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('Related non-ghost buttons in a group must be equal width.', $buttonStandard);
         $this->assertStringContainsString('The Button UI Reference page should render compact proof examples for horizontal static, horizontal fluid, vertical static, vertical fluid, all-icons, and no-icons groups;', $buttonStandard);
         $this->assertStringContainsString('Always required for icon-only buttons; copy must explain the action if clicked.', $buttonStandard);
+        $this->assertStringContainsString('pins the icon to the right padding and lets label-icon space expand', $buttonStandard);
+        $this->assertStringContainsString('data-ui-tooltip-content', $iconButtonView);
         $this->assertStringContainsString('Same role / same Carbon gray value family', $buttonStandard);
         $this->assertStringContainsString('Secondary is a filled gray action role, not a neutral outline/white button.', $colorStandard);
     }

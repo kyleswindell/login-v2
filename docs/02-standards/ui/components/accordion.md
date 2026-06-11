@@ -106,7 +106,7 @@ Accordion is the installed Login App 2.0 disclosure API. It owns local expand/co
 - Validation state ownership. Form fields own labels, helper text, errors, and warnings.
 - Page-level layout. Use the 2x Grid, Spacing, and Pattern APIs.
 - Primary navigation. Use navigation components or Pattern-owned shell APIs.
-- Peer-view switching. Use Tabs or Content switcher when implemented.
+- Peer-view switching. Use Tabs or Content switcher.
 - Comparable data rows. Use Structured list or Data table.
 - Focused tasks. Use Modal or a Pattern-owned workflow.
 
@@ -455,7 +455,7 @@ Interaction and composition behavior:
 
 | Need                                             | Use instead                                      |
 | ------------------------------------------------ | ------------------------------------------------ |
-| Switch between peer views                        | Tabs or Content switcher when implemented.       |
+| Switch between peer views                        | Tabs or Content switcher.                        |
 | Compare row-like content                         | Structured list or Data table.                   |
 | Show focused task or confirmation                | Modal.                                           |
 | Show short contextual help attached to a trigger | Toggletip or Tooltip depending on interactivity. |

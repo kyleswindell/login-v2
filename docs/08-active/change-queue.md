@@ -343,16 +343,18 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - tests assert deferred disposition rather than fake implemented examples
 - Implemented in: worklog-2-F-0044
 
-### P2-F-CQ-160 - Content switcher deferred disposition proof
+### P2-F-CQ-160 - Content switcher component API installation and proof
 - Status: Implemented Pending Review
 - Owner: Batch F
 - Follow-up To: P2-F-CQ-129
-- Scope: Keep Content switcher as a gated/deferred Component unless a product need approves it, with Tabs as the current alternative.
+- Scope: Install Content switcher after manual review identified immediate app use cases and the prior deferred disposition was no longer correct.
 - Acceptance:
-  - page shows no callable public API
-  - trigger conditions, prohibited local workarounds, and Tabs alternative are explicit
-  - tests assert deferred disposition rather than fake implemented examples
-- Implemented in: worklog-2-F-0044
+  - `x-ui.content-switcher` renders a compact peer-view switcher through app-owned `ui-content-switcher*` classes and token aliases
+  - `initContentSwitchers` is registered in the shared app lifecycle and is safe on initial page load and `livewire:navigated`
+  - UI Reference page renders peer view, icon view, compact/no-panel, selected, disabled, and developer implementation examples
+  - canonical component standard, API registry, component catalog, and active implementation sync list Content switcher as an installed Component API instead of a deferred gap
+  - focused tests assert rendered API markers, source lifecycle registration, CSS token aliases, and absence of deferred placeholder proof
+- Implemented in: worklog-2-F-0051
 
 ### P2-F-CQ-161 - Form represented-by-pattern disposition proof
 - Status: Implemented Pending Review

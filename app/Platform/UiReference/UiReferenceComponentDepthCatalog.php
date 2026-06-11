@@ -64,7 +64,7 @@ class UiReferenceComponentDepthCatalog
                 ['Disabled setting', 'A setting is unavailable because of permissions or dependency.'],
                 ['Setting with helper text', 'Optional context explains what the setting changes.'],
             ]),
-            'content-switcher' => $this->deferred('content-switcher', 'Content switcher', 'Content switcher remains deferred until a compact peer-view switcher API is needed.', ['Use tabs for panel switching today.', 'Trigger when a small inline mode switcher cannot use tabs.']),
+            'content-switcher' => $this->contentSwitcherComponent(),
 
             'notification' => $this->feedback('notification', 'Notification', 'Notifications communicate state changes, errors, and system messages.', 'alert', ['Form validation error', 'Record saved', 'API failure', 'Background job completed', 'Maintenance notice']),
             'tag' => $this->feedback('tag', 'Tag', 'Tags label metadata, status, or filter context without becoming the main action.', 'tag', ['Metadata tag', 'Status tag', 'Filter/removable tag', 'Semantic tag']),
@@ -763,6 +763,122 @@ class UiReferenceComponentDepthCatalog
             'Helper, warning, and error copy must be referenced by `aria-describedby` where present.',
             'Do not rely on color alone for error or warning states; include visible text and status icon treatment.',
             'Native browser picker behavior varies by platform, so the server validation contract must remain authoritative.',
+        ]);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function contentSwitcherComponent(): array
+    {
+        return $this->correctedImplemented('content-switcher', 'Content switcher', 'Content switcher switches compact peer views without implying primary navigation, form selection, or task progress.', [
+            $this->exampleFromSample('Peer view switcher', 'Use when a compact surface needs two or three related views in the same workflow region.', [
+                'type' => 'content-switcher',
+                'label' => 'Workspace view',
+                'items' => [
+                    ['id' => 'content-switcher-summary', 'label' => 'Summary', 'value' => 'summary', 'selected' => true, 'panel_title' => 'Summary view', 'panel' => 'Key workspace metrics remain visible without navigating away.'],
+                    ['id' => 'content-switcher-activity', 'label' => 'Activity', 'value' => 'activity', 'panel_title' => 'Activity view', 'panel' => 'Recent changes and comments appear in the same region.'],
+                    ['id' => 'content-switcher-settings', 'label' => 'Settings', 'value' => 'settings', 'panel_title' => 'Settings view', 'panel' => 'Configuration details stay local to this compact surface.'],
+                ],
+            ], [
+                $this->sampleVariant('Default', [
+                    'type' => 'content-switcher',
+                    'label' => 'View mode',
+                    'items' => [
+                        ['label' => 'Summary', 'value' => 'summary', 'selected' => true],
+                        ['label' => 'Activity', 'value' => 'activity'],
+                    ],
+                ]),
+                $this->sampleVariant('Compact', [
+                    'type' => 'content-switcher',
+                    'label' => 'Density',
+                    'size' => 'sm',
+                    'items' => [
+                        ['label' => 'Daily', 'value' => 'daily', 'selected' => true],
+                        ['label' => 'Weekly', 'value' => 'weekly'],
+                    ],
+                ]),
+            ]),
+            $this->exampleFromSample('Icon view switcher', 'Icons may reinforce short labels when the available space is constrained.', [
+                'type' => 'content-switcher',
+                'label' => 'Display mode',
+                'items' => [
+                    ['label' => 'List', 'value' => 'list', 'icon' => 'heroicon-o-list-bullet', 'selected' => true, 'panel_title' => 'List display', 'panel' => 'Rows stay dense and scannable.'],
+                    ['label' => 'Grid', 'value' => 'grid', 'icon' => 'heroicon-o-squares-2x2', 'panel_title' => 'Grid display', 'panel' => 'Tiles emphasize visual grouping.'],
+                    ['label' => 'Map', 'value' => 'map', 'icon' => 'heroicon-o-map', 'disabled' => true, 'panel_title' => 'Map display', 'panel' => 'Unavailable options are disabled only when they can become available.'],
+                ],
+            ], [
+                $this->sampleVariant('Icon labels', [
+                    'type' => 'content-switcher',
+                    'label' => 'Display mode',
+                    'items' => [
+                        ['label' => 'List', 'value' => 'list', 'icon' => 'heroicon-o-list-bullet', 'selected' => true],
+                        ['label' => 'Grid', 'value' => 'grid', 'icon' => 'heroicon-o-squares-2x2'],
+                    ],
+                ]),
+                $this->sampleVariant('Disabled option', [
+                    'type' => 'content-switcher',
+                    'label' => 'Display mode',
+                    'items' => [
+                        ['label' => 'List', 'value' => 'list', 'selected' => true],
+                        ['label' => 'Map', 'value' => 'map', 'disabled' => true],
+                    ],
+                ]),
+            ]),
+            $this->exampleFromSample('Toolbar mode switcher', 'Use without panels only when the switched region is owned by a nearby parent component or pattern.', [
+                'type' => 'content-switcher',
+                'label' => 'Toolbar mode',
+                'show_panels' => false,
+                'size' => 'sm',
+                'items' => [
+                    ['label' => 'Open', 'value' => 'open', 'selected' => true],
+                    ['label' => 'Closed', 'value' => 'closed'],
+                    ['label' => 'All', 'value' => 'all'],
+                ],
+            ], [
+                $this->sampleVariant('No panel mode', [
+                    'type' => 'content-switcher',
+                    'label' => 'Filter mode',
+                    'show_panels' => false,
+                    'size' => 'sm',
+                    'items' => [
+                        ['label' => 'Open', 'value' => 'open', 'selected' => true],
+                        ['label' => 'All', 'value' => 'all'],
+                    ],
+                ]),
+            ]),
+        ], ['container', 'tablist', 'switcher option', 'selected option', 'optional icon', 'optional panel region'], [
+            'Use for compact peer view switching inside a page, card, toolbar, or panel.',
+            'Use when two or three equal views need less visual weight than Tabs.',
+            'Use labels that describe the displayed view, not actions.',
+        ], [
+            'Do not use for command actions; use Button or Menu buttons.',
+            'Do not use for form value submission; use Radio button, Select, Checkbox, or Toggle.',
+            'Do not use for route/location navigation; use Navigation, Breadcrumb, or Tabs when panel semantics are needed.',
+            'Do not use for progress; use Progress indicator.',
+        ], [
+            'Default',
+            'Hover',
+            'Focus-visible',
+            'Selected',
+            'Disabled',
+            'Compact',
+            'Icon with label',
+        ], [
+            'Uses tablist/tab/tabpanel semantics because options switch visible peer content.',
+            'Arrow keys, Home, and End move between enabled options and update the selected panel.',
+            'Enter and Space select the focused option.',
+            'Disabled options remain visible only when availability can change.',
+            'Horizontal overflow scrolls instead of wrapping.',
+        ], [
+            'Use short nouns such as Summary, Activity, Open, or Closed.',
+            'Avoid action verbs that make options read like command buttons.',
+            'Keep option count to two or three unless a stronger component standard approves more.',
+        ], [
+            'Provide an accessible group label through the component label prop.',
+            'Keep `aria-selected`, `aria-controls`, and panel IDs synchronized.',
+            'Do not rely on color alone; selected state also uses semantic attributes.',
+            'Disabled options must not receive focus or change panels.',
         ]);
     }
 
@@ -1637,6 +1753,7 @@ class UiReferenceComponentDepthCatalog
             'tile' => 'x-ui.tile',
             'tooltip' => 'x-ui.tooltip',
             'toggletip' => 'x-ui.toggletip',
+            'content-switcher' => 'x-ui.content-switcher',
             'notification' => 'x-ui.inline-alert / x-ui.toast',
             'modal' => 'x-ui.modal',
             'menu' => 'x-ui.menu / x-ui.menu-item',
@@ -1663,6 +1780,7 @@ class UiReferenceComponentDepthCatalog
                 'tabs' => 'initTabs exported from resources/js/ui-controls/tabs.js',
                 'accordion' => 'initAccordions exported from resources/js/ui-controls/accordions.js',
                 'dropdown' => 'initDropdowns exported from resources/js/ui-controls/dropdowns.js',
+                'content-switcher' => 'initContentSwitchers exported from resources/js/ui-controls/content-switchers.js',
                 'file-uploader', 'number-input', 'select', 'radio-button', 'toggle', 'inline-loading', 'loading', 'progress-bar', 'progress-indicator', 'tag', 'structured-list', 'tile', 'link', 'pagination', 'search', 'text-input', 'textarea' => 'No dedicated JavaScript controller required for the installed baseline API.',
                 'tooltip', 'toggletip' => 'initDisclosureHelpers exported from resources/js/ui-controls.js where richer dismissal behavior is needed.',
                 'multiselect' => 'initMultiselects exported from resources/js/ui-controls/multiselects.js',
@@ -1686,6 +1804,7 @@ class UiReferenceComponentDepthCatalog
                 'select' => 'ui-field, ui-field-label, ui-select',
                 'radio-button' => 'ui-checkbox-group, ui-radio, ui-control-label',
                 'toggle' => 'ui-switch, ui-switch-input, ui-switch-track, ui-switch-thumb',
+                'content-switcher' => 'ui-content-switcher, ui-content-switcher-list, ui-content-switcher-option, ui-content-switcher-panel',
                 'inline-loading' => 'ui-spinner, data-ui-inline-loading-status',
                 'loading' => 'ui-loading, ui-spinner, ui-skeleton',
                 'progress-bar' => 'data-ui-component=progress-bar, ui progressbar semantics',
@@ -1725,6 +1844,7 @@ class UiReferenceComponentDepthCatalog
             'select' => '<x-ui.select name="role" label="Role" :options="$options" value="admin" />',
             'radio-button' => '<x-ui.radio-group name="visibility" label="Visibility" :options="$options" value="team" />',
             'toggle' => '<x-ui.toggle name="enabled" label="Enable notifications" checked />',
+            'content-switcher' => '<x-ui.content-switcher label="View mode" :options="$options" value="summary" />',
             'inline-loading' => '<x-ui.inline-loading status="loading" label="Saving changes" />',
             'loading' => '<span class="ui-loading" role="status"><span class="ui-spinner"></span>Loading</span>',
             'progress-bar' => '<x-ui.progress-bar value="66" label="Import progress" />',
@@ -1763,6 +1883,7 @@ class UiReferenceComponentDepthCatalog
             'menu-buttons' => '<span class="ui-code-token-punctuation">&lt;</span><span class="ui-code-token-keyword">x-ui.menu-button</span> <span class="ui-code-token-property">label</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"Create"</span> <span class="ui-code-token-property">type</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"primary"</span> <span class="ui-code-token-property">:items</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"$items"</span> <span class="ui-code-token-punctuation">/&gt;</span>',
             'tabs' => '<span class="ui-code-token-punctuation">&lt;</span><span class="ui-code-token-keyword">x-ui.tabs</span> <span class="ui-code-token-property">:tabs</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"$tabs"</span> <span class="ui-code-token-property">variant</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"line"</span> <span class="ui-code-token-punctuation">/&gt;</span>',
             'checkbox' => '<span class="ui-code-token-punctuation">&lt;</span><span class="ui-code-token-keyword">x-ui.checkbox-group</span> <span class="ui-code-token-property">name</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"permissions"</span> <span class="ui-code-token-property">legend</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"Permissions"</span> <span class="ui-code-token-property">:options</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"$options"</span> <span class="ui-code-token-punctuation">/&gt;</span>',
+            'content-switcher' => '<span class="ui-code-token-punctuation">&lt;</span><span class="ui-code-token-keyword">x-ui.content-switcher</span> <span class="ui-code-token-property">label</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"View mode"</span> <span class="ui-code-token-property">:options</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"$options"</span> <span class="ui-code-token-property">value</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"summary"</span> <span class="ui-code-token-punctuation">/&gt;</span>',
             'data-table' => '<span class="ui-code-token-punctuation">&lt;</span><span class="ui-code-token-keyword">x-ui.data-table</span> <span class="ui-code-token-property">title</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"Users"</span> <span class="ui-code-token-property">:columns</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"$columns"</span> <span class="ui-code-token-property">:rows</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"$rows"</span> <span class="ui-code-token-property">sortable</span> <span class="ui-code-token-punctuation">/&gt;</span>',
             'date-picker' => '<span class="ui-code-token-punctuation">&lt;</span><span class="ui-code-token-keyword">x-ui.date-picker</span> <span class="ui-code-token-property">name</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"start_date"</span> <span class="ui-code-token-property">label</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"Start date"</span> <span class="ui-code-token-property">min</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"2026-01-01"</span> <span class="ui-code-token-punctuation">/&gt;</span>',
             'contained-list' => '<span class="ui-code-token-punctuation">&lt;</span><span class="ui-code-token-keyword">x-ui.contained-list</span> <span class="ui-code-token-property">title</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"Workspace reviews"</span> <span class="ui-code-token-property">:items</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"$items"</span> <span class="ui-code-token-punctuation">/&gt;</span>',

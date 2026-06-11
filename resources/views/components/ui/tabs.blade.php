@@ -17,6 +17,8 @@
     if ($selectedIndex === false) {
         $selectedIndex = 0;
     }
+
+    $selectedIndex = (int) $selectedIndex;
 @endphp
 
 <div
@@ -36,7 +38,7 @@
             @php
                 $tabId = $tab['id'] ?? $idBase.'-tab-'.$index;
                 $panelId = $tab['panel_id'] ?? $idBase.'-panel-'.$index;
-                $selected = $index === $selectedIndex;
+                $selected = (int) $index === $selectedIndex;
                 $disabled = (bool) ($tab['disabled'] ?? false);
             @endphp
             <button
@@ -74,7 +76,7 @@
             @php
                 $tabId = $tab['id'] ?? $idBase.'-tab-'.$index;
                 $panelId = $tab['panel_id'] ?? $idBase.'-panel-'.$index;
-                $selected = $index === $selectedIndex;
+                $selected = (int) $index === $selectedIndex;
             @endphp
             <section
                 id="{{ $panelId }}"

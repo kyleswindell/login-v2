@@ -1,4 +1,5 @@
 export { initAccordions } from './ui-controls/accordions';
+export { initContentSwitchers } from './ui-controls/content-switchers';
 export { initDropdownActionMenus } from './ui-controls/dropdown-action-menus';
 export { initFilterPanels } from './ui-controls/filter-panels';
 export { initInternalPhoneInputs } from './ui-controls/phone-inputs';

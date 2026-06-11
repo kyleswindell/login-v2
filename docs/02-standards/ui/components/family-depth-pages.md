@@ -191,7 +191,7 @@ Use the simplest structure that proves the component completely.
 | Feedback/loading component            | Status matrix, severity matrix, motion/loading proof, content rules                                         | Notification, Tag, Inline loading, Loading, Progress bar, Progress indicator.                                           |
 | Data display component                | Full-width demos, empty/loading/error states, density/overflow proof, action composition                    | Data table, Pagination, Structured list, List, Code snippet, Tile.                                                      |
 | Navigation/shell component            | Responsive/full-width examples, current state, overflow behavior, route ownership                           | Breadcrumb, Tabs, UI shell.                                                                                             |
-| Deferred or gated component           | Trigger-condition cards, approved alternatives, queued owner/API boundary                                   | Multiselect, Content switcher, Popover, Slider, Tree view, Contained list, AI label unless later accepted as canonical. |
+| Deferred or gated component           | Trigger-condition cards, approved alternatives, queued owner/API boundary                                   | AI label and other components only while their canonical standard marks them deferred, gated, or do-not-implement.       |
 
 Variants must render visually where supported. They may appear inside a scenario, variant matrix, size scale, state matrix, comparison grid, or another clearly labeled live-example section. Do not add disconnected prose-only variant lists.
 
@@ -298,14 +298,13 @@ Current deferred or gated components include:
 | Component        | Default status    | Required page behavior                                                                                                                          |
 | ---------------- | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | Multiselect      | Deferred or gated | Show trigger conditions, approved alternatives, implementation owner route, and queued API boundary. Do not render a fake complete multiselect. |
-| Content switcher | Deferred or gated | Show when Tabs, Toggle, or Pattern-owned navigation should be used instead. Do not render a speculative complete switcher.                      |
 | Popover          | Deferred or gated | Show trigger conditions and nearby Tooltip/Toggletip/Modal alternatives. Do not fake overlay behavior.                                          |
 | Slider           | Deferred or gated | Show approved field alternatives and required implementation gates. Do not render a speculative range control.                                  |
 | Tree view        | Deferred or gated | Show hierarchy/navigation alternatives and data contract gates. Do not fake tree keyboard behavior.                                             |
 | Contained list   | Deferred or gated | Show List, Structured list, Tile, or Data table alternatives as applicable. Do not render speculative contained-list behavior.                  |
 | AI label         | Deferred or gated | Show trigger conditions, content policy, owner route, and approved labeling alternatives. Do not render speculative AI affordances.             |
 
-A later accepted queue item may promote a deferred component to a canonical implementation. When that happens, update the component source, canonical Component API standard, UI Reference page, tests, and this deferred boundary if needed.
+A later accepted queue item may promote a deferred component to a canonical implementation. When that happens, update the component source, canonical Component API standard, UI Reference page, tests, and this deferred boundary if needed. Content switcher has been promoted and must render its installed API proof instead of deferred trigger-condition cards.
 
 Deferred pages must include:
 

@@ -720,7 +720,7 @@ Feature views must not create `form-check`, `form-check-input`, `radio-*`, `radi
 - A user can select more than one option; use Checkbox.
 - The setting applies immediately as an on/off state; use Toggle.
 - The option list is long, dynamic, or space-constrained; use Select or another approved list component.
-- The options switch visible page panels without submitting a value; use Tabs or Content switcher when implemented.
+- The options switch visible page panels without submitting a value; use Tabs or Content switcher.
 - The options are visual cards or tiles; gate a selectable-card radio standard first.
 - The group is read-only calculated output and not part of a form; use a data-display Pattern.
 - The choice is a single yes/no consent or acknowledgement; use Checkbox when the user is confirming one independent statement.

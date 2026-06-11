@@ -1058,6 +1058,7 @@ class PlatformUiReferenceTest extends TestCase
             'tabs' => ['Line tabs', 'Contained tabs', 'Vertical tabs', 'Icon-leading', 'Icon-only', 'Overflow/scroll', 'Disabled', 'data-ui-reference-sample-type="tabs"'],
             'ui-shell' => ['Header baseline', 'Left panel', 'Account menu', 'Notification/action area', 'Mobile/collapsed behavior', 'Right panel deferred', 'data-ui-reference-sample-type="shell"'],
             'code-snippet' => ['Single-line code', 'Multi-line code', 'Highlighted syntax tokens', 'ui-code-token-keyword', 'ui-code-token-property', 'ui-code-token-string'],
+            'content-switcher' => ['Peer view switcher', 'Icon view switcher', 'Toolbar mode switcher', 'Default', 'Compact', 'Disabled option', 'No panel mode', 'data-ui-reference-sample-type="content-switcher"'],
         ];
 
         foreach ($expectations as $slug => $needles) {
@@ -1760,7 +1761,6 @@ class PlatformUiReferenceTest extends TestCase
 
         $expectations = [
             'ai-label' => ['Do not implement', 'AI label is not implemented until an approved AI-assisted feature exists', 'Trigger only when a product AI decision record approves AI-assisted behavior'],
-            'content-switcher' => ['Deferred', 'Content switcher remains deferred', 'Use tabs for panel switching today'],
         ];
 
         foreach ($expectations as $slug => $needles) {
@@ -1775,6 +1775,61 @@ class PlatformUiReferenceTest extends TestCase
                 $response->assertSee($needle);
             }
         }
+    }
+
+    public function test_content_switcher_component_page_renders_installed_api_examples(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/components/content-switcher')
+            ->assertOk()
+            ->assertSee('x-ui.content-switcher')
+            ->assertSee('Peer view switcher')
+            ->assertSee('Icon view switcher')
+            ->assertSee('Toolbar mode switcher')
+            ->assertSee('Default')
+            ->assertSee('Compact')
+            ->assertSee('Disabled option')
+            ->assertSee('No panel mode')
+            ->assertSee('data-ui-component="content-switcher"', false)
+            ->assertSee('data-ui-content-switcher', false)
+            ->assertSee('data-ui-content-switcher-option', false)
+            ->assertSee('data-ui-content-switcher-panel', false)
+            ->assertSee('data-ui-content-switcher-size="sm"', false)
+            ->assertSee('role="tablist"', false)
+            ->assertSee('role="tab"', false)
+            ->assertSee('role="tabpanel"', false)
+            ->assertSee('aria-selected="true"', false)
+            ->assertSee('disabled', false)
+            ->assertDontSee('data-ui-reference-sample-type="deferred"', false)
+            ->assertDontSee('Content switcher remains deferred')
+            ->assertDontSee('No public API approved');
+
+        $componentView = file_get_contents(resource_path('views/components/ui/content-switcher.blade.php'));
+        $tabsView = file_get_contents(resource_path('views/components/ui/tabs.blade.php'));
+        $componentCss = file_get_contents(resource_path('css/app.css'));
+        $componentScript = file_get_contents(resource_path('js/ui-controls/content-switchers.js'));
+        $uiControls = file_get_contents(resource_path('js/ui-controls.js'));
+        $appJs = file_get_contents(resource_path('js/app.js'));
+        $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
+        $standard = file_get_contents(base_path('docs/02-standards/ui/components/content-switcher.md'));
+
+        $this->assertStringContainsString('data-ui-content-switcher', $componentView);
+        $this->assertStringContainsString('data-ui-content-switcher-option', $componentView);
+        $this->assertStringContainsString('data-ui-content-switcher-panel', $componentView);
+        $this->assertStringContainsString('role="tablist"', $componentView);
+        $this->assertStringContainsString('(int) $index === $selectedIndex', $componentView);
+        $this->assertStringContainsString('(int) $index === $selectedIndex', $tabsView);
+        $this->assertStringContainsString('.ui-content-switcher-option', $componentCss);
+        $this->assertStringContainsString('--ui-content-switcher-background', $componentCss);
+        $this->assertStringContainsString('--ui-content-switcher-selected', $componentCss);
+        $this->assertStringContainsString('initContentSwitchers(root = document)', $componentScript);
+        $this->assertStringContainsString('initializeSelectedOption(switcherRoot, list)', $componentScript);
+        $this->assertStringContainsString('uiContentSwitcherInitialized', $componentScript);
+        $this->assertStringContainsString('export { initContentSwitchers }', $uiControls);
+        $this->assertStringContainsString('initContentSwitchers', $appJs);
+        $this->assertStringContainsString('\'content-switcher\' => $this->contentSwitcherComponent()', $catalog);
+        $this->assertStringContainsString('x-ui.content-switcher', $standard);
     }
 
     public function test_component_api_proof_sync_pages_render_installed_apis(): void

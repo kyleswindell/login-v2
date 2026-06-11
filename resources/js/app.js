@@ -6,6 +6,7 @@ import './dashboard-proof-demo';
 
 import {
     initAccordions,
+    initContentSwitchers,
     initDropdownActionMenus,
     initFilterPanels,
     initInternalPhoneInputs,
@@ -57,6 +58,7 @@ const lifecycleInitializers = [
     initSliders,
     initTreeViews,
     initTabs,
+    initContentSwitchers,
     initErrorLogDrawer,
     initAuditLogDrawer,
     initSidebarToggle,

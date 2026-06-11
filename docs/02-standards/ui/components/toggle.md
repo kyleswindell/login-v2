@@ -116,7 +116,7 @@ Toggle is the installed Login App 2.0 binary immediate-setting API. It owns the 
 
 - Independent or multi-select choices that are submitted later. Use Checkbox and Forms Pattern.
 - Exactly one choice from a visible group. Use Radio button.
-- Switching between peer views or content panels. Use Tabs or Content switcher when implemented.
+- Switching between peer views or content panels. Use Tabs or Content switcher.
 - Opening or closing disclosure surfaces. Use Button, Accordion, Modal, Toggletip, or Menu buttons as appropriate.
 - Destructive actions or irreversible state changes. Use Button plus confirmation Pattern.
 - Field-level validation and form submission orchestration. Use field Components and Forms Pattern.
@@ -444,7 +444,7 @@ Feature views must not create `toggle-*`, Bootstrap form-switch patterns, raw ut
 | Native checkbox switch | Implemented                                | Use as the baseline immediate setting control.                                                      |
 | Checkbox Component     | Related Component                          | Use when a choice is independent, may be part of a multi-select group, or requires submit to apply. |
 | Radio button Component | Related Component                          | Use when exactly one visible option must be selected.                                               |
-| Content switcher       | Related Component / deferred as applicable | Use only when switching displayed content, not changing a setting.                                  |
+| Content switcher       | Related Component / installed API          | Use only when switching displayed content, not changing a setting.                                  |
 | Inline loading         | Related Component                          | Use near the setting when async saving needs local pending feedback.                                |
 | Notification           | Related Component                          | Use for failed save, permission, or workflow-level feedback.                                        |
 | Tooltip/Toggletip      | Related Component                          | Use only for supplemental explanation; do not hide required setting meaning there.                  |

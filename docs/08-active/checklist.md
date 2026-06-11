@@ -64,6 +64,7 @@
   - [x] UI Reference sidebar dropdowns use productive disclosure motion, reduced-motion handling, chevron state, and one shell scroll owner
   - [x] UI Reference sidebar uses one controlled disclosure API for Foundation Elements, Color, Typography, and Components with no native instant disclosure left in the shared sidebar partial
   - [x] UI Reference sidebar native-disclosure recovery was failed/reopened and replaced with a Navigation Pattern/UI shell correction using token-backed classes, controlled disclosure lifecycle, named nav regions, current-route semantics, and Heroicon chevrons
+  - [x] Content switcher has an installed `x-ui.content-switcher` API with token-backed UI Reference proof examples and lifecycle-owned switching behavior
   - [ ] remaining component-specific recovery queue P2-F-CQ-075 through P2-F-CQ-078, P2-F-CQ-080, P2-F-CQ-136 through P2-F-CQ-150, and P2-F-CQ-152 through P2-F-CQ-163 is implemented and ready for manual review
 
 ## Foundation Elements Layer
@@ -140,6 +141,7 @@
   - menu-buttons-focused assertions verify Menu button, Combo button, Overflow menu, size/width/state/keyboard proof, and canonical developer examples
   - typography type-set assertions verify nested Typography route, Productive/Expressive matrices, app-owned class names, 14px/16px bases, fixed/fluid heading behavior, blending/prohibited examples, and no Carbon production class API exposure
   - sidebar assertions verify Color/Typography dropdown state, productive disclosure motion markers, reduced-motion support, chevron open-state markers, native disclosure markup, readable category hover CSS, flat alphabetical Component menu order, one shell scroll owner, and removal of old Component category groups from the primary sidebar
+  - content-switcher-focused assertions verify installed API examples, ARIA tab semantics, token-backed source classes, lifecycle registration, and absence of deferred placeholder proof
 
 ## Handoff Readiness
 - [ ] Handoff Readiness

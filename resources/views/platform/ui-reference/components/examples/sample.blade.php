@@ -456,6 +456,16 @@
             </div>
         @break
 
+        @case('content-switcher')
+            <x-ui.content-switcher
+                :options="$items"
+                :value="$sample['value'] ?? null"
+                :label="$sample['label'] ?? 'Content switcher'"
+                :size="$sample['size'] ?? 'md'"
+                :show-panels="$sample['show_panels'] ?? true"
+            />
+        @break
+
         @case('alert')
             <div class="grid gap-3">
                 @foreach ($items as $item)

@@ -501,7 +501,7 @@ Feature views must not create `btn-*`, Bootstrap `.btn`, local `button-*`, raw u
 - The control navigates to unrelated content; use Link.
 - The control opens a menu; use Menu buttons.
 - The control represents task progress; use Progress indicator.
-- The control switches peer views; use Tabs or Content switcher when implemented.
+- The control switches peer views; use Tabs or Content switcher.
 - The action is purely decorative or informational.
 - A support color is being used as visual decoration.
 - A feature needs local margins or custom placement; parent Patterns own external spacing.

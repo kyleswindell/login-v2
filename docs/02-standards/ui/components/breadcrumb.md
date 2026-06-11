@@ -106,7 +106,7 @@ Breadcrumb is the installed Login App 2.0 orientation and parent-navigation API.
 
 - Primary navigation. Use UI shell, header, side navigation, or Pattern-owned navigation APIs.
 - Task progress. Use Progress indicator.
-- Peer view switching. Use Tabs or Content switcher when implemented.
+- Peer view switching. Use Tabs or Content switcher.
 - Previous-page history. Breadcrumbs describe hierarchy, not browser history.
 - Page title ownership. Page header or page content owns the visible title.
 - Feature-local overflow menus. Overflow behavior is owned by the Menu/Menu buttons API handoff.

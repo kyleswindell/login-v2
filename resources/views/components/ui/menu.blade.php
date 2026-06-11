@@ -22,6 +22,7 @@
     $panelId = $rootId.'-panel';
     $isIconTrigger = $triggerKind === 'icon' || filled($triggerIcon);
     $resolvedTriggerVariant = $triggerVariant ?? ($isIconTrigger ? 'ghost' : 'tertiary');
+    $resolvedTriggerIcon = $triggerIcon ?? ($isIconTrigger ? 'heroicon-o-ellipsis-vertical' : null);
     $visibleItems = collect($items)->reject(fn ($item) => $item['hidden'] ?? false);
 @endphp
 
@@ -37,21 +38,18 @@
             label="{{ $triggerLabel }}"
             :semantic="$resolvedTriggerVariant"
             :size="$resolvedSize"
-            :icon="$triggerIcon"
+            :icon="$resolvedTriggerIcon"
             :disabled="$disabled"
             data-ui-menu-trigger
             aria-haspopup="menu"
             aria-expanded="{{ $open ? 'true' : 'false' }}"
             aria-controls="{{ $panelId }}"
-        >
-            @unless (filled($triggerIcon))
-                <span aria-hidden="true">...</span>
-            @endunless
-        </x-ui.icon-button>
+        />
     @else
         <x-ui.button
             :semantic="$resolvedTriggerVariant"
             :size="$resolvedSize"
+            icon="heroicon-o-chevron-down"
             :disabled="$disabled"
             data-ui-menu-trigger
             aria-haspopup="menu"
@@ -59,7 +57,6 @@
             aria-controls="{{ $panelId }}"
         >
             {{ $triggerLabel }}
-            <x-heroicon-o-chevron-down class="ui-button-icon" aria-hidden="true" />
         </x-ui.button>
     @endif
 

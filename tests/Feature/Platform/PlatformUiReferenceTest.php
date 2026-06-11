@@ -1490,10 +1490,14 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-menu-buttons-base="combo-button"', false)
             ->assertSee('data-menu-buttons-base="overflow-menu"', false)
             ->assertSee('data-menu-buttons-trigger-row="primary-menu-button"', false)
-            ->assertSee('data-menu-buttons-trigger-row="tertiary-menu-button"', false)
+            ->assertSee('data-menu-buttons-trigger-row="outline-menu-button"', false)
             ->assertSee('data-menu-buttons-trigger-row="ghost-menu-button"', false)
             ->assertSee('data-menu-buttons-trigger-row="combo-primary-only"', false)
             ->assertSee('data-menu-buttons-trigger-row="overflow-ghost-only"', false)
+            ->assertSee('data-menu-buttons-base-variant="primary"', false)
+            ->assertSee('data-menu-buttons-base-variant="outline"', false)
+            ->assertSee('data-menu-buttons-base-variant="ghost"', false)
+            ->assertSee('data-menu-buttons-overflow-rule="ghost-only-vertical-ellipsis"', false)
             ->assertSee('data-menu-buttons-size-row="extra-small"', false)
             ->assertSee('data-menu-buttons-size-row="small"', false)
             ->assertSee('data-menu-buttons-size-row="medium"', false)
@@ -1525,6 +1529,8 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Menu button')
             ->assertSee('Combo button')
             ->assertSee('Overflow menu')
+            ->assertSee('Overflow menu can only use a ghost button')
+            ->assertSee('vertical ellipsis')
             ->assertSee('Extra small')
             ->assertSee('48px / 3rem')
             ->assertSee('Ghost trigger width follows the button')
@@ -1532,15 +1538,36 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Menu button triggers follow Button style guidance')
             ->assertDontSee('Component-specific API pending correction')
             ->assertDontSee('Family-depth implementation pending')
+            ->assertDontSee('<x-ui.menu', false)
             ->assertDontSee('data-ui-reference-sample-type="menu-button"', false);
 
         $menuView = file_get_contents(resource_path('views/components/ui/menu.blade.php'));
+        $menuButtonView = file_get_contents(resource_path('views/components/ui/menu-button.blade.php'));
+        $comboButtonView = file_get_contents(resource_path('views/components/ui/combo-button.blade.php'));
+        $overflowMenuView = file_get_contents(resource_path('views/components/ui/overflow-menu.blade.php'));
+        $menuButtonExamples = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/menu-buttons.blade.php'));
+        $appCss = file_get_contents(resource_path('css/app.css'));
         $menuButtonsStandard = file_get_contents(base_path('docs/02-standards/ui/components/menu-buttons.md'));
 
         $this->assertIsString($menuView);
+        $this->assertIsString($menuButtonView);
+        $this->assertIsString($comboButtonView);
+        $this->assertIsString($overflowMenuView);
+        $this->assertIsString($menuButtonExamples);
+        $this->assertIsString($appCss);
         $this->assertIsString($menuButtonsStandard);
-        $this->assertStringContainsString('x-heroicon-o-chevron-down', $menuView);
+        $this->assertStringContainsString('icon="heroicon-o-chevron-down"', $menuView);
+        $this->assertStringContainsString('heroicon-o-ellipsis-vertical', $menuView);
+        $this->assertStringContainsString('trigger-icon="heroicon-o-chevron-down"', $comboButtonView);
+        $this->assertStringContainsString('trigger-icon="heroicon-o-ellipsis-vertical"', $overflowMenuView);
+        $this->assertStringNotContainsString('<span aria-hidden="true">...</span>', $menuView);
+        $this->assertStringContainsString('Outline menu button', $menuButtonExamples);
+        $this->assertStringContainsString('.ui-combo-button [data-ui-combo-button-trigger] .ui-icon-button', $appCss);
+        $this->assertStringContainsString('border-start-start-radius: 0;', $appCss);
+        $this->assertStringContainsString('.ui-overflow-menu .ui-icon-button', $appCss);
         $this->assertStringContainsString('any approved secondary trigger must consume `--ui-action-secondary-*`', $menuButtonsStandard);
+        $this->assertStringContainsString('The caret must render to the right of the label and must not wrap to a new text line.', $menuButtonsStandard);
+        $this->assertStringContainsString('Overflow menu triggers must be icon-only ghost buttons using the approved vertical ellipsis icon', $menuButtonsStandard);
     }
 
     public function test_tooltip_component_recovery_page_renders_required_examples(): void

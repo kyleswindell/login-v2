@@ -33,10 +33,10 @@
 
     $triggerRows = [
         ['Primary menu button', 'Strongest local menu action group.', '<x-ui.menu-button type="primary" label="Create" :items="$menuItems" />'],
-        ['Tertiary menu button', 'Visible but not primary action group.', '<x-ui.menu-button type="tertiary" label="Actions" :items="$menuItems" />'],
+        ['Outline menu button', 'Visible but not primary action group. Uses the Button tertiary outline role.', '<x-ui.menu-button type="tertiary" label="Actions" :items="$menuItems" />'],
         ['Ghost menu button', 'Low-emphasis toolbar or header action group.', '<x-ui.menu-button type="ghost" label="More actions" :items="$menuItems" />'],
         ['Combo primary only', 'Primary action paired with a separate menu trigger.', '<x-ui.combo-button label="Save" menu-label="Save options" :items="$comboItems" />'],
-        ['Overflow ghost only', 'Icon-only trigger for constrained row/card actions.', '<x-ui.overflow-menu label="Workspace actions" :items="$rowItems" />'],
+        ['Overflow ghost only', 'Icon-only vertical ellipsis trigger for constrained row/card actions.', '<x-ui.overflow-menu label="Workspace actions" :items="$rowItems" />'],
     ];
 @endphp
 
@@ -76,9 +76,17 @@
         <div class="mt-4 grid gap-4 xl:grid-cols-3">
             <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-menu-buttons-base="menu-button">
                 <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Menu button</h4>
-                <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">A labeled button opens an equal-importance action list.</p>
-                <div class="mt-4">
-                    <x-ui.menu-button label="Create" type="primary" :items="$menuItems" />
+                <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">A labeled button opens an equal-importance action list. Base trigger variants are primary, outline, and ghost.</p>
+                <div class="mt-4 flex flex-wrap items-center gap-3">
+                    <div data-menu-buttons-base-variant="primary">
+                        <x-ui.menu-button label="Create" type="primary" :items="$menuItems" />
+                    </div>
+                    <div data-menu-buttons-base-variant="outline">
+                        <x-ui.menu-button label="Actions" type="tertiary" :items="$menuItems" />
+                    </div>
+                    <div data-menu-buttons-base-variant="ghost">
+                        <x-ui.menu-button label="More" type="ghost" :items="$menuItems" />
+                    </div>
                 </div>
             </article>
             <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-menu-buttons-base="combo-button">
@@ -90,8 +98,8 @@
             </article>
             <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-menu-buttons-base="overflow-menu">
                 <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Overflow menu</h4>
-                <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">Icon-only row or card trigger with an object-specific accessible name.</p>
-                <div class="mt-4">
+                <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">Icon-only row or card trigger with an object-specific accessible name. Overflow menu can only use a ghost button.</p>
+                <div class="mt-4" data-menu-buttons-overflow-rule="ghost-only-vertical-ellipsis">
                     <x-ui.overflow-menu label="Workspace actions" aria-label="Workspace alpha actions" tooltip="Workspace actions" :items="$rowItems" />
                 </div>
             </article>

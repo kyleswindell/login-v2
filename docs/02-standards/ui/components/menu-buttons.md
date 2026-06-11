@@ -157,7 +157,7 @@ Menu buttons must use the flexible UI Reference layout model. The page may use m
 | ----------- | ------------ | --------------: | --------- | ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------- |
 | `label`     | All triggers |        `string` | required  | non-empty string                                             | Visible for menu/combo. Accessible name for overflow.                                               |
 | `items`     | All menus    |         `array` | required  | item data contract                                           | Menu items must be simple actions or links.                                                         |
-| `type`      | Menu button  |        `string` | `primary` | `primary`, `tertiary`, `ghost`                               | Mirrors approved Button hierarchy.                                                                  |
+| `type`      | Menu button  |        `string` | `primary` | `primary`, `tertiary`, `ghost`                               | Mirrors approved Button hierarchy. `tertiary` is the outline visual treatment in the UI Reference.   |
 | `size`      | All triggers |        `string` | `md`      | `xs`, `sm`, `md`, `lg`                                       | Menu item height must match trigger size.                                                           |
 | `placement` | All menus    |        `string` | `auto`    | `auto`, `bottom-start`, `bottom-end`, `top-start`, `top-end` | Use `auto` unless a bounded surface requires a specific edge.                                       |
 | `align`     | All menus    |        `string` | `start`   | `start`, `end`                                               | Use `end` for right-aligned row/card overflow.                                                      |
@@ -268,7 +268,10 @@ Menu buttons consume Foundation Color, Spacing, Typography, Themes, Motion, and 
 ### 7.4. Token usage requirements:
 
 - Trigger color, border, icon, and focus treatment must come from the Button, Color, Icons, and Themes APIs.
-- Trigger hierarchy must follow Button style guidance exactly: primary menu triggers consume Button primary tokens, tertiary triggers consume Button tertiary tokens, ghost/overflow triggers consume Button ghost tokens, and any approved secondary trigger must consume `--ui-action-secondary-*` rather than local neutral styling.
+- Trigger hierarchy must follow Button style guidance exactly: primary menu triggers consume Button primary tokens, tertiary/outline triggers consume Button tertiary tokens, ghost/overflow triggers consume Button ghost tokens, and any approved secondary trigger must consume `--ui-action-secondary-*` rather than local neutral styling.
+- Labeled menu buttons must use the Button trailing-icon structure with the approved caret icon. The caret must render to the right of the label and must not wrap to a new text line.
+- Combo buttons must render as a joined split control: the primary action segment keeps the default rounded-start shape, the menu trigger segment keeps the rounded-end shape, and both segments remain separate focus targets.
+- Overflow menu triggers must be icon-only ghost buttons using the approved vertical ellipsis icon unless a product-level Icons decision approves another overflow icon.
 - Menu surface, border, shadow, item hover, focus, active, disabled, and danger treatment must use Color and Themes tokens.
 - Menu spacing, item height, padding, and trigger/menu separation must use Spacing tokens.
 - Menu item copy must use Typography tokens.
@@ -288,6 +291,8 @@ Menu buttons consume Foundation Color, Spacing, Typography, Themes, Motion, and 
 - `Escape` closes the open menu and returns focus to the trigger.
 - Outside click closes the menu and does not trigger nearby controls.
 - The trigger/menu width relationship must remain readable. Do not compress the menu narrower than its trigger or shorter than readable item content.
+- Menu button and Combo button menus use a minimum 160px width, may expand up to the app menu max width for longer item labels, and must match fluid trigger width only when the fluid capability is installed and tested.
+- Ghost menu buttons and Overflow menu triggers do not stretch to match menu width; they keep Button ghost sizing so the caret or ellipsis remains visually attached to its trigger.
 - Icon-only overflow triggers must maintain at least a 44px target even when the visible icon is smaller.
 
 Components own internal semantics and styling. Parent Patterns own grouping, external spacing, workflow orchestration, and page-level layout.
@@ -399,9 +404,9 @@ Because Menu buttons are broad and matrix-heavy, the Live examples section may u
 | Required proof                    | Rendered behavior                                                                                                       | Variants/options shown                                                            |
 | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
 | Variant purpose matrix            | Compares Menu button, Overflow menu, and Combo button disposition with status and use case.                             | Menu button, Overflow menu, Combo button                                         |
-| Trigger style matrix              | Shows allowed trigger treatments and disallowed combinations.                                                           | Menu primary, Menu tertiary, Menu ghost, Combo primary-only, Overflow ghost-only  |
+| Trigger style matrix              | Shows allowed trigger treatments and disallowed combinations.                                                           | Menu primary, Menu outline/tertiary, Menu ghost, Combo primary-only, Overflow ghost-only |
 | Size scale                        | Shows trigger and menu item height alignment across installed sizes.                                                    | Extra small, Small, Medium, Large                                                 |
-| Text trigger menu button          | A labeled trigger opens simple actions with equal importance.                                                           | Primary, Tertiary, Ghost, Open, Disabled, Loading                                 |
+| Text trigger menu button          | A labeled trigger opens simple actions with equal importance.                                                           | Primary, Outline/tertiary, Ghost, Open, Disabled, Loading                        |
 | Icon-only overflow trigger        | Dense overflow trigger for table rows, cards, and compact toolbars.                                                     | Icon trigger, accessible label, tooltip if needed, hover, focus-visible, disabled |
 | Row/card overflow actions         | Overflow menu is composed inside a table row or card without owning external spacing.                                   | View, Edit/Rename, Archive/Delete danger item                                     |
 | Grouped secondary actions         | A visible primary Button remains separate while secondary actions are grouped in a Menu button or Overflow menu.        | Primary Button + Menu button, no multiple-primary group                           |
@@ -422,7 +427,10 @@ Because Menu buttons are broad and matrix-heavy, the Live examples section may u
 - The page distinguishes Menu buttons from Button, Dropdown, Select, Popover, Tooltip, and Modal.
 - The page includes explicit guidance that Menu buttons are for actions, not value selection.
 - The page includes the icon-only overflow accessible-name requirement.
+- The page proves overflow menus are ghost-only vertical ellipsis icon buttons.
+- The page proves labeled menu triggers use the Button trailing-icon caret structure without wrapping the caret to a new line.
 - The page includes Combo button proof with a primary action, split trigger, and menu alternates.
+- The page proves Combo button segments share a joined split-control shape while preserving separate focus targets.
 - Feature tests should assert the page does not contain `Component-specific API pending correction`.
 - Feature tests should assert the page does not contain `Allowed variants, options, and modifiers - None`.
 - Feature tests should assert the page does not contain `Live Examples Card`, `Reference Examples`, or `Legacy Contract Summary`.

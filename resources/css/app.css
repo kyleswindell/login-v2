@@ -1953,7 +1953,28 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-combo-button {
-        @apply isolate;
+        @apply isolate inline-flex items-stretch gap-0;
+    }
+
+    .ui-combo-button .ui-menu-composition {
+        align-self: stretch;
+        margin-inline-start: -1px;
+    }
+
+    .ui-combo-button [data-ui-combo-button-primary] {
+        border-start-end-radius: 0;
+        border-end-end-radius: 0;
+    }
+
+    .ui-combo-button [data-ui-combo-button-trigger] .ui-icon-button {
+        block-size: 100%;
+        border-start-start-radius: 0;
+        border-end-start-radius: 0;
+        padding-inline: 1rem;
+    }
+
+    .ui-overflow-menu .ui-icon-button {
+        color: var(--ui-link-primary);
     }
 
     .ui-menu {

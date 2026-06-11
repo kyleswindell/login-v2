@@ -14,7 +14,7 @@
 @php($resolvedPlacement = $placement ?? $align)
 
 <div
-    class="ui-combo-button inline-flex items-start"
+    class="ui-combo-button"
     data-ui-component="combo-button"
     data-ui-combo-button
     data-ui-combo-button-size="{{ $size }}"
@@ -26,6 +26,7 @@
         :items="$items"
         :trigger-label="$menuLabel"
         trigger-kind="icon"
+        trigger-icon="heroicon-o-chevron-down"
         trigger-variant="primary"
         :size="$size"
         :placement="$resolvedPlacement"

@@ -18,12 +18,12 @@
         :trigger-label="$ariaLabel ?? $label"
         :menu-label="$label"
         trigger-kind="icon"
+        trigger-icon="heroicon-o-ellipsis-vertical"
         trigger-variant="ghost"
         :size="$size"
         :placement="$resolvedPlacement"
         :open="$open"
         :disabled="$disabled"
         data-ui-menu-button-kind="overflow"
-        @if (filled($tooltip)) title="{{ $tooltip }}" @endif
     />
 </div>

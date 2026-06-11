@@ -1057,7 +1057,7 @@ class PlatformUiReferenceTest extends TestCase
             'pagination' => ['Full pagination', 'Compact pagination', 'Page-size selector', 'Disabled prev/next', 'Overflow', 'ui-pagination-control'],
             'tabs' => ['Line tabs', 'Contained tabs', 'Vertical tabs', 'Icon-leading', 'Icon-only', 'Overflow/scroll', 'Disabled', 'data-ui-reference-sample-type="tabs"'],
             'ui-shell' => ['Header baseline', 'Left panel', 'Account menu', 'Notification/action area', 'Mobile/collapsed behavior', 'Right panel deferred', 'data-ui-reference-sample-type="shell"'],
-            'code-snippet' => ['Single-line code', 'Multi-line code', 'Highlighted syntax tokens', 'ui-code-token-keyword', 'ui-code-token-property', 'ui-code-token-string'],
+            'code-snippet' => ['Anatomy and variants', 'Inline', 'Single line with horizontal overflow', 'Multi-line with show more', 'Copy controls', 'Highlighted syntax tokens', 'data-component-live-layout="code-snippet-matrix"'],
             'content-switcher' => ['Peer view switcher', 'Icon view switcher', 'Toolbar mode switcher', 'Default', 'Compact', 'Disabled option', 'No panel mode', 'data-ui-reference-sample-type="content-switcher"'],
         ];
 
@@ -1071,7 +1071,7 @@ class PlatformUiReferenceTest extends TestCase
                 ->assertSee('ui-code-snippet', false)
                 ->assertDontSee('Family-depth implementation pending');
 
-            if (in_array($slug, ['button', 'menu-buttons', 'tooltip', 'checkbox'], true)) {
+            if (in_array($slug, ['button', 'menu-buttons', 'tooltip', 'checkbox', 'code-snippet'], true)) {
                 $response
                     ->assertSee('data-ui-reference-live-examples-layout="flexible-matrix"', false)
                     ->assertDontSee('Live Examples Card');
@@ -1321,23 +1321,56 @@ class PlatformUiReferenceTest extends TestCase
         $this->get('/platform/ui-reference/components/code-snippet')
             ->assertOk()
             ->assertSee('x-ui.code-snippet')
-            ->assertSee('Single-line code')
-            ->assertSee('Multi-line code')
+            ->assertSee('Anatomy and variants')
+            ->assertSee('Inline')
+            ->assertSee('Single line with horizontal overflow')
+            ->assertSee('Multi-line with show more')
+            ->assertSee('Show more')
+            ->assertSee('Show less')
+            ->assertSee('Copy controls')
+            ->assertSee('Copy to clipboard')
+            ->assertSee('Copied to clipboard')
             ->assertSee('Highlighted syntax tokens')
-            ->assertSee('Copy ready')
-            ->assertSee('Copied state')
-            ->assertSee('Without copy')
-            ->assertSee('With copy')
-            ->assertSee('Keyword token')
-            ->assertSee('Property token')
-            ->assertSee('String token')
+            ->assertSee('Light modifier')
+            ->assertSee('data-component-live-layout="code-snippet-matrix"', false)
             ->assertSee('data-ui-component="code-snippet"', false)
+            ->assertSee('data-ui-code-snippet', false)
+            ->assertSee('data-ui-code-copy-button', false)
+            ->assertSee('data-ui-code-copy-source', false)
+            ->assertSee('data-ui-code-show-more', false)
             ->assertSee('data-ui-code-snippet-variant="single"', false)
             ->assertSee('data-ui-code-snippet-variant="multi"', false)
+            ->assertSee('data-ui-code-snippet-variant="inline"', false)
             ->assertSee('ui-code-token-keyword', false)
             ->assertSee('ui-code-token-property', false)
             ->assertSee('ui-code-token-string', false)
-            ->assertSee('data-ui-code-copy-state="copied"', false);
+            ->assertSee('data-ui-code-copy-state="copied"', false)
+            ->assertDontSee('Live clipboard behavior   | Gated')
+            ->assertDontSee('Show more/show less for multi-line snippets | Gated');
+
+        $componentView = file_get_contents(resource_path('views/components/ui/code-snippet.blade.php'));
+        $examplesView = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/code-snippet.blade.php'));
+        $componentCss = file_get_contents(resource_path('css/app.css'));
+        $componentScript = file_get_contents(resource_path('js/ui-controls/code-snippets.js'));
+        $uiControls = file_get_contents(resource_path('js/ui-controls.js'));
+        $appJs = file_get_contents(resource_path('js/app.js'));
+        $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
+        $standard = file_get_contents(base_path('docs/02-standards/ui/components/code-snippet.md'));
+
+        $this->assertStringContainsString("['inline', 'single', 'multi']", $componentView);
+        $this->assertStringContainsString('data-ui-code-copy-button', $componentView);
+        $this->assertStringContainsString('data-ui-code-show-more', $componentView);
+        $this->assertStringContainsString('heroicon-o-clipboard-document', $componentView);
+        $this->assertStringContainsString('data-component-live-layout="code-snippet-matrix"', $examplesView);
+        $this->assertStringContainsString('Multi-line with show more', $examplesView);
+        $this->assertStringContainsString('.ui-code-snippet-shell-expandable', $componentCss);
+        $this->assertStringContainsString('.ui-code-snippet-inline', $componentCss);
+        $this->assertStringContainsString('export function initCodeSnippets(root = document)', $componentScript);
+        $this->assertStringContainsString('navigator.clipboard', $componentScript);
+        $this->assertStringContainsString('export { initCodeSnippets }', $uiControls);
+        $this->assertStringContainsString('initCodeSnippets', $appJs);
+        $this->assertStringContainsString('initCodeSnippets exported from resources/js/ui-controls/code-snippets.js', $catalog);
+        $this->assertStringContainsString('Show more/show less', $standard);
     }
 
     public function test_button_component_recovery_page_renders_required_examples(): void

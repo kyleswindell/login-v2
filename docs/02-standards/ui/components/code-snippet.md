@@ -2,8 +2,8 @@
 title: Code snippet
 slug: code-snippet
 api_layer: Component API
-status: implemented-pending-correction
-system_maturity: partial
+status: implemented-pending-review
+system_maturity: implemented
 category: developer-documentation
 priority: tier-b-common-reusable-component
 ui_reference_route: /platform/ui-reference/components/code-snippet
@@ -11,15 +11,22 @@ canonical_doc: docs/02-standards/ui/components/code-snippet.md
 source_owner: /platform/ui-reference/components/code-snippet
 blade_api:
   - x-ui.code-snippet
-javascript_api: []
+javascript_api:
+  - initCodeSnippets
 data_attributes:
   - data-ui-component="code-snippet"
+  - data-ui-code-snippet
   - data-ui-code-snippet-variant
   - data-ui-code-copy-state
+  - data-ui-code-copy-button
+  - data-ui-code-show-more
 source_files:
   - resources/views/components/ui/code-snippet.blade.php
+  - resources/js/ui-controls/code-snippets.js
+  - resources/js/ui-controls.js
+  - resources/js/app.js
   - resources/css/app.css
-  - resources/views/platform/ui-reference/components/code-snippet.blade.php
+  - resources/views/platform/ui-reference/components/live-examples/code-snippet.blade.php
 foundation_elements:
   - color
   - spacing
@@ -85,7 +92,7 @@ Code snippet presents exact implementation syntax with app-approved code typogra
 
 Canonical API owner: `/platform/ui-reference/components/code-snippet`. Use this Component API instead of creating local markup, styling, syntax colors, copy controls, or behavior for the same UI role.
 
-Code snippet is the installed Login App 2.0 developer-documentation primitive for canonical implementation examples inside UI Reference pages and internal standards. It owns code container anatomy, inline/single-line/multi-line disposition, language labels, copy affordance presentation, copy-state presentation, syntax token classes, code typography, horizontal overflow, token-backed focus and copy states, and code-specific content rules. It does not own prose formatting, API contract tables, long tutorials, live code execution, syntax parsing, clipboard JavaScript, expandable code regions, or feature-specific examples.
+Code snippet is the installed Login App 2.0 developer-documentation primitive for canonical implementation examples inside UI Reference pages and internal standards. It owns code container anatomy, inline/single-line/multi-line disposition, language labels, copy affordance behavior, copy-state presentation, show-more/show-less expansion for multi-line snippets, syntax token classes, code typography, horizontal overflow, token-backed focus and copy states, and code-specific content rules. It does not own prose formatting, API contract tables, long tutorials, live code execution, syntax parsing, full source viewers, or feature-specific examples.
 
 ### 1.1. Canonical API responsibilities:
 
@@ -93,11 +100,11 @@ Code snippet is the installed Login App 2.0 developer-documentation primitive fo
 - Preserve semantic `pre` and `code` structure for block snippets.
 - Preserve inline code semantics for inline snippets when that variant is installed.
 - Support the installed `single` and `multi` variants.
-- Keep the Carbon-style `inline` variant deferred until the implementation and UI Reference prove it.
+- Support the installed `inline` variant for short code terms inside prose.
 - Support optional language/context labels.
 - Support optional copy affordance markup when copying the exact snippet is useful.
 - Support visual copy states through `copyState="idle"` and `copyState="copied"`.
-- Keep interactive clipboard behavior gated until a documented JavaScript/data-attribute controller is approved.
+- Run copy and show-more behavior through the documented `initCodeSnippets` lifecycle controller.
 - Support app-owned syntax token classes for highlighted examples.
 - Preserve whitespace, indentation, and line breaks.
 - Keep long code readable with horizontal overflow rather than misleading wraps.
@@ -115,14 +122,14 @@ Code snippet is the installed Login App 2.0 developer-documentation primitive fo
 - Syntax parsing or automatic highlighting. Use explicit token spans or an approved highlighter gate.
 - Page-level spacing around examples. Parent documentation Patterns own external spacing and grouping.
 
-Carbon alignment note: Carbon documents inline, single-line, and multi-line code snippet variants, copy affordances, show-more behavior for multi-line snippets, token-backed focus/hover/active states, accessible syntax colors, and text updates for copy/show-more controls. Login App currently installs `single` and `multi` rendering, token classes, and visual copy-state examples through `x-ui.code-snippet`. Inline snippets, show-more behavior, and live clipboard behavior remain gated until installed with app-owned classes, JavaScript contracts, accessibility proof, and tests.
+Carbon alignment note: Carbon documents inline, single-line, and multi-line code snippet variants, copy affordances, show-more behavior for multi-line snippets, token-backed focus/hover/active states, accessible syntax colors, and text updates for copy/show-more controls. Login App installs those baseline behaviors through its own `x-ui.code-snippet`, `ui-*` namespace, `initCodeSnippets` controller, explicit token classes, and UI Reference proof.
 
 ## 2. Status and ownership
 
 | Field                        | Value                                                                                                                                                      |
 | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Status                       | Implemented Pending Correction                                                                                                                             |
-| System maturity              | Partial                                                                                                                                                    |
+| Status                       | Implemented Pending Review                                                                                                                                 |
+| System maturity              | Implemented                                                                                                                                                |
 | API layer                    | Component API                                                                                                                                              |
 | Component slug               | code-snippet                                                                                                                                               |
 | Category                     | Developer documentation                                                                                                                                    |
@@ -131,15 +138,15 @@ Carbon alignment note: Carbon documents inline, single-line, and multi-line code
 | Canonical doc                | `docs/02-standards/ui/components/code-snippet.md`                                                                                                          |
 | Source owner                 | `/platform/ui-reference/components/code-snippet`                                                                                                           |
 | Blade API                    | `x-ui.code-snippet`                                                                                                                                        |
-| JavaScript API               | None approved for live clipboard behavior                                                                                                                  |
+| JavaScript API               | `initCodeSnippets`                                                                                                                                         |
 | Data attributes              | `data-ui-component="code-snippet"`, `data-ui-code-snippet-variant`, `data-ui-code-copy-state`                                                              |
-| Props/options                | `variant`, `language`, `copyable`, `copyState`, content slot                                                                                               |
-| Source files                 | `resources/views/components/ui/code-snippet.blade.php`; `resources/css/app.css`; `resources/views/platform/ui-reference/components/code-snippet.blade.php` |
+| Props/options                | `variant`, `language`, `copyable`, `copyState`, `expandable`, `collapsedLines`, `light`, content slot                                                      |
+| Source files                 | `resources/views/components/ui/code-snippet.blade.php`; `resources/js/ui-controls/code-snippets.js`; `resources/css/app.css`; `resources/views/platform/ui-reference/components/live-examples/code-snippet.blade.php` |
 | CSS namespace                | `ui-code-snippet*` and `ui-code-token*`                                                                                                                    |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, Icons                                                                                                          |
 | Carbon benchmark             | Carbon Code snippet usage, style, and accessibility guidance                                                                                               |
 
-`Implemented Pending Correction` means the component exists and has a concrete Blade API, but the standard, UI Reference proof, and tests must be corrected to remove duplicated checklist content, generic fallback language, and unapproved assumptions about interactive copy behavior.
+`Implemented Pending Review` means the component has a concrete Blade API, lifecycle-owned copy/show-more behavior, UI Reference proof, and focused tests, and is waiting for manual visual review.
 
 ## 3. Installed standard
 
@@ -152,10 +159,10 @@ Use Code snippet when the user needs to read, compare, or copy exact implementat
 - Render code snippets through `<x-ui.code-snippet>`.
 - Use `variant="single"` for one-line API calls, token names, class names, route names, or commands.
 - Use `variant="multi"` for multiline Blade, PHP, JavaScript, CSS, HTML, JSON, or test examples.
-- Keep `variant="inline"` deferred until implemented and proven; use Markdown inline code or Typography-owned inline code treatment today.
+- Use `variant="inline"` for short copyable code terms inside body copy.
 - Use `language` when the snippet benefits from a visible language or context label.
 - Use `copyable` only when copying the exact snippet is useful.
-- Use `copyState="idle"` and `copyState="copied"` only as rendered visual states unless a clipboard controller is approved.
+- Use `copyState="idle"` and `copyState="copied"` for initial copy affordance state; live copying updates the state through `initCodeSnippets`.
 - Preserve whitespace and line breaks in multi-line examples.
 - Use horizontal overflow for long code instead of wrapping into misleading syntax.
 - Use explicit syntax token spans only where the UI Reference needs to prove code-token color roles.
@@ -168,6 +175,7 @@ Use Code snippet when the user needs to read, compare, or copy exact implementat
 
 | Mode                      | Status                   | Use                                                                                                   |
 | ------------------------- | ------------------------ | ----------------------------------------------------------------------------------------------------- |
+| Inline snippet            | Implemented              | Short code term or command embedded in prose.                                                         |
 | Single-line snippet       | Implemented              | Short API call, class name, route, command, token, or one-line implementation example.                |
 | Multi-line snippet        | Implemented              | Longer example that requires indentation, whitespace, or multiple lines.                              |
 | Language label            | Implemented              | Visible language/context label in the snippet header.                                                 |
@@ -175,9 +183,8 @@ Use Code snippet when the user needs to read, compare, or copy exact implementat
 | Copied                    | Implemented visual state | Copied state is rendered for UI Reference proof or server-rendered state.                             |
 | Syntax token highlighting | Implemented              | Explicit `ui-code-token-*` spans provide token-backed syntax color roles.                             |
 | Overflow                  | Implemented              | Long examples scroll horizontally without wrapping into incorrect syntax.                             |
-| Inline snippet            | Deferred                 | Use Markdown inline code or Typography-owned inline code treatment until installed.                   |
-| Show more/show less       | Gated                    | Requires JavaScript, button labels, height rules, status updates, and tests.                          |
-| Live clipboard behavior   | Gated                    | Requires JavaScript controller, data attributes, permission/error handling, announcements, and tests. |
+| Show more/show less       | Implemented              | Optional multi-line ghost button expands or collapses the snippet.                                    |
+| Live clipboard behavior   | Implemented              | Copy buttons and copyable inline snippets write exact snippet text and show copied feedback.          |
 
 ## 4. Public API
 
@@ -222,20 +229,23 @@ Use the Blade API instead of hand-building code snippet markup in feature views 
 | API surface             | Installed value                                                                                                                                            |
 | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Blade API               | `x-ui.code-snippet`                                                                                                                                        |
-| JavaScript              | No dedicated JavaScript controller approved for live clipboard behavior                                                                                    |
-| Root semantic structure | `pre` and `code` for block snippets; inline variant deferred                                                                                               |
-| Data attributes         | `data-ui-component="code-snippet"`, `data-ui-code-snippet-variant`, `data-ui-code-copy-state`                                                              |
+| JavaScript              | `initCodeSnippets`                                                                                                                                        |
+| Root semantic structure | `pre` and `code` for block snippets; inline variant renders inline `code` or copyable button plus `code`                                                   |
+| Data attributes         | `data-ui-component="code-snippet"`, `data-ui-code-snippet`, `data-ui-code-snippet-variant`, `data-ui-code-copy-state`, copy/show-more hooks                |
 | CSS namespace           | `ui-code-snippet*` and `ui-code-token*`                                                                                                                    |
-| Source files            | `resources/views/components/ui/code-snippet.blade.php`; `resources/css/app.css`; `resources/views/platform/ui-reference/components/code-snippet.blade.php` |
+| Source files            | `resources/views/components/ui/code-snippet.blade.php`; `resources/js/ui-controls/code-snippets.js`; `resources/css/app.css`; `resources/views/platform/ui-reference/components/live-examples/code-snippet.blade.php` |
 
 ### 4.3. Props and options
 
 | Prop/option  | Type     | Default      | Allowed values    | Required                                                                                                  | Notes                                                                                                                                 |
 | ------------ | -------- | ------------ | ----------------- | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `variant`    | `string` | `single`     | `single`, `multi` | No                                                                                                        | `single` keeps short calls compact. `multi` preserves line breaks and indentation. `inline` is deferred.                              |
+| `variant`    | `string` | `single`     | `inline`, `single`, `multi` | No                                                                                               | `inline` embeds short code terms in prose. `single` keeps short calls compact. `multi` preserves line breaks and indentation.         |
 | `language`   | `string` | `null`       | `null`            | Short language/context label such as `Blade`, `PHP`, `CSS`, `JavaScript`, `JSON`, `HTML`, `Route`, `Test` | No                                                                                                                                    | Renders the optional header label. Keep labels short and factual.                                             |
-| `copyable`   | `bool`   | `false`      | `true`, `false`   | No                                                                                                        | Renders a copy affordance when copying the exact snippet is useful. Live clipboard behavior is gated unless a controller is approved. |
-| `copyState`  | `string` | `idle`       | `idle`, `copied`  | No                                                                                                        | Renders visual copy state. Does not by itself perform clipboard behavior.                                                             |
+| `copyable`   | `bool`   | `false`      | `true`, `false`   | No                                                                                                        | Renders copy behavior when copying the exact snippet is useful.                                                                        |
+| `copyState`  | `string` | `idle`       | `idle`, `copied`  | No                                                                                                        | Sets initial copy tooltip/status state; `initCodeSnippets` updates it after copy.                                                     |
+| `expandable` | `bool`   | `false`      | `true`, `false`   | No                                                                                                        | Multi-line snippets may expose a Show more/Show less ghost button.                                                                    |
+| `collapsedLines` | `int` | `9`          | `2+`              | No                                                                                                        | Sets the collapsed visible line count for expandable multi-line snippets.                                                             |
+| `light`      | `bool`   | `false`      | `true`, `false`   | No                                                                                                        | Uses the alternate field/layer treatment when the snippet sits on a non-default layer.                                                 |
 | Default slot | `string` | `HtmlString` | none              | Exact escaped or safe code content                                                                        | Yes                                                                                                                                   | Content must be the canonical code being documented.                                                          |
 | `class`      | `string` | `null`       | `null`            | Layout passthrough if supported                                                                           | No                                                                                                                                    | Parent Patterns may pass layout classes. Do not use for local color, typography, spacing, or state overrides. |
 
@@ -246,10 +256,13 @@ Any prop not listed here is not public. If a feature needs another option, updat
 | Attribute                       | Status                   | Value             | Rule                                                                        |
 | ------------------------------- | ------------------------ | ----------------- | --------------------------------------------------------------------------- |
 | `data-ui-component`             | Implemented              | `code-snippet`    | Identifies the rendered component for tests and future behavior hooks.      |
-| `data-ui-code-snippet-variant`  | Implemented              | `single`, `multi` | Mirrors the installed variant for UI Reference proof and tests.             |
-| `data-ui-code-copy-state`       | Implemented visual state | `idle`, `copied`  | Mirrors the copy-state presentation. It is not a live controller by itself. |
-| `data-ui-code-copy-target`      | Deferred                 | none              | Requires clipboard controller gate before use.                              |
-| `data-ui-code-snippet-expanded` | Gated                    | none              | Requires show-more controller gate before use.                              |
+| `data-ui-code-snippet`          | Implemented              | present           | Lifecycle hook for `initCodeSnippets`.                                      |
+| `data-ui-code-snippet-variant`  | Implemented              | `inline`, `single`, `multi` | Mirrors the installed variant for UI Reference proof and tests.      |
+| `data-ui-code-copy-state`       | Implemented              | `idle`, `copied`  | Mirrors and updates copy-state presentation.                                |
+| `data-ui-code-copy-source`      | Implemented              | present           | Source text copied to clipboard.                                            |
+| `data-ui-code-copy-button`      | Implemented              | present           | Copy trigger hook.                                                          |
+| `data-ui-code-show-more`        | Implemented              | present           | Show more/show less trigger hook.                                           |
+| `data-ui-code-snippet-expanded` | Implemented              | `true`, `false`   | Mirrors expandable multi-line state.                                        |
 
 Feature views must not invent new `data-ui-code-*` attributes.
 
@@ -292,16 +305,16 @@ Feature views must not create additional `code-snippet-*`, `snippet-*`, `highlig
 
 | Name                    | Type         | Status                    | API                           | Notes                                                                                    |
 | ----------------------- | ------------ | ------------------------- | ----------------------------- | ---------------------------------------------------------------------------------------- |
+| Inline code snippet     | Variant      | Implemented               | `variant="inline"`            | Short code term or command embedded in prose.                                            |
 | Single-line             | Variant      | Implemented               | `variant="single"`            | Short API calls, route names, class names, token names, or commands.                     |
 | Multi-line              | Variant      | Implemented               | `variant="multi"`             | Preserved line breaks, indentation, and longer examples.                                 |
 | Language label          | Option       | Implemented               | `language="Blade"`            | Shows language/context in the snippet header.                                            |
 | Copy ready              | Option/state | Implemented visual state  | `copyable copyState="idle"`   | Renders copy affordance in idle state.                                                   |
-| Copied                  | State        | Implemented visual state  | `copyable copyState="copied"` | Renders copied confirmation. Live clipboard updates are gated.                           |
+| Copied                  | State        | Implemented               | `copyable copyState="copied"` | Renders copied confirmation and is updated by the controller after activation.            |
 | Syntax tokens           | Modifier     | Implemented               | `ui-code-token-*` spans       | Token-backed highlighting for examples that need it.                                     |
 | Overflow scroll         | Behavior     | Implemented               | component-owned CSS           | Long examples scroll horizontally.                                                       |
-| Inline code snippet     | Variant      | Deferred                  | none                          | Use Markdown inline code or Typography-owned inline code treatment today.                |
-| Show more/show less     | Behavior     | Gated                     | none                          | Requires controller, labels, status updates, reduced-motion behavior, and tests.         |
-| Live clipboard copy     | Behavior     | Gated                     | none                          | Requires JS controller, permission/error handling, status announcement, and tests.       |
+| Show more/show less     | Behavior     | Implemented               | `expandable`                  | Multi-line snippets may collapse/expand with a ghost button.                             |
+| Live clipboard copy     | Behavior     | Implemented               | `copyable`                    | Copy button or copyable inline snippet writes exact snippet text and updates feedback.   |
 | Executable/live preview | Behavior     | Not owned by Code snippet | none                          | Requires separate playground/live-preview Pattern.                                       |
 | Diff view               | Variant      | Gated                     | none                          | Requires dedicated diff token model, accessibility proof, and tests.                     |
 | Line numbers            | Modifier     | Gated                     | none                          | Requires copy behavior rules, wrapping/scroll proof, and screen-reader treatment.        |
@@ -318,17 +331,17 @@ Feature views must not create additional `code-snippet-*`, `snippet-*`, `highlig
 | Multi-line                 | Implemented                       | Preserves line breaks and indentation with block scrolling.                                                   |
 | Highlighted                | Implemented                       | Syntax roles use `ui-code-token-*` spans and Foundation Color/Typography roles.                               |
 | Copy ready                 | Implemented visual state          | Copy affordance is visible when `copyable` is true and `copyState="idle"`.                                    |
-| Copied                     | Implemented visual state          | Copied state is visible when `copyState="copied"`. Live state changes are gated.                              |
+| Copied                     | Implemented                       | Copied state is visible when `copyState="copied"` and after copy activation.                                  |
 | Hover                      | Implemented for copy control only | Copy control uses token-backed hover treatment. Read-only code body should not imply interactivity.           |
 | Focus-visible              | Implemented for copy control only | Copy control has visible focus in all supported themes.                                                       |
 | Active/pressed             | Implemented for copy control only | Copy control has token-backed active treatment.                                                               |
 | Overflow                   | Implemented                       | Long code scrolls horizontally without changing syntax meaning.                                               |
 | Read-only                  | Implemented                       | Code content is read-only; it is selectable text but not editable.                                            |
-| Disabled                   | Not applicable                    | Snippet content is read-only, not disabled. Gated copy controllers may define unavailable copy state later.   |
+| Disabled                   | Copy control only                 | Snippet content is read-only; copy controls may be disabled when copying is unavailable.                       |
 | Loading                    | Not applicable                    | Use Loading if snippet content is not ready.                                                                  |
 | Error/warning/success/info | Not applicable                    | These are not Code snippet states. Use copy-state text, comments inside code, or Notification as appropriate. |
 | Selected/unselected        | Not applicable                    | Snippet content is not a selection control.                                                                   |
-| Expanded/collapsed         | Gated                             | Requires show-more/show-less behavior before use.                                                             |
+| Expanded/collapsed         | Implemented                       | Expandable multi-line snippets expose Show more/Show less and `aria-expanded`.                                |
 | Empty                      | Not allowed                       | Do not render an empty code snippet. Use explanatory text or remove the example.                              |
 | Reduced motion             | Implemented where motion exists   | Copy-state transitions must use Foundation Motion and respect reduced-motion preferences when animated.       |
 
@@ -405,12 +418,13 @@ Feature views must not create local syntax classes, hard-coded token colors, arb
 | `x-ui.code-snippet`        | Approved                     | Required Blade API for code snippets.                                                                 |
 | Default slot               | Approved                     | Contains exact code content.                                                                          |
 | Escaped HTML entities      | Required when showing markup | Do not allow markup examples to execute.                                                              |
-| `variant` prop             | Approved                     | Use only `single` or `multi`.                                                                         |
+| `variant` prop             | Approved                     | Use `inline`, `single`, or `multi`.                                                                   |
 | `language` prop            | Approved                     | Use short labels only.                                                                                |
 | `copyable` prop            | Approved visual affordance   | Use only when copying exact snippet is useful.                                                        |
-| `copyState` prop           | Approved visual state        | Use `idle` or `copied`; does not implement clipboard behavior.                                        |
+| `copyState` prop           | Approved initial state       | Use `idle` or `copied`; live copy behavior updates this state.                                        |
+| `expandable` prop          | Approved                     | Use only on multi-line snippets that need collapsed and expanded views.                               |
 | `data-ui-*` attributes     | Approved only as documented  | Do not invent new snippet data attributes.                                                            |
-| Clipboard JavaScript       | Gated                        | Requires documented controller, status announcements, permission handling, error fallback, and tests. |
+| `initCodeSnippets`         | Approved                     | Owns copy-to-clipboard, copied feedback, and show-more behavior.                                      |
 | Syntax highlighter library | Gated                        | Requires dependency approval, token mapping, accessibility review, performance review, and tests.     |
 
 ## 8. Composition rules
@@ -448,7 +462,7 @@ Use Code snippet when:
 - The example is speculative, outdated, or not accepted as an app API.
 - The content is a full source file, long tutorial, diff, terminal log, stack trace, or live playground.
 - The content needs to be executed, edited, or previewed interactively.
-- The content is an inline reference and the inline variant is not installed; use Markdown inline code or Typography-owned inline code treatment.
+- The content is ordinary prose or metadata; use Typography/body text instead.
 - A visual token sample is needed; use the owning Foundation Element page.
 - A status, warning, or recovery message is needed; use Notification or prose.
 
@@ -458,11 +472,11 @@ Use Code snippet when:
 | -------------------------------- | ----------------------------------------------------------------------------------- |
 | Exact one-line component call    | Code snippet `variant="single"`                                                     |
 | Multiline implementation example | Code snippet `variant="multi"`                                                      |
-| Inline code term inside prose    | Markdown inline code / Typography inline code treatment until `inline` is installed |
+| Inline code term inside prose    | Code snippet `variant="inline"`                                                     |
 | API props/options table          | Markdown table / documentation Pattern                                              |
 | Long source file                 | Link to source or gated code viewer                                                 |
 | Copyable command/example         | Code snippet with `copyable` visual affordance                                      |
-| Live copy-to-clipboard behavior  | Gated Code snippet controller                                                       |
+| Live copy-to-clipboard behavior  | Code snippet with `copyable`                                                        |
 | Syntax-highlighted example       | Code snippet with `ui-code-token-*` spans                                           |
 | Warning about a code example     | Prose or Notification, not a severity snippet                                       |
 
@@ -475,7 +489,7 @@ Use Code snippet when:
 - Copy controls must be keyboard reachable when rendered.
 - Copy controls must show visible focus in every supported theme.
 - Copy state must be conveyed through text, not icon or color alone.
-- Live clipboard behavior, when installed later, must announce successful copy and failure states through an approved status mechanism.
+- Live clipboard behavior must announce successful copy and failure states through component feedback text.
 - Syntax colors must meet contrast requirements in supported light and dark themes.
 - Syntax meaning must not rely on color alone where the token distinction is necessary to understand the example.
 - Long snippets must remain reachable with keyboard and pointer scrolling where horizontal overflow is present.
@@ -510,7 +524,7 @@ Use Code snippet when:
 - Do not show speculative API calls as complete examples.
 - Do not show deferred APIs without deferred/gated disposition text.
 - Do not use screenshots of code as the primary code example.
-- Do not use fake controls for deferred clipboard, inline, show-more, diff, or live-preview behavior.
+- Do not use fake controls for diff, line numbers, syntax highlighter libraries, or live-preview behavior.
 - Do not attach feature-local clipboard JavaScript.
 - Do not use Bootstrap `.code`, `.pre-scrollable`, `.text-monospace`, or utility clusters as the app Code snippet API.
 - Do not use direct Carbon production classes such as `cds--*` or `bx--*`.
@@ -521,9 +535,6 @@ Use Code snippet when:
 
 | Capability                                  | Status                    | Gate                                                                                                                                                                 | Local workaround allowed?                                           |
 | ------------------------------------------- | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| Inline code snippet variant                 | Deferred                  | Requires source implementation, Typography alignment, hover/focus rules if interactive, UI Reference proof, and tests.                                               | Use Markdown inline code or Typography-owned inline code treatment. |
-| Live clipboard controller                   | Gated                     | Requires documented JavaScript controller, data attributes, success/failure announcements, permission fallback, focus behavior, browser support decision, and tests. | No feature-local JS. Visual copy-state examples may render.         |
-| Show more/show less for multi-line snippets | Gated                     | Requires collapsed height rules, accessible button labels, status updates, keyboard behavior, reduced-motion proof, and tests.                                       | No local show-more controls.                                        |
 | Syntax highlighter integration              | Gated                     | Requires dependency approval, performance review, token mapping, accessibility review, no raw theme colors, and UI Reference proof.                                  | Use explicit `ui-code-token-*` spans for proof examples.            |
 | Line numbers                                | Gated                     | Requires copy behavior decision, screen-reader handling, overflow proof, and tests.                                                                                  | No local line-number markup.                                        |
 | Diff view                                   | Gated                     | Requires addition/deletion token model, non-color-only meaning, line labels, accessibility proof, and tests.                                                         | Use prose or separate examples.                                     |
@@ -546,37 +557,37 @@ The Code snippet page is a developer-documentation reference page. The Live exam
 | Single-line code                  | Short API calls stay visually compact and may include copy affordance.                                                                                                                 | Single-line, Language label, Copy ready, Copied                           |
 | Multi-line code                   | Longer examples preserve line breaks, indentation, and horizontal overflow.                                                                                                            | Multi-line, Without copy, With copy, Overflow                             |
 | Syntax token proof                | Token spans render with approved Typography and Color roles.                                                                                                                           | Keyword, Property, String, Punctuation, Comment, Number, Function         |
-| Copy-state proof                  | Idle and copied visual states render without implying live clipboard JS is installed.                                                                                                  | Copy ready, Copied, Accessible copy label                                 |
+| Copy behavior proof               | Idle and copied states render through the icon-only copy button, tooltip, and live feedback text.                                                                                      | Copy to clipboard, Copied to clipboard, Accessible copy label             |
 | Overflow behavior                 | Long snippets scroll horizontally instead of wrapping into misleading syntax.                                                                                                          | Overflow, Multi-line, Single-line                                         |
 | Theme proof                       | Snippets render correctly on supported light, dark, layered, and inverse surfaces where applicable.                                                                                    | Themes, Contrast, Token colors                                            |
 | Accessibility proof               | Examples show `pre`/`code`, copy button label, focus-visible state, text-based copied feedback, and non-color-only token meaning.                                                      | Semantics, Copy button, Focus-visible, Copied text                        |
 | Content behavior proof            | Examples use real canonical app APIs, no placeholder comments, no secrets, no deprecated paths, and no speculative complete APIs.                                                      | Canonical examples, Safe content, No placeholders                         |
 | Selection guidance matrix         | Page distinguishes Code snippet from prose, tables, inline code, source viewers, screenshots, live previews, and Notifications.                                                        | Code snippet, Typography inline code, Documentation Pattern, Notification |
-| Prohibited usage proof            | Page shows raw `<pre>` wrappers, Bootstrap code utilities, direct Carbon classes, hard-coded syntax colors, screenshots of code, fake copy JS, and speculative examples as prohibited. | Raw wrappers, Bootstrap, Carbon classes, Local JS, Fake controls          |
-| Deferred gate proof               | Page shows trigger conditions for inline variant, live clipboard, show-more, syntax highlighter, line numbers, diff, and playground.                                                   | Inline, Clipboard, Show more, Highlighter, Line numbers, Diff             |
+| Prohibited usage proof            | Page shows raw `<pre>` wrappers, Bootstrap code utilities, direct Carbon classes, hard-coded syntax colors, screenshots of code, and speculative examples as prohibited.               | Raw wrappers, Bootstrap, Carbon classes, Fake controls                    |
+| Gated capability proof            | Page shows trigger conditions for syntax highlighter libraries, line numbers, diff, terminal variants, and playground.                                                                 | Highlighter, Line numbers, Diff, Playground                              |
 | Foundation Elements proof         | Page shows consumed Foundation Elements and token responsibilities.                                                                                                                    | Color, Spacing, Typography, Themes, Motion, Icons                         |
 | Developer implementation examples | Canonical Blade calls render as real code examples.                                                                                                                                    | Single, Multi, Copyable, Copied, Syntax tokens                            |
 
-The page must not display generic fallback/reference sections or placeholder developer comments. It must show the actual installed Blade API, props, rendered variants, rendered copy states, token classes, prohibited usage, deferred gates, accessibility behavior, and consumed Foundation Elements.
+The page must not display generic fallback/reference sections or placeholder developer comments. It must show the actual installed Blade API, props, rendered variants, rendered copy behavior, token classes, prohibited usage, remaining gated capabilities, accessibility behavior, and consumed Foundation Elements.
 
 ## 15. Testing and acceptance criteria
 
 - `/platform/ui-reference/components/code-snippet` returns 200 for authorized users.
-- The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
-- Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
+- The page shows the installed API, states, variants/options, prohibited usage, remaining gated capabilities, and Foundation Elements consumed.
+- Implemented APIs render production examples; remaining deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
-- The page identifies Code snippet as `Implemented Pending Correction`.
+- The page identifies Code snippet as `Implemented Pending Review`.
 - The page shows canonical `<x-ui.code-snippet>` examples.
-- The page renders single-line and multi-line examples.
+- The page renders inline, single-line, and multi-line examples.
 - The page renders language-label examples.
 - The page renders copy ready and copied visual states.
-- The page documents that live clipboard JavaScript is gated unless a documented controller is approved.
+- The page documents live clipboard behavior through `initCodeSnippets`.
 - The page renders syntax token examples using `ui-code-token-*` classes.
 - The page renders overflow examples without misleading wrapped syntax.
-- The page documents `variant`, `language`, `copyable`, `copyState`, and content slot behavior.
+- The page documents `variant`, `language`, `copyable`, `copyState`, `expandable`, `collapsedLines`, `light`, and content slot behavior.
 - The page documents semantic `pre` and `code` structure.
 - The page distinguishes Code snippet from prose, tables, inline code, source viewers, screenshots, live previews, and Notifications.
-- The page documents prohibited usage for raw `<pre>` wrappers, Bootstrap code utilities, direct Carbon classes, raw syntax colors, screenshots of code, fake copy JS, feature-local clipboard behavior, and speculative examples.
+- The page documents prohibited usage for raw `<pre>` wrappers, Bootstrap code utilities, direct Carbon classes, raw syntax colors, screenshots of code, feature-local clipboard behavior, and speculative examples.
 - Tests assert no generic placeholder content appears.
 - Tests assert stale labels such as `Component-specific API pending correction`, `Live Examples Card`, `Reference Examples`, `Legacy Contract Summary`, and duplicated implementation checklist sections remain absent.
 - Tests assert no `tier-1`, `tier-2`, direct Carbon production class names, Bootstrap code classes, hard-coded colors, arbitrary local spacing, local icons, custom JavaScript, or feature-local code snippet classes are presented as approved.
@@ -588,23 +599,26 @@ $response = $this->actingAs($admin)->get('/platform/ui-reference/components/code
 
 $response->assertOk();
 $response->assertSee('Code snippet');
-$response->assertSee('Implemented Pending Correction');
+$response->assertSee('Implemented Pending Review');
 $response->assertSee('x-ui.code-snippet');
 $response->assertSee('ui-code-snippet');
 $response->assertSee('variant');
 $response->assertSee('single');
 $response->assertSee('multi');
+$response->assertSee('inline');
 $response->assertSee('language');
 $response->assertSee('copyable');
 $response->assertSee('copyState');
-$response->assertSee('Copy ready');
-$response->assertSee('Copied');
+$response->assertSee('Copy to clipboard');
+$response->assertSee('Copied to clipboard');
+$response->assertSee('Show more');
+$response->assertSee('Show less');
 $response->assertSee('ui-code-token-keyword');
 $response->assertSee('ui-code-token-property');
 $response->assertSee('ui-code-token-string');
 $response->assertSee('pre');
 $response->assertSee('code');
-$response->assertSee('Live clipboard controller');
+$response->assertSee('initCodeSnippets');
 $response->assertSee('Color');
 $response->assertSee('Spacing');
 $response->assertSee('Typography');
@@ -651,4 +665,4 @@ $response->assertDontSee('text-monospace');
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon Code snippet usage, style, and accessibility guidance inform inline/single/multi variant boundaries, copy affordance labeling, copied-state text, show-more behavior, token-backed focus/hover/active states, and accessible syntax color expectations. Login App keeps its own `x-ui.code-snippet` API, `ui-*` namespace, explicit token classes, gated clipboard controller, Foundation Element tokens, and UI Reference proof.
+- Carbon Code snippet usage, style, and accessibility guidance inform inline/single/multi variant boundaries, copy affordance labeling, copied-state text, show-more behavior, token-backed focus/hover/active states, and accessible syntax color expectations. Login App keeps its own `x-ui.code-snippet` API, `ui-*` namespace, explicit token classes, `initCodeSnippets` controller, Foundation Element tokens, and UI Reference proof.

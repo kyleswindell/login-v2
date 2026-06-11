@@ -614,14 +614,15 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 - Status: Implemented Pending Review
 - Owner: Batch F
 - Follow-up To: P2-F-CQ-038
-- Scope: Replace generic Code snippet depth content with canonical `x-ui.code-snippet` examples for single-line, multi-line, highlighted syntax tokens, copy-state disposition, and token-backed developer snippets.
+- Scope: Replace generic Code snippet depth content with canonical `x-ui.code-snippet` examples for inline, single-line, multi-line, highlighted syntax tokens, copy behavior, show-more behavior, and token-backed developer snippets.
 - Acceptance:
-  - Code snippet page renders single-line and multi-line examples
+  - Code snippet page renders inline, single-line, and multi-line examples
   - highlighted syntax-token examples use approved Typography and Color token guidance
-  - copy behavior is implemented or explicitly gated with trigger conditions
+  - copy behavior uses an icon-only ghost button, tooltip, and copied-status feedback
+  - multi-line examples prove show-more/show-less behavior and horizontal overflow
   - developer implementation uses `x-ui.code-snippet`
-  - focused tests assert highlighted-token proof and no generic fallback
-- Implemented in: worklog-2-F-0025
+  - focused tests assert highlighted-token proof, copy/show-more hooks, and no generic fallback
+- Implemented in: worklog-2-F-0054
 
 ### P2-F-CQ-080 - Date picker component correction
 - Status: Implemented Pending Review

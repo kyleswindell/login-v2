@@ -519,7 +519,7 @@ class UiReferenceComponentDepthCatalog
      */
     private function codeSnippetComponent(): array
     {
-        return $this->correctedImplemented('code-snippet', 'Code snippet', 'Code snippets present implementation examples with app-approved code typography and syntax token colors.', [
+        return array_replace($this->correctedImplemented('code-snippet', 'Code snippet', 'Code snippets present implementation examples with app-approved code typography, syntax token colors, copy controls, and optional multi-line expansion.', [
             $this->exampleFromSample('Single-line code', 'Short API calls stay on one line and may include a copy action.', ['type' => 'code', 'variant' => 'single', 'language' => 'Blade', 'copyable' => true, 'items' => [], 'code' => '<span class="ui-code-token-punctuation">&lt;</span><span class="ui-code-token-keyword">x-ui.button</span> <span class="ui-code-token-property">semantic</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"primary"</span><span class="ui-code-token-punctuation">&gt;</span>Save<span class="ui-code-token-punctuation">&lt;/</span><span class="ui-code-token-keyword">x-ui.button</span><span class="ui-code-token-punctuation">&gt;</span>'], [
                 $this->sampleVariant('Copy ready', ['type' => 'code', 'variant' => 'single', 'language' => 'Blade', 'copyable' => true, 'items' => [], 'code' => '<span class="ui-code-token-punctuation">&lt;</span><span class="ui-code-token-keyword">x-ui.button</span><span class="ui-code-token-punctuation"> /&gt;</span>']),
                 $this->sampleVariant('Copied state', ['type' => 'code', 'variant' => 'single', 'language' => 'Blade', 'copyable' => true, 'copy_state' => 'copied', 'items' => [], 'code' => '<span class="ui-code-token-keyword">Copied</span>']),
@@ -552,6 +552,7 @@ class UiReferenceComponentDepthCatalog
             'Snippets preserve whitespace and line breaks.',
             'Copy buttons are optional and must update visible state when implemented.',
             'Long examples scroll horizontally instead of wrapping into misleading syntax.',
+            'Multi-line snippets may expose a show-more ghost button when the layout needs a collapsed view.',
         ], [
             'Keep examples short and tied to the current component API.',
             'Use highlighted tokens only for syntax roles such as keyword, property, string, and punctuation.',
@@ -560,6 +561,11 @@ class UiReferenceComponentDepthCatalog
             'Use semantic `pre` and `code` structure.',
             'Copy controls must be keyboard reachable and announce copied state when implemented.',
             'Token colors must meet contrast in light and dark themes.',
+        ]), [
+            'status' => 'Implemented - pending manual review',
+            'current_decision' => 'Code snippet owns inline, single-line, multi-line, copy tooltip/status, syntax token, horizontal overflow, light modifier, and show-more proof through the installed x-ui.code-snippet API.',
+            'live_examples_layout' => 'flexible-matrix',
+            'live_examples_view' => 'platform.ui-reference.components.live-examples.code-snippet',
         ]);
     }
 
@@ -1918,6 +1924,7 @@ class UiReferenceComponentDepthCatalog
             'breadcrumb', 'menu', 'menu-buttons' => 'initMenus exported from resources/js/ui-controls/menus.js',
                 'tabs' => 'initTabs exported from resources/js/ui-controls/tabs.js',
                 'accordion' => 'initAccordions exported from resources/js/ui-controls/accordions.js',
+                'code-snippet' => 'initCodeSnippets exported from resources/js/ui-controls/code-snippets.js',
                 'dropdown' => 'initDropdowns exported from resources/js/ui-controls/dropdowns.js',
                 'content-switcher' => 'initContentSwitchers exported from resources/js/ui-controls/content-switchers.js',
                 'checkbox' => 'initCheckboxes exported from resources/js/ui-controls/checkboxes.js',

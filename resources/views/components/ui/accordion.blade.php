@@ -45,7 +45,7 @@
             $isDisabled = (bool) ($item['disabled'] ?? false);
         @endphp
 
-        <section class="ui-accordion-item" data-ui-accordion-item>
+        <section class="ui-accordion-item" data-ui-accordion-item data-ui-accordion-item-open="{{ $isOpen ? 'true' : 'false' }}">
             <h3 class="ui-accordion-heading">
                 <button
                     id="{{ $triggerId }}"

@@ -1,6 +1,8 @@
 @php
     $currentSection = $currentSection ?? 'overview';
     $sidebarLinkClass = fn (bool $active, bool $compact = false) => trim('ui-reference-sidebar-link '.($compact ? 'ui-reference-sidebar-link-compact ' : '').($active ? 'is-current' : ''));
+    $approvedComponentSlugs = ['button', 'tooltip'];
+    $approvedElementSlugs = [];
     $statusBadgeLabel = fn (string $disposition) => match ($disposition) {
         'Partial' => 'Partial',
         'Needs audit' => 'Audit',
@@ -136,6 +138,11 @@
                         @else
                             <a wire:navigate href="{{ route('platform.ui-reference.elements.show', ['element' => $element['slug']]) }}" class="{{ $sidebarLinkClass($isActiveElement) }}" data-ui-reference-element-sidebar-item="{{ $element['slug'] }}" @if ($isActiveElement) aria-current="page" @endif>
                                 <span>{{ $element['label'] }}</span>
+                                @if (in_array($element['slug'], $approvedElementSlugs, true))
+                                    <span class="ui-reference-sidebar-approved-badge" role="img" aria-label="Approved" title="Approved" data-ui-reference-sidebar-approved="element:{{ $element['slug'] }}">
+                                        <x-heroicon-o-check-circle aria-hidden="true" />
+                                    </span>
+                                @endif
                                 @if ($element['disposition'] !== 'Implemented')
                                     <span class="ui-reference-sidebar-badge">{{ $statusBadgeLabel($element['disposition']) }}</span>
                                 @endif
@@ -180,6 +187,11 @@
                         @php $isActiveComponent = $currentSection === 'components.'.$component['slug']; @endphp
                         <a wire:navigate href="{{ route('platform.ui-reference.components.show', ['component' => $component['slug']]) }}" class="{{ $sidebarLinkClass($isActiveComponent) }}" data-ui-reference-component-sidebar-item="{{ $component['slug'] }}" data-ui-reference-component-sidebar-label="{{ $component['label'] }}" @if ($isActiveComponent) aria-current="page" @endif>
                             <span>{{ $component['label'] }}</span>
+                            @if (in_array($component['slug'], $approvedComponentSlugs, true))
+                                <span class="ui-reference-sidebar-approved-badge" role="img" aria-label="Approved" title="Approved" data-ui-reference-sidebar-approved="component:{{ $component['slug'] }}">
+                                    <x-heroicon-o-check-circle aria-hidden="true" />
+                                </span>
+                            @endif
                             @if ($component['disposition'] !== 'Implement Component Page')
                                 <span class="ui-reference-sidebar-badge">{{ $statusBadgeLabel($component['disposition']) }}</span>
                             @endif

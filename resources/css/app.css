@@ -1602,7 +1602,10 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-accordion-flush .ui-accordion-trigger:hover,
-    .ui-accordion-flush .ui-accordion-trigger:focus-visible {
+    .ui-accordion-flush .ui-accordion-trigger:focus-visible,
+    .ui-accordion-flush .ui-accordion-trigger[data-ui-accordion-focus='true'] {
+        inline-size: calc(100% + 2rem);
+        margin-inline: -1rem;
         padding-inline: 1rem;
     }
 
@@ -1615,7 +1618,8 @@ Use targeted searches for the class family being changed before reading this fil
         background-color: var(--ui-layer-selected-01);
     }
 
-    .ui-accordion-trigger:focus-visible {
+    .ui-accordion-trigger:focus-visible,
+    .ui-accordion-trigger[data-ui-accordion-focus='true'] {
         outline: 2px solid var(--ui-focus);
         outline-offset: -2px;
     }
@@ -1649,9 +1653,7 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-accordion-panel {
-        @apply border-t;
         block-size: auto;
-        border-color: var(--ui-border-subtle-01);
         background-color: transparent;
         opacity: 1;
         overflow: hidden;
@@ -1764,6 +1766,17 @@ Use targeted searches for the class family being changed before reading this fil
         @apply shrink-0 rounded-full border px-1.5 py-0.5 text-[0.62rem] font-semibold uppercase tracking-[0.12em];
         border-color: var(--ui-action-soft-neutral-border);
         color: var(--ui-text-helper);
+    }
+
+    .ui-reference-sidebar-approved-badge {
+        @apply inline-flex size-5 shrink-0 items-center justify-center rounded-full border;
+        border-color: var(--ui-support-success);
+        color: var(--ui-support-success);
+        background-color: color-mix(in srgb, var(--ui-support-success) 12%, transparent);
+    }
+
+    .ui-reference-sidebar-approved-badge svg {
+        @apply size-4;
     }
 
     .ui-reference-sidebar-disclosure {

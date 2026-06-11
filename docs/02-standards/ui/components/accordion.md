@@ -426,7 +426,9 @@ Interaction and composition behavior:
 - Parent layouts own external spacing; Accordion owns only trigger, item, and panel internals.
 - Default Accordion uses divider rules rather than a rounded bordered container.
 - Contained Accordion may use a bounded surface only when the parent context requires that treatment.
-- Flush Accordion sets row title and chevron padding to 0px at rest and adds 16px inline padding for hover and focus-visible interaction states.
+- Flush Accordion keeps row title and chevron alignment flush at rest, hover, and focus. Hover/focus surfaces may extend by 16px through negative margin plus matching padding, but the title and chevron must not shift into the default non-flush alignment.
+- Open panels belong to their trigger row. Do not draw an extra divider between an expanded trigger and its associated panel content; the next item boundary provides the bottom rule.
+- A clicked trigger keeps the visible focus treatment until the next pointer or keyboard action clears it.
 - Icon alignment is selected for the whole accordion instance. Do not alternate start and end icon placement on the same page.
 - Nested interactive controls inside a panel must have enough spacing from the trigger region to avoid accidental collapse.
 

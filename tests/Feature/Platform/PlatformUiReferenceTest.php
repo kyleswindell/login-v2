@@ -53,6 +53,8 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('aria-label="UI Reference patterns"', false)
             ->assertSee('aria-current="page"', false)
             ->assertSee('data-ui-reference-component-sidebar-sort="alphabetical"', false)
+            ->assertSee('data-ui-reference-sidebar-approved="component:button"', false)
+            ->assertSee('data-ui-reference-sidebar-approved="component:tooltip"', false)
             ->assertDontSee('data-ui-reference-component-sidebar-group=', false)
             ->assertDontSee('Legacy Index Surfaces')
             ->assertSee('Number input')
@@ -73,6 +75,8 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('<button', $sidebarPartial);
         $this->assertStringContainsString('aria-current="page"', $sidebarPartial);
         $this->assertStringContainsString('x-heroicon-o-chevron-down', $sidebarPartial);
+        $this->assertStringContainsString('$approvedComponentSlugs = [\'button\', \'tooltip\'];', $sidebarPartial);
+        $this->assertStringContainsString('x-heroicon-o-check-circle', $sidebarPartial);
         $this->assertStringNotContainsString('<details', $sidebarPartial);
         $this->assertStringNotContainsString('<summary', $sidebarPartial);
         $this->assertStringNotContainsString('border-slate-', $sidebarPartial);
@@ -88,6 +92,7 @@ class PlatformUiReferenceTest extends TestCase
         $appCss = file_get_contents(resource_path('css/app.css'));
         $this->assertStringContainsString('.ui-reference-sidebar-panel', $appCss);
         $this->assertStringContainsString('.ui-reference-sidebar-link', $appCss);
+        $this->assertStringContainsString('.ui-reference-sidebar-approved-badge', $appCss);
         $this->assertStringContainsString('var(--ui-text-secondary)', $appCss);
         $this->assertStringContainsString('var(--ui-layer-selected-01)', $appCss);
         $this->assertStringContainsString('max-block-size: calc(100dvh - 7rem)', $appCss);
@@ -854,12 +859,20 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertIsString($accordionScript);
         $this->assertIsString($accordionCss);
         $this->assertStringContainsString('prefers-reduced-motion: reduce', $accordionScript);
+        $this->assertStringContainsString('initAccordions = (root = document)', $accordionScript);
+        $this->assertStringContainsString('data-ui-accordion-focus', $accordionScript);
+        $this->assertStringContainsString('clearPersistedAccordionFocus', $accordionScript);
+        $this->assertStringContainsString('data-ui-accordion-item-open', $accordionScript);
         $this->assertStringContainsString('requestAnimationFrame', $accordionScript);
         $this->assertStringContainsString('transitionend', $accordionScript);
         $this->assertStringContainsString('.ui-accordion-flush .ui-accordion-trigger', $accordionCss);
+        $this->assertStringContainsString("data-ui-accordion-focus='true'", $accordionCss);
+        $this->assertStringContainsString('inline-size: calc(100% + 2rem);', $accordionCss);
+        $this->assertStringContainsString('margin-inline: -1rem;', $accordionCss);
         $this->assertStringContainsString('.ui-accordion-contained', $accordionCss);
         $this->assertMatchesRegularExpression('/\.ui-accordion\s*\{\s*@apply overflow-hidden;\s*background-color: transparent;/s', $accordionCss);
         $this->assertDoesNotMatchRegularExpression('/\.ui-accordion\s*\{[^}]*rounded[^}]*border/s', $accordionCss);
+        $this->assertStringNotContainsString('.ui-accordion-panel {'."\n".'        @apply border-t;', $accordionCss);
         $this->assertStringContainsString("data-ui-accordion-panel-open='false'", $accordionCss);
         $this->assertStringContainsString('block-size 200ms', $accordionCss);
         $this->assertStringContainsString('panel.scrollHeight', $accordionScript);

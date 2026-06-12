@@ -1428,6 +1428,12 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('<span class="ui-code-token-keyword">x-ui.data-table</span>', $examplesView);
         $this->assertStringContainsString('.ui-code-snippet-shell-expandable', $componentCss);
         $this->assertStringContainsString('@apply relative w-full max-w-3xl overflow-visible rounded-lg border', $componentCss);
+        $this->assertStringContainsString('--ui-code-snippet-layer: var(--ui-layer-01);', $componentCss);
+        $this->assertStringContainsString('background-color: var(--ui-code-snippet-layer);', $componentCss);
+        $this->assertStringContainsString('@apply flex min-h-10 items-center justify-between gap-3 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em];', $componentCss);
+        $this->assertStringContainsString('@apply px-4 py-2;', $componentCss);
+        $this->assertStringNotContainsString('@apply flex min-h-10 items-center justify-between gap-3 border-b px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em];', $componentCss);
+        $this->assertStringNotContainsString('@apply border-t px-4 py-2;', $componentCss);
         $this->assertStringContainsString(".ui-code-snippet-shell[data-ui-code-copy-state='copied'] .ui-code-snippet-copy-control .ui-icon-button", $componentCss);
         $this->assertStringContainsString("[data-ui-interaction-focus='true']", $componentCss);
         $this->assertStringContainsString('.ui-code-snippet-inline', $componentCss);
@@ -1440,6 +1446,7 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('initInteractionFocus', $appJs);
         $this->assertStringContainsString('initCodeSnippets exported from resources/js/ui-controls/code-snippets.js', $catalog);
         $this->assertStringContainsString('Show more/show less', $standard);
+        $this->assertStringContainsString('one layer surface across the language header, code body, and footer controls', $standard);
     }
 
     public function test_button_component_recovery_page_renders_required_examples(): void

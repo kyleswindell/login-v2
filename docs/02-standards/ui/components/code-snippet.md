@@ -168,6 +168,7 @@ Use Code snippet when the user needs to read, compare, or copy exact implementat
 - Use explicit syntax token spans only where the UI Reference needs to prove code-token color roles.
 - Use token-backed syntax spans for UI Reference live examples that demonstrate implementation code, copy feedback, horizontal overflow, or multi-line syntax.
 - Keep code examples real and tied to the current installed API.
+- Block snippet shells use one standard card-like border and one layer surface across the language header, code body, and footer controls. Do not add a separate header/footer background band or internal header/footer divider by default.
 - Do not show speculative, deferred, or fake API calls as complete production examples.
 - Parent Patterns own surrounding explanatory copy, example grouping, external spacing, and page layout.
 - Do not use raw `<pre>`, raw `<code>` blocks with local classes, Bootstrap code utilities, direct Carbon classes, raw colors, arbitrary spacing, or feature-local JavaScript to create code snippets.
@@ -379,6 +380,7 @@ Carbon color role mapping:
 | Carbon token / role | Carbon responsibility | Login App token / API | Login value source | Mapping status | Owner rule |
 | ------------------- | --------------------- | --------------------- | ------------------ | -------------- | ---------- |
 | `$layer` | Single-line snippet container background | `ui-code-snippet--single` surface role | App layer palette | Same role / app value | Code snippet surfaces use layer roles, not local gray blocks. |
+| `$layer` | Header/body/footer surface | `--ui-code-snippet-layer` | App layer palette | Same role / app value | Block snippet header, code body, and footer controls share one layer surface in the same shell. |
 | `$layer-hover`, `$layer-active` | Inline snippet hover/active background | Inline snippet state roles | App layer state palette | Same role / app value | Hover/active shares layer state mapping. |
 | `$icon-primary` | Multi-line/copy icon color | Code snippet copy/icon role | App icon palette | Same role / app value | Icons inherit currentColor from component state. |
 | `$focus` | Single-line/container/copy focus | Code snippet focus-visible role | App focus palette | Same role / app value | Focus must remain visible on copyable snippets, including the most recently clicked copy or show-more control. |

@@ -2378,24 +2378,24 @@ Use targeted searches for the class family being changed before reading this fil
 
     .ui-code-snippet-shell {
         @apply relative w-full max-w-3xl overflow-visible rounded-lg border;
+        --ui-code-snippet-layer: var(--ui-layer-01);
         border-color: var(--ui-border-subtle-01);
-        background-color: var(--ui-layer-01);
+        background-color: var(--ui-code-snippet-layer);
     }
 
     .ui-code-snippet-shell-light {
-        background-color: var(--ui-field-02);
+        --ui-code-snippet-layer: var(--ui-layer-02);
     }
 
     .ui-code-snippet-header {
-        @apply flex min-h-10 items-center justify-between gap-3 border-b px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em];
-        border-color: var(--ui-border-subtle-01);
-        background-color: var(--ui-layer-02);
+        @apply flex min-h-10 items-center justify-between gap-3 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em];
+        background-color: var(--ui-code-snippet-layer);
         color: var(--ui-text-helper);
     }
 
     .ui-code-snippet-shell .ui-code-snippet {
         @apply rounded-none border-0;
-        background-color: var(--ui-layer-01);
+        background-color: var(--ui-code-snippet-layer);
     }
 
     .ui-code-snippet-copy-control {
@@ -2430,9 +2430,8 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-code-snippet-footer {
-        @apply border-t px-4 py-2;
-        border-color: var(--ui-border-subtle-01);
-        background-color: var(--ui-layer-01);
+        @apply px-4 py-2;
+        background-color: var(--ui-code-snippet-layer);
     }
 
     .ui-code-snippet-toggle {

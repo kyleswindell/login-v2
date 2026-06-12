@@ -39,7 +39,7 @@ class UiReferenceElementCatalog
                 systemStatus: 'Implemented',
                 purpose: 'Color controls visual roles for content hierarchy, surfaces, fields, borders, links, actions, statuses, focus, loading, and high-contrast moments.',
                 summary: 'Semantic color tokens for text, icons, borders, surfaces, actions, statuses, and shadows.',
-                liveExamples: ['theme-aware swatches', 'token groups', 'layering model', 'interaction states', 'semantic support colors', 'contrast moments', 'common app examples'],
+                liveExamples: ['theme-aware swatches', 'token groups', 'layering model', 'background layering page', 'interaction states', 'semantic support colors', 'contrast moments', 'common app examples'],
                 tokens: [
                     ['name' => 'Text hierarchy', 'variable' => '--ui-text-strong / --ui-text-secondary / --ui-text-muted', 'api' => 'ui-card-title, ui-card-copy, text utility classes', 'example' => '<p class="ui-card-copy">Muted supporting copy</p>'],
                     ['name' => 'Surfaces', 'variable' => '--ui-surface / --ui-surface-elevated', 'api' => 'ui-card, ui-shell-card, layout wrappers', 'example' => '<article class="ui-card">...</article>'],
@@ -67,6 +67,7 @@ class UiReferenceElementCatalog
                 related: [
                     ['label' => 'Button component', 'href' => '/platform/ui-reference/components/button'],
                     ['label' => 'Notification component', 'href' => '/platform/ui-reference/components/notification'],
+                    ['label' => 'Background Layering', 'href' => '/platform/ui-reference/elements/color/layering'],
                     ['label' => 'Canonical color doc', 'href' => '/platform/docs?path=02-standards%2Fui%2Felements%2Fcolor.md'],
                     ['label' => 'Carbon color overview', 'href' => 'https://carbondesignsystem.com/elements/color/overview/'],
                 ],

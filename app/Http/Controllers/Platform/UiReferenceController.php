@@ -85,6 +85,15 @@ class UiReferenceController extends Controller
         ]);
     }
 
+    public function colorLayering(Request $request): View
+    {
+        $this->authorize('view-platform-ui-reference');
+
+        return $this->renderSection('elements.color-layering', [
+            'currentSection' => 'elements.color.layering',
+        ]);
+    }
+
     public function typographyTypeSets(Request $request): View
     {
         $this->authorize('view-platform-ui-reference');

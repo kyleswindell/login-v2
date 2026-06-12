@@ -509,7 +509,19 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-ui-reference-color-sidebar', false)
             ->assertSee('data-ui-reference-color-sidebar-item="overview"', false)
             ->assertSee('data-ui-reference-color-sidebar-item="token-palette"', false)
+            ->assertSee('data-ui-reference-color-sidebar-item="background-layering"', false)
             ->assertSee('Color Token Palette');
+
+        $this->get('/platform/ui-reference/elements/color/layering')
+            ->assertOk()
+            ->assertSee('data-color-background-layering-page', false)
+            ->assertSee('data-ui-reference-foundation-element="color"', false)
+            ->assertSee('data-ui-reference-element-dropdown="color"', false)
+            ->assertSee('data-ui-reference-element-dropdown-open="true"', false)
+            ->assertSee('data-ui-reference-sidebar-disclosure="color"', false)
+            ->assertSee('data-ui-reference-color-sidebar-item="background-layering"', false)
+            ->assertSee('aria-current="page"', false)
+            ->assertSee('Background Layering');
 
         $this->get('/platform/ui-reference/elements/typography/type-sets')
             ->assertOk()
@@ -561,6 +573,21 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Nested surface: G70')
             ->assertSee('ui-inline-alert-success', false)
             ->assertSee('Selected and active states use explicit role tokens');
+
+        $this->get('/platform/ui-reference/elements/color/layering')
+            ->assertOk()
+            ->assertSee('data-background-layering-section="model"', false)
+            ->assertSee('data-background-layering-section="stack-sequence"', false)
+            ->assertSee('data-background-layering-section="card-header-footer"', false)
+            ->assertSee('data-background-layering-section="component-containers"', false)
+            ->assertSee('data-background-layering-section="implementation-rules"', false)
+            ->assertSee('data-background-layer-example="card-with-header-footer"', false)
+            ->assertSee('data-background-layer-example="code-snippet-container"', false)
+            ->assertSee('--ui-background')
+            ->assertSee('--ui-layer-01')
+            ->assertSee('--ui-layer-02')
+            ->assertSee('--ui-layer-accent-01')
+            ->assertSee('Do not alternate white/gray manually in component examples');
 
         $this->get('/platform/ui-reference/elements/themes')
             ->assertOk()

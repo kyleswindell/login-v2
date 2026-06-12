@@ -2,7 +2,7 @@
 
 ## Status
 
-READY_FOR_REVIEW
+PASSED_REVIEW
 
 ## Queue Items
 
@@ -25,6 +25,7 @@ READY_FOR_REVIEW
 - Updated the component CSS so snippets align to the grid, preserve horizontal scroll, use 32px icon-only ghost copy controls, and expose collapsed/expanded multi-line states.
 - Updated the Code snippet standard, catalog source contract, active sync records, and focused tests to require `initCodeSnippets` and the corrected proof surface.
 - Follow-up correction: copy tooltips now use auto placement without shell clipping, inline copy snippets render a Tooltip, live code examples use token-backed syntax colors, copied state uses a semantic copied affordance color, snippet shell layering separates header/body surfaces, and clicked copy/show-more controls retain focus until another interaction.
+- Manual review on 2026-06-12 approved Code snippet behavior and component proof. The remaining background-layering concern is separated into the Color/Foundation layering proof route rather than keeping P2-F-CQ-078 open as a Code snippet blocker.
 
 ## Validation
 
@@ -41,4 +42,4 @@ READY_FOR_REVIEW
 ## Review Surface
 
 - Local app route: `/platform/ui-reference/components/code-snippet`
-- Manual review should verify inline click copy, icon-only copy tooltip/status feedback, multi-line show-more/show-less behavior, horizontal overflow, light modifier, syntax token color, and keyboard focus states.
+- Manual review approved inline click copy, icon-only copy tooltip/status feedback, multi-line show-more/show-less behavior, horizontal overflow, light modifier, syntax token color, and keyboard focus states.

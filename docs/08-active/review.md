@@ -6,7 +6,7 @@ PARTIAL
 
 ## Current Review State
 
-- Batch F remains PARTIAL because starter items are blocked behind manual review of the Component UI Reference recovery gate. P2-F-CQ-128 proved the promoted APIs from P2-F-CQ-135; P2-F-CQ-129 established the recovery sequence; P2-F-CQ-074, P2-F-CQ-079, P2-F-CQ-093, and P2-F-CQ-151 have passed manual review; P2-F-CQ-075 through P2-F-CQ-078, P2-F-CQ-080, P2-F-CQ-136 through P2-F-CQ-150, and P2-F-CQ-152 through P2-F-CQ-163 remain pending manual review; P2-F-CQ-164 adds the Typography Type Sets source API/proof surface; and P2-F-CQ-166 through P2-F-CQ-169 add UI API Standards Preflight enforcement plus the sidebar disclosure motion/scroll/consistency corrections. P2-F-CQ-169 failed manual review after the native disclosure recovery and has been reimplemented as a Navigation Pattern/UI shell correction in worklog 2-F-0050.
+- Batch F remains PARTIAL because starter items are blocked behind manual review of the Component UI Reference recovery gate. P2-F-CQ-128 proved the promoted APIs from P2-F-CQ-135; P2-F-CQ-129 established the recovery sequence; P2-F-CQ-074, P2-F-CQ-078, P2-F-CQ-079, P2-F-CQ-093, and P2-F-CQ-151 have passed manual review; P2-F-CQ-075, P2-F-CQ-076, P2-F-CQ-080, P2-F-CQ-136 through P2-F-CQ-150, and P2-F-CQ-152 through P2-F-CQ-163 remain pending manual review; P2-F-CQ-164 adds the Typography Type Sets source API/proof surface; and P2-F-CQ-166 through P2-F-CQ-169 add UI API Standards Preflight enforcement plus the sidebar disclosure motion/scroll/consistency corrections. P2-F-CQ-169 failed manual review after the native disclosure recovery and has been reimplemented as a Navigation Pattern/UI shell correction in worklog 2-F-0050.
 - P2-F-CQ-001: PASS. The Carbon audit and starter catalog matrix are accepted as sufficient planning and routing source material for the remaining Batch F work.
 - P2-F-CQ-007: PASS. The UI Reference starter catalog entry point is discoverable, lists the required starter set, and includes route disposition guidance for current UI Reference views.
 - P2-F-CQ-008: PASS. Correction pass 2-F-0015 was manually approved on 2026-06-06.
@@ -27,7 +27,8 @@ PARTIAL
 - P2-F-CQ-119: IMPLEMENTED PENDING REVIEW. Worklog 2-F-0029 makes `2x-grid` the canonical Foundation Element slug/doc/route, keeps `grid` as a compatibility alias, and removes the duplicate `grid.md` standard.
 - P2-F-CQ-120: IMPLEMENTED PENDING REVIEW. Worklog 2-F-0030 corrects Motion Foundation Element proof so expressive motion is gated, productive examples use installed APIs/utilities, Pattern routes are current, and reduced-motion proof is visible.
 - P2-F-CQ-074: PASS. Breadcrumb correction was manually approved on 2026-06-11.
-- P2-F-CQ-075, P2-F-CQ-076, and P2-F-CQ-078: IMPLEMENTED PENDING REVIEW. Component recovery started for Tabs, Code snippet, and generic fallback-ban coverage.
+- P2-F-CQ-075 and P2-F-CQ-076: IMPLEMENTED PENDING REVIEW. Component recovery started for Tabs and generic fallback-ban coverage.
+- P2-F-CQ-078: PASS. Code snippet behavior and component proof were manually approved on 2026-06-12; the remaining background-layering concern is tracked as Color/Foundation proof and not as a Code snippet component blocker.
 - P2-F-CQ-077: IMPLEMENTED PENDING REVIEW. Worklog 2-F-0041 corrects Menu so interactive triggers remain closed while visible proof panels show the menu surface, disabled items have distinct state treatment, submenu panels start collapsed until explicit interaction, RTL submenu placement mirrors correctly, the Blade API matches documented props/aliases, and focused tests assert roles, placement, sizing, and checkable/submenu hooks.
 - P2-F-CQ-079: PASS. Button correction was manually approved on 2026-06-11.
 - P2-F-CQ-093: PASS. Menu buttons correction was manually approved on 2026-06-11.
@@ -59,8 +60,8 @@ PARTIAL
 Visual: PENDING
 Functional: PENDING
 
-- Passed review: P2-F-CQ-001, P2-F-CQ-007, P2-F-CQ-008, P2-F-CQ-009, P2-F-CQ-010, P2-F-CQ-011, P2-F-CQ-025 through P2-F-CQ-032, P2-F-CQ-040 through P2-F-CQ-074, P2-F-CQ-079, P2-F-CQ-093, P2-F-CQ-121, and P2-F-CQ-151.
-- Pending review: P2-F-CQ-075 through P2-F-CQ-078, P2-F-CQ-080, P2-F-CQ-116 through P2-F-CQ-120, P2-F-CQ-122 through P2-F-CQ-135, P2-F-CQ-136 through P2-F-CQ-150, P2-F-CQ-152 through P2-F-CQ-163, P2-F-CQ-164, P2-F-CQ-165, P2-F-CQ-166, P2-F-CQ-167, P2-F-CQ-168, and P2-F-CQ-169.
+- Passed review: P2-F-CQ-001, P2-F-CQ-007, P2-F-CQ-008, P2-F-CQ-009, P2-F-CQ-010, P2-F-CQ-011, P2-F-CQ-025 through P2-F-CQ-032, P2-F-CQ-040 through P2-F-CQ-074, P2-F-CQ-078, P2-F-CQ-079, P2-F-CQ-093, P2-F-CQ-121, and P2-F-CQ-151.
+- Pending review: P2-F-CQ-075, P2-F-CQ-076, P2-F-CQ-080, P2-F-CQ-116 through P2-F-CQ-120, P2-F-CQ-122 through P2-F-CQ-135, P2-F-CQ-136 through P2-F-CQ-150, P2-F-CQ-152 through P2-F-CQ-163, P2-F-CQ-164, P2-F-CQ-165, P2-F-CQ-166, P2-F-CQ-167, P2-F-CQ-168, and P2-F-CQ-169.
 - Ready to implement: none.
 - Blocked: P2-F-CQ-002 through P2-F-CQ-006 remain blocked until manual review accepts the component recovery sequence as starter-safe.
 - Remaining Batch F items still require manual review before final visual and functional batch review.

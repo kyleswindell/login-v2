@@ -612,7 +612,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 - Implemented in: worklog-2-F-0025
 
 ### P2-F-CQ-078 - Code snippet component correction
-- Status: Implemented Pending Review
+- Status: Passed Review
 - Owner: Batch F
 - Follow-up To: P2-F-CQ-038
 - Scope: Replace generic Code snippet depth content with canonical `x-ui.code-snippet` examples for inline, single-line, multi-line, highlighted syntax tokens, copy behavior, show-more behavior, and token-backed developer snippets.
@@ -624,6 +624,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - developer implementation uses `x-ui.code-snippet`
   - focused tests assert highlighted-token proof, copy/show-more hooks, and no generic fallback
 - Implemented in: worklog-2-F-0054
+- Manual review: Approved on 2026-06-12. Background-layering concerns are separated into the Color/Foundation layering proof route rather than blocking this component item.
 
 ### P2-F-CQ-080 - Date picker component correction
 - Status: Implemented Pending Review
@@ -698,7 +699,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 
 ### P2-F-CQ-002 - Module home and dashboard summary starters
 - Status: Blocked
-- Blocked Until: Remaining component recovery queue P2-F-CQ-075 through P2-F-CQ-078, P2-F-CQ-080, P2-F-CQ-136 through P2-F-CQ-150, and P2-F-CQ-152 through P2-F-CQ-163 reaches a starter-safe review state.
+- Blocked Until: Remaining component recovery queue P2-F-CQ-075, P2-F-CQ-076, P2-F-CQ-080, P2-F-CQ-136 through P2-F-CQ-150, and P2-F-CQ-152 through P2-F-CQ-163 reaches a starter-safe review state.
 - Owner: Batch F
 - Scope: Provide starter examples for module home / overview, dashboard/module summary surfaces, and dashboard widget examples by module content type.
 - Acceptance:
@@ -708,7 +709,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 
 ### P2-F-CQ-003 - Settings and setup starters
 - Status: Blocked
-- Blocked Until: Remaining component recovery queue P2-F-CQ-075 through P2-F-CQ-078, P2-F-CQ-080, P2-F-CQ-136 through P2-F-CQ-150, and P2-F-CQ-152 through P2-F-CQ-163 reaches a starter-safe review state.
+- Blocked Until: Remaining component recovery queue P2-F-CQ-075, P2-F-CQ-076, P2-F-CQ-080, P2-F-CQ-136 through P2-F-CQ-150, and P2-F-CQ-152 through P2-F-CQ-163 reaches a starter-safe review state.
 - Owner: Batch F
 - Scope: Provide complete settings and setup/configuration starter examples and normalize proof surfaces only where needed for starter parity.
 - Acceptance:
@@ -718,7 +719,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 
 ### P2-F-CQ-004 - Account/profile starters
 - Status: Blocked
-- Blocked Until: Remaining component recovery queue P2-F-CQ-075 through P2-F-CQ-078, P2-F-CQ-080, P2-F-CQ-136 through P2-F-CQ-150, and P2-F-CQ-152 through P2-F-CQ-163 reaches a starter-safe review state.
+- Blocked Until: Remaining component recovery queue P2-F-CQ-075, P2-F-CQ-076, P2-F-CQ-080, P2-F-CQ-136 through P2-F-CQ-150, and P2-F-CQ-152 through P2-F-CQ-163 reaches a starter-safe review state.
 - Owner: Batch F
 - Scope: Provide account/profile read-only and editable starter examples using the existing account proof surfaces and UI Reference catalog.
 - Acceptance:
@@ -728,7 +729,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 
 ### P2-F-CQ-005 - List, detail, and create/edit starters
 - Status: Blocked
-- Blocked Until: Remaining component recovery queue P2-F-CQ-075 through P2-F-CQ-078, P2-F-CQ-080, P2-F-CQ-136 through P2-F-CQ-150, and P2-F-CQ-152 through P2-F-CQ-163 reaches a starter-safe review state.
+- Blocked Until: Remaining component recovery queue P2-F-CQ-075, P2-F-CQ-076, P2-F-CQ-080, P2-F-CQ-136 through P2-F-CQ-150, and P2-F-CQ-152 through P2-F-CQ-163 reaches a starter-safe review state.
 - Owner: Batch F
 - Scope: Provide starter examples for list/index, table-management index, operational log/detail, content browser/split-view, detail/read-only, create/edit form, and blocked/empty/unavailable page states.
 - Acceptance:
@@ -742,7 +743,7 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
 
 ### P2-F-CQ-006 - Batch F docs, tests, and handoff readiness
 - Status: Blocked
-- Blocked Until: Remaining component recovery queue P2-F-CQ-075 through P2-F-CQ-078, P2-F-CQ-080, P2-F-CQ-136 through P2-F-CQ-150, and P2-F-CQ-152 through P2-F-CQ-163 reaches a starter-safe review state.
+- Blocked Until: Remaining component recovery queue P2-F-CQ-075, P2-F-CQ-076, P2-F-CQ-080, P2-F-CQ-136 through P2-F-CQ-150, and P2-F-CQ-152 through P2-F-CQ-163 reaches a starter-safe review state.
 - Owner: Batch F
 - Scope: Add automated coverage and synchronize planning/handoff notes after starter implementation.
 - Acceptance:

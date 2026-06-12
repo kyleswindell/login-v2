@@ -1,7 +1,7 @@
 @php
     $currentSection = $currentSection ?? 'overview';
     $sidebarLinkClass = fn (bool $active, bool $compact = false) => trim('ui-reference-sidebar-link '.($compact ? 'ui-reference-sidebar-link-compact ' : '').($active ? 'is-current' : ''));
-    $approvedComponentSlugs = ['accordion', 'breadcrumb', 'button', 'menu-buttons', 'tooltip'];
+    $approvedComponentSlugs = ['accordion', 'breadcrumb', 'button', 'code-snippet', 'menu-buttons', 'tooltip'];
     $approvedElementSlugs = [];
     $statusBadgeLabel = fn (string $disposition) => match ($disposition) {
         'Partial' => 'Partial',
@@ -60,13 +60,14 @@
                         @php
                             $isActiveElement = $currentSection === 'elements.'.$element['slug'];
                             $isColorTokenPage = $currentSection === 'elements.color.tokens';
+                            $isColorLayeringPage = $currentSection === 'elements.color.layering';
                             $isTypographyTypeSetsPage = $currentSection === 'elements.typography.type-sets';
                             $isColorElement = $element['slug'] === 'color';
                             $isTypographyElement = $element['slug'] === 'typography';
                         @endphp
 
                         @if ($isColorElement)
-                            @php $isColorOpen = $isActiveElement || $isColorTokenPage; @endphp
+                            @php $isColorOpen = $isActiveElement || $isColorTokenPage || $isColorLayeringPage; @endphp
                             <section
                                 class="ui-reference-sidebar-disclosure"
                                 data-ui-reference-element-sidebar-item="color"
@@ -97,6 +98,7 @@
                                     <nav class="ui-reference-sidebar-nested-nav" aria-label="UI Reference color" data-ui-reference-color-sidebar>
                                         <a wire:navigate href="{{ route('platform.ui-reference.elements.show', ['element' => 'color']) }}" class="{{ $sidebarLinkClass($isActiveElement, true) }}" data-ui-reference-color-sidebar-item="overview" @if ($isActiveElement) aria-current="page" @endif>Overview</a>
                                         <a wire:navigate href="{{ route('platform.ui-reference.elements.color.tokens') }}" class="{{ $sidebarLinkClass($isColorTokenPage, true) }}" data-ui-reference-color-sidebar-item="token-palette" @if ($isColorTokenPage) aria-current="page" @endif>Token Palette</a>
+                                        <a wire:navigate href="{{ route('platform.ui-reference.elements.color.layering') }}" class="{{ $sidebarLinkClass($isColorLayeringPage, true) }}" data-ui-reference-color-sidebar-item="background-layering" @if ($isColorLayeringPage) aria-current="page" @endif>Background Layering</a>
                                     </nav>
                                 </div>
                             </section>

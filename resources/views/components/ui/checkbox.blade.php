@@ -61,12 +61,12 @@
 
     @if($error)
         <p id="{{ $statusId }}" class="ui-checkbox-error">
-            <x-heroicon-o-x-circle class="ui-checkbox-status-icon" aria-hidden="true" />
+            <x-ui.status-icon icon="x-circle" class="ui-checkbox-status-icon h-4 w-4 shrink-0" />
             <span>{{ $error }}</span>
         </p>
     @elseif($warning)
         <p id="{{ $statusId }}" class="ui-checkbox-warning">
-            <x-heroicon-o-exclamation-triangle class="ui-checkbox-status-icon" aria-hidden="true" />
+            <x-ui.status-icon icon="exclamation-triangle" class="ui-checkbox-status-icon h-4 w-4 shrink-0" />
             <span>{{ $warning }}</span>
         </p>
     @endif

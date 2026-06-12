@@ -2488,7 +2488,10 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-checkbox-status-icon {
-        @apply mt-px h-4 w-4 shrink-0;
+        @apply mt-px;
+        width: 1rem;
+        height: 1rem;
+        flex-shrink: 0;
     }
 
     .ui-checkbox-error {

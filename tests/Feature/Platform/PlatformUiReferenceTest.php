@@ -1902,10 +1902,12 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('data-ui-checkbox-input', $checkboxView);
         $this->assertStringContainsString('data-ui-checkbox-root', $checkboxView);
         $this->assertStringContainsString('ui-checkbox-status-icon', $checkboxView);
+        $this->assertStringContainsString('h-4 w-4 shrink-0', $checkboxView);
         $this->assertStringContainsString('data-ui-checkbox-nested-group', $checkboxGroupView);
         $this->assertStringContainsString('data-ui-checkbox-parent', $checkboxGroupView);
         $this->assertStringContainsString('data-ui-checkbox-child', $checkboxGroupView);
         $this->assertStringContainsString('ui-checkbox-status-icon', $checkboxGroupView);
+        $this->assertStringContainsString('h-4 w-4 shrink-0', $checkboxGroupView);
         $this->assertStringContainsString('data-component-live-layout="checkbox-matrix"', $checkboxExamples);
         $this->assertStringContainsString('Indeterminate appears only as a parent state', $checkboxExamples);
         $this->assertStringContainsString('.ui-checkbox-input:indeterminate + .ui-checkbox-box', $checkboxCss);

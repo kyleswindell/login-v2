@@ -109,8 +109,14 @@
     </div>
 
     @if($error)
-        <p id="{{ $statusId }}" class="ui-checkbox-error">{{ $error }}</p>
+        <p id="{{ $statusId }}" class="ui-checkbox-error">
+            <x-heroicon-o-x-circle class="ui-checkbox-status-icon" aria-hidden="true" />
+            <span>{{ $error }}</span>
+        </p>
     @elseif($warning)
-        <p id="{{ $statusId }}" class="ui-checkbox-warning">{{ $warning }}</p>
+        <p id="{{ $statusId }}" class="ui-checkbox-warning">
+            <x-heroicon-o-exclamation-triangle class="ui-checkbox-status-icon" aria-hidden="true" />
+            <span>{{ $warning }}</span>
+        </p>
     @endif
 </fieldset>

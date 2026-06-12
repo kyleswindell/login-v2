@@ -1901,15 +1901,22 @@ class PlatformUiReferenceTest extends TestCase
 
         $this->assertStringContainsString('data-ui-checkbox-input', $checkboxView);
         $this->assertStringContainsString('data-ui-checkbox-root', $checkboxView);
+        $this->assertStringContainsString('ui-checkbox-status-icon', $checkboxView);
         $this->assertStringContainsString('data-ui-checkbox-nested-group', $checkboxGroupView);
         $this->assertStringContainsString('data-ui-checkbox-parent', $checkboxGroupView);
         $this->assertStringContainsString('data-ui-checkbox-child', $checkboxGroupView);
+        $this->assertStringContainsString('ui-checkbox-status-icon', $checkboxGroupView);
         $this->assertStringContainsString('data-component-live-layout="checkbox-matrix"', $checkboxExamples);
         $this->assertStringContainsString('Indeterminate appears only as a parent state', $checkboxExamples);
         $this->assertStringContainsString('.ui-checkbox-input:indeterminate + .ui-checkbox-box', $checkboxCss);
+        $this->assertStringContainsString('.ui-checkbox[data-ui-checkbox-focus=\'true\'] .ui-checkbox-box', $checkboxCss);
+        $this->assertStringContainsString('.ui-checkbox-readonly .ui-checkbox-input:checked + .ui-checkbox-box', $checkboxCss);
         $this->assertStringContainsString('.ui-checkbox-group.ui-checkbox-invalid .ui-checkbox-box', $checkboxCss);
+        $this->assertStringNotContainsString('.ui-checkbox-control:hover .ui-checkbox-box', $checkboxCss);
         $this->assertStringContainsString('export function initCheckboxes(root = document)', $checkboxScript);
         $this->assertStringContainsString('syncParentFromChildren(group, parentRoot)', $checkboxScript);
+        $this->assertStringContainsString('syncChildrenFromParent(group, parentRoot)', $checkboxScript);
+        $this->assertStringContainsString('data-ui-checkbox-focus', $checkboxScript);
         $this->assertStringContainsString('export { initCheckboxes }', $uiControls);
         $this->assertStringContainsString('initCheckboxes', $appJs);
         $this->assertStringContainsString('\'checkbox\' => $this->checkboxComponent()', $catalog);

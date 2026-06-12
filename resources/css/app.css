@@ -2406,12 +2406,12 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-checkbox {
-        @apply space-y-1.5 text-sm;
+        @apply text-sm leading-5;
         color: var(--ui-text-primary);
     }
 
     .ui-checkbox-control {
-        @apply inline-grid cursor-pointer grid-cols-[1rem_minmax(0,1fr)] items-start gap-3;
+        @apply inline-grid min-h-5 cursor-pointer grid-cols-[1rem_minmax(0,1fr)] items-start gap-2;
     }
 
     .ui-checkbox-input {
@@ -2419,76 +2419,91 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-checkbox-box {
-        @apply mt-1 inline-flex h-4 w-4 shrink-0 items-center justify-center border transition;
-        border-color: var(--ui-border-strong-01);
-        background-color: var(--ui-field-01);
+        @apply relative mt-0.5 inline-flex h-4 w-4 shrink-0 items-center justify-center border;
+        box-sizing: border-box;
+        border-color: var(--ui-icon-primary);
+        background-color: transparent;
     }
 
     .ui-checkbox-input:checked + .ui-checkbox-box,
     .ui-checkbox-input:indeterminate + .ui-checkbox-box,
     .ui-checkbox[data-ui-checkbox-indeterminate='true'] .ui-checkbox-box {
-        border-color: var(--ui-action-primary-border);
-        background-color: var(--ui-action-primary-bg);
+        border-color: var(--ui-icon-primary);
+        background-color: var(--ui-icon-primary);
     }
 
     .ui-checkbox-input:checked + .ui-checkbox-box::after {
         content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
         width: 0.5rem;
         height: 0.275rem;
-        border-inline-start: 2px solid var(--ui-icon-on-color);
-        border-block-end: 2px solid var(--ui-icon-on-color);
-        transform: rotate(-45deg) translateY(-1px);
+        border-inline-start: 2px solid var(--ui-icon-inverse);
+        border-block-end: 2px solid var(--ui-icon-inverse);
+        transform: translate(-50%, -62%) rotate(-45deg);
     }
 
     .ui-checkbox-input:indeterminate + .ui-checkbox-box::after,
     .ui-checkbox[data-ui-checkbox-indeterminate='true'] .ui-checkbox-box::after {
         content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
         width: 0.625rem;
         height: 2px;
-        background-color: var(--ui-icon-on-color);
+        background-color: var(--ui-icon-inverse);
         border: 0;
-        transform: none;
+        transform: translate(-50%, -50%);
     }
 
-    .ui-checkbox-input:focus-visible + .ui-checkbox-box {
+    .ui-checkbox-input:focus-visible + .ui-checkbox-box,
+    .ui-checkbox[data-ui-checkbox-focus='true'] .ui-checkbox-box {
         outline: 2px solid var(--ui-focus);
-        outline-offset: 2px;
+        outline-offset: 1px;
+        box-shadow: inset 0 0 0 1px var(--ui-background);
     }
 
-    .ui-checkbox-control:hover .ui-checkbox-box {
-        border-color: var(--ui-action-primary-border-hover);
-        background-color: var(--ui-field-hover-01);
-    }
-
-    .ui-checkbox-control:hover .ui-checkbox-input:checked + .ui-checkbox-box,
-    .ui-checkbox-control:hover .ui-checkbox-input:indeterminate + .ui-checkbox-box {
-        background-color: var(--ui-action-primary-bg-hover);
-    }
-
-    .ui-checkbox-label,
-    .ui-checkbox-group-legend {
-        @apply font-semibold;
+    .ui-checkbox-label {
+        @apply text-sm font-normal leading-5;
         color: var(--ui-text-primary);
         min-width: 0;
         overflow-wrap: anywhere;
     }
 
+    .ui-checkbox-group-legend {
+        @apply mb-2 text-xs font-normal leading-4;
+        color: var(--ui-text-secondary);
+    }
+
     .ui-checkbox-helper,
     .ui-checkbox-group-helper {
-        @apply text-sm;
-        color: var(--ui-text-helper);
+        @apply mt-1 text-xs font-normal leading-4;
+        color: var(--ui-text-secondary);
     }
 
     .ui-checkbox-error,
     .ui-checkbox-warning {
-        @apply text-sm font-medium;
+        @apply mt-1 flex items-start gap-1.5 text-xs font-normal leading-4;
+    }
+
+    .ui-checkbox-status-icon {
+        @apply mt-px h-4 w-4 shrink-0;
     }
 
     .ui-checkbox-error {
         color: var(--ui-text-error);
     }
 
+    .ui-checkbox-error .ui-checkbox-status-icon {
+        color: var(--ui-support-error);
+    }
+
     .ui-checkbox-warning {
+        color: var(--ui-text-primary);
+    }
+
+    .ui-checkbox-warning .ui-checkbox-status-icon {
         color: var(--ui-support-warning);
     }
 
@@ -2498,44 +2513,44 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-checkbox-input:disabled + .ui-checkbox-box {
-        border-color: var(--ui-border-disabled);
-        background-color: var(--ui-action-disabled-bg);
+        border-color: var(--ui-icon-disabled);
+        background-color: var(--ui-icon-disabled);
     }
 
     .ui-checkbox-input:disabled:checked + .ui-checkbox-box,
     .ui-checkbox-input:disabled:indeterminate + .ui-checkbox-box {
-        border-color: var(--ui-border-disabled);
-        background-color: var(--ui-action-disabled-bg);
+        border-color: var(--ui-icon-disabled);
+        background-color: var(--ui-icon-disabled);
     }
 
     .ui-checkbox-input:disabled:checked + .ui-checkbox-box::after,
-    .ui-checkbox-readonly .ui-checkbox-input:checked + .ui-checkbox-box::after {
-        border-color: var(--ui-icon-on-color-disabled);
+    .ui-checkbox-input:disabled:indeterminate + .ui-checkbox-box::after {
+        border-color: var(--ui-icon-inverse);
         background-color: transparent;
     }
 
     .ui-checkbox-input:disabled:indeterminate + .ui-checkbox-box::after {
-        background-color: var(--ui-icon-on-color-disabled);
+        background-color: var(--ui-icon-inverse);
     }
 
     .ui-checkbox-readonly .ui-checkbox-box {
-        border-color: var(--ui-border-subtle-01);
-        background-color: var(--ui-layer-accent-01);
+        border-color: var(--ui-icon-disabled);
+        background-color: transparent;
     }
 
     .ui-checkbox-readonly .ui-checkbox-input:checked + .ui-checkbox-box,
     .ui-checkbox-readonly .ui-checkbox-input:indeterminate + .ui-checkbox-box {
-        border-color: var(--ui-icon-secondary);
-        background-color: var(--ui-layer-accent-01);
+        border-color: var(--ui-icon-disabled);
+        background-color: transparent;
     }
 
     .ui-checkbox-readonly .ui-checkbox-input:checked + .ui-checkbox-box::after {
-        border-color: var(--ui-icon-secondary);
+        border-color: var(--ui-icon-primary);
         background-color: transparent;
     }
 
     .ui-checkbox-readonly .ui-checkbox-input:indeterminate + .ui-checkbox-box::after {
-        background-color: var(--ui-icon-secondary);
+        background-color: var(--ui-icon-primary);
     }
 
     .ui-checkbox-invalid .ui-checkbox-box,
@@ -2543,34 +2558,30 @@ Use targeted searches for the class family being changed before reading this fil
         border-color: var(--ui-support-error);
     }
 
-    .ui-checkbox-warning-state .ui-checkbox-box,
-    .ui-checkbox-group.ui-checkbox-warning-state .ui-checkbox-box {
-        border-color: var(--ui-support-warning);
-    }
-
     .ui-checkbox-group {
-        @apply space-y-3;
+        @apply space-y-0;
         color: var(--ui-text-primary);
     }
 
     .ui-checkbox-group-options {
-        @apply flex flex-col gap-3;
+        @apply flex flex-col gap-1;
     }
 
     .ui-checkbox-group-horizontal .ui-checkbox-group-options {
-        @apply flex-row flex-wrap gap-x-5 gap-y-3;
+        @apply flex-row flex-wrap gap-x-5 gap-y-1;
     }
 
     .ui-checkbox-nested {
-        margin-inline-start: 1.75rem;
+        margin-inline-start: 0;
     }
 
     .ui-checkbox-option-tree {
-        @apply space-y-3;
+        @apply space-y-1;
     }
 
     .ui-checkbox-children {
-        @apply flex flex-col gap-3;
+        @apply ml-2 mt-1 flex flex-col gap-1 border-l pl-6;
+        border-color: var(--ui-border-subtle-01);
     }
 
     .ui-data-table-wrapper {

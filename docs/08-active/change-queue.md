@@ -274,7 +274,8 @@ This queue is agent-managed and implementation-ready. It is not a scratchpad.
   - source/API is confirmed as `x-ui.checkbox` / `x-ui.checkbox-group`
   - page renders independent choice, multi-select group, state matrix, group states, nested parent/child mixed state, overflow, and alignment examples
   - tests assert source/API markers, nested behavior hooks, state proof, and no generic fallback
-- Implemented in: worklog-2-F-0053
+  - correction asserts no checkbox hover styling, stable state geometry, persistent clicked focus, validation icons, and parent/child sync
+- Implemented in: worklog-2-F-0053; corrected in worklog-2-F-0055
 
 ### P2-F-CQ-154 - Text input component source/API and proof recovery
 - Status: Implemented Pending Review

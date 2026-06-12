@@ -99,6 +99,7 @@ Checkbox is the installed Login App 2.0 selection-control API for zero-or-more c
 - Render visible zero-or-more choice groups through the installed checkbox-group API.
 - Preserve native checkbox semantics and label click behavior.
 - Support selected, unselected, and indeterminate state where the parent-child selection model requires it.
+- Do not apply a visual hover treatment to the checkbox control; hover may only preserve the normal pointer affordance.
 - Support component and group-level disabled, read-only, error, warning, and helper text treatments.
 - Keep group labels, helper text, validation text, and item labels accessible.
 - Use Foundation Element APIs for color, spacing, typography, themes, motion, and icons.
@@ -156,7 +157,7 @@ Checkbox now has component-specific UI Reference examples that consume approved 
 - Keep external spacing owned by the parent Pattern.
 - Do not build custom checkbox visuals, raw utility clusters, local validation colors, or one-off JavaScript state handling in feature views.
 
-Carbon alignment note: Carbon defines Checkbox for multiple selections, not mutually exclusive selection; supports unselected, selected, indeterminate, focus, disabled, read-only, error, warning, and group-level states; recommends vertical group alignment when possible; and distinguishes Checkbox from Radio button and Toggle. Login App maps those principles to its own `x-ui.checkbox` and `x-ui.checkbox-group` APIs rather than adopting Carbon implementation classes directly.
+Carbon alignment note: Carbon defines Checkbox for multiple selections, not mutually exclusive selection; supports unselected, selected, indeterminate, focus, disabled, read-only, error, warning, and group-level states; recommends vertical group alignment when possible; and distinguishes Checkbox from Radio button and Toggle. Login App maps those principles to its own `x-ui.checkbox` and `x-ui.checkbox-group` APIs rather than adopting Carbon implementation classes directly, and treats hover as non-visual for the checkbox control.
 
 ## 4. Public API
 
@@ -308,7 +309,7 @@ Do not document Carbon-only variants or AI presence as implemented unless Login 
 | Selected               | Implemented / required proof                                         | Native checked checkbox state.                                                                                                    |
 | Indeterminate          | Implemented / required proof when parent-child/bulk selection exists | Must set native mixed state and expose `aria-checked="mixed"` when custom semantics are used. Do not fake with icon-only styling. |
 | Hover                  | Implemented                                                          | Pointer affordance may appear through label/input interaction; do not add decorative hover color.                                 |
-| Focus-visible          | Implemented / required proof                                         | Token-backed visible focus treatment on the interactive input/control.                                                            |
+| Persistent focus       | Implemented / required proof                                         | Token-backed visible focus treatment remains on the clicked control until another pointer or keyboard action moves focus.          |
 | Disabled               | Implemented / required proof                                         | Unavailable and not editable. Use only when the user cannot change the option.                                                    |
 | Read-only              | Implemented / required proof if the API exposes it                   | Non-editable but perceivable selected value. Confirm semantics and contrast.                                                      |
 | Error                  | Implemented / required proof                                         | Error copy and invalid treatment must be visible; meaning cannot rely on color alone.                                             |
@@ -352,7 +353,7 @@ Carbon color role mapping:
 | `$icon-primary`, `$icon-inverse` | Unchecked border, checked background, and checkmark fill | `ui-checkbox-box`, checked state icon/fill roles | App icon palette | Same role / app value | Checkbox visual state is component-owned but value comes from Icon/Color roles. |
 | `$text-primary`, `$text-secondary`, `$text-disabled` | Checkbox label, group label/helper, disabled label | `ui-checkbox-label`, group legend/helper roles | App text palette | Same role / app value | Labels and helper text follow Text role hierarchy. |
 | `$support-error`, `$text-error`, `$support-warning` | Error border/icon/message and warning icon/fill | Checkbox validation state classes | App status palette | Same role / app value | Error/warning require non-color cues and accessible message text. |
-| `$focus` | Checkbox focus border/ring | `ui-checkbox-input:focus-visible`, `--ui-focus` | App focus palette | Same role / app value | Focus must be visible on the real input/control. |
+| `$focus` | Checkbox focus border/ring | `ui-checkbox-input:focus-visible`, `data-ui-checkbox-focus`, `--ui-focus` | App focus palette | Same role / app value | Focus must be visible on the real input/control and persist after click until the next interaction. |
 | `$icon-disabled` | Disabled and read-only control border/fill | Disabled/read-only checkbox state | App icon disabled role | Same role / app value | Disabled/read-only must not rely on opacity alone. |
 | `$black` | Carbon warning inner fill anomaly/context | No direct Login App token | None | Needs verification | Do not hard-code black; map warning state through support/text/icon roles only after verification. |
 
@@ -427,7 +428,7 @@ Feature views may pass layout classes only where the public API allows them. Fea
 - Use `fieldset` and `legend` for related checkbox groups when the group owns the label.
 - Ensure the checkbox can be reached with Tab and toggled with Space.
 - Ensure label click/tap toggles the associated checkbox.
-- Keep focus-visible styling visible in every supported theme.
+- Keep focus styling visible in every supported theme, including persisted click focus.
 - Associate helper, warning, and error copy with the control or group through the installed API.
 - Expose indeterminate parent state accessibly. If a custom implementation is ever used, use `aria-checked="mixed"` for the partially checked state.
 - Do not rely on color alone for error, warning, selected, disabled, or read-only meaning.
@@ -483,7 +484,7 @@ No additional capability is approved without updating this Component standard an
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Public API/source          | The standard names the canonical Blade component, native/class API, JavaScript controller, CSS namespace, source files, or explicit deferred gate. |
 | Variants/options/modifiers | Approved variants, options, sizes, density, layout modifiers, and deferred gates are listed.                                                       |
-| States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
+| States                     | Default, non-visual hover, persistent focus, disabled, validation, selected, unselected, indeterminate, and not-applicable states are defined as relevant. |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
 | Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
@@ -507,9 +508,9 @@ The Checkbox page may use tabs, grouped examples, state matrices, or comparison 
 | -------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | Independent choice               | One setting can be toggled without affecting nearby choices.                                               | Unselected, selected, helper text.                                                                      |
 | Multi-select group               | Several visible choices can be selected at the same time under one group label.                            | Vertical group, selected/unselected mix, group helper text.                                             |
-| State matrix                     | Individual state treatments are visible without turning each state into a separate live variant.           | Focus, disabled, read-only, error with message, warning with message, selected and unselected bases.    |
+| State matrix                     | Individual state treatments are visible without turning each state into a separate live variant.           | Persistent focus, disabled, read-only, error with icon/message, warning with icon/message, selected and unselected bases. |
 | Group states                     | Helper, disabled, read-only, error, and warning states apply to the group without repeating messages.      | Group label, helper text, one error/warning message below the group, option-level highlighting.         |
-| Parent-child indeterminate group | Parent checkbox summarizes child selections and displays mixed state when only some children are selected. | Nested options, selected children, unselected children, parent checked/unchecked/mixed sync.            |
+| Parent-child indeterminate group | Parent checkbox summarizes child selections and displays mixed state only when some children are selected. | Nested options, selected children, unselected children, parent checked/unchecked/mixed sync, parent toggles all mutable children. |
 | Overflow and alignment           | Long labels wrap instead of truncating and align from the top of the checkbox control.                     | Long wrapping label, vertical default, horizontal short-label group.                                    |
 
 ### 15.1. Required component contract display
@@ -519,7 +520,7 @@ The Checkbox page may use tabs, grouped examples, state matrices, or comparison 
 - Installed API and canonical Blade calls.
 - Props/options for individual checkbox and checkbox group.
 - Anatomy: group, group label, checkbox input/control, label, helper text, error/warning text, nested child items.
-- States: unselected, selected, parent indeterminate, hover, focus-visible, disabled, read-only, error, warning, helper text, group-level validation.
+- States: unselected, selected, parent indeterminate, non-visual hover, persistent focus, disabled, read-only, error with icon/message, warning with icon/message, helper text, group-level validation.
 - Behavior: pointer, keyboard, focus, group, validation, nested/indeterminate, wrapping, and responsive behavior.
 - Accessibility requirements.
 - Content guidance.
@@ -565,7 +566,7 @@ The page must render production code examples, not placeholders:
 - The page does not show `Component-specific API pending correction` as the example call.
 - The page renders independent, multi-select, state matrix, group state, parent-child indeterminate, overflow, and alignment examples.
 - The page distinguishes Checkbox from Radio button and Toggle through the written use/do-not-use contract; live examples belong to the Checkbox API only.
-- The page shows unselected, selected, indeterminate, focus-visible, disabled, read-only, error, warning, helper, and group-level validation states.
+- The page shows unselected, selected, indeterminate, persistent focus, disabled, read-only, error, warning, helper, and group-level validation states.
 - The page includes accessible group semantics guidance for `fieldset` and `legend`.
 - The page includes keyboard expectations: Tab/Shift+Tab for focus navigation and Space to toggle.
 - The page includes label wrapping guidance and prohibits truncation.
@@ -590,7 +591,7 @@ $response->assertSee('Overflow and alignment');
 $response->assertSee('unselected');
 $response->assertSee('selected');
 $response->assertSee('indeterminate');
-$response->assertSee('focus-visible');
+$response->assertSee('persistent focus');
 $response->assertSee('disabled');
 $response->assertSee('read-only');
 $response->assertSee('error');

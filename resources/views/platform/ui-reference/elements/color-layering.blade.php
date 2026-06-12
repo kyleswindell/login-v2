@@ -8,14 +8,30 @@
             ['Page background', '--ui-background', 'The app canvas behind content regions.', 'Application shell body and large empty regions.'],
             ['Layer 01', '--ui-layer-01', 'First content surface above the page.', 'Cards, panels, table shells, and primary component containers.'],
             ['Layer 02', '--ui-layer-02', 'Nested surface above Layer 01.', 'Example wells, nested cards, code snippet bodies, dropdowns, and menus.'],
-            ['Layer accent 01', '--ui-layer-accent-01', 'Neutral accent strip on a layer.', 'Card headers, table headers, code snippet headers, and grouped section headers.'],
+            ['Layer 03', '--ui-layer-03', 'Fourth visible surface in a nested stack.', 'Deep contained regions when a component or pattern requires four visible layers.'],
+            ['Layer accent 01', '--ui-layer-accent-01', 'Optional neutral accent strip on a layer.', 'Table headers, code snippet headers, and grouped section headers only when the owning API requires a persistent band.'],
             ['Inverse layer', '--ui-layer-inverse', 'High contrast layer for inverted affordances.', 'Tooltips and deliberate inverse moments only.'],
         ];
 
         $layerStacks = [
-            ['Light default', '--ui-background', '--ui-layer-01', '--ui-layer-02', '--ui-layer-accent-01'],
-            ['Nested card', '--ui-layer-01', '--ui-layer-02', '--ui-layer-01', '--ui-layer-accent-01'],
-            ['Documentation/code', '--ui-layer-01', '--ui-layer-accent-01', '--ui-layer-02', '--ui-border-subtle-01'],
+            ['Page to contained region', [
+                ['Page canvas', '--ui-background'],
+                ['Layer 01 card', '--ui-layer-01'],
+                ['Layer 02 nested region', '--ui-layer-02'],
+                ['Layer 03 deepest region', '--ui-layer-03'],
+            ]],
+            ['Card to nested proof', [
+                ['Outer card', '--ui-layer-01'],
+                ['Nested example well', '--ui-layer-02'],
+                ['Contained proof surface', '--ui-layer-03'],
+                ['Return to layer 01 only with a new sibling context', '--ui-layer-01'],
+            ]],
+            ['Documentation container', [
+                ['Documentation card', '--ui-layer-01'],
+                ['Code shell', '--ui-layer-02'],
+                ['Code body', '--ui-layer-03'],
+                ['Inline nested note', '--ui-layer-01'],
+            ]],
         ];
     @endphp
 
@@ -67,18 +83,26 @@
 
         <section class="ui-card" data-background-layering-section="stack-sequence">
             <h2 class="ui-card-title">Stack Sequence</h2>
-            <p class="ui-card-copy mt-2">A parent surface owns the layer context. Children step once above that context, and headers/footers use accent layers only when they need a persistent structural band.</p>
+            <p class="ui-card-copy mt-2">A parent surface owns the layer context. Children step once above that context. Header, body, and footer areas inside the same card remain on the same layer by default.</p>
 
             <div class="mt-5 grid gap-4 xl:grid-cols-3">
-                @foreach ($layerStacks as [$label, $outer, $middle, $inner, $accent])
-                    <article class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background: var({{ $outer }});" data-background-layer-stack="{{ Str::slug($label) }}">
+                @foreach ($layerStacks as [$label, $layers])
+                    @php
+                        [$base, $first, $second, $third] = $layers;
+                    @endphp
+                    <article class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background: var({{ $base[1] }});" data-background-layer-stack="{{ Str::slug($label) }}" data-background-layer-depth="4">
                         <p class="text-sm font-semibold" style="color: var(--ui-text-primary);">{{ $label }}</p>
-                        <p class="mt-1 font-mono text-xs" style="color: var(--ui-text-helper);">{{ $outer }}</p>
-                        <div class="mt-4 rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background: var({{ $middle }});">
-                            <p class="font-mono text-xs" style="color: var(--ui-text-secondary);">{{ $middle }}</p>
-                            <div class="mt-4 rounded border" style="border-color: var(--ui-border-subtle-01); background: var({{ $inner }});">
-                                <div class="border-b px-3 py-2 text-xs font-semibold" style="border-color: var(--ui-border-subtle-01); background: var({{ $accent }}); color: var(--ui-text-primary);">Header band</div>
-                                <div class="px-3 py-4 text-sm" style="color: var(--ui-text-secondary);">Nested content body</div>
+                        <p class="mt-1 font-mono text-xs" style="color: var(--ui-text-helper);">{{ $base[1] }}</p>
+                        <div class="mt-4 rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background: var({{ $first[1] }});">
+                            <p class="text-xs font-semibold" style="color: var(--ui-text-primary);">{{ $first[0] }}</p>
+                            <p class="mt-1 font-mono text-xs" style="color: var(--ui-text-secondary);">{{ $first[1] }}</p>
+                            <div class="mt-4 rounded border p-4" style="border-color: var(--ui-border-subtle-01); background: var({{ $second[1] }});">
+                                <p class="text-xs font-semibold" style="color: var(--ui-text-primary);">{{ $second[0] }}</p>
+                                <p class="mt-1 font-mono text-xs" style="color: var(--ui-text-secondary);">{{ $second[1] }}</p>
+                                <div class="mt-4 rounded p-4" style="background: var({{ $third[1] }});">
+                                    <p class="text-xs font-semibold" style="color: var(--ui-text-primary);">{{ $third[0] }}</p>
+                                    <p class="mt-1 font-mono text-xs" style="color: var(--ui-text-secondary);">{{ $third[1] }}</p>
+                                </div>
                             </div>
                         </div>
                     </article>
@@ -88,11 +112,11 @@
 
         <section class="ui-card" data-background-layering-section="card-header-footer">
             <h2 class="ui-card-title">Cards With Header And Footer</h2>
-            <p class="ui-card-copy mt-2">Headers and footers are part of the same card. They use accent or same-layer treatment, not an unrelated raw shade.</p>
+            <p class="ui-card-copy mt-2">Headers and footers are part of the same card. Header, body, and footer share the same background layer by default, and card header/footer borders are opt-in separators rather than default structure.</p>
 
             <div class="mt-5 grid gap-5 xl:grid-cols-2">
                 <article class="overflow-hidden rounded-lg border" style="border-color: var(--ui-border-subtle-01); background: var(--ui-layer-01);" data-background-layer-example="card-with-header-footer">
-                    <header class="border-b px-4 py-3" style="border-color: var(--ui-border-subtle-01); background: var(--ui-layer-accent-01);">
+                    <header class="px-4 py-3" style="background: var(--ui-layer-01);">
                         <p class="text-sm font-semibold" style="color: var(--ui-text-primary);">Card header</p>
                     </header>
                     <div class="p-4" style="background: var(--ui-layer-01);">
@@ -101,20 +125,20 @@
                             <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">The nested region steps one layer above the card body.</p>
                         </div>
                     </div>
-                    <footer class="border-t px-4 py-3 text-sm" style="border-color: var(--ui-border-subtle-01); background: var(--ui-layer-accent-01); color: var(--ui-text-secondary);">
+                    <footer class="px-4 py-3 text-sm" style="background: var(--ui-layer-01); color: var(--ui-text-secondary);">
                         Footer actions or summary metadata
                     </footer>
                 </article>
 
                 <article class="overflow-hidden rounded-lg border" style="border-color: var(--ui-border-subtle-01); background: var(--ui-layer-01);" data-background-layer-example="same-layer-card">
-                    <header class="border-b px-4 py-3" style="border-color: var(--ui-border-subtle-01); background: var(--ui-layer-01);">
-                        <p class="text-sm font-semibold" style="color: var(--ui-text-primary);">Same-layer header</p>
+                    <header class="px-4 py-3" style="background: var(--ui-layer-01);">
+                        <p class="text-sm font-semibold" style="color: var(--ui-text-primary);">Default same-layer header</p>
                     </header>
                     <div class="p-4" style="background: var(--ui-layer-01);">
-                        <p class="text-sm" style="color: var(--ui-text-secondary);">Use same-layer headers when the border alone is enough to create structure.</p>
+                        <p class="text-sm" style="color: var(--ui-text-secondary);">The card does not need a different header color or a separator line to be a card.</p>
                     </div>
-                    <footer class="border-t px-4 py-3 text-sm" style="border-color: var(--ui-border-subtle-01); background: var(--ui-layer-01); color: var(--ui-text-secondary);">
-                        Same-layer footer
+                    <footer class="px-4 py-3 text-sm" style="background: var(--ui-layer-01); color: var(--ui-text-secondary);">
+                        Default same-layer footer
                     </footer>
                 </article>
             </div>
@@ -148,10 +172,12 @@
                     <li>Use `--ui-background` for the page canvas, not for nested cards.</li>
                     <li>Use `--ui-layer-01` for first-level cards, panels, and table shells.</li>
                     <li>Use `--ui-layer-02` for nested example wells, component bodies, and contained regions.</li>
-                    <li>Use `--ui-layer-accent-01` for persistent header/footer bands when a band is structurally necessary.</li>
+                    <li>Use `--ui-layer-03` when a component or pattern requires a fourth visible nested layer.</li>
                 </ul>
                 <ul class="space-y-3 text-sm" style="color: var(--ui-text-secondary);">
                     <li>Do not alternate white/gray manually in component examples.</li>
+                    <li>Do not use accent layers or borders for card headers and footers by default.</li>
+                    <li>Use `--ui-layer-accent-01` only for persistent structural bands owned by a component or pattern, such as table headers.</li>
                     <li>Do not solve contrast with raw slate, zinc, gray, or opacity utilities.</li>
                     <li>Do not put unrelated floating cards inside a card; use nested layers only for actual contained content.</li>
                     <li>When a component needs different layer behavior, update the owning Component standard and this Color reference together.</li>

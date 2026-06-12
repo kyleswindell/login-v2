@@ -161,6 +161,8 @@ Login App surfaces must use the installed layer roles rather than arbitrary back
 
 The dedicated UI Reference proof route is `/platform/ui-reference/elements/color/layering`. Use that page as the baseline when reviewing cards, component examples, code snippets, headers, footers, nested panels, menus, popovers, and table/form containers.
 
+Card headers, card bodies, and card footers share the same background layer by default. A card header must not switch to an accent/background token merely because it is a header, and a card footer must not switch layers merely because it is a footer. Header/footer separators are opt-in structural lines owned by the Component or Pattern API, not default card treatment.
+
 | Layer role      | Installed token examples                    | Purpose                                         | Allowed usage                                                          |
 | --------------- | ------------------------------------------- | ----------------------------------------------- | ---------------------------------------------------------------------- |
 | Page background | `--ui-background`, `--ui-surface`           | Base page or app-region background.             | App shell content background and large empty regions.                  |
@@ -670,7 +672,7 @@ Required sections and examples:
 | Theme-aware swatches      | Token swatches rendered from app CSS variables.                                                                                        | Light/default, dark if supported, inverse/high-contrast examples where implemented. |
 | Token groups              | Visual rows for text, icon, surface/layer, field, border, link, action, status, focus, loading/skeleton roles.                         | Token name, value source, allowed consumer, and status.                             |
 | Layering model            | Nested page/card/panel/example surfaces on `/platform/ui-reference/elements/color` and the dedicated `/platform/ui-reference/elements/color/layering` route. | `--ui-layer-01`, `--ui-layer-02`, elevated surface, border roles, readable text.    |
-| Background layering route | Cards, cards with headers/footers, nested examples, code/documentation containers, and form/container examples.                         | `--ui-background`, `--ui-layer-01`, `--ui-layer-02`, `--ui-layer-accent-01`, and border roles. |
+| Background layering route | Four-depth layer stacks, cards with same-layer headers/footers, nested examples, code/documentation containers, and form/container examples. | `--ui-background`, `--ui-layer-01`, `--ui-layer-02`, `--ui-layer-03`, and border roles. |
 | Interaction states        | Component examples in default, hover preview, active/pressed, selected, focus-visible, disabled, loading, validation where applicable. | State-specific token labels and notes that state tokens are not static colors.      |
 | Semantic support colors   | Success, warning, danger/error, info, neutral.                                                                                         | Badge/status/notification examples with text or icons, not color alone.             |
 | Contrast moments          | Text, icon, focus, border, inverse, and disabled examples.                                                                             | Pass/fail notes or implementation warnings where applicable.                        |

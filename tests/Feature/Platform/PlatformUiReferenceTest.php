@@ -586,8 +586,17 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('--ui-background')
             ->assertSee('--ui-layer-01')
             ->assertSee('--ui-layer-02')
-            ->assertSee('--ui-layer-accent-01')
+            ->assertSee('--ui-layer-03')
+            ->assertSee('data-background-layer-depth="4"', false)
+            ->assertSee('Header, body, and footer share the same background layer by default')
+            ->assertSee('Do not use accent layers or borders for card headers and footers by default')
             ->assertSee('Do not alternate white/gray manually in component examples');
+
+        $layeringView = file_get_contents(resource_path('views/platform/ui-reference/elements/color-layering.blade.php'));
+        $this->assertIsString($layeringView);
+        $this->assertStringContainsString('data-background-layer-depth="4"', $layeringView);
+        $this->assertStringNotContainsString('class="border-b px-4 py-3"', $layeringView);
+        $this->assertStringNotContainsString('class="border-t px-4 py-3', $layeringView);
 
         $this->get('/platform/ui-reference/elements/themes')
             ->assertOk()

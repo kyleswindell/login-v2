@@ -2107,9 +2107,36 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-menu-item:disabled,
-    .ui-menu-item[aria-disabled='true'] {
+    .ui-menu-item[aria-disabled='true'],
+    .ui-menu-item-disabled,
+    .ui-menu-item[data-ui-menu-item-state='disabled'] {
         cursor: not-allowed;
-        color: var(--ui-text-disabled);
+        background-color: transparent;
+        color: color-mix(in srgb, var(--ui-text-disabled) 42%, var(--ui-background));
+    }
+
+    .ui-menu-item:disabled:hover,
+    .ui-menu-item[aria-disabled='true']:hover,
+    .ui-menu-item-disabled:hover,
+    .ui-menu-item[data-ui-menu-item-state='disabled']:hover {
+        background-color: transparent;
+        color: color-mix(in srgb, var(--ui-text-disabled) 42%, var(--ui-background));
+    }
+
+    .ui-menu-item:disabled .ui-menu-item-check,
+    .ui-menu-item:disabled .ui-menu-item-submenu,
+    .ui-menu-item:disabled .ui-menu-item-shortcut,
+    .ui-menu-item[aria-disabled='true'] .ui-menu-item-check,
+    .ui-menu-item[aria-disabled='true'] .ui-menu-item-submenu,
+    .ui-menu-item[aria-disabled='true'] .ui-menu-item-shortcut,
+    .ui-menu-item-disabled .ui-menu-item-check,
+    .ui-menu-item-disabled .ui-menu-item-submenu,
+    .ui-menu-item-disabled .ui-menu-item-shortcut,
+    .ui-menu-item[data-ui-menu-item-state='disabled'] .ui-menu-item-check,
+    .ui-menu-item[data-ui-menu-item-state='disabled'] .ui-menu-item-submenu,
+    .ui-menu-item[data-ui-menu-item-state='disabled'] .ui-menu-item-shortcut {
+        background-color: transparent;
+        color: currentColor;
     }
 
     .ui-menu-item-label {
@@ -2149,7 +2176,6 @@ Use targeted searches for the class family being changed before reading this fil
         inset-inline-start: calc(100% + 0.25rem);
     }
 
-    .ui-menu-submenu-group:focus-within > .ui-menu-submenu-panel,
     .ui-menu-submenu-group:hover > .ui-menu-submenu-panel,
     .ui-menu-submenu-panel[data-ui-menu-submenu-open='true'] {
         display: grid;

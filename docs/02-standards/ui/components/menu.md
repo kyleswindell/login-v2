@@ -529,7 +529,8 @@ Feature views must not create local `dropdown-*`, `menu-*`, `overflow-*`, `actio
 - Home and End move to the first and last enabled items when implemented by `initMenus`.
 - Enter and Space activate the focused item.
 - Disabled items are skipped by activation and should be skipped by roving focus unless the implementation intentionally exposes them for screen-reader context.
-- Right and Left arrows may open and close one-level submenus; direction must account for RTL contexts.
+- One-level submenus open only from an explicit submenu interaction such as pointer hover, click, or the direction-aware submenu arrow key. Opening the parent menu or moving focus onto a submenu row must not expand the submenu by itself.
+- Right and Left arrows may open and close one-level submenus; direction must account for RTL contexts so RTL submenus open to the visual left of the parent menu and close from the mirrored arrow.
 - Submenus are one-level boundaries only. Do not add second-level or deeper submenu trees.
 - The trigger, panel, and item IDs/ARIA attributes must remain synchronized after server-rendered list changes.
 - Dividers must not be focusable.

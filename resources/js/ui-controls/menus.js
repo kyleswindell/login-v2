@@ -7,6 +7,7 @@ const closeMenu = (trigger, menu) => {
 
 const openMenu = (trigger, menu) => {
     trigger.setAttribute('aria-expanded', 'true');
+    closeSubmenus(menu);
     menu.hidden = false;
     trigger.closest('[data-ui-component="menu-composition"]')?.setAttribute('data-ui-menu-open', 'true');
     getEnabledMenuItems(menu)[0]?.focus();
@@ -39,6 +40,8 @@ const closeSubmenus = (menu) => {
     });
 };
 
+const isRtlMenu = (menu) => menu.closest('[dir="rtl"], .ui-menu-composition-rtl') !== null;
+
 export function initMenus(root = document) {
     root.querySelectorAll('[data-ui-menu-trigger]').forEach((trigger) => {
         if (trigger.dataset.uiMenuInitialized === 'true') {
@@ -66,7 +69,6 @@ export function initMenus(root = document) {
 
             submenuTrigger.addEventListener('pointerenter', () => openSubmenu(submenuTrigger, submenuPanel));
             group.addEventListener('pointerleave', () => closeSubmenu(submenuTrigger, submenuPanel));
-            submenuTrigger.addEventListener('focus', () => openSubmenu(submenuTrigger, submenuPanel));
             submenuTrigger.addEventListener('click', (event) => {
                 event.preventDefault();
 
@@ -103,6 +105,8 @@ export function initMenus(root = document) {
             const items = getEnabledMenuItems(activeMenu);
             const current = event.target.closest('[role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]');
             const index = items.indexOf(current);
+            const openSubmenuKey = isRtlMenu(activeMenu) ? 'ArrowLeft' : 'ArrowRight';
+            const closeSubmenuKey = isRtlMenu(activeMenu) ? 'ArrowRight' : 'ArrowLeft';
             let next = null;
 
             if (event.key === 'Escape') {
@@ -112,7 +116,7 @@ export function initMenus(root = document) {
                 return;
             }
 
-            if (event.key === 'ArrowRight' && current?.hasAttribute('data-ui-menu-submenu-trigger')) {
+            if (event.key === openSubmenuKey && current?.hasAttribute('data-ui-menu-submenu-trigger')) {
                 const group = current.closest('[data-ui-menu-submenu]');
                 const submenu = group?.querySelector('[data-ui-menu-submenu-panel]');
 
@@ -125,7 +129,7 @@ export function initMenus(root = document) {
                 return;
             }
 
-            if (event.key === 'ArrowLeft' && activeMenu.hasAttribute('data-ui-menu-submenu-panel')) {
+            if (event.key === closeSubmenuKey && activeMenu.hasAttribute('data-ui-menu-submenu-panel')) {
                 const group = activeMenu.closest('[data-ui-menu-submenu]');
                 const submenuTrigger = group?.querySelector('[data-ui-menu-submenu-trigger]');
 

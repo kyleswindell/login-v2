@@ -125,6 +125,7 @@
                                     role="menu"
                                     data-ui-menu-submenu-panel
                                     data-ui-menu-size="{{ $proofSize }}"
+                                    hidden
                                 >
                                     @foreach ($children as $child)
                                         @if ($child['divider'] ?? false)

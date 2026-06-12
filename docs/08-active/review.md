@@ -28,7 +28,7 @@ PARTIAL
 - P2-F-CQ-120: IMPLEMENTED PENDING REVIEW. Worklog 2-F-0030 corrects Motion Foundation Element proof so expressive motion is gated, productive examples use installed APIs/utilities, Pattern routes are current, and reduced-motion proof is visible.
 - P2-F-CQ-074: PASS. Breadcrumb correction was manually approved on 2026-06-11.
 - P2-F-CQ-075, P2-F-CQ-076, and P2-F-CQ-078: IMPLEMENTED PENDING REVIEW. Component recovery started for Tabs, Code snippet, and generic fallback-ban coverage.
-- P2-F-CQ-077: IMPLEMENTED PENDING REVIEW. Worklog 2-F-0041 corrects Menu so examples start closed, state/anatomy proof uses static proof panels, the Blade API matches documented props/aliases, and focused tests assert roles, placement, sizing, and checkable/submenu hooks.
+- P2-F-CQ-077: IMPLEMENTED PENDING REVIEW. Worklog 2-F-0041 corrects Menu so interactive triggers remain closed while visible proof panels show the menu surface, disabled items have distinct state treatment, submenu panels start collapsed until explicit interaction, RTL submenu placement mirrors correctly, the Blade API matches documented props/aliases, and focused tests assert roles, placement, sizing, and checkable/submenu hooks.
 - P2-F-CQ-079: PASS. Button correction was manually approved on 2026-06-11.
 - P2-F-CQ-093: PASS. Menu buttons correction was manually approved on 2026-06-11.
 - P2-F-CQ-080: IMPLEMENTED PENDING REVIEW. Worklog 2-F-0031 installs `x-ui.date-picker`, updates Date picker UI Reference examples to use the canonical API, and corrects reviewed standards table/link issues.

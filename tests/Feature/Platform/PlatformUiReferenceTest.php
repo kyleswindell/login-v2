@@ -1255,6 +1255,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Preview details')
             ->assertSee('Active workspaces')
             ->assertSee('Danger hover and focus')
+            ->assertSee('The visible proof panel represents the menu surface itself')
             ->assertSee('data-ui-component="menu-composition"', false)
             ->assertSee('data-ui-menu-open="false"', false)
             ->assertSee('data-ui-menu-trigger', false)
@@ -1292,12 +1293,14 @@ class PlatformUiReferenceTest extends TestCase
 
         $menuView = file_get_contents(resource_path('views/components/ui/menu.blade.php'));
         $menuItemView = file_get_contents(resource_path('views/components/ui/menu-item.blade.php'));
+        $menuSampleView = file_get_contents(resource_path('views/platform/ui-reference/components/examples/sample.blade.php'));
         $menuScript = file_get_contents(resource_path('js/ui-controls/menus.js'));
         $menuCss = file_get_contents(resource_path('css/app.css'));
         $menuStandard = file_get_contents(base_path('docs/02-standards/ui/components/menu.md'));
 
         $this->assertIsString($menuView);
         $this->assertIsString($menuItemView);
+        $this->assertIsString($menuSampleView);
         $this->assertIsString($menuScript);
         $this->assertIsString($menuCss);
         $this->assertIsString($menuStandard);
@@ -1305,12 +1308,23 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('data-ui-menu-submenu-panel', $menuView);
         $this->assertStringContainsString('reserveIndicator', $menuItemView);
         $this->assertStringContainsString('heroicon-o-chevron-right', $menuItemView);
+        $this->assertStringContainsString('ui-menu-item-disabled', $menuItemView);
+        $this->assertStringNotContainsString('text-[var(--ui-action-disabled-text)]', $menuItemView);
+        $this->assertStringContainsString('data-ui-menu-submenu-panel', $menuSampleView);
+        $this->assertStringContainsString('hidden', $menuSampleView);
         $this->assertStringContainsString('openSubmenu', $menuScript);
+        $this->assertStringNotContainsString("submenuTrigger.addEventListener('focus'", $menuScript);
+        $this->assertStringContainsString('const isRtlMenu', $menuScript);
+        $this->assertStringContainsString('openSubmenuKey', $menuScript);
+        $this->assertStringContainsString('closeSubmenuKey', $menuScript);
         $this->assertStringContainsString('ArrowRight', $menuScript);
         $this->assertStringContainsString('ArrowLeft', $menuScript);
+        $this->assertStringContainsString("data-ui-menu-item-state='disabled'", $menuCss);
         $this->assertStringContainsString('.ui-menu-submenu-panel', $menuCss);
         $this->assertStringContainsString('.ui-menu-composition-rtl .ui-menu', $menuCss);
+        $this->assertStringContainsString('.ui-menu-composition-rtl .ui-menu-submenu-panel', $menuCss);
         $this->assertStringContainsString('reserve the same indicator column', $menuStandard);
+        $this->assertStringContainsString('must not expand the submenu by itself', $menuStandard);
         $this->assertStringContainsString('RTL menus must mirror the full menu surface', $menuStandard);
     }
 

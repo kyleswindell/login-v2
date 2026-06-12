@@ -10,6 +10,8 @@ Date: 2026-06-09
 
 Corrected the Menu Component API and UI Reference proof surface so Menu examples are normal closed, interactive controls by default, while static proof panels demonstrate item states, sizing, placement, checkable roles, submenu hooks, and title behavior without hiding reference-page helper content.
 
+Follow-up review on 2026-06-12 corrected remaining Menu surface issues: the UI Reference page now shows visible menu proof panels for the primary examples instead of mostly closed triggers, disabled menu items receive a visibly distinct state, static submenu proof panels start collapsed, submenu rows no longer auto-expand from focus alone, and RTL submenu keyboard/placement behavior mirrors to the visual left side.
+
 ## Changes
 
 - Updated `x-ui.menu` to support the documented API aliases and props: `triggerIcon`, `triggerVariant`, `placement`, `disabled`, `id`, and `menuLabel`.
@@ -20,6 +22,8 @@ Corrected the Menu Component API and UI Reference proof surface so Menu examples
 - Corrected Menu catalog examples for contextual action, row action, grouped/selected state, sizing, alignment, truncation/title, and icon-only trigger proof.
 - Fixed the Menu standard item data table to avoid malformed Markdown pipe syntax.
 - Strengthened focused Menu recovery tests to assert closed examples, roles, placement, sizing, checkable roles, submenu hooks, title text, and no forced-open menu state.
+- Follow-up strengthened submenu behavior so opening a parent menu or focusing a submenu row does not expand the child panel, while pointer/click/arrow interaction still opens it.
+- Follow-up tightened disabled item CSS and RTL submenu placement/keyboard handling.
 - Synced the active queue so P2-F-CQ-077 is Implemented Pending Review and P2-F-CQ-079 Button is the next Ready To Implement correction.
 
 ## Files Updated

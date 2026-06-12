@@ -360,7 +360,7 @@ class UiReferenceComponentDepthCatalog
         ];
 
         return $this->correctedImplemented('menu', 'Menu', 'Menus present contextual actions behind a trigger without crowding the page.', [
-            $this->exampleFromSample('Contextual action menu', 'A closed menu button opens object-level actions in a predictable order without covering reference copy until the user interacts.', ['type' => 'menu', 'items' => $items, 'trigger_label' => 'Workspace actions', 'size' => 'md', 'align' => 'bottom-start'], [
+            $this->exampleFromSample('Contextual action menu', 'A closed trigger opens object-level actions in a predictable order, and the proof menu shows the action surface without replacing it with a menu-button example.', ['type' => 'menu', 'items' => $items, 'trigger_label' => 'Workspace actions', 'size' => 'md', 'align' => 'bottom-start', 'proof_panel' => true], [
                 $this->sampleVariant('Enabled item', ['type' => 'menu', 'items' => [['label' => 'Open details']], 'trigger_label' => 'Enabled state', 'proof_panel' => true]),
                 $this->sampleVariant('Hover item', ['type' => 'menu', 'items' => [['label' => 'Open details', 'state' => 'hover']], 'trigger_label' => 'Hover state', 'proof_panel' => true]),
                 $this->sampleVariant('Focus item', ['type' => 'menu', 'items' => [['label' => 'Open details', 'state' => 'focus']], 'trigger_label' => 'Focus state', 'proof_panel' => true]),
@@ -371,6 +371,7 @@ class UiReferenceComponentDepthCatalog
                 $this->sampleVariant('Disabled item', ['type' => 'menu', 'items' => [['label' => 'Export report', 'disabled' => true]], 'trigger_label' => 'Disabled state', 'proof_panel' => true]),
             ], [
                 'The base trigger is closed by default and becomes interactive through `initMenus`.',
+                'The visible proof panel represents the menu surface itself, not the Menu buttons component.',
                 'State variants use static proof panels so review text stays visible.',
             ]),
             $this->exampleFromSample('Row action menu', 'Table rows use icon-only overflow triggers and keep menus short.', ['type' => 'menu', 'items' => [
@@ -379,7 +380,7 @@ class UiReferenceComponentDepthCatalog
                 ['label' => 'Export record'],
                 ['divider' => true],
                 ['label' => 'Disable record', 'danger' => true],
-            ], 'trigger_label' => 'Open actions for Workspace alpha', 'trigger_kind' => 'icon', 'size' => 'sm'], [
+            ], 'trigger_label' => 'Open actions for Workspace alpha', 'trigger_kind' => 'icon', 'size' => 'sm', 'proof_panel' => true], [
                 $this->sampleVariant('Icon-only trigger', ['type' => 'menu', 'items' => [['label' => 'View record']], 'trigger_label' => 'Open actions for Workspace beta', 'trigger_kind' => 'icon']),
                 $this->sampleVariant('Divided groups', ['type' => 'menu', 'items' => [['label' => 'View record'], ['divider' => true], ['label' => 'Export record']], 'trigger_label' => 'Divided groups', 'proof_panel' => true]),
                 $this->sampleVariant('Extra small', ['type' => 'menu', 'items' => [['label' => 'Copy']], 'trigger_label' => 'XS menu', 'size' => 'xs', 'proof_panel' => true]),
@@ -401,7 +402,7 @@ class UiReferenceComponentDepthCatalog
                     ['label' => 'Review status'],
                 ]],
                 ['label' => 'Refresh', 'shortcut' => 'R'],
-            ], 'trigger_label' => 'View options'], [
+            ], 'trigger_label' => 'View options', 'proof_panel' => true], [
                 $this->sampleVariant('Dividers', ['type' => 'menu', 'items' => [['label' => 'Open'], ['label' => 'Duplicate'], ['divider' => true], ['label' => 'Archive'], ['label' => 'Delete workspace', 'danger' => true]], 'trigger_label' => 'Grouped menu', 'proof_panel' => true]),
                 $this->sampleVariant('Multi-section grouping', ['type' => 'menu', 'items' => [['label' => 'Open'], ['label' => 'Duplicate'], ['divider' => true], ['label' => 'Export'], ['label' => 'Share'], ['divider' => true], ['label' => 'Delete workspace', 'danger' => true]], 'trigger_label' => 'Sectioned menu', 'proof_panel' => true]),
                 $this->sampleVariant('Keyboard shortcut', ['type' => 'menu', 'items' => [['label' => 'Refresh', 'shortcut' => 'R']], 'trigger_label' => 'Shortcut menu', 'proof_panel' => true]),
@@ -414,7 +415,7 @@ class UiReferenceComponentDepthCatalog
                 'Selected and unselected rows reserve the same indicator column so labels stay aligned.',
                 'Submenus are working one-level action groups; deeper nesting remains prohibited.',
             ]),
-            $this->exampleFromSample('Alignment and RTL', 'Open menus align to the available space and mirror in RTL contexts.', ['type' => 'menu', 'items' => [['label' => 'Open'], ['label' => 'Export']], 'trigger_label' => 'Aligned menu', 'align' => 'bottom-end'], [
+            $this->exampleFromSample('Alignment and RTL', 'Open menus align to the available space and mirror in RTL contexts.', ['type' => 'menu', 'items' => [['label' => 'Open'], ['label' => 'Export']], 'trigger_label' => 'Aligned menu', 'align' => 'bottom-end', 'proof_panel' => true], [
                 $this->sampleVariant('Bottom start', ['type' => 'menu', 'items' => [['label' => 'Open']], 'trigger_label' => 'Bottom start', 'align' => 'bottom-start', 'proof_panel' => true]),
                 $this->sampleVariant('Bottom end', ['type' => 'menu', 'items' => [['label' => 'Open']], 'trigger_label' => 'Bottom end', 'align' => 'bottom-end', 'proof_panel' => true]),
                 $this->sampleVariant('Top start', ['type' => 'menu', 'items' => [['label' => 'Open']], 'trigger_label' => 'Top start', 'align' => 'top-start', 'proof_panel' => true]),

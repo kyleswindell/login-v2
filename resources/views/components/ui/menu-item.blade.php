@@ -52,25 +52,26 @@
     $classes = [
         'ui-menu-item flex w-full items-center gap-2 rounded-md border border-transparent text-left text-sm font-medium transition focus-visible:outline-none',
         'ui-menu-item-'.$resolvedSize,
-        $isCurrent ? $currentClasses[$resolvedSemantic] : $semanticClasses[$resolvedSemantic],
     ];
 
-    if ($isSelected) {
+    if ($disabled) {
+        $classes[] = 'ui-menu-item-disabled cursor-not-allowed border-transparent bg-transparent';
+    } else {
+        $classes[] = $isCurrent ? $currentClasses[$resolvedSemantic] : $semanticClasses[$resolvedSemantic];
+    }
+
+    if ($isSelected && ! $disabled) {
         $classes[] = 'is-selected';
     }
 
-    if (filled($state)) {
+    if (filled($state) && ! $disabled) {
         $classes[] = 'is-'.$state;
     }
 
-    if ($disabled) {
-        $classes[] = 'cursor-not-allowed border-transparent bg-transparent text-[var(--ui-action-disabled-text)]';
-    }
-
     $isLink = filled($href) && ! $disabled;
-    $stateValue = filled($state)
-        ? $state
-        : ($disabled ? 'disabled' : ($isSelected ? 'selected' : 'default'));
+    $stateValue = $disabled
+        ? 'disabled'
+        : (filled($state) ? $state : ($isSelected ? 'selected' : 'default'));
 @endphp
 
 @if ($isLink)

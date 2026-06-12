@@ -168,7 +168,7 @@ Use Code snippet when the user needs to read, compare, or copy exact implementat
 - Use explicit syntax token spans only where the UI Reference needs to prove code-token color roles.
 - Use token-backed syntax spans for UI Reference live examples that demonstrate implementation code, copy feedback, horizontal overflow, or multi-line syntax.
 - Keep code examples real and tied to the current installed API.
-- Block snippet shells use one standard card-like border and one layer surface across the language header, code body, and footer controls. Do not add a separate header/footer background band or internal header/footer divider by default.
+- Block snippet shells consume the standard `.ui-card` surface contract for their outer border, radius, shadow, and layer background. Nested block snippets default to `--ui-layer-02`; the language header, code body, and footer controls share that same layer surface. Do not add a separate header/footer background band or internal header/footer divider by default.
 - Do not show speculative, deferred, or fake API calls as complete production examples.
 - Parent Patterns own surrounding explanatory copy, example grouping, external spacing, and page layout.
 - Do not use raw `<pre>`, raw `<code>` blocks with local classes, Bootstrap code utilities, direct Carbon classes, raw colors, arbitrary spacing, or feature-local JavaScript to create code snippets.

@@ -1417,6 +1417,7 @@ class PlatformUiReferenceTest extends TestCase
         $standard = file_get_contents(base_path('docs/02-standards/ui/components/code-snippet.md'));
 
         $this->assertStringContainsString("['inline', 'single', 'multi']", $componentView);
+        $this->assertStringContainsString("'ui-card',", $componentView);
         $this->assertStringContainsString('data-ui-code-copy-button', $componentView);
         $this->assertStringContainsString('data-ui-code-show-more', $componentView);
         $this->assertStringContainsString('heroicon-o-clipboard-document', $componentView);
@@ -1427,9 +1428,12 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('<span class="ui-code-token-function">docker compose</span>', $examplesView);
         $this->assertStringContainsString('<span class="ui-code-token-keyword">x-ui.data-table</span>', $examplesView);
         $this->assertStringContainsString('.ui-code-snippet-shell-expandable', $componentCss);
-        $this->assertStringContainsString('@apply relative w-full max-w-3xl overflow-visible rounded-lg border', $componentCss);
-        $this->assertStringContainsString('--ui-code-snippet-layer: var(--ui-layer-01);', $componentCss);
+        $this->assertStringContainsString('background-color: var(--ui-card-layer, var(--ui-layer-01));', $componentCss);
+        $this->assertStringContainsString('@apply relative w-full max-w-3xl overflow-visible;', $componentCss);
+        $this->assertStringContainsString('--ui-code-snippet-layer: var(--ui-layer-02);', $componentCss);
+        $this->assertStringContainsString('--ui-card-layer: var(--ui-code-snippet-layer);', $componentCss);
         $this->assertStringContainsString('background-color: var(--ui-code-snippet-layer);', $componentCss);
+        $this->assertStringNotContainsString('@apply relative w-full max-w-3xl overflow-visible rounded-lg border', $componentCss);
         $this->assertStringContainsString('@apply flex min-h-10 items-center justify-between gap-3 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em];', $componentCss);
         $this->assertStringContainsString('@apply px-4 py-2;', $componentCss);
         $this->assertStringNotContainsString('@apply flex min-h-10 items-center justify-between gap-3 border-b px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em];', $componentCss);
@@ -1446,7 +1450,8 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('initInteractionFocus', $appJs);
         $this->assertStringContainsString('initCodeSnippets exported from resources/js/ui-controls/code-snippets.js', $catalog);
         $this->assertStringContainsString('Show more/show less', $standard);
-        $this->assertStringContainsString('one layer surface across the language header, code body, and footer controls', $standard);
+        $this->assertStringContainsString('consume the standard `.ui-card` surface contract', $standard);
+        $this->assertStringContainsString('Nested block snippets default to `--ui-layer-02`', $standard);
     }
 
     public function test_button_component_recovery_page_renders_required_examples(): void

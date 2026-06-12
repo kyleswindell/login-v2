@@ -48,6 +48,7 @@
 @else
 <div
     {{ $attributes->class([
+        'ui-card',
         'ui-code-snippet-shell',
         'ui-code-snippet-shell-single' => $resolvedVariant === 'single',
         'ui-code-snippet-shell-multi' => $resolvedVariant === 'multi',

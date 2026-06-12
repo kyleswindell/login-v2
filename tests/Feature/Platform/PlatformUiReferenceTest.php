@@ -588,6 +588,9 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('--ui-layer-02')
             ->assertSee('--ui-layer-03')
             ->assertSee('data-background-layer-depth="4"', false)
+            ->assertSee('data-background-layer-stack-sequence="background-layer-01-layer-02-layer-03"', false)
+            ->assertSee('Light: G10')
+            ->assertSee('Light: White')
             ->assertSee('Header, body, and footer share the same background layer by default')
             ->assertSee('Do not use accent layers or borders for card headers and footers by default')
             ->assertSee('Do not alternate white/gray manually in component examples');
@@ -595,6 +598,11 @@ class PlatformUiReferenceTest extends TestCase
         $layeringView = file_get_contents(resource_path('views/platform/ui-reference/elements/color-layering.blade.php'));
         $this->assertIsString($layeringView);
         $this->assertStringContainsString('data-background-layer-depth="4"', $layeringView);
+        $this->assertStringContainsString('data-background-layer-stack-sequence="background-layer-01-layer-02-layer-03"', $layeringView);
+        $this->assertStringNotContainsString('Return to layer 01', $layeringView);
+        $this->assertStringNotContainsString('Inline nested note', $layeringView);
+        $this->assertStringContainsString('data-background-layer-example="code-snippet-container"', $layeringView);
+        $this->assertStringNotContainsString('<div class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background: var(--ui-layer-01);" data-background-layer-example="code-snippet-container">', $layeringView);
         $this->assertStringNotContainsString('class="border-b px-4 py-3"', $layeringView);
         $this->assertStringNotContainsString('class="border-t px-4 py-3', $layeringView);
 

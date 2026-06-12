@@ -163,6 +163,8 @@ The dedicated UI Reference proof route is `/platform/ui-reference/elements/color
 
 Card headers, card bodies, and card footers share the same background layer by default. A card header must not switch to an accent/background token merely because it is a header, and a card footer must not switch layers merely because it is a footer. Header/footer separators are opt-in structural lines owned by the Component or Pattern API, not default card treatment.
 
+The canonical nested sequence is `--ui-background` → `--ui-layer-01` → `--ui-layer-02` → `--ui-layer-03`. In the light theme this resolves as G10 → White → G10 → White. Do not return to Layer 01 inside the same nested stack; only a new sibling context may begin a new Layer 01 sequence.
+
 | Layer role      | Installed token examples                    | Purpose                                         | Allowed usage                                                          |
 | --------------- | ------------------------------------------- | ----------------------------------------------- | ---------------------------------------------------------------------- |
 | Page background | `--ui-background`, `--ui-surface`           | Base page or app-region background.             | App shell content background and large empty regions.                  |

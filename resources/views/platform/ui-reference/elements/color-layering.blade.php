@@ -14,23 +14,23 @@
         ];
 
         $layerStacks = [
-            ['Page to contained region', [
-                ['Page canvas', '--ui-background'],
-                ['Layer 01 card', '--ui-layer-01'],
-                ['Layer 02 nested region', '--ui-layer-02'],
-                ['Layer 03 deepest region', '--ui-layer-03'],
+            ['Page to contained region', 'Generic page/card nesting', [
+                ['Page background', '--ui-background', 'Light: G10'],
+                ['Layer 01 card', '--ui-layer-01', 'Light: White'],
+                ['Layer 02 nested region', '--ui-layer-02', 'Light: G10'],
+                ['Layer 03 deepest region', '--ui-layer-03', 'Light: White'],
             ]],
-            ['Card to nested proof', [
-                ['Outer card', '--ui-layer-01'],
-                ['Nested example well', '--ui-layer-02'],
-                ['Contained proof surface', '--ui-layer-03'],
-                ['Return to layer 01 only with a new sibling context', '--ui-layer-01'],
+            ['Component example region', 'UI Reference live-example nesting', [
+                ['Page background', '--ui-background', 'Light: G10'],
+                ['Layer 01 example card', '--ui-layer-01', 'Light: White'],
+                ['Layer 02 component well', '--ui-layer-02', 'Light: G10'],
+                ['Layer 03 contained component', '--ui-layer-03', 'Light: White'],
             ]],
-            ['Documentation container', [
-                ['Documentation card', '--ui-layer-01'],
-                ['Code shell', '--ui-layer-02'],
-                ['Code body', '--ui-layer-03'],
-                ['Inline nested note', '--ui-layer-01'],
+            ['Documentation container', 'Documentation/code nesting', [
+                ['Page background', '--ui-background', 'Light: G10'],
+                ['Layer 01 documentation card', '--ui-layer-01', 'Light: White'],
+                ['Layer 02 code shell', '--ui-layer-02', 'Light: G10'],
+                ['Layer 03 code body', '--ui-layer-03', 'Light: White'],
             ]],
         ];
     @endphp
@@ -83,25 +83,30 @@
 
         <section class="ui-card" data-background-layering-section="stack-sequence">
             <h2 class="ui-card-title">Stack Sequence</h2>
-            <p class="ui-card-copy mt-2">A parent surface owns the layer context. Children step once above that context. Header, body, and footer areas inside the same card remain on the same layer by default.</p>
+            <p class="ui-card-copy mt-2">Use the same sequence for every nested surface: page background, Layer 01, Layer 02, then Layer 03. In the light theme this alternates G10, White, G10, White.</p>
 
             <div class="mt-5 grid gap-4 xl:grid-cols-3">
-                @foreach ($layerStacks as [$label, $layers])
+                @foreach ($layerStacks as [$label, $summary, $layers])
                     @php
                         [$base, $first, $second, $third] = $layers;
                     @endphp
-                    <article class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background: var({{ $base[1] }});" data-background-layer-stack="{{ Str::slug($label) }}" data-background-layer-depth="4">
+                    <article class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background: var({{ $base[1] }});" data-background-layer-stack="{{ Str::slug($label) }}" data-background-layer-depth="4" data-background-layer-stack-sequence="background-layer-01-layer-02-layer-03">
                         <p class="text-sm font-semibold" style="color: var(--ui-text-primary);">{{ $label }}</p>
+                        <p class="mt-1 text-xs" style="color: var(--ui-text-secondary);">{{ $summary }}</p>
                         <p class="mt-1 font-mono text-xs" style="color: var(--ui-text-helper);">{{ $base[1] }}</p>
+                        <p class="mt-1 text-xs" style="color: var(--ui-text-helper);">{{ $base[2] }}</p>
                         <div class="mt-4 rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background: var({{ $first[1] }});">
                             <p class="text-xs font-semibold" style="color: var(--ui-text-primary);">{{ $first[0] }}</p>
                             <p class="mt-1 font-mono text-xs" style="color: var(--ui-text-secondary);">{{ $first[1] }}</p>
+                            <p class="mt-1 text-xs" style="color: var(--ui-text-helper);">{{ $first[2] }}</p>
                             <div class="mt-4 rounded border p-4" style="border-color: var(--ui-border-subtle-01); background: var({{ $second[1] }});">
                                 <p class="text-xs font-semibold" style="color: var(--ui-text-primary);">{{ $second[0] }}</p>
                                 <p class="mt-1 font-mono text-xs" style="color: var(--ui-text-secondary);">{{ $second[1] }}</p>
+                                <p class="mt-1 text-xs" style="color: var(--ui-text-helper);">{{ $second[2] }}</p>
                                 <div class="mt-4 rounded p-4" style="background: var({{ $third[1] }});">
                                     <p class="text-xs font-semibold" style="color: var(--ui-text-primary);">{{ $third[0] }}</p>
                                     <p class="mt-1 font-mono text-xs" style="color: var(--ui-text-secondary);">{{ $third[1] }}</p>
+                                    <p class="mt-1 text-xs" style="color: var(--ui-text-helper);">{{ $third[2] }}</p>
                                 </div>
                             </div>
                         </div>
@@ -149,7 +154,7 @@
             <p class="ui-card-copy mt-2">Component examples should resolve through the same layer model. Code snippets, menu surfaces, table shells, and form groups must not invent a local background sequence.</p>
 
             <div class="mt-5 grid gap-5 xl:grid-cols-2">
-                <div class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background: var(--ui-layer-01);" data-background-layer-example="code-snippet-container">
+                <div class="min-w-0" data-background-layer-example="code-snippet-container">
                     <p class="mb-3 text-sm font-semibold" style="color: var(--ui-text-primary);">Code snippet container</p>
                     <x-ui.code-snippet language="Blade" copyable><span class="ui-code-token-punctuation">&lt;</span><span class="ui-code-token-keyword">x-ui.card</span> <span class="ui-code-token-property">layer</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"01"</span><span class="ui-code-token-punctuation">&gt;</span>...<span class="ui-code-token-punctuation">&lt;/</span><span class="ui-code-token-keyword">x-ui.card</span><span class="ui-code-token-punctuation">&gt;</span></x-ui.code-snippet>
                 </div>

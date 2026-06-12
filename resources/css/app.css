@@ -2408,6 +2408,9 @@ Use targeted searches for the class family being changed before reading this fil
     .ui-checkbox {
         @apply text-sm leading-5;
         color: var(--ui-text-primary);
+        --ui-checkbox-disabled-border: color-mix(in srgb, var(--ui-border-disabled) 70%, var(--ui-action-disabled-bg));
+        --ui-checkbox-disabled-background: var(--ui-action-disabled-bg);
+        --ui-checkbox-disabled-text: color-mix(in srgb, var(--ui-text-disabled) 45%, var(--ui-background));
     }
 
     .ui-checkbox-control {
@@ -2421,6 +2424,7 @@ Use targeted searches for the class family being changed before reading this fil
     .ui-checkbox-box {
         @apply relative mt-0.5 inline-flex h-4 w-4 shrink-0 items-center justify-center border;
         box-sizing: border-box;
+        border-radius: 0.125rem;
         border-color: var(--ui-icon-primary);
         background-color: transparent;
     }
@@ -2512,18 +2516,18 @@ Use targeted searches for the class family being changed before reading this fil
 
     .ui-checkbox-disabled,
     .ui-checkbox-input:disabled ~ .ui-checkbox-label {
-        color: var(--ui-text-disabled);
+        color: var(--ui-checkbox-disabled-text);
     }
 
     .ui-checkbox-input:disabled + .ui-checkbox-box {
-        border-color: var(--ui-icon-disabled);
-        background-color: var(--ui-icon-disabled);
+        border-color: var(--ui-checkbox-disabled-border);
+        background-color: var(--ui-checkbox-disabled-background);
     }
 
     .ui-checkbox-input:disabled:checked + .ui-checkbox-box,
     .ui-checkbox-input:disabled:indeterminate + .ui-checkbox-box {
-        border-color: var(--ui-icon-disabled);
-        background-color: var(--ui-icon-disabled);
+        border-color: var(--ui-checkbox-disabled-border);
+        background-color: var(--ui-checkbox-disabled-background);
     }
 
     .ui-checkbox-input:disabled:checked + .ui-checkbox-box::after,
@@ -2537,13 +2541,13 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-checkbox-readonly .ui-checkbox-box {
-        border-color: var(--ui-icon-disabled);
+        border-color: var(--ui-checkbox-disabled-border);
         background-color: transparent;
     }
 
     .ui-checkbox-readonly .ui-checkbox-input:checked + .ui-checkbox-box,
     .ui-checkbox-readonly .ui-checkbox-input:indeterminate + .ui-checkbox-box {
-        border-color: var(--ui-icon-disabled);
+        border-color: var(--ui-checkbox-disabled-border);
         background-color: transparent;
     }
 

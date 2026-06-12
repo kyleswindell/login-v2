@@ -1878,6 +1878,8 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Group states')
             ->assertSee('Nested group')
             ->assertSee('Overflow and alignment')
+            ->assertSee('Multiline single label')
+            ->assertSee('data-checkbox-alignment-example="multiline-single"', false)
             ->assertSee('data-component-live-layout="checkbox-matrix"', false)
             ->assertSee('data-ui-checkbox-group', false)
             ->assertSee('data-ui-checkbox-nested-group', false)
@@ -1908,9 +1910,20 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('data-ui-checkbox-child', $checkboxGroupView);
         $this->assertStringContainsString('ui-checkbox-status-icon', $checkboxGroupView);
         $this->assertStringContainsString('h-4 w-4 shrink-0', $checkboxGroupView);
+        $checkboxGroupOptionsPosition = strpos($checkboxGroupView, '<div class="ui-checkbox-group-options">');
+        $checkboxGroupHelperPosition = strpos($checkboxGroupView, 'class="ui-checkbox-group-helper"');
+
+        $this->assertNotFalse($checkboxGroupOptionsPosition);
+        $this->assertNotFalse($checkboxGroupHelperPosition);
+        $this->assertLessThan($checkboxGroupHelperPosition, $checkboxGroupOptionsPosition);
         $this->assertStringContainsString('data-component-live-layout="checkbox-matrix"', $checkboxExamples);
+        $this->assertStringContainsString('data-checkbox-alignment-example="multiline-single"', $checkboxExamples);
         $this->assertStringContainsString('Indeterminate appears only as a parent state', $checkboxExamples);
         $this->assertStringContainsString('.ui-checkbox-input:indeterminate + .ui-checkbox-box', $checkboxCss);
+        $this->assertStringContainsString('border-radius: 0.125rem', $checkboxCss);
+        $this->assertStringContainsString('--ui-checkbox-disabled-border: color-mix(in srgb, var(--ui-border-disabled) 70%, var(--ui-action-disabled-bg))', $checkboxCss);
+        $this->assertStringContainsString('background-color: var(--ui-checkbox-disabled-background)', $checkboxCss);
+        $this->assertStringContainsString('--ui-checkbox-disabled-text: color-mix(in srgb, var(--ui-text-disabled) 45%, var(--ui-background))', $checkboxCss);
         $this->assertStringContainsString('.ui-checkbox[data-ui-checkbox-focus=\'true\'] .ui-checkbox-box', $checkboxCss);
         $this->assertStringContainsString('.ui-checkbox-readonly .ui-checkbox-input:checked + .ui-checkbox-box', $checkboxCss);
         $this->assertStringContainsString('.ui-checkbox-group.ui-checkbox-invalid .ui-checkbox-box', $checkboxCss);

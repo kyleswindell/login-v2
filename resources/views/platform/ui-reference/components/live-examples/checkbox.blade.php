@@ -168,6 +168,16 @@
         <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Overflow and alignment</h3>
         <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">Labels wrap instead of truncating, with the control aligned to the top of the text. Vertical groups remain the default; horizontal groups are only for short labels.</p>
         <div class="mt-4 grid gap-4 lg:grid-cols-2">
+            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-checkbox-alignment-example="multiline-single">
+                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Multiline single label</h4>
+                <div class="mt-4 max-w-sm">
+                    <x-ui.checkbox
+                        name="checkbox_multiline_single"
+                        label="Send administrators an activity notification whenever workspace settings, billing permissions, or security-sensitive configuration values are changed"
+                    />
+                </div>
+            </article>
+
             <x-ui.checkbox-group
                 name="checkbox_wrapping_labels"
                 legend="Long label handling"

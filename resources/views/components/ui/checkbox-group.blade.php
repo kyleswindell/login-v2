@@ -41,10 +41,6 @@
         <legend class="ui-checkbox-group-legend">{{ $legend }}</legend>
     @endif
 
-    @if($helper)
-        <p id="{{ $helperId }}" class="ui-checkbox-group-helper">{{ $helper }}</p>
-    @endif
-
     <div class="ui-checkbox-group-options">
         @foreach($options as $index => $option)
             @php
@@ -107,6 +103,10 @@
             </div>
         @endforeach
     </div>
+
+    @if($helper)
+        <p id="{{ $helperId }}" class="ui-checkbox-group-helper">{{ $helper }}</p>
+    @endif
 
     @if($error)
         <p id="{{ $statusId }}" class="ui-checkbox-error">

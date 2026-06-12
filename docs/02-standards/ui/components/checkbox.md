@@ -154,6 +154,7 @@ Checkbox now has component-specific UI Reference examples that consume approved 
 - Use vertical stacking by default for groups.
 - Use horizontal groups only for short, predictable option sets where scan order remains clear.
 - Place helper, warning, and error copy at the group level when the message applies to the whole set.
+- Render group helper, warning, and error copy below the option list so the message reads as group support rather than an option label.
 - Keep external spacing owned by the parent Pattern.
 - Do not build custom checkbox visuals, raw utility clusters, local validation colors, or one-off JavaScript state handling in feature views.
 
@@ -354,7 +355,7 @@ Carbon color role mapping:
 | `$text-primary`, `$text-secondary`, `$text-disabled` | Checkbox label, group label/helper, disabled label | `ui-checkbox-label`, group legend/helper roles | App text palette | Same role / app value | Labels and helper text follow Text role hierarchy. |
 | `$support-error`, `$text-error`, `$support-warning` | Error border/icon/message and warning icon/fill | Checkbox validation state classes | App status palette | Same role / app value | Error/warning require non-color cues and accessible message text. |
 | `$focus` | Checkbox focus border/ring | `ui-checkbox-input:focus-visible`, `data-ui-checkbox-focus`, `--ui-focus` | App focus palette | Same role / app value | Focus must be visible on the real input/control and persist after click until the next interaction. |
-| `$icon-disabled` | Disabled and read-only control border/fill | Disabled/read-only checkbox state | App icon disabled role | Same role / app value | Disabled/read-only must not rely on opacity alone. |
+| `$icon-disabled` | Disabled and read-only control border/fill | Disabled/read-only checkbox state | App icon disabled role | Same role / app value | Disabled/read-only must use a visibly pale control border/fill and must not rely on opacity alone. |
 | `$black` | Carbon warning inner fill anomaly/context | No direct Login App token | None | Needs verification | Do not hard-code black; map warning state through support/text/icon roles only after verification. |
 
 ### 7.3. CSS namespace
@@ -384,6 +385,8 @@ The checkbox implementation must use an app-owned namespace. Use these names as 
 ```
 
 Feature views may pass layout classes only where the public API allows them. Feature views must not pass local classes to change checkbox color, border, state, focus, typography, icon, or internal spacing.
+
+The visual checkbox box must remain 16px by 16px, use a subtle rounded corner, and keep the input aligned to the top edge of wrapped or multiline labels.
 
 ## 8. Composition rules
 
@@ -509,9 +512,9 @@ The Checkbox page may use tabs, grouped examples, state matrices, or comparison 
 | Independent choice               | One setting can be toggled without affecting nearby choices.                                               | Unselected, selected, helper text.                                                                      |
 | Multi-select group               | Several visible choices can be selected at the same time under one group label.                            | Vertical group, selected/unselected mix, group helper text.                                             |
 | State matrix                     | Individual state treatments are visible without turning each state into a separate live variant.           | Persistent focus, disabled, read-only, error with icon/message, warning with icon/message, selected and unselected bases. |
-| Group states                     | Helper, disabled, read-only, error, and warning states apply to the group without repeating messages.      | Group label, helper text, one error/warning message below the group, option-level highlighting.         |
+| Group states                     | Helper, disabled, read-only, error, and warning states apply to the group without repeating messages.      | Group label, bottom helper text, one error/warning message below the group, option-level highlighting.  |
 | Parent-child indeterminate group | Parent checkbox summarizes child selections and displays mixed state only when some children are selected. | Nested options, selected children, unselected children, parent checked/unchecked/mixed sync, parent toggles all mutable children. |
-| Overflow and alignment           | Long labels wrap instead of truncating and align from the top of the checkbox control.                     | Long wrapping label, vertical default, horizontal short-label group.                                    |
+| Overflow and alignment           | Long labels wrap instead of truncating and align from the top of the checkbox control.                     | Multiline single label, long wrapping group label, vertical default, horizontal short-label group.       |
 
 ### 15.1. Required component contract display
 

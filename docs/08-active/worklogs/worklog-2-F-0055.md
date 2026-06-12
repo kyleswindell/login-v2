@@ -26,6 +26,7 @@ READY_FOR_REVIEW
 - Corrected read-only selected styling to use transparent background with primary checkmark treatment instead of the default selected fill.
 - Added error and warning icons to single-checkbox and group-level validation messages, and updated the Checkbox standard/tests to enforce the corrected behavior.
 - Follow-up correction: validation messages now use the app-owned `x-ui.status-icon` wrapper with explicit 16px sizing fallback so stale custom CSS cannot render oversized raw SVG icons.
+- Follow-up correction: restored the subtle rounded checkbox edge, tuned disabled/read-only control borders and disabled label treatment toward paler token roles, moved group helper text below options, and added a multiline single-label alignment proof.
 
 ## Validation
 
@@ -33,8 +34,12 @@ READY_FOR_REVIEW
 - Passed: `docker compose exec -T app php artisan test tests/Feature/Platform/PlatformUiReferenceTest.php --filter=component_family_depth_pages_render_specific_examples_and_variants`
 - Passed: `npm run build` after the expected sandboxed Tailwind/Vite native-module failure was rerun with approved escalation.
 - Passed: `npm run lint:docs:guardrails`
+- Follow-up passed: `docker compose exec -T app php artisan test tests/Feature/Platform/PlatformUiReferenceTest.php --filter=checkbox_component_page_renders_installed_api_examples`
+- Follow-up passed: `npm run lint:docs:guardrails`
+- Follow-up passed: `npm run build` with approved native-module escalation.
+- Follow-up browser review passed against built assets for rounded 16px checkbox geometry, multiline label top alignment, disabled/read-only control treatment, muted disabled label treatment, and group helper text below options.
 - Browser review passed against built assets for stable 16px geometry, transparent unchecked state, persistent clicked focus, nested parent/child checked and mixed sync, read-only selected styling, nested indentation, and 16px validation icons.
-- Browser caveat: the local Vite hot asset server hung on direct CSS/JS requests and served stale checkbox CSS in the browser. `public/hot` was temporarily moved aside for built-asset review after the production build passed, then restored.
+- Browser caveat: the local Vite hot asset server hung on direct CSS/JS requests and served stale checkbox CSS in the browser. `public/hot` is absent for this built-asset review surface; run `docker compose exec -T app php artisan local:ready` after starting host Vite to restore hot mode.
 
 ## Review Surface
 

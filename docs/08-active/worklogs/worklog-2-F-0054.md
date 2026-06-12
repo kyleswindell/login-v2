@@ -24,6 +24,7 @@ READY_FOR_REVIEW
 - Replaced generic generated examples with a Code snippet-owned live-example matrix covering inline, single-line horizontal overflow, larger multi-line example, copy tooltip/status feedback, show-more controls, light modifier, and syntax token proof.
 - Updated the component CSS so snippets align to the grid, preserve horizontal scroll, use 32px icon-only ghost copy controls, and expose collapsed/expanded multi-line states.
 - Updated the Code snippet standard, catalog source contract, active sync records, and focused tests to require `initCodeSnippets` and the corrected proof surface.
+- Follow-up correction: copy tooltips now use auto placement without shell clipping, inline copy snippets render a Tooltip, live code examples use token-backed syntax colors, copied state uses a semantic copied affordance color, snippet shell layering separates header/body surfaces, and clicked copy/show-more controls retain focus until another interaction.
 
 ## Validation
 
@@ -31,7 +32,11 @@ READY_FOR_REVIEW
 - Passed: `docker compose exec -T app php artisan test tests/Feature/Platform/PlatformUiReferenceTest.php --filter=component_family_depth_pages_render_specific_examples_and_variants`
 - Passed: `npm run build` after the expected sandboxed Tailwind/Vite native-module failure was rerun with approved escalation.
 - Passed: `npm run lint:docs:guardrails`
-- Browser review was attempted against `/platform/ui-reference/components/code-snippet`; the protected route redirected to `/login`, and Browser login typing remains blocked by the Browser session's unavailable virtual clipboard/type path. Authenticated route coverage and production build validation are the reviewable local surface for this pass.
+- Follow-up passed: `docker compose exec -T app php artisan test tests/Feature/Platform/PlatformUiReferenceTest.php --filter=code_snippet_component_recovery_page_renders_required_examples`
+- Follow-up passed: `npm run lint:docs:guardrails`
+- Follow-up passed: `npm run build` with approved native-module escalation.
+- Follow-up browser review passed against built assets for auto-placement tooltip wiring, inline tooltip presence, non-clipped shell overflow, copied-state icon color, token-backed live-example code colors, and persisted clicked focus on the show-more/show-less control.
+- Browser caveat: local review remains in built-asset mode because `public/hot` is absent after prior Vite hot CSS instability; run `docker compose exec -T app php artisan local:ready` after starting host Vite to restore hot mode.
 
 ## Review Surface
 

@@ -166,6 +166,7 @@ Use Code snippet when the user needs to read, compare, or copy exact implementat
 - Preserve whitespace and line breaks in multi-line examples.
 - Use horizontal overflow for long code instead of wrapping into misleading syntax.
 - Use explicit syntax token spans only where the UI Reference needs to prove code-token color roles.
+- Use token-backed syntax spans for UI Reference live examples that demonstrate implementation code, copy feedback, horizontal overflow, or multi-line syntax.
 - Keep code examples real and tied to the current installed API.
 - Do not show speculative, deferred, or fake API calls as complete production examples.
 - Parent Patterns own surrounding explanatory copy, example grouping, external spacing, and page layout.
@@ -333,7 +334,7 @@ Feature views must not create additional `code-snippet-*`, `snippet-*`, `highlig
 | Copy ready                 | Implemented visual state          | Copy affordance is visible when `copyable` is true and `copyState="idle"`.                                    |
 | Copied                     | Implemented                       | Copied state is visible when `copyState="copied"` and after copy activation.                                  |
 | Hover                      | Implemented for copy control only | Copy control uses token-backed hover treatment. Read-only code body should not imply interactivity.           |
-| Focus-visible              | Implemented for copy control only | Copy control has visible focus in all supported themes.                                                       |
+| Focus-visible              | Implemented for copy control only | Copy control has visible focus in all supported themes. Clicked controls retain visible focus until another pointer or keyboard interaction. |
 | Active/pressed             | Implemented for copy control only | Copy control has token-backed active treatment.                                                               |
 | Overflow                   | Implemented                       | Long code scrolls horizontally without changing syntax meaning.                                               |
 | Read-only                  | Implemented                       | Code content is read-only; it is selectable text but not editable.                                            |
@@ -380,7 +381,7 @@ Carbon color role mapping:
 | `$layer` | Single-line snippet container background | `ui-code-snippet--single` surface role | App layer palette | Same role / app value | Code snippet surfaces use layer roles, not local gray blocks. |
 | `$layer-hover`, `$layer-active` | Inline snippet hover/active background | Inline snippet state roles | App layer state palette | Same role / app value | Hover/active shares layer state mapping. |
 | `$icon-primary` | Multi-line/copy icon color | Code snippet copy/icon role | App icon palette | Same role / app value | Icons inherit currentColor from component state. |
-| `$focus` | Single-line/container/copy focus | Code snippet focus-visible role | App focus palette | Same role / app value | Focus must remain visible on copyable snippets. |
+| `$focus` | Single-line/container/copy focus | Code snippet focus-visible role | App focus palette | Same role / app value | Focus must remain visible on copyable snippets, including the most recently clicked copy or show-more control. |
 | `--ui-code-token-*` syntax roles | Syntax highlighting colors | Code snippet token spans | App code token palette | App-specific role | Syntax token colors are component-owned and must not be reused as generic text colors. |
 
 ### 7.3. CSS namespace
@@ -439,6 +440,7 @@ Feature views must not create local syntax classes, hard-coded token colors, arb
 - Do not show deferred or speculative APIs as complete examples unless clearly marked as deferred trigger conditions.
 - Use `language` labels consistently across related examples.
 - Use `copyable` when the snippet is intended to be copied exactly.
+- Copy button tooltips must use Tooltip positioning that can resolve within the viewport and must not be clipped by the snippet shell or surrounding card.
 - Do not render copy controls for examples that require developer substitution unless the copy label/context makes that clear.
 - Long examples scroll horizontally instead of wrapping into misleading syntax.
 - Avoid very long examples; link to source docs or split examples when a snippet becomes hard to scan.
@@ -488,6 +490,7 @@ Use Code snippet when:
 - Copy controls must have an accessible name such as `Copy code`.
 - Copy controls must be keyboard reachable when rendered.
 - Copy controls must show visible focus in every supported theme.
+- Copy controls and show-more controls must keep visible clicked focus until another click, Tab, Escape, or other keyboard interaction changes focus context.
 - Copy state must be conveyed through text, not icon or color alone.
 - Live clipboard behavior must announce successful copy and failure states through component feedback text.
 - Syntax colors must meet contrast requirements in supported light and dark themes.
@@ -554,10 +557,10 @@ The Code snippet page is a developer-documentation reference page. The Live exam
 | Required proof                    | Rendered behavior                                                                                                                                                                      | Variants/options shown                                                    |
 | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | API status proof                  | Page states that Code snippet is implemented pending correction and uses `x-ui.code-snippet`.                                                                                          | `x-ui.code-snippet`, implemented pending correction                       |
-| Single-line code                  | Short API calls stay visually compact and may include copy affordance.                                                                                                                 | Single-line, Language label, Copy ready, Copied                           |
-| Multi-line code                   | Longer examples preserve line breaks, indentation, and horizontal overflow.                                                                                                            | Multi-line, Without copy, With copy, Overflow                             |
+| Single-line code                  | Short API calls stay visually compact, use token-backed code colors in live proof, and may include copy affordance.                                                                    | Single-line, Language label, Copy ready, Copied, Token colors             |
+| Multi-line code                   | Longer examples preserve line breaks, indentation, token-backed code colors, and horizontal overflow.                                                                                  | Multi-line, Without copy, With copy, Overflow, Token colors               |
 | Syntax token proof                | Token spans render with approved Typography and Color roles.                                                                                                                           | Keyword, Property, String, Punctuation, Comment, Number, Function         |
-| Copy behavior proof               | Idle and copied states render through the icon-only copy button, tooltip, and live feedback text.                                                                                      | Copy to clipboard, Copied to clipboard, Accessible copy label             |
+| Copy behavior proof               | Idle and copied states render through the icon-only copy button, non-clipped auto-positioning tooltip, copied-state color, and live feedback text.                                     | Copy to clipboard, Copied to clipboard, Accessible copy label, Tooltip    |
 | Overflow behavior                 | Long snippets scroll horizontally instead of wrapping into misleading syntax.                                                                                                          | Overflow, Multi-line, Single-line                                         |
 | Theme proof                       | Snippets render correctly on supported light, dark, layered, and inverse surfaces where applicable.                                                                                    | Themes, Contrast, Token colors                                            |
 | Accessibility proof               | Examples show `pre`/`code`, copy button label, focus-visible state, text-based copied feedback, and non-color-only token meaning.                                                      | Semantics, Copy button, Focus-visible, Copied text                        |

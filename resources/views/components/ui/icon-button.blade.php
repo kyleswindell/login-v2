@@ -7,6 +7,9 @@
     'semantic' => 'ghost',
     'size' => 'md',
     'tooltip' => null,
+    'tooltipPlacement' => 'top',
+    'tooltipAlign' => 'center',
+    'tooltipSize' => 'single',
     'disabled' => false,
     'loading' => false,
 ])
@@ -31,8 +34,14 @@
         'info' => ['info', 'base'],
     ];
     $allowedSizes = ['xs', 'sm', 'md', 'lg', 'lg-expressive', 'xl', '2xl'];
+    $allowedTooltipPlacements = ['auto', 'top', 'right', 'bottom', 'left'];
+    $allowedTooltipAlignments = ['start', 'center', 'end'];
+    $allowedTooltipSizes = ['auto', 'single', 'multi', 'definition'];
     [$resolvedSemantic, $resolvedVariant] = $semanticMap[$semantic] ?? $semanticMap['ghost'];
     $resolvedSize = in_array($size, $allowedSizes, true) ? $size : 'md';
+    $resolvedTooltipPlacement = in_array($tooltipPlacement, $allowedTooltipPlacements, true) ? $tooltipPlacement : 'top';
+    $resolvedTooltipAlign = in_array($tooltipAlign, $allowedTooltipAlignments, true) ? $tooltipAlign : 'center';
+    $resolvedTooltipSize = in_array($tooltipSize, $allowedTooltipSizes, true) ? $tooltipSize : 'single';
 
     $classes = ['ui-icon-button', 'ui-icon-button-'.$resolvedSize];
     $isDisabled = $disabled || $loading;
@@ -52,10 +61,10 @@
         data-ui-component="tooltip"
         data-ui-tooltip
         data-ui-tooltip-kind="default"
-        data-ui-tooltip-placement="top"
-        data-ui-tooltip-resolved-placement="top"
-        data-ui-tooltip-align="center"
-        data-ui-tooltip-size="single"
+        data-ui-tooltip-placement="{{ $resolvedTooltipPlacement }}"
+        data-ui-tooltip-resolved-placement="{{ $resolvedTooltipPlacement === 'auto' ? 'top' : $resolvedTooltipPlacement }}"
+        data-ui-tooltip-align="{{ $resolvedTooltipAlign }}"
+        data-ui-tooltip-size="{{ $resolvedTooltipSize }}"
         data-ui-tooltip-state="closed"
     >
         <span class="ui-tooltip-trigger" data-ui-tooltip-trigger>

@@ -1537,7 +1537,9 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-action.is-focus,
-    .ui-icon-button.is-focus {
+    .ui-icon-button.is-focus,
+    .ui-action[data-ui-interaction-focus='true'],
+    .ui-icon-button[data-ui-interaction-focus='true'] {
         outline: 2px solid var(--ui-focus);
         outline-offset: 2px;
     }
@@ -2349,7 +2351,7 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-code-snippet-shell {
-        @apply relative w-full max-w-3xl overflow-hidden rounded-lg border;
+        @apply relative w-full max-w-3xl overflow-visible rounded-lg border;
         border-color: var(--ui-border-subtle-01);
         background-color: var(--ui-layer-01);
     }
@@ -2361,15 +2363,17 @@ Use targeted searches for the class family being changed before reading this fil
     .ui-code-snippet-header {
         @apply flex min-h-10 items-center justify-between gap-3 border-b px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em];
         border-color: var(--ui-border-subtle-01);
+        background-color: var(--ui-layer-02);
         color: var(--ui-text-helper);
     }
 
     .ui-code-snippet-shell .ui-code-snippet {
         @apply rounded-none border-0;
+        background-color: var(--ui-layer-01);
     }
 
     .ui-code-snippet-copy-control {
-        @apply absolute right-1 top-1 z-10;
+        @apply absolute right-1 top-1 z-30;
     }
 
     .ui-code-snippet-copy-control .ui-icon-button {
@@ -2393,6 +2397,10 @@ Use targeted searches for the class family being changed before reading this fil
     .ui-code-snippet-copy-control .ui-icon-button:disabled {
         background-color: transparent;
         color: var(--ui-icon-disabled);
+    }
+
+    .ui-code-snippet-shell[data-ui-code-copy-state='copied'] .ui-code-snippet-copy-control .ui-icon-button {
+        color: var(--ui-support-success);
     }
 
     .ui-code-snippet-footer {

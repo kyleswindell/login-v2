@@ -22,16 +22,21 @@
 
 @if ($resolvedVariant === 'inline')
     @if ($copyable)
-        <button
-            type="button"
-            {{ $attributes->class(['ui-code-snippet-inline', 'ui-code-snippet-inline-copyable']) }}
-            data-ui-component="code-snippet"
-            data-ui-code-snippet
-            data-ui-code-snippet-variant="inline"
-            data-ui-code-copy-state="{{ $resolvedCopyState }}"
-            data-ui-code-copy-button
-            aria-describedby="{{ $feedbackId }}"
-        ><code data-ui-code-copy-source>{{ $slot }}</code><span id="{{ $feedbackId }}" class="sr-only" data-ui-code-copy-feedback>{{ $resolvedCopyState === 'copied' ? 'Copied to clipboard' : 'Copy to clipboard' }}</span></button>
+        <x-ui.tooltip
+            :text="$resolvedCopyState === 'copied' ? 'Copied to clipboard' : 'Copy to clipboard'"
+            placement="auto"
+            size="single"
+        >
+            <button
+                type="button"
+                {{ $attributes->class(['ui-code-snippet-inline', 'ui-code-snippet-inline-copyable']) }}
+                data-ui-component="code-snippet"
+                data-ui-code-snippet
+                data-ui-code-snippet-variant="inline"
+                data-ui-code-copy-state="{{ $resolvedCopyState }}"
+                data-ui-code-copy-button
+            ><code data-ui-code-copy-source>{{ $slot }}</code><span id="{{ $feedbackId }}" class="sr-only" data-ui-code-copy-feedback>{{ $resolvedCopyState === 'copied' ? 'Copied to clipboard' : 'Copy to clipboard' }}</span></button>
+        </x-ui.tooltip>
     @else
         <code
             {{ $attributes->class('ui-code-snippet-inline') }}
@@ -68,11 +73,11 @@
                 icon="heroicon-o-clipboard-document"
                 label="Copy to clipboard"
                 tooltip="{{ $resolvedCopyState === 'copied' ? 'Copied to clipboard' : 'Copy to clipboard' }}"
+                tooltip-placement="auto"
                 size="sm"
                 semantic="ghost"
                 data-ui-code-copy-button
                 data-ui-code-copy-state="{{ $resolvedCopyState }}"
-                aria-describedby="{{ $feedbackId }}"
             />
         </div>
     @endif

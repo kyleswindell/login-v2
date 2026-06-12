@@ -1352,6 +1352,7 @@ class PlatformUiReferenceTest extends TestCase
         $examplesView = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/code-snippet.blade.php'));
         $componentCss = file_get_contents(resource_path('css/app.css'));
         $componentScript = file_get_contents(resource_path('js/ui-controls/code-snippets.js'));
+        $interactionFocusScript = file_get_contents(resource_path('js/ui-controls/interaction-focus.js'));
         $uiControls = file_get_contents(resource_path('js/ui-controls.js'));
         $appJs = file_get_contents(resource_path('js/app.js'));
         $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
@@ -1361,14 +1362,24 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('data-ui-code-copy-button', $componentView);
         $this->assertStringContainsString('data-ui-code-show-more', $componentView);
         $this->assertStringContainsString('heroicon-o-clipboard-document', $componentView);
+        $this->assertStringContainsString('tooltip-placement="auto"', $componentView);
+        $this->assertStringContainsString('<x-ui.tooltip', $componentView);
         $this->assertStringContainsString('data-component-live-layout="code-snippet-matrix"', $examplesView);
         $this->assertStringContainsString('Multi-line with show more', $examplesView);
+        $this->assertStringContainsString('<span class="ui-code-token-function">docker compose</span>', $examplesView);
+        $this->assertStringContainsString('<span class="ui-code-token-keyword">x-ui.data-table</span>', $examplesView);
         $this->assertStringContainsString('.ui-code-snippet-shell-expandable', $componentCss);
+        $this->assertStringContainsString('@apply relative w-full max-w-3xl overflow-visible rounded-lg border', $componentCss);
+        $this->assertStringContainsString(".ui-code-snippet-shell[data-ui-code-copy-state='copied'] .ui-code-snippet-copy-control .ui-icon-button", $componentCss);
+        $this->assertStringContainsString("[data-ui-interaction-focus='true']", $componentCss);
         $this->assertStringContainsString('.ui-code-snippet-inline', $componentCss);
         $this->assertStringContainsString('export function initCodeSnippets(root = document)', $componentScript);
         $this->assertStringContainsString('navigator.clipboard', $componentScript);
+        $this->assertStringContainsString('export function initInteractionFocus(root = document)', $interactionFocusScript);
         $this->assertStringContainsString('export { initCodeSnippets }', $uiControls);
+        $this->assertStringContainsString('export { initInteractionFocus }', $uiControls);
         $this->assertStringContainsString('initCodeSnippets', $appJs);
+        $this->assertStringContainsString('initInteractionFocus', $appJs);
         $this->assertStringContainsString('initCodeSnippets exported from resources/js/ui-controls/code-snippets.js', $catalog);
         $this->assertStringContainsString('Show more/show less', $standard);
     }

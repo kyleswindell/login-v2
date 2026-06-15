@@ -1,7 +1,7 @@
 ---
 title: Date picker
 slug: date-picker
-status: implemented-pending-correction
+status: implemented-pending-review
 api_layer: Component API
 category: Inputs
 priority: Tier C - Contextual or deferred
@@ -56,7 +56,7 @@ Date picker uses native date controls for simple date and date-time entry.
 
 Canonical API owner: `/platform/ui-reference/components/date-picker`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
-This standard is intentionally narrower than Carbon's full Date picker component. Login App currently standardizes native browser date and date-time fields. Full calendar popovers, range calendars, unavailable-date calendars, and custom time-zone picker workflows are deferred unless a specific product workflow installs and proves those APIs.
+This standard is intentionally narrower than Carbon's full Date picker component. Login App currently standardizes native browser date and date-time fields. Full calendar popovers, range calendars, unavailable-date calendars, and custom time-zone picker workflows are deferred unless a specific product workflow installs and proves those APIs. In practical terms, custom calendar and range behavior remain gated.
 
 ## 2. Status and ownership
 
@@ -73,13 +73,15 @@ This standard is intentionally narrower than Carbon's full Date picker component
 
 ## 3. Installed standard
 
-Date picker now has component-specific UI Reference examples that consume approved Foundation Elements.
+Date picker has component-specific UI Reference examples that consume approved Foundation Elements.
 
 The installed Login App standard is:
 
 - Use native `input[type="date"]` for simple single-date entry.
 - Use native `input[type="datetime-local"]` for simple date-time entry when the workflow does not require a separate time-zone selector.
+- Support small, medium, large, and fluid field presentations through the installed field API.
 - Use labels, helper text, validation copy, disabled/read-only treatment, and token-backed field states consistently with the Form Pattern.
+- Use a read-only value summary plus hidden submitted value when the field is fixed but still belongs to form submission.
 - Use server-side validation as the source of truth for required, minimum, maximum, and business-rule validation.
 - Treat browser-rendered date picker popups as native browser behavior, not as app-owned visual surfaces.
 - Defer full calendar picker, range picker, unavailable-date rules, custom time picker, and custom date masking until a dedicated API and accessibility contract are approved.
@@ -92,9 +94,9 @@ This component owns the field-level date/date-time input API. Parent Patterns ow
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Blade           | `x-ui.date-picker`                                                                                                                                                                                            |
 | JavaScript      | No dedicated JavaScript controller required for the installed native-control API.                                                                                                                             |
-| Data attributes | None required for the installed API. Use only documented `data-ui-*` attributes if a future enhancement adds behavior.                                                                                        |
-| Props/options   | `name`, `id`, `label`, `value`, `type`, `min`, `max`, `step`, `required`, `disabled`, `readonly`, `helper`, `error`, `warning`, `autocomplete`, `attributes`.                                                 |
-| CSS namespace   | Use the app-owned `ui-*` namespace documented by the component implementation. Recommended namespaces are `ui-field`, `ui-field-label`, `ui-input`, `ui-input-date`, `ui-field-helper`, and `ui-field-error`. |
+| Data attributes | `data-ui-component="date-picker"`, `data-ui-date-picker`, `data-ui-date-picker-type`, `data-ui-date-picker-size`, `data-ui-date-picker-style`, `data-ui-date-picker-input`, `data-ui-date-picker-readonly`. |
+| Props/options   | `name`, `id`, `label`, `value`, `defaultValue`, `type`, `min`, `minDate`, `max`, `maxDate`, `step`, `required`, `disabled`, `readonly`, `readOnly`, `helper`, `helperText`, `error`, `invalid`, `invalidText`, `warning`, `warn`, `warnText`, `autocomplete`, `placeholder`, `dateFormat`, `size`, `style`, `skeleton`, `attributes`. |
+| CSS namespace   | Use the app-owned `ui-*` namespace documented by the component implementation. Recommended namespaces are `ui-date-picker`, `ui-date-picker-control`, `ui-input-date`, `ui-date-picker-status-icon`, `ui-date-picker-readonly-value`, and shared `ui-field*` helpers. |
 | Source files    | `resources/views/components/ui/date-picker.blade.php`; `resources/css/app.css`                                                                                                                                |
 
 Example call:
@@ -139,17 +141,31 @@ Validation example:
 | `id`           | `string / null`       |  `null` | derived from `name`                                     |       No | Use when multiple instances require explicit ids.                     |
 | `label`        | `string`              |       — | Plain text or escaped text                              |      Yes | Visible label is required. Placeholder-only labeling is prohibited.   |
 | `value`        | `string / null`       |  `null` | `YYYY-MM-DD` for date, `YYYY-MM-DDTHH:mm` for date-time |       No | Use normalized values that native inputs can parse.                   |
+| `defaultValue` | `string / null`       |  `null` | same as `value`                                         |       No | Alias for APIs that distinguish initial/default values.               |
 | `type`         | `string`              |  `date` | `date`, `datetime-local`                                |       No | Other native temporal types require a documented extension.           |
 | `min`          | `string / null`       |  `null` | Valid date or date-time value matching `type`           |       No | Pair with helper copy when the constraint matters to users.           |
+| `minDate`      | `string / null`       |  `null` | Valid date or date-time value matching `type`           |       No | Alias for `min`.                                                      |
 | `max`          | `string / null`       |  `null` | Valid date or date-time value matching `type`           |       No | Pair with helper copy when the constraint matters to users.           |
+| `maxDate`      | `string / null`       |  `null` | Valid date or date-time value matching `type`           |       No | Alias for `max`.                                                      |
 | `step`         | `int / string / null` |  `null` | Native input step value                                 |       No | Use only when seconds/minute precision is product-approved.           |
 | `required`     | `bool`                | `false` | `true`, `false`                                         |       No | Must be paired with server validation.                                |
 | `disabled`     | `bool`                | `false` | `true`, `false`                                         |       No | Disabled fields are not submitted and are not focusable.              |
 | `readonly`     | `bool`                | `false` | `true`, `false`                                         |       No | Prefer plain text summaries when the value is purely informational.   |
+| `readOnly`     | `bool`                | `false` | `true`, `false`                                         |       No | Alias for `readonly`.                                                 |
 | `helper`       | `string / null`       |  `null` | Short explanatory copy                                  |       No | Include format, time-zone, or constraint guidance when needed.        |
+| `helperText`   | `string / null`       |  `null` | Short explanatory copy                                  |       No | Alias for `helper`.                                                   |
 | `error`        | `string / null`       |  `null` | Short recovery copy                                     |       No | Sets invalid/error treatment and links copy to the control.           |
+| `invalid`      | `bool`                | `false` | `true`, `false`                                         |       No | Alias state for Carbon-style invalid APIs.                            |
+| `invalidText`  | `string / null`       |  `null` | Short recovery copy                                     |       No | Error copy used when `invalid` is true.                               |
 | `warning`      | `string / null`       |  `null` | Short caution copy                                      |       No | Use for non-blocking business-rule cautions.                          |
+| `warn`         | `bool`                | `false` | `true`, `false`                                         |       No | Alias state for Carbon-style warning APIs.                            |
+| `warnText`     | `string / null`       |  `null` | Short caution copy                                      |       No | Warning copy used when `warn` is true.                                |
 | `autocomplete` | `string / null`       |  `null` | Valid autocomplete token                                |       No | Use only valid browser tokens.                                        |
+| `placeholder`  | `string / null`       |  `null` | Native placeholder                                      |       No | Never use as the label or only format guidance.                       |
+| `dateFormat`   | `string / null`       |  `null` | Short date format label                                 |       No | Renders helper copy when helper text is not supplied.                 |
+| `size`         | `string`              |    `md` | `sm`, `md`, `lg`                                        |       No | Controls native field height.                                         |
+| `style`        | `string`              | `default` | `default`, `fluid`                                    |       No | Fluid uses the 64px expressive field treatment.                       |
+| `skeleton`     | `bool`                | `false` | `true`, `false`                                         |       No | Loading placeholder; disables the native input and exposes status.    |
 | `attributes`   | `array`               |    `[]` | Extra safe HTML attributes                              |       No | Do not use this to inject local style, raw color, or custom behavior. |
 
 ### 4.2. Value contract
@@ -161,7 +177,17 @@ Validation example:
 
 ### 4.3. Data attributes
 
-No date-picker-specific data attributes are approved for the installed native-control API.
+The installed native-control API exposes data attributes for review, tests, and future-safe initialization boundaries:
+
+| Attribute | Owner | Use |
+| --------- | ----- | --- |
+| `data-ui-component="date-picker"` | Component | Identifies the component root. |
+| `data-ui-date-picker` | Component | Identifies the field wrapper. |
+| `data-ui-date-picker-type` | Component | Records `date` or `datetime-local`. |
+| `data-ui-date-picker-size` | Component | Records `sm`, `md`, or `lg`. |
+| `data-ui-date-picker-style` | Component | Records `default` or `fluid`. |
+| `data-ui-date-picker-input` | Component | Identifies the native input when editable. |
+| `data-ui-date-picker-readonly` | Component | Identifies the read-only submitted value summary. |
 
 Future data attributes for custom calendar behavior, range selection, unavailable-date rules, or time-zone behavior must be documented here before use.
 
@@ -176,11 +202,16 @@ Date picker has no decorative visual variants. It has installed input types, fie
 | Minimum date       | Constraint            | Approved API             | `min="YYYY-MM-DD"`               | Dates before a known lower bound are invalid.                                                                    |
 | Maximum date       | Constraint            | Approved API             | `max="YYYY-MM-DD"`               | Dates after a known upper bound are invalid.                                                                     |
 | Required date      | Constraint            | Approved API             | `required`                       | Submission cannot proceed without a value.                                                                       |
+| Small              | Size                  | Approved API             | `size="sm"`                      | Use in dense forms where the surrounding pattern supports compact fields.                                         |
+| Medium             | Size                  | Approved API             | `size="md"`                      | Default field size.                                                                                              |
+| Large              | Size                  | Approved API             | `size="lg"`                      | Use where taller form fields are required by the surrounding pattern.                                             |
+| Fluid              | Style                 | Approved API             | `style="fluid"`                  | Use the 64px expressive field treatment for high-emphasis form contexts.                                         |
 | Helper text        | Field modifier        | Approved API             | `helper="..."`                   | Format, time-zone, or constraint guidance helps prevent errors.                                                  |
 | Error state        | Field state           | Approved API             | `error="..."`                    | Validation blocks submission and needs recovery copy.                                                            |
 | Warning state      | Field state           | Approved API             | `warning="..."`                  | A non-blocking caution should be visible.                                                                        |
 | Disabled           | State                 | Approved API             | `disabled`                       | The date cannot be changed and should not submit.                                                                |
 | Read-only          | State                 | Approved API             | `readonly`                       | The value is visible but not editable. Prefer plain text when no field affordance is needed.                     |
+| Skeleton/loading   | State                 | Approved API             | `skeleton`                       | Use only while date field data is loading and final shape is known.                                              |
 | Range date picker  | Component variant     | Deferred                 | None approved                    | Use only after a dedicated range API, keyboard model, validation contract, and UI Reference proof are installed. |
 | Calendar popover   | Component enhancement | Deferred                 | None approved                    | Use only when native controls are insufficient and the custom calendar behavior is approved.                     |
 | Time-only picker   | Component variant     | Deferred                 | None approved                    | Use only after a dedicated time-picker standard is approved.                                                     |
@@ -207,7 +238,7 @@ States must be represented through the installed Component API and token-backed 
 | Error           | Approved API                 | Error copy is visible, non-color-only, and linked to the input. Use `aria-invalid` when invalid.          |
 | Warning         | Approved API                 | Warning copy is visible and non-color-only. Do not mark valid fields invalid solely for warnings.         |
 | Min/max invalid | Approved API                 | Constraint is enforced by validation and explained when users can act on it.                              |
-| Loading         | Not applicable               | Date picker does not own loading. Parent Patterns may show loading around a form region.                  |
+| Skeleton/loading | Approved API               | Use `skeleton` when the field value or constraints are loading and the final field shape is known.        |
 | Calendar open   | Not app-owned for native API | Browser-native picker behavior is not styled or scripted by Login App.                                    |
 | Range selecting | Deferred                     | Do not fake range selection without a dedicated range API.                                                |
 
@@ -230,6 +261,9 @@ Recommended app-owned classes and helpers:
 | `ui-field-label`   | Component                | Visible field label.                                    |
 | `ui-input`         | Component                | Baseline field chrome.                                  |
 | `ui-input-date`    | Component                | Date/date-time-specific input hook.                     |
+| `ui-date-picker-sm` / `ui-date-picker-md` / `ui-date-picker-lg` | Component | Installed field heights. |
+| `ui-date-picker-fluid` | Component | 64px expressive field treatment. |
+| `ui-date-picker-readonly-value` | Component | Read-only submitted value summary. |
 | `ui-field-helper`  | Component                | Helper, format, and constraint copy.                    |
 | `ui-field-error`   | Component                | Blocking validation message.                            |
 | `ui-field-warning` | Component                | Non-blocking caution message.                           |
@@ -392,11 +426,16 @@ $response->assertSee('Date picker');
 $response->assertSee('x-ui.date-picker');
 $response->assertSee('type=&quot;date&quot;', false);
 $response->assertSee('type=&quot;datetime-local&quot;', false);
-$response->assertSee('Native single date');
-$response->assertSee('Native date-time');
-$response->assertSee('Validation date');
-$response->assertSee('Range deferred');
+$response->assertSee('Native date entry');
+$response->assertSee('Date-time entry');
+$response->assertSee('Styles and sizes');
+$response->assertSee('Validation states');
+$response->assertSee('Range and calendar boundaries');
 $response->assertSee('placeholder text is not a label');
+$response->assertSee('data-component-live-layout="date-picker-matrix"', false);
+$response->assertSee('data-ui-date-picker-size="sm"', false);
+$response->assertSee('data-ui-date-picker-style="fluid"', false);
+$response->assertSee('data-ui-date-picker-readonly', false);
 $response->assertDontSee('Component-specific API pending correction');
 $response->assertDontSee('cds--date-picker');
 $response->assertDontSee('bx--date-picker');

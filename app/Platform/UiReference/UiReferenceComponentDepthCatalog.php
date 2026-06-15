@@ -907,9 +907,9 @@ class UiReferenceComponentDepthCatalog
      */
     private function datePickerComponent(): array
     {
-        return $this->correctedImplemented('date-picker', 'Date picker', 'Date picker uses native date and date-time controls for simple date entry while deferring custom calendar and range-picker behavior.', [
-            $this->exampleFromSample('Native single date', 'Minimum viable date entry with a visible label, helper copy, and native browser picker behavior.', ['type' => 'date-picker', 'items' => [
-                ['name' => 'start_date', 'label' => 'Start date', 'value' => '2026-06-08', 'helper' => 'Use the first date this setting should apply.'],
+        return array_replace($this->correctedImplemented('date-picker', 'Date picker', 'Date picker uses native date and date-time controls for simple date entry while deferring custom calendar and range-picker behavior.', [
+            $this->exampleFromSample('Native date entry', 'Native single-date entry with visible label, helper copy, browser picker behavior, and optional min/max constraints.', ['type' => 'date-picker', 'items' => [
+                ['name' => 'start_date', 'label' => 'Start date', 'value' => '2026-06-08', 'helper' => 'Use the first date this setting should apply.', 'date_format' => 'yyyy-mm-dd'],
             ]], [
                 $this->sampleVariant('Required date', ['type' => 'date-picker', 'items' => [
                     ['name' => 'review_due', 'label' => 'Review due date', 'value' => '2026-06-15', 'helper' => 'Required dates must also be validated on the server.', 'required' => true],
@@ -920,7 +920,7 @@ class UiReferenceComponentDepthCatalog
             ], [
                 'The browser popup is native browser behavior; the app owns the field shell, label, helper, and validation treatment.',
             ]),
-            $this->exampleFromSample('Date-time', 'Native date-time entry for simple scheduling where the surrounding pattern explains the relevant time zone.', ['type' => 'date-picker', 'items' => [
+            $this->exampleFromSample('Date-time entry', 'Native date-time entry for simple scheduling where the surrounding pattern explains the relevant time zone.', ['type' => 'date-picker', 'items' => [
                 ['name' => 'scheduled_at', 'label' => 'Scheduled activation', 'value' => '2026-06-08T09:30', 'date_type' => 'datetime-local', 'helper' => 'Times use the workspace time zone.'],
             ]], [
                 $this->sampleVariant('Minute step', ['type' => 'date-picker', 'items' => [
@@ -930,7 +930,17 @@ class UiReferenceComponentDepthCatalog
                     ['name' => 'late_window', 'label' => 'Late maintenance window', 'value' => '2026-06-08T23:30', 'date_type' => 'datetime-local', 'state' => 'warning', 'warning' => 'This time is outside the recommended maintenance window.'],
                 ]]),
             ]),
-            $this->exampleFromSample('Validation date', 'Required date entry with blocking error copy and non-color-only status treatment.', ['type' => 'date-picker', 'items' => [
+            $this->exampleFromSample('Styles and sizes', 'Small, medium, large, and fluid field treatments use the same native input behavior.', ['type' => 'date-picker', 'items' => [
+                ['name' => 'date_sm', 'label' => 'Small', 'value' => '2026-06-08', 'size' => 'sm'],
+                ['name' => 'date_md', 'label' => 'Medium', 'value' => '2026-06-08', 'size' => 'md'],
+                ['name' => 'date_lg', 'label' => 'Large', 'value' => '2026-06-08', 'size' => 'lg'],
+            ]], [
+                $this->sampleVariant('Small', ['type' => 'date-picker', 'items' => [['name' => 'date_sm', 'label' => 'Small', 'value' => '2026-06-08', 'size' => 'sm']]]),
+                $this->sampleVariant('Medium', ['type' => 'date-picker', 'items' => [['name' => 'date_md', 'label' => 'Medium', 'value' => '2026-06-08', 'size' => 'md']]]),
+                $this->sampleVariant('Large', ['type' => 'date-picker', 'items' => [['name' => 'date_lg', 'label' => 'Large', 'value' => '2026-06-08', 'size' => 'lg']]]),
+                $this->sampleVariant('Fluid', ['type' => 'date-picker', 'items' => [['name' => 'date_fluid', 'label' => 'Fluid date', 'value' => '2026-06-08', 'style' => 'fluid']]]),
+            ]),
+            $this->exampleFromSample('Validation states', 'Required date entry with blocking error copy, warning copy, and non-color-only status treatment.', ['type' => 'date-picker', 'items' => [
                 ['name' => 'expires_on', 'label' => 'Expiration date', 'value' => '', 'state' => 'error', 'error' => 'Choose an expiration date before saving.', 'required' => true],
             ]], [
                 $this->sampleVariant('Error', ['type' => 'date-picker', 'items' => [
@@ -940,7 +950,7 @@ class UiReferenceComponentDepthCatalog
                     ['name' => 'review_date', 'label' => 'Review date', 'value' => '2026-12-24', 'state' => 'warning', 'warning' => 'Review dates near holidays need owner confirmation.'],
                 ]]),
             ]),
-            $this->exampleFromSample('Disabled and read-only dates', 'Unavailable and fixed date values stay visible without offering an editable date picker.', ['type' => 'date-picker', 'items' => [
+            $this->exampleFromSample('Disabled, read-only, and loading', 'Unavailable, fixed, and pending date values stay visible without offering an editable date picker.', ['type' => 'date-picker', 'items' => [
                 ['name' => 'created_on', 'label' => 'Created on', 'value' => '2026-06-08', 'state' => 'readonly', 'helper' => 'Created date is system-managed.'],
                 ['name' => 'locked_until', 'label' => 'Locked until', 'value' => '2026-06-30', 'state' => 'disabled', 'helper' => 'This date is controlled by tenant policy.'],
             ]], [
@@ -950,8 +960,11 @@ class UiReferenceComponentDepthCatalog
                 $this->sampleVariant('Disabled', ['type' => 'date-picker', 'items' => [
                     ['name' => 'policy_unlock', 'label' => 'Policy unlock date', 'value' => '2026-07-01', 'state' => 'disabled', 'helper' => 'Policy unlock date is not editable in this state.'],
                 ]]),
+                $this->sampleVariant('Loading', ['type' => 'date-picker', 'items' => [
+                    ['name' => 'available_date', 'label' => 'Available date', 'state' => 'loading'],
+                ]]),
             ]),
-            $this->exampleFromSample('Range picker boundary', 'Range relationships are pattern-owned today; custom calendar range picker behavior remains gated.', ['type' => 'deferred', 'items' => [
+            $this->exampleFromSample('Range and calendar boundaries', 'Range relationships are pattern-owned today; custom calendar range picker behavior remains gated.', ['type' => 'deferred', 'items' => [
                 ['label' => 'Use two x-ui.date-picker fields or the Date range filter Pattern until a custom calendar range API is approved.'],
                 ['label' => 'Trigger only when unavailable-date rules, calendar panels, range previews, and keyboard range selection are fully specified.'],
             ]], [
@@ -994,6 +1007,9 @@ class UiReferenceComponentDepthCatalog
             'Helper, warning, and error copy must be referenced by `aria-describedby` where present.',
             'Do not rely on color alone for error or warning states; include visible text and status icon treatment.',
             'Native browser picker behavior varies by platform, so the server validation contract must remain authoritative.',
+        ]), [
+            'live_examples_view' => 'platform.ui-reference.components.live-examples.date-picker',
+            'live_examples_layout' => 'flexible-matrix',
         ]);
     }
 

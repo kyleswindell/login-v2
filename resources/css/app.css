@@ -4876,12 +4876,91 @@ Use targeted searches for the class family being changed before reading this fil
             0 0 0 3px color-mix(in srgb, var(--ui-focus) 35%, transparent);
     }
 
+    .ui-date-picker {
+        @apply min-w-0;
+    }
+
     .ui-date-picker-control {
         @apply relative mt-2;
     }
 
+    .ui-date-picker .ui-input-date {
+        @apply w-full border-0 border-b text-sm transition focus:outline-none;
+        min-height: 2.5rem;
+        border-color: var(--ui-border-strong-01);
+        background-color: var(--ui-field-01);
+        color: var(--ui-text-primary);
+        border-radius: 0;
+        padding: 0 1rem;
+    }
+
+    .ui-date-picker-sm .ui-input-date {
+        min-height: 2rem;
+    }
+
+    .ui-date-picker-md .ui-input-date {
+        min-height: 2.5rem;
+    }
+
+    .ui-date-picker-lg .ui-input-date {
+        min-height: 3rem;
+    }
+
+    .ui-date-picker-fluid .ui-date-picker-control {
+        @apply mt-0;
+    }
+
+    .ui-date-picker-fluid .ui-field-label {
+        @apply pointer-events-none relative z-10 mb-0 block px-4 pt-2 text-xs;
+        background-color: var(--ui-field-01);
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-date-picker-fluid .ui-input-date {
+        min-height: 4rem;
+        padding-top: 0.75rem;
+    }
+
+    .ui-date-picker .ui-input-date:hover:not(:disabled) {
+        border-color: var(--ui-border-interactive);
+        background-color: var(--ui-field-hover-01);
+    }
+
+    .ui-date-picker .ui-input-date:focus,
+    .ui-date-picker .ui-input-date:focus-visible,
+    .ui-date-picker.is-focus .ui-input-date {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+        border-color: var(--ui-focus);
+        box-shadow: none;
+    }
+
+    .ui-date-picker-invalid .ui-input-date {
+        border-color: var(--ui-support-error);
+        outline-color: var(--ui-support-error);
+    }
+
+    .ui-date-picker-warning .ui-input-date {
+        border-color: var(--ui-support-warning);
+    }
+
+    .ui-date-picker-disabled .ui-input-date,
+    .ui-date-picker-skeleton .ui-input-date {
+        cursor: not-allowed;
+        border-color: transparent;
+        color: var(--ui-text-disabled);
+        background-color: var(--ui-field-01);
+        opacity: 1;
+    }
+
+    .ui-date-picker-fluid.ui-date-picker-disabled .ui-input-date,
+    .ui-date-picker-fluid.ui-date-picker-skeleton .ui-input-date {
+        border-color: var(--ui-border-subtle-01);
+    }
+
     .ui-date-picker-status-icon {
-        @apply pointer-events-none absolute inset-y-0 right-3 inline-flex items-center;
+        @apply pointer-events-none absolute top-1/2 h-4 w-4 -translate-y-1/2;
+        right: 1rem;
     }
 
     .ui-date-picker-status-icon-error {
@@ -4892,9 +4971,30 @@ Use targeted searches for the class family being changed before reading this fil
         color: var(--ui-support-warning);
     }
 
-    .ui-date-picker .ui-input[aria-invalid='true'],
-    .ui-date-picker .ui-input[data-ui-field-warning='true'] {
+    .ui-date-picker .ui-input-date[aria-invalid='true'],
+    .ui-date-picker .ui-input-date[data-ui-field-warning='true'] {
         padding-right: 2.75rem;
+    }
+
+    .ui-date-picker-readonly-value {
+        @apply mt-2 flex min-h-10 w-full items-center border-b px-4 text-sm;
+        border-color: var(--ui-border-subtle-01);
+        background-color: transparent;
+        color: var(--ui-text-primary);
+    }
+
+    .ui-date-picker-fluid .ui-date-picker-readonly-value {
+        @apply mt-0 min-h-16 items-end pb-3;
+        background-color: var(--ui-field-01);
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-date-picker-skeleton .ui-input-date {
+        color: transparent;
+        background-image:
+            linear-gradient(90deg, var(--ui-skeleton-background), var(--ui-skeleton-element), var(--ui-skeleton-background));
+        background-size: 200% 100%;
+        background-position: 0 0;
     }
 
     [data-theme-resolved="dark"] .ui-input[type="date"],

@@ -2,14 +2,15 @@
 title: Structured list
 slug: structured-list
 api_layer: Component API
-status: implemented-pending-correction
-system_maturity: partial
+status: implemented-pending-review
+system_maturity: complete
 category: data-display
 priority: tier-c-contextual-or-deferred
 ui_reference_route: /platform/ui-reference/components/structured-list
 canonical_doc: docs/02-standards/ui/components/structured-list.md
 source_owner: /platform/ui-reference/components/structured-list
-blade_api: []
+blade_api:
+  - x-ui.structured-list
 native_api:
   - table
   - caption
@@ -18,10 +19,13 @@ native_api:
   - tr
   - th
   - td
-javascript_api: []
+javascript_api:
+  - initStructuredLists
 source_files:
+  - resources/views/components/ui/structured-list.blade.php
+  - resources/views/platform/ui-reference/components/live-examples/structured-list.blade.php
+  - resources/js/ui-controls/structured-lists.js
   - resources/css/app.css
-  - route-owned UI Reference view for /platform/ui-reference/components/structured-list
 foundation_elements:
   - color
   - spacing
@@ -106,8 +110,8 @@ Structured list is the installed Login App 2.0 API for compact row/column compar
 - Use row headers when each row has a primary subject.
 - Support default and condensed density.
 - Support hang and flush alignment where the installed CSS proves both modes.
-- Support selectable rows only through visible native selection controls composed with the Checkbox or Radio button Component APIs.
-- Keep row-click selection, hidden selection controls, and custom keyboard grids gated unless a later API proves them.
+- Support selectable rows only through visible native radio controls and the installed selectable structured-list helper.
+- Keep hidden selection controls, custom keyboard grids, and multi-selection gated unless a later API proves them.
 - Preserve readable wrapping for rich row content.
 - Provide empty and loading/skeleton states for data-backed structured lists.
 - Consume Foundation Element APIs for color, spacing, typography, themes, motion, and 2x Grid where placement is relevant.
@@ -129,8 +133,8 @@ Carbon alignment note: Carbon treats Structured list as a row/column comparison 
 
 | Field                        | Value                                                                                                          |
 | ---------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| Status                       | Approved API                                                                                                   |
-| System maturity              | Partial                                                                                                        |
+| Status                       | Implemented Pending Review                                                                                     |
+| System maturity              | Complete                                                                                                       |
 | API layer                    | Component API                                                                                                  |
 | Component slug               | `structured-list`                                                                                              |
 | Category                     | Data display                                                                                                   |
@@ -138,22 +142,22 @@ Carbon alignment note: Carbon treats Structured list as a row/column comparison 
 | UI Reference route           | `/platform/ui-reference/components/structured-list`                                                            |
 | Canonical doc                | `docs/02-standards/ui/components/structured-list.md`                                                           |
 | Source owner                 | `/platform/ui-reference/components/structured-list`                                                            |
-| Blade API                    | No dedicated `x-ui.structured-list` Blade component is documented as installed                                 |
+| Blade API                    | `x-ui.structured-list`                                                                                        |
 | Native API                   | `<table>` with `<caption>`, `<thead>`, `<tbody>`, `<tr>`, `<th>`, and `<td>`                                   |
-| JavaScript API               | No dedicated JavaScript controller required for baseline structured list behavior                              |
-| Source files                 | `resources/css/app.css`; route-owned UI Reference view for `/platform/ui-reference/components/structured-list` |
+| JavaScript API               | `initStructuredLists` for selectable full-row click and arrow-key movement                                     |
+| Source files                 | `resources/views/components/ui/structured-list.blade.php`; `resources/views/platform/ui-reference/components/live-examples/structured-list.blade.php`; `resources/js/ui-controls/structured-lists.js`; `resources/css/app.css` |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, 2x Grid where composed in layouts                                  |
 | Carbon benchmark             | Carbon Structured list usage, style, code, and accessibility guidance                                          |
 
-`Approved API` means the installed route and examples exist, but the canonical standard, UI Reference page, and tests must be corrected so Structured list is documented as a compact structured comparison component with explicit native markup, density, alignment, selection boundaries, states, and responsive behavior instead of placeholder API text.
+`Implemented Pending Review` means the installed Blade API, UI Reference examples, JavaScript behavior, CSS contract, and tests are in place and ready for manual review against this standard.
 
 ## 3. Installed standard
 
-Structured list is represented by native table markup and app-owned classes. Do not invent a Blade component call unless a later accepted queue item installs and documents one.
+Structured list is represented through the installed `x-ui.structured-list` Blade API, which renders native table markup and app-owned classes. Feature views should use that API instead of local table/list markup for this UI role.
 
 ### 3.1. The installed standard is:
 
-- Render the baseline component with `<table class="ui-structured-list">`.
+- Render the baseline component with `<x-ui.structured-list>`, which emits `<table class="ui-structured-list">`.
 - Include a visible or visually hidden `<caption>` that names the comparison.
 - Use `<thead>` and `<th scope="col">` when columns compare repeated properties.
 - Use `<th scope="row">` for the primary subject of each data row.
@@ -163,7 +167,7 @@ Structured list is represented by native table markup and app-owned classes. Do 
 - Use `.ui-structured-list-hang` for the default hanging alignment where row content aligns under the header structure.
 - Use `.ui-structured-list-flush` only for non-selectable structured lists where the UI Reference proves the layout.
 - Use `.ui-structured-list-selectable` only when rows include visible native radio or checkbox controls and the UI Reference proves selection behavior.
-- Keep row selection non-JavaScript by default. Native controls own selection semantics.
+- Keep native controls as the selection source of truth. The JavaScript helper may add full-row click and arrow-key movement, but it must keep checked state, selected row state, and disabled state synchronized.
 - Use `.ui-structured-list-row-selected` only as a visual companion to a checked native control or current-row state.
 - Use empty-state copy instead of rendering an empty table as the only feedback.
 - Use skeleton rows or Loading/Inline loading composition for data-backed loading states.
@@ -175,6 +179,20 @@ Structured list is represented by native table markup and app-owned classes. Do 
 ### 4.1. Canonical calls
 
 Default structured list:
+
+```blade
+<x-ui.structured-list
+    caption="Workspace access"
+    :columns="[
+        ['key' => 'workspace', 'label' => 'Workspace'],
+        ['key' => 'role', 'label' => 'Role'],
+        ['key' => 'status', 'label' => 'Status'],
+    ]"
+    :rows="$rows"
+/>
+```
+
+Rendered structure:
 
 ```blade
 <table class="ui-structured-list ui-structured-list-hang">
@@ -274,19 +292,19 @@ Empty state:
 </div>
 ```
 
-Use the native API and `ui-structured-list*` classes instead of hand-building comparison rows with raw tables, grids, cards, utility clusters, or local CSS in feature views.
+Use `x-ui.structured-list` and its emitted native table structure instead of hand-building comparison rows with raw tables, grids, cards, utility clusters, or local CSS in feature views.
 
 ### 4.2. API surfaces
 
 | API surface         | Installed value                                                                                      |
 | ------------------- | ---------------------------------------------------------------------------------------------------- |
-| Blade component     | No dedicated `x-ui.structured-list` helper is documented as installed                                |
+| Blade component     | `x-ui.structured-list`                                                                               |
 | Root native element | `<table>` for structured row/column comparison                                                       |
 | Header elements     | `<caption>`, `<thead>`, `<th scope="col">`                                                           |
 | Row elements        | `<tbody>`, `<tr>`, `<th scope="row">`, `<td>`                                                        |
 | Selection controls  | Visible native radio/checkbox controls composed with approved Radio button or Checkbox APIs          |
-| JavaScript          | No dedicated JavaScript controller required for baseline behavior                                    |
-| Data attributes     | No public data attributes for baseline Structured list behavior                                      |
+| JavaScript          | `initStructuredLists` for selectable full-row click, Space, ArrowDown, and ArrowUp behavior          |
+| Data attributes     | `data-ui-structured-list*` hooks for size, alignment, background, selectable rows, radios, and state |
 | CSS namespace       | App-owned `ui-structured-list*` classes documented by this standard and the component implementation |
 | Source owner        | `/platform/ui-reference/components/structured-list`                                                  |
 | Token ownership     | Foundation Color, Spacing, Typography, Themes, Motion, and 2x Grid where composed in layouts         |
@@ -459,7 +477,7 @@ Feature views must not create `structured-list-*`, Bootstrap table variants, raw
 
 | Helper/API                | Status                   | Rule                                                                                             |
 | ------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------ |
-| `x-ui.structured-list`    | Not installed / deferred | Do not call until a future Component standard installs it.                                       |
+| `x-ui.structured-list`    | Installed                | Use for structured row/column comparison, density, alignment, selectable, empty, and skeleton states. |
 | Native table markup       | Implemented              | Use for baseline structured row/column comparison.                                               |
 | Checkbox Component        | Related Component        | Use for visible multi-select controls only when the parent Pattern owns multi-select behavior.   |
 | Radio button Component    | Related Component        | Use for visible single-select controls in selectable structured lists.                           |
@@ -472,7 +490,7 @@ Feature views must not create `structured-list-*`, Bootstrap table variants, raw
 - Use Structured list only when row/column comparison is meaningful.
 - Use List when content is simple body copy without repeated columns.
 - Use Data table when users need sorting, filtering, pagination, bulk actions, row menus, or large datasets.
-- Use native table semantics for the installed Structured list API.
+- Use `x-ui.structured-list` so native table semantics and app-owned class/state contracts stay centralized.
 - Include a caption for every structured list, even when visually hidden.
 - Include column headers when repeated row fields need comparison.
 - Use row headers for the primary subject of each row.
@@ -482,7 +500,7 @@ Feature views must not create `structured-list-*`, Bootstrap table variants, raw
 - Use flush alignment only for non-selectable rows.
 - Use selectable mode only with visible native controls and approved Checkbox/Radio button styling.
 - Keep selected visual state synchronized with native checked state.
-- Do not make entire rows clickable unless a future API installs row-click selection and keyboard behavior.
+- Do not make entire rows clickable outside the installed selectable structured-list behavior.
 - Do not place row action menus, inline edit controls, expandable panels, or bulk toolbars inside baseline Structured list.
 - Use empty-state copy when no rows exist.
 - Use skeleton rows or Loading/Inline loading when data-backed rows are pending.
@@ -536,7 +554,7 @@ Feature views must not create `structured-list-*`, Bootstrap table variants, raw
 - Focus-visible treatment belongs to the interactive child control and must be visible in supported themes.
 - Do not use `aria-selected` without a real selection pattern and keyboard behavior.
 - Do not use `role="grid"` unless the component implements grid keyboard interaction.
-- Do not use row-click selection without keyboard parity and a documented focus model.
+- Do not use row-click selection outside the installed selectable structured-list helper with keyboard parity and a documented focus model.
 - Disabled row styling must not be the only disabled signal; child controls must provide native disabled semantics.
 - Empty states must be visible text, not only an empty table.
 - Loading states must expose pending status through accessible text or a Pattern-owned busy region.
@@ -562,7 +580,7 @@ Feature views must not create `structured-list-*`, Bootstrap table variants, raw
 ## 12. Prohibited usage
 
 - Do not bypass the installed Component API with one-off Blade markup, raw utility clusters, raw colors, arbitrary spacing, local icons, or custom JavaScript.
-- Do not create a fake `x-ui.structured-list` or `x-ui.structured-list-row` API in feature code.
+- Do not bypass `x-ui.structured-list` with fake structured-list components, one-off tables, or local row APIs in feature code.
 - Do not use direct Carbon production classes such as `cds--*` or `bx--*`.
 - Do not use Bootstrap `.table`, `.table-striped`, `.table-hover`, `.list-group`, or feature-local structured-list classes for app-owned Structured list behavior.
 - Do not force body content into table structure when alignment is not needed.
@@ -578,13 +596,12 @@ Feature views must not create `structured-list-*`, Bootstrap table variants, raw
 
 ## 13. Deferred or gated capabilities
 
-No deferred capability blocks the installed native/class Structured list API. Future extensions still require an updated Component standard and UI Reference proof before production use.
+No deferred capability blocks the installed `x-ui.structured-list` API. Future extensions still require an updated Component standard and UI Reference proof before production use.
 
 | Capability                                           | Status                                                         | Gate                                                                                                        |
 | ---------------------------------------------------- | -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| Dedicated `x-ui.structured-list` Blade component     | Deferred unless later installed                                | Requires public props, slots, native output, selection contract, accessibility proof, and tests.            |
-| Dedicated `x-ui.structured-list-row` Blade component | Deferred unless later installed                                | Requires row/header/cell slot contract, responsive behavior, and tests.                                     |
-| Clickable row selection                              | Gated                                                          | Requires keyboard parity, focus model, visible state, accessible names, and tests.                          |
+| Dedicated row subcomponent                           | Deferred unless later installed                                | Requires row/header/cell slot contract, responsive behavior, and tests.                                     |
+| Custom clickable row selection outside installed selectable rows | Gated                                             | Requires keyboard parity, focus model, visible state, accessible names, and tests.                          |
 | Hidden-control selectable rows                       | Not allowed                                                    | Selection controls must remain visible unless a future component installs an equivalent accessible pattern. |
 | Multi-select structured list                         | Gated / Pattern-owned                                          | Requires Checkbox composition, selection count, bulk action ownership, persistence, and tests.              |
 | Sortable/filterable/paginated structured list        | Not owned by Structured list                                   | Use Data table.                                                                                             |

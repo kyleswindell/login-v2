@@ -2414,6 +2414,80 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('Badge/Status as related taxonomy helpers', $standard);
     }
 
+    public function test_structured_list_component_page_renders_installed_api_examples(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $response = $this->get('/platform/ui-reference/components/structured-list')
+            ->assertOk()
+            ->assertSee('x-ui.structured-list / x-ui.structured-list-row')
+            ->assertSee('data-component-live-layout="structured-list-matrix"', false)
+            ->assertSee('data-ui-reference-sample-type="structured-list"', false)
+            ->assertSee('Default structured list')
+            ->assertSee('Density and alignment')
+            ->assertSee('Condensed list')
+            ->assertSee('Flush alignment')
+            ->assertSee('Background modifier')
+            ->assertSee('Selectable structured list')
+            ->assertSee('Empty and skeleton states')
+            ->assertSee('Structured list vs related APIs')
+            ->assertSee('data-ui-component="structured-list"', false)
+            ->assertSee('data-ui-component="structured-list-row"', false)
+            ->assertSee('data-ui-structured-list', false)
+            ->assertSee('data-ui-structured-list-size="condensed"', false)
+            ->assertSee('data-ui-structured-list-alignment="flush"', false)
+            ->assertSee('data-ui-structured-list-background="true"', false)
+            ->assertSee('data-ui-structured-list-selectable="true"', false)
+            ->assertSee('data-ui-structured-list-radio', false)
+            ->assertSee('type="radio"', false)
+            ->assertSee('data-ui-structured-list-row-selected="true"', false)
+            ->assertSee('aria-busy="true"', false)
+            ->assertSee('ui-structured-list-empty', false)
+            ->assertSee('Data table')
+            ->assertDontSee('Component-specific API pending correction')
+            ->assertDontSee('Family-depth implementation pending')
+            ->assertDontSee('cds--structured-list')
+            ->assertDontSee('bx--structured-list');
+
+        $content = $response->getContent();
+        $this->assertStringContainsString('<table', $content);
+        $this->assertStringContainsString('<caption', $content);
+        $this->assertStringContainsString('<thead', $content);
+        $this->assertStringContainsString('<tbody', $content);
+        $this->assertStringContainsString('scope="col"', $content);
+        $this->assertStringContainsString('scope="row"', $content);
+
+        $componentView = file_get_contents(resource_path('views/components/ui/structured-list.blade.php'));
+        $liveExamples = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/structured-list.blade.php'));
+        $structuredListScript = file_get_contents(resource_path('js/ui-controls/structured-lists.js'));
+        $appScript = file_get_contents(resource_path('js/app.js'));
+        $controlsIndex = file_get_contents(resource_path('js/ui-controls.js'));
+        $structuredListCss = file_get_contents(resource_path('css/app.css'));
+        $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
+        $standard = file_get_contents(base_path('docs/02-standards/ui/components/structured-list.md'));
+
+        $this->assertStringContainsString("'variant' => 'default'", $componentView);
+        $this->assertStringContainsString('data-ui-structured-list-selectable="{{ $isSelectable ? \'true\' : \'false\' }}"', $componentView);
+        $this->assertStringContainsString('data-ui-structured-list-radio', $componentView);
+        $this->assertStringContainsString('ui-structured-list-empty', $componentView);
+        $this->assertStringContainsString('data-component-live-layout="structured-list-matrix"', $liveExamples);
+        $this->assertStringContainsString("variant=\"selectable\"", $liveExamples);
+        $this->assertStringContainsString('export function initStructuredLists', $structuredListScript);
+        $this->assertStringContainsString("event.key === ' '", $structuredListScript);
+        $this->assertStringContainsString('initStructuredLists', $appScript);
+        $this->assertStringContainsString("export { initStructuredLists } from './ui-controls/structured-lists';", $controlsIndex);
+        $this->assertStringContainsString('.ui-structured-list-shell', $structuredListCss);
+        $this->assertStringContainsString('.ui-structured-list-selectable', $structuredListCss);
+        $this->assertStringContainsString('.ui-structured-list-row-selected', $structuredListCss);
+        $this->assertStringContainsString('structured-list\' => $this->structuredListComponent()', $catalog);
+        $this->assertStringContainsString('Native table-backed row comparison with optional single-selection rows.', file_get_contents(app_path('Platform/UiReference/UiReferenceComponentCatalog.php')));
+        $this->assertStringContainsString('status: implemented-pending-review', $standard);
+        $this->assertStringContainsString('blade_api:', $standard);
+        $this->assertStringContainsString('x-ui.structured-list', $standard);
+        $this->assertStringContainsString('No deferred capability blocks the installed `x-ui.structured-list` API.', $standard);
+        $this->assertStringNotContainsString('Do not create a fake `x-ui.structured-list`', $standard);
+    }
+
     public function test_popover_component_page_renders_interactive_tip_and_trigger_examples(): void
     {
         $this->actingAsPlatformSuperAdmin();

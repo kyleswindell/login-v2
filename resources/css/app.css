@@ -5018,6 +5018,163 @@ Use targeted searches for the class family being changed before reading this fil
         color: var(--ui-icon-secondary);
     }
 
+    .ui-structured-list-shell {
+        @apply w-full overflow-x-auto;
+    }
+
+    .ui-structured-list {
+        @apply w-full table-fixed border-collapse text-left text-sm;
+        min-width: 31.25rem;
+        color: var(--ui-text-secondary);
+        background-color: transparent;
+    }
+
+    .ui-structured-list-background {
+        background-color: var(--ui-layer-01);
+    }
+
+    .ui-structured-list-header {
+        @apply align-bottom font-semibold;
+        height: auto;
+        max-height: 3.75rem;
+        padding: 1rem 1rem 0.5rem;
+        border-bottom: 1px solid var(--ui-border-subtle-01);
+        color: var(--ui-text-primary);
+        background-color: transparent;
+        line-height: 1.25rem;
+    }
+
+    .ui-structured-list-background .ui-structured-list-header {
+        background-color: var(--ui-layer-01);
+    }
+
+    .ui-structured-list-header[data-ui-structured-list-header-truncate='true'] {
+        @apply overflow-hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .ui-structured-list-row {
+        border-bottom: 1px solid var(--ui-border-subtle-01);
+        background-color: transparent;
+    }
+
+    .ui-structured-list-body .ui-structured-list-row:last-child {
+        border-bottom: 0;
+    }
+
+    .ui-structured-list-cell {
+        @apply align-top font-normal;
+        min-height: 3.75rem;
+        padding: 1rem 1rem 1.5rem;
+        color: var(--ui-text-secondary);
+        background-color: transparent;
+        line-height: 1.5rem;
+    }
+
+    .ui-structured-list-background .ui-structured-list-cell {
+        background-color: var(--ui-layer-01);
+    }
+
+    .ui-structured-list-row-header {
+        color: var(--ui-text-primary);
+        font-weight: 600;
+    }
+
+    .ui-structured-list-cell-description {
+        @apply mt-1 block font-normal;
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-structured-list-flush .ui-structured-list-header,
+    .ui-structured-list-flush .ui-structured-list-cell {
+        padding-left: 0;
+    }
+
+    .ui-structured-list-condensed .ui-structured-list-header {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+
+    .ui-structured-list-condensed .ui-structured-list-cell {
+        min-height: 2.25rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+
+    .ui-structured-list-selectable .ui-structured-list-row[data-ui-structured-list-selectable-row] {
+        cursor: pointer;
+    }
+
+    .ui-structured-list-selectable .ui-structured-list-row[data-ui-structured-list-selectable-row]:hover {
+        background-color: var(--ui-layer-hover-01);
+    }
+
+    .ui-structured-list-selectable .ui-structured-list-row[data-ui-structured-list-selectable-row]:hover .ui-structured-list-cell {
+        color: var(--ui-text-primary);
+        background-color: transparent;
+    }
+
+    .ui-structured-list-row-selected,
+    .ui-structured-list-row-selected .ui-structured-list-cell {
+        color: var(--ui-text-primary);
+        background-color: var(--ui-layer-selected-01);
+    }
+
+    .ui-structured-list-selectable .ui-structured-list-row-selected:hover,
+    .ui-structured-list-selectable .ui-structured-list-row-selected:hover .ui-structured-list-cell {
+        background-color: var(--ui-layer-selected-hover-01);
+    }
+
+    .ui-structured-list-row-disabled,
+    .ui-structured-list-row-disabled .ui-structured-list-cell,
+    .ui-structured-list-row-disabled .ui-structured-list-row-header {
+        color: var(--ui-text-disabled);
+        cursor: not-allowed;
+    }
+
+    .ui-structured-list-selection-cell {
+        width: 3rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .ui-structured-list-radio {
+        @apply h-4 w-4 align-middle;
+        accent-color: var(--ui-icon-primary);
+    }
+
+    .ui-structured-list-radio:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: 2px;
+    }
+
+    .ui-structured-list-radio:disabled {
+        accent-color: var(--ui-icon-disabled);
+        cursor: not-allowed;
+    }
+
+    .ui-structured-list-row:focus-within {
+        box-shadow: inset 0 0 0 2px var(--ui-focus);
+    }
+
+    .ui-structured-list-empty {
+        @apply py-2 text-sm;
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-structured-list-skeleton-line {
+        @apply block h-4 w-full max-w-48;
+        background: linear-gradient(90deg, var(--ui-skeleton-background), var(--ui-skeleton-element), var(--ui-skeleton-background));
+        background-size: 200% 100%;
+    }
+
+    .ui-structured-list-radio-placeholder {
+        @apply block h-4 w-4 rounded-full;
+        background-color: var(--ui-skeleton-element);
+    }
+
     .ui-selectable-option {
         @apply rounded-lg border px-4 py-3 transition;
         border-color: var(--ui-border-subtle-01);

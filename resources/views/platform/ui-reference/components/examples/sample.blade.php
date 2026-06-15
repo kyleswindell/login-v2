@@ -670,14 +670,34 @@
         @break
 
         @case('structured-list')
+            @php
+                $structuredListRows = $items[0]['rows'] ?? [
+                    ['id' => 'production', 'value' => 'production', 'cells' => ['workspace' => 'Production tenant', 'role' => 'Owner', 'status' => 'Active'], 'selected' => true],
+                    ['id' => 'staging', 'value' => 'staging', 'cells' => ['workspace' => 'Staging tenant', 'role' => 'Editor', 'status' => 'Pending']],
+                    ['id' => 'sandbox', 'value' => 'sandbox', 'cells' => ['workspace' => 'Sandbox tenant', 'role' => 'Viewer', 'status' => 'Disabled'], 'disabled' => true],
+                ];
+
+                if (($items[0]['empty'] ?? false) === true) {
+                    $structuredListRows = [];
+                }
+            @endphp
             <x-ui.structured-list
-                :selectable="$items[0]['selectable'] ?? true"
-                :condensed="($items[0]['density'] ?? null) === 'compact'"
-                :rows="$items[0]['rows'] ?? [
-                    ['title' => 'Production tenant', 'description' => 'Primary tenant environment.', 'meta' => 'Active', 'selected' => true],
-                    ['title' => 'Staging tenant', 'description' => 'Release review environment.', 'meta' => 'Pending'],
-                    ['title' => 'Sandbox tenant', 'description' => 'Local test environment.', 'meta' => 'Disabled', 'disabled' => true],
+                :id="$items[0]['id'] ?? null"
+                :name="$items[0]['name'] ?? null"
+                :caption="$items[0]['caption'] ?? 'Structured list example'"
+                :columns="$items[0]['columns'] ?? [
+                    ['key' => 'workspace', 'label' => 'Workspace'],
+                    ['key' => 'role', 'label' => 'Role'],
+                    ['key' => 'status', 'label' => 'Status'],
                 ]"
+                :rows="$structuredListRows"
+                :variant="$items[0]['variant'] ?? (($items[0]['selectable'] ?? true) ? 'selectable' : 'default')"
+                :value="$items[0]['value'] ?? 'production'"
+                :size="$items[0]['size'] ?? ((($items[0]['density'] ?? null) === 'compact') ? 'condensed' : 'default')"
+                :alignment="$items[0]['alignment'] ?? 'hang'"
+                :background="$items[0]['background'] ?? false"
+                :skeleton="$items[0]['skeleton'] ?? false"
+                empty-text="No structured rows available."
             />
         @break
 

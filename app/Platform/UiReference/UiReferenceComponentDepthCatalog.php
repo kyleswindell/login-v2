@@ -50,7 +50,7 @@ class UiReferenceComponentDepthCatalog
 
             'data-table' => $this->dataDisplay('data-table', 'Data table', 'Data table organizes comparable records into aligned columns.', 'table', ['Basic sortable table', 'Filterable table', 'Row actions', 'Loading', 'Empty', 'Responsive overflow']),
             'pagination' => $this->dataDisplay('pagination', 'Pagination', 'Pagination moves through segmented record sets.', 'pagination', ['Full pagination', 'Compact pagination', 'Page-size selector', 'Disabled prev/next', 'Overflow']),
-            'structured-list' => $this->dataDisplay('structured-list', 'Structured list', 'Structured list compares rich rows where a full data table would be excessive.', 'structured-list', ['Default structured list', 'Selectable structured list', 'Condensed list', 'Selected/focus/disabled/skeleton']),
+            'structured-list' => $this->structuredListComponent(),
             'list' => $this->listComponent(),
             'code-snippet' => $this->codeSnippetComponent(),
             'tile' => $this->dataDisplay('tile', 'Tile', 'Tile presents compact selectable, clickable, or static content blocks.', 'tile', ['Static tile', 'Clickable tile', 'Selectable tile', 'Expandable tile', 'Disabled deferred']),
@@ -1209,6 +1209,91 @@ class UiReferenceComponentDepthCatalog
             'Loading state identifies the related results region when asynchronous results update.',
         ]), [
             'live_examples_view' => 'platform.ui-reference.components.live-examples.search',
+            'live_examples_layout' => 'flexible-matrix',
+        ]);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function structuredListComponent(): array
+    {
+        return array_replace($this->correctedImplemented('structured-list', 'Structured list', 'Structured list compares rich rows where a full data table would be excessive.', [
+            $this->exampleFromSample('Default structured list', 'Read-only native table structure for simple grouped comparison.', ['type' => 'structured-list', 'items' => [[
+                'columns' => [
+                    ['key' => 'workspace', 'label' => 'Workspace'],
+                    ['key' => 'role', 'label' => 'Role'],
+                    ['key' => 'status', 'label' => 'Status'],
+                ],
+                'rows' => [
+                    ['id' => 'acme', 'cells' => ['workspace' => 'Acme production', 'role' => 'Owner', 'status' => 'Active']],
+                    ['id' => 'northwind', 'cells' => ['workspace' => 'Northwind staging', 'role' => 'Editor', 'status' => 'Pending review']],
+                ],
+            ]]], [
+                $this->sampleVariant('Hang alignment', ['type' => 'structured-list', 'items' => [['alignment' => 'hang']]]),
+                $this->sampleVariant('Background modifier', ['type' => 'structured-list', 'items' => [['background' => true]]]),
+            ]),
+            $this->exampleFromSample('Density and alignment', 'Condensed rows and flush alignment support dense read-only metadata comparisons.', ['type' => 'structured-list', 'items' => [[
+                'size' => 'condensed',
+                'alignment' => 'flush',
+            ]]], [
+                $this->sampleVariant('Condensed list', ['type' => 'structured-list', 'items' => [['size' => 'condensed']]]),
+                $this->sampleVariant('Flush alignment', ['type' => 'structured-list', 'items' => [['alignment' => 'flush']]]),
+            ]),
+            $this->exampleFromSample('Selectable structured list', 'Selectable structured list uses visible left radio controls and scalar single-selection behavior.', ['type' => 'structured-list', 'items' => [[
+                'variant' => 'selectable',
+                'value' => 'growth',
+                'name' => 'plan',
+            ]]], [
+                $this->sampleVariant('Radio-style selectable rows', ['type' => 'structured-list', 'items' => [['variant' => 'selectable', 'value' => 'growth']]]),
+                $this->sampleVariant('Disabled row', ['type' => 'structured-list', 'items' => [['variant' => 'selectable', 'disabled_row' => true]]]),
+            ]),
+            $this->exampleFromSample('Empty and skeleton states', 'Empty and skeleton states preserve the structured-list contract without pretending final data is loaded.', ['type' => 'structured-list', 'items' => [[
+                'empty' => true,
+            ]]], [
+                $this->sampleVariant('Empty state', ['type' => 'structured-list', 'items' => [['empty' => true]]]),
+                $this->sampleVariant('Skeleton state', ['type' => 'structured-list', 'items' => [['skeleton' => true]]]),
+            ]),
+            $this->exampleFromSample('Structured list vs related APIs', 'Sorting, filtering, pagination, nested rows, row expansion, and multi-selection move the workflow to Data table or another owning API.', ['type' => 'deferred', 'items' => [
+                ['label' => 'Use Data table for sorting, filtering, pagination, row expansion, or multiple row selection.'],
+                ['label' => 'Use Contained list for compact lists inside cards, sidebars, panels, or modals.'],
+            ]], [
+                $this->sampleVariant('Data table boundary', ['type' => 'deferred', 'items' => [['label' => 'Data table owns advanced row behavior.']]], 'Pattern-owned', 'Do not add table behavior to Structured list.'),
+            ]),
+        ], ['native table', 'caption', 'column headers', 'row headers', 'cells', 'dividers', 'radio selection control', 'empty state', 'skeleton rows'], [
+            'Use when users need simple row/column comparison.',
+            'Use selectable structured list only for one scalar row choice.',
+            'Use Data table when rows need sorting, filtering, pagination, nesting, expansion, or multi-selection.',
+        ], [
+            'Do not use Structured list for complex datasets, row action menus, bulk actions, or multiple row selection.',
+            'Do not use flush alignment with selectable lists.',
+            'Do not use background modifier with flush alignment.',
+        ], [
+            'Default',
+            'Selectable',
+            'Condensed',
+            'Hang alignment',
+            'Flush alignment',
+            'Background modifier',
+            'Selected',
+            'Focus',
+            'Disabled',
+            'Empty',
+            'Skeleton',
+        ], [
+            'Default structured lists are read-only and have no interactive row behavior.',
+            'Selectable lists use visible left radio controls and full-row click behavior.',
+            'ArrowUp and ArrowDown move focus between selectable rows; Space selects the focused row.',
+        ], [
+            'Column headers use short sentence-case labels.',
+            'Row text stays simple and scannable.',
+            'No-results or empty copy belongs inside the structured-list empty state when no rows are available.',
+        ], [
+            'Native table semantics preserve header and row relationships.',
+            'Selectable rows expose native radio controls for single-selection semantics.',
+            'Disabled selectable rows use disabled radio controls and disabled visual treatment.',
+        ]), [
+            'live_examples_view' => 'platform.ui-reference.components.live-examples.structured-list',
             'live_examples_layout' => 'flexible-matrix',
         ]);
     }
@@ -2564,7 +2649,8 @@ class UiReferenceComponentDepthCatalog
                 'content-switcher' => 'initContentSwitchers exported from resources/js/ui-controls/content-switchers.js',
                 'checkbox' => 'initCheckboxes exported from resources/js/ui-controls/checkboxes.js',
                 'search' => 'initSearchControls exported from resources/js/ui-controls/search.js',
-                'file-uploader', 'number-input', 'select', 'radio-button', 'toggle', 'inline-loading', 'loading', 'progress-bar', 'progress-indicator', 'tag', 'structured-list', 'tile', 'link', 'pagination', 'text-input', 'textarea' => 'No dedicated JavaScript controller required for the installed baseline API.',
+                'structured-list' => 'initStructuredLists exported from resources/js/ui-controls/structured-lists.js',
+                'file-uploader', 'number-input', 'select', 'radio-button', 'toggle', 'inline-loading', 'loading', 'progress-bar', 'progress-indicator', 'tag', 'tile', 'link', 'pagination', 'text-input', 'textarea' => 'No dedicated JavaScript controller required for the installed baseline API.',
                 'tooltip', 'toggletip' => 'initDisclosureHelpers exported from resources/js/ui-controls.js where richer dismissal behavior is needed.',
                 'multiselect' => 'initMultiselects exported from resources/js/ui-controls/multiselects.js',
                 'popover' => 'initPopovers exported from resources/js/ui-controls/popovers.js',
@@ -2594,7 +2680,7 @@ class UiReferenceComponentDepthCatalog
                 'progress-bar' => 'data-ui-component=progress-bar, ui progressbar semantics',
                 'progress-indicator' => 'data-ui-component=progress-indicator, data-ui-component=progress-step',
                 'tag' => 'ui-tag, ui-tag-sm, ui-tag-md, ui-tag-neutral, ui-tag-info, ui-tag-success, ui-tag-warning, ui-tag-error',
-                'structured-list' => 'ui-structured-list, ui-structured-list-row',
+                'structured-list' => 'ui-structured-list, ui-structured-list-row, ui-structured-list-condensed, ui-structured-list-hang, ui-structured-list-flush, ui-structured-list-selectable, ui-structured-list-selection-cell',
                 'tile' => 'data-ui-component=tile, ui tile state markers',
                 'tooltip' => 'data-ui-tooltip-trigger, data-ui-tooltip-content',
                 'toggletip' => 'data-ui-toggletip-trigger, data-ui-toggletip-panel, data-ui-toggletip-close',

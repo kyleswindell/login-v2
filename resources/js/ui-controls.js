@@ -14,6 +14,7 @@ export { initSearchableSelects } from './ui-controls/searchable-selects';
 export { initSearchControls } from './ui-controls/search';
 export { initSelectableOptionStates } from './ui-controls/selectable-options';
 export { initSliders } from './ui-controls/sliders';
+export { initStructuredLists } from './ui-controls/structured-lists';
 export { initTableSearchInputs } from './ui-controls/table-search';
 export { initTabs } from './ui-controls/tabs';
 export { initThemeModeControls, refreshThemeMode } from './ui-controls/theme-mode';

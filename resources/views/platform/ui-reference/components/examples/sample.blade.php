@@ -519,7 +519,13 @@
         @case('tag')
             <div class="flex flex-wrap gap-2">
                 @foreach ($items as $item)
-                    <x-ui.tag :tone="$item['semantic'] ?? ($item['tone'] ?? 'neutral')" :removable="$item['removable'] ?? false">
+                    <x-ui.tag
+                        :tone="$item['semantic'] ?? ($item['tone'] ?? 'neutral')"
+                        :size="$item['size'] ?? 'md'"
+                        :icon="$item['icon'] ?? null"
+                        :removable="$item['removable'] ?? false"
+                        :remove-label="$item['remove_label'] ?? null"
+                    >
                         {{ $item['title'] ?? $item['semantic'] ?? 'Active' }}
                     </x-ui.tag>
                 @endforeach

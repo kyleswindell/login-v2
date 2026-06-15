@@ -2,8 +2,8 @@
 title: Tag
 slug: tag
 api_layer: Component API
-status: implemented-pending-correction
-system_maturity: partial
+status: implemented-pending-review
+system_maturity: installed
 category: feedback-and-loading
 priority: tier-b-common-reusable-component
 ui_reference_route: /platform/ui-reference/components/tag
@@ -81,11 +81,11 @@ Canonical API owner: `/platform/ui-reference/components/tag`. Use this Component
 | Canonical doc                | `docs/02-standards/ui/components/tag.md`                                                                                                                               |
 | Source owner                 | `/platform/ui-reference/components/tag`                                                                                                                                |
 | Blade API                    | `x-ui.tag`                                                                                                                                                             |
-| Source files                 | `resources/views/components/ui/badge.blade.php`; `resources/views/components/ui/status.blade.php`; `resources/css/app.css`; final `x-ui.tag` wrapper installation gate |
+| Source files                 | `resources/views/components/ui/tag.blade.php`; `resources/views/components/ui/badge.blade.php`; `resources/views/components/ui/status.blade.php`; `resources/css/app.css` |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Icons                                                                                                                              |
 | Carbon benchmark             | Carbon Tag usage, style, and accessibility guidance                                                                                                                    |
 
-`Approved API` means the app already has badge/status surfaces, but the public Tag API, UI Reference page, and source naming need to be aligned before this component can be accepted.
+`Approved API` means `x-ui.tag` is the public static tag surface. `x-ui.badge` and `x-ui.status` remain related/transitional status-taxonomy helpers, but they do not own the Tag component standard.
 
 ## 3. Installed standard
 
@@ -105,7 +105,7 @@ Tag is the app-owned component family for compact label-like metadata and semant
 
 ### 4.1. Canonical calls
 
-The desired public API is `x-ui.tag`. If the current implementation still exposes `x-ui.badge` or `x-ui.status`, those APIs must be bridged or renamed during the Tag component correction instead of leaving the standard pointed at Tabs or local markup.
+The public API is `x-ui.tag`. Existing `x-ui.badge` or `x-ui.status` usages may remain where they provide status taxonomy, but new compact metadata and tag examples should use `x-ui.tag`.
 
 ```blade
 <x-ui.tag tone="neutral">Internal</x-ui.tag>
@@ -123,12 +123,12 @@ Use the Blade API instead of hand-building badge/tag/chip markup in feature view
 
 | API surface           | Installed value                                                                                                                                                                                   |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Blade API             | `x-ui.tag` desired public API; existing `x-ui.badge` / `x-ui.status` surfaces are transitional until corrected                                                                                    |
+| Blade API             | `x-ui.tag`; existing `x-ui.badge` / `x-ui.status` surfaces are related status-taxonomy helpers                                                                                                    |
 | JavaScript            | No dedicated JavaScript controller for static tags                                                                                                                                                |
 | Root semantic element | Non-interactive text element by default                                                                                                                                                           |
 | Data attributes       | `data-ui-component="tag"` when the corrected API renders                                                                                                                                          |
-| CSS namespace         | `ui-tag*`; existing `ui-badge*` and `ui-status*` are transitional aliases until correction                                                                                                        |
-| Source files          | `resources/views/components/ui/badge.blade.php`; `resources/views/components/ui/status.blade.php`; `resources/css/app.css`; final `resources/views/components/ui/tag.blade.php` installation gate |
+| CSS namespace         | `ui-tag*`; existing `ui-status*` classes remain owned by Badge/Status helpers                                                                                                                     |
+| Source files          | `resources/views/components/ui/tag.blade.php`; `resources/views/components/ui/badge.blade.php`; `resources/views/components/ui/status.blade.php`; `resources/css/app.css`                        |
 
 ### 4.3. Props and options
 
@@ -242,13 +242,13 @@ Do not hard-code tag colors, arbitrary border colors, pill radii, icon sources, 
 - Do not use tags as buttons, tabs, breadcrumbs, or notifications.
 - Do not hard-code tag color, border, typography, icon, radius, or spacing.
 - Do not use semantic tones for decoration.
-- Do not create local removable/filter-chip behavior before the Pattern and Component API are installed.
+- Do not create local removable/filter-chip behavior before the owning Pattern installs removal behavior, focus, persistence, and empty-state rules.
 
 ## 13. Deferred or gated capabilities
 
 | Capability               | Status       | Trigger condition                                                                           |
 | ------------------------ | ------------ | ------------------------------------------------------------------------------------------- |
-| Final `x-ui.tag` wrapper | Approved API | Create or alias the public wrapper, source file, UI Reference examples, and tests.          |
+| Final `x-ui.tag` wrapper | Approved API | Installed as the public static tag wrapper with UI Reference examples and tests.            |
 | Removable/filter tag     | Gated        | Filter/search Pattern defines removal behavior, focus, persistence, and empty-filter state. |
 | Inverse tag              | Gated        | Color token proof shows contrast on inverse/high-contrast surfaces.                         |
 | Tag group helper         | Deferred     | Needed only when repeated tag wrapping and spacing require a reusable API.                  |
@@ -289,7 +289,7 @@ The UI Reference page must render the approved five-card scaffold: Purpose, Use 
 
 - `/platform/ui-reference/components/tag` returns 200 for authorized users.
 - The page identifies Tag as the Tag/Badge/Status boundary, not Tabs.
-- The page shows `x-ui.tag` or explicitly marks the final wrapper as gated until wrapper installation while naming transitional badge/status source files.
+- The page shows `x-ui.tag` as the installed public API and names Badge/Status as related taxonomy helpers rather than Tag owners.
 - The page renders neutral, info, success, warning, error, small, medium, and icon-supported examples.
 - The page does not render removable tags as implemented until Pattern-owned behavior is installed.
 - Tests assert the page does not contain copied Tabs copy, `x-ui.tabs`, or `data-ui-tabs`.

@@ -2201,6 +2201,55 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('Carbon\'s Dropdown, Multiselect, Filterable multiselect, and Combo box', $standard);
     }
 
+    public function test_tag_component_page_renders_installed_api_examples(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $response = $this->get('/platform/ui-reference/components/tag')
+            ->assertOk()
+            ->assertSee('data-component-live-layout="tag-matrix"', false)
+            ->assertSee('data-ui-reference-sample-type="tags"', false)
+            ->assertSee('x-ui.tag')
+            ->assertSee('Metadata tags')
+            ->assertSee('Semantic status tags')
+            ->assertSee('Sizes and icon support')
+            ->assertSee('Filter and removable boundary')
+            ->assertSee('Tag versus related APIs')
+            ->assertSee('data-ui-component="tag"', false)
+            ->assertSee('data-ui-tag-tone="neutral"', false)
+            ->assertSee('data-ui-tag-tone="info"', false)
+            ->assertSee('data-ui-tag-tone="success"', false)
+            ->assertSee('data-ui-tag-tone="warning"', false)
+            ->assertSee('data-ui-tag-tone="error"', false)
+            ->assertSee('data-ui-tag-size="sm"', false)
+            ->assertSee('data-ui-tag-size="md"', false)
+            ->assertSee('data-ui-tag-removable="gated"', false)
+            ->assertSee('Gated: no remove button rendered')
+            ->assertDontSee('Component-specific correction pending')
+            ->assertDontSee('Family-depth implementation pending');
+
+        $content = $response->getContent();
+        $this->assertStringNotContainsString('aria-label="Remove tag"', $content);
+
+        $tagView = file_get_contents(resource_path('views/components/ui/tag.blade.php'));
+        $tagCss = file_get_contents(resource_path('css/app.css'));
+        $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
+        $standard = file_get_contents(base_path('docs/02-standards/ui/components/tag.md'));
+
+        $this->assertStringContainsString("'label' => null", $tagView);
+        $this->assertStringContainsString("'ui-tag-'.\$resolvedTone", $tagView);
+        $this->assertStringContainsString('data-ui-tag-removable="gated"', $tagView);
+        $this->assertStringNotContainsString('ui-status-pill', $tagView);
+        $this->assertStringNotContainsString('<button type="button"', $tagView);
+        $this->assertStringContainsString('.ui-tag', $tagCss);
+        $this->assertStringContainsString('--ui-tag-neutral-bg', $tagCss);
+        $this->assertStringContainsString('--ui-tag-error-text', $tagCss);
+        $this->assertStringContainsString('\'tag\' => $this->tagComponent()', $catalog);
+        $this->assertStringContainsString('ui-tag, ui-tag-sm, ui-tag-md', $catalog);
+        $this->assertStringContainsString('The public API is `x-ui.tag`', $standard);
+        $this->assertStringContainsString('Badge/Status as related taxonomy helpers', $standard);
+    }
+
     public function test_popover_component_page_renders_interactive_tip_and_trigger_examples(): void
     {
         $this->actingAsPlatformSuperAdmin();

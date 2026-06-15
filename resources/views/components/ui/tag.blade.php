@@ -2,25 +2,43 @@
     'tone' => 'neutral',
     'size' => 'md',
     'icon' => null,
+    'label' => null,
     'removable' => false,
     'removeLabel' => null,
 ])
 
 @php
-    $toneMap = ['neutral' => 'neutral', 'info' => 'info', 'success' => 'success', 'warning' => 'warning', 'error' => 'danger', 'danger' => 'danger', 'inverse' => 'neutral'];
+    $toneMap = [
+        'neutral' => 'neutral',
+        'info' => 'info',
+        'notice' => 'info',
+        'success' => 'success',
+        'warning' => 'warning',
+        'error' => 'error',
+        'danger' => 'error',
+        'inverse' => 'inverse',
+    ];
+
+    $sizeMap = ['sm' => 'sm', 'md' => 'md'];
     $resolvedTone = $toneMap[$tone] ?? 'neutral';
+    $resolvedSize = $sizeMap[$size] ?? 'md';
+    $isRemovableRequested = filter_var($removable, FILTER_VALIDATE_BOOLEAN);
 @endphp
 
 <span
-    {{ $attributes->class(['ui-status-pill ui-status-'.$resolvedTone, 'text-[0.68rem] px-2 py-0.5' => $size === 'sm']) }}
+    {{ $attributes->class([
+        'ui-tag',
+        'ui-tag-'.$resolvedTone,
+        'ui-tag-'.$resolvedSize,
+        'ui-tag-removable-gated' => $isRemovableRequested,
+    ]) }}
     data-ui-component="tag"
-    data-ui-tag-tone="{{ $tone }}"
+    data-ui-tag-tone="{{ $resolvedTone }}"
+    data-ui-tag-size="{{ $resolvedSize }}"
+    @if ($isRemovableRequested) data-ui-tag-removable="gated" @endif
 >
     @if ($icon)
-        <x-dynamic-component :component="$icon" class="h-3.5 w-3.5" aria-hidden="true" />
+        <x-dynamic-component :component="$icon" class="ui-tag-icon" aria-hidden="true" />
     @endif
-    <span>{{ $slot }}</span>
-    @if ($removable)
-        <button type="button" class="ml-1 rounded focus:outline-none focus-visible:outline focus-visible:outline-2" aria-label="{{ $removeLabel ?? 'Remove tag' }}">×</button>
-    @endif
+    <span class="ui-tag-label">{{ $label ?? $slot }}</span>
 </span>

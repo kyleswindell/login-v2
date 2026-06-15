@@ -36,7 +36,7 @@ class UiReferenceComponentDepthCatalog
             'content-switcher' => $this->contentSwitcherComponent(),
 
             'notification' => $this->feedback('notification', 'Notification', 'Notifications communicate state changes, errors, and system messages.', 'alert', ['Form validation error', 'Record saved', 'API failure', 'Background job completed', 'Maintenance notice']),
-            'tag' => $this->feedback('tag', 'Tag', 'Tags label metadata, status, or filter context without becoming the main action.', 'tag', ['Metadata tag', 'Status tag', 'Filter/removable tag', 'Semantic tag']),
+            'tag' => $this->tagComponent(),
             'inline-loading' => $this->feedback('inline-loading', 'Inline loading', 'Inline loading shows short local progress without blocking the page.', 'inline-loading', ['Button/action pending', 'Local save pending', 'Polite status']),
             'loading' => $this->feedback('loading', 'Loading', 'Loading uses spinners and skeletons to keep pending content understandable.', 'loading', ['Spinner', 'Skeleton text/card/table', 'Page-region loading']),
             'progress-bar' => $this->feedback('progress-bar', 'Progress bar', 'Progress bar shows measurable completion for a long-running task.', 'progress', ['Determinate progress', 'Indeterminate deferred', 'Success/error completion']),
@@ -1965,6 +1965,77 @@ class UiReferenceComponentDepthCatalog
     }
 
     /**
+     * @return array<string, mixed>
+     */
+    private function tagComponent(): array
+    {
+        return array_replace($this->correctedImplemented('tag', 'Tag', 'Tags label short metadata, semantic state, or filter context without becoming an action.', [
+            $this->exampleFromSample('Metadata tags', 'Neutral tags classify an object, owner, type, or compact metadata value.', ['type' => 'tag', 'items' => [
+                ['title' => 'Internal', 'tone' => 'neutral'],
+                ['title' => 'Trial', 'tone' => 'neutral', 'size' => 'sm'],
+                ['title' => 'Owner', 'tone' => 'neutral', 'size' => 'sm'],
+            ]], [
+                $this->sampleVariant('Neutral medium', ['type' => 'tag', 'items' => [['title' => 'Internal', 'tone' => 'neutral']]]),
+                $this->sampleVariant('Neutral small', ['type' => 'tag', 'items' => [['title' => 'Trial', 'tone' => 'neutral', 'size' => 'sm']]]),
+            ]),
+            $this->exampleFromSample('Semantic status tags', 'Semantic tones communicate real status with visible text and optional supporting icons.', ['type' => 'tag', 'items' => [
+                ['title' => 'Information', 'tone' => 'info', 'icon' => 'heroicon-o-information-circle'],
+                ['title' => 'Active', 'tone' => 'success', 'icon' => 'heroicon-o-check-circle'],
+                ['title' => 'Pending review', 'tone' => 'warning', 'icon' => 'heroicon-o-exclamation-triangle'],
+                ['title' => 'Blocked', 'tone' => 'error', 'icon' => 'heroicon-o-x-circle'],
+            ]], [
+                $this->sampleVariant('Info', ['type' => 'tag', 'items' => [['title' => 'Information', 'tone' => 'info']]]),
+                $this->sampleVariant('Success', ['type' => 'tag', 'items' => [['title' => 'Active', 'tone' => 'success']]]),
+                $this->sampleVariant('Warning', ['type' => 'tag', 'items' => [['title' => 'Pending review', 'tone' => 'warning']]]),
+                $this->sampleVariant('Error', ['type' => 'tag', 'items' => [['title' => 'Blocked', 'tone' => 'error']]]),
+            ]),
+            $this->exampleFromSample('Icon-supported tags', 'Icons reinforce visible tag text; they do not replace the label.', ['type' => 'tag', 'items' => [
+                ['title' => 'Verified', 'tone' => 'success', 'icon' => 'heroicon-o-check-circle'],
+                ['title' => 'Synced', 'tone' => 'info', 'icon' => 'heroicon-o-information-circle'],
+            ]], [
+                $this->sampleVariant('Decorative state icon', ['type' => 'tag', 'items' => [['title' => 'Verified', 'tone' => 'success', 'icon' => 'heroicon-o-check-circle']]]),
+            ]),
+            $this->exampleFromSample('Filter/removable boundary', 'Static tags do not render remove controls; removable/filter behavior is gated to the owning filter or search Pattern.', ['type' => 'tag', 'items' => [
+                ['title' => 'Region: North', 'tone' => 'neutral', 'removable' => true],
+            ]], [
+                $this->sampleVariant('Removable gated', ['type' => 'tag', 'items' => [['title' => 'Region: North', 'tone' => 'neutral', 'removable' => true]]], 'Gated', 'The component marks the request but does not render a remove button until Pattern ownership is installed.'),
+            ]),
+        ], ['container', 'short label', 'optional decorative icon', 'tone', 'size', 'gated removable marker'], [
+            'Use when the UI needs compact metadata, type, category, ownership, status, or filter-token display.',
+            'Use semantic tones only for real state or system meaning.',
+        ], [
+            'Do not use tags as buttons, tabs, breadcrumbs, notifications, or primary actions.',
+            'Do not render removable/filter tags until the owning Pattern defines behavior, focus, persistence, and empty states.',
+        ], [
+            'Static default',
+            'Neutral',
+            'Info',
+            'Success',
+            'Warning',
+            'Error',
+            'Small',
+            'Medium',
+            'Icon-supported',
+            'Removable gated',
+        ], [
+            'Static tags are not focusable and do not respond to hover, active, or disabled states.',
+            'Semantic tags rely on visible text first; tone and icon treatment only reinforce meaning.',
+            'Requested removable tags render a gated marker, not an interactive remove control.',
+        ], [
+            'Use concise sentence-case labels.',
+            'Avoid vague tags such as Other, Misc, or New unless the data model defines them.',
+            'Do not use tags for long explanatory messages.',
+        ], [
+            'Tag text communicates meaning without relying on color alone.',
+            'Decorative icons are hidden from assistive technology when the label already carries the meaning.',
+            'Static tags do not enter the tab order.',
+        ]), [
+            'live_examples_view' => 'platform.ui-reference.components.live-examples.tag',
+            'live_examples_layout' => 'flexible-matrix',
+        ]);
+    }
+
+    /**
      * @param array<int, string> $scenarios
      *
      * @return array<string, mixed>
@@ -2335,7 +2406,7 @@ class UiReferenceComponentDepthCatalog
                 'loading' => 'ui-loading, ui-spinner, ui-skeleton',
                 'progress-bar' => 'data-ui-component=progress-bar, ui progressbar semantics',
                 'progress-indicator' => 'data-ui-component=progress-indicator, data-ui-component=progress-step',
-                'tag' => 'ui-status-pill, ui-status-*',
+                'tag' => 'ui-tag, ui-tag-sm, ui-tag-md, ui-tag-neutral, ui-tag-info, ui-tag-success, ui-tag-warning, ui-tag-error',
                 'structured-list' => 'ui-structured-list, ui-structured-list-row',
                 'tile' => 'data-ui-component=tile, ui tile state markers',
                 'tooltip' => 'data-ui-tooltip-trigger, data-ui-tooltip-content',

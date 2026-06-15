@@ -3556,6 +3556,73 @@ Use targeted searches for the class family being changed before reading this fil
         vertical-align: middle;
     }
 
+    .ui-tag {
+        @apply inline-flex max-w-full items-center whitespace-nowrap border font-medium;
+        gap: var(--ui-spacing-02);
+        border-color: transparent;
+        border-radius: var(--ui-tag-radius);
+        background-color: var(--ui-tag-background);
+        color: var(--ui-tag-text);
+        line-height: 1;
+        vertical-align: middle;
+    }
+
+    .ui-tag-sm {
+        min-height: 1.125rem;
+        padding: 0 var(--ui-spacing-03);
+        font-size: 0.75rem;
+    }
+
+    .ui-tag-md {
+        min-height: 1.5rem;
+        padding: 0 var(--ui-spacing-04);
+        font-size: 0.75rem;
+    }
+
+    .ui-tag-icon {
+        width: 1rem;
+        height: 1rem;
+        flex: 0 0 auto;
+        color: currentColor;
+    }
+
+    .ui-tag-label {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .ui-tag-neutral {
+        --ui-tag-background: var(--ui-tag-neutral-bg);
+        --ui-tag-text: var(--ui-tag-neutral-text);
+    }
+
+    .ui-tag-info {
+        --ui-tag-background: var(--ui-tag-info-bg);
+        --ui-tag-text: var(--ui-tag-info-text);
+    }
+
+    .ui-tag-success {
+        --ui-tag-background: var(--ui-tag-success-bg);
+        --ui-tag-text: var(--ui-tag-success-text);
+    }
+
+    .ui-tag-warning {
+        --ui-tag-background: var(--ui-tag-warning-bg);
+        --ui-tag-text: var(--ui-tag-warning-text);
+    }
+
+    .ui-tag-error {
+        --ui-tag-background: var(--ui-tag-error-bg);
+        --ui-tag-text: var(--ui-tag-error-text);
+    }
+
+    .ui-tag-inverse {
+        --ui-tag-background: var(--ui-tag-inverse-bg);
+        --ui-tag-text: var(--ui-tag-inverse-text);
+        border-color: var(--ui-tag-inverse-border);
+    }
+
     .ui-status-neutral {
         background-color: var(--ui-status-neutral-bg);
         color: var(--ui-status-neutral-text);
@@ -5566,6 +5633,20 @@ Use targeted searches for the class family being changed before reading this fil
         --ui-status-error-bg: var(--ui-status-danger-bg);
         --ui-status-error-text: var(--ui-status-danger-text);
         --ui-status-error-solid-bg: var(--ui-status-danger-solid-bg);
+        --ui-tag-neutral-bg: var(--ui-status-neutral-bg);
+        --ui-tag-neutral-text: var(--ui-status-neutral-text);
+        --ui-tag-info-bg: var(--ui-status-info-bg);
+        --ui-tag-info-text: var(--ui-status-info-text);
+        --ui-tag-success-bg: var(--ui-status-success-bg);
+        --ui-tag-success-text: var(--ui-status-success-text);
+        --ui-tag-warning-bg: var(--ui-status-warning-bg);
+        --ui-tag-warning-text: var(--ui-status-warning-text);
+        --ui-tag-error-bg: var(--ui-status-danger-bg);
+        --ui-tag-error-text: var(--ui-status-danger-text);
+        --ui-tag-inverse-bg: var(--ui-background-inverse);
+        --ui-tag-inverse-text: var(--ui-text-inverse);
+        --ui-tag-inverse-border: var(--ui-border-inverse);
+        --ui-tag-radius: 9999px;
 
         --ui-notification-neutral-border: var(--ui-border-default);
         --ui-notification-neutral-bg: color-mix(in srgb, var(--ui-surface-elevated) 92%, transparent);
@@ -6012,6 +6093,20 @@ Use targeted searches for the class family being changed before reading this fil
         --ui-status-error-bg: var(--ui-status-danger-bg);
         --ui-status-error-text: var(--ui-status-danger-text);
         --ui-status-error-solid-bg: var(--ui-status-danger-solid-bg);
+        --ui-tag-neutral-bg: var(--ui-status-neutral-bg);
+        --ui-tag-neutral-text: var(--ui-status-neutral-text);
+        --ui-tag-info-bg: var(--ui-status-info-bg);
+        --ui-tag-info-text: var(--ui-status-info-text);
+        --ui-tag-success-bg: var(--ui-status-success-bg);
+        --ui-tag-success-text: var(--ui-status-success-text);
+        --ui-tag-warning-bg: var(--ui-status-warning-bg);
+        --ui-tag-warning-text: var(--ui-status-warning-text);
+        --ui-tag-error-bg: var(--ui-status-danger-bg);
+        --ui-tag-error-text: var(--ui-status-danger-text);
+        --ui-tag-inverse-bg: var(--ui-background-inverse);
+        --ui-tag-inverse-text: var(--ui-text-inverse);
+        --ui-tag-inverse-border: var(--ui-border-inverse);
+        --ui-tag-radius: 9999px;
 
         --ui-notification-neutral-border: var(--ui-border-default);
         --ui-notification-neutral-bg: color-mix(in srgb, var(--ui-surface-elevated) 92%, transparent);

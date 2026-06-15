@@ -48,12 +48,7 @@ class UiReferenceComponentDepthCatalog
             'slider' => $this->sliderComponent(),
 
             'checkbox' => $this->checkboxComponent(),
-            'radio-button' => $this->selection('radio-button', 'Radio button', 'Radio buttons choose exactly one option from a visible set.', 'radio', [
-                ['Vertical radio group', 'Default layout for readable single-choice groups.'],
-                ['Horizontal radio group', 'Compact peer choices with short labels.'],
-                ['Selected/unselected', 'Selected state changes value and visual emphasis.'],
-                ['Validation group', 'Error or warning applies to the group, not a single option only.'],
-            ]),
+            'radio-button' => $this->radioButtonComponent(),
             'toggle' => $this->selection('toggle', 'Toggle', 'Toggle controls immediate on/off settings.', 'toggle', [
                 ['Immediate setting', 'A setting changes as soon as the toggle is changed.'],
                 ['Disabled setting', 'A setting is unavailable because of permissions or dependency.'],
@@ -1663,6 +1658,101 @@ class UiReferenceComponentDepthCatalog
     }
 
     /**
+     * @return array<string, mixed>
+     */
+    private function radioButtonComponent(): array
+    {
+        return array_replace($this->implemented('radio-button', 'Radio button', 'Radio buttons choose exactly one option from a visible set.', [
+            [
+                'Vertical radio group',
+                'Default readable layout for mutually exclusive choices.',
+                'selection',
+                [['type' => 'radio', 'title' => 'Vertical radio group', 'orientation' => 'vertical']],
+                [
+                    $this->variant('Default group', 'selection', [['type' => 'radio', 'title' => 'Default group', 'orientation' => 'vertical']]),
+                    $this->variant('Helper text group', 'selection', [['type' => 'radio', 'title' => 'Helper text group', 'orientation' => 'vertical']]),
+                ],
+            ],
+            [
+                'Horizontal radio group',
+                'Compact layout for a few short options when the group remains easy to scan.',
+                'selection',
+                [['type' => 'radio', 'title' => 'Horizontal radio group', 'orientation' => 'horizontal']],
+                [
+                    $this->variant('Horizontal group', 'selection', [['type' => 'radio', 'title' => 'Horizontal group', 'orientation' => 'horizontal']]),
+                ],
+            ],
+            [
+                'Selected and unselected',
+                'Selection is a scalar value. Choosing a new option replaces the previous choice.',
+                'selection',
+                [['type' => 'radio', 'title' => 'Selected and unselected', 'value' => 'billing']],
+                [
+                    $this->variant('Selected state', 'selection', [['type' => 'radio', 'title' => 'Selected state', 'value' => 'owner']]),
+                    $this->variant('No preselected value', 'selection', [['type' => 'radio', 'title' => 'No preselected value', 'value' => null]]),
+                ],
+            ],
+            [
+                'Group states',
+                'Disabled, read-only, error, and warning states apply to the group while preserving single-selection semantics.',
+                'selection',
+                [
+                    ['type' => 'radio', 'title' => 'Disabled group', 'state' => 'disabled'],
+                    ['type' => 'radio', 'title' => 'Read-only group', 'state' => 'readonly', 'value' => 'billing'],
+                    ['type' => 'radio', 'title' => 'Error group', 'state' => 'error', 'value' => null],
+                    ['type' => 'radio', 'title' => 'Warning group', 'state' => 'warning', 'value' => 'audit'],
+                ],
+                [
+                    $this->variant('Disabled group', 'selection', [['type' => 'radio', 'title' => 'Disabled group', 'state' => 'disabled']]),
+                    $this->variant('Read-only group', 'selection', [['type' => 'radio', 'title' => 'Read-only group', 'state' => 'readonly', 'value' => 'billing']]),
+                    $this->variant('Error group', 'selection', [['type' => 'radio', 'title' => 'Error group', 'state' => 'error', 'value' => null]]),
+                    $this->variant('Warning group', 'selection', [['type' => 'radio', 'title' => 'Warning group', 'state' => 'warning', 'value' => 'audit']]),
+                ],
+            ],
+            [
+                'Overflow and alignment',
+                'Wrapped label behavior keeps long labels beneath the label text while the circular radio input stays top aligned.',
+                'selection',
+                [['type' => 'radio', 'title' => 'Wrapped label behavior', 'long_label' => true]],
+                [
+                    $this->variant('Wrapped label behavior', 'selection', [['type' => 'radio', 'title' => 'Wrapped label behavior', 'long_label' => true]]),
+                ],
+            ],
+            [
+                'Inline table radio',
+                'Compact single-selection radios can be used in row, table, or component-level control contexts.',
+                'selection',
+                [['type' => 'radio', 'title' => 'Inline table radio', 'compact' => true, 'value' => 'owner']],
+                [
+                    $this->variant('Inline table radio', 'selection', [['type' => 'radio', 'title' => 'Inline table radio', 'compact' => true, 'value' => 'owner']]),
+                ],
+            ],
+        ], ['group label', 'radio input', 'radio label', 'selected dot', 'helper text', 'error or warning message'], [
+            'Use when users must choose exactly one option from a visible set.',
+            'Use when options are short, mutually exclusive, and easier to compare when visible.',
+        ], [
+            'Do not use Radio button for multiple selections; use Checkbox.',
+            'Do not use Radio button for long option sets that are better handled by Select.',
+            'Do not use Radio button for binary immediate settings; use Toggle.',
+        ], [
+            'Unselected',
+            'Selected',
+            'Focus',
+            'Disabled',
+            'Read-only',
+            'Error',
+            'Warning',
+            'Helper text',
+            'Vertical',
+            'Horizontal',
+            'Wrapped label',
+            'Inline/table radio',
+        ]), [
+            'live_examples_layout' => 'flexible-matrix',
+        ]);
+    }
+
+    /**
      * @param array<int, array{0: string, 1: string}> $scenarios
      *
      * @return array<string, mixed>
@@ -1690,7 +1780,7 @@ class UiReferenceComponentDepthCatalog
             'Do not hide critical choices behind a dropdown when a small visible set is clearer.',
             'Do not use toggle when a submit action is required to apply the setting.',
         ], [
-            'Selected/unselected, focus, disabled, read-only, error, warning, helper text, and group-level validation where applicable.',
+            'Selected and unselected, focus, disabled, read-only, error, warning, helper text, and group-level validation where applicable.',
         ]);
     }
 

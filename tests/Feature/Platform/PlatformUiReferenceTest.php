@@ -1094,7 +1094,7 @@ class PlatformUiReferenceTest extends TestCase
             'text-input' => ['Login form field', 'Settings form field', 'Validation field', 'Read-only field', 'Disabled field', 'data-ui-reference-sample-type="field"'],
             'number-input' => ['Min/max/step', 'Increment/decrement', 'Error/warning icon', 'Compact/fluid', 'data-ui-reference-sample-type="field"'],
             'checkbox' => ['Independent choice', 'Multi-select group', 'Nested group', 'Group states', 'Overflow and alignment', 'data-component-live-layout="checkbox-matrix"'],
-            'radio-button' => ['Vertical radio group', 'Horizontal radio group', 'Selected/unselected', 'Validation group', 'data-ui-reference-sample-type="selection"'],
+            'radio-button' => ['Vertical radio group', 'Horizontal radio group', 'Selected and unselected', 'Group states', 'Overflow and alignment', 'Inline table radio', 'data-ui-reference-sample-type="selection"'],
             'notification' => ['Form validation error', 'Record saved', 'API failure', 'Background job completed', 'Maintenance notice', 'data-ui-reference-sample-type="alert"'],
             'modal' => ['Confirmation dialog', 'Form modal', 'Read-only detail', 'Destructive action', 'Wizard deferred', 'data-ui-component="modal-preview"'],
             'data-table' => ['Basic sortable table', 'Filterable table', 'Row actions', 'Loading', 'Responsive overflow', 'ui-table-row'],
@@ -2024,6 +2024,65 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('Parent/child indeterminate', $standard);
     }
 
+    public function test_radio_button_component_page_renders_installed_api_examples(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/components/radio-button')
+            ->assertOk()
+            ->assertSee('x-ui.radio-button / x-ui.radio-group')
+            ->assertSee('Vertical radio group')
+            ->assertSee('Horizontal radio group')
+            ->assertSee('Selected and unselected')
+            ->assertSee('Group states')
+            ->assertSee('Disabled group')
+            ->assertSee('Read-only group')
+            ->assertSee('Error group')
+            ->assertSee('Warning group')
+            ->assertSee('Overflow and alignment')
+            ->assertSee('Wrapped label behavior')
+            ->assertSee('Inline table radio')
+            ->assertSee('data-ui-component="radio-group"', false)
+            ->assertSee('data-ui-component="radio-button"', false)
+            ->assertSee('data-ui-radio-group', false)
+            ->assertSee('data-ui-radio-group-layout', false)
+            ->assertSee('data-ui-radio-input', false)
+            ->assertDontSee('Selected/unselected')
+            ->assertDontSee('Validation group')
+            ->assertDontSee('Component-specific API pending correction')
+            ->assertDontSee('Family-depth implementation pending');
+
+        $radioView = file_get_contents(resource_path('views/components/ui/radio-button.blade.php'));
+        $radioGroupView = file_get_contents(resource_path('views/components/ui/radio-group.blade.php'));
+        $sampleView = file_get_contents(resource_path('views/platform/ui-reference/components/examples/sample.blade.php'));
+        $radioCss = file_get_contents(resource_path('css/app.css'));
+        $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
+        $standard = file_get_contents(base_path('docs/02-standards/ui/components/radio-button.md'));
+
+        $this->assertStringContainsString('data-ui-radio-input', $radioView);
+        $this->assertStringContainsString('data-ui-radio-button', $radioView);
+        $this->assertStringContainsString('ui-radio-box', $radioView);
+        $this->assertStringContainsString('ui-radio-option-description', $radioView);
+        $this->assertStringContainsString('ui-radio-status-icon', $radioView);
+        $this->assertStringContainsString('onkeydown="return false;"', $radioView);
+        $this->assertStringContainsString('data-ui-radio-group-layout', $radioGroupView);
+        $this->assertStringContainsString('ui-radio-group-options', $radioGroupView);
+        $this->assertStringContainsString('ui-radio-status-icon', $radioGroupView);
+        $this->assertStringNotContainsString('ui-checkbox', $radioView);
+        $this->assertStringNotContainsString('ui-checkbox', $radioGroupView);
+        $this->assertStringNotContainsString('peer-checked', $radioView);
+        $this->assertStringContainsString('$radioValue', $sampleView);
+        $this->assertStringContainsString('.ui-radio-input:checked + .ui-radio-box::after', $radioCss);
+        $this->assertStringContainsString('.ui-radio-group-horizontal .ui-radio-group-options', $radioCss);
+        $this->assertStringContainsString('.ui-radio-group.ui-radio-invalid .ui-radio-box', $radioCss);
+        $this->assertStringContainsString('\'radio-button\' => $this->radioButtonComponent()', $catalog);
+        $this->assertStringContainsString("'Inline table radio'", $catalog);
+        $this->assertStringContainsString('x-ui.radio-group', $standard);
+        $this->assertStringContainsString('data-ui-radio-input', $standard);
+        $this->assertStringNotContainsString('No dedicated public Blade wrapper is approved yet', $standard);
+        $this->assertStringNotContainsString('Public `x-ui.radio-group` Blade wrapper  | Deferred', $standard);
+    }
+
     public function test_popover_component_page_renders_interactive_tip_and_trigger_examples(): void
     {
         $this->actingAsPlatformSuperAdmin();
@@ -2269,8 +2328,13 @@ class PlatformUiReferenceTest extends TestCase
                 'x-ui.radio-button / x-ui.radio-group',
                 'data-ui-component="radio-group"',
                 'data-ui-component="radio-button"',
+                'data-ui-radio-group',
                 'Vertical radio group',
                 'Horizontal radio group',
+                'Selected and unselected',
+                'Group states',
+                'Overflow and alignment',
+                'Inline table radio',
             ],
             'toggle' => [
                 'x-ui.toggle',

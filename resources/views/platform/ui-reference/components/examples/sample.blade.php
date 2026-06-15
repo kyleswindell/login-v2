@@ -413,7 +413,9 @@
         @case('selection')
             <div class="grid gap-4 md:grid-cols-2">
                 @foreach ($items as $item)
-                    @php($selectionType = $item['type'] ?? 'checkbox')
+                    @php
+                        $selectionType = $item['type'] ?? 'checkbox';
+                    @endphp
                     <fieldset class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);">
                         <legend class="text-sm font-semibold" style="color: var(--ui-text-primary);">{{ $item['title'] }}</legend>
                         @if ($selectionType === 'toggle')
@@ -445,22 +447,35 @@
                             </div>
                         @else
                             <div class="mt-3">
+                                @php
+                                    $radioValue = array_key_exists('value', $item) ? $item['value'] : 'owner';
+                                    $radioOptions = ($item['long_label'] ?? false)
+                                        ? [
+                                            ['label' => 'Owner access with extended audit responsibilities that wrap onto a second line without moving the radio input', 'value' => 'owner'],
+                                            ['label' => 'Billing access', 'value' => 'billing'],
+                                            ['label' => 'Audit access', 'value' => 'audit'],
+                                        ]
+                                        : [
+                                            ['label' => 'Owner access', 'value' => 'owner'],
+                                            ['label' => 'Billing access', 'value' => 'billing'],
+                                            ['label' => 'Audit access', 'value' => 'audit', 'disabled' => ($item['state'] ?? null) === 'disabled'],
+                                        ];
+                                @endphp
                                 <x-ui.radio-group
                                     :name="'radio_'.Str::slug($item['title'])"
                                     label="Access level"
-                                    :options="[
-                                        ['label' => 'Owner access', 'value' => 'owner'],
-                                        ['label' => 'Billing access', 'value' => 'billing'],
-                                        ['label' => 'Audit access', 'value' => 'audit', 'disabled' => ($item['state'] ?? null) === 'disabled'],
-                                    ]"
-                                    value="owner"
+                                    :options="$radioOptions"
+                                    :value="$radioValue"
                                     :orientation="($item['orientation'] ?? 'vertical')"
                                     helper="Choose one access level."
+                                    :disabled="($item['state'] ?? null) === 'disabled'"
+                                    :readonly="($item['state'] ?? null) === 'readonly'"
                                     :error="($item['state'] ?? null) === 'error' ? 'Choose an access level before continuing.' : null"
+                                    :warning="($item['state'] ?? null) === 'warning' ? 'Changing this may affect permissions.' : null"
                                 />
                             </div>
                         @endif
-                        @if (($item['state'] ?? null) === 'error')
+                        @if ($selectionType === 'checkbox' && ($item['state'] ?? null) === 'error')
                             <p class="mt-3 text-xs" style="color: var(--ui-text-error);">Choose an allowed option before continuing.</p>
                         @endif
                     </fieldset>

@@ -2,18 +2,28 @@
 title: Radio button
 slug: radio-button
 api_layer: Component API
-status: implemented-pending-correction
-system_maturity: partial
+status: implemented
+system_maturity: baseline
 category: selection-controls
 priority: tier-a-baseline-app-development
 ui_reference_route: /platform/ui-reference/components/radio-button
 canonical_doc: docs/02-standards/ui/components/radio-button.md
 source_owner: /platform/ui-reference/components/radio-button
-blade_api: []
+blade_api:
+  - x-ui.radio-group
+  - x-ui.radio-button
 javascript_api: []
-data_attributes: []
+data_attributes:
+  - data-ui-component="radio-group"
+  - data-ui-component="radio-button"
+  - data-ui-radio-group
+  - data-ui-radio-group-layout
+  - data-ui-radio
+  - data-ui-radio-input
 source_files:
   - resources/css/app.css
+  - resources/views/components/ui/radio-group.blade.php
+  - resources/views/components/ui/radio-button.blade.php
   - resources/views/platform/ui-reference/components/radio-button.blade.php
 foundation_elements:
   - color
@@ -126,7 +136,7 @@ Carbon alignment note: Carbon defines radio buttons as mutually exclusive choice
 | Field                        | Value                                                                                              |
 | ---------------------------- | -------------------------------------------------------------------------------------------------- |
 | Status                       | Approved API                                                                                       |
-| System maturity              | Partial                                                                                            |
+| System maturity              | Baseline                                                                                           |
 | API layer                    | Component API                                                                                      |
 | Component slug               | radio-button                                                                                       |
 | Category                     | Selection controls                                                                                 |
@@ -134,16 +144,16 @@ Carbon alignment note: Carbon defines radio buttons as mutually exclusive choice
 | UI Reference route           | `/platform/ui-reference/components/radio-button`                                                   |
 | Canonical doc                | `docs/02-standards/ui/components/radio-button.md`                                                  |
 | Source owner                 | `/platform/ui-reference/components/radio-button`                                                   |
-| Blade API                    | No dedicated public Blade wrapper is approved yet                                                  |
+| Blade API                    | `x-ui.radio-group`; `x-ui.radio-button`                                                            |
 | JavaScript API               | None approved for baseline radio behavior                                                          |
-| Data attributes              | None approved                                                                                      |
-| Props/options                | No Blade props; options are represented by native attributes and documented classes                |
-| Source files                 | `resources/css/app.css`; `resources/views/platform/ui-reference/components/radio-button.blade.php` |
+| Data attributes              | `data-ui-radio-group`, `data-ui-radio-group-layout`, `data-ui-radio`, `data-ui-radio-input`       |
+| Props/options                | Blade props map option arrays, scalar selected value, helper/error/warning text, and group layout |
+| Source files                 | `resources/css/app.css`; `resources/views/components/ui/radio-group.blade.php`; `resources/views/components/ui/radio-button.blade.php`; UI Reference route |
 | CSS namespace                | App-owned `ui-radio-group*` and `ui-radio*` classes                                                |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, Icons                                                  |
 | Carbon benchmark             | Carbon Radio button usage, style, and accessibility guidance                                       |
 
-`Approved API` means the radio group treatment and UI Reference route exist, but the canonical documentation, rendered examples, and regression tests must be corrected to replace placeholder guidance with the installed native-input and class-based API.
+`Approved API` means the radio group and option wrappers are installed, rendered in UI Reference, and must be used instead of local radio markup or checkbox-derived styling.
 
 ## 3. Installed standard
 
@@ -194,56 +204,33 @@ Use Radio button when the user must choose exactly one value from a visible set 
 
 ### 4.1. API status
 
-The current public API is native HTML plus app-owned CSS classes. A dedicated Blade component such as `x-ui.radio-group` or `x-ui.radio-button` is reserved for a future correction pass and must not be used in production until installed, documented, rendered in UI Reference, and tested.
+The current public API is `x-ui.radio-group` plus `x-ui.radio-button`. The wrappers render native `fieldset`, `legend`, `label`, and `<input type="radio">` semantics with app-owned classes and token-backed visual states.
 
-| API surface           | Installed value                                                                                    |
-| --------------------- | -------------------------------------------------------------------------------------------------- |
-| Blade                 | No dedicated public Blade wrapper approved yet                                                     |
-| JavaScript            | No dedicated JavaScript controller required                                                        |
-| Data attributes       | None approved                                                                                      |
-| Props/options         | No Blade props; use native radio attributes and documented classes                                 |
-| Root semantic element | Native `fieldset` containing native `<input type="radio">` controls                                |
-| CSS namespace         | `ui-radio-group*` and `ui-radio*`                                                                  |
-| Source files          | `resources/css/app.css`; `resources/views/platform/ui-reference/components/radio-button.blade.php` |
+| API surface           | Installed value                                                                                                                                           |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Blade                 | `x-ui.radio-group`; `x-ui.radio-button`                                                                                                                    |
+| JavaScript            | No dedicated JavaScript controller required                                                                                                               |
+| Data attributes       | `data-ui-radio-group`, `data-ui-radio-group-layout`, `data-ui-radio`, `data-ui-radio-input`                                                              |
+| Props/options         | `name`, `label`, `helper`, `error`, `warning`, `options`, scalar `value`, `orientation`/`layout`, `disabled`, `readonly`, `required`                    |
+| Root semantic element | Native `fieldset` containing native `<input type="radio">` controls                                                                                       |
+| CSS namespace         | `ui-radio-group`, `ui-radio-group-options`, `ui-radio-group-horizontal`, `ui-radio`, `ui-radio-control`, `ui-radio-input`, `ui-radio-box`, `ui-radio-*` |
+| Source files          | `resources/views/components/ui/radio-group.blade.php`; `resources/views/components/ui/radio-button.blade.php`; `resources/css/app.css`                  |
 
-Feature views may use canonical radio markup directly when a Pattern has not wrapped it. Do not create local radio partials, local segmented controls, or helper classes. If the same radio composition is repeated across features, move it into the owning Pattern or install a public Blade wrapper through the gate in this standard.
+Feature views should use the wrappers directly unless an owning Pattern composes them. Do not create local radio partials, local segmented controls, or helper classes for the same role.
 
 ### 4.2. Canonical vertical radio group
 
 ```blade
-<fieldset class="ui-radio-group ui-radio-group--vertical" aria-describedby="billing-cycle-helper">
-    <legend class="ui-radio-group__legend">Billing cycle</legend>
-
-    <p class="ui-radio-group__helper" id="billing-cycle-helper">
-        Choose how often this account is billed.
-    </p>
-
-    <label class="ui-radio" for="billing-cycle-monthly">
-        <input
-            class="ui-radio__input"
-            id="billing-cycle-monthly"
-            name="billing_cycle"
-            type="radio"
-            value="monthly"
-            @checked(old('billing_cycle', $account->billing_cycle ?? 'monthly') === 'monthly')
-        >
-        <span class="ui-radio__control" aria-hidden="true"></span>
-        <span class="ui-radio__label">Monthly</span>
-    </label>
-
-    <label class="ui-radio" for="billing-cycle-annual">
-        <input
-            class="ui-radio__input"
-            id="billing-cycle-annual"
-            name="billing_cycle"
-            type="radio"
-            value="annual"
-            @checked(old('billing_cycle', $account->billing_cycle ?? 'monthly') === 'annual')
-        >
-        <span class="ui-radio__control" aria-hidden="true"></span>
-        <span class="ui-radio__label">Annual</span>
-    </label>
-</fieldset>
+<x-ui.radio-group
+    name="billing_cycle"
+    label="Billing cycle"
+    helper="Choose how often this account is billed."
+    :options="[
+        ['label' => 'Monthly', 'value' => 'monthly'],
+        ['label' => 'Annual', 'value' => 'annual'],
+    ]"
+    :value="old('billing_cycle', $account->billing_cycle ?? 'monthly')"
+/>
 ```
 
 Use vertical layout as the default because it keeps option labels easier to scan and gives longer labels room to wrap.
@@ -251,52 +238,18 @@ Use vertical layout as the default because it keeps option labels easier to scan
 ### 4.3. Horizontal radio group
 
 ```blade
-<fieldset class="ui-radio-group ui-radio-group--horizontal" aria-describedby="status-helper">
-    <legend class="ui-radio-group__legend">Status</legend>
-
-    <p class="ui-radio-group__helper" id="status-helper">
-        Choose one status filter.
-    </p>
-
-    <label class="ui-radio" for="status-active">
-        <input
-            class="ui-radio__input"
-            id="status-active"
-            name="status"
-            type="radio"
-            value="active"
-            @checked(old('status', 'active') === 'active')
-        >
-        <span class="ui-radio__control" aria-hidden="true"></span>
-        <span class="ui-radio__label">Active</span>
-    </label>
-
-    <label class="ui-radio" for="status-paused">
-        <input
-            class="ui-radio__input"
-            id="status-paused"
-            name="status"
-            type="radio"
-            value="paused"
-            @checked(old('status') === 'paused')
-        >
-        <span class="ui-radio__control" aria-hidden="true"></span>
-        <span class="ui-radio__label">Paused</span>
-    </label>
-
-    <label class="ui-radio" for="status-archived">
-        <input
-            class="ui-radio__input"
-            id="status-archived"
-            name="status"
-            type="radio"
-            value="archived"
-            @checked(old('status') === 'archived')
-        >
-        <span class="ui-radio__control" aria-hidden="true"></span>
-        <span class="ui-radio__label">Archived</span>
-    </label>
-</fieldset>
+<x-ui.radio-group
+    name="status"
+    label="Status"
+    helper="Choose one status filter."
+    orientation="horizontal"
+    :options="[
+        ['label' => 'Active', 'value' => 'active'],
+        ['label' => 'Paused', 'value' => 'paused'],
+        ['label' => 'Archived', 'value' => 'archived'],
+    ]"
+    :value="old('status', 'active')"
+/>
 ```
 
 Use horizontal layout only for concise peer choices. Do not use horizontal layout when labels wrap, helper text differs by option, or the group contains more than a small visible set.
@@ -304,45 +257,17 @@ Use horizontal layout only for concise peer choices. Do not use horizontal layou
 ### 4.4. Error state
 
 ```blade
-<fieldset class="ui-radio-group ui-radio-group--vertical ui-radio-group--error" aria-describedby="plan-error">
-    <legend class="ui-radio-group__legend">Plan type</legend>
-
-    <div class="ui-radio-group__items">
-        <label class="ui-radio" for="plan-standard">
-            <input
-                class="ui-radio__input"
-                id="plan-standard"
-                name="plan_type"
-                type="radio"
-                value="standard"
-                required
-                aria-invalid="true"
-                aria-describedby="plan-error"
-            >
-            <span class="ui-radio__control" aria-hidden="true"></span>
-            <span class="ui-radio__label">Standard</span>
-        </label>
-
-        <label class="ui-radio" for="plan-enterprise">
-            <input
-                class="ui-radio__input"
-                id="plan-enterprise"
-                name="plan_type"
-                type="radio"
-                value="enterprise"
-                required
-                aria-invalid="true"
-                aria-describedby="plan-error"
-            >
-            <span class="ui-radio__control" aria-hidden="true"></span>
-            <span class="ui-radio__label">Enterprise</span>
-        </label>
-    </div>
-
-    <p class="ui-radio-group__message ui-radio-group__message--error" id="plan-error">
-        Select one plan type.
-    </p>
-</fieldset>
+<x-ui.radio-group
+    name="plan_type"
+    label="Plan type"
+    error="Select one plan type."
+    required
+    :options="[
+        ['label' => 'Standard', 'value' => 'standard'],
+        ['label' => 'Enterprise', 'value' => 'enterprise'],
+    ]"
+    :value="old('plan_type')"
+/>
 ```
 
 Error state belongs to the group. Every option is still a valid control; the error is that the group does not yet have an acceptable selected value.
@@ -350,40 +275,16 @@ Error state belongs to the group. Every option is still a valid control; the err
 ### 4.5. Warning state
 
 ```blade
-<fieldset class="ui-radio-group ui-radio-group--vertical ui-radio-group--warning" aria-describedby="role-warning">
-    <legend class="ui-radio-group__legend">Default role</legend>
-
-    <label class="ui-radio" for="role-user">
-        <input
-            class="ui-radio__input"
-            id="role-user"
-            name="default_role"
-            type="radio"
-            value="user"
-            checked
-            aria-describedby="role-warning"
-        >
-        <span class="ui-radio__control" aria-hidden="true"></span>
-        <span class="ui-radio__label">User</span>
-    </label>
-
-    <label class="ui-radio" for="role-admin">
-        <input
-            class="ui-radio__input"
-            id="role-admin"
-            name="default_role"
-            type="radio"
-            value="admin"
-            aria-describedby="role-warning"
-        >
-        <span class="ui-radio__control" aria-hidden="true"></span>
-        <span class="ui-radio__label">Admin</span>
-    </label>
-
-    <p class="ui-radio-group__message ui-radio-group__message--warning" id="role-warning">
-        Admin access grants broad account permissions.
-    </p>
-</fieldset>
+<x-ui.radio-group
+    name="default_role"
+    label="Default role"
+    warning="Admin access grants broad account permissions."
+    :options="[
+        ['label' => 'User', 'value' => 'user'],
+        ['label' => 'Admin', 'value' => 'admin'],
+    ]"
+    :value="old('default_role', 'user')"
+/>
 ```
 
 Warning is advisory. Do not set `aria-invalid="true"` unless the selection is also invalid and blocks submission.
@@ -391,43 +292,29 @@ Warning is advisory. Do not set `aria-invalid="true"` unless the selection is al
 ### 4.6. Disabled option and disabled group
 
 ```blade
-<fieldset class="ui-radio-group ui-radio-group--vertical" aria-describedby="region-helper">
-    <legend class="ui-radio-group__legend">Region</legend>
-
-    <p class="ui-radio-group__helper" id="region-helper">
-        Unavailable regions cannot be selected for this tenant.
-    </p>
-
-    <label class="ui-radio" for="region-east">
-        <input class="ui-radio__input" id="region-east" name="region" type="radio" value="east" checked>
-        <span class="ui-radio__control" aria-hidden="true"></span>
-        <span class="ui-radio__label">East</span>
-    </label>
-
-    <label class="ui-radio ui-radio--disabled" for="region-west">
-        <input class="ui-radio__input" id="region-west" name="region" type="radio" value="west" disabled>
-        <span class="ui-radio__control" aria-hidden="true"></span>
-        <span class="ui-radio__label">West</span>
-    </label>
-</fieldset>
+<x-ui.radio-group
+    name="region"
+    label="Region"
+    helper="Unavailable regions cannot be selected for this tenant."
+    :options="[
+        ['label' => 'East', 'value' => 'east'],
+        ['label' => 'West', 'value' => 'west', 'disabled' => true],
+    ]"
+    value="east"
+/>
 ```
 
 ```blade
-<fieldset class="ui-radio-group ui-radio-group--vertical ui-radio-group--disabled" disabled>
-    <legend class="ui-radio-group__legend">Billing mode</legend>
-
-    <label class="ui-radio" for="billing-mode-manual">
-        <input class="ui-radio__input" id="billing-mode-manual" name="billing_mode" type="radio" value="manual" checked>
-        <span class="ui-radio__control" aria-hidden="true"></span>
-        <span class="ui-radio__label">Manual</span>
-    </label>
-
-    <label class="ui-radio" for="billing-mode-auto">
-        <input class="ui-radio__input" id="billing-mode-auto" name="billing_mode" type="radio" value="auto">
-        <span class="ui-radio__control" aria-hidden="true"></span>
-        <span class="ui-radio__label">Automatic</span>
-    </label>
-</fieldset>
+<x-ui.radio-group
+    name="billing_mode"
+    label="Billing mode"
+    disabled
+    :options="[
+        ['label' => 'Manual', 'value' => 'manual'],
+        ['label' => 'Automatic', 'value' => 'auto'],
+    ]"
+    value="manual"
+/>
 ```
 
 Use a disabled option when one choice is unavailable. Use a disabled group when the entire choice is unavailable. Do not use disabled state for information the user must submit or copy.
@@ -437,42 +324,19 @@ Use a disabled option when one choice is unavailable. Use a disabled group when 
 Native radio inputs do not support a reliable `readonly` attribute. When a selected value must be visible but cannot be changed, use the read-only presentation, disable the visible controls, and preserve the submitted value with a hidden input when the form still needs to submit it.
 
 ```blade
-<fieldset class="ui-radio-group ui-radio-group--vertical ui-radio-group--readonly" aria-describedby="visibility-readonly-helper">
-    <legend class="ui-radio-group__legend">Workspace visibility</legend>
+<input type="hidden" name="workspace_visibility" value="private">
 
-    <input type="hidden" name="workspace_visibility" value="private">
-
-    <p class="ui-radio-group__helper" id="visibility-readonly-helper">
-        This value is managed by the account policy.
-    </p>
-
-    <label class="ui-radio ui-radio--readonly" for="visibility-private">
-        <input
-            class="ui-radio__input"
-            id="visibility-private"
-            name="workspace_visibility_display"
-            type="radio"
-            value="private"
-            checked
-            disabled
-        >
-        <span class="ui-radio__control" aria-hidden="true"></span>
-        <span class="ui-radio__label">Private</span>
-    </label>
-
-    <label class="ui-radio ui-radio--readonly" for="visibility-public">
-        <input
-            class="ui-radio__input"
-            id="visibility-public"
-            name="workspace_visibility_display"
-            type="radio"
-            value="public"
-            disabled
-        >
-        <span class="ui-radio__control" aria-hidden="true"></span>
-        <span class="ui-radio__label">Public</span>
-    </label>
-</fieldset>
+<x-ui.radio-group
+    name="workspace_visibility_display"
+    label="Workspace visibility"
+    helper="This value is managed by the account policy."
+    readonly
+    :options="[
+        ['label' => 'Private', 'value' => 'private'],
+        ['label' => 'Public', 'value' => 'public'],
+    ]"
+    value="private"
+/>
 ```
 
 Do not use a read-only radio group when a simple text display would be clearer. Use read-only radio only when preserving the original option context helps the user understand the selected value.
@@ -492,69 +356,64 @@ Do not use a read-only radio group when a simple text display would be clearer. 
 | `aria-describedby`    | ARIA                | Implemented                                                            | Required when helper/error/warning text exists               | Reference active helper, warning, or error message IDs.                                            |
 | `aria-invalid="true"` | ARIA                | Implemented for error state                                            | Required for invalid/error groups when implemented on inputs | Do not use for warnings that can be submitted.                                                     |
 | `aria-required`       | ARIA                | Optional when native required cannot express group requirement cleanly | Contextual                                                   | Use only when the installed markup requires an explicit group-level required announcement.         |
-| `data-*`              | Data attributes     | Not approved                                                           | No                                                           | No behavior data attributes are public for Radio button.                                           |
+| `data-ui-radio-*`     | Data attributes     | Implemented                                                            | Yes for rendered wrappers                                    | Used for UI Reference proof and safe source assertions, not for custom behavior controllers.       |
 
 ### 4.9. Class contract
 
-| Class                                  | Type             | Status                                       | Purpose                                                                |
-| -------------------------------------- | ---------------- | -------------------------------------------- | ---------------------------------------------------------------------- |
-| `ui-radio-group`                       | Component root   | Implemented                                  | Radio group wrapper, usually on `fieldset`.                            |
-| `ui-radio-group__legend`               | Element          | Implemented                                  | Visible group label.                                                   |
-| `ui-radio-group__helper`               | Element          | Implemented                                  | Group-level helper text.                                               |
-| `ui-radio-group__items`                | Element          | Implemented / optional                       | Option-list wrapper when layout needs a separate item container.       |
-| `ui-radio-group__message`              | Element          | Implemented                                  | Group-level validation or advisory message.                            |
-| `ui-radio-group__message--error`       | State element    | Implemented                                  | Error message treatment.                                               |
-| `ui-radio-group__message--warning`     | State element    | Implemented                                  | Warning message treatment.                                             |
-| `ui-radio-group__status-icon`          | Element          | Implemented / optional                       | Decorative status icon position when rendered.                         |
-| `ui-radio-group__status-icon--error`   | State element    | Implemented / optional                       | Error icon treatment.                                                  |
-| `ui-radio-group__status-icon--warning` | State element    | Implemented / optional                       | Warning icon treatment.                                                |
-| `ui-radio-group--vertical`             | Layout modifier  | Implemented                                  | Default stacked group layout.                                          |
-| `ui-radio-group--horizontal`           | Layout modifier  | Implemented                                  | Inline peer-choice layout.                                             |
-| `ui-radio-group--compact`              | Density modifier | Implemented / required proof                 | Compact group spacing.                                                 |
-| `ui-radio-group--error`                | State modifier   | Implemented                                  | Group invalid state.                                                   |
-| `ui-radio-group--warning`              | State modifier   | Implemented                                  | Group advisory state.                                                  |
-| `ui-radio-group--disabled`             | State modifier   | Visual hook only; native `disabled` required | Entire group disabled treatment.                                       |
-| `ui-radio-group--readonly`             | State modifier   | Approved API                                 | Read-only visual treatment.                                            |
-| `ui-radio`                             | Option root      | Implemented                                  | Label wrapper for one option.                                          |
-| `ui-radio__input`                      | Option element   | Implemented                                  | Native radio input.                                                    |
-| `ui-radio__control`                    | Option element   | Implemented                                  | Decorative custom radio control.                                       |
-| `ui-radio__label`                      | Option element   | Implemented                                  | Visible option label.                                                  |
-| `ui-radio__description`                | Option element   | Gated / optional                             | Per-option description; requires accessibility proof before broad use. |
-| `ui-radio--disabled`                   | Option state     | Visual hook only; native `disabled` required | Disabled option treatment.                                             |
-| `ui-radio--readonly`                   | Option state     | Approved API                                 | Read-only option treatment.                                            |
+| Class                         | Type             | Status       | Purpose                                                            |
+| ----------------------------- | ---------------- | ------------ | ------------------------------------------------------------------ |
+| `ui-radio-group`              | Component root   | Implemented  | Radio group wrapper on the rendered `fieldset`.                    |
+| `ui-radio-group-legend`       | Element          | Implemented  | Visible group label.                                               |
+| `ui-radio-group-helper`       | Element          | Implemented  | Group-level helper text.                                           |
+| `ui-radio-group-options`      | Element          | Implemented  | Option-list wrapper.                                               |
+| `ui-radio-group-horizontal`   | Layout modifier  | Implemented  | Inline peer-choice layout.                                         |
+| `ui-radio-group-disabled`     | State modifier   | Implemented  | Entire group disabled treatment paired with native `disabled`.     |
+| `ui-radio-group-readonly`     | State modifier   | Implemented  | Read-only visual treatment.                                        |
+| `ui-radio`                    | Option root      | Implemented  | One radio option root.                                             |
+| `ui-radio-control`            | Option element   | Implemented  | Label grid that aligns the control and label.                      |
+| `ui-radio-input`              | Option element   | Implemented  | Native radio input.                                                |
+| `ui-radio-box`                | Option element   | Implemented  | Decorative custom radio circle and selected dot.                   |
+| `ui-radio-label`              | Option element   | Implemented  | Visible option label.                                              |
+| `ui-radio-option-description` | Option element   | Implemented  | Optional per-option descriptive line where the layout allows it.   |
+| `ui-radio-helper`             | Option element   | Implemented  | Optional option-level helper text.                                 |
+| `ui-radio-error`              | State element    | Implemented  | Group or option error message treatment.                           |
+| `ui-radio-warning`            | State element    | Implemented  | Group or option warning message treatment.                         |
+| `ui-radio-status-icon`        | State element    | Implemented  | Decorative status icon inside error or warning messages.           |
+| `ui-radio-disabled`           | Option state     | Implemented  | Disabled option treatment paired with native `disabled`.           |
+| `ui-radio-readonly`           | Option state     | Implemented  | Read-only option treatment.                                        |
+| `ui-radio-invalid`            | Validation state | Implemented  | Invalid group or option treatment.                                 |
+| `ui-radio-warning-state`      | Advisory state   | Implemented  | Warning group or option treatment.                                 |
 
 Feature views must not create additional `ui-radio-*`, `radio-button-*`, `radio-group-*`, or local field classes. New classes require source implementation, this standard update, UI Reference proof, and tests.
 
-### 4.10. Reserved future Blade contract
+### 4.10. Gated future API contract
 
-The following names are reserved for a future correction pass. They are not production APIs today.
+The baseline wrapper contract is installed. The following adjacent APIs remain gated and are not production APIs today.
 
 | Reserved API              | Current status            | Gate                                                                                                                                                 |
 | ------------------------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `x-ui.radio-group`        | Deferred                  | Requires source file, props, option data contract, slots, validation mapping, native attribute passthrough, examples, migration guidance, and tests. |
-| `x-ui.radio-button`       | Deferred                  | Requires group integration rules, `name`/`value` contract, label/description slots, disabled/checked behavior, and tests.                            |
 | `x-ui.radio-card`         | Gated                     | Requires selectable tile/card semantics, keyboard behavior, focus treatment, content limits, and UI Reference proof.                                 |
 | `x-ui.radio-table-select` | Not owned by Radio button | Use Data table and Table toolbar Patterns.                                                                                                           |
 
-Do not create feature-local Blade components with these names.
+Do not create feature-local Blade components for gated radio variants.
 
 ## 5. Allowed variants, options, and modifiers
 
 | Name                      | Type             | Status                       | API                                                                | Notes                                                             |
 | ------------------------- | ---------------- | ---------------------------- | ------------------------------------------------------------------ | ----------------------------------------------------------------- |
-| Vertical group            | Layout           | Implemented                  | `ui-radio-group--vertical`                                         | Default readable layout.                                          |
-| Horizontal group          | Layout           | Implemented                  | `ui-radio-group--horizontal`                                       | Compact peer choices with short labels.                           |
-| Compact group             | Density          | Implemented / required proof | `ui-radio-group--compact`                                          | Dense forms or filter groups where approved.                      |
+| Vertical group            | Layout           | Implemented                  | Absence of horizontal modifier                                     | Default readable layout.                                          |
+| Horizontal group          | Layout           | Implemented                  | `ui-radio-group-horizontal`                                        | Compact peer choices with short labels.                           |
+| Compact group             | Density          | Gated                        | None                                                              | Dense forms or filter groups require a scoped spacing proof.      |
 | Selected option           | State            | Implemented                  | Native `checked`                                                   | One selected value per named group.                               |
 | Unselected option         | State            | Implemented                  | Absence of `checked`                                               | Available option that is not selected.                            |
 | Required group            | Constraint       | Implemented                  | `required` plus server validation                                  | Requires a visible required convention.                           |
-| Helper text               | Content          | Implemented                  | `ui-radio-group__helper` and `aria-describedby`                    | Explains group purpose or consequences.                           |
-| Error group               | Validation state | Implemented                  | `ui-radio-group--error`, error message, `aria-invalid`             | Group-level invalid state.                                        |
-| Warning group             | Advisory state   | Implemented                  | `ui-radio-group--warning`, warning message                         | Advisory state that may still submit.                             |
+| Helper text               | Content          | Implemented                  | `ui-radio-group-helper` and `aria-describedby`                     | Explains group purpose or consequences.                           |
+| Error group               | Validation state | Implemented                  | `ui-radio-invalid`, `ui-radio-error`, error message                | Group-level invalid state.                                        |
+| Warning group             | Advisory state   | Implemented                  | `ui-radio-warning-state`, `ui-radio-warning`, warning message      | Advisory state that may still submit.                             |
 | Disabled option           | State            | Implemented                  | Radio input `disabled`                                             | One unavailable option.                                           |
 | Disabled group            | State            | Implemented                  | `fieldset disabled`                                                | Entire group unavailable.                                         |
-| Read-only group           | State            | Approved API                 | `ui-radio-group--readonly` plus hidden submitted value when needed | Native radio has no real `readonly`; use documented presentation. |
-| Per-option description    | Content          | Gated                        | `ui-radio__description`                                            | Requires layout, wrapping, and accessible-description proof.      |
+| Read-only group           | State            | Approved API                 | `ui-radio-group-readonly` plus hidden submitted value when needed  | Native radio has no real `readonly`; use documented presentation. |
+| Per-option description    | Content          | Implemented                  | `ui-radio-option-description`                                      | Must wrap under the label and remain top-aligned with the control. |
 | Tile/card radio           | Variant          | Gated                        | None                                                               | Requires selectable tile/card standard.                           |
 | Nested conditional fields | Pattern behavior | Pattern-owned / gated        | None                                                               | Requires Forms Pattern ownership and focus/announcement proof.    |
 | AI presence               | Modifier         | Gated                        | None                                                               | Requires AI label/explainability contract.                        |
@@ -622,10 +481,10 @@ Carbon color role mapping:
 
 | Carbon token / role | Carbon responsibility | Login App token / API | Login value source | Mapping status | Owner rule |
 | ------------------- | --------------------- | --------------------- | ------------------ | -------------- | ---------- |
-| `$icon-primary` | Radio control border and selected inner dot | `ui-radio__control`, selected state | App icon palette | Same role / app value | Radio visual state is component-owned but uses shared icon/color roles. |
-| `$text-primary`, `$text-secondary`, `$text-disabled` | Option label, group label/helper, disabled label | `ui-radio__label`, group legend/helper roles | App text palette | Same role / app value | Text hierarchy stays Color/Typography-owned. |
+| `$icon-primary` | Radio control border and selected inner dot | `ui-radio-box`, selected state | App icon palette | Same role / app value | Radio visual state is component-owned but uses shared icon/color roles. |
+| `$text-primary`, `$text-secondary`, `$text-disabled` | Option label, group label/helper, disabled label | `ui-radio-label`, group legend/helper roles | App text palette | Same role / app value | Text hierarchy stays Color/Typography-owned. |
 | `$support-error`, `$text-error`, `$support-warning` | Error border/message and warning icon | Radio validation state classes | App status palette | Same role / app value | Validation must include message/icon semantics where applicable. |
-| `$focus` | Focus border/ring | `ui-radio__input:focus-visible`, `--ui-focus` | App focus palette | Same role / app value | Focus must target the actual control. |
+| `$focus` | Focus border/ring | `ui-radio-input:focus-visible`, `--ui-focus` | App focus palette | Same role / app value | Focus must target the actual control. |
 | `$text-disabled` and disabled icon/control roles | Disabled radio state | Disabled radio classes | App disabled palette | Same role / app value | Disabled styling must be token-backed. |
 | AI mini label size/color row | Carbon AI presence note | No baseline radio role until AI variant is approved | None | Not adopted | AI label adoption is owned by AI Label/AI pattern gates. |
 
@@ -635,29 +494,26 @@ Allowed component classes use the app-owned `ui-*` namespace documented by the i
 
 ```css
 .ui-radio-group
-.ui-radio-group__legend
-.ui-radio-group__helper
-.ui-radio-group__items
-.ui-radio-group__message
-.ui-radio-group__message--error
-.ui-radio-group__message--warning
-.ui-radio-group__status-icon
-.ui-radio-group__status-icon--error
-.ui-radio-group__status-icon--warning
-.ui-radio-group--vertical
-.ui-radio-group--horizontal
-.ui-radio-group--compact
-.ui-radio-group--error
-.ui-radio-group--warning
-.ui-radio-group--disabled
-.ui-radio-group--readonly
+.ui-radio-group-legend
+.ui-radio-group-helper
+.ui-radio-group-options
+.ui-radio-group-horizontal
+.ui-radio-group-disabled
+.ui-radio-group-readonly
 .ui-radio
-.ui-radio__input
-.ui-radio__control
-.ui-radio__label
-.ui-radio__description
-.ui-radio--disabled
-.ui-radio--readonly
+.ui-radio-control
+.ui-radio-input
+.ui-radio-box
+.ui-radio-label
+.ui-radio-option-description
+.ui-radio-helper
+.ui-radio-error
+.ui-radio-warning
+.ui-radio-status-icon
+.ui-radio-disabled
+.ui-radio-readonly
+.ui-radio-invalid
+.ui-radio-warning-state
 ```
 
 Feature views must not create `form-check`, `form-check-input`, `radio-*`, `radio-button-*`, `custom-radio-*`, `choice-*`, raw utility clusters, arbitrary width/height values, hard-coded validation colors, local focus rings, local icons, direct Carbon classes, Bootstrap field classes, or custom JavaScript for the same UI role.
@@ -678,7 +534,7 @@ Feature views must not create `form-check`, `form-check-input`, `radio-*`, `radi
 | `aria-required`                        | Optional                                                                 | Use only when native required semantics do not communicate group requirement sufficiently. |
 | Hidden input for read-only submission  | Approved with restrictions                                               | Use only to preserve a selected read-only value when visible radio controls are disabled.  |
 | Custom JavaScript selection controller | Not approved                                                             | Requires future documented JavaScript and data-attribute API.                              |
-| `data-ui-radio-*` attributes           | Not approved                                                             | Add only through a future documented behavior gate.                                        |
+| `data-ui-radio-*` attributes           | Approved for source and UI Reference proof                                | Use only for stable inspection and behavior-proof hooks; do not add custom controllers.    |
 
 ## 8. Composition rules
 
@@ -792,7 +648,7 @@ Feature views must not create `form-check`, `form-check-input`, `radio-*`, `radi
 
 - Do not bypass the installed Component API with one-off Blade markup, raw utility clusters, raw colors, arbitrary spacing, local icons, direct Carbon classes, Bootstrap form classes, or custom JavaScript.
 - Do not render `Component-specific API pending correction` as the example call or installed guidance.
-- Do not create feature-local `x-ui.radio-group`, `x-ui.radio-button`, `x-radio`, `x-radio-card`, or equivalent wrappers.
+- Do not create feature-local `x-radio`, `x-radio-card`, alternate `x-ui.radio-*` wrappers, or equivalent wrappers.
 - Do not create custom radio visuals that break native radio semantics.
 - Do not use `div`, `button`, or `a` elements as radio options without an approved custom widget standard.
 - Do not use radio buttons when multiple selections are allowed.
@@ -815,10 +671,8 @@ Feature views must not create `form-check`, `form-check-input`, `radio-*`, `radi
 
 | Capability                               | Status                           | Gate                                                                                                                                                 |
 | ---------------------------------------- | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Public `x-ui.radio-group` Blade wrapper  | Deferred                         | Requires source file, props, option data contract, slots, validation mapping, native attribute passthrough, examples, migration guidance, and tests. |
-| Public `x-ui.radio-button` Blade wrapper | Deferred                         | Requires group integration rules, label/description slots, option state mapping, `checked`/`disabled` behavior, and tests.                           |
 | Tile/card radio variant                  | Gated                            | Requires selectable tile/card semantics, full-card click behavior, keyboard behavior, focus treatment, content limits, and UI Reference proof.       |
-| Per-option descriptions                  | Gated unless already implemented | Requires wrapping, `aria-describedby` mapping, compact/horizontal restrictions, and tests.                                                           |
+| Per-option descriptions                  | Implemented baseline             | Use only for concise supporting copy that wraps under the label and remains top-aligned.                                                              |
 | Conditional reveal fields                | Pattern-owned / gated            | Requires Forms Pattern ownership, focus order, announcement behavior, validation mapping, and tests.                                                 |
 | AI presence                              | Gated                            | Requires AI label, explainability popover, provenance/revert behavior if applicable, and accessibility proof before production use.                  |
 | Custom JavaScript radio controller       | Not approved                     | Native radio behavior is sufficient for baseline; any controller requires documented data attributes, lifecycle, keyboard behavior, and tests.       |
@@ -859,7 +713,7 @@ The Radio button page is a selection-control reference page. The Live examples c
 
 | Required proof                    | Rendered behavior                                                                                                                                                        | Variants/options shown                                                                                |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------- |
-| API status proof                  | Page states that Radio button is Approved API and currently exposes native markup plus app-owned classes, not a public Blade wrapper.                                    | Native `<input type="radio">`, `fieldset`, `legend`, `ui-radio-group`, deferred `x-ui.radio-group`    |
+| API status proof                  | Page states that Radio button is Approved API and exposes installed Blade wrappers that render native markup plus app-owned classes.                                      | `x-ui.radio-group`, `x-ui.radio-button`, native `<input type="radio">`, `fieldset`, `legend`, `ui-radio-group` |
 | Vertical radio group              | Default stacked group renders with label, helper text, selected/unselected options, and native radio semantics.                                                          | Vertical, Selected, Unselected, Helper text, Focus-visible                                            |
 | Horizontal radio group            | Compact peer choices render inline with short labels and responsive wrapping guidance.                                                                                   | Horizontal, Selected, Unselected, Compact, Focus-visible                                              |
 | Selected/unselected matrix        | State examples show selected and unselected options in normal, hover-capable, focus-visible, and active states.                                                          | Selected, Unselected, Hover-capable, Focus-visible, Active                                            |
@@ -870,7 +724,7 @@ The Radio button page is a selection-control reference page. The Live examples c
 | Selection guidance matrix         | Page distinguishes Radio button from Checkbox, Toggle, Select, Tabs/Content switcher, Data table selection, and read-only data display.                                  | Radio, Checkbox, Toggle, Select, Tabs, Data table                                                     |
 | Accessibility proof               | Examples show `fieldset`, `legend`, label association, label click target, arrow-key behavior, selected semantics, helper/error association, and non-color-only state.   | Fieldset, Legend, Label, Keyboard, `checked`, `aria-describedby`                                      |
 | Prohibited usage proof            | Page shows custom div radios, Bootstrap form checks, direct Carbon classes, missing group labels, dropdown misuse, multi-select misuse, and toggle misuse as prohibited. | Native-only rule, Bootstrap prohibition, Carbon class prohibition, Dropdown boundary, Toggle boundary |
-| Deferred gate proof               | Page shows trigger conditions for Blade wrappers, radio cards, descriptions, conditional reveals, AI presence, and custom JS.                                            | Deferred wrapper, Gated radio card, Gated descriptions, Conditional reveal, AI, JS                    |
+| Deferred gate proof               | Page shows trigger conditions for radio cards, conditional reveals, AI presence, and custom JS.                                                                           | Gated radio card, Conditional reveal, AI, JS                                                         |
 | Foundation Elements proof         | Page shows consumed Foundation Elements and token responsibilities.                                                                                                      | Color, Spacing, Typography, Themes, Motion, Icons                                                     |
 | Developer implementation examples | Canonical markup renders as real code examples and does not include placeholder text.                                                                                    | Vertical, Horizontal, Error, Warning, Disabled, Read-only                                             |
 
@@ -883,7 +737,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
 - The page identifies Radio button as `Approved API`.
-- The page states that no dedicated public Blade wrapper is approved yet.
+- The page states that `x-ui.radio-group` and `x-ui.radio-button` are the installed Blade wrappers.
 - The page shows canonical native `<input type="radio">` markup, `fieldset`, `legend`, shared `name`, unique `value`, and `ui-radio-group` classes.
 - The page renders vertical group, horizontal group, selected/unselected, error, warning, disabled option, disabled group, and read-only examples.
 - The page documents native keyboard behavior, including Tab entry, arrow-key movement, and Space selection.
@@ -918,7 +772,8 @@ $response->assertSee('Disabled');
 $response->assertSee('Read-only');
 $response->assertSee('aria-describedby');
 $response->assertSee('aria-invalid');
-$response->assertSee('No dedicated public Blade wrapper is approved yet');
+$response->assertSee('x-ui.radio-group');
+$response->assertSee('x-ui.radio-button');
 $response->assertSee('Native radio inputs do not support a reliable readonly attribute');
 $response->assertSee('Color');
 $response->assertSee('Spacing');

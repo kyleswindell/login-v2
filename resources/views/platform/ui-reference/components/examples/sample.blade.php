@@ -203,6 +203,18 @@
                             ['label' => 'Pending review', 'value' => 'pending'],
                             ['label' => 'Disabled', 'value' => 'disabled'],
                         ];
+                        if (($item['grouped'] ?? false) === true) {
+                            $fieldOptions = [
+                                ['label' => 'Production', 'options' => [
+                                    ['label' => 'Active', 'value' => 'active'],
+                                    ['label' => 'Paused', 'value' => 'paused'],
+                                ]],
+                                ['label' => 'Review', 'options' => [
+                                    ['label' => 'Pending review', 'value' => 'pending'],
+                                    ['label' => 'Blocked', 'value' => 'blocked'],
+                                ]],
+                            ];
+                        }
                     @endphp
                     @if (($item['type'] ?? 'text') === 'search')
                         <x-ui.search
@@ -223,11 +235,19 @@
                             :label="$item['label']"
                             :options="$fieldOptions"
                             :value="$item['value_key'] ?? 'enabled'"
-                            helper="Helper text stays visible and concise."
-                            :error="$state === 'error' ? 'Resolve this field before saving.' : null"
-                            :warning="$state === 'warning' ? 'Review this selection before saving.' : null"
+                            :placeholder="$item['placeholder'] ?? null"
+                            :helper="$item['helper'] ?? 'Helper text stays visible and concise.'"
+                            :invalid="$state === 'error'"
+                            invalid-text="Resolve this field before saving."
+                            :warn="$state === 'warning'"
+                            warn-text="Review this selection before saving."
+                            :size="$item['size'] ?? 'md'"
+                            :variant="$item['variant'] ?? 'default'"
+                            :style="$item['style'] ?? 'default'"
+                            :required="$item['required'] ?? false"
                             :disabled="$state === 'disabled'"
                             :readonly="$state === 'readonly'"
+                            :skeleton="$state === 'loading'"
                             @class(['is-focus' => $state === 'focus'])
                         />
                     @elseif (($item['type'] ?? 'text') === 'dropdown')

@@ -2,18 +2,22 @@
 title: Select
 slug: select
 api_layer: Component API
-status: implemented-pending-correction
-system_maturity: partial
+status: implemented-pending-review
+system_maturity: installed
 category: inputs
 priority: tier-a-baseline-app-development
 ui_reference_route: /platform/ui-reference/components/select
 canonical_doc: docs/02-standards/ui/components/select.md
 source_owner: /platform/ui-reference/components/select
 blade_api:
-  - native select composed with app-owned ui-* field and select classes
+  - x-ui.select
 javascript_api: []
-data_attributes: []
+data_attributes:
+  - data-ui-component="select"
+  - data-ui-select-field
+  - data-ui-select
 source_files:
+  - resources/views/components/ui/select.blade.php
   - resources/css/app.css
 foundation_elements:
   - color
@@ -108,7 +112,7 @@ Select is the installed Login App 2.0 native single-selection field API. It owns
 | Field                        | Value                                                                                                    |
 | ---------------------------- | -------------------------------------------------------------------------------------------------------- |
 | Status                       | Approved API                                                                                             |
-| System maturity              | Partial                                                                                                  |
+| System maturity              | Installed                                                                                               |
 | API layer                    | Component API                                                                                            |
 | Component slug               | `select`                                                                                                 |
 | Category                     | Inputs                                                                                                   |
@@ -116,33 +120,33 @@ Select is the installed Login App 2.0 native single-selection field API. It owns
 | UI Reference route           | `/platform/ui-reference/components/select`                                                               |
 | Canonical doc                | `docs/02-standards/ui/components/select.md`                                                              |
 | Source owner                 | `/platform/ui-reference/components/select`                                                               |
-| Blade API                    | Native `<select>` composed with app-owned `ui-*` field and select classes                                |
-| Dedicated Blade component    | Not public until `x-ui.select` is implemented, documented, and proven                                    |
+| Blade API                    | `x-ui.select`                                                                                            |
+| Dedicated Blade component    | Installed public API backed by native `<select>` behavior                                                |
 | JavaScript API               | None required for installed native select behavior                                                       |
-| Data attributes              | None required for installed behavior                                                                     |
-| Source files                 | `resources/css/app.css`; UI Reference implementation owned by `/platform/ui-reference/components/select` |
+| Data attributes              | `data-ui-component="select"`, `data-ui-select-field`, `data-ui-select`                                  |
+| Source files                 | `resources/views/components/ui/select.blade.php`; `resources/css/app.css`; `/platform/ui-reference/components/select` |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Icons                                                                |
 | Carbon benchmark             | Carbon Select and Dropdown usage/style/accessibility guidance                                            |
 
-`Approved API` means the UI Reference route and component-specific examples exist, but the canonical document must replace placeholder API text with the installed native-select contract, explicit field states, option rules, and deferred gates for custom dropdown/combobox behavior.
+`Approved API` means `x-ui.select` is the public native single-value form-select API. It preserves browser-controlled option-list behavior while the app owns labels, helper/validation copy, field states, sizes, inline/fluid treatments, and UI Reference proof.
 
 ## 3. Installed standard
 
-Select is installed as a native field composition. The approved production API is native Blade markup using the app field class contract and select class namespace. A dedicated `<x-ui.select>` component is not public until it is implemented and documented as a follow-up API.
+Select is installed as a native field component. The approved production API is `<x-ui.select>`, which renders app-owned field markup around a native browser `<select>`.
 
 ### 3.1. The installed standard is:
 
-- Use a native `<select>` for one choice from a short known list.
-- Wrap the control in `.ui-field.ui-select-field`.
+- Use `<x-ui.select>` for one choice from a short known list.
+- The component wraps the control in `.ui-field.ui-select-field`.
 - Use `.ui-field-label` for the visible label.
 - Use `.ui-select` on the native `<select>` element.
-- Use `.ui-field-helper`, `.ui-field-error-message`, `.ui-field-warning-message`, and `.ui-field-status` for supporting copy.
+- Use `.ui-field-helper`, `.ui-field-error`, and `.ui-field-warning` for supporting copy.
 - Use `aria-describedby` when helper, warning, error, or status copy exists.
 - Use `aria-invalid="true"` only for blocking validation errors.
 - Use a first disabled empty option only when the workflow needs a prompt such as `Choose a status`.
 - Use `required` when a value must be selected before form submission.
 - Use `disabled` when the user cannot currently change the field.
-- Represent read-only as a non-interactive value summary. Do not use invalid `readonly` behavior on a native `<select>`.
+- Represent read-only as a non-interactive value summary plus a hidden submitted value. Do not use invalid `readonly` behavior on a native `<select>`.
 - Represent loading with a disabled select, `aria-busy="true"` on the wrapper, and visible status copy when options are pending.
 - Use `optgroup` only when grouping improves scanning and keeps the list short.
 - Do not use `multiple` on this component. Multiple selection is not part of the installed Select API.
@@ -154,125 +158,89 @@ Carbon alignment note: Carbon documents Select as a form control with enabled, h
 
 ### 4.1. Canonical calls
 
-Use native Blade markup with the installed field and select class contract.
+Use `x-ui.select`; it renders native Blade markup with the installed field and select class contract.
 
 ```blade
-<div class="ui-field ui-select-field">
-    <label class="ui-field-label" for="tenant-status">
-        Tenant status
-    </label>
-
-    <p class="ui-field-helper" id="tenant-status-helper">
-        Choose the current account state.
-    </p>
-
-    <select
-        id="tenant-status"
-        name="status"
-        class="ui-select"
-        aria-describedby="tenant-status-helper"
-    >
-        <option value="">Choose a status</option>
-        <option value="active">Active</option>
-        <option value="suspended">Suspended</option>
-        <option value="archived">Archived</option>
-    </select>
-</div>
+<x-ui.select
+    id="tenant-status"
+    name="status"
+    label="Tenant status"
+    helper="Choose the current account state."
+    placeholder="Choose a status"
+    :options="$statusOptions"
+/>
 ```
 
 ```blade
-<div class="ui-field ui-select-field ui-field-error">
-    <label class="ui-field-label" for="role">
-        Role
-    </label>
-
-    <p class="ui-field-helper" id="role-helper">
-        Select the role this user should receive.
-    </p>
-
-    <select
-        id="role"
-        name="role"
-        class="ui-select"
-        required
-        aria-describedby="role-helper role-error"
-        aria-invalid="true"
-    >
-        <option value="">Choose a role</option>
-        <option value="admin">Admin</option>
-        <option value="manager">Manager</option>
-        <option value="viewer">Viewer</option>
-    </select>
-
-    <p class="ui-field-error-message" id="role-error">
-        Choose a role before saving.
-    </p>
-</div>
+<x-ui.select
+    id="role"
+    name="role"
+    label="Role"
+    placeholder="Choose a role"
+    :options="$roleOptions"
+    required
+    invalid
+    invalid-text="Choose a role before saving."
+/>
 ```
 
 ```blade
-<div class="ui-field ui-select-field ui-field-readonly">
-    <span class="ui-field-label" id="billing-cycle-label">
-        Billing cycle
-    </span>
-
-    <p class="ui-field-value" aria-labelledby="billing-cycle-label">
-        Annual
-    </p>
-</div>
+<x-ui.select
+    id="billing-cycle"
+    name="billing_cycle"
+    label="Billing cycle"
+    :options="$cycleOptions"
+    value="annual"
+    readonly
+/>
 ```
 
 ```blade
-<div class="ui-field ui-select-field ui-field-loading" aria-busy="true">
-    <label class="ui-field-label" for="workspace-owner">
-        Workspace owner
-    </label>
-
-    <select
-        id="workspace-owner"
-        name="owner_id"
-        class="ui-select"
-        disabled
-        aria-describedby="workspace-owner-status"
-    >
-        <option value="">Loading owners</option>
-    </select>
-
-    <p class="ui-field-status" id="workspace-owner-status">
-        Owner options are loading.
-    </p>
-</div>
+<x-ui.select
+    id="workspace-owner"
+    name="owner_id"
+    label="Workspace owner"
+    placeholder="Loading owners"
+    :options="[]"
+    skeleton
+/>
 ```
 
-Use this native API instead of hand-building select controls in feature views.
+Use this component API instead of hand-building select controls in feature views.
 
 ### 4.2. API surfaces
 
 | API surface               | Installed value                                                                                              |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| Blade API                 | Native `<select>` composed with app-owned `ui-*` field and select classes                                    |
-| Dedicated Blade component | Not installed as public API. Do not call `<x-ui.select>` until that component is implemented and documented. |
+| Blade API                 | `x-ui.select`                                                                                                |
+| Dedicated Blade component | Installed public API backed by native `<select>` behavior                                                    |
 | JavaScript                | No dedicated JavaScript controller required for installed native select behavior                             |
 | Root semantic element     | Native `<select>`                                                                                            |
-| Data attributes           | None required for installed behavior. Feature views must not invent behavior attributes.                     |
-| CSS namespace             | App-owned `ui-*` field and select classes documented in this standard                                        |
-| Source files              | `resources/css/app.css`; UI Reference implementation owned by `/platform/ui-reference/components/select`     |
+| Data attributes           | `data-ui-component="select"`, `data-ui-select-field`, `data-ui-select`                                      |
+| CSS namespace             | `ui-select*` plus shared `ui-field*` classes documented in this standard                                     |
+| Source files              | `resources/views/components/ui/select.blade.php`; `resources/css/app.css`; `/platform/ui-reference/components/select` |
 
-### 4.3. Markup and option contract
+### 4.3. Prop and option contract
 
 | Option/attribute       | Type                         | Default       | Allowed values             | Required                        | Notes                                                                                      |
 | ---------------------- | ---------------------------- | ------------- | -------------------------- | ------------------------------- | ------------------------------------------------------------------------------------------ |
-| `id`                   | `string`                     | none          | Unique DOM ID              | Yes                             | Must match the visible label `for` attribute.                                              |
+| `id`                   | `string / null`              | generated     | Unique DOM ID              | No                              | Generated from `name` when omitted.                                                        |
 | `name`                 | `string`                     | none          | Laravel field name         | Yes                             | Submitted value key.                                                                       |
-| Visible label          | text/HTML                    | none          | Short concrete noun phrase | Yes                             | Use `<label for="...">` for interactive selects.                                           |
-| Helper text            | text/HTML                    | none          | Short guidance copy        | Recommended                     | State what the selection controls or affects.                                              |
-| `required`             | boolean attribute            | omitted       | present/omitted            | No                              | Use when a non-empty value is required.                                                    |
-| `disabled`             | boolean attribute            | omitted       | present/omitted            | No                              | Use when the field is unavailable.                                                         |
-| `aria-describedby`     | `string                      | null`         | none                       | Space-separated IDs             | Required when helper/status/error/warning text exists                                      | Reference every relevant supporting copy ID. |
-| `aria-invalid`         | `true                        | null`         | omitted                    | `true` when invalid             | Required for blocking errors                                                               | Do not set for warning states.               |
-| `aria-busy`            | `true                        | null`         | omitted                    | `true` on wrapper while pending | Required for loading state                                                                 | Pair with disabled select and status copy.   |
-| Prompt option          | `<option value="">`          | none          | Empty-value option         | Optional                        | Use when no default value should be selected.                                              |
-| Disabled prompt option | `<option value="" disabled>` | none          | Disabled empty option      | Optional                        | Use when the prompt should not be submitted. Avoid trapping users without a valid default. |
+| `label`                | `string`                     | none          | Short concrete noun phrase | Yes                             | Visible label associated to the field.                                                     |
+| `helper` / `helperText`| `string / null`              | null          | Short guidance copy        | No                              | Replaced by error or warning copy while active.                                            |
+| `value` / `defaultValue` | `string / int / null`      | null          | One scalar value           | No                              | Select stores one scalar value, not an array.                                              |
+| `size`                 | `string`                     | `md`          | `sm`, `md`, `lg`           | No                              | Default select field height.                                                              |
+| `variant`              | `string`                     | `default`     | `default`, `inline`        | No                              | Inline is lower visual weight for compact contexts.                                       |
+| `style`                | `string`                     | `default`     | `default`, `fluid`         | No                              | Fluid renders the 64px expressive field treatment.                                        |
+| `required`             | `bool`                       | `false`       | true/false                 | No                              | Use when a non-empty value is required.                                                    |
+| `disabled`             | `bool`                       | `false`       | true/false                 | No                              | Use when the field is unavailable.                                                         |
+| `readonly` / `readOnly`| `bool`                       | `false`       | true/false                 | No                              | Renders a non-interactive value summary plus hidden value.                                |
+| `invalid`              | `bool`                       | `false`       | true/false                 | No                              | Adds error state when paired with `invalidText`.                                          |
+| `invalidText` / `error`| `string / null`              | null          | Actionable error message   | No                              | Emits `aria-invalid="true"` and associated message.                                       |
+| `warn`                 | `bool`                       | `false`       | true/false                 | No                              | Adds warning state when paired with `warnText`.                                           |
+| `warnText` / `warning` | `string / null`              | null          | Non-blocking warning       | No                              | Warning does not emit `aria-invalid`.                                                     |
+| `skeleton`             | `bool`                       | `false`       | true/false                 | No                              | Disables the select, marks wrapper busy, and exposes loading status copy.                 |
+| `placeholder`          | `string / null`              | null          | Empty prompt option        | No                              | Use when no default value should be selected.                                             |
 | Option value           | `string / int`               | none          | Stable app value           | Yes for each option             | Values must map to server validation.                                                      |
 | Option label           | text                         | none          | Short visible label        | Yes for each option             | Avoid long or repeated-leading labels.                                                     |
 | `optgroup`             | HTML element                 | none          | Labeled option group       | Optional                        | Use sparingly for short grouped lists.                                                     |
@@ -287,22 +255,26 @@ Any option not listed here is not public. If a feature needs another option, upd
 | --------------------------- | ----------- | ------------------------------------------------------- |
 | `.ui-field`                 | Implemented | App field wrapper shared by input components.           |
 | `.ui-select-field`          | Implemented | Root select field namespace.                            |
+| `.ui-select-field-sm/md/lg` | Implemented | Default select size modifiers.                          |
+| `.ui-select-field-inline`   | Implemented | Inline select treatment.                                |
+| `.ui-select-field-fluid`    | Implemented | 64px fluid select treatment.                            |
+| `.ui-select-field-invalid`  | Implemented | Blocking validation wrapper state.                      |
+| `.ui-select-field-warning`  | Implemented | Non-blocking warning wrapper state.                     |
+| `.ui-select-field-disabled` | Implemented | Wrapper state paired with native `disabled`.            |
+| `.ui-select-field-readonly` | Implemented | Non-interactive value summary state.                    |
+| `.ui-select-field-skeleton` | Implemented | Pending options state paired with `aria-busy="true"`.   |
+| `.ui-select-shell`          | Implemented | Native select and status-icon positioning wrapper.      |
 | `.ui-field-label`           | Implemented | Visible label text.                                     |
 | `.ui-field-helper`          | Implemented | Helper/instruction copy.                                |
 | `.ui-select`                | Implemented | Native select styling hook.                             |
-| `.ui-field-error`           | Implemented | Blocking validation wrapper state.                      |
-| `.ui-field-error-message`   | Implemented | Error copy referenced by `aria-describedby`.            |
-| `.ui-field-warning`         | Implemented | Non-blocking warning wrapper state.                     |
-| `.ui-field-warning-message` | Implemented | Warning copy referenced by `aria-describedby`.          |
-| `.ui-field-disabled`        | Implemented | Optional wrapper state paired with native `disabled`.   |
-| `.ui-field-readonly`        | Implemented | Non-interactive value summary state.                    |
-| `.ui-field-loading`         | Implemented | Pending options state paired with `aria-busy="true"`.   |
-| `.ui-field-status`          | Implemented | Status copy for loading or pending option availability. |
-| `.ui-field-value`           | Implemented | Read-only value text.                                   |
+| `.ui-field-error`           | Implemented | Error copy referenced by `aria-describedby`.            |
+| `.ui-field-warning`         | Implemented | Warning copy referenced by `aria-describedby`.          |
+| `.ui-select-status-icon`    | Implemented | Error/warning status icon hook.                         |
+| `.ui-select-readonly-value` | Implemented | Read-only value summary.                                |
 
 ### 4.5. Option data contract
 
-When a view assembles options in PHP, use a simple option array and render native options.
+When a view assembles options in PHP, pass a simple option array into `x-ui.select`. The component renders native options.
 
 ```blade
 @php
@@ -313,42 +285,45 @@ When a view assembles options in PHP, use a simple option array and render nativ
     ];
 @endphp
 
-<select id="status" name="status" class="ui-select">
-    <option value="">Choose a status</option>
-
-    @foreach ($statusOptions as $option)
-        <option value="{{ $option['value'] }}" @selected(old('status') === $option['value'])>
-            {{ $option['label'] }}
-        </option>
-    @endforeach
-</select>
+<x-ui.select
+    id="status"
+    name="status"
+    label="Status"
+    placeholder="Choose a status"
+    :options="$statusOptions"
+    :value="old('status')"
+/>
 ```
 
 | Field      | Type            | Required | Notes                                                                                |
 | ---------- | --------------- | -------- | ------------------------------------------------------------------------------------ |
-| `value`    | `string         | int`     | Yes                                                                                  | Stable submitted value validated by the server. |
+| `value`    | `string / int`  | Yes      | Stable submitted value validated by the server.                                      |
 | `label`    | `string`        | Yes      | Visible option label. Keep concise.                                                  |
 | `disabled` | `bool`          | No       | Use only when an option may become available later. Hide impossible options.         |
-| `group`    | `string / null` | No       | Use to render `optgroup` only when grouping improves scanning.                       |
+| `options`  | `array / null`  | No       | Child option array for native `optgroup` rendering when grouping improves scanning.  |
 | `selected` | `bool`          | No       | Usually derive from model value or `old()` rather than storing in the option source. |
 
 ## 5. Allowed variants, options, and modifiers
 
 | Name                    | Type         | Status                   | API                                                                                                        | Notes                                                               |
 | ----------------------- | ------------ | ------------------------ | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| Short native selection  | Variant      | Implemented              | Native `<select class="ui-select">`                                                                        | Installed default. Use for short known lists.                       |
+| Short native selection  | Variant      | Implemented              | `<x-ui.select>`                                                                                             | Installed default. Use for short known lists.                       |
+| Small select            | Size         | Implemented              | `size="sm"`                                                                                                 | 32px default field height.                                         |
+| Medium select           | Size         | Implemented              | `size="md"`                                                                                                 | Default 40px field height.                                         |
+| Large select            | Size         | Implemented              | `size="lg"`                                                                                                 | 48px default field height.                                         |
+| Inline select           | Variant      | Implemented              | `variant="inline"`                                                                                          | Lower visual weight for compact form contexts.                     |
+| Fluid select            | Style        | Implemented              | `style="fluid"`                                                                                             | 64px expressive field treatment.                                   |
 | Required select         | Option/state | Implemented              | `required`                                                                                                 | Pair with helper/error copy when needed.                            |
 | Prompt option           | Composition  | Implemented              | Empty first `<option>`                                                                                     | Use to avoid preselecting a meaningful value.                       |
 | Disabled prompt option  | Composition  | Implemented with caution | `<option value="" disabled>`                                                                               | Use only when the form provides a valid way forward.                |
 | Grouped options         | Composition  | Implemented              | `optgroup`                                                                                                 | Use sparingly for short grouped lists.                              |
 | Helper text             | Composition  | Implemented              | `.ui-field-helper` and `aria-describedby`                                                                  | Explain what the selection affects.                                 |
-| Error validation        | State        | Implemented              | `.ui-field-error`, message ID, `aria-invalid="true"`                                                       | Blocking invalid state.                                             |
-| Warning validation      | State        | Implemented              | `.ui-field-warning`, message ID                                                                            | Non-blocking guidance. Do not set `aria-invalid`.                   |
+| Error validation        | State        | Implemented              | `invalid`, `invalid-text`, message ID, `aria-invalid="true"`                                               | Blocking invalid state.                                             |
+| Warning validation      | State        | Implemented              | `warn`, `warn-text`, message ID                                                                             | Non-blocking guidance. Do not set `aria-invalid`.                   |
 | Disabled                | State        | Implemented              | `disabled` and optional `.ui-field-disabled`                                                               | Prevents interaction and submission where browser behavior applies. |
-| Read-only summary       | State/mode   | Implemented              | `.ui-field-readonly` plus `.ui-field-value`                                                                | Render value text without an interactive select.                    |
-| Loading/pending options | State        | Implemented              | `.ui-field-loading`, `aria-busy="true"`, disabled select, status copy                                      | Use only while options are unavailable.                             |
+| Read-only summary       | State/mode   | Implemented              | `readonly` / `readOnly`                                                                                    | Render value text plus hidden value without an interactive select.  |
+| Loading/pending options | State        | Implemented              | `skeleton`, `aria-busy="true"`, disabled select, status copy                                               | Use only while options are unavailable.                             |
 | Compact density         | Gated        | Pattern-owned            | none                                                                                                       | Requires Forms/Table toolbar proof if introduced.                   |
-| Inline select           | Deferred     | none                     | Requires source implementation and UI Reference proof.                                                     |                                                                     |
 | Multi-select            | Deferred     | none                     | Use Checkbox group or future Multi-select/Combobox API. Do not use native `multiple` under this component. |                                                                     |
 | Searchable select       | Deferred     | none                     | Requires Combobox/Listbox API, JavaScript owner, keyboard contract, and tests.                             |                                                                     |
 | Async remote options    | Deferred     | none                     | Requires loading/error/retry and state-management contract.                                                |                                                                     |
@@ -371,7 +346,7 @@ When a view assembles options in PHP, use a simple option array and render nativ
 | Disabled           | Implemented                    | Native `disabled` prevents selection changes.                                                               |
 | Read-only          | Implemented as summary         | Render non-interactive value summary. Do not use invalid `readonly` attribute.                              |
 | Loading            | Implemented                    | Wrapper uses `aria-busy="true"`, select is disabled, and visible status copy is provided.                   |
-| Skeleton           | Deferred                       | Use Skeleton/Loading API only if a parent Pattern owns pending layout. Do not fake select skeleton locally. |
+| Skeleton/loading   | Implemented                    | `skeleton` disables the select, marks the wrapper busy, and exposes loading status copy.                    |
 | Success            | Not applicable                 | Successful form submission belongs to Notification/Inline feedback or the parent Pattern.                   |
 | Active/pressed     | Browser-owned                  | Native select activation is handled by browser/OS. Do not create static pressed styling.                    |
 | Overflow/truncated | Implemented with content rules | Avoid long labels. Rare truncation must preserve full value through approved title/help text.               |
@@ -413,7 +388,7 @@ Carbon color role mapping:
 | `$icon-primary`, `$icon-disabled` | Select chevron/icon states | `ui-select__icon` / chevron role | App icon palette | Same role / app value | Icons must inherit currentColor where possible. |
 | `$support-error`, `$text-error`, `$support-warning` | Invalid/warning border, icon, and message roles | Field validation state classes | App status palette | Same role / app value | Validation mapping is shared across field components. |
 | `$focus` | Focus field border/ring | `ui-select:focus-visible`, `--ui-focus` | App focus palette | Same role / app value | Focus remains Color-owned. |
-| `transparent` | Inline select field background | Inline select variant only when installed | Component variant rule | Not adopted unless installed | Do not implement inline select styling ad hoc in feature views. |
+| `transparent` | Inline select field background | `variant="inline"` | Component variant rule | Adopted for installed inline select | Do not implement inline select styling ad hoc in feature views. |
 | `$ai-border-strong` | AI select presence | No baseline select role until AI variant is approved | None | Not adopted | AI tokens remain gated. |
 
 ### 7.3. CSS namespace
@@ -425,17 +400,22 @@ Allowed component classes use the app-owned `ui-*` namespace documented by the i
 .ui-field-label
 .ui-field-helper
 .ui-field-error
-.ui-field-error-message
 .ui-field-warning
-.ui-field-warning-message
-.ui-field-disabled
-.ui-field-readonly
-.ui-field-loading
-.ui-field-status
-.ui-field-value
 .ui-select-field
+.ui-select-field-sm
+.ui-select-field-md
+.ui-select-field-lg
+.ui-select-field-inline
+.ui-select-field-fluid
+.ui-select-field-invalid
+.ui-select-field-warning
+.ui-select-field-disabled
+.ui-select-field-readonly
+.ui-select-field-skeleton
+.ui-select-shell
 .ui-select
-.ui-select-icon
+.ui-select-status-icon
+.ui-select-readonly-value
 ```
 
 Feature views must not create local `select-*`, `dropdown-*`, `combobox-*`, Bootstrap `.form-select` classes, raw utility clusters, arbitrary colors, arbitrary spacing, custom focus rings, local SVG icons, or feature-local JavaScript for the same UI role.
@@ -549,8 +529,6 @@ Feature views must not create local `select-*`, `dropdown-*`, `combobox-*`, Boot
 
 | Capability                           | Status                                        | Gate                                                                                                                         |
 | ------------------------------------ | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `x-ui.select` Blade component        | Deferred                                      | Requires source implementation, prop contract, option/slot contract, accessibility review, UI Reference proof, and tests.    |
-| Inline select variant                | Deferred                                      | Requires source implementation, density rules, Forms Pattern approval, and UI Reference proof.                               |
 | Compact/table-toolbar select         | Gated                                         | Requires Table toolbar or Filters Pattern proof for density, label visibility, and responsive behavior.                      |
 | Multi-select                         | Deferred                                      | Requires dedicated component/API, selected-item display, keyboard behavior, error states, and tests.                         |
 | Searchable select / Combobox         | Deferred                                      | Requires JavaScript owner, text input/listbox semantics, keyboard behavior, async/no-results states, and UI Reference proof. |
@@ -598,7 +576,7 @@ The Select page is a baseline input component reference page. The Live examples 
 | Loading/pending options  | Pending options example disables the select, uses `aria-busy="true"`, and shows visible status copy.                                                                                      | Loading, Status text, Disabled while pending                                    |
 | Grouped options          | A short grouped option example uses `optgroup` only where grouping improves scanning.                                                                                                     | Option groups, Short known list                                                 |
 | Option content guidance  | Examples show concise labels, avoided repeated-leading labels, and prompt copy.                                                                                                           | Content contract, Truncation/overflow guidance                                  |
-| Developer implementation | Canonical native Blade markup and option array rendering examples appear as real code.                                                                                                    | Native `select`, `ui-*` classes, `required`, `aria-describedby`, `aria-invalid` |
+| Developer implementation | Canonical `x-ui.select` calls and option array rendering examples appear as real code.                                                                                                    | `x-ui.select`, native `select`, `ui-*` classes, `required`, `aria-describedby`, `aria-invalid` |
 | Deferred alternatives    | Page shows searchable select, multiselect, async options, and custom dropdown chrome as deferred/gated, with approved alternatives.                                                       | Deferred gates, Combobox alternative, Checkbox/Radio/Menu alternatives          |
 | Prohibited usage         | Page shows forbidden placeholder-only labels, menu-as-select, native `multiple`, custom dropdown JavaScript, Bootstrap/Carbon classes, and invalid read-only select usage as not allowed. | Prohibited examples and approved corrections                                    |
 
@@ -610,7 +588,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
-- Native select examples use `<select>` with `.ui-select-field` and `.ui-select` classes.
+- Select examples use `x-ui.select` and render native `<select>` markup with `.ui-select-field` and `.ui-select` classes.
 - Every rendered select field has a visible label associated through `for` and `id`.
 - Helper, warning, error, and status copy are associated through `aria-describedby`.
 - Error examples include `aria-invalid="true"` and warning examples do not.
@@ -620,7 +598,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 - Loading examples use `aria-busy="true"`, visible status copy, and disabled select behavior.
 - Grouped option examples use native `optgroup` and remain short.
 - Deferred examples render trigger conditions instead of fake custom dropdown, multiselect, searchable select, async option, or combobox controls.
-- Developer examples do not call `<x-ui.select>` until that component is implemented and documented.
+- Developer examples call `<x-ui.select>` for the installed public API.
 - The page contains no generic placeholder content.
 - Tests assert stale labels and legacy scaffolding remain absent when they are not part of approved UI copy.
 - Tests assert no raw Bootstrap `.form-select`, hard-coded color, arbitrary local spacing, feature-local select/dropdown class system, custom JavaScript select controller, native `multiple` example, or direct Carbon production class is presented as approved.

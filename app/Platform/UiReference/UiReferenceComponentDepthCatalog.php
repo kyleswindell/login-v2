@@ -17,7 +17,7 @@ class UiReferenceComponentDepthCatalog
 
             'text-input' => $this->inputs('text-input', 'Text input', 'Single-line free-entry text fields capture short user-provided values.', 'text', ['Login form field', 'Settings form field', 'Validation field', 'Read-only field', 'Disabled field']),
             'textarea' => $this->inputs('textarea', 'Textarea', 'Textarea captures longer user-entered copy with visible multiline affordance.', 'textarea', ['Settings form field', 'Validation field', 'Read-only field', 'Disabled field']),
-            'select' => $this->inputs('select', 'Select', 'Native select chooses one option from a short known list.', 'select', ['Short native selection', 'Validation selection', 'Disabled/read-only']),
+            'select' => $this->selectComponent(),
             'dropdown' => $this->dropdownComponent(),
             'number-input' => $this->inputs('number-input', 'Number input', 'Number input captures bounded numeric values with optional step controls.', 'number', ['Min/max/step', 'Increment/decrement', 'Error/warning icon', 'Disabled/read-only', 'Compact/fluid']),
             'date-picker' => $this->datePickerComponent(),
@@ -321,6 +321,92 @@ class UiReferenceComponentDepthCatalog
             'Disabled dropdowns are not interactive; read-only dropdowns stay readable and do not open.',
         ]), [
             'live_examples_view' => 'platform.ui-reference.components.live-examples.dropdown',
+            'live_examples_layout' => 'flexible-matrix',
+        ]);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function selectComponent(): array
+    {
+        return array_replace($this->correctedImplemented('select', 'Select', 'Select collects one submitted form value from a native browser option list.', [
+            $this->exampleFromSample('Short native selection', 'Native select renders a visible label, helper text, prompt option, and one scalar selected value.', ['type' => 'field', 'items' => [
+                ['type' => 'select', 'label' => 'Status', 'placeholder' => 'Choose status', 'required' => true, 'value_key' => null],
+                ['type' => 'select', 'label' => 'Billing cycle', 'value_key' => 'annual'],
+            ]], [
+                $this->sampleVariant('Prompt option', ['type' => 'field', 'items' => [['type' => 'select', 'label' => 'Status', 'placeholder' => 'Choose status', 'required' => true, 'value_key' => null]]]),
+                $this->sampleVariant('Selected value', ['type' => 'field', 'items' => [['type' => 'select', 'label' => 'Billing cycle', 'value_key' => 'annual']]]),
+            ]),
+            $this->exampleFromSample('Styles and sizes', 'Default select supports small, medium, and large heights; inline and fluid styles stay native.', ['type' => 'field', 'items' => [
+                ['type' => 'select', 'label' => 'Small', 'size' => 'sm'],
+                ['type' => 'select', 'label' => 'Medium', 'size' => 'md'],
+                ['type' => 'select', 'label' => 'Large', 'size' => 'lg'],
+            ]], [
+                $this->sampleVariant('Small', ['type' => 'field', 'items' => [['type' => 'select', 'label' => 'Small', 'size' => 'sm']]]),
+                $this->sampleVariant('Medium', ['type' => 'field', 'items' => [['type' => 'select', 'label' => 'Medium', 'size' => 'md']]]),
+                $this->sampleVariant('Large', ['type' => 'field', 'items' => [['type' => 'select', 'label' => 'Large', 'size' => 'lg']]]),
+                $this->sampleVariant('Inline', ['type' => 'field', 'items' => [['type' => 'select', 'label' => 'Sort order', 'variant' => 'inline']]]),
+                $this->sampleVariant('Fluid', ['type' => 'field', 'items' => [['type' => 'select', 'label' => 'Billing cycle', 'style' => 'fluid']]]),
+            ]),
+            $this->exampleFromSample('Validation selection', 'Error and warning states replace helper text and keep message IDs associated through aria-describedby.', ['type' => 'field', 'items' => [
+                ['type' => 'select', 'label' => 'Account type', 'state' => 'error', 'required' => true],
+                ['type' => 'select', 'label' => 'Billing cycle', 'state' => 'warning'],
+            ]], [
+                $this->sampleVariant('Error', ['type' => 'field', 'items' => [['type' => 'select', 'label' => 'Account type', 'state' => 'error', 'required' => true]]]),
+                $this->sampleVariant('Warning', ['type' => 'field', 'items' => [['type' => 'select', 'label' => 'Billing cycle', 'state' => 'warning']]]),
+            ]),
+            $this->exampleFromSample('Disabled, read-only, and loading', 'Disabled and loading selects are unavailable; read-only renders a value summary rather than an enabled select.', ['type' => 'field', 'items' => [
+                ['type' => 'select', 'label' => 'Disabled plan', 'state' => 'disabled'],
+                ['type' => 'select', 'label' => 'Read-only plan', 'state' => 'readonly'],
+                ['type' => 'select', 'label' => 'Loading plans', 'state' => 'loading'],
+            ]], [
+                $this->sampleVariant('Disabled', ['type' => 'field', 'items' => [['type' => 'select', 'label' => 'Disabled plan', 'state' => 'disabled']]]),
+                $this->sampleVariant('Read-only summary', ['type' => 'field', 'items' => [['type' => 'select', 'label' => 'Read-only plan', 'state' => 'readonly']]]),
+                $this->sampleVariant('Loading', ['type' => 'field', 'items' => [['type' => 'select', 'label' => 'Loading plans', 'state' => 'loading']]]),
+            ]),
+            $this->exampleFromSample('Grouped options', 'Native optgroups may be used when grouping improves scanning and the list remains short.', ['type' => 'field', 'items' => [
+                ['type' => 'select', 'label' => 'Workspace state', 'grouped' => true, 'value_key' => 'pending'],
+            ]], [
+                $this->sampleVariant('Optgroup', ['type' => 'field', 'items' => [['type' => 'select', 'label' => 'Workspace state', 'grouped' => true, 'value_key' => 'pending']]]),
+            ]),
+        ], ['visible label', 'native select field', 'prompt option', 'selected option', 'helper or validation text', 'status icon', 'read-only summary'], [
+            'Use when the user chooses one option that will be submitted as part of a form.',
+            'Use for three or more short known options when radio buttons would take too much space.',
+        ], [
+            'Do not use Select for actions, filtering, sorting, navigation, searchable lists, or multiple selections.',
+            'Do not replace native select behavior with custom dropdown chrome when the browser control satisfies the workflow.',
+        ], [
+            'Enabled',
+            'Selected',
+            'Hover',
+            'Focus',
+            'Open',
+            'Error',
+            'Warning',
+            'Disabled',
+            'Read-only',
+            'Skeleton/loading',
+            'Small',
+            'Medium',
+            'Large',
+            'Inline',
+            'Fluid',
+            'Grouped options',
+        ], [
+            'Native browser select owns opening, closing, option highlighting, and keyboard behavior.',
+            'Read-only state renders a non-interactive value summary with a hidden submitted value.',
+            'Loading state disables the select, marks the wrapper busy, and exposes status copy.',
+        ], [
+            'Labels use one to three concise words where practical.',
+            'Option labels are sentence case, parallel, and usually three words or fewer.',
+            'Error messages say what the user must correct before saving.',
+        ], [
+            'Visible labels are associated to the native select by for/id.',
+            'Helper, error, warning, and loading copy are associated through aria-describedby.',
+            'Error states expose aria-invalid and warnings do not.',
+        ]), [
+            'live_examples_view' => 'platform.ui-reference.components.live-examples.select',
             'live_examples_layout' => 'flexible-matrix',
         ]);
     }
@@ -2397,7 +2483,7 @@ class UiReferenceComponentDepthCatalog
                 'dropdown' => 'ui-dropdown, ui-dropdown-trigger, ui-dropdown-menu, ui-dropdown-option, ui-dropdown-sm, ui-dropdown-md, ui-dropdown-lg',
                 'file-uploader' => 'ui-field, ui-field-label, ui-input, data-ui-file-uploader',
                 'number-input' => 'ui-field, ui-field-label, ui-input',
-                'select' => 'ui-field, ui-field-label, ui-select',
+                'select' => 'ui-select-field, ui-select, ui-select-shell, ui-select-readonly-value, data-ui-select-field, data-ui-select',
                 'checkbox' => 'ui-checkbox, ui-checkbox-group, ui-checkbox-box, data-ui-checkbox-input, data-ui-checkbox-nested-group',
                 'radio-button' => 'ui-checkbox-group, ui-radio, ui-control-label',
                 'toggle' => 'ui-switch, ui-switch-input, ui-switch-track, ui-switch-thumb',

@@ -2135,6 +2135,68 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('`disabled`', $standard);
     }
 
+    public function test_select_component_page_renders_installed_api_examples(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $response = $this->get('/platform/ui-reference/components/select')
+            ->assertOk()
+            ->assertSee('data-component-live-layout="select-matrix"', false)
+            ->assertSee('data-ui-reference-sample-type="field"', false)
+            ->assertSee('x-ui.select')
+            ->assertSee('Short native selection')
+            ->assertSee('Styles and sizes')
+            ->assertSee('Validation selection')
+            ->assertSee('Disabled, read-only, and loading')
+            ->assertSee('Grouped options')
+            ->assertSee('Select versus related APIs')
+            ->assertSee('data-ui-component="select"', false)
+            ->assertSee('data-ui-select-field', false)
+            ->assertSee('data-ui-select', false)
+            ->assertSee('data-ui-select-size="sm"', false)
+            ->assertSee('data-ui-select-size="md"', false)
+            ->assertSee('data-ui-select-size="lg"', false)
+            ->assertSee('data-ui-select-variant="inline"', false)
+            ->assertSee('data-ui-select-style="fluid"', false)
+            ->assertSee('aria-invalid="true"', false)
+            ->assertSee('aria-busy="true"', false)
+            ->assertSee('required', false)
+            ->assertSee('disabled', false)
+            ->assertSee('<optgroup label="Production">', false)
+            ->assertSee('data-ui-select-readonly', false)
+            ->assertSee('Choose an account type before saving.')
+            ->assertSee('Quarterly billing may change invoice timing.')
+            ->assertDontSee('Component-specific correction pending')
+            ->assertDontSee('Family-depth implementation pending')
+            ->assertDontSee('custom dropdown JavaScript');
+
+        $content = $response->getContent();
+        $this->assertStringNotContainsString('<select multiple', $content);
+        $this->assertStringNotContainsString(' multiple>', $content);
+        $this->assertStringNotContainsString('form-select', $content);
+
+        $selectView = file_get_contents(resource_path('views/components/ui/select.blade.php'));
+        $selectCss = file_get_contents(resource_path('css/app.css'));
+        $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
+        $standard = file_get_contents(base_path('docs/02-standards/ui/components/select.md'));
+
+        $this->assertStringContainsString("'size' => 'md'", $selectView);
+        $this->assertStringContainsString("'variant' => 'default'", $selectView);
+        $this->assertStringContainsString("'style' => 'default'", $selectView);
+        $this->assertStringContainsString("'skeleton' => false", $selectView);
+        $this->assertStringContainsString('ui-select-readonly-value', $selectView);
+        $this->assertStringContainsString('optgroup', $selectView);
+        $this->assertStringContainsString('heroicon-o-x-circle', $selectView);
+        $this->assertStringContainsString('heroicon-o-exclamation-triangle', $selectView);
+        $this->assertStringContainsString('.ui-select-field-fluid .ui-select', $selectCss);
+        $this->assertStringContainsString('.ui-select-field-inline .ui-select', $selectCss);
+        $this->assertStringContainsString('.ui-select-field-skeleton .ui-select', $selectCss);
+        $this->assertStringContainsString('\'select\' => $this->selectComponent()', $catalog);
+        $this->assertStringContainsString('ui-select-field, ui-select, ui-select-shell', $catalog);
+        $this->assertStringContainsString('The approved production API is `<x-ui.select>`', $standard);
+        $this->assertStringNotContainsString('Do not call `<x-ui.select>`', $standard);
+    }
+
     public function test_dropdown_component_page_renders_installed_api_examples(): void
     {
         $this->actingAsPlatformSuperAdmin();

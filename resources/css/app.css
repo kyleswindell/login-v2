@@ -3927,12 +3927,29 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-input,
-    .ui-select,
     .ui-textarea {
         @apply w-full rounded-md border px-4 py-3 text-sm transition focus:outline-none;
         border-color: var(--ui-border-strong-01);
         background-color: var(--ui-field-01);
         color: var(--ui-text-primary);
+    }
+
+    .ui-select-field {
+        @apply min-w-0;
+    }
+
+    .ui-select-shell {
+        @apply relative mt-2;
+    }
+
+    .ui-select {
+        @apply w-full border-0 border-b text-sm transition focus:outline-none;
+        min-height: 2.5rem;
+        border-color: var(--ui-border-strong-01);
+        background-color: var(--ui-field-01);
+        color: var(--ui-text-primary);
+        border-radius: 0;
+        padding: 0 3rem 0 1rem;
     }
 
     .ui-select {
@@ -3945,11 +3962,120 @@ Use targeted searches for the class family being changed before reading this fil
             calc(100% - 0.78rem) calc(50% - 0.16rem);
         background-repeat: no-repeat;
         background-size: 0.45rem 0.45rem, 0.45rem 0.45rem;
-        padding-right: 2.85rem;
     }
 
     .ui-select-compact {
-        @apply py-2;
+        min-height: 2rem;
+        padding-block: 0;
+    }
+
+    .ui-select-field-sm .ui-select {
+        min-height: 2rem;
+    }
+
+    .ui-select-field-md .ui-select {
+        min-height: 2.5rem;
+    }
+
+    .ui-select-field-lg .ui-select {
+        min-height: 3rem;
+    }
+
+    .ui-select-field-fluid .ui-select-shell {
+        @apply mt-0;
+        background-color: var(--ui-field-01);
+    }
+
+    .ui-select-field-fluid .ui-select {
+        min-height: 4rem;
+        padding-top: 1.25rem;
+    }
+
+    .ui-select-fluid-label {
+        @apply pointer-events-none absolute left-4 top-2 z-10 mb-0;
+    }
+
+    .ui-select-field-inline .ui-select-shell {
+        @apply mt-0 inline-block align-middle;
+    }
+
+    .ui-select-field-inline .ui-select {
+        width: auto;
+        min-height: 2rem;
+        background-color: transparent;
+        padding-left: 1rem;
+        padding-right: 2.5rem;
+    }
+
+    .ui-select:hover:not(:disabled) {
+        background-color: var(--ui-field-hover-01);
+    }
+
+    .ui-select:focus,
+    .ui-select:focus-visible,
+    .ui-select.is-focus {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+        border-color: var(--ui-focus);
+    }
+
+    .ui-select-field-invalid .ui-select {
+        border-color: var(--ui-support-error);
+        outline-color: var(--ui-support-error);
+    }
+
+    .ui-select-field-warning .ui-select {
+        border-color: var(--ui-support-warning);
+    }
+
+    .ui-select:disabled {
+        cursor: not-allowed;
+        border-color: transparent;
+        color: var(--ui-text-disabled);
+        background-color: var(--ui-field-01);
+        opacity: 1;
+    }
+
+    .ui-select-field-fluid .ui-select:disabled {
+        border-color: var(--ui-border-subtle-01);
+    }
+
+    .ui-select-status-icon {
+        @apply pointer-events-none absolute top-1/2 h-4 w-4 -translate-y-1/2;
+        right: 2.75rem;
+    }
+
+    .ui-select-status-icon-error {
+        color: var(--ui-support-error);
+    }
+
+    .ui-select-status-icon-warning {
+        color: var(--ui-support-warning);
+    }
+
+    .ui-select-readonly-value {
+        @apply mt-2 flex min-h-10 w-full items-center border-b px-4 text-sm;
+        border-color: var(--ui-border-subtle-01);
+        background-color: transparent;
+        color: var(--ui-text-primary);
+    }
+
+    .ui-select-field-fluid .ui-select-readonly-value {
+        @apply mt-0 min-h-16 items-end pb-3;
+        background-color: var(--ui-field-01);
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-select-readonly-text {
+        @apply min-w-0 truncate;
+    }
+
+    .ui-select-field-skeleton .ui-select {
+        color: transparent;
+        background-image:
+            linear-gradient(90deg, var(--ui-skeleton-background), var(--ui-skeleton-element), var(--ui-skeleton-background));
+        background-size: 200% 100%;
+        background-position: 0 0;
     }
 
     .ui-searchable-select {
@@ -4787,21 +4913,18 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-input:hover,
-    .ui-select:hover,
     .ui-textarea:hover {
         border-color: var(--ui-border-interactive);
         background-color: var(--ui-field-hover-01);
     }
 
     .ui-input:focus,
-    .ui-select:focus,
     .ui-textarea:focus {
         border-color: var(--ui-border-interactive);
         box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-focus) 55%, transparent);
     }
 
     .ui-input.is-focus,
-    .ui-select.is-focus,
     .ui-textarea.is-focus {
         border-color: var(--ui-border-interactive);
         box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-focus) 55%, transparent);
@@ -4809,7 +4932,6 @@ Use targeted searches for the class family being changed before reading this fil
 
     .ui-input[readonly],
     .ui-input:disabled,
-    .ui-select:disabled,
     .ui-textarea:disabled {
         cursor: not-allowed;
         border-color: var(--ui-border-disabled);
@@ -4818,14 +4940,12 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-input[aria-invalid='true'],
-    .ui-select[aria-invalid='true'],
     .ui-textarea[aria-invalid='true'] {
         border-color: var(--ui-alert-danger-border);
         box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-alert-danger-bg) 45%, transparent);
     }
 
     .ui-input[data-ui-field-warning='true'],
-    .ui-select[data-ui-field-warning='true'],
     .ui-textarea[data-ui-field-warning='true'] {
         border-color: var(--ui-alert-warning-border);
         box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-alert-warning-bg) 45%, transparent);

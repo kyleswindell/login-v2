@@ -2083,6 +2083,58 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringNotContainsString('Public `x-ui.radio-group` Blade wrapper  | Deferred', $standard);
     }
 
+    public function test_link_component_page_renders_installed_api_examples(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $response = $this->get('/platform/ui-reference/components/link')
+            ->assertOk()
+            ->assertSee('data-component-live-layout="link-matrix"', false)
+            ->assertSee('data-ui-reference-sample-type="links"', false)
+            ->assertSee('Inline content link')
+            ->assertSee('Standalone internal link')
+            ->assertSee('External/help link')
+            ->assertSee('Icon trailing')
+            ->assertSee('Email link')
+            ->assertSee('Phone link')
+            ->assertSee('Download link')
+            ->assertSee('Current navigation link')
+            ->assertSee('Visited policy')
+            ->assertSee('Unavailable treatment')
+            ->assertSee('Link versus Button versus Tile')
+            ->assertSee('data-ui-component="link"', false)
+            ->assertSee('data-ui-link-variant="inline"', false)
+            ->assertSee('data-ui-link-variant="standalone"', false)
+            ->assertSee('data-ui-link-size="sm"', false)
+            ->assertSee('data-ui-link-size="md"', false)
+            ->assertSee('data-ui-link-size="lg"', false)
+            ->assertSee('target="_blank" rel="noopener noreferrer"', false)
+            ->assertSee('href="mailto:support@example.com"', false)
+            ->assertSee('href="tel:+15555551212"', false)
+            ->assertSee('download="ui-reference.html"', false)
+            ->assertSee('aria-current="page"', false)
+            ->assertSee('aria-disabled="true"', false)
+            ->assertDontSee('Use when a user needs to start, confirm');
+
+        $content = $response->getContent();
+        $this->assertStringNotContainsString('<a href="#"', $content);
+        $this->assertStringNotContainsString('data-link-example="inline-content-link" class="ui-link-with-icon"', $content);
+
+        $componentView = file_get_contents(resource_path('views/components/ui/link.blade.php'));
+        $componentCss = file_get_contents(resource_path('css/app.css'));
+        $standard = file_get_contents(base_path('docs/02-standards/ui/components/link.md'));
+
+        $this->assertStringContainsString("'variant' => 'standalone'", $componentView);
+        $this->assertStringContainsString("'size' => 'md'", $componentView);
+        $this->assertStringContainsString("'unavailable' => false", $componentView);
+        $this->assertStringContainsString('! $isInline', $componentView);
+        $this->assertStringContainsString('ui-link-inline', $componentCss);
+        $this->assertStringContainsString('ui-link-standalone', $componentCss);
+        $this->assertStringContainsString('ui-link-unavailable', $componentCss);
+        $this->assertStringContainsString('data-ui-link-variant', $standard);
+        $this->assertStringContainsString('`disabled`', $standard);
+    }
+
     public function test_popover_component_page_renders_interactive_tip_and_trigger_examples(): void
     {
         $this->actingAsPlatformSuperAdmin();

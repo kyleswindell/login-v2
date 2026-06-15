@@ -97,9 +97,9 @@ Login App uses the app-owned `ui-link` class and the canonical `x-ui.link` Blade
 | Blade           | `x-ui.link`                                                                                                                                                                    |
 | Utility class   | `a.ui-link` is allowed for simple static anchors that do not need component props.                                                                                             |
 | JavaScript      | No dedicated JavaScript controller required.                                                                                                                                   |
-| Data attributes | None required for the base Link API. Pattern-owned links may add documented pattern attributes.                                                                                |
-| Props/options   | `href`, `variant`, `size`, `external`, `newTab`, `icon`, `iconPosition`, `visited`, `current`, `unavailable`, `download`, `navigate`, `ariaLabel`, `describedBy`, `attributes` |
-| CSS namespace   | `ui-link`, `ui-link-inline`, `ui-link-standalone`, `ui-link-external`, `ui-link-with-icon`, `ui-link-unavailable`                                                              |
+| Data attributes | `data-ui-component="link"`, `data-ui-link-variant`, `data-ui-link-size`, `data-ui-link-external`, `data-ui-link-current`, `data-ui-link-visited-policy`, `data-ui-link-disabled` where relevant. Pattern-owned links may add documented pattern attributes. |
+| Props/options   | `href`, `text`, `variant`, `size`, `external`, `newTab`, `icon`, `iconPosition`, `disabled`, `unavailable`, `visited`, `current`, `download`, `navigate`, `ariaLabel`, `describedBy`, `attributes` |
+| CSS namespace   | `ui-link`, `ui-link-inline`, `ui-link-standalone`, `ui-link-sm`, `ui-link-md`, `ui-link-lg`, `ui-link-with-icon`, `ui-link-external`, `ui-link-unavailable`                      |
 | Source files    | `resources/views/components/ui/link.blade.php`; `resources/css/app.css`; UI Reference route `/platform/ui-reference/components/link`                                           |
 
 Example calls:
@@ -123,12 +123,14 @@ Example calls:
 | Prop/option    | Type            |      Default | Allowed values                               | Required behavior                                                                                                  |
 | -------------- | --------------- | -----------: | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | `href`         | `string / null` |       `null` | valid URL, route, hash, `mailto:`, `tel:`    | Required for an interactive link unless `unavailable=true`.                                                        |
+| `text`         | `string / null` |       `null` | meaningful link text                         | Optional slot replacement for simple string-only calls. Visible text remains required.                             |
 | `variant`      | `string`        | `standalone` | `standalone`, `inline`                       | `inline` is used inside prose and must not include an icon.                                                        |
 | `size`         | `string`        |         `md` | `sm`, `md`, `lg`                             | Size must map to app typography tokens and must not be hard-coded locally.                                         |
 | `external`     | `bool`          |      `false` | `true`, `false`                              | Adds external-link semantics and an external icon when the visual context requires it.                             |
 | `newTab`       | `bool`          |      `false` | `true`, `false`                              | Requires `target="_blank"` and `rel="noopener noreferrer"`. Use only when preserving the current app task matters. |
 | `icon`         | `string / null` |       `null` | approved Heroicon alias                      | Icons are allowed on standalone links only.                                                                        |
-| `iconPosition` | `string`        |   `trailing` | `trailing`; `leading` only when app-approved | Trailing is the default. Leading icons are restricted to approved resource-list or navigation compositions.        |
+| `iconPosition` | `string`        |        `end` | `end`, `start`; legacy `trailing` / `leading` aliases may normalize to these values | End/trailing is the default. Start/leading icons are restricted to approved resource-list or navigation compositions. |
+| `disabled`     | `bool`          |      `false` | `true`, `false`                              | Alias for unavailable treatment. Renders non-interactive output and must not keep a navigable `href`.              |
 | `visited`      | `bool`          |      `false` | `true`, `false`                              | Enables visited styling only where knowing prior navigation helps the task.                                        |
 | `current`      | `bool / string` |      `false` | `false`, `page`, `step`, `location`          | Adds `aria-current` only when the link represents the current item in a navigation context.                        |
 | `unavailable`  | `bool`          |      `false` | `true`, `false`                              | Renders non-interactive unavailable treatment. Do not leave a navigable `href` on unavailable links.               |
@@ -233,6 +235,9 @@ Carbon color role mapping:
 .ui-link
 .ui-link-inline
 .ui-link-standalone
+.ui-link-sm
+.ui-link-md
+.ui-link-lg
 .ui-link-with-icon
 .ui-link-external
 .ui-link-unavailable

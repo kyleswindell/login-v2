@@ -48,17 +48,23 @@
             <div class="flex flex-wrap items-center gap-4 text-sm">
                 @foreach ($items as $item)
                     <x-ui.link
-                        :href="$item['href'] ?? '#'"
+                        :href="$item['href'] ?? null"
+                        :variant="$item['variant'] ?? 'standalone'"
+                        :size="$item['size'] ?? 'md'"
                         :external="$item['external'] ?? false"
                         :new-tab="$item['new_tab'] ?? false"
                         :icon="$item['icon'] ?? null"
-                        :icon-position="$item['icon_position'] ?? 'leading'"
+                        :icon-position="$item['icon_position'] ?? 'end'"
                         :disabled="$item['disabled'] ?? false"
+                        :unavailable="$item['unavailable'] ?? false"
                         :current="$item['current'] ?? false"
                         :visited="$item['visited'] ?? false"
+                        :download="$item['download'] ?? false"
+                        :navigate="$item['navigate'] ?? false"
                         @class([
                             'is-hover' => ($item['state'] ?? null) === 'hover',
                             'is-focus' => ($item['state'] ?? null) === 'focus',
+                            'is-active' => ($item['state'] ?? null) === 'active',
                         ])
                     >
                         {{ $item['label'] }}

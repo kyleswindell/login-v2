@@ -11,28 +11,7 @@ class UiReferenceComponentDepthCatalog
     {
         return match ($slug) {
             'button' => $this->buttonComponent(),
-            'link' => $this->actions('link', 'Link', 'Links move users to related locations or trusted reference content.', [
-                ['Inline content link', 'A link embedded in body copy without taking over action hierarchy.', 'links', [
-                    ['label' => 'View audit requirements', 'href' => '#'],
-                ], [
-                    $this->variant('Inline text', 'links', [['label' => 'View audit requirements', 'href' => '#']]),
-                    $this->variant('Icon trailing', 'links', [['label' => 'Open docs', 'href' => '#', 'icon' => 'heroicon-o-arrow-top-right-on-square', 'icon_position' => 'trailing']]),
-                ]],
-                ['External/help link', 'Reference handoff with an icon cue and accessible text.', 'links', [
-                    ['label' => 'Open platform runbook', 'href' => '#', 'icon' => 'heroicon-o-arrow-top-right-on-square', 'icon_position' => 'trailing'],
-                ], [
-                    $this->variant('Icon leading', 'links', [['label' => 'Help center', 'href' => '#', 'icon' => 'heroicon-o-question-mark-circle']]),
-                    $this->variant('Visited policy', 'links', [['label' => 'Previously viewed runbook', 'href' => '#', 'visited' => true]]),
-                ]],
-                ['Navigation link', 'A lightweight route link where a button would imply a command.', 'links', [
-                    ['label' => 'Settings', 'href' => '#'],
-                    ['label' => 'Users', 'href' => '#'],
-                    ['label' => 'Current profile', 'href' => '#', 'current' => true],
-                ], [
-                    $this->variant('Current', 'links', [['label' => 'Current profile', 'href' => '#', 'current' => true]]),
-                    $this->variant('Unavailable treatment', 'links', [['label' => 'Billing unavailable', 'href' => '#', 'disabled' => true]]),
-                ]],
-            ], ['anchor', 'label text', 'optional icon', 'visited policy', 'focus ring']),
+            'link' => $this->linkComponent(),
             'menu' => $this->menuComponent(),
             'menu-buttons' => $this->menuButtonsComponent(),
 
@@ -174,6 +153,89 @@ class UiReferenceComponentDepthCatalog
             'current_decision' => 'Button uses an expanded matrix-style reference layout because variants, sizes, groups, icons, content behavior, and token/state roles are too broad for the simple tab-plus-variants scaffold.',
             'live_examples_layout' => 'flexible-matrix',
             'live_examples_view' => 'platform.ui-reference.components.live-examples.button',
+        ]);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function linkComponent(): array
+    {
+        return array_replace($this->correctedImplemented('link', 'Link', 'Links move users to related locations, page sections, protocol destinations, or trusted reference content.', [
+            $this->exampleFromSample('Inline content link', 'A link embedded in body copy without taking over action hierarchy.', ['type' => 'links', 'items' => [
+                ['label' => 'billing policy section', 'href' => '#link-destination-proof', 'variant' => 'inline'],
+            ]], [
+                $this->sampleVariant('Inline text', ['type' => 'links', 'items' => [['label' => 'billing policy section', 'href' => '#link-destination-proof', 'variant' => 'inline']]]),
+                $this->sampleVariant('Inline icon suppressed', ['type' => 'links', 'items' => [['label' => 'policy notes', 'href' => '#link-destination-proof', 'variant' => 'inline', 'icon' => 'heroicon-o-arrow-top-right-on-square']]]),
+            ]),
+            $this->exampleFromSample('Standalone internal link', 'A route link after supporting copy, optionally with a trailing icon.', ['type' => 'links', 'items' => [
+                ['label' => 'Compare Button rules', 'href' => '/platform/ui-reference/components/button', 'icon' => 'heroicon-o-arrow-right', 'icon_position' => 'end'],
+            ]], [
+                $this->sampleVariant('Icon trailing', ['type' => 'links', 'items' => [['label' => 'Compare Button rules', 'href' => '/platform/ui-reference/components/button', 'icon' => 'heroicon-o-arrow-right', 'icon_position' => 'end']]]),
+                $this->sampleVariant('Same-page anchor', ['type' => 'links', 'items' => [['label' => 'Jump to destination proof', 'href' => '#link-destination-proof', 'icon' => 'heroicon-o-arrow-down']]]),
+            ]),
+            $this->exampleFromSample('External/help link', 'Reference handoff with a clear external cue and secure new-tab behavior.', ['type' => 'links', 'items' => [
+                ['label' => 'Open Carbon Link guidance', 'href' => 'https://carbondesignsystem.com/components/link/usage/', 'external' => true, 'new_tab' => true, 'icon' => 'heroicon-o-arrow-top-right-on-square'],
+            ]], [
+                $this->sampleVariant('Email link', ['type' => 'links', 'items' => [['label' => 'Email support', 'href' => 'mailto:support@example.com', 'icon' => 'heroicon-o-envelope']]]),
+                $this->sampleVariant('Phone link', ['type' => 'links', 'items' => [['label' => 'Call support', 'href' => 'tel:+15555551212', 'icon' => 'heroicon-o-phone']]]),
+                $this->sampleVariant('Download link', ['type' => 'links', 'items' => [['label' => 'Download reference', 'href' => '/platform/ui-reference', 'download' => 'ui-reference.html', 'icon' => 'heroicon-o-arrow-down-tray']]]),
+            ]),
+            $this->exampleFromSample('Navigation link', 'A lightweight current-route link where Button would imply a command.', ['type' => 'links', 'items' => [
+                ['label' => 'Link component', 'href' => '/platform/ui-reference/components/link', 'current' => 'page'],
+                ['label' => 'Billing unavailable', 'href' => '/platform/billing', 'unavailable' => true],
+            ]], [
+                $this->sampleVariant('Current page', ['type' => 'links', 'items' => [['label' => 'Link component', 'href' => '/platform/ui-reference/components/link', 'current' => 'page']]]),
+                $this->sampleVariant('Unavailable treatment', ['type' => 'links', 'items' => [['label' => 'Billing unavailable', 'href' => '/platform/billing', 'unavailable' => true]]]),
+                $this->sampleVariant('Visited policy', ['type' => 'links', 'items' => [['label' => 'Previously viewed runbook', 'href' => '#link-destination-proof', 'visited' => true]]]),
+            ]),
+            $this->exampleFromSample('Size scale', 'Small, medium, and large links map to Link-owned typography roles.', ['type' => 'links', 'items' => [
+                ['label' => 'Small helper link', 'href' => '#link-destination-proof', 'size' => 'sm'],
+                ['label' => 'Medium body link', 'href' => '#link-destination-proof', 'size' => 'md'],
+                ['label' => 'Large resource link', 'href' => '#link-destination-proof', 'size' => 'lg'],
+            ]], [
+                $this->sampleVariant('Small', ['type' => 'links', 'items' => [['label' => 'Small helper link', 'href' => '#link-destination-proof', 'size' => 'sm']]]),
+                $this->sampleVariant('Medium', ['type' => 'links', 'items' => [['label' => 'Medium body link', 'href' => '#link-destination-proof', 'size' => 'md']]]),
+                $this->sampleVariant('Large', ['type' => 'links', 'items' => [['label' => 'Large resource link', 'href' => '#link-destination-proof', 'size' => 'lg']]]),
+            ]),
+        ], ['native anchor element', 'destination-specific link text', 'optional standalone trailing icon', 'visited policy marker', 'visible focus ring'], [
+            'Use when users need to navigate to another route, same-page section, trusted resource, email address, or phone number.',
+            'Use inline links only inside prose, and standalone links only outside sentence flow.',
+        ], [
+            'Do not use Link for save, submit, delete, confirm, cancel, toggle, filtering, sorting, selection, or menu-trigger commands.',
+            'Do not use inline links with icons, fake href values, image-only links, or the same generic label for different destinations.',
+        ], [
+            'Enabled / unvisited',
+            'Hover',
+            'Focus',
+            'Active',
+            'Visited policy',
+            'Current page',
+            'Unavailable / disabled',
+            'Inline',
+            'Standalone',
+            'Small',
+            'Medium',
+            'Large',
+        ], [
+            'Interactive links render native anchors with valid internal, external, hash, mailto, tel, or download destinations.',
+            'Unavailable links render non-interactive text and do not keep an active href.',
+            'External new-tab links include secure rel behavior.',
+            'Inline links suppress icons and remain underlined by default.',
+            'Standalone links may use a trailing currentColor icon when it clarifies the destination.',
+        ], [
+            'Use destination-specific text such as Open account settings or Download tax form.',
+            'Avoid vague labels such as Click here, More, Learn more, or Read more unless nearby context is programmatically associated.',
+            'Use sentence case and keep link text concise enough to scan.',
+        ], [
+            'Links are keyboard reachable with Tab and activated with Enter.',
+            'Every link has meaningful visible text or a meaningful accessible name.',
+            'Focus state is visible and token-backed.',
+            'External, email, phone, and download destinations are clear from text or icon.',
+            'Disabled or unavailable links are not focusable or actionable.',
+        ]), [
+            'live_examples_view' => 'platform.ui-reference.components.live-examples.link',
+            'live_examples_layout' => 'flexible-matrix',
         ]);
     }
 
@@ -2172,7 +2234,7 @@ class UiReferenceComponentDepthCatalog
                 'date-picker' => 'ui-date-picker, ui-field, ui-field-label, ui-input-date, ui-field-helper, ui-field-error, ui-field-warning',
                 'text-input' => 'ui-field, ui-field-label, ui-input, ui-text-input, ui-field-helper, ui-field-error, ui-field-warning',
                 'textarea' => 'ui-field, ui-field-label, ui-textarea, ui-field-helper, ui-field-error, ui-field-warning',
-                'link' => 'ui-link',
+                'link' => 'ui-link, ui-link-inline, ui-link-standalone, ui-link-sm, ui-link-md, ui-link-lg, ui-link-with-icon, ui-link-external, ui-link-unavailable',
                 'pagination' => 'ui-pagination-control, ui-select, data-ui-pagination-page-size',
                 'search' => 'ui-field, ui-field-label, ui-input, data-ui-search',
                 'dropdown' => 'ui-searchable-select, ui-searchable-select-trigger, ui-searchable-select-panel',
@@ -2213,7 +2275,7 @@ class UiReferenceComponentDepthCatalog
             'code-snippet' => '<x-ui.code-snippet language="Blade" copyable>...</x-ui.code-snippet>',
             'text-input' => '<input name="workspace_name" class="ui-input ui-text-input" type="text" value="Workspace alpha">',
             'textarea' => '<textarea name="notes" class="ui-textarea">Workspace notes</textarea>',
-            'link' => '<x-ui.link href="/platform/docs" icon="heroicon-o-arrow-top-right-on-square">Open docs</x-ui.link>',
+            'link' => '<x-ui.link href="/platform/docs" variant="standalone" size="md" icon="heroicon-o-arrow-right">Open docs</x-ui.link>',
             'pagination' => '<x-ui.pagination :current-page="2" :last-page="5" :page-size-options="[10, 25]" />',
             'search' => '<x-ui.search name="query" label="Search records" value="tenant" />',
             'dropdown' => '<x-ui.dropdown name="role" label="Role" :options="$options" value="owner" />',

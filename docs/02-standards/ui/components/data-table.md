@@ -2,7 +2,7 @@
 title: Data table
 slug: data-table
 api_layer: Component API
-status: implemented-pending-correction
+status: implemented-pending-review
 system_maturity: partial
 category: data-display
 priority: tier-a-baseline-app-development
@@ -41,7 +41,6 @@ related_components:
   - tag
   - loading
 related_patterns:
-  - tables
   - tables
   - navigation
   - data-content
@@ -128,7 +127,7 @@ Data table is the installed Login App 2.0 API for tabular record display, scan h
 | Canonical doc      | `docs/02-standards/ui/components/data-table.md`                                                                                                                                 |
 | Source owner       | `/platform/ui-reference/components/data-table`                                                                                                                                  |
 | System maturity    | Partial                                                                                                                                                                         |
-| Correction reason  | Existing page/API is too generic and must document exact table API, examples, states, density, sorting, toolbar, row actions, loading, empty, and responsive overflow behavior. |
+| Correction outcome | The page/API documents exact table examples, states, row sizes, toolbar sizing, sorting, row actions, loading, empty, error, responsive overflow, Pagination composition, and gated selection/expansion boundaries. |
 
 ## 3. Installed standard
 
@@ -140,7 +139,9 @@ The installed standard is a semantic table API for comparable records. A table m
 
 - Default table structure.
 - Sortable column headers.
-- Standard and compact density.
+- Five approved row sizes: `xs`, `sm`, `md`, `lg`, and `xl`.
+- Backward-compatible standard and compact density aliases.
+- Small and large toolbar size pairing.
 - Optional table title and description.
 - Optional table toolbar for global table actions.
 - Optional Search composition.
@@ -234,7 +235,9 @@ Use the canonical API instead of hand-building feature-local table wrappers. If 
 | `title`            | `string / null` | `null`            | Short table title                  | No          | Required unless the table is named by surrounding heading or `ariaLabel`.                                                              |
 | `description`      | `string / null` | `null`            | Short supporting copy              | No          | Explains data source, scope, or freshness when useful.                                                                                 |
 | `ariaLabel`        | `string / null` | `null`            | Accessible table name              | Conditional | Required when no visible title or external label names the table.                                                                      |
-| `density`          | `string`        | `standard`        | `standard`, `compact`              | No          | Login App density abstraction. Do not invent row heights locally.                                                                      |
+| `size`             | `string / null` | derived from density | `xs`, `sm`, `md`, `lg`, `xl`       | No          | Primary row-height API. Header row and body rows must match.                                                                           |
+| `toolbarSize`      | `string / null` | derived from row size | `sm`, `lg`                         | No          | Toolbar height pairing. Small toolbars pair with `xs`/`sm`; large toolbars pair with `md`/`lg`/`xl`.                                   |
+| `density`          | `string`        | `standard`        | `standard`, `compact`              | No          | Backward-compatible alias. `compact` maps to `sm`; `standard` maps to `md` unless `size` is set. Do not invent local density systems.   |
 | `sortable`         | `bool`          | `false`           | `true`, `false`                    | No          | Enables sort affordance only for columns marked sortable. Requires accessible sort state handling.                                     |
 | `sortBy`           | `string / null` | `null`            | Valid column key                   | No          | Current sorted column key.                                                                                                             |
 | `sortDirection`    | `string / null` | `null`            | `asc`, `desc`, `null`              | No          | Current sort direction. Must update `aria-sort` when applicable.                                                                       |
@@ -245,7 +248,7 @@ Use the canonical API instead of hand-building feature-local table wrappers. If 
 | `error`            | `string / null` | `null`            | Short error message                | No          | Use when the table failed to load. Provide recovery when possible.                                                                     |
 | `rowActions`       | `bool`          | `false`           | `true`, `false`                    | No          | Allows row action slot or configured row action menu. Actions must use Button or Menu buttons APIs.                                    |
 | `selectable`       | `string / bool` | `false`           | `false`, `checkbox`, `radio`       | No          | Gated unless a canonical selection contract is implemented. Multi-select uses Checkbox; single-select uses Radio button.               |
-| `pagination`       | `bool`          | `false`           | `true`, `false`                    | No          | Composes Pagination below the table. Pagination owns page navigation controls.                                                         |
+| `pagination`       | `bool / slot`   | `false`           | `true`, `false`, slot/content      | No          | Composes Pagination below the table. Pagination owns page navigation controls.                                                         |
 | `responsive`       | `string`        | `overflow`        | `overflow`                         | No          | Horizontal overflow is the default responsive treatment for dense data. Do not collapse columns into cards without a Pattern standard. |
 | `striped`          | `bool`          | `false`           | `true`, `false`                    | No          | Zebra striping is deferred unless explicitly approved and proven.                                                                      |
 | `class`            | `string / null` | `null`            | Layout passthrough if supported    | No          | Parent Patterns may pass layout classes. Do not use for local color, row-height, typography, border, or state overrides.               |
@@ -322,6 +325,8 @@ Allowed component classes are owned by the Data table API and must not be recrea
 .ui-data-table-title
 .ui-data-table-description
 .ui-data-table-toolbar
+.ui-data-table-toolbar-sm
+.ui-data-table-toolbar-lg
 .ui-data-table-overflow
 .ui-data-table-table
 .ui-data-table-head
@@ -333,6 +338,11 @@ Allowed component classes are owned by the Data table API and must not be recrea
 .ui-data-table-row-selected
 .ui-data-table-cell
 .ui-data-table-cell-actions
+.ui-data-table-size-xs
+.ui-data-table-size-sm
+.ui-data-table-size-md
+.ui-data-table-size-lg
+.ui-data-table-size-xl
 .ui-data-table-density-standard
 .ui-data-table-density-compact
 .ui-data-table-empty
@@ -350,8 +360,10 @@ Data table has app-approved table modes and modifiers. It does not have decorati
 | ---------------------- | ----------------------------- | ------------------------------------------ | ------------------------------------------ | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- |
 | Default table          | Base mode                     | Approved API                               | `x-ui.data-table`                          | Records need aligned columns for scanning or comparison.                                   | Content is narrative or does not need column alignment.                          |
 | Sortable table         | Behavior option               | Approved API                               | `sortable`, column `sortable=true`         | Users need to reorder by a meaningful column.                                              | Sorting is not implemented or would imply false precision.                       |
-| Standard density       | Density                       | Approved API                               | `density="standard"`                       | Default admin table rhythm.                                                                | Dense toolbars, side panels, or constrained data regions require compact.        |
-| Compact density        | Density                       | Approved API                               | `density="compact"`                        | Dense admin rows, table toolbars, or repeated management rows.                             | Row content wraps to two lines or needs more breathing room.                     |
+| Row size scale         | Size option                   | Approved API                               | `size="xs|sm|md|lg|xl"`                    | Row height must follow the approved 24/32/40/48/64px scale.                                | A feature wants a local row-height system.                                       |
+| Toolbar size pairing   | Toolbar option                | Approved API                               | `toolbarSize="sm|lg"` / toolbar `size`     | Toolbar controls must pair with compact or standard row rhythm.                            | Small toolbars are paired with large rows or large toolbars with compact rows.   |
+| Standard density       | Compatibility density         | Approved API                               | `density="standard"`                       | Existing callers need default admin table rhythm.                                          | New work can set `size="md"` directly.                                           |
+| Compact density        | Compatibility density         | Approved API                               | `density="compact"`                        | Existing callers need dense admin rows or repeated management rows.                         | New work can set `size="sm"` directly.                                           |
 | Table toolbar          | Composition option            | Approved API                               | `toolbar` slot / `x-ui.data-table-toolbar` | Global table search, filter, export, view, or settings actions exist.                      | The action belongs to an individual row.                                         |
 | Row actions            | Composition option            | Approved API                               | `rowActions` / row action slot             | Each row has a small set of row-specific actions.                                          | The action applies to selected rows or the whole table.                          |
 | Loading/skeleton table | State modifier                | Approved API                               | `loading` / `x-ui.data-table-skeleton`     | Table rows are loading or refreshing.                                                      | The entire page is unavailable; use a Pattern-owned page loading state.          |

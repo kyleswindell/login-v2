@@ -4,6 +4,8 @@
     'title' => null,
     'description' => null,
     'ariaLabel' => null,
+    'size' => null,
+    'toolbarSize' => null,
     'density' => 'standard',
     'sortable' => false,
     'sortBy' => null,
@@ -21,6 +23,12 @@
 
 @php
     $resolvedDensity = in_array($density, ['standard', 'compact'], true) ? $density : 'standard';
+    $resolvedSize = in_array($size, ['xs', 'sm', 'md', 'lg', 'xl'], true)
+        ? $size
+        : ($resolvedDensity === 'compact' ? 'sm' : 'md');
+    $resolvedToolbarSize = in_array($toolbarSize, ['sm', 'lg'], true)
+        ? $toolbarSize
+        : (in_array($resolvedSize, ['xs', 'sm'], true) ? 'sm' : 'lg');
     $isEmpty = is_null($empty) ? count($rows) === 0 : (bool) $empty;
     $tableId = $attributes->get('id') ?? 'ui-data-table-'.substr(md5(($title ?? $ariaLabel ?? 'table').count($rows)), 0, 8);
     $labelId = $title ? $tableId.'-title' : null;
@@ -31,8 +39,12 @@
         'ui-data-table-wrapper',
         'ui-data-table-density-standard' => $resolvedDensity === 'standard',
         'ui-data-table-density-compact' => $resolvedDensity === 'compact',
+        'ui-data-table-size-'.$resolvedSize,
+        'ui-data-table-toolbar-'.$resolvedToolbarSize,
     ]) }}
     data-ui-data-table
+    data-ui-data-table-size="{{ $resolvedSize }}"
+    data-ui-data-table-toolbar-size="{{ $resolvedToolbarSize }}"
 >
     @if($title || $description)
         <header class="ui-data-table-header">
@@ -78,7 +90,15 @@
                                 @if($columnSortable)
                                     <button type="button" @class(['ui-table-sort', 'is-active' => $isSorted]) data-ui-data-table-sort>
                                         <span>{{ $label }}</span>
-                                        <span class="ui-table-sort-icon" aria-hidden="true">{{ $isSorted ? ($sortDirection === 'desc' ? '↓' : '↑') : '↕' }}</span>
+                                        <span class="ui-table-sort-icon" aria-hidden="true">
+                                            @if($isSorted && $sortDirection === 'desc')
+                                                <x-heroicon-o-chevron-down class="h-4 w-4" />
+                                            @elseif($isSorted)
+                                                <x-heroicon-o-chevron-up class="h-4 w-4" />
+                                            @else
+                                                <x-heroicon-o-arrows-up-down class="h-4 w-4" />
+                                            @endif
+                                        </span>
                                     </button>
                                 @else
                                     {{ $label }}
@@ -95,12 +115,25 @@
                 @else
                     <tbody class="ui-data-table-body">
                         @foreach($rows as $row)
-                            <tr @class(['ui-data-table-row ui-table-row', 'ui-data-table-row-current' => (bool) data_get($row, 'current', false), 'ui-data-table-row-selected' => (bool) data_get($row, 'selected', false)]) data-ui-data-table-row>
+                            @php
+                                $rowLabel = data_get($row, 'name')
+                                    ?? data_get($row, 'workspace')
+                                    ?? data_get($row, 'cells.name')
+                                    ?? data_get($row, 'cells.workspace')
+                                    ?? data_get($row, 'id', 'row');
+                                $rowDisabled = (bool) data_get($row, 'disabled', false);
+                            @endphp
+                            <tr @class([
+                                'ui-data-table-row ui-table-row',
+                                'ui-data-table-row-current' => (bool) data_get($row, 'current', false),
+                                'ui-data-table-row-selected' => (bool) data_get($row, 'selected', false),
+                                'ui-data-table-row-disabled' => $rowDisabled,
+                            ]) data-ui-data-table-row>
                                 @foreach($columns as $column)
                                     @php
                                         $key = data_get($column, 'key');
                                         $align = data_get($column, 'align', 'start');
-                                        $value = data_get($row, $key, '');
+                                        $value = data_get($row, 'cells.'.$key, data_get($row, $key, ''));
                                     @endphp
                                     <td class="ui-data-table-cell ui-data-table-cell-align-{{ $align }}" data-ui-data-table-cell>
                                         {!! is_string($value) ? e($value) : $value !!}
@@ -111,7 +144,7 @@
                                         @isset($rowActionsSlot)
                                             {{ $rowActionsSlot }}
                                         @else
-                                            <x-ui.button semantic="ghost" size="sm">Open</x-ui.button>
+                                            <x-ui.button semantic="ghost" size="sm" :disabled="$rowDisabled" aria-label="Open {{ $rowLabel }}">Open</x-ui.button>
                                         @endisset
                                     </td>
                                 @endif
@@ -127,7 +160,21 @@
         <div class="ui-data-table-pagination">
             {{ $paginationSlot }}
         </div>
-    @elseif($pagination)
+    @elseif($pagination === true)
+        <div class="ui-data-table-pagination">
+            <x-ui.pagination
+                id="{{ $tableId }}-pagination"
+                label="{{ ($title ?? $ariaLabel ?? 'Data table').' pagination' }}"
+                variant="pagination"
+                :current-page="1"
+                :total-pages="4"
+                :total-items="96"
+                :page-size="25"
+                :page-size-options="[10, 25, 50]"
+                base-url="#"
+            />
+        </div>
+    @elseif(filled($pagination))
         <div class="ui-data-table-pagination">
             {{ $pagination }}
         </div>

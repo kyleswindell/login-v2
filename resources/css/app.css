@@ -2759,8 +2759,41 @@ Use targeted searches for the class family being changed before reading this fil
 
     .ui-data-table-wrapper {
         @apply overflow-hidden rounded-lg border;
+        --ui-data-table-row-height: 2.5rem;
+        --ui-data-table-cell-padding-y: 0.5rem;
+        --ui-data-table-cell-padding-x: 1rem;
         border-color: var(--ui-border-subtle-01);
         background-color: var(--ui-layer-01);
+    }
+
+    .ui-data-table-size-xs {
+        --ui-data-table-row-height: 1.5rem;
+        --ui-data-table-cell-padding-y: 0.125rem;
+        --ui-data-table-cell-padding-x: 0.75rem;
+    }
+
+    .ui-data-table-size-sm {
+        --ui-data-table-row-height: 2rem;
+        --ui-data-table-cell-padding-y: 0.25rem;
+        --ui-data-table-cell-padding-x: 0.75rem;
+    }
+
+    .ui-data-table-size-md {
+        --ui-data-table-row-height: 2.5rem;
+        --ui-data-table-cell-padding-y: 0.5rem;
+        --ui-data-table-cell-padding-x: 1rem;
+    }
+
+    .ui-data-table-size-lg {
+        --ui-data-table-row-height: 3rem;
+        --ui-data-table-cell-padding-y: 0.75rem;
+        --ui-data-table-cell-padding-x: 1rem;
+    }
+
+    .ui-data-table-size-xl {
+        --ui-data-table-row-height: 4rem;
+        --ui-data-table-cell-padding-y: 1rem;
+        --ui-data-table-cell-padding-x: 1rem;
     }
 
     .ui-data-table-header {
@@ -2784,6 +2817,15 @@ Use targeted searches for the class family being changed before reading this fil
         background-color: var(--ui-layer-02);
     }
 
+    .ui-data-table-toolbar-sm {
+        @apply gap-2 px-3 py-2;
+        min-block-size: 2rem;
+    }
+
+    .ui-data-table-toolbar-lg {
+        min-block-size: 3rem;
+    }
+
     .ui-data-table-overflow {
         @apply overflow-x-auto;
     }
@@ -2804,18 +2846,25 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-data-table-header-cell {
-        @apply border-b px-4 py-3 text-xs font-semibold uppercase tracking-[0.14em];
+        @apply border-b text-xs font-semibold uppercase tracking-[0.14em];
+        min-block-size: var(--ui-data-table-row-height);
+        padding-block: var(--ui-data-table-cell-padding-y);
+        padding-inline: var(--ui-data-table-cell-padding-x);
         border-color: var(--ui-border-subtle-01);
     }
 
     .ui-data-table-cell {
-        @apply border-b px-4 py-3 align-middle;
+        @apply border-b align-middle;
+        min-block-size: var(--ui-data-table-row-height);
+        padding-block: var(--ui-data-table-cell-padding-y);
+        padding-inline: var(--ui-data-table-cell-padding-x);
         border-color: var(--ui-border-subtle-01);
     }
 
     .ui-data-table-density-compact .ui-data-table-header-cell,
     .ui-data-table-density-compact .ui-data-table-cell {
-        @apply px-3 py-2;
+        padding-block: var(--ui-data-table-cell-padding-y);
+        padding-inline: var(--ui-data-table-cell-padding-x);
     }
 
     .ui-data-table-cell-align-end {
@@ -2841,6 +2890,14 @@ Use targeted searches for the class family being changed before reading this fil
 
     .ui-data-table-row-selected {
         background-color: var(--ui-layer-selected-01);
+    }
+
+    .ui-data-table-row-disabled {
+        color: var(--ui-text-disabled);
+    }
+
+    .ui-data-table-row-disabled:hover {
+        background-color: var(--ui-layer-01);
     }
 
     .ui-data-table-empty {

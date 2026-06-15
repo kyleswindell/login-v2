@@ -48,7 +48,7 @@ class UiReferenceComponentDepthCatalog
             'toggletip' => $this->overlay('toggletip', 'Toggletip', 'Toggletip provides focusable, dismissible contextual help.', 'toggletip', ['Contextual help', 'Dismissible rich help', 'Form assistance']),
             'popover' => $this->popoverComponent(),
 
-            'data-table' => $this->dataDisplay('data-table', 'Data table', 'Data table organizes comparable records into aligned columns.', 'table', ['Basic sortable table', 'Filterable table', 'Row actions', 'Loading', 'Empty', 'Responsive overflow']),
+            'data-table' => $this->dataTableComponent(),
             'pagination' => $this->paginationComponent(),
             'structured-list' => $this->structuredListComponent(),
             'list' => $this->listComponent(),
@@ -1314,6 +1314,97 @@ class UiReferenceComponentDepthCatalog
         ]), [
             'live_examples_view' => 'platform.ui-reference.components.live-examples.pagination',
             'live_examples_layout' => 'flexible-matrix',
+        ]);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function dataTableComponent(): array
+    {
+        return array_replace($this->correctedImplemented('data-table', 'Data table', 'Data table presents structured, comparable records in aligned columns.', [
+            $this->exampleFromSample('Basic sortable table', 'A semantic table with title, description, sortable headers, and stable row geometry.', ['type' => 'table', 'items' => [['title' => 'Workspace access']]], [
+                $this->sampleVariant('Sorted ascending', ['type' => 'table', 'items' => [['title' => 'Sorted ascending']]]),
+                $this->sampleVariant('Sorted descending', ['type' => 'table', 'items' => [['title' => 'Sorted descending', 'sort_direction' => 'desc']]]),
+                $this->sampleVariant('Unsorted sortable', ['type' => 'table', 'items' => [['title' => 'Unsorted sortable', 'sort_by' => null]]]),
+            ]),
+            $this->exampleFromSample('Compact management table', 'Dense management rows keep header and body row heights paired.', ['type' => 'table', 'items' => [['title' => 'Management rows', 'density' => 'compact']]], [
+                $this->sampleVariant('Extra small rows', ['type' => 'table', 'items' => [['title' => 'Extra small rows', 'size' => 'xs']]]),
+                $this->sampleVariant('Small rows', ['type' => 'table', 'items' => [['title' => 'Small rows', 'size' => 'sm']]]),
+                $this->sampleVariant('Large rows', ['type' => 'table', 'items' => [['title' => 'Large rows', 'size' => 'lg']]]),
+                $this->sampleVariant('Extra large rows', ['type' => 'table', 'items' => [['title' => 'Extra large rows', 'size' => 'xl']]]),
+            ]),
+            $this->exampleFromSample('Filterable toolbar table', 'Global search, filter, export, and create controls sit in the table toolbar and keep row actions separate.', ['type' => 'table', 'items' => [['title' => 'Filterable records']]], [
+                $this->sampleVariant('Collapsed search gate', ['type' => 'deferred', 'items' => [['label' => 'Collapsed search requires the Search component disclosure pattern.']]], 'Pattern-owned'),
+                $this->sampleVariant('Persistent search', ['type' => 'table', 'items' => [['title' => 'Persistent search']]]),
+            ]),
+            $this->exampleFromSample('Row actions table', 'Row-specific commands remain explicit controls and do not turn the whole row into an ambiguous target.', ['type' => 'table', 'items' => [['title' => 'Row actions']]], [
+                $this->sampleVariant('Inline actions', ['type' => 'table', 'items' => [['title' => 'Inline actions', 'row_actions' => true]]]),
+                $this->sampleVariant('Overflow menu handoff', ['type' => 'deferred', 'items' => [['label' => 'Use Menu buttons for row overflow actions when three or more actions exist.']]], 'Related API'),
+            ]),
+            $this->exampleFromSample('Dynamic states', 'Loading, empty, and error states preserve the table contract and explain what happened.', ['type' => 'table', 'items' => [['title' => 'Loading table']]], [
+                $this->sampleVariant('Loading table', ['type' => 'table', 'items' => [['title' => 'Loading table', 'loading' => true]]]),
+                $this->sampleVariant('Empty table', ['type' => 'table', 'items' => [['title' => 'Empty table', 'empty' => true]]]),
+                $this->sampleVariant('Error table', ['type' => 'table', 'items' => [['title' => 'Error table', 'error' => 'Records could not be loaded.']]]),
+            ]),
+            $this->exampleFromSample('Responsive overflow and pagination', 'Wide data remains a table inside an overflow-safe region, and Pagination owns page navigation below it.', ['type' => 'table', 'items' => [['title' => 'Responsive overflow table']]], [
+                $this->sampleVariant('Responsive overflow table', ['type' => 'table', 'items' => [['title' => 'Responsive overflow table']]]),
+                $this->sampleVariant('Pagination composition', ['type' => 'table', 'items' => [['title' => 'Pagination composition', 'pagination' => true]]]),
+            ]),
+            $this->exampleFromSample('Selection and expansion gates', 'Selection, batch actions, and expansion require a documented behavior contract before becoming live table controls.', ['type' => 'deferred', 'items' => [
+                ['label' => 'Checkbox selection requires parent checkbox indeterminate behavior and batch-action ownership.'],
+                ['label' => 'Radio selection requires single-row selection state and clear action ownership.'],
+                ['label' => 'Expandable rows require disclosure semantics, keyboard behavior, and expanded-content boundaries.'],
+            ]], [
+                $this->sampleVariant('Selection and batch-action gate', ['type' => 'deferred', 'items' => [['label' => 'Do not fake selected rows or batch bars before the selection contract is installed.']]], 'Gated'),
+                $this->sampleVariant('Expandable-row gate', ['type' => 'deferred', 'items' => [['label' => 'Use a detail page, side panel, Modal, or Accordion until expandable rows are approved.']]], 'Gated'),
+            ]),
+        ], ['table header', 'toolbar', 'column headers', 'body rows', 'row actions', 'pagination region', 'state region'], [
+            'Use when users need to scan, compare, sort, filter, act on, or paginate structured records.',
+            'Use in the main content area with enough horizontal space for stable columns.',
+            'Compose Pagination, Search, Button, Menu buttons, Checkbox, Radio button, and Loading through their owning APIs when used inside or near the table.',
+        ], [
+            'Do not use Data table for narrative content, simple lists, or small option sets.',
+            'Do not nest data tables inside other data tables or cramped containers.',
+            'Do not fake selection, batch actions, expansion, sorting, or pagination without the installed behavior contract.',
+        ], [
+            'Default',
+            'Hover row',
+            'Focus-visible',
+            'Sorted ascending',
+            'Sorted descending',
+            'Unsorted sortable column',
+            'Current row',
+            'Disabled row action',
+            'Loading',
+            'Empty',
+            'Error',
+            'Responsive overflow',
+            'Selection gated',
+            'Expansion gated',
+        ], [
+            'Row hover is always available for scan support, but hover alone must not imply row click behavior.',
+            'Sorting controls live in column headers and expose aria-sort for ascending, descending, or none.',
+            'Toolbar controls apply to the table globally; row actions apply to one row only.',
+            'Pagination sits below the table region and remains owned by the Pagination Component.',
+        ], [
+            'Use sentence case for table title, description, column headers, and actions.',
+            'Keep column headers short; if a header truncates, provide the full title through the Tooltip standard.',
+            'Use explicit row action labels such as Open workspace or Retry import when repeated actions appear in every row.',
+        ], [
+            'Every table needs a visible title, aria-label, or aria-labelledby relationship.',
+            'Use native table semantics with th scope=col for column headers.',
+            'Interactive controls inside rows stay in the tab order and keep visible focus.',
+            'Do not rely on row color alone for sorted, current, selected, disabled, error, or warning meaning.',
+        ]), [
+            'live_examples_view' => 'platform.ui-reference.components.live-examples.data-table',
+            'live_examples_layout' => 'flexible-matrix',
+            'queued_gaps' => [
+                'Checkbox row selection and batch action bar',
+                'Radio row selection',
+                'Expandable and batch-expandable rows',
+                'Editable cells, column resizing, sticky columns, and AI presence variants',
+            ],
         ]);
     }
 
@@ -2794,6 +2885,7 @@ class UiReferenceComponentDepthCatalog
                 'popover' => 'ui-popover, ui-popover-panel, ui-popover-close',
                 'slider' => 'ui-slider, ui-range-slider, ui-slider-input, ui-slider-value',
                 'tree-view' => 'ui-tree-view, ui-tree-view-node, ui-tree-view-node-control',
+                'data-table' => 'ui-data-table-wrapper, ui-data-table-toolbar, ui-data-table-table, ui-data-table-row, ui-data-table-size-xs/sm/md/lg/xl, data-ui-data-table',
                 default => 'ui-* component classes plus Foundation Element token variables',
             },
             'tokens' => 'Color, Spacing, Typography, Themes, Motion, Icons, and Grid where applicable',

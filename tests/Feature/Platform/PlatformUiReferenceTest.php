@@ -1087,7 +1087,7 @@ class PlatformUiReferenceTest extends TestCase
 
         $expectations = [
             'button' => ['Variant purpose matrix', 'Size scale', 'State matrix', 'Button groups', 'Icon usage', 'Content behavior', 'Token and style roles', 'data-component-live-layout="button-matrix"'],
-            'link' => ['Inline content link', 'External/help link', 'Navigation link', 'Icon trailing', 'Unavailable treatment', 'data-ui-reference-sample-type="links"'],
+            'link' => ['Inline content link', 'External/help link', 'Destination types', 'Icon trailing', 'Unavailable treatment', 'data-ui-reference-sample-type="links"'],
             'menu' => ['Contextual action menu', 'Row action menu', 'Danger item', 'Divided groups', 'Submenu actions', 'data-ui-reference-sample-type="menu"'],
             'menu-buttons' => ['Variant purpose matrix', 'Base options', 'Trigger style matrix', 'Size scale', 'Placement and width behavior', 'States and keyboard behavior', 'data-component-live-layout="menu-buttons-matrix"'],
             'tooltip' => ['Anatomy', 'Placement and alignment', 'Sizing and structure', 'Behavior and accessibility', 'Content', 'Related overlays', 'data-component-live-layout="tooltip-matrix"'],
@@ -1097,8 +1097,8 @@ class PlatformUiReferenceTest extends TestCase
             'radio-button' => ['Vertical radio group', 'Horizontal radio group', 'Selected and unselected', 'Group states', 'Overflow and alignment', 'Inline table radio', 'data-ui-reference-sample-type="selection"'],
             'notification' => ['Form validation error', 'Record saved', 'API failure', 'Background job completed', 'Maintenance notice', 'data-ui-reference-sample-type="alert"'],
             'modal' => ['Confirmation dialog', 'Form modal', 'Read-only detail', 'Destructive action', 'Wizard deferred', 'data-ui-component="modal-preview"'],
-            'data-table' => ['Basic sortable table', 'Filterable table', 'Row actions', 'Loading', 'Responsive overflow', 'ui-table-row'],
-            'pagination' => ['Pagination bar', 'Pagination nav', 'Items per page', 'Disabled prev/next', 'Overflow', 'ui-pagination-control'],
+            'data-table' => ['Basic sortable table', 'Compact management table', 'Filterable toolbar table', 'Row actions table', 'Dynamic states', 'Responsive overflow and pagination', 'Selection and batch-action gate', 'data-component-live-layout="data-table-matrix"'],
+            'pagination' => ['Pagination bar', 'Pagination nav', 'Items per page', 'Sizes and boundary states', 'Overflow', 'ui-pagination-control'],
             'tabs' => ['Line tabs', 'Contained tabs', 'Vertical tabs', 'Icon-leading', 'Icon-only', 'Overflow/scroll', 'Disabled', 'data-ui-reference-sample-type="tabs"'],
             'ui-shell' => ['Header baseline', 'Left panel', 'Account menu', 'Notification/action area', 'Mobile/collapsed behavior', 'Right panel deferred', 'data-ui-reference-sample-type="shell"'],
             'code-snippet' => ['Anatomy and variants', 'Inline', 'Single line with horizontal overflow', 'Multi-line with show more', 'Copy controls', 'Highlighted syntax tokens', 'data-component-live-layout="code-snippet-matrix"'],
@@ -1115,7 +1115,7 @@ class PlatformUiReferenceTest extends TestCase
                 ->assertSee('ui-code-snippet', false)
                 ->assertDontSee('Family-depth implementation pending');
 
-            if (in_array($slug, ['button', 'menu-buttons', 'tooltip', 'checkbox', 'code-snippet'], true)) {
+            if (in_array($slug, ['button', 'link', 'menu-buttons', 'tooltip', 'checkbox', 'code-snippet', 'data-table', 'pagination'], true)) {
                 $response
                     ->assertSee('data-ui-reference-live-examples-layout="flexible-matrix"', false)
                     ->assertDontSee('Live Examples Card');
@@ -2564,6 +2564,79 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('Overflow ellipses are buttons that open hidden-page menus', $standard);
     }
 
+    public function test_data_table_component_page_renders_installed_api_examples_and_gates(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/components/data-table')
+            ->assertOk()
+            ->assertSee('x-ui.data-table')
+            ->assertSee('data-component-live-layout="data-table-matrix"', false)
+            ->assertSee('data-ui-reference-sample-type="data-table"', false)
+            ->assertSee('Basic sortable table')
+            ->assertSee('Compact management table')
+            ->assertSee('Filterable toolbar table')
+            ->assertSee('Row actions table')
+            ->assertSee('Dynamic states')
+            ->assertSee('Loading table')
+            ->assertSee('Empty table')
+            ->assertSee('Error table')
+            ->assertSee('Responsive overflow and pagination')
+            ->assertSee('Pagination composition')
+            ->assertSee('Selection and batch-action gate')
+            ->assertSee('Expandable-row gate')
+            ->assertSee('Batch expansion gate')
+            ->assertSee('Extra small rows')
+            ->assertSee('Small toolbar with compact rows')
+            ->assertSee('data-ui-data-table', false)
+            ->assertSee('data-ui-data-table-size="xs"', false)
+            ->assertSee('data-ui-data-table-size="sm"', false)
+            ->assertSee('data-ui-data-table-size="md"', false)
+            ->assertSee('data-ui-data-table-size="lg"', false)
+            ->assertSee('data-ui-data-table-size="xl"', false)
+            ->assertSee('data-ui-data-table-toolbar-size="sm"', false)
+            ->assertSee('data-ui-data-table-toolbar-size="lg"', false)
+            ->assertSee('data-ui-data-table-sort', false)
+            ->assertSee('aria-sort="ascending"', false)
+            ->assertSee('aria-sort="descending"', false)
+            ->assertSee('aria-sort="none"', false)
+            ->assertSee('data-ui-component="pagination"', false)
+            ->assertDontSee('Component-specific API pending correction')
+            ->assertDontSee('Family-depth implementation pending')
+            ->assertDontSee('cds--data-table')
+            ->assertDontSee('bx--data-table');
+
+        $componentView = file_get_contents(resource_path('views/components/ui/data-table.blade.php'));
+        $toolbarView = file_get_contents(resource_path('views/components/ui/data-table-toolbar.blade.php'));
+        $liveExamples = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/data-table.blade.php'));
+        $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
+        $overviewCatalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentCatalog.php'));
+        $standard = file_get_contents(base_path('docs/02-standards/ui/components/data-table.md'));
+        $css = file_get_contents(resource_path('css/app.css'));
+
+        $this->assertStringContainsString("'size' => null", $componentView);
+        $this->assertStringContainsString("'toolbarSize' => null", $componentView);
+        $this->assertStringContainsString("in_array(\$size, ['xs', 'sm', 'md', 'lg', 'xl'], true)", $componentView);
+        $this->assertStringContainsString("data_get(\$row, 'cells.'.\$key", $componentView);
+        $this->assertStringContainsString('x-heroicon-o-arrows-up-down', $componentView);
+        $this->assertStringContainsString('<x-ui.pagination', $componentView);
+        $this->assertStringContainsString('data-ui-data-table-toolbar-size="{{ $resolvedSize }}"', $toolbarView);
+        $this->assertStringContainsString('data-component-live-layout="data-table-matrix"', $liveExamples);
+        $this->assertStringContainsString('Selection and batch-action gate', $liveExamples);
+        $this->assertStringContainsString('Expandable-row gate', $liveExamples);
+        $this->assertStringContainsString('<x-ui.search', $liveExamples);
+        $this->assertStringContainsString('<x-ui.pagination', $liveExamples);
+        $this->assertStringContainsString('data-table\' => $this->dataTableComponent()', $catalog);
+        $this->assertStringContainsString('ui-data-table-wrapper, ui-data-table-toolbar', $catalog);
+        $this->assertStringContainsString('Implemented Pending Review', $overviewCatalog);
+        $this->assertStringContainsString('status: implemented-pending-review', $standard);
+        $this->assertStringContainsString('`size`', $standard);
+        $this->assertStringContainsString('`toolbarSize`', $standard);
+        $this->assertStringContainsString('Checkbox row selection     | Gated', $standard);
+        $this->assertStringContainsString('.ui-data-table-size-xs', $css);
+        $this->assertStringContainsString('.ui-data-table-toolbar-sm', $css);
+    }
+
     public function test_popover_component_page_renders_interactive_tip_and_trigger_examples(): void
     {
         $this->actingAsPlatformSuperAdmin();
@@ -2907,8 +2980,9 @@ class PlatformUiReferenceTest extends TestCase
                 'x-ui.data-table',
                 'data-ui-data-table',
                 'Basic sortable table',
-                'Filterable table',
-                'Responsive overflow',
+                'Filterable toolbar table',
+                'Responsive overflow and pagination',
+                'Selection and batch-action gate',
             ],
             'loading' => [
                 'Native status markup with ui-loading / ui-spinner / ui-skeleton classes',

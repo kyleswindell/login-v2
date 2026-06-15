@@ -49,7 +49,7 @@ class UiReferenceComponentDepthCatalog
             'popover' => $this->popoverComponent(),
 
             'data-table' => $this->dataDisplay('data-table', 'Data table', 'Data table organizes comparable records into aligned columns.', 'table', ['Basic sortable table', 'Filterable table', 'Row actions', 'Loading', 'Empty', 'Responsive overflow']),
-            'pagination' => $this->dataDisplay('pagination', 'Pagination', 'Pagination moves through segmented record sets.', 'pagination', ['Full pagination', 'Compact pagination', 'Page-size selector', 'Disabled prev/next', 'Overflow']),
+            'pagination' => $this->paginationComponent(),
             'structured-list' => $this->structuredListComponent(),
             'list' => $this->listComponent(),
             'code-snippet' => $this->codeSnippetComponent(),
@@ -1209,6 +1209,110 @@ class UiReferenceComponentDepthCatalog
             'Loading state identifies the related results region when asynchronous results update.',
         ]), [
             'live_examples_view' => 'platform.ui-reference.components.live-examples.search',
+            'live_examples_layout' => 'flexible-matrix',
+        ]);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function paginationComponent(): array
+    {
+        return array_replace($this->correctedImplemented('pagination', 'Pagination', 'Pagination divides large record sets into pages and gives users control over how much content they view.', [
+            $this->exampleFromSample('Pagination bar', 'A table-adjacent pagination bar renders items-per-page, item range, page selector, previous, and next controls.', ['type' => 'pagination', 'items' => [[
+                'variant' => 'pagination',
+                'current_page' => 3,
+                'total_pages' => 12,
+                'total_items' => 287,
+                'page_size' => 25,
+                'page_size_options' => [10, 25, 50, 100],
+            ]]], [
+                $this->sampleVariant('Items per page', ['type' => 'pagination', 'items' => [['variant' => 'pagination', 'page_size_options' => [10, 25, 50, 100]]]]),
+                $this->sampleVariant('Current range', ['type' => 'pagination', 'items' => [['variant' => 'pagination', 'current_page' => 3, 'total_items' => 287]]]),
+                $this->sampleVariant('Page selector', ['type' => 'pagination', 'items' => [['variant' => 'pagination', 'show_page_selector' => true]]]),
+            ]),
+            $this->exampleFromSample('Pagination nav', 'Page navigation renders previous, next, current page, page buttons, and an overflow menu for hidden pages.', ['type' => 'pagination', 'items' => [[
+                'variant' => 'pagination-nav',
+                'current_page' => 8,
+                'total_pages' => 24,
+                'total_items' => 590,
+                'alignment' => 'right',
+            ]]], [
+                $this->sampleVariant('Right aligned', ['type' => 'pagination', 'items' => [['variant' => 'pagination-nav', 'alignment' => 'right']]]),
+                $this->sampleVariant('Left aligned', ['type' => 'pagination', 'items' => [['variant' => 'pagination-nav', 'alignment' => 'left']]]),
+                $this->sampleVariant('Overflow menu', ['type' => 'pagination', 'items' => [['variant' => 'pagination-nav', 'current_page' => 8, 'total_pages' => 24]]]),
+            ]),
+            $this->exampleFromSample('Sizes and boundary states', 'Small, medium, and large controls preserve disabled previous and next boundary states.', ['type' => 'pagination', 'items' => [[
+                'variant' => 'pagination-nav',
+                'size' => 'sm',
+                'current_page' => 1,
+                'total_pages' => 5,
+            ]]], [
+                $this->sampleVariant('Small', ['type' => 'pagination', 'items' => [['variant' => 'pagination-nav', 'size' => 'sm']]]),
+                $this->sampleVariant('Medium', ['type' => 'pagination', 'items' => [['variant' => 'pagination-nav', 'size' => 'md']]]),
+                $this->sampleVariant('Large', ['type' => 'pagination', 'items' => [['variant' => 'pagination-nav', 'size' => 'lg']]]),
+                $this->sampleVariant('Disabled next', ['type' => 'pagination', 'items' => [['variant' => 'pagination-nav', 'current_page' => 5, 'total_pages' => 5]]]),
+            ]),
+            $this->exampleFromSample('Looping and responsive behavior', 'Looping keeps boundary controls active where continuous cycling makes sense; responsive bars preserve range and previous/next controls.', ['type' => 'pagination', 'items' => [[
+                'variant' => 'pagination-nav',
+                'current_page' => 5,
+                'total_pages' => 5,
+                'loop' => true,
+            ]]], [
+                $this->sampleVariant('Looping nav', ['type' => 'pagination', 'items' => [['variant' => 'pagination-nav', 'loop' => true]]]),
+                $this->sampleVariant('Responsive bar', ['type' => 'pagination', 'items' => [['variant' => 'pagination', 'size' => 'sm']]]),
+            ]),
+            $this->exampleFromSample('Pagination versus related APIs', 'Pagination owns page navigation controls; tables, search results, and lists own the content being paginated.', ['type' => 'deferred', 'items' => [
+                ['label' => 'Use Data table for table structure, sorting, filtering, rows, and toolbar behavior.'],
+                ['label' => 'Use Progress indicator for linear step flows.'],
+                ['label' => 'Do not render Pagination for small visible data sets.'],
+            ]], [
+                $this->sampleVariant('Data table boundary', ['type' => 'deferred', 'items' => [['label' => 'Data table owns the table; Pagination owns page navigation.']]], 'Pattern-owned'),
+                $this->sampleVariant('Linear flow boundary', ['type' => 'deferred', 'items' => [['label' => 'Progress indicator owns sequential task progress.']]], 'Use another API'),
+            ]),
+        ], [
+            'Pagination bar container',
+            'Items-per-page select',
+            'Visible item range',
+            'Current page selector',
+            'Previous and next icon controls',
+            'Pagination nav page buttons',
+            'Overflow menu for hidden pages',
+        ], [
+            'A table, page, section, or list has more content than should be displayed at once.',
+            'Users need control over items per page or direct page navigation.',
+            'Pagination improves performance, scanability, or content comprehension.',
+        ], [
+            'Do not use Pagination for linear form or wizard progression.',
+            'Do not paginate small data sets that fit in one clear view.',
+            'Do not use Pagination as a visual footer or divider.',
+        ], [
+            'Default',
+            'Hover',
+            'Focus-visible',
+            'Current page',
+            'Disabled previous',
+            'Disabled next',
+            'Overflow open',
+            'Looping boundary',
+            'Responsive collapse',
+        ], [
+            'Pagination bar uses native select controls for items per page and current page.',
+            'Pagination nav uses page links, previous/next icon links, and overflow menus for hidden pages.',
+            'Looping is opt-in and keeps previous/next enabled at boundaries.',
+            'Disabled controls communicate unavailable previous/next movement.',
+        ], [
+            'Use concise labels such as Items per page, Page, Previous page, and Next page.',
+            'Use range copy like 51-75 of 287 items.',
+            'Keep page-size options short and consistent across comparable views.',
+        ], [
+            'Render a named navigation landmark.',
+            'Expose aria-current on the active page.',
+            'Previous, next, page, and overflow controls must have accessible names.',
+            'Disabled controls must be programmatically disabled or removed from tab order.',
+            'Focus-visible treatment must be visible on every active control.',
+        ]), [
+            'live_examples_view' => 'platform.ui-reference.components.live-examples.pagination',
             'live_examples_layout' => 'flexible-matrix',
         ]);
     }
@@ -2665,7 +2769,7 @@ class UiReferenceComponentDepthCatalog
                 'text-input' => 'ui-field, ui-field-label, ui-input, ui-text-input, ui-field-helper, ui-field-error, ui-field-warning',
                 'textarea' => 'ui-field, ui-field-label, ui-textarea, ui-field-helper, ui-field-error, ui-field-warning',
                 'link' => 'ui-link, ui-link-inline, ui-link-standalone, ui-link-sm, ui-link-md, ui-link-lg, ui-link-with-icon, ui-link-external, ui-link-unavailable',
-                'pagination' => 'ui-pagination-control, ui-select, data-ui-pagination-page-size',
+                'pagination' => 'ui-pagination, ui-pagination-bar, ui-pagination-nav-shell, ui-pagination-control, ui-pagination-page, ui-pagination-overflow, data-ui-pagination-page-size',
                 'search' => 'ui-search, ui-search-field, ui-search-input, ui-search-icon, ui-search-clear, ui-search-loading, data-ui-search',
                 'dropdown' => 'ui-dropdown, ui-dropdown-trigger, ui-dropdown-menu, ui-dropdown-option, ui-dropdown-sm, ui-dropdown-md, ui-dropdown-lg',
                 'file-uploader' => 'ui-field, ui-field-label, ui-input, data-ui-file-uploader',
@@ -2706,7 +2810,7 @@ class UiReferenceComponentDepthCatalog
             'text-input' => '<input name="workspace_name" class="ui-input ui-text-input" type="text" value="Workspace alpha">',
             'textarea' => '<textarea name="notes" class="ui-textarea">Workspace notes</textarea>',
             'link' => '<x-ui.link href="/platform/docs" variant="standalone" size="md" icon="heroicon-o-arrow-right">Open docs</x-ui.link>',
-            'pagination' => '<x-ui.pagination :current-page="2" :last-page="5" :page-size-options="[10, 25]" />',
+            'pagination' => '<x-ui.pagination variant="pagination" :current-page="2" :total-pages="5" :page-size-options="[10, 25]" />',
             'search' => '<x-ui.search name="query" label="Search records" value="tenant" />',
             'dropdown' => '<x-ui.dropdown name="role" label="Role" :options="$options" value="owner" />',
             'file-uploader' => '<x-ui.file-uploader name="evidence" label="Upload evidence" accept="application/pdf" />',

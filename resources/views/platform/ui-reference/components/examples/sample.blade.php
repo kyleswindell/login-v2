@@ -660,12 +660,22 @@
 
         @case('pagination')
             <x-ui.pagination
+                :id="$items[0]['id'] ?? null"
+                :label="$items[0]['label'] ?? 'Example pagination'"
                 :current-page="$items[0]['current_page'] ?? 2"
-                :last-page="$items[0]['last_page'] ?? 5"
-                :total="$items[0]['total'] ?? 120"
-                :per-page="$items[0]['per_page'] ?? 25"
-                :variant="$items[0]['variant'] ?? 'full'"
+                :total-pages="$items[0]['total_pages'] ?? ($items[0]['last_page'] ?? 5)"
+                :total-items="$items[0]['total_items'] ?? ($items[0]['total'] ?? 120)"
+                :page-size="$items[0]['page_size'] ?? ($items[0]['per_page'] ?? 25)"
+                :variant="$items[0]['variant'] ?? 'pagination'"
+                :size="$items[0]['size'] ?? 'md'"
+                :alignment="$items[0]['alignment'] ?? 'right'"
                 :page-size-options="$items[0]['page_size_options'] ?? [10, 25, 50]"
+                :show-items-per-page="$items[0]['show_items_per_page'] ?? true"
+                :show-item-range="$items[0]['show_item_range'] ?? true"
+                :show-page-selector="$items[0]['show_page_selector'] ?? true"
+                :loop="$items[0]['loop'] ?? false"
+                :disabled="$items[0]['disabled'] ?? false"
+                base-url="/platform/ui-reference/components/pagination"
             />
         @break
 

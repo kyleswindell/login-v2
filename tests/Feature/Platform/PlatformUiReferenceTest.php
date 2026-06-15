@@ -2135,6 +2135,72 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('`disabled`', $standard);
     }
 
+    public function test_dropdown_component_page_renders_installed_api_examples(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/components/dropdown')
+            ->assertOk()
+            ->assertSee('data-component-live-layout="dropdown-matrix"', false)
+            ->assertSee('data-ui-reference-sample-type="field"', false)
+            ->assertSee('x-ui.dropdown')
+            ->assertSee('Basic known-option dropdown')
+            ->assertSee('Long known-option handoff')
+            ->assertSee('Validation selection')
+            ->assertSee('Disabled and read-only dropdown')
+            ->assertSee('Size comparison')
+            ->assertSee('Dropdown vs related APIs')
+            ->assertSee('Deferred and gated capabilities')
+            ->assertSee('Select')
+            ->assertSee('Menu buttons / Menu')
+            ->assertSee('Multiselect')
+            ->assertSee('Combo box')
+            ->assertSee('data-ui-component="dropdown"', false)
+            ->assertSee('data-ui-dropdown-trigger', false)
+            ->assertSee('data-ui-dropdown-menu', false)
+            ->assertSee('data-ui-dropdown-option', false)
+            ->assertSee('data-ui-dropdown-size="sm"', false)
+            ->assertSee('data-ui-dropdown-size="md"', false)
+            ->assertSee('data-ui-dropdown-size="lg"', false)
+            ->assertSee('aria-haspopup="listbox"', false)
+            ->assertSee('role="listbox"', false)
+            ->assertSee('role="option"', false)
+            ->assertSee('aria-invalid="true"', false)
+            ->assertSee('aria-readonly="true"', false)
+            ->assertSee('Choose a workspace type before saving.')
+            ->assertSee('Pending roles may delay access.')
+            ->assertDontSee('short action dropdown')
+            ->assertDontSee('Component-specific API pending correction')
+            ->assertDontSee('Family-depth implementation pending');
+
+        $dropdownView = file_get_contents(resource_path('views/components/ui/dropdown.blade.php'));
+        $dropdownScript = file_get_contents(resource_path('js/ui-controls/dropdowns.js'));
+        $uiControls = file_get_contents(resource_path('js/ui-controls.js'));
+        $appJs = file_get_contents(resource_path('js/app.js'));
+        $interactionFocus = file_get_contents(resource_path('js/ui-controls/interaction-focus.js'));
+        $dropdownCss = file_get_contents(resource_path('css/app.css'));
+        $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
+        $standard = file_get_contents(base_path('docs/02-standards/ui/components/dropdown.md'));
+
+        $this->assertStringContainsString("'size' => 'md'", $dropdownView);
+        $this->assertStringContainsString("'readonly' => false", $dropdownView);
+        $this->assertStringContainsString("'menuMaxHeight' => null", $dropdownView);
+        $this->assertStringContainsString('ui-dropdown-trigger', $dropdownView);
+        $this->assertStringContainsString('heroicon-o-chevron-down', $dropdownView);
+        $this->assertStringContainsString('data-ui-dropdown-option-value', $dropdownView);
+        $this->assertStringContainsString('export function initDropdowns(root = document)', $dropdownScript);
+        $this->assertStringContainsString('selectDropdownOption', $dropdownScript);
+        $this->assertStringContainsString('focusRelativeOption', $dropdownScript);
+        $this->assertStringContainsString('export { initDropdowns }', $uiControls);
+        $this->assertStringContainsString('initDropdowns', $appJs);
+        $this->assertStringContainsString('.ui-dropdown-trigger:not(:disabled)', $interactionFocus);
+        $this->assertStringContainsString('.ui-dropdown-trigger', $dropdownCss);
+        $this->assertStringContainsString('.ui-dropdown-option[aria-selected=\'true\']', $dropdownCss);
+        $this->assertStringContainsString('box-shadow: 0 2px 6px 0 rgb(0 0 0 / 20%)', $dropdownCss);
+        $this->assertStringContainsString('\'dropdown\' => $this->dropdownComponent()', $catalog);
+        $this->assertStringContainsString('Carbon\'s Dropdown, Multiselect, Filterable multiselect, and Combo box', $standard);
+    }
+
     public function test_popover_component_page_renders_interactive_tip_and_trigger_examples(): void
     {
         $this->actingAsPlatformSuperAdmin();

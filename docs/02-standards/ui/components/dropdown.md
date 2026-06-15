@@ -86,6 +86,7 @@ The installed Login App standard is:
 
 - Use Dropdown for one value selected from a known option list.
 - Use the app-owned `x-ui.dropdown` API for custom single-selection dropdowns.
+- Treat Carbon's Dropdown, Multiselect, Filterable multiselect, and Combo box as family-level reference coverage; in Login App, base Dropdown owns only custom single-select behavior unless this standard explicitly expands.
 - Use a visible label, optional helper text, visible validation copy, and token-backed field states.
 - Use Dropdown only when native Select is not the better fit for the workflow.
 - Use Menu buttons or Menu for action disclosure; Dropdown options are values, not commands.
@@ -102,10 +103,10 @@ This component owns the single-select field, trigger, selected value display, op
 | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Blade           | `x-ui.dropdown`                                                                                                                                                                                                                                                  |
 | JavaScript      | `initDropdowns` exported from the app UI controls entry when custom listbox behavior is installed. Do not add feature-local dropdown scripts.                                                                                                                    |
-| Data attributes | `data-ui-dropdown`, `data-ui-dropdown-trigger`, `data-ui-dropdown-menu`, `data-ui-dropdown-option`, `data-ui-dropdown-value`, `data-ui-dropdown-hidden-input`.                                                                                                   |
+| Data attributes | `data-ui-dropdown`, `data-ui-dropdown-trigger`, `data-ui-dropdown-menu`, `data-ui-dropdown-option`, `data-ui-dropdown-value`, `data-ui-dropdown-option-value`, `data-ui-dropdown-option-label`, `data-ui-dropdown-hidden-input`.                                  |
 | Props/options   | `name`, `id`, `label`, `options`, `value`, `placeholder`, `helper`, `error`, `warning`, `size`, `variant`, `required`, `disabled`, `readonly`, `menuMaxHeight`, `placement`, `attributes`.                                                                       |
 | CSS namespace   | Use the app-owned `ui-*` namespace documented by the component implementation. Recommended namespaces are `ui-dropdown`, `ui-dropdown-trigger`, `ui-dropdown-menu`, `ui-dropdown-option`, `ui-field`, `ui-field-label`, `ui-field-helper`, and `ui-field-error`. |
-| Source files    | Expected owners are `resources/views/components/ui/dropdown.blade.php`, `resources/js/ui-controls/dropdowns.js`, and `resources/css/app.css` once the correction is complete.                                                                                    |
+| Source files    | `resources/views/components/ui/dropdown.blade.php`, `resources/js/ui-controls/dropdowns.js`, `resources/css/app.css`, and UI Reference route `/platform/ui-reference/components/dropdown`.                                                                      |
 
 Example call:
 
@@ -187,7 +188,9 @@ Do not include decorative images, arbitrary icons, rich HTML, nested controls, a
 | `data-ui-dropdown-trigger`      | Trigger button | Opens/closes the option menu and owns `aria-expanded`.                                 |
 | `data-ui-dropdown-menu`         | Menu/listbox   | Contains selectable options.                                                           |
 | `data-ui-dropdown-option`       | Option         | Identifies one selectable option.                                                      |
-| `data-ui-dropdown-value`        | Option         | Stores the submitted option value.                                                     |
+| `data-ui-dropdown-value`        | Option/value   | Stores the visible selected text region or submitted option value, depending on owner. |
+| `data-ui-dropdown-option-value` | Option         | Stores the submitted option value for JavaScript selection.                            |
+| `data-ui-dropdown-option-label` | Option         | Stores the visible option label for JavaScript selection.                              |
 | `data-ui-dropdown-hidden-input` | Hidden input   | Stores the selected value for form submission when the trigger is not a native select. |
 
 ### 4.4. CSS namespace

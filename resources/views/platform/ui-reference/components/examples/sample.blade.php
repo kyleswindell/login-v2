@@ -236,11 +236,18 @@
                             :label="$item['label']"
                             :options="$fieldOptions"
                             :value="$item['value_key'] ?? 'enabled'"
-                            helper="Helper text stays visible and concise."
+                            :placeholder="$item['placeholder'] ?? 'Choose an option'"
+                            :helper="$item['helper'] ?? 'Helper text stays visible and concise.'"
                             :error="$state === 'error' ? 'Resolve this dropdown before saving.' : null"
                             :warning="$state === 'warning' ? 'Review this selection before saving.' : null"
+                            :size="$item['size'] ?? 'md'"
+                            :variant="$item['variant'] ?? 'default'"
+                            :required="$item['required'] ?? false"
                             :disabled="$state === 'disabled'"
+                            :readonly="$state === 'readonly'"
                             :open="$item['open'] ?? $state === 'focus'"
+                            :menu-max-height="$item['menu_max_height'] ?? null"
+                            :placement="$item['placement'] ?? 'auto'"
                         />
                     @elseif (($item['type'] ?? 'text') === 'file')
                         <x-ui.file-uploader

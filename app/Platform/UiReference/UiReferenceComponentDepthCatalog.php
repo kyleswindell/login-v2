@@ -18,7 +18,7 @@ class UiReferenceComponentDepthCatalog
             'text-input' => $this->inputs('text-input', 'Text input', 'Single-line free-entry text fields capture short user-provided values.', 'text', ['Login form field', 'Settings form field', 'Validation field', 'Read-only field', 'Disabled field']),
             'textarea' => $this->inputs('textarea', 'Textarea', 'Textarea captures longer user-entered copy with visible multiline affordance.', 'textarea', ['Settings form field', 'Validation field', 'Read-only field', 'Disabled field']),
             'select' => $this->inputs('select', 'Select', 'Native select chooses one option from a short known list.', 'select', ['Short native selection', 'Validation selection', 'Disabled/read-only']),
-            'dropdown' => $this->inputs('dropdown', 'Dropdown', 'Dropdown chooses from known options when a native select or menu boundary is more appropriate than free text.', 'dropdown', ['Long known-option handoff', 'Validation selection', 'Disabled/read-only']),
+            'dropdown' => $this->dropdownComponent(),
             'number-input' => $this->inputs('number-input', 'Number input', 'Number input captures bounded numeric values with optional step controls.', 'number', ['Min/max/step', 'Increment/decrement', 'Error/warning icon', 'Disabled/read-only', 'Compact/fluid']),
             'date-picker' => $this->datePickerComponent(),
             'file-uploader' => $this->inputs('file-uploader', 'File uploader', 'File uploader collects one or more user-selected files through an accessible input.', 'file', ['Button upload', 'File validation', 'Disabled', 'Drag-drop deferred']),
@@ -235,6 +235,92 @@ class UiReferenceComponentDepthCatalog
             'Disabled or unavailable links are not focusable or actionable.',
         ]), [
             'live_examples_view' => 'platform.ui-reference.components.live-examples.link',
+            'live_examples_layout' => 'flexible-matrix',
+        ]);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function dropdownComponent(): array
+    {
+        return array_replace($this->correctedImplemented('dropdown', 'Dropdown', 'Dropdown chooses one value from a known option list through a custom listbox when native Select or an action Menu is not the right boundary.', [
+            $this->exampleFromSample('Basic known-option dropdown', 'Single-select Dropdown shows a visible label, placeholder, selected value, and open or closed menu state.', ['type' => 'field', 'items' => [
+                ['label' => 'Status', 'type' => 'dropdown', 'name' => 'status', 'value_key' => 'active', 'open' => true],
+            ]], [
+                $this->sampleVariant('Closed', ['type' => 'field', 'items' => [['label' => 'Status', 'type' => 'dropdown', 'name' => 'status_closed']]]),
+                $this->sampleVariant('Open', ['type' => 'field', 'items' => [['label' => 'Status', 'type' => 'dropdown', 'name' => 'status_open', 'value_key' => 'active', 'open' => true]]]),
+                $this->sampleVariant('Selected', ['type' => 'field', 'items' => [['label' => 'Status', 'type' => 'dropdown', 'name' => 'status_selected', 'value_key' => 'enabled']]]),
+            ]),
+            $this->exampleFromSample('Long known-option handoff', 'Long option lists use capped menu height, scrolling affordance, one-line option labels, and title text for overflow labels.', ['type' => 'field', 'items' => [
+                ['label' => 'Reference area', 'type' => 'dropdown', 'name' => 'reference_area', 'value_key' => 'enabled', 'menu_max_height' => '11rem', 'open' => true],
+            ]], [
+                $this->sampleVariant('Capped menu', ['type' => 'field', 'items' => [['label' => 'Capped menu', 'type' => 'dropdown', 'name' => 'capped_menu', 'menu_max_height' => '11rem', 'open' => true]]]),
+                $this->sampleVariant('Auto placement', ['type' => 'field', 'items' => [['label' => 'Auto placement', 'type' => 'dropdown', 'name' => 'auto_placement', 'placement' => 'auto']]]),
+            ]),
+            $this->exampleFromSample('Validation selection', 'Validation examples prove helper, required, error, and warning states without relying on color alone.', ['type' => 'field', 'items' => [
+                ['label' => 'Workspace type', 'type' => 'dropdown', 'name' => 'workspace_type', 'state' => 'error', 'required' => true],
+                ['label' => 'Owner role', 'type' => 'dropdown', 'name' => 'owner_role', 'state' => 'warning', 'value_key' => 'pending'],
+            ]], [
+                $this->sampleVariant('Error', ['type' => 'field', 'items' => [['label' => 'Error dropdown', 'type' => 'dropdown', 'name' => 'error_dropdown', 'state' => 'error']]]),
+                $this->sampleVariant('Warning', ['type' => 'field', 'items' => [['label' => 'Warning dropdown', 'type' => 'dropdown', 'name' => 'warning_dropdown', 'state' => 'warning']]]),
+            ]),
+            $this->exampleFromSample('Disabled and read-only dropdown', 'Disabled cannot open; read-only keeps a fixed value visible and suppresses menu opening.', ['type' => 'field', 'items' => [
+                ['label' => 'Billing plan', 'type' => 'dropdown', 'name' => 'billing_plan', 'state' => 'disabled', 'value_key' => 'enabled'],
+                ['label' => 'System role', 'type' => 'dropdown', 'name' => 'system_role', 'state' => 'readonly', 'value_key' => 'paused'],
+            ]], [
+                $this->sampleVariant('Disabled', ['type' => 'field', 'items' => [['label' => 'Disabled dropdown', 'type' => 'dropdown', 'name' => 'disabled_dropdown', 'state' => 'disabled']]]),
+                $this->sampleVariant('Read-only', ['type' => 'field', 'items' => [['label' => 'Read-only dropdown', 'type' => 'dropdown', 'name' => 'readonly_dropdown', 'state' => 'readonly', 'value_key' => 'enabled']]]),
+            ]),
+            $this->exampleFromSample('Size comparison', 'Small, medium, and large sizes keep trigger and option row heights aligned.', ['type' => 'field', 'items' => [
+                ['label' => 'Small', 'type' => 'dropdown', 'name' => 'dropdown_sm', 'size' => 'sm', 'value_key' => 'enabled'],
+                ['label' => 'Medium', 'type' => 'dropdown', 'name' => 'dropdown_md', 'size' => 'md', 'value_key' => 'pending'],
+                ['label' => 'Large', 'type' => 'dropdown', 'name' => 'dropdown_lg', 'size' => 'lg', 'value_key' => 'disabled'],
+            ]], [
+                $this->sampleVariant('Small', ['type' => 'field', 'items' => [['label' => 'Small dropdown', 'type' => 'dropdown', 'name' => 'small_dropdown', 'size' => 'sm']]]),
+                $this->sampleVariant('Medium', ['type' => 'field', 'items' => [['label' => 'Medium dropdown', 'type' => 'dropdown', 'name' => 'medium_dropdown', 'size' => 'md']]]),
+                $this->sampleVariant('Large', ['type' => 'field', 'items' => [['label' => 'Large dropdown', 'type' => 'dropdown', 'name' => 'large_dropdown', 'size' => 'lg']]]),
+            ]),
+        ], ['visible label', 'button-like field trigger', 'selected value or placeholder', 'chevron icon', 'listbox menu', 'option rows', 'hidden submitted value', 'helper or validation text'], [
+            'Use when users need one value from a predefined list and a custom listbox is more appropriate than native Select.',
+            'Use for page filters, sorting controls, modals, side panels, or component controls where the option list is known before interaction.',
+        ], [
+            'Do not use Dropdown for action menus, overflow commands, destructive options, multiple selections, searchable/custom typed values, or two-option choices.',
+            'Do not use Dropdown when native Select satisfies a mostly form-based or mobile-first workflow.',
+        ], [
+            'Closed',
+            'Open',
+            'Hover',
+            'Focus',
+            'Active option',
+            'Selected',
+            'Invalid',
+            'Warning',
+            'Disabled',
+            'Read-only',
+            'Small',
+            'Medium',
+            'Large',
+            'Long menu',
+        ], [
+            'Trigger click, Enter, Space, or Arrow keys open the menu unless disabled or read-only.',
+            'Options are selected through click, Enter, or Space and update the visible value plus hidden submitted value.',
+            'Escape, outside click, Tab, or selecting an option closes the menu.',
+            'Open and closed states keep matching width; menu placement may resolve up or down to avoid clipping.',
+            'Multiselect, filterable multiselect, and combo box behavior belong to separate or deferred owners.',
+        ], [
+            'Labels are visible, concise, and sentence case.',
+            'Options are short text-only labels, preferably three words or fewer.',
+            'Long option text truncates visually and exposes the full label through `title`.',
+            'Error copy explains recovery; warning copy explains consequence.',
+        ], [
+            'Trigger exposes a listbox relationship with accessible label and `aria-expanded` state.',
+            'Options expose `role="option"` and selected state.',
+            'Helper, error, and warning copy are associated with the trigger.',
+            'Focus remains visible on trigger and options.',
+            'Disabled dropdowns are not interactive; read-only dropdowns stay readable and do not open.',
+        ]), [
+            'live_examples_view' => 'platform.ui-reference.components.live-examples.dropdown',
             'live_examples_layout' => 'flexible-matrix',
         ]);
     }
@@ -2237,7 +2323,7 @@ class UiReferenceComponentDepthCatalog
                 'link' => 'ui-link, ui-link-inline, ui-link-standalone, ui-link-sm, ui-link-md, ui-link-lg, ui-link-with-icon, ui-link-external, ui-link-unavailable',
                 'pagination' => 'ui-pagination-control, ui-select, data-ui-pagination-page-size',
                 'search' => 'ui-field, ui-field-label, ui-input, data-ui-search',
-                'dropdown' => 'ui-searchable-select, ui-searchable-select-trigger, ui-searchable-select-panel',
+                'dropdown' => 'ui-dropdown, ui-dropdown-trigger, ui-dropdown-menu, ui-dropdown-option, ui-dropdown-sm, ui-dropdown-md, ui-dropdown-lg',
                 'file-uploader' => 'ui-field, ui-field-label, ui-input, data-ui-file-uploader',
                 'number-input' => 'ui-field, ui-field-label, ui-input',
                 'select' => 'ui-field, ui-field-label, ui-select',

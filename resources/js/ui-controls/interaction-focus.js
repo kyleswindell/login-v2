@@ -1,4 +1,4 @@
-const interactionFocusSelector = '.ui-action:not(:disabled), .ui-icon-button:not(:disabled)';
+const interactionFocusSelector = '.ui-action:not(:disabled), .ui-icon-button:not(:disabled), .ui-dropdown-trigger:not(:disabled)';
 let interactionFocusClearRegistered = false;
 
 const clearInteractionFocus = (root = document) => {

@@ -2,6 +2,7 @@ export { initAccordions } from './ui-controls/accordions';
 export { initCheckboxes } from './ui-controls/checkboxes';
 export { initCodeSnippets } from './ui-controls/code-snippets';
 export { initContentSwitchers } from './ui-controls/content-switchers';
+export { initDropdowns } from './ui-controls/dropdowns';
 export { initDropdownActionMenus } from './ui-controls/dropdown-action-menus';
 export { initFilterPanels } from './ui-controls/filter-panels';
 export { initInternalPhoneInputs } from './ui-controls/phone-inputs';

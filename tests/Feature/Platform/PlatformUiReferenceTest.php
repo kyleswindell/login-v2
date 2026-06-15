@@ -78,7 +78,7 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('<button', $sidebarPartial);
         $this->assertStringContainsString('aria-current="page"', $sidebarPartial);
         $this->assertStringContainsString('x-heroicon-o-chevron-down', $sidebarPartial);
-        $this->assertStringContainsString('$approvedComponentSlugs = [\'accordion\', \'breadcrumb\', \'button\', \'menu-buttons\', \'tooltip\'];', $sidebarPartial);
+        $this->assertStringContainsString('$approvedComponentSlugs = [\'accordion\', \'breadcrumb\', \'button\', \'checkbox\', \'code-snippet\', \'menu-buttons\', \'tooltip\'];', $sidebarPartial);
         $this->assertStringContainsString('x-heroicon-o-check-circle', $sidebarPartial);
         $this->assertStringNotContainsString('<details', $sidebarPartial);
         $this->assertStringNotContainsString('<summary', $sidebarPartial);
@@ -2016,6 +2016,10 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('export { initCheckboxes }', $uiControls);
         $this->assertStringContainsString('initCheckboxes', $appJs);
         $this->assertStringContainsString('\'checkbox\' => $this->checkboxComponent()', $catalog);
+        $this->assertStringContainsString("'Unselected',", $catalog);
+        $this->assertStringContainsString("'Parent mixed',", $catalog);
+        $this->assertStringContainsString("'Group-level validation',", $catalog);
+        $this->assertStringNotContainsString('Unselected, selected, parent mixed, focus, disabled, read-only, error, warning, helper text, group-level validation, and wrapping labels.', $catalog);
         $this->assertStringContainsString('initCheckboxes exported from resources/js/ui-controls/checkboxes.js', $catalog);
         $this->assertStringContainsString('Parent/child indeterminate', $standard);
     }

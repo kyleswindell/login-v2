@@ -1516,7 +1516,17 @@ class UiReferenceComponentDepthCatalog
             'Do not use standalone indeterminate checkboxes; mixed state belongs to parent-child or owner-approved bulk selection.',
             'Do not truncate checkbox labels or hide small visible option sets in menus.',
         ], [
-            'Unselected, selected, parent mixed, focus, disabled, read-only, error, warning, helper text, group-level validation, and wrapping labels.',
+            'Unselected',
+            'Selected',
+            'Parent mixed',
+            'Focus',
+            'Disabled',
+            'Read-only',
+            'Error',
+            'Warning',
+            'Helper text',
+            'Group-level validation',
+            'Wrapping labels',
         ]), [
             'live_examples_view' => 'platform.ui-reference.components.live-examples.checkbox',
             'live_examples_layout' => 'flexible-matrix',

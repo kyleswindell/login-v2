@@ -412,6 +412,9 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('data-ui-menu-trigger', $html);
         $this->assertStringContainsString('data-ui-dropdown-option', $html);
         $this->assertStringContainsString('data-ui-pagination-page-size', $html);
+        $this->assertStringContainsString('ui-tile ui-tile--clickable', $html);
+        $this->assertStringContainsString('data-ui-tile-variant="clickable"', $html);
+        $this->assertStringContainsString('ui-tile__action-icon', $html);
         $this->assertStringContainsString('data-ui-toggletip-panel', $html);
         $this->assertStringContainsString('data-ui-multiselect-option', $html);
         $this->assertStringContainsString('data-ui-multiselect-filter', $html);
@@ -1103,6 +1106,7 @@ class PlatformUiReferenceTest extends TestCase
             'ui-shell' => ['Header baseline', 'Left panel', 'Account menu', 'Notification/action area', 'Mobile/collapsed behavior', 'Right panel deferred', 'data-ui-reference-sample-type="shell"'],
             'code-snippet' => ['Anatomy and variants', 'Inline', 'Single line with horizontal overflow', 'Multi-line with show more', 'Copy controls', 'Highlighted syntax tokens', 'data-component-live-layout="code-snippet-matrix"'],
             'content-switcher' => ['Peer view switcher', 'Icon view switcher', 'Toolbar mode switcher', 'Default', 'Compact', 'Disabled option', 'No panel mode', 'data-ui-reference-sample-type="content-switcher"'],
+            'tile' => ['Base tile', 'Clickable tile', 'Selectable tile', 'Expandable tile', 'Tile groups and layout', 'States and accessibility', 'Boundaries and gates', 'data-component-live-layout="tile-matrix"'],
         ];
 
         foreach ($expectations as $slug => $needles) {
@@ -1115,7 +1119,7 @@ class PlatformUiReferenceTest extends TestCase
                 ->assertSee('ui-code-snippet', false)
                 ->assertDontSee('Family-depth implementation pending');
 
-            if (in_array($slug, ['button', 'link', 'menu-buttons', 'tooltip', 'checkbox', 'code-snippet', 'data-table', 'pagination'], true)) {
+            if (in_array($slug, ['button', 'link', 'menu-buttons', 'tooltip', 'checkbox', 'code-snippet', 'data-table', 'pagination', 'tile'], true)) {
                 $response
                     ->assertSee('data-ui-reference-live-examples-layout="flexible-matrix"', false)
                     ->assertDontSee('Live Examples Card');
@@ -2414,6 +2418,86 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('Badge/Status as related taxonomy helpers', $standard);
     }
 
+    public function test_tile_component_page_renders_installed_api_examples_and_gates(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $response = $this->get('/platform/ui-reference/components/tile')
+            ->assertOk()
+            ->assertSee('x-ui.tile')
+            ->assertSee('data-component-live-layout="tile-matrix"', false)
+            ->assertSee('data-ui-reference-sample-type="tile"', false)
+            ->assertSee('Base tile')
+            ->assertSee('Clickable tile')
+            ->assertSee('Selectable tile')
+            ->assertSee('Expandable tile')
+            ->assertSee('Tile groups and layout')
+            ->assertSee('States and accessibility')
+            ->assertSee('Boundaries and gates')
+            ->assertSee('Developer implementation')
+            ->assertSee('data-ui-component="tile"', false)
+            ->assertSee('data-ui-tile-variant="static"', false)
+            ->assertSee('data-ui-tile-variant="clickable"', false)
+            ->assertSee('data-ui-tile-variant="selectable"', false)
+            ->assertSee('data-ui-tile-variant="expandable"', false)
+            ->assertSee('data-ui-tile-density="standard"', false)
+            ->assertSee('data-ui-selected="true"', false)
+            ->assertSee('data-ui-selected="false"', false)
+            ->assertSee('data-ui-expanded="true"', false)
+            ->assertSee('data-ui-expanded="false"', false)
+            ->assertSee('data-ui-disabled="true"', false)
+            ->assertSee('data-ui-tile-selection-mode="single"', false)
+            ->assertSee('data-ui-tile-selection-mode="multiple"', false)
+            ->assertSee('aria-current="page"', false)
+            ->assertSee('aria-expanded="true"', false)
+            ->assertSee('aria-expanded="false"', false)
+            ->assertSee('type="radio"', false)
+            ->assertSee('type="checkbox"', false)
+            ->assertSee('Media tile')
+            ->assertSee('Tile group helper')
+            ->assertSee('AI presence')
+            ->assertDontSee('Component-specific API pending correction')
+            ->assertDontSee('Family-depth implementation pending')
+            ->assertDontSee('cds--tile')
+            ->assertDontSee('bx--tile');
+
+        $content = $response->getContent();
+        $this->assertStringContainsString('ui-tile__selection-icon', $content);
+        $this->assertStringContainsString('ui-tile__action-icon', $content);
+        $this->assertStringContainsString('ui-tile__expanded', $content);
+
+        $componentView = file_get_contents(resource_path('views/components/ui/tile.blade.php'));
+        $contentPartial = file_get_contents(resource_path('views/components/ui/partials/tile-content.blade.php'));
+        $liveExamples = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/tile.blade.php'));
+        $tileCss = file_get_contents(resource_path('css/app.css'));
+        $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
+        $overviewCatalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentCatalog.php'));
+        $standard = file_get_contents(base_path('docs/02-standards/ui/components/tile.md'));
+
+        $this->assertStringContainsString("'variant' => 'static'", $componentView);
+        $this->assertStringContainsString('$variant === \'base\' ? \'static\'', $componentView);
+        $this->assertStringContainsString("'selectionMode' => 'single'", $componentView);
+        $this->assertStringContainsString('data-ui-tile-selection-mode', $componentView);
+        $this->assertStringContainsString('data-ui-expanded', $componentView);
+        $this->assertStringContainsString('ui-tile__selection-icon', $componentView);
+        $this->assertStringContainsString('x-heroicon-o-arrow-right', $componentView);
+        $this->assertStringContainsString('x-heroicon-o-chevron-down', $componentView);
+        $this->assertStringContainsString('ui-tile__title', $contentPartial);
+        $this->assertStringContainsString('data-component-live-layout="tile-matrix"', $liveExamples);
+        $this->assertStringContainsString('selection-mode="multiple"', $liveExamples);
+        $this->assertStringContainsString('<x-slot name="details">', $liveExamples);
+        $this->assertStringContainsString('.ui-tile--clickable', $tileCss);
+        $this->assertStringContainsString('.ui-tile__selection-icon', $tileCss);
+        $this->assertStringContainsString('.ui-tile--static', $tileCss);
+        $this->assertStringContainsString('tile\' => $this->tileComponent()', $catalog);
+        $this->assertStringContainsString('ui-tile, ui-tile__title, ui-tile__selection-icon', $catalog);
+        $this->assertStringContainsString('Implemented Pending Review', $overviewCatalog);
+        $this->assertStringContainsString('status: implemented-pending-review', $standard);
+        $this->assertStringContainsString('`selectionMode`', $standard);
+        $this->assertStringContainsString('`details`', $standard);
+        $this->assertStringContainsString('Media tile                                        | Deferred', $standard);
+    }
+
     public function test_structured_list_component_page_renders_installed_api_examples(): void
     {
         $this->actingAsPlatformSuperAdmin();
@@ -2941,6 +3025,8 @@ class PlatformUiReferenceTest extends TestCase
                 'Static tile',
                 'Clickable tile',
                 'Selectable tile',
+                'Expandable tile',
+                'data-component-live-layout="tile-matrix"',
             ],
             'tooltip' => [
                 'x-ui.tooltip',

@@ -2,8 +2,8 @@
 title: Tile
 slug: tile
 api_layer: Component API
-status: implemented-pending-correction
-system_maturity: partial
+status: implemented-pending-review
+system_maturity: implemented
 category: data-display
 priority: tier-b-common-reusable-component
 ui_reference_route: /platform/ui-reference/components/tile
@@ -125,8 +125,8 @@ Tile is the installed Login App 2.0 compact content-block API. It owns tile surf
 
 | Field                        | Value                                                                                                                                                                |
 | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Status                       | Approved API                                                                                                                                                         |
-| System maturity              | Partial                                                                                                                                                              |
+| Status                       | Implemented pending review                                                                                                                                           |
+| System maturity              | Implemented                                                                                                                                                          |
 | API layer                    | Component API                                                                                                                                                        |
 | Component slug               | tile                                                                                                                                                                 |
 | Category                     | Data display                                                                                                                                                         |
@@ -140,7 +140,7 @@ Tile is the installed Login App 2.0 compact content-block API. It owns tile surf
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, Icons, 2x Grid                                                                                                           |
 | Carbon benchmark             | Carbon Tile usage, style, and accessibility guidance                                                                                                                 |
 
-`Approved API` means the installed component exists, but the canonical public API, state definitions, interactive semantics, disabled/deferred boundaries, UI Reference examples, and regression expectations must be corrected so feature teams do not create local tile surfaces, selectable cards, clickable panels, or expandable card controls.
+`Implemented pending review` means the installed component, CSS namespace, canonical state attributes, UI Reference page, and focused regression expectations now exist and are ready for manual review before approval.
 
 ## 3. Installed standard
 
@@ -149,7 +149,7 @@ Tile is the standard compact block for short scan-and-select content when a tabl
 ### 3.1. The installed standard is:
 
 - Render tile surfaces through `<x-ui.tile>`.
-- Use `variant="static"` for non-interactive information blocks.
+- Use `variant="static"` for non-interactive information blocks. `variant="base"` is accepted only as a Carbon-aligned alias that resolves to the app-owned `static` variant.
 - Use `variant="clickable"` when the entire tile navigates or triggers one clear action.
 - Use `variant="selectable"` when the entire tile represents one selectable option.
 - Use `variant="expandable"` only when the installed component owns disclosure behavior.
@@ -215,7 +215,7 @@ Carbon alignment note: Carbon defines base/static, clickable, selectable, and ex
     title="Billing details"
     description="View account billing metadata."
 >
-    <x-slot:expanded>
+    <x-slot name="details">
         <dl class="ui-description-list">
             <div>
                 <dt>Billing contact</dt>
@@ -226,7 +226,7 @@ Carbon alignment note: Carbon defines base/static, clickable, selectable, and ex
                 <dd>Active</dd>
             </div>
         </dl>
-    </x-slot:expanded>
+    </x-slot>
 </x-ui.tile>
 ```
 
@@ -247,13 +247,14 @@ Use the Blade API instead of hand-building cards, panels, selectable card inputs
 
 | Prop/option   | Type            | Default    | Allowed values                                    | Required                                    | Notes                                                                                                                             |
 | ------------- | --------------- | ---------- | ------------------------------------------------- | ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `variant`     | `string`        | `static`   | `static`, `clickable`, `selectable`, `expandable` | No                                          | Selects semantic tile behavior.                                                                                                   |
+| `variant`     | `string`        | `static`   | `static`, `base`, `clickable`, `selectable`, `expandable` | No                                          | Selects semantic tile behavior. `base` resolves to app-owned `static`.                                                             |
 | `title`       | `string / null` | `null`     | Short sentence-case title                         | Recommended                                 | Preferred visible heading for scan hierarchy and accessible name.                                                                 |
 | `description` | `string / null` | `null`     | Short supporting text                             | No                                          | Keep concise. Do not use for long body content.                                                                                   |
 | `href`        | `string / null` | `null`     | Valid URL                                         | Required for link-style clickable tiles     | Use for navigation. Do not combine with child interactive controls.                                                               |
 | `type`        | `string`        | `button`   | `button`, `submit`                                | No                                          | Applies only when clickable tile renders a button. Use `submit` only when the owning form intentionally submits through the tile. |
 | `name`        | `string / null` | `null`     | Form field name                                   | Required for form-backed selectable tiles   | Use only when selectable tile participates in form submission.                                                                    |
 | `value`       | `string / null` | `null`     | Form field value                                  | Required when `name` is used                | Must map to the owning form option value.                                                                                         |
+| `selectionMode` | `string`      | `single`   | `single`, `multiple`                              | No                                          | Selects radio-style or checkbox-style selectable tile semantics.                                                                  |
 | `selected`    | `bool`          | `false`    | `true`, `false`                                   | No                                          | Marks selectable/current state. Must be semantic, not decorative.                                                                 |
 | `current`     | `bool`          | `false`    | `true`, `false`                                   | No                                          | Use for current navigation/detail state when selection is not a form value.                                                       |
 | `expanded`    | `bool`          | `false`    | `true`, `false`                                   | No                                          | Initial expandable state where supported. Parent state may control it only through installed behavior.                            |
@@ -275,7 +276,7 @@ Any prop not listed here is not public. If a feature needs another option, updat
 | `header`     | Gated unless implemented                    | Custom title/meta composition                       | Requires accessible naming proof. Prefer `title`, `meta`, and default slot.                                                    |
 | `media`      | Deferred unless implemented                 | Image/illustration area                             | Requires aspect ratio, alt text, loading, and responsive proof.                                                                |
 | `actions`    | Static tiles only / Pattern-owned           | Child links/buttons inside non-interactive tile     | Do not use inside clickable, selectable, or expandable trigger surfaces.                                                       |
-| `expanded`   | Implemented / required proof for expandable | Content revealed by expandable tile                 | Must not include nested controls unless the implementation proves valid disclosure semantics and focus behavior.               |
+| `details`    | Implemented for expandable tiles            | Content revealed by expandable tile                 | Must not include nested controls unless the implementation proves valid disclosure semantics and focus behavior.               |
 
 ### 4.8. Component-owned data attributes
 
@@ -284,6 +285,7 @@ Any prop not listed here is not public. If a feature needs another option, updat
 | `data-ui-component="tile"`                                            | Implemented when emitted | Component | Identifies the root component for testing and diagnostics.                                   |
 | `data-ui-tile-variant="static / clickable / selectable / expandable"` | Implemented when emitted | Component | Exposes approved variant for tests and component-owned styling only.                         |
 | `data-ui-tile-density="standard / compact"`                           | Implemented when emitted | Component | Exposes density for tests and component-owned styling only.                                  |
+| `data-ui-tile-selection-mode="single / multiple"`                      | Implemented when emitted | Component | Exposes selectable tile icon/semantics mode for tests and component-owned styling only.       |
 | `data-ui-selected="true / false"`                                     | Implemented when emitted | Component | Exposes selected state for tests and component-owned styling only.                           |
 | `data-ui-expanded="true / false"`                                     | Implemented when emitted | Component | Exposes expandable state for tests and component-owned styling only.                         |
 | `data-ui-disabled="true / false"`                                     | Implemented when emitted | Component | Exposes disabled state for tests and component-owned styling only.                           |
@@ -302,10 +304,10 @@ Any prop not listed here is not public. If a feature needs another option, updat
 
 | Name                              | Type          | Status                                            | API                                                                       | Notes                                                                  |
 | --------------------------------- | ------------- | ------------------------------------------------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| Static tile                       | Variant       | Implemented                                       | `variant="static"`                                                        | Non-interactive content surface.                                       |
+| Static tile                       | Variant       | Implemented                                       | `variant="static"` or `variant="base"` alias                              | Non-interactive content surface.                                       |
 | Clickable tile                    | Variant       | Implemented                                       | `variant="clickable"` with `href` or button behavior                      | Whole tile is one action.                                              |
 | Selectable tile                   | Variant       | Implemented / required proof                      | `variant="selectable"`, `selected`, `name`, `value`                       | Whole tile is one selectable option.                                   |
-| Expandable tile                   | Variant       | Implemented / required proof                      | `variant="expandable"`, `expanded`, `expanded` slot                       | Reveals secondary content.                                             |
+| Expandable tile                   | Variant       | Implemented / required proof                      | `variant="expandable"`, `expanded`, `details` slot                        | Reveals secondary content.                                             |
 | Standard density                  | Density       | Implemented                                       | `density="standard"`                                                      | Default tile spacing and scan hierarchy.                               |
 | Compact density                   | Density       | Implemented                                       | `density="compact"`                                                       | Dense option grids or constrained admin contexts.                      |
 | Selected                          | State         | Implemented                                       | `selected`                                                                | For selectable/current options only.                                   |

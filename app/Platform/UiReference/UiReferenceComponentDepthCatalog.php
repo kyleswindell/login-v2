@@ -53,7 +53,7 @@ class UiReferenceComponentDepthCatalog
             'structured-list' => $this->structuredListComponent(),
             'list' => $this->listComponent(),
             'code-snippet' => $this->codeSnippetComponent(),
-            'tile' => $this->dataDisplay('tile', 'Tile', 'Tile presents compact selectable, clickable, or static content blocks.', 'tile', ['Static tile', 'Clickable tile', 'Selectable tile', 'Expandable tile', 'Disabled deferred']),
+            'tile' => $this->tileComponent(),
             'contained-list' => $this->containedListComponent(),
             'tree-view' => $this->treeViewComponent(),
 
@@ -2565,6 +2565,63 @@ class UiReferenceComponentDepthCatalog
     }
 
     /**
+     * @return array<string, mixed>
+     */
+    private function tileComponent(): array
+    {
+        return array_replace($this->correctedImplemented('tile', 'Tile', 'Tile presents compact static, clickable, selectable, and expandable content blocks for scanning and choosing related information.', [], [
+            'tile surface',
+            'optional meta or icon',
+            'title and supporting description',
+            'clickable action icon, selectable control icon, or expandable trigger',
+            'optional static child action area',
+            'optional revealed detail region',
+        ], [
+            'Use for compact dashboard, settings, catalog, shortcut, choice, or disclosure blocks where a full table or rich card is too heavy.',
+            'Use static tiles when child links or buttons are needed inside the block.',
+            'Use clickable, selectable, or expandable tiles only when the entire tile has one clear behavior.',
+        ], [
+            'Do not use tiles for modal, popover, notification, or elevated overlay surfaces.',
+            'Do not place independent buttons, links, menus, or form controls inside clickable, selectable, or expandable tile trigger surfaces.',
+            'Do not use local card CSS, shadows, arbitrary borders, or raw utility clusters to recreate tile states.',
+        ], [
+            'Default',
+            'Hover for interactive variants',
+            'Focus-visible',
+            'Selected/current',
+            'Expanded/collapsed',
+            'Disabled interactive tile',
+            'Loading handoff',
+            'Deferred/gated capabilities',
+        ], [
+            'Static tiles are non-interactive and may contain approved child actions with their own focus targets.',
+            'Clickable tiles render as a full-container link or button and show the arrow affordance at the bottom end.',
+            'Selectable tiles render a form-backed radio or checkbox input and keep the selection icon visible before selection.',
+            'Expandable tiles expose aria-expanded on the disclosure trigger and reveal only short supporting details.',
+            'Parent Patterns own grouping, grid columns, external spacing, loading orchestration, and responsive placement.',
+        ], [
+            'Keep titles concise and sentence case.',
+            'Use descriptions only when they help distinguish similar tiles.',
+            'Use specific nouns for object tiles and verb-led titles only when the tile itself is an action.',
+            'Do not overload compact tiles with long body copy, unrelated metadata, or multiple competing actions.',
+        ], [
+            'Use link semantics for clickable navigation tiles and button semantics for command tiles.',
+            'Use native radio or checkbox semantics for selectable tiles when participating in a form.',
+            'Expose selected/current and expanded state without relying on color alone.',
+            'Keep static tiles out of the tab order unless they contain focusable child controls.',
+            'Disabled interactive tiles must not be activatable by keyboard or pointer.',
+        ]), [
+            'live_examples_view' => 'platform.ui-reference.components.live-examples.tile',
+            'live_examples_layout' => 'flexible-matrix',
+            'queued_gaps' => [
+                'Media tile requires media slot, aspect-ratio, alt text, lazy loading, responsive proof, and tests.',
+                'Reusable tile group helper remains Pattern-owned until group labels, responsive grid policy, and keyboard expectations are installed.',
+                'AI presence requires an approved AI-assisted product feature and explainability disclosure contract.',
+            ],
+        ]);
+    }
+
+    /**
      * @param array<int, string> $scenarios
      *
      * @return array<string, mixed>
@@ -2876,7 +2933,7 @@ class UiReferenceComponentDepthCatalog
                 'progress-indicator' => 'data-ui-component=progress-indicator, data-ui-component=progress-step',
                 'tag' => 'ui-tag, ui-tag-sm, ui-tag-md, ui-tag-neutral, ui-tag-info, ui-tag-success, ui-tag-warning, ui-tag-error',
                 'structured-list' => 'ui-structured-list, ui-structured-list-row, ui-structured-list-condensed, ui-structured-list-hang, ui-structured-list-flush, ui-structured-list-selectable, ui-structured-list-selection-cell',
-                'tile' => 'data-ui-component=tile, ui tile state markers',
+                'tile' => 'ui-tile, ui-tile__title, ui-tile__selection-icon, ui-tile__action-icon, data-ui-tile-variant, data-ui-selected, data-ui-expanded',
                 'tooltip' => 'data-ui-tooltip-trigger, data-ui-tooltip-content',
                 'toggletip' => 'data-ui-toggletip-trigger, data-ui-toggletip-panel, data-ui-toggletip-close',
                 'contained-list' => 'ui-contained-list, ui-contained-list-item',
@@ -2917,7 +2974,7 @@ class UiReferenceComponentDepthCatalog
             'progress-indicator' => '<x-ui.progress-indicator :steps="$steps" />',
             'tag' => '<x-ui.tag tone="success">Active</x-ui.tag>',
             'structured-list' => '<x-ui.structured-list :rows="$rows" selectable />',
-            'tile' => '<x-ui.tile title="Workspace" description="Open details" href="#" variant="clickable" />',
+            'tile' => '<x-ui.tile variant="selectable" name="plan" value="growth" title="Growth" description="Automation and review workflows." selected />',
             'tooltip' => '<x-ui.tooltip text="Edit workspace"><x-ui.icon-button label="Edit workspace">...</x-ui.icon-button></x-ui.tooltip>',
             'toggletip' => '<x-ui.toggletip label="About domains">Domains route users into a tenant.</x-ui.toggletip>',
             'menu' => '<x-ui.menu :items="$items" trigger-label="Actions" />',

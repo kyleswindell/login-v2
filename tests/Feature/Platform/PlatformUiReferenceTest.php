@@ -1901,6 +1901,76 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('custom calendar and range behavior remain gated', $standard);
     }
 
+    public function test_search_component_page_renders_installed_api_examples(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/components/search')
+            ->assertOk()
+            ->assertSee('x-ui.search')
+            ->assertSee('data-component-live-layout="search-matrix"', false)
+            ->assertSee('data-ui-reference-sample-type="search"', false)
+            ->assertSee('Page search')
+            ->assertSee('Table search')
+            ->assertSee('Component search')
+            ->assertSee('Clear action')
+            ->assertSee('Loading search')
+            ->assertSee('No-results handoff')
+            ->assertSee('Search vs related APIs')
+            ->assertSee('Deferred and gated capabilities')
+            ->assertSee('data-ui-component="search"', false)
+            ->assertSee('data-ui-search-input', false)
+            ->assertSee('data-ui-search-clear', false)
+            ->assertSee('data-ui-search-scope="table"', false)
+            ->assertSee('data-ui-search-size="sm"', false)
+            ->assertSee('data-ui-search-size="md"', false)
+            ->assertSee('data-ui-search-size="lg"', false)
+            ->assertSee('data-ui-search-variant="fluid"', false)
+            ->assertSee('data-ui-search-active="true"', false)
+            ->assertSee('data-ui-search-results-region="search-table-results"', false)
+            ->assertSee('aria-controls="search-table-results"', false)
+            ->assertSee('aria-busy="true"', false)
+            ->assertSee('data-ui-search-readonly', false)
+            ->assertSee('aria-invalid="true"', false)
+            ->assertSee('data-ui-field-warning="true"', false)
+            ->assertSee('Clear search')
+            ->assertSee('Text input')
+            ->assertSee('Dropdown')
+            ->assertSee('Table toolbar Pattern')
+            ->assertDontSee('Component-specific API pending correction')
+            ->assertDontSee('Family-depth implementation pending')
+            ->assertDontSee('cds--search')
+            ->assertDontSee('bx--search');
+
+        $componentView = file_get_contents(resource_path('views/components/ui/search.blade.php'));
+        $componentCss = file_get_contents(resource_path('css/app.css'));
+        $componentJs = file_get_contents(resource_path('js/ui-controls/search.js'));
+        $uiControls = file_get_contents(resource_path('js/ui-controls.js'));
+        $appJs = file_get_contents(resource_path('js/app.js'));
+        $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
+        $overviewCatalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentCatalog.php'));
+        $standard = file_get_contents(base_path('docs/02-standards/ui/components/search.md'));
+
+        $this->assertStringContainsString("'size' => 'md'", $componentView);
+        $this->assertStringContainsString("'variant' => 'default'", $componentView);
+        $this->assertStringContainsString("'clearable' => true", $componentView);
+        $this->assertStringContainsString('data-ui-search-clear', $componentView);
+        $this->assertStringContainsString('data-ui-search-readonly', $componentView);
+        $this->assertStringContainsString('.ui-search-input', $componentCss);
+        $this->assertStringContainsString('.ui-search-fluid .ui-search-input', $componentCss);
+        $this->assertStringContainsString('.ui-search-clear:focus-visible', $componentCss);
+        $this->assertStringContainsString('initSearchControls', $componentJs);
+        $this->assertStringContainsString("event.key === 'Escape'", $componentJs);
+        $this->assertStringContainsString('ui-search:change', $componentJs);
+        $this->assertStringContainsString("export { initSearchControls }", $uiControls);
+        $this->assertStringContainsString('initSearchControls', $appJs);
+        $this->assertStringContainsString("'live_examples_view' => 'platform.ui-reference.components.live-examples.search'", $catalog);
+        $this->assertStringContainsString("'search', 'Search', 'Inputs', 'Implemented Pending Review'", $overviewCatalog);
+        $this->assertStringContainsString('status: implemented-pending-review', $standard);
+        $this->assertStringContainsString('Global shell search', $standard);
+        $this->assertStringContainsString('Search suggestions', $standard);
+    }
+
     public function test_deferred_component_pages_show_trigger_conditions_instead_of_complete_ui(): void
     {
         $this->actingAsPlatformSuperAdmin();
@@ -2553,7 +2623,8 @@ class PlatformUiReferenceTest extends TestCase
                 'Page search',
                 'Table search',
                 'Clear action',
-                'Loading/no-results',
+                'Loading search',
+                'No-results handoff',
             ],
             'dropdown' => [
                 'x-ui.dropdown',

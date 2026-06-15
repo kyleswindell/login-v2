@@ -11,6 +11,7 @@ export { initMenus } from './ui-controls/menus';
 export { initMultiselects } from './ui-controls/multiselects';
 export { initPopovers } from './ui-controls/popovers';
 export { initSearchableSelects } from './ui-controls/searchable-selects';
+export { initSearchControls } from './ui-controls/search';
 export { initSelectableOptionStates } from './ui-controls/selectable-options';
 export { initSliders } from './ui-controls/sliders';
 export { initTableSearchInputs } from './ui-controls/table-search';

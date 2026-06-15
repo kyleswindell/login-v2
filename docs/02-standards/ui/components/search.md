@@ -1,7 +1,7 @@
 ---
 title: Search
 slug: search
-status: implemented-pending-correction
+status: implemented-pending-review
 api_layer: Component API
 category: Inputs
 priority: Tier A - Baseline app development
@@ -106,11 +106,11 @@ Search must consume approved Foundation Elements and app-owned `ui-*` classes. D
 | API surface     | Installed value                                                                                                                  |
 | --------------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | Blade           | `x-ui.search`                                                                                                                    |
-| JavaScript      | `initSearchControls` or equivalent search-control initializer when clear, debounce, loading, or active-change behavior is needed |
+| JavaScript      | `initSearchControls` for clear button visibility, Escape clearing, and optional debounced active-change events                 |
 | Data attributes | `data-ui-search`, `data-ui-search-input`, `data-ui-search-clear`, `data-ui-search-submit`, `data-ui-search-results-region`       |
 | Props/options   | Use the props documented in this standard                                                                                        |
 | CSS namespace   | `ui-search`, `ui-search-field`, `ui-search-input`, `ui-search-icon`, `ui-search-clear`, `ui-search-loading`, `ui-search-message` |
-| Source files    | `resources/views/components/ui/search.blade.php`; optional `resources/js/ui-controls/search.js`; `resources/css/app.css`         |
+| Source files    | `resources/views/components/ui/search.blade.php`; `resources/js/ui-controls/search.js`; `resources/css/app.css`                 |
 
 Example calls:
 
@@ -156,6 +156,7 @@ Example calls:
 | `scope`         | string      | `page`    | `page`, `table`, `component`, `global` | Defines the search scope for content and accessibility copy. `global` is Pattern-owned unless installed by the shell. |
 | `size`          | string      | `md`      | `sm`, `md`, `lg`                       | Maps to approved field heights and spacing.                                                                           |
 | `variant`       | string      | `default` | `default`, `fluid`                     | Use `fluid` only when Search must fill a Pattern-owned container.                                                     |
+| `style`         | string/null | `null`    | `default`, `fluid`                     | Alias for `variant` when matching field API terminology.                                                            |
 | `clearable`     | bool        | `true`    | `true`, `false`                        | Clear button appears when the input has a value.                                                                      |
 | `active`        | bool        | `false`   | `true`, `false`                        | Runs change behavior as users type. Requires Pattern-owned results behavior.                                          |
 | `debounce`      | int/null    | `300`     | milliseconds                           | Applies only when `active=true`.                                                                                      |
@@ -163,10 +164,18 @@ Example calls:
 | `loading`       | bool        | `false`   | `true`, `false`                        | Shows pending state while results update.                                                                             |
 | `disabled`      | bool        | `false`   | `true`, `false`                        | Uses native disabled behavior.                                                                                        |
 | `readonly`      | bool        | `false`   | `true`, `false`                        | Use only to display an applied query that cannot be edited in that context.                                           |
+| `readOnly`      | bool        | `false`   | `true`, `false`                        | Alias for `readonly`.                                                                                                 |
 | `helper`        | string/null | `null`    | text                                   | Short guidance below the field.                                                                                       |
+| `helperText`    | string/null | `null`    | text                                   | Alias for `helper`.                                                                                                   |
 | `error`         | string/null | `null`    | text                                   | Validation or search failure message.                                                                                 |
+| `invalid`       | bool        | `false`   | `true`, `false`                        | Alias state for invalid/error APIs.                                                                                   |
+| `invalidText`   | string/null | `null`    | text                                   | Error copy used when `invalid` is true.                                                                               |
 | `warning`       | string/null | `null`    | text                                   | Non-blocking caution message.                                                                                         |
+| `warn`          | bool        | `false`   | `true`, `false`                        | Alias state for warning APIs.                                                                                         |
+| `warnText`      | string/null | `null`    | text                                   | Warning copy used when `warn` is true.                                                                                |
 | `resultsRegion` | string/null | `null`    | valid id                               | Region updated by search results; required for active async results.                                                  |
+| `clearLabel`    | string      | `Clear search` | text                              | Accessible label for the clear button.                                                                                |
+| `showLabel`     | bool        | `false`   | `true`, `false`                        | Shows the label for default search when surrounding context does not visually identify scope.                         |
 | `attributes`    | array       | `[]`      | HTML attributes                        | Escape values and avoid local styling hooks.                                                                          |
 
 ### 4.2. Data attributes

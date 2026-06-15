@@ -222,10 +222,21 @@
                             :id="$fieldId"
                             :label="$item['label']"
                             :value="$item['value'] ?? null"
-                            placeholder="Search records"
-                            helper="Search applies to the current page region."
+                            :placeholder="$item['placeholder'] ?? 'Search records'"
+                            :helper="$item['helper'] ?? 'Search applies to the current page region.'"
+                            :scope="$item['scope'] ?? 'page'"
+                            :size="$item['size'] ?? 'md'"
+                            :variant="$item['variant'] ?? 'default'"
+                            :active="$item['active'] ?? false"
+                            :debounce="$item['debounce'] ?? 300"
+                            :results-region="$item['results_region'] ?? null"
                             :disabled="$state === 'disabled'"
+                            :readonly="$state === 'readonly'"
                             :loading="$item['loading'] ?? $state === 'loading'"
+                            :invalid="$state === 'error'"
+                            invalid-text="Enter at least two searchable characters."
+                            :warn="$state === 'warning'"
+                            warn-text="Broad searches may take longer to return."
                             @class(['is-focus' => $state === 'focus'])
                         />
                     @elseif (($item['type'] ?? 'text') === 'select')

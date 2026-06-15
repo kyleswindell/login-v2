@@ -4078,6 +4078,161 @@ Use targeted searches for the class family being changed before reading this fil
         background-position: 0 0;
     }
 
+    .ui-search {
+        @apply min-w-0;
+    }
+
+    .ui-search-field {
+        @apply relative mt-2;
+    }
+
+    .ui-search-fluid .ui-search-field {
+        @apply mt-0;
+    }
+
+    .ui-search-input {
+        @apply w-full border-0 border-b text-sm transition focus:outline-none;
+        min-height: 2.5rem;
+        border-color: var(--ui-border-strong-01);
+        background-color: var(--ui-field-01);
+        color: var(--ui-text-primary);
+        border-radius: 0;
+        padding: 0 2.5rem;
+    }
+
+    .ui-search-sm .ui-search-input {
+        min-height: 2rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+    .ui-search-md .ui-search-input {
+        min-height: 2.5rem;
+    }
+
+    .ui-search-lg .ui-search-input {
+        min-height: 3rem;
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+
+    .ui-search-fluid .ui-field-label {
+        @apply pointer-events-none relative z-10 mb-0 block px-4 pt-2 text-xs font-normal;
+        background-color: var(--ui-field-01);
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-search-fluid .ui-search-input {
+        min-height: 4rem;
+        padding: 0.75rem 5rem 0 1rem;
+    }
+
+    .ui-search-input::placeholder {
+        color: var(--ui-text-placeholder);
+    }
+
+    .ui-search-input:hover:not(:disabled) {
+        border-color: var(--ui-border-interactive);
+        background-color: var(--ui-field-hover-01);
+    }
+
+    .ui-search-input:focus,
+    .ui-search-input:focus-visible,
+    .ui-search.is-focus .ui-search-input {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+        border-color: var(--ui-focus);
+        box-shadow: none;
+    }
+
+    .ui-search-invalid .ui-search-input {
+        border-color: var(--ui-support-error);
+        outline-color: var(--ui-support-error);
+    }
+
+    .ui-search-warning .ui-search-input {
+        border-color: var(--ui-support-warning);
+    }
+
+    .ui-search-disabled .ui-search-input,
+    .ui-search-loading .ui-search-input {
+        cursor: not-allowed;
+        border-color: transparent;
+        color: var(--ui-text-disabled);
+        background-color: var(--ui-field-01);
+        opacity: 1;
+    }
+
+    .ui-search-fluid.ui-search-disabled .ui-search-input,
+    .ui-search-fluid.ui-search-loading .ui-search-input {
+        border-color: var(--ui-border-subtle-01);
+    }
+
+    .ui-search-icon {
+        @apply pointer-events-none absolute top-1/2 h-4 w-4 -translate-y-1/2;
+        left: 1rem;
+        color: var(--ui-icon-secondary);
+    }
+
+    .ui-search-sm .ui-search-icon {
+        left: 0.75rem;
+    }
+
+    .ui-search-lg .ui-search-icon {
+        left: 1rem;
+    }
+
+    .ui-search-clear,
+    .ui-search-loading-indicator {
+        @apply absolute top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center;
+        right: 0.25rem;
+        color: var(--ui-icon-primary);
+    }
+
+    .ui-search-fluid .ui-search-clear,
+    .ui-search-fluid .ui-search-loading-indicator {
+        right: 0.75rem;
+    }
+
+    .ui-search-clear:hover:not(:disabled) {
+        background-color: var(--ui-layer-hover-01);
+    }
+
+    .ui-search-clear:focus-visible,
+    .ui-search-clear[data-ui-interaction-focus='true'] {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-search-clear:disabled {
+        color: var(--ui-icon-disabled);
+        cursor: not-allowed;
+    }
+
+    .ui-search-clear-icon {
+        @apply h-4 w-4;
+    }
+
+    .ui-search-readonly-value {
+        @apply mt-2 flex min-h-10 w-full items-center border-b px-4 text-sm;
+        border-color: var(--ui-border-subtle-01);
+        background-color: transparent;
+        color: var(--ui-text-primary);
+    }
+
+    .ui-search-fluid .ui-search-readonly-value {
+        @apply mt-0 min-h-16 items-end pb-3;
+        background-color: var(--ui-field-01);
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-search-disabled .ui-search-icon,
+    .ui-search-loading .ui-search-icon,
+    .ui-search-disabled .ui-search-fluid-label,
+    .ui-search-loading .ui-search-fluid-label {
+        color: var(--ui-icon-disabled);
+    }
+
     .ui-searchable-select {
         @apply relative w-full;
     }

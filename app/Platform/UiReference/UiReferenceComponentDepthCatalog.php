@@ -22,7 +22,7 @@ class UiReferenceComponentDepthCatalog
             'number-input' => $this->inputs('number-input', 'Number input', 'Number input captures bounded numeric values with optional step controls.', 'number', ['Min/max/step', 'Increment/decrement', 'Error/warning icon', 'Disabled/read-only', 'Compact/fluid']),
             'date-picker' => $this->datePickerComponent(),
             'file-uploader' => $this->inputs('file-uploader', 'File uploader', 'File uploader collects one or more user-selected files through an accessible input.', 'file', ['Button upload', 'File validation', 'Disabled', 'Drag-drop deferred']),
-            'search' => $this->inputs('search', 'Search', 'Search captures free-entry keywords for page, table, or component scope.', 'search', ['Page search', 'Table search', 'Clear action', 'Loading/no-results']),
+            'search' => $this->searchComponent(),
             'multiselect' => $this->multiselectComponent(),
             'slider' => $this->sliderComponent(),
 
@@ -1126,6 +1126,90 @@ class UiReferenceComponentDepthCatalog
             'Keep `aria-selected`, `aria-controls`, and panel IDs synchronized.',
             'Do not rely on color alone; selected state also uses semantic attributes.',
             'Disabled options must not receive focus or change panels.',
+        ]);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function searchComponent(): array
+    {
+        return array_replace($this->correctedImplemented('search', 'Search', 'Search captures free-entry keywords for page, table, or component scope without owning result panels or structured filters.', [
+            $this->exampleFromSample('Page search', 'Page-scoped keyword entry with accessible label, placeholder, helper copy, and clear action.', ['type' => 'field', 'items' => [
+                ['type' => 'search', 'name' => 'search_page_users', 'label' => 'Search users', 'placeholder' => 'Search by name or email', 'helper' => 'Search applies to the current page region.'],
+            ]], [
+                $this->sampleVariant('Default page query', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Search users', 'placeholder' => 'Search by name or email']]]),
+                $this->sampleVariant('Clear action', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Search workspaces', 'value' => 'tenant']]]),
+            ]),
+            $this->exampleFromSample('Table search', 'Compact search can be composed into a table toolbar while the table pattern owns result count and filtering.', ['type' => 'field', 'items' => [
+                ['type' => 'search', 'name' => 'search_table_audit', 'label' => 'Search table', 'placeholder' => 'Search audit events', 'scope' => 'table', 'size' => 'sm', 'active' => true, 'results_region' => 'search-table-results'],
+            ]], [
+                $this->sampleVariant('Small table search', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Search table', 'scope' => 'table', 'size' => 'sm']]]),
+                $this->sampleVariant('Active search gate', ['type' => 'deferred', 'items' => [['label' => 'Active search requires debounce, status, and Pattern-owned result handling.']]], 'Gated', 'Do not render active result panels from the component alone.'),
+            ]),
+            $this->exampleFromSample('Component search', 'A fluid search field can fill a bounded component or panel region.', ['type' => 'field', 'items' => [
+                ['type' => 'search', 'name' => 'search_component_roles', 'label' => 'Search roles', 'placeholder' => 'Search roles', 'scope' => 'component', 'variant' => 'fluid'],
+            ]], [
+                $this->sampleVariant('Fluid search', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Search roles', 'variant' => 'fluid']]]),
+                $this->sampleVariant('Component scope', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Search roles', 'scope' => 'component']]]),
+            ]),
+            $this->exampleFromSample('Sizes and states', 'Small, medium, large, loading, disabled, and read-only states use the app field token contract.', ['type' => 'field', 'items' => [
+                ['type' => 'search', 'name' => 'search_size_sm', 'label' => 'Small search', 'size' => 'sm'],
+                ['type' => 'search', 'name' => 'search_size_md', 'label' => 'Medium search', 'size' => 'md'],
+                ['type' => 'search', 'name' => 'search_size_lg', 'label' => 'Large search', 'size' => 'lg'],
+            ]], [
+                $this->sampleVariant('Small', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Small search', 'size' => 'sm']]]),
+                $this->sampleVariant('Medium', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Medium search', 'size' => 'md']]]),
+                $this->sampleVariant('Large', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Large search', 'size' => 'lg']]]),
+                $this->sampleVariant('Loading search', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Loading search', 'state' => 'loading']]]),
+                $this->sampleVariant('Disabled', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Disabled search', 'state' => 'disabled']]]),
+                $this->sampleVariant('Read-only', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Read-only search', 'state' => 'readonly']]]),
+            ]),
+            $this->exampleFromSample('Validation search and no-results handoff', 'Field-level validation is distinct from no-results messaging, which belongs to the result region.', ['type' => 'field', 'items' => [
+                ['type' => 'search', 'name' => 'search_invalid', 'label' => 'Search audit events', 'value' => '?', 'state' => 'error'],
+                ['type' => 'search', 'name' => 'search_warning', 'label' => 'Search invoices', 'value' => 'all', 'state' => 'warning'],
+            ]], [
+                $this->sampleVariant('Validation search', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Search audit events', 'state' => 'error']]]),
+                $this->sampleVariant('No-results handoff', ['type' => 'deferred', 'items' => [['label' => 'Result region owns no-results guidance, not the field.']]], 'Pattern-owned', 'No-results is rendered by the result Pattern.'),
+            ]),
+        ], ['search field', 'search icon', 'query text', 'placeholder', 'clear button', 'label', 'helper or validation message', 'loading status'], [
+            'Use when users need free-keyword search for page, table, or component content.',
+            'Use placeholder text for a short hint, not as the accessible label.',
+            'Use Search with Patterns for result rendering, no-results states, and table filtering.',
+        ], [
+            'Do not use Search for ordinary text input, known-option selection, action menus, or structured filters.',
+            'Do not render suggestions, typeahead, recent searches, global shell search, or AI-assisted search without a Pattern or feature owner.',
+            'Do not create local clear-button scripts or raw search input chrome in feature views.',
+        ], [
+            'Enabled',
+            'Focus',
+            'Filled',
+            'Clear available',
+            'Loading',
+            'Disabled',
+            'Read-only',
+            'Error',
+            'Warning',
+            'Small',
+            'Medium',
+            'Large',
+            'Fluid',
+        ], [
+            'The clear button appears only when a query exists and clears on click or Escape.',
+            'Enter submits through the owning form when submit behavior is enabled.',
+            'Active search can dispatch debounced change events, but result panels and empty states remain Pattern-owned.',
+        ], [
+            'Labels name the search scope, such as Search users, Search table, or Search audit events.',
+            'Placeholders are short hints such as Search by name or email.',
+            'No-results copy belongs to the result region and should include a next step.',
+        ], [
+            'Search input uses native input[type=search] semantics with an accessible label.',
+            'The clear button is keyboard reachable and has an accessible name.',
+            'Escape clears the query when a clearable value exists.',
+            'Loading state identifies the related results region when asynchronous results update.',
+        ]), [
+            'live_examples_view' => 'platform.ui-reference.components.live-examples.search',
+            'live_examples_layout' => 'flexible-matrix',
         ]);
     }
 
@@ -2479,7 +2563,8 @@ class UiReferenceComponentDepthCatalog
                 'dropdown' => 'initDropdowns exported from resources/js/ui-controls/dropdowns.js',
                 'content-switcher' => 'initContentSwitchers exported from resources/js/ui-controls/content-switchers.js',
                 'checkbox' => 'initCheckboxes exported from resources/js/ui-controls/checkboxes.js',
-                'file-uploader', 'number-input', 'select', 'radio-button', 'toggle', 'inline-loading', 'loading', 'progress-bar', 'progress-indicator', 'tag', 'structured-list', 'tile', 'link', 'pagination', 'search', 'text-input', 'textarea' => 'No dedicated JavaScript controller required for the installed baseline API.',
+                'search' => 'initSearchControls exported from resources/js/ui-controls/search.js',
+                'file-uploader', 'number-input', 'select', 'radio-button', 'toggle', 'inline-loading', 'loading', 'progress-bar', 'progress-indicator', 'tag', 'structured-list', 'tile', 'link', 'pagination', 'text-input', 'textarea' => 'No dedicated JavaScript controller required for the installed baseline API.',
                 'tooltip', 'toggletip' => 'initDisclosureHelpers exported from resources/js/ui-controls.js where richer dismissal behavior is needed.',
                 'multiselect' => 'initMultiselects exported from resources/js/ui-controls/multiselects.js',
                 'popover' => 'initPopovers exported from resources/js/ui-controls/popovers.js',
@@ -2495,7 +2580,7 @@ class UiReferenceComponentDepthCatalog
                 'textarea' => 'ui-field, ui-field-label, ui-textarea, ui-field-helper, ui-field-error, ui-field-warning',
                 'link' => 'ui-link, ui-link-inline, ui-link-standalone, ui-link-sm, ui-link-md, ui-link-lg, ui-link-with-icon, ui-link-external, ui-link-unavailable',
                 'pagination' => 'ui-pagination-control, ui-select, data-ui-pagination-page-size',
-                'search' => 'ui-field, ui-field-label, ui-input, data-ui-search',
+                'search' => 'ui-search, ui-search-field, ui-search-input, ui-search-icon, ui-search-clear, ui-search-loading, data-ui-search',
                 'dropdown' => 'ui-dropdown, ui-dropdown-trigger, ui-dropdown-menu, ui-dropdown-option, ui-dropdown-sm, ui-dropdown-md, ui-dropdown-lg',
                 'file-uploader' => 'ui-field, ui-field-label, ui-input, data-ui-file-uploader',
                 'number-input' => 'ui-field, ui-field-label, ui-input',

@@ -626,7 +626,9 @@
         @break
 
         @case('list')
-            @php($listKind = $items[0]['kind'] ?? 'unordered')
+            @php
+                $listKind = $items[0]['kind'] ?? 'unordered';
+            @endphp
             @if ($listKind === 'ordered')
                 <ol class="ui-list ui-list-ordered">
                     <li>Review tenant identity.</li>

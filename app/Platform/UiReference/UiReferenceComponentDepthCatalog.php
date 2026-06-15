@@ -1246,11 +1246,32 @@ class UiReferenceComponentDepthCatalog
             $this->exampleFromSample('Basic contained list', 'A compact bounded list with title, description, and row metadata.', ['type' => 'contained-list', 'items' => [[
                 'title' => 'Workspace reviews',
                 'description' => 'Recent review checkpoints.',
+                'variant' => 'on-page',
+                'size' => 'lg',
                 'rows' => [
                     ['title' => 'Domain rules', 'description' => 'Routing policy ready', 'meta' => 'Reviewed', 'href' => '#', 'selected' => true],
                     ['title' => 'Security settings', 'description' => 'Owner approval pending', 'meta' => 'Pending'],
                 ],
             ]]], [
+                $this->sampleVariant('On-page list', ['type' => 'contained-list', 'items' => [[
+                    'title' => 'On-page list',
+                    'description' => 'Persistent bounded row group for a card or sidebar.',
+                    'variant' => 'on-page',
+                    'size' => 'lg',
+                    'rows' => [
+                        ['title' => 'Domain rules', 'description' => 'Persistent review item.', 'meta' => 'Ready'],
+                        ['title' => 'Security settings', 'description' => 'Persistent review item.', 'meta' => 'Pending'],
+                    ],
+                ]]]),
+                $this->sampleVariant('Disclosed list', ['type' => 'contained-list', 'items' => [[
+                    'title' => 'Disclosed list',
+                    'variant' => 'disclosed',
+                    'size' => 'lg',
+                    'rows' => [
+                        ['title' => 'Recent filters', 'description' => 'Compact row inside a temporary surface.', 'meta' => '3'],
+                        ['title' => 'Saved views', 'description' => 'Temporary-context row treatment.', 'meta' => '2'],
+                    ],
+                ]]]),
                 $this->sampleVariant('Selected row', ['type' => 'contained-list', 'items' => [[
                     'title' => 'Selected review',
                     'rows' => [
@@ -1261,6 +1282,103 @@ class UiReferenceComponentDepthCatalog
                     'title' => 'Actionable review',
                     'rows' => [
                         ['title' => 'Open review', 'description' => 'Rows may link when the entire item navigates.', 'href' => '#'],
+                    ],
+                ]]]),
+            ]),
+            $this->exampleFromSample('With icons', 'Non-interactive icons can help visually scan row category or row status.', ['type' => 'contained-list', 'items' => [[
+                'title' => 'Review signals',
+                'description' => 'Icons are decorative unless paired with status text.',
+                'inset_dividers' => true,
+                'rows' => [
+                    ['title' => 'Security alert', 'description' => 'Status icon is backed by row text.', 'meta' => 'Warning', 'status' => 'warning'],
+                    ['title' => 'Billing update', 'description' => 'Decorative row icon supports scanability.', 'meta' => 'Info', 'icon' => 'heroicon-o-credit-card'],
+                ],
+            ]]], [
+                $this->sampleVariant('With icons', ['type' => 'contained-list', 'items' => [[
+                    'title' => 'Icon rows',
+                    'rows' => [
+                        ['title' => 'Workspace', 'description' => 'Decorative icon before the row label.', 'icon' => 'heroicon-o-building-office'],
+                        ['title' => 'Completed check', 'description' => 'Semantic status remains visible in text.', 'status' => 'success', 'meta' => 'Complete'],
+                    ],
+                ]]]),
+            ]),
+            $this->exampleFromSample('With actions', 'Inline actions belong to the row and use approved button or icon-button APIs.', ['type' => 'contained-list', 'items' => [[
+                'title' => 'Invitations',
+                'rows' => [
+                    ['title' => 'laura@example.com', 'description' => 'Invited as Admin', 'meta' => 'Pending', 'actions' => [
+                        ['label' => 'Resend', 'semantic' => 'ghost', 'icon_only' => false],
+                        ['label' => 'Cancel invitation', 'icon' => 'heroicon-o-x-mark', 'semantic' => 'danger-ghost', 'icon_only' => true],
+                    ]],
+                    ['title' => 'sam@example.com', 'description' => 'Invited as Viewer', 'meta' => 'Pending', 'actions' => [
+                        ['label' => 'Resend', 'semantic' => 'ghost', 'icon_only' => false],
+                    ]],
+                ],
+            ]]], [
+                $this->sampleVariant('With actions', ['type' => 'contained-list', 'items' => [[
+                    'title' => 'Row actions',
+                    'rows' => [
+                        ['title' => 'Invite pending', 'description' => 'Row-owned actions sit at the end.', 'actions' => [
+                            ['label' => 'Resend', 'semantic' => 'ghost', 'icon_only' => false],
+                            ['label' => 'Cancel', 'icon' => 'heroicon-o-x-mark', 'semantic' => 'danger-ghost'],
+                        ]],
+                    ],
+                ]]]),
+            ]),
+            $this->exampleFromSample('With interactive items', 'Rows may be interactive when the whole row has one navigation target.', ['type' => 'contained-list', 'items' => [[
+                'title' => 'Related records',
+                'variant' => 'disclosed',
+                'rows' => [
+                    ['title' => 'Acme Tenant', 'description' => 'Open the tenant record.', 'href' => '#', 'current' => true],
+                    ['title' => 'Billing profile', 'description' => 'Open the billing record.', 'href' => '#'],
+                ],
+            ]]], [
+                $this->sampleVariant('With interactive items', ['type' => 'contained-list', 'items' => [[
+                    'title' => 'Linked rows',
+                    'rows' => [
+                        ['title' => 'Open workspace', 'description' => 'The whole row navigates.', 'href' => '#'],
+                    ],
+                ]]]),
+            ]),
+            $this->exampleFromSample('With interactive items and actions', 'When actions are present, controls own interaction instead of nesting controls inside a whole-row link.', ['type' => 'contained-list', 'items' => [[
+                'title' => 'Workspace tasks',
+                'rows' => [
+                    ['title' => 'Review domain', 'description' => 'Open details or dismiss the row-owned task.', 'meta' => 'Due today', 'actions' => [
+                        ['label' => 'Open', 'semantic' => 'ghost', 'icon_only' => false],
+                        ['label' => 'Dismiss task', 'icon' => 'heroicon-o-x-mark', 'semantic' => 'ghost'],
+                    ]],
+                    ['title' => 'Confirm owner', 'description' => 'Multiple row-owned controls remain aligned.', 'meta' => 'Waiting', 'actions' => [
+                        ['label' => 'Open', 'semantic' => 'ghost', 'icon_only' => false],
+                        ['label' => 'Archive task', 'icon' => 'heroicon-o-archive-box', 'semantic' => 'ghost'],
+                    ]],
+                ],
+            ]]], [
+                $this->sampleVariant('With interactive items and actions', ['type' => 'contained-list', 'items' => [[
+                    'title' => 'Interactive controls',
+                    'rows' => [
+                        ['title' => 'Review item', 'description' => 'Inline controls are the interaction target.', 'actions' => [
+                            ['label' => 'Open', 'semantic' => 'ghost', 'icon_only' => false],
+                            ['label' => 'Archive', 'icon' => 'heroicon-o-archive-box', 'semantic' => 'ghost'],
+                        ]],
+                    ],
+                ]]]),
+            ]),
+            $this->exampleFromSample('With list title decorators', 'List headers may include a decorative title icon and one compact header action.', ['type' => 'contained-list', 'items' => [[
+                'title' => 'Recent files',
+                'description' => 'Header action supports list-local search or filtering entry points.',
+                'title_icon' => 'heroicon-o-folder',
+                'header_action_label' => 'Search files',
+                'header_action_icon' => 'heroicon-o-magnifying-glass',
+                'rows' => [
+                    ['title' => 'Contract.pdf', 'description' => 'Uploaded today', 'meta' => 'PDF', 'icon' => 'heroicon-o-document-text'],
+                    ['title' => 'Renewal notes', 'description' => 'Updated yesterday', 'meta' => 'Doc', 'icon' => 'heroicon-o-document'],
+                ],
+            ]]], [
+                $this->sampleVariant('With list title decorators', ['type' => 'contained-list', 'items' => [[
+                    'title' => 'Decorated title',
+                    'title_icon' => 'heroicon-o-folder',
+                    'header_action_label' => 'Search list',
+                    'rows' => [
+                        ['title' => 'Decorated row', 'description' => 'Header icon and action are component-owned.'],
                     ],
                 ]]]),
             ]),
@@ -1281,26 +1399,37 @@ class UiReferenceComponentDepthCatalog
                     ],
                 ]]]),
             ]),
-        ], ['container', 'header', 'list body', 'item', 'title', 'description', 'metadata', 'empty/loading state'], [
+        ], ['container', 'header', 'list title', 'list title decorator', 'header action', 'list body', 'item', 'non-interactive icon', 'title', 'description', 'metadata', 'row action', 'row divider', 'empty/loading state'], [
             'Use inside panels, modals, and cards where a bounded list is clearer than a full table.',
             'Use when rows need short descriptions or metadata but not column comparison.',
+            'Use in small spaces or disclosure situations where related rows share the same content structure.',
         ], [
             'Do not use Contained list for sortable tabular data; use Data table.',
             'Do not use Contained list for body copy; use native List.',
+            'Do not nest row controls inside a whole-row link.',
         ], [
             'Default',
             'Hover',
             'Focus-visible',
+            'Active',
             'Selected',
             'Current',
             'Disabled',
             'Loading',
             'Empty',
+            'Info',
+            'Success',
+            'Warning',
+            'Error',
             'On-page',
             'Disclosed',
             'Elevated',
         ], [
             'Actionable rows navigate as a whole item.',
+            'Rows with actions are not rendered as whole-row links.',
+            'Inline actions use Button or Icon button APIs.',
+            'Non-interactive icons are decorative unless row status text supports them.',
+            'Inset row dividers are available when adjacent components would create converging rule lines.',
             'Selected and current rows use token-backed layer state.',
             'Loading and empty states are owned by the list container.',
         ], [

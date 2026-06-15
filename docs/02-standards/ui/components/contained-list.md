@@ -258,8 +258,14 @@ Use the empty state when a bounded list has no rows.
 | `labelledBy`                             | `string / null` | `null`                 | ID of external heading                | Optional                                                      | Use when a parent heading labels the list.                                      |
 | `items`                                  | `array / null`  | `null`                 | Item data contract entries            | Optional                                                      | Use for data-driven row rendering.                                              |
 | `variant`                                | `string` | `on-page` | `on-page`, `disclosed` | Optional                              | Defines surface treatment.                                    |
-| `size`                                   | `string` | `md`      | `sm`, `md`, `lg`       | Optional                              | Controls row density. Do not mix row sizes inside one list.   |
+| `size`                                   | `string` | `md`      | `sm`, `md`, `lg`, `xl` | Optional                              | Controls row density. Do not mix row sizes inside one list.   |
 | `description`                            | `string / null` | `null`                 | Short helper text                     | Optional                                                      | Use when the list purpose needs additional context.                             |
+| `titleIcon` / `title-icon`               | `string / null` | `null`                 | Approved Heroicon component name      | Optional                                                      | Decorative list-title icon. Must not replace title text.                        |
+| `headerActionLabel` / `header-action-label` | `string / null` | `null`              | Short accessible label                | Optional                                                      | Renders one compact header icon action for list-local search/filter entry points or similar actions. |
+| `headerActionIcon` / `header-action-icon` | `string / null` | `heroicon-o-magnifying-glass` | Approved Heroicon component name | Optional                                                      | Icon for the header action.                                                      |
+| `headerActionHref` / `header-action-href` | `string / null` | `null`              | URL / route                           | Optional                                                      | When provided, the header action is a link; otherwise it is a button.            |
+| `insetDividers` / `inset-dividers`       | `bool`   | `false`  | `true`, `false`        | Optional                              | Insets row dividers to avoid rule-line collisions near adjacent components.      |
+| `stickyHeader` / `sticky-header`         | `bool`   | `false`  | `true`, `false`        | Optional / constrained                | Use only when the parent context owns scrolling and keyboard/screen-reader behavior remains clear. |
 | `emptyTitle` / `empty-title`             | `string / null` | `null`                 | Short empty-state title               | Optional                                                      | Required when the list can be empty in normal use.                              |
 | `emptyDescription` / `empty-description` | `string / null` | `null`                 | Short empty-state body                | Optional                                                      | Explain how rows appear or what the user can do next.                           |
 | `loading`                                | `bool`   | `false`   | `true`, `false`        | Optional                              | Shows pending row state through approved loading composition. |
@@ -276,6 +282,7 @@ Use the empty state when a bounded list has no rows.
 | `href`         | `string / null` | `null`                                | Approved route/URL                      | Optional                                                   | Makes the row a single navigational target. Do not combine whole-row link with conflicting nested controls. |
 | `icon`         | `string / null` | `null`                                | Approved Heroicon alias/component       | Optional                                                   | Decorative by default unless status semantics require text support.                                         |
 | `status`       | `string / null` | `null`                                | `info`, `success`, `warning`, `error`   | Optional                                                   | Use for real semantic state only.                                                                           |
+| `actionItems` / item `actions` | `array` | `[]`                                  | Approved row action entries             | Optional                                                   | Data-driven row actions render Button or Icon button APIs. Rows with actions are not whole-row links.       |
 | `current`      | `bool`     | `false` | `true`, `false`                       | Optional                                | Marks the current row within this list context.            |
 | `selected`     | `bool`     | `false` | `true`, `false`                       | Optional                                | Use only when the contained list owns row selection.       |
 | `disabled`     | `bool`     | `false` | `true`, `false`                       | Optional                                | Use when the row or row action may become available later. |
@@ -310,11 +317,15 @@ Any option not listed here is not public. If a feature needs another contained-l
 | Small rows               | Size              | Implemented | `size="sm"`                                      | Dense sidebars, compact panels, and short metadata rows.                |
 | Medium rows              | Size              | Implemented | `size="md"`                                      | Default row density.                                                    |
 | Large rows               | Size              | Implemented | `size="lg"`                                      | Rows with more readable secondary detail.                               |
+| Extra large rows         | Size              | Implemented | `size="xl"`                                      | On-page rows that need 64px row height for richer but still concise content. |
 | Read-only rows           | Mode              | Implemented | No `href` or actions                             | Static row list.                                                        |
 | Linked rows              | Mode              | Implemented | `href`                                           | Whole row is one navigational target.                                   |
 | Inline row actions       | Composition       | Implemented | `actions` slot                                   | Use Button/Icon button/Menu APIs.                                       |
+| Data-driven row actions  | Composition       | Implemented | item `actions` / `actionItems`                   | Renders approved Button/Icon button controls from row data.             |
 | Row icons                | Composition       | Implemented | `icon`                                           | Decorative or status-supported icons only.                              |
+| List title decorators    | Composition       | Implemented | `titleIcon`, `headerActionLabel`                 | Header title icon plus one compact header action.                       |
 | Row metadata             | Composition       | Implemented | `meta`                                           | Dates, counts, short labels, or compact secondary details.              |
+| Inset row dividers       | Modifier          | Implemented | `insetDividers`                                  | Use where extended dividers would collide visually with nearby rules.   |
 | Empty state              | State/composition | Implemented | `emptyTitle`, `emptyDescription`                 | Do not render blank bounded surfaces.                                   |
 | List-level status        | State             | Implemented | `status`                                         | Use only for actual list state.                                         |
 | Row-level status         | State             | Implemented | item `status`                                    | Use only for actual row state.                                          |
@@ -384,9 +395,13 @@ Allowed component classes use the app-owned `ui-*` namespace documented by the i
 .ui-contained-list-on-page
 .ui-contained-list-disclosed
 .ui-contained-list-header
+.ui-contained-list-header-actions
+.ui-contained-list-header-sticky
 .ui-contained-list-title
+.ui-contained-list-title-icon
 .ui-contained-list-description
 .ui-contained-list-body
+.ui-contained-list-inset-dividers
 .ui-contained-list-item
 .ui-contained-list-item-link
 .ui-contained-list-item-content
@@ -549,9 +564,13 @@ The Contained list page must render production examples through the documented A
 | Disclosed contained list  | A compact list renders inside a drawer/disclosure/elevated context without redefining overlay styles.                                                          | Disclosed, Small rows, Compact content         |
 | Linked rows               | Whole-row links render with native link behavior and visible focus.                                                                                            | Linked row, Hover, Focus-visible, Active       |
 | Row actions               | Rows render approved Button/Icon button actions without nested interactive conflicts.                                                                          | Row actions, Icon button, Disabled action      |
+| Row icons                 | Rows render non-interactive icons and status icons through approved icon APIs with supporting text.                                                            | With icons, Status icons                       |
+| Interactive items and actions | Rows with actions render controls as the interaction target instead of nesting controls inside a whole-row link.                                           | With interactive items and actions             |
+| List title decorators     | Header title decorators and one compact header action render through approved icon/button APIs.                                                               | With list title decorators                     |
+| Inset row dividers        | Inset row dividers are available when adjacent components would otherwise create converging rule lines.                                                        | Inset dividers                                 |
 | Status rows               | Row-level and list-level semantic states render with text plus icon/state treatment.                                                                           | Info, Success, Warning, Error                  |
 | Empty and loading states  | Empty and loading examples preserve title/context and avoid fake blank rows.                                                                                   | Empty, Loading                                 |
-| Size scale                | Approved row sizes render with consistent density.                                                                                                             | Small, Medium, Large                           |
+| Size scale                | Approved row sizes render with consistent density.                                                                                                             | Small, Medium, Large, Extra large              |
 | Accessibility example     | The page demonstrates labeling, keyboard order, focus visibility, icon labeling, and non-color status cues.                                                    | Labelled list, Keyboard order, Icon labels     |
 | Selection and current row | The page documents current row behavior and gates selection unless a feature has an approved model.                                                            | Current, Selected gated                        |
 | Alternatives matrix       | The page distinguishes Contained list from List, Structured list, Data table, Tile/Card composition, Accordion, Tree view, and Navigation.                     | Selection guidance                             |

@@ -3870,11 +3870,16 @@ Use targeted searches for the class family being changed before reading this fil
 
     .ui-contained-list {
         @apply overflow-hidden rounded-lg border;
+        --ui-contained-list-header-min-height: 2rem;
+        --ui-contained-list-row-min-height: 2.5rem;
+        --ui-contained-list-divider-inset: 0;
         border-color: var(--ui-border-subtle-01);
         background-color: var(--ui-layer-01);
     }
 
     .ui-contained-list[data-ui-contained-list-variant='disclosed'] {
+        --ui-contained-list-header-min-height: 2rem;
+        --ui-contained-list-row-min-height: 3rem;
         background-color: var(--ui-layer-02);
     }
 
@@ -3884,13 +3889,28 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-contained-list-header {
-        @apply border-b px-4 py-3;
+        @apply flex items-center justify-between gap-3 px-4;
+        min-height: var(--ui-contained-list-header-min-height);
         border-color: var(--ui-border-subtle-01);
     }
 
+    .ui-contained-list-header-sticky {
+        @apply sticky top-0 z-10;
+        background-color: inherit;
+    }
+
+    .ui-contained-list-header-content {
+        @apply min-w-0;
+    }
+
     .ui-contained-list-title {
-        @apply text-sm font-semibold;
+        @apply flex min-w-0 items-center gap-2 text-sm font-semibold;
         color: var(--ui-text-primary);
+    }
+
+    .ui-contained-list-title-icon {
+        @apply h-4 w-4 shrink-0;
+        color: var(--ui-icon-primary);
     }
 
     .ui-contained-list-description {
@@ -3898,22 +3918,60 @@ Use targeted searches for the class family being changed before reading this fil
         color: var(--ui-text-secondary);
     }
 
+    .ui-contained-list[data-ui-contained-list-variant='disclosed'] .ui-contained-list-title {
+        @apply text-xs font-normal;
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-contained-list-header-actions {
+        @apply flex shrink-0 items-center gap-2;
+    }
+
     .ui-contained-list-body {
-        @apply divide-y;
         border-color: var(--ui-border-subtle-01);
     }
 
     .ui-contained-list-item {
-        @apply flex items-start justify-between gap-4 px-4 py-3 text-left transition;
+        @apply relative flex items-start justify-between gap-4 px-4 py-2 text-left transition;
+        min-height: var(--ui-contained-list-row-min-height);
         color: var(--ui-text-primary);
     }
 
+    .ui-contained-list-item + .ui-contained-list-item {
+        border-top: 1px solid var(--ui-border-subtle-01);
+    }
+
+    .ui-contained-list-inset-dividers {
+        --ui-contained-list-divider-inset: 3rem;
+    }
+
+    .ui-contained-list-inset-dividers .ui-contained-list-item + .ui-contained-list-item {
+        border-top: 0;
+    }
+
+    .ui-contained-list-inset-dividers .ui-contained-list-item + .ui-contained-list-item::before {
+        content: '';
+        position: absolute;
+        inset-inline-start: var(--ui-contained-list-divider-inset);
+        inset-inline-end: 0;
+        inset-block-start: 0;
+        border-top: 1px solid var(--ui-border-subtle-01);
+    }
+
     .ui-contained-list[data-ui-contained-list-size='sm'] .ui-contained-list-item {
-        @apply px-3 py-2;
+        --ui-contained-list-row-min-height: 2rem;
     }
 
     .ui-contained-list[data-ui-contained-list-size='lg'] .ui-contained-list-item {
-        @apply px-5 py-4;
+        --ui-contained-list-row-min-height: 3rem;
+    }
+
+    .ui-contained-list[data-ui-contained-list-size='xl'] .ui-contained-list-header {
+        --ui-contained-list-header-min-height: 3rem;
+    }
+
+    .ui-contained-list[data-ui-contained-list-size='xl'] .ui-contained-list-item {
+        --ui-contained-list-row-min-height: 4rem;
     }
 
     a.ui-contained-list-item:hover,
@@ -3935,8 +3993,37 @@ Use targeted searches for the class family being changed before reading this fil
         background-color: var(--ui-layer-selected-01);
     }
 
+    .ui-contained-list-item[aria-current='page'] {
+        box-shadow: inset 3px 0 0 var(--ui-border-interactive);
+    }
+
+    .ui-contained-list-item-icon {
+        @apply mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center;
+        color: var(--ui-icon-primary);
+    }
+
+    .ui-contained-list-item-icon-svg {
+        @apply h-4 w-4;
+    }
+
+    .ui-contained-list-status-success .ui-contained-list-item-icon {
+        color: var(--ui-support-success);
+    }
+
+    .ui-contained-list-status-warning .ui-contained-list-item-icon {
+        color: var(--ui-support-warning);
+    }
+
+    .ui-contained-list-status-error .ui-contained-list-item-icon {
+        color: var(--ui-support-error);
+    }
+
+    .ui-contained-list-status-info .ui-contained-list-item-icon {
+        color: var(--ui-link-primary);
+    }
+
     .ui-contained-list-item-content {
-        @apply grid min-w-0 gap-1;
+        @apply grid min-w-0 flex-1 gap-1;
     }
 
     .ui-contained-list-item-title {
@@ -3947,6 +4034,14 @@ Use targeted searches for the class family being changed before reading this fil
     .ui-contained-list-item-meta {
         @apply text-sm;
         color: var(--ui-text-secondary);
+    }
+
+    .ui-contained-list-item-actions {
+        @apply flex shrink-0 items-center gap-1;
+    }
+
+    .ui-contained-list-item-actions .ui-action {
+        @apply min-h-8;
     }
 
     .ui-contained-list-state {

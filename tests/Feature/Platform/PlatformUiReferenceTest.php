@@ -2088,10 +2088,20 @@ class PlatformUiReferenceTest extends TestCase
                 'data-ui-component="contained-list-item"',
                 'Basic contained list',
                 'Contained list states',
+                'On-page list',
+                'Disclosed list',
+                'With icons',
+                'With actions',
+                'With interactive items',
+                'With interactive items and actions',
+                'With list title decorators',
                 'Selected row',
                 'Actionable row',
                 'Loading',
                 'Empty',
+                'data-ui-contained-list-inset-dividers="true"',
+                'ui-contained-list-item-actions',
+                'ui-contained-list-title-icon',
             ],
             'list' => [
                 'Native ul/ol/li with ui-list classes',
@@ -2166,6 +2176,30 @@ class PlatformUiReferenceTest extends TestCase
                 $response->assertSee($needle, false);
             }
         }
+
+        $containedListView = file_get_contents(resource_path('views/components/ui/contained-list.blade.php'));
+        $containedListItemView = file_get_contents(resource_path('views/components/ui/contained-list-item.blade.php'));
+        $sampleView = file_get_contents(resource_path('views/platform/ui-reference/components/examples/sample.blade.php'));
+        $componentCss = file_get_contents(resource_path('css/app.css'));
+        $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
+        $standard = file_get_contents(base_path('docs/02-standards/ui/components/contained-list.md'));
+
+        $this->assertStringContainsString("'titleIcon' => null", $containedListView);
+        $this->assertStringContainsString("'headerActionLabel' => null", $containedListView);
+        $this->assertStringContainsString("'insetDividers' => false", $containedListView);
+        $this->assertStringContainsString("'stickyHeader' => false", $containedListView);
+        $this->assertStringContainsString("'actionItems' => []", $containedListItemView);
+        $this->assertStringContainsString('ui-contained-list-item-actions', $containedListItemView);
+        $this->assertStringContainsString('data-ui-contained-list-item-interactive="{{ $hasActions ? \'true\' : \'false\' }}"', $containedListItemView);
+        $this->assertStringContainsString(':title-icon="$item[\'title_icon\'] ?? null"', $sampleView);
+        $this->assertStringContainsString(':header-action-label="$item[\'header_action_label\'] ?? null"', $sampleView);
+        $this->assertStringContainsString(':inset-dividers="$item[\'inset_dividers\'] ?? false"', $sampleView);
+        $this->assertStringContainsString('.ui-contained-list-inset-dividers', $componentCss);
+        $this->assertStringContainsString('.ui-contained-list-item-actions', $componentCss);
+        $this->assertStringContainsString('.ui-contained-list-title-icon', $componentCss);
+        $this->assertStringContainsString("'With interactive items and actions'", $catalog);
+        $this->assertStringContainsString('List title decorators', $standard);
+        $this->assertStringContainsString('Extra large rows', $standard);
     }
 
     public function test_remaining_component_recovery_pages_render_canonical_api_proof(): void

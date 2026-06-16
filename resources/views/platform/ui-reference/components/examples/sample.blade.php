@@ -307,15 +307,31 @@
                             @class(['is-focus' => $state === 'focus'])
                         />
                     @else
-                        <label class="block" for="{{ $fieldId }}" data-ui-component="{{ ($item['type'] ?? 'text') === 'textarea' ? 'textarea' : 'text-input' }}">
-                            <span class="text-sm font-semibold" style="color: var(--ui-text-primary);">{{ $item['label'] }}</span>
-                            @if (($item['type'] ?? 'text') === 'textarea')
-                            <textarea id="{{ $fieldId }}" class="{{ $controlClass }} mt-2" @readonly($state === 'readonly') @disabled($state === 'disabled') @if ($state === 'error') aria-invalid="true" @endif>{{ $item['value'] }}</textarea>
-                            @else
-                                <input id="{{ $fieldId }}" type="{{ $item['type'] ?? 'text' }}" value="{{ $item['value'] }}" class="{{ $controlClass }} ui-text-input mt-2" @readonly($state === 'readonly') @disabled($state === 'disabled') @if ($state === 'error') aria-invalid="true" @endif>
-                            @endif
-                            <span class="mt-1 block text-xs" style="color: {{ $state === 'error' ? 'var(--ui-text-error)' : 'var(--ui-text-helper)' }};">{{ $state === 'error' ? 'Resolve this field before saving.' : 'Helper text stays visible and concise.' }}</span>
-                        </label>
+                        <x-ui.text-input
+                            :id="$fieldId"
+                            :name="$item['name'] ?? Str::slug($item['label'] ?? 'field', '_')"
+                            :label="$item['label']"
+                            :type="$item['type'] ?? 'text'"
+                            :variant="$item['variant'] ?? (($item['type'] ?? 'text') === 'textarea' ? 'textarea' : (($item['type'] ?? 'text') === 'password' ? 'password' : 'text'))"
+                            :style="$item['style'] ?? ($item['fluid'] ?? false ? 'fluid' : 'default')"
+                            :size="$item['size'] ?? 'md'"
+                            :value="$item['value'] ?? ''"
+                            :placeholder="$item['placeholder'] ?? null"
+                            :helper="$item['helper'] ?? 'Helper text stays visible and concise.'"
+                            :error="$state === 'error' ? ($item['error'] ?? 'Resolve this field before saving.') : null"
+                            :warning="$state === 'warning' ? ($item['warning'] ?? 'Review this value before saving.') : null"
+                            :disabled="$state === 'disabled'"
+                            :readonly="$state === 'readonly'"
+                            :required="$item['required'] ?? false"
+                            :optional="$item['optional'] ?? false"
+                            :skeleton="$state === 'loading' || ($item['skeleton'] ?? false)"
+                            :rows="$item['rows'] ?? 4"
+                            :maxlength="$item['maxlength'] ?? null"
+                            :maxwords="$item['maxwords'] ?? null"
+                            :counter="$item['counter'] ?? null"
+                            :password-visible="$item['password_visible'] ?? false"
+                            @class(['is-focus' => $state === 'focus'])
+                        />
                     @endif
                 @endforeach
             </div>

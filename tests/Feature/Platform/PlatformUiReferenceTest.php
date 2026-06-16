@@ -1115,7 +1115,7 @@ class PlatformUiReferenceTest extends TestCase
             'menu' => ['Contextual action menu', 'Row action menu', 'Danger item', 'Divided groups', 'Submenu actions', 'data-ui-reference-sample-type="menu"'],
             'menu-buttons' => ['Variant purpose matrix', 'Base options', 'Trigger style matrix', 'Size scale', 'Placement and width behavior', 'States and keyboard behavior', 'data-component-live-layout="menu-buttons-matrix"'],
             'tooltip' => ['Anatomy', 'Placement and alignment', 'Sizing and structure', 'Behavior and accessibility', 'Content', 'Related overlays', 'data-component-live-layout="tooltip-matrix"'],
-            'text-input' => ['Login form field', 'Settings form field', 'Validation field', 'Read-only field', 'Disabled field', 'data-ui-reference-sample-type="field"'],
+            'text-input' => ['Text input', 'Password input', 'Text area', 'Default and fluid styles', 'Text area features', 'Password features', 'data-component-live-layout="text-input-matrix"'],
             'number-input' => ['Min/max/step', 'Increment/decrement', 'Error/warning icon', 'Compact/fluid', 'data-ui-reference-sample-type="field"'],
             'checkbox' => ['Independent choice', 'Multi-select group', 'Nested group', 'Group states', 'Overflow and alignment', 'data-component-live-layout="checkbox-matrix"'],
             'radio-button' => ['Vertical radio group', 'Horizontal radio group', 'Selected and unselected', 'Group states', 'Overflow and alignment', 'Inline table radio', 'data-ui-reference-sample-type="selection"'],
@@ -2018,6 +2018,80 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('status: implemented-pending-review', $standard);
         $this->assertStringContainsString('Global shell search', $standard);
         $this->assertStringContainsString('Search suggestions', $standard);
+    }
+
+    public function test_text_input_component_page_renders_installed_family_examples(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $response = $this->get('/platform/ui-reference/components/text-input')
+            ->assertOk()
+            ->assertSee('x-ui.text-input')
+            ->assertSee('data-component-live-layout="text-input-matrix"', false)
+            ->assertSee('data-ui-reference-sample-type="text-input"', false)
+            ->assertSee('Text input')
+            ->assertSee('Password input')
+            ->assertSee('Text area')
+            ->assertSee('Default and fluid styles')
+            ->assertSee('Sizes')
+            ->assertSee('States')
+            ->assertSee('Text area features')
+            ->assertSee('Password features')
+            ->assertSee('data-ui-text-input-kind="text"', false)
+            ->assertSee('data-ui-text-input-kind="password"', false)
+            ->assertSee('data-ui-text-input-kind="textarea"', false)
+            ->assertSee('data-ui-text-input-style="fluid"', false)
+            ->assertSee('data-ui-text-input-size="sm"', false)
+            ->assertSee('data-ui-text-input-size="md"', false)
+            ->assertSee('data-ui-text-input-size="lg"', false)
+            ->assertSee('data-ui-password-toggle', false)
+            ->assertSee('aria-pressed="false"', false)
+            ->assertSee('aria-invalid="true"', false)
+            ->assertSee('data-ui-field-warning="true"', false)
+            ->assertSee('data-ui-textarea-counter="characters"', false)
+            ->assertSee('data-ui-textarea-counter="words"', false)
+            ->assertSee('aria-busy="true"', false)
+            ->assertDontSee('Dedicated Blade component    | Not public')
+            ->assertDontSee('password reveal controls')
+            ->assertDontSee('multi-line text entry');
+
+        $content = $response->getContent();
+        $this->assertStringContainsString('Show password', $content);
+        $this->assertStringContainsString('Hide password', $content);
+
+        $componentView = file_get_contents(resource_path('views/components/ui/text-input.blade.php'));
+        $componentCss = file_get_contents(resource_path('css/app.css'));
+        $componentJs = file_get_contents(resource_path('js/ui-controls/text-inputs.js'));
+        $uiControls = file_get_contents(resource_path('js/ui-controls.js'));
+        $appJs = file_get_contents(resource_path('js/app.js'));
+        $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
+        $overviewCatalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentCatalog.php'));
+        $standard = file_get_contents(base_path('docs/02-standards/ui/components/text-input.md'));
+        $liveExamples = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/text-input.blade.php'));
+
+        $this->assertStringContainsString("'variant' => 'text'", $componentView);
+        $this->assertStringContainsString("'style' => 'default'", $componentView);
+        $this->assertStringContainsString("'size' => 'md'", $componentView);
+        $this->assertStringContainsString('data-ui-password-toggle', $componentView);
+        $this->assertStringContainsString('data-ui-text-input-control', $componentView);
+        $this->assertStringContainsString('ui-text-input-status-icon-error', $componentView);
+        $this->assertStringContainsString('ui-text-input-counter', $componentView);
+        $this->assertStringContainsString('.ui-text-input-component', $componentCss);
+        $this->assertStringContainsString('.ui-text-input-style-fluid .ui-text-input-control', $componentCss);
+        $this->assertStringContainsString('min-block-size: 4rem;', $componentCss);
+        $this->assertStringContainsString('.ui-text-input-password-toggle', $componentCss);
+        $this->assertStringContainsString('.ui-text-input-counter', $componentCss);
+        $this->assertStringContainsString('initTextInputs', $componentJs);
+        $this->assertStringContainsString("input.type = input.type === 'password' ? 'text' : 'password';", $componentJs);
+        $this->assertStringContainsString('export { initTextInputs }', $uiControls);
+        $this->assertStringContainsString('initTextInputs', $appJs);
+        $this->assertStringContainsString("'live_examples_view' => 'platform.ui-reference.components.live-examples.text-input'", $catalog);
+        $this->assertStringContainsString("'text-input', 'Text input', 'Inputs', 'Implemented Pending Review'", $overviewCatalog);
+        $this->assertStringContainsString('Text input is the component family for free-form user-entered content.', $standard);
+        $this->assertStringContainsString('Password input hides characters by default.', $standard);
+        $this->assertStringContainsString('Text area has variable height and includes a resize handle by default.', $standard);
+        $this->assertStringContainsString('data-text-input-live-section="textarea-features"', $liveExamples);
+        $this->assertStringContainsString('data-text-input-live-section="password-features"', $liveExamples);
     }
 
     public function test_deferred_component_pages_show_trigger_conditions_instead_of_complete_ui(): void
@@ -3311,11 +3385,14 @@ class PlatformUiReferenceTest extends TestCase
                 'Group states',
             ],
             'text-input' => [
-                'Native input[type=text/email/password/search/url/tel] with ui-field and ui-text-input classes',
+                'x-ui.text-input',
                 'data-ui-component="text-input"',
-                'ui-text-input',
-                'Login form field',
-                'Validation field',
+                'data-ui-text-input-kind="text"',
+                'data-ui-text-input-kind="password"',
+                'data-ui-text-input-kind="textarea"',
+                'Default and fluid styles',
+                'Text area features',
+                'Password features',
             ],
             'data-table' => [
                 'x-ui.data-table',

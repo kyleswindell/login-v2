@@ -15,7 +15,7 @@ class UiReferenceComponentDepthCatalog
             'menu' => $this->menuComponent(),
             'menu-buttons' => $this->menuButtonsComponent(),
 
-            'text-input' => $this->inputs('text-input', 'Text input', 'Single-line free-entry text fields capture short user-provided values.', 'text', ['Login form field', 'Settings form field', 'Validation field', 'Read-only field', 'Disabled field']),
+            'text-input' => $this->textInputComponent(),
             'textarea' => $this->inputs('textarea', 'Textarea', 'Textarea captures longer user-entered copy with visible multiline affordance.', 'textarea', ['Settings form field', 'Validation field', 'Read-only field', 'Disabled field']),
             'select' => $this->selectComponent(),
             'dropdown' => $this->dropdownComponent(),
@@ -911,6 +911,82 @@ class UiReferenceComponentDepthCatalog
             'Do not use custom field chrome when the native control satisfies the workflow.',
         ], [
             'Default, hover-capable, focus-visible, disabled, read-only, helper, error, warning, and loading where applicable.',
+        ]);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function textInputComponent(): array
+    {
+        return array_replace($this->correctedImplemented('text-input', 'Text input', 'Text input captures single-line text, private password values, and multi-line text area content through one field family.', [
+            $this->exampleFromSample('Text input', 'Single-line free-form text input for values that cannot be predicted with preset options.', ['type' => 'field', 'items' => [
+                ['label' => 'Workspace name', 'type' => 'text', 'value' => 'North region'],
+            ]], [
+                $this->sampleVariant('Default text input', ['type' => 'field', 'items' => [['label' => 'Workspace name', 'type' => 'text', 'value' => 'North region']]]),
+                $this->sampleVariant('Fluid text input', ['type' => 'field', 'items' => [['label' => 'Email address', 'type' => 'email', 'value' => 'owner@example.com', 'style' => 'fluid']]]),
+            ]),
+            $this->exampleFromSample('Password input', 'Password input hides characters by default and exposes a separate visibility toggle target.', ['type' => 'field', 'items' => [
+                ['label' => 'Password', 'type' => 'password', 'value' => 'CorrectHorse2'],
+            ]], [
+                $this->sampleVariant('Fluid password input', ['type' => 'field', 'items' => [['label' => 'Password', 'type' => 'password', 'value' => 'CorrectHorse2', 'style' => 'fluid']]]),
+                $this->sampleVariant('Password error', ['type' => 'field', 'items' => [['label' => 'Password', 'type' => 'password', 'value' => 'short', 'state' => 'error']]]),
+            ]),
+            $this->exampleFromSample('Text area', 'Text area captures multi-line comments, notes, descriptions, and message-style content.', ['type' => 'field', 'items' => [
+                ['label' => 'Description', 'type' => 'textarea', 'value' => 'Document the operational context.'],
+            ]], [
+                $this->sampleVariant('Fluid text area', ['type' => 'field', 'items' => [['label' => 'Comments', 'type' => 'textarea', 'value' => 'Longer notes remain editable.', 'style' => 'fluid']]]),
+                $this->sampleVariant('Character counter', ['type' => 'field', 'items' => [['label' => 'Summary', 'type' => 'textarea', 'value' => 'Initial summary', 'maxlength' => 120, 'counter' => 'characters']]]),
+            ]),
+            $this->exampleFromSample('States and validation', 'All text input family members support helper, focus, error, warning, disabled, read-only, and skeleton states.', ['type' => 'field', 'items' => [
+                ['label' => 'Focused field', 'type' => 'text', 'value' => 'Focused value', 'state' => 'focus'],
+                ['label' => 'Validation field', 'type' => 'text', 'value' => '', 'state' => 'error'],
+                ['label' => 'Warning field', 'type' => 'text', 'value' => 'Review value', 'state' => 'warning'],
+            ]], [
+                $this->sampleVariant('Disabled', ['type' => 'field', 'items' => [['label' => 'Disabled field', 'type' => 'text', 'value' => 'Unavailable', 'state' => 'disabled']]]),
+                $this->sampleVariant('Read-only', ['type' => 'field', 'items' => [['label' => 'Read-only field', 'type' => 'text', 'value' => 'Read-only value', 'state' => 'readonly']]]),
+                $this->sampleVariant('Skeleton', ['type' => 'field', 'items' => [['label' => 'Skeleton field', 'type' => 'text', 'state' => 'loading']]]),
+            ]),
+        ], ['label', 'field shell', 'text control', 'password visibility toggle', 'textarea resize handle', 'helper or validation message', 'status icon', 'counter'], [
+            'Use for free-form values that cannot be predicted with preset options.',
+            'Use Password input for private values and Text area for content that may span multiple lines.',
+        ], [
+            'Do not use Text input when users must choose from a predefined option set.',
+            'Do not replace a required label with placeholder text.',
+        ], [
+            'Text input',
+            'Password input',
+            'Text area',
+            'Default style',
+            'Fluid style',
+            'Small',
+            'Medium',
+            'Large',
+            'Enabled',
+            'Focus',
+            'Error',
+            'Warning',
+            'Disabled',
+            'Read-only',
+            'Skeleton',
+        ], [
+            'Default labels and helper text sit outside the field.',
+            'Fluid labels sit inside the field and helper text is exposed through tooltip semantics.',
+            'Password visibility is controlled by a separate button target.',
+            'Text area counters and resize behavior remain component-owned.',
+        ], [
+            'Use short sentence-case labels without trailing colons.',
+            'Helper text should provide useful guidance and is replaced by error or warning copy when active.',
+            'Placeholder text may provide examples but must not contain crucial information.',
+        ], [
+            'Labels remain programmatically associated with the control.',
+            'Error states use `aria-invalid` and associated message text.',
+            'Password toggles expose `aria-pressed` and accessible show/hide labels.',
+        ]), [
+            'status' => 'Implemented - pending manual review',
+            'current_decision' => 'Text input now owns text, password, and textarea variants through the installed x-ui.text-input API, including default/fluid styles, validation, counters, skeleton, and password reveal behavior.',
+            'live_examples_layout' => 'flexible-matrix',
+            'live_examples_view' => 'platform.ui-reference.components.live-examples.text-input',
         ]);
     }
 
@@ -2944,7 +3020,7 @@ class UiReferenceComponentDepthCatalog
             'breadcrumb' => 'x-ui.breadcrumb',
             'button' => 'x-ui.button / x-ui.icon-button',
             'code-snippet' => 'x-ui.code-snippet',
-            'text-input' => 'Native input[type=text/email/password/search/url/tel] with ui-field and ui-text-input classes',
+            'text-input' => 'x-ui.text-input',
             'textarea' => 'Native textarea with ui-field and ui-textarea classes',
             'link' => 'x-ui.link',
             'pagination' => 'x-ui.pagination',

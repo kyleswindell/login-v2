@@ -4176,6 +4176,11 @@ Use targeted searches for the class family being changed before reading this fil
         color: var(--ui-support-error);
     }
 
+    .ui-field-label-indicator {
+        font-weight: 400;
+        color: var(--ui-text-secondary);
+    }
+
     .ui-field-helper,
     .ui-field-error,
     .ui-field-warning {
@@ -4192,6 +4197,218 @@ Use targeted searches for the class family being changed before reading this fil
 
     .ui-field-warning {
         color: var(--ui-support-warning);
+    }
+
+    .ui-text-input-component {
+        @apply min-w-0;
+    }
+
+    .ui-text-input-shell {
+        @apply relative mt-2;
+        background-color: var(--ui-field-01);
+    }
+
+    .ui-text-input-control {
+        @apply w-full border-0 border-b text-sm transition focus:outline-none;
+        box-sizing: border-box;
+        min-block-size: 2.5rem;
+        border-color: var(--ui-border-strong-01);
+        border-radius: 0;
+        background-color: var(--ui-field-01);
+        color: var(--ui-text-primary);
+        padding-inline: 1rem;
+    }
+
+    .ui-text-input-control::placeholder {
+        color: var(--ui-text-placeholder);
+    }
+
+    .ui-text-input-size-sm .ui-text-input-control {
+        min-block-size: 2rem;
+    }
+
+    .ui-text-input-size-md .ui-text-input-control {
+        min-block-size: 2.5rem;
+    }
+
+    .ui-text-input-size-lg .ui-text-input-control {
+        min-block-size: 3rem;
+    }
+
+    .ui-text-input-kind-password .ui-text-input-control {
+        padding-inline-end: 4rem;
+    }
+
+    .ui-text-input-invalid .ui-text-input-control,
+    .ui-text-input-warning .ui-text-input-control {
+        padding-inline-end: 2.75rem;
+    }
+
+    .ui-text-input-kind-password.ui-text-input-invalid .ui-text-input-control,
+    .ui-text-input-kind-password.ui-text-input-warning .ui-text-input-control {
+        padding-inline-end: 6.25rem;
+    }
+
+    .ui-text-input-kind-textarea .ui-text-input-control {
+        min-block-size: 2.5rem;
+        padding-block: 0.6875rem;
+        resize: vertical;
+        overflow-y: auto;
+    }
+
+    .ui-text-input-kind-textarea .ui-text-input-control[data-ui-textarea-resize='none'] {
+        resize: none;
+    }
+
+    .ui-text-input-style-fluid .ui-text-input-shell {
+        @apply mt-0;
+        min-block-size: 4rem;
+        border: 1px solid transparent;
+        border-block-end-color: var(--ui-border-strong-01);
+    }
+
+    .ui-text-input-style-fluid .ui-field-label {
+        @apply pointer-events-none relative z-10 mb-0 block px-4 pt-2 text-xs font-normal;
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-text-input-style-fluid .ui-text-input-control {
+        min-block-size: 4rem;
+        border-block-end: 0;
+        background-color: transparent;
+        padding-block-start: 1.25rem;
+    }
+
+    .ui-text-input-style-fluid.ui-text-input-kind-textarea .ui-text-input-control {
+        min-block-size: 5.5rem;
+        padding-block-start: 0.5rem;
+    }
+
+    .ui-text-input-control:hover:not(:disabled):not([readonly]) {
+        background-color: var(--ui-field-hover-01);
+    }
+
+    .ui-text-input-control:focus,
+    .ui-text-input-control:focus-visible,
+    .ui-text-input-component.is-focus .ui-text-input-control,
+    .ui-text-input-component.ui-reference-force-focus .ui-text-input-control {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+        border-color: var(--ui-focus);
+        box-shadow: none;
+    }
+
+    .ui-text-input-style-fluid .ui-text-input-shell:focus-within,
+    .ui-text-input-style-fluid.is-focus .ui-text-input-shell,
+    .ui-text-input-style-fluid.ui-reference-force-focus .ui-text-input-shell {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+        border-color: var(--ui-focus);
+    }
+
+    .ui-text-input-invalid .ui-text-input-control,
+    .ui-text-input-invalid .ui-text-input-shell,
+    .ui-text-input-invalid .ui-text-input-control:focus,
+    .ui-text-input-invalid .ui-text-input-control:focus-visible {
+        border-color: var(--ui-support-error);
+        outline-color: var(--ui-support-error);
+    }
+
+    .ui-text-input-warning .ui-text-input-control,
+    .ui-text-input-warning .ui-text-input-shell {
+        border-color: var(--ui-support-warning);
+    }
+
+    .ui-text-input-disabled .ui-field-label,
+    .ui-text-input-disabled .ui-text-input-control,
+    .ui-text-input-disabled .ui-text-input-password-toggle {
+        color: var(--ui-text-disabled);
+    }
+
+    .ui-text-input-disabled .ui-text-input-control {
+        cursor: not-allowed;
+        border-block-end-color: transparent;
+        background-color: var(--ui-field-01);
+        opacity: 1;
+    }
+
+    .ui-text-input-style-fluid.ui-text-input-disabled .ui-text-input-control {
+        border-block-end-color: var(--ui-border-subtle-01);
+    }
+
+    .ui-text-input-readonly .ui-text-input-control {
+        cursor: default;
+        border-block-end-color: var(--ui-border-subtle-01);
+        background-color: transparent;
+        color: var(--ui-text-primary);
+    }
+
+    .ui-text-input-style-fluid.ui-text-input-readonly .ui-text-input-control {
+        background-color: var(--ui-field-01);
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-text-input-status-icon {
+        @apply pointer-events-none absolute top-1/2 h-4 w-4 -translate-y-1/2;
+        right: 1rem;
+    }
+
+    .ui-text-input-kind-textarea .ui-text-input-status-icon {
+        top: 1.25rem;
+        transform: none;
+    }
+
+    .ui-text-input-kind-password .ui-text-input-status-icon {
+        right: 4rem;
+    }
+
+    .ui-text-input-status-icon-error {
+        color: var(--ui-support-error);
+    }
+
+    .ui-text-input-status-icon-warning {
+        color: var(--ui-support-warning);
+    }
+
+    .ui-text-input-password-toggle {
+        @apply absolute top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center border-0 bg-transparent p-0;
+        right: 0.25rem;
+        color: var(--ui-icon-primary);
+    }
+
+    .ui-text-input-password-toggle:hover:not(:disabled) {
+        background-color: var(--ui-layer-hover-01);
+    }
+
+    .ui-text-input-password-toggle:focus-visible,
+    .ui-text-input-password-toggle[data-ui-interaction-focus='true'] {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-text-input-password-icon {
+        @apply h-4 w-4;
+    }
+
+    .ui-text-input-password-toggle[aria-pressed='false'] .ui-text-input-password-icon-hide,
+    .ui-text-input-password-toggle[aria-pressed='true'] .ui-text-input-password-icon-show {
+        display: none;
+    }
+
+    .ui-text-input-skeleton .ui-text-input-control {
+        color: transparent;
+        background-image:
+            linear-gradient(90deg, var(--ui-skeleton-background), var(--ui-skeleton-element), var(--ui-skeleton-background));
+        background-size: 200% 100%;
+    }
+
+    .ui-text-input-counter {
+        @apply mt-1.5 text-right text-xs leading-5;
+        color: var(--ui-text-helper);
+    }
+
+    .ui-text-input-fluid-helper {
+        @apply sr-only;
     }
 
     .ui-input,

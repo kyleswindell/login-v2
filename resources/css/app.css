@@ -3616,70 +3616,279 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-tag {
-        @apply inline-flex max-w-full items-center whitespace-nowrap border font-medium;
-        gap: var(--ui-spacing-02);
+        @apply inline-flex max-w-full shrink-0 items-center whitespace-nowrap border font-medium;
+        box-sizing: border-box;
+        gap: 0;
         border-color: transparent;
         border-radius: var(--ui-tag-radius);
         background-color: var(--ui-tag-background);
         color: var(--ui-tag-text);
         line-height: 1;
+        text-decoration: none;
         vertical-align: middle;
     }
 
+    button.ui-tag {
+        @apply cursor-pointer appearance-none;
+        font: inherit;
+    }
+
     .ui-tag-sm {
-        min-height: 1.125rem;
-        padding: 0 var(--ui-spacing-03);
+        block-size: 1.125rem;
+        padding-inline: var(--ui-spacing-03);
         font-size: 0.75rem;
     }
 
     .ui-tag-md {
-        min-height: 1.5rem;
-        padding: 0 var(--ui-spacing-04);
+        block-size: 1.5rem;
+        padding-inline: var(--ui-spacing-03);
         font-size: 0.75rem;
     }
 
-    .ui-tag-icon {
-        width: 1rem;
-        height: 1rem;
+    .ui-tag-lg {
+        block-size: 2rem;
+        padding-inline: var(--ui-spacing-04);
+        font-size: 0.875rem;
+    }
+
+    .ui-tag-icon,
+    .ui-tag-action-icon,
+    .ui-tag-close-icon {
+        inline-size: 1rem;
+        block-size: 1rem;
         flex: 0 0 auto;
         color: currentColor;
     }
 
+    .ui-tag-icon {
+        margin-inline-start: calc(var(--ui-spacing-03) * -1);
+        margin-inline-end: var(--ui-spacing-02);
+    }
+
+    .ui-tag-md .ui-tag-icon {
+        margin-inline-start: calc(var(--ui-spacing-02) * -1);
+        margin-inline-end: var(--ui-spacing-02);
+    }
+
+    .ui-tag-sm .ui-tag-icon {
+        margin-inline-start: calc(var(--ui-spacing-02) * -1);
+        margin-inline-end: var(--ui-spacing-02);
+    }
+
     .ui-tag-label {
-        min-width: 0;
+        min-inline-size: 0;
         overflow: hidden;
         text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
-    .ui-tag-neutral {
-        --ui-tag-background: var(--ui-tag-neutral-bg);
-        --ui-tag-text: var(--ui-tag-neutral-text);
+    .ui-tag-truncate-start .ui-tag-label {
+        direction: rtl;
+        text-align: left;
     }
 
-    .ui-tag-info {
-        --ui-tag-background: var(--ui-tag-info-bg);
-        --ui-tag-text: var(--ui-tag-info-text);
+    .ui-tag-truncate-middle .ui-tag-label {
+        text-overflow: clip;
     }
 
-    .ui-tag-success {
-        --ui-tag-background: var(--ui-tag-success-bg);
-        --ui-tag-text: var(--ui-tag-success-text);
+    .ui-tag-close,
+    .ui-tag-action-icon {
+        margin-inline-start: var(--ui-spacing-04);
     }
 
-    .ui-tag-warning {
-        --ui-tag-background: var(--ui-tag-warning-bg);
-        --ui-tag-text: var(--ui-tag-warning-text);
+    .ui-tag-close {
+        @apply inline-flex shrink-0 cursor-pointer appearance-none items-center justify-center border-0 bg-transparent p-0;
+        color: currentColor;
     }
 
-    .ui-tag-error {
-        --ui-tag-background: var(--ui-tag-error-bg);
-        --ui-tag-text: var(--ui-tag-error-text);
+    .ui-tag-md .ui-tag-close,
+    .ui-tag-md .ui-tag-action-icon {
+        margin-inline-start: var(--ui-spacing-03);
     }
 
-    .ui-tag-inverse {
-        --ui-tag-background: var(--ui-tag-inverse-bg);
-        --ui-tag-text: var(--ui-tag-inverse-text);
-        border-color: var(--ui-tag-inverse-border);
+    .ui-tag-sm .ui-tag-close,
+    .ui-tag-sm .ui-tag-action-icon {
+        margin-inline-start: var(--ui-spacing-03);
+        margin-inline-end: -0.4375rem;
+    }
+
+    .ui-tag-read-only,
+    .ui-tag-dismissible,
+    .ui-tag-operational {
+        --ui-tag-background: var(--ui-tag-color-background);
+        --ui-tag-text: var(--ui-tag-color-text);
+    }
+
+    .ui-tag-operational,
+    .ui-tag-selectable {
+        border-color: var(--ui-tag-border);
+    }
+
+    .ui-tag-dismissible:hover,
+    .ui-tag-operational:hover {
+        background-color: var(--ui-tag-color-hover);
+    }
+
+    .ui-tag-dismissible:focus-within,
+    .ui-tag-operational:focus-visible,
+    .ui-tag-selectable:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: 1px;
+    }
+
+    .ui-tag-selectable {
+        --ui-tag-background: var(--ui-layer-01);
+        --ui-tag-text: var(--ui-text-primary);
+        --ui-tag-border: var(--ui-border-inverse);
+    }
+
+    .ui-tag-selectable:hover {
+        background-color: var(--ui-layer-hover-01);
+    }
+
+    .ui-tag-selectable.ui-tag-selected {
+        --ui-tag-background: var(--ui-background-inverse);
+        --ui-tag-text: var(--ui-text-inverse);
+        --ui-tag-border: var(--ui-background-inverse);
+    }
+
+    .ui-tag-disabled,
+    .ui-tag:disabled,
+    .ui-tag-close:disabled {
+        cursor: not-allowed;
+    }
+
+    .ui-tag-disabled,
+    .ui-tag:disabled {
+        --ui-tag-background: var(--ui-layer-01);
+        --ui-tag-text: var(--ui-text-disabled);
+        --ui-tag-border: var(--ui-border-disabled);
+    }
+
+    .ui-tag-skeleton {
+        inline-size: 6rem;
+        color: transparent;
+        background: linear-gradient(90deg, var(--ui-skeleton-background), var(--ui-skeleton-element), var(--ui-skeleton-background));
+        background-size: 200% 100%;
+        border-color: transparent;
+    }
+
+    .ui-tag-color-gray {
+        --ui-tag-color-background: var(--ui-tag-background-gray);
+        --ui-tag-color-text: var(--ui-tag-color-gray);
+        --ui-tag-color-hover: var(--ui-tag-hover-gray);
+        --ui-tag-border: var(--ui-tag-border-gray);
+    }
+
+    .ui-tag-color-cool-gray {
+        --ui-tag-color-background: var(--ui-tag-background-cool-gray);
+        --ui-tag-color-text: var(--ui-tag-color-cool-gray);
+        --ui-tag-color-hover: var(--ui-tag-hover-cool-gray);
+        --ui-tag-border: var(--ui-tag-border-cool-gray);
+    }
+
+    .ui-tag-color-warm-gray {
+        --ui-tag-color-background: var(--ui-tag-background-warm-gray);
+        --ui-tag-color-text: var(--ui-tag-color-warm-gray);
+        --ui-tag-color-hover: var(--ui-tag-hover-warm-gray);
+        --ui-tag-border: var(--ui-tag-border-warm-gray);
+    }
+
+    .ui-tag-color-red {
+        --ui-tag-color-background: var(--ui-tag-background-red);
+        --ui-tag-color-text: var(--ui-tag-color-red);
+        --ui-tag-color-hover: var(--ui-tag-hover-red);
+        --ui-tag-border: var(--ui-tag-border-red);
+    }
+
+    .ui-tag-color-magenta {
+        --ui-tag-color-background: var(--ui-tag-background-magenta);
+        --ui-tag-color-text: var(--ui-tag-color-magenta);
+        --ui-tag-color-hover: var(--ui-tag-hover-magenta);
+        --ui-tag-border: var(--ui-tag-border-magenta);
+    }
+
+    .ui-tag-color-purple {
+        --ui-tag-color-background: var(--ui-tag-background-purple);
+        --ui-tag-color-text: var(--ui-tag-color-purple);
+        --ui-tag-color-hover: var(--ui-tag-hover-purple);
+        --ui-tag-border: var(--ui-tag-border-purple);
+    }
+
+    .ui-tag-color-blue {
+        --ui-tag-color-background: var(--ui-tag-background-blue);
+        --ui-tag-color-text: var(--ui-tag-color-blue);
+        --ui-tag-color-hover: var(--ui-tag-hover-blue);
+        --ui-tag-border: var(--ui-tag-border-blue);
+    }
+
+    .ui-tag-color-cyan {
+        --ui-tag-color-background: var(--ui-tag-background-cyan);
+        --ui-tag-color-text: var(--ui-tag-color-cyan);
+        --ui-tag-color-hover: var(--ui-tag-hover-cyan);
+        --ui-tag-border: var(--ui-tag-border-cyan);
+    }
+
+    .ui-tag-color-teal {
+        --ui-tag-color-background: var(--ui-tag-background-teal);
+        --ui-tag-color-text: var(--ui-tag-color-teal);
+        --ui-tag-color-hover: var(--ui-tag-hover-teal);
+        --ui-tag-border: var(--ui-tag-border-teal);
+    }
+
+    .ui-tag-color-green {
+        --ui-tag-color-background: var(--ui-tag-background-green);
+        --ui-tag-color-text: var(--ui-tag-color-green);
+        --ui-tag-color-hover: var(--ui-tag-hover-green);
+        --ui-tag-border: var(--ui-tag-border-green);
+    }
+
+    .ui-tag-color-high-contrast {
+        --ui-tag-color-background: var(--ui-background-inverse);
+        --ui-tag-color-text: var(--ui-text-inverse);
+        --ui-tag-color-hover: var(--ui-background-hover);
+        --ui-tag-border: var(--ui-border-inverse);
+    }
+
+    .ui-tag-color-outline {
+        --ui-tag-color-background: transparent;
+        --ui-tag-color-text: var(--ui-text-primary);
+        --ui-tag-color-hover: var(--ui-background-hover);
+        --ui-tag-border: var(--ui-border-strong);
+    }
+
+    .ui-tag-group {
+        @apply flex flex-wrap items-center;
+        gap: var(--ui-spacing-03);
+    }
+
+    .ui-tag-disclosure {
+        @apply relative inline-flex;
+    }
+
+    .ui-tag-disclosure summary {
+        list-style: none;
+    }
+
+    .ui-tag-disclosure summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .ui-tag-disclosure[open] .ui-tag-action-icon {
+        transform: rotate(180deg);
+    }
+
+    .ui-tag-disclosure-panel {
+        @apply absolute z-50 mt-2 flex min-w-48 flex-wrap gap-2 border p-3 shadow-xl;
+        inset-block-start: 100%;
+        inset-inline-start: 0;
+        border-color: var(--ui-border-subtle-01);
+        background-color: var(--ui-layer-02);
+    }
+
+    .ui-reference-force-focus {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: 1px;
     }
 
     .ui-status-neutral {
@@ -6977,20 +7186,47 @@ Use targeted searches for the class family being changed before reading this fil
         --ui-status-error-bg: var(--ui-status-danger-bg);
         --ui-status-error-text: var(--ui-status-danger-text);
         --ui-status-error-solid-bg: var(--ui-status-danger-solid-bg);
-        --ui-tag-neutral-bg: var(--ui-status-neutral-bg);
-        --ui-tag-neutral-text: var(--ui-status-neutral-text);
-        --ui-tag-info-bg: var(--ui-status-info-bg);
-        --ui-tag-info-text: var(--ui-status-info-text);
-        --ui-tag-success-bg: var(--ui-status-success-bg);
-        --ui-tag-success-text: var(--ui-status-success-text);
-        --ui-tag-warning-bg: var(--ui-status-warning-bg);
-        --ui-tag-warning-text: var(--ui-status-warning-text);
-        --ui-tag-error-bg: var(--ui-status-danger-bg);
-        --ui-tag-error-text: var(--ui-status-danger-text);
-        --ui-tag-inverse-bg: var(--ui-background-inverse);
-        --ui-tag-inverse-text: var(--ui-text-inverse);
-        --ui-tag-inverse-border: var(--ui-border-inverse);
-        --ui-tag-radius: 9999px;
+        --ui-tag-background-gray: #e0e0e0;
+        --ui-tag-color-gray: #161616;
+        --ui-tag-hover-gray: #d1d1d1;
+        --ui-tag-border-gray: #a8a8a8;
+        --ui-tag-background-cool-gray: #dde1e6;
+        --ui-tag-color-cool-gray: #121619;
+        --ui-tag-hover-cool-gray: #cdd3da;
+        --ui-tag-border-cool-gray: #a2a9b0;
+        --ui-tag-background-warm-gray: #e5e0df;
+        --ui-tag-color-warm-gray: #171414;
+        --ui-tag-hover-warm-gray: #d8d0cf;
+        --ui-tag-border-warm-gray: #ada8a8;
+        --ui-tag-background-red: #ffd7d9;
+        --ui-tag-color-red: #a2191f;
+        --ui-tag-hover-red: #ffc2c5;
+        --ui-tag-border-red: #ff8389;
+        --ui-tag-background-magenta: #ffd6e8;
+        --ui-tag-color-magenta: #9f1853;
+        --ui-tag-hover-magenta: #ffbdda;
+        --ui-tag-border-magenta: #ff7eb6;
+        --ui-tag-background-purple: #e8daff;
+        --ui-tag-color-purple: #6929c4;
+        --ui-tag-hover-purple: #dcc7ff;
+        --ui-tag-border-purple: #be95ff;
+        --ui-tag-background-blue: #d0e2ff;
+        --ui-tag-color-blue: #0043ce;
+        --ui-tag-hover-blue: #b8d3ff;
+        --ui-tag-border-blue: #78a9ff;
+        --ui-tag-background-cyan: #bae6ff;
+        --ui-tag-color-cyan: #00539a;
+        --ui-tag-hover-cyan: #99daff;
+        --ui-tag-border-cyan: #33b1ff;
+        --ui-tag-background-teal: #9ef0f0;
+        --ui-tag-color-teal: #005d5d;
+        --ui-tag-hover-teal: #57e5e5;
+        --ui-tag-border-teal: #08bdba;
+        --ui-tag-background-green: #a7f0ba;
+        --ui-tag-color-green: #0e6027;
+        --ui-tag-hover-green: #74e792;
+        --ui-tag-border-green: #42be65;
+        --ui-tag-radius: 1rem;
 
         --ui-notification-neutral-border: var(--ui-border-default);
         --ui-notification-neutral-bg: color-mix(in srgb, var(--ui-surface-elevated) 92%, transparent);
@@ -7437,20 +7673,47 @@ Use targeted searches for the class family being changed before reading this fil
         --ui-status-error-bg: var(--ui-status-danger-bg);
         --ui-status-error-text: var(--ui-status-danger-text);
         --ui-status-error-solid-bg: var(--ui-status-danger-solid-bg);
-        --ui-tag-neutral-bg: var(--ui-status-neutral-bg);
-        --ui-tag-neutral-text: var(--ui-status-neutral-text);
-        --ui-tag-info-bg: var(--ui-status-info-bg);
-        --ui-tag-info-text: var(--ui-status-info-text);
-        --ui-tag-success-bg: var(--ui-status-success-bg);
-        --ui-tag-success-text: var(--ui-status-success-text);
-        --ui-tag-warning-bg: var(--ui-status-warning-bg);
-        --ui-tag-warning-text: var(--ui-status-warning-text);
-        --ui-tag-error-bg: var(--ui-status-danger-bg);
-        --ui-tag-error-text: var(--ui-status-danger-text);
-        --ui-tag-inverse-bg: var(--ui-background-inverse);
-        --ui-tag-inverse-text: var(--ui-text-inverse);
-        --ui-tag-inverse-border: var(--ui-border-inverse);
-        --ui-tag-radius: 9999px;
+        --ui-tag-background-gray: #e0e0e0;
+        --ui-tag-color-gray: #161616;
+        --ui-tag-hover-gray: #d1d1d1;
+        --ui-tag-border-gray: #a8a8a8;
+        --ui-tag-background-cool-gray: #dde1e6;
+        --ui-tag-color-cool-gray: #121619;
+        --ui-tag-hover-cool-gray: #cdd3da;
+        --ui-tag-border-cool-gray: #a2a9b0;
+        --ui-tag-background-warm-gray: #e5e0df;
+        --ui-tag-color-warm-gray: #171414;
+        --ui-tag-hover-warm-gray: #d8d0cf;
+        --ui-tag-border-warm-gray: #ada8a8;
+        --ui-tag-background-red: #ffd7d9;
+        --ui-tag-color-red: #a2191f;
+        --ui-tag-hover-red: #ffc2c5;
+        --ui-tag-border-red: #ff8389;
+        --ui-tag-background-magenta: #ffd6e8;
+        --ui-tag-color-magenta: #9f1853;
+        --ui-tag-hover-magenta: #ffbdda;
+        --ui-tag-border-magenta: #ff7eb6;
+        --ui-tag-background-purple: #e8daff;
+        --ui-tag-color-purple: #6929c4;
+        --ui-tag-hover-purple: #dcc7ff;
+        --ui-tag-border-purple: #be95ff;
+        --ui-tag-background-blue: #d0e2ff;
+        --ui-tag-color-blue: #0043ce;
+        --ui-tag-hover-blue: #b8d3ff;
+        --ui-tag-border-blue: #78a9ff;
+        --ui-tag-background-cyan: #bae6ff;
+        --ui-tag-color-cyan: #00539a;
+        --ui-tag-hover-cyan: #99daff;
+        --ui-tag-border-cyan: #33b1ff;
+        --ui-tag-background-teal: #9ef0f0;
+        --ui-tag-color-teal: #005d5d;
+        --ui-tag-hover-teal: #57e5e5;
+        --ui-tag-border-teal: #08bdba;
+        --ui-tag-background-green: #a7f0ba;
+        --ui-tag-color-green: #0e6027;
+        --ui-tag-hover-green: #74e792;
+        --ui-tag-border-green: #42be65;
+        --ui-tag-radius: 1rem;
 
         --ui-notification-neutral-border: var(--ui-border-default);
         --ui-notification-neutral-bg: color-mix(in srgb, var(--ui-surface-elevated) 92%, transparent);

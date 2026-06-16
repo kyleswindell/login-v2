@@ -2528,66 +2528,67 @@ class UiReferenceComponentDepthCatalog
      */
     private function tagComponent(): array
     {
-        return array_replace($this->correctedImplemented('tag', 'Tag', 'Tags label short metadata, semantic state, or filter context without becoming an action.', [
-            $this->exampleFromSample('Metadata tags', 'Neutral tags classify an object, owner, type, or compact metadata value.', ['type' => 'tag', 'items' => [
-                ['title' => 'Internal', 'tone' => 'neutral'],
-                ['title' => 'Trial', 'tone' => 'neutral', 'size' => 'sm'],
-                ['title' => 'Owner', 'tone' => 'neutral', 'size' => 'sm'],
+        return array_replace($this->correctedImplemented('tag', 'Tag', 'Tags label short metadata, semantic state, filters, selectable choices, or compact overflow disclosure.', [
+            $this->exampleFromSample('Read-only tag', 'Read-only tags classify an object, owner, type, or compact metadata value without interactivity.', ['type' => 'tag', 'items' => [
+                ['title' => 'Internal', 'color' => 'gray'],
+                ['title' => 'Trial', 'color' => 'cool-gray', 'size' => 'sm'],
+                ['title' => 'Owner', 'color' => 'warm-gray', 'size' => 'lg', 'icon' => 'heroicon-o-user'],
             ]], [
-                $this->sampleVariant('Neutral medium', ['type' => 'tag', 'items' => [['title' => 'Internal', 'tone' => 'neutral']]]),
-                $this->sampleVariant('Neutral small', ['type' => 'tag', 'items' => [['title' => 'Trial', 'tone' => 'neutral', 'size' => 'sm']]]),
+                $this->sampleVariant('Read-only with decorative icon', ['type' => 'tag', 'items' => [['title' => 'Verified', 'color' => 'green', 'icon' => 'heroicon-o-check-circle']]]),
+                $this->sampleVariant('Large tag', ['type' => 'tag', 'items' => [['title' => 'Large label', 'color' => 'gray', 'size' => 'lg']]]),
             ]),
-            $this->exampleFromSample('Semantic status tags', 'Semantic tones communicate real status with visible text and optional supporting icons.', ['type' => 'tag', 'items' => [
-                ['title' => 'Information', 'tone' => 'info', 'icon' => 'heroicon-o-information-circle'],
-                ['title' => 'Active', 'tone' => 'success', 'icon' => 'heroicon-o-check-circle'],
-                ['title' => 'Pending review', 'tone' => 'warning', 'icon' => 'heroicon-o-exclamation-triangle'],
-                ['title' => 'Blocked', 'tone' => 'error', 'icon' => 'heroicon-o-x-circle'],
+            $this->exampleFromSample('Dismissible tag', 'Dismissible tags remove only through the close icon and are common in filter or user-generated label contexts.', ['type' => 'tag', 'items' => [
+                ['title' => 'Region', 'color' => 'blue', 'variant' => 'dismissible', 'remove_label' => 'Remove region filter'],
+                ['title' => 'AI assisted', 'color' => 'purple', 'variant' => 'dismissible', 'icon' => 'heroicon-o-sparkles', 'remove_label' => 'Remove AI assisted filter'],
             ]], [
-                $this->sampleVariant('Info', ['type' => 'tag', 'items' => [['title' => 'Information', 'tone' => 'info']]]),
-                $this->sampleVariant('Success', ['type' => 'tag', 'items' => [['title' => 'Active', 'tone' => 'success']]]),
-                $this->sampleVariant('Warning', ['type' => 'tag', 'items' => [['title' => 'Pending review', 'tone' => 'warning']]]),
-                $this->sampleVariant('Error', ['type' => 'tag', 'items' => [['title' => 'Blocked', 'tone' => 'error']]]),
+                $this->sampleVariant('Dismissible with decorative icon', ['type' => 'tag', 'items' => [['title' => 'Campaign', 'color' => 'magenta', 'variant' => 'dismissible', 'icon' => 'heroicon-o-tag', 'remove_label' => 'Remove campaign filter']]]),
+                $this->sampleVariant('Dismissible disabled', ['type' => 'tag', 'items' => [['title' => 'Disabled', 'color' => 'gray', 'variant' => 'dismissible', 'disabled' => true]]]),
             ]),
-            $this->exampleFromSample('Icon-supported tags', 'Icons reinforce visible tag text; they do not replace the label.', ['type' => 'tag', 'items' => [
-                ['title' => 'Verified', 'tone' => 'success', 'icon' => 'heroicon-o-check-circle'],
-                ['title' => 'Synced', 'tone' => 'info', 'icon' => 'heroicon-o-information-circle'],
+            $this->exampleFromSample('Selectable tag', 'Selectable tags use core tokens, a visible border, and toggle selected state on the whole container.', ['type' => 'tag', 'items' => [
+                ['title' => 'Unselected', 'variant' => 'selectable'],
+                ['title' => 'Selected', 'variant' => 'selectable', 'selected' => true],
+                ['title' => 'Disabled', 'variant' => 'selectable', 'disabled' => true],
             ]], [
-                $this->sampleVariant('Decorative state icon', ['type' => 'tag', 'items' => [['title' => 'Verified', 'tone' => 'success', 'icon' => 'heroicon-o-check-circle']]]),
+                $this->sampleVariant('Selectable selected', ['type' => 'tag', 'items' => [['title' => 'Open', 'variant' => 'selectable', 'selected' => true]]]),
+                $this->sampleVariant('Selectable with icon', ['type' => 'tag', 'items' => [['title' => 'Teams', 'variant' => 'selectable', 'icon' => 'heroicon-o-user-group']]]),
             ]),
-            $this->exampleFromSample('Filter/removable boundary', 'Static tags do not render remove controls; removable/filter behavior is gated to the owning filter or search Pattern.', ['type' => 'tag', 'items' => [
-                ['title' => 'Region: North', 'tone' => 'neutral', 'removable' => true],
+            $this->exampleFromSample('Operational tag', 'Operational tags disclose overflow or related tags and use component color tokens plus a visible border.', ['type' => 'tag', 'items' => [
+                ['title' => 'More tags', 'color' => 'teal', 'variant' => 'operational'],
+                ['title' => 'Disabled', 'color' => 'teal', 'variant' => 'operational', 'disabled' => true],
             ]], [
-                $this->sampleVariant('Removable gated', ['type' => 'tag', 'items' => [['title' => 'Region: North', 'tone' => 'neutral', 'removable' => true]]], 'Gated', 'The component marks the request but does not render a remove button until Pattern ownership is installed.'),
+                $this->sampleVariant('Operational with overflow content', ['type' => 'tag', 'items' => [['title' => 'Overflow tags', 'color' => 'teal', 'variant' => 'operational']]]),
             ]),
-        ], ['container', 'short label', 'optional decorative icon', 'tone', 'size', 'gated removable marker'], [
+        ], ['container', 'short label', 'optional decorative icon', 'close icon', 'border', 'size', 'overflow tooltip'], [
             'Use when the UI needs compact metadata, type, category, ownership, status, or filter-token display.',
-            'Use semantic tones only for real state or system meaning.',
+            'Use read-only tags for categorization, dismissible tags for removable filters, selectable tags for compact choices, and operational tags for overflow disclosure.',
         ], [
             'Do not use tags as buttons, tabs, breadcrumbs, notifications, or primary actions.',
-            'Do not render removable/filter tags until the owning Pattern defines behavior, focus, persistence, and empty states.',
+            'Do not use selectable tags when a form Checkbox, Radio button, or Content switcher owns the interaction.',
         ], [
-            'Static default',
-            'Neutral',
-            'Info',
-            'Success',
-            'Warning',
-            'Error',
+            'Read-only',
+            'Dismissible',
+            'Selectable',
+            'Operational',
             'Small',
             'Medium',
-            'Icon-supported',
-            'Removable gated',
+            'Large',
+            'Color tokens',
+            'High contrast',
+            'Outline',
+            'Overflow tooltip',
+            'Skeleton',
         ], [
-            'Static tags are not focusable and do not respond to hover, active, or disabled states.',
-            'Semantic tags rely on visible text first; tone and icon treatment only reinforce meaning.',
-            'Requested removable tags render a gated marker, not an interactive remove control.',
+            'Read-only tags are not focusable and do not respond to hover, active, or selected states.',
+            'Dismissible and operational tags use component hover tokens, focus borders, and disabled core roles.',
+            'Selectable tags use core tokens only and expose selected state through `aria-pressed`.',
         ], [
             'Use concise sentence-case labels.',
             'Avoid vague tags such as Other, Misc, or New unless the data model defines them.',
-            'Do not use tags for long explanatory messages.',
+            'Truncate long labels to one line and provide the full title through tooltip/title behavior.',
         ], [
             'Tag text communicates meaning without relying on color alone.',
             'Decorative icons are hidden from assistive technology when the label already carries the meaning.',
-            'Static tags do not enter the tab order.',
+            'Dismissible, selectable, and operational controls remain keyboard focusable and expose accessible names.',
         ]), [
             'live_examples_view' => 'platform.ui-reference.components.live-examples.tag',
             'live_examples_layout' => 'flexible-matrix',
@@ -3024,7 +3025,7 @@ class UiReferenceComponentDepthCatalog
                 'loading' => 'ui-loading, ui-loading__indicator, ui-loading__spinner, ui-loading__label, data-ui-loading',
                 'progress-bar' => 'data-ui-component=progress-bar, ui progressbar semantics',
                 'progress-indicator' => 'data-ui-component=progress-indicator, data-ui-component=progress-step',
-                'tag' => 'ui-tag, ui-tag-sm, ui-tag-md, ui-tag-neutral, ui-tag-info, ui-tag-success, ui-tag-warning, ui-tag-error',
+                'tag' => 'ui-tag, ui-tag-sm, ui-tag-md, ui-tag-lg, ui-tag-read-only, ui-tag-dismissible, ui-tag-selectable, ui-tag-operational',
                 'structured-list' => 'ui-structured-list, ui-structured-list-row, ui-structured-list-condensed, ui-structured-list-hang, ui-structured-list-flush, ui-structured-list-selectable, ui-structured-list-selection-cell',
                 'tile' => 'ui-tile, ui-tile__title, ui-tile__selection-icon, ui-tile__action-icon, data-ui-tile-variant, data-ui-selected, data-ui-expanded',
                 'tooltip' => 'data-ui-tooltip-trigger, data-ui-tooltip-content',

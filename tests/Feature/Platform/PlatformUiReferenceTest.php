@@ -2439,44 +2439,74 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-component-live-layout="tag-matrix"', false)
             ->assertSee('data-ui-reference-sample-type="tags"', false)
             ->assertSee('x-ui.tag')
-            ->assertSee('Metadata tags')
-            ->assertSee('Semantic status tags')
-            ->assertSee('Sizes and icon support')
-            ->assertSee('Filter and removable boundary')
+            ->assertSee('Variants')
+            ->assertSee('Read-only')
+            ->assertSee('Dismissible')
+            ->assertSee('Selectable')
+            ->assertSee('Operational')
+            ->assertSee('Sizes and anatomy')
+            ->assertSee('Color token matrix')
+            ->assertSee('Interactive states')
+            ->assertSee('Overflow and tooltips')
+            ->assertSee('Tag groups')
             ->assertSee('Tag versus related APIs')
             ->assertSee('data-ui-component="tag"', false)
-            ->assertSee('data-ui-tag-tone="neutral"', false)
-            ->assertSee('data-ui-tag-tone="info"', false)
-            ->assertSee('data-ui-tag-tone="success"', false)
-            ->assertSee('data-ui-tag-tone="warning"', false)
-            ->assertSee('data-ui-tag-tone="error"', false)
+            ->assertSee('data-ui-tag-variant="read-only"', false)
+            ->assertSee('data-ui-tag-variant="dismissible"', false)
+            ->assertSee('data-ui-tag-variant="selectable"', false)
+            ->assertSee('data-ui-tag-variant="operational"', false)
+            ->assertSee('data-ui-tag-color="gray"', false)
+            ->assertSee('data-ui-tag-color="green"', false)
+            ->assertSee('data-ui-tag-color="teal"', false)
             ->assertSee('data-ui-tag-size="sm"', false)
             ->assertSee('data-ui-tag-size="md"', false)
-            ->assertSee('data-ui-tag-removable="gated"', false)
-            ->assertSee('Gated: no remove button rendered')
+            ->assertSee('data-ui-tag-size="lg"', false)
+            ->assertSee('data-ui-tag-selected="true"', false)
+            ->assertSee('aria-pressed="true"', false)
+            ->assertSee('aria-label="Remove region filter"', false)
+            ->assertSee('ui-tag-disclosure-panel', false)
+            ->assertSee('title="Customer analytics export workspace"', false)
             ->assertDontSee('Component-specific correction pending')
             ->assertDontSee('Family-depth implementation pending');
 
         $content = $response->getContent();
-        $this->assertStringNotContainsString('aria-label="Remove tag"', $content);
+        $this->assertStringContainsString('aria-label="Remove region filter"', $content);
+        $this->assertStringContainsString('data-ui-tag-variant="operational"', $content);
 
         $tagView = file_get_contents(resource_path('views/components/ui/tag.blade.php'));
         $tagCss = file_get_contents(resource_path('css/app.css'));
         $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
+        $overviewCatalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentCatalog.php'));
         $standard = file_get_contents(base_path('docs/02-standards/ui/components/tag.md'));
+        $liveExamples = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/tag.blade.php'));
 
         $this->assertStringContainsString("'label' => null", $tagView);
-        $this->assertStringContainsString("'ui-tag-'.\$resolvedTone", $tagView);
-        $this->assertStringContainsString('data-ui-tag-removable="gated"', $tagView);
+        $this->assertStringContainsString("'variant' => 'read-only'", $tagView);
+        $this->assertStringContainsString("'size' => 'md'", $tagView);
+        $this->assertStringContainsString("'lg' => 'lg'", $tagView);
+        $this->assertStringContainsString('data-ui-tag-variant="{{ $resolvedVariant }}"', $tagView);
+        $this->assertStringContainsString('aria-pressed="{{ $isSelected ? \'true\' : \'false\' }}"', $tagView);
+        $this->assertStringContainsString('<button type="button" class="ui-tag-close"', $tagView);
         $this->assertStringNotContainsString('ui-status-pill', $tagView);
-        $this->assertStringNotContainsString('<button type="button"', $tagView);
         $this->assertStringContainsString('.ui-tag', $tagCss);
-        $this->assertStringContainsString('--ui-tag-neutral-bg', $tagCss);
-        $this->assertStringContainsString('--ui-tag-error-text', $tagCss);
+        $this->assertStringContainsString('block-size: 2rem;', $tagCss);
+        $this->assertStringContainsString('--ui-tag-background-gray: #e0e0e0;', $tagCss);
+        $this->assertStringContainsString('--ui-tag-color-green: #0e6027;', $tagCss);
+        $this->assertStringContainsString('--ui-tag-border-teal: #08bdba;', $tagCss);
+        $this->assertStringContainsString('.ui-tag-selectable', $tagCss);
+        $this->assertStringContainsString('.ui-tag-operational', $tagCss);
+        $this->assertStringContainsString('.ui-tag-group', $tagCss);
+        $this->assertStringContainsString('gap: var(--ui-spacing-03);', $tagCss);
         $this->assertStringContainsString('\'tag\' => $this->tagComponent()', $catalog);
-        $this->assertStringContainsString('ui-tag, ui-tag-sm, ui-tag-md', $catalog);
+        $this->assertStringContainsString('ui-tag, ui-tag-sm, ui-tag-md, ui-tag-lg', $catalog);
+        $this->assertStringContainsString('Compact metadata, filter, selectable, and operational overflow labels.', $overviewCatalog);
+        $this->assertStringContainsString('$tag-background-gray', $standard);
+        $this->assertStringContainsString('Selectable tags use core tokens only.', $standard);
+        $this->assertStringContainsString('Operational tag and operational tag disclosing overflow content.', $standard);
         $this->assertStringContainsString('The public API is `x-ui.tag`', $standard);
-        $this->assertStringContainsString('Badge/Status as related taxonomy helpers', $standard);
+        $this->assertStringContainsString('Legacy `x-ui.badge` and `x-ui.status` usage may remain only as transitional status-taxonomy helpers', $standard);
+        $this->assertStringContainsString('data-tag-live-section="color-token-matrix"', $liveExamples);
+        $this->assertStringContainsString('data-tag-live-section="overflow-tooltips"', $liveExamples);
     }
 
     public function test_loading_component_page_renders_installed_api_examples(): void
@@ -3228,10 +3258,13 @@ class PlatformUiReferenceTest extends TestCase
             'tag' => [
                 'x-ui.tag',
                 'data-ui-component="tag"',
-                'Metadata tag',
-                'Status tag',
-                'Filter/removable tag',
-                'Semantic tag',
+                'Read-only tag',
+                'Dismissible tag',
+                'Selectable tag',
+                'Operational tag',
+                'Large tag',
+                'Color tokens',
+                'Overflow tooltip',
             ],
             'structured-list' => [
                 'x-ui.structured-list / x-ui.structured-list-row',

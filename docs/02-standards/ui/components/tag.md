@@ -13,13 +13,9 @@ blade_api:
   - x-ui.tag
 related_components:
   - notification
-  - data-table
-  - tile
+  - tooltip
+  - popover
   - button
-related_patterns:
-  - layout
-  - tables
-  - navigation
 foundation_elements:
   - color
   - spacing
@@ -33,284 +29,230 @@ carbon_reference:
 ---
 
 # Tag Component API Standard
+
 - [1. API summary](#1-api-summary)
 - [2. Status and ownership](#2-status-and-ownership)
 - [3. Installed standard](#3-installed-standard)
-  - [3.1. The installed standard is:](#31-the-installed-standard-is)
 - [4. Public API](#4-public-api)
-  - [4.1. Canonical calls](#41-canonical-calls)
-  - [4.2. API surfaces](#42-api-surfaces)
-  - [4.3. Props and options](#43-props-and-options)
-- [5. Allowed variants, options, and modifiers](#5-allowed-variants-options-and-modifiers)
-- [6. States](#6-states)
-- [7. Token, class, and helper usage](#7-token-class-and-helper-usage)
-  - [7.1. Tag consumes Foundation Element APIs:](#71-tag-consumes-foundation-element-apis)
-- [8. Composition rules](#8-composition-rules)
-- [9. Selection guidance](#9-selection-guidance)
-  - [9.1. Use when:](#91-use-when)
-  - [9.2. Do not use when:](#92-do-not-use-when)
-- [10. Accessibility contract](#10-accessibility-contract)
-- [11. Content contract](#11-content-contract)
-- [12. Prohibited usage](#12-prohibited-usage)
-- [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
-  - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
-- [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
-- [17. Related APIs](#17-related-apis)
-- [18. References](#18-references)
+- [5. Anatomy](#5-anatomy)
+- [6. Variants, sizes, and states](#6-variants-sizes-and-states)
+- [7. Color tokens](#7-color-tokens)
+- [8. Structure](#8-structure)
+- [9. Overflow and grouping](#9-overflow-and-grouping)
+- [10. Accessibility and content](#10-accessibility-and-content)
+- [11. UI Reference requirements](#11-ui-reference-requirements)
+- [12. Testing and acceptance criteria](#12-testing-and-acceptance-criteria)
+- [13. Related APIs](#13-related-apis)
+- [14. References](#14-references)
 
 ## 1. API summary
 
-Tag labels short metadata, categorization, state, or filter information without taking over the surrounding workflow.
+Tag labels compact metadata, categorization, filter state, compact choices, or overflow tag disclosure without becoming a generic Button, Menu, Notification, Badge, or Status wrapper.
 
-Canonical API owner: `/platform/ui-reference/components/tag`. Use this Component API instead of creating local badge, chip, pill, status-label, or filter-token markup for the same UI role.
+Canonical API owner: `/platform/ui-reference/components/tag`.
+
+The public API is `x-ui.tag`. Legacy `x-ui.badge` and `x-ui.status` usage may remain only as transitional status-taxonomy helpers; new compact label, filter-token, selectable, and operational tag usage must use `x-ui.tag`.
 
 ## 2. Status and ownership
 
-| Field                        | Value                                                                                                                                                                  |
-| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Status                       | Approved API                                                                                                                                                           |
-| System maturity              | Partial                                                                                                                                                                |
-| API layer                    | Component API                                                                                                                                                          |
-| Component slug               | `tag`                                                                                                                                                                  |
-| Category                     | Feedback and loading                                                                                                                                                   |
-| Priority                     | Tier B - Common reusable component                                                                                                                                     |
-| UI Reference route           | `/platform/ui-reference/components/tag`                                                                                                                                |
-| Canonical doc                | `docs/02-standards/ui/components/tag.md`                                                                                                                               |
-| Source owner                 | `/platform/ui-reference/components/tag`                                                                                                                                |
-| Blade API                    | `x-ui.tag`                                                                                                                                                             |
-| Source files                 | `resources/views/components/ui/tag.blade.php`; `resources/views/components/ui/badge.blade.php`; `resources/views/components/ui/status.blade.php`; `resources/css/app.css` |
-| Foundation Elements consumed | Color, Spacing, Typography, Themes, Icons                                                                                                                              |
-| Carbon benchmark             | Carbon Tag usage, style, and accessibility guidance                                                                                                                    |
-
-`Approved API` means `x-ui.tag` is the public static tag surface. `x-ui.badge` and `x-ui.status` remain related/transitional status-taxonomy helpers, but they do not own the Tag component standard.
+| Field                        | Value                                                                                                   |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------- |
+| Status                       | Implemented pending review                                                                               |
+| System maturity              | Installed                                                                                                |
+| API layer                    | Component API                                                                                            |
+| Component slug               | `tag`                                                                                                    |
+| UI Reference route           | `/platform/ui-reference/components/tag`                                                                  |
+| Canonical doc                | `docs/02-standards/ui/components/tag.md`                                                                 |
+| Blade API                    | `x-ui.tag`                                                                                               |
+| Source files                 | `resources/views/components/ui/tag.blade.php`; `resources/css/app.css`                                  |
+| Foundation Elements consumed | Color, Spacing, Typography, Themes, Icons                                                                |
+| Carbon benchmark             | Carbon Tag usage, style, accessibility, and color-token guidance                                         |
 
 ## 3. Installed standard
 
-Tag is the app-owned component family for compact label-like metadata and semantic state markers.
-
-### 3.1. The installed standard is:
-
-- Use tags for short metadata, classification, status, and filter-token display.
-- Use semantic tone only when the tag communicates real status or system meaning.
-- Use neutral tags for category, ownership, type, or metadata that is not a status.
-- Keep tags compact and inline with surrounding content.
-- Use icons only when the icon reinforces the visible tag text.
-- Use removable/filter tags only after the owning Pattern defines filter state, removal behavior, keyboard behavior, and persistence.
-- Do not use tags as buttons, tabs, breadcrumbs, notifications, or primary actions.
+- Implement all four variants: read-only, dismissible, selectable, and operational.
+- Use read-only tags for non-interactive category, metadata, or status labels.
+- Use dismissible tags for filter tokens or user-generated labels that can be removed through the close icon only.
+- Use selectable tags for compact choices that toggle selected/unselected state on the whole container.
+- Use operational tags for compact disclosure of additional or overflow tags.
+- Use small, medium, and large sizes.
+- Use component Tag color tokens for read-only, dismissible, and operational color families.
+- Use core tokens only for selectable tags.
+- Keep tag labels one line; truncate long labels with ellipsis and expose the full title through tooltip/title behavior.
+- Do not use tags for primary commands, navigation, explanatory feedback, or long-form copy.
 
 ## 4. Public API
 
-### 4.1. Canonical calls
-
-The public API is `x-ui.tag`. Existing `x-ui.badge` or `x-ui.status` usages may remain where they provide status taxonomy, but new compact metadata and tag examples should use `x-ui.tag`.
-
 ```blade
-<x-ui.tag tone="neutral">Internal</x-ui.tag>
+<x-ui.tag color="gray">Internal</x-ui.tag>
 
-<x-ui.tag tone="success" icon="heroicon-o-check-circle">
-    Active
+<x-ui.tag color="green" icon="heroicon-o-check-circle">
+    Verified
 </x-ui.tag>
 
-<x-ui.tag tone="warning">Pending review</x-ui.tag>
+<x-ui.tag variant="dismissible" color="blue" remove-label="Remove region filter">
+    Region
+</x-ui.tag>
+
+<x-ui.tag variant="selectable" selected>
+    Open
+</x-ui.tag>
+
+<x-ui.tag variant="operational" color="teal">
+    More tags
+</x-ui.tag>
 ```
 
-Use the Blade API instead of hand-building badge/tag/chip markup in feature views.
+| Prop/option            | Type                  | Default     | Allowed values                                                                                  | Notes |
+| ---------------------- | --------------------- | ----------- | ----------------------------------------------------------------------------------------------- | ----- |
+| Default slot / `label` | `string / HtmlString` | none        | Short visible text                                                                               | Required unless `skeleton=true`. |
+| `variant`              | `string`              | `read-only` | `read-only`, `dismissible`, `selectable`, `operational`                                          | `removable`, `selectable`, and `operational` boolean props remain compatibility aliases. |
+| `color` / `tone`       | `string`              | `gray`      | `gray`, `cool-gray`, `warm-gray`, `red`, `magenta`, `purple`, `blue`, `cyan`, `teal`, `green`, `high-contrast`, `outline` | Legacy `neutral/info/success/warning/error` map to the closest Tag colors. |
+| `size`                 | `string`              | `md`        | `sm`, `md`, `lg`                                                                                 | Required sizes are 18px, 24px, and 32px. |
+| `icon`                 | `string / null`       | `null`      | Approved Heroicon component alias                                                                | Decorative by default; visible text remains required. |
+| `removeLabel`          | `string / null`       | generated   | Specific action label                                                                            | Required for production dismissible tags when generated text is insufficient. |
+| `selected`             | `bool`                | `false`     | `true`, `false`                                                                                  | Selectable tags expose selected state with `aria-pressed`. |
+| `disabled`             | `bool`                | `false`     | `true`, `false`                                                                                  | Uses core disabled roles, not opacity-only styling. |
+| `skeleton`             | `bool`                | `false`     | `true`, `false`                                                                                  | Loading placeholder only. |
+| `truncate`             | `string / null`       | `null`      | `start`, `middle`, `end`                                                                         | Keeps the tag one line and pairs with `title`. |
+| `title`                | `string / null`       | `null`      | Full title text                                                                                  | Required when visible title is truncated. |
 
-### 4.2. API surfaces
+## 5. Anatomy
 
-| API surface           | Installed value                                                                                                                                                                                   |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Blade API             | `x-ui.tag`; existing `x-ui.badge` / `x-ui.status` surfaces are related status-taxonomy helpers                                                                                                    |
-| JavaScript            | No dedicated JavaScript controller for static tags                                                                                                                                                |
-| Root semantic element | Non-interactive text element by default                                                                                                                                                           |
-| Data attributes       | `data-ui-component="tag"` when the corrected API renders                                                                                                                                          |
-| CSS namespace         | `ui-tag*`; existing `ui-status*` classes remain owned by Badge/Status helpers                                                                                                                     |
-| Source files          | `resources/views/components/ui/tag.blade.php`; `resources/views/components/ui/badge.blade.php`; `resources/views/components/ui/status.blade.php`; `resources/css/app.css`                        |
+| Variant         | Decorative icon | Title | Container | Close icon | Border | Interactivity |
+| --------------- | --------------- | ----- | --------- | ---------- | ------ | ------------- |
+| Read-only       | Optional        | Required | Required | Not allowed | Not required by default | None |
+| Dismissible     | Optional        | Required | Required | Required | Not required by default | Close icon only |
+| Selectable      | Optional        | Required | Required | Not allowed | Required | Entire container toggles selected state |
+| Operational     | Optional        | Required | Required | Not allowed | Required | Entire container discloses additional tags |
 
-### 4.3. Props and options
+Selectable and operational tags must include a visible border to distinguish them from read-only tags.
 
-| Prop/option            | Type                  | Default   | Allowed values                                              | Required                       | Notes                                                                                                                  |
-| ---------------------- | --------------------- | --------- | ----------------------------------------------------------- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------- |
-| Default slot / `label` | `string / HtmlString` | none      | Short visible text                                          | Yes                            | Keep the label concise and meaningful without relying on color.                                                        |
-| `tone`                 | `string`              | `neutral` | `neutral`, `info`, `success`, `warning`, `error`, `inverse` | No                             | Use semantic tones only for real semantic meaning.                                                                     |
-| `size`                 | `string`              | `md`      | `sm`, `md`                                                  | No                             | `sm` is for dense tables/lists; `md` is the default.                                                                   |
-| `icon`                 | `string / null`       | `null`    | Approved Heroicon alias/component                           | No                             | Decorative unless the icon conveys state not already in text.                                                          |
-| `removable`            | `bool`                | `false`   | `true`, `false`                                             | No                             | Gated until removal behavior and Pattern ownership are installed.                                                      |
-| `removeLabel`          | `string / null`       | `null`    | Short action label                                          | Required when `removable=true` | Must describe what will be removed.                                                                                    |
-| `class`                | `string / null`       | `null`    | Layout passthrough if supported                             | No                             | Parent Patterns may pass placement classes only. Do not use for local color, typography, state, or behavior overrides. |
+## 6. Variants, sizes, and states
 
-Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and UI Reference proof before production use.
+| Variant     | Installed API | Required states |
+| ----------- | ------------- | --------------- |
+| Read-only   | `variant="read-only"` | Enabled, disabled when context requires unavailable metadata |
+| Dismissible | `variant="dismissible"` or `removable` | Enabled, hover, focus, disabled |
+| Selectable  | `variant="selectable"` or `selectable` | Enabled, hover, focus, selected, disabled |
+| Operational | `variant="operational"` or `operational` | Enabled, hover, focus, disabled, disclosed content proof |
+| Skeleton    | `skeleton` | Loading placeholder |
 
-## 5. Allowed variants, options, and modifiers
+| Size | API | Container height |
+| ---- | --- | ---------------- |
+| Small | `size="sm"` | 18px / 1.125rem |
+| Medium | `size="md"` | 24px / 1.5rem |
+| Large | `size="lg"` | 32px / 2rem |
 
-| Name          | Type     | Status       | API              | Use when                                                                           | Do not use when                                               |
-| ------------- | -------- | ------------ | ---------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| Neutral tag   | Tone     | Approved API | `tone="neutral"` | The tag is metadata, type, owner, category, or non-semantic classification.        | The tag communicates error, success, warning, or info status. |
-| Info tag      | Tone     | Approved API | `tone="info"`    | The tag communicates neutral system information or in-progress state.              | The value is only decorative or category metadata.            |
-| Success tag   | Tone     | Approved API | `tone="success"` | The item is complete, active, verified, or healthy.                                | The tag is merely positive marketing copy.                    |
-| Warning tag   | Tone     | Approved API | `tone="warning"` | The item needs attention but is not blocking.                                      | The issue is blocking or invalid.                             |
-| Error tag     | Tone     | Approved API | `tone="error"`   | The item is blocked, failed, invalid, or unsafe.                                   | Use Notification when the user needs explanatory feedback.    |
-| Inverse tag   | Tone     | Gated        | `tone="inverse"` | A tag appears on an inverse/high-contrast surface and Color tokens prove contrast. | Use on normal light/dark layers.                              |
-| Small tag     | Size     | Approved API | `size="sm"`      | Dense tables, list rows, metadata lines, or compact panels.                        | Tags need to stand alone in larger content.                   |
-| Medium tag    | Size     | Approved API | `size="md"`      | Default app UI and card/list metadata.                                             | Dense table cells require a smaller treatment.                |
-| Icon tag      | Modifier | Approved API | `icon="..."`     | The icon reinforces state or category and text remains visible.                    | The icon replaces text or adds decorative noise.              |
-| Removable tag | Modifier | Gated        | `removable`      | Pattern-owned filters or selected criteria need removal controls.                  | Static metadata, status, or category tags.                    |
+## 7. Color tokens
 
-## 6. States
+Read-only, dismissible, and operational tags use component Tag color tokens. Selectable tags use core tokens only.
 
-| State                      | Status                         | API representation          | Notes                                                                                          |
-| -------------------------- | ------------------------------ | --------------------------- | ---------------------------------------------------------------------------------------------- |
-| Default                    | Approved API                   | `x-ui.tag` with tone/size   | Non-interactive display state.                                                                 |
-| Hover                      | Not applicable for static tags | none                        | Static tags do not respond to hover. Removable tags must define hover for the remove control.  |
-| Focus-visible              | Gated for removable tags       | Remove button focus         | Static tags are not focusable.                                                                 |
-| Active/pressed             | Gated for removable tags       | Remove button pressed state | Only applies to the removal action.                                                            |
-| Disabled                   | Not applicable for static tags | none                        | Disabled tags are usually a smell; explain unavailable status through content or Notification. |
-| Selected                   | Pattern-owned                  | Filter Pattern state        | Selected filters may render as tags, but the Pattern owns state.                               |
-| Error/warning/success/info | Approved API                   | `tone`                      | Semantic tones must not rely on color alone.                                                   |
-| Loading                    | Not applicable                 | none                        | Use Inline loading or Loading.                                                                 |
-| Empty                      | Not applicable                 | none                        | Do not render empty tags.                                                                      |
+| Color | Background token | Background value | Text/icon token | Text/icon value | Hover token | Hover value | Border token | Border value |
+| ----- | ---------------- | ---------------- | --------------- | --------------- | ----------- | ----------- | ------------ | ------------ |
+| Gray | `$tag-background-gray` | `#e0e0e0` | `$tag-color-gray` | `#161616` | `$tag-hover-gray` | `#d1d1d1` | `$tag-border-gray` | `#a8a8a8` |
+| Cool gray | `$tag-background-cool-gray` | `#dde1e6` | `$tag-color-cool-gray` | `#121619` | `$tag-hover-cool-gray` | `#cdd3da` | `$tag-border-cool-gray` | `#a2a9b0` |
+| Warm gray | `$tag-background-warm-gray` | `#e5e0df` | `$tag-color-warm-gray` | `#171414` | `$tag-hover-warm-gray` | `#d8d0cf` | `$tag-border-warm-gray` | `#ada8a8` |
+| Red | `$tag-background-red` | `#ffd7d9` | `$tag-color-red` | `#a2191f` | `$tag-hover-red` | `#ffc2c5` | `$tag-border-red` | `#ff8389` |
+| Magenta | `$tag-background-magenta` | `#ffd6e8` | `$tag-color-magenta` | `#9f1853` | `$tag-hover-magenta` | `#ffbdda` | `$tag-border-magenta` | `#ff7eb6` |
+| Purple | `$tag-background-purple` | `#e8daff` | `$tag-color-purple` | `#6929c4` | `$tag-hover-purple` | `#dcc7ff` | `$tag-border-purple` | `#be95ff` |
+| Blue | `$tag-background-blue` | `#d0e2ff` | `$tag-color-blue` | `#0043ce` | `$tag-hover-blue` | `#b8d3ff` | `$tag-border-blue` | `#78a9ff` |
+| Cyan | `$tag-background-cyan` | `#bae6ff` | `$tag-color-cyan` | `#00539a` | `$tag-hover-cyan` | `#99daff` | `$tag-border-cyan` | `#33b1ff` |
+| Teal | `$tag-background-teal` | `#9ef0f0` | `$tag-color-teal` | `#005d5d` | `$tag-hover-teal` | `#57e5e5` | `$tag-border-teal` | `#08bdba` |
+| Green | `$tag-background-green` | `#a7f0ba` | `$tag-color-green` | `#0e6027` | `$tag-hover-green` | `#74e792` | `$tag-border-green` | `#42be65` |
 
-## 7. Token, class, and helper usage
+Selectable tag core colors:
 
-### 7.1. Tag consumes Foundation Element APIs:
+| Element | Property | Token |
+| ------- | -------- | ----- |
+| Text | `color` | `$text-primary` |
+| Icon | `color` | `$icon-primary` |
+| Border | `border` | `$border-inverse` |
+| Background | `background-color` | `$layer` |
+| Hover background | `background-color` | `$layer-hover` |
+| Selected text | `color` | `$text-inverse` |
+| Selected background | `background-color` | `$background-inverse` |
 
-- Color: token-backed neutral and semantic surfaces, text, icon, border, inverse, and disabled roles.
-- Spacing: internal padding and icon/label gap.
-- Typography: compact label text.
-- Themes: light/dark and inverse contrast.
-- Icons: approved Heroicons only when text remains visible.
+High contrast and outline styles use core tokens instead of the component color family.
 
-Carbon color role mapping:
+## 8. Structure
 
-| Carbon token / role | Carbon responsibility | Login App token / API | Login value source | Mapping status | Owner rule |
-| ------------------- | --------------------- | --------------------- | ------------------ | -------------- | ---------- |
-| `$tag-background-*`, `$tag-color-*`, `$tag-hover-*`, `$tag-border-*` | Read-only, operational, and dismissible all-color tag families | Tag tone/variant API and app-owned tag variables only when installed | Component-owned tag palette | Needs verification | Public Carbon docs point to component token families but exact all-color rows remain source-inferred; do not standardize local palettes until verified. |
-| `$layer` | Disabled tag background and selectable default background | Tag disabled/selectable classes using layer role | App layer palette | Same role / app value | Disabled/selectable layer use must match the global layer mapping. |
-| `$text-disabled` | Disabled tag text | Tag disabled text role | App text palette | Same role / app value | Disabled tags must not use opacity-only treatment. |
-| `$border-disabled` | Disabled outline/operational border | Tag disabled border role | App border palette | Same role / app value | Border-disabled stays Color-owned. |
-| `$focus` | Tag focus container border | Tag focus-visible state | App focus palette | Same role / app value | Only interactive/removable/selectable tags receive focus. |
-| `$background-inverse`, `$text-inverse`, `$border-inverse` | High-contrast and selected tag roles | `tone="inverse"` / selected tag state when installed | App inverse palette | Same role / app value | Inverse and selected roles are gated until contrast proof exists. |
-| `$background`, `$background-hover`, `$text-primary`, `$icon-primary` | Outline and selectable core-token exceptions | Outline/selectable tag variant roles | App background/text/icon palettes | Same role / app value | These are core-token exceptions, not a separate tag color family. |
-| `$icon-color` | Public-doc high-contrast read-only icon anomaly | No standard Login App mapping yet | None | Needs verification | Treat the Carbon row as anomalous until source verification promotes a real token. |
+| Element | Small | Medium | Large |
+| ------- | ----- | ------ | ----- |
+| Container height | 18px | 24px | 32px |
+| Border radius | 16px | 16px | 16px |
+| Container padding | 8px left/right | 8px left/right | 12px left/right |
+| Decorative icon size | 16px | 16px | 16px |
+| Dismissible icon size | 16px | 16px | 16px |
 
-Do not hard-code tag colors, arbitrary border colors, pill radii, icon sources, or local spacing.
+Icon spacing must vary by size and icon purpose. Decorative icon spacing must not be reused blindly for the dismissible close icon.
 
-## 8. Composition rules
+## 9. Overflow and grouping
 
-- Tags may appear in table cells, list rows, tiles, cards, filters, headers, and metadata groups.
-- Parent Patterns own external spacing and wrapping behavior.
-- A tag group must wrap predictably and preserve scan order.
-- Static tags must not contain buttons, links, menus, or form controls.
-- Removable tags are gated until the Pattern owns filter state, removal behavior, focus, and persistence.
+- Long titles truncate with ellipsis and never wrap.
+- Truncated titles must expose the full title through browser tooltip/title behavior on hover and keyboard focus.
+- Truncation may occur at the start, middle, or end depending on the use case.
+- Tag groups use 8px spacing and may wrap while preserving scan order.
+- Dismissible filter tag groups must keep each close action independently focusable.
 
-## 9. Selection guidance
+## 10. Accessibility and content
 
-### 9.1. Use when:
-
-- The UI needs compact metadata, type, category, ownership, status, or filter-token display.
-- A semantic state needs a short visual marker next to the relevant object.
-- A table/list/card needs scannable labels.
-
-### 9.2. Do not use when:
-
-- The message needs explanation or action; use Notification.
-- The user must activate a command; use Button, Link, Menu, or Menu buttons.
-- The UI is switching views; use Tabs or Content switcher when installed.
-- The value is long-form content; use plain text or a Structured list.
-
-## 10. Accessibility contract
-
-- Tag text must communicate the meaning without relying on color alone.
-- Semantic tones must meet contrast requirements in supported themes.
-- Icons are decorative unless they add meaning not present in text; meaningful icons need accessible text.
-- Removable tags must expose a keyboard-focusable remove control with an accessible name before production use.
-- Do not make static tags focusable.
-
-## 11. Content contract
-
+- Visible tag text must carry meaning without relying on color alone.
+- Icons are decorative unless the visible text does not already communicate the meaning.
+- Dismissible close icons require a specific accessible label.
+- Selectable tags expose state with `aria-pressed`.
+- Operational tags expose disclosure semantics through the owning trigger/disclosure pattern.
 - Use short sentence-case labels.
-- Prefer nouns or concise state phrases such as `Active`, `Pending review`, `Internal`, or `Trial`.
-- Avoid vague labels such as `Other`, `Misc`, or `New` unless the surrounding data model defines them.
-- Do not use tags as full sentences or explanatory copy.
+- Avoid vague tags such as `Other`, `Misc`, or `New` unless the data model defines them.
 
-## 12. Prohibited usage
+## 11. UI Reference requirements
 
-- Do not render Tag through copied Tabs, Badge, or Status standards text.
-- Do not use tags as buttons, tabs, breadcrumbs, or notifications.
-- Do not hard-code tag color, border, typography, icon, radius, or spacing.
-- Do not use semantic tones for decoration.
-- Do not create local removable/filter-chip behavior before the owning Pattern installs removal behavior, focus, persistence, and empty-state rules.
+The UI Reference page must render:
 
-## 13. Deferred or gated capabilities
+- Read-only tag.
+- Read-only tag with decorative icon.
+- Dismissible tag.
+- Dismissible tag with decorative icon.
+- Selectable tag, unselected and selected.
+- Operational tag and operational tag disclosing overflow content.
+- Disabled examples where applicable.
+- Skeleton example.
+- Small, medium, and large examples.
+- Overflow/truncated title examples with tooltip/title behavior.
+- Read-only, dismissible, and operational examples for every supported component color.
+- Selectable examples separately from component-color examples.
+- High contrast and outline examples.
+- Tag group, wrapping tag group, selectable group, and dismissible filter group.
 
-| Capability               | Status       | Trigger condition                                                                           |
-| ------------------------ | ------------ | ------------------------------------------------------------------------------------------- |
-| Final `x-ui.tag` wrapper | Approved API | Installed as the public static tag wrapper with UI Reference examples and tests.            |
-| Removable/filter tag     | Gated        | Filter/search Pattern defines removal behavior, focus, persistence, and empty-filter state. |
-| Inverse tag              | Gated        | Color token proof shows contrast on inverse/high-contrast surfaces.                         |
-| Tag group helper         | Deferred     | Needed only when repeated tag wrapping and spacing require a reusable API.                  |
-
-## 14. Implementation and UI Reference Checklist
-### 14.1. Implementation checklist
-| Requirement                | Standard expectation                                                                                                                               |
-| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Public API/source          | The standard names the canonical Blade component, native/class API, JavaScript controller, CSS namespace, source files, or explicit deferred gate. |
-| Variants/options/modifiers | Approved variants, options, sizes, density, layout modifiers, and deferred gates are listed.                                                       |
-| States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
-| Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
-| Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
-
-### 14.2. UI Reference proof checklist
-| Requirement               | Visual proof expectation                                                                              |
-| ------------------------- | ----------------------------------------------------------------------------------------------------- |
-| Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
-| Rendered variants/options | Every applicable supported variant, option, size, modifier, or deferred trigger condition is shown.   |
-| Rendered states           | Required states are shown visually and with accessibility markers where relevant.                     |
-| Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
-| Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
-| Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
-
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
-
-| Required proof            | Rendered behavior                                                          | Variants/options shown                        |
-| ------------------------- | -------------------------------------------------------------------------- | --------------------------------------------- |
-| Metadata tags             | Neutral tags in list/card/table contexts.                                  | Neutral, small, medium                        |
-| Semantic status tags      | Status tags that remain readable in light and dark themes.                 | Info, success, warning, error                 |
-| Icon-supported tags       | Icons paired with visible text.                                            | Icon tag, decorative icon handling            |
-| Filter/removable boundary | Gated disposition for removable tags until Pattern ownership exists.       | Removable deferred/gated                      |
-| Developer implementation  | Canonical calls and transitional alias notes render as real code examples. | `x-ui.tag`, transitional badge/status aliases |
-
-## 16. Testing and acceptance criteria
+## 12. Testing and acceptance criteria
 
 - `/platform/ui-reference/components/tag` returns 200 for authorized users.
-- The page identifies Tag as the Tag/Badge/Status boundary, not Tabs.
-- The page shows `x-ui.tag` as the installed public API and names Badge/Status as related taxonomy helpers rather than Tag owners.
-- The page renders neutral, info, success, warning, error, small, medium, and icon-supported examples.
-- The page does not render removable tags as implemented until Pattern-owned behavior is installed.
-- Tests assert the page does not contain copied Tabs copy, `x-ui.tabs`, or `data-ui-tabs`.
+- `x-ui.tag` is the canonical component name.
+- Legacy Badge/Status usage is documented as transitional or related, not the Tag owner.
+- All four variants render on the UI Reference page.
+- Dismissible tags render a close button.
+- Selectable tags render a bordered button and selected state.
+- Operational tags render a bordered trigger and overflow-disclosure example.
+- `sm`, `md`, and `lg` sizes render with exact component size classes.
+- Tag CSS includes component color tokens for all ten supported color families.
+- Selectable tags use core tokens only.
+- Truncated examples remain single-line and expose full text through `title`.
+- Tests assert live examples, component source, CSS tokens, and standard text.
 
-## 17. Related APIs
+## 13. Related APIs
 
-| API                 | Route                                            |
-| ------------------- | ------------------------------------------------ |
-| Notification        | `/platform/ui-reference/components/notification` |
-| Data table          | `/platform/ui-reference/components/data-table`   |
-| Tile                | `/platform/ui-reference/components/tile`         |
-| Tables Pattern      | `/platform/ui-reference/patterns/tables`         |
-| Layout Pattern      | `/platform/ui-reference/patterns/layout`         |
-| Components overview | `/platform/ui-reference/components`              |
+| API | Route |
+| --- | ----- |
+| Notification | `/platform/ui-reference/components/notification` |
+| Tooltip | `/platform/ui-reference/components/tooltip` |
+| Popover | `/platform/ui-reference/components/popover` |
+| Button | `/platform/ui-reference/components/button` |
+| Components overview | `/platform/ui-reference/components` |
 
-## 18. References
+## 14. References
 
 - [Component Standards Index](index.md)
-- [Component Implementation Checklist](checklist.md)
 - [Foundation Color](../elements/color.md)
 - [Foundation Typography](../elements/typography.md)
 - [Foundation Icons](../elements/icons.md)
-- [Pattern Standards Index](../patterns/index.md)
-- Carbon Tag usage, style, and accessibility guidance are comparison input only; Login App owns its Tag API, tone names, token values, and UI Reference proof.
+- Carbon Tag usage, style, color, and accessibility guidance inform the variant, state, size, overflow, and token coverage. Login App owns the `x-ui.tag` API and app-owned `ui-*` implementation contract.

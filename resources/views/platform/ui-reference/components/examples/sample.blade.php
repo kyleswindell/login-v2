@@ -558,10 +558,15 @@
                 @foreach ($items as $item)
                     <x-ui.tag
                         :tone="$item['semantic'] ?? ($item['tone'] ?? 'neutral')"
+                        :color="$item['color'] ?? null"
+                        :variant="$item['variant'] ?? 'read-only'"
                         :size="$item['size'] ?? 'md'"
                         :icon="$item['icon'] ?? null"
                         :removable="$item['removable'] ?? false"
                         :remove-label="$item['remove_label'] ?? null"
+                        :selected="$item['selected'] ?? false"
+                        :disabled="$item['disabled'] ?? false"
+                        :skeleton="$item['skeleton'] ?? false"
                     >
                         {{ $item['title'] ?? $item['semantic'] ?? 'Active' }}
                     </x-ui.tag>

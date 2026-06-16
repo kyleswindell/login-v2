@@ -203,7 +203,27 @@ class PlatformUiReferenceTest extends TestCase
                 ->assertDontSee('data-ui-reference-example="'.$component['slug'].'-shared-live-example"', false)
                 ->assertDontSee('data-ui-reference-example="'.$component['slug'].'-queued-trigger"', false);
 
-            if (in_array($component['slug'], ['button', 'menu-buttons'], true)) {
+            $flexibleMatrixComponents = [
+                'button',
+                'checkbox',
+                'code-snippet',
+                'contained-list',
+                'data-table',
+                'date-picker',
+                'dropdown',
+                'link',
+                'loading',
+                'menu-buttons',
+                'pagination',
+                'search',
+                'select',
+                'structured-list',
+                'tag',
+                'tile',
+                'tooltip',
+            ];
+
+            if (in_array($component['slug'], $flexibleMatrixComponents, true)) {
                 $componentPage->assertSee('data-ui-reference-live-examples-layout="flexible-matrix"', false);
             } else {
                 $componentPage->assertSee('data-component-section="variants-for-example"', false);
@@ -2442,6 +2462,78 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('Badge/Status as related taxonomy helpers', $standard);
     }
 
+    public function test_loading_component_page_renders_installed_api_examples(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/components/loading')
+            ->assertOk()
+            ->assertSee('x-ui.loading')
+            ->assertSee('data-component-live-layout="loading-matrix"', false)
+            ->assertSee('data-ui-reference-sample-type="loading"', false)
+            ->assertSee('Large loading')
+            ->assertSee('Placement examples')
+            ->assertSee('Small loading')
+            ->assertSee('States and boundaries')
+            ->assertSee('Loading account summary')
+            ->assertSee('Loading workspace tile')
+            ->assertSee('Loading page data')
+            ->assertSee('Saving changes')
+            ->assertSee('Checking invitation status')
+            ->assertSee('No indicator is rendered when loading is inactive.')
+            ->assertSee('data-ui-component="loading"', false)
+            ->assertSee('data-ui-loading', false)
+            ->assertSee('data-ui-loading-active="true"', false)
+            ->assertSee('data-ui-loading-active="false"', false)
+            ->assertSee('data-ui-loading-size="lg"', false)
+            ->assertSee('data-ui-loading-size="sm"', false)
+            ->assertSee('data-ui-loading-placement="page"', false)
+            ->assertSee('data-ui-loading-placement="section"', false)
+            ->assertSee('data-ui-loading-placement="modal"', false)
+            ->assertSee('data-ui-loading-placement="side-panel"', false)
+            ->assertSee('data-ui-loading-placement="tile"', false)
+            ->assertSee('data-ui-loading-placement="inline"', false)
+            ->assertSee('data-ui-loading-overlay="true"', false)
+            ->assertSee('data-ui-loading-overlay="false"', false)
+            ->assertSee('role="status"', false)
+            ->assertSee('aria-live="polite"', false)
+            ->assertSee('aria-busy="true"', false)
+            ->assertDontSee('Native status markup with ui-loading / ui-spinner / ui-skeleton classes')
+            ->assertDontSee('No dedicated public Blade wrapper is approved yet')
+            ->assertDontSee('Component-specific API pending correction')
+            ->assertDontSee('Family-depth implementation pending')
+            ->assertDontSee('spinner-border')
+            ->assertDontSee('placeholder-glow')
+            ->assertDontSee('cds--loading')
+            ->assertDontSee('bx--loading');
+
+        $inactiveMarkup = Blade::render('<x-ui.loading :active="false" size="sm" placement="inline" aria-label="Inactive loading" />');
+
+        $this->assertSame('', trim($inactiveMarkup));
+
+        $componentView = file_get_contents(resource_path('views/components/ui/loading.blade.php'));
+        $componentCss = file_get_contents(resource_path('css/app.css'));
+        $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
+        $overviewCatalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentCatalog.php'));
+        $standard = file_get_contents(base_path('docs/02-standards/ui/components/loading.md'));
+
+        $this->assertStringContainsString("'size' => 'lg'", $componentView);
+        $this->assertStringContainsString("'placement' => 'component'", $componentView);
+        $this->assertStringContainsString('data-ui-loading-overlay', $componentView);
+        $this->assertStringContainsString('data-ui-loading-disable-related-actions', $componentView);
+        $this->assertStringContainsString('.ui-loading--lg .ui-loading__indicator', $componentCss);
+        $this->assertStringContainsString('width: 5.5rem;', $componentCss);
+        $this->assertStringContainsString('width: 1rem;', $componentCss);
+        $this->assertStringContainsString('background-color: var(--ui-overlay);', $componentCss);
+        $this->assertStringContainsString('prefers-reduced-motion: reduce', $componentCss);
+        $this->assertStringContainsString("'live_examples_view' => 'platform.ui-reference.components.live-examples.loading'", $catalog);
+        $this->assertStringContainsString("'loading', 'Loading', 'Feedback and loading', 'Implemented Pending Review'", $overviewCatalog);
+        $this->assertStringContainsString('status: implemented-pending-review', $standard);
+        $this->assertStringContainsString('x-ui.loading', $standard);
+        $this->assertStringContainsString('Large is 88px; small is 16px.', $standard);
+        $this->assertStringNotContainsString('No dedicated public Blade wrapper is approved yet', $standard);
+    }
+
     public function test_tile_component_page_renders_installed_api_examples_and_gates(): void
     {
         $this->actingAsPlatformSuperAdmin();
@@ -3168,11 +3260,13 @@ class PlatformUiReferenceTest extends TestCase
                 'Selection and batch-action gate',
             ],
             'loading' => [
-                'Native status markup with ui-loading / ui-spinner / ui-skeleton classes',
+                'x-ui.loading',
                 'data-ui-component="loading"',
                 'ui-loading',
-                'ui-spinner',
-                'Skeleton text/card/table',
+                'data-ui-loading-size="lg"',
+                'data-ui-loading-size="sm"',
+                'Large loading',
+                'Small loading',
             ],
             'modal' => [
                 'x-ui.modal',

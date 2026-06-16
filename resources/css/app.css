@@ -6016,6 +6016,129 @@ Use targeted searches for the class family being changed before reading this fil
         border-top-color: currentColor;
     }
 
+    .ui-loading {
+        @apply inline-flex items-center justify-center gap-3 text-sm;
+        color: var(--ui-text-primary);
+    }
+
+    .ui-loading[aria-busy='true'] {
+        cursor: progress;
+    }
+
+    .ui-loading--lg {
+        @apply flex-col gap-3 text-center;
+        min-inline-size: 5.5rem;
+    }
+
+    .ui-loading--sm {
+        @apply inline-flex flex-row text-sm;
+        min-inline-size: 1rem;
+    }
+
+    .ui-loading--overlay {
+        @apply absolute inset-0 z-10;
+        background-color: var(--ui-overlay);
+        color: var(--ui-text-inverse);
+        pointer-events: auto;
+    }
+
+    .ui-loading--placement-page.ui-loading--overlay {
+        @apply fixed;
+    }
+
+    .ui-loading__indicator {
+        @apply inline-flex items-center justify-center rounded-full;
+        flex: 0 0 auto;
+    }
+
+    .ui-loading--lg .ui-loading__indicator {
+        width: 5.5rem;
+        height: 5.5rem;
+    }
+
+    .ui-loading--sm .ui-loading__indicator {
+        width: 1rem;
+        height: 1rem;
+        background-color: var(--ui-layer-accent-01);
+    }
+
+    .ui-loading__spinner {
+        @apply block rounded-full border-solid;
+        width: 100%;
+        height: 100%;
+        border-color: var(--ui-spinner-track);
+        border-top-color: var(--ui-spinner-head);
+        animation: ui-spin 0.8s linear infinite;
+    }
+
+    .ui-loading--lg .ui-loading__spinner {
+        border-width: 0.5rem;
+    }
+
+    .ui-loading--sm .ui-loading__spinner {
+        border-width: 0.125rem;
+    }
+
+    .ui-loading__label {
+        @apply text-sm;
+        color: currentColor;
+    }
+
+    .ui-loading-demo-region,
+    .ui-loading-demo-surface,
+    .ui-loading-demo-modal,
+    .ui-loading-demo-panel {
+        @apply relative overflow-hidden rounded-md border p-4;
+        border-color: var(--ui-border-subtle-01);
+        background-color: var(--ui-layer-02);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-loading-demo-region {
+        min-height: 15rem;
+    }
+
+    .ui-loading-demo-region__content {
+        @apply space-y-3;
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-loading-demo-region__content h4,
+    .ui-loading-demo-surface h4 {
+        @apply text-sm font-semibold;
+        color: var(--ui-text-primary);
+    }
+
+    .ui-loading-demo-surface {
+        min-height: 14rem;
+    }
+
+    .ui-loading-demo-surface--page {
+        min-height: 14rem;
+        background-color: var(--ui-background);
+    }
+
+    .ui-loading-demo-modal {
+        min-height: 10rem;
+        background-color: var(--ui-layer-01);
+    }
+
+    .ui-loading-demo-panel {
+        min-height: 10rem;
+        background-color: var(--ui-layer-01);
+    }
+
+    .ui-loading-inactive-proof {
+        @apply flex items-center gap-2 text-sm;
+        color: var(--ui-text-secondary);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-loading__spinner {
+            animation-duration: 1.6s;
+        }
+    }
+
     .ui-notification-trigger {
         @apply relative inline-flex h-10 w-10 items-center justify-center rounded-lg border transition;
         border-color: var(--ui-notification-trigger-border);

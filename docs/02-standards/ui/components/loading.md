@@ -2,19 +2,26 @@
 title: Loading
 slug: loading
 api_layer: Component API
-status: implemented-pending-correction
-system_maturity: partial
+status: implemented-pending-review
+system_maturity: installed
 category: feedback-and-loading
 priority: tier-a-baseline-app-development
 ui_reference_route: /platform/ui-reference/components/loading
 canonical_doc: docs/02-standards/ui/components/loading.md
 source_owner: /platform/ui-reference/components/loading
-blade_api: []
+blade_api:
+  - x-ui.loading
 javascript_api: []
-data_attributes: []
+data_attributes:
+  - data-ui-loading
+  - data-ui-loading-active
+  - data-ui-loading-size
+  - data-ui-loading-placement
+  - data-ui-loading-overlay
 source_files:
   - resources/css/app.css
-  - resources/views/platform/ui-reference/components/loading.blade.php
+  - resources/views/components/ui/loading.blade.php
+  - resources/views/platform/ui-reference/components/live-examples/loading.blade.php
 foundation_elements:
   - color
   - spacing
@@ -53,14 +60,10 @@ carbon_reference:
   - [4.1. API status](#41-api-status)
   - [4.2. Canonical spinner](#42-canonical-spinner)
   - [4.3. Localized spinner](#43-localized-spinner)
-  - [4.4. Skeleton text](#44-skeleton-text)
-  - [4.5. Skeleton card](#45-skeleton-card)
-  - [4.6. Skeleton table](#46-skeleton-table)
-  - [4.7. Page-region loading](#47-page-region-loading)
-  - [4.8. Status handoff](#48-status-handoff)
-  - [4.9. Class contract](#49-class-contract)
-  - [4.10. Option contract](#410-option-contract)
-  - [4.11. Reserved future Blade contract](#411-reserved-future-blade-contract)
+  - [4.4. Overlay loading](#44-overlay-loading)
+  - [4.5. Inactive state](#45-inactive-state)
+  - [4.6. Class contract](#46-class-contract)
+  - [4.7. Option contract](#47-option-contract)
 - [5. Allowed variants, options, and modifiers](#5-allowed-variants-options-and-modifiers)
 - [6. States](#6-states)
 - [7. Token, class, and helper usage](#7-token-class-and-helper-usage)
@@ -90,24 +93,25 @@ carbon_reference:
 
 ## 1. API summary
 
-Loading uses spinners, skeletons, and page-region pending states to keep delayed content understandable while the system retrieves data, saves changes, or performs processing.
+Loading provides large blocking and small inline indicators for unknown-duration pending work while the system retrieves data, saves changes, or performs processing.
 
 Canonical API owner: `/platform/ui-reference/components/loading`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
-Loading is the installed Login App 2.0 pending-state API for non-interactive loading feedback. It owns spinner presentation, skeleton placeholder presentation, loading-region semantics, reduced-motion behavior, status handoff copy, token-backed loading colors, and loading-specific accessibility requirements. It does not own button-in-progress behavior, determinate progress, notification outcomes, page-level overlay orchestration, modal focus behavior, table data fetching, form validation, or external layout spacing.
+Loading is the installed Login App 2.0 pending-state API for non-interactive loading feedback. It owns the `x-ui.loading` Blade API, large and small spinner presentation, optional label text, loading overlay visuals, placement classes, reduced-motion behavior, token-backed loading colors, and loading-specific accessibility requirements. It does not own button-in-progress completion behavior, determinate progress, notification outcomes, modal focus trapping, inert background management, table data fetching, form validation, or external layout spacing.
 
 ### 1.1. Canonical API responsibilities:
 
-- Render pending content through app-owned `ui-loading*` and `ui-skeleton*` classes.
-- Provide a canonical class-and-semantics API until a Blade wrapper is explicitly installed.
-- Distinguish spinner, skeleton text, skeleton card, skeleton table, and page-region loading modes.
+- Render pending content through `x-ui.loading` and app-owned `ui-loading*` classes.
+- Provide large and small loading indicator sizes.
+- Provide optional overlay treatment for large page, component, section, modal, side-panel, and tile loading.
+- Provide inline small loading without overlay.
 - Keep every loading state tied to a pending region, pending action, or pending content target.
 - Provide understandable visible or assistive status text.
-- Mark affected regions busy where appropriate.
+- Mark loading indicators busy where appropriate.
 - Respect reduced-motion preferences for animated spinner and skeleton states.
 - Keep loading indicators non-interactive and out of the tab order.
 - Consume Foundation Element APIs for color, spacing, typography, themes, and motion.
-- Prove spinner, skeleton, page-region, status, reduced-motion, accessibility, and implementation behavior on the UI Reference page.
+- Prove large loading, small loading, placement, overlay, inactive state, reduced-motion, accessibility, and implementation behavior on the UI Reference page.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -115,7 +119,7 @@ Loading is the installed Login App 2.0 pending-state API for non-interactive loa
 - Submit/cancel placement or disabled action orchestration. Use Button and the parent Pattern.
 - Determinate progress, percent complete, steps, or long-running process tracking. Use Progress indicator when installed, or gate the capability.
 - Success, error, warning, or informational outcome banners. Use Notification unless the page-region loading handoff is explicitly scoped to status text.
-- Full-page overlay, inert state, scroll locking, and focus return. Use Overlay/feedback or Modal Pattern ownership.
+- Focus trapping, inert state, scroll locking, and focus return. Use Overlay/feedback or Modal Pattern ownership.
 - Data table sorting, pagination, filter, or empty-state behavior. Use Data table or Table toolbar Patterns.
 - External spacing around a loading component. Parent Patterns own placement, grouping, spacing, and workflow orchestration.
 
@@ -126,7 +130,7 @@ Carbon alignment note: Carbon treats loading indicators as visual feedback for p
 | Field                        | Value                                                                                                  |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------ |
 | Status                       | Approved API                                                                                           |
-| System maturity              | Partial                                                                                                |
+| System maturity              | Installed                                                                                              |
 | API layer                    | Component API                                                                                          |
 | Component slug               | loading                                                                                                |
 | Category                     | Feedback and loading                                                                                   |
@@ -134,35 +138,34 @@ Carbon alignment note: Carbon treats loading indicators as visual feedback for p
 | UI Reference route           | `/platform/ui-reference/components/loading`                                                            |
 | Canonical doc                | `docs/02-standards/ui/components/loading.md`                                                           |
 | Source owner                 | `/platform/ui-reference/components/loading`                                                            |
-| Blade API                    | No dedicated public Blade wrapper is approved yet                                                      |
+| Blade API                    | `x-ui.loading`                                                                                         |
 | JavaScript API               | None required for baseline loading behavior                                                            |
-| Data attributes              | None approved for behavior                                                                             |
-| Props/options                | No Blade props; options are represented by documented class modes and semantic markup                  |
-| Source files                 | `resources/css/app.css`; `resources/views/platform/ui-reference/components/loading.blade.php`          |
-| CSS namespace                | App-owned `ui-loading*` and `ui-skeleton*` classes                                                     |
+| Data attributes              | `data-ui-loading`, `data-ui-loading-active`, `data-ui-loading-size`, `data-ui-loading-placement`, `data-ui-loading-overlay` |
+| Props/options                | `id`, `active`, `size`, `placement`, `label`, `overlay`, `disableRelatedActions`, `ariaLabel`, `ariaLive`, `attributes` |
+| Source files                 | `resources/views/components/ui/loading.blade.php`; `resources/css/app.css`; `resources/views/platform/ui-reference/components/live-examples/loading.blade.php` |
+| CSS namespace                | App-owned `ui-loading*` classes                                                                         |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion                                                             |
 | Carbon benchmark             | Carbon Loading usage, style, accessibility, Loading Pattern, and Inline loading accessibility guidance |
 
-`Approved API` means the loading visual treatment and route exist, but the canonical documentation, UI Reference proof, and regression tests must be corrected to replace placeholder text with the installed class-and-semantics API. A public Blade wrapper may be added later only through the documented gate.
+`Approved API` means the loading Blade wrapper, visual treatment, route proof, and regression tests are installed. Skeleton-specific wrappers remain separate future work.
 
 ## 3. Installed standard
 
-The installed standard is a class-and-semantics Component API.
+The installed standard is a Blade Component API.
 
 Use the installed Loading API when a region, content block, table, card, or page section is pending and the user needs to understand that the system is still working. Loading indicators must be tied to a concrete pending target and must not be used as decorative emphasis.
 
 ### 3.1. Installed production rules:
 
-- Use `ui-loading` as the root class for loading status blocks.
-- Use `ui-loading--spinner` for an indeterminate spinner.
-- Use `ui-loading--skeleton` plus a skeleton shape modifier for content placeholders.
-- Use `ui-loading-region` on the affected content region when the region is busy.
-- Use `ui-loading--sm` for localized loading and `ui-loading--lg` for section or page-region loading.
-- Use `ui-skeleton--text`, `ui-skeleton--card`, and `ui-skeleton--table` for approved skeleton shapes.
-- Provide visible status text or component-owned assistive text for every loading state.
+- Use `<x-ui.loading>` as the canonical API for loading indicators.
+- Use `size="lg"` for page, component, section, modal, side-panel, tile, or major-region loading. Large is the default and renders an 88px indicator.
+- Use `size="sm"` for localized inline loading. Small renders a 16px indicator.
+- Use `placement` to identify the loading boundary: `inline`, `component`, `section`, `modal`, `side-panel`, `tile`, or `page`.
+- Use `overlay` only when large loading should block interaction with the region. Overlay defaults on for large non-inline placements.
+- Use `label` or `aria-label` for every loading indicator.
 - Add `role="status"` and an appropriate live-region strategy when loading status text needs to be announced.
-- Add `aria-busy="true"` to the affected region when existing content is being updated.
-- Remove the loading indicator and clear or update `aria-busy` when content is ready.
+- Render inactive loading with `:active="false"` when no indicator should be visible.
+- Remove the loading indicator and clear or update parent busy state when content is ready.
 - Communicate completion through focus movement, updated content, or a status message when the completion would otherwise only be visual.
 - Use Foundation Motion and `prefers-reduced-motion` behavior for spinner and skeleton animation.
 - Parent Patterns own placement, sizing context, overlays, disabled dependent controls, and external spacing.
@@ -172,13 +175,12 @@ Use the installed Loading API when a region, content block, table, card, or page
 
 | Mode                       | Status                              | Use                                                                                                           |
 | -------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| Spinner                    | Implemented                         | Use for indeterminate pending work when the content shape is unknown or the wait belongs to a bounded region. |
-| Skeleton text              | Implemented                         | Use when text content is loading and the future text layout is known.                                         |
-| Skeleton card              | Implemented                         | Use when a card or tile-like content block is loading.                                                        |
-| Skeleton table             | Implemented                         | Use when table rows or tabular data are loading.                                                              |
-| Page-region loading        | Implemented                         | Use when a page section is busy and existing or upcoming content must be marked as pending.                   |
-| Status handoff             | Implemented as text/state treatment | Use after loading completes or fails when the user needs an immediate outcome cue.                            |
-| Full-page blocking overlay | Gated / Pattern-owned               | Requires overlay/focus/inert behavior approval before production use.                                         |
+| Large loading              | Implemented                         | Use for indeterminate pending work in a page, component, section, modal, side-panel, tile, or major region. |
+| Small loading              | Implemented                         | Use for localized pending work near a specific action or compact UI element.                                |
+| Overlay loading            | Implemented visual treatment        | Use with large loading when interaction with the unavailable region should be blocked.                       |
+| Inactive loading           | Implemented                         | Use `:active="false"` when no loading indicator should render.                                              |
+| Skeleton text/card/table   | Pattern/component-consumed          | Use when a consuming component or Pattern owns the final content shape.                                      |
+| Full focus/inert overlay   | Gated / Pattern-owned               | Requires overlay/focus/inert behavior approval before production use.                                       |
 
 This page must not render `Component-specific API pending correction` as the example call. It must show real loading markup, real class names, state ownership, and deferred gates.
 
@@ -186,228 +188,131 @@ This page must not render `Component-specific API pending correction` as the exa
 
 ### 4.1. API status
 
-The current public API is markup plus app-owned CSS classes. A dedicated Blade component such as `x-ui.loading` or `x-ui.skeleton` is reserved for a future correction pass and must not be used in production until installed, documented, rendered in UI Reference, and tested.
+The current public API is `x-ui.loading`.
 
 | API surface           | Installed value                                                                               |
 | --------------------- | --------------------------------------------------------------------------------------------- |
-| Blade                 | No dedicated public Blade wrapper approved yet                                                |
+| Blade                 | `x-ui.loading`                                                                                |
 | JavaScript            | No dedicated JavaScript controller required                                                   |
-| Data attributes       | None approved for behavior                                                                    |
-| Props/options         | No Blade props; use documented class modes and native semantics                               |
+| Data attributes       | `data-ui-loading`, `data-ui-loading-active`, `data-ui-loading-size`, `data-ui-loading-placement`, `data-ui-loading-overlay` |
+| Props/options         | `id`, `active`, `size`, `placement`, `label`, `overlay`, `disableRelatedActions`, `ariaLabel`, `ariaLive`, `attributes` |
 | Slots                 | Not applicable until a Blade wrapper is installed                                             |
 | Root semantic element | Native `div`, `section`, `tbody`, or context-appropriate container with status semantics      |
-| CSS namespace         | `ui-loading*` and `ui-skeleton*`                                                              |
-| Source files          | `resources/css/app.css`; `resources/views/platform/ui-reference/components/loading.blade.php` |
+| CSS namespace         | `ui-loading*`                                                                                 |
+| Source files          | `resources/views/components/ui/loading.blade.php`; `resources/css/app.css`; `resources/views/platform/ui-reference/components/live-examples/loading.blade.php` |
 
-Feature views may use canonical loading markup directly when a Pattern has not wrapped it. Do not create local loading partials or helper components. If the same loading composition is repeated across features, move it into the owning Pattern or install a public Blade wrapper through the gate in this standard.
+Feature views must use `x-ui.loading` instead of creating local spinner markup.
 
 ### 4.2. Canonical spinner
 
 Use a spinner when work is indeterminate and the shape of incoming content is not useful to preview.
 
 ```blade
-<div class="ui-loading ui-loading--spinner ui-loading--lg" role="status" aria-live="polite">
-    <span class="ui-loading__spinner" aria-hidden="true"></span>
-    <span class="ui-loading__label">Loading account summary</span>
-</div>
+<x-ui.loading
+    active
+    size="lg"
+    placement="section"
+    label="Loading account summary"
+    overlay
+/>
 ```
 
 Use specific labels. `Loading account summary` is better than `Loading` because it names the pending target.
 
 ### 4.3. Localized spinner
 
-Use the small spinner for localized pending work near a region or piece of content. Do not use it inside a submit button unless the Button or Inline loading API owns that behavior.
+Use the small spinner for localized pending work near a region or piece of content. Small loading does not use an overlay.
 
 ```blade
-<div class="ui-loading ui-loading--spinner ui-loading--sm" role="status" aria-live="polite">
-    <span class="ui-loading__spinner" aria-hidden="true"></span>
-    <span class="ui-loading__label">Checking invitation status</span>
-</div>
+<x-ui.loading
+    active
+    size="sm"
+    placement="inline"
+    label="Checking invitation status"
+    :overlay="false"
+/>
 ```
 
-### 4.4. Skeleton text
+### 4.4. Overlay loading
 
-Use skeleton text when the final content is text or data copy and the pending shape helps users understand layout continuity.
+Use overlay loading when a large loading state temporarily blocks a page, component, section, modal, side-panel, or tile region.
 
 ```blade
-<div class="ui-loading ui-loading--skeleton ui-loading--text" role="status" aria-live="polite">
-    <span class="ui-loading__label">Loading profile details</span>
-
-    <div class="ui-skeleton ui-skeleton--text" aria-hidden="true">
-        <span class="ui-skeleton__line ui-skeleton__line--long"></span>
-        <span class="ui-skeleton__line ui-skeleton__line--medium"></span>
-        <span class="ui-skeleton__line ui-skeleton__line--short"></span>
-    </div>
-</div>
+<x-ui.loading
+    active
+    size="lg"
+    placement="section"
+    label="Loading account summary"
+    overlay
+/>
 ```
 
-Skeleton shapes are visual placeholders. They must not contain fake user data, fake table values, or placeholder words that could be mistaken for loaded content.
+Parent Patterns own focus trapping, inert background behavior, scroll locking, and focus return. The Loading component owns the visual overlay and status indicator.
 
-### 4.5. Skeleton card
+### 4.5. Inactive state
 
-Use skeleton card for card, tile, or dashboard panel content that is loading.
+Inactive loading renders no indicator.
 
 ```blade
-<div class="ui-loading ui-loading--skeleton ui-loading--card" role="status" aria-live="polite">
-    <span class="ui-loading__label">Loading workspace card</span>
-
-    <article class="ui-skeleton ui-skeleton--card" aria-hidden="true">
-        <span class="ui-skeleton__block ui-skeleton__block--media"></span>
-        <span class="ui-skeleton__line ui-skeleton__line--medium"></span>
-        <span class="ui-skeleton__line ui-skeleton__line--short"></span>
-    </article>
-</div>
+<x-ui.loading :active="false" size="sm" placement="inline" aria-label="Inactive loading" />
 ```
 
-### 4.6. Skeleton table
+### 4.6. Class contract
 
-Use skeleton table when table rows are loading and the column structure is already known.
+| Class | Type | Status | Purpose |
+| ----- | ---- | ------ | ------- |
+| `ui-loading` | Root | Implemented | Loading indicator wrapper. |
+| `ui-loading--lg` / `ui-loading--sm` | Size | Implemented | Large 88px indicator or small 16px indicator. |
+| `ui-loading--placement-*` | Placement | Implemented | Records inline, component, section, modal, side-panel, tile, or page placement. |
+| `ui-loading--overlay` | Modifier | Implemented | Visual overlay for large blocked regions. |
+| `ui-loading__indicator` | Element | Implemented | Indicator box with fixed size. |
+| `ui-loading__spinner` | Element | Implemented | Token-backed circular spinner. |
+| `ui-loading__label` | Element | Implemented | Optional visible label text. |
 
-```blade
-<div class="ui-loading ui-loading--skeleton ui-loading--table" role="status" aria-live="polite">
-    <span class="ui-loading__label">Loading users table</span>
+Feature views must not create additional `ui-loading-*` classes. New classes require source implementation, this standard update, UI Reference proof, and tests.
 
-    <div class="ui-skeleton ui-skeleton--table" aria-hidden="true">
-        <span class="ui-skeleton__row"></span>
-        <span class="ui-skeleton__row"></span>
-        <span class="ui-skeleton__row"></span>
-    </div>
-</div>
-```
+### 4.7. Option contract
 
-Do not skeletonize table actions, menus, checkboxes, toggles, or other action controls. The pending data area can use a skeleton; interactive controls should be unavailable, hidden, or left as stable structure according to the Data table or parent Pattern.
-
-### 4.7. Page-region loading
-
-Use `ui-loading-region` when an existing region becomes busy or when a section of a page is reserved for content that has not loaded yet.
-
-```blade
-<section class="ui-loading-region" aria-busy="true" aria-describedby="users-loading-state">
-    <div id="users-loading-state" class="ui-loading ui-loading--spinner ui-loading--lg" role="status" aria-live="polite">
-        <span class="ui-loading__spinner" aria-hidden="true"></span>
-        <span class="ui-loading__label">Loading users</span>
-    </div>
-</section>
-```
-
-When loading completes, remove the loading indicator, render the loaded content, set `aria-busy="false"` or remove `aria-busy`, and provide a completion cue when the update is not otherwise obvious.
-
-### 4.8. Status handoff
-
-Use status handoff text when loading completes, fails, or requires a next step. Use Notification when the message is persistent, dismissible, global, or visually prominent.
-
-```blade
-<div class="ui-loading ui-loading--success" role="status" aria-live="polite">
-    <span class="ui-loading__label">Users loaded</span>
-</div>
-```
-
-```blade
-<div class="ui-loading ui-loading--error" role="status" aria-live="polite">
-    <span class="ui-loading__label">Could not load users. Try again.</span>
-</div>
-```
-
-Status handoff classes are not decorative color variants. They communicate the immediate result of a loading operation. Longer recovery or outcome content belongs to Notification or the parent Pattern.
-
-### 4.9. Class contract
-
-| Class                       | Type                    | Status      | Purpose                                          |
-| --------------------------- | ----------------------- | ----------- | ------------------------------------------------ |
-| `ui-loading`                | Root                    | Implemented | Base loading/status wrapper.                     |
-| `ui-loading-region`         | Region                  | Implemented | Marks the affected page or content region.       |
-| `ui-loading--spinner`       | Mode                    | Implemented | Indeterminate spinner mode.                      |
-| `ui-loading--skeleton`      | Mode                    | Implemented | Skeleton placeholder mode.                       |
-| `ui-loading--sm`            | Size                    | Implemented | Localized/small spinner or compact status.       |
-| `ui-loading--lg`            | Size                    | Implemented | Section/page-region spinner or prominent status. |
-| `ui-loading--text`          | Skeleton shape modifier | Implemented | Text skeleton composition.                       |
-| `ui-loading--card`          | Skeleton shape modifier | Implemented | Card/tile skeleton composition.                  |
-| `ui-loading--table`         | Skeleton shape modifier | Implemented | Table/list skeleton composition.                 |
-| `ui-loading--loading`       | Status modifier         | Implemented | Explicit active loading state when needed.       |
-| `ui-loading--success`       | Status handoff          | Implemented | Completed loading result.                        |
-| `ui-loading--error`         | Status handoff          | Implemented | Loading failed and recovery is needed.           |
-| `ui-loading--warning`       | Status handoff          | Implemented | Loading completed with a non-blocking concern.   |
-| `ui-loading--info`          | Status handoff          | Implemented | Loading requires neutral follow-up information.  |
-| `ui-loading__spinner`       | Element                 | Implemented | Token-backed spinner graphic.                    |
-| `ui-loading__label`         | Element                 | Implemented | Visible or component-owned status text.          |
-| `ui-skeleton`               | Root                    | Implemented | Base skeleton placeholder.                       |
-| `ui-skeleton--text`         | Skeleton shape          | Implemented | Text skeleton shape.                             |
-| `ui-skeleton--card`         | Skeleton shape          | Implemented | Card skeleton shape.                             |
-| `ui-skeleton--table`        | Skeleton shape          | Implemented | Table skeleton shape.                            |
-| `ui-skeleton__line`         | Element                 | Implemented | Text placeholder line.                           |
-| `ui-skeleton__line--long`   | Element modifier        | Implemented | Long placeholder line.                           |
-| `ui-skeleton__line--medium` | Element modifier        | Implemented | Medium placeholder line.                         |
-| `ui-skeleton__line--short`  | Element modifier        | Implemented | Short placeholder line.                          |
-| `ui-skeleton__block`        | Element                 | Implemented | Card/media placeholder block.                    |
-| `ui-skeleton__row`          | Element                 | Implemented | Table/list placeholder row.                      |
-
-Feature views must not create additional `ui-loading-*` or `ui-skeleton-*` classes. New classes require source implementation, this standard update, UI Reference proof, and tests.
-
-### 4.10. Option contract
-
-Because no public Blade wrapper is installed, these are class/markup options rather than Blade props.
-
-| Option         | Type            | Default                                   | Allowed values                                         | Required                                        | Notes                                                       |
-| -------------- | --------------- | ----------------------------------------- | ------------------------------------------------------ | ----------------------------------------------- | ----------------------------------------------------------- |
-| Mode           | Class modifier  | `spinner` when a loading block is present | `spinner`, `skeleton`, `page-region`, `status handoff` | Yes                                             | Choose the smallest mode that explains the pending work.    |
-| Spinner size   | Class modifier  | `lg` for section loading                  | `sm`, `lg`                                             | No                                              | `sm` is localized; `lg` is section/page-region.             |
-| Skeleton shape | Class modifier  | None                                      | `text`, `card`, `table`                                | Required for skeleton mode                      | Shape must match the incoming content structure.            |
-| Status         | Class modifier  | `loading`                                 | `loading`, `success`, `error`, `warning`, `info`       | No                                              | Status modifiers are for pending/result handoff only.       |
-| Label          | Text content    | None                                      | Specific status text                                   | Yes                                             | Label names the pending target or result.                   |
-| Live region    | Native ARIA     | `polite` for most loading updates         | `polite`, `assertive` by exception                     | Contextual                                      | Use `assertive` only for blocking or urgent status changes. |
-| Busy region    | Native ARIA     | Not set                                   | `aria-busy="true"` on affected region                  | Required when existing content is being updated | Clear when loading completes.                               |
-| Motion         | CSS media query | Animated                                  | Reduced when user prefers reduced motion               | Required                                        | Must respect `prefers-reduced-motion`.                      |
+| Option | Type | Default | Allowed values | Required | Notes |
+| ------ | ---- | ------- | -------------- | -------- | ----- |
+| `id` | string / null | `null` | Valid HTML id | No | Use when a region needs a stable target. |
+| `active` | bool | `true` | `true`, `false` | No | False renders no indicator. |
+| `size` | string | `lg` | `sm`, `lg` | No | Large is 88px; small is 16px. |
+| `placement` | string | `component` | `inline`, `component`, `section`, `modal`, `side-panel`, `tile`, `page` | No | Identifies the loading boundary. |
+| `label` | string / null | `null` | Brief process label | No | Visible label; also used for accessible name unless `ariaLabel` is provided. |
+| `overlay` | bool / null | computed | `true`, `false`, `null` | No | Null follows the size/placement overlay rule. |
+| `disableRelatedActions` | bool | `false` | `true`, `false` | No | Emits a review marker; parent Pattern must disable actual controls. |
+| `ariaLabel` | string / null | label or `Loading` | Accessible name | No | Required when there is no visible label. |
+| `ariaLive` | string | `polite` | `off`, `polite`, `assertive` | No | Use assertive only for urgent blocking changes. |
 
 Any API not listed here is not public. If a feature needs a new loading shape, wrapper, status, data attribute, or JavaScript behavior, update the component implementation, this standard, UI Reference proof, and tests before production use.
 
-### 4.11. Reserved future Blade contract
-
-The following names are reserved for a future correction pass. They are not production APIs today.
-
-| Reserved API          | Current status | Gate                                                                                                                |
-| --------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `x-ui.loading`        | Deferred       | Requires source file, public props, slots, class mapping, accessibility behavior, UI Reference examples, and tests. |
-| `x-ui.loading-region` | Deferred       | Requires region semantics, busy-state handling, completion behavior, overlay boundary rules, and tests.             |
-| `x-ui.skeleton`       | Deferred       | Requires shape props, hidden/visible label behavior, reduced-motion behavior, and tests.                            |
-| `x-ui.skeleton-table` | Deferred       | Requires Data table Pattern alignment, row/column options, responsive behavior, and tests.                          |
-
-Do not create feature-local Blade components with these names.
-
 ## 5. Allowed variants, options, and modifiers
 
-| Name                           | Type                  | Status                | API                                                            | Notes                                                                                    |
-| ------------------------------ | --------------------- | --------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| Spinner                        | Mode                  | Implemented           | `ui-loading ui-loading--spinner`                               | Indeterminate loading indicator.                                                         |
-| Small spinner                  | Size                  | Implemented           | `ui-loading--sm`                                               | Localized loading near a content region.                                                 |
-| Large spinner                  | Size                  | Implemented           | `ui-loading--lg`                                               | Section or page-region loading.                                                          |
-| Skeleton text                  | Mode/shape            | Implemented           | `ui-loading--skeleton ui-loading--text`; `ui-skeleton--text`   | Text/data copy placeholders.                                                             |
-| Skeleton card                  | Mode/shape            | Implemented           | `ui-loading--skeleton ui-loading--card`; `ui-skeleton--card`   | Card/tile placeholders.                                                                  |
-| Skeleton table                 | Mode/shape            | Implemented           | `ui-loading--skeleton ui-loading--table`; `ui-skeleton--table` | Table/list row placeholders.                                                             |
-| Page-region loading            | Composition           | Implemented           | `ui-loading-region` with `aria-busy`                           | Marks a busy page section.                                                               |
-| Loading status                 | State                 | Implemented           | `ui-loading--loading` or spinner/skeleton mode                 | Pending work is active.                                                                  |
-| Success handoff                | Status                | Implemented           | `ui-loading--success`                                          | Use only as immediate completion text; use Notification for persistent outcomes.         |
-| Error handoff                  | Status                | Implemented           | `ui-loading--error`                                            | Use only for immediate failure text; use Notification for recovery flows.                |
-| Warning handoff                | Status                | Implemented           | `ui-loading--warning`                                          | Use for non-blocking pending result concerns.                                            |
-| Informational handoff          | Status                | Implemented           | `ui-loading--info`                                             | Use for neutral loading result/status details.                                           |
-| Reduced-motion                 | State/user preference | Implemented           | CSS `prefers-reduced-motion` behavior                          | Animation reduces or changes to non-motion treatment automatically.                      |
-| Inline action loading          | Boundary              | Not owned by Loading  | Use Inline loading or Button loading                           | Do not build inline button replacements with this API.                                   |
-| Full-page blocking overlay     | Composition           | Gated / Pattern-owned | None                                                           | Requires overlay, inert, scroll, and focus behavior proof.                               |
-| Determinate progress           | Component boundary    | Not owned by Loading  | Progress indicator when installed                              | Loading is indeterminate only.                                                           |
-| Custom skeleton shape          | Extension             | Gated                 | None                                                           | Requires source implementation, tokens, responsive proof, and UI Reference examples.     |
-| Skeleton form controls         | Usage                 | Not allowed           | None                                                           | Do not skeletonize buttons, inputs, menus, toggles, checkboxes, radios, or modal shells. |
-| Multiple simultaneous spinners | Usage                 | Not allowed           | None                                                           | Use one loading message for the affected region.                                         |
+| Name | Type | Status | API | Notes |
+| ---- | ---- | ------ | --- | ----- |
+| Large loading | Size | Implemented | `<x-ui.loading size="lg" />` | Default 88px indicator for page, section, modal, side-panel, tile, or component loading. |
+| Small loading | Size | Implemented | `<x-ui.loading size="sm" placement="inline" />` | 16px inline indicator for localized pending work. |
+| Overlay loading | Modifier | Implemented | `overlay` / computed overlay | Visual overlay for large blocked regions. |
+| Inline placement | Placement | Implemented | `placement="inline"` | Localized indicator without overlay. |
+| Page placement | Placement | Implemented | `placement="page"` | Centers large loading in the viewport. |
+| Component/section/modal/side-panel/tile placement | Placement | Implemented | `placement="component"`, `section`, `modal`, `side-panel`, `tile` | Centers large loading in the owning region. |
+| Active state | State | Implemented | `active` | Renders loading with status semantics. |
+| Inactive state | State | Implemented | `:active="false"` | Renders no indicator. |
+| Reduced-motion | State/user preference | Implemented | CSS `prefers-reduced-motion` behavior | Animation slows under reduced-motion preference. |
+| Inline action loading | Boundary | Not owned by Loading | Use Inline loading or Button loading | Do not build action completion handoffs with this API. |
+| Determinate progress | Component boundary | Not owned by Loading | Progress bar or progress indicator | Loading is indeterminate only. |
+| Skeleton component wrappers | Extension | Gated | None | Requires a separate Skeleton API or consuming component proof. |
+| Multiple simultaneous spinners | Usage | Not allowed | None | Use one loading message for the affected region unless every loader is clearly localized. |
 
 ## 6. States
 
 | State                       | Status                            | Implementation requirement                                                                                                                  |
 | --------------------------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | Default / inactive          | Implemented as absence            | Do not render a loading indicator when no work is pending.                                                                                  |
-| Loading / active            | Implemented                       | Render spinner, skeleton, or region loading with status text and token-backed motion.                                                       |
-| Skeleton                    | Implemented                       | Render a shape that approximates the incoming content and is hidden from assistive tech when status text already conveys the loading state. |
-| Success                     | Implemented as handoff            | Communicate completion briefly when the loaded content or focus change does not already make completion clear.                              |
-| Error                       | Implemented as handoff            | Explain that loading failed and provide a recovery path or route to Notification/Pattern-owned recovery.                                    |
-| Warning                     | Implemented as handoff            | Communicate non-blocking concerns after loading completes.                                                                                  |
-| Informational               | Implemented as handoff            | Communicate neutral status or next-step context.                                                                                            |
+| Loading / active            | Implemented                       | Render loading with status text or accessible name and token-backed motion.                                                                 |
+| Overlay active              | Implemented                       | Overlay blocks pointer interaction with the unavailable visual region.                                                                      |
+| Small inline active         | Implemented                       | Render inline without overlay and keep it near the related action or status text.                                                           |
 | Reduced motion              | Implemented                       | Spinner and skeleton animation must respect user reduced-motion preferences.                                                                |
 | Disabled dependent controls | Pattern/child-owned               | Disable affected controls through Button or field APIs while loading; Loading itself is not disabled.                                       |
 | Hover                       | Not applicable                    | Loading is non-interactive. Do not add hover treatment.                                                                                     |
@@ -440,21 +345,20 @@ Icons and grid are not public Loading API dependencies. If a loading flow needs 
 
 | Element API | Allowed usage                                                                                                                                                                                 |
 | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Color       | Spinner stroke, skeleton surface, skeleton pulse, loading text, status handoff text/border/background, disabled-region contrast, and theme-specific overlay roles when approved by a Pattern. |
-| Spacing     | Spinner-label gap, skeleton line gaps, skeleton card internal spacing, table skeleton row spacing, and region padding when the component owns internal spacing.                               |
-| Typography  | Loading label, status handoff text, concise recovery copy, and hidden/visible assistive text sizing where applicable.                                                                         |
-| Themes      | Light, dark, and inverse token resolution for spinner, skeleton, text, and status handoff states.                                                                                             |
-| Motion      | Spinner rotation, skeleton pulse/shimmer, state entry/exit timing, and reduced-motion behavior.                                                                                               |
+| Color       | Indicator stroke, small indicator background, loading text, disabled-region contrast, and overlay roles. |
+| Spacing     | Indicator-label gap, indicator dimensions, and region centering when the component owns internal spacing. |
+| Typography  | Optional loading label text sizing. |
+| Themes      | Light, dark, and inverse token resolution for indicator, text, and overlay states. |
+| Motion      | Spinner rotation and reduced-motion behavior. |
 
 Carbon color role mapping:
 
 | Carbon token / role | Carbon responsibility | Login App token / API | Login value source | Mapping status | Owner rule |
 | ------------------- | --------------------- | --------------------- | ------------------ | -------------- | ---------- |
-| `$interactive` | Large/small loading indicator stroke | `ui-loading--spinner`, spinner stroke role | App interactive/action palette | Same role / app value | Spinner stroke uses the global interactive role, not arbitrary brand colors. |
+| `$interactive` | Large/small loading indicator stroke | `ui-loading__spinner`, spinner stroke role | App interactive/action palette | Same role / app value | Spinner stroke uses the global interactive role, not arbitrary brand colors. |
 | `$layer-accent` | Small loading indicator background | Loading indicator background role | App layer accent palette | Same role / app value | Indicator background shares layer accent mapping. |
-| `$overlay` | Page loading overlay | Overlay Pattern role / `--ui-overlay` when installed | App overlay palette | Same role / app value | Overlay use is Pattern-gated; Loading does not create local scrims. |
-| `$skeleton-background`, `$skeleton-element` | Skeleton container/element surfaces | `ui-loading--skeleton`, `--ui-skeleton-*` when installed | App skeleton palette | Same role / app value | Skeleton roles are Loading/Skeleton-owned, not generic gray blocks. |
-| `$text-secondary`, `$text-primary` | Loading label and status handoff text | Loading text roles | App text palette | Same role / app value | Loading copy follows text hierarchy. |
+| `$overlay` | Page loading overlay | `--ui-overlay` | App overlay palette | Same role / app value | Loading uses the global overlay role and does not create local scrim colors. |
+| `$text-secondary`, `$text-primary` | Loading label text | Loading text roles | App text palette | Same role / app value | Loading copy follows text hierarchy. |
 
 ### 7.3. CSS namespace
 
@@ -462,32 +366,19 @@ Allowed component classes use the app-owned `ui-*` namespace documented by the i
 
 ```css
 .ui-loading
-.ui-loading-region
-.ui-loading--spinner
-.ui-loading--skeleton
 .ui-loading--sm
 .ui-loading--lg
-.ui-loading--text
-.ui-loading--card
-.ui-loading--table
-.ui-loading--loading
-.ui-loading--success
-.ui-loading--error
-.ui-loading--warning
-.ui-loading--info
+.ui-loading--placement-inline
+.ui-loading--placement-component
+.ui-loading--placement-section
+.ui-loading--placement-modal
+.ui-loading--placement-side-panel
+.ui-loading--placement-tile
+.ui-loading--placement-page
+.ui-loading--overlay
+.ui-loading__indicator
 .ui-loading__spinner
 .ui-loading__label
-.ui-skeleton
-.ui-skeleton--text
-.ui-skeleton--card
-.ui-skeleton--table
-.ui-skeleton__line
-.ui-skeleton__line--long
-.ui-skeleton__line--medium
-.ui-skeleton__line--short
-.ui-skeleton__block
-.ui-skeleton__block--media
-.ui-skeleton__row
 ```
 
 Feature views must not create `spinner-*`, `loader-*`, `skeleton-*`, `placeholder-*`, Bootstrap `.spinner-border`, Bootstrap `.placeholder`, direct Carbon production classes, raw SVG loaders, local keyframes, arbitrary animation durations, raw hex colors, arbitrary spacing, custom focus rings, or feature-local loading classes for the same UI role.
@@ -498,11 +389,11 @@ Feature views must not create `spinner-*`, `loader-*`, `skeleton-*`, `placeholde
 | ------------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
 | Native `role="status"`                | Approved                                           | Use for loading status text that should be announced.                                                                                      |
 | Native `aria-live`                    | Approved                                           | Use `polite` for most loading updates and `assertive` only for blocking or urgent conditions.                                              |
-| Native `aria-busy`                    | Approved                                           | Apply to the affected region while content is loading; clear when complete.                                                                |
-| Native `aria-hidden="true"`           | Approved for decorative skeleton/spinner internals | Hide purely visual spinner/skeleton shapes when label/status text communicates meaning.                                                    |
+| Native `aria-busy`                    | Approved                                           | Loading emits busy state; parent Patterns may also apply it to the affected region and clear when complete.                                |
+| Native `aria-hidden="true"`           | Approved for decorative spinner internals          | Hide purely visual spinner shapes when label/status text communicates meaning.                                                             |
 | Component-owned hidden text           | Approved if implemented by the CSS API             | Use only the app-owned hidden-text class documented by implementation; do not create ad hoc screen-reader utility classes in features.     |
 | JavaScript polling/loading controller | Not approved as Loading API                        | Feature or Pattern behavior may fetch data, but it must not create a new Loading Component JavaScript API without documentation and tests. |
-| `data-ui-loading-*` attributes        | Not approved                                       | Add only through a future documented JavaScript/data-attribute gate.                                                                       |
+| `data-ui-loading-*` attributes        | Approved                                           | Use only attributes emitted by `x-ui.loading` for tests, review, and future-safe behavior boundaries.                                      |
 
 ## 8. Composition rules
 
@@ -542,16 +433,16 @@ Feature views must not create `spinner-*`, `loader-*`, `skeleton-*`, `placeholde
 - The feedback is an outcome rather than a pending state; use Notification or status messaging owned by the Pattern.
 - The indicator is decorative or intended to add visual motion.
 - Content loads instantly enough that an indicator would flash.
-- The page needs a blocking overlay; use an approved overlay Pattern before production use.
+- The page needs focus trapping, inert background behavior, scroll locking, or focus return; use an approved overlay Pattern before production use.
 - The content is actually empty after loading; use the correct Empty state or Pattern.
 
 ### 9.3. Mode selection:
 
 | Need                                                    | Use                                  |
 | ------------------------------------------------------- | ------------------------------------ |
-| Unknown or short indeterminate pending work in a region | Spinner                              |
-| Localized status near a small content area              | Small spinner                        |
-| Section or page-region pending state                    | Large spinner or page-region loading |
+| Unknown or short indeterminate pending work in a region | Loading                              |
+| Localized status near a small content area              | Small loading                        |
+| Section or page-region pending state                    | Large loading                        |
 | Text or metadata loading                                | Skeleton text                        |
 | Card, tile, dashboard panel, or summary block loading   | Skeleton card                        |
 | Tabular rows or list-like data loading                  | Skeleton table                       |
@@ -563,11 +454,11 @@ Feature views must not create `spinner-*`, `loader-*`, `skeleton-*`, `placeholde
 
 | Need                                               | Use                                                     |
 | -------------------------------------------------- | ------------------------------------------------------- |
-| Work is pending                                    | `ui-loading--loading`, spinner, or skeleton mode        |
-| Work completed and content update is not obvious   | `ui-loading--success` handoff or Pattern-owned status   |
-| Work failed and immediate retry/recovery is needed | `ui-loading--error` handoff or Notification             |
-| Work completed with a non-blocking concern         | `ui-loading--warning` handoff or Notification           |
-| Work requires neutral context                      | `ui-loading--info` handoff or Pattern-owned helper text |
+| Work is pending                                    | `x-ui.loading`                                          |
+| Work completed and content update is not obvious   | Pattern-owned status or Notification                    |
+| Work failed and immediate retry/recovery is needed | Notification or Pattern-owned recovery                  |
+| Work completed with a non-blocking concern         | Notification or Pattern-owned helper text               |
+| Work requires neutral context                      | Pattern-owned helper text                               |
 
 ## 10. Accessibility contract
 
@@ -576,10 +467,10 @@ Feature views must not create `spinner-*`, `loader-*`, `skeleton-*`, `placeholde
 - Status text must name the pending target or action.
 - Use `aria-busy="true"` on the affected region when existing content is being updated.
 - Clear `aria-busy` when loading completes.
-- Purely visual spinner and skeleton internals must be hidden from assistive technology when status text already conveys the loading state.
+- Purely visual spinner internals must be hidden from assistive technology when status text already conveys the loading state.
 - Do not rely on animation alone to communicate loading.
 - Do not rely on color alone for loading, success, error, warning, or info meaning.
-- Reduced-motion preferences must be respected for spinner and skeleton animation.
+- Reduced-motion preferences must be respected for spinner animation.
 - If a loading indicator disappears after a long or blocking operation, completion must be conveyed through updated focus, updated content, or a status message.
 - If loading disables dependent controls, those controls must use their own semantic disabled state.
 - If a full-page blocker is approved by a Pattern, the Pattern must own focus order, inert/background behavior, scroll behavior, escape/cancel behavior where applicable, and completion focus return.
@@ -606,7 +497,7 @@ Feature views must not create `spinner-*`, `loader-*`, `skeleton-*`, `placeholde
 
 - Do not bypass the installed Component API with one-off Blade markup, raw utility clusters, raw colors, arbitrary spacing, local icons, raw SVG loaders, Bootstrap spinners, Bootstrap placeholders, or custom JavaScript.
 - Do not render `Component-specific API pending correction` as the example call or installed guidance.
-- Do not create feature-local `x-ui.loading`, `x-ui.skeleton`, `x-loading`, `x-spinner`, or equivalent wrappers.
+- Do not create feature-local loading wrappers such as `x-loading`, `x-spinner`, `x-ui.skeleton`, or equivalent local APIs.
 - Do not create local `spinner-*`, `loader-*`, `skeleton-*`, `placeholder-*`, or animation keyframe classes.
 - Do not use direct Carbon production classes such as `cds--*` or `bx--*`.
 - Do not use loading indicators for decorative emphasis.
@@ -624,11 +515,9 @@ Feature views must not create `spinner-*`, `loader-*`, `skeleton-*`, `placeholde
 
 | Capability                                     | Status                | Gate                                                                                                                                            |
 | ---------------------------------------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| Public `x-ui.loading` Blade wrapper            | Deferred              | Requires source file, props, slots, status semantics, class mapping, examples, tests, and migration guidance from direct class markup.          |
-| Public `x-ui.loading-region` Blade wrapper     | Deferred              | Requires busy-state semantics, completion behavior, region labeling, overlay boundaries, and tests.                                             |
 | Public `x-ui.skeleton` Blade wrapper           | Deferred              | Requires shape props, label behavior, reduced-motion proof, responsive behavior, and tests.                                                     |
 | Custom skeleton shape API                      | Gated                 | Requires tokenized dimensions, layout constraints, no fake content, UI Reference matrix, and accessibility proof.                               |
-| Full-page blocking overlay                     | Pattern-owned / gated | Requires Overlay/feedback Pattern approval, inert behavior, scroll locking, focus return, status announcement, reduced-motion proof, and tests. |
+| Full focus/inert overlay orchestration         | Pattern-owned / gated | Requires Overlay/feedback Pattern approval, inert behavior, scroll locking, focus return, status announcement, reduced-motion proof, and tests. |
 | Determinate progress or percentage             | Not owned by Loading  | Requires Progress indicator API. Do not add percentage behavior to Loading.                                                                     |
 | Inline loading replacement for buttons/actions | Not owned by Loading  | Use Inline loading or Button loading behavior.                                                                                                  |
 | Data-fetch JavaScript controller               | Deferred              | Requires documented data attributes, lifecycle events, cancellation/error handling, no feature-local controller forks, and tests.               |
@@ -663,27 +552,27 @@ Future extensions require an updated Component standard and UI Reference proof b
 
 The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
-The Loading page is a broad feedback reference page. It should use matrices, grouped examples, state tables, skeleton shape examples, and implementation examples rather than a simple tab-only scaffold.
+The Loading page is a broad feedback reference page. It should use matrices, grouped examples, state tables, placement examples, and implementation examples rather than a simple tab-only scaffold.
 
 ### 15.1. Required Live examples internal sections:
 
 | Required proof                    | Rendered behavior                                                                                                                                      | Variants/options shown                                                                       |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
-| API status proof                  | Page states that Loading is Approved API and currently exposes a class-and-semantics API, not a public Blade wrapper.                                  | `ui-loading`, `ui-skeleton`, deferred `x-ui.loading`                                         |
-| Spinner size matrix               | Small and large spinners render with labels and status semantics.                                                                                      | Spinner, Small, Large, Loading                                                               |
-| Skeleton shape matrix             | Text, card, and table skeletons render as visual placeholders with status text.                                                                        | Skeleton text, Skeleton card, Skeleton table, Reduced motion                                 |
-| Page-region loading               | A busy page section renders with `aria-busy`, status text, and completion guidance.                                                                    | Page-region, Spinner large, Busy region, Completion cue                                      |
-| Status handoff matrix             | Loading result states render as immediate text handoffs, with Notification boundary guidance.                                                          | Success, Error, Warning, Info, Loading                                                       |
-| Reduced-motion proof              | Spinner and skeleton examples document and demonstrate reduced-motion behavior.                                                                        | Motion, Reduced motion, Skeleton pulse/shimmer replacement                                   |
-| Accessibility proof               | Examples show status text, live regions, `aria-busy`, hidden decorative shapes, non-focusable loading roots, and completion announcement requirements. | `role="status"`, `aria-live`, `aria-busy`, `aria-hidden`, completion status                  |
+| API status proof                  | Page states that Loading is Approved API and exposes `x-ui.loading`.                                                                                   | `x-ui.loading`, `ui-loading`, `data-ui-loading`                                              |
+| Size matrix                       | Small and large loading indicators render with labels and status semantics.                                                                            | Small, Large, 16px, 88px                                                                     |
+| Placement examples                | Page, component, section, modal, side-panel, tile, and inline examples show the loading boundary.                                                      | Page, Component, Section, Modal, Side panel, Tile, Inline                                    |
+| Overlay proof                     | Large region loading blocks the unavailable visual region with the overlay token.                                                                      | Overlay, `--ui-overlay`, Pointer blocking                                                    |
+| Active/inactive state proof       | Active loading renders status markup; inactive loading renders no indicator.                                                                           | Active, Inactive                                                                             |
+| Reduced-motion proof              | Spinner examples document and demonstrate reduced-motion behavior.                                                                                     | Motion, Reduced motion                                                                       |
+| Accessibility proof               | Examples show status text, live regions, busy state, hidden decorative spinner, non-focusable loading roots, and completion announcement requirements. | `role="status"`, `aria-live`, `aria-busy`, `aria-hidden`, completion status                  |
 | Content behavior proof            | Examples use specific labels and recovery copy instead of vague loading text.                                                                          | Loading users, Saving profile, Could not load users, Users loaded                            |
-| Selection matrix                  | Page distinguishes spinner, skeleton, page-region loading, Inline loading, Progress indicator, Notification, and Empty state use.                      | Spinner, Skeleton, Region, Inline loading boundary, Progress boundary, Notification boundary |
-| Prohibited usage proof            | Page shows local spinners, Bootstrap spinners/placeholders, direct Carbon classes, fake skeleton data, and decorative loading as prohibited.           | Raw loaders, Bootstrap, Carbon classes, Fake data, Multiple spinners                         |
-| Deferred gate proof               | Page shows trigger conditions for Blade wrappers, overlay loading, custom skeletons, JavaScript, timeouts, and progress.                               | Deferred wrappers, Full-page overlay, Custom skeleton, JS controller, Progress               |
+| Selection matrix                  | Page distinguishes Loading from skeleton states, Inline loading, Progress bar, Progress indicator, Notification, and Empty state use.                 | Loading, Skeleton, Inline loading boundary, Progress boundary, Notification boundary         |
+| Prohibited usage proof            | Page shows local spinners, Bootstrap spinners/placeholders, direct Carbon classes, decorative loading, and multiple spinners as prohibited.            | Raw loaders, Bootstrap, Carbon classes, Multiple spinners                                    |
+| Deferred gate proof               | Page shows trigger conditions for skeleton wrappers, full inert/focus overlay behavior, JavaScript controllers, timeouts, and progress.                | Skeleton API, Full focus/inert overlay, JS controller, Progress                              |
 | Foundation Elements proof         | Page shows consumed Foundation Elements and token responsibilities.                                                                                    | Color, Spacing, Typography, Themes, Motion                                                   |
-| Developer implementation examples | Canonical class/markup examples render as real code examples and do not include placeholder text.                                                      | Spinner, Skeleton text/card/table, Page-region, Status handoff                               |
+| Developer implementation examples | Canonical `x-ui.loading` examples render as real code examples and do not include placeholder text.                                                    | Large page loading, Component loading, Modal loading, Inline small loading                   |
 
-The page must not display generic fallback/reference sections or placeholder developer comments. It must show the actual installed class API, rendered modes, rendered states, prohibited usage, deferred gates, accessibility behavior, reduced-motion behavior, and consumed Foundation Elements.
+The page must not display generic fallback/reference sections or placeholder developer comments. It must show the actual installed Blade API, rendered modes, rendered states, prohibited usage, deferred gates, accessibility behavior, reduced-motion behavior, and consumed Foundation Elements.
 
 ## 16. Testing and acceptance criteria
 
@@ -692,16 +581,15 @@ The page must not display generic fallback/reference sections or placeholder dev
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
 - The page identifies Loading as `Approved API`.
-- The page states that no dedicated public Blade wrapper is approved yet.
-- The page shows the class-and-semantics API with `ui-loading`, `ui-loading-region`, and `ui-skeleton` examples.
-- The page renders spinner examples for small and large sizes.
-- The page renders skeleton text, skeleton card, and skeleton table examples.
-- The page renders page-region loading with `aria-busy` and status text.
-- The page renders status handoff examples for success, error, warning, and info.
-- The page documents reduced-motion behavior for spinner and skeleton animation.
+- The page shows `x-ui.loading` as the canonical API.
+- The page renders loading examples for small and large sizes.
+- The page renders page, component, section, modal, side-panel, tile, and inline placement examples.
+- The page renders overlay examples with `--ui-overlay`.
+- The page renders active and inactive state examples.
+- The page documents reduced-motion behavior for spinner animation.
 - The page documents that Loading is non-interactive and must not receive focus.
 - The page documents completion handoff requirements when loading disappears.
-- The page distinguishes Loading from Inline loading, Button loading, Progress indicator, Notification, and Empty state behavior.
+- The page distinguishes Loading from skeleton states, Inline loading, Button loading, Progress bar, Progress indicator, Notification, and Empty state behavior.
 - The page documents prohibited usage for raw spinners, Bootstrap spinners/placeholders, direct Carbon classes, local skeleton classes, fake skeleton content, decorative loading, and multiple simultaneous indicators.
 - Tests assert no generic placeholder content appears.
 - Tests assert stale labels such as `Component-specific API pending correction`, `Live Examples Card`, `Reference Examples`, and `Legacy Contract Summary` remain absent.
@@ -715,30 +603,26 @@ $response = $this->actingAs($admin)->get('/platform/ui-reference/components/load
 $response->assertOk();
 $response->assertSee('Loading');
 $response->assertSee('Approved API');
-$response->assertSee('ui-loading');
-$response->assertSee('ui-loading-region');
-$response->assertSee('ui-skeleton');
-$response->assertSee('Spinner');
-$response->assertSee('Small spinner');
-$response->assertSee('Large spinner');
-$response->assertSee('Skeleton text');
-$response->assertSee('Skeleton card');
-$response->assertSee('Skeleton table');
-$response->assertSee('Page-region loading');
+$response->assertSee('x-ui.loading');
+$response->assertSee('data-component-live-layout="loading-matrix"', false);
+$response->assertSee('data-ui-loading', false);
+$response->assertSee('data-ui-loading-size="lg"', false);
+$response->assertSee('data-ui-loading-size="sm"', false);
+$response->assertSee('data-ui-loading-placement="page"', false);
+$response->assertSee('data-ui-loading-placement="inline"', false);
+$response->assertSee('data-ui-loading-overlay="true"', false);
+$response->assertSee('Large loading');
+$response->assertSee('Small loading');
+$response->assertSee('Placement examples');
 $response->assertSee('role=&quot;status&quot;', false);
 $response->assertSee('aria-live');
 $response->assertSee('aria-busy');
 $response->assertSee('Reduced motion');
-$response->assertSee('Success');
-$response->assertSee('Error');
-$response->assertSee('Warning');
-$response->assertSee('Info');
 $response->assertSee('Color');
 $response->assertSee('Spacing');
 $response->assertSee('Typography');
 $response->assertSee('Themes');
 $response->assertSee('Motion');
-$response->assertSee('No dedicated public Blade wrapper is approved yet');
 $response->assertDontSee('Component-specific API pending correction');
 $response->assertDontSee('Live Examples Card');
 $response->assertDontSee('Reference Examples');
@@ -782,4 +666,4 @@ $response->assertDontSee('btn btn-primary');
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon Loading usage, style, accessibility, and Loading Pattern guidance inform spinner sizing, skeleton selection, multiple-indicator avoidance, status announcements, and reduced-motion requirements. Login App keeps its own class-and-semantics API, `ui-*` namespace, Foundation Element tokens, and UI Reference proof.
+- Carbon Loading usage, style, accessibility, and Loading Pattern guidance inform spinner sizing, skeleton selection, multiple-indicator avoidance, status announcements, and reduced-motion requirements. Login App keeps its own `x-ui.loading` API, `ui-*` namespace, Foundation Element tokens, and UI Reference proof.

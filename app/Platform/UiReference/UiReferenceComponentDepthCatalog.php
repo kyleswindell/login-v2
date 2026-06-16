@@ -38,7 +38,7 @@ class UiReferenceComponentDepthCatalog
             'notification' => $this->feedback('notification', 'Notification', 'Notifications communicate state changes, errors, and system messages.', 'alert', ['Form validation error', 'Record saved', 'API failure', 'Background job completed', 'Maintenance notice']),
             'tag' => $this->tagComponent(),
             'inline-loading' => $this->feedback('inline-loading', 'Inline loading', 'Inline loading shows short local progress without blocking the page.', 'inline-loading', ['Button/action pending', 'Local save pending', 'Polite status']),
-            'loading' => $this->feedback('loading', 'Loading', 'Loading uses spinners and skeletons to keep pending content understandable.', 'loading', ['Spinner', 'Skeleton text/card/table', 'Page-region loading']),
+            'loading' => $this->loadingComponent(),
             'progress-bar' => $this->feedback('progress-bar', 'Progress bar', 'Progress bar shows measurable completion for a long-running task.', 'progress', ['Determinate progress', 'Indeterminate deferred', 'Success/error completion']),
             'progress-indicator' => $this->feedback('progress-indicator', 'Progress indicator', 'Progress indicator shows a user position in a linear step flow.', 'steps', ['Step flow', 'Current/completed/error step', 'Vertical/horizontal']),
             'ai-label' => $this->doNotImplement('ai-label', 'AI label', 'AI label is not implemented until an approved AI-assisted feature exists.'),
@@ -2438,6 +2438,76 @@ class UiReferenceComponentDepthCatalog
     /**
      * @return array<string, mixed>
      */
+    private function loadingComponent(): array
+    {
+        return array_replace($this->correctedImplemented('loading', 'Loading', 'Loading provides large blocking indicators and small inline indicators for unknown-duration pending work.', [
+            $this->exampleFromSample('Large loading', 'Large loading centers an 88px indicator inside an unavailable page, section, modal, side-panel, tile, or component region.', ['type' => 'loading', 'items' => [
+                ['title' => 'Loading account summary', 'size' => 'lg', 'placement' => 'section'],
+            ]], [
+                $this->sampleVariant('Section overlay', ['type' => 'loading', 'items' => [['title' => 'Loading account summary', 'size' => 'lg', 'placement' => 'section']]]),
+                $this->sampleVariant('Tile overlay', ['type' => 'loading', 'items' => [['title' => 'Loading workspace tile', 'size' => 'lg', 'placement' => 'tile']]]),
+            ]),
+            $this->exampleFromSample('Small loading', 'Small loading uses a 16px inline indicator near the triggering action and does not use an overlay.', ['type' => 'loading', 'items' => [
+                ['title' => 'Checking invitation status', 'size' => 'sm', 'placement' => 'inline'],
+            ]], [
+                $this->sampleVariant('Inline status', ['type' => 'loading', 'items' => [['title' => 'Checking invitation status', 'size' => 'sm', 'placement' => 'inline']]]),
+                $this->sampleVariant('Button-adjacent loading', ['type' => 'loading', 'items' => [['title' => 'Saving', 'size' => 'sm', 'placement' => 'inline']]]),
+            ]),
+            $this->exampleFromSample('Placement examples', 'Page, modal, side-panel, section, tile, and component placements identify the blocked region for large loading.', ['type' => 'loading', 'items' => [
+                ['title' => 'Loading page data', 'size' => 'lg', 'placement' => 'page'],
+            ]], [
+                $this->sampleVariant('Page', ['type' => 'loading', 'items' => [['title' => 'Loading page data', 'size' => 'lg', 'placement' => 'page']]]),
+                $this->sampleVariant('Modal', ['type' => 'loading', 'items' => [['title' => 'Saving changes', 'size' => 'lg', 'placement' => 'modal']]]),
+                $this->sampleVariant('Side panel', ['type' => 'loading', 'items' => [['title' => 'Loading panel', 'size' => 'lg', 'placement' => 'side-panel']]]),
+            ]),
+        ], ['loading indicator', 'optional label text', 'optional overlay', 'pending region boundary'], [
+            'Use when unknown-duration pending work exceeds three seconds or temporarily disables a visible region.',
+            'Use large loading for page, section, modal, side-panel, tile, or component regions.',
+            'Use small loading for localized inline pending feedback near the triggering action.',
+        ], [
+            'Do not use loading where skeleton states can progressively represent known final content.',
+            'Do not use loading for measured progress, multi-step progress, validation, or required user action.',
+            'Do not show multiple simultaneous loaders unless each one is tied to a clear localized pending region.',
+        ], [
+            'Active',
+            'Inactive',
+            'Large',
+            'Small',
+            'Overlay',
+            'Page placement',
+            'Component placement',
+            'Modal placement',
+            'Side-panel placement',
+            'Tile placement',
+            'Inline placement',
+        ], [
+            'Active loading renders role=status with aria-live and aria-busy.',
+            'Inactive loading renders no indicator.',
+            'Large loading defaults to overlay for page, component, section, modal, side-panel, and tile placement.',
+            'Small loading stays inline and does not use an overlay.',
+            'Parent Patterns own final focus return, business state changes, and disabling external controls.',
+        ], [
+            'Keep optional labels brief and specific, such as Loading account summary or Saving changes.',
+            'Do not use vague labels when the pending target can be named.',
+            'Do not use the visual label as the only accessibility announcement.',
+        ], [
+            'Every visible loading indicator needs an accessible name through visible label text or aria-label.',
+            'Large overlay loading must visually block the inactive region and parent Patterns must prevent focus from entering unavailable controls.',
+            'Inline loading must preserve context and related controls should be disabled during processing.',
+            'Use aria-live only when the pending state should be announced.',
+        ]), [
+            'live_examples_view' => 'platform.ui-reference.components.live-examples.loading',
+            'live_examples_layout' => 'flexible-matrix',
+            'queued_gaps' => [
+                'Skeleton shape wrappers remain represented by consuming components and Patterns until a separate Skeleton API is installed.',
+                'Full focus trapping, inert background management, and focus return remain Overlay/Modal Pattern responsibilities.',
+            ],
+        ]);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
     private function tagComponent(): array
     {
         return array_replace($this->correctedImplemented('tag', 'Tag', 'Tags label short metadata, semantic state, or filter context without becoming an action.', [
@@ -2867,7 +2937,7 @@ class UiReferenceComponentDepthCatalog
             'radio-button' => 'x-ui.radio-button / x-ui.radio-group',
             'toggle' => 'x-ui.toggle',
             'inline-loading' => 'x-ui.inline-loading',
-            'loading' => 'Native status markup with ui-loading / ui-spinner / ui-skeleton classes',
+            'loading' => 'x-ui.loading',
             'progress-bar' => 'x-ui.progress-bar',
             'progress-indicator' => 'x-ui.progress-indicator / x-ui.progress-step',
             'tag' => 'x-ui.tag',
@@ -2933,7 +3003,7 @@ class UiReferenceComponentDepthCatalog
                 'toggle' => 'ui-switch, ui-switch-input, ui-switch-track, ui-switch-thumb',
                 'content-switcher' => 'ui-content-switcher, ui-content-switcher-list, ui-content-switcher-option, ui-content-switcher-panel',
                 'inline-loading' => 'ui-spinner, data-ui-inline-loading-status',
-                'loading' => 'ui-loading, ui-spinner, ui-skeleton',
+                'loading' => 'ui-loading, ui-loading__indicator, ui-loading__spinner, ui-loading__label, data-ui-loading',
                 'progress-bar' => 'data-ui-component=progress-bar, ui progressbar semantics',
                 'progress-indicator' => 'data-ui-component=progress-indicator, data-ui-component=progress-step',
                 'tag' => 'ui-tag, ui-tag-sm, ui-tag-md, ui-tag-neutral, ui-tag-info, ui-tag-success, ui-tag-warning, ui-tag-error',
@@ -2974,7 +3044,7 @@ class UiReferenceComponentDepthCatalog
             'toggle' => '<x-ui.toggle name="enabled" label="Enable notifications" checked />',
             'content-switcher' => '<x-ui.content-switcher label="View mode" :options="$options" value="summary" />',
             'inline-loading' => '<x-ui.inline-loading status="loading" label="Saving changes" />',
-            'loading' => '<span class="ui-loading" role="status"><span class="ui-spinner"></span>Loading</span>',
+            'loading' => '<x-ui.loading active size="lg" placement="section" label="Loading data..." overlay />',
             'progress-bar' => '<x-ui.progress-bar value="66" label="Import progress" />',
             'progress-indicator' => '<x-ui.progress-indicator :steps="$steps" />',
             'tag' => '<x-ui.tag tone="success">Active</x-ui.tag>',

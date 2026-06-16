@@ -88,7 +88,13 @@ or, when using local PHP/npm directly:
 npm run local:ready
 ```
 
-This command normalizes `public/hot` to `http://localhost:5173`, checks the local app and Vite endpoints, and upserts the review user `test@example.com` / `password` with platform review/admin access. After Docker database resets, rerun this command instead of manually recreating the user or rewriting `public/hot`.
+This command normalizes `public/hot`, aligns the browser-facing Reverb host with the app URL, checks the local app and Vite endpoints, and upserts the review user `test@example.com` / `password` with platform review/admin access. After Docker database resets, rerun this command instead of manually recreating the user or rewriting `public/hot`.
+
+For LAN review, pass the browser-reachable URLs so Vite and websocket clients do not fall back to stale localhost values:
+
+```bash
+docker compose exec app php artisan local:ready --app-url=http://192.168.50.10:8000 --vite-url=http://192.168.50.10:5173
+```
 
 The Compose stack includes:
 

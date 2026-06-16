@@ -19,10 +19,12 @@ Artisan::command('active-batch-review:sync-manifest', function () {
 
 Artisan::command('local:ready
     {--skip-http-checks : Prepare local review state without checking app and Vite HTTP endpoints.}
+    {--env-path= : Override the env-file path; defaults to .env.}
     {--hot-path= : Override the hot-file path; defaults to public/hot.}
-    {--app-url=http://localhost:8000 : Local Laravel app URL to verify.}
+    {--app-url= : Local Laravel app URL to verify; defaults to APP_URL or localhost:8000.}
+    {--reverb-host= : Browser-reachable Reverb host; defaults to the app URL host.}
     {--vite-check-url= : Override the Vite URL used for the HTTP check; defaults to node:5173 inside Docker and localhost:5173 outside Docker.}
-    {--vite-url=http://localhost:5173 : Local Vite URL to verify.}', function () {
+    {--vite-url= : Local Vite URL to write to public/hot; defaults to VITE_DEV_SERVER_URL or localhost:5173.}', function () {
     if (app()->environment('production')) {
         $this->error('local:ready is not available in production.');
 
@@ -30,10 +32,12 @@ Artisan::command('local:ready
     }
 
     $result = app(LocalReviewEnvironment::class)->prepare(
+        envPath: $this->option('env-path') ?: null,
         hotPath: $this->option('hot-path') ?: null,
-        viteUrl: $this->option('vite-url'),
+        viteUrl: $this->option('vite-url') ?: null,
         viteCheckUrl: $this->option('vite-check-url') ?: null,
-        appUrl: $this->option('app-url'),
+        appUrl: $this->option('app-url') ?: null,
+        reverbHost: $this->option('reverb-host') ?: null,
         skipHttpChecks: (bool) $this->option('skip-http-checks'),
     );
 
@@ -62,6 +66,7 @@ Artisan::command('local:ready
     $this->line("App: {$result['app_url']}");
     $this->line("Vite: {$result['vite_url']}");
     $this->line("Vite check: {$result['vite_check_url']}");
+    $this->line("Reverb browser host: {$result['reverb_host']}:{$result['reverb_port']}");
     $this->line("Login: {$result['email']} / {$result['password']}");
 
     return $hasFailure ? Command::FAILURE : Command::SUCCESS;

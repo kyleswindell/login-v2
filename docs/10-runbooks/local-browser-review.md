@@ -25,6 +25,7 @@ npm run local:ready
 The readiness command:
 
 - writes `public/hot` as `http://localhost:5173`
+- normalizes the browser-facing Reverb host from the app URL
 - verifies Vite JavaScript and CSS at `http://localhost:5173` when run on the host
 - verifies host-run Vite JavaScript and CSS through `http://host.docker.internal:5173` when run inside the Docker app container
 - verifies the app login route at `http://localhost:8000/login`
@@ -61,6 +62,16 @@ http://localhost:5173
 ```
 
 Do not use `http://0.0.0.0:5173` for the host browser. The readiness command owns this normalization.
+
+## LAN Review
+
+When reviewing through a LAN URL, pass the browser-reachable app and Vite URLs:
+
+```bash
+docker compose exec app php artisan local:ready --app-url=http://192.168.50.10:8000 --vite-url=http://192.168.50.10:5173
+```
+
+The readiness command uses the app URL host as the browser-facing Reverb host. If the page is loaded at `http://192.168.50.10:8000`, the frontend must connect to `ws://192.168.50.10:8080`, not `ws://localhost:8080`.
 
 Built-asset review is a fallback only when:
 

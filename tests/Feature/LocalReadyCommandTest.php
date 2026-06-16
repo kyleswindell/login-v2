@@ -15,13 +15,28 @@ class LocalReadyCommandTest extends TestCase
 {
     use RefreshDatabase;
 
+    private string $envPath;
     private string $hotPath;
 
     protected function setUp(): void
     {
         parent::setUp();
 
+        $this->envPath = storage_path('framework/testing/env-'.Str::uuid());
         $this->hotPath = storage_path('framework/testing/hot-'.Str::uuid());
+
+        File::ensureDirectoryExists(dirname($this->envPath));
+        File::put($this->envPath, implode(PHP_EOL, [
+            'APP_URL=http://192.168.50.10:8000',
+            'VITE_DEV_SERVER_URL=http://192.168.50.10:5173',
+            'REVERB_HOST=localhost',
+            'REVERB_PORT=8080',
+            'REVERB_SCHEME=http',
+            'VITE_REVERB_HOST="${REVERB_HOST}"',
+            'VITE_REVERB_PORT="${REVERB_PORT}"',
+            'VITE_REVERB_SCHEME="${REVERB_SCHEME}"',
+            '',
+        ]));
     }
 
     protected function tearDown(): void
@@ -31,6 +46,7 @@ class LocalReadyCommandTest extends TestCase
         }
 
         File::delete($this->hotPath);
+        File::delete($this->envPath);
 
         parent::tearDown();
     }
@@ -38,11 +54,14 @@ class LocalReadyCommandTest extends TestCase
     public function test_it_creates_the_local_review_user_and_normalizes_the_hot_file(): void
     {
         $this->artisan('local:ready', [
+            '--env-path' => $this->envPath,
             '--hot-path' => $this->hotPath,
             '--skip-http-checks' => true,
         ])->assertSuccessful();
 
-        $this->assertSame(LocalReviewEnvironment::VITE_URL, File::get($this->hotPath));
+        $this->assertSame('http://192.168.50.10:5173', File::get($this->hotPath));
+        $this->assertStringContainsString('REVERB_HOST=192.168.50.10', File::get($this->envPath));
+        $this->assertStringContainsString('VITE_REVERB_HOST=${REVERB_HOST}', File::get($this->envPath));
 
         $user = User::query()
             ->where('email', LocalReviewEnvironment::EMAIL)
@@ -66,17 +85,22 @@ class LocalReadyCommandTest extends TestCase
         @chmod($this->hotPath, 0444);
 
         $this->artisan('local:ready', [
+            '--env-path' => $this->envPath,
             '--hot-path' => $this->hotPath,
             '--skip-http-checks' => true,
         ])->assertSuccessful();
 
         $this->artisan('local:ready', [
+            '--env-path' => $this->envPath,
             '--hot-path' => $this->hotPath,
             '--skip-http-checks' => true,
         ])->assertSuccessful();
 
         $this->assertSame(1, User::query()->where('email', LocalReviewEnvironment::EMAIL)->count());
-        $this->assertSame(LocalReviewEnvironment::VITE_URL, File::get($this->hotPath));
+        $this->assertSame('http://192.168.50.10:5173', File::get($this->hotPath));
+        $env = File::get($this->envPath);
+        $this->assertSame(1, preg_match_all('/^REVERB_HOST=/m', $env));
+        $this->assertSame(1, preg_match_all('/^VITE_REVERB_HOST=/m', $env));
 
         $user = User::query()
             ->where('email', LocalReviewEnvironment::EMAIL)
@@ -97,7 +121,10 @@ class LocalReadyCommandTest extends TestCase
         ]);
 
         $this->artisan('local:ready', [
+            '--env-path' => $this->envPath,
             '--hot-path' => $this->hotPath,
+            '--app-url' => 'http://localhost:8000',
+            '--vite-url' => LocalReviewEnvironment::VITE_URL,
             '--vite-check-url' => 'http://node:5173',
         ])
             ->expectsOutputToContain('[ok] vite js:')

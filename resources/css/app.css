@@ -6113,7 +6113,7 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-date-picker .ui-input-date {
-        @apply w-full border-0 border-b text-sm transition focus:outline-none;
+        @apply w-full border-0 border-b text-sm focus:outline-none;
         min-height: 2.5rem;
         border-color: var(--ui-border-strong-01);
         background-color: var(--ui-field-01);
@@ -6155,8 +6155,7 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-date-picker .ui-input-date:hover:not(:disabled) {
-        border-color: var(--ui-border-interactive);
-        background-color: var(--ui-field-hover-01);
+        cursor: text;
     }
 
     .ui-date-picker .ui-input-date:focus,
@@ -6178,6 +6177,8 @@ Use targeted searches for the class family being changed before reading this fil
     .ui-date-picker-invalid .ui-input-date {
         border-color: var(--ui-support-error);
         outline-color: var(--ui-support-error);
+        outline: 2px solid var(--ui-support-error);
+        outline-offset: -2px;
     }
 
     .ui-date-picker-invalid .ui-input-date:focus,
@@ -6211,6 +6212,15 @@ Use targeted searches for the class family being changed before reading this fil
     .ui-date-picker-fluid.ui-date-picker-disabled .ui-input-date,
     .ui-date-picker-fluid.ui-date-picker-skeleton .ui-input-date {
         border-color: var(--ui-border-subtle-01);
+    }
+
+    .ui-date-picker-disabled .ui-field-label,
+    .ui-date-picker-disabled .ui-field-helper,
+    .ui-date-picker-disabled .ui-date-picker-status-icon,
+    .ui-date-picker-skeleton .ui-field-label,
+    .ui-date-picker-skeleton .ui-field-helper,
+    .ui-date-picker-skeleton .ui-date-picker-status-icon {
+        color: var(--ui-text-disabled);
     }
 
     .ui-date-picker-status-icon {
@@ -6271,8 +6281,16 @@ Use targeted searches for the class family being changed before reading this fil
         padding-right: 2.75rem;
     }
 
+    .ui-date-range-picker-input-shell .ui-input-date:hover:not(:disabled) {
+        cursor: text;
+    }
+
     .ui-date-range-picker-input-icon {
-        @apply pointer-events-none absolute top-1/2 h-4 w-4 -translate-y-1/2;
+        @apply pointer-events-none absolute top-1/2 -translate-y-1/2;
+        width: 1rem;
+        height: 1rem;
+        min-width: 1rem;
+        display: block;
         right: 1rem;
         color: var(--ui-icon-secondary);
     }
@@ -6347,14 +6365,100 @@ Use targeted searches for the class family being changed before reading this fil
         color: var(--ui-text-on-color);
     }
 
+    .ui-date-range-picker-disabled .ui-date-range-picker-input-icon,
+    .ui-time-picker-disabled .ui-select-chevron-icon {
+        color: var(--ui-icon-disabled);
+    }
+
     .ui-time-picker {
-        @apply mt-4 grid gap-4 rounded-md border p-4 md:grid-cols-[minmax(12rem,1fr)_8rem_minmax(14rem,1fr)];
+        @apply mt-4 rounded-md border p-4;
         border-color: var(--ui-border-subtle-01);
         background-color: var(--ui-layer-02);
     }
 
+    .ui-time-picker-row {
+        @apply flex flex-wrap items-end gap-0;
+    }
+
+    .ui-time-picker-time-field {
+        flex: 0 1 7rem;
+        min-width: 7rem;
+    }
+
+    .ui-time-picker-period {
+        flex: 0 1 8rem;
+        min-width: 8rem;
+    }
+
+    .ui-time-picker-timezone {
+        flex: 1 1 18rem;
+        min-width: min(100%, 18rem);
+    }
+
+    .ui-time-picker .ui-select-shell {
+        margin-top: 0;
+    }
+
+    .ui-time-picker .ui-input,
+    .ui-time-picker .ui-select {
+        border-radius: 0;
+    }
+
+    .ui-time-picker .ui-input:hover:not(:disabled),
+    .ui-time-picker .ui-select:hover:not(:disabled) {
+        background-color: var(--ui-field-01);
+    }
+
+    .ui-time-picker .ui-input:hover:not(:disabled) {
+        cursor: text;
+    }
+
+    .ui-time-picker .ui-select-field-fluid:not(.ui-select-field-disabled):not(.ui-select-field-skeleton) .ui-select-shell:hover {
+        background-color: var(--ui-field-01);
+    }
+
+    .ui-time-picker-fluid .ui-time-picker-row {
+        align-items: stretch;
+    }
+
+    .ui-time-picker-fluid .ui-time-picker-time-field-shell {
+        @apply relative;
+        min-height: 4rem;
+        border: 1px solid var(--ui-border-strong-01);
+        background-color: var(--ui-field-01);
+    }
+
+    .ui-time-picker-fluid .ui-time-picker-time-field-shell .ui-field-label {
+        @apply pointer-events-none absolute left-4 top-2 z-10 mb-0;
+    }
+
+    .ui-time-picker-fluid .ui-time-picker-input {
+        min-height: 4rem;
+        border-bottom: 0;
+        padding-top: 1.25rem;
+    }
+
+    .ui-time-picker-invalid .ui-input,
+    .ui-time-picker-invalid .ui-select {
+        border-color: var(--ui-support-error);
+        outline: 2px solid var(--ui-support-error);
+        outline-offset: -2px;
+    }
+
+    .ui-time-picker-invalid .ui-select-shell,
+    .ui-time-picker-invalid .ui-time-picker-time-field-shell {
+        border-color: var(--ui-support-error);
+    }
+
+    .ui-time-picker-disabled .ui-field-label,
+    .ui-time-picker-disabled .ui-field-helper,
+    .ui-time-picker-disabled .ui-input,
+    .ui-time-picker-disabled .ui-select {
+        color: var(--ui-text-disabled);
+    }
+
     .ui-time-picker-helper {
-        @apply md:col-span-3;
+        @apply mt-2;
     }
 
     .ui-time-picker-input {
@@ -6417,6 +6521,58 @@ Use targeted searches for the class family being changed before reading this fil
     .ui-textarea[data-ui-field-warning='true'] {
         border-color: var(--ui-alert-warning-border);
         box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-alert-warning-bg) 45%, transparent);
+    }
+
+    .ui-date-picker .ui-input-date:hover:not(:disabled),
+    .ui-date-range-picker-input-shell .ui-input-date:hover:not(:disabled),
+    .ui-time-picker .ui-input:hover:not(:disabled) {
+        border-color: var(--ui-border-strong-01);
+        background-color: var(--ui-field-01);
+        cursor: text;
+        box-shadow: none;
+    }
+
+    .ui-date-picker-fluid .ui-input-date:hover:not(:disabled),
+    .ui-time-picker-fluid .ui-time-picker-input:hover:not(:disabled) {
+        background-color: transparent;
+    }
+
+    .ui-time-picker .ui-select:hover:not(:disabled),
+    .ui-time-picker .ui-select-field-fluid:not(.ui-select-field-disabled):not(.ui-select-field-skeleton) .ui-select-shell:hover {
+        background-color: var(--ui-field-01);
+    }
+
+    .ui-time-picker .ui-select-field-fluid .ui-select:hover:not(:disabled) {
+        background-color: transparent;
+    }
+
+    .ui-date-picker-disabled .ui-input-date,
+    .ui-date-picker-skeleton .ui-input-date,
+    .ui-time-picker-disabled .ui-input,
+    .ui-time-picker-disabled .ui-select {
+        border-color: transparent;
+        background-color: var(--ui-field-01);
+        color: var(--ui-text-disabled);
+        box-shadow: none;
+        opacity: 1;
+    }
+
+    .ui-date-picker-fluid.ui-date-picker-disabled .ui-date-picker-control,
+    .ui-date-picker-fluid.ui-date-picker-skeleton .ui-date-picker-control,
+    .ui-time-picker-fluid.ui-time-picker-disabled .ui-time-picker-time-field-shell,
+    .ui-time-picker-fluid.ui-time-picker-disabled .ui-select-shell {
+        border-color: var(--ui-border-subtle-01);
+    }
+
+    .ui-date-picker-invalid .ui-input-date,
+    .ui-date-picker-invalid .ui-input-date:focus,
+    .ui-date-picker-invalid .ui-input-date:focus-visible,
+    .ui-time-picker-invalid .ui-input,
+    .ui-time-picker-invalid .ui-select {
+        border-color: var(--ui-support-error);
+        outline: 2px solid var(--ui-support-error);
+        outline-offset: -2px;
+        box-shadow: none;
     }
 
     .ui-divider {

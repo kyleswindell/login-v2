@@ -16,467 +16,255 @@ foundation_elements:
 related_components:
   - text-input
   - select
-  - number-input
 related_patterns:
   - forms
   - tables
 ---
 
-# Date picker Component API Standard
-- [1. API summary](#1-api-summary)
-- [2. Status and ownership](#2-status-and-ownership)
-- [3. Installed standard](#3-installed-standard)
-- [4. Public API](#4-public-api)
-  - [4.1. Props/options](#41-propsoptions)
-  - [4.2. Value contract](#42-value-contract)
-  - [4.3. Data attributes](#43-data-attributes)
-- [5. Allowed variants, options, and modifiers](#5-allowed-variants-options-and-modifiers)
-- [6. States](#6-states)
-- [7. Token, class, and helper usage](#7-token-class-and-helper-usage)
-  - [7.1. Foundation Elements consumed:](#71-foundation-elements-consumed)
-- [8. Composition rules](#8-composition-rules)
-- [9. Selection guidance](#9-selection-guidance)
-  - [9.1. Use when:](#91-use-when)
-  - [9.2. Do not use when:](#92-do-not-use-when)
-- [10. Accessibility contract](#10-accessibility-contract)
-- [11. Content contract](#11-content-contract)
-- [12. Prohibited usage](#12-prohibited-usage)
-- [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
-  - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
-- [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
-- [17. Related APIs](#17-related-apis)
-- [18. References](#18-references)
+# Date Picker Component Standard
 
-## 1. API summary
+- [1. Purpose](#1-purpose)
+- [2. Approved variants](#2-approved-variants)
+- [3. Public API](#3-public-api)
+- [4. Styling](#4-styling)
+- [5. States](#5-states)
+- [6. Content](#6-content)
+- [7. Accessibility](#7-accessibility)
+- [8. Composition](#8-composition)
+- [9. Prohibited usage](#9-prohibited-usage)
+- [10. UI Reference requirements](#10-ui-reference-requirements)
+- [11. Acceptance criteria](#11-acceptance-criteria)
+- [12. References](#12-references)
 
-Date picker supports date, date-time, range calendar, and time picker entry.
+## 1. Purpose
 
-Canonical API owner: `/platform/ui-reference/components/date-picker`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Date picker supports three approved component surfaces:
 
-This standard follows Carbon's date picker coverage for simple date input, date-time entry, range calendar selection, and time picker anatomy. Login App owns the field shell, validation treatment, range calendar proof, hover range preview, and time picker composition. Unavailable-date rules, relative date shortcuts, date masking/parsing, AI presence, and complex scheduling behavior remain gated until their owning standards install those capabilities.
+- Simple date input: one date text/native input with visible label and format guidance.
+- Calendar picker: a date input with calendar affordance, including the app-owned date range proof when start/end selection is needed.
+- Time picker: a composed control containing a time text input, AM/PM select, and timezone select.
 
-## 2. Status and ownership
+Date + Time combo picker is not an approved component option. Do not use a single `datetime-local` live example as a substitute for time picker composition.
 
-| Field              | Value                                            |
-| ------------------ | ------------------------------------------------ |
-| Status             | Approved API                                     |
-| API layer          | Component API                                    |
-| Component slug     | date-picker                                      |
-| Category           | Inputs                                           |
-| Priority           | Tier C - Contextual or deferred                  |
-| UI Reference route | `/platform/ui-reference/components/date-picker`  |
-| Canonical doc      | `docs/02-standards/ui/components/date-picker.md` |
-| Source owner       | `/platform/ui-reference/components/date-picker`  |
+Canonical API owner: `/platform/ui-reference/components/date-picker`.
 
-## 3. Installed standard
+## 2. Approved Variants
 
-Date picker has component-specific UI Reference examples that consume approved Foundation Elements.
+| Variant | Status | Required parts | Use when |
+| --- | --- | --- | --- |
+| Simple date input | Approved | Label, date input, optional helper/status text | A workflow needs one date and browser/native date entry is sufficient. |
+| Calendar picker | Approved | Label, date input, calendar affordance; range picker adds start/end labels and one calendar menu | A user benefits from choosing a date or range from a calendar surface. |
+| Time picker | Approved | Label, hour/minute input, AM/PM select for 12-hour time, timezone select | A workflow needs a specific time and associated timezone. |
 
-The installed Login App standard is:
+All three variants support default and fluid styling.
 
-- Use native `input[type="date"]` for simple single-date entry.
-- Use native `input[type="datetime-local"]` for simple date-time entry when the workflow does not require a separate time-zone selector.
-- Use the installed date range picker proof when users need to choose start and end dates from a calendar and inspect a range preview.
-- Use time picker composition for scheduling moments that need a time field, AM/PM select, and timezone select.
-- Support small, medium, large, and fluid field presentations through the installed field API.
-- Use labels, helper text, validation copy, disabled/read-only treatment, and token-backed field states consistently with the Form Pattern.
-- Use a read-only value summary plus hidden submitted value when the field is fixed but still belongs to form submission.
-- Use server-side validation as the source of truth for required, minimum, maximum, and business-rule validation.
-- Treat browser-rendered native date picker popups as native browser behavior, not as app-owned visual surfaces.
-- Defer unavailable-date rules, date masking/parsing, relative date shortcuts, AI presence, and complex scheduling behavior until a dedicated API and accessibility contract are approved.
+Default size support:
 
-This component owns the field-level date/date-time input API, range calendar interaction proof, and time picker composition. Parent Patterns own form layout, filtering behavior, submission, persistence, and server validation orchestration.
+| Size | Height | Use case |
+| --- | ---: | --- |
+| Small `sm` | 32px / 2rem | Dense forms or constrained spaces. |
+| Medium `md` | 40px / 2.5rem | Default and most common size. |
+| Large `lg` | 48px / 3rem | Simple forms or isolated controls with more room. |
 
-## 4. Public API
+Fluid size support:
 
-| API surface     | Installed value                                                                                                                                                                                               |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Blade           | `x-ui.date-picker`                                                                                                                                                                                            |
-| JavaScript      | `initDateRangePickers` for range calendar selection and hover range preview. Native date/date-time fields do not require scripting.                                                                            |
+| Style | Height | Use case |
+| --- | ---: | --- |
+| Fluid | 64px / 4rem | Expressive forms, contained spaces, or controls attached to complex components. |
+
+## 3. Public API
+
+| Surface | Installed value |
+| --- | --- |
+| Blade | `x-ui.date-picker` for simple date input and calendar-field shell. |
+| JavaScript | `initDateRangePickers` for range calendar selection and hover range preview. |
 | Data attributes | `data-ui-component="date-picker"`, `data-ui-date-picker`, `data-ui-date-picker-type`, `data-ui-date-picker-size`, `data-ui-date-picker-style`, `data-ui-date-picker-input`, `data-ui-date-picker-readonly`, `data-ui-component="date-range-picker"`, `data-ui-date-range-picker`, `data-ui-date-range-input`, `data-ui-date-range-calendar`, `data-ui-date-range-day`, `data-ui-component="time-picker"`, `data-ui-time-picker`. |
-| Props/options   | `name`, `id`, `label`, `value`, `defaultValue`, `type`, `min`, `minDate`, `max`, `maxDate`, `step`, `required`, `disabled`, `readonly`, `readOnly`, `helper`, `helperText`, `error`, `invalid`, `invalidText`, `warning`, `warn`, `warnText`, `autocomplete`, `placeholder`, `dateFormat`, `size`, `style`, `skeleton`, `attributes`. |
-| CSS namespace   | Use the app-owned `ui-*` namespace documented by the component implementation. Recommended namespaces are `ui-date-picker`, `ui-date-picker-control`, `ui-input-date`, `ui-date-picker-status-icon`, `ui-date-picker-readonly-value`, and shared `ui-field*` helpers. |
-| Source files    | `resources/views/components/ui/date-picker.blade.php`; `resources/css/app.css`                                                                                                                                |
+| CSS namespace | `ui-date-picker`, `ui-date-range-picker`, `ui-time-picker`, shared `ui-field`, `ui-input`, and `ui-select` roles. |
+| Source files | `resources/views/components/ui/date-picker.blade.php`, `resources/views/platform/ui-reference/components/live-examples/date-picker.blade.php`, `resources/js/ui-controls/date-range-pickers.js`, `resources/css/app.css`. |
 
-Example call:
+Approved simple date call:
 
 ```blade
 <x-ui.date-picker
     name="start_date"
     label="Start date"
-    helper="Use the first date this setting should apply."
-    min="2026-01-01"
+    helper="Format: yyyy-mm-dd."
+    min-date="2026-01-01"
+    max-date="2026-12-31"
 />
 ```
 
-Date-time example:
+Approved fluid date call:
 
 ```blade
 <x-ui.date-picker
-    name="scheduled_at"
-    label="Scheduled activation"
-    type="datetime-local"
-    helper="Times use the workspace time zone."
+    name="renewal_date"
+    label="Renewal date"
+    style="fluid"
+    value="2026-06-18"
 />
 ```
 
-Validation example:
+Time picker is composed from text input and Select component primitives. It is not represented by `x-ui.date-picker type="datetime-local"`.
 
-```blade
-<x-ui.date-picker
-    name="expires_on"
-    label="Expiration date"
-    :value="old('expires_on')"
-    :error="$errors->first('expires_on')"
-    required
-/>
-```
+## 4. Styling
 
-### 4.1. Props/options
+Default style:
 
-| Prop/option    | Type                  | Default | Allowed values                                          | Required | Notes                                                                 |
-| -------------- | --------------------- | ------: | ------------------------------------------------------- | -------: | --------------------------------------------------------------------- |
-| `name`         | `string`              |       — | Valid form field name                                   |      Yes | Must map to the submitted field.                                      |
-| `id`           | `string / null`       |  `null` | derived from `name`                                     |       No | Use when multiple instances require explicit ids.                     |
-| `label`        | `string`              |       — | Plain text or escaped text                              |      Yes | Visible label is required. Placeholder-only labeling is prohibited.   |
-| `value`        | `string / null`       |  `null` | `YYYY-MM-DD` for date, `YYYY-MM-DDTHH:mm` for date-time |       No | Use normalized values that native inputs can parse.                   |
-| `defaultValue` | `string / null`       |  `null` | same as `value`                                         |       No | Alias for APIs that distinguish initial/default values.               |
-| `type`         | `string`              |  `date` | `date`, `datetime-local`                                |       No | Other native temporal types require a documented extension.           |
-| `min`          | `string / null`       |  `null` | Valid date or date-time value matching `type`           |       No | Pair with helper copy when the constraint matters to users.           |
-| `minDate`      | `string / null`       |  `null` | Valid date or date-time value matching `type`           |       No | Alias for `min`.                                                      |
-| `max`          | `string / null`       |  `null` | Valid date or date-time value matching `type`           |       No | Pair with helper copy when the constraint matters to users.           |
-| `maxDate`      | `string / null`       |  `null` | Valid date or date-time value matching `type`           |       No | Alias for `max`.                                                      |
-| `step`         | `int / string / null` |  `null` | Native input step value                                 |       No | Use only when seconds/minute precision is product-approved.           |
-| `required`     | `bool`                | `false` | `true`, `false`                                         |       No | Must be paired with server validation.                                |
-| `disabled`     | `bool`                | `false` | `true`, `false`                                         |       No | Disabled fields are not submitted and are not focusable.              |
-| `readonly`     | `bool`                | `false` | `true`, `false`                                         |       No | Prefer plain text summaries when the value is purely informational.   |
-| `readOnly`     | `bool`                | `false` | `true`, `false`                                         |       No | Alias for `readonly`.                                                 |
-| `helper`       | `string / null`       |  `null` | Short explanatory copy                                  |       No | Include format, time-zone, or constraint guidance when needed.        |
-| `helperText`   | `string / null`       |  `null` | Short explanatory copy                                  |       No | Alias for `helper`.                                                   |
-| `error`        | `string / null`       |  `null` | Short recovery copy                                     |       No | Sets invalid/error treatment and links copy to the control.           |
-| `invalid`      | `bool`                | `false` | `true`, `false`                                         |       No | Alias state for Carbon-style invalid APIs.                            |
-| `invalidText`  | `string / null`       |  `null` | Short recovery copy                                     |       No | Error copy used when `invalid` is true.                               |
-| `warning`      | `string / null`       |  `null` | Short caution copy                                      |       No | Use for non-blocking business-rule cautions.                          |
-| `warn`         | `bool`                | `false` | `true`, `false`                                         |       No | Alias state for Carbon-style warning APIs.                            |
-| `warnText`     | `string / null`       |  `null` | Short caution copy                                      |       No | Warning copy used when `warn` is true.                                |
-| `autocomplete` | `string / null`       |  `null` | Valid autocomplete token                                |       No | Use only valid browser tokens.                                        |
-| `placeholder`  | `string / null`       |  `null` | Native placeholder                                      |       No | Never use as the label or only format guidance.                       |
-| `dateFormat`   | `string / null`       |  `null` | Short date format label                                 |       No | Renders helper copy when helper text is not supplied.                 |
-| `size`         | `string`              |    `md` | `sm`, `md`, `lg`                                        |       No | Controls native field height.                                         |
-| `style`        | `string`              | `default` | `default`, `fluid`                                    |       No | Fluid uses the 64px expressive field treatment.                       |
-| `skeleton`     | `bool`                | `false` | `true`, `false`                                         |       No | Loading placeholder; disables the native input and exposes status.    |
-| `attributes`   | `array`               |    `[]` | Extra safe HTML attributes                              |       No | Do not use this to inject local style, raw color, or custom behavior. |
+- Label sits above the field.
+- The date/time entry field owns the field layer background.
+- The surrounding example/card layer does not become part of the input background.
+- Default fields support `sm`, `md`, and `lg`.
 
-### 4.2. Value contract
+Fluid style:
 
-| Type             | Submitted value shape | Example            | Notes                                                                                                         |
-| ---------------- | --------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------- |
-| `date`           | `YYYY-MM-DD`          | `2026-06-08`       | Browser display may localize, but the value should remain normalized.                                         |
-| `datetime-local` | `YYYY-MM-DDTHH:mm`    | `2026-06-08T09:30` | Does not include a time-zone offset. The surrounding Pattern must explain the relevant time zone when needed. |
+- Label sits inside the field shell.
+- The full component shell owns the field layer background and border.
+- Fluid fields use a single 64px height except when warning or error text extends the component.
+- Time picker fluid style applies the 64px treatment to the time input, AM/PM select, and timezone select as one composed row.
 
-### 4.3. Data attributes
+Hover:
 
-The installed native-control API exposes data attributes for review, tests, and future-safe initialization boundaries:
+- Date picker and time picker fields should not show a visible hover color shift.
+- The only hover affordance for entry fields is the cursor changing to the text-entry cursor.
+- Calendar day cells may still use calendar-specific hover/preview states.
 
-| Attribute | Owner | Use |
-| --------- | ----- | --- |
-| `data-ui-component="date-picker"` | Component | Identifies the component root. |
-| `data-ui-date-picker` | Component | Identifies the field wrapper. |
-| `data-ui-date-picker-type` | Component | Records `date` or `datetime-local`. |
-| `data-ui-date-picker-size` | Component | Records `sm`, `md`, or `lg`. |
-| `data-ui-date-picker-style` | Component | Records `default` or `fluid`. |
-| `data-ui-date-picker-input` | Component | Identifies the native input when editable. |
-| `data-ui-date-picker-readonly` | Component | Identifies the read-only submitted value summary. |
-| `data-ui-component="date-range-picker"` | Component | Identifies the range picker proof root. |
-| `data-ui-date-range-picker` | Component | Initialization boundary for range picker behavior. |
-| `data-ui-date-range-input` | Component | Identifies start and end range inputs. |
-| `data-ui-date-range-calendar` | Component | Identifies the range calendar surface. |
-| `data-ui-date-range-day` | Component | Identifies selectable calendar days and range preview state. |
-| `data-ui-component="time-picker"` | Component | Identifies the time picker composition. |
-| `data-ui-time-picker` | Component | Identifies the time picker wrapper. |
+Layering:
 
-Future data attributes for unavailable-date rules, relative date shortcuts, AI presence, or masking behavior must be documented here before use.
+- Default inputs use `--ui-field-01` only on the entry field.
+- Fluid inputs use `--ui-field-01` on the complete field shell.
+- Example cards and parent containers use layer tokens independently and must not redefine component fields with local background utilities.
 
-## 5. Allowed variants, options, and modifiers
+## 5. States
 
-Date picker has no decorative visual variants. It has installed input types, field states, and composition boundaries.
+Universal states apply to simple date input, calendar picker fields, and time picker fields.
 
-| Name               | Type                  | Status                   | API                              | Use when                                                                                                         |
-| ------------------ | --------------------- | ------------------------ | -------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| Native single date | Input type            | Approved API             | `type="date"`                    | User enters one date and a native control is sufficient.                                                         |
-| Native date-time   | Input type            | Approved API             | `type="datetime-local"`          | User enters one local date-time and the workflow does not require a custom time-zone selector.                   |
-| Minimum date       | Constraint            | Approved API             | `min="YYYY-MM-DD"`               | Dates before a known lower bound are invalid.                                                                    |
-| Maximum date       | Constraint            | Approved API             | `max="YYYY-MM-DD"`               | Dates after a known upper bound are invalid.                                                                     |
-| Required date      | Constraint            | Approved API             | `required`                       | Submission cannot proceed without a value.                                                                       |
-| Small              | Size                  | Approved API             | `size="sm"`                      | Use in dense forms where the surrounding pattern supports compact fields.                                         |
-| Medium             | Size                  | Approved API             | `size="md"`                      | Default field size.                                                                                              |
-| Large              | Size                  | Approved API             | `size="lg"`                      | Use where taller form fields are required by the surrounding pattern.                                             |
-| Fluid              | Style                 | Approved API             | `style="fluid"`                  | Use the 64px expressive field treatment for high-emphasis form contexts.                                         |
-| Helper text        | Field modifier        | Approved API             | `helper="..."`                   | Format, time-zone, or constraint guidance helps prevent errors.                                                  |
-| Error state        | Field state           | Approved API             | `error="..."`                    | Validation blocks submission and needs recovery copy.                                                            |
-| Warning state      | Field state           | Approved API             | `warning="..."`                  | A non-blocking caution should be visible.                                                                        |
-| Disabled           | State                 | Approved API             | `disabled`                       | The date cannot be changed and should not submit.                                                                |
-| Read-only          | State                 | Approved API             | `readonly`                       | The value is visible but not editable. Prefer plain text when no field affordance is needed.                     |
-| Skeleton/loading   | State                 | Approved API             | `skeleton`                       | Use only while date field data is loading and final shape is known.                                              |
-| Range date picker  | Component variant     | Approved API             | `data-ui-date-range-picker`      | Use when users need calendar context and coordinated start/end selection.                                        |
-| Calendar popover   | Component enhancement | Approved for range proof | `data-ui-date-range-calendar`    | Use with the installed range picker proof; simple single-date native popups remain browser-owned.                |
-| Time picker        | Component composition | Approved API             | `data-ui-time-picker`            | Use for a time text field with AM/PM and timezone selects.                                                       |
-| Time-zone selector | Component composition | Approved API             | Select component inside time picker | Use when a time value needs explicit timezone context.                                                        |
-| Date masking       | Enhancement           | Deferred                 | None approved                    | Requires localization, parsing, validation, and accessibility review.                                            |
+| State | Required behavior |
+| --- | --- |
+| Enabled | Field is live and editable. |
+| Hover | No visible hover color shift on entry fields; cursor changes to text cursor. |
+| Focus | Focus ring appears when the user tabs to or clicks into the control and remains until the next click or keyboard focus action. |
+| Open | Calendar picker menu is visible and interactive. Only calendar picker owns this state. |
+| Error | Invalid field uses `--ui-support-error` for border/outline and visible recovery copy. In multi-field pickers, mark only the invalid field. |
+| Warning | Warning text is visible and non-blocking. |
+| Disabled | Field is not focusable or submitted. Label, text, icon, and border use disabled tokens. Default disabled field keeps the field background and hides the default bottom border; fluid disabled field keeps subtle shell border. |
+| Read-only | Value is reviewable, accessible, and non-editable. |
+| Skeleton | Initial loading placeholder; interactive behavior is removed. |
 
-Do not render deferred variants as working production UI.
+Disabled token expectations:
 
-## 6. States
+- Label and field text use `--ui-text-disabled`.
+- Calendar and select icons use `--ui-icon-disabled`.
+- Disabled non-subtle borders use `--ui-border-disabled`.
+- Disabled date/time field background remains `--ui-field-01`.
 
-States must be represented through the installed Component API and token-backed classes. Do not create state-only local CSS outside the API.
+Error token expectations:
 
-| State           | Status                       | Required implementation                                                                                   |
-| --------------- | ---------------------------- | --------------------------------------------------------------------------------------------------------- |
-| Default         | Approved API                 | Labeled native date input with token-backed field styling.                                                |
-| Empty value     | Approved API                 | No selected/submitted value. Helper text remains available when present.                                  |
-| Filled value    | Approved API                 | Normalized value is rendered by the native control.                                                       |
-| Hover-capable   | Approved API                 | Browser and app field hover treatment must remain token-backed where implemented.                         |
-| Focus-visible   | Approved API                 | Visible focus ring/treatment is required.                                                                 |
-| Disabled        | Approved API                 | Native `disabled` attribute. Do not attach custom interactive behavior.                                   |
-| Read-only       | Approved API                 | Native `readonly` attribute or read-only field treatment. Consider plain text for non-editable summaries. |
-| Required        | Approved API                 | Native `required` plus server validation.                                                                 |
-| Helper text     | Approved API                 | Helper text is associated through description semantics.                                                  |
-| Error           | Approved API                 | Error copy is visible, non-color-only, and linked to the input. Use `aria-invalid` when invalid.          |
-| Warning         | Approved API                 | Warning copy is visible and non-color-only. Do not mark valid fields invalid solely for warnings.         |
-| Min/max invalid | Approved API                 | Constraint is enforced by validation and explained when users can act on it.                              |
-| Skeleton/loading | Approved API               | Use `skeleton` when the field value or constraints are loading and the final field shape is known.        |
-| Range selecting | Approved API                 | Range picker updates start/end values, selected range, and hover preview through `initDateRangePickers`. |
-| Calendar open   | Approved for range proof     | Range calendar menu is visible in the UI Reference proof with date buttons and selected range state.     |
-| Time picker     | Approved API                 | Time field, AM/PM select, and timezone select use text-input/select state behavior.                      |
+- Error border and focus-style outline use `--ui-support-error`.
+- Error message text uses the app error text role.
+- Error state must not rely on placeholder text or color alone.
 
-## 7. Token, class, and helper usage
+## 6. Content
 
-Date picker consumes Foundation Color, Spacing, Typography, and Themes through the app field classes.
+Labels:
 
-### 7.1. Foundation Elements consumed:
+- Every date and time picker field must have a visible label.
+- Date range inputs must be labeled independently as start and end dates.
+- Labels should be clear and descriptive.
 
-- Color
-- Spacing
-- Typography
-- Themes
+Date format:
 
-Recommended app-owned classes and helpers:
+- Simple date input must include format guidance inline with the label or helper text.
+- Do not rely only on placeholder text for format guidance because it disappears as the user types.
+- Date format copy must match the configured value format.
 
-| Class/helper       | Owner                    | Allowed usage                                           |
-| ------------------ | ------------------------ | ------------------------------------------------------- |
-| `ui-field`         | Component / Form Pattern | Wraps label, control, helper text, and validation copy. |
-| `ui-field-label`   | Component                | Visible field label.                                    |
-| `ui-input`         | Component                | Baseline field chrome.                                  |
-| `ui-input-date`    | Component                | Date/date-time-specific input hook.                     |
-| `ui-date-picker-sm` / `ui-date-picker-md` / `ui-date-picker-lg` | Component | Installed field heights. |
-| `ui-date-picker-fluid` | Component | 64px expressive field treatment. |
-| `ui-date-picker-readonly-value` | Component | Read-only submitted value summary. |
-| `ui-date-range-picker` | Component | Range picker wrapper and calendar surface. |
-| `ui-date-range-day` | Component | Calendar day button and range state hook. |
-| `ui-time-picker` | Component | Time picker composition layout. |
-| `ui-field-helper`  | Component                | Helper, format, and constraint copy.                    |
-| `ui-field-error`   | Component                | Blocking validation message.                            |
-| `ui-field-warning` | Component                | Non-blocking caution message.                           |
-| `ui-field-meta`    | Component / Pattern      | Optional compact metadata such as time-zone context.    |
+Time format:
 
-Do not hard-code raw color, spacing, font size, borders, focus rings, icons, or motion values in feature views.
+- 12-hour and 24-hour systems are allowed.
+- 12-hour time must include AM/PM selection.
+- Use uppercase `AM` and `PM` with no periods.
+- Specific times should specify a timezone.
 
-## 8. Composition rules
+## 7. Accessibility
 
-- Use native semantics first. Do not add JavaScript unless an approved enhancement requires it.
-- A visible label is required for every date picker.
-- Helper text should explain constraints, format expectations, or time-zone context when those affect successful entry.
-- Error and warning copy must be visible and associated with the field through the installed field API.
-- `date` values use `YYYY-MM-DD` for the submitted value.
-- `datetime-local` values use `YYYY-MM-DDTHH:mm` and do not include a time-zone offset.
-- When a time zone matters, the parent Pattern must expose that context in helper text, adjacent content, or a separate approved control.
-- `min`, `max`, and `step` must match the selected input type and server validation.
-- Native browser date picker UI may vary by device and browser. Do not depend on custom visual styling of the browser picker popup.
-- Range selection is installed for the date range picker proof. Parent Patterns still own submission, filter/query behavior, server validation, labels, and recovery copy.
-- Components own internal semantics and styling. Parent Patterns own grouping, external spacing, workflow orchestration, filtering behavior, and page-level layout.
+- Use visible labels, not placeholder-only labeling.
+- Link helper, warning, and error copy with the field through `aria-describedby`.
+- Use `aria-invalid="true"` only for invalid fields.
+- Disabled fields must not be focusable.
+- Read-only values must remain readable and accessible.
+- Calendar range buttons must have meaningful date labels.
+- Time picker select controls must expose their label and selected value.
 
-## 9. Selection guidance
+## 8. Composition
 
-### 9.1. Use when:
+Time picker composes existing primitives:
 
-- Users need to enter or choose one date.
-- Users need to enter one local date-time.
-- Users need to select a start and end date with visible calendar context.
-- Users need to enter a time with AM/PM and timezone context.
-- Native browser date/date-time controls satisfy the workflow.
-- The date is known, approximate, memorable, or simple enough to type.
-- A filter, form, or settings workflow needs a standard date field with helper and validation states.
+- Time field follows Text input behavior.
+- AM/PM and timezone controls follow Select behavior, including the approved chevron icon.
+- Time picker row must keep those controls on one composed line when there is enough width and wrap only when the container is genuinely constrained.
 
-### 9.2. Do not use when:
+Calendar picker composes:
 
-- Users need unavailable-date rules or blocked-date semantics that are not installed.
-- Users need recurring schedules, multiple dates, or relative date shortcuts.
-- Users need month-only, year-only, fiscal period, or relative date shortcuts.
-- Placeholder text would be the only label.
-- A custom picker is being added for visual preference without a date, range, or time selection need.
+- Date field shell.
+- Calendar trigger/affordance.
+- Calendar menu or range menu when date selection from a calendar is required.
 
-Use related APIs instead:
+Parent patterns own form layout, persistence, filtering, submission, and server validation orchestration.
 
-| Need                                                | Use                                                                                   |
-| --------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| Plain text entry                                    | Text input                                                                            |
-| Select from a short known set such as month or year | Select                                                                                |
-| Exact numeric value, duration, or interval          | Number input                                                                          |
-| Start/end date relationship                         | Date range picker for calendar selection; Form or filtering Pattern owns submission and query behavior |
-| Complex scheduling workflow                         | Forms Pattern                                                                         |
-| Search/filter query by date                         | Table or Filter Pattern owns the query behavior                                       |
+## 9. Prohibited Usage
 
-## 10. Accessibility contract
+- Do not display Date + Time combo picker as an approved live example.
+- Do not use `datetime-local` as a UI Reference substitute for time picker composition.
+- Do not create local date picker shells with raw Tailwind color utilities.
+- Do not hard-code hover backgrounds for date/time entry fields.
+- Do not use placeholder-only date format guidance.
+- Do not mark all fields invalid when only one date/time field is invalid.
+- Do not build production unavailable-date rules, date masking, relative shortcuts, or AI presence until those capabilities have approved standards.
 
-- Use a native input for the installed API: `input[type="date"]` or `input[type="datetime-local"]`.
-- Provide a visible text label for every control.
-- Associate helper, warning, and error copy with the input through the installed field description API.
-- Use `aria-invalid="true"` only for invalid/error states.
-- Maintain a visible focus state.
-- Do not rely on placeholder text as the accessible name or sole format instruction.
-- Do not rely on color alone for error, warning, required, unavailable, or disabled meaning.
-- Keep server validation messages specific enough to tell users how to recover.
-- Preserve keyboard access to the native field.
-- Range picker day buttons must expose selected range state, focus-visible treatment, and status copy that updates when the range changes.
+## 10. UI Reference Requirements
 
-## 11. Content contract
+The UI Reference page must organize the live examples into three tabs:
 
-- Use sentence case labels.
-- Name the date being requested directly, such as `Start date`, `Expiration date`, `Scheduled activation`, or `Report end date`.
-- Avoid vague labels such as `Date`, `When`, or `Select date` when a more specific label is available.
-- Helper text should explain constraints users can act on: date format, earliest date, latest date, time-zone context, or business rule.
-- Error text should explain the problem and the required recovery.
-- Warning text should explain the caution without implying submission is blocked.
-- Date-time fields must explain the relevant time zone when the submitted value is interpreted in a specific zone.
-- Do not use placeholder text as the only format guidance.
+| Tab | Required live examples |
+| --- | --- |
+| Simple date input | Default simple date input, fluid simple date input, small/medium/large default sizes, universal states. |
+| Calendar picker | Default calendar picker, fluid calendar picker, working date range proof with start/end inputs and selectable calendar days, calendar picker states. |
+| Time picker | Default time picker row, fluid time picker row, small/medium/large default time picker sizing, focus/error/disabled states. |
 
-## 12. Prohibited usage
+The page must also show:
 
-- Do not bypass the installed Component API with one-off Blade markup, raw utility clusters, raw colors, arbitrary spacing, local icons, or custom JavaScript.
-- Do not rely on placeholder text as the only label.
-- Do not use custom field chrome when the native control satisfies the workflow.
-- Do not import or initialize a third-party date picker library without an approved standard update.
-- Do not copy Carbon DatePicker JavaScript, Carbon production classes, or Carbon visual markup into Login App feature views.
-- Do not build local range picker, calendar popover, unavailable-date picker, or time-zone selector markup outside the Date picker component contract.
-- Do not style the browser-native picker popup as if it were an app-owned surface.
-- Do not store display-formatted date strings as the canonical submitted value.
-- Do not hide required format, time-zone, or validation information in placeholder text.
+- `x-ui.date-picker` usage.
+- `data-date-picker-tabs`.
+- `data-ui-component="date-range-picker"`.
+- `data-ui-date-range-input="start"` and `data-ui-date-range-input="end"`.
+- `data-ui-date-range-calendar` and `data-ui-date-range-day`.
+- `data-ui-component="time-picker"`.
+- `data-ui-time-picker`.
+- `data-ui-time-picker-period`.
+- `data-ui-time-picker-timezone`.
+- No approved live `datetime-local` combo example.
 
-## 13. Deferred or gated capabilities
+## 11. Acceptance Criteria
 
-| Capability              | Status                   | Gate                                                                                                                                                   |
-| ----------------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Unavailable-date rules  | Deferred                 | Requires disabled-date semantics, non-color meaning, keyboard behavior, and server validation.                                                         |
-| Relative date shortcuts | Deferred                 | Requires Filter/Forms Pattern ownership and visible result explanation.                                                                                |
-| Date masking/parsing    | Deferred                 | Requires localization, validation, screen reader behavior, and manual input fallback review.                                                           |
-| Month/year-only picker  | Deferred                 | Requires approved use case and component or Select/Number composition decision.                                                                        |
+- Simple date input, calendar picker, and time picker are visually and structurally separate.
+- Default and fluid styles are represented for all three approved surfaces.
+- Default sizes `sm`, `md`, and `lg` are represented for date and time picker fields.
+- Fluid examples use one 64px shell treatment.
+- Date range calendar icons render at 16px by 16px and do not scale with the surrounding page.
+- Date range picker is interactive through `initDateRangePickers`.
+- Time picker displays time, AM/PM, and timezone controls as one composed row when width allows.
+- AM/PM and timezone controls use the Select component chevron.
+- Date/time entry fields do not show a visible hover background or border shift.
+- Error examples use `--ui-support-error` for border/outline.
+- Disabled examples are visibly muted with disabled text/icon/border tokens.
+- Date and time format helper copy matches the rendered values.
+- The focused state can be inspected after click or keyboard focus.
+- Component source, CSS, UI Reference, and this standard remain synchronized.
 
-Future extensions require an updated Component standard and UI Reference proof before production use.
+## 12. References
 
-## 14. Implementation and UI Reference Checklist
-### 14.1. Implementation checklist
-| Requirement                | Standard expectation                                                                                                                               |
-| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Public API/source          | The standard names the canonical Blade component, native/class API, JavaScript controller, CSS namespace, source files, or explicit deferred gate. |
-| Variants/options/modifiers | Approved variants, options, sizes, density, layout modifiers, and deferred gates are listed.                                                       |
-| States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
-| Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
-| Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
-
-### 14.2. UI Reference proof checklist
-| Requirement               | Visual proof expectation                                                                              |
-| ------------------------- | ----------------------------------------------------------------------------------------------------- |
-| Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
-| Rendered variants/options | Every applicable supported variant, option, size, modifier, or deferred trigger condition is shown.   |
-| Rendered states           | Required states are shown visually and with accessibility markers where relevant.                     |
-| Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
-| Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
-| Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
-
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
-
-The `Live examples` card may use tabs, grouped examples, matrices, or full-width sections. Date picker should remain relatively simple and may use tabbed scenarios or grouped field examples.
-
-| Required proof              | Rendered behavior                                                                                                      | Variants/options shown                                                                           |
-| --------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| Native single date          | Native `input[type="date"]` demonstrates visible label, helper text, normalized value, and token-backed field styling. | Default, Helper text, Focus-visible, Min/max when useful                                         |
-| Native date-time            | Native `input[type="datetime-local"]` demonstrates date-time entry and time-zone helper copy.                          | Date-time, Helper text, Focus-visible                                                            |
-| Validation date             | Required date field demonstrates blocking validation copy and non-color-only error treatment.                          | Required, Error, Warning, `aria-invalid`, Described-by text                                      |
-| Disabled and read-only date | Disabled and read-only examples show how unavailable and non-editable values are represented.                          | Disabled, Read-only                                                                              |
-| Bounded scheduling date     | Minimum and maximum dates demonstrate user-visible constraints and server-validation alignment.                        | `min`, `max`, Helper text                                                                        |
-| Date range picker           | Calendar range picker lets users choose start and end dates from either input and previews the hovered end range.       | Start input, End input, Calendar open, Range selected, Hover preview |
-| Time picker                 | Time text field is composed with AM/PM and timezone selects.                                                           | Time text input, AM/PM select, Timezone select |
-
-## 16. Testing and acceptance criteria
-
-- `/platform/ui-reference/components/date-picker` returns 200 for authorized users.
-- The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
-- Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
-- The page does not contain `Component-specific API pending correction.`
-- The page renders `x-ui.date-picker` as the canonical Blade API.
-- The page renders at least one native `input[type="date"]` example.
-- The page renders at least one native `input[type="datetime-local"]` example.
-- The page shows helper, error, warning, disabled, read-only, required, min, and max behavior.
-- The page states that placeholder text is not a label.
-- The page renders an app-owned range calendar proof with start/end inputs, selected range, and hover preview state hooks.
-- The page renders a time picker proof with time text input, AM/PM select, and timezone select.
-- The page does not render unavailable-date rules, relative shortcuts, or date masking as production UI.
-- The page does not use Carbon production classes such as `cds--date-picker` or `bx--date-picker`.
-- The page does not link to deprecated `tier-1` or `tier-2` canonical docs paths.
-
-Suggested feature assertions:
-
-```php
-$response->assertOk();
-$response->assertSee('Date picker');
-$response->assertSee('x-ui.date-picker');
-$response->assertSee('type=&quot;date&quot;', false);
-$response->assertSee('type=&quot;datetime-local&quot;', false);
-$response->assertSee('Single date entry');
-$response->assertSee('Date range picker');
-$response->assertSee('Time picker anatomy');
-$response->assertSee('Styles and fluid versions');
-$response->assertSee('States');
-$response->assertSee('data-ui-component="date-range-picker"', false);
-$response->assertSee('data-ui-date-range-day', false);
-$response->assertSee('data-ui-component="time-picker"', false);
-$response->assertSee('placeholder text is not a label');
-$response->assertSee('data-component-live-layout="date-picker-matrix"', false);
-$response->assertSee('data-ui-date-picker-size="sm"', false);
-$response->assertSee('data-ui-date-picker-style="fluid"', false);
-$response->assertSee('data-ui-date-picker-readonly', false);
-$response->assertDontSee('Component-specific API pending correction');
-$response->assertDontSee('cds--date-picker');
-$response->assertDontSee('bx--date-picker');
-$response->assertDontSee('tier-1');
-$response->assertDontSee('tier-2');
-```
-
-## 17. Related APIs
-
-| API                    | Route                                            |
-| ---------------------- | ------------------------------------------------ |
-| Text input             | `/platform/ui-reference/components/text-input`   |
-| Select                 | `/platform/ui-reference/components/select`       |
-| Number input           | `/platform/ui-reference/components/number-input` |
-| Form patterns          | `/platform/ui-reference/patterns/forms`          |
-| Table/filter patterns  | `/platform/ui-reference/patterns/tables`         |
-| Scheduling composition | `/platform/ui-reference/patterns/forms`          |
-| Components overview    | `/platform/ui-reference/components`              |
-
-## 18. References
-
-- [Component Standards Index](index.md)
-- [Component Implementation Checklist](checklist.md)
-- [Foundation Elements Standards](../elements/index.md)
-- [Pattern Standards Index](../patterns/index.md)
-- [Carbon Date picker usage](https://carbondesignsystem.com/components/date-picker/usage/)
-- [Carbon Date picker style](https://carbondesignsystem.com/components/date-picker/style/)
-- [Carbon Date picker accessibility](https://carbondesignsystem.com/components/date-picker/accessibility/)
-
-Carbon Date picker guidance informs the distinction between simple date input, calendar picker, range picker, and time picker. Login App standardizes native date/date-time input, app-owned range calendar selection, and time picker composition while gating unavailable-date rules, masking, relative shortcuts, and AI presence until those capabilities are installed.
+- Carbon Date picker style guidance.
+- Carbon Date picker usage guidance.
+- Login App Text input standard.
+- Login App Select standard.
+- Login App Color standard.

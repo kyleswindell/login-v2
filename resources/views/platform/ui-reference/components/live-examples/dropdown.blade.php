@@ -16,19 +16,28 @@
         ['value' => 'workspaces', 'label' => 'Workspace catalog'],
     ];
 
+    $familyRows = [
+        ['Dropdown', 'Installed', 'x-ui.dropdown', 'Single-select option list. Selecting an option closes the menu and updates the field text.'],
+        ['Multiselect', 'Installed', 'x-ui.multiselect', 'Multiple selected values. Menu stays open while selections are made.'],
+        ['Filterable multiselect', 'Installed', 'x-ui.multiselect filterable', 'Typed filtering removes non-matching options and keeps selected values summarized.'],
+        ['Fluid dropdown', 'Installed for dropdown', 'x-ui.dropdown variant="fluid"', '64px field height with fluid label/field spacing.'],
+        ['Inline dropdown', 'Required gap', 'No approved API', 'Inline modifier still needs keyboard, sizing, and layout proof before use.'],
+        ['Combo box', 'Required gap', 'No approved API', 'Typed filtering plus optional custom value entry requires a dedicated combo-box API.'],
+    ];
+
     $boundaryRows = [
         ['Dropdown', 'Custom single selection from a known option list.', 'Use for page filters, sorting controls, and custom single-value fields.', 'Approved here'],
         ['Select', 'Native form selection.', 'Use when native mobile/form behavior is preferred.', 'Separate component'],
         ['Menu buttons / Menu', 'Command disclosure.', 'Use when items are actions like Edit, Duplicate, or Archive.', 'Separate component'],
-        ['Multiselect', 'Multiple selected values.', 'Use when users can choose more than one option.', 'Separate component'],
-        ['Combo box', 'Typed filtering or custom values.', 'Requires dedicated Combo box approval before implementation.', 'Deferred boundary'],
+        ['Multiselect', 'Multiple selected values.', 'Use when users can choose more than one option.', 'Installed separate component'],
+        ['Combo box', 'Typed filtering or custom values.', 'Requires dedicated Combo box approval before implementation.', 'Required gap'],
         ['Radio button / Toggle', 'Visible few choices or immediate binary settings.', 'Use for two options, visible comparison, or on/off settings.', 'Separate component'],
     ];
 
     $deferredRows = [
-        ['Fluid dropdown', 'Gated', 'Needs attached/contained field context and spacing proof before production use.'],
-        ['Inline dropdown', 'Deferred', 'Needs separate inline selection keyboard and labeling contract.'],
-        ['Filterable dropdown', 'Not implemented here', 'Use Search/Text input today or approve Combo box/filterable Multiselect.'],
+        ['Inline dropdown', 'Required gap', 'Needs separate inline selection keyboard, spacing, and labeling contract.'],
+        ['Combo box', 'Required gap', 'Needs dedicated API for typed suggestions, highlighted best match, clear icon, and custom value save behavior.'],
+        ['Vertical divider sets', 'Required gap for combo/filterable variants', 'Divider rules apply when clear and chevron controls become separately interactive.'],
         ['Skeleton dropdown', 'Deferred', 'Requires async option loading ownership.'],
         ['AI presence dropdown', 'Gated', 'Requires approved AI feature and AI label standard.'],
     ];
@@ -63,6 +72,57 @@
                         helper="Selecting an option closes the menu and updates the hidden value."
                         open
                     />
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-dropdown-live-section="family-coverage">
+        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Dropdown family coverage</h3>
+        <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">Carbon groups dropdown, multiselect, filterable multiselect, and combo box as one selection family. Login App maps installed behavior to separate app-owned APIs and keeps unimplemented family variants visible as required gaps.</p>
+
+        <div class="mt-4 overflow-x-auto rounded-lg border" style="border-color: var(--ui-border-subtle-01);">
+            <table class="min-w-full text-left text-sm">
+                <thead style="background-color: var(--ui-layer-accent-01); color: var(--ui-text-secondary);">
+                    <tr>
+                        <th class="px-4 py-3">Family variant</th>
+                        <th class="px-4 py-3">Status</th>
+                        <th class="px-4 py-3">API</th>
+                        <th class="px-4 py-3">Behavior</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($familyRows as [$variant, $status, $api, $behavior])
+                        <tr class="border-t" style="border-color: var(--ui-border-subtle-01);">
+                            <td class="px-4 py-3 font-semibold" style="color: var(--ui-text-primary);">{{ $variant }}</td>
+                            <td class="px-4 py-3" style="color: var(--ui-text-secondary);">{{ $status }}</td>
+                            <td class="px-4 py-3"><code>{{ $api }}</code></td>
+                            <td class="max-w-lg px-4 py-3 leading-6" style="color: var(--ui-text-secondary);">{{ $behavior }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-4 grid gap-4 xl:grid-cols-3">
+            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
+                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Fluid dropdown</h4>
+                <div class="mt-4">
+                    <x-ui.dropdown name="fluid_status" label="Billing status" variant="fluid" :options="$statusOptions" value="pending" />
+                </div>
+            </article>
+
+            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
+                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Multiselect</h4>
+                <div class="mt-4">
+                    <x-ui.multiselect name="dropdown_family_roles" label="Roles" :options="$statusOptions" :value="['active', 'paused']" clearable open />
+                </div>
+            </article>
+
+            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
+                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Filterable multiselect</h4>
+                <div class="mt-4">
+                    <x-ui.multiselect name="dropdown_family_filterable" label="Reference areas" :options="$longOptions" :value="['billing']" filterable clearable open />
                 </div>
             </article>
         </div>
@@ -142,7 +202,7 @@
 
     <section class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-dropdown-live-section="related-api-boundaries">
         <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Dropdown vs related APIs</h3>
-        <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">Carbon’s dropdown family is documented, but this app keeps neighboring behaviors in their own component owners unless the standard is updated first.</p>
+        <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">Use Dropdown for values, Menu/Menu buttons for actions, Multiselect for multiple values, and Select when native form behavior is the better control.</p>
         <div class="mt-4 overflow-x-auto rounded-lg border" style="border-color: var(--ui-border-subtle-01);">
             <table class="min-w-full text-left text-sm">
                 <thead style="background-color: var(--ui-layer-accent-01); color: var(--ui-text-secondary);">
@@ -171,7 +231,7 @@
 
     <section class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-dropdown-live-section="deferred-gated-capabilities">
         <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Deferred and gated capabilities</h3>
-        <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">These capabilities remain standards-gated. The page documents trigger conditions instead of rendering fake production controls.</p>
+        <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">These remaining family capabilities are not complete. The page documents trigger conditions instead of rendering fake production controls.</p>
         <div class="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
             @foreach ($deferredRows as [$capability, $status, $reason])
                 <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">

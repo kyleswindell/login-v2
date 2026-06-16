@@ -71,6 +71,8 @@
         @if($required) aria-required="true" @endif
         @disabled($isDisabled)
         data-ui-dropdown-trigger
+        data-ui-dropdown-field
+        data-ui-dropdown-unified-trigger
     >
         <span @class(['ui-dropdown-value', 'ui-dropdown-placeholder' => blank($selectedLabel)]) data-ui-dropdown-value>{{ $selectedLabel ?? $placeholder }}</span>
         @if ($isInvalid)
@@ -78,7 +80,7 @@
         @elseif ($isWarning)
             <x-heroicon-o-exclamation-triangle class="ui-dropdown-status-icon ui-dropdown-status-icon-warning" aria-hidden="true" />
         @endif
-        <span class="ui-dropdown-chevron" aria-hidden="true">
+        <span class="ui-dropdown-chevron" aria-hidden="true" data-ui-dropdown-chevron>
             <x-heroicon-o-chevron-down class="ui-dropdown-chevron-icon" />
         </span>
     </button>

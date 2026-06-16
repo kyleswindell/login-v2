@@ -2361,6 +2361,9 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Validation selection')
             ->assertSee('Disabled and read-only dropdown')
             ->assertSee('Size comparison')
+            ->assertSee('Dropdown family coverage')
+            ->assertSee('Filterable multiselect')
+            ->assertSee('Required gap')
             ->assertSee('Dropdown vs related APIs')
             ->assertSee('Deferred and gated capabilities')
             ->assertSee('Select')
@@ -2369,11 +2372,17 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Combo box')
             ->assertSee('data-ui-component="dropdown"', false)
             ->assertSee('data-ui-dropdown-trigger', false)
+            ->assertSee('data-ui-dropdown-field', false)
+            ->assertSee('data-ui-dropdown-unified-trigger', false)
+            ->assertSee('data-ui-dropdown-chevron', false)
             ->assertSee('data-ui-dropdown-menu', false)
             ->assertSee('data-ui-dropdown-option', false)
+            ->assertSee('data-ui-dropdown-variant="fluid"', false)
             ->assertSee('data-ui-dropdown-size="sm"', false)
             ->assertSee('data-ui-dropdown-size="md"', false)
             ->assertSee('data-ui-dropdown-size="lg"', false)
+            ->assertSee('data-ui-component="multiselect"', false)
+            ->assertSee('data-ui-multiselect-filterable="true"', false)
             ->assertSee('aria-haspopup="listbox"', false)
             ->assertSee('role="listbox"', false)
             ->assertSee('role="option"', false)
@@ -2398,6 +2407,9 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString("'readonly' => false", $dropdownView);
         $this->assertStringContainsString("'menuMaxHeight' => null", $dropdownView);
         $this->assertStringContainsString('ui-dropdown-trigger', $dropdownView);
+        $this->assertStringContainsString('data-ui-dropdown-field', $dropdownView);
+        $this->assertStringContainsString('data-ui-dropdown-unified-trigger', $dropdownView);
+        $this->assertStringContainsString('data-ui-dropdown-chevron', $dropdownView);
         $this->assertStringContainsString('heroicon-o-chevron-down', $dropdownView);
         $this->assertStringContainsString('data-ui-dropdown-option-value', $dropdownView);
         $this->assertStringContainsString('export function initDropdowns(root = document)', $dropdownScript);
@@ -2407,10 +2419,14 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('initDropdowns', $appJs);
         $this->assertStringContainsString('.ui-dropdown-trigger:not(:disabled)', $interactionFocus);
         $this->assertStringContainsString('.ui-dropdown-trigger', $dropdownCss);
+        $this->assertStringNotContainsString('.ui-dropdown-chevron {'."\n".'        @apply inline-flex items-center justify-center border-l;', $dropdownCss);
         $this->assertStringContainsString('.ui-dropdown-option[aria-selected=\'true\']', $dropdownCss);
         $this->assertStringContainsString('box-shadow: 0 2px 6px 0 rgb(0 0 0 / 20%)', $dropdownCss);
         $this->assertStringContainsString('\'dropdown\' => $this->dropdownComponent()', $catalog);
         $this->assertStringContainsString('Carbon\'s Dropdown, Multiselect, Filterable multiselect, and Combo box', $standard);
+        $this->assertStringContainsString('Field and chevron must function as one dropdown control', $standard);
+        $this->assertStringContainsString('Default Dropdown field and menu item heights must match', $standard);
+        $this->assertStringContainsString('Combo box plus Inline dropdown remain required gaps', $standard);
     }
 
     public function test_tag_component_page_renders_installed_api_examples(): void

@@ -281,9 +281,17 @@ class UiReferenceComponentDepthCatalog
                 $this->sampleVariant('Medium', ['type' => 'field', 'items' => [['label' => 'Medium dropdown', 'type' => 'dropdown', 'name' => 'medium_dropdown', 'size' => 'md']]]),
                 $this->sampleVariant('Large', ['type' => 'field', 'items' => [['label' => 'Large dropdown', 'type' => 'dropdown', 'name' => 'large_dropdown', 'size' => 'lg']]]),
             ]),
-        ], ['visible label', 'button-like field trigger', 'selected value or placeholder', 'chevron icon', 'listbox menu', 'option rows', 'hidden submitted value', 'helper or validation text'], [
+            $this->exampleFromSample('Dropdown family coverage', 'Dropdown family behavior is split across installed app-owned APIs while combo box and inline dropdown remain required gaps.', ['type' => 'field', 'items' => [
+                ['label' => 'Fluid dropdown', 'type' => 'dropdown', 'name' => 'fluid_dropdown', 'style' => 'fluid', 'value_key' => 'pending'],
+            ]], [
+                $this->sampleVariant('Fluid dropdown', ['type' => 'field', 'items' => [['label' => 'Fluid dropdown', 'type' => 'dropdown', 'name' => 'fluid_dropdown_variant', 'style' => 'fluid']]]),
+                $this->sampleVariant('Multiselect owner', ['type' => 'multiselect', 'items' => [['label' => 'Roles', 'name' => 'dropdown_family_roles', 'value' => ['enabled', 'disabled'], 'clearable' => true]]]),
+                $this->sampleVariant('Filterable multiselect owner', ['type' => 'multiselect', 'items' => [['label' => 'Reference areas', 'name' => 'dropdown_family_filterable', 'filterable' => true, 'clearable' => true]]]),
+            ]),
+        ], ['visible label', 'unified field and chevron trigger', 'selected value or placeholder', 'chevron icon', 'listbox menu', 'option rows', 'hidden submitted value', 'helper or validation text'], [
             'Use when users need one value from a predefined list and a custom listbox is more appropriate than native Select.',
             'Use for page filters, sorting controls, modals, side panels, or component controls where the option list is known before interaction.',
+            'Use Multiselect or filterable Multiselect for installed multi-value selection behavior from the same Carbon family.',
         ], [
             'Do not use Dropdown for action menus, overflow commands, destructive options, multiple selections, searchable/custom typed values, or two-option choices.',
             'Do not use Dropdown when native Select satisfies a mostly form-based or mobile-first workflow.',
@@ -301,13 +309,17 @@ class UiReferenceComponentDepthCatalog
             'Small',
             'Medium',
             'Large',
+            'Fluid',
             'Long menu',
+            'Required inline dropdown gap',
+            'Required combo box gap',
         ], [
+            'The field and chevron are one unified trigger; clicking anywhere in the field toggles the menu unless disabled or read-only.',
             'Trigger click, Enter, Space, or Arrow keys open the menu unless disabled or read-only.',
             'Options are selected through click, Enter, or Space and update the visible value plus hidden submitted value.',
             'Escape, outside click, Tab, or selecting an option closes the menu.',
             'Open and closed states keep matching width; menu placement may resolve up or down to avoid clipping.',
-            'Multiselect, filterable multiselect, and combo box behavior belong to separate or deferred owners.',
+            'Multiselect and filterable multiselect belong to the installed Multiselect owner; combo box and inline dropdown remain required gaps until dedicated APIs exist.',
         ], [
             'Labels are visible, concise, and sentence case.',
             'Options are short text-only labels, preferably three words or fewer.',

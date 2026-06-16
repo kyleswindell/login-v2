@@ -33,9 +33,10 @@ related_patterns:
 - [3. Installed standard](#3-installed-standard)
 - [4. Public API](#4-public-api)
   - [4.1. Props/options](#41-propsoptions)
-  - [4.2. Option data contract](#42-option-data-contract)
-  - [4.3. Data attributes](#43-data-attributes)
-  - [4.4. CSS namespace](#44-css-namespace)
+  - [4.2. Required structure and sizing](#42-required-structure-and-sizing)
+  - [4.3. Option data contract](#43-option-data-contract)
+  - [4.4. Data attributes](#44-data-attributes)
+  - [4.5. CSS namespace](#45-css-namespace)
 - [5. Allowed variants, options, and modifiers](#5-allowed-variants-options-and-modifiers)
 - [6. States](#6-states)
 - [7. Token, class, and helper usage](#7-token-class-and-helper-usage)
@@ -63,7 +64,7 @@ Dropdown chooses one value from a known list of options when a custom listbox ha
 
 Canonical API owner: `/platform/ui-reference/components/dropdown`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
-This standard is intentionally scoped to **single known-option selection**. Do not use Dropdown for command menus, overflow actions, multiple selection, searchable free-text entry, or native form selection where Select is the correct installed API.
+Carbon defines Dropdown, Multiselect, Filterable multiselect, and Combo box as a selection-control family. Login App maps that family to app-owned Component APIs: `x-ui.dropdown` owns single-select dropdown behavior, `x-ui.multiselect` owns multiselect and filterable multiselect behavior, and Combo box plus Inline dropdown remain required gaps until dedicated APIs are implemented.
 
 ## 2. Status and ownership
 
@@ -86,7 +87,7 @@ The installed Login App standard is:
 
 - Use Dropdown for one value selected from a known option list.
 - Use the app-owned `x-ui.dropdown` API for custom single-selection dropdowns.
-- Treat Carbon's Dropdown, Multiselect, Filterable multiselect, and Combo box as family-level reference coverage; in Login App, base Dropdown owns only custom single-select behavior unless this standard explicitly expands.
+- Treat Carbon's Dropdown, Multiselect, Filterable multiselect, and Combo box as family-level reference coverage; in Login App, base Dropdown owns custom single-select behavior, while Multiselect and Filterable multiselect are installed through `x-ui.multiselect`.
 - Use a visible label, optional helper text, visible validation copy, and token-backed field states.
 - Use Dropdown only when native Select is not the better fit for the workflow.
 - Use Menu buttons or Menu for action disclosure; Dropdown options are values, not commands.
@@ -94,6 +95,7 @@ The installed Login App standard is:
 - Do not implement Combo box behavior inside Dropdown. If users can type to filter or enter a custom value, use Search/Text input today or add a dedicated Combo box standard before implementation.
 - Keep options short, text-only, and easy to scan.
 - Keep overflow and menu placement behavior inside the component API rather than feature-local JavaScript.
+- Field and chevron must function as one dropdown control. The chevron is decorative structure inside the field trigger, not a disconnected button.
 
 This component owns the single-select field, trigger, selected value display, option menu, option selection, validation state, and menu open/close behavior. Parent Patterns own form layout, filtering intent, table-toolbar composition, submission, persistence, and page-level spacing.
 
@@ -103,7 +105,7 @@ This component owns the single-select field, trigger, selected value display, op
 | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Blade           | `x-ui.dropdown`                                                                                                                                                                                                                                                  |
 | JavaScript      | `initDropdowns` exported from the app UI controls entry when custom listbox behavior is installed. Do not add feature-local dropdown scripts.                                                                                                                    |
-| Data attributes | `data-ui-dropdown`, `data-ui-dropdown-trigger`, `data-ui-dropdown-menu`, `data-ui-dropdown-option`, `data-ui-dropdown-value`, `data-ui-dropdown-option-value`, `data-ui-dropdown-option-label`, `data-ui-dropdown-hidden-input`.                                  |
+| Data attributes | `data-ui-dropdown`, `data-ui-dropdown-trigger`, `data-ui-dropdown-field`, `data-ui-dropdown-chevron`, `data-ui-dropdown-menu`, `data-ui-dropdown-option`, `data-ui-dropdown-value`, `data-ui-dropdown-option-value`, `data-ui-dropdown-option-label`, `data-ui-dropdown-hidden-input`. |
 | Props/options   | `name`, `id`, `label`, `options`, `value`, `placeholder`, `helper`, `error`, `warning`, `size`, `variant`, `required`, `disabled`, `readonly`, `menuMaxHeight`, `placement`, `attributes`.                                                                       |
 | CSS namespace   | Use the app-owned `ui-*` namespace documented by the component implementation. Recommended namespaces are `ui-dropdown`, `ui-dropdown-trigger`, `ui-dropdown-menu`, `ui-dropdown-option`, `ui-field`, `ui-field-label`, `ui-field-helper`, and `ui-field-error`. |
 | Source files    | `resources/views/components/ui/dropdown.blade.php`, `resources/js/ui-controls/dropdowns.js`, `resources/css/app.css`, and UI Reference route `/platform/ui-reference/components/dropdown`.                                                                      |
@@ -161,7 +163,7 @@ Disabled example:
 | `error`         | `string / null`       |             `null` | Short recovery copy        |       No | Sets invalid/error treatment and links copy to the control.                                                |
 | `warning`       | `string / null`       |             `null` | Short caution copy         |       No | Use for non-blocking caution copy.                                                                         |
 | `size`          | `string`              |               `md` | `sm`, `md`, `lg`           |       No | Use one field size consistently within the same form or toolbar region.                                    |
-| `variant`       | `string`              |          `default` | `default`, `fluid`         |       No | `fluid` is gated unless the page proves attached/contained input behavior.                                 |
+| `variant`       | `string`              |          `default` | `default`, `fluid`         |       No | `fluid` uses the installed 64px field structure for attached or contained field compositions.              |
 | `required`      | `bool`                |            `false` | `true`, `false`            |       No | Must be paired with server validation.                                                                     |
 | `disabled`      | `bool`                |            `false` | `true`, `false`            |       No | Disabled dropdowns cannot open and should not submit a changed value.                                      |
 | `readonly`      | `bool`                |            `false` | `true`, `false`            |       No | Read-only shows a fixed value without opening the menu. Prefer plain text for purely informational values. |
@@ -169,7 +171,30 @@ Disabled example:
 | `placement`     | `string`              |             `auto` | `auto`, `down`, `up`       |       No | Prefer `auto`; manual placement needs a layout reason.                                                     |
 | `attributes`    | `array`               |               `[]` | Extra safe HTML attributes |       No | Do not use this to inject local styles, raw colors, or custom behavior.                                    |
 
-### 4.2. Option data contract
+### 4.2. Required structure and sizing
+
+The installed Dropdown must preserve Carbon-equivalent field structure through app-owned classes and tokens:
+
+| Mode | Required structure |
+| ---- | ------------------ |
+| Default dropdown | Label margin-bottom 8px; field padding-left 16px; effective field padding-right 48px for the chevron zone; border-bottom 1px; chevron zone 48px with 16px icon padding; helper margin-top 4px; state icon 16px plus 16px spacing. |
+| Fluid dropdown | Label margin-bottom 4px; field height 64px; field padding-left 16px; effective field padding-right 48px; field block padding/margins follow the 13px fluid alignment; chevron zone remains 48px. |
+| Multiselect | Owned by `x-ui.multiselect`; field padding-left 16px; effective field padding-right 48px; selected tag height 24px; selected-value clear behavior stays component-owned. |
+| Filterable multiselect | Owned by `x-ui.multiselect filterable`; typing filters option visibility, clear controls clear typed filter or selected values according to the Multiselect owner. |
+| Combo box | Required gap; when implemented it must provide field padding-right 72px, clear icon, chevron, vertical divider between separately interactive icon controls, filtering/autocomplete, and optional custom value save behavior. |
+| Inline dropdown | Required gap; when implemented it must use inline field text and option padding-left/right 16px and a 16px chevron offset without filtering behavior. |
+
+Default Dropdown field and menu item heights must match:
+
+| Size | Field height | Menu item height |
+| ---- | ------------ | ---------------- |
+| `sm` | 32px / 2rem | 32px / 2rem |
+| `md` | 40px / 2.5rem | 40px / 2.5rem |
+| `lg` | 48px / 3rem | 48px / 3rem |
+
+Fluid Dropdown has a 64px field. Fluid menu items use 64px by default and may use a 40px condensed item height only when that condensed variant is explicitly installed and proven.
+
+### 4.3. Option data contract
 
 | Key        | Type            | Required | Notes                                                                                    |
 | ---------- | --------------- | -------: | ---------------------------------------------------------------------------------------- |
@@ -180,12 +205,14 @@ Disabled example:
 
 Do not include decorative images, arbitrary icons, rich HTML, nested controls, action labels, or multi-line descriptions in Dropdown options.
 
-### 4.3. Data attributes
+### 4.4. Data attributes
 
 | Attribute                       | Owner          | Purpose                                                                                |
 | ------------------------------- | -------------- | -------------------------------------------------------------------------------------- |
 | `data-ui-dropdown`              | Root           | Initializes and scopes dropdown behavior.                                              |
 | `data-ui-dropdown-trigger`      | Trigger button | Opens/closes the option menu and owns `aria-expanded`.                                 |
+| `data-ui-dropdown-field`        | Trigger button | Marks the whole field, including the chevron zone, as the single dropdown control.      |
+| `data-ui-dropdown-chevron`      | Chevron icon   | Identifies the decorative chevron area inside the unified field trigger.                |
 | `data-ui-dropdown-menu`         | Menu/listbox   | Contains selectable options.                                                           |
 | `data-ui-dropdown-option`       | Option         | Identifies one selectable option.                                                      |
 | `data-ui-dropdown-value`        | Option/value   | Stores the visible selected text region or submitted option value, depending on owner. |
@@ -193,7 +220,7 @@ Do not include decorative images, arbitrary icons, rich HTML, nested controls, a
 | `data-ui-dropdown-option-label` | Option         | Stores the visible option label for JavaScript selection.                              |
 | `data-ui-dropdown-hidden-input` | Hidden input   | Stores the selected value for form submission when the trigger is not a native select. |
 
-### 4.4. CSS namespace
+### 4.5. CSS namespace
 
 Recommended app-owned classes:
 
@@ -237,10 +264,12 @@ Dropdown does not have decorative variants. It has installed single-select behav
 | Read-only dropdown             | State              | Approved API         | `readonly`                                                                                 | A selected value is visible but the menu must not open.                             |
 | Long menu with capped height   | Modifier           | Approved API         | `menuMaxHeight="..."`                                                                      | A known option list is long enough to need vertical scrolling.                      |
 | Auto placement                 | Behavior           | Approved API         | `placement="auto"`                                                                         | Menu should open up or down to avoid clipping.                                      |
-| Fluid dropdown                 | Variant            | Gated                | `variant="fluid"`                                                                          | Use only after the UI Reference proves attached/contained field behavior.           |
-| Inline dropdown                | Variant            | Deferred             | None approved                                                                              | Use only after an inline selection API and keyboard contract are approved.          |
-| Filterable dropdown            | Component boundary | Not implemented here | Search/Text input today; Combo box or filterable Multiselect only after dedicated approval | Filtering changes the component into a different API boundary.                      |
-| Multiple selection             | Component boundary | Not implemented here | Use Multiselect                                                                            | More than one option may be selected.                                               |
+| Fluid dropdown                 | Variant            | Approved API         | `variant="fluid"`                                                                          | Use when the surrounding field composition requires Carbon-style fluid spacing.      |
+| Multiselect                    | Related API        | Approved API         | `x-ui.multiselect`                                                                         | More than one option may be selected.                                               |
+| Filterable multiselect         | Related API        | Approved API         | `x-ui.multiselect filterable`                                                              | Users need to filter a known multi-value option set before selecting values.        |
+| Inline dropdown                | Required gap       | No approved API      | None approved                                                                              | Use only after an inline selection API, sizing, and keyboard contract are approved. |
+| Combo box                      | Required gap       | No approved API      | None approved                                                                              | Users need searchable single selection, autocomplete, or custom value entry.         |
+| Multiple selection             | Related API        | Approved API         | Use Multiselect                                                                            | More than one option may be selected.                                               |
 | Action menu                    | Component boundary | Not implemented here | Use Menu buttons / Menu                                                                    | Options are commands rather than submitted values.                                  |
 | Native select                  | Component boundary | Separate component   | Use Select                                                                                 | Native mobile/form behavior is preferred.                                           |
 | AI presence                    | Gated              | Not implemented      | None approved                                                                              | Requires an approved AI-assisted feature and AI disclosure standard.                |
@@ -268,8 +297,8 @@ States must be represented through the installed Component API and token-backed 
 | Overflow/truncated option | Approved API   | Long option text truncates safely and exposes full text through an approved Tooltip only when needed.             |
 | Skeleton/loading          | Gated          | Use only when async options are installed; otherwise parent Patterns own loading.                                 |
 | Empty options             | Gated          | Use only when async/conditional options are installed; otherwise do not render an empty dropdown.                 |
-| Multi-selected            | Not applicable | Use Multiselect.                                                                                                  |
-| Filtered                  | Not applicable | Use Search/Text input today; approve Combo box or filterable Multiselect before adding filtered listbox behavior. |
+| Multi-selected            | Related API    | Use Multiselect.                                                                                                  |
+| Filtered                  | Related API    | Use filterable Multiselect for multiple values; add Combo box before searchable single selection or custom values. |
 | Current action            | Not applicable | Use Menu/Menu buttons for commands.                                                                               |
 
 ## 7. Token, class, and helper usage
@@ -332,6 +361,9 @@ Do not hard-code raw color, spacing, font size, borders, focus rings, icon sourc
 
 - Use native semantics first where the native Select component satisfies the workflow.
 - Use custom Dropdown only through the installed `x-ui.dropdown` API.
+- The field and chevron operate as one control. Clicking anywhere in the field, including the chevron zone, toggles the menu open or closed where the variant allows field-click closing.
+- The chevron must not be implemented as a disconnected button, and it must not receive a visual divider unless multiple separately interactive icon controls are introduced.
+- Open and closed dropdown states must use the same field width.
 - The trigger opens/closes the menu by click, tap, Enter, Space, or Down Arrow.
 - Arrow keys move through options once the menu is open.
 - Enter or Space selects the focused option and closes the menu.
@@ -426,22 +458,21 @@ Use related APIs instead:
 - Do not place decorative images, arbitrary icons, links, buttons, checkboxes, or nested controls inside options.
 - Do not nest dropdowns or use them to display overly complex information.
 - Do not create local size, density, border, menu elevation, option hover, selected, or focus treatments outside the API.
-- Do not render deferred fluid, inline, filterable, async, skeleton, or AI-presence behavior as production UI.
+- Do not render inline, combo box, async, skeleton, or AI-presence behavior as production UI until those required gaps or gates are explicitly implemented.
 
 ## 13. Deferred or gated capabilities
 
-| Capability            | Status               | Gate                                                                                            |
-| --------------------- | -------------------- | ----------------------------------------------------------------------------------------------- |
-| Fluid dropdown        | Gated                | Requires a proven attached/contained field context, spacing rules, and UI Reference proof.      |
-| Inline dropdown       | Deferred             | Requires a separate inline selection API, placement rules, and keyboard contract.               |
-| Async options         | Deferred             | Requires loading, empty, error, retry, and stale-value behavior.                                |
-| Skeleton dropdown     | Deferred             | Requires async option loading ownership and reduced-motion/loading guidance.                    |
-| Filterable dropdown   | Not implemented here | Use Search/Text input today; approve Combo box or filterable Multiselect before implementation. |
-| Multi-select dropdown | Not implemented here | Use Multiselect after canonical API is approved.                                                |
-| Rich option templates | Deferred             | Requires accessible naming, truncation, layout, and keyboard review.                            |
-| Option grouping       | Gated                | Requires clear grouping semantics and scan behavior.                                            |
-| AI presence           | Gated                | Requires approved AI-assisted feature, AI explainability content, and AI label standard.        |
-| Custom mobile picker  | Deferred             | Requires mobile accessibility, native-control comparison, and platform behavior review.         |
+| Capability                 | Status       | Gate                                                                                            |
+| -------------------------- | ------------ | ----------------------------------------------------------------------------------------------- |
+| Inline dropdown            | Required gap | Requires a separate inline selection API, placement rules, sizing, and keyboard contract.       |
+| Combo box                  | Required gap | Requires dedicated typed filtering/autocomplete, clear icon, highlighted best match, and custom-value save behavior. |
+| Vertical divider icon sets | Required for combo/filterable variants | Apply only where multiple interactive controls appear inside one field. Do not divide the decorative Dropdown chevron from the field text. |
+| Async options              | Deferred     | Requires loading, empty, error, retry, and stale-value behavior.                                |
+| Skeleton dropdown          | Deferred     | Requires async option loading ownership and reduced-motion/loading guidance.                    |
+| Rich option templates      | Deferred     | Requires accessible naming, truncation, layout, and keyboard review.                            |
+| Option grouping            | Gated        | Requires clear grouping semantics and scan behavior.                                            |
+| AI presence                | Gated        | Requires approved AI-assisted feature, AI explainability content, and AI label standard.        |
+| Custom mobile picker       | Deferred     | Requires mobile accessibility, native-control comparison, and platform behavior review.         |
 
 No additional capability is approved without updating this Component standard and UI Reference proof.
 
@@ -478,8 +509,9 @@ Dropdown is a field/control component. Its Live examples may use grouped example
 | Validation dropdown             | Required single-select field demonstrates helper text, error text, warning text, and non-color-only validation treatment.                             | Helper text, Error, Warning, Required, Focus-visible                  |
 | Disabled and read-only dropdown | Disabled cannot open; read-only displays the value without allowing changes.                                                                          | Disabled, Read-only, Selected value                                   |
 | Size comparison                 | Approved field sizes render with matching option row heights and consistent surrounding field scale.                                                  | Small, Medium, Large                                                  |
-| Dropdown vs related APIs        | Visual comparison explains when to use Dropdown, Select, Menu buttons/Menu, Multiselect, Combo box, Radio button, and Toggle.                         | Boundary examples, Deferred/gated labels where applicable             |
-| Deferred/gated capabilities     | Page shows trigger conditions instead of fake working controls for fluid, inline, async, skeleton, filterable, multiselect, and AI-presence behavior. | Gated, Deferred, Not implemented                                      |
+| Dropdown family coverage        | Shows installed base Dropdown, Fluid dropdown, Multiselect, and Filterable multiselect, plus required gaps for Inline dropdown and Combo box.          | Dropdown, Fluid, Multiselect, Filterable multiselect, Combo box gap   |
+| Dropdown vs related APIs        | Visual comparison explains when to use Dropdown, Select, Menu buttons/Menu, Multiselect, Combo box, Radio button, and Toggle.                         | Boundary examples, required-gap labels where applicable               |
+| Deferred/gated capabilities     | Page shows trigger conditions instead of fake working controls for inline, combo box, async, skeleton, and AI-presence behavior.                      | Required gap, Gated, Deferred                                         |
 
 ### 15.1. The UI Reference page must also show:
 
@@ -506,7 +538,12 @@ Dropdown is a field/control component. Its Live examples may use grouped example
 - The page shows `Select`, `Menu buttons`, `Multiselect`, Search/Text input, and Combo box disposition as boundary APIs.
 - The page does not render action-menu examples as Dropdown examples.
 - The page shows visible label, helper, error, warning, disabled, read-only, open, selected, and focus-visible examples.
-- The page shows deferred/gated conditions for fluid, inline, async, filterable, multiselect, skeleton, and AI-presence capabilities instead of fake controls.
+- The page shows installed Multiselect and Filterable multiselect as related production APIs rather than pretending they are deferred.
+- The page shows required-gap conditions for Inline dropdown and Combo box instead of fake controls.
+- The field and chevron operate as one control in markup and behavior.
+- The chevron does not have a visual divider unless the component introduces multiple separately interactive controls.
+- The default field and option row heights match for `sm`, `md`, and `lg`.
+- The page shows the required structure and sizing expectations for default, fluid, multiselect, filterable multiselect, combo box, and inline dropdown.
 
 Suggested feature-test assertions:
 
@@ -522,6 +559,9 @@ $response->assertSee('Validation dropdown');
 $response->assertSee('Disabled and read-only dropdown');
 $response->assertSee('Size comparison');
 $response->assertSee('Dropdown vs related APIs');
+$response->assertSee('Dropdown family coverage');
+$response->assertSee('Filterable multiselect');
+$response->assertSee('Required gap');
 $response->assertSee('Select');
 $response->assertSee('Menu buttons');
 $response->assertSee('Multiselect');

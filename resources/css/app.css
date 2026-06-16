@@ -4479,10 +4479,9 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-dropdown-chevron {
-        @apply inline-flex items-center justify-center border-l;
+        @apply inline-flex items-center justify-center;
         align-self: stretch;
         inline-size: 3rem;
-        border-color: var(--ui-border-subtle-01);
         color: var(--ui-icon-primary);
     }
 

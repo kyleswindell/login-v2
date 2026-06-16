@@ -2087,6 +2087,9 @@ class UiReferenceComponentDepthCatalog
                 $this->sampleVariant('Ordered steps', ['type' => 'list', 'items' => [
                     ['kind' => 'ordered'],
                 ]]),
+                $this->sampleVariant('Nested ordered boundary', ['type' => 'list', 'items' => [
+                    ['kind' => 'ordered'],
+                ]]),
             ]),
             $this->exampleFromSample('Content-only guidance', 'Content lists remove markers when the layout already supplies the visual grouping.', ['type' => 'list', 'items' => [
                 ['kind' => 'content'],
@@ -2098,6 +2101,7 @@ class UiReferenceComponentDepthCatalog
         ], ['native list element', 'list item', 'marker', 'nested list', 'content-only item'], [
             'Use for prose content that benefits from list semantics.',
             'Use ordered lists for sequences and unordered lists for peer supporting points.',
+            'Use en dash markers for level 1 unordered items, square markers for level 2 unordered items, numbers for level 1 ordered items, and letters for level 2 ordered items.',
         ], [
             'Do not use List for comparable rows; use Structured list or Data table.',
             'Do not use List for navigation or action menus.',
@@ -2107,10 +2111,12 @@ class UiReferenceComponentDepthCatalog
             'Nested',
             'Content-only',
             'Marker',
+            'Nested marker hierarchy',
             'Readable spacing',
         ], [
             'Lists use native browser semantics and app-owned `ui-list*` classes.',
             'Nested lists remain shallow and support the parent list item.',
+            'Markers stay top-aligned with the first line of wrapped item text.',
             'Content-only lists remove marker styling without changing semantic ownership.',
         ], [
             'Keep list items parallel and concise.',

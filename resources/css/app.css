@@ -4808,20 +4808,29 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-list {
-        @apply list-disc space-y-2 pl-5 text-sm;
+        @apply space-y-2 pl-5 text-sm;
         color: var(--ui-text-secondary);
+        list-style-position: outside;
     }
 
     .ui-list-ordered {
-        @apply list-decimal;
+        list-style-type: decimal;
     }
 
     .ui-list-unordered {
-        @apply list-disc;
+        list-style-type: "– ";
     }
 
     .ui-list-nested {
         @apply mt-2 space-y-1 pl-5;
+    }
+
+    .ui-list-ordered.ui-list-nested {
+        list-style-type: lower-alpha;
+    }
+
+    .ui-list-unordered.ui-list-nested {
+        list-style-type: square;
     }
 
     .ui-list-content {

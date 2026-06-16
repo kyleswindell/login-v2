@@ -147,6 +147,9 @@ List is represented by native semantic elements and app-owned classes. Do not in
 - Use `.ui-list-compact` only when the surrounding Pattern explicitly needs denser body content.
 - Use nested native lists inside the parent `<li>` when hierarchy is required.
 - Keep nested hierarchy shallow. Two visible levels are the installed boundary for component proof.
+- Use en dash markers for level 1 unordered list items and square markers for level 2 unordered list items.
+- Use numbers for level 1 ordered list items and letters for level 2 ordered list items.
+- Keep markers top-aligned with the first line of wrapped item text.
 - Keep markers visible for body-content lists unless an approved Pattern owns a different semantic structure.
 - Let long list item content wrap under the item text area while preserving readable marker alignment.
 - Use empty-state copy instead of rendering an empty `<ul>` or `<ol>`.
@@ -203,6 +206,22 @@ Nested list:
     </li>
     <li>Billing contact is complete.</li>
 </ul>
+```
+
+Nested ordered list:
+
+```blade
+<ol class="ui-list ui-list-ordered">
+    <li>Review tenant identity.</li>
+    <li>
+        Confirm routing policy.
+        <ol class="ui-list ui-list-ordered ui-list-nested">
+            <li>Verify the primary domain.</li>
+            <li>Confirm the fallback route.</li>
+        </ol>
+    </li>
+    <li>Save the configuration.</li>
+</ol>
 ```
 
 Current link item:

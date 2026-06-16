@@ -3012,6 +3012,7 @@ class PlatformUiReferenceTest extends TestCase
                 'Ordered list',
                 'Unordered list',
                 'Nested boundary',
+                'Nested ordered boundary',
                 'Content-only guidance',
             ],
             'multiselect' => [
@@ -3077,6 +3078,21 @@ class PlatformUiReferenceTest extends TestCase
                 $response->assertSee($needle, false);
             }
         }
+
+        $sampleView = file_get_contents(resource_path('views/platform/ui-reference/components/examples/sample.blade.php'));
+        $componentCss = file_get_contents(resource_path('css/app.css'));
+        $listStandard = file_get_contents(base_path('docs/02-standards/ui/components/list.md'));
+
+        $this->assertStringContainsString('<ol class="ui-list ui-list-ordered ui-list-nested">', $sampleView);
+        $this->assertStringContainsString('<ul class="ui-list ui-list-unordered ui-list-nested">', $sampleView);
+        $this->assertStringContainsString('list-style-position: outside;', $componentCss);
+        $this->assertStringContainsString('list-style-type: "– ";', $componentCss);
+        $this->assertStringContainsString('.ui-list-ordered.ui-list-nested', $componentCss);
+        $this->assertStringContainsString('list-style-type: lower-alpha;', $componentCss);
+        $this->assertStringContainsString('.ui-list-unordered.ui-list-nested', $componentCss);
+        $this->assertStringContainsString('list-style-type: square;', $componentCss);
+        $this->assertStringContainsString('Use en dash markers for level 1 unordered list items and square markers for level 2 unordered list items.', $listStandard);
+        $this->assertStringContainsString('Use numbers for level 1 ordered list items and letters for level 2 ordered list items.', $listStandard);
 
         $containedListView = file_get_contents(resource_path('views/components/ui/contained-list.blade.php'));
         $containedListItemView = file_get_contents(resource_path('views/components/ui/contained-list-item.blade.php'));

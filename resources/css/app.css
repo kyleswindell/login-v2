@@ -4618,7 +4618,7 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-search-field {
-        @apply relative mt-2 flex items-center border-b transition;
+        @apply relative mt-2 flex items-center border-b;
         min-height: var(--ui-search-height);
         border-color: var(--ui-border-strong-01);
         background-color: var(--ui-field-01);
@@ -4668,7 +4668,8 @@ Use targeted searches for the class family being changed before reading this fil
 
     .ui-search-fluid .ui-search-input {
         min-height: 4rem;
-        padding-block: 0;
+        padding-block-start: 1.375rem;
+        padding-block-end: 0;
     }
 
     .ui-search-input::placeholder {
@@ -4676,8 +4677,7 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-search-field:hover:has(.ui-search-input:not(:disabled)) {
-        border-color: var(--ui-border-interactive);
-        background-color: var(--ui-field-hover-01);
+        cursor: text;
     }
 
     .ui-search-field:focus-within,

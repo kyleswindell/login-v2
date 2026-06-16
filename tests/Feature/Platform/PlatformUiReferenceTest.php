@@ -1962,6 +1962,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Variants')
             ->assertSee('Default search')
             ->assertSee('Fluid search')
+            ->assertSee('Standalone fluid search')
             ->assertSee('Expandable search')
             ->assertSee('Expandable search behavior')
             ->assertSee('Sizing')
@@ -1973,6 +1974,8 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Context examples')
             ->assertSee('Search vs related APIs')
             ->assertSee('Deferred and gated capabilities')
+            ->assertSee('ui-reference-layer-section', false)
+            ->assertSee('ui-reference-example-card', false)
             ->assertSee('data-ui-component="search"', false)
             ->assertSee('data-ui-search-input', false)
             ->assertSee('data-ui-search-clear', false)
@@ -2024,6 +2027,8 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('.ui-search-input', $componentCss);
         $this->assertStringContainsString('.ui-search-field:focus-within', $componentCss);
         $this->assertStringContainsString('.ui-search-fluid .ui-search-icon', $componentCss);
+        $this->assertStringContainsString('.ui-search-field:hover:has(.ui-search-input:not(:disabled))', $componentCss);
+        $this->assertStringContainsString('cursor: text', $componentCss);
         $this->assertStringContainsString('.ui-search-expandable-trigger', $componentCss);
         $this->assertStringContainsString('.ui-search-clear:focus-visible', $componentCss);
         $this->assertStringContainsString('initSearchControls', $componentJs);
@@ -2039,6 +2044,8 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString("'search', 'Search', 'Inputs', 'Implemented Pending Review'", $overviewCatalog);
         $this->assertStringContainsString('status: implemented-pending-review', $standard);
         $this->assertStringContainsString('Expandable search', $standard);
+        $this->assertStringContainsString('Fluid search', $standard);
+        $this->assertStringContainsString('Hover on Search does not visibly change field background or border color.', $standard);
         $this->assertStringContainsString('Error           | Not applicable', $standard);
         $this->assertStringContainsString('Global shell search', $standard);
         $this->assertStringContainsString('Search suggestions', $standard);

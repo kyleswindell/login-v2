@@ -324,6 +324,8 @@ Do not place raw SVG icons, feature-local spacing utilities, raw colors, or one-
 - The clear button removes the query and must be keyboard reachable when visible.
 - Active search must use debounce and must not issue unbounded network requests on every keystroke without a Pattern-owned performance contract.
 - Search must not create horizontal overflow in table toolbars, page headers, or responsive surfaces.
+- Search hover must not introduce a visible field background or border-color state; pointer hover over the editable field may only use the text-entry cursor.
+- Fluid search must render as a distinct 64px field treatment with reserved right-side icon/control space and no icon overlap with the placeholder or entered value.
 - A search field in a Data table toolbar must be composed by the table toolbar Pattern; the Search component does not own toolbar grouping.
 - Failed search requests, warning messages, loading status, and no-results states belong to the owning results Pattern or data region, not Search field validation anatomy.
 - Motion and state changes must use approved Foundation Motion and respect reduced-motion preferences where applicable.
@@ -447,6 +449,7 @@ The Live examples section may use grouped examples, state tables, or matrix sect
 | Required proof              | Rendered behavior                                                                                                  | Variants/options shown                                                  |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
 | Variants                    | Default, fluid, and expandable search render through the installed API.                                             | `variant="default"`, `variant="fluid"`, `variant="expandable"`          |
+| Fluid search                | Standalone fluid search and filled fluid search render as 64px fields with correct icon/control reservation.        | `variant="fluid"`, Empty, Filled                                        |
 | Expandable search behavior  | Collapsed icon-only trigger opens the search field, focuses the input, shows clear control when filled, and supports Escape clear/collapse. | Collapsed, expanded, filled, clear, toolbar placement                    |
 | Sizing                      | Default small, medium, and large search examples plus separate fluid 64px example render with clear labels.        | `size="sm"`, `size="md"`, `size="lg"`, `variant="fluid"`                |
 | States                      | Enabled, focus, filled, and disabled are shown as the only Search-owned states.                                    | Enabled, Focus, Filled, Disabled                                        |
@@ -462,10 +465,12 @@ The Live examples section may use grouped examples, state tables, or matrix sect
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The page documents and renders `x-ui.search`.
 - The page shows default search, fluid search, expandable search, sizing, enabled/focus/filled/disabled states, context examples, and clear behavior.
+- The page shows a standalone fluid search section distinct from the sizing matrix.
 - The page distinguishes Search from Text input, Select, Dropdown, Filter Pattern, and Table toolbar Pattern.
 - Clear action examples include a keyboard-reachable clear button with an accessible name.
 - Expandable search examples include collapsed, expanded, filled, clear, keyboard focus, and toolbar placement behavior.
 - Fluid search examples show the 64px unified control, full-control focus boundary, right-side search icon placement, and reserved icon spacing.
+- Hover on Search does not visibly change field background or border color.
 - Error and warning examples are not rendered or documented as Search states.
 - Active search, typeahead, suggestions, recent searches, focused search, global shell search, and AI-assisted search are not rendered as production controls unless their Pattern/API gates are completed.
 - No generic fallback text appears.

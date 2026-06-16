@@ -93,11 +93,10 @@ Search is the app-owned free-keyword input component for finding records, filter
 - Clear action.
 - Small, medium, and large sizes.
 - Default and fluid widths.
+- Expandable search.
 - Disabled state.
-- Read-only display state.
-- Loading state.
 - No-results feedback as a Pattern-owned result state.
-- Helper, error, and warning text when Search is used as a validated field.
+- Helper text. Error, warning, loading, and no-results messaging belong to the owning result Pattern or data region.
 
 Search must consume approved Foundation Elements and app-owned `ui-*` classes. Do not create local search inputs, local icon markup, local clear buttons, or feature-specific search field styling.
 
@@ -106,10 +105,10 @@ Search must consume approved Foundation Elements and app-owned `ui-*` classes. D
 | API surface     | Installed value                                                                                                                  |
 | --------------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | Blade           | `x-ui.search`                                                                                                                    |
-| JavaScript      | `initSearchControls` for clear button visibility, Escape clearing, and optional debounced active-change events                 |
-| Data attributes | `data-ui-search`, `data-ui-search-input`, `data-ui-search-clear`, `data-ui-search-submit`, `data-ui-search-results-region`       |
+| JavaScript      | `initSearchControls` for clear button visibility, Escape clearing, expandable behavior, and optional debounced active-change events |
+| Data attributes | `data-ui-search`, `data-ui-search-input`, `data-ui-search-clear`, `data-ui-search-submit`, `data-ui-search-results-region`, `data-ui-search-expandable*` |
 | Props/options   | Use the props documented in this standard                                                                                        |
-| CSS namespace   | `ui-search`, `ui-search-field`, `ui-search-input`, `ui-search-icon`, `ui-search-clear`, `ui-search-loading`, `ui-search-message` |
+| CSS namespace   | `ui-search`, `ui-search-field`, `ui-search-input`, `ui-search-icon`, `ui-search-clear`, `ui-search-expandable`, `ui-search-message` |
 | Source files    | `resources/views/components/ui/search.blade.php`; `resources/js/ui-controls/search.js`; `resources/css/app.css`                 |
 
 Example calls:
@@ -136,11 +135,11 @@ Example calls:
 
 ```blade
 <x-ui.search
-    name="audit_search"
-    label="Search audit events"
-    placeholder="Search by actor, event, or IP address"
-    :loading="$isSearching"
-    results-region="audit-results"
+    name="toolbar_search"
+    label="Search table"
+    placeholder="Search rows"
+    variant="expandable"
+    open-label="Open table search"
 />
 ```
 
@@ -155,24 +154,23 @@ Example calls:
 | `placeholder`   | string/null | `null`    | short hint                             | Placeholder may hint scope but must not replace the label.                                                            |
 | `scope`         | string      | `page`    | `page`, `table`, `component`, `global` | Defines the search scope for content and accessibility copy. `global` is Pattern-owned unless installed by the shell. |
 | `size`          | string      | `md`      | `sm`, `md`, `lg`                       | Maps to approved field heights and spacing.                                                                           |
-| `variant`       | string      | `default` | `default`, `fluid`                     | Use `fluid` only when Search must fill a Pattern-owned container.                                                     |
-| `style`         | string/null | `null`    | `default`, `fluid`                     | Alias for `variant` when matching field API terminology.                                                            |
+| `variant`       | string      | `default` | `default`, `fluid`, `expandable`       | Use `fluid` when Search must fill a Pattern-owned container; use `expandable` for icon-triggered compact search.     |
+| `style`         | string/null | `null`    | `default`, `fluid`, `expandable`       | Alias for `variant` when matching field API terminology.                                                            |
+| `expanded`      | bool        | `false`   | `true`, `false`                        | Initial expanded state for expandable search. Filled expandable search opens by default.                             |
+| `openLabel`     | string      | `Open search` | text                               | Accessible label for the collapsed expandable search trigger.                                                        |
+| `collapseOnEscape` | bool     | `true`    | `true`, `false`                        | Allows Escape to collapse an empty expandable search after clearing.                                                  |
 | `clearable`     | bool        | `true`    | `true`, `false`                        | Clear button appears when the input has a value.                                                                      |
 | `active`        | bool        | `false`   | `true`, `false`                        | Runs change behavior as users type. Requires Pattern-owned results behavior.                                          |
 | `debounce`      | int/null    | `300`     | milliseconds                           | Applies only when `active=true`.                                                                                      |
 | `submit`        | bool        | `true`    | `true`, `false`                        | Submit behavior for standard form/search routes.                                                                      |
-| `loading`       | bool        | `false`   | `true`, `false`                        | Shows pending state while results update.                                                                             |
+| `loading`       | bool        | `false`   | `true`, `false`                        | Compatibility only. Pending result UI belongs to the owning result Pattern or data region.                            |
 | `disabled`      | bool        | `false`   | `true`, `false`                        | Uses native disabled behavior.                                                                                        |
 | `readonly`      | bool        | `false`   | `true`, `false`                        | Use only to display an applied query that cannot be edited in that context.                                           |
 | `readOnly`      | bool        | `false`   | `true`, `false`                        | Alias for `readonly`.                                                                                                 |
 | `helper`        | string/null | `null`    | text                                   | Short guidance below the field.                                                                                       |
 | `helperText`    | string/null | `null`    | text                                   | Alias for `helper`.                                                                                                   |
-| `error`         | string/null | `null`    | text                                   | Validation or search failure message.                                                                                 |
-| `invalid`       | bool        | `false`   | `true`, `false`                        | Alias state for invalid/error APIs.                                                                                   |
-| `invalidText`   | string/null | `null`    | text                                   | Error copy used when `invalid` is true.                                                                               |
-| `warning`       | string/null | `null`    | text                                   | Non-blocking caution message.                                                                                         |
-| `warn`          | bool        | `false`   | `true`, `false`                        | Alias state for warning APIs.                                                                                         |
-| `warnText`      | string/null | `null`    | text                                   | Warning copy used when `warn` is true.                                                                                |
+| `error` / `invalid` / `invalidText` | compatibility only | ignored | none | Error/invalid states are not Search states. Use the owning results Pattern for failed-request or empty-result messaging. |
+| `warning` / `warn` / `warnText` | compatibility only | ignored | none | Warning states are not Search states. Do not render warning copy as Search field anatomy. |
 | `resultsRegion` | string/null | `null`    | valid id                               | Region updated by search results; required for active async results.                                                  |
 | `clearLabel`    | string      | `Clear search` | text                              | Accessible label for the clear button.                                                                                |
 | `showLabel`     | bool        | `false`   | `true`, `false`                        | Shows the label for default search when surrounding context does not visually identify scope.                         |
@@ -187,8 +185,11 @@ Example calls:
 | `data-ui-search-clear`          | Clear button               | Clears the current query.                                   |
 | `data-ui-search-submit`         | Submit button, if rendered | Submits the query explicitly.                               |
 | `data-ui-search-results-region` | Root or input              | Associates the search field with an updated results region. |
-| `data-ui-search-loading`        | Root                       | Indicates local pending result update.                      |
+| `data-ui-search-loading`        | Root                       | Compatibility marker only; result loading UI is Pattern-owned. |
 | `data-ui-search-scope`          | Root                       | Documents page, table, component, or global scope.          |
+| `data-ui-search-expandable`     | Root                       | Identifies expandable search behavior.                      |
+| `data-ui-search-expanded`       | Root                       | Stores current expanded state for expandable search.         |
+| `data-ui-search-expandable-trigger` | Button                  | Icon-only trigger that opens collapsed expandable search.    |
 
 ### 4.3. CSS namespace
 
@@ -201,12 +202,11 @@ Use only the app-owned Search namespace:
 .ui-search-icon
 .ui-search-clear
 .ui-search-submit
-.ui-search-loading
 .ui-search-message
 .ui-search-helper
-.ui-search-error
-.ui-search-warning
 .ui-search-fluid
+.ui-search-expandable
+.ui-search-expandable-trigger
 .ui-search-sm
 .ui-search-md
 .ui-search-lg
@@ -226,13 +226,13 @@ Search does not use decorative variants. It has installed usage scopes, sizes, s
 | Global search          | Scope        | Gated / Pattern-owned    | `scope="global"`                    | Only when the app shell owns global search placement and routing.                         |
 | Default width          | Variant      | Implemented              | `variant="default"`                 | Search uses content-fit or configured width.                                              |
 | Fluid width            | Variant      | Implemented              | `variant="fluid"`                   | Search fills its parent region. Parent Pattern owns the layout width.                     |
+| Expandable search      | Variant      | Implemented              | `variant="expandable"`              | Search can collapse to an icon-only trigger and expand into a focused field.              |
 | Small                  | Size         | Implemented              | `size="sm"`                         | Dense table toolbar, compact cards, or utility surfaces.                                  |
 | Medium                 | Size         | Implemented              | `size="md"`                         | Default app search field.                                                                 |
 | Large                  | Size         | Implemented              | `size="lg"`                         | High-emphasis page search.                                                                |
 | Clearable              | Modifier     | Implemented              | `clearable`                         | Users can remove the query with a clear button or Escape.                                 |
 | Submit search          | Behavior     | Implemented              | `submit=true`                       | Search runs on form submission or Enter.                                                  |
 | Active search          | Behavior     | Gated / Pattern-owned    | `active=true`                       | Results update as users type. Requires debounce, result status, and no-results behavior.  |
-| Loading                | State option | Implemented              | `loading`                           | Results are updating.                                                                     |
 | No results             | Result state | Pattern-owned            | `resultsRegion` plus result message | The Search field may trigger this, but the results Pattern owns the rendered empty state. |
 | Suggestions/typeahead  | Capability   | Deferred                 | none approved                       | Requires Pattern-owned result panel, keyboard behavior, and result navigation.            |
 | Scoped filter selector | Composition  | Deferred / Pattern-owned | none approved                       | Requires Search Pattern and Filter Pattern ownership.                                     |
@@ -251,11 +251,11 @@ States must be represented through the installed Component API and token-backed 
 | Clear available | Implemented    | Clear button appears only when the input has a value.                                                                |
 | Clear pressed   | Implemented    | Clear button removes the value and returns focus according to component behavior.                                    |
 | Disabled        | Implemented    | Native disabled input/control behavior.                                                                              |
-| Read-only       | Implemented    | Query is visible but cannot be edited in that context.                                                               |
-| Loading         | Implemented    | Pending result update uses app loading treatment and accessible status messaging when results change asynchronously. |
+| Expandable collapsed | Implemented | Icon-only trigger has an accessible name and opens the search field.                                                  |
+| Expandable expanded | Implemented | Expanded input receives focus, preserves accessible labeling, and supports clear/Escape behavior.                      |
 | Helper          | Implemented    | Short search scope or format guidance below the field.                                                               |
-| Error           | Implemented    | Use only for invalid query, failed search request, or required search failure.                                       |
-| Warning         | Implemented    | Use only for non-blocking caution such as broad/expensive query.                                                     |
+| Error           | Not applicable | Do not render invalid text, error icons, or validation spacing as Search anatomy.                                    |
+| Warning         | Not applicable | Do not render warning text, warning icons, or validation spacing as Search anatomy.                                  |
 | No results      | Pattern-owned  | Result region owns the no-results message and next-step guidance.                                                    |
 | Success         | Not applicable | Search does not use success styling for ordinary results.                                                            |
 | Empty           | Pattern-owned  | Empty result state belongs to the result list/table/pattern, not the field alone.                                    |
@@ -271,16 +271,16 @@ Search consumes Foundation Element APIs through app-owned classes.
 - Typography
 - Themes
 - Icons
-- Motion, when loading, active search, or suggestion/result panels are implemented
+- Motion, when active search, expandable search, or suggestion/result panels are implemented
 - 2x Grid, when Search is placed in page headers, table toolbars, or responsive layouts
 
 | Element API | Allowed usage                                                                                          |
 | ----------- | ------------------------------------------------------------------------------------------------------ |
-| Color       | Field, text, helper, error, warning, icon, focus, and loading tokens.                                  |
-| Spacing     | Field padding, icon spacing, clear-button spacing, helper/error spacing, and toolbar composition gaps. |
-| Typography  | Label, input text, helper text, error/warning copy, and result-count messaging.                        |
+| Color       | Field, text, helper, placeholder, icon, focus, filled, and disabled tokens.                            |
+| Spacing     | Field padding, icon spacing, clear-button spacing, helper spacing, and toolbar composition gaps.       |
+| Typography  | Label, input text, helper text, and result-count messaging.                                           |
 | Themes      | Search must remain readable in supported light, dark, inline, inverse, and high-contrast contexts.     |
-| Icons       | Magnifying glass icon, clear icon, and optional loading indicator use approved icon rules.             |
+| Icons       | Magnifying glass icon and clear icon use approved icon rules.                                          |
 | Motion      | Loading and optional result-panel transitions must respect reduced-motion preferences.                 |
 | 2x Grid     | Parent Patterns own alignment and width in headers, toolbars, and shells.                              |
 
@@ -292,8 +292,7 @@ Carbon color role mapping:
 | `$border-strong` | Search field border-bottom | Search field border role | App border palette | Same role / app value | Do not style search borders locally. |
 | `$text-primary`, `$text-placeholder`, `$text-disabled` | Filled value, placeholder, and disabled text | Search input text roles | App text palette | Same role / app value | Text roles follow Color/Typography standards. |
 | `$icon-secondary`, `$icon-primary` | Search icon and clear icon | `ui-search-icon`, `ui-search-clear` | App icon palette | Same role / app value | Icons inherit currentColor from component state. |
-| `$focus` | Focus field border/ring | `ui-search-input:focus-visible`, `--ui-focus` | App focus palette | Same role / app value | Focus remains Color-owned. |
-| Loading/status roles | Loading indicator and optional messages | Loading/Inline Loading APIs when composed | Loading/status palettes | Same role / app value | Search does not invent loading colors; it composes Loading/Inline Loading. |
+| `$focus` | Focus field border/ring | `ui-search-field:focus-within`, `--ui-focus` | App focus palette | Same role / app value | Focus covers the full interactive control, including fluid search. |
 
 Allowed helper classes and APIs:
 
@@ -303,8 +302,10 @@ Allowed helper classes and APIs:
 .ui-search-input
 .ui-search-icon
 .ui-search-clear
-.ui-search-loading
 .ui-search-message
+.ui-search-fluid
+.ui-search-expandable
+.ui-search-expandable-trigger
 ```
 
 ```blade
@@ -316,7 +317,7 @@ Do not place raw SVG icons, feature-local spacing utilities, raw colors, or one-
 ## 8. Composition rules
 
 - Use native search/input semantics first.
-- Search owns the field, icon, clear action, disabled/read-only state, loading indicator, helper/error/warning text, and accessible labels.
+- Search owns the field, icon, clear action, expandable trigger, enabled/focus/filled/disabled states, helper text, and accessible labels.
 - Parent Patterns own external spacing, toolbar placement, result layout, filter chips, suggestions panels, result counts, no-results empty states, and search routing.
 - `Enter` submits the query when submit behavior is enabled.
 - `Escape` clears the query when a query exists and the component is clearable.
@@ -324,7 +325,7 @@ Do not place raw SVG icons, feature-local spacing utilities, raw colors, or one-
 - Active search must use debounce and must not issue unbounded network requests on every keystroke without a Pattern-owned performance contract.
 - Search must not create horizontal overflow in table toolbars, page headers, or responsive surfaces.
 - A search field in a Data table toolbar must be composed by the table toolbar Pattern; the Search component does not own toolbar grouping.
-- Loading and no-results states must identify the related results region when results update asynchronously.
+- Failed search requests, warning messages, loading status, and no-results states belong to the owning results Pattern or data region, not Search field validation anatomy.
 - Motion and state changes must use approved Foundation Motion and respect reduced-motion preferences where applicable.
 
 Components own internal semantics and styling. Parent Patterns own grouping, external spacing, workflow orchestration, result rendering, and page-level layout.
@@ -387,7 +388,7 @@ Components own internal semantics and styling. Parent Patterns own grouping, ext
 - Clear button accessible text should be direct, such as `Clear search`.
 - Loading copy should identify what is pending, such as `Searching users`.
 - No-results copy belongs to the result Pattern and should include a next step, such as clearing the search or checking spelling.
-- Error copy should distinguish failed search requests from empty results.
+- Failed-search copy belongs to the owning results Pattern and should distinguish failed requests from empty results.
 - Do not use vague labels such as `Search` alone when the page has multiple search fields or ambiguous scope.
 
 ## 12. Prohibited usage
@@ -400,7 +401,7 @@ Components own internal semantics and styling. Parent Patterns own grouping, ext
 - Do not fake typeahead, suggestions, recent searches, or result panels without a Pattern-owned Search API.
 - Do not use custom field chrome when the installed Search control satisfies the workflow.
 - Do not create local clear-button behavior.
-- Do not issue unbounded active-search network requests without debounce, loading, status, and result handling.
+- Do not issue unbounded active-search network requests without debounce, status, and result handling.
 - Do not use direct Carbon production classes such as `cds--search` or `bx--search`.
 
 ## 13. Deferred or gated capabilities
@@ -423,8 +424,8 @@ Components own internal semantics and styling. Parent Patterns own grouping, ext
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Public API/source          | The standard names the canonical Blade component, native/class API, JavaScript controller, CSS namespace, source files, or explicit deferred gate. |
 | Variants/options/modifiers | Approved variants, options, sizes, density, layout modifiers, and deferred gates are listed.                                                       |
-| States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
-| Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
+| States                     | Default, hover, focus-visible, active/pressed, filled, disabled, expandable, and not-applicable states are defined as relevant.                    |
+| Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, and copy requirements are defined.                                         |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
 | Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
 
@@ -443,19 +444,15 @@ The UI Reference page must render the approved five-card scaffold: Purpose, Use 
 
 The Live examples section may use grouped examples, state tables, or matrix sections rather than tabs if that better represents Search. Search examples must render production app markup rather than screenshots or fake controls.
 
-| Required proof                | Rendered behavior                                                                                                    | Variants/options shown                                              |
-| ----------------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| Page search                   | Page-scoped free keyword entry with label, placeholder, helper text, and clear action.                               | Default width, medium size, clearable, submit behavior              |
-| Table search                  | Compact search composed into a table toolbar region without owning toolbar spacing.                                  | Small size, table scope, clear action, active/search-on-change gate |
-| Component search              | Search inside a bounded card, panel, or list region.                                                                 | Fluid width, component scope, helper text                           |
-| Clear action                  | Entered value reveals a keyboard-reachable clear control that removes the query.                                     | Filled state, clear available, clear pressed, focus-visible         |
-| Loading search                | Search shows local pending state while a related result region updates.                                              | Loading, `aria-busy` or status message, results-region relationship |
-| No-results handoff            | Result region shows no-results guidance instead of treating no results as field validation.                          | Pattern-owned no-results, empty-state guidance                      |
-| Validation search             | Invalid or failed search request shows field-level message without confusing it with no results.                     | Error, warning, helper text                                         |
-| Disabled and read-only search | Disabled search cannot be edited; read-only search displays an applied query that cannot be changed in that context. | Disabled, read-only                                                 |
-| Size comparison               | Approved search sizes render using app field spacing and icon sizing.                                                | Small, medium, large                                                |
-| Search vs related APIs        | Demonstrates the boundary between Search, Text input, Select, Dropdown, Filter Pattern, and Table toolbar Pattern.   | Related API comparison                                              |
-| Deferred/gated capabilities   | Shows trigger conditions for suggestions, typeahead, active result panels, focused search, and global shell search.  | Deferred, gated, Pattern-owned                                      |
+| Required proof              | Rendered behavior                                                                                                  | Variants/options shown                                                  |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
+| Variants                    | Default, fluid, and expandable search render through the installed API.                                             | `variant="default"`, `variant="fluid"`, `variant="expandable"`          |
+| Expandable search behavior  | Collapsed icon-only trigger opens the search field, focuses the input, shows clear control when filled, and supports Escape clear/collapse. | Collapsed, expanded, filled, clear, toolbar placement                    |
+| Sizing                      | Default small, medium, and large search examples plus separate fluid 64px example render with clear labels.        | `size="sm"`, `size="md"`, `size="lg"`, `variant="fluid"`                |
+| States                      | Enabled, focus, filled, and disabled are shown as the only Search-owned states.                                    | Enabled, Focus, Filled, Disabled                                        |
+| Context examples            | Global, page-level, component-level, and table-toolbar search contexts are shown without owning result rendering.   | `scope="global"`, `scope="page"`, `scope="component"`, `scope="table"`  |
+| Search vs related APIs      | Demonstrates the boundary between Search, Text input, Select, Dropdown, Filter Pattern, and Table toolbar Pattern. | Related API comparison                                                  |
+| Deferred/gated capabilities | Shows trigger conditions for suggestions, typeahead, active result panels, focused search, result panels, and AI-assisted search. | Deferred, gated, Pattern-owned                                      |
 
 ## 16. Testing and acceptance criteria
 
@@ -464,10 +461,12 @@ The Live examples section may use grouped examples, state tables, or matrix sect
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The page documents and renders `x-ui.search`.
-- The page shows page search, table search, component search, clear action, loading search, no-results handoff, validation search, disabled/read-only search, and size comparison examples.
+- The page shows default search, fluid search, expandable search, sizing, enabled/focus/filled/disabled states, context examples, and clear behavior.
 - The page distinguishes Search from Text input, Select, Dropdown, Filter Pattern, and Table toolbar Pattern.
 - Clear action examples include a keyboard-reachable clear button with an accessible name.
-- Loading and no-results examples identify result-region ownership and do not treat no-results as validation.
+- Expandable search examples include collapsed, expanded, filled, clear, keyboard focus, and toolbar placement behavior.
+- Fluid search examples show the 64px unified control, full-control focus boundary, right-side search icon placement, and reserved icon spacing.
+- Error and warning examples are not rendered or documented as Search states.
 - Active search, typeahead, suggestions, recent searches, focused search, global shell search, and AI-assisted search are not rendered as production controls unless their Pattern/API gates are completed.
 - No generic fallback text appears.
 - No placeholder API text appears.
@@ -479,16 +478,16 @@ The Live examples section may use grouped examples, state tables, or matrix sect
 $response->assertOk();
 $response->assertSee('x-ui.search');
 $response->assertSee('data-ui-search');
-$response->assertSee('Page search');
-$response->assertSee('Table search');
-$response->assertSee('Component search');
-$response->assertSee('Clear action');
-$response->assertSee('Loading search');
-$response->assertSee('No-results handoff');
+$response->assertSee('Variants');
+$response->assertSee('Expandable search behavior');
+$response->assertSee('Sizing');
+$response->assertSee('States');
+$response->assertSee('Context examples');
 $response->assertSee('Search vs related APIs');
 $response->assertSee('Text input');
 $response->assertSee('Dropdown');
 $response->assertSee('Table toolbar Pattern');
+$response->assertDontSee('Validation search');
 $response->assertDontSee('Component-specific API pending correction');
 $response->assertDontSee('Allowed variants, options, and modifiers</h2><ul><li>None</li></ul>', false);
 $response->assertDontSee('Live Examples Card');

@@ -9,6 +9,9 @@
     'size' => 'md',
     'variant' => 'default',
     'style' => null,
+    'expanded' => false,
+    'openLabel' => 'Open search',
+    'collapseOnEscape' => true,
     'clearable' => true,
     'active' => false,
     'debounce' => 300,
@@ -35,20 +38,19 @@
     $fieldId = $id ?? str($name)->slug('-')->toString();
     $value = $value ?? $defaultValue;
     $helper = $helper ?? $helperText;
-    $error = $error ?? ($invalid ? $invalidText : null);
-    $warning = $warning ?? ($warn ? $warnText : null);
     $size = in_array($size, ['sm', 'md', 'lg'], true) ? $size : 'md';
     $scope = in_array($scope, ['page', 'table', 'component', 'global'], true) ? $scope : 'page';
-    $variant = ($style ?? $variant) === 'fluid' ? 'fluid' : 'default';
-    $isInvalid = filled($error);
-    $isWarning = ! $isInvalid && filled($warning);
+    $variant = in_array(($style ?? $variant), ['default', 'fluid', 'expandable'], true) ? ($style ?? $variant) : 'default';
+    $isExpandable = $variant === 'expandable';
+    $isExpanded = ! $isExpandable || (bool) $expanded || filled($value);
     $isReadOnly = (bool) ($readonly || $readOnly);
     $isDisabled = (bool) ($disabled || $loading);
     $isFilled = filled($value);
-    $helperId = $helper && ! $isInvalid && ! $isWarning ? $fieldId.'-helper' : null;
-    $statusId = $isInvalid || $isWarning || $loading ? $fieldId.'-status' : null;
+    $helperId = $helper ? $fieldId.'-helper' : null;
+    $statusId = $loading ? $fieldId.'-status' : null;
     $describedBy = trim(collect([$helperId, $statusId])->filter()->implode(' '));
     $debounce = $debounceMs ?? $debounce;
+    $fieldShellId = $fieldId.'-field';
 @endphp
 
 <div
@@ -58,8 +60,7 @@
         'ui-search-'.$size,
         'ui-search-'.$variant,
         'ui-search-filled' => $isFilled,
-        'ui-search-invalid' => $isInvalid,
-        'ui-search-warning' => $isWarning,
+        'ui-search-expanded' => $isExpanded,
         'ui-search-disabled' => $isDisabled,
         'ui-search-readonly' => $isReadOnly,
         'ui-search-loading' => $loading,
@@ -72,11 +73,27 @@
     data-ui-search-variant="{{ $variant }}"
     data-ui-search-clearable="{{ $clearable ? 'true' : 'false' }}"
     data-ui-search-submit="{{ $submit ? 'true' : 'false' }}"
+    @if($isExpandable) data-ui-search-expandable="true" data-ui-search-expanded="{{ $isExpanded ? 'true' : 'false' }}" data-ui-search-collapse-on-escape="{{ $collapseOnEscape ? 'true' : 'false' }}" @endif
     @if($active) data-ui-search-active="true" @endif
     @if($debounce) data-ui-search-debounce="{{ $debounce }}" @endif
     @if($resultsRegion) data-ui-search-results-region="{{ $resultsRegion }}" @endif
     @if($loading) data-ui-search-loading="true" aria-busy="true" @endif
 >
+    @if ($isExpandable)
+        <button
+            type="button"
+            class="ui-search-expandable-trigger"
+            aria-label="{{ $openLabel }}"
+            aria-expanded="{{ $isExpanded ? 'true' : 'false' }}"
+            aria-controls="{{ $fieldShellId }}"
+            data-ui-search-expandable-trigger
+            @disabled($isDisabled)
+            @if($isExpanded) hidden @endif
+        >
+            <x-heroicon-o-magnifying-glass class="ui-search-expandable-icon" aria-hidden="true" />
+        </button>
+    @endif
+
     @if ($variant === 'fluid')
         <label id="{{ $fieldId }}-label" for="{{ $isReadOnly ? $fieldId.'-value' : $fieldId }}" class="ui-field-label ui-search-fluid-label">{{ $label }}</label>
     @else
@@ -95,7 +112,7 @@
             {{ filled($value) ? $value : 'No search applied' }}
         </div>
     @else
-        <div class="ui-search-field">
+        <div id="{{ $fieldShellId }}" class="ui-search-field" data-ui-search-field @if($isExpandable && ! $isExpanded) hidden @endif>
             <x-heroicon-o-magnifying-glass class="ui-search-icon" aria-hidden="true" />
             <input
                 id="{{ $fieldId }}"
@@ -104,8 +121,6 @@
                 value="{{ $value }}"
                 placeholder="{{ $placeholder }}"
                 @disabled($isDisabled)
-                @if($isInvalid) aria-invalid="true" @endif
-                @if($isWarning) data-ui-field-warning="true" @endif
                 @if($describedBy !== '') aria-describedby="{{ $describedBy }}" @endif
                 @if($resultsRegion) aria-controls="{{ $resultsRegion }}" @endif
                 class="ui-search-input"
@@ -133,15 +148,11 @@
         </div>
     @endif
 
-    @if ($helper && ! $isInvalid && ! $isWarning)
+    @if ($helper)
         <p id="{{ $helperId }}" class="ui-field-helper ui-search-helper">{{ $helper }}</p>
     @endif
 
-    @if ($isInvalid)
-        <p id="{{ $statusId }}" class="ui-field-error ui-search-error">{{ $error }}</p>
-    @elseif ($isWarning)
-        <p id="{{ $statusId }}" class="ui-field-warning ui-search-warning-message">{{ $warning }}</p>
-    @elseif ($loading)
+    @if ($loading)
         <p id="{{ $statusId }}" class="ui-field-helper ui-search-message">Searching related results.</p>
     @endif
 </div>

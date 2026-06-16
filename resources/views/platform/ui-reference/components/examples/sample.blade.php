@@ -227,6 +227,8 @@
                             :scope="$item['scope'] ?? 'page'"
                             :size="$item['size'] ?? 'md'"
                             :variant="$item['variant'] ?? 'default'"
+                            :expanded="$item['expanded'] ?? false"
+                            :open-label="$item['open_label'] ?? 'Open search'"
                             :active="$item['active'] ?? false"
                             :debounce="$item['debounce'] ?? 300"
                             :results-region="$item['results_region'] ?? null"

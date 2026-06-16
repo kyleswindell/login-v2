@@ -20,6 +20,32 @@ const syncSearchState = (root, input, clearButton) => {
     }
 };
 
+const setExpandableState = (root, expanded, { focus = false } = {}) => {
+    if (root.dataset.uiSearchExpandable !== 'true') {
+        return;
+    }
+
+    const trigger = root.querySelector('[data-ui-search-expandable-trigger]');
+    const field = root.querySelector('[data-ui-search-field]');
+    const input = root.querySelector('[data-ui-search-input]');
+
+    root.classList.toggle('ui-search-expanded', expanded);
+    root.dataset.uiSearchExpanded = expanded ? 'true' : 'false';
+
+    if (trigger instanceof HTMLButtonElement) {
+        trigger.hidden = expanded;
+        trigger.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    }
+
+    if (field instanceof HTMLElement) {
+        field.hidden = !expanded;
+    }
+
+    if (focus && input instanceof HTMLInputElement) {
+        window.requestAnimationFrame(() => input.focus());
+    }
+};
+
 const clearSearch = (root, input, clearButton) => {
     if (input.disabled || input.readOnly) {
         return;
@@ -39,6 +65,7 @@ export function initSearchControls(root = document) {
 
         const input = search.querySelector('[data-ui-search-input]');
         const clearButton = search.querySelector('[data-ui-search-clear]');
+        const expandableTrigger = search.querySelector('[data-ui-search-expandable-trigger]');
 
         if (!(input instanceof HTMLInputElement)) {
             return;
@@ -48,6 +75,8 @@ export function initSearchControls(root = document) {
         let debounceTimer = null;
         const active = search.dataset.uiSearchActive === 'true';
         const debounce = Number.parseInt(search.dataset.uiSearchDebounce || '300', 10);
+        const isExpandable = search.dataset.uiSearchExpandable === 'true';
+        const shouldCollapseOnEscape = search.dataset.uiSearchCollapseOnEscape !== 'false';
 
         const queueActiveChange = () => {
             if (!active) {
@@ -67,6 +96,13 @@ export function initSearchControls(root = document) {
             if (event.key === 'Escape' && input.value.length > 0) {
                 event.preventDefault();
                 clearSearch(search, input, clearButton);
+                return;
+            }
+
+            if (event.key === 'Escape' && isExpandable && shouldCollapseOnEscape) {
+                event.preventDefault();
+                setExpandableState(search, false);
+                expandableTrigger?.focus();
             }
         });
 
@@ -74,6 +110,11 @@ export function initSearchControls(root = document) {
             clearButton.addEventListener('click', () => clearSearch(search, input, clearButton));
         }
 
+        if (expandableTrigger instanceof HTMLButtonElement) {
+            expandableTrigger.addEventListener('click', () => setExpandableState(search, true, { focus: true }));
+        }
+
+        setExpandableState(search, search.dataset.uiSearchExpanded === 'true' || input.value.length > 0);
         syncSearchState(search, input, clearButton);
     });
 }

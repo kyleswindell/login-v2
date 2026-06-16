@@ -4565,106 +4565,106 @@ Use targeted searches for the class family being changed before reading this fil
 
     .ui-search {
         @apply min-w-0;
+        --ui-search-height: 2.5rem;
+        --ui-search-icon-inline-start: 1rem;
+        --ui-search-input-padding-inline-start: 2.5rem;
+        --ui-search-input-padding-inline-end: 2.5rem;
     }
 
     .ui-search-field {
-        @apply relative mt-2;
+        @apply relative mt-2 flex items-center border-b transition;
+        min-height: var(--ui-search-height);
+        border-color: var(--ui-border-strong-01);
+        background-color: var(--ui-field-01);
     }
 
     .ui-search-fluid .ui-search-field {
-        @apply mt-0;
+        @apply mt-1 border;
+        min-height: 4rem;
+        border-color: var(--ui-border-strong-01);
     }
 
     .ui-search-input {
-        @apply w-full border-0 border-b text-sm transition focus:outline-none;
-        min-height: 2.5rem;
-        border-color: var(--ui-border-strong-01);
-        background-color: var(--ui-field-01);
+        @apply w-full border-0 bg-transparent text-sm transition focus:outline-none;
+        min-height: var(--ui-search-height);
         color: var(--ui-text-primary);
         border-radius: 0;
-        padding: 0 2.5rem;
+        padding-block: 0;
+        padding-inline: var(--ui-search-input-padding-inline-start) var(--ui-search-input-padding-inline-end);
     }
 
-    .ui-search-sm .ui-search-input {
-        min-height: 2rem;
-        padding-left: 2rem;
-        padding-right: 2rem;
+    .ui-search-sm {
+        --ui-search-height: 2rem;
+        --ui-search-icon-inline-start: 0.75rem;
+        --ui-search-input-padding-inline-start: 2rem;
+        --ui-search-input-padding-inline-end: 2rem;
     }
 
-    .ui-search-md .ui-search-input {
-        min-height: 2.5rem;
+    .ui-search-md {
+        --ui-search-height: 2.5rem;
     }
 
-    .ui-search-lg .ui-search-input {
-        min-height: 3rem;
-        padding-left: 3rem;
-        padding-right: 3rem;
+    .ui-search-lg {
+        --ui-search-height: 3rem;
+        --ui-search-input-padding-inline-start: 3rem;
+        --ui-search-input-padding-inline-end: 3rem;
     }
 
     .ui-search-fluid .ui-field-label {
-        @apply pointer-events-none relative z-10 mb-0 block px-4 pt-2 text-xs font-normal;
-        background-color: var(--ui-field-01);
+        @apply mb-1 block text-xs font-normal;
         color: var(--ui-text-secondary);
+    }
+
+    .ui-search-fluid {
+        --ui-search-input-padding-inline-start: 1rem;
+        --ui-search-input-padding-inline-end: 5rem;
     }
 
     .ui-search-fluid .ui-search-input {
         min-height: 4rem;
-        padding: 0.75rem 5rem 0 1rem;
+        padding-block: 0;
     }
 
     .ui-search-input::placeholder {
         color: var(--ui-text-placeholder);
     }
 
-    .ui-search-input:hover:not(:disabled) {
+    .ui-search-field:hover:has(.ui-search-input:not(:disabled)) {
         border-color: var(--ui-border-interactive);
         background-color: var(--ui-field-hover-01);
     }
 
-    .ui-search-input:focus,
-    .ui-search-input:focus-visible,
-    .ui-search.is-focus .ui-search-input {
+    .ui-search-field:focus-within,
+    .ui-search.is-focus .ui-search-field {
         outline: 2px solid var(--ui-focus);
         outline-offset: -2px;
         border-color: var(--ui-focus);
         box-shadow: none;
     }
 
-    .ui-search-invalid .ui-search-input {
-        border-color: var(--ui-support-error);
-        outline-color: var(--ui-support-error);
-    }
-
-    .ui-search-warning .ui-search-input {
-        border-color: var(--ui-support-warning);
+    .ui-search-disabled .ui-search-field,
+    .ui-search-loading .ui-search-field {
+        cursor: not-allowed;
+        border-color: var(--ui-border-subtle-01);
+        background-color: var(--ui-field-01);
+        opacity: 1;
     }
 
     .ui-search-disabled .ui-search-input,
     .ui-search-loading .ui-search-input {
         cursor: not-allowed;
-        border-color: transparent;
         color: var(--ui-text-disabled);
-        background-color: var(--ui-field-01);
-        opacity: 1;
-    }
-
-    .ui-search-fluid.ui-search-disabled .ui-search-input,
-    .ui-search-fluid.ui-search-loading .ui-search-input {
-        border-color: var(--ui-border-subtle-01);
     }
 
     .ui-search-icon {
         @apply pointer-events-none absolute top-1/2 h-4 w-4 -translate-y-1/2;
-        left: 1rem;
+        left: var(--ui-search-icon-inline-start);
         color: var(--ui-icon-secondary);
     }
 
-    .ui-search-sm .ui-search-icon {
-        left: 0.75rem;
-    }
-
-    .ui-search-lg .ui-search-icon {
-        left: 1rem;
+    .ui-search-fluid .ui-search-icon {
+        left: auto;
+        right: 0.75rem;
     }
 
     .ui-search-clear,
@@ -4676,7 +4676,7 @@ Use targeted searches for the class family being changed before reading this fil
 
     .ui-search-fluid .ui-search-clear,
     .ui-search-fluid .ui-search-loading-indicator {
-        right: 0.75rem;
+        right: 2.75rem;
     }
 
     .ui-search-clear:hover:not(:disabled) {
@@ -4716,6 +4716,42 @@ Use targeted searches for the class family being changed before reading this fil
     .ui-search-disabled .ui-search-fluid-label,
     .ui-search-loading .ui-search-fluid-label {
         color: var(--ui-icon-disabled);
+    }
+
+    .ui-search-expandable {
+        @apply flex items-start gap-2;
+    }
+
+    .ui-search-expandable-trigger {
+        @apply inline-flex items-center justify-center border-0 transition;
+        width: var(--ui-search-height);
+        height: var(--ui-search-height);
+        background-color: var(--ui-field-01);
+        color: var(--ui-icon-secondary);
+    }
+
+    .ui-search-expandable-trigger:hover:not(:disabled) {
+        background-color: var(--ui-field-hover-01);
+    }
+
+    .ui-search-expandable-trigger:focus-visible,
+    .ui-search-expandable-trigger[data-ui-interaction-focus='true'] {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-search-expandable-trigger:disabled {
+        color: var(--ui-icon-disabled);
+        cursor: not-allowed;
+    }
+
+    .ui-search-expandable-icon {
+        @apply h-4 w-4;
+    }
+
+    .ui-search-expandable .ui-search-field {
+        @apply mt-0;
+        min-width: min(18rem, 100%);
     }
 
     .ui-searchable-select {

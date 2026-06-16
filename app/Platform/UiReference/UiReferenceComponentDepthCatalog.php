@@ -1225,44 +1225,55 @@ class UiReferenceComponentDepthCatalog
     private function searchComponent(): array
     {
         return array_replace($this->correctedImplemented('search', 'Search', 'Search captures free-entry keywords for page, table, or component scope without owning result panels or structured filters.', [
-            $this->exampleFromSample('Page search', 'Page-scoped keyword entry with accessible label, placeholder, helper copy, and clear action.', ['type' => 'field', 'items' => [
-                ['type' => 'search', 'name' => 'search_page_users', 'label' => 'Search users', 'placeholder' => 'Search by name or email', 'helper' => 'Search applies to the current page region.'],
+            $this->exampleFromSample('Variants', 'Default, fluid, and expandable search render through the installed Search API.', ['type' => 'field', 'items' => [
+                ['type' => 'search', 'name' => 'search_default', 'label' => 'Search users', 'placeholder' => 'Search by name or email'],
+                ['type' => 'search', 'name' => 'search_fluid', 'label' => 'Search roles', 'placeholder' => 'Search roles', 'variant' => 'fluid'],
+                ['type' => 'search', 'name' => 'search_expandable_collapsed', 'label' => 'Search', 'placeholder' => 'Search table', 'variant' => 'expandable'],
             ]], [
-                $this->sampleVariant('Default page query', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Search users', 'placeholder' => 'Search by name or email']]]),
-                $this->sampleVariant('Clear action', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Search workspaces', 'value' => 'tenant']]]),
-            ]),
-            $this->exampleFromSample('Table search', 'Compact search can be composed into a table toolbar while the table pattern owns result count and filtering.', ['type' => 'field', 'items' => [
-                ['type' => 'search', 'name' => 'search_table_audit', 'label' => 'Search table', 'placeholder' => 'Search audit events', 'scope' => 'table', 'size' => 'sm', 'active' => true, 'results_region' => 'search-table-results'],
-            ]], [
-                $this->sampleVariant('Small table search', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Search table', 'scope' => 'table', 'size' => 'sm']]]),
-                $this->sampleVariant('Active search gate', ['type' => 'deferred', 'items' => [['label' => 'Active search requires debounce, status, and Pattern-owned result handling.']]], 'Gated', 'Do not render active result panels from the component alone.'),
-            ]),
-            $this->exampleFromSample('Component search', 'A fluid search field can fill a bounded component or panel region.', ['type' => 'field', 'items' => [
-                ['type' => 'search', 'name' => 'search_component_roles', 'label' => 'Search roles', 'placeholder' => 'Search roles', 'scope' => 'component', 'variant' => 'fluid'],
-            ]], [
+                $this->sampleVariant('Default search', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Search users']]]),
                 $this->sampleVariant('Fluid search', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Search roles', 'variant' => 'fluid']]]),
-                $this->sampleVariant('Component scope', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Search roles', 'scope' => 'component']]]),
+                $this->sampleVariant('Expandable search', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Search', 'variant' => 'expandable']]]),
             ]),
-            $this->exampleFromSample('Sizes and states', 'Small, medium, large, loading, disabled, and read-only states use the app field token contract.', ['type' => 'field', 'items' => [
-                ['type' => 'search', 'name' => 'search_size_sm', 'label' => 'Small search', 'size' => 'sm'],
-                ['type' => 'search', 'name' => 'search_size_md', 'label' => 'Medium search', 'size' => 'md'],
-                ['type' => 'search', 'name' => 'search_size_lg', 'label' => 'Large search', 'size' => 'lg'],
+            $this->exampleFromSample('Expandable search behavior', 'Expandable search opens from an icon-only trigger, focuses the input, and supports filled and clear behavior.', ['type' => 'field', 'items' => [
+                ['type' => 'search', 'name' => 'search_expandable_open', 'label' => 'Search', 'placeholder' => 'Search rows', 'variant' => 'expandable', 'expanded' => true],
+                ['type' => 'search', 'name' => 'search_expandable_filled', 'label' => 'Search', 'placeholder' => 'Search rows', 'variant' => 'expandable', 'value' => 'billing'],
+            ]], [
+                $this->sampleVariant('Collapsed trigger', ['type' => 'field', 'items' => [['type' => 'search', 'variant' => 'expandable']]]),
+                $this->sampleVariant('Expanded input', ['type' => 'field', 'items' => [['type' => 'search', 'variant' => 'expandable', 'expanded' => true]]]),
+                $this->sampleVariant('Toolbar placement', ['type' => 'field', 'items' => [['type' => 'search', 'variant' => 'expandable', 'scope' => 'table']]]),
+            ]),
+            $this->exampleFromSample('Sizing', 'Small, medium, large, and fluid search sizes render with app field spacing and icon placement.', ['type' => 'field', 'items' => [
+                ['type' => 'search', 'name' => 'search_size_sm', 'label' => 'Small search, 32px', 'size' => 'sm'],
+                ['type' => 'search', 'name' => 'search_size_md', 'label' => 'Medium search, 40px', 'size' => 'md'],
+                ['type' => 'search', 'name' => 'search_size_lg', 'label' => 'Large search, 48px', 'size' => 'lg'],
+                ['type' => 'search', 'name' => 'search_size_fluid', 'label' => 'Fluid search, 64px', 'variant' => 'fluid'],
             ]], [
                 $this->sampleVariant('Small', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Small search', 'size' => 'sm']]]),
                 $this->sampleVariant('Medium', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Medium search', 'size' => 'md']]]),
                 $this->sampleVariant('Large', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Large search', 'size' => 'lg']]]),
-                $this->sampleVariant('Loading search', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Loading search', 'state' => 'loading']]]),
-                $this->sampleVariant('Disabled', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Disabled search', 'state' => 'disabled']]]),
-                $this->sampleVariant('Read-only', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Read-only search', 'state' => 'readonly']]]),
+                $this->sampleVariant('Fluid 64px', ['type' => 'field', 'items' => [['type' => 'search', 'variant' => 'fluid']]]),
             ]),
-            $this->exampleFromSample('Validation search and no-results handoff', 'Field-level validation is distinct from no-results messaging, which belongs to the result region.', ['type' => 'field', 'items' => [
-                ['type' => 'search', 'name' => 'search_invalid', 'label' => 'Search audit events', 'value' => '?', 'state' => 'error'],
-                ['type' => 'search', 'name' => 'search_warning', 'label' => 'Search invoices', 'value' => 'all', 'state' => 'warning'],
+            $this->exampleFromSample('States', 'Search-owned states are enabled, focus, filled, and disabled.', ['type' => 'field', 'items' => [
+                ['type' => 'search', 'name' => 'search_state_enabled', 'label' => 'Enabled search'],
+                ['type' => 'search', 'name' => 'search_state_filled', 'label' => 'Filled search', 'value' => 'tenant'],
+                ['type' => 'search', 'name' => 'search_state_disabled', 'label' => 'Disabled search', 'state' => 'disabled'],
             ]], [
-                $this->sampleVariant('Validation search', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Search audit events', 'state' => 'error']]]),
-                $this->sampleVariant('No-results handoff', ['type' => 'deferred', 'items' => [['label' => 'Result region owns no-results guidance, not the field.']]], 'Pattern-owned', 'No-results is rendered by the result Pattern.'),
+                $this->sampleVariant('Enabled', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Enabled search']]]),
+                $this->sampleVariant('Focus', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Focus search']]]),
+                $this->sampleVariant('Filled', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Filled search', 'value' => 'tenant']]]),
+                $this->sampleVariant('Disabled', ['type' => 'field', 'items' => [['type' => 'search', 'label' => 'Disabled search', 'state' => 'disabled']]]),
             ]),
-        ], ['search field', 'search icon', 'query text', 'placeholder', 'clear button', 'label', 'helper or validation message', 'loading status'], [
+            $this->exampleFromSample('Context examples', 'Global, page, component, and table-toolbar search contexts render without owning result panels or filtering orchestration.', ['type' => 'field', 'items' => [
+                ['type' => 'search', 'name' => 'search_context_global', 'label' => 'Global search', 'scope' => 'global'],
+                ['type' => 'search', 'name' => 'search_context_page', 'label' => 'Page-level search', 'scope' => 'page'],
+                ['type' => 'search', 'name' => 'search_context_component', 'label' => 'Component-level search', 'scope' => 'component'],
+                ['type' => 'search', 'name' => 'search_context_table', 'label' => 'Table toolbar expandable search', 'scope' => 'table', 'variant' => 'expandable'],
+            ]], [
+                $this->sampleVariant('Global search', ['type' => 'field', 'items' => [['type' => 'search', 'scope' => 'global']]]),
+                $this->sampleVariant('Page-level search', ['type' => 'field', 'items' => [['type' => 'search', 'scope' => 'page']]]),
+                $this->sampleVariant('Table toolbar expandable search', ['type' => 'field', 'items' => [['type' => 'search', 'scope' => 'table', 'variant' => 'expandable']]]),
+            ]),
+        ], ['search field', 'search icon', 'query text', 'placeholder', 'clear button', 'expandable trigger', 'label', 'helper text'], [
             'Use when users need free-keyword search for page, table, or component content.',
             'Use placeholder text for a short hint, not as the accessible label.',
             'Use Search with Patterns for result rendering, no-results states, and table filtering.',
@@ -1275,15 +1286,14 @@ class UiReferenceComponentDepthCatalog
             'Focus',
             'Filled',
             'Clear available',
-            'Loading',
             'Disabled',
-            'Read-only',
-            'Error',
-            'Warning',
+            'Expandable collapsed',
+            'Expandable expanded',
             'Small',
             'Medium',
             'Large',
             'Fluid',
+            'Expandable',
         ], [
             'The clear button appears only when a query exists and clears on click or Escape.',
             'Enter submits through the owning form when submit behavior is enabled.',
@@ -1296,7 +1306,7 @@ class UiReferenceComponentDepthCatalog
             'Search input uses native input[type=search] semantics with an accessible label.',
             'The clear button is keyboard reachable and has an accessible name.',
             'Escape clears the query when a clearable value exists.',
-            'Loading state identifies the related results region when asynchronous results update.',
+            'Failed search, loading, and no-results messaging belongs to the owning results Pattern or data region.',
         ]), [
             'live_examples_view' => 'platform.ui-reference.components.live-examples.search',
             'live_examples_layout' => 'flexible-matrix',

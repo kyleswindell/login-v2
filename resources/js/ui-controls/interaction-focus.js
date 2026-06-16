@@ -1,4 +1,4 @@
-const interactionFocusSelector = '.ui-action:not(:disabled), .ui-icon-button:not(:disabled), .ui-dropdown-trigger:not(:disabled), .ui-search-clear:not(:disabled), .ui-search-expandable-trigger:not(:disabled)';
+const interactionFocusSelector = '.ui-action:not(:disabled), .ui-icon-button:not(:disabled), .ui-dropdown-trigger:not(:disabled), .ui-search-clear:not(:disabled), .ui-search-expandable-trigger:not(:disabled), .ui-tile--clickable:not(:disabled):not(.ui-tile--disabled), .ui-tile--selectable:not(.ui-tile--disabled), .ui-tile__expand-trigger:not(:disabled), .ui-tile__expand-button:not(:disabled)';
 let interactionFocusClearRegistered = false;
 
 const clearInteractionFocus = (root = document) => {

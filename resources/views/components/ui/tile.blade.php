@@ -15,6 +15,8 @@
     'icon' => null,
     'meta' => null,
     'loading' => false,
+    'interactive' => false,
+    'expandButtonLabel' => 'Toggle tile details',
 ])
 
 @php
@@ -30,12 +32,16 @@
     $hasBody = filled($title) && $slotContent !== '';
     $detailsSlot = $details ?? null;
     $hasDetailsSlot = isset($detailsSlot) && trim((string) $detailsSlot) !== '';
+    $actionsSlot = $actions ?? null;
+    $hasActionsSlot = isset($actionsSlot) && trim((string) $actionsSlot) !== '';
     $isInteractive = in_array($variant, ['clickable', 'selectable', 'expandable'], true);
+    $isExpandableInteractive = $variant === 'expandable' && (bool) $interactive;
     $isSelected = (bool) $selected || (bool) $current;
     $rootClasses = [
         'ui-tile',
         'ui-tile--'.$variant,
         'ui-tile--density-'.$density,
+        'ui-tile--expandable-interactive' => $isExpandableInteractive,
         'ui-tile--selected' => $isSelected,
         'ui-tile--current' => (bool) $current,
         'ui-tile--expanded' => $variant === 'expandable' && (bool) $expanded,
@@ -55,6 +61,8 @@
             'data-ui-selected' => $isSelected ? 'true' : 'false',
             'data-ui-current' => $current ? 'true' : 'false',
             'data-ui-expanded' => $variant === 'expandable' && $expanded ? 'true' : 'false',
+            'data-ui-tile-expanded' => $variant === 'expandable' && $expanded ? 'true' : 'false',
+            'data-ui-tile-interactive' => $isExpandableInteractive ? 'true' : 'false',
             'data-ui-disabled' => $disabled ? 'true' : 'false',
         ]);
 @endphp
@@ -103,7 +111,11 @@
     <label
         {{ $tileAttributes->merge([
             'data-ui-tile-selection-mode' => $selectionMode,
+            'data-ui-tile-selectable' => true,
+            'role' => $selectionMode === 'multiple' ? 'checkbox' : 'radio',
+            'aria-checked' => $isSelected ? 'true' : 'false',
             'aria-disabled' => $disabled ? 'true' : null,
+            'tabindex' => $disabled ? '-1' : '0',
         ]) }}
     >
         <input
@@ -113,6 +125,7 @@
             @if(filled($value)) value="{{ $value }}" @endif
             @if($selected) checked @endif
             @if($disabled) disabled @endif
+            tabindex="-1"
         >
         <span class="ui-tile__selection-icon" aria-hidden="true"></span>
         @include('components.ui.partials.tile-content', [
@@ -128,35 +141,70 @@
 @elseif ($variant === 'expandable')
     <div
         {{ $tileAttributes->merge([
+            'data-ui-tile-expandable' => true,
             'aria-disabled' => $disabled ? 'true' : null,
             'aria-busy' => $loading ? 'true' : null,
         ]) }}
     >
-        <button
-            type="button"
-            class="ui-tile__expand-trigger"
-            aria-expanded="{{ $expanded ? 'true' : 'false' }}"
-            aria-controls="{{ $expandedPanelId }}"
-            @if($disabled) disabled @endif
-        >
-            @include('components.ui.partials.tile-content', [
-                'title' => $title,
-                'description' => $description,
-                'meta' => $meta,
-                'icon' => $icon,
-                'slot' => $slot,
-                'usesSlotAsTitle' => $usesSlotAsTitle,
-                'hasBody' => $hasBody,
-            ])
-            <span class="ui-tile__action-icon" aria-hidden="true">
-                <x-heroicon-o-chevron-down />
-            </span>
-        </button>
+        @if ($isExpandableInteractive)
+            <div class="ui-tile__interactive-content">
+                @include('components.ui.partials.tile-content', [
+                    'title' => $title,
+                    'description' => $description,
+                    'meta' => $meta,
+                    'icon' => $icon,
+                    'slot' => $slot,
+                    'usesSlotAsTitle' => $usesSlotAsTitle,
+                    'hasBody' => $hasBody,
+                ])
+
+                @if ($hasActionsSlot)
+                    <div class="ui-tile__actions">
+                        {{ $actionsSlot }}
+                    </div>
+                @endif
+            </div>
+
+            <button
+                type="button"
+                class="ui-tile__expand-button"
+                aria-label="{{ $expandButtonLabel }}"
+                aria-expanded="{{ $expanded ? 'true' : 'false' }}"
+                aria-controls="{{ $expandedPanelId }}"
+                data-ui-tile-expand-trigger
+                @if($disabled) disabled @endif
+            >
+                <x-heroicon-o-chevron-down aria-hidden="true" />
+            </button>
+        @else
+            <button
+                type="button"
+                class="ui-tile__expand-trigger"
+                aria-expanded="{{ $expanded ? 'true' : 'false' }}"
+                aria-controls="{{ $expandedPanelId }}"
+                data-ui-tile-expand-trigger
+                @if($disabled) disabled @endif
+            >
+                @include('components.ui.partials.tile-content', [
+                    'title' => $title,
+                    'description' => $description,
+                    'meta' => $meta,
+                    'icon' => $icon,
+                    'slot' => $slot,
+                    'usesSlotAsTitle' => $usesSlotAsTitle,
+                    'hasBody' => $hasBody,
+                ])
+                <span class="ui-tile__action-icon" aria-hidden="true">
+                    <x-heroicon-o-chevron-down />
+                </span>
+            </button>
+        @endif
 
         @if ($hasDetailsSlot)
             <div
                 id="{{ $expandedPanelId }}"
                 class="ui-tile__expanded"
+                data-ui-tile-expanded-panel
                 @if(! $expanded) hidden @endif
             >
                 {{ $detailsSlot }}

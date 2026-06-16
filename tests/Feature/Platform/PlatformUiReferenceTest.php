@@ -2703,7 +2703,12 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Clickable tile')
             ->assertSee('Selectable tile')
             ->assertSee('Expandable tile')
-            ->assertSee('Tile groups and layout')
+            ->assertSee('Expandable tile with interactive elements')
+            ->assertSee('Layout')
+            ->assertSee('Standard layout')
+            ->assertSee('Vertical masonry layout')
+            ->assertSee('Horizontal masonry layout')
+            ->assertSee('Grid proportions')
             ->assertSee('States and accessibility')
             ->assertSee('Boundaries and gates')
             ->assertSee('Developer implementation')
@@ -2717,12 +2722,24 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-ui-selected="false"', false)
             ->assertSee('data-ui-expanded="true"', false)
             ->assertSee('data-ui-expanded="false"', false)
+            ->assertSee('data-ui-tile-expanded="true"', false)
+            ->assertSee('data-ui-tile-expanded="false"', false)
+            ->assertSee('data-ui-tile-expandable', false)
+            ->assertSee('data-ui-tile-expand-trigger', false)
+            ->assertSee('data-ui-tile-expanded-panel', false)
+            ->assertSee('data-ui-tile-selectable', false)
+            ->assertSee('data-ui-tile-interactive="true"', false)
             ->assertSee('data-ui-disabled="true"', false)
             ->assertSee('data-ui-tile-selection-mode="single"', false)
             ->assertSee('data-ui-tile-selection-mode="multiple"', false)
             ->assertSee('aria-current="page"', false)
             ->assertSee('aria-expanded="true"', false)
             ->assertSee('aria-expanded="false"', false)
+            ->assertSee('role="radio"', false)
+            ->assertSee('role="checkbox"', false)
+            ->assertSee('aria-checked="true"', false)
+            ->assertSee('aria-checked="false"', false)
+            ->assertSee('tabindex="0"', false)
             ->assertSee('type="radio"', false)
             ->assertSee('type="checkbox"', false)
             ->assertSee('Media tile')
@@ -2736,11 +2753,16 @@ class PlatformUiReferenceTest extends TestCase
         $content = $response->getContent();
         $this->assertStringContainsString('ui-tile__selection-icon', $content);
         $this->assertStringContainsString('ui-tile__action-icon', $content);
+        $this->assertStringContainsString('ui-tile__expand-button', $content);
         $this->assertStringContainsString('ui-tile__expanded', $content);
 
         $componentView = file_get_contents(resource_path('views/components/ui/tile.blade.php'));
         $contentPartial = file_get_contents(resource_path('views/components/ui/partials/tile-content.blade.php'));
         $liveExamples = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/tile.blade.php'));
+        $tilesScript = file_get_contents(resource_path('js/ui-controls/tiles.js'));
+        $controlsIndex = file_get_contents(resource_path('js/ui-controls.js'));
+        $appScript = file_get_contents(resource_path('js/app.js'));
+        $interactionFocus = file_get_contents(resource_path('js/ui-controls/interaction-focus.js'));
         $tileCss = file_get_contents(resource_path('css/app.css'));
         $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
         $overviewCatalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentCatalog.php'));
@@ -2749,25 +2771,63 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString("'variant' => 'static'", $componentView);
         $this->assertStringContainsString('$variant === \'base\' ? \'static\'', $componentView);
         $this->assertStringContainsString("'selectionMode' => 'single'", $componentView);
+        $this->assertStringContainsString("'interactive' => false", $componentView);
+        $this->assertStringContainsString("'expandButtonLabel' => 'Toggle tile details'", $componentView);
+        $this->assertStringContainsString('$isExpandableInteractive', $componentView);
         $this->assertStringContainsString('data-ui-tile-selection-mode', $componentView);
+        $this->assertStringContainsString('data-ui-tile-selectable', $componentView);
+        $this->assertStringContainsString('aria-checked', $componentView);
+        $this->assertStringContainsString('role', $componentView);
         $this->assertStringContainsString('data-ui-expanded', $componentView);
+        $this->assertStringContainsString('data-ui-tile-expanded', $componentView);
+        $this->assertStringContainsString('data-ui-tile-expandable', $componentView);
+        $this->assertStringContainsString('data-ui-tile-expand-trigger', $componentView);
+        $this->assertStringContainsString('data-ui-tile-expanded-panel', $componentView);
+        $this->assertStringContainsString('ui-tile--expandable-interactive', $componentView);
         $this->assertStringContainsString('ui-tile__selection-icon', $componentView);
+        $this->assertStringContainsString('ui-tile__expand-button', $componentView);
         $this->assertStringContainsString('x-heroicon-o-arrow-right', $componentView);
         $this->assertStringContainsString('x-heroicon-o-chevron-down', $componentView);
         $this->assertStringContainsString('ui-tile__title', $contentPartial);
         $this->assertStringContainsString('data-component-live-layout="tile-matrix"', $liveExamples);
         $this->assertStringContainsString('selection-mode="multiple"', $liveExamples);
+        $this->assertStringContainsString('interactive expand-button-label', $liveExamples);
+        $this->assertStringContainsString('Standard layout', $liveExamples);
+        $this->assertStringContainsString('Vertical masonry layout', $liveExamples);
+        $this->assertStringContainsString('Horizontal masonry layout', $liveExamples);
+        $this->assertStringContainsString('Grid proportions', $liveExamples);
         $this->assertStringContainsString('<x-slot name="details">', $liveExamples);
+        $this->assertStringContainsString('export function initTiles', $tilesScript);
+        $this->assertStringContainsString('setTileExpanded', $tilesScript);
+        $this->assertStringContainsString('syncSelectableGroup', $tilesScript);
+        $this->assertStringContainsString("export { initTiles } from './ui-controls/tiles';", $controlsIndex);
+        $this->assertStringContainsString('initTiles', $appScript);
+        $this->assertStringContainsString('.ui-tile--selectable:not(.ui-tile--disabled)', $interactionFocus);
         $this->assertStringContainsString('.ui-tile--clickable', $tileCss);
         $this->assertStringContainsString('.ui-tile__selection-icon', $tileCss);
+        $this->assertStringContainsString('.ui-tile__expand-button', $tileCss);
+        $this->assertStringContainsString('.ui-tile-layout-standard', $tileCss);
+        $this->assertStringContainsString('.ui-tile-layout-vertical-masonry', $tileCss);
+        $this->assertStringContainsString('.ui-tile-layout-horizontal-masonry', $tileCss);
+        $this->assertStringContainsString('.ui-tile-grid-proportions', $tileCss);
+        $this->assertStringContainsString('var(--ui-border-disabled)', $tileCss);
+        $this->assertStringContainsString('var(--ui-border-inverse)', $tileCss);
+        $this->assertStringContainsString('box-shadow: none', $tileCss);
         $this->assertStringContainsString('.ui-tile--static', $tileCss);
         $this->assertStringContainsString('tile\' => $this->tileComponent()', $catalog);
         $this->assertStringContainsString('ui-tile, ui-tile__title, ui-tile__selection-icon', $catalog);
         $this->assertStringContainsString('Implemented Pending Review', $overviewCatalog);
         $this->assertStringContainsString('status: implemented-pending-review', $standard);
+        $this->assertStringContainsString('initTiles', $standard);
         $this->assertStringContainsString('`selectionMode`', $standard);
+        $this->assertStringContainsString('`interactive`', $standard);
+        $this->assertStringContainsString('`expandButtonLabel`', $standard);
         $this->assertStringContainsString('`details`', $standard);
-        $this->assertStringContainsString('Media tile                                        | Deferred', $standard);
+        $this->assertStringContainsString('Media tile | Deferred', $standard);
+        $this->assertStringNotContainsString('Radio tile group                                  | Gated', $standard);
+        $this->assertStringNotContainsString('Multi-select tile group                           | Gated', $standard);
+        $this->assertStringNotContainsString('Expandable tile with interactive revealed content | Gated', $standard);
+        $this->assertStringNotContainsString('Component-specific JavaScript initializer         | Deferred', $standard);
     }
 
     public function test_structured_list_component_page_renders_installed_api_examples(): void

@@ -2939,7 +2939,8 @@ Use targeted searches for the class family being changed before reading this fil
         .ui-menu-item,
         .ui-breadcrumb-overflow-trigger,
         .ui-tile,
-        .ui-tile__action-icon {
+        .ui-tile__action-icon,
+        .ui-tile__expand-button {
             transition: none;
         }
 
@@ -5807,8 +5808,17 @@ Use targeted searches for the class family being changed before reading this fil
         color: var(--ui-text-primary);
     }
 
+    a.ui-tile--clickable:active,
+    button.ui-tile--clickable:active:not(:disabled),
+    label.ui-tile--selectable:active:not(.ui-tile--disabled),
+    .ui-tile--expandable:not(.ui-tile--disabled):active {
+        background-color: var(--ui-layer-active-01);
+    }
+
     .ui-tile:focus-visible,
+    .ui-tile[data-ui-interaction-focus='true'],
     label.ui-tile:focus-within,
+    label.ui-tile[data-ui-interaction-focus='true'],
     .ui-tile--expandable:focus-within {
         outline: 2px solid var(--ui-focus);
         outline-offset: -2px;
@@ -5827,6 +5837,7 @@ Use targeted searches for the class family being changed before reading this fil
     .ui-tile--disabled,
     .ui-tile:disabled {
         border-color: var(--ui-border-disabled);
+        background-color: var(--ui-layer-01);
         color: var(--ui-text-disabled);
         cursor: not-allowed;
     }
@@ -5887,6 +5898,12 @@ Use targeted searches for the class family being changed before reading this fil
         padding: 0;
     }
 
+    .ui-tile__interactive-content {
+        @apply flex min-h-16 flex-col items-stretch;
+        gap: 0.5rem;
+        padding: var(--ui-tile-padding) calc(var(--ui-tile-padding) + 3rem) var(--ui-tile-padding) var(--ui-tile-padding);
+    }
+
     .ui-tile__expand-trigger {
         @apply flex min-h-16 w-full flex-col items-stretch text-left;
         appearance: none;
@@ -5908,13 +5925,53 @@ Use targeted searches for the class family being changed before reading this fil
         outline: none;
     }
 
-    .ui-tile--expanded .ui-tile__action-icon {
+    .ui-tile__expand-button {
+        @apply absolute inline-flex h-10 w-10 items-center justify-center;
+        inset-block-end: 0;
+        inset-inline-end: 0;
+        border: 0;
+        border-radius: inherit;
+        background: transparent;
+        color: var(--ui-icon-interactive);
+        cursor: pointer;
+        transition: transform 160ms ease, background-color 160ms ease;
+    }
+
+    .ui-tile__expand-button:hover:not(:disabled) {
+        background-color: var(--ui-layer-hover-01);
+    }
+
+    .ui-tile__expand-button:focus {
+        outline: none;
+    }
+
+    .ui-tile__expand-button:focus-visible,
+    .ui-tile__expand-button[data-ui-interaction-focus='true'] {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-tile__expand-button:disabled {
+        color: var(--ui-icon-disabled);
+        cursor: not-allowed;
+    }
+
+    .ui-tile__expand-button svg {
+        @apply h-5 w-5;
+    }
+
+    .ui-tile--expanded .ui-tile__action-icon,
+    .ui-tile--expanded .ui-tile__expand-button svg {
         transform: rotate(180deg);
     }
 
     .ui-tile__expanded {
         padding: 0 var(--ui-tile-padding) var(--ui-tile-padding);
         color: var(--ui-text-secondary);
+    }
+
+    .ui-tile--expandable-interactive .ui-tile__expanded {
+        padding-inline-end: calc(var(--ui-tile-padding) + 3rem);
     }
 
     .ui-tile__input {
@@ -5968,6 +6025,32 @@ Use targeted searches for the class family being changed before reading this fil
 
     .ui-tile--disabled.ui-tile--selected .ui-tile__selection-icon {
         background-color: var(--ui-icon-disabled);
+    }
+
+    .ui-tile-layout-standard {
+        @apply grid gap-4;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    }
+
+    .ui-tile-layout-vertical-masonry {
+        @apply grid gap-4 lg:grid-cols-3;
+        align-items: start;
+    }
+
+    .ui-tile-layout-horizontal-masonry {
+        @apply grid gap-4;
+        grid-template-columns: minmax(0, 2fr) minmax(12rem, 1fr);
+    }
+
+    .ui-tile-grid-proportions {
+        @apply grid gap-4;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+    }
+
+    @media (max-width: 767px) {
+        .ui-tile-layout-horizontal-masonry {
+            grid-template-columns: 1fr;
+        }
     }
 
     .ui-selectable-option {

@@ -21,5 +21,6 @@ export { initTableSearchInputs } from './ui-controls/table-search';
 export { initTabs } from './ui-controls/tabs';
 export { initTextInputs } from './ui-controls/text-inputs';
 export { initThemeModeControls, refreshThemeMode } from './ui-controls/theme-mode';
+export { initTiles } from './ui-controls/tiles';
 export { initTooltips } from './ui-controls/tooltips';
 export { initTreeViews } from './ui-controls/tree-views';

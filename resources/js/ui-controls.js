@@ -10,6 +10,7 @@ export { initInternalPhoneInputs } from './ui-controls/phone-inputs';
 export { initInteractionFocus } from './ui-controls/interaction-focus';
 export { initMenus } from './ui-controls/menus';
 export { initMultiselects } from './ui-controls/multiselects';
+export { initPagination } from './ui-controls/pagination';
 export { initPopovers } from './ui-controls/popovers';
 export { initSearchableSelects } from './ui-controls/searchable-selects';
 export { initSearchControls } from './ui-controls/search';

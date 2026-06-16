@@ -6817,7 +6817,7 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-pagination-pagination {
-        border-block-start: 1px solid var(--ui-border-subtle-01);
+        border: 1px solid var(--ui-border-subtle-01);
         background-color: var(--ui-layer-01);
     }
 
@@ -6840,6 +6840,7 @@ Use targeted searches for the class family being changed before reading this fil
         grid-template-columns: minmax(0, auto) minmax(0, 1fr) minmax(0, auto) auto;
         align-items: center;
         gap: 0;
+        padding-inline: 1rem;
     }
 
     .ui-pagination-page-size,
@@ -6856,7 +6857,7 @@ Use targeted searches for the class family being changed before reading this fil
     .ui-pagination-page-selector,
     .ui-pagination-range {
         min-block-size: var(--ui-pagination-control-size);
-        padding-inline: var(--ui-pagination-inline-padding);
+        padding-inline: 0;
     }
 
     .ui-pagination-label,
@@ -6869,11 +6870,18 @@ Use targeted searches for the class family being changed before reading this fil
     .ui-pagination-select {
         min-block-size: var(--ui-pagination-control-size);
         border: 0;
-        border-inline: 1px solid var(--ui-border-subtle-01);
+        border-inline: 0;
         background-color: transparent;
         color: var(--ui-text-primary);
-        padding-inline: 0.5rem 2rem;
         font: inherit;
+    }
+
+    .ui-pagination-select-page-size {
+        padding-inline: 0.5rem 1rem;
+    }
+
+    .ui-pagination-select-page-select {
+        padding-inline: 1rem 0.5rem;
     }
 
     .ui-pagination-select:hover {
@@ -6974,14 +6982,6 @@ Use targeted searches for the class family being changed before reading this fil
         position: relative;
     }
 
-    .ui-pagination-overflow summary {
-        list-style: none;
-    }
-
-    .ui-pagination-overflow summary::-webkit-details-marker {
-        display: none;
-    }
-
     .ui-pagination-overflow-menu {
         position: absolute;
         inset-block-start: calc(100% + 0.25rem);
@@ -7008,6 +7008,19 @@ Use targeted searches for the class family being changed before reading this fil
 
     .ui-pagination-overflow-item:hover {
         background-color: var(--ui-layer-hover-01);
+    }
+
+    .ui-pagination-small-breakpoint .ui-pagination-bar {
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .ui-pagination-small-breakpoint .ui-pagination-page-size,
+    .ui-pagination-small-breakpoint .ui-pagination-page-selector {
+        display: none;
+    }
+
+    .ui-pagination-small-breakpoint .ui-pagination-range {
+        padding-inline-start: 0;
     }
 
     @media (max-width: 48rem) {

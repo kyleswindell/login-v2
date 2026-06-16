@@ -22,6 +22,8 @@
     'loop' => false,
     'disabled' => false,
     'responsive' => true,
+    'interactive' => false,
+    'smallBreakpoint' => false,
     'window' => 1,
 ])
 
@@ -48,6 +50,8 @@
     $resolvedAlignment = in_array($alignment, ['left', 'right'], true) ? $alignment : 'right';
     $pageWindow = max(1, min(3, (int) $window));
     $isDisabled = (bool) $disabled;
+    $isInteractive = (bool) $interactive;
+    $isSmallBreakpoint = (bool) $smallBreakpoint;
     $hasPrevious = $loop ? $last > 1 : $current > 1;
     $hasNext = $loop ? $last > 1 : $current < $last;
     $previousPage = $current <= 1 ? ($loop ? $last : 1) : $current - 1;
@@ -111,9 +115,14 @@
     data-ui-pagination-alignment="{{ $resolvedAlignment }}"
     data-ui-pagination-current="{{ $current }}"
     data-ui-pagination-total-pages="{{ $last }}"
+    data-ui-pagination-page-size-value="{{ $pageSize }}"
+    @if($total !== null) data-ui-pagination-total-items="{{ $total }}" @endif
+    data-ui-pagination-window="{{ $pageWindow }}"
+    @if($isInteractive) data-ui-pagination-interactive="true" @endif
     @if($loop) data-ui-pagination-loop="true" @endif
     @if($isDisabled) data-ui-pagination-disabled="true" @endif
     @if($responsive) data-ui-pagination-responsive="true" @endif
+    @if($isSmallBreakpoint) data-ui-pagination-small-breakpoint="true" @endif
     {{ $attributes->class([
         'ui-pagination',
         'ui-pagination-'.$resolvedVariant,
@@ -121,16 +130,17 @@
         'ui-pagination-align-'.$resolvedAlignment,
         'ui-pagination-disabled' => $isDisabled,
         'ui-pagination-responsive' => $responsive,
+        'ui-pagination-small-breakpoint' => $isSmallBreakpoint,
     ]) }}
 >
     @if ($resolvedVariant === 'pagination')
         <div class="ui-pagination-bar" data-ui-pagination-bar>
             @if ($showItemsPerPage && $optionValues->isNotEmpty())
                 <form class="ui-pagination-page-size" method="GET" action="{{ $baseUrl === '#' ? '#' : $baseUrl }}" data-ui-pagination-page-size-form>
-                    <label class="ui-pagination-label" for="{{ $paginationId }}-page-size">Items per page</label>
+                    <label class="ui-pagination-label" for="{{ $paginationId }}-page-size">Items per page:</label>
                     <select
                         id="{{ $paginationId }}-page-size"
-                        class="ui-pagination-select"
+                        class="ui-pagination-select ui-pagination-select-page-size"
                         name="{{ $pageSizeName }}"
                         @disabled($isDisabled)
                         data-ui-pagination-page-size
@@ -156,10 +166,10 @@
 
             @if ($showPageSelector)
                 <label class="ui-pagination-label ui-pagination-page-selector" for="{{ $paginationId }}-page-select">
-                    <span>Page</span>
+                    <span class="sr-only">Current page</span>
                     <select
                         id="{{ $paginationId }}-page-select"
-                        class="ui-pagination-select"
+                        class="ui-pagination-select ui-pagination-select-page-select"
                         name="{{ $pageName }}"
                         @disabled($isDisabled)
                         data-ui-pagination-page-select
@@ -168,7 +178,7 @@
                             <option value="{{ $page }}" @selected($page === $current)>{{ $page }}</option>
                         @endforeach
                     </select>
-                    <span>of {{ $last }}</span>
+                    <span>of {{ $last }} {{ str('page')->plural($last) }}</span>
                 </label>
             @endif
 
@@ -232,13 +242,22 @@
                     @else
                         @php
                             $overflowPages = range($item['start'], $item['end']);
+                            $overflowId = $paginationId.'-overflow-'.$item['start'].'-'.$item['end'];
                         @endphp
                         <li class="ui-pagination-item ui-pagination-item-overflow">
-                            <details class="ui-pagination-overflow" data-ui-pagination-overflow>
-                                <summary class="ui-pagination-page ui-pagination-overflow-trigger" aria-label="Show hidden pages {{ $item['start'] }} through {{ $item['end'] }}">
+                            <div class="ui-pagination-overflow" data-ui-pagination-overflow>
+                                <button
+                                    type="button"
+                                    class="ui-pagination-page ui-pagination-overflow-trigger"
+                                    aria-label="Show hidden pages {{ $item['start'] }} through {{ $item['end'] }}"
+                                    aria-haspopup="menu"
+                                    aria-expanded="false"
+                                    aria-controls="{{ $overflowId }}"
+                                    data-ui-pagination-overflow-trigger
+                                >
                                     <span aria-hidden="true">...</span>
-                                </summary>
-                                <div class="ui-pagination-overflow-menu" role="menu">
+                                </button>
+                                <div id="{{ $overflowId }}" class="ui-pagination-overflow-menu" role="menu" data-ui-pagination-overflow-menu hidden>
                                     @foreach ($overflowPages as $page)
                                         <a
                                             href="{{ $hrefFor($page) }}"
@@ -250,7 +269,7 @@
                                         </a>
                                     @endforeach
                                 </div>
-                            </details>
+                            </div>
                         </li>
                     @endif
                 @endforeach

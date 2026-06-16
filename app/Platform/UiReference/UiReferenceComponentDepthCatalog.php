@@ -1309,7 +1309,7 @@ class UiReferenceComponentDepthCatalog
     private function paginationComponent(): array
     {
         return array_replace($this->correctedImplemented('pagination', 'Pagination', 'Pagination divides large record sets into pages and gives users control over how much content they view.', [
-            $this->exampleFromSample('Pagination bar', 'A table-adjacent pagination bar renders items-per-page, item range, page selector, previous, and next controls.', ['type' => 'pagination', 'items' => [[
+            $this->exampleFromSample('Pagination bar sizes', 'Table-adjacent pagination bars render small, medium, and large sizes with items-per-page, item range, page selector, previous, and next controls.', ['type' => 'pagination', 'items' => [[
                 'variant' => 'pagination',
                 'current_page' => 3,
                 'total_pages' => 12,
@@ -1317,40 +1317,47 @@ class UiReferenceComponentDepthCatalog
                 'page_size' => 25,
                 'page_size_options' => [10, 25, 50, 100],
             ]]], [
-                $this->sampleVariant('Items per page', ['type' => 'pagination', 'items' => [['variant' => 'pagination', 'page_size_options' => [10, 25, 50, 100]]]]),
-                $this->sampleVariant('Current range', ['type' => 'pagination', 'items' => [['variant' => 'pagination', 'current_page' => 3, 'total_items' => 287]]]),
-                $this->sampleVariant('Page selector', ['type' => 'pagination', 'items' => [['variant' => 'pagination', 'show_page_selector' => true]]]),
+                $this->sampleVariant('Small pagination', ['type' => 'pagination', 'items' => [['variant' => 'pagination', 'size' => 'sm']]]),
+                $this->sampleVariant('Medium pagination', ['type' => 'pagination', 'items' => [['variant' => 'pagination', 'size' => 'md']]]),
+                $this->sampleVariant('Large pagination', ['type' => 'pagination', 'items' => [['variant' => 'pagination', 'size' => 'lg']]]),
             ]),
-            $this->exampleFromSample('Pagination nav', 'Page navigation renders previous, next, current page, page buttons, and an overflow menu for hidden pages.', ['type' => 'pagination', 'items' => [[
+            $this->exampleFromSample('Pagination nav sizes', 'Page navigation renders small, medium, and large page buttons, current page, disabled boundaries, and overflow menus for hidden pages.', ['type' => 'pagination', 'items' => [[
                 'variant' => 'pagination-nav',
                 'current_page' => 8,
                 'total_pages' => 24,
                 'total_items' => 590,
                 'alignment' => 'right',
             ]]], [
-                $this->sampleVariant('Right aligned', ['type' => 'pagination', 'items' => [['variant' => 'pagination-nav', 'alignment' => 'right']]]),
-                $this->sampleVariant('Left aligned', ['type' => 'pagination', 'items' => [['variant' => 'pagination-nav', 'alignment' => 'left']]]),
-                $this->sampleVariant('Overflow menu', ['type' => 'pagination', 'items' => [['variant' => 'pagination-nav', 'current_page' => 8, 'total_pages' => 24]]]),
+                $this->sampleVariant('Small pagination nav', ['type' => 'pagination', 'items' => [['variant' => 'pagination-nav', 'size' => 'sm']]]),
+                $this->sampleVariant('Medium pagination nav', ['type' => 'pagination', 'items' => [['variant' => 'pagination-nav', 'size' => 'md']]]),
+                $this->sampleVariant('Large pagination nav', ['type' => 'pagination', 'items' => [['variant' => 'pagination-nav', 'size' => 'lg']]]),
             ]),
-            $this->exampleFromSample('Sizes and boundary states', 'Small, medium, and large controls preserve disabled previous and next boundary states.', ['type' => 'pagination', 'items' => [[
+            $this->exampleFromSample('Data table size pairings', 'Pagination pairs to connected data table row height: xs and sm use small, md uses medium, and lg and xl use large.', ['type' => 'pagination', 'items' => [[
+                'variant' => 'pagination',
+                'size' => 'md',
+                'current_page' => 3,
+                'total_pages' => 12,
+            ]]], [
+                $this->sampleVariant('Extra small table uses small pagination', ['type' => 'pagination', 'items' => [['table_size' => 'xs', 'size' => 'sm']]]),
+                $this->sampleVariant('Medium table uses medium pagination', ['type' => 'pagination', 'items' => [['table_size' => 'md', 'size' => 'md']]]),
+                $this->sampleVariant('Extra large table uses large pagination', ['type' => 'pagination', 'items' => [['table_size' => 'xl', 'size' => 'lg']]]),
+            ]),
+            $this->exampleFromSample('Overflow menu behavior', 'The ellipsis opens a keyboard-accessible hidden-page menu that closes after selection, outside click, or Escape and scrolls when many pages are hidden.', ['type' => 'pagination', 'items' => [[
                 'variant' => 'pagination-nav',
+                'current_page' => 18,
+                'total_pages' => 42,
+            ]]], [
+                $this->sampleVariant('Overflow ellipsis', ['type' => 'pagination', 'items' => [['variant' => 'pagination-nav', 'total_pages' => 42]]]),
+                $this->sampleVariant('Overflow menu open', ['type' => 'pagination', 'items' => [['variant' => 'pagination-nav', 'total_pages' => 75]]]),
+            ]),
+            $this->exampleFromSample('Small-breakpoint responsive pagination', 'Small-breakpoint pagination removes select controls while keeping range, total item information, previous, and next visible and usable.', ['type' => 'pagination', 'items' => [[
+                'variant' => 'pagination',
                 'size' => 'sm',
-                'current_page' => 1,
-                'total_pages' => 5,
+                'current_page' => 2,
+                'total_pages' => 9,
             ]]], [
-                $this->sampleVariant('Small', ['type' => 'pagination', 'items' => [['variant' => 'pagination-nav', 'size' => 'sm']]]),
-                $this->sampleVariant('Medium', ['type' => 'pagination', 'items' => [['variant' => 'pagination-nav', 'size' => 'md']]]),
-                $this->sampleVariant('Large', ['type' => 'pagination', 'items' => [['variant' => 'pagination-nav', 'size' => 'lg']]]),
-                $this->sampleVariant('Disabled next', ['type' => 'pagination', 'items' => [['variant' => 'pagination-nav', 'current_page' => 5, 'total_pages' => 5]]]),
-            ]),
-            $this->exampleFromSample('Looping and responsive behavior', 'Looping keeps boundary controls active where continuous cycling makes sense; responsive bars preserve range and previous/next controls.', ['type' => 'pagination', 'items' => [[
-                'variant' => 'pagination-nav',
-                'current_page' => 5,
-                'total_pages' => 5,
-                'loop' => true,
-            ]]], [
-                $this->sampleVariant('Looping nav', ['type' => 'pagination', 'items' => [['variant' => 'pagination-nav', 'loop' => true]]]),
-                $this->sampleVariant('Responsive bar', ['type' => 'pagination', 'items' => [['variant' => 'pagination', 'size' => 'sm']]]),
+                $this->sampleVariant('Select controls removed', ['type' => 'pagination', 'items' => [['variant' => 'pagination', 'small_breakpoint' => true]]]),
+                $this->sampleVariant('Range and controls remain', ['type' => 'pagination', 'items' => [['variant' => 'pagination', 'show_item_range' => true]]]),
             ]),
             $this->exampleFromSample('Pagination versus related APIs', 'Pagination owns page navigation controls; tables, search results, and lists own the content being paginated.', ['type' => 'deferred', 'items' => [
                 ['label' => 'Use Data table for table structure, sorting, filtering, rows, and toolbar behavior.'],
@@ -1392,7 +1399,7 @@ class UiReferenceComponentDepthCatalog
             'Looping is opt-in and keeps previous/next enabled at boundaries.',
             'Disabled controls communicate unavailable previous/next movement.',
         ], [
-            'Use concise labels such as Items per page, Page, Previous page, and Next page.',
+            'Use concise labels such as Items per page:, Current page, Previous page, and Next page.',
             'Use range copy like 51-75 of 287 items.',
             'Keep page-size options short and consistent across comparable views.',
         ], [
@@ -3086,7 +3093,8 @@ class UiReferenceComponentDepthCatalog
                 'checkbox' => 'initCheckboxes exported from resources/js/ui-controls/checkboxes.js',
                 'search' => 'initSearchControls exported from resources/js/ui-controls/search.js',
                 'structured-list' => 'initStructuredLists exported from resources/js/ui-controls/structured-lists.js',
-                'file-uploader', 'number-input', 'select', 'radio-button', 'toggle', 'inline-loading', 'loading', 'progress-bar', 'progress-indicator', 'tag', 'tile', 'link', 'pagination', 'text-input', 'textarea' => 'No dedicated JavaScript controller required for the installed baseline API.',
+                'file-uploader', 'number-input', 'select', 'radio-button', 'toggle', 'inline-loading', 'loading', 'progress-bar', 'progress-indicator', 'tag', 'tile', 'link', 'text-input', 'textarea' => 'No dedicated JavaScript controller required for the installed baseline API.',
+                'pagination' => 'initPagination exported from resources/js/ui-controls/pagination.js',
                 'tooltip', 'toggletip' => 'initDisclosureHelpers exported from resources/js/ui-controls.js where richer dismissal behavior is needed.',
                 'multiselect' => 'initMultiselects exported from resources/js/ui-controls/multiselects.js',
                 'popover' => 'initPopovers exported from resources/js/ui-controls/popovers.js',

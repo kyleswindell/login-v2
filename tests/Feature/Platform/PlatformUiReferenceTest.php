@@ -2827,16 +2827,17 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('x-ui.pagination')
             ->assertSee('data-component-live-layout="pagination-matrix"', false)
             ->assertSee('data-ui-reference-sample-type="pagination"', false)
-            ->assertSee('Pagination bar')
-            ->assertSee('Pagination nav')
-            ->assertSee('Sizes and boundary states')
-            ->assertSee('Looping and responsive behavior')
+            ->assertSee('Pagination bar sizes')
+            ->assertSee('Pagination nav sizes')
+            ->assertSee('Data table size pairings')
+            ->assertSee('Overflow menu behavior')
+            ->assertSee('Small-breakpoint responsive pagination')
             ->assertSee('Pagination versus related APIs')
-            ->assertSee('Items per page')
-            ->assertSee('Page')
+            ->assertSee('Items per page:')
+            ->assertSee('of 12 pages')
             ->assertSee('Previous page')
             ->assertSee('Next page')
-            ->assertSee('Looping nav')
+            ->assertSee('Pagination supports small, medium, and large only')
             ->assertSee('data-ui-component="pagination"', false)
             ->assertSee('data-ui-pagination-variant="pagination"', false)
             ->assertSee('data-ui-pagination-variant="pagination-nav"', false)
@@ -2845,14 +2846,17 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-ui-pagination-size="lg"', false)
             ->assertSee('data-ui-pagination-alignment="left"', false)
             ->assertSee('data-ui-pagination-alignment="right"', false)
-            ->assertSee('data-ui-pagination-loop="true"', false)
             ->assertSee('data-ui-pagination-page-size', false)
             ->assertSee('data-ui-pagination-page-select', false)
+            ->assertSee('data-ui-pagination-interactive="true"', false)
+            ->assertSee('data-ui-pagination-small-breakpoint="true"', false)
             ->assertSee('data-ui-pagination-prev', false)
             ->assertSee('data-ui-pagination-next', false)
             ->assertSee('data-ui-pagination-overflow', false)
+            ->assertSee('data-ui-pagination-overflow-trigger', false)
             ->assertSee('role="menu"', false)
             ->assertSee('role="menuitem"', false)
+            ->assertSee('aria-haspopup="menu"', false)
             ->assertSee('aria-current="page"', false)
             ->assertSee('aria-disabled="true"', false)
             ->assertDontSee('Component-specific API pending correction')
@@ -2866,6 +2870,9 @@ class PlatformUiReferenceTest extends TestCase
         $paginationView = file_get_contents(resource_path('views/components/ui/pagination.blade.php'));
         $liveExamples = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/pagination.blade.php'));
         $paginationCss = file_get_contents(resource_path('css/app.css'));
+        $paginationScript = file_get_contents(resource_path('js/ui-controls/pagination.js'));
+        $appScript = file_get_contents(resource_path('js/app.js'));
+        $controlsIndex = file_get_contents(resource_path('js/ui-controls.js'));
         $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
         $overviewCatalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentCatalog.php'));
         $standard = file_get_contents(base_path('docs/02-standards/ui/components/pagination.md'));
@@ -2876,21 +2883,39 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('data-ui-pagination-page-size', $paginationView);
         $this->assertStringContainsString('data-ui-pagination-page-select', $paginationView);
         $this->assertStringContainsString('data-ui-pagination-overflow', $paginationView);
+        $this->assertStringContainsString('Items per page:', $paginationView);
+        $this->assertStringContainsString('of {{ $last }} {{ str(\'page\')->plural($last) }}', $paginationView);
+        $this->assertStringContainsString('data-ui-pagination-interactive="true"', $paginationView);
+        $this->assertStringContainsString('data-ui-pagination-small-breakpoint="true"', $paginationView);
+        $this->assertStringContainsString('data-ui-pagination-overflow-trigger', $paginationView);
         $this->assertStringContainsString('x-heroicon-o-chevron-left', $paginationView);
         $this->assertStringContainsString('x-heroicon-o-chevron-right', $paginationView);
         $this->assertStringContainsString('data-component-live-layout="pagination-matrix"', $liveExamples);
         $this->assertStringContainsString('variant="pagination"', $liveExamples);
         $this->assertStringContainsString('variant="pagination-nav"', $liveExamples);
+        $this->assertStringContainsString('pagination-bar-sm', $liveExamples);
+        $this->assertStringContainsString('pagination-nav-sm', $liveExamples);
+        $this->assertStringContainsString('data-ui-pagination-overflow-open-example="true"', $liveExamples);
+        $this->assertStringContainsString('small-breakpoint', $liveExamples);
         $this->assertStringContainsString('.ui-pagination-bar', $paginationCss);
         $this->assertStringContainsString('.ui-pagination-nav-shell', $paginationCss);
         $this->assertStringContainsString('.ui-pagination-overflow-menu', $paginationCss);
+        $this->assertStringContainsString('.ui-pagination-small-breakpoint', $paginationCss);
+        $this->assertStringContainsString('export function initPagination', $paginationScript);
+        $this->assertStringContainsString('data-ui-pagination-overflow-trigger', $paginationScript);
+        $this->assertStringContainsString('initPagination', $appScript);
+        $this->assertStringContainsString("export { initPagination } from './ui-controls/pagination';", $controlsIndex);
         $this->assertStringContainsString('pagination\' => $this->paginationComponent()', $catalog);
+        $this->assertStringContainsString('Pagination bar sizes', $catalog);
+        $this->assertStringContainsString('Data table size pairings', $catalog);
         $this->assertStringContainsString('ui-pagination, ui-pagination-bar, ui-pagination-nav-shell', $catalog);
         $this->assertStringContainsString('Pagination bar and page navigation for segmented record sets.', $overviewCatalog);
         $this->assertStringContainsString('status: implemented-pending-review', $standard);
         $this->assertStringContainsString('variant="pagination"', $standard);
         $this->assertStringContainsString('variant="pagination-nav"', $standard);
         $this->assertStringContainsString('showItemsPerPage', $standard);
+        $this->assertStringContainsString('Items per page:', $standard);
+        $this->assertStringContainsString('Data table size pairings', $standard);
         $this->assertStringContainsString('Overflow ellipses are buttons that open hidden-page menus', $standard);
     }
 

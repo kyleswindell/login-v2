@@ -11,10 +11,12 @@ canonical_doc: docs/02-standards/ui/components/pagination.md
 source_owner: /platform/ui-reference/components/pagination
 blade_api:
   - x-ui.pagination
-javascript_api: []
+javascript_api:
+  - initPagination
 source_files:
   - resources/views/components/ui/pagination.blade.php
   - resources/views/platform/ui-reference/components/live-examples/pagination.blade.php
+  - resources/js/ui-controls/pagination.js
   - resources/css/app.css
 foundation_elements:
   - color
@@ -130,8 +132,8 @@ Pagination is the installed Login App 2.0 record-set navigation API. It owns pag
 | Canonical doc                | `docs/02-standards/ui/components/pagination.md`                                     |
 | Source owner                 | `/platform/ui-reference/components/pagination`                                      |
 | Blade API                    | `x-ui.pagination`                                                                   |
-| JavaScript API               | No dedicated public JavaScript controller required for baseline pagination behavior |
-| Source files                 | `resources/views/components/ui/pagination.blade.php`; `resources/views/platform/ui-reference/components/live-examples/pagination.blade.php`; `resources/css/app.css` |
+| JavaScript API               | `initPagination` private lifecycle initializer for overflow menus and UI Reference/local state examples |
+| Source files                 | `resources/views/components/ui/pagination.blade.php`; `resources/views/platform/ui-reference/components/live-examples/pagination.blade.php`; `resources/js/ui-controls/pagination.js`; `resources/css/app.css` |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Icons, 2x Grid where composed in data layouts   |
 | Carbon benchmark             | Carbon Pagination usage, style, and accessibility guidance                          |
 
@@ -221,7 +223,7 @@ Use the Blade API instead of hand-building `<nav>`, page links, previous/next bu
 | API surface           | Installed value                                                                                            |
 | --------------------- | ---------------------------------------------------------------------------------------------------------- |
 | Blade API             | `x-ui.pagination`                                                                                          |
-| JavaScript            | No dedicated public JavaScript controller required for baseline behavior                                   |
+| JavaScript            | `initPagination` lifecycle initializer owns overflow menu behavior and interactive UI Reference/local pagination examples; feature data fetching remains parent-owned |
 | Root semantic element | Component-owned navigation landmark, normally `<nav aria-label="...">`                                     |
 | Page controls         | Links for URL navigation; buttons only when parent state owner handles client-side pagination              |
 | Page-size selector    | Component-owned select composition when `showItemsPerPage` is enabled                                      |
@@ -291,6 +293,8 @@ Preferred input is a Laravel paginator object. When explicit pagination data is 
 | `data-ui-pagination-page-size`                    | Implemented when emitted | Component | Identifies page-size selector.                                                                 |
 | `data-ui-pagination-page-select`                  | Implemented when emitted | Component | Identifies current-page selector in the pagination bar.                                        |
 | `data-ui-pagination-overflow`                     | Implemented when emitted | Component | Identifies the overflow ellipsis menu for hidden pages.                                        |
+| `data-ui-pagination-interactive="true"`           | Implemented when emitted | Component | Enables local example state updates without route navigation.                                  |
+| `data-ui-pagination-small-breakpoint="true"`      | Implemented when emitted | Component | Forces the UI Reference small-breakpoint proof state.                                          |
 | Feature-local data attributes                     | Not allowed              | none      | Do not create local pagination state, loading, responsive, or interaction behavior attributes. |
 
 ## 5. Allowed variants, options, and modifiers
@@ -302,6 +306,7 @@ Preferred input is a Laravel paginator object. When explicit pagination data is 
 | Small size                           | Size                        | Implemented                                        | `size="sm"`                                                                       | 32px controls; pair with extra-small or small table rows.                     |
 | Medium size                          | Size                        | Implemented                                        | `size="md"`                                                                       | 40px controls; default.                                                       |
 | Large size                           | Size                        | Implemented                                        | `size="lg"`                                                                       | 48px controls; pair with large or extra-large table rows.                     |
+| Data table size pairing              | Composition rule            | Implemented / required proof                       | Data table `xs/sm/md/lg/xl` to Pagination `sm/sm/md/lg/lg`                       | Pagination does not expose extra-small or extra-large sizes directly.         |
 | Page-size selector                   | Option                      | Implemented / required proof if source supports it | `showItemsPerPage`                                                                | Lets users change records per page when the route supports it.                |
 | Page summary                         | Option                      | Implemented                                        | automatic from paginator or explicit data                                         | Shows visible range and total when known.                                     |
 | Previous/next controls               | Control                     | Implemented                                        | automatic                                                                         | Boundary controls become disabled at first/last page.                         |
@@ -314,7 +319,7 @@ Preferred input is a Laravel paginator object. When explicit pagination data is 
 | Infinite scroll                      | Not owned                   | none                                               | Use a dedicated Pattern if installed; do not add infinite behavior to Pagination. |                                                                               |
 | Jump-to-page input                   | Deferred                    | none                                               | Requires Number input, validation, keyboard, and URL-state proof.                 |                                                                               |
 | First/last controls                  | Deferred unless implemented | none                                               | Requires API, icon labels, disabled states, and responsive proof.                 |                                                                               |
-| Client-side pagination controller    | Deferred                    | none                                               | Requires documented initializer, events, cleanup, and accessibility behavior.     |                                                                               |
+| Interactive local examples           | Lifecycle behavior          | Implemented / UI Reference only                    | `interactive`                                                                     | Updates example page/page-size state without owning parent data fetching.     |
 | Custom page-size options per feature | Gated                       | `pageSizeOptions` with Pattern approval            | Use only when data type or performance requires different values.                 |                                                                               |
 
 ## 6. States
@@ -380,6 +385,29 @@ Carbon color role mapping:
 | `$border-interactive` | Selected/current page indicator | Current page border/indicator role | App border-interactive palette | Same role / app value | Current/selected state must be semantic and accessible. |
 | `$focus` | Page/nav focus treatment | Pagination link/button focus-visible | App focus palette | Same role / app value | Focus stays Color-owned. |
 
+Pagination structure and spacing:
+
+| Element                         | Required structure / spacing                                                                 |
+| ------------------------------- | -------------------------------------------------------------------------------------------- |
+| Container                       | 1px border with 16px / 1rem horizontal padding for the pagination bar.                       |
+| Items-per-page select           | 8px / 0.5rem left padding and 16px / 1rem right padding; no left border splitting the label. |
+| Page selector                   | 16px / 1rem left padding and 8px / 0.5rem right padding.                                    |
+| Previous/next chevron icons     | 16px x 16px icon size.                                                                       |
+| Overflow/caret affordance icons | 16px x 16px icon size when iconography is used.                                              |
+| Small pagination                | 32px / 2rem control height.                                                                  |
+| Medium pagination               | 40px / 2.5rem control height.                                                                |
+| Large pagination                | 48px / 3rem control height.                                                                  |
+
+Data table size pairings:
+
+| Data table row size | Pagination size |
+| ------------------- | --------------- |
+| `xs`                | `sm`            |
+| `sm`                | `sm`            |
+| `md`                | `md`            |
+| `lg`                | `lg`            |
+| `xl`                | `lg`            |
+
 ### 7.3. CSS namespace
 
 Allowed component classes must use the app-owned `ui-*` namespace documented by the implementation. Acceptable class families include:
@@ -400,6 +428,8 @@ Allowed component classes must use the app-owned `ui-*` namespace documented by 
 .ui-pagination-label
 .ui-pagination-select
 .ui-pagination-range
+.ui-pagination-select-page-size
+.ui-pagination-select-page-select
 .ui-pagination-pagination
 .ui-pagination-nav
 .ui-pagination-sm
@@ -407,6 +437,7 @@ Allowed component classes must use the app-owned `ui-*` namespace documented by 
 .ui-pagination-lg
 .ui-pagination-disabled
 .ui-pagination-responsive
+.ui-pagination-small-breakpoint
 ```
 
 Feature views must not create Bootstrap `.pagination`, local `.page-item`, local `.page-link`, raw utility clusters, arbitrary widths, hard-coded breakpoints, custom icons, custom focus rings, local table-pagination bars, or direct Carbon implementation classes for the same UI role.
@@ -490,7 +521,7 @@ Feature views must not create Bootstrap `.pagination`, local `.page-item`, local
 - Disabled boundary controls must be programmatically disabled or removed from the tab order according to the installed control type.
 - Overflow ellipses are buttons that open hidden-page menus and must have accessible names.
 - Page-size controls must use native Select semantics or the installed Select API styling.
-- Page-size labels must identify what the selector changes, such as `Items per page`.
+- Page-size labels must identify what the selector changes and include the colon: `Items per page:`.
 - Changing page size must preserve filters and sort state and should reset to page 1 unless the Pattern states otherwise.
 - Keyboard users must be able to reach and operate every active control in logical order.
 - Focus-visible treatment must be visible in supported light and dark themes.
@@ -505,8 +536,8 @@ Feature views must not create Bootstrap `.pagination`, local `.page-item`, local
 - Use sentence case.
 - Use concrete result nouns in accessible labels when possible: `Users pagination`, `Invoices pagination`, `Search results pagination`.
 - Use concise range copy: `1–25 of 287`.
-- Use concise current-page copy in page summaries: `Page 3 of 12`.
-- Use `Items per page` for page-size labels unless the record type needs a clearer noun, such as `Invoices per page`.
+- Use concise current-page copy in page summaries: `3 of 12 pages`.
+- Use `Items per page:` for page-size labels unless the record type needs a clearer noun, such as `Invoices per page:`.
 - Use `Previous` and `Next` for visible control labels when text is shown.
 - Use `Previous page` and `Next page` for accessible names when the visible control is icon-only.
 - Do not use vague labels such as `Go`, `Back`, `Forward`, or `More`.
@@ -529,7 +560,7 @@ Feature views must not create Bootstrap `.pagination`, local `.page-item`, local
 - Do not pair Pagination and infinite scroll for the same record set.
 - Do not rely on color alone for current, disabled, or active state.
 - Do not disable controls only visually.
-- Do not use local JavaScript to update query strings, focus, or record regions unless a Pattern explicitly owns client-side pagination.
+- Do not use feature-local JavaScript to update query strings, focus, or record regions unless a Pattern explicitly owns client-side pagination. Use the installed `initPagination` initializer for component overflow behavior and UI Reference/local examples.
 - Do not truncate page-size labels or current-page summaries so far that meaning is lost.
 - Do not allow pagination controls to wrap into an unreadable order on small screens.
 - Do not put Pagination above the record set as the only navigation unless a Pattern explicitly proves top-and-bottom pagination.
@@ -543,7 +574,7 @@ Feature views must not create Bootstrap `.pagination`, local `.page-item`, local
 | First/last page controls                     | Deferred unless already implemented | Requires icon/text labels, disabled states, responsive proof, and route-state tests.                           |
 | Load more mode                               | Pattern-owned / Deferred            | Requires Data list/Search results Pattern ownership; do not add to Pagination without a new mode.              |
 | Infinite scroll                              | Not owned                           | Requires a dedicated Pattern with loading, focus, announcement, and footer access rules.                       |
-| Client-side pagination controller            | Deferred                            | Requires documented initializer, events, loading announcements, focus policy, cleanup behavior, and tests.     |
+| Client-side data pagination controller       | Pattern-owned / Deferred            | Data fetching, loading announcements, and focus movement after a data reload remain Pattern-owned.             |
 | Multiple independent paginators on one route | Gated                               | Requires distinct `pageName` values, labels, query-state handling, and UI Reference proof.                     |
 | Custom page-size option sets                 | Gated                               | Requires performance/design justification and Pattern-level consistency review.                                |
 | Custom pagination icons                      | Not allowed                         | Requires Icons Element update and UI Reference proof.                                                          |
@@ -581,14 +612,15 @@ The Pagination page is a data-navigation component reference. The Live examples 
 
 | Required proof                 | Rendered behavior                                                                                                                                | Variants/options shown                                                                                          |
 | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
-| Pagination bar                 | Known-total record set renders items-per-page, range copy, page selector, previous, and next controls.                                           | `variant="pagination"`, Size, Current page, Focus-visible, Hover, Active, Page summary                         |
-| Pagination nav                 | Page navigation renders previous/next controls, page buttons, current-page indicator, and overflow menu.                                        | `variant="pagination-nav"`, Alignment, Selected page, Overflow menu, Disabled boundary                         |
+| Pagination bar sizes           | Known-total record set renders small, medium, and large pagination bars with items-per-page, range copy, page selector, previous, and next controls. | `variant="pagination"`, `size="sm"`, `size="md"`, `size="lg"`, Focus-visible, Hover, Active, Page summary |
+| Pagination nav sizes           | Page navigation renders small, medium, and large nav controls with previous/next controls, page buttons, current-page indicator, and overflow menu. | `variant="pagination-nav"`, `size="sm"`, `size="md"`, `size="lg"`, Selected page, Overflow menu, Disabled boundary |
 | Page-size selector             | Page-size selector renders with label, approved option values, query-state note, and reset-to-page-1 behavior.                                   | `showItemsPerPage`, `pageSizeOptions`, Select composition, Focus-visible, Disabled                              |
 | Disabled prev/next             | First-page and last-page examples show disabled previous and disabled next controls.                                                             | Disabled previous, Disabled next, Boundary states, Accessible names                                             |
-| Overflow                       | Large page count renders first/last nearby pages and an ellipsis menu for hidden pages.                                                          | Overflow menu, Current page, Window size, Hidden-page links                                                     |
+| Data table size pairings       | Pairing matrix and attached table example show `xs/sm/md/lg/xl` table rows mapped to `sm/sm/md/lg/lg` pagination.                               | Connected data table, `sm`, `md`, `lg`, no direct `xs` or `xl` pagination size                                  |
+| Overflow menu behavior         | Large page count renders first/last nearby pages and an ellipsis button that opens a menu for hidden pages.                                     | Overflow menu, Open menu, Scrollable menu, Current page, Window size, Hidden-page links                         |
 | Empty and single-page behavior | Zero-result and one-page data examples show empty/suppressed/disabled behavior without fake page links.                                          | Empty, Single page, Disabled/hidden controls, Parent empty-state note                                           |
 | Loading/skeleton handoff       | Pending record reload shows disabled pagination plus approved Loading or Inline loading composition, not local spinner markup.                   | Loading handoff, Skeleton not owned, Disabled controls                                                          |
-| Responsive behavior            | Narrow viewport example preserves range and previous/next controls or uses overflow to avoid crowding.                                           | Responsive, Overflow menu, Focus order, No lost labels                                                          |
+| Small-breakpoint responsive pagination | Narrow viewport example removes select controls while preserving total/range text and previous/next controls.                            | Selects removed, Range remains, Total remains, Previous/next remain usable                                      |
 | Accessibility matrix           | Page proves nav label, page labels, previous/next accessible names, `aria-current`, disabled controls, ellipsis separators, and page-size label. | Navigation landmark, `aria-current`, Accessible names, Select label                                             |
 | Developer implementation       | Canonical calls and props render as real code examples.                                                                                          | `x-ui.pagination`, `variant`, `size`, `showItemsPerPage`, `pageSizeOptions`, explicit data contract             |
 | Deferred capabilities          | Page documents trigger conditions instead of fake controls.                                                                                      | Unknown-total mode, Jump-to-page input, First/last controls, Load more, Infinite scroll                         |
@@ -603,12 +635,17 @@ The page must not display generic fallback/reference sections or placeholder dev
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
 - The pagination bar example renders items-per-page, item range, page selector, previous, and next controls.
 - The pagination nav example renders previous/next controls, page numbers, current page, overflow behavior where applicable, and selected state.
-- The page-size selector example renders a labelled selector with approved page-size options.
+- Small, medium, and large examples exist for both pagination bar and pagination nav.
+- The page-size selector example renders a labelled selector with approved page-size options and the visible label `Items per page:`.
+- The page selector text renders as `[page selector] of [total page count] pages`.
+- Data table size pairings are documented and demonstrated where practical.
 - Boundary examples render disabled previous on the first page and disabled next on the last page.
-- Overflow examples render ellipsis menus with hidden page links.
+- Overflow examples render button-triggered ellipsis menus with hidden page links/options.
+- Overflow menus close after selection, outside click, and Escape, and support keyboard movement.
 - Empty and single-page examples do not render fake active page links.
 - Loading examples use approved Loading or Inline loading composition and do not create a local spinner.
 - Responsive examples preserve focus order and accessible names.
+- The small-breakpoint example removes select controls and keeps item count, item range, previous, and next readable and usable.
 - Accessibility examples prove navigation label, page labels, previous/next accessible names, current-page indication, disabled controls, and page-size label.
 - Developer examples use `x-ui.pagination`, not placeholder comments or ad hoc markup.
 - Tests assert stale scaffold labels, placeholder pending-correction copy, legacy reference sections, old tier paths, Bootstrap pagination classes, and direct Carbon implementation class prefixes remain absent from rendered approved examples.
@@ -630,7 +667,7 @@ $response->assertSee('Users pagination');
 $response->assertSee('Previous page');
 $response->assertSee('Next page');
 $response->assertSee('aria-current');
-$response->assertSee('Items per page');
+$response->assertSee('Items per page:');
 $response->assertSee('Overflow');
 $response->assertSee('Looping nav');
 $response->assertSee('Disabled previous');

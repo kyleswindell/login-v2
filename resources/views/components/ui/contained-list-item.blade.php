@@ -16,6 +16,20 @@
     $hasActionSlot = isset($actions) && trim((string) $actions) !== '';
     $hasActionItems = ! empty($actionItems);
     $hasActions = $hasActionSlot || $hasActionItems;
+    $actionItemsCollection = collect($actionItems);
+    $usesOverflowActions = $actionItemsCollection->count() > 1 && ! $hasActionSlot;
+    $overflowActionItems = $actionItemsCollection->map(function ($action): array {
+        $actionSemantic = data_get($action, 'semantic', 'neutral');
+        $isDanger = str_contains((string) $actionSemantic, 'danger');
+
+        return [
+            'label' => data_get($action, 'label', 'Row action'),
+            'href' => data_get($action, 'href'),
+            'disabled' => (bool) data_get($action, 'disabled', false),
+            'semantic' => $isDanger ? 'danger' : (in_array($actionSemantic, ['neutral', 'primary', 'success', 'warning', 'notice', 'info'], true) ? $actionSemantic : 'neutral'),
+            'danger' => $isDanger,
+        ];
+    })->all();
     $isInteractive = filled($href) && ! $disabled && ! $hasActions;
     $baseClasses = [
         'ui-contained-list-item',
@@ -86,35 +100,44 @@
         @endif
         @if ($hasActions)
             <span class="ui-contained-list-item-actions">
-                @foreach ($actionItems as $action)
-                    @php
-                        $actionLabel = data_get($action, 'label', 'Row action');
-                        $actionIcon = data_get($action, 'icon');
-                        $actionHref = data_get($action, 'href');
-                        $actionSemantic = data_get($action, 'semantic', 'ghost');
-                        $actionDisabled = (bool) data_get($action, 'disabled', false);
-                        $iconOnly = (bool) data_get($action, 'icon_only', filled($actionIcon));
-                    @endphp
-                    @if ($iconOnly && $actionIcon)
-                        <x-ui.icon-button
-                            :href="$actionHref"
-                            :icon="$actionIcon"
-                            :label="$actionLabel"
-                            :tooltip="data_get($action, 'tooltip', $actionLabel)"
-                            tooltip-placement="auto"
-                            size="sm"
-                            :semantic="$actionSemantic"
-                            :disabled="$actionDisabled"
-                        />
-                    @else
-                        <x-ui.button
-                            :href="$actionHref"
-                            size="sm"
-                            :semantic="$actionSemantic"
-                            :disabled="$actionDisabled"
-                        >{{ $actionLabel }}</x-ui.button>
-                    @endif
-                @endforeach
+                @if ($usesOverflowActions)
+                    <x-ui.overflow-menu
+                        :items="$overflowActionItems"
+                        label="Row actions"
+                        aria-label="More row actions"
+                        size="sm"
+                    />
+                @else
+                    @foreach ($actionItems as $action)
+                        @php
+                            $actionLabel = data_get($action, 'label', 'Row action');
+                            $actionIcon = data_get($action, 'icon');
+                            $actionHref = data_get($action, 'href');
+                            $actionSemantic = data_get($action, 'semantic', 'ghost');
+                            $actionDisabled = (bool) data_get($action, 'disabled', false);
+                            $iconOnly = (bool) data_get($action, 'icon_only', filled($actionIcon));
+                        @endphp
+                        @if ($iconOnly && $actionIcon)
+                            <x-ui.icon-button
+                                :href="$actionHref"
+                                :icon="$actionIcon"
+                                :label="$actionLabel"
+                                :tooltip="data_get($action, 'tooltip', $actionLabel)"
+                                tooltip-placement="auto"
+                                size="sm"
+                                :semantic="$actionSemantic"
+                                :disabled="$actionDisabled"
+                            />
+                        @else
+                            <x-ui.button
+                                :href="$actionHref"
+                                size="sm"
+                                :semantic="$actionSemantic"
+                                :disabled="$actionDisabled"
+                            >{{ $actionLabel }}</x-ui.button>
+                        @endif
+                    @endforeach
+                @endif
                 @if ($hasActionSlot)
                     {{ $actions }}
                 @endif

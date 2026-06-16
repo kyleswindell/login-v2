@@ -1,5 +1,7 @@
 @props([
     'title' => null,
+    'ariaLabel' => null,
+    'labelledBy' => null,
     'description' => null,
     'items' => [],
     'variant' => 'on-page',
@@ -29,6 +31,8 @@
     data-ui-contained-list-variant="{{ $variant }}"
     data-ui-contained-list-size="{{ $size }}"
     data-ui-contained-list-inset-dividers="{{ $insetDividers ? 'true' : 'false' }}"
+    @if(filled($ariaLabel) && blank($title) && blank($labelledBy)) aria-label="{{ $ariaLabel }}" @endif
+    @if(filled($labelledBy)) aria-labelledby="{{ $labelledBy }}" @endif
     @if($loading) aria-busy="true" @endif
 >
     @if ($title || $description)

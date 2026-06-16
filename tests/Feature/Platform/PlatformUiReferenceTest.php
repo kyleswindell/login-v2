@@ -1102,6 +1102,7 @@ class PlatformUiReferenceTest extends TestCase
             'modal' => ['Confirmation dialog', 'Form modal', 'Read-only detail', 'Destructive action', 'Wizard deferred', 'data-ui-component="modal-preview"'],
             'data-table' => ['Basic sortable table', 'Compact management table', 'Filterable toolbar table', 'Row actions table', 'Dynamic states', 'Responsive overflow and pagination', 'Selection and batch-action gate', 'data-component-live-layout="data-table-matrix"'],
             'pagination' => ['Pagination bar', 'Pagination nav', 'Items per page', 'Sizes and boundary states', 'Overflow', 'ui-pagination-control'],
+            'contained-list' => ['On-page contained list', 'Sizing and dynamic content', 'Interactive elements', 'Interactive states', 'Search and filtering', 'Scrolling and sticky header', 'Disclosed list', 'data-component-live-layout="contained-list-matrix"'],
             'tabs' => ['Line tabs', 'Contained tabs', 'Vertical tabs', 'Icon-leading', 'Icon-only', 'Overflow/scroll', 'Disabled', 'data-ui-reference-sample-type="tabs"'],
             'ui-shell' => ['Header baseline', 'Left panel', 'Account menu', 'Notification/action area', 'Mobile/collapsed behavior', 'Right panel deferred', 'data-ui-reference-sample-type="shell"'],
             'code-snippet' => ['Anatomy and variants', 'Inline', 'Single line with horizontal overflow', 'Multi-line with show more', 'Copy controls', 'Highlighted syntax tokens', 'data-component-live-layout="code-snippet-matrix"'],
@@ -1119,7 +1120,7 @@ class PlatformUiReferenceTest extends TestCase
                 ->assertSee('ui-code-snippet', false)
                 ->assertDontSee('Family-depth implementation pending');
 
-            if (in_array($slug, ['button', 'link', 'menu-buttons', 'tooltip', 'checkbox', 'code-snippet', 'data-table', 'pagination', 'tile'], true)) {
+            if (in_array($slug, ['button', 'link', 'menu-buttons', 'tooltip', 'checkbox', 'code-snippet', 'data-table', 'pagination', 'tile', 'contained-list'], true)) {
                 $response
                     ->assertSee('data-ui-reference-live-examples-layout="flexible-matrix"', false)
                     ->assertDontSee('Live Examples Card');
@@ -2774,6 +2775,81 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('Trigger button options', $standard);
     }
 
+    public function test_contained_list_component_page_renders_installed_api_examples(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $response = $this->get('/platform/ui-reference/components/contained-list')
+            ->assertOk()
+            ->assertSee('x-ui.contained-list')
+            ->assertSee('x-ui.contained-list-item')
+            ->assertSee('data-component-live-layout="contained-list-matrix"', false)
+            ->assertSee('data-ui-reference-sample-type="contained-list"', false)
+            ->assertSee('On-page contained list')
+            ->assertSee('Sizing and dynamic content')
+            ->assertSee('Notification-style rows')
+            ->assertSee('Dynamic row height')
+            ->assertSee('Interactive elements')
+            ->assertSee('Linked rows')
+            ->assertSee('Row actions')
+            ->assertSee('Interactive states')
+            ->assertSee('Search and filtering')
+            ->assertSee('Header search action')
+            ->assertSee('Persistent filter composition')
+            ->assertSee('Scrolling and sticky header')
+            ->assertSee('Disclosed list')
+            ->assertSee('Boundaries and gates')
+            ->assertSee('data-ui-component="contained-list"', false)
+            ->assertSee('data-ui-component="contained-list-item"', false)
+            ->assertSee('data-ui-contained-list-variant="on-page"', false)
+            ->assertSee('data-ui-contained-list-variant="disclosed"', false)
+            ->assertSee('data-ui-contained-list-size="md"', false)
+            ->assertSee('data-ui-contained-list-size="lg"', false)
+            ->assertSee('data-ui-contained-list-size="xl"', false)
+            ->assertSee('data-ui-contained-list-inset-dividers="true"', false)
+            ->assertSee('ui-contained-list-header-sticky', false)
+            ->assertSee('data-ui-component="overflow-menu"', false)
+            ->assertSee('data-ui-component="search"', false)
+            ->assertSee('Use Data table for sorting, pagination, bulk actions, or complex comparison')
+            ->assertDontSee('Component-specific API pending correction')
+            ->assertDontSee('Family-depth implementation pending')
+            ->assertDontSee('Live Examples Card')
+            ->assertDontSee('list-group')
+            ->assertDontSee('cds--contained-list')
+            ->assertDontSee('bx--contained-list');
+
+        $content = $response->getContent();
+        $this->assertGreaterThanOrEqual(35, substr_count($content, 'data-ui-component="contained-list-item"'));
+        $this->assertGreaterThanOrEqual(8, substr_count($content, 'data-ui-component="contained-list"'));
+
+        $containedListView = file_get_contents(resource_path('views/components/ui/contained-list.blade.php'));
+        $containedListItemView = file_get_contents(resource_path('views/components/ui/contained-list-item.blade.php'));
+        $liveExamples = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/contained-list.blade.php'));
+        $componentCss = file_get_contents(resource_path('css/app.css'));
+        $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
+        $overviewCatalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentCatalog.php'));
+        $standard = file_get_contents(base_path('docs/02-standards/ui/components/contained-list.md'));
+
+        $this->assertStringContainsString("'ariaLabel' => null", $containedListView);
+        $this->assertStringContainsString("'labelledBy' => null", $containedListView);
+        $this->assertStringContainsString('aria-label="{{ $ariaLabel }}"', $containedListView);
+        $this->assertStringContainsString('$usesOverflowActions', $containedListItemView);
+        $this->assertStringContainsString('x-ui.overflow-menu', $containedListItemView);
+        $this->assertStringContainsString('data-component-live-layout="contained-list-matrix"', $liveExamples);
+        $this->assertStringContainsString('$singleLineRows', $liveExamples);
+        $this->assertStringContainsString('$notificationRows', $liveExamples);
+        $this->assertStringContainsString('$dynamicRows', $liveExamples);
+        $this->assertStringContainsString('header-action-label="Search rows"', $liveExamples);
+        $this->assertStringContainsString('<x-ui.search', $liveExamples);
+        $this->assertStringContainsString('sticky-header', $liveExamples);
+        $this->assertStringContainsString(".ui-contained-list-item[data-ui-contained-list-item-interactive='true']:not(a):hover", $componentCss);
+        $this->assertStringContainsString('a.ui-contained-list-item:active', $componentCss);
+        $this->assertStringContainsString('live_examples_view\' => \'platform.ui-reference.components.live-examples.contained-list\'', $catalog);
+        $this->assertStringContainsString('Implemented Pending Review', $overviewCatalog);
+        $this->assertStringContainsString('Search/filter composition', $standard);
+        $this->assertStringContainsString('Sticky header with scrolling rows | Implemented / constrained', $standard);
+    }
+
     public function test_component_api_proof_sync_pages_render_installed_apis(): void
     {
         $this->actingAsPlatformSuperAdmin();
@@ -2783,22 +2859,18 @@ class PlatformUiReferenceTest extends TestCase
                 'x-ui.contained-list',
                 'data-ui-component="contained-list"',
                 'data-ui-component="contained-list-item"',
-                'Basic contained list',
-                'Contained list states',
-                'On-page list',
+                'On-page contained list',
                 'Disclosed list',
-                'With icons',
-                'With actions',
-                'With interactive items',
-                'With interactive items and actions',
-                'With list title decorators',
-                'Selected row',
-                'Actionable row',
-                'Loading',
-                'Empty',
+                'Sizing and dynamic content',
+                'Notification-style rows',
+                'Interactive elements',
+                'Interactive states',
+                'Search and filtering',
+                'Scrolling and sticky header',
+                'Boundaries and gates',
                 'data-ui-contained-list-inset-dividers="true"',
                 'ui-contained-list-item-actions',
-                'ui-contained-list-title-icon',
+                'data-ui-component="overflow-menu"',
             ],
             'list' => [
                 'Native ul/ol/li with ui-list classes',
@@ -2882,10 +2954,12 @@ class PlatformUiReferenceTest extends TestCase
         $standard = file_get_contents(base_path('docs/02-standards/ui/components/contained-list.md'));
 
         $this->assertStringContainsString("'titleIcon' => null", $containedListView);
+        $this->assertStringContainsString("'ariaLabel' => null", $containedListView);
         $this->assertStringContainsString("'headerActionLabel' => null", $containedListView);
         $this->assertStringContainsString("'insetDividers' => false", $containedListView);
         $this->assertStringContainsString("'stickyHeader' => false", $containedListView);
         $this->assertStringContainsString("'actionItems' => []", $containedListItemView);
+        $this->assertStringContainsString('$usesOverflowActions', $containedListItemView);
         $this->assertStringContainsString('ui-contained-list-item-actions', $containedListItemView);
         $this->assertStringContainsString('data-ui-contained-list-item-interactive="{{ $hasActions ? \'true\' : \'false\' }}"', $containedListItemView);
         $this->assertStringContainsString(':title-icon="$item[\'title_icon\'] ?? null"', $sampleView);
@@ -2894,7 +2968,7 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('.ui-contained-list-inset-dividers', $componentCss);
         $this->assertStringContainsString('.ui-contained-list-item-actions', $componentCss);
         $this->assertStringContainsString('.ui-contained-list-title-icon', $componentCss);
-        $this->assertStringContainsString("'With interactive items and actions'", $catalog);
+        $this->assertStringContainsString('live_examples_view\' => \'platform.ui-reference.components.live-examples.contained-list\'', $catalog);
         $this->assertStringContainsString('List title decorators', $standard);
         $this->assertStringContainsString('Extra large rows', $standard);
     }

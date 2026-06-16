@@ -82,7 +82,7 @@ related_patterns:
 
 ## 1. API summary
 
-Contained list organizes related repeated rows inside a bounded surface such as a card, sidebar, drawer, disclosure region, compact panel, or contextual review area.
+Contained list organizes related repeated rows inside a bounded surface such as a page region, sidebar, drawer, disclosure region, compact panel, or contextual review area.
 
 Canonical API owner: `/platform/ui-reference/components/contained-list`. Use this Component API instead of creating local repeated-row markup, local card-list styling, or local row-action behavior for the same UI role.
 
@@ -106,7 +106,7 @@ Contained list is the installed Login App 2.0 bounded row-list API. It owns the 
 - Object cards with rich previews, large media, or independent card actions. Use Tile/Card composition.
 - Optional disclosure of repeated content. Use Accordion.
 - Tree or nested hierarchy. Use Tree view or a Pattern-owned navigation/data structure.
-- Search/filter tooling, sticky headers, and virtualized/large-row performance. Those remain gated until a Pattern or Component standard owns them.
+- Search/filter query behavior and virtualized/large-row performance. Contained list may compose with Search/Filter Pattern entry points, but query state and filtering behavior remain Pattern-owned.
 
 ## 2. Status and ownership
 
@@ -142,8 +142,10 @@ Use Contained list when related repeated rows need to sit inside a bounded surfa
 - Use native links for navigational rows.
 - Use native buttons or approved Button/Icon button APIs for row actions.
 - Keep row content structurally consistent inside the same contained list.
-- Use on-page contained lists for persistent card/sidebar/panel regions.
+- Use on-page contained lists for persistent page regions, cards, sidebars, or panels.
 - Use disclosed contained lists for compact row sets inside drawer, disclosure, popover-like, or elevated surfaces.
+- Use sticky headers only inside a constrained scrolling parent that owns the scroll region.
+- Compose search/filter through a header action entry point or a nearby Search/Filter Pattern control; Contained list does not own query behavior.
 - Use row icons only when they improve scanability or communicate real row status.
 - Use row actions only when actions belong to each row and do not require table-level bulk behavior.
 - Use approved empty, loading, warning, error, disabled, selected/current, and read-only states when relevant.
@@ -312,7 +314,7 @@ Any option not listed here is not public. If a feature needs another contained-l
 
 | Name                     | Type              | Status      | API                                              | Notes                                                                   |
 | ------------------------ | ----------------- | ----------- | ------------------------------------------------ | ----------------------------------------------------------------------- |
-| On-page contained list   | Variant           | Implemented | `variant="on-page"`                              | Persistent card, sidebar, panel, or page section list.                  |
+| On-page contained list   | Variant           | Implemented | `variant="on-page"`                              | Persistent page region, card, sidebar, or panel list.                   |
 | Disclosed contained list | Variant           | Implemented | `variant="disclosed"`                            | Compact list inside drawer, disclosure, or elevated contextual surface. |
 | Small rows               | Size              | Implemented | `size="sm"`                                      | Dense sidebars, compact panels, and short metadata rows.                |
 | Medium rows              | Size              | Implemented | `size="md"`                                      | Default row density.                                                    |
@@ -331,8 +333,8 @@ Any option not listed here is not public. If a feature needs another contained-l
 | Row-level status         | State             | Implemented | item `status`                                    | Use only for actual row state.                                          |
 | Current row              | State             | Implemented | `current`                                        | Marks current row in this bounded context.                              |
 | Selected row             | State             | Gated       | `selected`                                       | Use only when selection model is documented for the feature.            |
-| Sticky header            | Gated             | none        | Requires scroll, focus, and screen-reader proof. |
-| Search/filter in header  | Gated             | none        | Requires Search/Filter Pattern ownership.        |
+| Sticky header            | Implemented / constrained | `stickyHeader` / `sticky-header` | Use only when a parent scroll region owns scrolling and focus behavior remains clear. |
+| Search/filter composition | Pattern-owned composition | `headerActionLabel`; nearby Search/Filter Pattern controls | Contained list may show the entry point or sit below a persistent search/filter control, but query behavior is Pattern-owned. |
 | Bulk selection           | Not allowed       | none        | Use Data table.                                  |
 | Sorting/pagination       | Not allowed       | none        | Use Data table.                                  |
 | Deep hierarchy           | Not allowed       | none        | Use Tree view or Pattern-owned structure.        |
@@ -442,7 +444,8 @@ Feature views must not create local `contained-list-*`, `card-list-*`, `panel-li
 - A contained list must not replace List when the content is simple text-only documentation.
 - A contained list must not replace Tile/Card composition when each item needs independent card structure, rich media, or multiple independent actions.
 - A contained list must not become a navigation menu unless a Navigation Pattern owns that behavior.
-- Sticky headers, search/filter, and scrollable row bodies require gated Pattern proof before use.
+- Sticky headers and scrollable row bodies require a constrained parent scroll region and UI Reference proof before use.
+- Search/filter behavior remains Pattern-owned; Contained list may expose a header action entry point or sit below a Search/Filter control.
 - Empty and loading states must preserve the list title/context.
 
 ## 9. Selection guidance
@@ -464,7 +467,7 @@ Feature views must not create local `contained-list-*`, `card-list-*`, `panel-li
 - Content is optional disclosure; use Accordion.
 - Rows are hierarchical or deeply nested; use Tree view or a Pattern-owned hierarchy.
 - The list is really primary navigation; use Navigation Pattern APIs.
-- The workflow requires local search/filter, sticky headers, or virtualization before those capabilities are approved.
+- The workflow requires local search/filter behavior, virtualization, or large-row performance before those capabilities are approved.
 - The component would contain long paragraphs or mixed row structures that are hard to scan.
 
 ### 9.3. Selection matrix:
@@ -530,15 +533,15 @@ Feature views must not create local `contained-list-*`, `card-list-*`, `panel-li
 - Do not use icons as the only status indicator.
 - Do not render blank containers when the list is empty.
 - Do not put long-form content or mixed row structures in a contained list.
-- Do not add sticky headers, search/filter, virtualization, row reordering, or scroll containers without a gated standard update.
+- Do not add search/filter behavior, virtualization, row reordering, or custom scroll containers without the owning Pattern or standard proof.
 - Do not use contained list as primary navigation.
 
 ## 13. Deferred or gated capabilities
 
 | Capability                        | Status                 | Gate                                                                                         |
 | --------------------------------- | ---------------------- | -------------------------------------------------------------------------------------------- |
-| Sticky header with scrolling rows | Gated                  | Requires scroll, focus, keyboard, screen-reader, height, and responsive proof.               |
-| Search/filter in header           | Gated                  | Requires Search/Filter Pattern ownership and no-conflict behavior with Data table.           |
+| Sticky header with scrolling rows | Implemented / constrained | Requires parent-owned scroll region plus focus, keyboard, screen-reader, height, and responsive proof. |
+| Search/filter behavior            | Pattern-owned          | Search query state, filtering, empty states, and persistence belong to Search/Filter Pattern ownership. |
 | Bulk row selection                | Not allowed            | Use Data table.                                                                              |
 | Sorting and pagination            | Not allowed            | Use Data table.                                                                              |
 | Virtualized rows                  | Deferred               | Requires performance, focus, screen-reader, and loading-state proof.                         |
@@ -574,7 +577,9 @@ The Contained list page must render production examples through the documented A
 | Accessibility example     | The page demonstrates labeling, keyboard order, focus visibility, icon labeling, and non-color status cues.                                                    | Labelled list, Keyboard order, Icon labels     |
 | Selection and current row | The page documents current row behavior and gates selection unless a feature has an approved model.                                                            | Current, Selected gated                        |
 | Alternatives matrix       | The page distinguishes Contained list from List, Structured list, Data table, Tile/Card composition, Accordion, Tree view, and Navigation.                     | Selection guidance                             |
-| Deferred gates            | Sticky headers, search/filter, virtualization, drag reorder, nested lists, and expandable rows render as gated disposition rows, not fake production controls. | Gated capabilities                             |
+| Search/filter composition | Header action and persistent Search/Filter Pattern composition render without making Contained list own query behavior. | Header action, persistent search field         |
+| Scrolling and sticky header | A constrained parent scroll region proves sticky header behavior without trapping focus or redefining page scroll. | Sticky header, scrollable rows                 |
+| Deferred gates            | Search/filter behavior, virtualization, drag reorder, nested lists, and expandable rows render as gated disposition rows, not fake production controls. | Gated capabilities                             |
 
 The page must include canonical Blade examples for `x-ui.contained-list`, `x-ui.contained-list-item`, item data, linked rows, row actions, empty states, and status rows. It must link to this canonical standard and to consumed Element and Component standards.
 

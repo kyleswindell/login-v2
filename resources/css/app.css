@@ -4717,12 +4717,19 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     a.ui-contained-list-item:hover,
-    a.ui-contained-list-item:focus-visible {
+    a.ui-contained-list-item:focus-visible,
+    .ui-contained-list-item[data-ui-contained-list-item-interactive='true']:not(a):hover {
         background-color: var(--ui-layer-hover-01);
+        color: var(--ui-text-primary);
+    }
+
+    a.ui-contained-list-item:active {
+        background-color: var(--ui-layer-active-01);
         outline: none;
     }
 
     a.ui-contained-list-item:focus-visible {
+        outline: none;
         box-shadow: inset 0 0 0 2px var(--ui-focus);
     }
 

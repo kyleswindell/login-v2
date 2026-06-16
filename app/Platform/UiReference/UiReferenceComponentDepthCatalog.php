@@ -1851,7 +1851,7 @@ class UiReferenceComponentDepthCatalog
      */
     private function containedListComponent(): array
     {
-        return $this->correctedImplemented('contained-list', 'Contained list', 'Contained list presents bounded row-like items inside cards, panels, and compact review regions.', [
+        return array_replace($this->correctedImplemented('contained-list', 'Contained list', 'Contained list presents bounded row-like items inside page regions, panels, sidebars, disclosures, and compact review areas.', [
             $this->exampleFromSample('Basic contained list', 'A compact bounded list with title, description, and row metadata.', ['type' => 'contained-list', 'items' => [[
                 'title' => 'Workspace reviews',
                 'description' => 'Recent review checkpoints.',
@@ -2048,6 +2048,9 @@ class UiReferenceComponentDepthCatalog
             'Actionable rows need a clear accessible name.',
             'Disabled rows must not be focusable.',
             'Empty and loading states need visible text.',
+        ]), [
+            'live_examples_view' => 'platform.ui-reference.components.live-examples.contained-list',
+            'live_examples_layout' => 'flexible-matrix',
         ]);
     }
 

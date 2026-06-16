@@ -1518,6 +1518,20 @@ class UiReferenceComponentDepthCatalog
                 $this->sampleVariant('Hang alignment', ['type' => 'structured-list', 'items' => [['alignment' => 'hang']]]),
                 $this->sampleVariant('Background modifier', ['type' => 'structured-list', 'items' => [['background' => true]]]),
             ]),
+            $this->exampleFromSample('Dynamic width and wrapping', 'Long content moves across columns so reviewers can verify content-driven width adjustment, wrapping, and row/header alignment.', ['type' => 'structured-list', 'items' => [[
+                'columns' => [
+                    ['key' => 'workspace', 'label' => 'Workspace and routing context'],
+                    ['key' => 'owner', 'label' => 'Responsible team'],
+                    ['key' => 'notes', 'label' => 'Operational notes'],
+                ],
+                'rows' => [
+                    ['id' => 'enterprise-routing', 'cells' => ['workspace' => 'Enterprise customer support workspace with regional escalation routing', 'owner' => 'Platform operations', 'notes' => 'Long operational note proving wrapping behavior.']],
+                    ['id' => 'tenant-handoff', 'cells' => ['workspace' => 'Tenant handoff', 'owner' => 'Customer success enablement team with implementation review ownership', 'notes' => 'Short note']],
+                ],
+            ]]], [
+                $this->sampleVariant('Long row header', ['type' => 'structured-list', 'items' => [['long_column' => 'workspace']]]),
+                $this->sampleVariant('Long body cell', ['type' => 'structured-list', 'items' => [['long_column' => 'notes']]]),
+            ]),
             $this->exampleFromSample('Density and alignment', 'Condensed rows and flush alignment support dense read-only metadata comparisons.', ['type' => 'structured-list', 'items' => [[
                 'size' => 'condensed',
                 'alignment' => 'flush',

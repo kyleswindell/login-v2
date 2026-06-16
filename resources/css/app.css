@@ -5523,7 +5523,7 @@ Use targeted searches for the class family being changed before reading this fil
     }
 
     .ui-structured-list {
-        @apply w-full table-fixed border-collapse text-left text-sm;
+        @apply w-full table-auto border-collapse text-left text-sm;
         min-width: 31.25rem;
         color: var(--ui-text-secondary);
         background-color: transparent;

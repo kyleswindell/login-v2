@@ -11,6 +11,39 @@
         ['id' => 'sandbox', 'cells' => ['workspace' => 'Sandbox tenant', 'role' => 'Viewer', 'status' => 'Disabled'], 'disabled' => true],
     ];
 
+    $dynamicColumns = [
+        ['key' => 'workspace', 'label' => 'Workspace and routing context'],
+        ['key' => 'owner', 'label' => 'Responsible team'],
+        ['key' => 'notes', 'label' => 'Operational notes'],
+    ];
+
+    $dynamicRows = [
+        [
+            'id' => 'enterprise-routing',
+            'cells' => [
+                'workspace' => 'Enterprise customer support workspace with regional escalation routing',
+                'owner' => 'Platform operations',
+                'notes' => 'Long operational note proving that cell content wraps without forcing horizontal overflow or collapsing adjacent columns.',
+            ],
+        ],
+        [
+            'id' => 'tenant-handoff',
+            'cells' => [
+                'workspace' => 'Tenant handoff',
+                'owner' => 'Customer success enablement team with implementation review ownership',
+                'notes' => 'Short note',
+            ],
+        ],
+        [
+            'id' => 'audit-review',
+            'cells' => [
+                'workspace' => 'Audit review queue',
+                'owner' => 'Compliance',
+                'notes' => 'A longer policy-facing description in the final column checks that the table can rebalance available space when the widest content moves between columns.',
+            ],
+        ],
+    ];
+
     $metadataColumns = [
         ['key' => 'token', 'label' => 'Token'],
         ['key' => 'scope', 'label' => 'Scope'],
@@ -54,6 +87,21 @@
                 caption="Workspace access summary"
                 :columns="$workspaceColumns"
                 :rows="$workspaceRows"
+                alignment="hang"
+            />
+        </div>
+    </section>
+
+    <section class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-structured-list-live-section="dynamic-width-and-wrapping">
+        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Dynamic width and wrapping</h3>
+        <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">Longer text is distributed across different columns so reviewers can check content-driven width adjustment, wrapping, and row/header alignment.</p>
+
+        <div class="mt-4">
+            <x-ui.structured-list
+                id="structured-list-dynamic-width"
+                caption="Long structured list content"
+                :columns="$dynamicColumns"
+                :rows="$dynamicRows"
                 alignment="hang"
             />
         </div>

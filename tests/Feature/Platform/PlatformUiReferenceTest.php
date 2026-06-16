@@ -2745,6 +2745,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-component-live-layout="structured-list-matrix"', false)
             ->assertSee('data-ui-reference-sample-type="structured-list"', false)
             ->assertSee('Default structured list')
+            ->assertSee('Dynamic width and wrapping')
             ->assertSee('Density and alignment')
             ->assertSee('Condensed list')
             ->assertSee('Flush alignment')
@@ -2755,6 +2756,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-ui-component="structured-list"', false)
             ->assertSee('data-ui-component="structured-list-row"', false)
             ->assertSee('data-ui-structured-list', false)
+            ->assertSee('data-structured-list-live-section="dynamic-width-and-wrapping"', false)
             ->assertSee('data-ui-structured-list-size="condensed"', false)
             ->assertSee('data-ui-structured-list-alignment="flush"', false)
             ->assertSee('data-ui-structured-list-background="true"', false)
@@ -2764,6 +2766,9 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-ui-structured-list-row-selected="true"', false)
             ->assertSee('aria-busy="true"', false)
             ->assertSee('ui-structured-list-empty', false)
+            ->assertSee('Enterprise customer support workspace with regional escalation routing')
+            ->assertSee('Customer success enablement team with implementation review ownership')
+            ->assertSee('content-driven width adjustment')
             ->assertSee('Data table')
             ->assertDontSee('Component-specific API pending correction')
             ->assertDontSee('Family-depth implementation pending')
@@ -2792,15 +2797,19 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('data-ui-structured-list-radio', $componentView);
         $this->assertStringContainsString('ui-structured-list-empty', $componentView);
         $this->assertStringContainsString('data-component-live-layout="structured-list-matrix"', $liveExamples);
+        $this->assertStringContainsString('structured-list-dynamic-width', $liveExamples);
+        $this->assertStringContainsString('$dynamicRows', $liveExamples);
         $this->assertStringContainsString("variant=\"selectable\"", $liveExamples);
         $this->assertStringContainsString('export function initStructuredLists', $structuredListScript);
         $this->assertStringContainsString("event.key === ' '", $structuredListScript);
         $this->assertStringContainsString('initStructuredLists', $appScript);
         $this->assertStringContainsString("export { initStructuredLists } from './ui-controls/structured-lists';", $controlsIndex);
         $this->assertStringContainsString('.ui-structured-list-shell', $structuredListCss);
+        $this->assertStringContainsString('@apply w-full table-auto border-collapse text-left text-sm;', $structuredListCss);
         $this->assertStringContainsString('.ui-structured-list-selectable', $structuredListCss);
         $this->assertStringContainsString('.ui-structured-list-row-selected', $structuredListCss);
         $this->assertStringContainsString('structured-list\' => $this->structuredListComponent()', $catalog);
+        $this->assertStringContainsString('Dynamic width and wrapping', $catalog);
         $this->assertStringContainsString('Native table-backed row comparison with optional single-selection rows.', file_get_contents(app_path('Platform/UiReference/UiReferenceComponentCatalog.php')));
         $this->assertStringContainsString('status: implemented-pending-review', $standard);
         $this->assertStringContainsString('blade_api:', $standard);

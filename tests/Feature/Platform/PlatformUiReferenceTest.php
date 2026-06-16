@@ -2407,6 +2407,8 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-ui-select-size="lg"', false)
             ->assertSee('data-ui-select-variant="inline"', false)
             ->assertSee('data-ui-select-style="fluid"', false)
+            ->assertSee('ui-select-chevron-icon', false)
+            ->assertSee('ui-reference-force-focus', false)
             ->assertSee('aria-invalid="true"', false)
             ->assertSee('aria-busy="true"', false)
             ->assertSee('required', false)
@@ -2437,12 +2439,21 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('optgroup', $selectView);
         $this->assertStringContainsString('heroicon-o-x-circle', $selectView);
         $this->assertStringContainsString('heroicon-o-exclamation-triangle', $selectView);
+        $this->assertStringContainsString('heroicon-o-chevron-down', $selectView);
+        $this->assertStringContainsString('$requestedVariant', $selectView);
+        $this->assertStringContainsString('$variant === \'inline\' ? \'sr-only\' : \'ui-field-label\'', $selectView);
         $this->assertStringContainsString('.ui-select-field-fluid .ui-select', $selectCss);
+        $this->assertStringContainsString('.ui-select-field-fluid .ui-select-shell:focus-within', $selectCss);
+        $this->assertStringContainsString('.ui-select-chevron-icon', $selectCss);
+        $this->assertStringContainsString('border-bottom-color: transparent', $selectCss);
         $this->assertStringContainsString('.ui-select-field-inline .ui-select', $selectCss);
         $this->assertStringContainsString('.ui-select-field-skeleton .ui-select', $selectCss);
+        $this->assertStringNotContainsString('linear-gradient(45deg, transparent 50%, currentColor 50%)', $selectCss);
         $this->assertStringContainsString('\'select\' => $this->selectComponent()', $catalog);
-        $this->assertStringContainsString('ui-select-field, ui-select, ui-select-shell', $catalog);
+        $this->assertStringContainsString('outline chevron icon', $catalog);
         $this->assertStringContainsString('The approved production API is `<x-ui.select>`', $standard);
+        $this->assertStringContainsString('Inline select is borderless', $standard);
+        $this->assertStringContainsString('approved outline chevron icon', $standard);
         $this->assertStringNotContainsString('Do not call `<x-ui.select>`', $standard);
     }
 

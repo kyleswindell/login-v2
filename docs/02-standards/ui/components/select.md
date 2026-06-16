@@ -140,6 +140,7 @@ Select is installed as a native field component. The approved production API is 
 - The component wraps the control in `.ui-field.ui-select-field`.
 - Use `.ui-field-label` for the visible label.
 - Use `.ui-select` on the native `<select>` element.
+- Use `.ui-select-chevron-icon` with the approved outline chevron icon. Do not draw the select chevron with CSS triangles, text glyphs, or local SVG.
 - Use `.ui-field-helper`, `.ui-field-error`, and `.ui-field-warning` for supporting copy.
 - Use `aria-describedby` when helper, warning, error, or status copy exists.
 - Use `aria-invalid="true"` only for blocking validation errors.
@@ -230,8 +231,8 @@ Use this component API instead of hand-building select controls in feature views
 | `helper` / `helperText`| `string / null`              | null          | Short guidance copy        | No                              | Replaced by error or warning copy while active.                                            |
 | `value` / `defaultValue` | `string / int / null`      | null          | One scalar value           | No                              | Select stores one scalar value, not an array.                                              |
 | `size`                 | `string`                     | `md`          | `sm`, `md`, `lg`           | No                              | Default select field height.                                                              |
-| `variant`              | `string`                     | `default`     | `default`, `inline`        | No                              | Inline is lower visual weight for compact contexts.                                       |
-| `style`                | `string`                     | `default`     | `default`, `fluid`         | No                              | Fluid renders the 64px expressive field treatment.                                        |
+| `variant`              | `string`                     | `default`     | `default`, `inline`        | No                              | Inline is lower visual weight for compact contexts. Inline renders borderless and does not show a top label. |
+| `style`                | `string`                     | `default`     | `default`, `fluid`         | No                              | Fluid renders the 64px expressive field treatment with the full shell owning the field background and border. |
 | `required`             | `bool`                       | `false`       | true/false                 | No                              | Use when a non-empty value is required.                                                    |
 | `disabled`             | `bool`                       | `false`       | true/false                 | No                              | Use when the field is unavailable.                                                         |
 | `readonly` / `readOnly`| `bool`                       | `false`       | true/false                 | No                              | Renders a non-interactive value summary plus hidden value.                                |
@@ -256,20 +257,21 @@ Any option not listed here is not public. If a feature needs another option, upd
 | `.ui-field`                 | Implemented | App field wrapper shared by input components.           |
 | `.ui-select-field`          | Implemented | Root select field namespace.                            |
 | `.ui-select-field-sm/md/lg` | Implemented | Default select size modifiers.                          |
-| `.ui-select-field-inline`   | Implemented | Inline select treatment.                                |
-| `.ui-select-field-fluid`    | Implemented | 64px fluid select treatment.                            |
+| `.ui-select-field-inline`   | Implemented | Borderless inline select treatment with visually hidden label. |
+| `.ui-select-field-fluid`    | Implemented | 64px fluid select treatment where the full shell owns the field surface. |
 | `.ui-select-field-invalid`  | Implemented | Blocking validation wrapper state.                      |
 | `.ui-select-field-warning`  | Implemented | Non-blocking warning wrapper state.                     |
 | `.ui-select-field-disabled` | Implemented | Wrapper state paired with native `disabled`.            |
 | `.ui-select-field-readonly` | Implemented | Non-interactive value summary state.                    |
 | `.ui-select-field-skeleton` | Implemented | Pending options state paired with `aria-busy="true"`.   |
-| `.ui-select-shell`          | Implemented | Native select and status-icon positioning wrapper.      |
+| `.ui-select-shell`          | Implemented | Native select, chevron, and status-icon positioning wrapper. |
 | `.ui-field-label`           | Implemented | Visible label text.                                     |
 | `.ui-field-helper`          | Implemented | Helper/instruction copy.                                |
 | `.ui-select`                | Implemented | Native select styling hook.                             |
 | `.ui-field-error`           | Implemented | Error copy referenced by `aria-describedby`.            |
 | `.ui-field-warning`         | Implemented | Warning copy referenced by `aria-describedby`.          |
 | `.ui-select-status-icon`    | Implemented | Error/warning status icon hook.                         |
+| `.ui-select-chevron-icon`   | Implemented | Approved outline chevron icon hook.                     |
 | `.ui-select-readonly-value` | Implemented | Read-only value summary.                                |
 
 ### 4.5. Option data contract
@@ -382,13 +384,13 @@ Carbon color role mapping:
 
 | Carbon token / role | Carbon responsibility | Login App token / API | Login value source | Mapping status | Owner rule |
 | ------------------- | --------------------- | --------------------- | ------------------ | -------------- | ---------- |
-| `$field`, `$field-hover` | Select field background and hover state | `ui-select`, `ui-field`, `--ui-field`, `--ui-field-hover` | App field palette | Same role / app value | Shared field mapping with Text input, Dropdown, and Search. |
-| `$border-strong`, `$border-subtle` | Default and read-only field border-bottom | `ui-select` border role | App border palette | Same role / app value | Select must not define local border colors. |
+| `$field`, `$field-hover` | Select field background and hover state | `ui-select`, `ui-select-shell`, `ui-field`, `--ui-field`, `--ui-field-hover` | App field palette | Same role / app value | Default select uses the field surface on the native control; fluid select uses the full shell as the field surface. |
+| `$border-strong`, `$border-subtle` | Default field border-bottom, fluid shell border, and read-only border | `ui-select` / `ui-select-shell` border role | App border palette | Same role / app value | Select must not define local border colors. Inline select is intentionally borderless. |
 | `$text-primary`, `$text-secondary`, `$text-helper`, `$text-disabled` | Select value, label, helper, and disabled text | `ui-select`, `ui-field-*` text roles | App text palette | Same role / app value | Browser option rendering may be OS-owned; the visible control uses app roles. |
-| `$icon-primary`, `$icon-disabled` | Select chevron/icon states | `ui-select__icon` / chevron role | App icon palette | Same role / app value | Icons must inherit currentColor where possible. |
+| `$icon-primary`, `$icon-disabled` | Select chevron/icon states | `ui-select-chevron-icon` / chevron role | App icon palette | Same role / app value | Icons must use approved Heroicons/app icon wrappers and inherit currentColor where possible. |
 | `$support-error`, `$text-error`, `$support-warning` | Invalid/warning border, icon, and message roles | Field validation state classes | App status palette | Same role / app value | Validation mapping is shared across field components. |
-| `$focus` | Focus field border/ring | `ui-select:focus-visible`, `--ui-focus` | App focus palette | Same role / app value | Focus remains Color-owned. |
-| `transparent` | Inline select field background | `variant="inline"` | Component variant rule | Adopted for installed inline select | Do not implement inline select styling ad hoc in feature views. |
+| `$focus` | Focus field border/ring | `ui-select:focus-visible`, `ui-select-shell:focus-within`, `--ui-focus` | App focus palette | Same role / app value | Default focus is applied to the native control; fluid focus is applied to the full shell. Error focus uses the error support role. |
+| `transparent` | Inline select field background and border | `variant="inline"` | Component variant rule | Adopted for installed inline select | Inline select is borderless and lower visual weight; do not implement inline select styling ad hoc in feature views. |
 | `$ai-border-strong` | AI select presence | No baseline select role until AI variant is approved | None | Not adopted | AI tokens remain gated. |
 
 ### 7.3. CSS namespace
@@ -415,6 +417,7 @@ Allowed component classes use the app-owned `ui-*` namespace documented by the i
 .ui-select-shell
 .ui-select
 .ui-select-status-icon
+.ui-select-chevron-icon
 .ui-select-readonly-value
 ```
 
@@ -570,8 +573,9 @@ The Select page is a baseline input component reference page. The Live examples 
 
 | Required proof           | Rendered behavior                                                                                                                                                                         | Variants/options shown                                                          |
 | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| Short native selection   | Native select renders with visible label, helper text, prompt option, selected value, and token-backed field styling.                                                                     | Default, Prompt option, Selected value, Helper text, Focus-visible              |
-| Validation selection     | Error and warning examples render with proper message IDs and `aria-describedby`; blocking errors include `aria-invalid="true"`.                                                          | Error, Warning, Required, Helper text                                           |
+| Short native selection   | Native select renders with visible label, helper text, prompt option, selected value, token-backed field styling, and approved outline chevron icon.                                      | Default, Prompt option, Selected value, Helper text, Focus-visible              |
+| Styles and sizes         | Small, medium, large, inline, and fluid examples show correct field treatment. Inline has no visible top label and no bottom border. Fluid applies background, border, hover, and focus to the full shell. | Small, Medium, Large, Inline, Fluid                                             |
+| Validation selection     | Error and warning examples render with proper message IDs and `aria-describedby`; blocking errors include `aria-invalid="true"` and demonstrate error focus treatment.                    | Error, Warning, Required, Helper text                                           |
 | Disabled/read-only       | Disabled select is unavailable; read-only example renders a non-interactive value summary instead of enabled select.                                                                      | Disabled, Read-only summary, Helper text                                        |
 | Loading/pending options  | Pending options example disables the select, uses `aria-busy="true"`, and shows visible status copy.                                                                                      | Loading, Status text, Disabled while pending                                    |
 | Grouped options          | A short grouped option example uses `optgroup` only where grouping improves scanning.                                                                                                     | Option groups, Short known list                                                 |
@@ -589,7 +593,10 @@ The page must not display generic fallback/reference sections or placeholder dev
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
 - Select examples use `x-ui.select` and render native `<select>` markup with `.ui-select-field` and `.ui-select` classes.
-- Every rendered select field has a visible label associated through `for` and `id`.
+- Every rendered non-inline select field has a visible label associated through `for` and `id`; inline select keeps an associated screen-reader label without rendering a top label.
+- Select chevrons use `.ui-select-chevron-icon` with the approved outline chevron icon, not CSS triangle backgrounds.
+- Inline select is borderless.
+- Fluid select applies background, border, hover, and focus treatment to the full `.ui-select-shell` surface.
 - Helper, warning, error, and status copy are associated through `aria-describedby`.
 - Error examples include `aria-invalid="true"` and warning examples do not.
 - Required examples include the native `required` attribute where applicable.

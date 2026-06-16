@@ -382,7 +382,7 @@ class UiReferenceComponentDepthCatalog
             ]], [
                 $this->sampleVariant('Optgroup', ['type' => 'field', 'items' => [['type' => 'select', 'label' => 'Workspace state', 'grouped' => true, 'value_key' => 'pending']]]),
             ]),
-        ], ['visible label', 'native select field', 'prompt option', 'selected option', 'helper or validation text', 'status icon', 'read-only summary'], [
+        ], ['visible label', 'native select field', 'outline chevron icon', 'prompt option', 'selected option', 'helper or validation text', 'status icon', 'read-only summary'], [
             'Use when the user chooses one option that will be submitted as part of a form.',
             'Use for three or more short known options when radio buttons would take too much space.',
         ], [

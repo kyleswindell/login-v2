@@ -4425,10 +4425,12 @@ Use targeted searches for the class family being changed before reading this fil
 
     .ui-select-shell {
         @apply relative mt-2;
+        background-color: var(--ui-field-01);
     }
 
     .ui-select {
         @apply w-full border-0 border-b text-sm transition focus:outline-none;
+        appearance: none;
         min-height: 2.5rem;
         border-color: var(--ui-border-strong-01);
         background-color: var(--ui-field-01);
@@ -4437,16 +4439,10 @@ Use targeted searches for the class family being changed before reading this fil
         padding: 0 3rem 0 1rem;
     }
 
-    .ui-select {
-        appearance: none;
-        background-image:
-            linear-gradient(45deg, transparent 50%, currentColor 50%),
-            linear-gradient(135deg, currentColor 50%, transparent 50%);
-        background-position:
-            calc(100% - 1.15rem) calc(50% - 0.16rem),
-            calc(100% - 0.78rem) calc(50% - 0.16rem);
-        background-repeat: no-repeat;
-        background-size: 0.45rem 0.45rem, 0.45rem 0.45rem;
+    .ui-select-chevron-icon {
+        @apply pointer-events-none absolute top-1/2 h-4 w-4 -translate-y-1/2;
+        right: 1rem;
+        color: var(--ui-icon-primary);
     }
 
     .ui-select-compact {
@@ -4468,11 +4464,15 @@ Use targeted searches for the class family being changed before reading this fil
 
     .ui-select-field-fluid .ui-select-shell {
         @apply mt-0;
+        min-height: 4rem;
+        border: 1px solid var(--ui-border-strong-01);
         background-color: var(--ui-field-01);
     }
 
     .ui-select-field-fluid .ui-select {
         min-height: 4rem;
+        border-bottom: 0;
+        background-color: transparent;
         padding-top: 1.25rem;
     }
 
@@ -4482,29 +4482,64 @@ Use targeted searches for the class family being changed before reading this fil
 
     .ui-select-field-inline .ui-select-shell {
         @apply mt-0 inline-block align-middle;
+        background-color: transparent;
     }
 
     .ui-select-field-inline .ui-select {
         width: auto;
         min-height: 2rem;
+        border-bottom-color: transparent;
         background-color: transparent;
-        padding-left: 1rem;
-        padding-right: 2.5rem;
+        padding-left: 0;
+        padding-right: 2rem;
+    }
+
+    .ui-select-field-inline .ui-select-chevron-icon {
+        right: 0.25rem;
     }
 
     .ui-select:hover:not(:disabled) {
         background-color: var(--ui-field-hover-01);
     }
 
+    .ui-select-field-fluid .ui-select:hover:not(:disabled) {
+        background-color: transparent;
+    }
+
+    .ui-select-field-fluid:not(.ui-select-field-disabled):not(.ui-select-field-skeleton) .ui-select-shell:hover {
+        background-color: var(--ui-field-hover-01);
+    }
+
     .ui-select:focus,
     .ui-select:focus-visible,
-    .ui-select.is-focus {
+    .ui-select.is-focus,
+    .ui-select-field.ui-reference-force-focus .ui-select {
         outline: 2px solid var(--ui-focus);
         outline-offset: -2px;
         border-color: var(--ui-focus);
     }
 
-    .ui-select-field-invalid .ui-select {
+    .ui-select-field-fluid .ui-select:focus,
+    .ui-select-field-fluid .ui-select:focus-visible {
+        outline: 0;
+    }
+
+    .ui-select-field-fluid .ui-select-shell:focus-within,
+    .ui-select-field-fluid.ui-reference-force-focus .ui-select-shell,
+    .ui-select-field-fluid.is-focus .ui-select-shell {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+        border-color: var(--ui-focus);
+    }
+
+    .ui-select-field-invalid .ui-select,
+    .ui-select-field-invalid.ui-reference-force-focus .ui-select {
+        border-color: var(--ui-support-error);
+        outline-color: var(--ui-support-error);
+    }
+
+    .ui-select-field-invalid.ui-reference-force-focus .ui-select-shell,
+    .ui-select-field-invalid .ui-select-shell:focus-within {
         border-color: var(--ui-support-error);
         outline-color: var(--ui-support-error);
     }
@@ -4521,7 +4556,17 @@ Use targeted searches for the class family being changed before reading this fil
         opacity: 1;
     }
 
+    .ui-select:disabled + .ui-select-chevron-icon,
+    .ui-select-field-skeleton .ui-select-chevron-icon {
+        color: var(--ui-icon-disabled);
+    }
+
     .ui-select-field-fluid .ui-select:disabled {
+        border-color: transparent;
+    }
+
+    .ui-select-field-fluid.ui-select-field-disabled .ui-select-shell,
+    .ui-select-field-fluid.ui-select-field-skeleton .ui-select-shell {
         border-color: var(--ui-border-subtle-01);
     }
 

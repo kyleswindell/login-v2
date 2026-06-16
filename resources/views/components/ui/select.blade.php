@@ -31,8 +31,9 @@
     $error = $error ?? ($invalid ? $invalidText : null);
     $warning = $warning ?? ($warn ? $warnText : null);
     $size = in_array($size, ['sm', 'md', 'lg'], true) ? $size : 'md';
-    $variant = $variant === 'inline' ? 'inline' : 'default';
-    $fieldStyle = $style === 'fluid' || $variant === 'fluid' ? 'fluid' : 'default';
+    $requestedVariant = in_array($variant, ['default', 'inline', 'fluid'], true) ? $variant : 'default';
+    $variant = $requestedVariant === 'inline' ? 'inline' : 'default';
+    $fieldStyle = $style === 'fluid' || $requestedVariant === 'fluid' ? 'fluid' : 'default';
     $isInvalid = filled($error);
     $isWarning = ! $isInvalid && filled($warning);
     $isReadOnly = (bool) ($readonly || $readOnly);
@@ -76,7 +77,7 @@
     @if($skeleton) aria-busy="true" @endif
 >
     @if ($fieldStyle !== 'fluid')
-        <label id="{{ $fieldId }}-label" for="{{ $isReadOnly ? $fieldId.'-value' : $fieldId }}" class="ui-field-label">{{ $label }}</label>
+        <label id="{{ $fieldId }}-label" for="{{ $isReadOnly ? $fieldId.'-value' : $fieldId }}" class="{{ $variant === 'inline' ? 'sr-only' : 'ui-field-label' }}">{{ $label }}</label>
     @endif
 
     @if ($isReadOnly)
@@ -133,6 +134,7 @@
             @elseif ($isWarning)
                 <x-heroicon-o-exclamation-triangle class="ui-select-status-icon ui-select-status-icon-warning" aria-hidden="true" />
             @endif
+            <x-heroicon-o-chevron-down class="ui-select-chevron-icon" aria-hidden="true" />
         </div>
     @endif
 

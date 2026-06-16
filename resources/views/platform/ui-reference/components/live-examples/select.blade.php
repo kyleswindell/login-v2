@@ -102,6 +102,7 @@
                 label="Account type"
                 placeholder="Choose type"
                 :options="$cycleOptions"
+                class="ui-reference-force-focus"
                 invalid
                 invalid-text="Choose an account type before saving."
                 required

@@ -1853,21 +1853,29 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('x-ui.date-picker')
             ->assertSee('data-component-live-layout="date-picker-matrix"', false)
             ->assertSee('data-ui-reference-sample-type="date-picker"', false)
-            ->assertSee('Native date entry')
+            ->assertSee('Single date entry')
             ->assertSee('Date-time entry')
-            ->assertSee('Styles and sizes')
-            ->assertSee('Validation states')
-            ->assertSee('Disabled, read-only, and loading')
-            ->assertSee('Range and calendar boundaries')
+            ->assertSee('Date range picker')
+            ->assertSee('Time picker anatomy')
+            ->assertSee('Styles and fluid versions')
+            ->assertSee('States')
             ->assertSee('Required date')
             ->assertSee('Bounded date')
-            ->assertSee('Minute step')
-            ->assertSee('Warning state')
-            ->assertSee('Pattern-owned range')
+            ->assertSee('Selected range: 2026-06-10 to 2026-06-18.')
+            ->assertSee('Meeting time')
+            ->assertSee('Timezone')
             ->assertSee('data-ui-component="date-picker"', false)
             ->assertSee('data-ui-date-picker-input', false)
             ->assertSee('data-ui-date-picker-type="date"', false)
             ->assertSee('data-ui-date-picker-type="datetime-local"', false)
+            ->assertSee('data-ui-component="date-range-picker"', false)
+            ->assertSee('data-ui-date-range-picker', false)
+            ->assertSee('data-ui-date-range-input="start"', false)
+            ->assertSee('data-ui-date-range-input="end"', false)
+            ->assertSee('data-ui-date-range-calendar', false)
+            ->assertSee('data-ui-date-range-day', false)
+            ->assertSee('data-ui-component="time-picker"', false)
+            ->assertSee('data-ui-time-picker', false)
             ->assertSee('data-ui-date-picker-size="sm"', false)
             ->assertSee('data-ui-date-picker-size="md"', false)
             ->assertSee('data-ui-date-picker-size="lg"', false)
@@ -1880,8 +1888,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('aria-busy="true"', false)
             ->assertSee('disabled', false)
             ->assertSee('ui-input-date', false)
-            ->assertSee('Calendar popover requires keyboard navigation')
-            ->assertSee('Date range filter Pattern')
+            ->assertDontSee('range behavior remain gated')
             ->assertDontSee('Component-specific API pending correction')
             ->assertDontSee('Family-depth implementation pending')
             ->assertDontSee('cds--date-picker')
@@ -1889,6 +1896,10 @@ class PlatformUiReferenceTest extends TestCase
 
         $componentView = file_get_contents(resource_path('views/components/ui/date-picker.blade.php'));
         $componentCss = file_get_contents(resource_path('css/app.css'));
+        $dateRangeJs = file_get_contents(resource_path('js/ui-controls/date-range-pickers.js'));
+        $uiControlsJs = file_get_contents(resource_path('js/ui-controls.js'));
+        $appJs = file_get_contents(resource_path('js/app.js'));
+        $liveExamples = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/date-picker.blade.php'));
         $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
         $overviewCatalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentCatalog.php'));
         $standard = file_get_contents(base_path('docs/02-standards/ui/components/date-picker.md'));
@@ -1900,10 +1911,22 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('ui-date-picker-fluid', $componentCss);
         $this->assertStringContainsString('ui-date-picker-readonly-value', $componentCss);
         $this->assertStringContainsString('ui-date-picker-skeleton', $componentCss);
+        $this->assertStringContainsString('.ui-date-range-picker', $componentCss);
+        $this->assertStringContainsString('.ui-date-range-day[data-ui-date-range-in-range=', $componentCss);
+        $this->assertStringContainsString('.ui-time-picker', $componentCss);
+        $this->assertStringContainsString('ui-date-picker-fluid.ui-date-picker-invalid .ui-date-picker-control', $componentCss);
+        $this->assertStringContainsString('initDateRangePickers', $dateRangeJs);
+        $this->assertStringContainsString('data-ui-date-range-picker', $dateRangeJs);
+        $this->assertStringContainsString('uiDateRangeHover', $dateRangeJs);
+        $this->assertStringContainsString('export { initDateRangePickers }', $uiControlsJs);
+        $this->assertStringContainsString('initDateRangePickers', $appJs);
+        $this->assertStringContainsString('data-ui-component="time-picker"', $liveExamples);
         $this->assertStringContainsString("'live_examples_view' => 'platform.ui-reference.components.live-examples.date-picker'", $catalog);
         $this->assertStringContainsString("'date-picker', 'Date picker', 'Inputs', 'Implemented Pending Review'", $overviewCatalog);
         $this->assertStringContainsString('status: implemented-pending-review', $standard);
-        $this->assertStringContainsString('custom calendar and range behavior remain gated', $standard);
+        $this->assertStringContainsString('range calendar selection, and time picker anatomy', $standard);
+        $this->assertStringContainsString('data-ui-date-range-picker', $standard);
+        $this->assertStringNotContainsString('Range picker remains gated', $standard);
     }
 
     public function test_search_component_page_renders_installed_api_examples(): void

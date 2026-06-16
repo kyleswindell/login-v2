@@ -5472,6 +5472,44 @@ Use targeted searches for the class family being changed before reading this fil
         @apply min-w-0;
     }
 
+    .ui-reference-layer-section {
+        @apply rounded-lg border p-4;
+        border-color: var(--ui-border-subtle-01);
+        background-color: var(--ui-layer-01);
+    }
+
+    .ui-reference-section-heading {
+        @apply max-w-3xl;
+    }
+
+    .ui-reference-section-heading h3 {
+        @apply text-base font-semibold;
+        color: var(--ui-text-primary);
+    }
+
+    .ui-reference-section-heading p {
+        @apply mt-2 text-sm leading-6;
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-reference-example-card {
+        @apply rounded-md border p-4;
+        border-color: var(--ui-border-subtle-01);
+        background-color: var(--ui-layer-02);
+    }
+
+    .ui-reference-example-title {
+        @apply text-sm font-semibold;
+        color: var(--ui-text-primary);
+    }
+
+    .ui-state-badge {
+        @apply inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium;
+        border-color: var(--ui-border-subtle-01);
+        background-color: var(--ui-layer-01);
+        color: var(--ui-text-secondary);
+    }
+
     .ui-date-picker-control {
         @apply relative mt-2;
     }
@@ -5500,15 +5538,20 @@ Use targeted searches for the class family being changed before reading this fil
 
     .ui-date-picker-fluid .ui-date-picker-control {
         @apply mt-0;
+        border: 1px solid transparent;
+        border-bottom-color: var(--ui-border-strong-01);
+        background-color: var(--ui-field-01);
     }
 
     .ui-date-picker-fluid .ui-field-label {
         @apply pointer-events-none relative z-10 mb-0 block px-4 pt-2 text-xs;
-        background-color: var(--ui-field-01);
+        background-color: transparent;
         color: var(--ui-text-secondary);
     }
 
     .ui-date-picker-fluid .ui-input-date {
+        border-bottom: 0;
+        background-color: transparent;
         min-height: 4rem;
         padding-top: 0.75rem;
     }
@@ -5527,9 +5570,31 @@ Use targeted searches for the class family being changed before reading this fil
         box-shadow: none;
     }
 
+    .ui-date-picker-fluid .ui-date-picker-control:focus-within,
+    .ui-date-picker-fluid.is-focus .ui-date-picker-control {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+        border-color: var(--ui-focus);
+    }
+
     .ui-date-picker-invalid .ui-input-date {
         border-color: var(--ui-support-error);
         outline-color: var(--ui-support-error);
+    }
+
+    .ui-date-picker-invalid .ui-input-date:focus,
+    .ui-date-picker-invalid .ui-input-date:focus-visible,
+    .ui-date-picker-invalid.is-focus .ui-input-date {
+        border-color: var(--ui-support-error);
+        outline-color: var(--ui-support-error);
+    }
+
+    .ui-date-picker-fluid.ui-date-picker-invalid .ui-date-picker-control,
+    .ui-date-picker-fluid.ui-date-picker-invalid .ui-date-picker-control:focus-within,
+    .ui-date-picker-fluid.ui-date-picker-invalid.is-focus .ui-date-picker-control {
+        border-color: var(--ui-support-error);
+        outline: 2px solid var(--ui-support-error);
+        outline-offset: -2px;
     }
 
     .ui-date-picker-warning .ui-input-date {
@@ -5587,6 +5652,119 @@ Use targeted searches for the class family being changed before reading this fil
             linear-gradient(90deg, var(--ui-skeleton-background), var(--ui-skeleton-element), var(--ui-skeleton-background));
         background-size: 200% 100%;
         background-position: 0 0;
+    }
+
+    .ui-date-range-picker {
+        @apply mt-4 max-w-5xl rounded-md border p-4;
+        border-color: var(--ui-border-subtle-01);
+        background-color: var(--ui-layer-02);
+    }
+
+    .ui-date-range-picker-fields {
+        @apply grid gap-4 md:grid-cols-2;
+    }
+
+    .ui-date-range-picker-input-shell {
+        @apply relative mt-2 block;
+    }
+
+    .ui-date-range-picker-input-shell .ui-input-date {
+        @apply w-full;
+        padding-right: 2.75rem;
+    }
+
+    .ui-date-range-picker-input-icon {
+        @apply pointer-events-none absolute top-1/2 h-4 w-4 -translate-y-1/2;
+        right: 1rem;
+        color: var(--ui-icon-secondary);
+    }
+
+    .ui-date-range-picker input[data-ui-date-range-input-active='true'] {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+        border-color: var(--ui-focus);
+    }
+
+    .ui-date-range-calendar {
+        @apply mt-4 w-full max-w-md border;
+        border-color: var(--ui-border-subtle-01);
+        background-color: var(--ui-layer-01);
+        box-shadow: var(--ui-shadow-popover, 0 1rem 2rem rgb(0 0 0 / 0.12));
+    }
+
+    .ui-date-range-calendar-header {
+        @apply flex h-10 items-center justify-between border-b px-2 text-sm font-semibold;
+        border-color: var(--ui-border-subtle-01);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-date-range-calendar-nav {
+        @apply h-8 w-8;
+    }
+
+    .ui-date-range-calendar-weekdays,
+    .ui-date-range-calendar-grid {
+        @apply grid grid-cols-7;
+    }
+
+    .ui-date-range-calendar-weekdays {
+        @apply border-b text-center text-xs font-medium;
+        border-color: var(--ui-border-subtle-01);
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-date-range-calendar-weekdays span {
+        @apply py-2;
+    }
+
+    .ui-date-range-day {
+        @apply h-10 border-0 text-sm transition focus:outline-none;
+        background-color: transparent;
+        color: var(--ui-text-primary);
+    }
+
+    .ui-date-range-day[data-ui-date-range-adjacent-month='true'] {
+        color: var(--ui-text-placeholder);
+    }
+
+    .ui-date-range-day:hover {
+        background-color: var(--ui-layer-hover-01);
+    }
+
+    .ui-date-range-day:focus-visible {
+        box-shadow: inset 0 0 0 2px var(--ui-focus), inset 0 0 0 3px var(--ui-focus-inset);
+    }
+
+    .ui-date-range-day[data-ui-date-range-in-range='true'] {
+        background-color: var(--ui-layer-selected-01);
+    }
+
+    .ui-date-range-day[data-ui-date-range-preview-end='true'] {
+        box-shadow: inset 0 0 0 1px var(--ui-border-interactive);
+    }
+
+    .ui-date-range-day[data-ui-date-range-start='true'],
+    .ui-date-range-day[data-ui-date-range-end='true'] {
+        background-color: var(--ui-background-brand);
+        color: var(--ui-text-on-color);
+    }
+
+    .ui-time-picker {
+        @apply mt-4 grid gap-4 rounded-md border p-4 md:grid-cols-[minmax(12rem,1fr)_8rem_minmax(14rem,1fr)];
+        border-color: var(--ui-border-subtle-01);
+        background-color: var(--ui-layer-02);
+    }
+
+    .ui-time-picker-helper {
+        @apply md:col-span-3;
+    }
+
+    .ui-time-picker-input {
+        @apply mt-2 w-full;
+    }
+
+    .ui-date-picker-state-grid {
+        @apply mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-4;
     }
 
     [data-theme-resolved="dark"] .ui-input[type="date"],

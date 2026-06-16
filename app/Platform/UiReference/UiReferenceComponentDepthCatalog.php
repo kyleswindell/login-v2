@@ -907,7 +907,7 @@ class UiReferenceComponentDepthCatalog
      */
     private function datePickerComponent(): array
     {
-        return array_replace($this->correctedImplemented('date-picker', 'Date picker', 'Date picker uses native date and date-time controls for simple date entry while deferring custom calendar and range-picker behavior.', [
+        return array_replace($this->correctedImplemented('date-picker', 'Date picker', 'Date picker supports native date/date-time entry, range calendar selection, and time picker composition for scheduling workflows.', [
             $this->exampleFromSample('Native date entry', 'Native single-date entry with visible label, helper copy, browser picker behavior, and optional min/max constraints.', ['type' => 'date-picker', 'items' => [
                 ['name' => 'start_date', 'label' => 'Start date', 'value' => '2026-06-08', 'helper' => 'Use the first date this setting should apply.', 'date_format' => 'yyyy-mm-dd'],
             ]], [
@@ -964,21 +964,21 @@ class UiReferenceComponentDepthCatalog
                     ['name' => 'available_date', 'label' => 'Available date', 'state' => 'loading'],
                 ]]),
             ]),
-            $this->exampleFromSample('Range and calendar boundaries', 'Range relationships are pattern-owned today; custom calendar range picker behavior remains gated.', ['type' => 'deferred', 'items' => [
-                ['label' => 'Use two x-ui.date-picker fields or the Date range filter Pattern until a custom calendar range API is approved.'],
-                ['label' => 'Trigger only when unavailable-date rules, calendar panels, range previews, and keyboard range selection are fully specified.'],
+            $this->exampleFromSample('Date range picker', 'A paired start/end calendar picker supports start selection, end selection, range display, and hover preview.', ['type' => 'deferred', 'items' => [
+                ['label' => 'Use the installed date range picker proof when users need calendar context for start/end selection.'],
+                ['label' => 'Forms and filtering Patterns still own submission, query behavior, and server validation.'],
             ]], [
-                $this->sampleVariant('Pattern-owned range', ['type' => 'deferred', 'items' => [
-                    ['label' => 'Date range filtering belongs to the Forms/Tables Pattern until a range-picker Component is approved.'],
-                ]], 'Deferred', 'Do not fake a custom range calendar on the Component page.'),
+                $this->sampleVariant('Hover preview', ['type' => 'deferred', 'items' => [
+                    ['label' => 'Once a start date is selected, hovering an end date previews the range before selection.'],
+                ]], 'Installed', 'Use app-owned range picker classes and lifecycle initialization.'),
             ]),
         ], ['label', 'native date/date-time input', 'helper text', 'validation message', 'status icon', 'min/max/step constraints', 'disabled/read-only treatment'], [
             'Use native date or date-time entry for simple field-level date capture.',
             'Use visible helper copy when constraints, time zone, or business rules affect the date.',
             'Use server-side validation as the source of truth for required, minimum, maximum, and business-rule validation.',
         ], [
-            'Do not build custom calendar chrome for simple date entry.',
-            'Do not use Date picker for date ranges, unavailable-date rules, or scheduling workflows without a Pattern owner.',
+            'Do not build local custom calendar chrome outside the Date picker component contract.',
+            'Do not use Date picker for unavailable-date rules or complex scheduling workflows without a Pattern owner.',
             'Do not rely on placeholder text or native browser UI as the only instruction.',
         ], [
             'Default',
@@ -990,12 +990,14 @@ class UiReferenceComponentDepthCatalog
             'Error',
             'Warning',
             'Date-time',
-            'Range deferred',
+            'Range selecting',
+            'Calendar open',
+            'Time picker',
         ], [
             'The input uses native date or datetime-local browser behavior; the app owns label, helper, validation, status, and layout treatment.',
             'Disabled fields are not editable or focusable; read-only fields expose fixed values without allowing edits.',
             'Minimum, maximum, and step constraints must be paired with server validation and user-visible helper or error copy when they affect the task.',
-            'Custom range selection, masked input, unavailable dates, and calendar panels remain gated until a dedicated API is approved.',
+            'Range selection uses app-owned date range classes and lifecycle initialization; unavailable dates and masked input remain gated until approved.',
         ], [
             'Write labels in sentence case and name the date being captured, such as Start date or Expiration date.',
             'Explain time zone ownership when using date-time fields.',

@@ -1,21 +1,46 @@
 @php
-    $boundaryRows = [
-        ['Native date', 'One date value submitted with a form.', '<x-ui.date-picker type="date" />', 'Installed here'],
-        ['Native date-time', 'One local date-time value; parent copy owns the time-zone context.', '<x-ui.date-picker type="datetime-local" />', 'Installed here'],
-        ['Range picker', 'Coordinated start/end calendar selection, previews, and keyboard range behavior.', 'Use two fields or a Pattern today', 'Gated'],
-        ['Time picker', 'Time-only selection, time zones, or complex scheduling.', 'Separate API required', 'Gated'],
-        ['Custom calendar', 'Calendar menu, unavailable dates, and month navigation.', 'Separate API required', 'Gated'],
+    $stateRows = [
+        ['Default', 'Report date', 'date_picker_state_default', ['value' => '2026-06-08', 'helper' => 'Format: yyyy-mm-dd.']],
+        ['Hover', 'Hover date', 'date_picker_state_hover', ['value' => '2026-06-09', 'helper' => 'Hover uses the shared field hover token.']],
+        ['Focus', 'Focused date', 'date_picker_state_focus', ['value' => '2026-06-10', 'class' => 'is-focus', 'helper' => 'Focus is visible on keyboard and click focus.']],
+        ['Error', 'Expiration date', 'date_picker_state_error', ['invalid' => true, 'invalid-text' => 'Choose an expiration date before saving.', 'required' => true]],
+        ['Warning', 'Review date', 'date_picker_state_warning', ['value' => '2026-12-24', 'warn' => true, 'warn-text' => 'Review dates near holidays need owner confirmation.']],
+        ['Disabled', 'Locked until', 'date_picker_state_disabled', ['value' => '2026-06-30', 'disabled' => true, 'helper' => 'This date is controlled by tenant policy.']],
+        ['Read-only', 'Created on', 'date_picker_state_readonly', ['value' => '2026-06-08', 'readonly' => true, 'helper' => 'Created date is system-managed.']],
+        ['Skeleton', 'Available date', 'date_picker_state_loading', ['skeleton' => true]],
     ];
+
+    $timeZones = [
+        ['value' => 'America/New_York', 'label' => 'Eastern Time'],
+        ['value' => 'America/Chicago', 'label' => 'Central Time'],
+        ['value' => 'America/Denver', 'label' => 'Mountain Time'],
+        ['value' => 'America/Los_Angeles', 'label' => 'Pacific Time'],
+    ];
+
+    $periods = [
+        ['value' => 'AM', 'label' => 'AM'],
+        ['value' => 'PM', 'label' => 'PM'],
+    ];
+
+    $calendarStart = \Carbon\CarbonImmutable::parse('2026-06-01');
+    $calendarEnd = \Carbon\CarbonImmutable::parse('2026-07-05');
+    $calendarDays = [];
+
+    for ($day = $calendarStart; $day->lte($calendarEnd); $day = $day->addDay()) {
+        $calendarDays[] = $day;
+    }
 @endphp
 
-<div class="space-y-6" data-component-live-layout="date-picker-matrix" data-ui-reference-sample-type="date-picker">
-    <section class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-date-picker-live-section="native-date-entry">
-        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Native date entry</h3>
-        <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">The installed component uses native browser date controls. The app owns the label, helper copy, validation, sizing, and token-backed field shell.</p>
+<div class="space-y-8" data-component-live-layout="date-picker-matrix" data-ui-reference-sample-type="date-picker">
+    <section class="ui-reference-layer-section" data-date-picker-live-section="single-date-entry">
+        <div class="ui-reference-section-heading">
+            <h3>Single date entry</h3>
+            <p>Simple date input uses the canonical date picker API for visible labels, helper text, min/max constraints, and normalized submitted values.</p>
+        </div>
 
-        <div class="mt-4 grid gap-4 xl:grid-cols-2">
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Required date</h4>
+        <div class="grid gap-4 xl:grid-cols-3">
+            <article class="ui-reference-example-card">
+                <h4 class="ui-reference-example-title">Required date</h4>
                 <div class="mt-4 max-w-sm">
                     <x-ui.date-picker
                         name="date_picker_start_date"
@@ -28,8 +53,8 @@
                 </div>
             </article>
 
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Bounded date</h4>
+            <article class="ui-reference-example-card">
+                <h4 class="ui-reference-example-title">Bounded date</h4>
                 <div class="mt-4 max-w-sm">
                     <x-ui.date-picker
                         name="date_picker_policy_start"
@@ -41,16 +66,10 @@
                     />
                 </div>
             </article>
-        </div>
-    </section>
 
-    <section class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-date-picker-live-section="date-time-entry">
-        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Date-time entry</h3>
-        <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">Use native date-time only for simple local scheduling. The surrounding form or pattern must explain which time zone interprets the value.</p>
-        <div class="mt-4 grid gap-4 xl:grid-cols-2">
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Date-time</h4>
-                <div class="mt-4">
+            <article class="ui-reference-example-card">
+                <h4 class="ui-reference-example-title">Date-time entry</h4>
+                <div class="mt-4 max-w-sm">
                     <x-ui.date-picker
                         name="date_picker_scheduled_at"
                         label="Scheduled activation"
@@ -60,121 +79,197 @@
                     />
                 </div>
             </article>
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Minute step</h4>
-                <div class="mt-4">
-                    <x-ui.date-picker
-                        name="date_picker_maintenance_start"
-                        label="Maintenance start"
-                        type="datetime-local"
-                        value="2026-06-08T09:30"
-                        step="60"
-                        helper="Minute precision is allowed for this scheduling workflow."
-                    />
-                </div>
-            </article>
         </div>
     </section>
 
-    <section class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-date-picker-live-section="styles-and-sizes">
-        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Styles and sizes</h3>
-        <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">Date picker supports small, medium, and large field heights. Fluid uses the 64px expressive field treatment.</p>
-        <div class="mt-4 grid gap-4 xl:grid-cols-3">
+    <section class="ui-reference-layer-section" data-date-picker-live-section="date-range-picker">
+        <div class="ui-reference-section-heading">
+            <h3>Date range picker</h3>
+            <p>Range selection uses paired start and end fields plus one calendar menu. Selecting from either field updates the same range and previews the hovered endpoint.</p>
+        </div>
+
+        <div
+            class="ui-date-range-picker"
+            data-ui-component="date-range-picker"
+            data-ui-date-range-picker
+            data-ui-date-range-start="2026-06-10"
+            data-ui-date-range-end="2026-06-18"
+        >
+            <div class="ui-date-range-picker-fields">
+                <label class="ui-field ui-date-range-picker-field" for="date-range-start">
+                    <span class="ui-field-label">Start date</span>
+                    <span class="ui-date-range-picker-input-shell">
+                        <input
+                            id="date-range-start"
+                            name="date_range_start"
+                            type="text"
+                            value="2026-06-10"
+                            inputmode="numeric"
+                            autocomplete="off"
+                            class="ui-input ui-input-date"
+                            data-ui-date-range-input="start"
+                            aria-describedby="date-range-status"
+                        >
+                        <x-heroicon-o-calendar-days class="ui-date-range-picker-input-icon" aria-hidden="true" />
+                    </span>
+                </label>
+
+                <label class="ui-field ui-date-range-picker-field" for="date-range-end">
+                    <span class="ui-field-label">End date</span>
+                    <span class="ui-date-range-picker-input-shell">
+                        <input
+                            id="date-range-end"
+                            name="date_range_end"
+                            type="text"
+                            value="2026-06-18"
+                            inputmode="numeric"
+                            autocomplete="off"
+                            class="ui-input ui-input-date"
+                            data-ui-date-range-input="end"
+                            aria-describedby="date-range-status"
+                        >
+                        <x-heroicon-o-calendar-days class="ui-date-range-picker-input-icon" aria-hidden="true" />
+                    </span>
+                </label>
+            </div>
+
+            <div class="ui-date-range-calendar" role="dialog" aria-label="Choose reporting date range" data-ui-date-range-calendar>
+                <div class="ui-date-range-calendar-header">
+                    <button type="button" class="ui-icon-button ui-date-range-calendar-nav" aria-label="Previous month" disabled>
+                        <x-heroicon-o-chevron-left aria-hidden="true" />
+                    </button>
+                    <p>June 2026</p>
+                    <button type="button" class="ui-icon-button ui-date-range-calendar-nav" aria-label="Next month" disabled>
+                        <x-heroicon-o-chevron-right aria-hidden="true" />
+                    </button>
+                </div>
+
+                <div class="ui-date-range-calendar-weekdays" aria-hidden="true">
+                    <span>Mon</span>
+                    <span>Tue</span>
+                    <span>Wed</span>
+                    <span>Thu</span>
+                    <span>Fri</span>
+                    <span>Sat</span>
+                    <span>Sun</span>
+                </div>
+
+                <div class="ui-date-range-calendar-grid" role="grid" aria-label="June 2026 calendar">
+                    @foreach ($calendarDays as $day)
+                        @php
+                            $date = $day->format('Y-m-d');
+                            $isCurrentMonth = $day->month === 6;
+                        @endphp
+                        <button
+                            type="button"
+                            class="ui-date-range-day"
+                            data-ui-date-range-day
+                            data-date="{{ $date }}"
+                            role="gridcell"
+                            aria-label="{{ $day->format('F j, Y') }}"
+                            @if(! $isCurrentMonth) data-ui-date-range-adjacent-month="true" @endif
+                        >
+                            {{ $day->format('j') }}
+                        </button>
+                    @endforeach
+                </div>
+            </div>
+
+            <p id="date-range-status" class="ui-field-helper" data-ui-date-range-status aria-live="polite">
+                Selected range: 2026-06-10 to 2026-06-18.
+            </p>
+        </div>
+    </section>
+
+    <section class="ui-reference-layer-section" data-date-picker-live-section="time-picker">
+        <div class="ui-reference-section-heading">
+            <h3>Time picker anatomy</h3>
+            <p>Time picker combines a time text field, AM/PM select, and timezone select. The selects use the Select component contract because time picker is a composed field.</p>
+        </div>
+
+        <div class="ui-time-picker" data-ui-component="time-picker" data-ui-time-picker>
+            <div class="ui-field ui-time-picker-time-field">
+                <label id="time-picker-meeting-time-label" for="time-picker-meeting-time" class="ui-field-label">Meeting time</label>
+                <input
+                    id="time-picker-meeting-time"
+                    name="meeting_time"
+                    type="text"
+                    value="11:30"
+                    inputmode="numeric"
+                    pattern="[0-9]{1,2}:[0-9]{2}"
+                    class="ui-input ui-time-picker-input"
+                    aria-describedby="time-picker-helper"
+                    data-ui-time-picker-input
+                >
+            </div>
+
+            <x-ui.select
+                name="meeting_period"
+                label="Period"
+                :options="$periods"
+                value="AM"
+                data-ui-time-picker-period
+            />
+
+            <x-ui.select
+                name="meeting_timezone"
+                label="Timezone"
+                :options="$timeZones"
+                value="America/New_York"
+                data-ui-time-picker-timezone
+            />
+
+            <p id="time-picker-helper" class="ui-field-helper ui-time-picker-helper">Use uppercase AM or PM and include the timezone for scheduled events.</p>
+        </div>
+    </section>
+
+    <section class="ui-reference-layer-section" data-date-picker-live-section="styles-and-fluid">
+        <div class="ui-reference-section-heading">
+            <h3>Styles and fluid versions</h3>
+            <p>Default date fields support small, medium, and large heights. Fluid fields use the single 64px expressive height and apply focus/error treatment to the full field shell.</p>
+        </div>
+
+        <div class="grid gap-4 xl:grid-cols-3">
             <x-ui.date-picker name="date_picker_sm" label="Small" size="sm" value="2026-06-08" />
             <x-ui.date-picker name="date_picker_md" label="Medium" size="md" value="2026-06-08" />
             <x-ui.date-picker name="date_picker_lg" label="Large" size="lg" value="2026-06-08" />
         </div>
-        <div class="mt-4 max-w-sm">
-            <x-ui.date-picker name="date_picker_fluid" label="Fluid date" style="fluid" value="2026-06-08" helper="Fluid fields are reserved for high-emphasis form contexts." />
-        </div>
-    </section>
-
-    <section class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-date-picker-live-section="validation-states">
-        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Validation states</h3>
-        <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">Error and warning states replace helper text, associate the message by ID, and include visible status treatment.</p>
-        <div class="mt-4 grid gap-4 xl:grid-cols-2">
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Error</h4>
-                <div class="mt-4">
-                    <x-ui.date-picker
-                        name="date_picker_expires_on"
-                        label="Expiration date"
-                        invalid
-                        invalid-text="Choose an expiration date before saving."
-                        required
-                    />
-                </div>
-            </article>
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Warning state</h4>
-                <div class="mt-4">
-                    <x-ui.date-picker
-                        name="date_picker_review_date"
-                        label="Review date"
-                        value="2026-12-24"
-                        warn
-                        warn-text="Review dates near holidays need owner confirmation."
-                    />
-                </div>
-            </article>
-        </div>
-    </section>
-
-    <section class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-date-picker-live-section="disabled-readonly-loading">
-        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Disabled, read-only, and loading</h3>
-        <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">Disabled fields are unavailable. Read-only renders a value summary plus hidden submitted value. Loading keeps the field disabled and exposes status copy.</p>
-        <div class="mt-4 grid gap-4 xl:grid-cols-3">
-            <x-ui.date-picker name="date_picker_disabled" label="Locked until" value="2026-06-30" helper="This date is controlled by tenant policy." disabled />
-            <x-ui.date-picker name="date_picker_readonly" label="Created on" value="2026-06-08" helper="Created date is system-managed." readonly />
-            <x-ui.date-picker name="date_picker_loading" label="Available date" skeleton />
-        </div>
-    </section>
-
-    <section class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-date-picker-live-section="range-and-calendar-boundaries">
-        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Range and calendar boundaries</h3>
-        <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">Range relationships are pattern-owned today. Custom calendar panels, unavailable-date rules, range previews, and time-only controls remain gated until those APIs are installed.</p>
 
         <div class="mt-4 grid gap-4 xl:grid-cols-2">
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Pattern-owned range composition</h4>
-                <div class="mt-4 grid gap-4 md:grid-cols-2">
-                    <x-ui.date-picker name="date_picker_range_start" label="Start date" value="2026-06-01" />
-                    <x-ui.date-picker name="date_picker_range_end" label="End date" value="2026-06-30" />
-                </div>
-                <p class="mt-3 text-xs leading-5" style="color: var(--ui-text-helper);">The parent form or Date range filter Pattern owns cross-field validation and recovery copy.</p>
-            </article>
+            <x-ui.date-picker name="date_picker_fluid" label="Fluid date" style="fluid" value="2026-06-08" helper="Fluid fields are reserved for expressive or contained contexts." />
+            <x-ui.date-picker name="date_picker_fluid_error" label="Fluid expiration date" style="fluid" invalid invalid-text="Choose an expiration date before saving." required />
+        </div>
+    </section>
 
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Deferred capabilities</h4>
-                <ul class="mt-4 space-y-2 text-sm leading-6" style="color: var(--ui-text-secondary);">
-                    <li>Calendar popover requires keyboard navigation, focus management, month navigation, and dismissal behavior.</li>
-                    <li>Range picker requires coordinated start/end semantics, range preview, and server validation.</li>
-                    <li>Time picker requires a separate standard for time format, localization, step behavior, and time-zone context.</li>
-                </ul>
-            </article>
+    <section class="ui-reference-layer-section" data-date-picker-live-section="states">
+        <div class="ui-reference-section-heading">
+            <h3>States</h3>
+            <p>Date picker fields use the same text input state model, with calendar-open and range-selecting states added only for calendar picker variants.</p>
         </div>
 
-        <div class="mt-4 overflow-x-auto rounded-lg border" style="border-color: var(--ui-border-subtle-01);">
-            <table class="min-w-full text-left text-sm">
-                <thead style="background-color: var(--ui-layer-02); color: var(--ui-text-secondary);">
-                    <tr>
-                        <th class="px-3 py-2 font-medium">Capability</th>
-                        <th class="px-3 py-2 font-medium">Owns</th>
-                        <th class="px-3 py-2 font-medium">Example</th>
-                        <th class="px-3 py-2 font-medium">Status</th>
-                    </tr>
-                </thead>
-                <tbody style="color: var(--ui-text-primary);">
-                    @foreach ($boundaryRows as [$capability, $owns, $example, $status])
-                        <tr class="border-t" style="border-color: var(--ui-border-subtle-01);">
-                            <td class="px-3 py-2 font-medium">{{ $capability }}</td>
-                            <td class="px-3 py-2">{{ $owns }}</td>
-                            <td class="px-3 py-2"><code>{{ $example }}</code></td>
-                            <td class="px-3 py-2">{{ $status }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+        <div class="ui-date-picker-state-grid">
+            @foreach ($stateRows as [$stateLabel, $fieldLabel, $fieldName, $stateProps])
+                <article class="ui-reference-example-card">
+                    <span class="ui-state-badge">{{ $stateLabel }}</span>
+                    <div class="mt-4">
+                        <x-ui.date-picker
+                            :name="$fieldName"
+                            :label="$fieldLabel"
+                            :value="$stateProps['value'] ?? null"
+                            :helper="$stateProps['helper'] ?? null"
+                            :invalid="$stateProps['invalid'] ?? false"
+                            :invalid-text="$stateProps['invalid-text'] ?? null"
+                            :warn="$stateProps['warn'] ?? false"
+                            :warn-text="$stateProps['warn-text'] ?? null"
+                            :disabled="$stateProps['disabled'] ?? false"
+                            :readonly="$stateProps['readonly'] ?? false"
+                            :required="$stateProps['required'] ?? false"
+                            :skeleton="$stateProps['skeleton'] ?? false"
+                            :class="$stateProps['class'] ?? null"
+                        />
+                    </div>
+                </article>
+            @endforeach
         </div>
     </section>
 </div>

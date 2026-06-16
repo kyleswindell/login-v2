@@ -1,7 +1,7 @@
 @php
     $currentSection = $currentSection ?? 'overview';
     $sidebarLinkClass = fn (bool $active, bool $compact = false) => trim('ui-reference-sidebar-link '.($compact ? 'ui-reference-sidebar-link-compact ' : '').($active ? 'is-current' : ''));
-    $approvedComponentSlugs = ['accordion', 'breadcrumb', 'button', 'checkbox', 'code-snippet', 'menu-buttons', 'tooltip'];
+    $approvedComponentSlugs = ['accordion', 'breadcrumb', 'button', 'checkbox', 'code-snippet', 'link', 'menu-buttons', 'tooltip'];
     $approvedElementSlugs = [];
     $statusBadgeLabel = fn (string $disposition) => match ($disposition) {
         'Partial' => 'Partial',

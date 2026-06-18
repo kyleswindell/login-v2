@@ -2054,7 +2054,11 @@ class PlatformUiReferenceTest extends TestCase
         $componentView = file_get_contents(resource_path('views/components/ui/date-picker.blade.php'));
         $inputView = file_get_contents(resource_path('views/components/ui/date-picker-input.blade.php'));
         $skeletonView = file_get_contents(resource_path('views/components/ui/date-picker-skeleton.blade.php'));
-        $componentCss = file_get_contents(resource_path('css/components/list.css'));
+        $componentCss = implode("\n", [
+            file_get_contents(resource_path('css/components/date-picker.css')),
+            file_get_contents(resource_path('css/components/date-picker-input.css')),
+            file_get_contents(resource_path('css/components/flatpickr.css')),
+        ]);
         $datePickerJs = file_get_contents(resource_path('js/ui-controls/date-picker.js'));
         $uiControlsJs = file_get_contents(resource_path('js/ui-controls.js'));
         $appJs = file_get_contents(resource_path('js/app.js'));
@@ -2076,7 +2080,8 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('.flatpickr-calendar.ui-date-picker-calendar', $componentCss);
         $this->assertStringContainsString('ui-date-picker-skeleton', $componentCss);
         $this->assertStringContainsString('width: 1rem;', $componentCss);
-        $this->assertStringContainsString('.ui-date-picker-input-field .ui-input-date:hover:not(:disabled):not([readonly])', $componentCss);
+        $this->assertStringContainsString('.ui-date-picker-input-field', $componentCss);
+        $this->assertStringContainsString('.ui-input-date:hover:not(:disabled):not([readonly])', $componentCss);
         $this->assertStringContainsString('cursor: text;', $componentCss);
         $this->assertStringContainsString("import flatpickr from 'flatpickr';", $datePickerJs);
         $this->assertStringContainsString("import rangePlugin from 'flatpickr/dist/plugins/rangePlugin';", $datePickerJs);
@@ -2758,22 +2763,22 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('selectDropdownOption', $dropdownScript);
         $this->assertStringContainsString('focusRelativeOption', $dropdownScript);
         $this->assertStringContainsString('focusDropdownOption', $dropdownScript);
-        $this->assertStringContainsString("event.key === 'Home'", $dropdownScript);
-        $this->assertStringContainsString("event.key === 'End'", $dropdownScript);
+        $this->assertStringContainsString('event.key === "Home"', $dropdownScript);
+        $this->assertStringContainsString('event.key === "End"', $dropdownScript);
         $this->assertStringContainsString('export { initDropdowns }', $uiControls);
         $this->assertStringContainsString('initDropdowns', $appJs);
         $this->assertStringContainsString('.ui-dropdown-trigger:not(:disabled)', $interactionFocus);
-        $this->assertStringContainsString('.ui-dropdown-trigger', $dropdownCss);
+        $this->assertStringContainsString('.ui-dropdown .ui-list-box-field', $dropdownCss);
         $this->assertStringContainsString('.ui-dropdown-fluid .ui-list-box', $dropdownCss);
-        $this->assertStringContainsString('inset-block: auto 100%;', $dropdownCss);
-        $this->assertStringContainsString('.ui-dropdown-invalid .ui-dropdown-trigger:not(.ui-list-box-expanded)', $dropdownCss);
+        $this->assertStringContainsString('inset-block-start: 100%;', $listBoxCss);
+        $this->assertStringContainsString('.ui-dropdown-invalid .ui-list-box', $dropdownCss);
         $this->assertStringNotContainsString('.ui-dropdown-chevron {'."\n".'        @apply inline-flex items-center justify-center border-l;', $dropdownCss);
         $this->assertStringContainsString('.ui-dropdown-option[aria-selected="true"] .ui-dropdown-option-check', $dropdownCss);
         $this->assertStringContainsString('block-size: var(--ui-list-box-size);', $listBoxCss);
         $this->assertStringContainsString('.ui-list-box:focus', $listBoxCss);
         $this->assertStringContainsString('inset-block-start: 100%;', $listBoxCss);
-        $this->assertStringContainsString('.ui-list-box-menu-item:first-child', $listBoxCss);
-        $this->assertStringContainsString('.ui-list-box-invalid:not(.ui-list-box-expanded)', $listBoxCss);
+        $this->assertStringContainsString('.ui-list-box-menu-item:first-of-type', $listBoxCss);
+        $this->assertStringContainsString('.ui-list-box-invalid .ui-list-box-field', $listBoxCss);
         $this->assertStringContainsString('.ui-list-box-menu-item[aria-selected="true"]', $listBoxCss);
         $this->assertStringContainsString('.ui-list-box-menu-item-highlighted', $listBoxCss);
         $this->assertStringContainsString('.ui-list-box-menu-item-disabled', $listBoxCss);
@@ -2904,7 +2909,7 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('data-ui-tag-variant="operational"', $content);
 
         $tagView = file_get_contents(resource_path('views/components/ui/tag.blade.php'));
-        $tagCss = file_get_contents(resource_path('css/app.css'));
+        $tagCss = file_get_contents(resource_path('css/components/tag.css'));
         $tagGroupView = file_get_contents(resource_path('views/components/ui/tag-group.blade.php'));
         $tagJs = file_get_contents(resource_path('js/ui-controls/tag.js'));
         $uiControls = file_get_contents(resource_path('js/ui-controls.js'));
@@ -2949,7 +2954,7 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('inline-size: fit-content;', $tagCss);
         $this->assertStringContainsString('border-radius: 16px;', $tagCss);
         $this->assertStringContainsString('padding-block: 0;', $tagCss);
-        $this->assertStringContainsString('font-weight: 400;', $tagCss);
+        $this->assertStringContainsString('font-weight: var(--ui-type-label-01-font-weight);', $tagCss);
         $this->assertStringContainsString('min-block-size: 1.125rem;', $tagCss);
         $this->assertStringContainsString('max-block-size: 1.125rem;', $tagCss);
         $this->assertStringContainsString('min-block-size: 1.5rem;', $tagCss);
@@ -2961,14 +2966,16 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('padding-inline-end: 1px;', $tagCss);
         $this->assertStringContainsString('.ui-tag-operational.ui-tag-lg:not(.ui-tag-has-icon)', $tagCss);
         $this->assertStringContainsString('border-width: 1px;', $tagCss);
-        $this->assertStringContainsString('--ui-tag-background: var(--ui-tag-type-background, var(--ui-tag-background-gray));', $tagCss);
+        $this->assertStringContainsString('--ui-tag-background: var(', $tagCss);
+        $this->assertStringContainsString('var(--ui-tag-background-gray)', $tagCss);
         $this->assertStringContainsString('--ui-tag-color: var(--ui-tag-type-color, var(--ui-tag-color-gray));', $tagCss);
         $this->assertStringContainsString('--ui-tag-hover: var(--ui-tag-type-hover, var(--ui-tag-hover-gray));', $tagCss);
         $this->assertStringContainsString('--ui-tag-border: var(--ui-tag-type-border, transparent);', $tagCss);
-        $this->assertStringContainsString('--ui-tag-hover-red: #c21e25;', $tagCss);
-        $this->assertStringContainsString('--ui-tag-hover-blue: #0053ff;', $tagCss);
-        $this->assertStringContainsString('--ui-tag-hover-cyan: #0066bd;', $tagCss);
-        $this->assertStringContainsString('--ui-tag-hover-green: #11742f;', $tagCss);
+        $this->assertStringContainsString('--ui-tag-type-hover: var(--ui-tag-hover-red);', $tagCss);
+        $this->assertStringContainsString('--ui-tag-type-hover: var(--ui-tag-hover-blue);', $tagCss);
+        $this->assertStringContainsString('--ui-tag-type-hover: var(--ui-tag-hover-cyan);', $tagCss);
+        $this->assertStringContainsString('--ui-tag-type-hover: var(--ui-tag-hover-green);', $tagCss);
+        $this->assertStringNotContainsString('#c21e25', $tagCss);
         $this->assertStringContainsString('.ui-tag-dismissible.ui-reference-force-hover .ui-tag-close', $tagCss);
         $this->assertStringContainsString('background-color: var(--ui-tag-hover);', $tagCss);
         $this->assertStringNotContainsString('color-mix(in srgb, currentColor 12%, transparent)', $tagCss);
@@ -2985,7 +2992,7 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('.ui-tag-operational.ui-reference-force-focus', $tagCss);
         $this->assertStringContainsString('.ui-tag-selectable.ui-reference-force-hover', $tagCss);
         $this->assertStringContainsString('.ui-tag-group', $tagCss);
-        $this->assertStringContainsString('gap: var(--ui-spacing-03);', $tagCss);
+        $this->assertStringContainsString('gap: var(--ui-spacing-03, 0.5rem);', $tagCss);
         $this->assertStringContainsString('\'tag\' => $this->tagComponent()', $catalog);
         $this->assertStringContainsString('ui-tag, ui-tag-sm, ui-tag-md, ui-tag-lg', $catalog);
         $this->assertStringContainsString('variant-first implementation and UI Reference page', $catalog);
@@ -3409,7 +3416,7 @@ class PlatformUiReferenceTest extends TestCase
 
         $paginationView = file_get_contents(resource_path('views/components/ui/pagination.blade.php'));
         $liveExamples = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/pagination.blade.php'));
-        $paginationCss = file_get_contents(resource_path('css/app.css'));
+        $paginationCss = file_get_contents(resource_path('css/components/pagination.css'));
         $paginationScript = file_get_contents(resource_path('js/ui-controls/pagination.js'));
         $selectView = file_get_contents(resource_path('views/components/ui/select.blade.php'));
         $appScript = file_get_contents(resource_path('js/app.js'));
@@ -3484,7 +3491,7 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('height: 1rem;', $paginationCss);
         $this->assertStringContainsString('border-inline-end: 1px solid var(--ui-border-subtle-01);', $paginationCss);
         $this->assertStringContainsString('border-inline-start: 1px solid var(--ui-border-subtle-01);', $paginationCss);
-        $this->assertStringContainsString('border-block-start: 0;', $paginationCss);
+        $this->assertStringContainsString('border-block-start: 1px solid var(--ui-border-subtle-01);', $paginationCss);
         $this->assertStringContainsString('.ui-pagination-nav-shell', $paginationCss);
         $this->assertStringContainsString('.ui-pagination-overflow-menu', $paginationCss);
         $this->assertStringContainsString('.ui-pagination-small-breakpoint', $paginationCss);

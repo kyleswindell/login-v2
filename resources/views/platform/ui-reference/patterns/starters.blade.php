@@ -55,7 +55,7 @@
             kicker="P2-F-CQ-007"
         >
             <x-slot:actions>
-                <x-ui.button :href="route('platform.ui-reference.patterns.archetypes')" variant="outline">Archetype vocabulary</x-ui.button>
+                <x-ui.button :href="route('platform.ui-reference.patterns.archetypes')" semantic="tertiary">Archetype vocabulary</x-ui.button>
                 <x-ui.button :href="route('platform.ui-reference.patterns.widget-content')" semantic="primary">Widget examples</x-ui.button>
             </x-slot:actions>
         </x-ui.patterns.page-title-actions-row>

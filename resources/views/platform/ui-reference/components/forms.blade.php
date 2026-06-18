@@ -423,7 +423,7 @@
             </div>
 
             <div class="mt-5 flex flex-wrap items-center gap-3">
-                <x-ui.button variant="ghost">Cancel</x-ui.button>
+                <x-ui.button semantic="ghost">Cancel</x-ui.button>
                 <x-ui.button semantic="danger">Delete</x-ui.button>
                 <x-ui.button type="submit" semantic="primary">Save Workspace</x-ui.button>
             </div>

@@ -19,6 +19,7 @@ class UiReferenceComponentDepthCatalog
             'textarea' => $this->inputs('textarea', 'Textarea', 'Textarea captures longer user-entered copy with visible multiline affordance.', 'textarea', ['Settings form field', 'Validation field', 'Read-only field', 'Disabled field']),
             'select' => $this->selectComponent(),
             'dropdown' => $this->dropdownComponent(),
+            'combo-box' => $this->comboBoxComponent(),
             'number-input' => $this->inputs('number-input', 'Number input', 'Number input captures bounded numeric values with optional step controls.', 'number', ['Min/max/step', 'Increment/decrement', 'Error/warning icon', 'Disabled/read-only', 'Compact/fluid']),
             'date-picker' => $this->datePickerComponent(),
             'file-uploader' => $this->inputs('file-uploader', 'File uploader', 'File uploader collects one or more user-selected files through an accessible input.', 'file', ['Button upload', 'File validation', 'Disabled', 'Drag-drop deferred']),
@@ -340,6 +341,35 @@ class UiReferenceComponentDepthCatalog
     /**
      * @return array<string, mixed>
      */
+    private function comboBoxComponent(): array
+    {
+        return array_replace($this->deferred('combo-box', 'Combo box', 'Combo box is a standalone selection-control owner for typed filtering, highlighted suggestions, clear control behavior, and optional custom-value entry. It must not be implemented as a Dropdown variant.', [
+            'A workflow requires typed filtering against a known option list where Dropdown and Select are too limited.',
+            'A workflow requires optional custom-value entry with validation and persistence rules.',
+            'The component standard defines text input plus listbox keyboard behavior, clear-button behavior, focus management, async/empty states, and UI Reference proof.',
+        ]), [
+            'current_decision' => 'Combo box is tracked as a standalone queued-gap component page so Dropdown remains a custom single-select listbox and Multiselect remains the multi-value owner.',
+            'related' => [
+                ['label' => 'Dropdown', 'href' => '/platform/ui-reference/components/dropdown'],
+                ['label' => 'Multiselect', 'href' => '/platform/ui-reference/components/multiselect'],
+                ['label' => 'Select', 'href' => '/platform/ui-reference/components/select'],
+                ['label' => 'Text input', 'href' => '/platform/ui-reference/components/text-input'],
+                ['label' => 'Form patterns', 'href' => '/platform/ui-reference/patterns/forms'],
+            ],
+            'developer_api' => [
+                'owner_route' => '/platform/ui-reference/components/combo-box',
+                'blade' => 'No public Blade API approved yet.',
+                'css' => 'resources/css/components/combo-box.css is a Carbon SCSS-derived visual target only until Blade/API work is approved.',
+                'tokens' => 'Will consume ListBox, Text input, field, focus, icon, and motion tokens.',
+                'example' => 'No public component API approved.',
+            ],
+            'developer_api_example_markup' => '<span class="ui-code-token-string">No public Combo box API approved.</span>',
+        ]);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
     private function selectComponent(): array
     {
         return array_replace($this->correctedImplemented('select', 'Select', 'Select collects one submitted form value from a native browser option list.', [
@@ -443,7 +473,7 @@ class UiReferenceComponentDepthCatalog
         ];
         $currentPage = ['label' => 'Current page'];
 
-        return $this->correctedImplemented('breadcrumb', 'Breadcrumb', 'Breadcrumbs show a user where the current view sits in the app information architecture.', [
+        return array_replace($this->correctedImplemented('breadcrumb', 'Breadcrumb', 'Breadcrumbs show a user where the current view sits in the app information architecture.', [
             $this->exampleFromSample('Small size', 'Small breadcrumbs pair with page headers and condensed breakpoints.', ['type' => 'breadcrumb', 'items' => $baseTrail, 'size' => 'sm', 'include_current' => false], [
                 $this->sampleVariant('Truncated menu', ['type' => 'breadcrumb', 'items' => $overflowTrail, 'size' => 'sm', 'overflow' => true, 'include_current' => false]),
                 $this->sampleVariant('Current page listed', ['type' => 'breadcrumb', 'items' => $baseTrail, 'size' => 'sm', 'current' => $currentPage]),
@@ -486,6 +516,9 @@ class UiReferenceComponentDepthCatalog
             'Use an ordered list so the hierarchy is conveyed structurally.',
             'The overflow trigger needs `aria-haspopup="menu"` and synchronized `aria-expanded`.',
             'The current page, when listed, uses `aria-current="page"` and is not a link.',
+        ]), [
+            'live_examples_view' => 'platform.ui-reference.components.live-examples.breadcrumb',
+            'live_examples_layout' => 'flexible-matrix',
         ]);
     }
 
@@ -511,7 +544,7 @@ class UiReferenceComponentDepthCatalog
             ['label' => 'Result C', 'dismissible' => true, 'icon' => '◎', 'panel' => 'Dismissible tabs may use icons only when all tabs do.'],
         ];
 
-        return $this->correctedImplemented('tabs', 'Tabs', 'Tabs switch between peer panels while keeping the user in the same task context.', [
+        return array_replace($this->correctedImplemented('tabs', 'Tabs', 'Tabs switch between peer panels while keeping the user in the same task context.', [
             $this->exampleFromSample('Line tabs', 'Flexible tabs for peer sections in a page, modal, or component surface.', ['type' => 'tabs', 'items' => $baseTabs, 'variant' => 'line'], [
                 $this->sampleVariant('Scrollable line tabs', ['type' => 'tabs', 'items' => array_merge($baseTabs, [
                     ['label' => 'Billing', 'panel' => 'Billing content.'],
@@ -581,6 +614,9 @@ class UiReferenceComponentDepthCatalog
             'Arrow keys move focus through enabled tabs; Enter and Space activate manual tabs.',
             'Disabled tabs are removed from interaction and are not subject to contrast requirements.',
             'Icon-only tabs need accessible names and a tooltip pattern when used in production.',
+        ]), [
+            'live_examples_view' => 'platform.ui-reference.components.live-examples.tabs',
+            'live_examples_layout' => 'flexible-matrix',
         ]);
     }
 
@@ -590,25 +626,24 @@ class UiReferenceComponentDepthCatalog
     private function menuComponent(): array
     {
         $items = [
-            ['label' => 'Open details', 'shortcut' => 'Enter'],
-            ['label' => 'Duplicate', 'shortcut' => 'Ctrl+D'],
+            ['label' => 'Open details', 'href' => '#', 'shortcut' => 'Enter'],
+            ['label' => 'Duplicate', 'action' => 'duplicate-workspace', 'method' => 'POST', 'shortcut' => 'Ctrl+D'],
             ['label' => 'Move to', 'children' => [
-                ['label' => 'Active workspaces'],
-                ['label' => 'Archived workspaces'],
+                ['label' => 'Active workspaces', 'action' => 'move-workspace-active'],
+                ['label' => 'Archived workspaces', 'action' => 'move-workspace-archived'],
             ]],
-            ['divider' => true],
-            ['label' => 'Delete', 'danger' => true, 'state' => 'danger-hover'],
+            ['label' => 'Delete workspace', 'tone' => 'danger', 'method' => 'DELETE', 'dividerBefore' => true, 'state' => 'danger-hover', 'dangerDescription' => 'Deletes the workspace and removes active access.'],
         ];
 
-        return $this->correctedImplemented('menu', 'Menu', 'Menus present contextual actions behind a trigger without crowding the page.', [
+        return array_replace($this->correctedImplemented('menu', 'Menu', 'Menus present contextual actions behind a trigger without crowding the page.', [
             $this->exampleFromSample('Contextual action menu', 'A closed trigger opens object-level actions in a predictable order, and the proof menu shows the action surface without replacing it with a menu-button example.', ['type' => 'menu', 'items' => $items, 'trigger_label' => 'Workspace actions', 'size' => 'md', 'align' => 'bottom-start', 'proof_panel' => true], [
                 $this->sampleVariant('Enabled item', ['type' => 'menu', 'items' => [['label' => 'Open details']], 'trigger_label' => 'Enabled state', 'proof_panel' => true]),
                 $this->sampleVariant('Hover item', ['type' => 'menu', 'items' => [['label' => 'Open details', 'state' => 'hover']], 'trigger_label' => 'Hover state', 'proof_panel' => true]),
                 $this->sampleVariant('Focus item', ['type' => 'menu', 'items' => [['label' => 'Open details', 'state' => 'focus']], 'trigger_label' => 'Focus state', 'proof_panel' => true]),
                 $this->sampleVariant('Focus and hover', ['type' => 'menu', 'items' => [['label' => 'Open details', 'state' => 'focus-hover']], 'trigger_label' => 'Focus + hover', 'proof_panel' => true]),
-                $this->sampleVariant('Danger item', ['type' => 'menu', 'items' => [['label' => 'Delete workspace', 'danger' => true]], 'trigger_label' => 'Danger item', 'proof_panel' => true]),
-                $this->sampleVariant('Danger hover', ['type' => 'menu', 'items' => [['label' => 'Delete workspace', 'danger' => true, 'state' => 'danger-hover']], 'trigger_label' => 'Danger state', 'proof_panel' => true]),
-                $this->sampleVariant('Danger hover and focus', ['type' => 'menu', 'items' => [['label' => 'Delete workspace', 'danger' => true, 'state' => 'danger-focus-hover']], 'trigger_label' => 'Danger focus state', 'proof_panel' => true]),
+                $this->sampleVariant('Danger item', ['type' => 'menu', 'items' => [['label' => 'Delete workspace', 'tone' => 'danger', 'method' => 'DELETE', 'dangerDescription' => 'Deletes the workspace and removes active access.']], 'trigger_label' => 'Danger item', 'proof_panel' => true]),
+                $this->sampleVariant('Danger hover', ['type' => 'menu', 'items' => [['label' => 'Delete workspace', 'tone' => 'danger', 'state' => 'danger-hover']], 'trigger_label' => 'Danger state', 'proof_panel' => true]),
+                $this->sampleVariant('Danger hover and focus', ['type' => 'menu', 'items' => [['label' => 'Delete workspace', 'tone' => 'danger', 'state' => 'danger-focus-hover']], 'trigger_label' => 'Danger focus state', 'proof_panel' => true]),
                 $this->sampleVariant('Disabled item', ['type' => 'menu', 'items' => [['label' => 'Export report', 'disabled' => true]], 'trigger_label' => 'Disabled state', 'proof_panel' => true]),
             ], [
                 'The base trigger is closed by default and becomes interactive through `initMenus`.',
@@ -616,14 +651,13 @@ class UiReferenceComponentDepthCatalog
                 'State variants use static proof panels so review text stays visible.',
             ]),
             $this->exampleFromSample('Row action menu', 'Table rows use icon-only overflow triggers and keep menus short.', ['type' => 'menu', 'items' => [
-                ['label' => 'View record'],
-                ['label' => 'Edit record'],
-                ['label' => 'Export record'],
-                ['divider' => true],
-                ['label' => 'Disable record', 'danger' => true],
+                ['label' => 'View record', 'href' => '#'],
+                ['label' => 'Edit record', 'action' => 'edit-record'],
+                ['label' => 'Export record', 'action' => 'export-record'],
+                ['label' => 'Disable record', 'tone' => 'danger', 'method' => 'PATCH', 'dividerBefore' => true],
             ], 'trigger_label' => 'Open actions for Workspace alpha', 'trigger_kind' => 'icon', 'size' => 'sm', 'proof_panel' => true], [
                 $this->sampleVariant('Icon-only trigger', ['type' => 'menu', 'items' => [['label' => 'View record']], 'trigger_label' => 'Open actions for Workspace beta', 'trigger_kind' => 'icon']),
-                $this->sampleVariant('Divided groups', ['type' => 'menu', 'items' => [['label' => 'View record'], ['divider' => true], ['label' => 'Export record']], 'trigger_label' => 'Divided groups', 'proof_panel' => true]),
+                $this->sampleVariant('Divided groups', ['type' => 'menu', 'items' => [['label' => 'View record'], ['label' => 'Export record', 'dividerBefore' => true]], 'trigger_label' => 'Divided groups', 'proof_panel' => true]),
                 $this->sampleVariant('Extra small', ['type' => 'menu', 'items' => [['label' => 'Copy']], 'trigger_label' => 'XS menu', 'size' => 'xs', 'proof_panel' => true]),
                 $this->sampleVariant('Small', ['type' => 'menu', 'items' => [['label' => 'Copy']], 'trigger_label' => 'SM menu', 'size' => 'sm', 'proof_panel' => true]),
                 $this->sampleVariant('Medium', ['type' => 'menu', 'items' => [['label' => 'Copy']], 'trigger_label' => 'MD menu', 'size' => 'md', 'proof_panel' => true]),
@@ -635,7 +669,7 @@ class UiReferenceComponentDepthCatalog
             $this->exampleFromSample('Grouped and selected menu', 'Dividers, selected rows, shortcuts, selected indicators, title tooltips, and submenu indicators keep larger menus scannable.', ['type' => 'menu', 'items' => [
                 ['label' => 'List view', 'selected' => true, 'selection_type' => 'single'],
                 ['label' => 'Card view', 'selection_type' => 'single'],
-                ['label' => 'Preview details'],
+                ['label' => 'Preview details', 'action' => 'preview-workspace'],
                 ['divider' => true],
                 ['label' => 'Sort by', 'children' => [
                     ['label' => 'Created date'],
@@ -644,8 +678,8 @@ class UiReferenceComponentDepthCatalog
                 ]],
                 ['label' => 'Refresh', 'shortcut' => 'R'],
             ], 'trigger_label' => 'View options', 'proof_panel' => true], [
-                $this->sampleVariant('Dividers', ['type' => 'menu', 'items' => [['label' => 'Open'], ['label' => 'Duplicate'], ['divider' => true], ['label' => 'Archive'], ['label' => 'Delete workspace', 'danger' => true]], 'trigger_label' => 'Grouped menu', 'proof_panel' => true]),
-                $this->sampleVariant('Multi-section grouping', ['type' => 'menu', 'items' => [['label' => 'Open'], ['label' => 'Duplicate'], ['divider' => true], ['label' => 'Export'], ['label' => 'Share'], ['divider' => true], ['label' => 'Delete workspace', 'danger' => true]], 'trigger_label' => 'Sectioned menu', 'proof_panel' => true]),
+                $this->sampleVariant('Dividers', ['type' => 'menu', 'items' => [['label' => 'Open'], ['label' => 'Duplicate'], ['label' => 'Archive', 'dividerBefore' => true], ['label' => 'Delete workspace', 'tone' => 'danger']], 'trigger_label' => 'Grouped menu', 'proof_panel' => true]),
+                $this->sampleVariant('Multi-section grouping', ['type' => 'menu', 'items' => [['label' => 'Open'], ['label' => 'Duplicate'], ['label' => 'Export', 'dividerBefore' => true], ['label' => 'Share'], ['label' => 'Delete workspace', 'tone' => 'danger', 'dividerBefore' => true]], 'trigger_label' => 'Sectioned menu', 'proof_panel' => true]),
                 $this->sampleVariant('Keyboard shortcut', ['type' => 'menu', 'items' => [['label' => 'Refresh', 'shortcut' => 'R']], 'trigger_label' => 'Shortcut menu', 'proof_panel' => true]),
                 $this->sampleVariant('Submenu actions', ['type' => 'menu', 'items' => [['label' => 'Move to', 'children' => [['label' => 'Active workspaces'], ['label' => 'Archived workspaces'], ['label' => 'Review queue']]]], 'trigger_label' => 'Submenu menu', 'proof_panel' => true]),
                 $this->sampleVariant('Single-select', ['type' => 'menu', 'items' => [['label' => 'List view', 'selected' => true, 'selection_type' => 'single'], ['label' => 'Card view', 'selection_type' => 'single'], ['label' => 'Preview details']], 'trigger_label' => 'Single select', 'proof_panel' => true]),
@@ -698,6 +732,9 @@ class UiReferenceComponentDepthCatalog
             'Menu items use `role="menuitem"` and visible focus.',
             'Disabled items remain visible only when the action may become available later.',
             'Permission-impossible actions should be hidden instead of disabled.',
+        ]), [
+            'live_examples_view' => 'platform.ui-reference.components.live-examples.menu',
+            'live_examples_layout' => 'flexible-matrix',
         ]);
     }
 
@@ -995,108 +1032,71 @@ class UiReferenceComponentDepthCatalog
      */
     private function datePickerComponent(): array
     {
-        return array_replace($this->correctedImplemented('date-picker', 'Date picker', 'Date picker supports native date/date-time entry, range calendar selection, and time picker composition for scheduling workflows.', [
-            $this->exampleFromSample('Native date entry', 'Native single-date entry with visible label, helper copy, browser picker behavior, and optional min/max constraints.', ['type' => 'date-picker', 'items' => [
-                ['name' => 'start_date', 'label' => 'Start date', 'value' => '2026-06-08', 'helper' => 'Use the first date this setting should apply.', 'date_format' => 'yyyy-mm-dd'],
+        return array_replace($this->correctedImplemented('date-picker', 'Date picker', 'Date picker supports simple text date entry, single calendar selection, range calendar selection, and skeleton loading through the installed compound API.', [
+            $this->exampleFromSample('Simple date input', 'Simple date input is first-party text entry and does not initialize Flatpickr.', ['type' => 'date-picker', 'items' => [
+                ['date_picker_type' => 'simple', 'name' => 'start_date', 'label' => 'Start date', 'value' => '06/08/2026', 'helper' => 'Format: month/day/year.'],
+            ]], []),
+            $this->exampleFromSample('Single calendar picker', 'Single calendar picker uses Flatpickr behavior behind the app-owned wrapper and input components.', ['type' => 'date-picker', 'items' => [
+                ['date_picker_type' => 'single', 'name' => 'policy_start', 'label' => 'Policy start date', 'value' => '2026-06-08', 'min' => '2026-01-01', 'max' => '2026-12-31', 'helper' => 'Allowed dates run from January 1 through December 31, 2026.'],
             ]], [
-                $this->sampleVariant('Required date', ['type' => 'date-picker', 'items' => [
-                    ['name' => 'review_due', 'label' => 'Review due date', 'value' => '2026-06-15', 'helper' => 'Required dates must also be validated on the server.', 'required' => true],
-                ]]),
-                $this->sampleVariant('Bounded date', ['type' => 'date-picker', 'items' => [
-                    ['name' => 'policy_start', 'label' => 'Policy start date', 'value' => '2026-06-08', 'min' => '2026-01-01', 'max' => '2026-12-31', 'helper' => 'Allowed dates run from January 1 through December 31, 2026.'],
-                ]]),
-            ], [
-                'The browser popup is native browser behavior; the app owns the field shell, label, helper, and validation treatment.',
-            ]),
-            $this->exampleFromSample('Date-time entry', 'Native date-time entry for simple scheduling where the surrounding pattern explains the relevant time zone.', ['type' => 'date-picker', 'items' => [
-                ['name' => 'scheduled_at', 'label' => 'Scheduled activation', 'value' => '2026-06-08T09:30', 'date_type' => 'datetime-local', 'helper' => 'Times use the workspace time zone.'],
-            ]], [
-                $this->sampleVariant('Minute step', ['type' => 'date-picker', 'items' => [
-                    ['name' => 'maintenance_start', 'label' => 'Maintenance start', 'value' => '2026-06-08T09:30', 'date_type' => 'datetime-local', 'step' => '60', 'helper' => 'Minute precision is allowed for this scheduling workflow.'],
-                ]]),
-                $this->sampleVariant('Warning state', ['type' => 'date-picker', 'items' => [
-                    ['name' => 'late_window', 'label' => 'Late maintenance window', 'value' => '2026-06-08T23:30', 'date_type' => 'datetime-local', 'state' => 'warning', 'warning' => 'This time is outside the recommended maintenance window.'],
+                $this->sampleVariant('Fluid calendar', ['type' => 'date-picker', 'items' => [
+                    ['date_picker_type' => 'single', 'name' => 'date_fluid', 'label' => 'Fluid date', 'value' => '2026-06-08', 'style' => 'fluid'],
                 ]]),
             ]),
-            $this->exampleFromSample('Styles and sizes', 'Small, medium, large, and fluid field treatments use the same native input behavior.', ['type' => 'date-picker', 'items' => [
-                ['name' => 'date_sm', 'label' => 'Small', 'value' => '2026-06-08', 'size' => 'sm'],
-                ['name' => 'date_md', 'label' => 'Medium', 'value' => '2026-06-08', 'size' => 'md'],
-                ['name' => 'date_lg', 'label' => 'Large', 'value' => '2026-06-08', 'size' => 'lg'],
+            $this->exampleFromSample('Validation states', 'Validation state is applied only to the affected input field.', ['type' => 'date-picker', 'items' => [
+                ['date_picker_type' => 'single', 'name' => 'expires_on', 'label' => 'Expiration date', 'value' => '', 'state' => 'error', 'error' => 'Choose an expiration date before saving.', 'required' => true],
             ]], [
-                $this->sampleVariant('Small', ['type' => 'date-picker', 'items' => [['name' => 'date_sm', 'label' => 'Small', 'value' => '2026-06-08', 'size' => 'sm']]]),
-                $this->sampleVariant('Medium', ['type' => 'date-picker', 'items' => [['name' => 'date_md', 'label' => 'Medium', 'value' => '2026-06-08', 'size' => 'md']]]),
-                $this->sampleVariant('Large', ['type' => 'date-picker', 'items' => [['name' => 'date_lg', 'label' => 'Large', 'value' => '2026-06-08', 'size' => 'lg']]]),
-                $this->sampleVariant('Fluid', ['type' => 'date-picker', 'items' => [['name' => 'date_fluid', 'label' => 'Fluid date', 'value' => '2026-06-08', 'style' => 'fluid']]]),
-            ]),
-            $this->exampleFromSample('Validation states', 'Required date entry with blocking error copy, warning copy, and non-color-only status treatment.', ['type' => 'date-picker', 'items' => [
-                ['name' => 'expires_on', 'label' => 'Expiration date', 'value' => '', 'state' => 'error', 'error' => 'Choose an expiration date before saving.', 'required' => true],
-            ]], [
-                $this->sampleVariant('Error', ['type' => 'date-picker', 'items' => [
-                    ['name' => 'cutover_date', 'label' => 'Cutover date', 'value' => '', 'state' => 'error', 'error' => 'Choose a cutover date before continuing.'],
-                ]]),
                 $this->sampleVariant('Warning', ['type' => 'date-picker', 'items' => [
-                    ['name' => 'review_date', 'label' => 'Review date', 'value' => '2026-12-24', 'state' => 'warning', 'warning' => 'Review dates near holidays need owner confirmation.'],
+                    ['date_picker_type' => 'single', 'name' => 'review_date', 'label' => 'Review date', 'value' => '2026-12-24', 'state' => 'warning', 'warning' => 'Review dates near holidays need owner confirmation.'],
                 ]]),
             ]),
-            $this->exampleFromSample('Disabled, read-only, and loading', 'Unavailable, fixed, and pending date values stay visible without offering an editable date picker.', ['type' => 'date-picker', 'items' => [
-                ['name' => 'created_on', 'label' => 'Created on', 'value' => '2026-06-08', 'state' => 'readonly', 'helper' => 'Created date is system-managed.'],
-                ['name' => 'locked_until', 'label' => 'Locked until', 'value' => '2026-06-30', 'state' => 'disabled', 'helper' => 'This date is controlled by tenant policy.'],
+            $this->exampleFromSample('Disabled, read-only, and loading', 'Unavailable, fixed, and pending date values stay visible without offering editable calendar behavior.', ['type' => 'date-picker', 'items' => [
+                ['date_picker_type' => 'single', 'name' => 'created_on', 'label' => 'Created on', 'value' => '2026-06-08', 'state' => 'readonly', 'helper' => 'Created date is system-managed.'],
+                ['date_picker_type' => 'single', 'name' => 'locked_until', 'label' => 'Locked until', 'value' => '2026-06-30', 'state' => 'disabled', 'helper' => 'This date is controlled by tenant policy.'],
             ]], [
-                $this->sampleVariant('Read-only', ['type' => 'date-picker', 'items' => [
-                    ['name' => 'audit_date', 'label' => 'Audit date', 'value' => '2026-06-08', 'state' => 'readonly', 'helper' => 'Audit dates are generated by the system.'],
-                ]]),
-                $this->sampleVariant('Disabled', ['type' => 'date-picker', 'items' => [
-                    ['name' => 'policy_unlock', 'label' => 'Policy unlock date', 'value' => '2026-07-01', 'state' => 'disabled', 'helper' => 'Policy unlock date is not editable in this state.'],
-                ]]),
                 $this->sampleVariant('Loading', ['type' => 'date-picker', 'items' => [
                     ['name' => 'available_date', 'label' => 'Available date', 'state' => 'loading'],
                 ]]),
             ]),
-            $this->exampleFromSample('Date range picker', 'A paired start/end calendar picker supports start selection, end selection, range display, and hover preview.', ['type' => 'deferred', 'items' => [
-                ['label' => 'Use the installed date range picker proof when users need calendar context for start/end selection.'],
+            $this->exampleFromSample('Range calendar picker', 'A paired start/end calendar picker uses Flatpickr range mode and rangePlugin for two-input range selection.', ['type' => 'deferred', 'items' => [
+                ['label' => 'The live proof renders through x-ui.date-picker date-picker-type="range" with two x-ui.date-picker-input children.'],
                 ['label' => 'Forms and filtering Patterns still own submission, query behavior, and server validation.'],
-            ]], [
-                $this->sampleVariant('Hover preview', ['type' => 'deferred', 'items' => [
-                    ['label' => 'Once a start date is selected, hovering an end date previews the range before selection.'],
-                ]], 'Installed', 'Use app-owned range picker classes and lifecycle initialization.'),
-            ]),
-        ], ['label', 'native date/date-time input', 'helper text', 'validation message', 'status icon', 'min/max/step constraints', 'disabled/read-only treatment'], [
-            'Use native date or date-time entry for simple field-level date capture.',
-            'Use visible helper copy when constraints, time zone, or business rules affect the date.',
+            ]], []),
+        ], ['label', 'text input', 'calendar input', 'range inputs', 'helper text', 'validation message', 'status icon', 'min/max constraints', 'disabled/read-only treatment'], [
+            'Use simple date input when users only need typed entry.',
+            'Use single calendar picker when users benefit from calendar context.',
+            'Use range calendar picker when users need paired start and end date selection.',
             'Use server-side validation as the source of truth for required, minimum, maximum, and business-rule validation.',
         ], [
             'Do not build local custom calendar chrome outside the Date picker component contract.',
-            'Do not use Date picker for unavailable-date rules or complex scheduling workflows without a Pattern owner.',
-            'Do not rely on placeholder text or native browser UI as the only instruction.',
+            'Do not use Date Picker for time entry.',
+            'Do not rely on placeholder text or native picker behavior as the only instruction.',
         ], [
             'Default',
-            'Hover-capable',
             'Focus-visible',
+            'Open',
             'Required',
             'Disabled',
             'Read-only',
             'Error',
             'Warning',
-            'Date-time',
             'Range selecting',
             'Calendar open',
-            'Time picker',
+            'Skeleton',
         ], [
-            'The input uses native date or datetime-local browser behavior; the app owns label, helper, validation, status, and layout treatment.',
+            'Simple date input does not initialize Flatpickr.',
+            'Single and range calendar picker variants initialize Flatpickr locally through `initDatePickers`.',
             'Disabled fields are not editable or focusable; read-only fields expose fixed values without allowing edits.',
-            'Minimum, maximum, and step constraints must be paired with server validation and user-visible helper or error copy when they affect the task.',
-            'Range selection uses app-owned date range classes and lifecycle initialization; unavailable dates and masked input remain gated until approved.',
+            'Minimum and maximum constraints must be paired with server validation and user-visible helper or error copy when they affect the task.',
         ], [
             'Write labels in sentence case and name the date being captured, such as Start date or Expiration date.',
-            'Explain time zone ownership when using date-time fields.',
             'Error copy must describe recovery, not only restate that a date is invalid.',
-            'Do not hide required date constraints inside placeholder text or native picker behavior.',
+            'Range inputs must use clear Start date and End date labels.',
         ], [
-            'Every field needs a visible label associated with the native input.',
+            'Every field needs a visible label associated with the input.',
             'Use `aria-invalid` and visible error text for blocking validation.',
             'Helper, warning, and error copy must be referenced by `aria-describedby` where present.',
             'Do not rely on color alone for error or warning states; include visible text and status icon treatment.',
-            'Native browser picker behavior varies by platform, so the server validation contract must remain authoritative.',
         ]), [
             'live_examples_view' => 'platform.ui-reference.components.live-examples.date-picker',
             'live_examples_layout' => 'flexible-matrix',
@@ -1619,7 +1619,7 @@ class UiReferenceComponentDepthCatalog
      */
     private function multiselectComponent(): array
     {
-        return $this->correctedImplemented('multiselect', 'Multiselect', 'Multiselect chooses multiple known options through the installed multi-value field API.', [
+        return array_replace($this->correctedImplemented('multiselect', 'Multiselect', 'Multiselect chooses multiple known options through the installed multi-value field API.', [
             $this->exampleFromSample('Filterable multiselect', 'Searchable known-option selection with selected values shown in the trigger.', ['type' => 'multiselect', 'items' => [[
                 'name' => 'workspace_roles',
                 'label' => 'Workspace roles',
@@ -1715,6 +1715,9 @@ class UiReferenceComponentDepthCatalog
             'The trigger exposes listbox semantics and selected options expose `aria-selected`.',
             'Every instance needs a visible label.',
             'Validation states need visible text and `aria-invalid` where blocking.',
+        ]), [
+            'live_examples_view' => 'platform.ui-reference.components.live-examples.multiselect',
+            'live_examples_layout' => 'flexible-matrix',
         ]);
     }
 
@@ -2180,7 +2183,7 @@ class UiReferenceComponentDepthCatalog
      */
     private function listComponent(): array
     {
-        return $this->correctedImplemented('list', 'List', 'List presents ordered, unordered, nested, or content-only body copy through native list semantics and app list classes.', [
+        return array_replace($this->correctedImplemented('list', 'List', 'List presents ordered, unordered, nested, or content-only body copy through native list semantics and app list classes.', [
             $this->exampleFromSample('Unordered list', 'Default content list for short non-sequential supporting information.', ['type' => 'list', 'items' => [
                 ['kind' => 'unordered'],
             ]], [
@@ -2233,6 +2236,9 @@ class UiReferenceComponentDepthCatalog
             'Use native `ul`, `ol`, and `li` elements.',
             'Do not remove semantics when visually removing markers.',
             'Nested content must remain understandable in reading order.',
+        ]), [
+            'live_examples_view' => 'platform.ui-reference.components.live-examples.list',
+            'live_examples_layout' => 'flexible-matrix',
         ]);
     }
 
@@ -2637,19 +2643,19 @@ class UiReferenceComponentDepthCatalog
     {
         return array_replace($this->correctedImplemented('tag', 'Tag', 'Tags label short metadata, semantic state, filters, selectable choices, or compact overflow disclosure.', [
             $this->exampleFromSample('Read-only tag', 'Read-only tags classify an object, owner, type, or compact metadata value without interactivity.', ['type' => 'tag', 'items' => [
-                ['title' => 'Internal', 'color' => 'gray'],
-                ['title' => 'Trial', 'color' => 'cool-gray', 'size' => 'sm'],
-                ['title' => 'Owner', 'color' => 'warm-gray', 'size' => 'lg', 'icon' => 'heroicon-o-user'],
+                ['title' => 'Internal', 'type' => 'gray'],
+                ['title' => 'Trial', 'type' => 'cool-gray', 'size' => 'sm'],
+                ['title' => 'Owner', 'type' => 'warm-gray', 'size' => 'lg', 'icon' => 'heroicon-o-user'],
             ]], [
-                $this->sampleVariant('Read-only with decorative icon', ['type' => 'tag', 'items' => [['title' => 'Verified', 'color' => 'green', 'icon' => 'heroicon-o-check-circle']]]),
-                $this->sampleVariant('Large tag', ['type' => 'tag', 'items' => [['title' => 'Large label', 'color' => 'gray', 'size' => 'lg']]]),
+                $this->sampleVariant('Read-only with decorative icon', ['type' => 'tag', 'items' => [['title' => 'Verified', 'type' => 'green', 'icon' => 'heroicon-o-check-circle']]]),
+                $this->sampleVariant('Large tag', ['type' => 'tag', 'items' => [['title' => 'Large label', 'type' => 'gray', 'size' => 'lg']]]),
             ]),
             $this->exampleFromSample('Dismissible tag', 'Dismissible tags remove only through the close icon and are common in filter or user-generated label contexts.', ['type' => 'tag', 'items' => [
-                ['title' => 'Region', 'color' => 'blue', 'variant' => 'dismissible', 'remove_label' => 'Remove region filter'],
-                ['title' => 'AI assisted', 'color' => 'purple', 'variant' => 'dismissible', 'icon' => 'heroicon-o-sparkles', 'remove_label' => 'Remove AI assisted filter'],
+                ['title' => 'Region', 'type' => 'blue', 'variant' => 'dismissible', 'dismiss_label' => 'Remove region filter'],
+                ['title' => 'AI assisted', 'type' => 'purple', 'variant' => 'dismissible', 'icon' => 'heroicon-o-sparkles', 'dismiss_label' => 'Remove AI assisted filter'],
             ]], [
-                $this->sampleVariant('Dismissible with decorative icon', ['type' => 'tag', 'items' => [['title' => 'Campaign', 'color' => 'magenta', 'variant' => 'dismissible', 'icon' => 'heroicon-o-tag', 'remove_label' => 'Remove campaign filter']]]),
-                $this->sampleVariant('Dismissible disabled', ['type' => 'tag', 'items' => [['title' => 'Disabled', 'color' => 'gray', 'variant' => 'dismissible', 'disabled' => true]]]),
+                $this->sampleVariant('Dismissible with decorative icon', ['type' => 'tag', 'items' => [['title' => 'Campaign', 'type' => 'magenta', 'variant' => 'dismissible', 'icon' => 'heroicon-o-tag', 'dismiss_label' => 'Remove campaign filter']]]),
+                $this->sampleVariant('Dismissible disabled', ['type' => 'tag', 'items' => [['title' => 'Disabled', 'type' => 'gray', 'variant' => 'dismissible', 'disabled' => true]]]),
             ]),
             $this->exampleFromSample('Selectable tag', 'Selectable tags use core tokens, a visible border, and toggle selected state on the whole container.', ['type' => 'tag', 'items' => [
                 ['title' => 'Unselected', 'variant' => 'selectable'],
@@ -2660,10 +2666,10 @@ class UiReferenceComponentDepthCatalog
                 $this->sampleVariant('Selectable with icon', ['type' => 'tag', 'items' => [['title' => 'Teams', 'variant' => 'selectable', 'icon' => 'heroicon-o-user-group']]]),
             ]),
             $this->exampleFromSample('Operational tag', 'Operational tags disclose overflow or related tags and use component color tokens plus a visible border.', ['type' => 'tag', 'items' => [
-                ['title' => 'More tags', 'color' => 'teal', 'variant' => 'operational'],
-                ['title' => 'Disabled', 'color' => 'teal', 'variant' => 'operational', 'disabled' => true],
+                ['title' => 'More tags', 'type' => 'teal', 'variant' => 'operational'],
+                ['title' => 'Disabled', 'type' => 'teal', 'variant' => 'operational', 'disabled' => true],
             ]], [
-                $this->sampleVariant('Operational with overflow content', ['type' => 'tag', 'items' => [['title' => 'Overflow tags', 'color' => 'teal', 'variant' => 'operational']]]),
+                $this->sampleVariant('Operational with overflow content', ['type' => 'tag', 'items' => [['title' => 'Overflow tags', 'type' => 'teal', 'variant' => 'operational']]]),
             ]),
         ], ['container', 'short label', 'optional decorative icon', 'close icon', 'border', 'size', 'overflow tooltip'], [
             'Use when the UI needs compact metadata, type, category, ownership, status, or filter-token display.',
@@ -2697,6 +2703,8 @@ class UiReferenceComponentDepthCatalog
             'Decorative icons are hidden from assistive technology when the label already carries the meaning.',
             'Dismissible, selectable, and operational controls remain keyboard focusable and expose accessible names.',
         ]), [
+            'current_decision' => 'Tag uses a variant-first implementation and UI Reference page: read-only, dismissible, selectable, and operational are separate approved variant surfaces. Dismissible focus belongs to the close icon, selectable tags use core tokens only, and operational tags do not become menu buttons.',
+            'carbon_parity_note' => 'Tag structure, size, spacing, disabled, focus, overflow, and group examples are aligned to the Carbon Tag family while preserving the app-owned x-ui.tag API and ui-* token contract. Full color-family implementation remains a follow-up pass.',
             'live_examples_view' => 'platform.ui-reference.components.live-examples.tag',
             'live_examples_layout' => 'flexible-matrix',
         ]);
@@ -3110,12 +3118,12 @@ class UiReferenceComponentDepthCatalog
                 'popover' => 'initPopovers exported from resources/js/ui-controls/popovers.js',
                 'slider' => 'initSliders exported from resources/js/ui-controls/sliders.js',
                 'tree-view' => 'initTreeViews exported from resources/js/ui-controls/tree-views.js',
-                'date-picker' => 'No dedicated JavaScript controller required for the native-control API.',
+                'date-picker' => 'initDatePickers exported from resources/js/ui-controls/date-picker.js',
                 default => 'No dedicated JavaScript controller required.',
             },
             'css_classes' => match ($slug) {
                 'menu-buttons' => 'ui-menu-button, ui-combo-button, ui-overflow-menu, ui-menu, ui-menu-item',
-                'date-picker' => 'ui-date-picker, ui-field, ui-field-label, ui-input-date, ui-field-helper, ui-field-error, ui-field-warning',
+                'date-picker' => 'ui-date-picker, ui-date-picker-input-field, ui-date-picker-range-fields, ui-date-picker-calendar, ui-date-picker-skeleton, data-ui-date-picker-flatpickr',
                 'text-input' => 'ui-field, ui-field-label, ui-input, ui-text-input, ui-field-helper, ui-field-error, ui-field-warning',
                 'textarea' => 'ui-field, ui-field-label, ui-textarea, ui-field-helper, ui-field-error, ui-field-warning',
                 'link' => 'ui-link, ui-link-inline, ui-link-standalone, ui-link-sm, ui-link-md, ui-link-lg, ui-link-with-icon, ui-link-external, ui-link-unavailable',
@@ -3174,7 +3182,7 @@ class UiReferenceComponentDepthCatalog
             'loading' => '<x-ui.loading active size="lg" placement="section" label="Loading data..." overlay />',
             'progress-bar' => '<x-ui.progress-bar value="66" label="Import progress" />',
             'progress-indicator' => '<x-ui.progress-indicator :steps="$steps" />',
-            'tag' => '<x-ui.tag tone="success">Active</x-ui.tag>',
+            'tag' => '<x-ui.tag type="green" text="Active" />',
             'structured-list' => '<x-ui.structured-list :rows="$rows" selectable />',
             'tile' => '<x-ui.tile variant="selectable" name="plan" value="growth" title="Growth" description="Automation and review workflows." selected />',
             'tooltip' => '<x-ui.tooltip text="Edit workspace"><x-ui.icon-button label="Edit workspace">...</x-ui.icon-button></x-ui.tooltip>',
@@ -3186,7 +3194,7 @@ class UiReferenceComponentDepthCatalog
             'tabs' => '<x-ui.tabs :tabs="$tabs" variant="line" />',
             'checkbox' => '<x-ui.checkbox-group name="permissions" legend="Permissions" :options="$options" :selected="$selected" />',
             'data-table' => '<x-ui.data-table title="Users" :columns="$columns" :rows="$rows" sortable />',
-            'date-picker' => '<x-ui.date-picker name="start_date" label="Start date" min="2026-01-01" />',
+            'date-picker' => '<x-ui.date-picker date-picker-type="single" value="2026-06-08"><x-ui.date-picker-input name="start_date" label-text="Start date" calendar /></x-ui.date-picker>',
             'contained-list' => '<x-ui.contained-list title="Workspace reviews" :items="$items" />',
             'list' => '<ul class="ui-list ui-list-unordered"><li>List item</li></ul>',
             'multiselect' => '<x-ui.multiselect name="roles" label="Roles" :options="$options" :value="$selected" filterable />',
@@ -3210,7 +3218,7 @@ class UiReferenceComponentDepthCatalog
             'checkbox' => '<span class="ui-code-token-punctuation">&lt;</span><span class="ui-code-token-keyword">x-ui.checkbox-group</span> <span class="ui-code-token-property">name</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"permissions"</span> <span class="ui-code-token-property">legend</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"Permissions"</span> <span class="ui-code-token-property">:options</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"$options"</span> <span class="ui-code-token-punctuation">/&gt;</span>',
             'content-switcher' => '<span class="ui-code-token-punctuation">&lt;</span><span class="ui-code-token-keyword">x-ui.content-switcher</span> <span class="ui-code-token-property">label</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"View mode"</span> <span class="ui-code-token-property">:options</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"$options"</span> <span class="ui-code-token-property">value</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"summary"</span> <span class="ui-code-token-punctuation">/&gt;</span>',
             'data-table' => '<span class="ui-code-token-punctuation">&lt;</span><span class="ui-code-token-keyword">x-ui.data-table</span> <span class="ui-code-token-property">title</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"Users"</span> <span class="ui-code-token-property">:columns</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"$columns"</span> <span class="ui-code-token-property">:rows</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"$rows"</span> <span class="ui-code-token-property">sortable</span> <span class="ui-code-token-punctuation">/&gt;</span>',
-            'date-picker' => '<span class="ui-code-token-punctuation">&lt;</span><span class="ui-code-token-keyword">x-ui.date-picker</span> <span class="ui-code-token-property">name</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"start_date"</span> <span class="ui-code-token-property">label</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"Start date"</span> <span class="ui-code-token-property">min</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"2026-01-01"</span> <span class="ui-code-token-punctuation">/&gt;</span>',
+            'date-picker' => '<span class="ui-code-token-punctuation">&lt;</span><span class="ui-code-token-keyword">x-ui.date-picker</span> <span class="ui-code-token-property">date-picker-type</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"single"</span> <span class="ui-code-token-property">value</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"2026-06-08"</span><span class="ui-code-token-punctuation">&gt;</span><span class="ui-code-token-punctuation">&lt;</span><span class="ui-code-token-keyword">x-ui.date-picker-input</span> <span class="ui-code-token-property">name</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"start_date"</span> <span class="ui-code-token-property">label-text</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"Start date"</span> <span class="ui-code-token-property">calendar</span> <span class="ui-code-token-punctuation">/&gt;</span><span class="ui-code-token-punctuation">&lt;/</span><span class="ui-code-token-keyword">x-ui.date-picker</span><span class="ui-code-token-punctuation">&gt;</span>',
             'contained-list' => '<span class="ui-code-token-punctuation">&lt;</span><span class="ui-code-token-keyword">x-ui.contained-list</span> <span class="ui-code-token-property">title</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"Workspace reviews"</span> <span class="ui-code-token-property">:items</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"$items"</span> <span class="ui-code-token-punctuation">/&gt;</span>',
             'list' => '<span class="ui-code-token-punctuation">&lt;</span><span class="ui-code-token-keyword">ul</span> <span class="ui-code-token-property">class</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"ui-list ui-list-unordered"</span><span class="ui-code-token-punctuation">&gt;</span>...<span class="ui-code-token-punctuation">&lt;/</span><span class="ui-code-token-keyword">ul</span><span class="ui-code-token-punctuation">&gt;</span>',
             'multiselect' => '<span class="ui-code-token-punctuation">&lt;</span><span class="ui-code-token-keyword">x-ui.multiselect</span> <span class="ui-code-token-property">name</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"roles"</span> <span class="ui-code-token-property">label</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"Roles"</span> <span class="ui-code-token-property">:options</span><span class="ui-code-token-punctuation">=</span><span class="ui-code-token-string">"$options"</span> <span class="ui-code-token-property">filterable</span> <span class="ui-code-token-punctuation">/&gt;</span>',

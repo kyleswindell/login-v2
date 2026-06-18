@@ -58,11 +58,11 @@
             <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
                 <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Copy button states</h4>
                 <div class="mt-4 flex flex-wrap items-center gap-3">
-                    <x-ui.icon-button icon="heroicon-o-clipboard-document" label="Enabled" tooltip="Copy to clipboard" size="sm" semantic="ghost" class="ui-code-snippet-state-button" />
-                    <x-ui.icon-button icon="heroicon-o-clipboard-document" label="Hover" tooltip="Copy to clipboard" size="sm" semantic="ghost" class="ui-code-snippet-state-button is-hover" />
-                    <x-ui.icon-button icon="heroicon-o-clipboard-document" label="Focus" tooltip="Copy to clipboard" size="sm" semantic="ghost" class="ui-code-snippet-state-button is-focus" />
-                    <x-ui.icon-button icon="heroicon-o-clipboard-document" label="Active" tooltip="Copy to clipboard" size="sm" semantic="ghost" class="ui-code-snippet-state-button is-active" />
-                    <x-ui.icon-button icon="heroicon-o-clipboard-document" label="Disabled" tooltip="Copy to clipboard" size="sm" semantic="ghost" class="ui-code-snippet-state-button" disabled />
+                    <x-ui.copy-button label="Enabled" size="sm" class="ui-code-snippet-state-button" />
+                    <x-ui.copy-button label="Hover" size="sm" class="ui-code-snippet-state-button is-hover" />
+                    <x-ui.copy-button label="Focus" size="sm" class="ui-code-snippet-state-button is-focus" />
+                    <x-ui.copy-button label="Active" size="sm" class="ui-code-snippet-state-button is-active" />
+                    <x-ui.copy-button label="Disabled" size="sm" class="ui-code-snippet-state-button" disabled />
                 </div>
             </article>
         </div>

@@ -191,7 +191,7 @@
                         status-semantic="notice"
                     >
                         <x-slot:actions>
-                            <x-ui.button variant="outline" size="sm">Open record</x-ui.button>
+                            <x-ui.button semantic="tertiary" size="sm">Open record</x-ui.button>
                         </x-slot:actions>
                     </x-ui.patterns.identity-summary-card>
 
@@ -209,7 +209,7 @@
                         status-semantic="success"
                     >
                         <x-slot:actions>
-                            <x-ui.button variant="outline" size="sm">Message</x-ui.button>
+                            <x-ui.button semantic="tertiary" size="sm">Message</x-ui.button>
                             <x-ui.button semantic="primary" size="sm">Open profile</x-ui.button>
                         </x-slot:actions>
 
@@ -252,7 +252,7 @@
             >
                 <x-slot:actions>
                     <x-ui.button semantic="primary">Assign Review</x-ui.button>
-                    <x-ui.button variant="ghost">View Queue</x-ui.button>
+                    <x-ui.button semantic="ghost">View Queue</x-ui.button>
                 </x-slot:actions>
             </x-ui.patterns.empty-state>
         </x-ui.patterns.content-section-block>

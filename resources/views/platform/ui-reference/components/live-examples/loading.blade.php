@@ -32,7 +32,7 @@
         </div>
 
         <div class="mt-4 grid gap-4 xl:grid-cols-3">
-            <article class="ui-loading-demo-surface ui-loading-demo-surface--page">
+            <article class="ui-loading-demo-surface ui-loading-demo-surface--page" data-ui-loading-review-boundary="page-preview">
                 <h4>Page placement</h4>
                 <x-ui.loading active size="lg" placement="page" label="Loading page data" overlay />
             </article>

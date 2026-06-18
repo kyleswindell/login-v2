@@ -5,6 +5,12 @@
         ['value' => 'paused', 'label' => 'Paused'],
     ];
 
+    $roleOptions = [
+        ['value' => 'admin', 'label' => 'Admin'],
+        ['value' => 'billing', 'label' => 'Billing'],
+        ['value' => 'viewer', 'label' => 'Viewer'],
+    ];
+
     $longOptions = [
         ['value' => 'audit', 'label' => 'Audit evidence package requiring owner review'],
         ['value' => 'billing', 'label' => 'Billing profile'],
@@ -16,17 +22,25 @@
         ['value' => 'workspaces', 'label' => 'Workspace catalog'],
     ];
 
+    $tabs = [
+        ['id' => 'variants', 'label' => 'Variants'],
+        ['id' => 'states', 'label' => 'States'],
+        ['id' => 'sizes', 'label' => 'Sizes'],
+        ['id' => 'family', 'label' => 'Family'],
+        ['id' => 'boundaries', 'label' => 'Boundaries'],
+    ];
+
     $familyRows = [
-        ['Dropdown', 'Installed', 'x-ui.dropdown', 'Single-select option list. Selecting an option closes the menu and updates the field text.'],
-        ['Multiselect', 'Installed', 'x-ui.multiselect', 'Multiple selected values. Menu stays open while selections are made.'],
-        ['Filterable multiselect', 'Installed', 'x-ui.multiselect filterable', 'Typed filtering removes non-matching options and keeps selected values summarized.'],
-        ['Fluid dropdown', 'Installed for dropdown', 'x-ui.dropdown variant="fluid"', '64px field height with fluid label/field spacing.'],
-        ['Inline dropdown', 'Required gap', 'No approved API', 'Inline modifier still needs keyboard, sizing, and layout proof before use.'],
-        ['Combo box', 'Required gap', 'No approved API', 'Typed filtering plus optional custom value entry requires a dedicated combo-box API.'],
+        ['Dropdown', 'Installed', 'x-ui.dropdown', 'Single-select option list.'],
+        ['Fluid dropdown', 'Installed', 'x-ui.dropdown variant="fluid"', '64px field treatment for fluid field layouts.'],
+        ['Multiselect', 'Installed standalone', 'x-ui.multiselect', 'Multiple selected values; reviewed on its own component page.'],
+        ['Filterable multiselect', 'Installed standalone', 'x-ui.multiselect filterable', 'Multiple selected values with filtering; reviewed on its own component page.'],
+        ['Inline dropdown', 'Required gap', 'No approved API', 'Inline single-select behavior is not installed.'],
+        ['Combo box', 'Required gap', 'No approved API', 'Typed filtering and custom values need a dedicated API.'],
     ];
 
     $boundaryRows = [
-        ['Dropdown', 'Custom single selection from a known option list.', 'Use for page filters, sorting controls, and custom single-value fields.', 'Approved here'],
+        ['Dropdown', 'Custom single selection from a known option list.', 'Use for filters, sorting controls, and custom single-value fields.', 'Approved here'],
         ['Select', 'Native form selection.', 'Use when native mobile/form behavior is preferred.', 'Separate component'],
         ['Menu buttons / Menu', 'Command disclosure.', 'Use when items are actions like Edit, Duplicate, or Archive.', 'Separate component'],
         ['Multiselect', 'Multiple selected values.', 'Use when users can choose more than one option.', 'Installed separate component'],
@@ -43,15 +57,36 @@
     ];
 @endphp
 
-<div class="space-y-6" data-component-live-layout="dropdown-matrix" data-ui-reference-sample-type="field">
-    <section class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-dropdown-live-section="basic-known-option-dropdown">
-        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Basic known-option dropdown</h3>
-        <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">Dropdown selects one known value through the app-owned custom listbox API. Closed and open states use the same field width.</p>
+<div class="space-y-6" data-component-live-layout="dropdown-matrix" data-ui-reference-sample-type="field" data-ui-reference-tabs data-dropdown-live-tabs>
+    <div class="flex flex-wrap gap-2" role="tablist" aria-label="Dropdown live example groups">
+        @foreach ($tabs as $index => $tab)
+            @php
+                $tabId = 'dropdown-'.$tab['id'].'-tab';
+                $panelId = 'dropdown-'.$tab['id'].'-panel';
+            @endphp
+            <button
+                id="{{ $tabId }}"
+                type="button"
+                class="ui-reference-tab"
+                role="tab"
+                aria-selected="{{ $index === 0 ? 'true' : 'false' }}"
+                aria-controls="{{ $panelId }}"
+                tabindex="{{ $index === 0 ? '0' : '-1' }}"
+            >
+                {{ $tab['label'] }}
+            </button>
+        @endforeach
+    </div>
 
-        <div class="mt-4 grid gap-4 xl:grid-cols-2">
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Closed</h4>
-                <div class="mt-4 max-w-sm">
+    <section id="dropdown-variants-panel" class="ui-reference-component-panel" role="tabpanel" aria-labelledby="dropdown-variants-tab" data-dropdown-live-section="variants">
+        <p class="ui-kicker">Dropdown</p>
+        <h3 class="ui-card-title mt-2">Variants</h3>
+        <p class="ui-card-copy mt-2">Review the default, selected, long-option, and fluid dropdown field treatments. Open each control to confirm listbox behavior.</p>
+
+        <div class="mt-5 grid min-w-0 gap-5 xl:grid-cols-2">
+            <article class="ui-reference-component-panel">
+                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Placeholder</h4>
+                <div class="mt-4 max-w-md">
                     <x-ui.dropdown
                         name="status_closed"
                         label="Status"
@@ -61,94 +96,57 @@
                     />
                 </div>
             </article>
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Open with selected value</h4>
-                <div class="mt-4 max-w-sm">
+
+            <article class="ui-reference-component-panel">
+                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Selected value</h4>
+                <div class="mt-4 max-w-md">
                     <x-ui.dropdown
-                        name="status_open"
+                        name="status_selected"
                         label="Status"
                         :options="$statusOptions"
                         value="active"
-                        helper="Selecting an option closes the menu and updates the hidden value."
-                        open
+                        helper="Selected values update the visible field and hidden submitted value."
+                    />
+                </div>
+            </article>
+
+            <article class="ui-reference-component-panel">
+                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Long known-option handoff</h4>
+                <div class="mt-4 max-w-lg">
+                    <x-ui.dropdown
+                        name="long_known_option"
+                        label="Reference area"
+                        placeholder="Choose area"
+                        :options="$longOptions"
+                        value="billing"
+                        helper="Long labels truncate visually and keep their full title for hover or focus inspection."
+                        menu-max-height="11rem"
+                    />
+                </div>
+            </article>
+
+            <article class="ui-reference-component-panel">
+                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Fluid dropdown</h4>
+                <div class="mt-4 max-w-md pb-1">
+                    <x-ui.dropdown
+                        name="fluid_status"
+                        label="Billing status"
+                        variant="fluid"
+                        :options="$statusOptions"
+                        value="pending"
+                        helper="Fluid keeps the 64px field treatment."
                     />
                 </div>
             </article>
         </div>
     </section>
 
-    <section class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-dropdown-live-section="family-coverage">
-        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Dropdown family coverage</h3>
-        <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">Carbon groups dropdown, multiselect, filterable multiselect, and combo box as one selection family. Login App maps installed behavior to separate app-owned APIs and keeps unimplemented family variants visible as required gaps.</p>
+    <section id="dropdown-states-panel" class="ui-reference-component-panel" role="tabpanel" aria-labelledby="dropdown-states-tab" data-dropdown-live-section="states" hidden>
+        <p class="ui-kicker">Field states</p>
+        <h3 class="ui-card-title mt-2">Validation, disabled, and read-only</h3>
+        <p class="ui-card-copy mt-2">State examples stay closed by default so the field border, label, helper, and message spacing can be reviewed clearly.</p>
 
-        <div class="mt-4 overflow-x-auto rounded-lg border" style="border-color: var(--ui-border-subtle-01);">
-            <table class="min-w-full text-left text-sm">
-                <thead style="background-color: var(--ui-layer-accent-01); color: var(--ui-text-secondary);">
-                    <tr>
-                        <th class="px-4 py-3">Family variant</th>
-                        <th class="px-4 py-3">Status</th>
-                        <th class="px-4 py-3">API</th>
-                        <th class="px-4 py-3">Behavior</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($familyRows as [$variant, $status, $api, $behavior])
-                        <tr class="border-t" style="border-color: var(--ui-border-subtle-01);">
-                            <td class="px-4 py-3 font-semibold" style="color: var(--ui-text-primary);">{{ $variant }}</td>
-                            <td class="px-4 py-3" style="color: var(--ui-text-secondary);">{{ $status }}</td>
-                            <td class="px-4 py-3"><code>{{ $api }}</code></td>
-                            <td class="max-w-lg px-4 py-3 leading-6" style="color: var(--ui-text-secondary);">{{ $behavior }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-
-        <div class="mt-4 grid gap-4 xl:grid-cols-3">
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Fluid dropdown</h4>
-                <div class="mt-4">
-                    <x-ui.dropdown name="fluid_status" label="Billing status" variant="fluid" :options="$statusOptions" value="pending" />
-                </div>
-            </article>
-
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Multiselect</h4>
-                <div class="mt-4">
-                    <x-ui.multiselect name="dropdown_family_roles" label="Roles" :options="$statusOptions" :value="['active', 'paused']" clearable open />
-                </div>
-            </article>
-
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Filterable multiselect</h4>
-                <div class="mt-4">
-                    <x-ui.multiselect name="dropdown_family_filterable" label="Reference areas" :options="$longOptions" :value="['billing']" filterable clearable open />
-                </div>
-            </article>
-        </div>
-    </section>
-
-    <section class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-dropdown-live-section="long-known-option-handoff">
-        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Long known-option handoff</h3>
-        <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">Long known lists cap the menu height, keep option text to one line, expose full text through the browser title, and preserve menu elevation.</p>
-        <div class="mt-4 max-w-lg">
-            <x-ui.dropdown
-                name="long_known_option"
-                label="Reference area"
-                placeholder="Choose area"
-                :options="$longOptions"
-                value="billing"
-                helper="Long option labels truncate visually and keep their full title for hover/focus inspection."
-                menu-max-height="11rem"
-                open
-            />
-        </div>
-    </section>
-
-    <section class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-dropdown-live-section="validation-selection">
-        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Validation selection</h3>
-        <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">Helper text is replaced or supplemented by non-color-only error and warning states when validation applies.</p>
-        <div class="mt-4 grid gap-4 xl:grid-cols-2">
+        <div class="mt-5 grid min-w-0 gap-5 xl:grid-cols-2">
             <x-ui.dropdown
                 name="validation_error"
                 label="Workspace type"
@@ -157,20 +155,15 @@
                 error="Choose a workspace type before saving."
                 required
             />
+
             <x-ui.dropdown
                 name="validation_warning"
                 label="Owner role"
-                :options="$statusOptions"
-                value="pending"
+                :options="$roleOptions"
+                value="billing"
                 warning="Pending roles may delay access."
             />
-        </div>
-    </section>
 
-    <section class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-dropdown-live-section="disabled-readonly">
-        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Disabled and read-only dropdown</h3>
-        <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">Disabled dropdowns cannot be reached or opened. Read-only dropdowns keep the fixed value visible and suppress opening.</p>
-        <div class="mt-4 grid gap-4 xl:grid-cols-2">
             <x-ui.dropdown
                 name="disabled_plan"
                 label="Billing plan"
@@ -179,49 +172,52 @@
                 helper="Plan is managed by account ownership."
                 disabled
             />
+
             <x-ui.dropdown
                 name="readonly_plan"
                 label="System role"
-                :options="$statusOptions"
-                value="paused"
+                :options="$roleOptions"
+                value="viewer"
                 helper="System roles are assigned by policy."
                 readonly
             />
         </div>
     </section>
 
-    <section class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-dropdown-live-section="size-comparison">
-        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Size comparison</h3>
-        <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">Default Dropdown sizes keep field height and option height aligned.</p>
-        <div class="mt-4 grid gap-4 xl:grid-cols-3">
+    <section id="dropdown-sizes-panel" class="ui-reference-component-panel" role="tabpanel" aria-labelledby="dropdown-sizes-tab" data-dropdown-live-section="size-comparison" hidden>
+        <p class="ui-kicker">Sizing</p>
+        <h3 class="ui-card-title mt-2">Size comparison</h3>
+        <p class="ui-card-copy mt-2">Small, medium, and large fields should align to their matching option row heights without hanging outside the card.</p>
+
+        <div class="mt-5 grid min-w-0 gap-5 xl:grid-cols-3">
             <x-ui.dropdown name="dropdown_sm" label="Small" size="sm" :options="$statusOptions" value="active" />
             <x-ui.dropdown name="dropdown_md" label="Medium" size="md" :options="$statusOptions" value="pending" />
             <x-ui.dropdown name="dropdown_lg" label="Large" size="lg" :options="$statusOptions" value="paused" />
         </div>
     </section>
 
-    <section class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-dropdown-live-section="related-api-boundaries">
-        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Dropdown vs related APIs</h3>
-        <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">Use Dropdown for values, Menu/Menu buttons for actions, Multiselect for multiple values, and Select when native form behavior is the better control.</p>
-        <div class="mt-4 overflow-x-auto rounded-lg border" style="border-color: var(--ui-border-subtle-01);">
+    <section id="dropdown-family-panel" class="ui-reference-component-panel" role="tabpanel" aria-labelledby="dropdown-family-tab" data-dropdown-live-section="family-coverage" hidden>
+        <p class="ui-kicker">Selection family</p>
+        <h3 class="ui-card-title mt-2">Dropdown family coverage</h3>
+        <p class="ui-card-copy mt-2">Dropdown remains the single-select owner. Related installed family members are linked here for boundary review instead of being rendered as Dropdown variants.</p>
+
+        <div class="mt-6 overflow-x-auto rounded-lg border" style="border-color: var(--ui-border-subtle-01);">
             <table class="min-w-full text-left text-sm">
-                <thead style="background-color: var(--ui-layer-accent-01); color: var(--ui-text-secondary);">
+                <thead style="background-color: var(--ui-layer-02); color: var(--ui-text-secondary);">
                     <tr>
-                        <th class="px-4 py-3">API</th>
-                        <th class="px-4 py-3">Role</th>
-                        <th class="px-4 py-3">Use when</th>
-                        <th class="px-4 py-3">Disposition</th>
+                        <th class="px-3 py-2 font-medium">Family member</th>
+                        <th class="px-3 py-2 font-medium">Status</th>
+                        <th class="px-3 py-2 font-medium">API</th>
+                        <th class="px-3 py-2 font-medium">Behavior</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach ($boundaryRows as [$api, $role, $useWhen, $disposition])
+                <tbody style="color: var(--ui-text-primary);">
+                    @foreach ($familyRows as [$variant, $status, $api, $behavior])
                         <tr class="border-t" style="border-color: var(--ui-border-subtle-01);">
-                            <td class="px-4 py-3 font-semibold" style="color: var(--ui-text-primary);">{{ $api }}</td>
-                            <td class="max-w-xs px-4 py-3 leading-6" style="color: var(--ui-text-secondary);">{{ $role }}</td>
-                            <td class="max-w-md px-4 py-3 leading-6" style="color: var(--ui-text-secondary);">{{ $useWhen }}</td>
-                            <td class="px-4 py-3">
-                                <span class="inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold" style="border-color: var(--ui-border-subtle-01); color: var(--ui-text-secondary);">{{ $disposition }}</span>
-                            </td>
+                            <td class="px-3 py-2 font-medium">{{ $variant }}</td>
+                            <td class="px-3 py-2">{{ $status }}</td>
+                            <td class="px-3 py-2"><code>{{ $api }}</code></td>
+                            <td class="px-3 py-2">{{ $behavior }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -229,14 +225,40 @@
         </div>
     </section>
 
-    <section class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-dropdown-live-section="deferred-gated-capabilities">
-        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Deferred and gated capabilities</h3>
-        <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">These remaining family capabilities are not complete. The page documents trigger conditions instead of rendering fake production controls.</p>
-        <div class="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+    <section id="dropdown-boundaries-panel" class="ui-reference-component-panel" role="tabpanel" aria-labelledby="dropdown-boundaries-tab" data-dropdown-live-section="boundaries" hidden>
+        <p class="ui-kicker">Boundaries</p>
+        <h3 class="ui-card-title mt-2">Dropdown vs related APIs</h3>
+        <p class="ui-card-copy mt-2">Dropdown options are values. Commands, native form selection, multiple values, and typed search belong to other APIs.</p>
+
+        <div class="mt-5 overflow-x-auto rounded-lg border" style="border-color: var(--ui-border-subtle-01);">
+            <table class="min-w-full text-left text-sm">
+                <thead style="background-color: var(--ui-layer-02); color: var(--ui-text-secondary);">
+                    <tr>
+                        <th class="px-3 py-2 font-medium">API</th>
+                        <th class="px-3 py-2 font-medium">Role</th>
+                        <th class="px-3 py-2 font-medium">Use when</th>
+                        <th class="px-3 py-2 font-medium">Disposition</th>
+                    </tr>
+                </thead>
+                <tbody style="color: var(--ui-text-primary);">
+                    @foreach ($boundaryRows as [$api, $role, $useWhen, $disposition])
+                        <tr class="border-t" style="border-color: var(--ui-border-subtle-01);">
+                            <td class="px-3 py-2 font-medium">{{ $api }}</td>
+                            <td class="px-3 py-2">{{ $role }}</td>
+                            <td class="px-3 py-2">{{ $useWhen }}</td>
+                            <td class="px-3 py-2">{{ $disposition }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+
+        <h4 class="mt-6 text-sm font-semibold" style="color: var(--ui-text-primary);">Deferred and gated capabilities</h4>
+        <div class="mt-3 grid min-w-0 gap-4 md:grid-cols-2 xl:grid-cols-3">
             @foreach ($deferredRows as [$capability, $status, $reason])
-                <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
+                <article class="ui-reference-component-panel">
                     <div class="flex flex-wrap items-center gap-2">
-                        <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">{{ $capability }}</h4>
+                        <h5 class="text-sm font-semibold" style="color: var(--ui-text-primary);">{{ $capability }}</h5>
                         <span class="inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold" style="border-color: var(--ui-border-subtle-01); color: var(--ui-text-secondary);">{{ $status }}</span>
                     </div>
                     <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">{{ $reason }}</p>

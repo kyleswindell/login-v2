@@ -21,206 +21,321 @@
 @endphp
 
 <div class="space-y-6" data-component-live-layout="tile-matrix" data-ui-reference-sample-type="tile">
-    <section class="ui-reference-layer-section" data-tile-live-section="variants">
+    <section class="ui-reference-layer-section" data-tile-live-section="approved-variants">
         <div class="ui-reference-section-heading">
-            <h3>Variants</h3>
-            <p>Tile owns the full component family: base, clickable, selectable, expandable, and expandable with interactive elements. Interactive variants use the feature-flag border treatment as the current standard.</p>
+            <h3>Approved Variants</h3>
+            <p>Tile variants are separated by behavior. Each tab shows applicable states first, then live examples for that variant.</p>
         </div>
 
-        <div class="mt-4 ui-tile-layout-standard">
-            <x-ui.tile title="Base tile" description="Non-interactive content block." meta="Static" />
-            <x-ui.tile variant="clickable" href="#" title="Clickable tile" description="One whole-container action." meta="Feature border" />
-            <x-ui.tile variant="selectable" name="tile_variant" value="selectable" title="Selectable tile" description="Radio-style selected state." selected />
-            <x-ui.tile id="tile-variant-expandable" variant="expandable" title="Expandable tile" description="Full-container disclosure.">
-                <x-slot name="details">
-                    <p class="text-sm">The whole tile trigger opens and closes this supporting detail.</p>
-                </x-slot>
-            </x-ui.tile>
-            <x-ui.tile id="tile-variant-interactive" variant="expandable" title="Expandable tile with interactive elements" description="Internal controls keep their own click targets." interactive>
-                <x-slot name="actions">
-                    <x-ui.link href="#" variant="standalone" size="sm">Open details</x-ui.link>
-                    <x-ui.button semantic="neutral" size="sm">Test action</x-ui.button>
-                </x-slot>
-                <x-slot name="details">
-                    <p class="text-sm">Only the bottom-right expansion button controls this region.</p>
-                </x-slot>
-            </x-ui.tile>
-        </div>
-    </section>
+        <div class="ui-tabs ui-tabs-contained mt-4" data-ui-tabs data-ui-tabs-activation="manual" data-tile-variant-tabs>
+            <div class="ui-tabs-list" role="tablist" aria-label="Tile approved variants">
+                <button id="tile-base-tab" type="button" class="ui-tabs-tab" role="tab" aria-selected="true" aria-controls="tile-base-panel" data-ui-tabs-tab>
+                    Base Tile
+                </button>
+                <button id="tile-clickable-tab" type="button" class="ui-tabs-tab" role="tab" aria-selected="false" aria-controls="tile-clickable-panel" tabindex="-1" data-ui-tabs-tab>
+                    Clickable Tile
+                </button>
+                <button id="tile-selectable-tab" type="button" class="ui-tabs-tab" role="tab" aria-selected="false" aria-controls="tile-selectable-panel" tabindex="-1" data-ui-tabs-tab>
+                    Selectable Tile
+                </button>
+                <button id="tile-expandable-tab" type="button" class="ui-tabs-tab" role="tab" aria-selected="false" aria-controls="tile-expandable-panel" tabindex="-1" data-ui-tabs-tab>
+                    Expandable Tile
+                </button>
+                <button id="tile-expandable-interactive-tab" type="button" class="ui-tabs-tab" role="tab" aria-selected="false" aria-controls="tile-expandable-interactive-panel" tabindex="-1" data-ui-tabs-tab>
+                    Expandable Tile with Interactive Elements
+                </button>
+            </div>
 
-    <section class="ui-reference-layer-section" data-tile-live-section="clickable-tile">
-        <div class="ui-reference-section-heading">
-            <h3>Clickable tile</h3>
-            <p>Clickable tiles make the full container one link or one command. The arrow affordance sits bottom-right and nested controls are not allowed.</p>
-        </div>
+            <div class="ui-tabs-panels">
+                <section id="tile-base-panel" class="ui-tabs-panel space-y-6" role="tabpanel" aria-labelledby="tile-base-tab" data-ui-tabs-panel>
+                    <div class="ui-reference-section-heading">
+                        <h3>Base Tile</h3>
+                        <p>Base tiles are non-interactive layer surfaces. They do not add a border by default and may contain approved child actions because the tile itself is not a target.</p>
+                    </div>
 
-        <div class="mt-4 ui-tile-layout-standard">
-            <x-ui.tile variant="clickable" href="#" title="Default clickable tile" description="Open access, roles, and status." meta="Navigation" />
-            <x-ui.tile class="ui-reference-force-focus" variant="clickable" href="#" title="Focused clickable tile" description="Focus applies to the container." meta="Focus" />
-            <x-ui.tile variant="clickable" title="Run audit check" description="Starts one local command." meta="Button action" />
-            <x-ui.tile variant="clickable" title="Disabled clickable tile" description="Unavailable because billing is managed upstream." meta="Disabled" disabled />
-        </div>
-    </section>
-
-    <section class="ui-reference-layer-section" data-tile-live-section="selectable-tile">
-        <div class="ui-reference-section-heading">
-            <h3>Selectable tile</h3>
-            <p>Selectable tile groups use matching variants. Single select uses radio-style icons and multi-select uses checkbox-style icons that remain visible in the enabled state.</p>
-        </div>
-
-        <div class="mt-4 grid gap-4 xl:grid-cols-2">
-            <fieldset class="min-w-0 rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <legend class="text-sm font-semibold" style="color: var(--ui-text-primary);">Single-select tile group</legend>
-                <div class="mt-3 grid gap-3">
-                    <x-ui.tile variant="selectable" name="tile_plan" value="starter" selection-mode="single" title="Starter" description="Core workspace tools." />
-                    <x-ui.tile variant="selectable" name="tile_plan" value="growth" selection-mode="single" title="Growth" description="Automation and review workflows." selected />
-                    <x-ui.tile class="ui-reference-force-focus" variant="selectable" name="tile_plan" value="scale" selection-mode="single" title="Scale" description="Focused option state." />
-                    <x-ui.tile variant="selectable" name="tile_plan" value="enterprise" selection-mode="single" title="Enterprise" description="Unavailable for this tenant." disabled />
-                </div>
-            </fieldset>
-
-            <fieldset class="min-w-0 rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <legend class="text-sm font-semibold" style="color: var(--ui-text-primary);">Multi-select tile group</legend>
-                <div class="mt-3 grid gap-3">
-                    <x-ui.tile variant="selectable" name="tile_features[]" value="audit" selection-mode="multiple" title="Audit export" description="Scheduled account exports." selected />
-                    <x-ui.tile class="ui-reference-force-focus" variant="selectable" name="tile_features[]" value="roles" selection-mode="multiple" title="Role review" description="Manager approval workflow." />
-                    <x-ui.tile variant="selectable" name="tile_features[]" value="search" selection-mode="multiple" title="Advanced search" description="Saved filters and bulk review." selected />
-                    <x-ui.tile variant="selectable" name="tile_features[]" value="api" selection-mode="multiple" title="API access" description="Disabled until owner approval." disabled />
-                </div>
-            </fieldset>
-        </div>
-    </section>
-
-    <section class="ui-reference-layer-section" data-tile-live-section="expandable-tile">
-        <div class="ui-reference-section-heading">
-            <h3>Expandable tile</h3>
-            <p>Expandable tiles without internal controls use the whole tile trigger. Expandable tiles with internal controls use only the bottom-right expansion button.</p>
-        </div>
-
-        <div class="mt-4 grid gap-4 lg:grid-cols-2">
-            <x-ui.tile id="tile-billing-details" variant="expandable" title="Expandable expanded" description="View short billing metadata." expanded>
-                <x-slot name="details">
-                    <dl class="grid gap-2 text-sm">
-                        <div>
-                            <dt class="font-semibold" style="color: var(--ui-text-primary);">Billing contact</dt>
-                            <dd>Accounting team</dd>
+                    <section>
+                        <h4 class="ui-reference-example-title">States applicable to base tile</h4>
+                        <div class="mt-3 ui-tile-layout-standard">
+                            <x-ui.tile title="Enabled base tile" description="Static content surface on its own UI layer." meta="Status summary" />
+                            <x-ui.tile title="Base tile with actions" description="Child controls own interaction; the tile remains static.">
+                                <x-slot name="actions">
+                                    <x-ui.button semantic="tertiary" size="sm">Open</x-ui.button>
+                                    <x-ui.link href="#" variant="standalone" size="sm">Learn more</x-ui.link>
+                                </x-slot>
+                            </x-ui.tile>
                         </div>
-                        <div>
-                            <dt class="font-semibold" style="color: var(--ui-text-primary);">Status</dt>
-                            <dd>Active</dd>
+                    </section>
+
+                    <section>
+                        <h4 class="ui-reference-example-title">Live examples</h4>
+                        <div class="mt-3 ui-tile-layout-standard">
+                            <x-ui.tile title="Lite" meta="30-day free trial" description="Per month, no contract">
+                                <div class="ui-tile__body">
+                                    <x-ui.tag type="green" size="sm" text="Featured product" />
+                                    <p class="mt-4 border-t pt-3" style="border-color: var(--ui-border-subtle-01);">Get started with your first assistant.</p>
+                                </div>
+                                <x-slot name="actions">
+                                    <x-ui.button semantic="primary" size="sm">Get started</x-ui.button>
+                                </x-slot>
+                            </x-ui.tile>
+
+                            <x-ui.tile title="Standard" meta="30-day free trial" description="Per month, no contract">
+                                <div class="ui-tile__body">
+                                    <x-ui.tag type="blue" size="sm" text="Recommended" />
+                                    <p class="mt-4 border-t pt-3" style="border-color: var(--ui-border-subtle-01);">Build a more robust and faster assistant.</p>
+                                </div>
+                                <x-slot name="actions">
+                                    <x-ui.button semantic="primary" size="sm">Get started</x-ui.button>
+                                </x-slot>
+                            </x-ui.tile>
                         </div>
-                    </dl>
-                </x-slot>
-            </x-ui.tile>
+                    </section>
+                </section>
 
-            <x-ui.tile id="tile-security-details" class="ui-reference-force-focus" variant="expandable" title="Expandable focus state" description="Collapsed state keeps secondary content hidden.">
-                <x-slot name="details">
-                    <p class="text-sm">This detail is hidden until the owning state opens the tile.</p>
-                </x-slot>
-            </x-ui.tile>
+                <section id="tile-clickable-panel" class="ui-tabs-panel space-y-6" role="tabpanel" aria-labelledby="tile-clickable-tab" data-ui-tabs-panel hidden>
+                    <div class="ui-reference-section-heading">
+                        <h3>Clickable Tile</h3>
+                        <p>Clickable tiles make the whole tile one link or one command. They do not contain nested independent controls.</p>
+                    </div>
 
-            <x-ui.tile id="tile-locked-details" variant="expandable" title="Disabled expandable tile" description="Disabled expansion is visually distinct and not operable." disabled>
-                <x-slot name="details">
-                    <p class="text-sm">Disabled expandable content is not reachable until enabled.</p>
-                </x-slot>
-            </x-ui.tile>
+                    <section>
+                        <h4 class="ui-reference-example-title">States applicable to clickable tile</h4>
+                        <div class="mt-3 ui-tile-layout-standard">
+                            <x-ui.tile variant="clickable" href="#" title="Enabled" description="Whole-container navigation." />
+                            <x-ui.tile variant="clickable" href="#" title="Current route" description="Current state emits route context." current />
+                            <x-ui.tile class="ui-reference-force-focus" variant="clickable" href="#" title="Focus" description="Focus applies to the operative tile." />
+                            <x-ui.tile variant="clickable" title="Disabled" description="Unavailable and visually disabled." disabled />
+                        </div>
+                    </section>
 
-            <x-ui.tile id="tile-integration-details" variant="expandable" title="Expandable with internal link and button" description="The internal controls do not toggle expansion." interactive expand-button-label="Expand integration details">
-                <x-slot name="actions">
-                    <x-ui.link href="#" variant="standalone" size="sm">Open integration</x-ui.link>
-                    <x-ui.button semantic="neutral" size="sm">Test connection</x-ui.button>
-                </x-slot>
-                <x-slot name="details">
-                    <p class="text-sm">The expansion button is the only disclosure trigger for this tile.</p>
-                </x-slot>
-            </x-ui.tile>
+                    <section>
+                        <h4 class="ui-reference-example-title">Live examples</h4>
+                        <div class="mt-3 ui-tile-layout-standard">
+                            <x-ui.tile variant="clickable" href="#" title="Access review" description="Review active users, role assignments, and tenant access flags." meta="Navigation" />
+                            <x-ui.tile variant="clickable" title="Run audit check" description="Starts one local command for the selected workspace." meta="Button action" />
+                        </div>
+                    </section>
+                </section>
+
+                <section id="tile-selectable-panel" class="ui-tabs-panel space-y-6" role="tabpanel" aria-labelledby="tile-selectable-tab" data-ui-tabs-panel hidden>
+                    <div class="ui-reference-section-heading">
+                        <h3>Selectable Tile</h3>
+                        <p>Selectable tiles only change the selection indicator and border when selected. Single-select uses radio semantics; multi-select uses checkbox semantics.</p>
+                    </div>
+
+                    <section>
+                        <h4 class="ui-reference-example-title">States applicable to selectable tile</h4>
+                        <div class="mt-3 ui-tile-layout-standard">
+                            <x-ui.tile variant="selectable" name="tile_single_states" value="enabled" selection-mode="single" title="Enabled" description="Unselected radio tile." />
+                            <x-ui.tile variant="selectable" name="tile_single_states" value="selected" selection-mode="single" title="Enabled selected" description="Selected radio tile." selected />
+                            <x-ui.tile class="ui-reference-force-focus" variant="selectable" name="tile_single_states" value="focus" selection-mode="single" title="Focus" description="Focused radio tile." />
+                            <x-ui.tile variant="selectable" name="tile_single_states" value="disabled" selection-mode="single" title="Disabled" description="Unavailable radio tile." disabled />
+                        </div>
+                    </section>
+
+                    <section>
+                        <h4 class="ui-reference-example-title">Single-select live group</h4>
+                        <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">Use single-select tiles when the user can only select one tile from a group.</p>
+                        <div class="mt-3 ui-tile-layout-standard" role="radiogroup" aria-label="Tile table setup">
+                            <x-ui.tile variant="selectable" name="tile_table_setup" value="manual" selection-mode="single" title="Selectable tables" description="Select tables manually." selected />
+                            <x-ui.tile variant="selectable" name="tile_table_setup" value="recommended" selection-mode="single" title="Discover related tables" description="Let the system recommend related tables." />
+                        </div>
+                    </section>
+
+                    <section>
+                        <h4 class="ui-reference-example-title">Multi-select live group</h4>
+                        <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">Use multi-select tiles when the user can select multiple tiles from a group.</p>
+                        <div class="mt-3 ui-tile-layout-standard" role="group" aria-label="Tile capability selection">
+                            <x-ui.tile variant="selectable" name="tile_capabilities[]" value="collaboration" selection-mode="multiple" title="SPSS Collaboration & Deployment" selected />
+                            <x-ui.tile variant="selectable" name="tile_capabilities[]" value="openshift" selection-mode="multiple" title="Red Hat Openshift Container Platform for Power" selected />
+                            <x-ui.tile variant="selectable" name="tile_capabilities[]" value="security" selection-mode="multiple" title="Security Verify Governance" />
+                            <x-ui.tile variant="selectable" name="tile_capabilities[]" value="networking" selection-mode="multiple" title="VMware vCloud Networking & Security" />
+                        </div>
+                    </section>
+                </section>
+
+                <section id="tile-expandable-panel" class="ui-tabs-panel space-y-6" role="tabpanel" aria-labelledby="tile-expandable-tab" data-ui-tabs-panel hidden>
+                    <div class="ui-reference-section-heading">
+                        <h3>Expandable Tile</h3>
+                        <p>Expandable tiles without internal controls use the full tile trigger. The whole surface may hover and focus because it is the operative target.</p>
+                    </div>
+
+                    <section>
+                        <h4 class="ui-reference-example-title">States applicable to expandable tile</h4>
+                        <div class="mt-3 ui-tile-layout-standard">
+                            <x-ui.tile id="tile-expandable-state-enabled" variant="expandable" title="Enabled" description="Collapsed expandable tile.">
+                                <x-slot name="details">
+                                    <p class="text-sm">Collapsed details become available after expansion.</p>
+                                </x-slot>
+                            </x-ui.tile>
+                            <x-ui.tile id="tile-expandable-state-focus" class="ui-reference-force-focus" variant="expandable" title="Focus" description="Focus applies to the full trigger.">
+                                <x-slot name="details">
+                                    <p class="text-sm">Focus remains on the full tile trigger.</p>
+                                </x-slot>
+                            </x-ui.tile>
+                            <x-ui.tile id="tile-expandable-state-disabled" variant="expandable" title="Disabled" description="Disabled expansion is not operable." disabled>
+                                <x-slot name="details">
+                                    <p class="text-sm">Disabled details remain unavailable.</p>
+                                </x-slot>
+                            </x-ui.tile>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h4 class="ui-reference-example-title">Live examples</h4>
+                        <div class="mt-3 ui-tile-layout-standard">
+                            <x-ui.tile id="tile-setup-collapsed" variant="expandable" title="Setup" description="Check the steps before provisioning.">
+                                <x-slot name="details">
+                                    <p class="text-sm">Determine the location connecting to the cloud provider.</p>
+                                </x-slot>
+                            </x-ui.tile>
+                            <x-ui.tile id="tile-setup-expanded" variant="expandable" title="Setup" description="Check the steps before provisioning." expanded>
+                                <x-slot name="details">
+                                    <div class="space-y-3 text-sm">
+                                        <p><strong style="color: var(--ui-text-primary);">Determine the location connecting to IBM Cloud</strong></p>
+                                        <p>Verify your colocation provider or Network Service Provider capabilities.</p>
+                                        <p><strong style="color: var(--ui-text-primary);">Market your request</strong></p>
+                                        <p>Open a dedicated request and complete it.</p>
+                                    </div>
+                                </x-slot>
+                            </x-ui.tile>
+                        </div>
+                    </section>
+                </section>
+
+                <section id="tile-expandable-interactive-panel" class="ui-tabs-panel space-y-6" role="tabpanel" aria-labelledby="tile-expandable-interactive-tab" data-ui-tabs-panel hidden>
+                    <div class="ui-reference-section-heading">
+                        <h3>Expandable Tile with Interactive Elements</h3>
+                        <p>Interactive expandable tiles keep internal controls independent. Only the bottom-right expansion button toggles details and receives toggle focus.</p>
+                    </div>
+
+                    <section>
+                        <h4 class="ui-reference-example-title">States applicable to expandable tile with interactive elements</h4>
+                        <div class="mt-3 ui-tile-layout-standard">
+                            <x-ui.tile id="tile-expandable-interactive-enabled" variant="expandable" title="Enabled interactive" description="Internal controls do not toggle expansion." interactive expand-button-label="Expand account details">
+                                <x-slot name="actions">
+                                    <x-ui.link href="#" variant="standalone" size="sm">Link</x-ui.link>
+                                </x-slot>
+                                <x-slot name="details">
+                                    <p class="text-sm">Only the bottom-right button opens this content.</p>
+                                </x-slot>
+                            </x-ui.tile>
+                            <x-ui.tile id="tile-expandable-interactive-expanded" variant="expandable" title="Expanded interactive" description="Expanded content is visible." interactive expanded expand-button-label="Collapse account details">
+                                <x-slot name="actions">
+                                    <x-ui.link href="#" variant="standalone" size="sm">Link</x-ui.link>
+                                </x-slot>
+                                <x-slot name="details">
+                                    <div class="grid gap-0 border-t text-sm sm:grid-cols-2" style="border-color: var(--ui-border-subtle-01);">
+                                        <div class="border-r p-3" style="border-color: var(--ui-border-subtle-01);">Business terms<br>25</div>
+                                        <div class="p-3">Business terms<br>25</div>
+                                        <div class="border-t border-r p-3" style="border-color: var(--ui-border-subtle-01);">Business terms<br>25</div>
+                                        <div class="border-t p-3" style="border-color: var(--ui-border-subtle-01);">Business terms<br>25</div>
+                                    </div>
+                                </x-slot>
+                            </x-ui.tile>
+                            <x-ui.tile id="tile-expandable-interactive-focus" variant="expandable" title="Toggle focus" description="Focus is scoped to the expand button." interactive expand-button-label="Expand focused details">
+                                <x-slot name="details">
+                                    <p class="text-sm">The container does not receive duplicate focus when this button is focused.</p>
+                                </x-slot>
+                            </x-ui.tile>
+                            <x-ui.tile id="tile-expandable-interactive-disabled" variant="expandable" title="Disabled interactive" description="Disabled expansion button and tile content use disabled tokens." interactive disabled expand-button-label="Expand disabled details">
+                                <x-slot name="actions">
+                                    <x-ui.link href="#" variant="standalone" size="sm">Link</x-ui.link>
+                                </x-slot>
+                                <x-slot name="details">
+                                    <p class="text-sm">Disabled details remain closed.</p>
+                                </x-slot>
+                            </x-ui.tile>
+                        </div>
+                    </section>
+                </section>
+            </div>
         </div>
     </section>
 
     <section class="ui-reference-layer-section" data-tile-live-section="layout">
         <div class="ui-reference-section-heading">
             <h3>Layout</h3>
-            <p>Parent Patterns own grid placement. Tile groups should use matching variants, consistent spacing, and grid-aligned proportions.</p>
+            <p>Parent patterns own grid placement. Tile layouts use matching variants, consistent spacing, and grid-aligned proportions.</p>
         </div>
 
-        <div class="mt-4 space-y-5">
-            <div>
-                <h4 class="ui-reference-example-title">Standard layout</h4>
-                <div class="mt-3 ui-tile-layout-standard">
-                    <x-ui.tile title="Standard tile" description="Same height and width is the preferred default." />
-                    <x-ui.tile title="Standard tile" description="Tile groups usually flow left to right." />
-                    <x-ui.tile title="Standard tile" description="Keep variants consistent inside a group." />
-                </div>
+        <div class="ui-tabs ui-tabs-contained mt-4" data-ui-tabs data-ui-tabs-activation="manual" data-tile-layout-tabs>
+            <div class="ui-tabs-list" role="tablist" aria-label="Tile layouts">
+                <button id="tile-layout-standard-tab" type="button" class="ui-tabs-tab" role="tab" aria-selected="true" aria-controls="tile-layout-standard-panel" data-ui-tabs-tab>
+                    Standard layout
+                </button>
+                <button id="tile-layout-vertical-tab" type="button" class="ui-tabs-tab" role="tab" aria-selected="false" aria-controls="tile-layout-vertical-panel" tabindex="-1" data-ui-tabs-tab>
+                    Vertical masonry layout
+                </button>
+                <button id="tile-layout-horizontal-tab" type="button" class="ui-tabs-tab" role="tab" aria-selected="false" aria-controls="tile-layout-horizontal-panel" tabindex="-1" data-ui-tabs-tab>
+                    Horizontal masonry layout
+                </button>
             </div>
 
-            <div>
-                <h4 class="ui-reference-example-title">Vertical masonry layout</h4>
-                <div class="mt-3 ui-tile-layout-vertical-masonry">
-                    <x-ui.tile title="Short tile" description="Width stays consistent." />
-                    <x-ui.tile title="Tall tile" description="Height may vary when content needs more lines while the column width stays aligned to the grid and readable at narrow breakpoints." />
-                    <x-ui.tile title="Medium tile" description="Use this when content naturally varies by amount." />
-                </div>
-            </div>
+            <div class="ui-tabs-panels">
+                <section id="tile-layout-standard-panel" class="ui-tabs-panel space-y-5" role="tabpanel" aria-labelledby="tile-layout-standard-tab" data-ui-tabs-panel>
+                    <h4 class="ui-reference-example-title">Standard layout</h4>
+                    <p class="text-sm" style="color: var(--ui-text-secondary);">Tiles are the same height and width as other tiles in the group. Standard layout is the default.</p>
+                    <div class="ui-tile-layout-standard">
+                        <x-ui.tile title="Standard tile" description="Same height and width." />
+                        <x-ui.tile title="Standard tile" description="Aligned to the same grid." />
+                        <x-ui.tile title="Standard tile" description="Matching variant treatment." />
+                        <x-ui.tile title="Standard tile" description="Consistent scanning rhythm." />
+                    </div>
+                </section>
 
-            <div>
-                <h4 class="ui-reference-example-title">Horizontal masonry layout</h4>
-                <div class="mt-3 ui-tile-layout-horizontal-masonry">
-                    <x-ui.tile title="Wide tile" description="Tiles may vary in width when the row remains coherent." />
-                    <x-ui.tile title="Narrow tile" description="Avoid very small fractions at small breakpoints." />
-                </div>
-            </div>
+                <section id="tile-layout-vertical-panel" class="ui-tabs-panel space-y-5" role="tabpanel" aria-labelledby="tile-layout-vertical-tab" data-ui-tabs-panel hidden>
+                    <h4 class="ui-reference-example-title">Vertical masonry layout</h4>
+                    <p class="text-sm" style="color: var(--ui-text-secondary);">Tiles may vary in height, but width remains consistent.</p>
+                    <div class="ui-tile-layout-vertical-masonry">
+                        <x-ui.tile title="Short tile" description="Width stays consistent." />
+                        <x-ui.tile title="Tall tile" description="Height may vary when content needs more lines while the column width stays aligned to the grid and readable at narrow breakpoints." />
+                        <x-ui.tile title="Medium tile" description="Use this when content naturally varies by amount." />
+                        <x-ui.tile title="Supporting tile" description="Keep the same variant treatment within the group." />
+                    </div>
+                </section>
 
-            <div>
-                <h4 class="ui-reference-example-title">Grid proportions</h4>
-                <div class="mt-3 overflow-x-auto rounded-md border" style="border-color: var(--ui-border-subtle-01);">
-                    <table class="min-w-full text-left text-sm">
-                        <thead style="background-color: var(--ui-layer-02); color: var(--ui-text-secondary);">
-                            <tr>
-                                <th class="px-3 py-2 font-medium">Percentage</th>
-                                <th class="px-3 py-2 font-medium">XL</th>
-                                <th class="px-3 py-2 font-medium">L</th>
-                                <th class="px-3 py-2 font-medium">M</th>
-                                <th class="px-3 py-2 font-medium">S</th>
-                                <th class="px-3 py-2 font-medium">XS</th>
+                <section id="tile-layout-horizontal-panel" class="ui-tabs-panel space-y-5" role="tabpanel" aria-labelledby="tile-layout-horizontal-tab" data-ui-tabs-panel hidden>
+                    <h4 class="ui-reference-example-title">Horizontal masonry layout</h4>
+                    <p class="text-sm" style="color: var(--ui-text-secondary);">Tiles may vary in width, and different rows may vary in height, while tiles within a row stay coherent.</p>
+                    <div class="ui-tile-layout-horizontal-masonry">
+                        <x-ui.tile title="Wide tile" description="Tiles may vary in width when the row remains coherent." />
+                        <x-ui.tile title="Narrow tile" description="Avoid very small fractions at small breakpoints." />
+                        <x-ui.tile title="Half-width tile" description="Content remains readable." />
+                        <x-ui.tile title="Wide summary tile" description="Use width changes only when the content hierarchy requires it." />
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="ui-tile-grid-proportions mt-5">
+            <h4 class="ui-reference-example-title">Grid proportions</h4>
+            <div class="overflow-x-auto rounded-md border" style="border-color: var(--ui-border-subtle-01);">
+                <table class="min-w-full text-left text-sm">
+                    <thead style="background-color: var(--ui-layer-02); color: var(--ui-text-secondary);">
+                        <tr>
+                            <th class="px-3 py-2 font-medium">Percentage</th>
+                            <th class="px-3 py-2 font-medium">XL</th>
+                            <th class="px-3 py-2 font-medium">L</th>
+                            <th class="px-3 py-2 font-medium">M</th>
+                            <th class="px-3 py-2 font-medium">S</th>
+                            <th class="px-3 py-2 font-medium">XS</th>
+                        </tr>
+                    </thead>
+                    <tbody style="color: var(--ui-text-primary);">
+                        @foreach ($gridProportions as [$percentage, $xl, $lg, $md, $sm, $xs])
+                            <tr class="border-t" style="border-color: var(--ui-border-subtle-01);">
+                                <th class="px-3 py-2 font-medium" scope="row">{{ $percentage }}</th>
+                                <td class="px-3 py-2">{{ $xl }}</td>
+                                <td class="px-3 py-2">{{ $lg }}</td>
+                                <td class="px-3 py-2">{{ $md }}</td>
+                                <td class="px-3 py-2">{{ $sm }}</td>
+                                <td class="px-3 py-2">{{ $xs }}</td>
                             </tr>
-                        </thead>
-                        <tbody style="color: var(--ui-text-primary);">
-                            @foreach ($gridProportions as [$percentage, $xl, $lg, $md, $sm, $xs])
-                                <tr class="border-t" style="border-color: var(--ui-border-subtle-01);">
-                                    <th class="px-3 py-2 font-medium" scope="row">{{ $percentage }}</th>
-                                    <td class="px-3 py-2">{{ $xl }}</td>
-                                    <td class="px-3 py-2">{{ $lg }}</td>
-                                    <td class="px-3 py-2">{{ $md }}</td>
-                                    <td class="px-3 py-2">{{ $sm }}</td>
-                                    <td class="px-3 py-2">{{ $xs }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
-        </div>
-    </section>
-
-    <section class="ui-reference-layer-section" data-tile-live-section="states-and-accessibility">
-        <div class="ui-reference-section-heading">
-            <h3>States and accessibility</h3>
-            <p>Interactive tile states are token-backed and semantic: focus-visible outlines the operative surface, selected/current state is not color-only, and disabled interactive tiles are not activatable.</p>
-        </div>
-
-        <div class="mt-4 ui-tile-layout-standard">
-            <x-ui.tile variant="clickable" href="#" title="Enabled" description="Default interactive state." />
-            <x-ui.tile variant="clickable" href="#" title="Current route" description="Current state emits aria-current." current />
-            <x-ui.tile variant="selectable" name="tile_state" value="selected" title="Selected" description="Selected border and icon are visible." selected />
-            <x-ui.tile variant="selectable" name="tile_state" value="disabled" title="Disabled selectable" description="Disabled state removes interaction." disabled />
-            <x-ui.tile id="tile-disabled-interactive-expand" variant="expandable" title="Disabled interactive expandable" description="Disabled expansion button is not operable." interactive disabled>
-                <x-slot name="actions">
-                    <x-ui.link href="#" variant="standalone" size="sm">Internal CTA</x-ui.link>
-                </x-slot>
-                <x-slot name="details">
-                    <p class="text-sm">Disabled expandable content remains closed.</p>
-                </x-slot>
-            </x-ui.tile>
         </div>
     </section>
 
@@ -272,7 +387,7 @@
 &lt;x-ui.tile
     variant="expandable"
     title="Integration details"
-    interactive
+    interactive expand-button-label="Expand integration details"
 &gt;
     &lt;x-slot name="actions"&gt;...&lt;/x-slot&gt;
     &lt;x-slot name="details"&gt;...&lt;/x-slot&gt;

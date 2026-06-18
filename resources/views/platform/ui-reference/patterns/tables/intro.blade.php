@@ -94,9 +94,9 @@
                             </select>
                         </label>
                         <div class="flex items-center gap-2 text-sm ui-reference-text">
-                            <x-ui.button variant="ghost" size="sm">Previous</x-ui.button>
+                            <x-ui.button semantic="ghost" size="sm">Previous</x-ui.button>
                             <span>Page 2 of 7</span>
-                            <x-ui.button variant="outline" size="sm">Next</x-ui.button>
+                            <x-ui.button semantic="tertiary" size="sm">Next</x-ui.button>
                         </div>
                     </div>
                 </article>
@@ -126,7 +126,7 @@
                         <option>Owner: Security</option>
                     </select>
                     <x-slot:actions>
-                        <x-ui.button variant="ghost">Reset</x-ui.button>
+                        <x-ui.button semantic="ghost">Reset</x-ui.button>
                         <x-ui.button semantic="primary">Apply</x-ui.button>
                     </x-slot:actions>
                 </x-ui.patterns.search-filter-bar>

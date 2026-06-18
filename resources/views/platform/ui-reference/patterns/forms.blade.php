@@ -10,7 +10,7 @@
             kicker="Tier 2A"
         >
             <x-slot:actions>
-                <x-ui.button variant="outline" size="sm">Desktop proof</x-ui.button>
+                <x-ui.button semantic="tertiary" size="sm">Desktop proof</x-ui.button>
                 <x-ui.button semantic="primary" size="sm">Responsive proof</x-ui.button>
             </x-slot:actions>
         </x-ui.patterns.page-title-actions-row>
@@ -101,10 +101,10 @@
                     <div class="mt-3">
                         <x-ui.patterns.form-actions-bar>
                             <x-slot:leading>
-                                <x-ui.button variant="ghost">Cancel</x-ui.button>
+                                <x-ui.button semantic="ghost">Cancel</x-ui.button>
                             </x-slot:leading>
 
-                            <x-ui.button semantic="danger" variant="soft">Archive</x-ui.button>
+                            <x-ui.button semantic="danger-tertiary">Archive</x-ui.button>
                             <x-ui.button semantic="primary">Save Workspace</x-ui.button>
                         </x-ui.patterns.form-actions-bar>
                     </div>
@@ -229,10 +229,10 @@
 
                 <x-ui.patterns.form-actions-bar>
                     <x-slot:leading>
-                        <x-ui.button variant="ghost">Cancel</x-ui.button>
+                        <x-ui.button semantic="ghost">Cancel</x-ui.button>
                     </x-slot:leading>
 
-                    <x-ui.button semantic="danger" variant="soft">Archive</x-ui.button>
+                    <x-ui.button semantic="danger-tertiary">Archive</x-ui.button>
                     <x-ui.button semantic="primary">Save Workspace</x-ui.button>
                 </x-ui.patterns.form-actions-bar>
             </div>

@@ -47,6 +47,10 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-ui-reference-sidebar-disclosure-panel', false)
             ->assertSee('data-ui-reference-sidebar-disclosure-icon', false)
             ->assertSee('data-ui-reference-sidebar-scroll-owner="shell"', false)
+            ->assertSee('data-mobile-sidebar-dock', false)
+            ->assertSee('data-default-panel="custom"', false)
+            ->assertSee('data-mobile-dock-panel="custom"', false)
+            ->assertSee('data-mobile-dock-target="custom"', false)
             ->assertSee('aria-label="UI Reference overview"', false)
             ->assertSee('aria-label="UI Reference foundation elements"', false)
             ->assertSee('aria-label="UI Reference components"', false)
@@ -113,6 +117,32 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('initializer(document)', $appJs);
         $this->assertStringContainsString("document.readyState === 'loading'", $appJs);
         $this->assertStringContainsString('initUiReferenceSidebarDisclosures', $uiReferenceJs);
+    }
+
+    public function test_css_foundation_owns_carbon_state_and_utility_primitives(): void
+    {
+        $documentCss = file_get_contents(resource_path('css/base/document.css'));
+        $semanticAliasesCss = file_get_contents(resource_path('css/tokens/semantic/app-aliases.css'));
+
+        $this->assertStringContainsString('@layer utilities', $documentCss);
+        $this->assertStringContainsString(':disabled', $documentCss);
+        $this->assertStringContainsString('[aria-disabled="true"]', $documentCss);
+        $this->assertStringContainsString('cursor: not-allowed;', $documentCss);
+        $this->assertStringContainsString('[aria-readonly="true"]', $documentCss);
+        $this->assertStringContainsString(':where(.ui-overflow-ellipsis, .ui-text-overflow)', $documentCss);
+        $this->assertStringContainsString('text-overflow: ellipsis;', $documentCss);
+        $this->assertStringContainsString(':where(.ui-focus-outline, .ui-focus-outline-inset):focus-visible', $documentCss);
+        $this->assertStringContainsString(':where(.ui-button-reset)', $documentCss);
+        $this->assertStringContainsString(':where(.ui-shadow-floating)', $documentCss);
+        $this->assertStringContainsString(':where(.ui-fluid-field)', $documentCss);
+        $this->assertStringContainsString('background-color: var(--ui-field-hover);', $documentCss);
+        $this->assertStringContainsString('border-block-end-color: var(--ui-focus);', $documentCss);
+
+        $this->assertStringContainsString('--ui-layer: var(--ui-layer-01);', $semanticAliasesCss);
+        $this->assertStringContainsString('--ui-layer-active: var(--ui-layer-active-01);', $semanticAliasesCss);
+        $this->assertStringContainsString('--ui-layer-accent-hover: var(--ui-layer-accent-hover-01);', $semanticAliasesCss);
+        $this->assertStringContainsString('--ui-border-subtle-selected: var(--ui-border-subtle-selected-01);', $semanticAliasesCss);
+        $this->assertStringContainsString('--ui-shadow-floating-top:', $semanticAliasesCss);
     }
 
     public function test_tier_one_component_catalog_routes_are_discoverable(): void
@@ -204,28 +234,11 @@ class PlatformUiReferenceTest extends TestCase
                 ->assertDontSee('data-ui-reference-example="'.$component['slug'].'-shared-live-example"', false)
                 ->assertDontSee('data-ui-reference-example="'.$component['slug'].'-queued-trigger"', false);
 
-            $flexibleMatrixComponents = [
-                'button',
-                'checkbox',
-                'code-snippet',
-                'contained-list',
-                'data-table',
-                'date-picker',
-                'dropdown',
-                'link',
-                'loading',
-                'menu-buttons',
-                'pagination',
-                'search',
-                'select',
-                'structured-list',
-                'tag',
-                'tile',
-                'tooltip',
-            ];
-
-            if (in_array($component['slug'], $flexibleMatrixComponents, true)) {
-                $componentPage->assertSee('data-ui-reference-live-examples-layout="flexible-matrix"', false);
+            if (! empty($component['live_examples_view'])) {
+                $componentPage->assertSee(
+                    'data-ui-reference-live-examples-layout="'.($component['live_examples_layout'] ?? 'custom').'"',
+                    false
+                );
             } else {
                 $componentPage->assertSee('data-component-section="variants-for-example"', false);
             }
@@ -336,7 +349,7 @@ class PlatformUiReferenceTest extends TestCase
             ['label' => 'Open', 'href' => '#'],
             ['label' => 'Archive', 'shortcut' => 'A'],
             ['divider' => true],
-            ['label' => 'Delete', 'danger' => true],
+            ['label' => 'Delete', 'tone' => 'danger'],
         ];
         $options = [
             ['label' => 'Owner', 'value' => 'owner'],
@@ -366,6 +379,7 @@ class PlatformUiReferenceTest extends TestCase
 
         $html = Blade::render(<<<'BLADE'
             <x-ui.link href="#" icon="heroicon-o-arrow-top-right-on-square">Docs</x-ui.link>
+            <x-ui.copy-button label="Copy API" copy-state="copied" />
             <x-ui.menu-button :items="$items" label="More actions" open />
             <x-ui.combo-button :items="$items" label="Run report" open />
             <x-ui.overflow-menu :items="$items" label="Row actions" open />
@@ -380,7 +394,7 @@ class PlatformUiReferenceTest extends TestCase
             <x-ui.inline-loading status="loading" label="Saving changes" />
             <x-ui.progress-bar value="40" label="Import progress" />
             <x-ui.progress-indicator :steps="$steps" />
-            <x-ui.tag tone="success" icon="heroicon-o-check-circle">Active</x-ui.tag>
+            <x-ui.tag type="green" text="Active" icon="heroicon-o-check-circle" />
             <x-ui.structured-list :rows="$rows" selectable />
             <x-ui.contained-list title="Contained workspaces" :items="$containedItems" />
             <ul class="ui-list ui-list-unordered"><li>Native list API</li></ul>
@@ -396,9 +410,12 @@ class PlatformUiReferenceTest extends TestCase
 
         foreach ([
             'data-ui-component="link"',
+            'data-ui-component="copy-button"',
+            'data-ui-copy-state="copied"',
             'data-ui-component="menu-button"',
             'data-ui-component="combo-button"',
             'data-ui-component="overflow-menu"',
+            'ui-menu-item-danger',
             'data-ui-component="pagination"',
             'data-ui-component="search"',
             'data-ui-component="dropdown"',
@@ -432,6 +449,9 @@ class PlatformUiReferenceTest extends TestCase
 
         $this->assertStringContainsString('data-ui-menu-trigger', $html);
         $this->assertStringContainsString('data-ui-dropdown-option', $html);
+        $this->assertStringContainsString('ui-list-box', $html);
+        $this->assertStringContainsString('ui-list-box-menu', $html);
+        $this->assertStringContainsString('ui-list-box-menu-item', $html);
         $this->assertStringContainsString('data-ui-pagination-page-size', $html);
         $this->assertStringContainsString('ui-tile ui-tile--clickable', $html);
         $this->assertStringContainsString('data-ui-tile-variant="clickable"', $html);
@@ -440,6 +460,8 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('data-ui-multiselect-option', $html);
         $this->assertStringContainsString('data-ui-multiselect-filter', $html);
         $this->assertStringContainsString('data-ui-multiselect-clear', $html);
+        $this->assertStringContainsString('aria-multiselectable="true"', $html);
+        $this->assertStringContainsString('ui-list-box-menu-item-selected', $html);
         $this->assertStringContainsString('data-ui-popover-trigger', $html);
         $this->assertStringContainsString('data-ui-popover-panel', $html);
         $this->assertStringContainsString('data-ui-popover-close', $html);
@@ -611,24 +633,36 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('--ui-layer-01')
             ->assertSee('--ui-layer-02')
             ->assertSee('--ui-layer-03')
-            ->assertSee('data-background-layer-depth="4"', false)
-            ->assertSee('data-background-layer-stack-sequence="background-layer-01-layer-02-layer-03"', false)
+            ->assertSee('--ui-layer-04')
+            ->assertSee('--ui-layer-05')
+            ->assertSee('data-background-layer-depth="6"', false)
+            ->assertSee('data-background-layer-stack-sequence="background-layer-01-layer-02-layer-03-layer-04-layer-05"', false)
             ->assertSee('Light: G10')
             ->assertSee('Light: White')
             ->assertSee('Header, body, and footer share the same background layer by default')
             ->assertSee('Do not use accent layers or borders for card headers and footers by default')
+            ->assertSee('After Layer 05')
             ->assertSee('Do not alternate white/gray manually in component examples');
 
         $layeringView = file_get_contents(resource_path('views/platform/ui-reference/elements/color-layering.blade.php'));
         $this->assertIsString($layeringView);
-        $this->assertStringContainsString('data-background-layer-depth="4"', $layeringView);
-        $this->assertStringContainsString('data-background-layer-stack-sequence="background-layer-01-layer-02-layer-03"', $layeringView);
+        $this->assertStringContainsString('data-background-layer-depth="6"', $layeringView);
+        $this->assertStringContainsString('data-background-layer-stack-sequence="background-layer-01-layer-02-layer-03-layer-04-layer-05"', $layeringView);
         $this->assertStringNotContainsString('Return to layer 01', $layeringView);
         $this->assertStringNotContainsString('Inline nested note', $layeringView);
         $this->assertStringContainsString('data-background-layer-example="code-snippet-container"', $layeringView);
         $this->assertStringNotContainsString('<div class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background: var(--ui-layer-01);" data-background-layer-example="code-snippet-container">', $layeringView);
         $this->assertStringNotContainsString('class="border-b px-4 py-3"', $layeringView);
         $this->assertStringNotContainsString('class="border-t px-4 py-3', $layeringView);
+
+        $componentShowView = file_get_contents(resource_path('views/platform/ui-reference/components/show.blade.php'));
+        $appCss = file_get_contents(resource_path('css/app.css'));
+        $this->assertStringContainsString('--ui-layer-04:', $appCss);
+        $this->assertStringContainsString('--ui-layer-05:', $appCss);
+        $this->assertStringContainsString('.ui-reference-component-section', $appCss);
+        $this->assertStringContainsString('.ui-reference-layer-section', $appCss);
+        $this->assertStringContainsString('@apply min-w-0;', $appCss);
+        $this->assertStringNotContainsString('<section class="ui-card" data-component-card=', $componentShowView);
 
         $this->get('/platform/ui-reference/elements/themes')
             ->assertOk()
@@ -1112,7 +1146,7 @@ class PlatformUiReferenceTest extends TestCase
         $expectations = [
             'button' => ['Variant purpose matrix', 'Size scale', 'State matrix', 'Button groups', 'Icon usage', 'Content behavior', 'Token and style roles', 'data-component-live-layout="button-matrix"'],
             'link' => ['Inline content link', 'External/help link', 'Destination types', 'Icon trailing', 'Unavailable treatment', 'data-ui-reference-sample-type="links"'],
-            'menu' => ['Contextual action menu', 'Row action menu', 'Danger item', 'Divided groups', 'Submenu actions', 'data-ui-reference-sample-type="menu"'],
+            'menu' => ['Contextual action menu', 'Row action menu', 'Danger item', 'Divided groups', 'Submenu actions', 'data-component-live-layout="menu-matrix"'],
             'menu-buttons' => ['Variant purpose matrix', 'Base options', 'Trigger style matrix', 'Size scale', 'Placement and width behavior', 'States and keyboard behavior', 'data-component-live-layout="menu-buttons-matrix"'],
             'tooltip' => ['Anatomy', 'Placement and alignment', 'Sizing and structure', 'Behavior and accessibility', 'Content', 'Related overlays', 'data-component-live-layout="tooltip-matrix"'],
             'text-input' => ['Text input', 'Password input', 'Text area', 'Default and fluid styles', 'Text area features', 'Password features', 'data-component-live-layout="text-input-matrix"'],
@@ -1122,9 +1156,9 @@ class PlatformUiReferenceTest extends TestCase
             'notification' => ['Form validation error', 'Record saved', 'API failure', 'Background job completed', 'Maintenance notice', 'data-ui-reference-sample-type="alert"'],
             'modal' => ['Confirmation dialog', 'Form modal', 'Read-only detail', 'Destructive action', 'Wizard deferred', 'data-ui-component="modal-preview"'],
             'data-table' => ['Basic sortable table', 'Compact management table', 'Filterable toolbar table', 'Row actions table', 'Dynamic states', 'Responsive overflow and pagination', 'Selection and batch-action gate', 'data-component-live-layout="data-table-matrix"'],
-            'pagination' => ['Pagination bar', 'Pagination nav', 'Items per page', 'Sizes and boundary states', 'Overflow', 'ui-pagination-control'],
+            'pagination' => ['Pagination bar sizes', 'Pagination nav sizes', 'Items per page', 'Data table size pairings', 'Overflow menu behavior', 'ui-pagination-control'],
             'contained-list' => ['On-page contained list', 'Sizing and dynamic content', 'Interactive elements', 'Interactive states', 'Search and filtering', 'Scrolling and sticky header', 'Disclosed list', 'data-component-live-layout="contained-list-matrix"'],
-            'tabs' => ['Line tabs', 'Contained tabs', 'Vertical tabs', 'Icon-leading', 'Icon-only', 'Overflow/scroll', 'Disabled', 'data-ui-reference-sample-type="tabs"'],
+            'tabs' => ['Line tabs', 'Contained tabs', 'Vertical tabs', 'Icon-leading', 'Icon-only', 'Overflow/scroll', 'Disabled', 'data-component-live-layout="tabs-matrix"'],
             'ui-shell' => ['Header baseline', 'Left panel', 'Account menu', 'Notification/action area', 'Mobile/collapsed behavior', 'Right panel deferred', 'data-ui-reference-sample-type="shell"'],
             'code-snippet' => ['Anatomy and variants', 'Inline', 'Single line with horizontal overflow', 'Multi-line with show more', 'Copy controls', 'Highlighted syntax tokens', 'data-component-live-layout="code-snippet-matrix"'],
             'content-switcher' => ['Peer view switcher', 'Icon view switcher', 'Toolbar mode switcher', 'Default', 'Compact', 'Disabled option', 'No panel mode', 'data-ui-reference-sample-type="content-switcher"'],
@@ -1141,7 +1175,7 @@ class PlatformUiReferenceTest extends TestCase
                 ->assertSee('ui-code-snippet', false)
                 ->assertDontSee('Family-depth implementation pending');
 
-            if (in_array($slug, ['button', 'link', 'menu-buttons', 'tooltip', 'checkbox', 'code-snippet', 'data-table', 'pagination', 'tile', 'contained-list'], true)) {
+            if (in_array($slug, ['button', 'link', 'menu', 'menu-buttons', 'tooltip', 'text-input', 'checkbox', 'code-snippet', 'data-table', 'pagination', 'contained-list', 'tabs', 'tile'], true)) {
                 $response
                     ->assertSee('data-ui-reference-live-examples-layout="flexible-matrix"', false)
                     ->assertDontSee('Live Examples Card');
@@ -1161,7 +1195,7 @@ class PlatformUiReferenceTest extends TestCase
     {
         $this->actingAsPlatformSuperAdmin();
 
-        foreach (['breadcrumb', 'tabs', 'menu', 'code-snippet', 'button', 'tooltip'] as $slug) {
+        foreach (['breadcrumb', 'tabs', 'menu', 'multiselect', 'list', 'code-snippet', 'button', 'tooltip'] as $slug) {
             $response = $this->get('/platform/ui-reference/components/'.$slug)
                 ->assertOk()
                 ->assertSee('data-component-section="developer-code-example"', false)
@@ -1171,7 +1205,7 @@ class PlatformUiReferenceTest extends TestCase
                 ->assertDontSee('Current location, keyboard navigation, focus order, responsive collapse, overflow, and skip-link/focus expectations')
                 ->assertDontSee('Default, hover-capable, focus-visible, disabled, read-only, helper, error, warning, and loading where applicable.');
 
-            if (in_array($slug, ['button', 'tooltip'], true)) {
+            if (in_array($slug, ['breadcrumb', 'tabs', 'menu', 'multiselect', 'list', 'code-snippet', 'button', 'tooltip'], true)) {
                 $response
                     ->assertSee('Implemented - pending manual review')
                     ->assertSee('data-ui-reference-live-examples-layout="flexible-matrix"', false);
@@ -1197,6 +1231,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Truncated menu')
             ->assertSee('Current page listed')
             ->assertSee('Truncated menu with current page listed')
+            ->assertSee('data-component-live-layout="breadcrumb-matrix"', false)
             ->assertSee('data-ui-component="breadcrumb"', false)
             ->assertSee('data-ui-breadcrumb-size="sm"', false)
             ->assertSee('data-ui-breadcrumb-size="md"', false)
@@ -1252,6 +1287,7 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertIsString($breadcrumbCss);
         $this->assertIsString($menuScript);
         $this->assertStringNotContainsString("'menu_open' => true", $breadcrumbCatalog);
+        $this->assertStringContainsString("'live_examples_view' => 'platform.ui-reference.components.live-examples.breadcrumb'", $breadcrumbCatalog);
         $this->assertStringContainsString('<x-ui.menu-item', $breadcrumbView);
         $this->assertStringContainsString('heroicon-o-ellipsis-horizontal', $breadcrumbView);
         $this->assertStringContainsString('data-ui-menu-panel', $breadcrumbView);
@@ -1282,6 +1318,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Dismissible tabs with icons')
             ->assertSee('Manual activation')
             ->assertSee('Small breakpoint handoff')
+            ->assertSee('data-component-live-layout="tabs-matrix"', false)
             ->assertSee('data-ui-component="tabs"', false)
             ->assertSee('data-ui-tabs-activation="manual"', false)
             ->assertSee('role="tablist"', false)
@@ -1294,6 +1331,14 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Focus-visible')
             ->assertSee('Scrollable')
             ->assertSee('Dismissible');
+
+        $tabsCatalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
+        $tabsLiveExamples = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/tabs.blade.php'));
+
+        $this->assertIsString($tabsCatalog);
+        $this->assertIsString($tabsLiveExamples);
+        $this->assertStringContainsString("'live_examples_view' => 'platform.ui-reference.components.live-examples.tabs'", $tabsCatalog);
+        $this->assertStringContainsString('data-component-live-layout="tabs-matrix"', $tabsLiveExamples);
     }
 
     public function test_menu_component_recovery_page_renders_required_examples(): void
@@ -1340,9 +1385,16 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('without forcing the interactive menu open')
             ->assertSee('data-ui-component="menu-item"', false)
             ->assertSee('data-ui-menu-item', false)
+            ->assertSee('data-ui-menu-close', false)
+            ->assertSee('data-ui-menu-action', false)
+            ->assertSee('data-ui-menu-method', false)
+            ->assertSee('data-ui-menu-divider', false)
             ->assertSee('data-ui-menu-item-size="xs"', false)
             ->assertSee('data-ui-menu-item-size="lg"', false)
             ->assertSee('data-ui-menu-item-state="danger-focus-hover"', false)
+            ->assertSee('data-ui-menu-method="DELETE"', false)
+            ->assertSee('data-ui-menu-action="duplicate-workspace"', false)
+            ->assertSee('Deletes the workspace and removes active access.')
             ->assertSee('ui-menu-item-xs', false)
             ->assertSee('ui-menu-item-lg', false)
             ->assertSee('ui-menu-align-bottom-end', false)
@@ -1363,37 +1415,59 @@ class PlatformUiReferenceTest extends TestCase
 
         $menuView = file_get_contents(resource_path('views/components/ui/menu.blade.php'));
         $menuItemView = file_get_contents(resource_path('views/components/ui/menu-item.blade.php'));
-        $menuSampleView = file_get_contents(resource_path('views/platform/ui-reference/components/examples/sample.blade.php'));
+        $menuLiveExamplesView = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/menu.blade.php'));
+        $menuProofView = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/partials/menu-proof.blade.php'));
         $menuScript = file_get_contents(resource_path('js/ui-controls/menus.js'));
-        $menuCss = file_get_contents(resource_path('css/app.css'));
+        $menuCss = file_get_contents(resource_path('css/components/menu.css'));
+        $menuCatalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
         $menuStandard = file_get_contents(base_path('docs/02-standards/ui/components/menu.md'));
 
         $this->assertIsString($menuView);
         $this->assertIsString($menuItemView);
-        $this->assertIsString($menuSampleView);
+        $this->assertIsString($menuLiveExamplesView);
+        $this->assertIsString($menuProofView);
         $this->assertIsString($menuScript);
         $this->assertIsString($menuCss);
+        $this->assertIsString($menuCatalog);
         $this->assertIsString($menuStandard);
         $this->assertStringContainsString('$reservesSelectionIndicator', $menuView);
+        $this->assertStringContainsString('dividerBefore', $menuView);
         $this->assertStringContainsString('data-ui-menu-submenu-panel', $menuView);
+        $this->assertStringContainsString('{{ $slot }}', $menuView);
         $this->assertStringContainsString('reserveIndicator', $menuItemView);
+        $this->assertStringContainsString('dangerDescription', $menuItemView);
+        $this->assertStringContainsString('data-ui-menu-action', $menuItemView);
+        $this->assertStringContainsString('data-ui-menu-method', $menuItemView);
+        $this->assertStringContainsString('data-ui-menu-close', $menuItemView);
         $this->assertStringContainsString('heroicon-o-chevron-right', $menuItemView);
         $this->assertStringContainsString('ui-menu-item-disabled', $menuItemView);
         $this->assertStringNotContainsString('text-[var(--ui-action-disabled-text)]', $menuItemView);
-        $this->assertStringContainsString('data-ui-menu-submenu-panel', $menuSampleView);
-        $this->assertStringContainsString('hidden', $menuSampleView);
+        $this->assertStringNotContainsString('text-[var(--ui-action-outline-danger-text)]', $menuItemView);
+        $this->assertStringContainsString('data-component-live-layout="menu-matrix"', $menuLiveExamplesView);
+        $this->assertStringContainsString('data-ui-menu-submenu-panel', $menuProofView);
+        $this->assertStringContainsString('hidden', $menuProofView);
+        $this->assertStringContainsString("'live_examples_view' => 'platform.ui-reference.components.live-examples.menu'", $menuCatalog);
         $this->assertStringContainsString('openSubmenu', $menuScript);
+        $this->assertStringContainsString('setMenuOpenState', $menuScript);
+        $this->assertStringContainsString('closeOtherMenus', $menuScript);
+        $this->assertStringContainsString('activateMenuItem', $menuScript);
+        $this->assertStringContainsString("event.key === 'Tab'", $menuScript);
+        $this->assertStringContainsString("trigger.addEventListener('mousedown'", $menuScript);
         $this->assertStringNotContainsString("submenuTrigger.addEventListener('focus'", $menuScript);
         $this->assertStringContainsString('const isRtlMenu', $menuScript);
         $this->assertStringContainsString('openSubmenuKey', $menuScript);
         $this->assertStringContainsString('closeSubmenuKey', $menuScript);
         $this->assertStringContainsString('ArrowRight', $menuScript);
         $this->assertStringContainsString('ArrowLeft', $menuScript);
-        $this->assertStringContainsString("data-ui-menu-item-state='disabled'", $menuCss);
+        $this->assertStringContainsString('.ui-menu-item[data-ui-menu-item-state="disabled"]', $menuCss);
+        $this->assertStringContainsString('.ui-menu-item-primary', $menuCss);
+        $this->assertStringContainsString('.ui-menu-item-danger', $menuCss);
         $this->assertStringContainsString('.ui-menu-submenu-panel', $menuCss);
         $this->assertStringContainsString('.ui-menu-composition-rtl .ui-menu', $menuCss);
         $this->assertStringContainsString('.ui-menu-composition-rtl .ui-menu-submenu-panel', $menuCss);
         $this->assertStringContainsString('reserve the same indicator column', $menuStandard);
+        $this->assertStringContainsString('data-ui-menu-action', $menuStandard);
+        $this->assertStringContainsString('Tab closes the menu', $menuStandard);
         $this->assertStringContainsString('must not expand the submenu by itself', $menuStandard);
         $this->assertStringContainsString('RTL menus must mirror the full menu surface', $menuStandard);
     }
@@ -1433,8 +1507,9 @@ class PlatformUiReferenceTest extends TestCase
             ->assertDontSee('Show more/show less for multi-line snippets | Gated');
 
         $componentView = file_get_contents(resource_path('views/components/ui/code-snippet.blade.php'));
+        $copyButtonView = file_get_contents(resource_path('views/components/ui/copy-button.blade.php'));
         $examplesView = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/code-snippet.blade.php'));
-        $componentCss = file_get_contents(resource_path('css/app.css'));
+        $componentCss = file_get_contents(resource_path('css/components/code-snippet.css'));
         $componentScript = file_get_contents(resource_path('js/ui-controls/code-snippets.js'));
         $interactionFocusScript = file_get_contents(resource_path('js/ui-controls/interaction-focus.js'));
         $uiControls = file_get_contents(resource_path('js/ui-controls.js'));
@@ -1446,15 +1521,16 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString("'ui-card',", $componentView);
         $this->assertStringContainsString('data-ui-code-copy-button', $componentView);
         $this->assertStringContainsString('data-ui-code-show-more', $componentView);
-        $this->assertStringContainsString('heroicon-o-clipboard-document', $componentView);
-        $this->assertStringContainsString('tooltip-placement="auto"', $componentView);
+        $this->assertStringContainsString('<x-ui.copy-button', $componentView);
+        $this->assertStringContainsString('align="auto"', $componentView);
+        $this->assertStringContainsString('heroicon-o-clipboard-document', $copyButtonView);
         $this->assertStringContainsString('<x-ui.tooltip', $componentView);
+        $this->assertStringContainsString('<x-ui.copy-button label="Enabled"', $examplesView);
         $this->assertStringContainsString('data-component-live-layout="code-snippet-matrix"', $examplesView);
         $this->assertStringContainsString('Multi-line with show more', $examplesView);
         $this->assertStringContainsString('<span class="ui-code-token-function">docker compose</span>', $examplesView);
         $this->assertStringContainsString('<span class="ui-code-token-keyword">x-ui.data-table</span>', $examplesView);
         $this->assertStringContainsString('.ui-code-snippet-shell-expandable', $componentCss);
-        $this->assertStringContainsString('background-color: var(--ui-card-layer, var(--ui-layer-01));', $componentCss);
         $this->assertStringContainsString('@apply relative w-full max-w-3xl overflow-visible;', $componentCss);
         $this->assertStringContainsString('--ui-code-snippet-layer: var(--ui-layer-02);', $componentCss);
         $this->assertStringContainsString('--ui-card-layer: var(--ui-code-snippet-layer);', $componentCss);
@@ -1464,8 +1540,8 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('@apply px-4 py-2;', $componentCss);
         $this->assertStringNotContainsString('@apply flex min-h-10 items-center justify-between gap-3 border-b px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em];', $componentCss);
         $this->assertStringNotContainsString('@apply border-t px-4 py-2;', $componentCss);
-        $this->assertStringContainsString(".ui-code-snippet-shell[data-ui-code-copy-state='copied'] .ui-code-snippet-copy-control .ui-icon-button", $componentCss);
-        $this->assertStringContainsString("[data-ui-interaction-focus='true']", $componentCss);
+        $this->assertStringContainsString('.ui-code-snippet-copy-control .ui-copy-button', $componentCss);
+        $this->assertStringContainsString('.ui-code-snippet-shell[data-ui-code-copy-state="copied"]', $componentCss);
         $this->assertStringContainsString('.ui-code-snippet-inline', $componentCss);
         $this->assertStringContainsString('export function initCodeSnippets(root = document)', $componentScript);
         $this->assertStringContainsString('navigator.clipboard', $componentScript);
@@ -1478,6 +1554,39 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('Show more/show less', $standard);
         $this->assertStringContainsString('consume the standard `.ui-card` surface contract', $standard);
         $this->assertStringContainsString('Nested block snippets default to `--ui-layer-02`', $standard);
+    }
+
+    public function test_button_blade_api_renders_carbon_aligned_contract(): void
+    {
+        $html = Blade::render(<<<'BLADE'
+            <x-ui.button>Save changes</x-ui.button>
+            <x-ui.button type="submit" semantic="secondary" size="sm">Cancel</x-ui.button>
+            <x-ui.button href="/reports" semantic="tertiary">Open report</x-ui.button>
+            <x-ui.button href="/reports" semantic="primary" loading>Saving</x-ui.button>
+            <x-ui.button semantic="primary" size="lg" expressive>Create workspace</x-ui.button>
+            <x-ui.button semantic="danger" danger-description="Deletes the tenant and removes active access.">Delete tenant</x-ui.button>
+            <x-ui.button semantic="primary" icon="heroicon-o-plus">Create workspace</x-ui.button>
+            <x-ui.icon-button icon="heroicon-o-cog-6-tooth" label="Open settings" tooltip="Open settings" semantic="ghost" size="lg" />
+            <x-ui.icon-button icon="heroicon-o-trash" label="Delete tenant" semantic="danger" size="2xl" />
+        BLADE);
+
+        $this->assertStringContainsString('class="ui-button ui-button-primary ui-button-lg"', $html);
+        $this->assertStringContainsString('type="button"', $html);
+        $this->assertStringContainsString('type="submit"', $html);
+        $this->assertStringContainsString('class="ui-button ui-button-secondary ui-button-sm"', $html);
+        $this->assertStringContainsString('<a', $html);
+        $this->assertStringContainsString('href="/reports"', $html);
+        $this->assertMatchesRegularExpression('/<button[^>]*aria-busy="true"[^>]*disabled/s', $html);
+        $this->assertStringContainsString('ui-button-expressive', $html);
+        $this->assertStringContainsString('aria-describedby="ui-button-danger-description-', $html);
+        $this->assertStringContainsString('Deletes the tenant and removes active access.', $html);
+        $this->assertStringContainsString('class="ui-button-icon"', $html);
+        $this->assertStringContainsString('aria-hidden="true"', $html);
+        $this->assertStringContainsString('data-ui-component="icon-button"', $html);
+        $this->assertStringContainsString('class="ui-button ui-button-ghost ui-button-lg ui-button-icon-only ui-icon-button"', $html);
+        $this->assertStringContainsString('class="ui-button ui-button-ghost ui-button-md ui-button-icon-only ui-icon-button"', $html);
+        $this->assertStringNotContainsString('ui-action', $html);
+        $this->assertStringNotContainsString('ui-button-danger ui-button-2xl ui-button-icon-only', $html);
     }
 
     public function test_button_component_recovery_page_renders_required_examples(): void
@@ -1514,6 +1623,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Large expressive')
             ->assertSee('Extra large')
             ->assertSee('2XL')
+            ->assertSee('ui-button-expressive', false)
             ->assertSee('Default')
             ->assertSee('Hover')
             ->assertSee('Focus-visible')
@@ -1521,6 +1631,8 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Disabled')
             ->assertSee('Loading')
             ->assertSee('Danger hover')
+            ->assertSee('Danger description')
+            ->assertSee('Deletes the tenant and removes active access.')
             ->assertSee('Horizontal static')
             ->assertSee('Horizontal fluid')
             ->assertSee('Vertical static')
@@ -1534,13 +1646,13 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('More than 3 actions')
             ->assertSee('Menu buttons or Toolbar')
             ->assertSee('Button icons appear to the right of the label')
-            ->assertSee('Icon-only buttons use the same state tokens')
+            ->assertSee('Icon-only buttons use the same Button state tokens')
             ->assertSee('always require a tooltip plus an accessible name')
             ->assertSee('Danger icon-only is not allowed')
             ->assertSee('data-button-token-contract="carbon-button-colors"', false)
             ->assertSee('data-button-token-row="secondary"', false)
             ->assertSee('$button-secondary / hover / active')
-            ->assertSee('--ui-action-secondary-bg / -hover / -active')
+            ->assertSee('--ui-button-secondary / -hover / -active')
             ->assertSee('Gray 80 #393939')
             ->assertSee('Gray 80 hover #4c4c4c')
             ->assertSee('Gray 60 active #6f6f6f')
@@ -1565,9 +1677,10 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-ui-component="icon-button"', false)
             ->assertSee('data-button-variant-row="danger-ghost"', false)
             ->assertSee('data-button-size-row="2xl"', false)
-            ->assertSee('ui-action-lg-expressive', false)
-            ->assertSee('ui-action-xl', false)
-            ->assertSee('ui-action-2xl', false)
+            ->assertDontSee('ui-action-lg-expressive', false)
+            ->assertDontSee('ui-action-xl', false)
+            ->assertDontSee('ui-action-2xl', false)
+            ->assertDontSee('lg-expressive', false)
             ->assertSee('data-button-group-layout="horizontal-static"', false)
             ->assertSee('data-button-group-layout="horizontal-fluid"', false)
             ->assertSee('data-button-group-layout="vertical-static"', false)
@@ -1590,6 +1703,13 @@ class PlatformUiReferenceTest extends TestCase
             ->assertDontSee('data-ui-component="menu-button"', false)
             ->assertDontSee('data-button-icon-state-matrix', false)
             ->assertDontSee('data-button-icon-state-row="default"', false)
+            ->assertDontSee('semantic=&quot;success&quot;', false)
+            ->assertDontSee('semantic=&quot;warning&quot;', false)
+            ->assertDontSee('semantic=&quot;notice&quot;', false)
+            ->assertDontSee('semantic=&quot;info&quot;', false)
+            ->assertDontSee('semantic=&quot;neutral&quot;', false)
+            ->assertDontSee('variant=&quot;soft&quot;', false)
+            ->assertDontSee('variant=&quot;outline&quot;', false)
             ->assertSee('is-hover', false)
             ->assertSee('is-focus', false)
             ->assertSee('is-active', false)
@@ -1600,56 +1720,59 @@ class PlatformUiReferenceTest extends TestCase
 
         $buttonView = file_get_contents(resource_path('views/components/ui/button.blade.php'));
         $iconButtonView = file_get_contents(resource_path('views/components/ui/icon-button.blade.php'));
-        $buttonCss = file_get_contents(resource_path('css/app.css'));
+        $buttonCss = file_get_contents(resource_path('css/components/button.css'));
+        $iconButtonCss = file_get_contents(resource_path('css/components/icon-button.css'));
+        $buttonGroupCss = file_get_contents(resource_path('css/components/button-group.css'));
+        $buttonTokenCss = file_get_contents(resource_path('css/tokens/components/buttons.css'));
         $buttonStandard = file_get_contents(base_path('docs/02-standards/ui/components/button.md'));
         $colorStandard = file_get_contents(base_path('docs/02-standards/ui/elements/color.md'));
 
         $this->assertIsString($buttonView);
         $this->assertIsString($iconButtonView);
         $this->assertIsString($buttonCss);
+        $this->assertIsString($iconButtonCss);
+        $this->assertIsString($buttonGroupCss);
+        $this->assertIsString($buttonTokenCss);
         $this->assertIsString($buttonStandard);
         $this->assertIsString($colorStandard);
-        $this->assertStringContainsString("'secondary' => ['secondary', 'base']", $buttonView);
-        $this->assertStringContainsString("'secondary' => ['secondary', 'base']", $iconButtonView);
-        $this->assertStringContainsString("'tertiary' => ['tertiary', 'outline']", $buttonView);
-        $this->assertStringContainsString("'tertiary' => ['tertiary', 'outline']", $iconButtonView);
-        $this->assertStringContainsString('--ui-action-secondary-bg: rgb(57 57 57);', $buttonCss);
-        $this->assertStringContainsString('--ui-action-secondary-bg-hover: rgb(76 76 76);', $buttonCss);
-        $this->assertStringContainsString('--ui-action-secondary-bg-active: rgb(111 111 111);', $buttonCss);
-        $this->assertStringContainsString('--ui-action-secondary-bg: rgb(111 111 111);', $buttonCss);
-        $this->assertStringContainsString('--ui-action-secondary-bg-hover: rgb(96 96 96);', $buttonCss);
-        $this->assertStringContainsString('--ui-action-secondary-bg-active: rgb(57 57 57);', $buttonCss);
-        $this->assertStringContainsString('.ui-action-secondary:active', $buttonCss);
-        $this->assertStringContainsString('.ui-icon-button.ui-action-secondary', $buttonCss);
-        $this->assertStringContainsString('--ui-button-padding-start: 1rem;', $buttonCss);
-        $this->assertStringContainsString('--ui-button-padding-end: 4rem;', $buttonCss);
-        $this->assertStringContainsString('--ui-button-gap: 2rem;', $buttonCss);
-        $this->assertStringContainsString('--ui-button-label-line-height: 1.25rem;', $buttonCss);
-        $this->assertStringContainsString('padding-block: max(0rem, calc((var(--ui-button-height) - var(--ui-button-label-line-height)) / 2));', $buttonCss);
-        $this->assertStringContainsString('.ui-action-with-icon', $buttonCss);
-        $this->assertStringContainsString('.ui-action-with-icon .ui-button-icon', $buttonCss);
-        $this->assertStringContainsString('margin-inline-start: auto;', $buttonCss);
-        $this->assertStringContainsString('.ui-action-with-icon.ui-action-ghost .ui-button-icon', $buttonCss);
-        $this->assertStringContainsString('margin-inline-start: 0;', $buttonCss);
-        $this->assertStringContainsString('.ui-action-tertiary.ui-action-outline', $buttonCss);
-        $this->assertStringContainsString('--ui-action-tertiary-border: var(--ui-action-outline-primary-border);', $buttonCss);
-        $this->assertStringContainsString('--ui-action-tertiary-text: var(--ui-action-outline-primary-text);', $buttonCss);
-        $this->assertStringContainsString('--ui-action-tertiary-bg-hover: var(--ui-action-primary-bg-hover);', $buttonCss);
-        $this->assertStringContainsString('--ui-action-tertiary-text-hover: var(--ui-text-inverse);', $buttonCss);
-        $this->assertStringContainsString('--ui-action-tertiary-border: var(--ui-background-inverse);', $buttonCss);
-        $this->assertStringContainsString('--ui-action-tertiary-bg-hover: var(--ui-background-inverse);', $buttonCss);
-        $this->assertStringContainsString('--ui-action-tertiary-text-hover: rgb(3 105 161);', $buttonCss);
-        $this->assertStringContainsString('.ui-button-group-equal', $buttonCss);
-        $this->assertStringContainsString('.ui-button-group-fluid', $buttonCss);
-        $this->assertStringContainsString('.ui-button-group-vertical', $buttonCss);
-        $this->assertStringContainsString('grid-auto-columns: minmax(0, 1fr);', $buttonCss);
-        $this->assertStringContainsString('grid-auto-rows: minmax(var(--ui-button-height), 1fr);', $buttonCss);
+        $this->assertStringContainsString('$allowedSemantics = [', $buttonView);
+        $this->assertStringContainsString('$allowedSemantics = [\'primary\', \'secondary\', \'tertiary\', \'ghost\'];', $iconButtonView);
+        $this->assertStringContainsString('$allowedSizes = [\'xs\', \'sm\', \'md\', \'lg\', \'xl\', \'2xl\'];', $buttonView);
+        $this->assertStringContainsString('$allowedSizes = [\'xs\', \'sm\', \'md\', \'lg\'];', $iconButtonView);
+        $this->assertStringContainsString('$size === \'lg-expressive\'', $buttonView);
+        $this->assertStringContainsString('ui-button-danger-description-', $buttonView);
+        $this->assertStringContainsString('aria-describedby', $buttonView);
+        $this->assertStringContainsString("'ui-button-'.\$resolvedSemantic", $buttonView);
+        $this->assertStringContainsString('ui-button-icon-only', $iconButtonView);
+        $this->assertStringContainsString("'ui-button-'.\$resolvedSemantic", $iconButtonView);
+        $this->assertStringContainsString('.ui-button-secondary', $buttonCss);
+        $this->assertStringContainsString('.ui-button-secondary.is-hover', $buttonCss);
+        $this->assertStringContainsString('.ui-button-tertiary.is-focus', $buttonCss);
+        $this->assertStringContainsString('.ui-button-danger.is-active', $buttonCss);
+        $this->assertStringContainsString('.ui-button-expressive', $buttonCss);
+        $this->assertStringContainsString('.ui-button-icon', $buttonCss);
+        $this->assertStringContainsString('.ui-button-loading', $buttonCss);
+        $this->assertStringContainsString('.ui-button-icon-only', $iconButtonCss);
+        $this->assertStringContainsString('.ui-icon-button .ui-button-icon', $iconButtonCss);
+        $this->assertStringContainsString('--ui-button-secondary: var(--ui-gray-80);', $buttonTokenCss);
+        $this->assertStringContainsString('--ui-button-secondary-hover: var(--ui-gray-80-hover);', $buttonTokenCss);
+        $this->assertStringContainsString('--ui-button-secondary-active: var(--ui-gray-60);', $buttonTokenCss);
+        $this->assertStringContainsString('--ui-button-secondary: var(--ui-gray-60);', $buttonTokenCss);
+        $this->assertStringContainsString('--ui-button-secondary-hover: var(--ui-gray-60-hover);', $buttonTokenCss);
+        $this->assertStringContainsString('--ui-button-secondary-active: var(--ui-gray-80);', $buttonTokenCss);
+        $this->assertStringContainsString('.ui-button-group-equal', $buttonGroupCss);
+        $this->assertStringContainsString('.ui-button-group-fluid', $buttonGroupCss);
+        $this->assertStringContainsString('.ui-button-group-vertical', $buttonGroupCss);
+        $this->assertStringContainsString('grid-auto-columns: minmax(0, 1fr);', $buttonGroupCss);
         $this->assertStringContainsString('Use Button groups only when users need to consider two or three visible actions together.', $buttonStandard);
         $this->assertStringContainsString('Related non-ghost buttons in a group must be equal width.', $buttonStandard);
         $this->assertStringContainsString('share the tallest required button height when any label wraps to a second line', $buttonStandard);
         $this->assertStringContainsString('The Button UI Reference page should render compact proof examples for horizontal static, horizontal fluid, vertical static, vertical fluid, all-icons, and no-icons groups;', $buttonStandard);
         $this->assertStringContainsString('Always required for icon-only buttons; copy must explain the action if clicked.', $buttonStandard);
-        $this->assertStringContainsString('pins the icon to the right padding and lets label-icon space expand', $buttonStandard);
+        $this->assertStringContainsString('keeps the icon pinned to the right padding and lets label-icon space expand', $buttonStandard);
+        $this->assertStringContainsString('Expressive is not a size value.', $buttonStandard);
+        $this->assertStringContainsString('`size="lg" expressive`', $buttonStandard);
+        $this->assertStringContainsString('`dangerDescription="..."`', $buttonStandard);
         $this->assertStringContainsString('data-ui-tooltip-content', $iconButtonView);
         $this->assertStringContainsString('Tertiary is a primary-color outline role, not neutral outline.', $buttonStandard);
         $this->assertStringContainsString('Action tertiary must stay mapped to the primary-color Button tertiary role, not neutral outline.', $colorStandard);
@@ -1685,12 +1808,12 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-menu-buttons-base="combo-button"', false)
             ->assertSee('data-menu-buttons-base="overflow-menu"', false)
             ->assertSee('data-menu-buttons-trigger-row="primary-menu-button"', false)
-            ->assertSee('data-menu-buttons-trigger-row="outline-menu-button"', false)
+            ->assertSee('data-menu-buttons-trigger-row="tertiary-menu-button"', false)
             ->assertSee('data-menu-buttons-trigger-row="ghost-menu-button"', false)
             ->assertSee('data-menu-buttons-trigger-row="combo-primary-only"', false)
             ->assertSee('data-menu-buttons-trigger-row="overflow-ghost-only"', false)
             ->assertSee('data-menu-buttons-base-variant="primary"', false)
-            ->assertSee('data-menu-buttons-base-variant="outline"', false)
+            ->assertSee('data-menu-buttons-base-variant="tertiary"', false)
             ->assertSee('data-menu-buttons-base-variant="ghost"', false)
             ->assertSee('data-menu-buttons-overflow-rule="ghost-only-vertical-ellipsis"', false)
             ->assertSee('data-menu-buttons-size-row="extra-small"', false)
@@ -1741,7 +1864,8 @@ class PlatformUiReferenceTest extends TestCase
         $comboButtonView = file_get_contents(resource_path('views/components/ui/combo-button.blade.php'));
         $overflowMenuView = file_get_contents(resource_path('views/components/ui/overflow-menu.blade.php'));
         $menuButtonExamples = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/menu-buttons.blade.php'));
-        $appCss = file_get_contents(resource_path('css/app.css'));
+        $comboButtonCss = file_get_contents(resource_path('css/components/combo-button.css'));
+        $overflowMenuCss = file_get_contents(resource_path('css/components/overflow-menu.css'));
         $menuButtonsStandard = file_get_contents(base_path('docs/02-standards/ui/components/menu-buttons.md'));
 
         $this->assertIsString($menuView);
@@ -1749,17 +1873,18 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertIsString($comboButtonView);
         $this->assertIsString($overflowMenuView);
         $this->assertIsString($menuButtonExamples);
-        $this->assertIsString($appCss);
+        $this->assertIsString($comboButtonCss);
+        $this->assertIsString($overflowMenuCss);
         $this->assertIsString($menuButtonsStandard);
         $this->assertStringContainsString('icon="heroicon-o-chevron-down"', $menuView);
         $this->assertStringContainsString('heroicon-o-ellipsis-vertical', $menuView);
         $this->assertStringContainsString('trigger-icon="heroicon-o-chevron-down"', $comboButtonView);
         $this->assertStringContainsString('trigger-icon="heroicon-o-ellipsis-vertical"', $overflowMenuView);
         $this->assertStringNotContainsString('<span aria-hidden="true">...</span>', $menuView);
-        $this->assertStringContainsString('Outline menu button', $menuButtonExamples);
-        $this->assertStringContainsString('.ui-combo-button [data-ui-combo-button-trigger] .ui-icon-button', $appCss);
-        $this->assertStringContainsString('border-start-start-radius: 0;', $appCss);
-        $this->assertStringContainsString('.ui-overflow-menu .ui-icon-button', $appCss);
+        $this->assertStringContainsString('Tertiary menu button', $menuButtonExamples);
+        $this->assertStringContainsString('.ui-combo-button-trigger.ui-button', $comboButtonCss);
+        $this->assertStringContainsString('border-start-start-radius: 0;', $comboButtonCss);
+        $this->assertStringContainsString('.ui-overflow-menu-trigger', $overflowMenuCss);
         $this->assertStringContainsString('any approved secondary trigger must consume `--ui-action-secondary-*`', $menuButtonsStandard);
         $this->assertStringContainsString('The caret must render to the right of the label and must not wrap to a new text line.', $menuButtonsStandard);
         $this->assertStringContainsString('Overflow menu triggers must be icon-only ghost buttons using the approved vertical ellipsis icon', $menuButtonsStandard);
@@ -1872,6 +1997,7 @@ class PlatformUiReferenceTest extends TestCase
         $this->get('/platform/ui-reference/components/date-picker')
             ->assertOk()
             ->assertSee('x-ui.date-picker')
+            ->assertSee('x-ui.date-picker-input')
             ->assertSee('data-component-live-layout="date-picker-matrix"', false)
             ->assertSee('data-ui-reference-sample-type="date-picker"', false)
             ->assertSee('Approved variants')
@@ -1880,49 +2006,35 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-ui-tabs-tab', false)
             ->assertSee('data-ui-tabs-panel', false)
             ->assertSee('Simple date input')
-            ->assertSee('Default simple date input')
-            ->assertSee('Fluid simple date input')
-            ->assertSee('Calendar picker')
-            ->assertSee('Default calendar picker')
-            ->assertSee('Fluid calendar picker')
-            ->assertSee('Date range picker')
-            ->assertSee('Time picker')
-            ->assertSee('Default time picker')
-            ->assertSee('Fluid time picker')
-            ->assertSee('Default input sizes')
-            ->assertSee('Small date input, 32px')
-            ->assertSee('Medium date input, 40px')
-            ->assertSee('Large date input, 48px')
-            ->assertSee('Small time picker, 32px')
-            ->assertSee('Medium time picker, 40px')
-            ->assertSee('Large time picker, 48px')
-            ->assertSee('Selected range: 2026-06-10 to 2026-06-18.')
-            ->assertSee('Set time')
-            ->assertSee('Clock')
-            ->assertSee('Timezone')
+            ->assertSee('Single calendar picker')
+            ->assertSee('Range calendar picker')
+            ->assertSee('Skeleton loading')
+            ->assertSee('Small date input')
+            ->assertSee('Medium date input')
+            ->assertSee('Large date input')
+            ->assertSee('Small calendar picker')
+            ->assertSee('Medium calendar picker')
+            ->assertSee('Large calendar picker')
+            ->assertSee('Required field')
             ->assertSee('data-ui-component="date-picker"', false)
+            ->assertSee('data-ui-date-picker-flatpickr', false)
             ->assertSee('data-ui-date-picker-input', false)
-            ->assertSee('data-ui-date-picker-type="date"', false)
-            ->assertSee('data-ui-component="date-range-picker"', false)
-            ->assertSee('data-ui-date-range-picker', false)
-            ->assertSee('data-ui-date-range-input="start"', false)
-            ->assertSee('data-ui-date-range-input="end"', false)
-            ->assertSee('data-ui-date-range-calendar', false)
-            ->assertSee('data-ui-date-range-day', false)
-            ->assertSee('data-ui-component="time-picker"', false)
-            ->assertSee('data-ui-time-picker', false)
-            ->assertSee('data-ui-time-picker-period', false)
-            ->assertSee('data-ui-time-picker-timezone', false)
-            ->assertSee('ui-time-picker-row', false)
+            ->assertSee('data-ui-date-picker-type="simple"', false)
+            ->assertSee('data-ui-date-picker-type="single"', false)
+            ->assertSee('data-ui-date-picker-type="range"', false)
+            ->assertSee('data-ui-date-picker-input-role="start"', false)
+            ->assertSee('data-ui-date-picker-input-role="end"', false)
+            ->assertSee('data-ui-component="date-picker-skeleton"', false)
             ->assertSee('data-ui-date-picker-size="sm"', false)
             ->assertSee('data-ui-date-picker-size="md"', false)
             ->assertSee('data-ui-date-picker-size="lg"', false)
             ->assertSee('data-ui-date-picker-style="fluid"', false)
-            ->assertSee('min="2026-01-01"', false)
-            ->assertSee('max="2026-12-31"', false)
+            ->assertSee('data-ui-date-picker-min-date="2019-03-13"', false)
+            ->assertSee('data-ui-date-picker-max-date="2019-03-31"', false)
+            ->assertSee('data-ui-date-picker-disable="[&quot;2019-03-05&quot;', false)
+            ->assertSee('data-ui-date-picker-date-format="m/d/Y"', false)
             ->assertSee('aria-invalid="true"', false)
             ->assertSee('data-ui-field-warning="true"', false)
-            ->assertSee('data-ui-date-picker-readonly', false)
             ->assertSee('aria-busy="true"', false)
             ->assertSee('disabled', false)
             ->assertSee('ui-input-date', false)
@@ -1930,56 +2042,78 @@ class PlatformUiReferenceTest extends TestCase
             ->assertDontSee('Component-specific API pending correction')
             ->assertDontSee('Family-depth implementation pending')
             ->assertDontSee('Date-time entry')
+            ->assertDontSee('Time picker live examples')
+            ->assertDontSee('data-ui-component="time-picker"', false)
+            ->assertDontSee('data-ui-time-picker', false)
+            ->assertDontSee('data-ui-date-range-picker', false)
+            ->assertDontSee('data-ui-date-range-calendar', false)
             ->assertDontSee('data-ui-date-picker-type="datetime-local"', false)
             ->assertDontSee('cds--date-picker')
             ->assertDontSee('bx--date-picker');
 
         $componentView = file_get_contents(resource_path('views/components/ui/date-picker.blade.php'));
-        $componentCss = file_get_contents(resource_path('css/app.css'));
-        $dateRangeJs = file_get_contents(resource_path('js/ui-controls/date-range-pickers.js'));
+        $inputView = file_get_contents(resource_path('views/components/ui/date-picker-input.blade.php'));
+        $skeletonView = file_get_contents(resource_path('views/components/ui/date-picker-skeleton.blade.php'));
+        $componentCss = file_get_contents(resource_path('css/components/list.css'));
+        $datePickerJs = file_get_contents(resource_path('js/ui-controls/date-picker.js'));
         $uiControlsJs = file_get_contents(resource_path('js/ui-controls.js'));
         $appJs = file_get_contents(resource_path('js/app.js'));
         $liveExamples = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/date-picker.blade.php'));
         $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
         $overviewCatalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentCatalog.php'));
         $standard = file_get_contents(base_path('docs/02-standards/ui/components/date-picker.md'));
+        $reference = file_get_contents(base_path('docs/09-reference/ui/flatpickr-date-picker-dependency-review.md'));
+        $packageJson = file_get_contents(base_path('package.json'));
 
-        $this->assertStringContainsString("'size' => 'md'", $componentView);
-        $this->assertStringContainsString("'style' => 'default'", $componentView);
-        $this->assertStringContainsString("'skeleton' => false", $componentView);
-        $this->assertStringContainsString('data-ui-date-picker-readonly', $componentView);
-        $this->assertStringContainsString('ui-date-picker-fluid', $componentCss);
-        $this->assertStringContainsString('ui-date-picker-readonly-value', $componentCss);
+        $this->assertStringContainsString("'datePickerType' => 'single'", $componentView);
+        $this->assertStringContainsString("data-ui-date-picker-type=\"{{ \$type }}\"", $componentView);
+        $this->assertStringContainsString('data-ui-date-picker-flatpickr', $componentView);
+        $this->assertStringContainsString("'labelText' => null", $inputView);
+        $this->assertStringContainsString('data-ui-date-picker-input-role="{{ $role }}"', $inputView);
+        $this->assertStringContainsString('ui-date-picker-calendar-icon', $inputView);
+        $this->assertStringContainsString('data-ui-component="date-picker-skeleton"', $skeletonView);
+        $this->assertStringContainsString('ui-date-picker-input-fluid', $componentCss);
+        $this->assertStringContainsString('.flatpickr-calendar.ui-date-picker-calendar', $componentCss);
         $this->assertStringContainsString('ui-date-picker-skeleton', $componentCss);
-        $this->assertStringContainsString('.ui-date-range-picker', $componentCss);
-        $this->assertStringContainsString('.ui-date-range-day[data-ui-date-range-in-range=', $componentCss);
-        $this->assertStringContainsString('.ui-time-picker', $componentCss);
-        $this->assertStringContainsString('.ui-time-picker-row', $componentCss);
         $this->assertStringContainsString('width: 1rem;', $componentCss);
-        $this->assertStringContainsString('display: block;', $componentCss);
-        $this->assertStringContainsString('.ui-date-picker .ui-input-date:hover:not(:disabled)', $componentCss);
+        $this->assertStringContainsString('.ui-date-picker-input-field .ui-input-date:hover:not(:disabled):not([readonly])', $componentCss);
         $this->assertStringContainsString('cursor: text;', $componentCss);
-        $this->assertStringContainsString('.ui-time-picker-invalid .ui-input', $componentCss);
-        $this->assertStringContainsString('.ui-time-picker-disabled .ui-input', $componentCss);
-        $this->assertStringContainsString('ui-date-picker-fluid.ui-date-picker-invalid .ui-date-picker-control', $componentCss);
-        $this->assertStringContainsString('initDateRangePickers', $dateRangeJs);
-        $this->assertStringContainsString('data-ui-date-range-picker', $dateRangeJs);
-        $this->assertStringContainsString('uiDateRangeHover', $dateRangeJs);
-        $this->assertStringContainsString('export { initDateRangePickers }', $uiControlsJs);
-        $this->assertStringContainsString('initDateRangePickers', $appJs);
-        $this->assertStringContainsString('data-ui-component="time-picker"', $liveExamples);
+        $this->assertStringContainsString("import flatpickr from 'flatpickr';", $datePickerJs);
+        $this->assertStringContainsString("import rangePlugin from 'flatpickr/dist/plugins/rangePlugin';", $datePickerJs);
+        $this->assertStringContainsString("import 'flatpickr/dist/flatpickr.css';", $datePickerJs);
+        $this->assertStringContainsString('export function initDatePickers(root = document)', $datePickerJs);
+        $this->assertStringContainsString("new rangePlugin({ input: inputs[1] })", $datePickerJs);
+        $this->assertStringContainsString('data-ui-date-picker-flatpickr', $datePickerJs);
+        $this->assertStringContainsString('uiDatePickerSelectedValue', $datePickerJs);
+        $this->assertStringContainsString('export { initDatePickers }', $uiControlsJs);
+        $this->assertStringContainsString('initDatePickers', $appJs);
+        $this->assertStringNotContainsString('initDateRangePickers', $uiControlsJs);
+        $this->assertStringNotContainsString('initDateRangePickers', $appJs);
+        $this->assertFileDoesNotExist(resource_path('js/ui-controls/date-range-pickers.js'));
         $this->assertStringContainsString('data-date-picker-tabs', $liveExamples);
-        $this->assertStringContainsString('Date + Time combo picker is not an approved component option.', $liveExamples);
+        $this->assertStringContainsString('date-picker-type="simple"', $liveExamples);
+        $this->assertStringContainsString('date-picker-type="single"', $liveExamples);
+        $this->assertStringContainsString('date-picker-type="range"', $liveExamples);
+        $this->assertStringContainsString('<x-ui.date-picker-skeleton', $liveExamples);
+        $this->assertStringContainsString('role="start"', $liveExamples);
+        $this->assertStringContainsString('role="end"', $liveExamples);
+        $this->assertStringNotContainsString('data-ui-component="time-picker"', $liveExamples);
         $this->assertStringNotContainsString('type="datetime-local"', $liveExamples);
+        $this->assertStringNotContainsString('variant="calendar"', $liveExamples);
+        $this->assertStringNotContainsString(':calendar="false"', $liveExamples);
         $this->assertStringContainsString("'live_examples_view' => 'platform.ui-reference.components.live-examples.date-picker'", $catalog);
+        $this->assertStringContainsString('initDatePickers exported from resources/js/ui-controls/date-picker.js', $catalog);
         $this->assertStringContainsString("'date-picker', 'Date picker', 'Inputs', 'Implemented Pending Review'", $overviewCatalog);
         $this->assertStringContainsString('status: implemented-pending-review', $standard);
-        $this->assertStringContainsString('Date + Time combo picker is not an approved component option.', $standard);
-        $this->assertStringContainsString('Simple date input, calendar picker, and time picker are visually and structurally separate.', $standard);
-        $this->assertStringContainsString('data-ui-time-picker-timezone', $standard);
-        $this->assertStringContainsString('data-ui-date-range-picker', $standard);
-        $this->assertStringContainsString('Do not use `datetime-local` as a UI Reference substitute for time picker composition.', $standard);
+        $this->assertStringContainsString('x-ui.date-picker-input', $standard);
+        $this->assertStringContainsString('Flatpickr `rangePlugin`', $standard);
+        $this->assertStringContainsString('Time Picker is not a Date Picker variant.', $standard);
+        $this->assertStringContainsString('No legacy `variant="calendar"`', $standard);
         $this->assertStringNotContainsString('Range picker remains gated', $standard);
+        $this->assertStringContainsString('flatpickr', $packageJson);
+        $this->assertStringContainsString('"flatpickr": "4.6.13"', $packageJson);
+        $this->assertStringContainsString('rangePlugin', $reference);
+        $this->assertStringContainsString('https://flatpickr.js.org/options/', $reference);
     }
 
     public function test_search_component_page_renders_installed_api_examples(): void
@@ -2039,7 +2173,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertDontSee('bx--search');
 
         $componentView = file_get_contents(resource_path('views/components/ui/search.blade.php'));
-        $componentCss = file_get_contents(resource_path('css/app.css'));
+        $componentCss = file_get_contents(resource_path('css/components/list.css'));
         $componentJs = file_get_contents(resource_path('js/ui-controls/search.js'));
         $uiControls = file_get_contents(resource_path('js/ui-controls.js'));
         $appJs = file_get_contents(resource_path('js/app.js'));
@@ -2432,27 +2566,39 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-component-live-layout="select-matrix"', false)
             ->assertSee('data-ui-reference-sample-type="field"', false)
             ->assertSee('x-ui.select')
-            ->assertSee('Short native selection')
-            ->assertSee('Styles and sizes')
-            ->assertSee('Validation selection')
-            ->assertSee('Disabled, read-only, and loading')
-            ->assertSee('Grouped options')
+            ->assertSee('Default option behavior')
+            ->assertSee('Empty default option')
+            ->assertSee('First option default')
+            ->assertSee('Custom option default')
+            ->assertSee('Variants')
+            ->assertSee('Inline no-label select')
+            ->assertSee('Sizes')
+            ->assertSee('States')
+            ->assertSee('Focus')
+            ->assertSee('Options and groups')
+            ->assertSee('Label behavior')
             ->assertSee('Select versus related APIs')
             ->assertSee('data-ui-component="select"', false)
             ->assertSee('data-ui-select-field', false)
             ->assertSee('data-ui-select', false)
+            ->assertSee('data-ui-select-size="xs"', false)
             ->assertSee('data-ui-select-size="sm"', false)
             ->assertSee('data-ui-select-size="md"', false)
             ->assertSee('data-ui-select-size="lg"', false)
             ->assertSee('data-ui-select-variant="inline"', false)
             ->assertSee('data-ui-select-style="fluid"', false)
+            ->assertSee('data-ui-select-no-label="true"', false)
+            ->assertSee('data-ui-select-hidden-label="true"', false)
+            ->assertSee('aria-label="Sort order"', false)
             ->assertSee('ui-select-chevron-icon', false)
             ->assertSee('ui-reference-force-focus', false)
             ->assertSee('aria-invalid="true"', false)
             ->assertSee('aria-busy="true"', false)
             ->assertSee('required', false)
             ->assertSee('disabled', false)
-            ->assertSee('<optgroup label="Production">', false)
+            ->assertSee('value="option-3"', false)
+            ->assertSee('label="Planning"', false)
+            ->assertSee('label="Review"', false)
             ->assertSee('data-ui-select-readonly', false)
             ->assertSee('Choose an account type before saving.')
             ->assertSee('Quarterly billing may change invoice timing.')
@@ -2466,32 +2612,59 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringNotContainsString('form-select', $content);
 
         $selectView = file_get_contents(resource_path('views/components/ui/select.blade.php'));
-        $selectCss = file_get_contents(resource_path('css/app.css'));
+        $selectCss = file_get_contents(resource_path('css/components/select.css'));
         $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
         $standard = file_get_contents(base_path('docs/02-standards/ui/components/select.md'));
 
         $this->assertStringContainsString("'size' => 'md'", $selectView);
         $this->assertStringContainsString("'variant' => 'default'", $selectView);
         $this->assertStringContainsString("'style' => 'default'", $selectView);
+        $this->assertStringContainsString("'optionGroups' => null", $selectView);
+        $this->assertStringContainsString("'inline' => false", $selectView);
+        $this->assertStringContainsString("'noLabel' => false", $selectView);
+        $this->assertStringContainsString("'hideLabel' => false", $selectView);
         $this->assertStringContainsString("'skeleton' => false", $selectView);
+        $this->assertStringContainsString("['xs', 'sm', 'md', 'lg']", $selectView);
         $this->assertStringContainsString('ui-select-readonly-value', $selectView);
+        $this->assertStringContainsString('data-ui-select-no-label', $selectView);
+        $this->assertStringContainsString('data-ui-select-hidden-label', $selectView);
+        $this->assertStringContainsString("data_get(\$option, 'text'", $selectView);
+        $this->assertStringContainsString("data_get(\$option, 'hidden'", $selectView);
         $this->assertStringContainsString('optgroup', $selectView);
         $this->assertStringContainsString('heroicon-o-x-circle', $selectView);
         $this->assertStringContainsString('heroicon-o-exclamation-triangle', $selectView);
         $this->assertStringContainsString('heroicon-o-chevron-down', $selectView);
         $this->assertStringContainsString('$requestedVariant', $selectView);
-        $this->assertStringContainsString('$variant === \'inline\' ? \'sr-only\' : \'ui-field-label\'', $selectView);
+        $this->assertStringContainsString("'sr-only' => \$hideLabel", $selectView);
         $this->assertStringContainsString('.ui-select-field-fluid .ui-select', $selectCss);
-        $this->assertStringContainsString('.ui-select-field-fluid .ui-select-shell:focus-within', $selectCss);
+        $this->assertStringContainsString('.ui-select-field-fluid .ui-select-shell', $selectCss);
+        $this->assertStringContainsString('background-color: transparent;', $selectCss);
+        $this->assertStringContainsString('background-color: var(--ui-field-01);', $selectCss);
+        $this->assertStringContainsString('.ui-select-field-fluid:not(.ui-select-field-disabled):not(', $selectCss);
         $this->assertStringContainsString('.ui-select-chevron-icon', $selectCss);
-        $this->assertStringContainsString('border-bottom-color: transparent', $selectCss);
+        $this->assertStringContainsString('border-block-end-color: transparent', $selectCss);
+        $this->assertStringContainsString('inline-size: fit-content;', $selectCss);
+        $this->assertStringContainsString('inline-size: max-content;', $selectCss);
         $this->assertStringContainsString('.ui-select-field-inline .ui-select', $selectCss);
+        $this->assertStringContainsString('.ui-select-field-inline .ui-select-chevron-icon', $selectCss);
+        $this->assertStringContainsString('.ui-select-field-xs .ui-select', $selectCss);
+        $this->assertStringContainsString('.ui-select-field-no-label .ui-select-shell', $selectCss);
+        $this->assertStringContainsString('padding-inline: var(--ui-spacing-05) var(--ui-spacing-09);', $selectCss);
+        $this->assertStringContainsString('inset-inline-end: var(--ui-spacing-05);', $selectCss);
+        $this->assertStringContainsString('.ui-select-field-invalid.ui-reference-force-focus .ui-select', $selectCss);
+        $this->assertStringContainsString('.ui-select option', $selectCss);
+        $this->assertStringContainsString('.ui-select option:checked', $selectCss);
         $this->assertStringContainsString('.ui-select-field-skeleton .ui-select', $selectCss);
         $this->assertStringNotContainsString('linear-gradient(45deg, transparent 50%, currentColor 50%)', $selectCss);
         $this->assertStringContainsString('\'select\' => $this->selectComponent()', $catalog);
         $this->assertStringContainsString('outline chevron icon', $catalog);
         $this->assertStringContainsString('The approved production API is `<x-ui.select>`', $standard);
-        $this->assertStringContainsString('Inline select is borderless', $standard);
+        $this->assertStringContainsString('Select is not a ListBox consumer.', $standard);
+        $this->assertStringContainsString('Inline select is not default select with', $standard);
+        $this->assertStringContainsString('16px left padding', $standard);
+        $this->assertStringContainsString('noLabel', $standard);
+        $this->assertStringContainsString('hideLabel', $standard);
+        $this->assertStringContainsString('Default option behavior', $standard);
         $this->assertStringContainsString('approved outline chevron icon', $standard);
         $this->assertStringNotContainsString('Do not call `<x-ui.select>`', $standard);
     }
@@ -2504,17 +2677,16 @@ class PlatformUiReferenceTest extends TestCase
             ->assertOk()
             ->assertSee('data-component-live-layout="dropdown-matrix"', false)
             ->assertSee('data-ui-reference-sample-type="field"', false)
+            ->assertSee('data-dropdown-live-tabs', false)
             ->assertSee('x-ui.dropdown')
-            ->assertSee('Basic known-option dropdown')
             ->assertSee('Long known-option handoff')
-            ->assertSee('Validation selection')
-            ->assertSee('Disabled and read-only dropdown')
+            ->assertSee('Validation, disabled, and read-only')
             ->assertSee('Size comparison')
             ->assertSee('Dropdown family coverage')
             ->assertSee('Filterable multiselect')
+            ->assertSee('Installed standalone')
             ->assertSee('Required gap')
             ->assertSee('Dropdown vs related APIs')
-            ->assertSee('Deferred and gated capabilities')
             ->assertSee('Select')
             ->assertSee('Menu buttons / Menu')
             ->assertSee('Multiselect')
@@ -2530,8 +2702,8 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-ui-dropdown-size="sm"', false)
             ->assertSee('data-ui-dropdown-size="md"', false)
             ->assertSee('data-ui-dropdown-size="lg"', false)
-            ->assertSee('data-ui-component="multiselect"', false)
-            ->assertSee('data-ui-multiselect-filterable="true"', false)
+            ->assertDontSee('data-ui-component="multiselect"', false)
+            ->assertDontSee('data-ui-multiselect-filterable="true"', false)
             ->assertSee('aria-haspopup="listbox"', false)
             ->assertSee('role="listbox"', false)
             ->assertSee('role="option"', false)
@@ -2539,16 +2711,23 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('aria-readonly="true"', false)
             ->assertSee('Choose a workspace type before saving.')
             ->assertSee('Pending roles may delay access.')
+            ->assertDontSee('data-ui-dropdown-open="true"', false)
+            ->assertDontSee('ui-list-box-menu-open', false)
             ->assertDontSee('short action dropdown')
             ->assertDontSee('Component-specific API pending correction')
             ->assertDontSee('Family-depth implementation pending');
 
         $dropdownView = file_get_contents(resource_path('views/components/ui/dropdown.blade.php'));
+        $liveExamples = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/dropdown.blade.php'));
         $dropdownScript = file_get_contents(resource_path('js/ui-controls/dropdowns.js'));
         $uiControls = file_get_contents(resource_path('js/ui-controls.js'));
         $appJs = file_get_contents(resource_path('js/app.js'));
         $interactionFocus = file_get_contents(resource_path('js/ui-controls/interaction-focus.js'));
-        $dropdownCss = file_get_contents(resource_path('css/app.css'));
+        $dropdownCss = file_get_contents(resource_path('css/components/dropdown.css'));
+        $listBoxCss = file_get_contents(resource_path('css/components/list-box.css'));
+        $multiselectView = file_get_contents(resource_path('views/components/ui/multiselect.blade.php'));
+        $multiselectCss = file_get_contents(resource_path('css/components/multiselect.css'));
+        $formCss = file_get_contents(resource_path('css/components/form.css'));
         $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
         $standard = file_get_contents(base_path('docs/02-standards/ui/components/dropdown.md'));
 
@@ -2556,26 +2735,107 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString("'readonly' => false", $dropdownView);
         $this->assertStringContainsString("'menuMaxHeight' => null", $dropdownView);
         $this->assertStringContainsString('ui-dropdown-trigger', $dropdownView);
+        $this->assertStringContainsString('ui-list-box-wrapper', $dropdownView);
+        $this->assertStringContainsString('ui-list-box-menu-item', $dropdownView);
         $this->assertStringContainsString('data-ui-dropdown-field', $dropdownView);
         $this->assertStringContainsString('data-ui-dropdown-unified-trigger', $dropdownView);
         $this->assertStringContainsString('data-ui-dropdown-chevron', $dropdownView);
         $this->assertStringContainsString('heroicon-o-chevron-down', $dropdownView);
         $this->assertStringContainsString('data-ui-dropdown-option-value', $dropdownView);
+        $this->assertStringContainsString('data-ui-reference-tabs', $liveExamples);
+        $this->assertStringContainsString('data-dropdown-live-section="variants"', $liveExamples);
+        $this->assertStringContainsString('data-dropdown-live-section="states"', $liveExamples);
+        $this->assertStringContainsString('data-dropdown-live-section="size-comparison"', $liveExamples);
+        $this->assertStringContainsString('data-dropdown-live-section="family-coverage"', $liveExamples);
+        $this->assertStringContainsString('data-dropdown-live-section="boundaries"', $liveExamples);
+        $this->assertStringContainsString('Deferred and gated capabilities', $liveExamples);
+        $this->assertStringNotContainsString('<x-ui.multiselect', $liveExamples);
+        $this->assertStringNotContainsString(' open />', $liveExamples);
+        $this->assertStringNotContainsString(' clearable open', $liveExamples);
+        $this->assertStringContainsString('x-heroicon-o-chevron-down', $multiselectView);
+        $this->assertStringNotContainsString('<span aria-hidden="true">v</span>', $multiselectView);
         $this->assertStringContainsString('export function initDropdowns(root = document)', $dropdownScript);
         $this->assertStringContainsString('selectDropdownOption', $dropdownScript);
         $this->assertStringContainsString('focusRelativeOption', $dropdownScript);
+        $this->assertStringContainsString('focusDropdownOption', $dropdownScript);
+        $this->assertStringContainsString("event.key === 'Home'", $dropdownScript);
+        $this->assertStringContainsString("event.key === 'End'", $dropdownScript);
         $this->assertStringContainsString('export { initDropdowns }', $uiControls);
         $this->assertStringContainsString('initDropdowns', $appJs);
         $this->assertStringContainsString('.ui-dropdown-trigger:not(:disabled)', $interactionFocus);
         $this->assertStringContainsString('.ui-dropdown-trigger', $dropdownCss);
+        $this->assertStringContainsString('.ui-dropdown-fluid .ui-list-box', $dropdownCss);
+        $this->assertStringContainsString('inset-block: auto 100%;', $dropdownCss);
+        $this->assertStringContainsString('.ui-dropdown-invalid .ui-dropdown-trigger:not(.ui-list-box-expanded)', $dropdownCss);
         $this->assertStringNotContainsString('.ui-dropdown-chevron {'."\n".'        @apply inline-flex items-center justify-center border-l;', $dropdownCss);
-        $this->assertStringContainsString('.ui-dropdown-option[aria-selected=\'true\']', $dropdownCss);
-        $this->assertStringContainsString('box-shadow: 0 2px 6px 0 rgb(0 0 0 / 20%)', $dropdownCss);
+        $this->assertStringContainsString('.ui-dropdown-option[aria-selected="true"] .ui-dropdown-option-check', $dropdownCss);
+        $this->assertStringContainsString('block-size: var(--ui-list-box-size);', $listBoxCss);
+        $this->assertStringContainsString('.ui-list-box:focus', $listBoxCss);
+        $this->assertStringContainsString('inset-block-start: 100%;', $listBoxCss);
+        $this->assertStringContainsString('.ui-list-box-menu-item:first-child', $listBoxCss);
+        $this->assertStringContainsString('.ui-list-box-invalid:not(.ui-list-box-expanded)', $listBoxCss);
+        $this->assertStringContainsString('.ui-list-box-menu-item[aria-selected="true"]', $listBoxCss);
+        $this->assertStringContainsString('.ui-list-box-menu-item-highlighted', $listBoxCss);
+        $this->assertStringContainsString('.ui-list-box-menu-item-disabled', $listBoxCss);
+        $this->assertStringContainsString('.ui-multiselect .ui-multiselect-panel.ui-list-box-menu-open', $multiselectCss);
+        $this->assertStringContainsString('.ui-multiselect-chevron-icon', $multiselectCss);
+        $this->assertStringContainsString('.ui-field-helper', $formCss);
         $this->assertStringContainsString('\'dropdown\' => $this->dropdownComponent()', $catalog);
         $this->assertStringContainsString('Carbon\'s Dropdown, Multiselect, Filterable multiselect, and Combo box', $standard);
+        $this->assertStringContainsString('Dropdown is a custom listbox consumer.', $standard);
         $this->assertStringContainsString('Field and chevron must function as one dropdown control', $standard);
         $this->assertStringContainsString('Default Dropdown field and menu item heights must match', $standard);
         $this->assertStringContainsString('Combo box plus Inline dropdown remain required gaps', $standard);
+    }
+
+    public function test_multiselect_and_combo_box_reference_pages_keep_selection_owners_separate(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/ui-reference/components/multiselect')
+            ->assertOk()
+            ->assertSee('data-component-live-layout="multiselect-matrix"', false)
+            ->assertSee('data-multiselect-live-tabs', false)
+            ->assertSee('data-multiselect-live-section="variants"', false)
+            ->assertSee('data-multiselect-live-section="states"', false)
+            ->assertSee('data-multiselect-live-section="filtering-actions"', false)
+            ->assertSee('data-multiselect-live-section="overflow"', false)
+            ->assertSee('data-multiselect-live-section="boundaries"', false)
+            ->assertSee('x-ui.multiselect')
+            ->assertSee('Filterable multiselect')
+            ->assertSee('Validation multiselect')
+            ->assertSee('Disabled and loading multiselect')
+            ->assertSee('Combo box')
+            ->assertSee('Queued gap')
+            ->assertSee('data-ui-component="multiselect"', false)
+            ->assertSee('data-ui-multiselect-filterable="true"', false)
+            ->assertSee('aria-multiselectable="true"', false)
+            ->assertSee('data-ui-multiselect-clear', false)
+            ->assertSee('data-ui-multiselect-select-all', false);
+
+        $this->get('/platform/ui-reference/components/combo-box')
+            ->assertOk()
+            ->assertSee('data-ui-reference-component="combo-box"', false)
+            ->assertSee('data-ui-reference-component-disposition="Queued Gap"', false)
+            ->assertSee('No public Combo box API approved')
+            ->assertSee('standalone queued-gap component page')
+            ->assertSee('Dropdown')
+            ->assertSee('Multiselect')
+            ->assertDontSee('data-ui-component="combo-box"', false);
+
+        $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentCatalog.php'));
+        $depthCatalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
+        $multiselectLiveExamples = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/multiselect.blade.php'));
+        $comboBoxStandard = file_get_contents(base_path('docs/02-standards/ui/components/combo-box.md'));
+        $apiRegistry = file_get_contents(base_path('docs/02-standards/ui/api-registry.md'));
+
+        $this->assertStringContainsString("component('combo-box', 'Combo box'", $catalog);
+        $this->assertStringContainsString('\'combo-box\' => $this->comboBoxComponent()', $depthCatalog);
+        $this->assertStringContainsString('data-ui-reference-tabs', $multiselectLiveExamples);
+        $this->assertStringContainsString('data-multiselect-live-section="filtering-actions"', $multiselectLiveExamples);
+        $this->assertStringContainsString('data-multiselect-live-section="overflow"', $multiselectLiveExamples);
+        $this->assertStringContainsString('Do not implement Combo box behavior inside Dropdown.', $comboBoxStandard);
+        $this->assertStringContainsString('| Combo box          | Queued gap', $apiRegistry);
     }
 
     public function test_tag_component_page_renders_installed_api_examples(): void
@@ -2586,31 +2846,53 @@ class PlatformUiReferenceTest extends TestCase
             ->assertOk()
             ->assertSee('data-component-live-layout="tag-matrix"', false)
             ->assertSee('data-ui-reference-sample-type="tags"', false)
+            ->assertSee('data-tag-variant-tabs', false)
             ->assertSee('x-ui.tag')
-            ->assertSee('Variants')
+            ->assertSee('Approved variants')
             ->assertSee('Read-only')
             ->assertSee('Dismissible')
             ->assertSee('Selectable')
             ->assertSee('Operational')
-            ->assertSee('Sizes and anatomy')
-            ->assertSee('Color token matrix')
-            ->assertSee('Interactive states')
-            ->assertSee('Overflow and tooltips')
+            ->assertSee('Read-only tag')
+            ->assertSee('Dismissible tag')
+            ->assertSee('Selectable tag')
+            ->assertSee('Operational tag')
+            ->assertSee('Type hooks')
+            ->assertSee('States')
+            ->assertSee('Disclosure proof')
+            ->assertSee('Fixed-height tag construction')
+            ->assertSee('Heights and radius')
+            ->assertSee('Dismissible spacing')
+            ->assertSee('Interactive borders')
+            ->assertSee('Truncation and label metadata')
+            ->assertSee('Tag color token proof')
+            ->assertSee('Read-only color matrix')
+            ->assertSee('Dismissible color matrix')
+            ->assertSee('Operational color matrix')
+            ->assertSee('Selectable core-token states')
             ->assertSee('Tag groups')
             ->assertSee('Tag versus related APIs')
+            ->assertSee('data-tag-panel="read-only"', false)
+            ->assertSee('data-tag-panel="dismissible"', false)
+            ->assertSee('data-tag-panel="selectable"', false)
+            ->assertSee('data-tag-panel="operational"', false)
             ->assertSee('data-ui-component="tag"', false)
             ->assertSee('data-ui-tag-variant="read-only"', false)
             ->assertSee('data-ui-tag-variant="dismissible"', false)
             ->assertSee('data-ui-tag-variant="selectable"', false)
             ->assertSee('data-ui-tag-variant="operational"', false)
-            ->assertSee('data-ui-tag-color="gray"', false)
-            ->assertSee('data-ui-tag-color="green"', false)
-            ->assertSee('data-ui-tag-color="teal"', false)
+            ->assertSee('data-ui-tag-type="gray"', false)
+            ->assertSee('data-ui-tag-type="green"', false)
+            ->assertSee('data-ui-tag-type="teal"', false)
             ->assertSee('data-ui-tag-size="sm"', false)
             ->assertSee('data-ui-tag-size="md"', false)
             ->assertSee('data-ui-tag-size="lg"', false)
             ->assertSee('data-ui-tag-selected="true"', false)
             ->assertSee('aria-pressed="true"', false)
+            ->assertSee('data-ui-tag-selection-mode="single"', false)
+            ->assertSee('data-ui-tag-selection-mode="multiple"', false)
+            ->assertSee('data-ui-tag-disclosure-target="tag-disclosure-text-list"', false)
+            ->assertSee('aria-controls="tag-disclosure-text-list"', false)
             ->assertSee('aria-label="Remove region filter"', false)
             ->assertSee('ui-tag-disclosure-panel', false)
             ->assertSee('title="Customer analytics export workspace"', false)
@@ -2623,38 +2905,130 @@ class PlatformUiReferenceTest extends TestCase
 
         $tagView = file_get_contents(resource_path('views/components/ui/tag.blade.php'));
         $tagCss = file_get_contents(resource_path('css/app.css'));
+        $tagGroupView = file_get_contents(resource_path('views/components/ui/tag-group.blade.php'));
+        $tagJs = file_get_contents(resource_path('js/ui-controls/tag.js'));
+        $uiControls = file_get_contents(resource_path('js/ui-controls.js'));
+        $appJs = file_get_contents(resource_path('js/app.js'));
         $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
         $overviewCatalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentCatalog.php'));
         $standard = file_get_contents(base_path('docs/02-standards/ui/components/tag.md'));
         $liveExamples = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/tag.blade.php'));
 
-        $this->assertStringContainsString("'label' => null", $tagView);
+        $this->assertStringContainsString("'text' => null", $tagView);
+        $this->assertStringContainsString("'type' => 'gray'", $tagView);
         $this->assertStringContainsString("'variant' => 'read-only'", $tagView);
         $this->assertStringContainsString("'size' => 'md'", $tagView);
         $this->assertStringContainsString("'lg' => 'lg'", $tagView);
+        $this->assertStringContainsString("'dismissLabel' => null", $tagView);
+        $this->assertStringContainsString("'defaultSelected' => false", $tagView);
+        $this->assertStringContainsString("'dir' => 'ltr'", $tagView);
+        $this->assertStringContainsString("'ui-tag-has-icon' => filled(\$icon)", $tagView);
         $this->assertStringContainsString('data-ui-tag-variant="{{ $resolvedVariant }}"', $tagView);
+        $this->assertStringContainsString('data-ui-tag-type="{{ $resolvedType }}"', $tagView);
         $this->assertStringContainsString('aria-pressed="{{ $isSelected ? \'true\' : \'false\' }}"', $tagView);
-        $this->assertStringContainsString('<button type="button" class="ui-tag-close"', $tagView);
+        $this->assertStringContainsString('data-ui-tag-disclosure-target="{{ $disclosureId }}"', $tagView);
+        $this->assertStringContainsString('class="ui-tag-close"', $tagView);
+        $this->assertStringContainsString('ui-tag-label-middle', $tagView);
+        $this->assertStringContainsString('$titleAttribute', $tagView);
+        $this->assertStringContainsString('$directionAttribute', $tagView);
+        $this->assertStringNotContainsString("'tone' =>", $tagView);
+        $this->assertStringNotContainsString("'color' =>", $tagView);
+        $this->assertStringNotContainsString("'label' =>", $tagView);
+        $this->assertStringNotContainsString("'removeLabel' =>", $tagView);
+        $this->assertStringNotContainsString("'removable' =>", $tagView);
+        $this->assertStringNotContainsString('ui-tag-action-icon', $tagView);
         $this->assertStringNotContainsString('ui-status-pill', $tagView);
+        $this->assertStringContainsString('data-ui-tag-group', $tagGroupView);
+        $this->assertStringContainsString('data-ui-tag-selection-mode="{{ $resolvedSelectionMode }}"', $tagGroupView);
+        $this->assertStringContainsString('export function initTags(root = document)', $tagJs);
+        $this->assertStringContainsString('data-ui-tag-dismiss', $tagJs);
+        $this->assertStringContainsString('uiTagDisclosureTarget', $tagJs);
+        $this->assertStringContainsString("export { initTags } from './ui-controls/tag';", $uiControls);
+        $this->assertStringContainsString('initTags,', $appJs);
         $this->assertStringContainsString('.ui-tag', $tagCss);
+        $this->assertStringContainsString('inline-size: fit-content;', $tagCss);
+        $this->assertStringContainsString('border-radius: 16px;', $tagCss);
+        $this->assertStringContainsString('padding-block: 0;', $tagCss);
+        $this->assertStringContainsString('font-weight: 400;', $tagCss);
+        $this->assertStringContainsString('min-block-size: 1.125rem;', $tagCss);
+        $this->assertStringContainsString('max-block-size: 1.125rem;', $tagCss);
+        $this->assertStringContainsString('min-block-size: 1.5rem;', $tagCss);
+        $this->assertStringContainsString('max-block-size: 1.5rem;', $tagCss);
         $this->assertStringContainsString('block-size: 2rem;', $tagCss);
-        $this->assertStringContainsString('--ui-tag-background-gray: #e0e0e0;', $tagCss);
-        $this->assertStringContainsString('--ui-tag-color-green: #0e6027;', $tagCss);
-        $this->assertStringContainsString('--ui-tag-border-teal: #08bdba;', $tagCss);
+        $this->assertStringContainsString('max-block-size: 2rem;', $tagCss);
+        $this->assertStringContainsString('.ui-tag-read-only.ui-tag-lg:not(.ui-tag-has-icon)', $tagCss);
+        $this->assertStringContainsString('.ui-tag-dismissible.ui-tag-sm:not(.ui-tag-has-icon)', $tagCss);
+        $this->assertStringContainsString('padding-inline-end: 1px;', $tagCss);
+        $this->assertStringContainsString('.ui-tag-operational.ui-tag-lg:not(.ui-tag-has-icon)', $tagCss);
+        $this->assertStringContainsString('border-width: 1px;', $tagCss);
+        $this->assertStringContainsString('--ui-tag-background: var(--ui-tag-type-background, var(--ui-tag-background-gray));', $tagCss);
+        $this->assertStringContainsString('--ui-tag-color: var(--ui-tag-type-color, var(--ui-tag-color-gray));', $tagCss);
+        $this->assertStringContainsString('--ui-tag-hover: var(--ui-tag-type-hover, var(--ui-tag-hover-gray));', $tagCss);
+        $this->assertStringContainsString('--ui-tag-border: var(--ui-tag-type-border, transparent);', $tagCss);
+        $this->assertStringContainsString('--ui-tag-hover-red: #c21e25;', $tagCss);
+        $this->assertStringContainsString('--ui-tag-hover-blue: #0053ff;', $tagCss);
+        $this->assertStringContainsString('--ui-tag-hover-cyan: #0066bd;', $tagCss);
+        $this->assertStringContainsString('--ui-tag-hover-green: #11742f;', $tagCss);
+        $this->assertStringContainsString('.ui-tag-dismissible.ui-reference-force-hover .ui-tag-close', $tagCss);
+        $this->assertStringContainsString('background-color: var(--ui-tag-hover);', $tagCss);
+        $this->assertStringNotContainsString('color-mix(in srgb, currentColor 12%, transparent)', $tagCss);
         $this->assertStringContainsString('.ui-tag-selectable', $tagCss);
         $this->assertStringContainsString('.ui-tag-operational', $tagCss);
+        $this->assertStringContainsString('.ui-tag-type-high-contrast', $tagCss);
+        $this->assertStringContainsString('.ui-tag-type-outline', $tagCss);
+        $this->assertStringContainsString('--ui-tag-type-background: var(--ui-background);', $tagCss);
+        $this->assertStringContainsString('--ui-tag-type-border: var(--ui-border-inverse);', $tagCss);
+        $this->assertStringContainsString('.ui-tag-type-teal', $tagCss);
+        $this->assertStringContainsString('.ui-tag-label-middle', $tagCss);
+        $this->assertStringContainsString('.ui-tag-close:focus-visible', $tagCss);
+        $this->assertStringContainsString('.ui-tag-dismissible.ui-reference-force-focus .ui-tag-close', $tagCss);
+        $this->assertStringContainsString('.ui-tag-operational.ui-reference-force-focus', $tagCss);
+        $this->assertStringContainsString('.ui-tag-selectable.ui-reference-force-hover', $tagCss);
         $this->assertStringContainsString('.ui-tag-group', $tagCss);
         $this->assertStringContainsString('gap: var(--ui-spacing-03);', $tagCss);
         $this->assertStringContainsString('\'tag\' => $this->tagComponent()', $catalog);
         $this->assertStringContainsString('ui-tag, ui-tag-sm, ui-tag-md, ui-tag-lg', $catalog);
+        $this->assertStringContainsString('variant-first implementation and UI Reference page', $catalog);
         $this->assertStringContainsString('Compact metadata, filter, selectable, and operational overflow labels.', $overviewCatalog);
-        $this->assertStringContainsString('$tag-background-gray', $standard);
+        $this->assertStringContainsString('`x-ui.tag-group` owns tag grouping semantics', $standard);
+        $this->assertStringContainsString('Tags are fixed-height inline-flex pills.', $standard);
+        $this->assertStringContainsString('Dismissible focus applies only to the close button', $standard);
         $this->assertStringContainsString('Selectable tags use core tokens only.', $standard);
-        $this->assertStringContainsString('Operational tag and operational tag disclosing overflow content.', $standard);
+        $this->assertStringContainsString('Read-only, dismissible, and operational tags use Tag component color tokens.', $standard);
+        $this->assertStringContainsString('| `red` | `#a2191f` | `#ffd7d9` | `#c21e25` | `#fa4d56` |', $standard);
+        $this->assertStringContainsString('Dismissible tags consume `--ui-tag-background` and `--ui-tag-color`; close-target hover uses `--ui-tag-hover`', $standard);
+        $this->assertStringContainsString('Selectable tags use core tokens only and do not expose component color families.', $standard);
+        $this->assertStringNotContainsString('color matrix is deferred', $standard);
+        $this->assertStringContainsString('Operational tags are not Menu buttons', $standard);
+        $this->assertStringContainsString('Approved variant tabs for Read-only, Dismissible, Selectable, and Operational', $standard);
         $this->assertStringContainsString('The public API is `x-ui.tag`', $standard);
-        $this->assertStringContainsString('Legacy `x-ui.badge` and `x-ui.status` usage may remain only as transitional status-taxonomy helpers', $standard);
-        $this->assertStringContainsString('data-tag-live-section="color-token-matrix"', $liveExamples);
-        $this->assertStringContainsString('data-tag-live-section="overflow-tooltips"', $liveExamples);
+        $this->assertStringContainsString('Legacy `x-ui.badge` and `x-ui.status` are deprecated for new tag work', $standard);
+        $this->assertStringContainsString('data-tag-live-section="approved-variants"', $liveExamples);
+        $this->assertStringContainsString('data-tag-live-section="tag-structure-proof"', $liveExamples);
+        $this->assertStringContainsString('Fixed-height tag construction', $liveExamples);
+        $this->assertStringContainsString('radius 16px', $liveExamples);
+        $this->assertStringContainsString('Dismissible spacing', $liveExamples);
+        $this->assertStringContainsString('Interactive tag structure examples', $liveExamples);
+        $this->assertStringContainsString('Tag truncation examples', $liveExamples);
+        $this->assertStringContainsString('class="is-hover"', $liveExamples);
+        $this->assertStringContainsString('class="is-focus"', $liveExamples);
+        $this->assertStringContainsString('data-tag-live-section="tag-color-tokens"', $liveExamples);
+        $this->assertStringContainsString('Read-only color token examples', $liveExamples);
+        $this->assertStringContainsString('Dismissible color token examples', $liveExamples);
+        $this->assertStringContainsString('Operational color token examples', $liveExamples);
+        $this->assertStringContainsString('Selectable core-token state examples', $liveExamples);
+        $this->assertStringContainsString('type="high-contrast"', $liveExamples);
+        $this->assertStringContainsString('type="outline"', $liveExamples);
+        $this->assertStringContainsString('class="ui-tag-skeleton"', $liveExamples);
+        $this->assertStringContainsString('data-tag-variant-tabs', $liveExamples);
+        $this->assertStringContainsString('data-tag-live-section="tag-groups"', $liveExamples);
+        $this->assertStringContainsString('data-tag-live-section="tag-related-apis"', $liveExamples);
+        $this->assertStringContainsString('selection-mode="single"', $liveExamples);
+        $this->assertStringContainsString('disclosure-target="tag-disclosure-text-list"', $liveExamples);
+        $this->assertStringNotContainsString('<details class="ui-tag-disclosure"', $liveExamples);
+        $this->assertStringNotContainsString('remove-label=', $liveExamples);
+        $this->assertStringNotContainsString('color=', $liveExamples);
+        $this->assertStringNotContainsString('ui-tag-action-icon', $liveExamples);
     }
 
     public function test_loading_component_page_renders_installed_api_examples(): void
@@ -2688,6 +3062,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-ui-loading-placement="side-panel"', false)
             ->assertSee('data-ui-loading-placement="tile"', false)
             ->assertSee('data-ui-loading-placement="inline"', false)
+            ->assertSee('data-ui-loading-review-boundary="page-preview"', false)
             ->assertSee('data-ui-loading-overlay="true"', false)
             ->assertSee('data-ui-loading-overlay="false"', false)
             ->assertSee('role="status"', false)
@@ -2720,6 +3095,8 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('width: 5.5rem;', $componentCss);
         $this->assertStringContainsString('width: 1rem;', $componentCss);
         $this->assertStringContainsString('background-color: var(--ui-overlay);', $componentCss);
+        $this->assertStringContainsString('.ui-loading-demo-surface--page .ui-loading--placement-page.ui-loading--overlay', $componentCss);
+        $this->assertStringContainsString('@apply absolute;', $componentCss);
         $this->assertStringContainsString('prefers-reduced-motion: reduce', $componentCss);
         $this->assertStringContainsString("'live_examples_view' => 'platform.ui-reference.components.live-examples.loading'", $catalog);
         $this->assertStringContainsString("'loading', 'Loading', 'Feedback and loading', 'Implemented Pending Review'", $overviewCatalog);
@@ -2738,17 +3115,24 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('x-ui.tile')
             ->assertSee('data-component-live-layout="tile-matrix"', false)
             ->assertSee('data-ui-reference-sample-type="tile"', false)
-            ->assertSee('Base tile')
-            ->assertSee('Clickable tile')
-            ->assertSee('Selectable tile')
-            ->assertSee('Expandable tile')
-            ->assertSee('Expandable tile with interactive elements')
+            ->assertSee('Approved Variants')
+            ->assertSee('data-tile-variant-tabs', false)
+            ->assertSee('Base Tile')
+            ->assertSee('Clickable Tile')
+            ->assertSee('Selectable Tile')
+            ->assertSee('Expandable Tile')
+            ->assertSee('Expandable Tile with Interactive Elements')
+            ->assertSee('States applicable to base tile')
+            ->assertSee('States applicable to clickable tile')
+            ->assertSee('States applicable to selectable tile')
+            ->assertSee('States applicable to expandable tile')
+            ->assertSee('States applicable to expandable tile with interactive elements')
             ->assertSee('Layout')
+            ->assertSee('data-tile-layout-tabs', false)
             ->assertSee('Standard layout')
             ->assertSee('Vertical masonry layout')
             ->assertSee('Horizontal masonry layout')
             ->assertSee('Grid proportions')
-            ->assertSee('States and accessibility')
             ->assertSee('Boundaries and gates')
             ->assertSee('Developer implementation')
             ->assertSee('data-ui-component="tile"', false)
@@ -2828,7 +3212,12 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('x-heroicon-o-arrow-right', $componentView);
         $this->assertStringContainsString('x-heroicon-o-chevron-down', $componentView);
         $this->assertStringContainsString('ui-tile__title', $contentPartial);
+        $this->assertStringContainsString('<div class="ui-tile__body">', $contentPartial);
         $this->assertStringContainsString('data-component-live-layout="tile-matrix"', $liveExamples);
+        $this->assertStringContainsString('data-tile-variant-tabs', $liveExamples);
+        $this->assertStringContainsString('data-tile-layout-tabs', $liveExamples);
+        $this->assertStringContainsString('States applicable to selectable tile', $liveExamples);
+        $this->assertStringContainsString('Selected selectable tiles only change the border and selection control', $standard);
         $this->assertStringContainsString('selection-mode="multiple"', $liveExamples);
         $this->assertStringContainsString('interactive expand-button-label', $liveExamples);
         $this->assertStringContainsString('Standard layout', $liveExamples);
@@ -2849,6 +3238,10 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('.ui-tile-layout-vertical-masonry', $tileCss);
         $this->assertStringContainsString('.ui-tile-layout-horizontal-masonry', $tileCss);
         $this->assertStringContainsString('.ui-tile-grid-proportions', $tileCss);
+        $this->assertStringContainsString('--ui-tile-layer: var(--ui-layer-01);', $tileCss);
+        $this->assertStringContainsString('--ui-tile-layer-hover: var(--ui-layer-hover-01);', $tileCss);
+        $this->assertStringContainsString('.ui-tile--expandable:not(.ui-tile--expandable-interactive):not(.ui-tile--disabled):hover', $tileCss);
+        $this->assertStringContainsString('.ui-tile--expandable:not(.ui-tile--expandable-interactive):focus-within', $tileCss);
         $this->assertStringContainsString('var(--ui-border-disabled)', $tileCss);
         $this->assertStringContainsString('var(--ui-border-inverse)', $tileCss);
         $this->assertStringContainsString('box-shadow: none', $tileCss);
@@ -2862,6 +3255,7 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('`interactive`', $standard);
         $this->assertStringContainsString('`expandButtonLabel`', $standard);
         $this->assertStringContainsString('`details`', $standard);
+        $this->assertStringContainsString('They default to the first component surface layer, `--ui-layer-01`', $standard);
         $this->assertStringContainsString('Media tile | Deferred', $standard);
         $this->assertStringNotContainsString('Radio tile group                                  | Gated', $standard);
         $this->assertStringNotContainsString('Multi-select tile group                           | Gated', $standard);
@@ -2961,6 +3355,8 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('x-ui.pagination')
             ->assertSee('data-component-live-layout="pagination-matrix"', false)
             ->assertSee('data-ui-reference-sample-type="pagination"', false)
+            ->assertSee('data-pagination-variant-tabs', false)
+            ->assertSee('role="tablist"', false)
             ->assertSee('Pagination bar sizes')
             ->assertSee('Pagination nav sizes')
             ->assertSee('Data table size pairings')
@@ -2968,9 +3364,10 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('Small-breakpoint responsive pagination')
             ->assertSee('Pagination versus related APIs')
             ->assertSee('Items per page:')
-            ->assertSee('of 12 pages')
+            ->assertSee('of 11 pages')
             ->assertSee('Previous page')
             ->assertSee('Next page')
+            ->assertSee('1&ndash;10 of 103 items', false)
             ->assertSee('Pagination supports small, medium, and large only')
             ->assertSee('data-ui-component="pagination"', false)
             ->assertSee('data-ui-pagination-variant="pagination"', false)
@@ -2980,6 +3377,15 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-ui-pagination-size="lg"', false)
             ->assertSee('data-ui-pagination-alignment="left"', false)
             ->assertSee('data-ui-pagination-alignment="right"', false)
+            ->assertSee('data-ui-pagination-left', false)
+            ->assertSee('data-ui-pagination-right', false)
+            ->assertSee('ui-pagination-page-size-segment', false)
+            ->assertSee('ui-pagination-select-field', false)
+            ->assertSee('ui-select-field-inline', false)
+            ->assertSee('ui-select-chevron-icon', false)
+            ->assertSee('ui-pagination-range-segment', false)
+            ->assertSee('ui-pagination-page-select-segment', false)
+            ->assertSee('ui-pagination-control-cell', false)
             ->assertSee('data-ui-pagination-page-size', false)
             ->assertSee('data-ui-pagination-page-select', false)
             ->assertSee('data-ui-pagination-interactive="true"', false)
@@ -3005,6 +3411,7 @@ class PlatformUiReferenceTest extends TestCase
         $liveExamples = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/pagination.blade.php'));
         $paginationCss = file_get_contents(resource_path('css/app.css'));
         $paginationScript = file_get_contents(resource_path('js/ui-controls/pagination.js'));
+        $selectView = file_get_contents(resource_path('views/components/ui/select.blade.php'));
         $appScript = file_get_contents(resource_path('js/app.js'));
         $controlsIndex = file_get_contents(resource_path('js/ui-controls.js'));
         $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
@@ -3017,14 +3424,44 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('data-ui-pagination-page-size', $paginationView);
         $this->assertStringContainsString('data-ui-pagination-page-select', $paginationView);
         $this->assertStringContainsString('data-ui-pagination-overflow', $paginationView);
+        $this->assertStringContainsString("'pageSizes' => null", $paginationView);
+        $this->assertStringContainsString("'itemsPerPageText' => 'Items per page:'", $paginationView);
+        $this->assertStringContainsString("'backwardText' => 'Previous page'", $paginationView);
+        $this->assertStringContainsString("'forwardText' => 'Next page'", $paginationView);
+        $this->assertStringContainsString("'pageNumberText' => 'Page number'", $paginationView);
+        $this->assertStringContainsString('$derivedLast = $total !== null && $pageSize > 0 ? max(1, (int) ceil($total / $pageSize)) : null;', $paginationView);
+        $this->assertStringContainsString('$last = max(1, (int) ($totalPages ?? $derivedLast ?? $lastPage));', $paginationView);
+        $this->assertStringContainsString('$resolvedPageSizeOptions = filled($pageSizeOptions) ? $pageSizeOptions : ($pageSizes ?? []);', $paginationView);
+        $this->assertStringContainsString('$pageOptions = collect(range(1, $last))->map(fn (int $page)', $paginationView);
+        $this->assertStringContainsString('data-ui-pagination-left', $paginationView);
+        $this->assertStringContainsString('data-ui-pagination-right', $paginationView);
+        $this->assertStringContainsString('ui-pagination-page-size-segment', $paginationView);
+        $this->assertStringContainsString('<x-ui.select', $paginationView);
+        $this->assertStringContainsString('ui-pagination-select-field ui-pagination-page-size-select-field', $paginationView);
+        $this->assertStringContainsString('ui-pagination-select-field ui-pagination-page-number-select-field', $paginationView);
+        $this->assertStringContainsString(':select-attributes="[\'data-ui-pagination-page-size\' => true]"', $paginationView);
+        $this->assertStringContainsString(':select-attributes="[\'data-ui-pagination-page-select\' => true]"', $paginationView);
+        $this->assertStringNotContainsString('ui-pagination-inline-select', $paginationView);
+        $this->assertStringNotContainsString('ui-pagination-inline-select-icon', $paginationView);
+        $this->assertStringContainsString('ui-pagination-range-segment', $paginationView);
+        $this->assertStringContainsString('ui-pagination-page-select-segment', $paginationView);
+        $this->assertStringContainsString('ui-pagination-control-cell', $paginationView);
         $this->assertStringContainsString('Items per page:', $paginationView);
+        $this->assertStringContainsString('{{ $from }}&ndash;{{ $to }} of {{ $total }} items', $paginationView);
+        $this->assertStringContainsString('0&ndash;0 of 0 items', $paginationView);
         $this->assertStringContainsString('of {{ $last }} {{ str(\'page\')->plural($last) }}', $paginationView);
+        $this->assertStringContainsString('data-ui-pagination-total-pages-label', $paginationView);
         $this->assertStringContainsString('data-ui-pagination-interactive="true"', $paginationView);
         $this->assertStringContainsString('data-ui-pagination-small-breakpoint="true"', $paginationView);
+        $this->assertStringContainsString('type="button"', $paginationView);
         $this->assertStringContainsString('data-ui-pagination-overflow-trigger', $paginationView);
+        $this->assertStringNotContainsString('x-heroicon-o-chevron-down', $paginationView);
         $this->assertStringContainsString('x-heroicon-o-chevron-left', $paginationView);
         $this->assertStringContainsString('x-heroicon-o-chevron-right', $paginationView);
+        $this->assertStringContainsString("'selectAttributes' => []", $selectView);
+        $this->assertStringContainsString('$nativeSelectAttributes', $selectView);
         $this->assertStringContainsString('data-component-live-layout="pagination-matrix"', $liveExamples);
+        $this->assertStringContainsString('data-pagination-variant-tabs', $liveExamples);
         $this->assertStringContainsString('variant="pagination"', $liveExamples);
         $this->assertStringContainsString('variant="pagination-nav"', $liveExamples);
         $this->assertStringContainsString('pagination-bar-sm', $liveExamples);
@@ -3032,11 +3469,30 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('data-ui-pagination-overflow-open-example="true"', $liveExamples);
         $this->assertStringContainsString('small-breakpoint', $liveExamples);
         $this->assertStringContainsString('.ui-pagination-bar', $paginationCss);
+        $this->assertStringContainsString('.ui-pagination-left', $paginationCss);
+        $this->assertStringContainsString('.ui-pagination-right', $paginationCss);
+        $this->assertStringContainsString('.ui-pagination-page-size-segment', $paginationCss);
+        $this->assertStringContainsString('.ui-pagination-select-field', $paginationCss);
+        $this->assertStringContainsString('.ui-pagination .ui-select-field-inline .ui-select', $paginationCss);
+        $this->assertStringContainsString('.ui-pagination-page-number-select-field .ui-select-chevron-icon', $paginationCss);
+        $this->assertStringNotContainsString('.ui-pagination-inline-select', $paginationCss);
+        $this->assertStringNotContainsString('.ui-pagination-select {', $paginationCss);
+        $this->assertStringContainsString('.ui-pagination-range-segment', $paginationCss);
+        $this->assertStringContainsString('.ui-pagination-page-select-segment', $paginationCss);
+        $this->assertStringContainsString('.ui-pagination-control-cell', $paginationCss);
+        $this->assertStringContainsString('width: 1rem;', $paginationCss);
+        $this->assertStringContainsString('height: 1rem;', $paginationCss);
+        $this->assertStringContainsString('border-inline-end: 1px solid var(--ui-border-subtle-01);', $paginationCss);
+        $this->assertStringContainsString('border-inline-start: 1px solid var(--ui-border-subtle-01);', $paginationCss);
+        $this->assertStringContainsString('border-block-start: 0;', $paginationCss);
         $this->assertStringContainsString('.ui-pagination-nav-shell', $paginationCss);
         $this->assertStringContainsString('.ui-pagination-overflow-menu', $paginationCss);
         $this->assertStringContainsString('.ui-pagination-small-breakpoint', $paginationCss);
         $this->assertStringContainsString('export function initPagination', $paginationScript);
         $this->assertStringContainsString('data-ui-pagination-overflow-trigger', $paginationScript);
+        $this->assertStringContainsString('totalPagesLabel.textContent', $paginationScript);
+        $this->assertStringContainsString("'0\\u20130 of 0 items'", $paginationScript);
+        $this->assertStringContainsString('`${from}\\u2013${to} of ${totalItems} items`', $paginationScript);
         $this->assertStringContainsString('initPagination', $appScript);
         $this->assertStringContainsString("export { initPagination } from './ui-controls/pagination';", $controlsIndex);
         $this->assertStringContainsString('pagination\' => $this->paginationComponent()', $catalog);
@@ -3049,6 +3505,13 @@ class PlatformUiReferenceTest extends TestCase
         $this->assertStringContainsString('variant="pagination-nav"', $standard);
         $this->assertStringContainsString('showItemsPerPage', $standard);
         $this->assertStringContainsString('Items per page:', $standard);
+        $this->assertStringContainsString('The `variant="pagination"` bar must render the Carbon-aligned segment order below.', $standard);
+        $this->assertStringContainsString('Pagination composes Select for both controls.', $standard);
+        $this->assertStringContainsString('selectAttributes', $standard);
+        $this->assertStringContainsString('Pagination bar structure and spacing', $standard);
+        $this->assertStringNotContainsString('ui-pagination-inline-select', $standard);
+        $this->assertStringContainsString('pageSizes', $standard);
+        $this->assertStringContainsString('itemsPerPageText', $standard);
         $this->assertStringContainsString('Data table size pairings', $standard);
         $this->assertStringContainsString('Overflow ellipses are buttons that open hidden-page menus', $standard);
     }
@@ -3286,6 +3749,7 @@ class PlatformUiReferenceTest extends TestCase
                 'Nested boundary',
                 'Nested ordered boundary',
                 'Content-only guidance',
+                'data-component-live-layout="list-matrix"',
             ],
             'multiselect' => [
                 'x-ui.multiselect',
@@ -3297,6 +3761,7 @@ class PlatformUiReferenceTest extends TestCase
                 'Validation multiselect',
                 'Disabled and loading multiselect',
                 'Select all',
+                'data-component-live-layout="multiselect-matrix"',
             ],
             'popover' => [
                 'x-ui.popover',
@@ -3351,12 +3816,20 @@ class PlatformUiReferenceTest extends TestCase
             }
         }
 
-        $sampleView = file_get_contents(resource_path('views/platform/ui-reference/components/examples/sample.blade.php'));
-        $componentCss = file_get_contents(resource_path('css/app.css'));
+        $listLiveExamples = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/list.blade.php'));
+        $listProofView = file_get_contents(resource_path('views/platform/ui-reference/components/live-examples/partials/list-proof.blade.php'));
+        $componentCss = file_get_contents(resource_path('css/components/list.css'));
+        $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
         $listStandard = file_get_contents(base_path('docs/02-standards/ui/components/list.md'));
 
-        $this->assertStringContainsString('<ol class="ui-list ui-list-ordered ui-list-nested">', $sampleView);
-        $this->assertStringContainsString('<ul class="ui-list ui-list-unordered ui-list-nested">', $sampleView);
+        $this->assertStringContainsString('data-component-live-layout="list-matrix"', $listLiveExamples);
+        $this->assertStringContainsString('<ol class="ui-list ui-list-ordered ui-list-nested">', $listProofView);
+        $this->assertStringContainsString('<ul class="ui-list ui-list-unordered ui-list-nested">', $listProofView);
+        $this->assertStringContainsString("'live_examples_view' => 'platform.ui-reference.components.live-examples.list'", $catalog);
+        $this->assertStringContainsString("'live_examples_view' => 'platform.ui-reference.components.live-examples.multiselect'", $catalog);
+        $this->assertStringContainsString("'live_examples_view' => 'platform.ui-reference.components.live-examples.breadcrumb'", $catalog);
+        $this->assertStringContainsString("'live_examples_view' => 'platform.ui-reference.components.live-examples.tabs'", $catalog);
+        $this->assertStringContainsString("'live_examples_view' => 'platform.ui-reference.components.live-examples.menu'", $catalog);
         $this->assertStringContainsString('list-style-position: outside;', $componentCss);
         $this->assertStringContainsString('list-style-type: "– ";', $componentCss);
         $this->assertStringContainsString('.ui-list-ordered.ui-list-nested', $componentCss);
@@ -3369,7 +3842,7 @@ class PlatformUiReferenceTest extends TestCase
         $containedListView = file_get_contents(resource_path('views/components/ui/contained-list.blade.php'));
         $containedListItemView = file_get_contents(resource_path('views/components/ui/contained-list-item.blade.php'));
         $sampleView = file_get_contents(resource_path('views/platform/ui-reference/components/examples/sample.blade.php'));
-        $componentCss = file_get_contents(resource_path('css/app.css'));
+        $componentCss = file_get_contents(resource_path('css/components/contained-list.css'));
         $catalog = file_get_contents(app_path('Platform/UiReference/UiReferenceComponentDepthCatalog.php'));
         $standard = file_get_contents(base_path('docs/02-standards/ui/components/contained-list.md'));
 
@@ -3415,7 +3888,7 @@ class PlatformUiReferenceTest extends TestCase
                 'Pagination bar',
                 'Pagination nav',
                 'Items per page',
-                'Disabled prev/next',
+                'Overflow menu behavior',
             ],
             'search' => [
                 'x-ui.search',
@@ -3624,9 +4097,8 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('G-ACT-04')
             ->assertSee('G-ACT-05')
             ->assertSee('standard filled treatment')
-            ->assertSee('soft')
+            ->assertSee('tertiary')
             ->assertSee('ghost')
-            ->assertSee('outline')
             ->assertSee('danger semantic')
             ->assertSee('G-LABEL-01')
             ->assertSee('G-LABEL-06')
@@ -3636,7 +4108,7 @@ class PlatformUiReferenceTest extends TestCase
             ->assertSee('data-ui-reference-example="button-state-contract"', false)
             ->assertSee('data-ui-implementation-guide="actions"', false)
             ->assertSee('&lt;x-ui.button semantic=&quot;primary&quot;&gt;Save Workspace&lt;/x-ui.button&gt;', false)
-            ->assertSee('&lt;x-ui.button semantic=&quot;notice&quot; variant=&quot;soft&quot;&gt;Queue Review&lt;/x-ui.button&gt;', false)
+            ->assertSee('&lt;x-ui.button semantic=&quot;tertiary&quot;&gt;Queue Review&lt;/x-ui.button&gt;', false)
             ->assertSee('&lt;x-ui.icon-button label=&quot;Open filters&quot;&gt;...&lt;/x-ui.icon-button&gt;', false)
             ->assertSee('x-ui.patterns.dropdown-action-menu')
             ->assertSee('One primary action');

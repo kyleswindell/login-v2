@@ -69,7 +69,7 @@
                             <option>Review</option>
                         </select>
                         <x-slot:actions>
-                            <x-ui.button variant="ghost">Reset</x-ui.button>
+                            <x-ui.button semantic="ghost">Reset</x-ui.button>
                             <x-ui.button semantic="primary">Apply</x-ui.button>
                         </x-slot:actions>
                     </x-ui.patterns.search-filter-bar>
@@ -88,7 +88,7 @@
                         ]"
                     >
                         <x-slot:actions>
-                            <x-ui.button variant="ghost">Clear range</x-ui.button>
+                            <x-ui.button semantic="ghost">Clear range</x-ui.button>
                             <x-ui.button semantic="primary">Apply range</x-ui.button>
                         </x-slot:actions>
                     </x-ui.patterns.date-range-filter>

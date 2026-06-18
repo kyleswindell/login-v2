@@ -10,7 +10,7 @@
             kicker="Dashboard widgets"
         >
             <x-slot:actions>
-                <x-ui.button :href="route('platform.ui-reference.patterns.layout')" variant="outline">Back to dashboard demo</x-ui.button>
+                <x-ui.button :href="route('platform.ui-reference.patterns.layout')" semantic="tertiary">Back to dashboard demo</x-ui.button>
                 <x-ui.button :href="route('platform.ui-reference.patterns.widget-content.size', ['size' => 'shape-map'])" semantic="primary">View shape map</x-ui.button>
             </x-slot:actions>
         </x-ui.patterns.page-title-actions-row>

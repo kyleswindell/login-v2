@@ -17,7 +17,7 @@
             <p class="ui-page-header-copy mt-3">Use this page to see what the component looks like in the app, when to use it, how it behaves, and which Foundation Elements it consumes. If a feature needs behavior that is not represented here, update this contract or compose a higher-level Pattern instead of creating local one-off UI.</p>
         </div>
 
-        <section class="ui-card" data-component-card="purpose" data-component-section="purpose">
+        <section class="ui-reference-component-section" data-component-card="purpose" data-component-section="purpose">
             <div class="grid min-w-0 gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(18rem,0.55fr)]">
                 <div class="min-w-0">
                     <div class="flex flex-wrap items-center gap-3">
@@ -28,7 +28,7 @@
                     <p class="ui-card-copy mt-2">{{ $catalogComponent['purpose'] }}</p>
                     <p class="mt-4 text-sm leading-6" style="color: var(--ui-text-secondary);">{{ $catalogComponent['current_decision'] }}</p>
                 </div>
-                <aside class="min-w-0 rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-component-section="implementation-status">
+                <aside class="ui-reference-component-panel" data-component-section="implementation-status">
                     <p class="ui-kicker">Implementation status</p>
                     <dl class="mt-3 space-y-3 text-sm">
                         <div>
@@ -54,11 +54,11 @@
             </div>
         </section>
 
-        <section class="ui-card" data-component-card="use-cases">
+        <section class="ui-reference-component-section" data-component-card="use-cases">
             <p class="ui-kicker">Usage boundary</p>
             <h2 class="ui-card-title mt-2">Use cases</h2>
             <div class="mt-5 grid min-w-0 gap-4 xl:grid-cols-2">
-                <article class="min-w-0 rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-component-section="use-when">
+                <article class="ui-reference-component-panel" data-component-section="use-when">
                     <h3 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Use when</h3>
                     <ul class="mt-3 space-y-2 text-sm leading-6" style="color: var(--ui-text-secondary);">
                         @foreach ($catalogComponent['use_when'] as $item)
@@ -66,7 +66,7 @@
                         @endforeach
                     </ul>
                 </article>
-                <article class="min-w-0 rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-component-section="do-not-use-when">
+                <article class="ui-reference-component-panel" data-component-section="do-not-use-when">
                     <h3 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Do not use when</h3>
                     <ul class="mt-3 space-y-2 text-sm leading-6" style="color: var(--ui-text-secondary);">
                         @foreach ($catalogComponent['do_not_use_when'] as $item)
@@ -77,13 +77,13 @@
             </div>
         </section>
 
-        <section class="ui-card" data-component-card="component-contract">
+        <section class="ui-reference-component-section" data-component-card="component-contract">
             <p class="ui-kicker">Implementation rules</p>
             <h2 class="ui-card-title mt-2">Component contract</h2>
             <p class="ui-card-copy mt-2">Use these requirements when building, reviewing, or composing this component.</p>
 
             <div class="mt-5 grid min-w-0 gap-4 xl:grid-cols-2">
-                <article class="min-w-0 rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-component-section="anatomy">
+                <article class="ui-reference-component-panel" data-component-section="anatomy">
                     <h3 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Anatomy</h3>
                     <ul class="mt-3 space-y-2 text-sm leading-6" style="color: var(--ui-text-secondary);">
                         @foreach ($catalogComponent['anatomy'] as $part)
@@ -91,18 +91,18 @@
                         @endforeach
                     </ul>
                 </article>
-                <article class="min-w-0 rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-component-section="states">
+                <article class="ui-reference-component-panel" data-component-section="states">
                     <h3 class="text-sm font-semibold" style="color: var(--ui-text-primary);">States</h3>
                     <div class="mt-3 flex flex-wrap gap-2">
                         @foreach ($catalogComponent['states'] as $state)
-                            <span class="inline-flex items-center whitespace-nowrap rounded-full border px-2.5 py-1 text-xs font-semibold" style="border-color: var(--ui-border-subtle-01); color: var(--ui-text-secondary); background-color: var(--ui-layer-01);">{{ $state }}</span>
+                            <span class="inline-flex items-center whitespace-nowrap rounded-full border px-2.5 py-1 text-xs font-semibold" style="border-color: var(--ui-border-subtle-01); color: var(--ui-text-secondary); background-color: var(--ui-layer-02);">{{ $state }}</span>
                         @endforeach
                     </div>
                 </article>
             </div>
 
             <div class="mt-4 grid min-w-0 gap-4 xl:grid-cols-2">
-                <article class="min-w-0 rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-component-section="behavior">
+                <article class="ui-reference-component-panel" data-component-section="behavior">
                     <h3 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Behavior</h3>
                     <ul class="mt-3 space-y-2 text-sm leading-6" style="color: var(--ui-text-secondary);">
                         @foreach ($catalogComponent['behavior'] as $behavior)
@@ -110,7 +110,7 @@
                         @endforeach
                     </ul>
                 </article>
-                <article class="min-w-0 rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-component-section="developer-implementation">
+                <article class="ui-reference-component-panel" data-component-section="developer-implementation">
                     <h3 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Developer implementation</h3>
                     <dl class="mt-3 min-w-0 space-y-3 text-sm">
                         @foreach ($catalogComponent['developer_api'] as $term => $value)
@@ -138,7 +138,7 @@
                         </div>
                     </div>
                 </article>
-                <article class="min-w-0 rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-component-section="content-guidance">
+                <article class="ui-reference-component-panel" data-component-section="content-guidance">
                     <h3 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Content guidance</h3>
                     <ul class="mt-3 space-y-2 text-sm leading-6" style="color: var(--ui-text-secondary);">
                         @foreach ($catalogComponent['content_guidance'] as $item)
@@ -146,7 +146,7 @@
                         @endforeach
                     </ul>
                 </article>
-                <article class="min-w-0 rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-component-section="accessibility">
+                <article class="ui-reference-component-panel" data-component-section="accessibility">
                     <h3 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Accessibility requirements</h3>
                     <ul class="mt-3 space-y-2 text-sm leading-6" style="color: var(--ui-text-secondary);">
                         @foreach ($catalogComponent['accessibility'] as $item)
@@ -157,7 +157,7 @@
             </div>
         </section>
 
-        <section class="ui-card" data-component-card="live-examples" data-component-section="live-examples">
+        <section class="ui-reference-component-section" data-component-card="live-examples" data-component-section="live-examples">
             <div class="flex flex-col gap-2 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                     <p class="ui-kicker">Rendered scenarios</p>
@@ -202,7 +202,7 @@
                     <article
                         id="{{ $panelId }}"
                         class="mt-5 min-w-0 rounded-lg border p-4"
-                        style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);"
+                        style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);"
                         role="tabpanel"
                         aria-labelledby="{{ $tabId }}"
                         data-ui-reference-live-example-panel="{{ $example['id'] }}"
@@ -214,7 +214,7 @@
                                 <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">{{ $example['description'] }}</p>
                             </div>
                             @if (! empty($example['context_notes']))
-                                <aside class="min-w-0 rounded-lg border p-3" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);">
+                                <aside class="min-w-0 rounded-lg border p-3" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
                                     <p class="text-xs font-semibold uppercase tracking-[0.14em]" style="color: var(--ui-text-helper);">Context notes</p>
                                     <ul class="mt-2 space-y-2 text-sm leading-5" style="color: var(--ui-text-secondary);">
                                         @foreach ($example['context_notes'] as $note)
@@ -231,14 +231,14 @@
                             @elseif (! empty($example['sample'] ?? null))
                                 @include('platform.ui-reference.components.examples.sample', ['sample' => $example['sample']])
                             @else
-                                <div class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);">
+                                <div class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
                                     <p class="text-sm font-semibold" style="color: var(--ui-text-primary);">Component-specific correction pending</p>
                                     <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">{{ $example['description'] }}</p>
                                 </div>
                             @endif
                         </div>
 
-                        <div class="mt-5 min-w-0 rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-component-section="variants-for-example">
+                        <div class="mt-5 min-w-0 rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-component-section="variants-for-example">
                             <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Variants for this example</h4>
                             <div class="mt-3 grid min-w-0 gap-3 md:grid-cols-2">
                                 @foreach ($example['variants'] ?? [] as $variant)
@@ -247,7 +247,7 @@
                                             'min-w-0 rounded-md border p-3',
                                             'md:col-span-2' => (($variant['sample']['type'] ?? null) === 'breadcrumb'),
                                         ])
-                                        style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);"
+                                        style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-03);"
                                     >
                                         <div class="flex flex-wrap items-center gap-2">
                                             <p class="text-sm font-semibold" style="color: var(--ui-text-primary);">{{ $variant['label'] }}</p>
@@ -275,12 +275,12 @@
             @endif
         </section>
 
-        <section class="ui-card" data-component-card="related-components-and-patterns" data-component-section="related-components-and-patterns">
+        <section class="ui-reference-component-section" data-component-card="related-components-and-patterns" data-component-section="related-components-and-patterns">
             <p class="ui-kicker">Composition links</p>
             <h2 class="ui-card-title mt-2">Related components and patterns</h2>
             <div class="mt-4 flex flex-wrap gap-2">
                 @foreach ($catalogComponent['related'] as $related)
-                    <a wire:navigate href="{{ $related['href'] }}" class="rounded-full border px-3 py-1.5 text-xs font-semibold transition" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02); color: var(--ui-text-secondary);">{{ $related['label'] }}</a>
+                    <a wire:navigate href="{{ $related['href'] }}" class="rounded-full border px-3 py-1.5 text-xs font-semibold transition" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01); color: var(--ui-text-secondary);">{{ $related['label'] }}</a>
                 @endforeach
             </div>
         </section>

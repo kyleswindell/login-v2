@@ -10,7 +10,7 @@
             kicker="Widget content shapes"
         >
             <x-slot:actions>
-                <x-ui.button :href="route('platform.ui-reference.patterns.widget-content')" variant="outline">Back to standards</x-ui.button>
+                <x-ui.button :href="route('platform.ui-reference.patterns.widget-content')" semantic="tertiary">Back to standards</x-ui.button>
             </x-slot:actions>
         </x-ui.patterns.page-title-actions-row>
 

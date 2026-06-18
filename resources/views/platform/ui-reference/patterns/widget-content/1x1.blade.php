@@ -10,8 +10,8 @@
             kicker="Widget size · 1×1"
         >
             <x-slot:actions>
-                <x-ui.button :href="route('platform.ui-reference.patterns.widget-content')" variant="outline">Standards overview</x-ui.button>
-                <x-ui.button :href="route('platform.ui-reference.patterns.widget-content.size', ['size' => 'shape-map'])" variant="outline">Shape map</x-ui.button>
+                <x-ui.button :href="route('platform.ui-reference.patterns.widget-content')" semantic="tertiary">Standards overview</x-ui.button>
+                <x-ui.button :href="route('platform.ui-reference.patterns.widget-content.size', ['size' => 'shape-map'])" semantic="tertiary">Shape map</x-ui.button>
             </x-slot:actions>
         </x-ui.patterns.page-title-actions-row>
 

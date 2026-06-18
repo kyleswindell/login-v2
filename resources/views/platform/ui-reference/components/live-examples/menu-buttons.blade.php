@@ -33,7 +33,7 @@
 
     $triggerRows = [
         ['Primary menu button', 'Strongest local menu action group.', '<x-ui.menu-button type="primary" label="Create" :items="$menuItems" />'],
-        ['Outline menu button', 'Visible but not primary action group. Uses the Button tertiary outline role.', '<x-ui.menu-button type="tertiary" label="Actions" :items="$menuItems" />'],
+        ['Tertiary menu button', 'Visible but not primary action group. Uses the Button tertiary hierarchy.', '<x-ui.menu-button type="tertiary" label="Actions" :items="$menuItems" />'],
         ['Ghost menu button', 'Low-emphasis toolbar or header action group.', '<x-ui.menu-button type="ghost" label="More actions" :items="$menuItems" />'],
         ['Combo primary only', 'Primary action paired with a separate menu trigger.', '<x-ui.combo-button label="Save" menu-label="Save options" :items="$comboItems" />'],
         ['Overflow ghost only', 'Icon-only vertical ellipsis trigger for constrained row/card actions.', '<x-ui.overflow-menu label="Workspace actions" :items="$rowItems" />'],
@@ -76,12 +76,12 @@
         <div class="mt-4 grid gap-4 xl:grid-cols-3">
             <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-menu-buttons-base="menu-button">
                 <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Menu button</h4>
-                <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">A labeled button opens an equal-importance action list. Base trigger variants are primary, outline, and ghost.</p>
+                <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">A labeled button opens an equal-importance action list. Base trigger variants are primary, tertiary, and ghost.</p>
                 <div class="mt-4 flex flex-wrap items-center gap-3">
                     <div data-menu-buttons-base-variant="primary">
                         <x-ui.menu-button label="Create" type="primary" :items="$menuItems" />
                     </div>
-                    <div data-menu-buttons-base-variant="outline">
+                    <div data-menu-buttons-base-variant="tertiary">
                         <x-ui.menu-button label="Actions" type="tertiary" :items="$menuItems" />
                     </div>
                     <div data-menu-buttons-base-variant="ghost">

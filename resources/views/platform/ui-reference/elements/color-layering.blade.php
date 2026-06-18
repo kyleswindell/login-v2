@@ -8,7 +8,9 @@
             ['Page background', '--ui-background', 'The app canvas behind content regions.', 'Application shell body and large empty regions.'],
             ['Layer 01', '--ui-layer-01', 'First content surface above the page.', 'Cards, panels, table shells, and primary component containers.'],
             ['Layer 02', '--ui-layer-02', 'Nested surface above Layer 01.', 'Example wells, nested cards, code snippet bodies, dropdowns, and menus.'],
-            ['Layer 03', '--ui-layer-03', 'Fourth visible surface in a nested stack.', 'Deep contained regions when a component or pattern requires four visible layers.'],
+            ['Layer 03', '--ui-layer-03', 'Third layer surface in a nested stack.', 'Deep contained regions when a component or pattern requires four visible surfaces.'],
+            ['Layer 04', '--ui-layer-04', 'Fourth layer surface in a nested stack.', 'Rare deep composition inside complex examples or overlays.'],
+            ['Layer 05', '--ui-layer-05', 'Fifth layer surface before the stack resets.', 'Maximum preset nested depth before starting a new background sequence.'],
             ['Layer accent 01', '--ui-layer-accent-01', 'Optional neutral accent strip on a layer.', 'Table headers, code snippet headers, and grouped section headers only when the owning API requires a persistent band.'],
             ['Inverse layer', '--ui-layer-inverse', 'High contrast layer for inverted affordances.', 'Tooltips and deliberate inverse moments only.'],
         ];
@@ -18,19 +20,25 @@
                 ['Page background', '--ui-background', 'Light: G10'],
                 ['Layer 01 card', '--ui-layer-01', 'Light: White'],
                 ['Layer 02 nested region', '--ui-layer-02', 'Light: G10'],
-                ['Layer 03 deepest region', '--ui-layer-03', 'Light: White'],
+                ['Layer 03 contained region', '--ui-layer-03', 'Light: White'],
+                ['Layer 04 deep region', '--ui-layer-04', 'Light: G10'],
+                ['Layer 05 deepest region', '--ui-layer-05', 'Light: White'],
             ]],
             ['Component example region', 'UI Reference live-example nesting', [
                 ['Page background', '--ui-background', 'Light: G10'],
                 ['Layer 01 example card', '--ui-layer-01', 'Light: White'],
                 ['Layer 02 component well', '--ui-layer-02', 'Light: G10'],
                 ['Layer 03 contained component', '--ui-layer-03', 'Light: White'],
+                ['Layer 04 nested component area', '--ui-layer-04', 'Light: G10'],
+                ['Layer 05 deepest component area', '--ui-layer-05', 'Light: White'],
             ]],
             ['Documentation container', 'Documentation/code nesting', [
                 ['Page background', '--ui-background', 'Light: G10'],
                 ['Layer 01 documentation card', '--ui-layer-01', 'Light: White'],
                 ['Layer 02 code shell', '--ui-layer-02', 'Light: G10'],
                 ['Layer 03 code body', '--ui-layer-03', 'Light: White'],
+                ['Layer 04 nested proof', '--ui-layer-04', 'Light: G10'],
+                ['Layer 05 deepest proof', '--ui-layer-05', 'Light: White'],
             ]],
         ];
     @endphp
@@ -83,14 +91,14 @@
 
         <section class="ui-card" data-background-layering-section="stack-sequence">
             <h2 class="ui-card-title">Stack Sequence</h2>
-            <p class="ui-card-copy mt-2">Use the same sequence for every nested surface: page background, Layer 01, Layer 02, then Layer 03. In the light theme this alternates G10, White, G10, White.</p>
+            <p class="ui-card-copy mt-2">Use the same sequence for every nested surface: page background, Layer 01, Layer 02, Layer 03, Layer 04, then Layer 05. In the light theme this alternates G10, White, G10, White, G10, White. After Layer 05, start a new stack at the page background value only when a new sibling context requires it.</p>
 
             <div class="mt-5 grid gap-4 xl:grid-cols-3">
                 @foreach ($layerStacks as [$label, $summary, $layers])
                     @php
-                        [$base, $first, $second, $third] = $layers;
+                        [$base, $first, $second, $third, $fourth, $fifth] = $layers;
                     @endphp
-                    <article class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background: var({{ $base[1] }});" data-background-layer-stack="{{ Str::slug($label) }}" data-background-layer-depth="4" data-background-layer-stack-sequence="background-layer-01-layer-02-layer-03">
+                    <article class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background: var({{ $base[1] }});" data-background-layer-stack="{{ Str::slug($label) }}" data-background-layer-depth="6" data-background-layer-stack-sequence="background-layer-01-layer-02-layer-03-layer-04-layer-05">
                         <p class="text-sm font-semibold" style="color: var(--ui-text-primary);">{{ $label }}</p>
                         <p class="mt-1 text-xs" style="color: var(--ui-text-secondary);">{{ $summary }}</p>
                         <p class="mt-1 font-mono text-xs" style="color: var(--ui-text-helper);">{{ $base[1] }}</p>
@@ -107,6 +115,16 @@
                                     <p class="text-xs font-semibold" style="color: var(--ui-text-primary);">{{ $third[0] }}</p>
                                     <p class="mt-1 font-mono text-xs" style="color: var(--ui-text-secondary);">{{ $third[1] }}</p>
                                     <p class="mt-1 text-xs" style="color: var(--ui-text-helper);">{{ $third[2] }}</p>
+                                    <div class="mt-4 rounded border p-4" style="border-color: var(--ui-border-subtle-01); background: var({{ $fourth[1] }});">
+                                        <p class="text-xs font-semibold" style="color: var(--ui-text-primary);">{{ $fourth[0] }}</p>
+                                        <p class="mt-1 font-mono text-xs" style="color: var(--ui-text-secondary);">{{ $fourth[1] }}</p>
+                                        <p class="mt-1 text-xs" style="color: var(--ui-text-helper);">{{ $fourth[2] }}</p>
+                                        <div class="mt-4 rounded p-4" style="background: var({{ $fifth[1] }});">
+                                            <p class="text-xs font-semibold" style="color: var(--ui-text-primary);">{{ $fifth[0] }}</p>
+                                            <p class="mt-1 font-mono text-xs" style="color: var(--ui-text-secondary);">{{ $fifth[1] }}</p>
+                                            <p class="mt-1 text-xs" style="color: var(--ui-text-helper);">{{ $fifth[2] }}</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -177,10 +195,11 @@
                     <li>Use `--ui-background` for the page canvas, not for nested cards.</li>
                     <li>Use `--ui-layer-01` for first-level cards, panels, and table shells.</li>
                     <li>Use `--ui-layer-02` for nested example wells, component bodies, and contained regions.</li>
-                    <li>Use `--ui-layer-03` when a component or pattern requires a fourth visible nested layer.</li>
+                    <li>Use `--ui-layer-03`, `--ui-layer-04`, and `--ui-layer-05` for deep composition that genuinely requires additional visible nested surfaces.</li>
                 </ul>
                 <ul class="space-y-3 text-sm" style="color: var(--ui-text-secondary);">
                     <li>Do not alternate white/gray manually in component examples.</li>
+                    <li>Do not return to Layer 01 inside the same stack. After Layer 05, begin a new background sequence only for a new sibling context.</li>
                     <li>Do not use accent layers or borders for card headers and footers by default.</li>
                     <li>Use `--ui-layer-accent-01` only for persistent structural bands owned by a component or pattern, such as table headers.</li>
                     <li>Do not solve contrast with raw slate, zinc, gray, or opacity utilities.</li>

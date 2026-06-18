@@ -8,10 +8,33 @@
         @case('buttons')
             <div class="flex flex-wrap items-center gap-3">
                 @foreach ($items as $item)
+                    @php
+                        $buttonSemantic = $item['semantic'] ?? 'tertiary';
+                        $buttonVariant = $item['variant'] ?? null;
+                        $buttonSize = $item['size'] ?? 'md';
+                        $buttonExpressive = $buttonSize === 'lg-expressive';
+
+                        $buttonSemantic = match ($buttonSemantic) {
+                            'neutral' => 'tertiary',
+                            'success', 'notice', 'info', 'warning' => 'primary',
+                            default => $buttonSemantic,
+                        };
+
+                        $buttonSemantic = match ($buttonVariant) {
+                            'outline', 'soft', 'tertiary' => $buttonSemantic === 'danger' ? 'danger-tertiary' : 'tertiary',
+                            'ghost' => $buttonSemantic === 'danger' ? 'danger-ghost' : 'ghost',
+                            default => $buttonSemantic,
+                        };
+
+                        if ($buttonExpressive) {
+                            $buttonSize = 'lg';
+                        }
+                    @endphp
+
                     <x-ui.button
-                        :semantic="$item['semantic'] ?? 'neutral'"
-                        :variant="$item['variant'] ?? 'base'"
-                        :size="$item['size'] ?? 'md'"
+                        :semantic="$buttonSemantic"
+                        :size="$buttonSize"
+                        :expressive="$buttonExpressive"
                         :loading="$item['loading'] ?? false"
                         :disabled="$item['disabled'] ?? false"
                         @class([
@@ -185,7 +208,7 @@
                     @if (($item['kind'] ?? 'text') === 'icon')
                         <button type="button" @disabled($item['disabled'] ?? false) class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg border" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01); color: var(--ui-icon-primary);" aria-label="{{ $item['label'] }}">•••</button>
                     @else
-                        <x-ui.button variant="outline" :loading="$item['loading'] ?? false" :disabled="$item['disabled'] ?? false">{{ $item['label'] }} ▾</x-ui.button>
+                        <x-ui.button semantic="tertiary" :loading="$item['loading'] ?? false" :disabled="$item['disabled'] ?? false">{{ $item['label'] }} ▾</x-ui.button>
                     @endif
                 @endforeach
             </div>
@@ -342,32 +365,39 @@
         @case('date-picker')
             <div class="grid gap-4 md:grid-cols-2">
                 @foreach ($items as $item)
-                    <x-ui.date-picker
-                        :name="$item['name'] ?? 'date_picker_example'"
-                        :id="$item['id'] ?? null"
-                        :label="$item['label'] ?? 'Date'"
-                        :value="$item['value'] ?? null"
-                        :type="$item['date_type'] ?? 'date'"
-                        :min-date="$item['min'] ?? ($item['min_date'] ?? null)"
-                        :max-date="$item['max'] ?? ($item['max_date'] ?? null)"
-                        :step="$item['step'] ?? null"
-                        :required="$item['required'] ?? false"
-                        :disabled="($item['state'] ?? null) === 'disabled' || ($item['disabled'] ?? false)"
-                        :readonly="($item['state'] ?? null) === 'readonly' || ($item['readonly'] ?? false)"
-                        :skeleton="($item['state'] ?? null) === 'loading' || ($item['skeleton'] ?? false)"
-                        :helper="$item['helper'] ?? null"
-                        :invalid="($item['state'] ?? null) === 'error' || ($item['invalid'] ?? false)"
-                        :invalid-text="$item['error'] ?? ($item['invalid_text'] ?? 'Choose a valid date before continuing.')"
-                        :warn="($item['state'] ?? null) === 'warning' || ($item['warn'] ?? false)"
-                        :warn-text="$item['warning'] ?? ($item['warn_text'] ?? 'This date is outside the recommended scheduling window.')"
-                        :autocomplete="$item['autocomplete'] ?? null"
-                        :date-format="$item['date_format'] ?? null"
-                        :size="$item['size'] ?? 'md'"
-                        :style="$item['style'] ?? 'default'"
-                        @class([
-                            'is-focus' => ($item['state'] ?? null) === 'focus',
-                        ])
-                    />
+                    @if(($item['state'] ?? null) === 'loading' || ($item['skeleton'] ?? false))
+                        <x-ui.date-picker-skeleton :size="$item['size'] ?? 'md'" :style="$item['style'] ?? 'default'" />
+                    @else
+                        <x-ui.date-picker
+                            :date-picker-type="$item['date_picker_type'] ?? 'single'"
+                            :value="$item['value'] ?? null"
+                            :date-format="$item['date_format'] ?? 'Y-m-d'"
+                            :min-date="$item['min'] ?? ($item['min_date'] ?? null)"
+                            :max-date="$item['max'] ?? ($item['max_date'] ?? null)"
+                        >
+                            <x-ui.date-picker-input
+                                :name="$item['name'] ?? 'date_picker_example'"
+                                :id="$item['id'] ?? null"
+                                :label-text="$item['label'] ?? 'Date'"
+                                :value="$item['value'] ?? null"
+                                :required="$item['required'] ?? false"
+                                :disabled="($item['state'] ?? null) === 'disabled' || ($item['disabled'] ?? false)"
+                                :read-only="($item['state'] ?? null) === 'readonly' || ($item['readonly'] ?? false)"
+                                :helper-text="$item['helper'] ?? null"
+                                :invalid="($item['state'] ?? null) === 'error' || ($item['invalid'] ?? false)"
+                                :invalid-text="$item['error'] ?? ($item['invalid_text'] ?? 'Choose a valid date before continuing.')"
+                                :warn="($item['state'] ?? null) === 'warning' || ($item['warn'] ?? false)"
+                                :warn-text="$item['warning'] ?? ($item['warn_text'] ?? 'This date is outside the recommended scheduling window.')"
+                                :placeholder="$item['placeholder'] ?? 'mm/dd/yyyy'"
+                                :size="$item['size'] ?? 'md'"
+                                :style="$item['style'] ?? 'default'"
+                                :calendar="($item['date_picker_type'] ?? 'single') !== 'simple'"
+                                @class([
+                                    'is-focus' => ($item['state'] ?? null) === 'focus',
+                                ])
+                            />
+                        </x-ui.date-picker>
+                    @endif
                 @endforeach
             </div>
         @break
@@ -572,24 +602,20 @@
         @break
 
         @case('tag')
-            <div class="flex flex-wrap gap-2">
+            <x-ui.tag-group :label="$sample['label'] ?? 'Tag examples'">
                 @foreach ($items as $item)
                     <x-ui.tag
-                        :tone="$item['semantic'] ?? ($item['tone'] ?? 'neutral')"
-                        :color="$item['color'] ?? null"
+                        :type="$item['type'] ?? 'gray'"
                         :variant="$item['variant'] ?? 'read-only'"
                         :size="$item['size'] ?? 'md'"
+                        :text="$item['title'] ?? 'Active'"
                         :icon="$item['icon'] ?? null"
-                        :removable="$item['removable'] ?? false"
-                        :remove-label="$item['remove_label'] ?? null"
+                        :dismiss-label="$item['dismiss_label'] ?? null"
                         :selected="$item['selected'] ?? false"
                         :disabled="$item['disabled'] ?? false"
-                        :skeleton="$item['skeleton'] ?? false"
-                    >
-                        {{ $item['title'] ?? $item['semantic'] ?? 'Active' }}
-                    </x-ui.tag>
+                    />
                 @endforeach
-            </div>
+            </x-ui.tag-group>
         @break
 
         @case('loading')
@@ -633,7 +659,7 @@
                 <h4 class="font-semibold" style="color: var(--ui-text-primary);">{{ $items[0]['title'] ?? 'Confirmation dialog' }}</h4>
                 <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">Modal copy states the decision and keeps required actions visible.</p>
                 <div class="mt-4 flex flex-wrap justify-end gap-2">
-                    <x-ui.button variant="ghost">Cancel</x-ui.button>
+                    <x-ui.button semantic="ghost">Cancel</x-ui.button>
                     <x-ui.button semantic="primary">Continue</x-ui.button>
                 </div>
             </div>

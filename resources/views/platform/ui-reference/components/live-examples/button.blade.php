@@ -10,13 +10,13 @@
     ];
 
     $sizeRows = [
-        ['Extra small', '24px / 1.5rem', 'Confined layout or dense utility area.', 'xs', null],
-        ['Small', '32px / 2rem', 'Pairs with 32px small controls.', 'sm', null],
-        ['Medium', '40px / 2.5rem', 'Pairs with 40px medium controls.', 'md', null],
-        ['Large productive', '48px / 3rem', 'Common software product size.', 'lg', null],
-        ['Large expressive', '48px / 3rem', 'Expressive type treatment for non-dense/editorial contexts only.', 'lg-expressive', null],
-        ['Extra large', '64px / 4rem', 'Full-bleed inside large components such as modals or side panels.', 'xl', 'w-full justify-start'],
-        ['2XL', '80px / 5rem', 'Full-screen or large-surface contexts only.', '2xl', 'w-full justify-start'],
+        ['Extra small', '24px / 1.5rem', 'Confined layout or dense utility area.', 'xs', null, false],
+        ['Small', '32px / 2rem', 'Pairs with 32px small controls.', 'sm', null, false],
+        ['Medium', '40px / 2.5rem', 'Pairs with 40px medium controls.', 'md', null, false],
+        ['Large productive', '48px / 3rem', 'Common software product size.', 'lg', null, false],
+        ['Large expressive', '48px / 3rem', 'Expressive type treatment for non-dense/editorial contexts only.', 'lg', null, true],
+        ['Extra large', '64px / 4rem', 'Full-bleed inside large components such as modals or side panels.', 'xl', 'w-full justify-start', false],
+        ['2XL', '80px / 5rem', 'Full-screen or large-surface contexts only.', '2xl', 'w-full justify-start', false],
     ];
 
     $stateRows = [
@@ -27,6 +27,7 @@
         ['Disabled', '<x-ui.button semantic="primary" disabled>Save changes</x-ui.button>'],
         ['Loading', '<x-ui.button semantic="primary" loading>Saving changes</x-ui.button>'],
         ['Danger hover', '<x-ui.button semantic="danger" class="is-hover">Delete tenant</x-ui.button>'],
+        ['Danger description', '<x-ui.button semantic="danger" danger-description="Deletes the tenant and removes active access.">Delete tenant</x-ui.button>'],
     ];
 
     $groupGuidanceRows = [
@@ -56,21 +57,21 @@
     $structureRows = [
         ['Button without icon', 'padding-left', '16px / 1rem', '$spacing-05', '--ui-button-padding-start'],
         ['Button without icon', 'padding-right', '64px / 4rem', '$spacing-10', '--ui-button-padding-end'],
-        ['Button with icon', 'padding-left/right', '16px / 1rem', '$spacing-05', 'ui-action-with-icon'],
+        ['Button with icon', 'padding-left/right', '16px / 1rem', '$spacing-05', 'ui-button .ui-button-icon'],
         ['Button with icon', 'label-icon spacing', '32px / 2rem', '$spacing-07', '--ui-button-gap'],
-        ['Ghost with icon', 'label-icon spacing', '8px / 0.5rem', '$spacing-03', 'ui-action-ghost'],
-        ['Icon-only button', 'padding-left/right', '16px / 1rem', '$spacing-05', 'ui-icon-button-*'],
+        ['Ghost with icon', 'label-icon spacing', '8px / 0.5rem', '$spacing-03', 'ui-button-ghost'],
+        ['Icon-only button', 'padding-left/right', '0', '$spacing-00', 'ui-button-icon-only'],
         ['Icon', 'svg', '16px x 16px', '-', 'ui-button-icon'],
-        ['Expressive icon', 'svg', '20px x 20px', '-', 'ui-action-lg-expressive .ui-button-icon'],
+        ['Expressive icon', 'svg', '20px x 20px', '-', 'ui-button-expressive .ui-button-icon'],
     ];
 
     $tokenRows = [
-        ['Primary', '$button-primary / hover / active', '--ui-action-primary-bg / -hover / -active', 'Button-owned action color family.'],
-        ['Secondary', '$button-secondary / hover / active', '--ui-action-secondary-bg / -hover / -active', 'Light: Gray 80 #393939, Gray 80 hover #4c4c4c, Gray 60 active #6f6f6f. Dark uses the corresponding lighter gray secondary family.'],
-        ['Tertiary', '$button-tertiary / hover / active', '--ui-action-tertiary-bg / -hover / -active', 'Transparent default with token-backed border/text and filled interaction states.'],
-        ['Ghost', '$background-hover + $link-primary roles', '--ui-action-ghost-*', 'Transparent low-emphasis trigger with token-backed hover and active treatment.'],
-        ['Danger', '$button-danger-primary / hover / active + $button-danger-secondary', '--ui-action-danger-*', 'Destructive button hierarchy only.'],
-        ['Disabled', '$button-disabled + $text-on-color-disabled', '--ui-action-disabled-*', 'Disabled surface, label, and icon roles.'],
+        ['Primary', '$button-primary / hover / active', '--ui-button-primary / -hover / -active', 'Button-owned action color family.'],
+        ['Secondary', '$button-secondary / hover / active', '--ui-button-secondary / -hover / -active', 'Light: Gray 80 #393939, Gray 80 hover #4c4c4c, Gray 60 active #6f6f6f. Dark uses the corresponding lighter gray secondary family.'],
+        ['Tertiary', '$button-tertiary / hover / active', '--ui-button-tertiary / -hover / -active', 'Transparent default with token-backed border/text and filled interaction states.'],
+        ['Ghost', '$background-hover + $link-primary roles', '--ui-background-hover + --ui-link-primary', 'Transparent low-emphasis trigger with token-backed hover and active treatment.'],
+        ['Danger', '$button-danger-primary / hover / active + $button-danger-secondary', '--ui-button-danger-*', 'Destructive button hierarchy only.'],
+        ['Disabled', '$button-disabled + $text-on-color-disabled', '--ui-button-disabled + --ui-text-on-color-disabled', 'Disabled surface, label, and icon roles.'],
     ];
 @endphp
 
@@ -109,12 +110,12 @@
         <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Size scale</h3>
         <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">Do not mix button sizes in button groups. The installed size classes map to Carbon button heights: 24, 32, 40, 48, 64, and 80px.</p>
         <div class="mt-4 grid gap-3">
-            @foreach ($sizeRows as [$label, $height, $purpose, $size, $extraClass])
+            @foreach ($sizeRows as [$label, $height, $purpose, $size, $extraClass, $expressive])
                 <div class="grid gap-3 rounded-md border p-3 md:grid-cols-[11rem_9rem_minmax(0,1fr)_minmax(14rem,0.7fr)] md:items-center" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-button-size-row="{{ Str::slug($label) }}">
                     <p class="font-semibold" style="color: var(--ui-text-primary);">{{ $label }}</p>
                     <p class="text-sm" style="color: var(--ui-text-helper);">{{ $height }}</p>
                     <p class="text-sm leading-6" style="color: var(--ui-text-secondary);">{{ $purpose }}</p>
-                    <x-ui.button semantic="primary" :size="$size" @class([$extraClass => filled($extraClass)])>{{ $label }}</x-ui.button>
+                    <x-ui.button semantic="primary" :size="$size" :expressive="$expressive" @class([$extraClass => filled($extraClass)])>{{ $label }}</x-ui.button>
                 </div>
             @endforeach
         </div>
@@ -161,7 +162,7 @@
 
     <section class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-button-live-section="state-matrix">
         <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">State matrix</h3>
-        <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">States use app action tokens for container, label, icon, focus, active, disabled, loading, and danger behavior.</p>
+            <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">States use Button tokens for container, label, icon, focus, active, disabled, loading, and danger behavior.</p>
         <div class="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
             @foreach ($stateRows as [$label, $example])
                 <article class="rounded-md border p-3" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);" data-button-state-row="{{ Str::slug($label) }}">
@@ -256,7 +257,7 @@
     <section class="grid gap-4 xl:grid-cols-2">
         <article class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-button-live-section="icon-usage">
             <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Icon usage</h3>
-            <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">Button icons appear to the right of the label. Icon-only buttons use the same state tokens as every other button, and always require a tooltip plus an accessible name.</p>
+            <p class="mt-2 text-sm" style="color: var(--ui-text-secondary);">Button icons appear to the right of the label. Icon-only buttons use the same Button state tokens as every other button, and always require a tooltip plus an accessible name.</p>
             <div class="mt-4 flex flex-wrap items-center gap-3">
                 <x-ui.button semantic="primary" icon="heroicon-o-arrow-down-tray">Download report</x-ui.button>
                 <x-ui.button semantic="ghost" icon="heroicon-o-arrow-top-right-on-square">Open docs</x-ui.button>

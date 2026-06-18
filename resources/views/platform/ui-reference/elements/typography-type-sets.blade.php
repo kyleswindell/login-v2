@@ -67,7 +67,7 @@
                     <p class="ui-type-productive-body mt-2">Adjust the filter values or clear the table search to review the full dataset.</p>
                     <div class="mt-4 flex flex-wrap gap-2">
                         <x-ui.button size="sm">Clear filters</x-ui.button>
-                        <x-ui.button variant="tertiary" size="sm">Save view</x-ui.button>
+                        <x-ui.button semantic="tertiary" size="sm">Save view</x-ui.button>
                     </div>
                 </article>
 
@@ -77,7 +77,7 @@
                     <p class="ui-type-expressive-body mt-2">This surface can use stronger hierarchy when the empty state needs to slow the reader down and explain recovery.</p>
                     <div class="mt-4 flex flex-wrap gap-2">
                         <x-ui.button size="sm">Clear filters</x-ui.button>
-                        <x-ui.button variant="tertiary" size="sm">Save view</x-ui.button>
+                        <x-ui.button semantic="tertiary" size="sm">Save view</x-ui.button>
                     </div>
                 </article>
             </div>
@@ -99,7 +99,7 @@
                         @else
                             <div class="mt-4 flex flex-wrap gap-2">
                                 <x-ui.button size="sm">Continue</x-ui.button>
-                                <x-ui.button variant="ghost" size="sm">Cancel</x-ui.button>
+                                <x-ui.button semantic="ghost" size="sm">Cancel</x-ui.button>
                             </div>
                         @endif
                     </article>

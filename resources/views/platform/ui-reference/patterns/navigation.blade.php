@@ -17,7 +17,7 @@
                 </div>
             </x-slot:context>
             <x-slot:actions>
-                <x-ui.button variant="ghost">Secondary</x-ui.button>
+                <x-ui.button semantic="ghost">Secondary</x-ui.button>
                 <x-ui.button semantic="primary">Primary Action</x-ui.button>
             </x-slot:actions>
         </x-ui.patterns.page-title-actions-row>
@@ -64,8 +64,8 @@
                             <p class="text-sm ui-reference-text-muted">One primary action remains visible; secondary choices reduce emphasis.</p>
                         </div>
                         <div class="flex flex-wrap items-center gap-2">
-                            <x-ui.button variant="ghost" size="sm">Cancel</x-ui.button>
-                            <x-ui.button variant="outline" size="sm">Preview</x-ui.button>
+                            <x-ui.button semantic="ghost" size="sm">Cancel</x-ui.button>
+                            <x-ui.button semantic="tertiary" size="sm">Preview</x-ui.button>
                             <x-ui.button semantic="primary" size="sm">Save Workspace</x-ui.button>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                             <option>Any owner</option>
                             <option selected>Platform Team</option>
                         </select>
-                        <x-ui.button variant="ghost">Reset</x-ui.button>
+                        <x-ui.button semantic="ghost">Reset</x-ui.button>
                         <x-ui.button semantic="primary">Apply</x-ui.button>
                     </div>
                     <p class="mt-3 text-sm ui-reference-text-muted">Use Apply for same-page filtering and Save/Create/Submit only when the resource or workflow completes.</p>
@@ -88,9 +88,9 @@
                 <article class="ui-reference-example-surface p-4">
                     <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Form action bar</p>
                     <div class="mt-3 flex flex-wrap items-center justify-between gap-3">
-                        <x-ui.button variant="ghost">Cancel</x-ui.button>
+                        <x-ui.button semantic="ghost">Cancel</x-ui.button>
                         <div class="flex flex-wrap items-center gap-2">
-                            <x-ui.button semantic="danger" variant="soft">Archive</x-ui.button>
+                            <x-ui.button semantic="danger-tertiary">Archive</x-ui.button>
                             <x-ui.button semantic="primary">Save Workspace</x-ui.button>
                         </div>
                     </div>
@@ -192,7 +192,7 @@
                             <option>Any status</option>
                             <option>Needs review</option>
                         </select>
-                        <x-ui.button variant="ghost">Clear</x-ui.button>
+                        <x-ui.button semantic="ghost">Clear</x-ui.button>
                         <x-ui.button semantic="primary">Apply</x-ui.button>
                     </div>
                 </article>
@@ -297,7 +297,7 @@
                             <option>Security</option>
                         </select>
                         <x-slot:actions>
-                            <x-ui.button variant="ghost">Reset</x-ui.button>
+                            <x-ui.button semantic="ghost">Reset</x-ui.button>
                             <x-ui.button semantic="primary">Apply</x-ui.button>
                         </x-slot:actions>
                     </x-ui.patterns.search-filter-bar>
@@ -327,7 +327,7 @@
                         ]"
                     >
                         <x-slot:actions>
-                            <x-ui.button variant="ghost">Clear range</x-ui.button>
+                            <x-ui.button semantic="ghost">Clear range</x-ui.button>
                             <x-ui.button semantic="primary">Run report</x-ui.button>
                         </x-slot:actions>
                     </x-ui.patterns.date-range-filter>

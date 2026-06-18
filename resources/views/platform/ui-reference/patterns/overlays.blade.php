@@ -197,10 +197,10 @@
                 <article class="ui-reference-example-surface p-4">
                     <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Modal variants</p>
                     <div class="mt-3 grid gap-3 sm:grid-cols-2">
-                        <x-ui.button variant="outline" data-ui-demo-overlay-open="reference-drawer">Passive/detail drawer</x-ui.button>
+                        <x-ui.button semantic="tertiary" data-ui-demo-overlay-open="reference-drawer">Passive/detail drawer</x-ui.button>
                         <x-ui.button semantic="primary" data-ui-demo-overlay-open="reference-modal">Transactional modal</x-ui.button>
                         <x-ui.button semantic="danger" data-ui-demo-overlay-open="reference-modal">Danger confirmation</x-ui.button>
-                        <x-ui.button semantic="notice" variant="soft">Queued gap: progress modal</x-ui.button>
+                        <x-ui.button semantic="tertiary">Queued gap: progress modal</x-ui.button>
                     </div>
                     <p class="mt-3 text-sm ui-reference-text-muted">Use the existing drawer/modal components; progress modal is queued until a blocking-task consumer exists.</p>
                 </article>
@@ -269,7 +269,7 @@
             <div class="mt-4 ui-reference-subtle-surface p-4">
                 <div class="flex flex-wrap items-center gap-3">
                     <x-ui.button semantic="primary" data-ui-demo-overlay-open="reference-drawer">Open Drawer</x-ui.button>
-                    <x-ui.button variant="outline" class="is-focus" data-ui-demo-overlay-open="reference-drawer">Focused Trigger</x-ui.button>
+                    <x-ui.button semantic="tertiary" class="is-focus" data-ui-demo-overlay-open="reference-drawer">Focused Trigger</x-ui.button>
                     <x-ui.button semantic="primary" disabled>Disabled Trigger</x-ui.button>
                 </div>
                 <p class="mt-3 text-sm ui-reference-text-muted">Open the drawer and verify focus lands inside the panel, `Escape` closes it, backdrop click closes it, and focus returns to the trigger.</p>
@@ -281,7 +281,7 @@
             <div class="mt-4 ui-reference-subtle-surface p-4">
                 <div class="flex flex-wrap items-center gap-3">
                     <x-ui.button semantic="danger" data-ui-demo-overlay-open="reference-modal">Open Destructive Modal</x-ui.button>
-                    <x-ui.button variant="outline" class="is-focus" data-ui-demo-overlay-open="reference-modal">Focused Trigger</x-ui.button>
+                    <x-ui.button semantic="tertiary" class="is-focus" data-ui-demo-overlay-open="reference-modal">Focused Trigger</x-ui.button>
                     <x-ui.button semantic="danger" disabled>Disabled Trigger</x-ui.button>
                 </div>
                 <p class="mt-3 text-sm ui-reference-text-muted">This modal is the blocking Tier 1 confirmation baseline. It should close via explicit action, `Escape`, or backdrop click.</p>
@@ -305,51 +305,51 @@
             <p class="ui-kicker">Toast Baseline</p>
             <div class="mt-2 flex flex-wrap items-center gap-3">
                 <p class="text-sm ui-reference-text-muted">Toasts should use a polite live region for non-critical updates, an assertive region for high-severity failures, and only minimal baseline entry/exit motion.</p>
-                <x-ui.button variant="ghost" size="xs" data-ui-demo-toast-reset>Reset Toast Stack</x-ui.button>
-                <x-ui.button semantic="info" variant="soft" size="xs" data-ui-demo-toast-generate>Generate Example Toast</x-ui.button>
+                <x-ui.button semantic="ghost" size="xs" data-ui-demo-toast-reset>Reset Toast Stack</x-ui.button>
+                <x-ui.button semantic="tertiary" size="xs" data-ui-demo-toast-generate>Generate Example Toast</x-ui.button>
             </div>
             <div class="mt-4 flex flex-col gap-3" data-ui-demo-toast-stack>
                 <x-ui.toast semantic="neutral" title="Neutral" data-ui-demo-toast>
                     Workspace baseline saved without further action.
                     <x-slot:actions>
-                        <x-ui.button variant="ghost" size="xs" data-ui-demo-toast-dismiss>Dismiss</x-ui.button>
+                        <x-ui.button semantic="ghost" size="xs" data-ui-demo-toast-dismiss>Dismiss</x-ui.button>
                     </x-slot:actions>
                 </x-ui.toast>
                 <x-ui.toast semantic="info" title="Info" data-ui-demo-toast>
                     A new reference sample is available for review.
                     <x-slot:actions>
-                        <x-ui.button variant="ghost" size="xs" data-ui-demo-toast-dismiss>Dismiss</x-ui.button>
+                        <x-ui.button semantic="ghost" size="xs" data-ui-demo-toast-dismiss>Dismiss</x-ui.button>
                     </x-slot:actions>
                 </x-ui.toast>
                 <x-ui.toast semantic="success" title="Success" data-ui-demo-toast>
                     Notification digest preferences updated.
                     <x-slot:actions>
-                        <x-ui.button variant="ghost" size="xs" data-ui-demo-toast-dismiss>Dismiss</x-ui.button>
+                        <x-ui.button semantic="ghost" size="xs" data-ui-demo-toast-dismiss>Dismiss</x-ui.button>
                     </x-slot:actions>
                 </x-ui.toast>
                 <x-ui.toast semantic="notice" title="Notice" data-ui-demo-toast>
                     Batch handoff is queued after documentation sync.
                     <x-slot:actions>
-                        <x-ui.button variant="ghost" size="xs" data-ui-demo-toast-dismiss>Dismiss</x-ui.button>
+                        <x-ui.button semantic="ghost" size="xs" data-ui-demo-toast-dismiss>Dismiss</x-ui.button>
                     </x-slot:actions>
                 </x-ui.toast>
                 <x-ui.toast semantic="warning" title="Warning" data-ui-demo-toast>
                     Audit export contains redacted values.
                     <x-slot:actions>
-                        <x-ui.button variant="ghost" size="xs" data-ui-demo-toast-dismiss>Dismiss</x-ui.button>
+                        <x-ui.button semantic="ghost" size="xs" data-ui-demo-toast-dismiss>Dismiss</x-ui.button>
                     </x-slot:actions>
                 </x-ui.toast>
                 <x-ui.toast semantic="danger" title="Danger" data-ui-demo-toast>
                     Could not reach notification provider. Retry in 30 seconds.
                     <x-slot:actions>
-                        <x-ui.button variant="ghost" size="xs" data-ui-demo-toast-dismiss>Dismiss</x-ui.button>
+                        <x-ui.button semantic="ghost" size="xs" data-ui-demo-toast-dismiss>Dismiss</x-ui.button>
                     </x-slot:actions>
                 </x-ui.toast>
                 <template data-ui-demo-toast-template>
                     <x-ui.toast semantic="info" title="Generated Example" data-ui-demo-toast data-ui-demo-generated-toast class="hidden">
                         Review the baseline toast entry and dismiss motion on a fresh example.
                         <x-slot:actions>
-                            <x-ui.button variant="ghost" size="xs" data-ui-demo-toast-dismiss>Dismiss</x-ui.button>
+                            <x-ui.button semantic="ghost" size="xs" data-ui-demo-toast-dismiss>Dismiss</x-ui.button>
                         </x-slot:actions>
                     </x-ui.toast>
                 </template>
@@ -396,7 +396,7 @@
             description="Context stays intact while detail content is inspected in a right-side panel."
         >
             <x-slot:headerActions>
-                <x-ui.button variant="ghost" data-ui-demo-close>Close</x-ui.button>
+                <x-ui.button semantic="ghost" data-ui-demo-close>Close</x-ui.button>
             </x-slot:headerActions>
 
             <div class="grid gap-4 md:grid-cols-2">
@@ -415,7 +415,7 @@
             </div>
 
             <x-slot:actions>
-                <x-ui.button variant="ghost" data-ui-demo-close>Cancel</x-ui.button>
+                <x-ui.button semantic="ghost" data-ui-demo-close>Cancel</x-ui.button>
                 <x-ui.button semantic="primary">Take Action</x-ui.button>
             </x-slot:actions>
         </x-ui.drawer>
@@ -433,7 +433,7 @@
             </x-ui.inline-alert>
 
             <x-slot:actions>
-                <x-ui.button variant="ghost" data-ui-demo-close>Cancel</x-ui.button>
+                <x-ui.button semantic="ghost" data-ui-demo-close>Cancel</x-ui.button>
                 <x-ui.button semantic="danger" loading>Deleting</x-ui.button>
                 <x-ui.button semantic="danger">Delete</x-ui.button>
             </x-slot:actions>

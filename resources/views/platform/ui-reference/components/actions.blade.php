@@ -21,10 +21,10 @@
         />
 
         <section class="ui-card" data-ui-guidance="action-usage" data-guidance-id="P2-F-CQ-008">
-            <p class="ui-kicker">Button Variant Usage Guidance</p>
+            <p class="ui-kicker">Button Hierarchy Usage Guidance</p>
             <div class="mt-3 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
                 <div>
-                    <h2 class="text-base font-semibold ui-reference-text-strong">Variant selection rules</h2>
+                    <h2 class="text-base font-semibold ui-reference-text-strong">Hierarchy selection rules</h2>
                     <dl class="mt-3 space-y-3 text-sm ui-reference-text">
                         <div>
                             <dt class="font-semibold ui-reference-text-strong">G-ACT-01 - One primary action</dt>
@@ -35,12 +35,12 @@
                             <dd class="mt-1">Use the standard filled treatment for the dominant submit, create, save, or continue action in the current region.</dd>
                         </div>
                         <div>
-                            <dt class="font-semibold ui-reference-text-strong">G-ACT-03 - Soft button</dt>
-                            <dd class="mt-1">Use soft when the action is important but supportive, such as a status-aware follow-up or review note that should not compete with the primary action.</dd>
+                            <dt class="font-semibold ui-reference-text-strong">G-ACT-03 - Tertiary button</dt>
+                            <dd class="mt-1">Use tertiary when the action is important but supportive, such as a follow-up or review note that should not compete with the primary action.</dd>
                         </div>
                         <div>
-                            <dt class="font-semibold ui-reference-text-strong">G-ACT-04 - Ghost and outline buttons</dt>
-                            <dd class="mt-1">Use ghost for cancel, close, reset, and low-emphasis navigation. Use outline for a visible alternate path that should remain secondary.</dd>
+                            <dt class="font-semibold ui-reference-text-strong">G-ACT-04 - Ghost buttons</dt>
+                            <dd class="mt-1">Use ghost for cancel, close, reset, and low-emphasis navigation. Use tertiary for a visible alternate path that should remain secondary.</dd>
                         </div>
                         <div>
                             <dt class="font-semibold ui-reference-text-strong">G-ACT-05 - Destructive actions</dt>
@@ -94,21 +94,21 @@
                 </article>
 
                 <article class="ui-reference-example-surface p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Soft</p>
-                    <x-ui.button semantic="notice" variant="soft" class="mt-3">Queue Review</x-ui.button>
-                    <code class="mt-3 block rounded-md ui-reference-code-surface px-3 py-2 text-xs ui-reference-text">&lt;x-ui.button semantic=&quot;notice&quot; variant=&quot;soft&quot;&gt;Queue Review&lt;/x-ui.button&gt;</code>
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Tertiary</p>
+                    <x-ui.button semantic="tertiary" class="mt-3">Queue Review</x-ui.button>
+                    <code class="mt-3 block rounded-md ui-reference-code-surface px-3 py-2 text-xs ui-reference-text">&lt;x-ui.button semantic=&quot;tertiary&quot;&gt;Queue Review&lt;/x-ui.button&gt;</code>
                 </article>
 
                 <article class="ui-reference-example-surface p-4">
                     <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Ghost</p>
-                    <x-ui.button variant="ghost" class="mt-3">Cancel</x-ui.button>
-                    <code class="mt-3 block rounded-md ui-reference-code-surface px-3 py-2 text-xs ui-reference-text">&lt;x-ui.button variant=&quot;ghost&quot;&gt;Cancel&lt;/x-ui.button&gt;</code>
+                    <x-ui.button semantic="ghost" class="mt-3">Cancel</x-ui.button>
+                    <code class="mt-3 block rounded-md ui-reference-code-surface px-3 py-2 text-xs ui-reference-text">&lt;x-ui.button semantic=&quot;ghost&quot;&gt;Cancel&lt;/x-ui.button&gt;</code>
                 </article>
 
                 <article class="ui-reference-example-surface p-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Outline</p>
-                    <x-ui.button variant="outline" class="mt-3">Open Settings</x-ui.button>
-                    <code class="mt-3 block rounded-md ui-reference-code-surface px-3 py-2 text-xs ui-reference-text">&lt;x-ui.button variant=&quot;outline&quot;&gt;Open Settings&lt;/x-ui.button&gt;</code>
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Tertiary link action</p>
+                    <x-ui.button semantic="tertiary" class="mt-3">Open Settings</x-ui.button>
+                    <code class="mt-3 block rounded-md ui-reference-code-surface px-3 py-2 text-xs ui-reference-text">&lt;x-ui.button semantic=&quot;tertiary&quot;&gt;Open Settings&lt;/x-ui.button&gt;</code>
                 </article>
 
                 <article class="ui-reference-example-surface p-4">
@@ -140,10 +140,7 @@
                 <article class="ui-reference-example-surface p-4">
                     <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Icon Leading + Grouped Menu</p>
                     <div class="mt-3 flex flex-wrap items-center gap-3">
-                        <x-ui.button variant="outline">
-                            <x-heroicon-o-arrow-down-tray class="h-4 w-4" aria-hidden="true" />
-                            Export Results
-                        </x-ui.button>
+                        <x-ui.button semantic="tertiary" icon="heroicon-o-arrow-down-tray">Export Results</x-ui.button>
                         <div class="ui-reference-subtle-surface p-2">
                             <x-ui.menu-item href="#" onclick="event.preventDefault()">Open details</x-ui.menu-item>
                             <x-ui.menu-item href="#" semantic="danger" onclick="event.preventDefault()">Archive workspace</x-ui.menu-item>
@@ -169,7 +166,7 @@
                         <tr>
                             <td class="px-4 py-3 ui-reference-text-strong">Button action</td>
                             <td class="px-4 py-3"><code>x-ui.button</code></td>
-                            <td class="px-4 py-3"><code>semantic</code>: neutral, primary, success, warning, danger, notice, info. <code>variant</code>: standard, soft, ghost, outline. <code>size</code>, <code>disabled</code>, and <code>loading</code> are supported.</td>
+                            <td class="px-4 py-3"><code>semantic</code>: primary, secondary, tertiary, ghost, danger, danger-tertiary, danger-ghost. <code>size</code>, <code>expressive</code>, <code>disabled</code>, and <code>loading</code> are supported.</td>
                             <td class="px-4 py-3">/components/actions, /patterns/navigation, /patterns/forms, /patterns/tables</td>
                         </tr>
                         <tr>
@@ -192,71 +189,58 @@
         <section class="ui-card">
             <p class="ui-kicker">Semantic Actions</p>
             <div class="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                <x-ui.button>Neutral</x-ui.button>
                 <x-ui.button semantic="primary">Primary</x-ui.button>
-                <x-ui.button semantic="success">Success</x-ui.button>
-                <x-ui.button semantic="warning">Warning</x-ui.button>
+                <x-ui.button semantic="secondary">Secondary</x-ui.button>
+                <x-ui.button semantic="tertiary">Tertiary</x-ui.button>
+                <x-ui.button semantic="ghost">Ghost</x-ui.button>
                 <x-ui.button semantic="danger">Danger</x-ui.button>
-                <x-ui.button semantic="notice">Notice</x-ui.button>
-                <x-ui.button semantic="info">Info</x-ui.button>
-                <x-ui.button variant="ghost">Ghost</x-ui.button>
+                <x-ui.button semantic="danger-tertiary">Danger tertiary</x-ui.button>
+                <x-ui.button semantic="danger-ghost">Danger ghost</x-ui.button>
             </div>
         </section>
 
         <section class="ui-card">
-            <p class="ui-kicker">Variant Styles</p>
-            <p class="mt-2 text-sm ui-reference-text-muted">Soft and outline variants must preserve contrast in both themes.</p>
+            <p class="ui-kicker">Button Hierarchy Styles</p>
+            <p class="mt-2 text-sm ui-reference-text-muted">Button hierarchy is expressed through semantic values, not status color or legacy variant props.</p>
             <x-ui.patterns.proof-review-target
                 class="mt-4"
                 :items="[
-                    ['id' => 'P2-B-CQ-014', 'note' => 'Verify the supported semantic colorways and their outline/ghost usage through this shared Tier 1 matrix instead of grouped-menu one-offs.'],
+                    ['id' => 'P2-B-CQ-014', 'note' => 'Verify the supported semantic hierarchy through this shared Tier 1 matrix instead of grouped-menu one-offs.'],
                     ['id' => 'P2-B-CQ-016', 'note' => 'Neutral ghost should now read as the same borderless low-emphasis treatment as the semantic ghost variants in this matrix.'],
                 ]"
             />
             <div class="mt-4 space-y-4">
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Soft</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Primary and secondary</p>
                     <div class="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                        <x-ui.button variant="soft">Soft Neutral</x-ui.button>
-                        <x-ui.button semantic="primary" variant="soft">Soft Primary</x-ui.button>
-                        <x-ui.button semantic="success" variant="soft">Soft Success</x-ui.button>
-                        <x-ui.button semantic="warning" variant="soft">Soft Warning</x-ui.button>
-                        <x-ui.button semantic="danger" variant="soft">Soft Danger</x-ui.button>
-                        <x-ui.button semantic="notice" variant="soft">Soft Notice</x-ui.button>
-                        <x-ui.button semantic="info" variant="soft">Soft Info</x-ui.button>
+                        <x-ui.button semantic="primary">Primary</x-ui.button>
+                        <x-ui.button semantic="secondary">Secondary</x-ui.button>
+                        <x-ui.button semantic="tertiary">Tertiary</x-ui.button>
+                        <x-ui.button semantic="ghost">Ghost</x-ui.button>
                     </div>
                 </div>
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Outline</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Danger hierarchy</p>
                     <div class="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                        <x-ui.button variant="outline">Outline Neutral</x-ui.button>
-                        <x-ui.button semantic="primary" variant="outline">Outline Primary</x-ui.button>
-                        <x-ui.button semantic="success" variant="outline">Outline Success</x-ui.button>
-                        <x-ui.button semantic="warning" variant="outline">Outline Warning</x-ui.button>
-                        <x-ui.button semantic="danger" variant="outline">Outline Danger</x-ui.button>
-                        <x-ui.button semantic="notice" variant="outline">Outline Notice</x-ui.button>
-                        <x-ui.button semantic="info" variant="outline">Outline Info</x-ui.button>
+                        <x-ui.button semantic="danger">Danger primary</x-ui.button>
+                        <x-ui.button semantic="danger-tertiary">Danger tertiary</x-ui.button>
+                        <x-ui.button semantic="danger-ghost">Danger ghost</x-ui.button>
                     </div>
                 </div>
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Ghost</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Ghost usage</p>
                     <div class="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                        <x-ui.button variant="ghost">Ghost Neutral</x-ui.button>
-                        <x-ui.button semantic="primary" variant="ghost">Ghost Primary</x-ui.button>
-                        <x-ui.button semantic="success" variant="ghost">Ghost Success</x-ui.button>
-                        <x-ui.button semantic="warning" variant="ghost">Ghost Warning</x-ui.button>
-                        <x-ui.button semantic="danger" variant="ghost">Ghost Danger</x-ui.button>
-                        <x-ui.button semantic="notice" variant="ghost">Ghost Notice</x-ui.button>
-                        <x-ui.button semantic="info" variant="ghost">Ghost Info</x-ui.button>
+                        <x-ui.button semantic="ghost">Close review</x-ui.button>
+                        <x-ui.button semantic="danger-ghost">Delete draft</x-ui.button>
                     </div>
                     <div class="mt-4 grid gap-4 md:grid-cols-2">
                         <div class="ui-reference-subtle-surface p-4">
-                            <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Neutral Ghost Baseline</p>
-                            <x-ui.button variant="ghost" class="mt-3">Close review</x-ui.button>
+                            <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Ghost baseline</p>
+                            <x-ui.button semantic="ghost" class="mt-3">Close review</x-ui.button>
                         </div>
                         <div class="ui-reference-subtle-surface p-4">
-                            <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Semantic Ghost Parity</p>
-                            <x-ui.button semantic="notice" variant="ghost" class="mt-3">Open reviewer note</x-ui.button>
+                            <p class="text-xs font-semibold uppercase tracking-[0.15em] ui-reference-text-muted">Danger ghost</p>
+                            <x-ui.button semantic="danger-ghost" class="mt-3">Delete draft</x-ui.button>
                         </div>
                     </div>
                 </div>
@@ -330,14 +314,8 @@
                     <x-heroicon-o-plus class="h-4 w-4" aria-hidden="true" />
                     Create Workspace
                 </x-ui.button>
-                <x-ui.button variant="outline">
-                    <x-heroicon-o-cog-6-tooth class="h-4 w-4" aria-hidden="true" />
-                    Open Settings
-                </x-ui.button>
-                <x-ui.button semantic="warning" variant="outline">
-                    <x-heroicon-o-arrow-down-tray class="h-4 w-4" aria-hidden="true" />
-                    Export Results
-                </x-ui.button>
+                <x-ui.button semantic="tertiary" icon="heroicon-o-cog-6-tooth">Open Settings</x-ui.button>
+                <x-ui.button semantic="ghost" icon="heroicon-o-arrow-down-tray">Export Results</x-ui.button>
             </div>
         </section>
 

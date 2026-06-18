@@ -1,231 +1,569 @@
 @php
-    $tagColors = [
-        ['label' => 'Gray', 'color' => 'gray'],
-        ['label' => 'Cool gray', 'color' => 'cool-gray'],
-        ['label' => 'Warm gray', 'color' => 'warm-gray'],
-        ['label' => 'Red', 'color' => 'red'],
-        ['label' => 'Magenta', 'color' => 'magenta'],
-        ['label' => 'Purple', 'color' => 'purple'],
-        ['label' => 'Blue', 'color' => 'blue'],
-        ['label' => 'Cyan', 'color' => 'cyan'],
-        ['label' => 'Teal', 'color' => 'teal'],
-        ['label' => 'Green', 'color' => 'green'],
-    ];
+$tagTypes = [
+['label' => 'Gray', 'type' => 'gray'],
+['label' => 'Cool gray', 'type' => 'cool-gray'],
+['label' => 'Warm gray', 'type' => 'warm-gray'],
+['label' => 'Red', 'type' => 'red'],
+['label' => 'Magenta', 'type' => 'magenta'],
+['label' => 'Purple', 'type' => 'purple'],
+['label' => 'Blue', 'type' => 'blue'],
+['label' => 'Cyan', 'type' => 'cyan'],
+['label' => 'Teal', 'type' => 'teal'],
+['label' => 'Green', 'type' => 'green'],
+];
 
-    $sections = [
-        ['id' => 'variant-family', 'title' => 'Variants'],
-        ['id' => 'sizes-and-anatomy', 'title' => 'Sizes and anatomy'],
-        ['id' => 'color-token-matrix', 'title' => 'Color token matrix'],
-        ['id' => 'interactive-states', 'title' => 'Interactive states'],
-        ['id' => 'overflow-tooltips', 'title' => 'Overflow and tooltips'],
-        ['id' => 'tag-groups', 'title' => 'Tag groups'],
-        ['id' => 'tag-related-apis', 'title' => 'Tag versus related APIs'],
-    ];
+$allTagTypes = [
+...$tagTypes,
+['label' => 'High contrast', 'type' => 'high-contrast'],
+['label' => 'Outline', 'type' => 'outline'],
+];
 
-    $boundaryRows = [
-        ['Tag', 'Compact metadata, filters, selectable choices, and overflow tag disclosure.', '<x-ui.tag variant="dismissible">Region</x-ui.tag>', 'Canonical component'],
-        ['Badge / Status', 'Legacy taxonomy helper only where existing status wrappers remain.', '<x-ui.badge status="pending review" />', 'Related transitional API'],
-        ['Notification', 'Explanatory feedback that needs message content or recovery guidance.', '<x-ui.inline-alert semantic="danger">...</x-ui.inline-alert>', 'Separate component'],
-        ['Button / Menu button', 'Commands, action groups, and menus.', '<x-ui.button>Save</x-ui.button>', 'Use owning action API'],
-    ];
+$sizes = [
+['size' => 'sm', 'label' => 'Small', 'height' => '18px'],
+['size' => 'md', 'label' => 'Medium', 'height' => '24px'],
+['size' => 'lg', 'label' => 'Large', 'height' => '32px'],
+];
+
+$structureRows = [
+['variant' => 'read-only', 'label' => 'Read-only', 'type' => 'gray'],
+['variant' => 'dismissible', 'label' => 'Dismissible', 'type' => 'blue'],
+['variant' => 'selectable', 'label' => 'Selectable', 'type' => 'gray'],
+['variant' => 'operational', 'label' => 'Operational', 'type' => 'teal'],
+];
+
+$boundaryRows = [
+['Tag', 'Compact metadata, filters, selectable choices, and overflow tag disclosure.', '<x-ui.tag text="Region" variant="dismissible" />', 'Canonical component'],
+['Badge / Status', 'Legacy taxonomy helper only where existing status wrappers remain.', '<x-ui.badge status="pending review" />', 'Deprecated for new tag work'],
+['Notification', 'Explanatory feedback that needs message content or recovery guidance.', '<x-ui.inline-alert semantic="danger">...</x-ui.inline-alert>', 'Separate component'],
+['Button / Menu button', 'Commands, action groups, and menus.', '<x-ui.button>Save</x-ui.button>', 'Use owning action API'],
+];
 @endphp
 
 <div class="space-y-6" data-component-live-layout="tag-matrix" data-ui-reference-sample-type="tags">
-    <nav class="flex flex-wrap gap-2" aria-label="Tag example sections">
-        @foreach ($sections as $section)
-            <a class="ui-link text-sm" href="#tag-{{ $section['id'] }}">{{ $section['title'] }}</a>
-        @endforeach
-    </nav>
+    <section class="ui-reference-layer-section" data-tag-live-section="approved-variants">
+        <div class="ui-reference-section-heading">
+            <div>
+                <p class="ui-reference-section-kicker">Approved variants</p>
+                <h3 class="ui-reference-section-title">Tag</h3>
+                <p class="ui-reference-section-description">Tags are compact labels for metadata, filters, selectable choices, or tag overflow disclosure. Each variant owns its own structure and interaction contract.</p>
+            </div>
+        </div>
 
-    <section id="tag-variant-family" class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-tag-live-section="variant-family">
-        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Variants</h3>
-        <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">Tag is the canonical component family for read-only labels, dismissible filters, selectable choices, and operational overflow disclosure.</p>
+        <div class="ui-tabs ui-tabs-contained mt-4" data-ui-tabs data-ui-tabs-activation="manual" data-tag-variant-tabs>
+            <div class="ui-tabs-list" role="tablist" aria-label="Tag approved variants">
+                <button id="tag-read-only-tab" type="button" class="ui-tabs-tab" role="tab" aria-selected="true" aria-controls="tag-read-only-panel" data-ui-tabs-tab>Read-only</button>
+                <button id="tag-dismissible-tab" type="button" class="ui-tabs-tab" role="tab" aria-selected="false" aria-controls="tag-dismissible-panel" tabindex="-1" data-ui-tabs-tab>Dismissible</button>
+                <button id="tag-selectable-tab" type="button" class="ui-tabs-tab" role="tab" aria-selected="false" aria-controls="tag-selectable-panel" tabindex="-1" data-ui-tabs-tab>Selectable</button>
+                <button id="tag-operational-tab" type="button" class="ui-tabs-tab" role="tab" aria-selected="false" aria-controls="tag-operational-panel" tabindex="-1" data-ui-tabs-tab>Operational</button>
+            </div>
 
-        <div class="mt-4 grid gap-4 xl:grid-cols-2">
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Read-only</h4>
-                <div class="mt-4 flex flex-wrap gap-2">
-                    <x-ui.tag color="gray">Internal</x-ui.tag>
-                    <x-ui.tag color="green" icon="heroicon-o-check-circle">Verified</x-ui.tag>
-                    <x-ui.tag color="blue" disabled>Disabled label</x-ui.tag>
-                </div>
-            </article>
-
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Dismissible</h4>
-                <div class="mt-4 flex flex-wrap gap-2">
-                    <x-ui.tag variant="dismissible" color="blue" remove-label="Remove region filter">Region</x-ui.tag>
-                    <x-ui.tag variant="dismissible" color="purple" icon="heroicon-o-sparkles" remove-label="Remove AI filter">AI assisted</x-ui.tag>
-                    <x-ui.tag variant="dismissible" color="gray" remove-label="Remove disabled filter" disabled>Disabled</x-ui.tag>
-                </div>
-            </article>
-
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Selectable</h4>
-                <div class="mt-4 flex flex-wrap gap-2">
-                    <x-ui.tag variant="selectable">Unselected</x-ui.tag>
-                    <x-ui.tag variant="selectable" selected>Selected</x-ui.tag>
-                    <x-ui.tag variant="selectable" icon="heroicon-o-user-group">Teams</x-ui.tag>
-                    <x-ui.tag variant="selectable" disabled>Disabled</x-ui.tag>
-                </div>
-            </article>
-
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Operational</h4>
-                <div class="mt-4 flex flex-wrap items-start gap-3">
-                    <x-ui.tag variant="operational" color="teal">More tags</x-ui.tag>
-                    <details class="ui-tag-disclosure">
-                        <summary class="ui-tag ui-tag-operational ui-tag-color-teal ui-tag-md" data-ui-component="tag" data-ui-tag-variant="operational" data-ui-tag-color="teal">
-                            <span class="ui-tag-label">Overflow tags</span>
-                            <x-heroicon-o-chevron-down class="ui-tag-action-icon" aria-hidden="true" />
-                        </summary>
-                        <div class="ui-tag-disclosure-panel">
-                            <x-ui.tag color="teal" size="sm">Finance</x-ui.tag>
-                            <x-ui.tag color="teal" size="sm">Legal</x-ui.tag>
-                            <x-ui.tag color="teal" size="sm">Security</x-ui.tag>
+            <div class="ui-tabs-panels">
+                <section id="tag-read-only-panel" class="ui-tabs-panel space-y-6" role="tabpanel" aria-labelledby="tag-read-only-tab" data-ui-tabs-panel data-tag-panel="read-only">
+                    <div class="ui-reference-example-card" data-ui-layer="01">
+                        <div class="ui-reference-card-header">
+                            <div>
+                                <h4>Read-only tag</h4>
+                                <p>Use read-only tags for short metadata, category, owner, or state labels that do not trigger an action.</p>
+                            </div>
                         </div>
-                    </details>
-                    <x-ui.tag variant="operational" color="teal" disabled>Disabled</x-ui.tag>
-                </div>
-            </article>
+                        <div class="ui-reference-card-body">
+                            <div class="ui-reference-grid ui-reference-grid-3">
+                                <div class="ui-reference-example-card" data-ui-layer="02">
+                                    <div class="ui-reference-card-header">
+                                        <h5>Type hooks</h5>
+                                    </div>
+                                    <div class="ui-reference-card-body">
+                                        <x-ui.tag-group label="Read-only tag type examples">
+                                            @foreach ($tagTypes as $tag)
+                                            <x-ui.tag :type="$tag['type']" :text="$tag['label']" />
+                                            @endforeach
+                                            <x-ui.tag type="high-contrast" text="High contrast" />
+                                            <x-ui.tag type="outline" text="Outline" />
+                                        </x-ui.tag-group>
+                                    </div>
+                                </div>
+
+                                <div class="ui-reference-example-card" data-ui-layer="02">
+                                    <div class="ui-reference-card-header">
+                                        <h5>Structure and sizing</h5>
+                                    </div>
+                                    <div class="ui-reference-card-body">
+                                        <div class="space-y-3">
+                                            @foreach ($sizes as $row)
+                                            <div class="flex flex-wrap items-center gap-3">
+                                                <x-ui.tag :size="$row['size']" type="blue" :text="$row['label']" />
+                                                <x-ui.tag :size="$row['size']" type="blue" icon="heroicon-o-tag" text="With icon" />
+                                                <span class="text-xs" style="color: var(--ui-text-secondary);">{{ $row['height'] }} height</span>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ui-reference-example-card" data-ui-layer="02">
+                                    <div class="ui-reference-card-header">
+                                        <h5>Content behavior</h5>
+                                    </div>
+                                    <div class="ui-reference-card-body">
+                                        <x-ui.tag-group label="Read-only content examples">
+                                            <x-ui.tag type="green" icon="heroicon-o-check-circle" text="Verified" />
+                                            <x-ui.tag type="gray" text="Disabled label" disabled />
+                                            <x-ui.tag class="max-w-48" truncate="end" tag-title="Customer analytics export workspace" text="Customer analytics export workspace" />
+                                            <x-ui.tag class="max-w-48" truncate="middle" tag-title="tenant-prod-us-east-2-938473829" text="tenant-prod-us-east-2-938473829" />
+                                        </x-ui.tag-group>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="tag-dismissible-panel" class="ui-tabs-panel space-y-6" role="tabpanel" aria-labelledby="tag-dismissible-tab" data-ui-tabs-panel data-tag-panel="dismissible" hidden>
+                    <div class="ui-reference-example-card" data-ui-layer="01">
+                        <div class="ui-reference-card-header">
+                            <div>
+                                <h4>Dismissible tag</h4>
+                                <p>Use dismissible tags for filters or user-generated labels. Only the close icon removes the tag.</p>
+                            </div>
+                        </div>
+                        <div class="ui-reference-card-body">
+                            <div class="ui-reference-grid ui-reference-grid-3">
+                                <div class="ui-reference-example-card" data-ui-layer="02">
+                                    <div class="ui-reference-card-header">
+                                        <h5>Live removal</h5>
+                                    </div>
+                                    <div class="ui-reference-card-body">
+                                        <x-ui.tag-group label="Applied filters">
+                                            <x-ui.tag variant="dismissible" type="gray" text="Owner: Kim" dismiss-label="Remove owner filter" />
+                                            <x-ui.tag variant="dismissible" type="gray" text="Region: North" dismiss-label="Remove region filter" />
+                                            <x-ui.tag variant="dismissible" type="gray" text="AI assisted" icon="heroicon-o-sparkles" dismiss-label="Remove AI assisted filter" />
+                                        </x-ui.tag-group>
+                                    </div>
+                                </div>
+
+                                <div class="ui-reference-example-card" data-ui-layer="02">
+                                    <div class="ui-reference-card-header">
+                                        <h5>States</h5>
+                                    </div>
+                                    <div class="ui-reference-card-body">
+                                        <x-ui.tag-group label="Dismissible state examples">
+                                            <x-ui.tag variant="dismissible" type="blue" text="Region" dismiss-label="Remove region filter" />
+                                            <x-ui.tag variant="dismissible" type="blue" text="Close hover" dismiss-label="Remove hover proof" class="is-hover" />
+                                            <x-ui.tag variant="dismissible" type="blue" text="Close focus" dismiss-label="Remove focus proof" class="is-focus" />
+                                            <x-ui.tag variant="dismissible" type="blue" text="Disabled" dismiss-label="Remove disabled proof" disabled />
+                                        </x-ui.tag-group>
+                                    </div>
+                                </div>
+
+                                <div class="ui-reference-example-card" data-ui-layer="02">
+                                    <div class="ui-reference-card-header">
+                                        <h5>Type hooks</h5>
+                                    </div>
+                                    <div class="ui-reference-card-body">
+                                        <x-ui.tag-group label="Dismissible tag type examples">
+                                            @foreach ($tagTypes as $tag)
+                                            <x-ui.tag variant="dismissible" :type="$tag['type']" :text="$tag['label']" dismiss-label="Remove {{ $tag['label'] }} filter" />
+                                            @endforeach
+                                        </x-ui.tag-group>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="tag-selectable-panel" class="ui-tabs-panel space-y-6" role="tabpanel" aria-labelledby="tag-selectable-tab" data-ui-tabs-panel data-tag-panel="selectable" hidden>
+                    <div class="ui-reference-example-card" data-ui-layer="01">
+                        <div class="ui-reference-card-header">
+                            <div>
+                                <h4>Selectable tag</h4>
+                                <p>Use selectable tags for compact choices. Selectable tags use core interaction tokens, not the color family matrix.</p>
+                            </div>
+                        </div>
+                        <div class="ui-reference-card-body">
+                            <div class="ui-reference-grid ui-reference-grid-3">
+                                <div class="ui-reference-example-card" data-ui-layer="02">
+                                    <div class="ui-reference-card-header">
+                                        <h5>Single select group</h5>
+                                    </div>
+                                    <div class="ui-reference-card-body">
+                                        <x-ui.tag-group label="Status filters" selection-mode="single">
+                                            <x-ui.tag variant="selectable" text="Open" selected />
+                                            <x-ui.tag variant="selectable" text="Closed" />
+                                            <x-ui.tag variant="selectable" text="Archived" />
+                                        </x-ui.tag-group>
+                                    </div>
+                                </div>
+
+                                <div class="ui-reference-example-card" data-ui-layer="02">
+                                    <div class="ui-reference-card-header">
+                                        <h5>Multiple select group</h5>
+                                    </div>
+                                    <div class="ui-reference-card-body">
+                                        <x-ui.tag-group label="Team filters" selection-mode="multiple">
+                                            <x-ui.tag variant="selectable" text="Finance" default-selected />
+                                            <x-ui.tag variant="selectable" text="Legal" />
+                                            <x-ui.tag variant="selectable" text="Security" icon="heroicon-o-shield-check" />
+                                        </x-ui.tag-group>
+                                    </div>
+                                </div>
+
+                                <div class="ui-reference-example-card" data-ui-layer="02">
+                                    <div class="ui-reference-card-header">
+                                        <h5>States and overflow</h5>
+                                    </div>
+                                    <div class="ui-reference-card-body">
+                                        <x-ui.tag-group label="Selectable state examples">
+                                            <x-ui.tag variant="selectable" text="Selectable" />
+                                            <x-ui.tag variant="selectable" text="Hover" class="is-hover" />
+                                            <x-ui.tag variant="selectable" text="Focus" class="is-focus" />
+                                            <x-ui.tag variant="selectable" text="Selected" selected />
+                                            <x-ui.tag variant="selectable" text="Disabled" disabled />
+                                            <x-ui.tag variant="selectable" class="max-w-48" truncate="middle" tag-title="tenant-prod-us-east-2-938473829" text="tenant-prod-us-east-2-938473829" />
+                                        </x-ui.tag-group>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="tag-operational-panel" class="ui-tabs-panel space-y-6" role="tabpanel" aria-labelledby="tag-operational-tab" data-ui-tabs-panel data-tag-panel="operational" hidden>
+                    <div class="ui-reference-example-card" data-ui-layer="01">
+                        <div class="ui-reference-card-header">
+                            <div>
+                                <h4>Operational tag</h4>
+                                <p>Use operational tags to disclose additional tags or compact related tag content. The trigger remains a tag, not a menu button.</p>
+                            </div>
+                        </div>
+                        <div class="ui-reference-card-body">
+                            <div class="ui-reference-grid ui-reference-grid-3">
+                                <div class="ui-reference-example-card" data-ui-layer="02">
+                                    <div class="ui-reference-card-header">
+                                        <h5>Disclosure proof</h5>
+                                    </div>
+                                    <div class="ui-reference-card-body">
+                                        <div class="flex flex-wrap items-start gap-4">
+                                            <div class="ui-tag-disclosure">
+                                                <x-ui.tag variant="operational" type="teal" text="View more" disclosure-target="tag-disclosure-text-list" />
+                                                <div id="tag-disclosure-text-list" class="ui-tag-disclosure-panel ui-tag-disclosure-panel-text-list" data-ui-tag-disclosure hidden>
+                                                    <div class="ui-tag-disclosure-row">Finance</div>
+                                                    <div class="ui-tag-disclosure-row">Legal</div>
+                                                    <div class="ui-tag-disclosure-row">Security</div>
+                                                    <div class="ui-tag-disclosure-row">Retention</div>
+                                                    <div class="ui-tag-disclosure-row">Audit</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="ui-tag-disclosure">
+                                                <x-ui.tag variant="operational" type="cyan" text="Tag list" disclosure-target="tag-disclosure-tag-list" />
+                                                <div id="tag-disclosure-tag-list" class="ui-tag-disclosure-panel ui-tag-disclosure-panel-tag-list" data-ui-tag-disclosure hidden>
+                                                    <x-ui.tag-group label="Overflow tags">
+                                                        <x-ui.tag type="cyan" size="sm" text="Subnet" />
+                                                        <x-ui.tag type="cyan" size="sm" text="Gateway" />
+                                                        <x-ui.tag type="cyan" size="sm" text="Firewall" />
+                                                        <x-ui.tag type="cyan" size="sm" text="Load balancer" />
+                                                        <x-ui.tag type="cyan" size="sm" text="VPC" />
+                                                    </x-ui.tag-group>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ui-reference-example-card" data-ui-layer="02">
+                                    <div class="ui-reference-card-header">
+                                        <h5>States</h5>
+                                    </div>
+                                    <div class="ui-reference-card-body">
+                                        <x-ui.tag-group label="Operational state examples">
+                                            <x-ui.tag variant="operational" type="teal" text="Operational" />
+                                            <x-ui.tag variant="operational" type="teal" text="Hover" class="is-hover" />
+                                            <x-ui.tag variant="operational" type="teal" text="Focus" class="is-focus" />
+                                            <x-ui.tag variant="operational" type="teal" text="Disabled" disabled />
+                                        </x-ui.tag-group>
+                                    </div>
+                                </div>
+
+                                <div class="ui-reference-example-card" data-ui-layer="02">
+                                    <div class="ui-reference-card-header">
+                                        <h5>Type hooks</h5>
+                                    </div>
+                                    <div class="ui-reference-card-body">
+                                        <x-ui.tag-group label="Operational type examples">
+                                            @foreach ($tagTypes as $tag)
+                                            <x-ui.tag variant="operational" :type="$tag['type']" :text="$tag['label']" />
+                                            @endforeach
+                                        </x-ui.tag-group>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
     </section>
 
-    <section id="tag-sizes-and-anatomy" class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-tag-live-section="sizes-and-anatomy">
-        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Sizes and anatomy</h3>
-        <div class="mt-4 grid gap-4 xl:grid-cols-2">
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Small, medium, large</h4>
-                <div class="mt-4 flex flex-wrap items-center gap-2">
-                    <x-ui.tag size="sm">Small tag</x-ui.tag>
-                    <x-ui.tag size="md" icon="heroicon-o-information-circle">Medium tag</x-ui.tag>
-                    <x-ui.tag size="lg" icon="heroicon-o-check-circle">Large tag</x-ui.tag>
-                </div>
-            </article>
+    <section class="ui-reference-layer-section" data-tag-live-section="tag-structure-proof">
+        <div class="ui-reference-section-heading">
+            <div>
+                <p class="ui-reference-section-kicker">Structure proof</p>
+                <h3 class="ui-reference-section-title">Fixed-height tag construction</h3>
+                <p class="ui-reference-section-description">Tags use fixed heights, a 16px radius, horizontal-only padding, 16px icons, label title metadata, and an 8px group gap. These examples intentionally separate physical construction from color-token coverage.</p>
+            </div>
+        </div>
 
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Variant anatomy</h4>
-                <div class="mt-4 flex flex-wrap gap-2">
-                    <x-ui.tag color="cool-gray" icon="heroicon-o-tag">Icon label</x-ui.tag>
-                    <x-ui.tag variant="dismissible" color="magenta" icon="heroicon-o-tag" remove-label="Remove campaign">Campaign</x-ui.tag>
-                    <x-ui.tag variant="selectable" selected>Selectable border</x-ui.tag>
-                    <x-ui.tag variant="operational" color="cyan">Operational border</x-ui.tag>
+        <div class="ui-reference-grid ui-reference-grid-2 mt-4">
+            <div class="ui-reference-example-card" data-ui-layer="01">
+                <div class="ui-reference-card-header">
+                    <h4>Heights and radius</h4>
                 </div>
-            </article>
+                <div class="ui-reference-card-body">
+                    <div class="space-y-4">
+                        @foreach ($sizes as $row)
+                        <div class="flex flex-wrap items-center gap-3">
+                            <span class="w-16 text-xs font-medium" style="color: var(--ui-text-secondary);">{{ $row['label'] }}</span>
+                            <x-ui.tag :size="$row['size']" type="gray" text="Metadata" />
+                            <x-ui.tag :size="$row['size']" type="green" text="Verified" icon="heroicon-o-check-circle" />
+                            <span class="text-xs" style="color: var(--ui-text-secondary);">{{ $row['height'] }}, radius 16px</span>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui-reference-example-card" data-ui-layer="01">
+                <div class="ui-reference-card-header">
+                    <h4>Dismissible spacing</h4>
+                </div>
+                <div class="ui-reference-card-body">
+                    <div class="space-y-4">
+                        @foreach ($sizes as $row)
+                        <div class="flex flex-wrap items-center gap-3">
+                            <span class="w-16 text-xs font-medium" style="color: var(--ui-text-secondary);">{{ $row['label'] }}</span>
+                            <x-ui.tag variant="dismissible" :size="$row['size']" type="blue" text="Owner" dismiss-label="Remove owner tag" />
+                            <x-ui.tag variant="dismissible" :size="$row['size']" type="blue" text="AI assisted" icon="heroicon-o-sparkles" dismiss-label="Remove AI assisted tag" />
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui-reference-example-card" data-ui-layer="01">
+                <div class="ui-reference-card-header">
+                    <h4>Interactive borders</h4>
+                </div>
+                <div class="ui-reference-card-body">
+                    <x-ui.tag-group label="Interactive tag structure examples">
+                        @foreach ($structureRows as $row)
+                        @if ($row['variant'] === 'read-only')
+                        <x-ui.tag :type="$row['type']" :text="$row['label']" />
+                        @elseif ($row['variant'] === 'dismissible')
+                        <x-ui.tag variant="dismissible" :type="$row['type']" :text="$row['label']" dismiss-label="Remove dismissible tag" />
+                        @else
+                        <x-ui.tag :variant="$row['variant']" :type="$row['type']" :text="$row['label']" />
+                        @endif
+                        @endforeach
+                    </x-ui.tag-group>
+                </div>
+            </div>
+
+            <div class="ui-reference-example-card" data-ui-layer="01">
+                <div class="ui-reference-card-header">
+                    <h4>Truncation and label metadata</h4>
+                </div>
+                <div class="ui-reference-card-body">
+                    <x-ui.tag-group label="Tag truncation examples">
+                        <x-ui.tag class="max-w-48" truncate="end" tag-title="Customer analytics export workspace" text="Customer analytics export workspace" />
+                        <x-ui.tag class="max-w-48" truncate="start" tag-title="customer-analytics-production-cluster" text="customer-analytics-production-cluster" />
+                        <x-ui.tag class="max-w-48" truncate="middle" tag-title="tenant-prod-us-east-2-938473829" text="tenant-prod-us-east-2-938473829" />
+                    </x-ui.tag-group>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section id="tag-color-token-matrix" class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-tag-live-section="color-token-matrix">
-        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Color token matrix</h3>
-        <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">Read-only, dismissible, and operational tags use component tag color tokens. Selectable tags are shown separately because they use core tokens only.</p>
-        <div class="mt-4 grid gap-4 xl:grid-cols-3">
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Read-only colors</h4>
-                <div class="mt-4 flex flex-wrap gap-2">
-                    @foreach ($tagColors as $tag)
-                        <x-ui.tag :color="$tag['color']">{{ $tag['label'] }}</x-ui.tag>
-                    @endforeach
-                    <x-ui.tag color="high-contrast">High contrast</x-ui.tag>
-                    <x-ui.tag color="outline">Outline</x-ui.tag>
-                </div>
-            </article>
+    <section class="ui-reference-layer-section" data-tag-live-section="tag-color-tokens">
+        <div class="ui-reference-section-heading">
+            <div>
+                <p class="ui-reference-section-kicker">Color tokens</p>
+                <h3 class="ui-reference-section-title">Tag color token proof</h3>
+                <p class="ui-reference-section-description">Read-only, dismissible, and operational tags consume component color tokens. Selectable tags use core tokens only and are intentionally shown outside the color family matrix.</p>
+            </div>
+        </div>
 
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Dismissible colors</h4>
-                <div class="mt-4 flex flex-wrap gap-2">
-                    @foreach ($tagColors as $tag)
-                        <x-ui.tag variant="dismissible" :color="$tag['color']" remove-label="Remove {{ $tag['label'] }}">{{ $tag['label'] }}</x-ui.tag>
-                    @endforeach
-                    <x-ui.tag variant="dismissible" color="high-contrast" remove-label="Remove high contrast">High contrast</x-ui.tag>
-                    <x-ui.tag variant="dismissible" color="outline" remove-label="Remove outline">Outline</x-ui.tag>
+        <div class="ui-reference-grid ui-reference-grid-2 mt-4">
+            <div class="ui-reference-example-card" data-ui-layer="01">
+                <div class="ui-reference-card-header">
+                    <h4>Read-only color matrix</h4>
                 </div>
-            </article>
+                <div class="ui-reference-card-body">
+                    <x-ui.tag-group label="Read-only color token examples">
+                        @foreach ($allTagTypes as $tag)
+                        <x-ui.tag :type="$tag['type']" :text="$tag['label']" />
+                        @endforeach
+                    </x-ui.tag-group>
+                </div>
+            </div>
 
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Operational colors</h4>
-                <div class="mt-4 flex flex-wrap gap-2">
-                    @foreach ($tagColors as $tag)
-                        <x-ui.tag variant="operational" :color="$tag['color']">{{ $tag['label'] }}</x-ui.tag>
-                    @endforeach
-                    <x-ui.tag variant="operational" color="high-contrast">High contrast</x-ui.tag>
-                    <x-ui.tag variant="operational" color="outline">Outline</x-ui.tag>
+            <div class="ui-reference-example-card" data-ui-layer="01">
+                <div class="ui-reference-card-header">
+                    <h4>Dismissible color matrix</h4>
                 </div>
-            </article>
+                <div class="ui-reference-card-body">
+                    <x-ui.tag-group label="Dismissible color token examples">
+                        @foreach ($allTagTypes as $tag)
+                        <x-ui.tag variant="dismissible" :type="$tag['type']" :text="$tag['label']" dismiss-label="Remove {{ $tag['label'] }} tag" />
+                        @endforeach
+                    </x-ui.tag-group>
+                </div>
+            </div>
+
+            <div class="ui-reference-example-card" data-ui-layer="01">
+                <div class="ui-reference-card-header">
+                    <h4>Operational color matrix</h4>
+                </div>
+                <div class="ui-reference-card-body">
+                    <x-ui.tag-group label="Operational color token examples">
+                        @foreach ($tagTypes as $tag)
+                        <x-ui.tag variant="operational" :type="$tag['type']" :text="$tag['label']" />
+                        @endforeach
+                    </x-ui.tag-group>
+                    <p class="mt-3 text-xs leading-5" style="color: var(--ui-text-secondary);">Operational tags use the same component color families plus the border token. High contrast and outline are read-only/dismissible treatments.</p>
+                </div>
+            </div>
+
+            <div class="ui-reference-example-card" data-ui-layer="01">
+                <div class="ui-reference-card-header">
+                    <h4>Selectable core-token states</h4>
+                </div>
+                <div class="ui-reference-card-body">
+                    <x-ui.tag-group label="Selectable core-token state examples">
+                        <x-ui.tag variant="selectable" text="Enabled" />
+                        <x-ui.tag variant="selectable" text="Hover" class="is-hover" />
+                        <x-ui.tag variant="selectable" text="Focus" class="is-focus" />
+                        <x-ui.tag variant="selectable" text="Selected" selected />
+                        <x-ui.tag variant="selectable" text="Disabled" disabled />
+                        <x-ui.tag variant="selectable" text="Skeleton" class="ui-tag-skeleton" />
+                    </x-ui.tag-group>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui-reference-grid ui-reference-grid-4 mt-4">
+            <div class="ui-reference-example-card" data-ui-layer="01">
+                <div class="ui-reference-card-header">
+                    <h4>Read-only states</h4>
+                </div>
+                <div class="ui-reference-card-body">
+                    <x-ui.tag-group label="Read-only state examples">
+                        <x-ui.tag type="green" text="Enabled" />
+                        <x-ui.tag type="green" text="Disabled" disabled />
+                        <x-ui.tag type="green" text="Skeleton" class="ui-tag-skeleton" />
+                    </x-ui.tag-group>
+                </div>
+            </div>
+
+            <div class="ui-reference-example-card" data-ui-layer="01">
+                <div class="ui-reference-card-header">
+                    <h4>Dismissible states</h4>
+                </div>
+                <div class="ui-reference-card-body">
+                    <x-ui.tag-group label="Dismissible state examples with close target">
+                        <x-ui.tag variant="dismissible" type="blue" text="Enabled" dismiss-label="Remove enabled tag" />
+                        <x-ui.tag variant="dismissible" type="blue" text="Close hover" dismiss-label="Remove hover tag" class="is-hover" />
+                        <x-ui.tag variant="dismissible" type="blue" text="Close focus" dismiss-label="Remove focus tag" class="is-focus" />
+                        <x-ui.tag variant="dismissible" type="blue" text="Disabled" dismiss-label="Remove disabled tag" disabled />
+                        <x-ui.tag variant="dismissible" type="blue" text="Skeleton" dismiss-label="Remove skeleton tag" class="ui-tag-skeleton" />
+                    </x-ui.tag-group>
+                </div>
+            </div>
+
+            <div class="ui-reference-example-card" data-ui-layer="01">
+                <div class="ui-reference-card-header">
+                    <h4>Operational states</h4>
+                </div>
+                <div class="ui-reference-card-body">
+                    <x-ui.tag-group label="Operational state examples with border token">
+                        <x-ui.tag variant="operational" type="teal" text="Enabled" />
+                        <x-ui.tag variant="operational" type="teal" text="Hover" class="is-hover" />
+                        <x-ui.tag variant="operational" type="teal" text="Focus" class="is-focus" />
+                        <x-ui.tag variant="operational" type="teal" text="Disabled" disabled />
+                        <x-ui.tag variant="operational" type="teal" text="Skeleton" class="ui-tag-skeleton" />
+                    </x-ui.tag-group>
+                </div>
+            </div>
+
+            <div class="ui-reference-example-card" data-ui-layer="01">
+                <div class="ui-reference-card-header">
+                    <h4>Special type states</h4>
+                </div>
+                <div class="ui-reference-card-body">
+                    <x-ui.tag-group label="High contrast and outline states">
+                        <x-ui.tag type="high-contrast" text="High contrast" />
+                        <x-ui.tag variant="dismissible" type="high-contrast" text="Close hover" dismiss-label="Remove high contrast tag" class="is-hover" />
+                        <x-ui.tag type="outline" text="Outline" />
+                        <x-ui.tag variant="dismissible" type="outline" text="Close focus" dismiss-label="Remove outline tag" class="is-focus" />
+                    </x-ui.tag-group>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section id="tag-interactive-states" class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-tag-live-section="interactive-states">
-        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Interactive states</h3>
-        <div class="mt-4 grid gap-4 xl:grid-cols-2">
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Dismissible and operational</h4>
-                <div class="mt-4 flex flex-wrap gap-2">
-                    <x-ui.tag variant="dismissible" color="red" remove-label="Remove hover proof">Dismissible hover</x-ui.tag>
-                    <x-ui.tag variant="dismissible" color="red" remove-label="Remove focus proof" class="ui-reference-force-focus">Dismissible focus</x-ui.tag>
-                    <x-ui.tag variant="dismissible" color="red" remove-label="Remove disabled proof" disabled>Dismissible disabled</x-ui.tag>
-                    <x-ui.tag variant="operational" color="blue">Operational hover</x-ui.tag>
-                    <x-ui.tag variant="operational" color="blue" class="ui-reference-force-focus">Operational focus</x-ui.tag>
-                    <x-ui.tag variant="operational" color="blue" disabled>Operational disabled</x-ui.tag>
-                </div>
-            </article>
+    <section class="ui-reference-layer-section" data-tag-live-section="tag-groups">
+        <div class="ui-reference-section-heading">
+            <div>
+                <p class="ui-reference-section-kicker">Grouping</p>
+                <h3 class="ui-reference-section-title">Tag groups</h3>
+                <p class="ui-reference-section-description">Groups use 8px spacing, wrap naturally, and declare selection mode only when selectable tags need coordinated behavior.</p>
+            </div>
+        </div>
 
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Selectable and skeleton</h4>
-                <div class="mt-4 flex flex-wrap gap-2">
-                    <x-ui.tag variant="selectable">Selectable hover</x-ui.tag>
-                    <x-ui.tag variant="selectable" class="ui-reference-force-focus">Selectable focus</x-ui.tag>
-                    <x-ui.tag variant="selectable" selected>Selectable selected</x-ui.tag>
-                    <x-ui.tag variant="selectable" disabled>Selectable disabled</x-ui.tag>
-                    <x-ui.tag skeleton>Loading tag</x-ui.tag>
+        <div class="ui-reference-grid ui-reference-grid-2 mt-4">
+            <div class="ui-reference-example-card" data-ui-layer="01">
+                <div class="ui-reference-card-header">
+                    <h4>Wrapping read-only group</h4>
                 </div>
-            </article>
+                <div class="ui-reference-card-body">
+                    <x-ui.tag-group label="Network tags">
+                        <x-ui.tag type="blue" text="Subnet" />
+                        <x-ui.tag type="magenta" text="Floating IP" />
+                        <x-ui.tag type="green" text="VPC" />
+                        <x-ui.tag type="purple" text="Load balancer" />
+                        <x-ui.tag type="teal" text="Flow log" />
+                        <x-ui.tag type="cyan" text="Gateway" />
+                    </x-ui.tag-group>
+                </div>
+            </div>
+
+            <div class="ui-reference-example-card" data-ui-layer="01">
+                <div class="ui-reference-card-header">
+                    <h4>Dismissible filter group</h4>
+                </div>
+                <div class="ui-reference-card-body">
+                    <x-ui.tag-group label="Invoice filters">
+                        <x-ui.tag variant="dismissible" type="gray" text="Type: Invoice" dismiss-label="Remove type filter" />
+                        <x-ui.tag variant="dismissible" type="gray" text="Owner: Avery" dismiss-label="Remove owner filter" />
+                        <x-ui.tag variant="dismissible" type="gray" text="Due this week" dismiss-label="Remove due date filter" />
+                    </x-ui.tag-group>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section id="tag-overflow-tooltips" class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-tag-live-section="overflow-tooltips">
-        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Overflow and tooltips</h3>
-        <p class="mt-2 text-sm leading-6" style="color: var(--ui-text-secondary);">Long titles remain single-line, truncate with ellipsis, and expose the full value through the browser title tooltip.</p>
-        <div class="mt-4 flex max-w-xl flex-wrap gap-2">
-            <x-ui.tag class="max-w-48" truncate="end" title="Customer analytics export workspace">Customer analytics export workspace</x-ui.tag>
-            <x-ui.tag class="max-w-48" truncate="middle" title="tenant-prod-us-east-2-938473829">tenant-prod-us-east-2-938473829</x-ui.tag>
-            <x-ui.tag class="max-w-48" truncate="start" title="Global reporting and compliance workspace">Global reporting and compliance workspace</x-ui.tag>
-            <x-ui.tag variant="selectable" class="max-w-48" truncate="end" title="Keyboard focus shows the full title">Keyboard focus shows the full title</x-ui.tag>
+    <section class="ui-reference-layer-section" data-tag-live-section="tag-related-apis">
+        <div class="ui-reference-section-heading">
+            <div>
+                <p class="ui-reference-section-kicker">Boundaries</p>
+                <h3 class="ui-reference-section-title">Tag versus related APIs</h3>
+                <p class="ui-reference-section-description">Tags do not replace notifications, commands, status taxonomy wrappers, or long-form feedback surfaces.</p>
+            </div>
         </div>
-    </section>
 
-    <section id="tag-tag-groups" class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-tag-live-section="tag-groups">
-        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Tag groups</h3>
-        <div class="mt-4 grid gap-4 xl:grid-cols-2">
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Wrapping group</h4>
-                <div class="ui-tag-group mt-4">
-                    @foreach ($tagColors as $tag)
-                        <x-ui.tag :color="$tag['color']">{{ $tag['label'] }}</x-ui.tag>
-                    @endforeach
-                </div>
-            </article>
-
-            <article class="rounded-md border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-02);">
-                <h4 class="text-sm font-semibold" style="color: var(--ui-text-primary);">Selectable and filter groups</h4>
-                <div class="ui-tag-group mt-4">
-                    <x-ui.tag variant="selectable" selected>Open</x-ui.tag>
-                    <x-ui.tag variant="selectable">Closed</x-ui.tag>
-                    <x-ui.tag variant="selectable">Archived</x-ui.tag>
-                </div>
-                <div class="ui-tag-group mt-4">
-                    <x-ui.tag variant="dismissible" color="gray" remove-label="Remove owner filter">Owner: Kim</x-ui.tag>
-                    <x-ui.tag variant="dismissible" color="gray" remove-label="Remove region filter">Region: North</x-ui.tag>
-                    <x-ui.tag variant="dismissible" color="gray" remove-label="Remove status filter">Status: Active</x-ui.tag>
-                </div>
-            </article>
-        </div>
-    </section>
-
-    <section id="tag-tag-related-apis" class="rounded-lg border p-4" style="border-color: var(--ui-border-subtle-01); background-color: var(--ui-layer-01);" data-tag-live-section="tag-related-apis">
-        <h3 class="text-base font-semibold" style="color: var(--ui-text-primary);">Tag versus related APIs</h3>
-        <div class="mt-4 overflow-x-auto rounded-lg border" style="border-color: var(--ui-border-subtle-01);">
+        <div class="mt-4 overflow-x-auto border" style="border-color: var(--ui-border-subtle-01);">
             <table class="min-w-full text-left text-sm">
-                <thead style="background-color: var(--ui-layer-02); color: var(--ui-text-secondary);">
+                <thead style="background-color: var(--ui-layer-01); color: var(--ui-text-secondary);">
                     <tr>
                         <th class="px-3 py-2 font-medium">API</th>
                         <th class="px-3 py-2 font-medium">Owns</th>
@@ -235,12 +573,12 @@
                 </thead>
                 <tbody style="color: var(--ui-text-primary);">
                     @foreach ($boundaryRows as [$api, $owns, $example, $status])
-                        <tr class="border-t" style="border-color: var(--ui-border-subtle-01);">
-                            <td class="px-3 py-2 font-medium">{{ $api }}</td>
-                            <td class="px-3 py-2">{{ $owns }}</td>
-                            <td class="px-3 py-2"><code>{{ $example }}</code></td>
-                            <td class="px-3 py-2">{{ $status }}</td>
-                        </tr>
+                    <tr class="border-t" style="border-color: var(--ui-border-subtle-01);">
+                        <td class="px-3 py-2 font-medium">{{ $api }}</td>
+                        <td class="px-3 py-2">{{ $owns }}</td>
+                        <td class="px-3 py-2"><code>{{ $example }}</code></td>
+                        <td class="px-3 py-2">{{ $status }}</td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>

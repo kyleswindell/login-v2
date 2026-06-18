@@ -10,7 +10,7 @@
             kicker="Tier 2G"
         >
             <x-slot:actions>
-                <x-ui.button :href="route('platform.ui-reference.patterns.widget-content')" variant="outline">Open widget standards</x-ui.button>
+                <x-ui.button :href="route('platform.ui-reference.patterns.widget-content')" semantic="tertiary">Open widget standards</x-ui.button>
                 <x-ui.button :href="route('dashboard')" semantic="primary">Compare live dashboard</x-ui.button>
             </x-slot:actions>
         </x-ui.patterns.page-title-actions-row>
@@ -101,13 +101,13 @@
                     <div class="flex flex-wrap items-center gap-2">
                         <x-ui.button
                             x-on:click="reset()"
-                            variant="ghost"
+                            semantic="ghost"
                             x-bind:disabled="!editing && hiddenWidgets.length === 0"
                         >
                             Reset proof
                         </x-ui.button>
-                        <x-ui.button x-show="!editing" x-on:click="toggleEditing()" variant="outline">Customize proof</x-ui.button>
-                        <x-ui.button x-show="editing" x-on:click="toggleEditing()" semantic="success">Lock proof</x-ui.button>
+                        <x-ui.button x-show="!editing" x-on:click="toggleEditing()" semantic="tertiary">Customize proof</x-ui.button>
+                        <x-ui.button x-show="editing" x-on:click="toggleEditing()" semantic="primary">Lock proof</x-ui.button>
                     </div>
                 </div>
 
@@ -237,7 +237,7 @@
                                 <a href="{{ route('dashboard') }}" class="font-semibold underline-offset-4 hover:underline">Compare the live dashboard consumer</a>.
                             </p>
                             <pre class="ui-pattern-widget-shell-section mt-4 overflow-x-auto text-xs" data-dashboard-proof-saved-layout x-text="savedLayoutPreview()"></pre>
-                            <x-ui.button href="#dashboard-customization-proof" variant="ghost" class="mt-4">Review saved snapshot</x-ui.button>
+                            <x-ui.button href="#dashboard-customization-proof" semantic="ghost" class="mt-4">Review saved snapshot</x-ui.button>
                         </div>
 
                         <div class="ui-card">

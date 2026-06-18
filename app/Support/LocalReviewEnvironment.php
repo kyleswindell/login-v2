@@ -17,6 +17,8 @@ class LocalReviewEnvironment
     public const PASSWORD = 'password';
     public const REVERB_PORT = '8080';
     public const REVERB_SCHEME = 'http';
+    public const REVERB_SERVER_HOST = '0.0.0.0';
+    public const REVERB_SERVER_PORT = '8080';
     public const ROLE = 'platform_super_admin';
     public const VITE_DOCKER_CHECK_URL = 'http://host.docker.internal:5173';
     public const VITE_URL = 'http://localhost:5173';
@@ -92,6 +94,7 @@ class LocalReviewEnvironment
         } else {
             $checks[] = $this->verifyViteAsset($viteCheckUrl, $viteUrl, 'resources/js/app.js', 'vite js');
             $checks[] = $this->verifyViteAsset($viteCheckUrl, $viteUrl, 'resources/css/app.css', 'vite css');
+            $checks[] = $this->verifyReverb($reverbHost, $reverbPort);
             $checks[] = $this->verifyApp($appUrl);
         }
 
@@ -156,6 +159,9 @@ class LocalReviewEnvironment
         }
 
         $env = File::get($envPath);
+        $env = $this->upsertEnvValue($env, 'BROADCAST_CONNECTION', 'reverb');
+        $env = $this->upsertEnvValue($env, 'REVERB_SERVER_HOST', self::REVERB_SERVER_HOST);
+        $env = $this->upsertEnvValue($env, 'REVERB_SERVER_PORT', self::REVERB_SERVER_PORT);
         $env = $this->upsertEnvValue($env, 'REVERB_HOST', $reverbHost);
         $env = $this->upsertEnvValue($env, 'REVERB_PORT', $reverbPort);
         $env = $this->upsertEnvValue($env, 'REVERB_SCHEME', $reverbScheme);
@@ -267,6 +273,38 @@ class LocalReviewEnvironment
             "{$appUrl}/login",
             fn (int $status): bool => $status >= 200 && $status < 500,
         );
+    }
+
+    /**
+     * @return array{name: string, status: string, message: string}
+     */
+    private function verifyReverb(string $reverbHost, string $reverbPort): array
+    {
+        $checkHost = File::exists('/.dockerenv') ? 'reverb' : $reverbHost;
+        $port = (int) $reverbPort;
+
+        try {
+            $socket = @fsockopen($checkHost, $port, $errorCode, $errorMessage, self::HTTP_TIMEOUT_SECONDS);
+        } catch (Throwable $exception) {
+            $socket = false;
+            $errorMessage = $exception->getMessage();
+        }
+
+        if (is_resource($socket)) {
+            fclose($socket);
+
+            return [
+                'name' => 'reverb',
+                'status' => 'ok',
+                'message' => "{$checkHost}:{$port} accepted a TCP connection.",
+            ];
+        }
+
+        return [
+            'name' => 'reverb',
+            'status' => 'failed',
+            'message' => "{$checkHost}:{$port} did not accept a TCP connection: {$errorMessage}",
+        ];
     }
 
     /**

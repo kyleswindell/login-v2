@@ -15,6 +15,13 @@ The intended staging runtime is:
 * websocket/app endpoint proxied through Apache
 * queue worker running continuously on the same server
 
+The intended local runtime is:
+
+* Laravel app at `http://localhost:8000` or a LAN review URL
+* Reverb exposed directly on port `8080`
+* browser-facing Reverb host matched to the app URL host by `php artisan local:ready`
+* `BROADCAST_CONNECTION=reverb` for local notification review
+
 ## Repo Artifacts
 
 Current server templates live here:
@@ -64,6 +71,23 @@ Important:
 5. Enable and start:
    * `platform-reverb.service`
    * `platform-queue-worker.service`
+
+## Local Docker Setup
+
+Start the Reverb service with the local Compose stack:
+
+```bash
+docker compose up -d reverb
+docker compose exec app php artisan local:ready
+```
+
+For LAN review:
+
+```bash
+docker compose exec app php artisan local:ready --app-url=http://192.168.50.10:8000 --vite-url=http://192.168.50.10:5173
+```
+
+The readiness command normalizes local `.env` so the app broadcasts through Reverb and the browser connects to the same host used for the app URL.
 
 ## Deploy Flow Impact
 

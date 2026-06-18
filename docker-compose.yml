@@ -31,7 +31,31 @@ services:
       - node-modules:/var/www/html/node_modules
     ports:
       - "${VITE_PORT:-5173}:5173"
-    command: sh -lc "npm install && (npm run dev -- --host 0.0.0.0 & vite_pid=$$!; sleep 3; printf '%s' 'http://localhost:5173' > public/hot; wait $$vite_pid)"
+    environment:
+      VITE_DEV_SERVER_URL: "${VITE_DEV_SERVER_URL:-http://localhost:5173}"
+      VITE_USE_POLLING: "${VITE_USE_POLLING:-true}"
+      VITE_POLLING_INTERVAL: "${VITE_POLLING_INTERVAL:-1000}"
+    command: sh -lc "npm install && (npm run dev -- --host 0.0.0.0 --port 5173 & vite_pid=$$!; sleep 3; printf '%s' \"$$VITE_DEV_SERVER_URL\" > public/hot; wait $$vite_pid)"
+
+  reverb:
+    build:
+      context: .
+      dockerfile: .docker/php/Dockerfile
+      args:
+        UID: ${DOCKER_UID:-1000}
+        GID: ${DOCKER_GID:-1000}
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+      - composer-vendor:/var/www/html/vendor
+    ports:
+      - "${REVERB_SERVER_PORT:-8080}:8080"
+    env_file:
+      - .env
+    depends_on:
+      redis:
+        condition: service_started
+    command: sh -lc "composer install && php artisan reverb:start --host=0.0.0.0 --port=8080"
 
   postgres:
     image: postgres:16-alpine
@@ -45,7 +69,11 @@ services:
       - postgres-data:/var/lib/postgresql/data
       - ./.docker/postgres/init-test-db.sh:/docker-entrypoint-initdb.d/10-create-test-db.sh:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-platform_app} -d ${DB_DATABASE:-platform_app}"]
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${DB_USERNAME:-platform_app} -d ${DB_DATABASE:-platform_app}",
+        ]
       interval: 5s
       timeout: 5s
       retries: 10

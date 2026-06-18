@@ -25,9 +25,10 @@ npm run local:ready
 The readiness command:
 
 - writes `public/hot` as `http://localhost:5173`
-- normalizes the browser-facing Reverb host from the app URL
+- normalizes the local broadcast connection to Reverb and the browser-facing Reverb host from the app URL
 - verifies Vite JavaScript and CSS at `http://localhost:5173` when run on the host
 - verifies host-run Vite JavaScript and CSS through `http://host.docker.internal:5173` when run inside the Docker app container
+- verifies Reverb accepts a TCP connection on port `8080`
 - verifies the app login route at `http://localhost:8000/login`
 - upserts `test@example.com` / `password`
 - assigns the `platform_super_admin` role for protected local review routes
@@ -52,6 +53,20 @@ The Docker `node` service is opt-in under the `docker-vite` profile. Use it only
 docker compose --profile docker-vite up node
 docker compose exec app php artisan local:ready --vite-check-url=http://node:5173
 ```
+
+Docker Vite enables polling by default for Windows bind mounts. If CSS or JavaScript still appears stale when using the Docker `node` service, restart that service once and rerun `local:ready`; do not keep restarting or cache-busting in a loop.
+
+## Realtime Notifications
+
+Realtime notification testing is part of local review. The Compose stack includes a `reverb` service on port `8080`, and `local:ready` normalizes `.env` to:
+
+```env
+BROADCAST_CONNECTION=reverb
+REVERB_SERVER_HOST=0.0.0.0
+REVERB_SERVER_PORT=8080
+```
+
+When the page is loaded at `http://localhost:8000`, the browser connects to `ws://localhost:8080`. When using LAN review, pass the LAN app and Vite URLs to `local:ready` so the browser connects to the LAN Reverb host instead of stale localhost values.
 
 ## Asset Mode
 

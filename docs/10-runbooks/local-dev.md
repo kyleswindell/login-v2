@@ -88,7 +88,7 @@ or, when using local PHP/npm directly:
 npm run local:ready
 ```
 
-This command normalizes `public/hot`, aligns the browser-facing Reverb host with the app URL, checks the local app and Vite endpoints, and upserts the review user `test@example.com` / `password` with platform review/admin access. After Docker database resets, rerun this command instead of manually recreating the user or rewriting `public/hot`.
+This command normalizes `public/hot`, aligns the browser-facing Reverb host with the app URL, checks the local app, Vite endpoints, and Reverb TCP port, and upserts the review user `test@example.com` / `password` with platform review/admin access. After Docker database resets, rerun this command instead of manually recreating the user or rewriting `public/hot`.
 
 For LAN review, pass the browser-reachable URLs so Vite and websocket clients do not fall back to stale localhost values:
 
@@ -100,6 +100,7 @@ The Compose stack includes:
 
 * `app`: PHP 8.3 CLI container running Laravel's local server
 * `node`: optional Node 22 container running Vite under the `docker-vite` profile
+* `reverb`: Laravel Reverb websocket server for local realtime notification review
 * `postgres`: PostgreSQL 16
 * `redis`: Redis 7
 * `mailpit`: local email capture
@@ -112,6 +113,17 @@ Use the Docker Vite service only when explicitly testing the containerized Node 
 docker compose --profile docker-vite up node
 docker compose exec app php artisan local:ready --vite-check-url=http://node:5173
 ```
+
+The Docker Vite service enables polling by default for Windows bind mounts. Restart the `node` service once if the Docker Vite path appears stale; use host-run Vite as the default local review path.
+
+Realtime notification review expects Reverb to be running:
+
+```bash
+docker compose up -d reverb
+docker compose exec app php artisan local:ready
+```
+
+`local:ready` normalizes local `.env` to `BROADCAST_CONNECTION=reverb`, binds the Reverb server to `0.0.0.0:8080`, and points the browser-facing Reverb host at the app URL host.
 
 Compose mounts `vendor/` and `node_modules/` as Docker named volumes. That keeps Composer and npm dependency trees out of each checkout or disposable worker worktree while preserving them for the active Compose project. Use `docker compose down --volumes` when intentionally clearing those dependency volumes.
 

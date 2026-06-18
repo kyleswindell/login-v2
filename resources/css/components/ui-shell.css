@@ -1,0 +1,49 @@
+/* ==========================================================================
+File: resources/css/components/ui-shell.css
+Purpose: UI Shell component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/ui-shell/
+
+Notes:
+
+* Defines UI Shell selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Document and page defaults belong in resources/css/base/.
+  ========================================================================== */
+
+@layer components {
+    .ui-shell {
+        min-block-size: 100vh;
+        background-color: var(--ui-background);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-shell-header {
+        position: sticky;
+        z-index: 7000;
+        inset-block-start: 0;
+        display: flex;
+        align-items: center;
+        min-block-size: 3rem;
+        border-block-end: 1px solid var(--ui-border-subtle-01);
+        background-color: var(--ui-background);
+    }
+
+    .ui-shell-side-nav {
+        inline-size: 16rem;
+        border-inline-end: 1px solid var(--ui-border-subtle-01);
+        background-color: var(--ui-layer-01);
+    }
+
+    .ui-shell-content {
+        min-inline-size: 0;
+        padding: var(--ui-spacing-06);
+    }
+
+    .ui-shell-with-side-nav {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+    }
+}

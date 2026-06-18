@@ -1,0 +1,132 @@
+/* ==========================================================================
+File: resources/css/components/copy-button.css
+Purpose: Copy Button component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/copy-button/
+
+Notes:
+
+* Defines Copy Button selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Copy Button feedback consumes tooltip, layer, icon, focus, and motion tokens.
+  ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+   Base copy button
+   ---------------------------------------------------------------------- */
+
+    .ui-copy-button {
+        box-sizing: border-box;
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--ui-button-size, 3rem);
+        block-size: var(--ui-button-size, 3rem);
+        margin: 0;
+        border: 0;
+        padding: 0;
+        background-color: var(--ui-layer-01);
+        color: var(--ui-icon-primary);
+        cursor: pointer;
+        outline: none;
+        transition:
+            background-color var(--ui-duration-fast-01) var(--ui-motion-standard-productive),
+            outline var(--ui-duration-fast-01) var(--ui-motion-standard-productive);
+    }
+
+    .ui-copy-button-xs {
+        --ui-button-size: 1.5rem;
+    }
+
+    .ui-copy-button-sm {
+        --ui-button-size: 2rem;
+    }
+
+    .ui-copy-button-md {
+        --ui-button-size: 2.5rem;
+    }
+
+    .ui-copy-button-lg {
+        --ui-button-size: 3rem;
+    }
+
+    .ui-copy-button:hover {
+        background-color: var(--ui-layer-hover-01);
+    }
+
+    .ui-copy-button:active {
+        background-color: var(--ui-layer-active-01);
+    }
+
+    .ui-copy-button:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-copy-button-icon {
+        inline-size: 1rem;
+        block-size: 1rem;
+        fill: currentColor;
+    }
+
+    .ui-copy-button-label {
+        font-size: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+   Feedback
+   ---------------------------------------------------------------------- */
+
+    .ui-copy-button::before,
+    .ui-copy-button-feedback {
+        display: none;
+    }
+
+    .ui-copy-button::before {
+        content: "";
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-start: 50%;
+        border: 0.25rem solid transparent;
+        border-block-start-color: var(--ui-background-inverse);
+        transform: translate(-50%, -100%);
+    }
+
+    .ui-copy-button-feedback {
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-start: 50%;
+        z-index: 1;
+        max-inline-size: 13rem;
+        padding: var(--ui-spacing-03) var(--ui-spacing-05);
+        background-color: var(--ui-background-inverse);
+        color: var(--ui-text-inverse);
+        font-size: var(--ui-type-label-01-font-size);
+        font-weight: var(--ui-type-label-01-font-weight);
+        line-height: var(--ui-type-label-01-line-height);
+        letter-spacing: var(--ui-type-label-01-letter-spacing);
+        white-space: nowrap;
+        transform: translate(-50%, calc(-100% - 0.25rem));
+    }
+
+    .ui-copy-button-animating::before,
+    .ui-copy-button-animating .ui-copy-button-feedback {
+        display: block;
+    }
+
+    .ui-copy-button-fade-in::before,
+    .ui-copy-button-fade-in .ui-copy-button-feedback {
+        animation: ui-show-feedback var(--ui-duration-fast-02)
+            var(--ui-motion-standard-productive);
+    }
+
+    .ui-copy-button-fade-out::before,
+    .ui-copy-button-fade-out .ui-copy-button-feedback {
+        animation: ui-hide-feedback var(--ui-duration-fast-02)
+            var(--ui-motion-standard-productive);
+    }
+}

@@ -29,6 +29,7 @@ UI support and tracking notes only.
 - [Phase 2 Batch F - Foundation Elements Carbon Comparison Notes](Phase%202%20Batch%20F%20-%20Foundation%20Elements%20Carbon%20Comparison%20Notes.md)
 - [Phase 2 Batch F - Starter Catalog Matrix](Phase%202%20Batch%20F%20-%20Starter%20Catalog%20Matrix.md)
 - [Phase 2 Batch F - UI Reference Route Disposition Matrix](Phase%202%20Batch%20F%20-%20UI%20Reference%20Route%20Disposition%20Matrix.md)
+- [Flatpickr Date Picker Dependency Review](flatpickr-date-picker-dependency-review.md)
 
 ## Related
 

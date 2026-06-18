@@ -1,0 +1,49 @@
+/* ==========================================================================
+   File: resources/css/tokens/motion.css
+   Purpose: Global motion duration and easing tokens.
+   Source: Carbon motion package.
+   Carbon reference:
+
+   * reference/carbon-main/packages/motion/src/index.ts
+
+   Notes:
+   - Defines motion tokens only.
+   - Component CSS should consume --ui-duration-* and --ui-motion-* aliases.
+   - Keep reduced-motion behavior in component/base CSS, not in this token file.
+   ========================================================================== */
+
+@layer base {
+    :root {
+        /* Carbon duration scale */
+        --duration-fast-01: 70ms;
+        --duration-fast-02: 110ms;
+        --duration-moderate-01: 150ms;
+        --duration-moderate-02: 240ms;
+        --duration-slow-01: 400ms;
+        --duration-slow-02: 700ms;
+
+        /* App-facing duration aliases */
+        --ui-duration-fast-01: var(--duration-fast-01);
+        --ui-duration-fast-02: var(--duration-fast-02);
+        --ui-duration-moderate-01: var(--duration-moderate-01);
+        --ui-duration-moderate-02: var(--duration-moderate-02);
+        --ui-duration-slow-01: var(--duration-slow-01);
+        --ui-duration-slow-02: var(--duration-slow-02);
+
+        /* Carbon easing curves */
+        --motion-standard-productive: cubic-bezier(0.2, 0, 0.38, 0.9);
+        --motion-standard-expressive: cubic-bezier(0.4, 0.14, 0.3, 1);
+        --motion-entrance-productive: cubic-bezier(0, 0, 0.38, 0.9);
+        --motion-entrance-expressive: cubic-bezier(0, 0, 0.3, 1);
+        --motion-exit-productive: cubic-bezier(0.2, 0, 1, 0.9);
+        --motion-exit-expressive: cubic-bezier(0.4, 0.14, 1, 1);
+
+        /* App-facing easing aliases */
+        --ui-motion-standard-productive: var(--motion-standard-productive);
+        --ui-motion-standard-expressive: var(--motion-standard-expressive);
+        --ui-motion-entrance-productive: var(--motion-entrance-productive);
+        --ui-motion-entrance-expressive: var(--motion-entrance-expressive);
+        --ui-motion-exit-productive: var(--motion-exit-productive);
+        --ui-motion-exit-expressive: var(--motion-exit-expressive);
+    }
+}

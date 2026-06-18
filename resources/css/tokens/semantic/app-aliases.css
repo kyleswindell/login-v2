@@ -1,0 +1,787 @@
+/* ==========================================================================
+File: resources/css/tokens/semantic/app-aliases.css
+Purpose: App-facing semantic aliases and compatibility aliases.
+Notes:
+
+* Defines app aliases only.
+* Do not define primitive palette values here.
+* Do not define theme role tokens here.
+* Do not define component token values here.
+* Aliases should point to active theme, component, or app semantic tokens.
+  ========================================================================== */
+
+@layer base {
+    :root {
+        /* ------------------------------------------------------------------
+Canvas / surface aliases
+------------------------------------------------------------------ */
+        --ui-canvas: var(--ui-background);
+        --ui-surface: var(--ui-layer-01);
+        --ui-surface-elevated: var(--ui-layer-01);
+        --ui-surface-muted: var(--ui-layer-02);
+        --ui-card-layer: var(--ui-layer-01);
+
+        /* ------------------------------------------------------------------
+       Carbon layer set aliases
+       ------------------------------------------------------------------ */
+        --ui-layer: var(--ui-layer-01);
+        --ui-layer-active: var(--ui-layer-active-01);
+        --ui-layer-background: var(--ui-layer-background-01);
+        --ui-layer-hover: var(--ui-layer-hover-01);
+        --ui-layer-selected: var(--ui-layer-selected-01);
+        --ui-layer-selected-hover: var(--ui-layer-selected-hover-01);
+        --ui-layer-accent: var(--ui-layer-accent-01);
+        --ui-layer-accent-active: var(--ui-layer-accent-active-01);
+        --ui-layer-accent-hover: var(--ui-layer-accent-hover-01);
+
+        /* ------------------------------------------------------------------
+       Field aliases
+       ------------------------------------------------------------------ */
+        --ui-field: var(--ui-field-01);
+        --ui-field-hover: var(--ui-field-hover-01);
+        --ui-field-disabled: color-mix(
+            in srgb,
+            var(--ui-field-01) 60%,
+            var(--ui-background) 40%
+        );
+
+        /* ------------------------------------------------------------------
+       Border aliases
+       ------------------------------------------------------------------ */
+        --ui-border-default: var(--ui-border-subtle-01);
+        --ui-border-muted: var(--ui-border-subtle-00);
+        --ui-border-subtle: var(--ui-border-subtle-01);
+        --ui-border-subtle-selected: var(--ui-border-subtle-selected-01);
+        --ui-border-strong: var(--ui-border-strong-01);
+        --ui-border-tile: var(--ui-border-tile-01);
+
+        /* ------------------------------------------------------------------
+       Text aliases
+       ------------------------------------------------------------------ */
+        --ui-text-muted: var(--ui-text-helper);
+        --ui-text-strong: var(--ui-text-primary);
+
+        /* ------------------------------------------------------------------
+       Icon aliases
+       ------------------------------------------------------------------ */
+        --ui-icon-muted: var(--ui-icon-secondary);
+        --ui-icon-strong: var(--ui-icon-primary);
+
+        /* ------------------------------------------------------------------
+       Link aliases
+       ------------------------------------------------------------------ */
+        --ui-link: var(--ui-link-primary);
+        --ui-link-hover: var(--ui-link-primary-hover);
+        --ui-link-text: var(--ui-link-primary);
+        --ui-link-text-hover: var(--ui-link-primary-hover);
+
+        /* ------------------------------------------------------------------
+       Shadow, scrollbar, and loading aliases
+       ------------------------------------------------------------------ */
+        --ui-shadow-color: var(--ui-black);
+        --ui-scrollbar-track: var(--ui-layer-02);
+        --ui-scrollbar-thumb: var(--ui-border-strong-01);
+        --ui-scrollbar-thumb-hover: var(--ui-border-strong-02);
+        --ui-spinner-track: var(--ui-skeleton-element);
+        --ui-spinner-head: var(--ui-focus);
+        --ui-support-notice: var(--ui-support-caution-undefined);
+
+        /* ------------------------------------------------------------------
+       Component configuration compatibility aliases
+       ------------------------------------------------------------------ */
+        --ui-background-disabled: color-mix(
+            in srgb,
+            var(--ui-background) 88%,
+            var(--ui-text-disabled) 12%
+        );
+        --ui-shadow-popover: 0 1rem 2rem
+            color-mix(in srgb, var(--ui-shadow-color) 12%, transparent);
+        --ui-shadow-floating: 0 0.25rem 1rem
+            color-mix(in srgb, var(--ui-shadow-color) 16%, transparent);
+        --ui-shadow-floating-top: 0 -0.25rem 1rem
+            color-mix(in srgb, var(--ui-shadow-color) 16%, transparent);
+        --ui-shadow-overlay-panel: 0 0.5rem 2rem
+            color-mix(in srgb, var(--ui-shadow-color) 24%, transparent);
+        --ui-accordion-panel-max-height: 16rem;
+        --ui-code-snippet-collapsed-lines: 9;
+        --ui-dropdown-menu-max-height: 13.75rem;
+
+        /* ------------------------------------------------------------------
+       Content switcher auxiliary aliases
+       ------------------------------------------------------------------ */
+        --ui-content-switcher-border: var(--ui-border-strong-01);
+        --ui-content-switcher-divider: var(--ui-border-strong-01);
+        --ui-content-switcher-background-disabled: var(--ui-button-disabled);
+        --ui-content-switcher-selected-border: var(--ui-border-inverse);
+        --ui-content-switcher-text: var(--ui-text-secondary);
+        --ui-content-switcher-text-hover: var(--ui-text-primary);
+        --ui-content-switcher-selected-text: var(--ui-text-primary);
+
+        /* ------------------------------------------------------------------
+       Primary action aliases
+       ------------------------------------------------------------------ */
+        --ui-action-primary-bg: var(--ui-button-primary);
+        --ui-action-primary-bg-hover: var(--ui-button-primary-hover);
+        --ui-action-primary-bg-active: var(--ui-button-primary-active);
+
+        --ui-action-primary-border: var(--ui-button-primary);
+        --ui-action-primary-border-hover: var(--ui-button-primary-hover);
+        --ui-action-primary-border-active: var(--ui-button-primary-active);
+
+        --ui-action-primary-text: var(--ui-text-on-color);
+        --ui-action-primary-text-hover: var(--ui-text-on-color);
+        --ui-action-primary-text-active: var(--ui-text-on-color);
+
+        /* ------------------------------------------------------------------
+       Secondary action aliases
+       ------------------------------------------------------------------ */
+        --ui-action-secondary-bg: var(--ui-button-secondary);
+        --ui-action-secondary-bg-hover: var(--ui-button-secondary-hover);
+        --ui-action-secondary-bg-active: var(--ui-button-secondary-active);
+
+        --ui-action-secondary-border: var(--ui-button-secondary);
+        --ui-action-secondary-border-hover: var(--ui-button-secondary-hover);
+        --ui-action-secondary-border-active: var(--ui-button-secondary-active);
+
+        --ui-action-secondary-text: var(--ui-text-on-color);
+        --ui-action-secondary-text-hover: var(--ui-text-on-color);
+        --ui-action-secondary-text-active: var(--ui-text-on-color);
+
+        /* ------------------------------------------------------------------
+       Neutral action aliases
+       ------------------------------------------------------------------ */
+        --ui-action-neutral-border: var(--ui-border-subtle-01);
+        --ui-action-neutral-bg: var(--ui-layer-01);
+        --ui-action-neutral-text: var(--ui-text-secondary);
+        --ui-action-neutral-border-hover: var(--ui-border-strong-01);
+        --ui-action-neutral-bg-hover: var(--ui-layer-hover-01);
+        --ui-action-neutral-text-hover: var(--ui-text-primary);
+
+        /* ------------------------------------------------------------------
+       Tertiary / outline action aliases
+       ------------------------------------------------------------------ */
+        --ui-action-tertiary-bg: transparent;
+        --ui-action-tertiary-bg-hover: var(--ui-button-tertiary-hover);
+        --ui-action-tertiary-bg-active: var(--ui-button-tertiary-active);
+        --ui-action-tertiary-bg-focus: transparent;
+
+        --ui-action-tertiary-border: var(--ui-button-tertiary);
+        --ui-action-tertiary-border-hover: var(--ui-button-tertiary-hover);
+        --ui-action-tertiary-border-active: var(--ui-button-tertiary-active);
+
+        --ui-action-tertiary-text: var(--ui-button-tertiary);
+        --ui-action-tertiary-text-hover: var(--ui-text-on-color);
+        --ui-action-tertiary-text-active: var(--ui-text-on-color);
+        --ui-action-tertiary-text-focus: var(--ui-button-tertiary);
+
+        --ui-action-outline-neutral-border: var(--ui-border-strong-01);
+        --ui-action-outline-neutral-text: var(--ui-text-primary);
+        --ui-action-outline-neutral-bg-hover: var(--ui-layer-hover-01);
+
+        --ui-action-outline-primary-border: var(--ui-button-tertiary);
+        --ui-action-outline-primary-text: var(--ui-button-tertiary);
+        --ui-action-outline-primary-bg-hover: var(--ui-background-hover);
+
+        /* ------------------------------------------------------------------
+       Danger action aliases
+       ------------------------------------------------------------------ */
+        --ui-action-danger-bg: var(--ui-button-danger-primary);
+        --ui-action-danger-bg-hover: var(--ui-button-danger-hover);
+        --ui-action-danger-bg-active: var(--ui-button-danger-active);
+
+        --ui-action-danger-border: var(--ui-button-danger-primary);
+        --ui-action-danger-border-hover: var(--ui-button-danger-hover);
+        --ui-action-danger-border-active: var(--ui-button-danger-active);
+
+        --ui-action-danger-text: var(--ui-text-on-color);
+        --ui-action-danger-text-hover: var(--ui-text-on-color);
+        --ui-action-danger-text-active: var(--ui-text-on-color);
+
+        /* ------------------------------------------------------------------
+       Danger tertiary / ghost action aliases
+       ------------------------------------------------------------------ */
+        --ui-action-danger-tertiary-bg: transparent;
+        --ui-action-danger-tertiary-bg-hover: var(--ui-button-danger-hover);
+        --ui-action-danger-tertiary-bg-active: var(--ui-button-danger-active);
+
+        --ui-action-danger-tertiary-border: var(--ui-button-danger-secondary);
+        --ui-action-danger-tertiary-border-hover: var(--ui-button-danger-hover);
+        --ui-action-danger-tertiary-border-active: var(
+            --ui-button-danger-active
+        );
+
+        --ui-action-danger-tertiary-text: var(--ui-button-danger-secondary);
+        --ui-action-danger-tertiary-text-hover: var(--ui-text-on-color);
+        --ui-action-danger-tertiary-text-active: var(--ui-text-on-color);
+
+        --ui-action-danger-ghost-bg: transparent;
+        --ui-action-danger-ghost-bg-hover: var(--ui-background-hover);
+        --ui-action-danger-ghost-bg-active: var(--ui-background-active);
+
+        --ui-action-danger-ghost-border: transparent;
+        --ui-action-danger-ghost-border-hover: transparent;
+        --ui-action-danger-ghost-border-active: transparent;
+
+        --ui-action-danger-ghost-text: var(--ui-button-danger-secondary);
+        --ui-action-danger-ghost-text-hover: var(--ui-button-danger-secondary);
+        --ui-action-danger-ghost-text-active: var(--ui-button-danger-secondary);
+
+        --ui-action-outline-danger-border: var(--ui-button-danger-secondary);
+        --ui-action-outline-danger-text: var(--ui-button-danger-secondary);
+        --ui-action-outline-danger-bg-hover: color-mix(
+            in srgb,
+            var(--ui-button-danger-secondary) 12%,
+            transparent
+        );
+
+        /* ------------------------------------------------------------------
+       Support action aliases
+       ------------------------------------------------------------------ */
+        --ui-action-success-border: var(--ui-support-success);
+        --ui-action-success-bg: var(--ui-support-success);
+        --ui-action-success-text: var(--ui-text-on-color);
+        --ui-action-success-border-hover: color-mix(
+            in srgb,
+            var(--ui-support-success) 86%,
+            var(--ui-black)
+        );
+        --ui-action-success-bg-hover: color-mix(
+            in srgb,
+            var(--ui-support-success) 86%,
+            var(--ui-black)
+        );
+        --ui-action-success-text-hover: var(--ui-text-on-color);
+
+        --ui-action-warning-border: var(--ui-support-warning);
+        --ui-action-warning-bg: var(--ui-support-warning);
+        --ui-action-warning-text: var(--ui-text-primary);
+        --ui-action-warning-border-hover: color-mix(
+            in srgb,
+            var(--ui-support-warning) 86%,
+            var(--ui-black)
+        );
+        --ui-action-warning-bg-hover: color-mix(
+            in srgb,
+            var(--ui-support-warning) 86%,
+            var(--ui-black)
+        );
+        --ui-action-warning-text-hover: var(--ui-text-primary);
+
+        --ui-action-notice-border: var(--ui-support-caution-major);
+        --ui-action-notice-bg: var(--ui-support-caution-major);
+        --ui-action-notice-text: var(--ui-text-on-color);
+        --ui-action-notice-border-hover: color-mix(
+            in srgb,
+            var(--ui-support-caution-major) 86%,
+            var(--ui-black)
+        );
+        --ui-action-notice-bg-hover: color-mix(
+            in srgb,
+            var(--ui-support-caution-major) 86%,
+            var(--ui-black)
+        );
+        --ui-action-notice-text-hover: var(--ui-text-on-color);
+
+        --ui-action-info-border: var(--ui-support-info);
+        --ui-action-info-bg: var(--ui-support-info);
+        --ui-action-info-text: var(--ui-text-on-color);
+        --ui-action-info-border-hover: color-mix(
+            in srgb,
+            var(--ui-support-info) 86%,
+            var(--ui-black)
+        );
+        --ui-action-info-bg-hover: color-mix(
+            in srgb,
+            var(--ui-support-info) 86%,
+            var(--ui-black)
+        );
+        --ui-action-info-text-hover: var(--ui-text-on-color);
+
+        /* ------------------------------------------------------------------
+       Soft action aliases
+       ------------------------------------------------------------------ */
+        --ui-action-soft-neutral-border: var(--ui-border-subtle-01);
+        --ui-action-soft-neutral-bg: color-mix(
+            in srgb,
+            var(--ui-layer-accent-01) 72%,
+            transparent
+        );
+        --ui-action-soft-neutral-text: var(--ui-text-primary);
+        --ui-action-soft-neutral-bg-hover: var(--ui-layer-hover-01);
+
+        --ui-action-soft-primary-border: color-mix(
+            in srgb,
+            var(--ui-button-primary) 44%,
+            transparent
+        );
+        --ui-action-soft-primary-bg: color-mix(
+            in srgb,
+            var(--ui-button-primary) 12%,
+            transparent
+        );
+        --ui-action-soft-primary-text: var(--ui-link-primary);
+        --ui-action-soft-primary-bg-hover: color-mix(
+            in srgb,
+            var(--ui-button-primary) 18%,
+            transparent
+        );
+
+        --ui-action-soft-success-border: color-mix(
+            in srgb,
+            var(--ui-support-success) 44%,
+            transparent
+        );
+        --ui-action-soft-success-bg: color-mix(
+            in srgb,
+            var(--ui-support-success) 12%,
+            transparent
+        );
+        --ui-action-soft-success-text: var(--ui-support-success);
+        --ui-action-soft-success-bg-hover: color-mix(
+            in srgb,
+            var(--ui-support-success) 18%,
+            transparent
+        );
+
+        --ui-action-soft-warning-border: color-mix(
+            in srgb,
+            var(--ui-support-warning) 44%,
+            transparent
+        );
+        --ui-action-soft-warning-bg: color-mix(
+            in srgb,
+            var(--ui-support-warning) 12%,
+            transparent
+        );
+        --ui-action-soft-warning-text: var(--ui-support-warning);
+        --ui-action-soft-warning-bg-hover: color-mix(
+            in srgb,
+            var(--ui-support-warning) 18%,
+            transparent
+        );
+
+        --ui-action-soft-danger-border: color-mix(
+            in srgb,
+            var(--ui-support-error) 44%,
+            transparent
+        );
+        --ui-action-soft-danger-bg: color-mix(
+            in srgb,
+            var(--ui-support-error) 12%,
+            transparent
+        );
+        --ui-action-soft-danger-text: var(--ui-support-error);
+        --ui-action-soft-danger-bg-hover: color-mix(
+            in srgb,
+            var(--ui-support-error) 18%,
+            transparent
+        );
+
+        --ui-action-soft-notice-border: color-mix(
+            in srgb,
+            var(--ui-support-caution-major) 44%,
+            transparent
+        );
+        --ui-action-soft-notice-bg: color-mix(
+            in srgb,
+            var(--ui-support-caution-major) 12%,
+            transparent
+        );
+        --ui-action-soft-notice-text: var(--ui-support-caution-major);
+        --ui-action-soft-notice-bg-hover: color-mix(
+            in srgb,
+            var(--ui-support-caution-major) 18%,
+            transparent
+        );
+
+        --ui-action-soft-info-border: color-mix(
+            in srgb,
+            var(--ui-support-info) 44%,
+            transparent
+        );
+        --ui-action-soft-info-bg: color-mix(
+            in srgb,
+            var(--ui-support-info) 12%,
+            transparent
+        );
+        --ui-action-soft-info-text: var(--ui-support-info);
+        --ui-action-soft-info-bg-hover: color-mix(
+            in srgb,
+            var(--ui-support-info) 18%,
+            transparent
+        );
+
+        /* ------------------------------------------------------------------
+       Outline support action aliases
+       ------------------------------------------------------------------ */
+        --ui-action-outline-success-border: var(--ui-support-success);
+        --ui-action-outline-success-text: var(--ui-support-success);
+        --ui-action-outline-success-bg-hover: color-mix(
+            in srgb,
+            var(--ui-support-success) 12%,
+            transparent
+        );
+
+        --ui-action-outline-warning-border: var(--ui-support-warning);
+        --ui-action-outline-warning-text: var(--ui-support-warning);
+        --ui-action-outline-warning-bg-hover: color-mix(
+            in srgb,
+            var(--ui-support-warning) 12%,
+            transparent
+        );
+
+        --ui-action-outline-notice-border: var(--ui-support-caution-major);
+        --ui-action-outline-notice-text: var(--ui-support-caution-major);
+        --ui-action-outline-notice-bg-hover: color-mix(
+            in srgb,
+            var(--ui-support-caution-major) 12%,
+            transparent
+        );
+
+        --ui-action-outline-info-border: var(--ui-support-info);
+        --ui-action-outline-info-text: var(--ui-support-info);
+        --ui-action-outline-info-bg-hover: color-mix(
+            in srgb,
+            var(--ui-support-info) 12%,
+            transparent
+        );
+
+        /* ------------------------------------------------------------------
+       Ghost action aliases
+       ------------------------------------------------------------------ */
+        --ui-action-ghost-bg-hover: var(--ui-background-hover);
+        --ui-action-ghost-bg-active: var(--ui-background-active);
+        --ui-action-ghost-text: var(--ui-link-primary);
+        --ui-action-ghost-text-hover: var(--ui-link-primary-hover);
+        --ui-action-ghost-text-active: var(--ui-link-primary-hover);
+
+        /* ------------------------------------------------------------------
+       Disabled action aliases
+       ------------------------------------------------------------------ */
+        --ui-action-disabled-bg: var(--ui-button-disabled);
+        --ui-action-disabled-border: var(--ui-border-disabled);
+        --ui-action-disabled-text: var(--ui-text-on-color-disabled);
+
+        /* ------------------------------------------------------------------
+       Button separator aliases
+       ------------------------------------------------------------------ */
+        --ui-button-separator-color: var(--ui-button-separator);
+
+        /* ------------------------------------------------------------------
+       Login provider aliases
+       ------------------------------------------------------------------ */
+        --ui-login-google-border: var(--ui-border-subtle-01);
+        --ui-login-google-bg: var(--ui-white);
+        --ui-login-google-text: var(--ui-gray-100);
+        --ui-login-google-bg-hover: var(--ui-gray-10);
+
+        --ui-login-github-border: var(--ui-border-subtle-01);
+        --ui-login-github-bg: var(--ui-gray-90);
+        --ui-login-github-text: var(--ui-white);
+        --ui-login-github-border-hover: var(--ui-border-strong-01);
+        --ui-login-github-bg-hover: var(--ui-gray-100);
+
+        --ui-login-microsoft-border: var(--ui-button-primary);
+        --ui-login-microsoft-bg: var(--ui-button-primary);
+        --ui-login-microsoft-text: var(--ui-text-on-color);
+        --ui-login-microsoft-border-hover: var(--ui-button-primary-hover);
+        --ui-login-microsoft-bg-hover: var(--ui-button-primary-hover);
+
+        /* ------------------------------------------------------------------
+       Switch aliases
+       ------------------------------------------------------------------ */
+        --ui-switch-track-off-border: var(--ui-border-strong-01);
+        --ui-switch-track-off-bg: var(
+            --ui-toggle-off,
+            var(--ui-border-subtle-02)
+        );
+        --ui-switch-track-on-border: var(--ui-border-interactive);
+        --ui-switch-track-on-bg: var(--ui-border-interactive);
+        --ui-switch-thumb-off-bg: var(--ui-background);
+        --ui-switch-thumb-on-bg: var(--ui-text-on-color);
+
+        /* ------------------------------------------------------------------
+       Status semantic aliases
+       ------------------------------------------------------------------ */
+        --ui-status-neutral-bg: color-mix(
+            in srgb,
+            var(--ui-status-gray) 16%,
+            var(--ui-status-accessibility-background)
+        );
+        --ui-status-neutral-text: var(--ui-status-gray);
+
+        --ui-status-info-bg: color-mix(
+            in srgb,
+            var(--ui-status-blue) 16%,
+            var(--ui-status-accessibility-background)
+        );
+        --ui-status-info-text: var(--ui-status-blue);
+
+        --ui-status-success-bg: color-mix(
+            in srgb,
+            var(--ui-status-green) 16%,
+            var(--ui-status-accessibility-background)
+        );
+        --ui-status-success-text: var(--ui-status-green);
+
+        --ui-status-warning-bg: color-mix(
+            in srgb,
+            var(--ui-status-yellow) 24%,
+            var(--ui-status-accessibility-background)
+        );
+        --ui-status-warning-text: var(
+            --ui-status-yellow-outline,
+            var(--ui-status-yellow)
+        );
+
+        --ui-status-danger-bg: color-mix(
+            in srgb,
+            var(--ui-status-red) 16%,
+            var(--ui-status-accessibility-background)
+        );
+        --ui-status-danger-text: var(--ui-status-red);
+
+        --ui-status-notice-bg: color-mix(
+            in srgb,
+            var(--ui-status-purple) 16%,
+            var(--ui-status-accessibility-background)
+        );
+        --ui-status-notice-text: var(--ui-status-purple);
+
+        --ui-status-error-bg: var(--ui-status-danger-bg);
+        --ui-status-error-text: var(--ui-status-danger-text);
+
+        --ui-status-solid-text: var(--ui-text-on-color);
+        --ui-status-neutral-solid-bg: var(--ui-status-gray);
+        --ui-status-info-solid-bg: var(--ui-status-blue);
+        --ui-status-success-solid-bg: var(--ui-status-green);
+        --ui-status-warning-solid-bg: var(
+            --ui-status-yellow-outline,
+            var(--ui-status-yellow)
+        );
+        --ui-status-danger-solid-bg: var(--ui-status-red);
+        --ui-status-notice-solid-bg: var(--ui-status-purple);
+        --ui-status-error-solid-bg: var(--ui-status-danger-solid-bg);
+
+        /* ------------------------------------------------------------------
+       Inline notification semantic aliases
+       ------------------------------------------------------------------ */
+        --ui-notification-neutral-border: var(--ui-border-subtle-01);
+        --ui-notification-neutral-bg: var(--ui-layer-01);
+        --ui-notification-neutral-text: var(--ui-text-primary);
+
+        --ui-notification-info-border: var(--ui-status-blue);
+        --ui-notification-info-bg: var(--ui-notification-background-info);
+        --ui-notification-info-text: var(--ui-text-primary);
+
+        --ui-notification-success-border: var(--ui-status-green);
+        --ui-notification-success-bg: var(--ui-notification-background-success);
+        --ui-notification-success-text: var(--ui-text-primary);
+
+        --ui-notification-warning-border: var(
+            --ui-status-yellow-outline,
+            var(--ui-status-yellow)
+        );
+        --ui-notification-warning-bg: var(--ui-notification-background-warning);
+        --ui-notification-warning-text: var(--ui-text-primary);
+
+        --ui-notification-notice-border: var(--ui-status-purple);
+        --ui-notification-notice-bg: var(--ui-layer-01);
+        --ui-notification-notice-text: var(--ui-text-primary);
+
+        --ui-notification-danger-border: var(--ui-status-red);
+        --ui-notification-danger-bg: var(--ui-notification-background-error);
+        --ui-notification-danger-text: var(--ui-text-primary);
+
+        --ui-notification-error-border: var(--ui-notification-danger-border);
+        --ui-notification-error-bg: var(--ui-notification-danger-bg);
+        --ui-notification-error-text: var(--ui-notification-danger-text);
+
+        /* ------------------------------------------------------------------
+       Toast notification semantic aliases
+       ------------------------------------------------------------------ */
+        --ui-notification-toast-neutral-border: var(
+            --ui-notification-neutral-border
+        );
+        --ui-notification-toast-neutral-bg: var(--ui-layer-01);
+        --ui-notification-toast-neutral-text: var(
+            --ui-notification-neutral-text
+        );
+
+        --ui-notification-toast-info-border: var(--ui-notification-info-border);
+        --ui-notification-toast-info-bg: var(--ui-notification-background-info);
+        --ui-notification-toast-info-text: var(--ui-notification-info-text);
+
+        --ui-notification-toast-success-border: var(
+            --ui-notification-success-border
+        );
+        --ui-notification-toast-success-bg: var(
+            --ui-notification-background-success
+        );
+        --ui-notification-toast-success-text: var(
+            --ui-notification-success-text
+        );
+
+        --ui-notification-toast-warning-border: var(
+            --ui-notification-warning-border
+        );
+        --ui-notification-toast-warning-bg: var(
+            --ui-notification-background-warning
+        );
+        --ui-notification-toast-warning-text: var(
+            --ui-notification-warning-text
+        );
+
+        --ui-notification-toast-notice-border: var(
+            --ui-notification-notice-border
+        );
+        --ui-notification-toast-notice-bg: var(--ui-layer-01);
+        --ui-notification-toast-notice-text: var(--ui-notification-notice-text);
+
+        --ui-notification-toast-danger-border: var(
+            --ui-notification-danger-border
+        );
+        --ui-notification-toast-danger-bg: var(
+            --ui-notification-background-error
+        );
+        --ui-notification-toast-danger-text: var(--ui-notification-danger-text);
+
+        --ui-notification-toast-error-border: var(
+            --ui-notification-toast-danger-border
+        );
+        --ui-notification-toast-error-bg: var(
+            --ui-notification-toast-danger-bg
+        );
+        --ui-notification-toast-error-text: var(
+            --ui-notification-toast-danger-text
+        );
+
+        /* ------------------------------------------------------------------
+       Alert aliases
+       ------------------------------------------------------------------ */
+        --ui-alert-info-border: var(--ui-notification-info-border);
+        --ui-alert-info-bg: var(--ui-notification-info-bg);
+        --ui-alert-info-text: var(--ui-notification-info-text);
+
+        --ui-alert-success-border: var(--ui-notification-success-border);
+        --ui-alert-success-bg: var(--ui-notification-success-bg);
+        --ui-alert-success-text: var(--ui-notification-success-text);
+
+        --ui-alert-warning-border: var(--ui-notification-warning-border);
+        --ui-alert-warning-bg: var(--ui-notification-warning-bg);
+        --ui-alert-warning-text: var(--ui-notification-warning-text);
+
+        --ui-alert-notice-border: var(--ui-notification-notice-border);
+        --ui-alert-notice-bg: var(--ui-notification-notice-bg);
+        --ui-alert-notice-text: var(--ui-notification-notice-text);
+
+        --ui-alert-danger-border: var(--ui-notification-danger-border);
+        --ui-alert-danger-bg: var(--ui-notification-danger-bg);
+        --ui-alert-danger-text: var(--ui-notification-danger-text);
+
+        --ui-alert-error-border: var(--ui-notification-error-border);
+        --ui-alert-error-bg: var(--ui-notification-error-bg);
+        --ui-alert-error-text: var(--ui-notification-error-text);
+
+        /* ------------------------------------------------------------------
+       Notification trigger / preview aliases
+       ------------------------------------------------------------------ */
+        --ui-notification-trigger-border: var(--ui-border-subtle-01);
+        --ui-notification-trigger-bg: var(--ui-layer-01);
+        --ui-notification-trigger-text: var(--ui-icon-secondary);
+        --ui-notification-trigger-border-hover: var(--ui-border-strong-01);
+        --ui-notification-trigger-bg-hover: var(--ui-layer-hover-01);
+        --ui-notification-trigger-text-hover: var(--ui-icon-primary);
+        --ui-notification-trigger-shadow: 0 10px 30px
+            color-mix(in srgb, var(--ui-shadow-color) 12%, transparent);
+
+        --ui-notification-unread-border: var(--ui-notification-danger-border);
+        --ui-notification-unread-bg: color-mix(
+            in srgb,
+            var(--ui-notification-danger-bg) 40%,
+            var(--ui-layer-01)
+        );
+        --ui-notification-unread-text: var(--ui-notification-danger-text);
+        --ui-notification-unread-border-hover: var(
+            --ui-notification-danger-border
+        );
+        --ui-notification-unread-bg-hover: color-mix(
+            in srgb,
+            var(--ui-notification-danger-bg) 55%,
+            var(--ui-layer-01)
+        );
+        --ui-notification-unread-shadow: 0 12px 24px
+            color-mix(in srgb, var(--ui-shadow-color) 14%, transparent);
+        --ui-notification-unread-shadow-hover: 0 14px 28px
+            color-mix(in srgb, var(--ui-shadow-color) 16%, transparent);
+
+        --ui-notification-badge-border: var(--ui-status-danger-solid-bg);
+        --ui-notification-badge-bg: var(--ui-status-danger-solid-bg);
+        --ui-notification-badge-text: var(--ui-status-solid-text);
+        --ui-notification-badge-shadow: 0 6px 16px
+            color-mix(in srgb, var(--ui-shadow-color) 16%, transparent);
+
+        --ui-notification-preview-border: var(--ui-border-subtle-01);
+        --ui-notification-preview-bg: var(--ui-layer-01);
+        --ui-notification-preview-shadow: 0 10px 24px
+            color-mix(in srgb, var(--ui-shadow-color) 8%, transparent);
+        --ui-notification-preview-border-hover: var(--ui-border-strong-01);
+        --ui-notification-preview-bg-hover: var(--ui-layer-hover-01);
+
+        --ui-notification-preview-unread-border: var(
+            --ui-notification-danger-border
+        );
+        --ui-notification-preview-unread-bg: var(--ui-notification-unread-bg);
+        --ui-notification-preview-unread-accent: var(
+            --ui-status-danger-solid-bg
+        );
+        --ui-notification-preview-unread-shadow: var(
+            --ui-notification-preview-shadow
+        );
+        --ui-notification-preview-unread-border-hover: var(
+            --ui-notification-danger-border
+        );
+        --ui-notification-preview-unread-bg-hover: var(
+            --ui-notification-unread-bg-hover
+        );
+
+        --ui-notification-preview-pill-unread-bg: var(
+            --ui-notification-unread-bg
+        );
+        --ui-notification-preview-pill-unread-text: var(
+            --ui-notification-unread-text
+        );
+        --ui-notification-preview-pill-unread-border: var(
+            --ui-notification-unread-border
+        );
+
+        --ui-notification-preview-pill-neutral-bg: var(--ui-status-neutral-bg);
+        --ui-notification-preview-pill-neutral-text: var(
+            --ui-status-neutral-text
+        );
+        --ui-notification-preview-pill-info-bg: var(--ui-status-info-bg);
+        --ui-notification-preview-pill-info-text: var(--ui-status-info-text);
+        --ui-notification-preview-pill-success-bg: var(--ui-status-success-bg);
+        --ui-notification-preview-pill-success-text: var(
+            --ui-status-success-text
+        );
+        --ui-notification-preview-pill-notice-bg: var(--ui-status-notice-bg);
+        --ui-notification-preview-pill-notice-text: var(
+            --ui-status-notice-text
+        );
+        --ui-notification-preview-pill-warning-bg: var(--ui-status-warning-bg);
+        --ui-notification-preview-pill-warning-text: var(
+            --ui-status-warning-text
+        );
+        --ui-notification-preview-pill-danger-bg: var(--ui-status-danger-bg);
+        --ui-notification-preview-pill-danger-text: var(
+            --ui-status-danger-text
+        );
+        --ui-notification-preview-pill-error-bg: var(
+            --ui-notification-preview-pill-danger-bg
+        );
+        --ui-notification-preview-pill-error-text: var(
+            --ui-notification-preview-pill-danger-text
+        );
+    }
+}

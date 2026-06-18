@@ -1,0 +1,14 @@
+/* ==========================================================================
+   File: resources/css/tokens/components/index.css
+   Purpose: Component token entrypoint.
+   Notes:
+   - Component token files map component roles to primitive/theme tokens.
+   - Do not place component selectors here.
+   - Do not define global theme role tokens here.
+   ========================================================================== */
+
+@import "./buttons.css";
+@import "./tags.css";
+@import "./status.css";
+@import "./notifications.css";
+@import "./content-switcher.css";

@@ -1,0 +1,9 @@
+/* ==========================================================================
+   File: resources/css/tokens/palette/index.css
+   Purpose: Primitive palette token entrypoint.
+   Notes:
+   - Import raw swatch values before theme or component token files.
+   - Do not define token values directly in this file.
+   ========================================================================== */
+
+@import "./base-colors.css";

@@ -1,0 +1,258 @@
+/* ==========================================================================
+File: resources/css/components/contained-list.css
+Purpose: Contained List component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/contained-list/
+
+Notes:
+
+* Defines Contained List selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+  ========================================================================== */
+
+@layer components {
+    .ui-contained-list {
+        inline-size: 100%;
+        background-color: var(--ui-layer-01);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-contained-list-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-block-size: 3rem;
+        padding: var(--ui-spacing-04) var(--ui-spacing-05);
+        border-block-end: 1px solid var(--ui-border-subtle-01);
+        font-size: var(--ui-type-heading-compact-01-font-size);
+        font-weight: var(--ui-type-heading-compact-01-font-weight);
+        line-height: var(--ui-type-heading-compact-01-line-height);
+    }
+
+    .ui-contained-list-item {
+        min-block-size: 2.5rem;
+        padding: var(--ui-spacing-04) var(--ui-spacing-05);
+        border-block-end: 1px solid var(--ui-border-subtle-01);
+    }
+
+    .ui-contained-list-item:hover {
+        background-color: var(--ui-layer-hover-01);
+    }
+}
+
+@layer components {
+    /* Laravel UI contained-list API migrated from app.css after Carbon SCSS ownership audit. */
+    .ui-contained-list {
+        @apply overflow-hidden rounded-lg border;
+        --ui-contained-list-header-min-height: 2rem;
+        --ui-contained-list-row-min-height: 2.5rem;
+        --ui-contained-list-divider-inset: 0;
+        border-color: var(--ui-border-subtle-01);
+        background-color: var(--ui-layer-01);
+    }
+
+    .ui-contained-list[data-ui-contained-list-variant="disclosed"] {
+        --ui-contained-list-header-min-height: 2rem;
+        --ui-contained-list-row-min-height: 3rem;
+        background-color: var(--ui-layer-02);
+    }
+
+    .ui-contained-list[data-ui-contained-list-variant="elevated"] {
+        background-color: var(--ui-layer-02);
+        box-shadow: 0 18px 34px
+            color-mix(in srgb, var(--ui-shadow-color) 18%, transparent);
+    }
+
+    .ui-contained-list-header {
+        @apply flex items-center justify-between gap-3 px-4;
+        min-height: var(--ui-contained-list-header-min-height);
+        border-color: var(--ui-border-subtle-01);
+    }
+
+    .ui-contained-list-header-sticky {
+        @apply sticky top-0 z-10;
+        background-color: inherit;
+    }
+
+    .ui-contained-list-header-content {
+        @apply min-w-0;
+    }
+
+    .ui-contained-list-title {
+        @apply flex min-w-0 items-center gap-2 text-sm font-semibold;
+        color: var(--ui-text-primary);
+    }
+
+    .ui-contained-list-title-icon {
+        @apply h-4 w-4 shrink-0;
+        color: var(--ui-icon-primary);
+    }
+
+    .ui-contained-list-description {
+        @apply mt-1 text-sm;
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-contained-list[data-ui-contained-list-variant="disclosed"]
+        .ui-contained-list-title {
+        @apply text-xs font-normal;
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-contained-list-header-actions {
+        @apply flex shrink-0 items-center gap-2;
+    }
+
+    .ui-contained-list-body {
+        border-color: var(--ui-border-subtle-01);
+    }
+
+    .ui-contained-list-item {
+        @apply relative flex items-start justify-between gap-4 px-4 py-2 text-left transition;
+        min-height: var(--ui-contained-list-row-min-height);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-contained-list-item + .ui-contained-list-item {
+        border-top: 1px solid var(--ui-border-subtle-01);
+    }
+
+    .ui-contained-list-inset-dividers {
+        --ui-contained-list-divider-inset: 3rem;
+    }
+
+    .ui-contained-list-inset-dividers
+        .ui-contained-list-item
+        + .ui-contained-list-item {
+        border-top: 0;
+    }
+
+    .ui-contained-list-inset-dividers
+        .ui-contained-list-item
+        + .ui-contained-list-item::before {
+        content: "";
+        position: absolute;
+        inset-inline-start: var(--ui-contained-list-divider-inset);
+        inset-inline-end: 0;
+        inset-block-start: 0;
+        border-top: 1px solid var(--ui-border-subtle-01);
+    }
+
+    .ui-contained-list[data-ui-contained-list-size="sm"]
+        .ui-contained-list-item {
+        --ui-contained-list-row-min-height: 2rem;
+    }
+
+    .ui-contained-list[data-ui-contained-list-size="lg"]
+        .ui-contained-list-item {
+        --ui-contained-list-row-min-height: 3rem;
+    }
+
+    .ui-contained-list[data-ui-contained-list-size="xl"]
+        .ui-contained-list-header {
+        --ui-contained-list-header-min-height: 3rem;
+    }
+
+    .ui-contained-list[data-ui-contained-list-size="xl"]
+        .ui-contained-list-item {
+        --ui-contained-list-row-min-height: 4rem;
+    }
+
+    a.ui-contained-list-item:hover,
+    a.ui-contained-list-item:focus-visible,
+    .ui-contained-list-item[data-ui-contained-list-item-interactive="true"]:not(
+            a
+        ):hover {
+        background-color: var(--ui-layer-hover-01);
+        color: var(--ui-text-primary);
+    }
+
+    a.ui-contained-list-item:active {
+        background-color: var(--ui-layer-active-01);
+        outline: none;
+    }
+
+    a.ui-contained-list-item:focus-visible {
+        outline: none;
+        box-shadow: inset 0 0 0 2px var(--ui-focus);
+    }
+
+    .ui-contained-list-item[aria-disabled="true"] {
+        color: var(--ui-text-disabled);
+        opacity: 0.72;
+    }
+
+    .ui-contained-list-item[data-ui-selected="true"] {
+        background-color: var(--ui-layer-selected-01);
+    }
+
+    .ui-contained-list-item[aria-current="page"] {
+        box-shadow: inset 3px 0 0 var(--ui-border-interactive);
+    }
+
+    .ui-contained-list-item-icon {
+        @apply mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center;
+        color: var(--ui-icon-primary);
+    }
+
+    .ui-contained-list-item-icon-svg {
+        @apply h-4 w-4;
+    }
+
+    .ui-contained-list-status-success .ui-contained-list-item-icon {
+        color: var(--ui-support-success);
+    }
+
+    .ui-contained-list-status-warning .ui-contained-list-item-icon {
+        color: var(--ui-support-warning);
+    }
+
+    .ui-contained-list-status-error .ui-contained-list-item-icon {
+        color: var(--ui-support-error);
+    }
+
+    .ui-contained-list-status-info .ui-contained-list-item-icon {
+        color: var(--ui-link-primary);
+    }
+
+    .ui-contained-list-item-content {
+        @apply grid min-w-0 flex-1 gap-1;
+    }
+
+    .ui-contained-list-item-title {
+        @apply text-sm font-semibold;
+    }
+
+    .ui-contained-list-item-description,
+    .ui-contained-list-item-meta {
+        @apply text-sm;
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-contained-list-item-actions {
+        @apply flex shrink-0 items-center gap-1;
+    }
+
+    .ui-contained-list-item-actions .ui-action {
+        @apply min-h-8;
+    }
+
+    .ui-contained-list-state {
+        @apply px-4 py-6 text-sm;
+        color: var(--ui-text-helper);
+    }
+
+    .ui-contained-list-state-title {
+        @apply font-semibold;
+        color: var(--ui-text-primary);
+    }
+
+    .ui-contained-list-state-description {
+        @apply mt-1;
+        color: var(--ui-text-secondary);
+    }
+
+
+}

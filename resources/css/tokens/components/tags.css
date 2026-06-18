@@ -1,0 +1,247 @@
+/* ==========================================================================
+File: resources/css/tokens/components/tags.css
+Purpose: Tag component color tokens.
+Notes:
+
+* Defines tag component tokens only.
+* Do not place component selectors in this file.
+* Do not define global theme role tokens in this file.
+* Do not use tag component tokens as global semantic colors.
+* Read-only, dismissible, and operational tags consume these tokens.
+* Selectable, high-contrast, and outline tag styles consume core theme tokens.
+  ========================================================================== */
+
+@layer base {
+    :root {
+        --ui-tag-radius: 1rem;
+    }
+
+    /* ----------------------------------------------------------------------
+Tag component tokens: white theme
+---------------------------------------------------------------------- */
+    :root,
+    html[data-theme-resolved="light"],
+    html[data-theme-resolved="white"],
+    [data-theme-resolved="light"],
+    [data-theme-resolved="white"] {
+        --ui-tag-background-red: var(--ui-red-20);
+        --ui-tag-color-red: var(--ui-red-70);
+        --ui-tag-hover-red: var(--ui-red-20-hover);
+        --ui-tag-border-red: var(--ui-red-40);
+
+        --ui-tag-background-magenta: var(--ui-magenta-20);
+        --ui-tag-color-magenta: var(--ui-magenta-70);
+        --ui-tag-hover-magenta: var(--ui-magenta-20-hover);
+        --ui-tag-border-magenta: var(--ui-magenta-40);
+
+        --ui-tag-background-purple: var(--ui-purple-20);
+        --ui-tag-color-purple: var(--ui-purple-70);
+        --ui-tag-hover-purple: var(--ui-purple-20-hover);
+        --ui-tag-border-purple: var(--ui-purple-40);
+
+        --ui-tag-background-blue: var(--ui-blue-20);
+        --ui-tag-color-blue: var(--ui-blue-70);
+        --ui-tag-hover-blue: var(--ui-blue-20-hover);
+        --ui-tag-border-blue: var(--ui-blue-40);
+
+        --ui-tag-background-cyan: var(--ui-cyan-20);
+        --ui-tag-color-cyan: var(--ui-cyan-70);
+        --ui-tag-hover-cyan: var(--ui-cyan-20-hover);
+        --ui-tag-border-cyan: var(--ui-cyan-40);
+
+        --ui-tag-background-teal: var(--ui-teal-20);
+        --ui-tag-color-teal: var(--ui-teal-70);
+        --ui-tag-hover-teal: var(--ui-teal-20-hover);
+        --ui-tag-border-teal: var(--ui-teal-40);
+
+        --ui-tag-background-green: var(--ui-green-20);
+        --ui-tag-color-green: var(--ui-green-70);
+        --ui-tag-hover-green: var(--ui-green-20-hover);
+        --ui-tag-border-green: var(--ui-green-40);
+
+        --ui-tag-background-gray: var(--ui-gray-20);
+        --ui-tag-color-gray: var(--ui-gray-100);
+        --ui-tag-hover-gray: var(--ui-gray-20-hover);
+        --ui-tag-border-gray: var(--ui-gray-40);
+
+        --ui-tag-background-cool-gray: var(--ui-cool-gray-20);
+        --ui-tag-color-cool-gray: var(--ui-cool-gray-100);
+        --ui-tag-hover-cool-gray: var(--ui-cool-gray-20-hover);
+        --ui-tag-border-cool-gray: var(--ui-cool-gray-40);
+
+        --ui-tag-background-warm-gray: var(--ui-warm-gray-20);
+        --ui-tag-color-warm-gray: var(--ui-warm-gray-100);
+        --ui-tag-hover-warm-gray: var(--ui-warm-gray-20-hover);
+        --ui-tag-border-warm-gray: var(--ui-warm-gray-40);
+    }
+
+    /* ----------------------------------------------------------------------
+   Tag component tokens: gray 10 theme
+   ---------------------------------------------------------------------- */
+    html[data-theme-resolved="gray-10"],
+    [data-theme-resolved="gray-10"] {
+        --ui-tag-background-red: var(--ui-red-20);
+        --ui-tag-color-red: var(--ui-red-70);
+        --ui-tag-hover-red: var(--ui-red-20-hover);
+        --ui-tag-border-red: var(--ui-red-40);
+
+        --ui-tag-background-magenta: var(--ui-magenta-20);
+        --ui-tag-color-magenta: var(--ui-magenta-70);
+        --ui-tag-hover-magenta: var(--ui-magenta-20-hover);
+        --ui-tag-border-magenta: var(--ui-magenta-40);
+
+        --ui-tag-background-purple: var(--ui-purple-20);
+        --ui-tag-color-purple: var(--ui-purple-70);
+        --ui-tag-hover-purple: var(--ui-purple-20-hover);
+        --ui-tag-border-purple: var(--ui-purple-40);
+
+        --ui-tag-background-blue: var(--ui-blue-20);
+        --ui-tag-color-blue: var(--ui-blue-70);
+        --ui-tag-hover-blue: var(--ui-blue-20-hover);
+        --ui-tag-border-blue: var(--ui-blue-40);
+
+        --ui-tag-background-cyan: var(--ui-cyan-20);
+        --ui-tag-color-cyan: var(--ui-cyan-70);
+        --ui-tag-hover-cyan: var(--ui-cyan-20-hover);
+        --ui-tag-border-cyan: var(--ui-cyan-40);
+
+        --ui-tag-background-teal: var(--ui-teal-20);
+        --ui-tag-color-teal: var(--ui-teal-70);
+        --ui-tag-hover-teal: var(--ui-teal-20-hover);
+        --ui-tag-border-teal: var(--ui-teal-40);
+
+        --ui-tag-background-green: var(--ui-green-20);
+        --ui-tag-color-green: var(--ui-green-70);
+        --ui-tag-hover-green: var(--ui-green-20-hover);
+        --ui-tag-border-green: var(--ui-green-40);
+
+        --ui-tag-background-gray: var(--ui-gray-20);
+        --ui-tag-color-gray: var(--ui-gray-100);
+        --ui-tag-hover-gray: var(--ui-gray-20-hover);
+        --ui-tag-border-gray: var(--ui-gray-40);
+
+        --ui-tag-background-cool-gray: var(--ui-cool-gray-20);
+        --ui-tag-color-cool-gray: var(--ui-cool-gray-100);
+        --ui-tag-hover-cool-gray: var(--ui-cool-gray-20-hover);
+        --ui-tag-border-cool-gray: var(--ui-cool-gray-40);
+
+        --ui-tag-background-warm-gray: var(--ui-warm-gray-20);
+        --ui-tag-color-warm-gray: var(--ui-warm-gray-100);
+        --ui-tag-hover-warm-gray: var(--ui-warm-gray-20-hover);
+        --ui-tag-border-warm-gray: var(--ui-warm-gray-40);
+    }
+
+    /* ----------------------------------------------------------------------
+   Tag component tokens: gray 90 theme
+   ---------------------------------------------------------------------- */
+    html[data-theme-resolved="dark"],
+    html[data-theme-resolved="gray-90"],
+    [data-theme-resolved="dark"],
+    [data-theme-resolved="gray-90"] {
+        --ui-tag-background-red: var(--ui-red-70);
+        --ui-tag-color-red: var(--ui-red-20);
+        --ui-tag-hover-red: var(--ui-red-70-hover);
+        --ui-tag-border-red: var(--ui-red-50);
+
+        --ui-tag-background-magenta: var(--ui-magenta-70);
+        --ui-tag-color-magenta: var(--ui-magenta-20);
+        --ui-tag-hover-magenta: var(--ui-magenta-70-hover);
+        --ui-tag-border-magenta: var(--ui-magenta-50);
+
+        --ui-tag-background-purple: var(--ui-purple-70);
+        --ui-tag-color-purple: var(--ui-purple-20);
+        --ui-tag-hover-purple: var(--ui-purple-70-hover);
+        --ui-tag-border-purple: var(--ui-purple-50);
+
+        --ui-tag-background-blue: var(--ui-blue-70);
+        --ui-tag-color-blue: var(--ui-blue-20);
+        --ui-tag-hover-blue: var(--ui-blue-70-hover);
+        --ui-tag-border-blue: var(--ui-blue-50);
+
+        --ui-tag-background-cyan: var(--ui-cyan-70);
+        --ui-tag-color-cyan: var(--ui-cyan-20);
+        --ui-tag-hover-cyan: var(--ui-cyan-70-hover);
+        --ui-tag-border-cyan: var(--ui-cyan-50);
+
+        --ui-tag-background-teal: var(--ui-teal-70);
+        --ui-tag-color-teal: var(--ui-teal-20);
+        --ui-tag-hover-teal: var(--ui-teal-70-hover);
+        --ui-tag-border-teal: var(--ui-teal-50);
+
+        --ui-tag-background-green: var(--ui-green-70);
+        --ui-tag-color-green: var(--ui-green-20);
+        --ui-tag-hover-green: var(--ui-green-70-hover);
+        --ui-tag-border-green: var(--ui-green-50);
+
+        --ui-tag-background-gray: var(--ui-gray-70);
+        --ui-tag-color-gray: var(--ui-gray-10);
+        --ui-tag-hover-gray: var(--ui-gray-70-hover);
+        --ui-tag-border-gray: var(--ui-gray-50);
+
+        --ui-tag-background-cool-gray: var(--ui-cool-gray-70);
+        --ui-tag-color-cool-gray: var(--ui-cool-gray-10);
+        --ui-tag-hover-cool-gray: var(--ui-cool-gray-70-hover);
+        --ui-tag-border-cool-gray: var(--ui-cool-gray-50);
+
+        --ui-tag-background-warm-gray: var(--ui-warm-gray-70);
+        --ui-tag-color-warm-gray: var(--ui-warm-gray-10);
+        --ui-tag-hover-warm-gray: var(--ui-warm-gray-70-hover);
+        --ui-tag-border-warm-gray: var(--ui-warm-gray-50);
+    }
+
+    /* ----------------------------------------------------------------------
+   Tag component tokens: gray 100 theme
+   ---------------------------------------------------------------------- */
+    html[data-theme-resolved="gray-100"],
+    [data-theme-resolved="gray-100"] {
+        --ui-tag-background-red: var(--ui-red-70);
+        --ui-tag-color-red: var(--ui-red-20);
+        --ui-tag-hover-red: var(--ui-red-70-hover);
+        --ui-tag-border-red: var(--ui-red-50);
+
+        --ui-tag-background-magenta: var(--ui-magenta-70);
+        --ui-tag-color-magenta: var(--ui-magenta-20);
+        --ui-tag-hover-magenta: var(--ui-magenta-70-hover);
+        --ui-tag-border-magenta: var(--ui-magenta-50);
+
+        --ui-tag-background-purple: var(--ui-purple-70);
+        --ui-tag-color-purple: var(--ui-purple-20);
+        --ui-tag-hover-purple: var(--ui-purple-70-hover);
+        --ui-tag-border-purple: var(--ui-purple-50);
+
+        --ui-tag-background-blue: var(--ui-blue-70);
+        --ui-tag-color-blue: var(--ui-blue-20);
+        --ui-tag-hover-blue: var(--ui-blue-70-hover);
+        --ui-tag-border-blue: var(--ui-blue-50);
+
+        --ui-tag-background-cyan: var(--ui-cyan-70);
+        --ui-tag-color-cyan: var(--ui-cyan-20);
+        --ui-tag-hover-cyan: var(--ui-cyan-70-hover);
+        --ui-tag-border-cyan: var(--ui-cyan-50);
+
+        --ui-tag-background-teal: var(--ui-teal-70);
+        --ui-tag-color-teal: var(--ui-teal-20);
+        --ui-tag-hover-teal: var(--ui-teal-70-hover);
+        --ui-tag-border-teal: var(--ui-teal-50);
+
+        --ui-tag-background-green: var(--ui-green-70);
+        --ui-tag-color-green: var(--ui-green-20);
+        --ui-tag-hover-green: var(--ui-green-70-hover);
+        --ui-tag-border-green: var(--ui-green-50);
+
+        --ui-tag-background-gray: var(--ui-gray-70);
+        --ui-tag-color-gray: var(--ui-gray-10);
+        --ui-tag-hover-gray: var(--ui-gray-70-hover);
+        --ui-tag-border-gray: var(--ui-gray-50);
+
+        --ui-tag-background-cool-gray: var(--ui-cool-gray-70);
+        --ui-tag-color-cool-gray: var(--ui-cool-gray-10);
+        --ui-tag-hover-cool-gray: var(--ui-cool-gray-70-hover);
+        --ui-tag-border-cool-gray: var(--ui-cool-gray-50);
+
+        --ui-tag-background-warm-gray: var(--ui-warm-gray-70);
+        --ui-tag-color-warm-gray: var(--ui-warm-gray-10);
+        --ui-tag-hover-warm-gray: var(--ui-warm-gray-70-hover);
+        --ui-tag-border-warm-gray: var(--ui-warm-gray-50);
+    }
+}

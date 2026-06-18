@@ -1,0 +1,58 @@
+/* ==========================================================================
+File: resources/css/components/inline-alert.css
+Purpose: Inline Alert compatibility target.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/notification/
+
+Notes:
+
+* Carbon owns this behavior as inline notification.
+* Keep implementation selectors in notification.css.
+* This file exists only as a named compatibility target for app migration.
+  ========================================================================== */
+
+@layer components {
+    /* Laravel UI inline-alert API migrated from app.css after Carbon notification ownership audit. */
+    .ui-inline-alert {
+        @apply rounded-lg border px-4 py-3 text-sm;
+    }
+
+    .ui-inline-alert-neutral {
+        border-color: var(--ui-notification-neutral-border);
+        background-color: var(--ui-notification-neutral-bg);
+        color: var(--ui-notification-neutral-text);
+    }
+
+    .ui-inline-alert-info {
+        border-color: var(--ui-notification-info-border);
+        background-color: var(--ui-notification-info-bg);
+        color: var(--ui-notification-info-text);
+    }
+
+    .ui-inline-alert-success {
+        border-color: var(--ui-notification-success-border);
+        background-color: var(--ui-notification-success-bg);
+        color: var(--ui-notification-success-text);
+    }
+
+    .ui-inline-alert-warning {
+        border-color: var(--ui-notification-warning-border);
+        background-color: var(--ui-notification-warning-bg);
+        color: var(--ui-notification-warning-text);
+    }
+
+    .ui-inline-alert-notice {
+        border-color: var(--ui-notification-notice-border);
+        background-color: var(--ui-notification-notice-bg);
+        color: var(--ui-notification-notice-text);
+    }
+
+    .ui-inline-alert-danger {
+        border-color: var(--ui-notification-danger-border);
+        background-color: var(--ui-notification-danger-bg);
+        color: var(--ui-notification-danger-text);
+    }
+
+
+}

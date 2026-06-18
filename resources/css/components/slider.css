@@ -1,0 +1,43 @@
+/* ==========================================================================
+File: resources/css/components/slider.css
+Purpose: Slider component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/slider/
+
+Notes:
+
+* Defines Slider selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Slider consumes form, type, spacing, focus, and theme tokens.
+  ========================================================================== */
+
+@layer components {
+    .ui-slider {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: var(--ui-spacing-05);
+        inline-size: 100%;
+    }
+
+    .ui-slider-input {
+        inline-size: 100%;
+        accent-color: var(--ui-border-interactive);
+    }
+
+    .ui-slider-input:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: 2px;
+    }
+
+    .ui-slider-input:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    .ui-slider-value {
+        min-inline-size: 4rem;
+    }
+}

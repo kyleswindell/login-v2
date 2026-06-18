@@ -1,0 +1,68 @@
+/* ==========================================================================
+   File: resources/css/base/animation.css
+   Purpose: Shared animation primitives.
+   Notes:
+   - Defines reusable animation primitives only.
+   - Component CSS owns component-specific animation application.
+   - Motion duration/easing values live in tokens/motion.css.
+   ========================================================================== */
+
+@keyframes ui-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes ui-fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes ui-fade-out {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes ui-show-feedback {
+    from {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    to {
+        opacity: 1;
+        visibility: inherit;
+    }
+}
+
+@keyframes ui-hide-feedback {
+    from {
+        opacity: 1;
+        visibility: inherit;
+    }
+
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+@keyframes ui-progress-indeterminate {
+    from {
+        inset-inline-start: -40%;
+    }
+
+    to {
+        inset-inline-start: 100%;
+    }
+}

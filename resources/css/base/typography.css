@@ -1,0 +1,9 @@
+/* ==========================================================================
+   File: resources/css/base/typography.css
+   Purpose: Base typography application for app-owned type tokens.
+   Notes:
+   - Type reset and font family application are owned by resources/css/type/.
+   - Keep this file for future base element typography that is not part of the
+     Type package contract.
+   - Do not define Carbon font package dependencies here.
+   ========================================================================== */

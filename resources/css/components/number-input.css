@@ -1,0 +1,101 @@
+/* ==========================================================================
+File: resources/css/components/number-input.css
+Purpose: Number Input component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/number-input/
+* reference/carbon-main/packages/styles/scss/components/fluid-number-input/
+
+Notes:
+
+* Defines Number Input selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Number Input consumes form, button, type, spacing, motion, and theme tokens.
+  ========================================================================== */
+
+@layer components {
+    .ui-number-input {
+        position: relative;
+        display: flex;
+        inline-size: 100%;
+    }
+
+    .ui-number-input-field {
+        --ui-number-input-size: 2.5rem;
+
+        inline-size: 100%;
+        block-size: var(--ui-number-input-size);
+        border: 0;
+        border-block-end: 1px solid var(--ui-border-strong-01);
+        padding: 0 calc(var(--ui-number-input-size) * 2) 0 var(--ui-spacing-05);
+        background-color: var(--ui-field-01);
+        color: var(--ui-text-primary);
+        font: inherit;
+        font-size: var(--ui-type-body-compact-01-font-size);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+        transition:
+            background-color var(--ui-duration-fast-01) var(--ui-motion-standard-productive),
+            outline var(--ui-duration-fast-01) var(--ui-motion-standard-productive);
+    }
+
+    .ui-number-input-field:hover {
+        background-color: var(--ui-field-hover-01);
+    }
+
+    .ui-number-input-field:focus {
+        outline-color: var(--ui-focus);
+    }
+
+    .ui-number-input-field:disabled {
+        color: var(--ui-text-disabled);
+        cursor: not-allowed;
+    }
+
+    .ui-number-input-field-invalid:not(:focus),
+    .ui-number-input[data-invalid] .ui-number-input-field:not(:focus) {
+        outline-color: var(--ui-support-error);
+    }
+
+    .ui-number-input-field-warning:not(:focus),
+    .ui-number-input[data-warning] .ui-number-input-field:not(:focus) {
+        outline-color: var(--ui-support-warning);
+    }
+
+    .ui-number-input-controls {
+        position: absolute;
+        inset-block: 0;
+        inset-inline-end: 0;
+        display: grid;
+        grid-template-columns: repeat(2, var(--ui-number-input-size, 2.5rem));
+        block-size: 100%;
+    }
+
+    .ui-number-input-control {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        border-inline-start: 1px solid var(--ui-border-subtle-01);
+        padding: 0;
+        background-color: transparent;
+        color: var(--ui-icon-primary);
+        cursor: pointer;
+    }
+
+    .ui-number-input-control:hover {
+        background-color: var(--ui-layer-hover-01);
+    }
+
+    .ui-number-input-control:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-number-input-control:disabled {
+        color: var(--ui-icon-disabled);
+        cursor: not-allowed;
+    }
+}

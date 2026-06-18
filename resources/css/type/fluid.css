@@ -1,0 +1,55 @@
+/* ==========================================================================
+   File: resources/css/type/fluid.css
+   Purpose: Fluid type size aliases.
+   Carbon reference:
+
+   * reference/carbon-main/packages/type/src/fluid.ts
+
+   Notes:
+   - Provides CSS clamp aliases for Carbon fluid type roles.
+   - Keeps letter spacing at 0 to match app frontend rules.
+   ========================================================================== */
+
+@layer base {
+    :root {
+        --ui-type-fluid-heading-03-size: clamp(
+            var(--ui-type-scale-05),
+            1.1rem + 0.35vw,
+            var(--ui-type-scale-06)
+        );
+        --ui-type-fluid-heading-04-size: clamp(
+            var(--ui-type-scale-07),
+            1.35rem + 0.75vw,
+            var(--ui-type-scale-08)
+        );
+        --ui-type-fluid-heading-05-size: clamp(
+            var(--ui-type-scale-08),
+            1.4rem + 2vw,
+            var(--ui-type-scale-13)
+        );
+        --ui-type-fluid-heading-06-size: var(
+            --ui-type-fluid-heading-05-size
+        );
+        --ui-type-fluid-paragraph-01-size: clamp(
+            var(--ui-type-scale-06),
+            1.2rem + 1vw,
+            var(--ui-type-scale-08)
+        );
+        --ui-type-fluid-display-01-size: clamp(
+            var(--ui-type-scale-10),
+            1.6rem + 4vw,
+            var(--ui-type-scale-15)
+        );
+        --ui-type-fluid-display-02-size: var(--ui-type-fluid-display-01-size);
+        --ui-type-fluid-display-03-size: clamp(
+            var(--ui-type-scale-10),
+            1.2rem + 6vw,
+            var(--ui-type-scale-16)
+        );
+        --ui-type-fluid-display-04-size: clamp(
+            var(--ui-type-scale-10),
+            0.6rem + 10vw,
+            var(--ui-type-scale-23)
+        );
+    }
+}

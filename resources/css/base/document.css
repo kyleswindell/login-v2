@@ -1,0 +1,122 @@
+/* ==========================================================================
+   File: resources/css/base/document.css
+   Purpose: Document-level application of active theme tokens.
+   Notes:
+   - Do not define palette, theme, or component tokens here.
+   - Keep document defaults token-driven so theme files own values.
+   ========================================================================== */
+
+@layer base {
+    html {
+        color-scheme: var(--ui-color-scheme, light);
+        background-color: var(--ui-background);
+    }
+
+    body {
+        background-color: var(--ui-canvas);
+        color: var(--ui-text-primary);
+    }
+}
+
+@layer utilities {
+    :where(
+            :disabled,
+            [disabled],
+            [aria-disabled="true"],
+            [data-disabled="true"],
+            [data-ui-disabled="true"],
+            .is-disabled,
+            .ui-disabled,
+            [class^="ui-"][class*="disabled"],
+            [class*=" ui-"][class*="disabled"]
+        ),
+    :where(
+            :disabled,
+            [disabled],
+            [aria-disabled="true"],
+            [data-disabled="true"],
+            [data-ui-disabled="true"],
+            .is-disabled,
+            .ui-disabled,
+            [class^="ui-"][class*="disabled"],
+            [class*=" ui-"][class*="disabled"]
+        )
+        :where(button, a, input, select, textarea, label, summary, [role="button"], [role="option"], [tabindex]) {
+        cursor: not-allowed;
+    }
+
+    :where([aria-readonly="true"], [readonly], [data-readonly="true"], [data-ui-readonly="true"], [class^="ui-"][class*="readonly"], [class*=" ui-"][class*="readonly"]) {
+        cursor: default;
+    }
+
+    :where(.ui-overflow-ellipsis, .ui-text-overflow) {
+        display: block;
+        overflow: hidden;
+        min-inline-size: 0;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    :where(.ui-focus-outline, .ui-focus-outline-inset):focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    :where(.ui-focus-outline-border):focus-visible {
+        outline: 1px solid var(--ui-focus);
+        outline-offset: 0;
+    }
+
+    :where(.ui-button-reset) {
+        display: inline-block;
+        inline-size: 100%;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        appearance: none;
+        background: none;
+        color: inherit;
+        cursor: pointer;
+        font: inherit;
+        text-align: start;
+    }
+
+    :where(.ui-button-reset)::-moz-focus-inner {
+        border: 0;
+    }
+
+    :where(.ui-shadow-floating) {
+        box-shadow: var(--ui-shadow-floating);
+    }
+
+    :where(.ui-shadow-floating-top) {
+        box-shadow: var(--ui-shadow-floating-top, var(--ui-shadow-floating));
+    }
+
+    :where(.ui-fluid-field) {
+        min-block-size: 4rem;
+        border-block-end: 1px solid var(--ui-border-subtle);
+        background-color: var(--ui-field);
+    }
+
+    :where(.ui-fluid-field:hover) {
+        background-color: var(--ui-field-hover);
+    }
+
+    :where(.ui-fluid-field:focus-within, .ui-fluid-field.is-focus, .ui-fluid-field.ui-reference-force-focus) {
+        border-block-end-color: var(--ui-focus);
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    :where(.ui-fluid-field[aria-disabled="true"], .ui-fluid-field[disabled], .ui-fluid-field.is-disabled, .ui-fluid-field[class*="disabled"]) {
+        border-block-end-color: var(--ui-border-disabled);
+        background-color: var(--ui-field-disabled);
+        color: var(--ui-text-disabled);
+    }
+
+    :where(.ui-fluid-field[readonly], .ui-fluid-field[aria-readonly="true"], .ui-fluid-field.is-readonly, .ui-fluid-field[class*="readonly"]) {
+        border-block-end-color: var(--ui-border-subtle);
+        background-color: var(--ui-field);
+    }
+}

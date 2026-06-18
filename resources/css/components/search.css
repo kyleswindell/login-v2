@@ -1,0 +1,101 @@
+/* ==========================================================================
+File: resources/css/components/search.css
+Purpose: Search component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/search/
+* reference/carbon-main/packages/styles/scss/components/fluid-search/
+
+Notes:
+
+* Defines Search selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Search consumes form, type, spacing, motion, and theme tokens.
+  ========================================================================== */
+
+@layer components {
+    .ui-search {
+        position: relative;
+        display: flex;
+        align-items: center;
+        inline-size: 100%;
+    }
+
+    .ui-search-input {
+        --ui-search-size: 2.5rem;
+
+        inline-size: 100%;
+        block-size: var(--ui-search-size);
+        border: 0;
+        border-block-end: 1px solid var(--ui-border-strong-01);
+        padding: 0 var(--ui-search-size);
+        background-color: var(--ui-field-01);
+        color: var(--ui-text-primary);
+        font: inherit;
+        font-size: var(--ui-type-body-compact-01-font-size);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+        transition:
+            background-color var(--ui-duration-fast-01) var(--ui-motion-standard-productive),
+            outline var(--ui-duration-fast-01) var(--ui-motion-standard-productive);
+    }
+
+    .ui-search-input:hover {
+        background-color: var(--ui-field-hover-01);
+    }
+
+    .ui-search-input:focus {
+        outline-color: var(--ui-focus);
+    }
+
+    .ui-search-input::placeholder {
+        color: var(--ui-text-placeholder);
+        opacity: 1;
+    }
+
+    .ui-search-sm .ui-search-input {
+        --ui-search-size: 2rem;
+    }
+
+    .ui-search-lg .ui-search-input {
+        --ui-search-size: 3rem;
+    }
+
+    .ui-search-icon,
+    .ui-search-clear {
+        position: absolute;
+        inset-block-start: 50%;
+        transform: translateY(-50%);
+    }
+
+    .ui-search-icon {
+        inset-inline-start: var(--ui-spacing-05);
+        color: var(--ui-icon-secondary);
+    }
+
+    .ui-search-clear {
+        inset-inline-end: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--ui-search-size, 2.5rem);
+        block-size: var(--ui-search-size, 2.5rem);
+        border: 0;
+        padding: 0;
+        background: transparent;
+        color: var(--ui-icon-primary);
+        cursor: pointer;
+    }
+
+    .ui-search-clear:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-search-input:disabled {
+        color: var(--ui-text-disabled);
+        cursor: not-allowed;
+    }
+}

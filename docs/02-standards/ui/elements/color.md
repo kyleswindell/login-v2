@@ -163,14 +163,16 @@ The dedicated UI Reference proof route is `/platform/ui-reference/elements/color
 
 Card headers, card bodies, and card footers share the same background layer by default. A card header must not switch to an accent/background token merely because it is a header, and a card footer must not switch layers merely because it is a footer. Header/footer separators are opt-in structural lines owned by the Component or Pattern API, not default card treatment.
 
-The canonical nested sequence is `--ui-background` → `--ui-layer-01` → `--ui-layer-02` → `--ui-layer-03`. In the light theme this resolves as G10 → White → G10 → White. Do not return to Layer 01 inside the same nested stack; only a new sibling context may begin a new Layer 01 sequence.
+The canonical nested sequence is `--ui-background` → `--ui-layer-01` → `--ui-layer-02` → `--ui-layer-03` → `--ui-layer-04` → `--ui-layer-05`. In light contexts this resolves as G10 → White → G10 → White → G10 → White. In dark contexts each layer becomes one neutral step lighter. After Layer 05, reset to the original background value only when a new sibling context begins a new stack; do not return to Layer 01 inside the same nested stack.
 
 | Layer role      | Installed token examples                    | Purpose                                         | Allowed usage                                                          |
 | --------------- | ------------------------------------------- | ----------------------------------------------- | ---------------------------------------------------------------------- |
 | Page background | `--ui-background`, `--ui-surface`           | Base page or app-region background.             | App shell content background and large empty regions.                  |
 | Layer 01        | `--ui-layer-01`, `--ui-surface`             | First surface above the page background.        | Cards, panels, tables, and primary component containers.               |
 | Layer 02        | `--ui-layer-02`, `--ui-surface-elevated`    | Nested surface above Layer 01.                  | Nested cards, reference blocks, live-example panels, dropdowns, menus. |
-| Layer 03        | `--ui-layer-03` when installed              | Third nested surface.                           | Deeply nested overlays only when documented by the owning Pattern.     |
+| Layer 03        | `--ui-layer-03`                             | Third nested surface.                           | Deep contained regions when the owning API requires the depth.         |
+| Layer 04        | `--ui-layer-04`                             | Fourth nested surface.                          | Rare deep composition inside complex examples or overlays.             |
+| Layer 05        | `--ui-layer-05`                             | Fifth nested surface before reset.              | Maximum preset nested depth before a new sibling stack begins.         |
 | Inverse layer   | `--ui-inverse-*` roles when installed       | Light-on-dark or dark-on-light contrast moment. | Tooltips, inverse shell, callouts, and high-contrast focus moments.    |
 | Overlay         | `--ui-overlay`, shadow roles when installed | Blocks or dims background context.              | Modal backdrops, drawers, and full-screen overlays.                    |
 
@@ -210,7 +212,9 @@ Do not rely on color alone for semantic meaning. Use visible text, icons, labels
 | Surface elevated  | `--ui-surface-elevated`                                                              | Elevated cards, panels, menus, popovers, overlays                     | `<article class="ui-card">...</article>`                                                |
 | Layer 01          | `--ui-layer-01`                                                                      | Cards, panels, table shells, base component surfaces                  | `<article class="ui-card">...</article>`                                                |
 | Layer 02          | `--ui-layer-02`                                                                      | Nested cards, live-example panels, contained component regions        | `<aside style="background-color: var(--ui-layer-02);">...</aside>`                      |
-| Layer 03          | `--ui-layer-03` when installed                                                       | Deep nested floating layers                                           | Pattern-owned only.                                                                     |
+| Layer 03          | `--ui-layer-03`                                                                      | Deep nested content layers                                            | Component or Pattern-owned deep composition.                                             |
+| Layer 04          | `--ui-layer-04`                                                                      | Rare fourth nested content layer                                      | Component or Pattern-owned deep composition only.                                        |
+| Layer 05          | `--ui-layer-05`                                                                      | Fifth nested content layer before reset                               | Maximum preset depth before starting a new sibling stack.                                |
 | Field background  | `--ui-field`, `--ui-field-hover`, `--ui-field-disabled`                              | Text input, select, textarea, search, date picker                     | `<input class="ui-field" />`                                                            |
 | Field border      | `--ui-border-subtle-01`, `--ui-border-strong-01`, `--ui-border-interactive`          | Inputs, cards, panels, tables, menus                                  | `<div style="border-color: var(--ui-border-subtle-01);">...</div>`                      |
 | Border subtle     | `--ui-border-subtle-01`                                                              | Low-emphasis card, panel, row, and section boundaries                 | Used by `ui-card` and reference examples.                                               |
@@ -291,7 +295,7 @@ This baseline maps the core Carbon coverage model into Login App owner surfaces.
 | Carbon family / role | Login App owner | Login App token/API family | Required alignment rule |
 | -------------------- | --------------- | -------------------------- | ----------------------- |
 | `$background`, `$background-hover`, `$background-active`, `$background-selected` | Color + Themes Elements | `--ui-background`, `--ui-surface`, selected/hover aliases where installed | Base backgrounds and state backgrounds must not be replaced by local page colors. |
-| `$layer-01..03`, `$layer-hover-*`, `$layer-active-*`, `$layer-selected-*` | Color + Themes Elements | `--ui-layer-01..03`, layer state aliases | Cards, menus, tables, modals, popovers, and nested surfaces must consume layer roles consistently by depth/state. |
+| `$layer-01..05`, `$layer-hover-*`, `$layer-active-*`, `$layer-selected-*` | Color + Themes Elements | `--ui-layer-01..05`, layer state aliases | Cards, menus, tables, modals, popovers, and nested surfaces must consume layer roles consistently by depth/state. |
 | `$field`, `$field-hover` | Color Element + field Components | `--ui-field`, `--ui-field-hover`, `--ui-field-disabled` | Text input, textarea, search, select, dropdown, date/time, and number controls must share field roles unless a component standard documents a variant. |
 | `$text-primary`, `$text-secondary`, `$text-helper`, `$text-placeholder`, `$text-disabled`, `$text-inverse` | Color + Typography Elements | `--ui-text-*` | Text hierarchy must use app text roles, not component-local muted/gray classes. |
 | `$icon-primary`, `$icon-secondary`, `$icon-disabled`, `$icon-inverse`, `$icon-on-color` | Color + Icons Elements | `--ui-icon-*` | Icons inherit role/state from the owning component and must not receive local raw colors. |
@@ -674,7 +678,7 @@ Required sections and examples:
 | Theme-aware swatches      | Token swatches rendered from app CSS variables.                                                                                        | Light/default, dark if supported, inverse/high-contrast examples where implemented. |
 | Token groups              | Visual rows for text, icon, surface/layer, field, border, link, action, status, focus, loading/skeleton roles.                         | Token name, value source, allowed consumer, and status.                             |
 | Layering model            | Nested page/card/panel/example surfaces on `/platform/ui-reference/elements/color` and the dedicated `/platform/ui-reference/elements/color/layering` route. | `--ui-layer-01`, `--ui-layer-02`, elevated surface, border roles, readable text.    |
-| Background layering route | Four-depth layer stacks, cards with same-layer headers/footers, nested examples, code/documentation containers, and form/container examples. | `--ui-background`, `--ui-layer-01`, `--ui-layer-02`, `--ui-layer-03`, and border roles. |
+| Background layering route | Five-layer stacks, cards with same-layer headers/footers, nested examples, code/documentation containers, and form/container examples. | `--ui-background`, `--ui-layer-01`, `--ui-layer-02`, `--ui-layer-03`, `--ui-layer-04`, `--ui-layer-05`, and border roles. |
 | Interaction states        | Component examples in default, hover preview, active/pressed, selected, focus-visible, disabled, loading, validation where applicable. | State-specific token labels and notes that state tokens are not static colors.      |
 | Semantic support colors   | Success, warning, danger/error, info, neutral.                                                                                         | Badge/status/notification examples with text or icons, not color alone.             |
 | Contrast moments          | Text, icon, focus, border, inverse, and disabled examples.                                                                             | Pass/fail notes or implementation warnings where applicable.                        |
@@ -712,7 +716,7 @@ The UI Reference page should include this text or equivalent:
 - The page shows token/class/helper API references, allowed usage, prohibited usage, accessibility constraints, and implementation status.
 - Theme-aware swatches render from actual CSS variables rather than hard-coded sample blocks.
 - Token groups include text, icon, surface/layer, field, border, link, action, status, focus, and loading/skeleton roles.
-- Layering examples show at least base/page, Layer 01, and Layer 02 surfaces.
+- Layering examples show base/page, Layer 01, Layer 02, Layer 03, Layer 04, and Layer 05 surfaces.
 - Interaction examples show default, hover, active/pressed, selected/current where applicable, focus-visible, disabled, loading, and validation states.
 - Semantic examples show success, warning, danger/error, information, and neutral states with non-color cues.
 - Common app examples include button, link, notification/alert, form field, selected table row or selected item, status tag/badge, icon button, and inverse tooltip/toggletip where implemented.

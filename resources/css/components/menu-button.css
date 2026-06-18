@@ -1,0 +1,30 @@
+/* ==========================================================================
+File: resources/css/components/menu-button.css
+Purpose: Menu Button component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/menu-button/
+
+Notes:
+
+* Defines Menu Button selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Menu Button composes Button and Menu behavior.
+  ========================================================================== */
+
+@layer components {
+    .ui-menu-button {
+        position: relative;
+        display: inline-flex;
+    }
+
+    .ui-menu-button-trigger .ui-button-icon {
+        transition: transform var(--ui-duration-fast-02)
+            var(--ui-motion-standard-productive);
+    }
+
+    .ui-menu-button-open .ui-menu-button-trigger .ui-button-icon {
+        transform: rotate(180deg);
+    }
+}

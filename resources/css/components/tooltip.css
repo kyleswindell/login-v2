@@ -1,0 +1,253 @@
+/* ==========================================================================
+File: resources/css/components/tooltip.css
+Purpose: Tooltip component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/tooltip/_tooltip.scss
+
+Notes:
+
+* Defines Tooltip selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Tooltip composes Popover behavior and owns tooltip sizing/placement.
+  ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+   Base tooltip container
+   ---------------------------------------------------------------------- */
+
+    .ui-tooltip {
+        --ui-tooltip-offset: 0.75rem;
+        --ui-tooltip-padding-block: var(--ui-spacing-05);
+        --ui-tooltip-padding-inline: var(--ui-spacing-05);
+
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        inline-size: fit-content;
+        color: inherit;
+    }
+
+    .ui-tooltip-trigger {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: inherit;
+    }
+
+    .ui-tooltip-trigger:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: 2px;
+    }
+
+    /* ----------------------------------------------------------------------
+   Definition tooltip trigger
+   ---------------------------------------------------------------------- */
+
+    .ui-tooltip-definition-trigger,
+    .ui-definition-term {
+        appearance: none;
+        border: 0;
+        border-block-end: 1px dotted var(--ui-border-strong-01);
+        border-radius: 0;
+        padding: 0;
+        background: transparent;
+        color: var(--ui-text-primary);
+        cursor: help;
+        font: inherit;
+    }
+
+    .ui-tooltip-definition-trigger:hover,
+    .ui-tooltip[data-ui-tooltip-state="open"] .ui-tooltip-definition-trigger,
+    .ui-definition-term:hover {
+        border-block-end-color: var(--ui-border-interactive);
+    }
+
+    .ui-tooltip-definition-trigger:focus-visible,
+    .ui-definition-term:focus-visible {
+        border-block-end-color: var(--ui-border-interactive);
+        outline: 2px solid var(--ui-focus);
+        outline-offset: 2px;
+    }
+
+    /* ----------------------------------------------------------------------
+   Tooltip content
+   ---------------------------------------------------------------------- */
+
+    .ui-tooltip-content {
+        position: absolute;
+        z-index: 6000;
+        display: block;
+        max-inline-size: 18rem;
+        padding: var(--ui-tooltip-padding-block)
+            var(--ui-tooltip-padding-inline);
+        background-color: var(--ui-background-inverse);
+        box-shadow: var(--ui-shadow-floating);
+        color: var(--ui-text-inverse);
+        font-size: var(--ui-type-body-01-font-size);
+        font-weight: var(--ui-type-body-01-font-weight);
+        line-height: var(--ui-type-body-01-line-height);
+        letter-spacing: var(--ui-type-body-01-letter-spacing);
+        overflow-wrap: break-word;
+        text-align: start;
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition:
+            opacity var(--ui-duration-fast-02) var(--ui-motion-standard-productive),
+            visibility var(--ui-duration-fast-02) var(--ui-motion-standard-productive);
+    }
+
+    .ui-tooltip-content[hidden] {
+        display: none;
+    }
+
+    .ui-tooltip[data-ui-tooltip-state="open"] .ui-tooltip-content,
+    .ui-tooltip:hover .ui-tooltip-content,
+    .ui-tooltip:focus-within .ui-tooltip-content,
+    .ui-tooltip-open {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .ui-tooltip[data-ui-tooltip-size="single"] .ui-tooltip-content {
+        inline-size: max-content;
+        max-inline-size: 18rem;
+        white-space: nowrap;
+    }
+
+    .ui-tooltip[data-ui-tooltip-size="multi"] .ui-tooltip-content {
+        inline-size: max-content;
+        max-inline-size: 18rem;
+    }
+
+    .ui-tooltip[data-ui-tooltip-size="definition"] .ui-tooltip-content,
+    .ui-definition-tooltip {
+        max-inline-size: 11rem;
+        padding: var(--ui-spacing-03) var(--ui-spacing-05);
+        text-wrap: auto;
+        word-break: break-word;
+    }
+
+    .ui-icon-tooltip {
+        --ui-tooltip-offset: 0.5rem;
+        --ui-tooltip-padding-block: 0.125rem;
+        --ui-tooltip-padding-inline: var(--ui-spacing-05);
+    }
+
+    .ui-icon-tooltip .ui-tooltip-content {
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+    }
+
+    .ui-tooltip-icon {
+        inline-size: 1rem;
+        block-size: 1rem;
+        color: var(--ui-icon-secondary);
+    }
+
+    /* ----------------------------------------------------------------------
+   Placement
+   ---------------------------------------------------------------------- */
+
+    .ui-tooltip[data-ui-tooltip-resolved-placement="top"] .ui-tooltip-content,
+    .ui-tooltip-placement-top .ui-tooltip-content {
+        inset-block-end: calc(100% + var(--ui-tooltip-offset));
+        inset-inline-start: 50%;
+        transform: translateX(-50%);
+    }
+
+    .ui-tooltip[data-ui-tooltip-resolved-placement="bottom"] .ui-tooltip-content,
+    .ui-tooltip-placement-bottom .ui-tooltip-content {
+        inset-block-start: calc(100% + var(--ui-tooltip-offset));
+        inset-inline-start: 50%;
+        transform: translateX(-50%);
+    }
+
+    .ui-tooltip[data-ui-tooltip-resolved-placement="left"] .ui-tooltip-content,
+    .ui-tooltip-placement-left .ui-tooltip-content {
+        inset-block-start: 50%;
+        inset-inline-end: calc(100% + var(--ui-tooltip-offset));
+        transform: translateY(-50%);
+    }
+
+    .ui-tooltip[data-ui-tooltip-resolved-placement="right"] .ui-tooltip-content,
+    .ui-tooltip-placement-right .ui-tooltip-content {
+        inset-block-start: 50%;
+        inset-inline-start: calc(100% + var(--ui-tooltip-offset));
+        transform: translateY(-50%);
+    }
+
+    .ui-tooltip[data-ui-tooltip-align="start"] .ui-tooltip-content {
+        inset-inline-start: 0;
+        transform: none;
+    }
+
+    .ui-tooltip[data-ui-tooltip-align="end"] .ui-tooltip-content {
+        inset-inline: auto 0;
+        transform: none;
+    }
+
+    /* ----------------------------------------------------------------------
+   Caret
+   ---------------------------------------------------------------------- */
+
+    .ui-tooltip-caret {
+        position: absolute;
+        z-index: 6001;
+        inline-size: 0.5rem;
+        block-size: 0.5rem;
+        background-color: var(--ui-background-inverse);
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transform: rotate(45deg);
+    }
+
+    .ui-tooltip[data-ui-tooltip-state="open"] .ui-tooltip-caret,
+    .ui-tooltip:hover .ui-tooltip-caret,
+    .ui-tooltip:focus-within .ui-tooltip-caret {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .ui-tooltip[data-ui-tooltip-resolved-placement="top"] .ui-tooltip-caret,
+    .ui-tooltip-placement-top .ui-tooltip-caret {
+        inset-block-end: calc(100% + var(--ui-tooltip-offset) - 0.25rem);
+        inset-inline-start: 50%;
+        margin-inline-start: -0.25rem;
+    }
+
+    .ui-tooltip[data-ui-tooltip-resolved-placement="bottom"] .ui-tooltip-caret,
+    .ui-tooltip-placement-bottom .ui-tooltip-caret {
+        inset-block-start: calc(100% + var(--ui-tooltip-offset) - 0.25rem);
+        inset-inline-start: 50%;
+        margin-inline-start: -0.25rem;
+    }
+
+    .ui-tooltip[data-ui-tooltip-resolved-placement="left"] .ui-tooltip-caret,
+    .ui-tooltip-placement-left .ui-tooltip-caret {
+        inset-block-start: 50%;
+        inset-inline-end: calc(100% + var(--ui-tooltip-offset) - 0.25rem);
+        margin-block-start: -0.25rem;
+    }
+
+    .ui-tooltip[data-ui-tooltip-resolved-placement="right"] .ui-tooltip-caret,
+    .ui-tooltip-placement-right .ui-tooltip-caret {
+        inset-block-start: 50%;
+        inset-inline-start: calc(100% + var(--ui-tooltip-offset) - 0.25rem);
+        margin-block-start: -0.25rem;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-tooltip-content,
+        .ui-tooltip-caret {
+            transition: none;
+        }
+    }
+}

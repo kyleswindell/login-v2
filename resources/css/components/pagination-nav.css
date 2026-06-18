@@ -1,0 +1,53 @@
+/* ==========================================================================
+File: resources/css/components/pagination-nav.css
+Purpose: Pagination Nav component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/pagination-nav/
+
+Notes:
+
+* Defines Pagination Nav selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+  ========================================================================== */
+
+@layer components {
+    .ui-pagination-nav-list {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--ui-spacing-02);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .ui-pagination-nav-item {
+        display: inline-flex;
+    }
+
+    .ui-pagination-nav-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-inline-size: 2rem;
+        block-size: 2rem;
+        padding-inline: var(--ui-spacing-03);
+        color: var(--ui-text-primary);
+        text-decoration: none;
+    }
+
+    .ui-pagination-nav-link:hover {
+        background-color: var(--ui-layer-hover-01);
+    }
+
+    .ui-pagination-nav-link[aria-current="page"] {
+        background-color: var(--ui-layer-selected-01);
+        font-weight: var(--ui-font-weight-semibold);
+    }
+
+    .ui-pagination-nav-link:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+}

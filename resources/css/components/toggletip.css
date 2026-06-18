@@ -1,0 +1,45 @@
+/* ==========================================================================
+File: resources/css/components/toggletip.css
+Purpose: Toggletip component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/toggletip/
+
+Notes:
+
+* Defines Toggletip selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Toggletip composes Popover behavior.
+  ========================================================================== */
+
+@layer components {
+    .ui-toggletip {
+        position: relative;
+        display: inline-flex;
+    }
+
+    .ui-toggletip-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        padding: 0;
+        background: transparent;
+        color: var(--ui-icon-secondary);
+        cursor: pointer;
+    }
+
+    .ui-toggletip-button:hover {
+        color: var(--ui-icon-primary);
+    }
+
+    .ui-toggletip-button:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: 2px;
+    }
+
+    .ui-toggletip-content {
+        min-inline-size: 12rem;
+    }
+}

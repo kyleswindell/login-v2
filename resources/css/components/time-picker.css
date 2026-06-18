@@ -1,0 +1,340 @@
+/* ==========================================================================
+File: resources/css/components/time-picker.css
+Purpose: Time Picker component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/time-picker/
+* reference/carbon-main/packages/styles/scss/components/fluid-time-picker/
+
+Notes:
+
+* Defines Time Picker selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Time Picker consumes form, select, type, spacing, and theme tokens.
+  ========================================================================== */
+
+@layer components {
+    .ui-time-picker {
+        display: flex;
+        align-items: flex-end;
+        gap: var(--ui-spacing-03);
+        inline-size: 100%;
+    }
+
+    .ui-time-picker-input {
+        inline-size: 100%;
+        block-size: 2.5rem;
+        border: 0;
+        border-block-end: 1px solid var(--ui-border-strong-01);
+        padding: 0 var(--ui-spacing-05);
+        background-color: var(--ui-field-01);
+        color: var(--ui-text-primary);
+        font: inherit;
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+    }
+
+    .ui-time-picker-input:hover {
+        background-color: var(--ui-field-hover-01);
+    }
+
+    .ui-time-picker-input:focus {
+        outline-color: var(--ui-focus);
+    }
+
+    .ui-time-picker-invalid .ui-time-picker-input:not(:focus) {
+        outline-color: var(--ui-support-error);
+    }
+
+    .ui-time-picker-warning .ui-time-picker-input:not(:focus) {
+        outline-color: var(--ui-support-warning);
+    }
+}
+
+@layer components {
+    /* Laravel UI time-picker API migrated from app.css after Carbon SCSS ownership audit. */
+    .ui-time-picker {
+        @apply mt-4 min-w-0;
+    }
+
+    .ui-time-picker-row {
+        @apply flex flex-wrap items-start gap-0;
+    }
+
+    .ui-time-picker-time-field {
+        flex: 0 1 8rem;
+        min-width: 7rem;
+    }
+
+    .ui-time-picker-period {
+        flex: 0 1 8rem;
+        min-width: 8rem;
+    }
+
+    .ui-time-picker-timezone {
+        flex: 1 1 18rem;
+        min-width: min(100%, 18rem);
+    }
+
+    .ui-time-picker .ui-select-shell {
+        margin-top: 0;
+    }
+
+    .ui-time-picker .ui-input,
+    .ui-time-picker .ui-select,
+    .ui-time-picker .ui-select-shell,
+    .ui-time-picker-fluid .ui-time-picker-time-field-shell {
+        border-radius: 0;
+    }
+
+    .ui-time-picker .ui-select-field {
+        margin-top: 0;
+    }
+
+    .ui-time-picker .ui-select-field > .ui-field-label {
+        position: static;
+    }
+
+    .ui-time-picker .ui-select-shell,
+    .ui-time-picker .ui-time-picker-time-field {
+        min-height: 4rem;
+    }
+
+    .ui-time-picker:not(.ui-time-picker-fluid) .ui-select-shell,
+    .ui-time-picker:not(.ui-time-picker-fluid) .ui-time-picker-input {
+        border-top: 0;
+        border-right: 0;
+        border-left: 0;
+        border-bottom: 1px solid var(--ui-border-strong-01);
+        background-color: var(--ui-field-01);
+    }
+
+    .ui-time-picker .ui-input:hover:not(:disabled),
+    .ui-time-picker .ui-select:hover:not(:disabled) {
+        background-color: var(--ui-field-01);
+    }
+
+    .ui-time-picker .ui-input:hover:not(:disabled) {
+        cursor: text;
+    }
+
+    .ui-time-picker
+        .ui-select-field-fluid:not(.ui-select-field-disabled):not(
+            .ui-select-field-skeleton
+        )
+        .ui-select-shell:hover {
+        background-color: var(--ui-field-01);
+    }
+
+    .ui-time-picker-fluid .ui-time-picker-row {
+        align-items: stretch;
+    }
+
+    .ui-time-picker-fluid .ui-select-field {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .ui-time-picker-fluid .ui-select-shell {
+        flex: 1 1 auto;
+        border: 0;
+        border-bottom: 1px solid var(--ui-border-strong-01);
+    }
+
+    .ui-time-picker-fluid .ui-time-picker-time-field-shell {
+        @apply relative flex flex-col justify-start;
+        min-height: 4rem;
+        border: 0;
+        border-bottom: 1px solid var(--ui-border-strong-01);
+        background-color: var(--ui-field-01);
+    }
+
+    .ui-time-picker-fluid .ui-time-picker-time-field-shell .ui-field-label {
+        @apply pointer-events-none absolute left-4 top-2 z-10 mb-0;
+    }
+
+    .ui-time-picker-fluid .ui-time-picker-input {
+        min-height: 4rem;
+        border-bottom: 0;
+        padding-top: 1.25rem;
+    }
+
+    .ui-time-picker-fluid .ui-time-picker-input:focus,
+    .ui-time-picker-fluid .ui-time-picker-input:focus-visible,
+    .ui-time-picker-fluid .ui-time-picker-input.is-focus {
+        outline: 0;
+        border-color: transparent;
+        box-shadow: none;
+    }
+
+    .ui-time-picker-fluid .ui-time-picker-time-field-shell:focus-within,
+    .ui-time-picker-fluid .ui-time-picker-time-field-shell.is-focus {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+        border-color: var(--ui-focus);
+    }
+
+    .ui-time-picker .ui-time-picker-input {
+        margin-top: 0;
+        border-top: 0;
+        border-right: 0;
+        border-left: 0;
+    }
+
+    .ui-time-picker-row > .ui-field:not(:first-child),
+    .ui-time-picker-row > .ui-select-field:not(:first-child) .ui-select-shell {
+        border-left: 1px solid var(--ui-border-subtle-01);
+    }
+
+    .ui-time-picker-row .ui-field-label {
+        min-height: 1.25rem;
+    }
+
+    .ui-time-picker-fluid .ui-time-picker-row .ui-field-label {
+        min-height: 0;
+    }
+
+    .ui-time-picker-fluid .ui-time-picker-row > .ui-field:not(:first-child),
+    .ui-time-picker-fluid
+        .ui-time-picker-row
+        > .ui-select-field:not(:first-child)
+        .ui-select-shell {
+        border-left-color: var(--ui-border-strong-01);
+    }
+
+    .ui-time-picker-invalid .ui-input,
+    .ui-time-picker-invalid .ui-select {
+        border-color: var(--ui-support-error);
+        outline: 2px solid var(--ui-support-error);
+        outline-offset: -2px;
+    }
+
+    .ui-time-picker-invalid .ui-select-shell,
+    .ui-time-picker-invalid .ui-time-picker-time-field-shell {
+        border-color: var(--ui-support-error);
+    }
+
+    .ui-time-picker-time-field-invalid .ui-time-picker-input,
+    .ui-time-picker-time-field-invalid .ui-time-picker-input:focus,
+    .ui-time-picker-time-field-invalid .ui-time-picker-input:focus-visible {
+        border-color: var(--ui-support-error);
+        outline: 2px solid var(--ui-support-error);
+        outline-offset: -2px;
+        box-shadow: none;
+    }
+
+    .ui-time-picker-fluid .ui-time-picker-time-field-invalid {
+        border-color: var(--ui-support-error);
+        outline: 2px solid var(--ui-support-error);
+        outline-offset: -2px;
+    }
+
+    .ui-time-picker-fluid
+        .ui-time-picker-time-field-invalid
+        .ui-time-picker-input {
+        outline: 0;
+        border-color: transparent;
+    }
+
+    .ui-time-picker-disabled .ui-field-label,
+    .ui-time-picker-disabled .ui-field-helper,
+    .ui-time-picker-disabled .ui-input,
+    .ui-time-picker-disabled .ui-select,
+    .ui-time-picker-disabled .ui-select-chevron-icon {
+        color: var(--ui-text-disabled);
+    }
+
+    .ui-time-picker-helper {
+        @apply mt-2;
+    }
+
+    .ui-time-picker-input {
+        @apply mt-2 w-full;
+    }
+
+    .ui-date-picker-state-grid {
+        @apply mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-4;
+    }
+
+    [data-theme-resolved="dark"] .ui-input[type="date"],
+    [data-theme-resolved="dark"] .ui-input[type="datetime-local"] {
+        color-scheme: dark;
+    }
+
+    [data-theme-resolved="light"] .ui-input[type="date"],
+    [data-theme-resolved="light"] .ui-input[type="datetime-local"] {
+        color-scheme: light;
+    }
+
+    .ui-date-picker .ui-input-date:hover:not(:disabled),
+    .ui-date-range-picker-input-shell .ui-input-date:hover:not(:disabled),
+    .ui-time-picker .ui-input:hover:not(:disabled) {
+        border-color: var(--ui-border-strong-01);
+        background-color: inherit;
+        cursor: text;
+        box-shadow: none;
+    }
+
+    .ui-date-picker-fluid .ui-input-date:hover:not(:disabled),
+    .ui-time-picker-fluid .ui-time-picker-input:hover:not(:disabled) {
+        background-color: transparent;
+    }
+
+    .ui-time-picker .ui-select:hover:not(:disabled),
+    .ui-time-picker
+        .ui-select-field-fluid:not(.ui-select-field-disabled):not(
+            .ui-select-field-skeleton
+        )
+        .ui-select-shell:hover {
+        background-color: var(--ui-field-01);
+    }
+
+    .ui-time-picker .ui-select-field-fluid .ui-select:hover:not(:disabled) {
+        background-color: transparent;
+    }
+
+    .ui-date-picker-disabled .ui-input-date,
+    .ui-date-picker-skeleton .ui-input-date,
+    .ui-time-picker-disabled .ui-input,
+    .ui-time-picker-disabled .ui-select {
+        border-color: var(--ui-border-disabled);
+        background-color: var(
+            --ui-field-disabled,
+            color-mix(in srgb, var(--ui-field-01) 60%, var(--ui-background) 40%)
+        );
+        color: var(--ui-text-disabled);
+        box-shadow: none;
+        opacity: 1;
+    }
+
+    .ui-date-picker-fluid.ui-date-picker-disabled .ui-date-picker-control,
+    .ui-date-picker-fluid.ui-date-picker-skeleton .ui-date-picker-control,
+    .ui-time-picker-fluid.ui-time-picker-disabled
+        .ui-time-picker-time-field-shell,
+    .ui-time-picker-fluid.ui-time-picker-disabled .ui-select-shell {
+        border-color: var(--ui-border-disabled);
+        background-color: var(
+            --ui-field-disabled,
+            color-mix(in srgb, var(--ui-field-01) 60%, var(--ui-background) 40%)
+        );
+    }
+
+    .ui-date-picker-invalid .ui-input-date,
+    .ui-date-picker-invalid .ui-input-date:focus,
+    .ui-date-picker-invalid .ui-input-date:focus-visible,
+    .ui-time-picker-invalid .ui-input,
+    .ui-time-picker-invalid .ui-select {
+        border-color: var(--ui-support-error);
+        outline: 2px solid var(--ui-support-error);
+        outline-offset: -2px;
+        box-shadow: none;
+    }
+
+    .ui-divider {
+        @apply border-0;
+        border-top: 1px solid var(--ui-border-default);
+    }
+
+
+}

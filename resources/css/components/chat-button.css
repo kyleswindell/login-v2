@@ -1,0 +1,92 @@
+/* ==========================================================================
+File: resources/css/components/chat-button.css
+Purpose: Chat Button component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/chat-button/
+
+Notes:
+
+* Defines Chat Button selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Chat Button color values are theme role aliases.
+  ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+   Base chat button
+   ---------------------------------------------------------------------- */
+
+    .ui-chat-button {
+        border-radius: 1.5rem;
+    }
+
+    .ui-chat-button:not(.ui-chat-button-with-icon) {
+        padding-inline-end: 0.9375rem;
+    }
+
+    .ui-chat-button.ui-button-md {
+        border-radius: 1.25rem;
+    }
+
+    .ui-chat-button.ui-button-sm {
+        border-radius: 1rem;
+    }
+
+    /* ----------------------------------------------------------------------
+   Quick action
+   ---------------------------------------------------------------------- */
+
+    .ui-chat-button-quick-action {
+        align-items: center;
+        border-color: var(--ui-chat-button);
+        background-color: transparent;
+        color: var(--ui-chat-button);
+    }
+
+    .ui-chat-button-quick-action:hover:not(:active):not(:disabled) {
+        border-color: transparent;
+        background-color: var(--ui-chat-button-hover);
+        color: var(--ui-chat-button-text-hover);
+    }
+
+    .ui-chat-button-quick-action:active {
+        border-color: transparent;
+        background-color: var(--ui-chat-button-active);
+        color: var(--ui-chat-button-text-hover);
+    }
+
+    .ui-chat-button-quick-action.ui-button-ghost:focus-visible {
+        border-color: var(--ui-focus);
+        box-shadow: inset 0 0 0 1px var(--ui-focus);
+    }
+
+    .ui-chat-button-quick-action.ui-button-ghost:hover:focus-visible {
+        border-color: var(--ui-focus);
+        box-shadow: inset 0 0 0 1px var(--ui-focus-inset);
+    }
+
+    .ui-chat-button-quick-action:disabled,
+    .ui-chat-button-quick-action[aria-disabled="true"] {
+        border-color: var(--ui-button-disabled);
+        color: var(--ui-button-disabled);
+    }
+
+    .ui-chat-button-quick-action-selected,
+    .ui-chat-button-quick-action-selected:disabled,
+    .ui-chat-button-quick-action-selected[aria-disabled="true"] {
+        border-color: transparent;
+        background-color: var(--ui-chat-button-selected);
+        color: var(--ui-chat-button-text-selected);
+    }
+
+    .ui-chat-button-quick-action-selected:not(:disabled):hover,
+    .ui-chat-button-quick-action-selected:not(:disabled):active {
+        color: var(--ui-chat-button-text-selected);
+    }
+
+    .ui-chat-button.ui-button-skeleton {
+        overflow: hidden;
+    }
+}

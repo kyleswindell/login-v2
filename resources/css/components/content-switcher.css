@@ -1,0 +1,138 @@
+/* ==========================================================================
+File: resources/css/components/content-switcher.css
+Purpose: Content Switcher component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/content-switcher/
+
+Notes:
+
+* Defines Content Switcher selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Content Switcher color values are provided by tokens/components/content-switcher.css.
+  ========================================================================== */
+
+@layer components {
+    .ui-content-switcher {
+        display: inline-flex;
+        inline-size: fit-content;
+        max-inline-size: 100%;
+        block-size: 2.5rem;
+    }
+
+    .ui-content-switcher-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-inline-size: 4rem;
+        border: 1px solid var(--ui-border-interactive);
+        border-inline-end-width: 0;
+        padding: 0 var(--ui-spacing-05);
+        background-color: var(--ui-content-switcher-background);
+        color: var(--ui-text-primary);
+        cursor: pointer;
+        font-size: var(--ui-type-body-compact-01-font-size);
+        line-height: var(--ui-type-body-compact-01-line-height);
+    }
+
+    .ui-content-switcher-button:last-child {
+        border-inline-end-width: 1px;
+    }
+
+    .ui-content-switcher-button:hover {
+        background-color: var(--ui-content-switcher-background-hover);
+    }
+
+    .ui-content-switcher-button-selected,
+    .ui-content-switcher-button[aria-selected="true"] {
+        background-color: var(--ui-content-switcher-selected);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-content-switcher-button:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-content-switcher-button:disabled {
+        color: var(--ui-text-disabled);
+        cursor: not-allowed;
+    }
+}
+
+@layer components {
+    /* Laravel UI content-switcher API migrated from app.css after Carbon SCSS ownership audit. */
+    .ui-content-switcher {
+        @apply min-w-0;
+    }
+
+    .ui-content-switcher-list {
+        @apply inline-flex max-w-full min-w-0 overflow-x-auto border;
+        border-color: var(--ui-content-switcher-border);
+        background-color: var(--ui-content-switcher-background);
+    }
+
+    .ui-content-switcher-option {
+        @apply inline-flex min-h-10 shrink-0 items-center justify-center gap-2 border-r px-4 py-2 text-sm font-semibold transition;
+        min-inline-size: 8rem;
+        border-color: var(--ui-content-switcher-divider);
+        background-color: var(--ui-content-switcher-background);
+        color: var(--ui-content-switcher-text);
+    }
+
+    .ui-content-switcher-option:last-child {
+        border-inline-end-width: 0;
+    }
+
+    .ui-content-switcher-option:hover {
+        background-color: var(--ui-content-switcher-background-hover);
+        color: var(--ui-content-switcher-text-hover);
+    }
+
+    .ui-content-switcher-option:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-content-switcher-option[aria-selected="true"] {
+        background-color: var(--ui-content-switcher-selected);
+        color: var(--ui-content-switcher-selected-text);
+        box-shadow: inset 0 0 0 1px var(--ui-content-switcher-selected-border);
+    }
+
+    .ui-content-switcher-option:disabled {
+        cursor: not-allowed;
+        border-color: var(--ui-border-disabled);
+        background-color: var(--ui-content-switcher-background-disabled);
+        color: var(--ui-text-disabled);
+    }
+
+    .ui-content-switcher-sm .ui-content-switcher-option {
+        @apply min-h-8 px-3 py-1.5 text-xs;
+        min-inline-size: 6.5rem;
+    }
+
+    .ui-content-switcher-icon {
+        @apply h-4 w-4 shrink-0;
+        color: currentColor;
+    }
+
+    .ui-content-switcher-panels {
+        @apply mt-4 rounded-lg border;
+        border-color: var(--ui-border-subtle-01);
+        background-color: var(--ui-layer-01);
+    }
+
+    .ui-content-switcher-panel {
+        @apply p-4 text-sm leading-6;
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-content-switcher-panel-title {
+        @apply mb-1 text-sm font-semibold;
+        color: var(--ui-text-primary);
+    }
+
+
+}

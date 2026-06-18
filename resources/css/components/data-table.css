@@ -1,0 +1,246 @@
+/* ==========================================================================
+File: resources/css/components/data-table.css
+Purpose: Data Table component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/data-table/
+
+Notes:
+
+* Defines Data Table selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+  ========================================================================== */
+
+@layer components {
+    .ui-data-table-container {
+        inline-size: 100%;
+        overflow: auto;
+    }
+
+    .ui-data-table {
+        inline-size: 100%;
+        border-collapse: collapse;
+        background-color: var(--ui-layer-01);
+        color: var(--ui-text-primary);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        line-height: var(--ui-type-body-compact-01-line-height);
+    }
+
+    .ui-data-table th,
+    .ui-data-table td {
+        min-block-size: 3rem;
+        border-block-end: 1px solid var(--ui-border-subtle-01);
+        padding: var(--ui-spacing-04) var(--ui-spacing-05);
+        text-align: start;
+        vertical-align: middle;
+    }
+
+    .ui-data-table th {
+        background-color: var(--ui-layer-accent-01);
+        color: var(--ui-text-secondary);
+        font-weight: var(--ui-font-weight-semibold);
+    }
+
+    .ui-data-table tbody tr:hover {
+        background-color: var(--ui-layer-hover-01);
+    }
+
+    .ui-data-table-row-selected {
+        background-color: var(--ui-layer-selected-01);
+    }
+
+    .ui-data-table-sort-button {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--ui-spacing-03);
+        border: 0;
+        padding: 0;
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+        font: inherit;
+    }
+}
+
+@layer components {
+    /* Laravel UI data-table API migrated from app.css after Carbon SCSS ownership audit. */
+    .ui-data-table-wrapper {
+        @apply overflow-hidden rounded-lg border;
+        --ui-data-table-row-height: 2.5rem;
+        --ui-data-table-cell-padding-y: 0.5rem;
+        --ui-data-table-cell-padding-x: 1rem;
+        border-color: var(--ui-border-subtle-01);
+        background-color: var(--ui-layer-01);
+    }
+
+    .ui-data-table-size-xs {
+        --ui-data-table-row-height: 1.5rem;
+        --ui-data-table-cell-padding-y: 0.125rem;
+        --ui-data-table-cell-padding-x: 0.75rem;
+    }
+
+    .ui-data-table-size-sm {
+        --ui-data-table-row-height: 2rem;
+        --ui-data-table-cell-padding-y: 0.25rem;
+        --ui-data-table-cell-padding-x: 0.75rem;
+    }
+
+    .ui-data-table-size-md {
+        --ui-data-table-row-height: 2.5rem;
+        --ui-data-table-cell-padding-y: 0.5rem;
+        --ui-data-table-cell-padding-x: 1rem;
+    }
+
+    .ui-data-table-size-lg {
+        --ui-data-table-row-height: 3rem;
+        --ui-data-table-cell-padding-y: 0.75rem;
+        --ui-data-table-cell-padding-x: 1rem;
+    }
+
+    .ui-data-table-size-xl {
+        --ui-data-table-row-height: 4rem;
+        --ui-data-table-cell-padding-y: 1rem;
+        --ui-data-table-cell-padding-x: 1rem;
+    }
+
+    .ui-data-table-header {
+        @apply border-b px-4 py-4;
+        border-color: var(--ui-border-subtle-01);
+    }
+
+    .ui-data-table-title {
+        @apply text-base font-semibold;
+        color: var(--ui-text-primary);
+    }
+
+    .ui-data-table-description {
+        @apply mt-1 text-sm;
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-data-table-toolbar {
+        @apply flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3;
+        border-color: var(--ui-border-subtle-01);
+        background-color: var(--ui-layer-02);
+    }
+
+    .ui-data-table-toolbar-sm {
+        @apply gap-2 px-3 py-2;
+        min-block-size: 2rem;
+    }
+
+    .ui-data-table-toolbar-lg {
+        min-block-size: 3rem;
+    }
+
+    .ui-data-table-overflow {
+        @apply overflow-x-auto;
+    }
+
+    .ui-data-table-overflow:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-data-table-table {
+        @apply min-w-full border-collapse text-left text-sm;
+        color: var(--ui-text-primary);
+    }
+
+    .ui-data-table-head {
+        background-color: var(--ui-layer-accent-01);
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-data-table-header-cell {
+        @apply border-b text-xs font-semibold uppercase tracking-[0.14em];
+        min-block-size: var(--ui-data-table-row-height);
+        padding-block: var(--ui-data-table-cell-padding-y);
+        padding-inline: var(--ui-data-table-cell-padding-x);
+        border-color: var(--ui-border-subtle-01);
+    }
+
+    .ui-data-table-cell {
+        @apply border-b align-middle;
+        min-block-size: var(--ui-data-table-row-height);
+        padding-block: var(--ui-data-table-cell-padding-y);
+        padding-inline: var(--ui-data-table-cell-padding-x);
+        border-color: var(--ui-border-subtle-01);
+    }
+
+    .ui-data-table-density-compact .ui-data-table-header-cell,
+    .ui-data-table-density-compact .ui-data-table-cell {
+        padding-block: var(--ui-data-table-cell-padding-y);
+        padding-inline: var(--ui-data-table-cell-padding-x);
+    }
+
+    .ui-data-table-cell-align-end {
+        @apply text-right;
+    }
+
+    .ui-data-table-cell-align-center {
+        @apply text-center;
+    }
+
+    .ui-data-table-cell-actions {
+        @apply whitespace-nowrap text-right;
+    }
+
+    .ui-data-table-row {
+        transition: background-color 160ms ease;
+    }
+
+    .ui-data-table-row:hover,
+    .ui-data-table-row-current {
+        background-color: var(--ui-layer-hover-01);
+    }
+
+    .ui-data-table-row-selected {
+        background-color: var(--ui-layer-selected-01);
+    }
+
+    .ui-data-table-row-disabled {
+        color: var(--ui-text-disabled);
+    }
+
+    .ui-data-table-row-disabled:hover {
+        background-color: var(--ui-layer-01);
+    }
+
+    .ui-data-table-empty {
+        @apply px-4 py-8 text-center;
+        background-color: var(--ui-layer-01);
+    }
+
+    .ui-data-table-empty-title {
+        @apply font-semibold;
+        color: var(--ui-text-primary);
+    }
+
+    .ui-data-table-empty-description {
+        @apply mt-2 text-sm;
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-data-table-error {
+        background-color: var(--ui-status-danger-bg);
+    }
+
+    .ui-data-table-skeleton-line {
+        @apply block h-3 w-full max-w-40 rounded-full;
+        background-color: var(--ui-skeleton-element);
+    }
+
+    .ui-data-table-pagination {
+        padding: 0;
+        border-block-start: 0;
+        background-color: var(--ui-layer-02);
+    }
+
+    .ui-data-table-pagination .ui-pagination-pagination {
+        border-block-start: 0;
+    }
+
+
+}

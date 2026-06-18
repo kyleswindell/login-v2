@@ -1,0 +1,122 @@
+/* ==========================================================================
+File: resources/css/tokens/components/buttons.css
+Purpose: Button component color tokens.
+Notes:
+
+* Defines button component tokens only.
+* Do not place component selectors in this file.
+* Do not define global theme role tokens in this file.
+* Do not define app action aliases in this file.
+* App action aliases should consume these tokens from semantic/app-aliases.css.
+  ========================================================================== */
+
+@layer base {
+    /* ----------------------------------------------------------------------
+Button component tokens: white theme
+---------------------------------------------------------------------- */
+    :root,
+    html[data-theme-resolved="light"],
+    html[data-theme-resolved="white"],
+    [data-theme-resolved="light"],
+    [data-theme-resolved="white"] {
+        --ui-button-primary: var(--ui-blue-60);
+        --ui-button-primary-hover: var(--ui-blue-60-hover);
+        --ui-button-primary-active: var(--ui-blue-80);
+
+        --ui-button-secondary: var(--ui-gray-80);
+        --ui-button-secondary-hover: var(--ui-gray-80-hover);
+        --ui-button-secondary-active: var(--ui-gray-60);
+
+        --ui-button-tertiary: var(--ui-blue-60);
+        --ui-button-tertiary-hover: var(--ui-blue-60-hover);
+        --ui-button-tertiary-active: var(--ui-blue-80);
+
+        --ui-button-danger-primary: var(--ui-red-60);
+        --ui-button-danger-secondary: var(--ui-red-60);
+        --ui-button-danger-hover: var(--ui-red-60-hover);
+        --ui-button-danger-active: var(--ui-red-80);
+
+        --ui-button-separator: var(--ui-gray-20);
+        --ui-button-disabled: var(--ui-gray-30);
+    }
+
+    /* ----------------------------------------------------------------------
+   Button component tokens: gray 10 theme
+   ---------------------------------------------------------------------- */
+    html[data-theme-resolved="gray-10"],
+    [data-theme-resolved="gray-10"] {
+        --ui-button-primary: var(--ui-blue-60);
+        --ui-button-primary-hover: var(--ui-blue-60-hover);
+        --ui-button-primary-active: var(--ui-blue-80);
+
+        --ui-button-secondary: var(--ui-gray-80);
+        --ui-button-secondary-hover: var(--ui-gray-80-hover);
+        --ui-button-secondary-active: var(--ui-gray-60);
+
+        --ui-button-tertiary: var(--ui-blue-60);
+        --ui-button-tertiary-hover: var(--ui-blue-60-hover);
+        --ui-button-tertiary-active: var(--ui-blue-80);
+
+        --ui-button-danger-primary: var(--ui-red-60);
+        --ui-button-danger-secondary: var(--ui-red-60);
+        --ui-button-danger-hover: var(--ui-red-60-hover);
+        --ui-button-danger-active: var(--ui-red-80);
+
+        --ui-button-separator: var(--ui-gray-20);
+        --ui-button-disabled: var(--ui-gray-30);
+    }
+
+    /* ----------------------------------------------------------------------
+   Button component tokens: gray 90 theme
+   ---------------------------------------------------------------------- */
+    html[data-theme-resolved="dark"],
+    html[data-theme-resolved="gray-90"],
+    [data-theme-resolved="dark"],
+    [data-theme-resolved="gray-90"] {
+        --ui-button-primary: var(--ui-blue-60);
+        --ui-button-primary-hover: var(--ui-blue-60-hover);
+        --ui-button-primary-active: var(--ui-blue-80);
+
+        --ui-button-secondary: var(--ui-gray-60);
+        --ui-button-secondary-hover: var(--ui-gray-60-hover);
+        --ui-button-secondary-active: var(--ui-gray-80);
+
+        --ui-button-tertiary: var(--ui-white);
+        --ui-button-tertiary-hover: var(--ui-gray-10);
+        --ui-button-tertiary-active: var(--ui-gray-30);
+
+        --ui-button-danger-primary: var(--ui-red-60);
+        --ui-button-danger-secondary: var(--ui-red-40);
+        --ui-button-danger-hover: var(--ui-red-60-hover);
+        --ui-button-danger-active: var(--ui-red-80);
+
+        --ui-button-separator: var(--ui-gray-100);
+        --ui-button-disabled: rgb(var(--ui-gray-50-rgb) / 0.3);
+    }
+
+    /* ----------------------------------------------------------------------
+   Button component tokens: gray 100 theme
+   ---------------------------------------------------------------------- */
+    html[data-theme-resolved="gray-100"],
+    [data-theme-resolved="gray-100"] {
+        --ui-button-primary: var(--ui-blue-60);
+        --ui-button-primary-hover: var(--ui-blue-60-hover);
+        --ui-button-primary-active: var(--ui-blue-80);
+
+        --ui-button-secondary: var(--ui-gray-60);
+        --ui-button-secondary-hover: var(--ui-gray-60-hover);
+        --ui-button-secondary-active: var(--ui-gray-80);
+
+        --ui-button-tertiary: var(--ui-white);
+        --ui-button-tertiary-hover: var(--ui-gray-10);
+        --ui-button-tertiary-active: var(--ui-gray-30);
+
+        --ui-button-danger-primary: var(--ui-red-60);
+        --ui-button-danger-secondary: var(--ui-red-50);
+        --ui-button-danger-hover: var(--ui-red-60-hover);
+        --ui-button-danger-active: var(--ui-red-80);
+
+        --ui-button-separator: var(--ui-gray-100);
+        --ui-button-disabled: rgb(var(--ui-gray-50-rgb) / 0.3);
+    }
+}

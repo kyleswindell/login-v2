@@ -11,12 +11,10 @@ merged_from:
   - Color Token Matrix - Carbon Deep Research Report.md
   - Color Token Matrix - Addendum 1.md
   - Color Token Matrix - Addendum 2.md
-  - Carbon Color Token Pattern Gap Addendum
 ---
 
 # Carbon Color Token Mapping Master Inventory
 - [1. Reference status and scope](#1-reference-status-and-scope)
-  - [1.1. How agents should use this file](#11-how-agents-should-use-this-file)
 - [2. Source files merged](#2-source-files-merged)
 - [3. Governance relationship to Login App](#3-governance-relationship-to-login-app)
   - [3.1. Carbon evidence is not Login App API](#31-carbon-evidence-is-not-login-app-api)
@@ -29,12 +27,14 @@ merged_from:
   - [5.4. Supplemental global and contextual tokens confirmed by addendum](#54-supplemental-global-and-contextual-tokens-confirmed-by-addendum)
   - [5.5. AI tokens surfaced directly on current style pages](#55-ai-tokens-surfaced-directly-on-current-style-pages)
   - [5.6. Source-inferred Tag component-token family](#56-source-inferred-tag-component-token-family)
-  - [5.7. Source-confirmed Content switcher component tokens](#57-source-confirmed-content-switcher-component-tokens)
-  - [5.8. AI-token catalog cleanup](#58-ai-token-catalog-cleanup)
-  - [5.9. Public documentation finding](#59-public-documentation-finding)
-  - [5.10. Public/style-page verified AI tokens](#510-publicstyle-page-verified-ai-tokens)
-  - [5.11. GitHub/design-kit documented AI tokens](#511-githubdesign-kit-documented-ai-tokens)
-  - [5.12. Source-inferred AI skeleton tokens](#512-source-inferred-ai-skeleton-tokens)
+  - [5.7. Source-inferred Tag component-token family](#57-source-inferred-tag-component-token-family)
+  - [5.8. Source-confirmed Content switcher component tokens](#58-source-confirmed-content-switcher-component-tokens)
+  - [5.9. Source-confirmed Content switcher component tokens](#59-source-confirmed-content-switcher-component-tokens)
+  - [5.10. AI-token catalog cleanup](#510-ai-token-catalog-cleanup)
+  - [5.11. Public documentation finding](#511-public-documentation-finding)
+  - [5.12. Public/style-page verified AI tokens](#512-publicstyle-page-verified-ai-tokens)
+  - [5.13. GitHub/design-kit documented AI tokens](#513-githubdesign-kit-documented-ai-tokens)
+  - [5.14. Source-inferred AI skeleton tokens](#514-source-inferred-ai-skeleton-tokens)
 - [6. Mapping table schema](#6-mapping-table-schema)
 - [7. Component color-token mappings](#7-component-color-token-mappings)
   - [7.1. Actions and navigation](#71-actions-and-navigation)
@@ -88,44 +88,39 @@ merged_from:
     - [7.4.8. Tag](#748-tag)
     - [7.4.9. Form](#749-form)
 - [8. Pattern color-token mappings](#8-pattern-color-token-mappings)
-  - [8.1. Pattern-family disposition after gap addendum](#81-pattern-family-disposition-after-gap-addendum)
-  - [8.2. Read-only states](#82-read-only-states)
-  - [8.3. Status indicators](#83-status-indicators)
+  - [8.1. Read-only states](#81-read-only-states)
+  - [8.2. Status indicators](#82-status-indicators)
 - [9. Element and support color-token mappings](#9-element-and-support-color-token-mappings)
   - [9.1. Skeleton](#91-skeleton)
 - [10. UI shell and side nav disposition](#10-ui-shell-and-side-nav-disposition)
-  - [10.1. Current public documentation finding](#101-current-public-documentation-finding)
-  - [10.2. Legacy style documentation finding](#102-legacy-style-documentation-finding)
-  - [10.3. UI shell / side nav disposition](#103-ui-shell--side-nav-disposition)
-  - [10.4. UI shell merge guidance](#104-ui-shell-merge-guidance)
-- [11. Coverage matrix after merge](#11-coverage-matrix-after-merge)
-- [12. Remaining gaps after merge](#12-remaining-gaps-after-merge)
-  - [12.1. Verification warnings](#121-verification-warnings)
-  - [12.2. Pattern family gaps still worth researching](#122-pattern-family-gaps-still-worth-researching)
-- [13. Login App conversion guidance](#13-login-app-conversion-guidance)
-  - [13.1. Convert into Color Element roles](#131-convert-into-color-element-roles)
-  - [13.2. Convert into Component standards](#132-convert-into-component-standards)
-  - [13.3. Convert into Pattern standards](#133-convert-into-pattern-standards)
-  - [13.4. Do not copy blindly](#134-do-not-copy-blindly)
-- [14. Source index](#14-source-index)
-  - [14.1. URLs collected across merged files](#141-urls-collected-across-merged-files)
-- [15. Related Login App standards](#15-related-login-app-standards)
+- [11. UI shell and side nav cleanup](#11-ui-shell-and-side-nav-cleanup)
+  - [11.1. Current public documentation finding](#111-current-public-documentation-finding)
+  - [11.2. Legacy style documentation finding](#112-legacy-style-documentation-finding)
+  - [11.3. UI shell / side nav disposition](#113-ui-shell--side-nav-disposition)
+  - [11.4. UI shell merge guidance](#114-ui-shell-merge-guidance)
+- [12. Skeleton state disposition](#12-skeleton-state-disposition)
+- [13. Skeleton states cleanup](#13-skeleton-states-cleanup)
+  - [13.1. Public documentation finding](#131-public-documentation-finding)
+  - [13.2. Source-inferred skeleton rows](#132-source-inferred-skeleton-rows)
+  - [13.3. Skeleton merge guidance](#133-skeleton-merge-guidance)
+- [14. Coverage matrix after merge](#14-coverage-matrix-after-merge)
+- [15. Remaining gaps after merge](#15-remaining-gaps-after-merge)
+  - [15.1. Verification warnings](#151-verification-warnings)
+  - [15.2. Pattern family gaps still worth researching](#152-pattern-family-gaps-still-worth-researching)
+- [16. Login App conversion guidance](#16-login-app-conversion-guidance)
+  - [16.1. Convert into Color Element roles](#161-convert-into-color-element-roles)
+  - [16.2. Convert into Component standards](#162-convert-into-component-standards)
+  - [16.3. Convert into Pattern standards](#163-convert-into-pattern-standards)
+  - [16.4. Do not copy blindly](#164-do-not-copy-blindly)
+- [17. Source index](#17-source-index)
+  - [17.1. URLs collected across merged files](#171-urls-collected-across-merged-files)
+- [18. Related Login App standards](#18-related-login-app-standards)
 
 ## 1. Reference status and scope
 
 This support reference merges the original Carbon color-token research inventory with the first follow-up addendum and the final gap-cleanup addendum.
 
 This file is not the Login App Color Element API. The canonical app color rules belong in `docs/02-standards/ui/elements/color.md`. Use this master inventory as third-party Carbon evidence when deciding whether a color role belongs globally in the Color Element, locally in a Component API, or compositionally in a Pattern API.
-
-### 1.1. How agents should use this file
-
-Use this file as a searchable evidence inventory, not as implementation authority. Start with the table of contents, then open only the relevant token family, component, pattern, coverage, or gap section. Promote findings into the canonical owner before implementing them:
-
-- Color Element roles: `docs/02-standards/ui/elements/color.md`.
-- Component-specific roles: `docs/02-standards/ui/components/<component>.md`.
-- Pattern-specific roles: `docs/02-standards/ui/patterns/<pattern>.md`.
-
-Only `Documented` rows are standard-ready evidence by default. `Documented guidance` rows can inform direction but not exact row-level implementation. Rows marked `Needs verification`, `Documented anomaly`, `Source-inferred`, `GitHub-documented`, or `Docs-source conflict` must stay out of hard Login App standards until the relevant canonical owner records the verification decision.
 
 ## 2. Source files merged
 
@@ -134,7 +129,6 @@ Only `Documented` rows are standard-ready evidence by default. `Documented guida
 | `Color Token Matrix - Carbon Deep Research Report.md` | Original inventory, base token catalog, original component/pattern rows, and first coverage report.                  | Used as the base for global token catalog, original component rows, pattern rows, and conversion guidance. |
 | `Color Token Matrix - Addendum 1.md`                  | Broad component-family expansion and source-page audit.                                                              | Merged into component mapping sections and supplemental token clarifications.                              |
 | `Color Token Matrix - Addendum 2.md`                  | Manual cleanup of remaining gaps: Tag, Content switcher, AI, UI shell/side nav, Skeleton, Slider, and File uploader. | Treated as the final override for those gap areas.                                                         |
-| `Carbon Color Token Pattern Gap Addendum`             | Pattern-family coverage for Forms, Search, Empty states, Loading, Global header, Table toolbar, Common actions, Login, Filtering, and Notifications. | Merged as pattern disposition guidance; row-level Data table toolbar/batch rows remain component-owned. |
 
 ## 3. Governance relationship to Login App
 
@@ -158,11 +152,11 @@ Carbon token names, Carbon source paths, and Carbon class names appear here only
 | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | `Documented`           | The mapping appears as a direct row or token-specific statement in current Carbon public docs captured by the research pass. | May be used as Carbon reference evidence.                     |
 | `Documented guidance`  | Carbon gives a token-family rule or usage rule but not every exact token row.                                                | Keep as guidance; do not treat as complete row-level mapping. |
-| `Documented anomaly`   | Carbon public docs show a value that appears malformed, surprising, or inconsistent.                                         | Preserve exact evidence; block hard standards until verified. |
-| `Needs verification`   | Carbon guidance exists, but exact token names, source rows, or public-doc visibility remain incomplete or uncertain.         | Block hard standards until verified in the canonical owner.   |
-| `Source-inferred`      | Mapping or token family came from official Carbon source/package files rather than current public docs.                      | Keep separate; block hard standards until source review lands. |
+| `Documented anomaly`   | Carbon public docs show a value that appears malformed, surprising, or inconsistent.                                         | Preserve exact evidence and verify before standardizing.      |
+| `Needs verification`   | Carbon guidance exists, but exact token names, source rows, or public-doc visibility remain incomplete or uncertain.         | Do not convert into hard app standards until verified.        |
+| `Source-inferred`      | Mapping or token family came from official Carbon source/package files rather than current public docs.                      | Keep separate from public-doc-confirmed rows.                 |
 | `GitHub-documented`    | Evidence appears in official Carbon GitHub issue/discussion/design-kit work.                                                 | Use as caveat or lead, not as public-doc-confirmed mapping.   |
-| `Docs-source conflict` | Carbon docs and official source disagree.                                                                                    | Preserve both values; block hard standards until resolved.    |
+| `Docs-source conflict` | Carbon docs and official source disagree.                                                                                    | Preserve both values and do not normalize silently.           |
 
 ## 5. Master token catalog
 
@@ -284,6 +278,8 @@ Carbon token names, Carbon source paths, and Carbon class names appear here only
 
 ### 5.6. Source-inferred Tag component-token family
 
+### 5.7. Source-inferred Tag component-token family
+
 Official Carbon source exposes the component-token family names for all-color tags. These names should be treated as **Source-inferred** until confirmed in a stable public documentation table.
 
 Source:
@@ -297,7 +293,9 @@ Source:
 | Tag hover           | `$tag-hover-red`, `$tag-hover-magenta`, `$tag-hover-purple`, `$tag-hover-blue`, `$tag-hover-cyan`, `$tag-hover-teal`, `$tag-hover-green`, `$tag-hover-gray`, `$tag-hover-cool-gray`, `$tag-hover-warm-gray`                                                   | Tag component-specific | Source-inferred |
 | Tag border          | `$tag-border-red`, `$tag-border-magenta`, `$tag-border-purple`, `$tag-border-blue`, `$tag-border-cyan`, `$tag-border-teal`, `$tag-border-green`, `$tag-border-gray`, `$tag-border-cool-gray`, `$tag-border-warm-gray`                                         | Tag component-specific | Source-inferred |
 
-### 5.7. Source-confirmed Content switcher component tokens
+### 5.8. Source-confirmed Content switcher component tokens
+
+### 5.9. Source-confirmed Content switcher component tokens
 
 | Token                                | Scope                               | Confidence                    | Source                                                |
 | ------------------------------------ | ----------------------------------- | ----------------------------- | ----------------------------------------------------- |
@@ -305,9 +303,9 @@ Source:
 | `$content-switcher-background-hover` | Content switcher component-specific | Documented + source-confirmed | Public style page and official component-token source |
 | `$content-switcher-selected`         | Content switcher component-specific | Documented + source-confirmed | Public style page and official component-token source |
 
-### 5.8. AI-token catalog cleanup
+### 5.10. AI-token catalog cleanup
 
-### 5.9. Public documentation finding
+### 5.11. Public documentation finding
 
 Carbon’s public token page confirms that AI tokens exist inside the main Carbon themes and should only be used for custom AI components, variants, or instances. The parsed public docs expose the section families **General AI**, **Chat**, and **Chat button**, but they do not expose a clean complete machine-readable token list in the retrieved text.
 
@@ -317,7 +315,7 @@ This addendum therefore separates:
 - **GitHub/design-kit documented AI tokens**.
 - **Source-inferred AI skeleton tokens**.
 
-### 5.10. Public/style-page verified AI tokens
+### 5.12. Public/style-page verified AI tokens
 
 | Token                    | Source family          | Where documented                                                                      | Confidence |
 | ------------------------ | ---------------------- | ------------------------------------------------------------------------------------- | ---------- |
@@ -334,7 +332,7 @@ This addendum therefore separates:
 | `$ai-popover-background` | AI label               | AI label explainability popover                                                       | Documented |
 | `$ai-border-stop`        | AI presence            | Tile                                                                                  | Documented |
 
-### 5.11. GitHub/design-kit documented AI tokens
+### 5.13. GitHub/design-kit documented AI tokens
 
 The following tokens appear in official Carbon design-kit issue material or source-adjacent work but should remain lower confidence until verified in current public docs or package token source.
 
@@ -351,7 +349,7 @@ The following tokens appear in official Carbon design-kit issue material or sour
 | `$ai-popover-shadow-outer-01` | GitHub-documented                         | Not confirmed in public style rows reviewed here.     |
 | `$ai-popover-shadow-outer-02` | GitHub-documented                         | Not confirmed in public style rows reviewed here.     |
 
-### 5.12. Source-inferred AI skeleton tokens
+### 5.14. Source-inferred AI skeleton tokens
 
 Official source for AI skeleton styles references AI skeleton utility tokens. These should remain **Source-inferred** unless added to the public token page or style pages.
 
@@ -1124,8 +1122,6 @@ Coverage status: Confirmed row-level mappings.
 | Standard         | Any                   | Selected         | Row                      | background-color | `$layer-selected`       | Data table style        | Row                            | Documented |       |
 | Standard         | Any                   | Selected + hover | Row                      | background-color | `$layer-selected-hover` | Data table style        | Row                            | Documented |       |
 | Standard         | Any                   | Zebra            | Row                      | background-color | `$layer-accent`         | Data table style        | Row                            | Documented |       |
-| Toolbar          | Any                   | Default          | Toolbar                  | background-color | `$layer`                | Data table style        | Toolbar                        | Documented | Contextual token; consumed by table toolbar pattern composition. |
-| Toolbar          | Any                   | Default          | Icon button              | token family     | See ghost button        | Data table style        | Toolbar                        | Documented guidance | Delegates to Button component mappings. |
 
 
 #### 7.4.2. Structured list
@@ -1285,24 +1281,7 @@ Coverage status: Confirmed row-level mappings.
 
 Pattern rows remain intentionally separate from Component rows because they describe composition-level semantics, not reusable component primitives.
 
-### 8.1. Pattern-family disposition after gap addendum
-
-The pattern-gap addendum found that the reviewed Carbon pattern pages mostly publish composition, placement, workflow, accessibility, and content guidance rather than new row-level color-token tables. Color-token implementation should therefore inherit from the child Component, Foundation Color, Typography, Pictogram, Icon, and Theme standards used by the pattern.
-
-| Pattern family | Carbon source reviewed | Row-level color-token table found? | Updated status | Token ownership result |
-| -------------- | ---------------------- | ---------------------------------- | -------------- | ---------------------- |
-| Forms | Forms pattern; Form usage/style | No pattern-level table | Guidance-only / component-owned | Use Form, field, Button, Notification, and validation-related component mappings. |
-| Search | Search pattern; Search style; Empty states; Loading pattern | No pattern-level table | Guidance-only / component-owned | Use Search, Loading/Progress, Empty state composition, and selected filter component mappings. |
-| Empty states | Empty states pattern; Pictograms usage; Button; Link | No pattern-level table | Guidance-only / pattern composition | Use Typography, Button, Link, Pictograms/illustration guidance, and optional status/notification components. |
-| Loading pattern | Loading pattern; Loading; Inline loading; Progress bar; Progress indicator; Color tokens | No pattern-level table | Guidance-only / component-owned | Use Loading, Inline loading, Progress, Button/Link, and global Skeleton token rows. |
-| Global header / navigation shell | Global header pattern; UI shell usage pages; migration guidance; legacy v10 style page | No current row-level table | Guidance-only / UI shell-owned | Do not infer rows from screenshots or legacy palette values; keep shell/navigation colors app-pattern-owned until current source mappings are verified. |
-| Table toolbar / batch action | Data table style; Filtering pattern | Yes, as Data table component rows | Component-owned rows / pattern-consumed | Keep toolbar and batch-action rows in Data table; cross-reference from table-toolbar pattern guidance. |
-| Common actions | Common actions pattern; Button; Link; Modal; Notification; Overflow menu | No pattern-level table | Guidance-only / component-owned | Use the rendered action component mappings and do not create a common-action token family. |
-| Login | Login pattern; Text input; Password input; Button; Link; Form; Notification | No pattern-level table | Guidance-only / pattern composition | Use field, form, notification, button, link, layout, and theme roles. |
-| Filtering | Filtering pattern; Search; Checkbox; Radio; Select; Dropdown/Combo box; Tag; Data table; Pagination | No pattern-level table | Guidance-only / component-owned | Use the selected filtering component mappings; Tag all-color rows remain verification-gated. |
-| Notifications pattern | Notification pattern; Notification component; Button; Modal; UI shell placement | No new rows beyond Notification component | Guidance-only / component-owned | Use Notification component rows, Button/Modal rows, and shell placement guidance. |
-
-### 8.2. Read-only states
+### 8.1. Read-only states
 
 Coverage status: Confirmed row-level mappings retained from original inventory.
 
@@ -1310,7 +1289,7 @@ Coverage status: Confirmed row-level mappings retained from original inventory.
 | ------------------------- | --------------------- | --------- | ---------------------------- | ----------- | ---------------- | ------------------------------- | ------------------------- | ---------- | ----- |
 | Read-only signifier icons | Any                   | Read-only | Chevron/close/calendar icons | color token | `$icon-disabled` | Carbon Read-only states pattern | Component icon signifiers | Documented |       |
 
-### 8.3. Status indicators
+### 8.2. Status indicators
 
 Coverage status: Confirmed row-level mappings retained from original inventory.
 
@@ -1342,11 +1321,12 @@ Coverage status: Partial support mapping.
 | Standard    | Any                   | Loading | Skeleton container             | background-color    | `$skeleton-background`           | Carbon Color tokens    | Miscellaneous       | Documented      | Public global token.                                                  |
 | Standard    | Any                   | Loading | Skeleton element               | background-color    | `$skeleton-element`              | Carbon Color tokens    | Miscellaneous       | Documented      | Public global token.                                                  |
 
-Disposition: keep `$skeleton-element` and `$skeleton-background` in the global/miscellaneous color-token section. Keep AI skeleton tokens in the AI/scoped-token section. Do not create a fake Skeleton component mapping table unless a current public Skeleton style page or official component source is reviewed.
 
 ## 10. UI shell and side nav disposition
 
-### 10.1. Current public documentation finding
+## 11. UI shell and side nav cleanup
+
+### 11.1. Current public documentation finding
 
 Current Carbon UI shell pages document the role and structure of the shell:
 
@@ -1363,7 +1343,7 @@ Sources:
 - `https://carbondesignsystem.com/components/UI-shell-left-panel/usage/`
 - `https://carbondesignsystem.com/components/UI-shell-right-panel/usage/`
 
-### 10.2. Legacy style documentation finding
+### 11.2. Legacy style documentation finding
 
 Legacy v10 UI shell left-panel style documentation explicitly states that UI shell did not use Carbon theme tokens at that time and instead used IBM Design Language palette values. This is useful historical context, but it is not a current token mapping.
 
@@ -1371,7 +1351,7 @@ Source:
 
 - `https://v10.carbondesignsystem.com/components/UI-shell-left-panel/style/`
 
-### 10.3. UI shell / side nav disposition
+### 11.3. UI shell / side nav disposition
 
 | Family               | Current-doc result                           | Legacy/source result                                                             | Updated disposition                                                                         |
 | -------------------- | -------------------------------------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
@@ -1380,13 +1360,43 @@ Source:
 | UI shell right panel | No row-level current color-token table found | Current usage docs explain right-panel/switcher behavior                         | No current token mappings extracted. Keep as unresolved / guidance-only.                    |
 | Side nav             | No standalone current style page resolved    | Current source tree contains side-nav source under UI shell package              | Source follow-up could inspect implementation, but no public-doc mapping is confirmed here. |
 
-### 10.4. UI shell merge guidance
+### 11.4. UI shell merge guidance
 
 Do not add UI shell or side-nav color mappings to the confirmed mapping table unless a current public style table or official source token usage is reviewed and marked as Source-inferred.
 
 For Login App, shell/navigation color should remain Pattern-owned and app-defined.
 
-## 11. Coverage matrix after merge
+## 12. Skeleton state disposition
+
+## 13. Skeleton states cleanup
+
+### 13.1. Public documentation finding
+
+Carbon’s public Color → Tokens page explicitly documents:
+
+| Token                  | Category                 | Purpose                                 | Confidence |
+| ---------------------- | ------------------------ | --------------------------------------- | ---------- |
+| `$skeleton-element`    | Miscellaneous / skeleton | Skeleton color for text and UI elements | Documented |
+| `$skeleton-background` | Miscellaneous / skeleton | Skeleton color for containers           | Documented |
+
+A standalone current public Skeleton component style page was not found in this pass. Skeleton guidance appears through Loading/Loading pattern docs and through component examples rather than a complete row-level Skeleton style table.
+
+### 13.2. Source-inferred skeleton rows
+
+| Area    | Component / Pattern / Element | Variant     | Mode / Size / Density | State   | Anatomy element                | Property            | Color token                      | Source page            | Source section      | Confidence      | Notes                                                                 |
+| ------- | ----------------------------- | ----------- | --------------------- | ------- | ------------------------------ | ------------------- | -------------------------------- | ---------------------- | ------------------- | --------------- | --------------------------------------------------------------------- |
+| Element | Skeleton                      | Standard    | Any                   | Loading | Skeleton element               | background-color    | `$skeleton-element`              | Carbon Color tokens    | Miscellaneous       | Documented      | Public global token.                                                  |
+| Element | Skeleton                      | Standard    | Any                   | Loading | Skeleton container             | background-color    | `$skeleton-background`           | Carbon Color tokens    | Miscellaneous       | Documented      | Public global token.                                                  |
+| Element | Skeleton                      | AI skeleton | Any                   | Loading | AI skeleton background         | background-color    | `$ai-skeleton-background`        | Official Carbon source | AI skeleton styles  | Source-inferred | Keep AI-only.                                                         |
+| Element | Skeleton                      | AI skeleton | Any                   | Loading | AI skeleton element background | background/gradient | `ai-skeleton-element-background` | Official Carbon source | AI skeleton utility | Source-inferred | Keep AI-only; exact public token spelling needs package verification. |
+
+### 13.3. Skeleton merge guidance
+
+Keep skeleton tokens in the global/miscellaneous color-token section. Keep AI skeleton tokens in the AI/scoped-token section.
+
+Do not create a fake Skeleton component mapping table unless a current public Skeleton style page or official component source is reviewed.
+
+## 14. Coverage matrix after merge
 
 | Family                             | Type      | Rows | Documented rows | Source-inferred rows | Verification rows | Status                          |
 | ---------------------------------- | --------- | ---- | --------------- | -------------------- | ----------------- | ------------------------------- |
@@ -1428,7 +1438,7 @@ For Login App, shell/navigation color should remain Pattern-owned and app-define
 | Progress bar                       | Component | 3    | 3               | 0                    | 0                 | Confirmed row-level mappings    |
 | AI label                           | Component | 9    | 9               | 0                    | 0                 | Confirmed row-level mappings    |
 | Skeleton                           | Element   | 4    | 2               | 2                    | 0                 | Source-inferred included        |
-| Data table                         | Component | 25   | 24              | 0                    | 0                 | Confirmed row-level mappings + component delegation |
+| Data table                         | Component | 23   | 23              | 0                    | 0                 | Confirmed row-level mappings    |
 | Structured list                    | Component | 7    | 7               | 0                    | 0                 | Confirmed row-level mappings    |
 | Contained list                     | Component | 7    | 7               | 0                    | 0                 | Confirmed row-level mappings    |
 | List                               | Component | 2    | 2               | 0                    | 0                 | Confirmed row-level mappings    |
@@ -1438,11 +1448,12 @@ For Login App, shell/navigation color should remain Pattern-owned and app-define
 | Tag                                | Component | 46   | 43              | 0                    | 4                 | Partial / verification required |
 | Form                               | Component | 7    | 7               | 0                    | 0                 | Confirmed row-level mappings    |
 | Read-only states                   | Pattern   | 1    | 1               | 0                    | 0                 | Confirmed row-level mappings    |
+| Skeleton                           | Element   | 4    | 2               | 2                    | 0                 | Source-inferred included        |
 | Status indicators                  | Pattern   | 11   | 11              | 0                    | 0                 | Confirmed row-level mappings    |
 
-## 12. Remaining gaps after merge
+## 15. Remaining gaps after merge
 
-The merge closes the known Slider and File uploader row-level omissions, expands Tag, Content switcher, AI, Skeleton, and UI shell/side nav dispositions, and classifies the reviewed pattern-family gaps as guidance-only/component-owned unless row-level token tables were found. The following gaps still remain.
+The merge closes the known Slider and File uploader row-level omissions and expands Tag, Content switcher, AI, Skeleton, and UI shell/side nav dispositions. The following gaps still remain.
 
 | Gap                                                        | Type                   | Status     | Reason                                                                                                                                          |
 | ---------------------------------------------------------- | ---------------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1451,9 +1462,9 @@ The merge closes the known Slider and File uploader row-level omissions, expands
 | Side nav                                                   | Component / Pattern    | Unresolved | No standalone current style page resolved; requires current source review if needed.                                                            |
 | Standalone Skeleton component/page                         | Element / Component    | Partial    | Core `$skeleton-element` and `$skeleton-background` are confirmed; standalone style table was not found.                                        |
 | Tag all-color component token rows                         | Component              | Partial    | Public docs point to component-token families; exact all-color token names are source-inferred, not fully public-doc rowed.                     |
-| Pattern-specific row-level token tables                    | Pattern                | Not found in reviewed public pages | Forms, Search, Empty states, Loading, Common actions, Login, Filtering, and Notifications pattern pages are guidance-only/component-owned in the reviewed docs. |
+| Pattern family mappings beyond read-only/status indicators | Pattern                | Partial    | Forms, search, empty states, loading pattern, navigation shell, table toolbar, common actions, and login pattern remain light or guidance-only. |
 
-### 12.1. Verification warnings
+### 15.1. Verification warnings
 
 The following rows should remain out of hard Login App standards until verified against current Carbon package output or public docs:
 
@@ -1468,26 +1479,24 @@ The following rows should remain out of hard Login App standards until verified 
 | Popover             | One inverse container mapping remains marked `Needs verification`.                                               |
 | AI tokens           | The full public master AI token catalog was not machine-readably verified; keep AI token adoption gated.         |
 | UI shell / side nav | No current public row-level token mappings were found; do not use legacy palette rows as current token evidence. |
-| Pattern families    | Most reviewed pattern pages are guidance-only/component-owned; do not invent row-level pattern token families.    |
+| Pattern families    | Pattern coverage remains light outside Read-only states and Status indicators.                                   |
 
-### 12.2. Pattern family dispositions after addendum
+### 15.2. Pattern family gaps still worth researching
 
-| Pattern family | Disposition |
-| -------------- | ----------- |
-| Forms pattern | Guidance-only / component-owned; use Form, field, Button, and Notification mappings. |
-| Search pattern | Guidance-only / component-owned; use Search, Loading/Progress, Empty state composition, and selected filter component mappings. |
-| Empty states / no-results | Guidance-only / pattern composition; use Typography, Button, Link, Pictograms, and optional status/notification components. |
-| Loading pattern | Guidance-only / component-owned; use Loading, Inline loading, Progress, Button/Link, and global Skeleton token rows. |
-| Navigation shell pattern | Guidance-only / UI shell-owned; current public docs still do not expose row-level shell color-token tables. |
-| Table toolbar / batch actions | Component-owned rows / pattern-consumed; Data table owns the toolbar and batch-action rows. |
-| Common actions / destructive confirmation | Guidance-only / component-owned; use the rendered action components. |
-| Login pattern | Guidance-only / pattern composition; use field, form, notification, button, link, layout, and theme roles. |
-| Filtering pattern | Guidance-only / component-owned; use the selected filtering components; Tag all-color rows remain verification-gated. |
-| Notifications pattern | Guidance-only / component-owned; use Notification rows, Button/Modal rows, and shell placement guidance. |
+| Pattern family                            | Why it remains a gap                                                                                                                                                    |
+| ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Forms pattern                             | Validation summaries, field grouping, AI presence, fluid style escalation, helper/error/warning/success placement may have guidance but are not fully token-rowed here. |
+| Search pattern                            | Active query, no-results, result-count, filter interaction, and status treatment remain pattern-level guidance gaps.                                                    |
+| Empty states / no-results                 | Pictogram/icon, title/body, action, unavailable/blocked/empty distinction is not yet row-level mapped.                                                                  |
+| Loading pattern                           | Region loading, skeleton, page overlay, delayed-loading, reduced-motion, and handoff behavior are only partially captured through Loading/Skeleton tokens.              |
+| Navigation shell pattern                  | Header/left-panel/right-panel composition remains unresolved in current public row-level token terms.                                                                   |
+| Table toolbar / batch actions             | Data table batch action rows exist, but broader toolbar/filter summary/pending/disabled composition remains under-extracted.                                            |
+| Common actions / destructive confirmation | Action grouping and destructive escalation are component-driven, but pattern-level token rules are not fully mapped.                                                    |
+| Login pattern                             | Login form surface, background, brand/illustration, support links, and action hierarchy are not extracted.                                                              |
 
-## 13. Login App conversion guidance
+## 16. Login App conversion guidance
 
-### 13.1. Convert into Color Element roles
+### 16.1. Convert into Color Element roles
 
 Keep global semantic token families and contextual alias concepts in the Color Element standard:
 
@@ -1506,7 +1515,7 @@ Keep global semantic token families and contextual alias concepts in the Color E
 - Inverse.
 - Theme and layer behavior.
 
-### 13.2. Convert into Component standards
+### 16.2. Convert into Component standards
 
 Keep component-specific mappings in the owning Component standard:
 
@@ -1521,7 +1530,7 @@ Keep component-specific mappings in the owning Component standard:
 - Loading/inline loading/progress.
 - Slider/file uploader.
 
-### 13.3. Convert into Pattern standards
+### 16.3. Convert into Pattern standards
 
 Keep composition-level mappings and state placement in the owning Pattern standard:
 
@@ -1531,7 +1540,7 @@ Keep composition-level mappings and state placement in the owning Pattern standa
 - Status indicator semantics.
 - Shell, navigation, form, table toolbar, search/filter, and notification composition.
 
-### 13.4. Do not copy blindly
+### 16.4. Do not copy blindly
 
 Do not promote the following into Login App standards without review:
 
@@ -1545,9 +1554,9 @@ Do not promote the following into Login App standards without review:
 - Direct Carbon production class names.
 - Carbon Sass module names as app API.
 
-## 14. Source index
+## 17. Source index
 
-### 14.1. URLs collected across merged files
+### 17.1. URLs collected across merged files
 
 - `https://carbondesignsystem.com/components/UI-shell-header/usage/`
 - `https://carbondesignsystem.com/components/UI-shell-left-panel/usage/`
@@ -1564,7 +1573,6 @@ Do not promote the following into Login App standards without review:
 - `https://carbondesignsystem.com/components/dropdown/style/`
 - `https://carbondesignsystem.com/components/file-uploader/style/`
 - `https://carbondesignsystem.com/components/form/style/`
-- `https://carbondesignsystem.com/components/form/usage/`
 - `https://carbondesignsystem.com/components/inline-loading/style/`
 - `https://carbondesignsystem.com/components/link/style/`
 - `https://carbondesignsystem.com/components/list/style/`
@@ -1597,18 +1605,9 @@ Do not promote the following into Login App standards without review:
 - `https://carbondesignsystem.com/elements/themes/overview/`
 - `https://carbondesignsystem.com/guidelines/carbon-for-ai/`
 - `https://carbondesignsystem.com/guidelines/carbon-for-ai/overview/`
-- `https://carbondesignsystem.com/migrating/guide/design/`
-- `https://carbondesignsystem.com/patterns/common-actions/`
-- `https://carbondesignsystem.com/patterns/empty-states-pattern/`
-- `https://carbondesignsystem.com/patterns/filtering/`
-- `https://carbondesignsystem.com/patterns/forms-pattern/`
-- `https://carbondesignsystem.com/patterns/global-header/`
-- `https://carbondesignsystem.com/patterns/login-pattern/`
 - `https://carbondesignsystem.com/patterns/loading-pattern/`
-- `https://carbondesignsystem.com/patterns/notification-pattern/`
 - `https://carbondesignsystem.com/patterns/overview/`
 - `https://carbondesignsystem.com/patterns/read-only-states-pattern/`
-- `https://carbondesignsystem.com/patterns/search-pattern/`
 - `https://carbondesignsystem.com/patterns/status-indicator-pattern/`
 - `https://github.com/carbon-design-system/carbon/blob/main/packages/styles/scss/component-tokens/_content-switcher.scss`
 - `https://github.com/carbon-design-system/carbon/blob/main/packages/styles/scss/component-tokens/_tag.scss`
@@ -1616,7 +1615,7 @@ Do not promote the following into Login App standards without review:
 - `https://github.com/carbon-design-system/carbon/issues/13418`
 - `https://v10.carbondesignsystem.com/components/UI-shell-left-panel/style/`
 
-## 15. Related Login App standards
+## 18. Related Login App standards
 
 | API                       | Route / path                                  |
 | ------------------------- | --------------------------------------------- |

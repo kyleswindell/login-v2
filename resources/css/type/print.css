@@ -1,0 +1,12 @@
+/* ==========================================================================
+   File: resources/css/type/print.css
+   Purpose: CSS counterpart note for Carbon type print helper.
+   Carbon reference:
+
+   * reference/carbon-main/packages/type/src/print.ts
+
+   Notes:
+   - Carbon print.ts converts JavaScript type objects to CSS declarations.
+   - This app keeps emitted declarations in tokens.css and styles.css.
+   - No runtime CSS is required here.
+   ========================================================================== */

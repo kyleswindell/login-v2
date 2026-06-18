@@ -1,0 +1,9 @@
+/* ==========================================================================
+   File: resources/css/tokens/type/index.css
+   Purpose: Compatibility import for the app Type package.
+   Notes:
+   - Type ownership now lives in resources/css/type/.
+   - Keep this shim so tokens/index.css import order remains stable.
+   ========================================================================== */
+
+@import "../../type/index.css";

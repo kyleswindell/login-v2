@@ -1,0 +1,35 @@
+/* ==========================================================================
+   File: resources/css/type/reset.css
+   Purpose: Base type reset.
+   Carbon reference:
+
+   * reference/carbon-main/packages/type/src/reset.ts
+
+   Notes:
+   - Applies app-owned font families and smoothing defaults.
+   ========================================================================== */
+
+@layer base {
+    html {
+        font-size: 16px;
+    }
+
+    body {
+        font-family: var(--ui-font-family-sans);
+        font-weight: var(--ui-font-weight-regular);
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    strong {
+        font-weight: var(--ui-font-weight-semibold);
+    }
+
+    code,
+    kbd,
+    samp,
+    pre {
+        font-family: var(--ui-font-family-mono);
+    }
+}

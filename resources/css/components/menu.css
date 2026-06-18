@@ -1,0 +1,282 @@
+/* ==========================================================================
+File: resources/css/components/menu.css
+Purpose: Menu component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/menu/
+
+Notes:
+
+* Defines Menu selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Menu uses Popover-style floating surfaces.
+  ========================================================================== */
+
+@layer components {
+    .ui-menu-composition {
+        @apply relative inline-flex flex-col items-start gap-2;
+    }
+
+    .ui-menu {
+        @apply z-20 min-w-56 rounded-lg border p-1 shadow-xl;
+        border-color: var(--ui-border-subtle-01);
+        background-color: var(--ui-layer-01);
+        color: var(--ui-text-primary);
+        list-style: none;
+        box-shadow: 0 16px 32px
+            color-mix(in srgb, var(--ui-shadow-color) 24%, transparent);
+    }
+
+    .ui-menu[hidden] {
+        display: none;
+    }
+
+    .ui-menu-align-bottom-start,
+    .ui-menu-align-bottom-end,
+    .ui-menu-align-top-start,
+    .ui-menu-align-top-end {
+        @apply absolute;
+    }
+
+    .ui-menu-align-bottom-start {
+        inset-block-start: calc(100% + 0.375rem);
+        inset-inline-start: 0;
+    }
+
+    .ui-menu-align-bottom-end {
+        inset-block-start: calc(100% + 0.375rem);
+        inset-inline-end: 0;
+    }
+
+    .ui-menu-align-top-start {
+        inset-block-end: calc(100% + 0.375rem);
+        inset-inline-start: 0;
+    }
+
+    .ui-menu-align-top-end {
+        inset-block-end: calc(100% + 0.375rem);
+        inset-inline-end: 0;
+    }
+
+    .ui-menu-item {
+        @apply flex w-full items-center gap-2 rounded-md border border-transparent text-left text-sm font-medium transition focus-visible:outline-none;
+        color: var(--ui-text-primary);
+        background-color: transparent;
+        cursor: pointer;
+        line-height: var(--ui-type-body-compact-01-line-height);
+        text-decoration: none;
+    }
+
+    .ui-menu-item-xs {
+        min-block-size: 1.5rem;
+        padding: 0.1875rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .ui-menu-item-sm {
+        min-block-size: 2rem;
+        padding: 0.375rem 0.625rem;
+    }
+
+    .ui-menu-item-md {
+        min-block-size: 2.5rem;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .ui-menu-item-lg {
+        min-block-size: 3rem;
+        padding: 0.625rem 0.875rem;
+    }
+
+    .ui-menu-item:hover,
+    .ui-menu-item.is-hover,
+    .ui-menu-item.is-focus-hover {
+        background-color: var(--ui-layer-hover-01);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-menu-item:focus-visible,
+    .ui-menu-item.is-focus,
+    .ui-menu-item.is-focus-hover {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-menu-item.is-selected,
+    .ui-menu-item-current,
+    .ui-menu-item[data-ui-current="true"] {
+        background-color: var(--ui-layer-selected-01);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-menu-item-primary {
+        color: var(--ui-action-outline-primary-text);
+    }
+
+    .ui-menu-item-primary:hover,
+    .ui-menu-item-primary:focus-visible {
+        background-color: var(--ui-action-outline-primary-bg-hover);
+    }
+
+    .ui-menu-item-success {
+        color: var(--ui-action-outline-success-text);
+    }
+
+    .ui-menu-item-success:hover,
+    .ui-menu-item-success:focus-visible {
+        background-color: var(--ui-action-outline-success-bg-hover);
+    }
+
+    .ui-menu-item-warning {
+        color: var(--ui-action-outline-warning-text);
+    }
+
+    .ui-menu-item-warning:hover,
+    .ui-menu-item-warning:focus-visible {
+        background-color: var(--ui-action-outline-warning-bg-hover);
+    }
+
+    .ui-menu-item-notice {
+        color: var(--ui-action-outline-notice-text);
+    }
+
+    .ui-menu-item-notice:hover,
+    .ui-menu-item-notice:focus-visible {
+        background-color: var(--ui-action-outline-notice-bg-hover);
+    }
+
+    .ui-menu-item-info {
+        color: var(--ui-action-outline-info-text);
+    }
+
+    .ui-menu-item-info:hover,
+    .ui-menu-item-info:focus-visible {
+        background-color: var(--ui-action-outline-info-bg-hover);
+    }
+
+    .ui-menu-item-danger {
+        color: var(--ui-action-outline-danger-text);
+    }
+
+    .ui-menu-item-danger:hover,
+    .ui-menu-item-danger:focus-visible,
+    .ui-menu-item.is-danger-hover,
+    .ui-menu-item.is-danger-focus-hover {
+        background-color: var(--ui-action-soft-danger-bg-hover);
+        color: var(--ui-action-outline-danger-text);
+    }
+
+    .ui-menu-item.is-danger-focus-hover {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-menu-item:disabled,
+    .ui-menu-item[aria-disabled="true"],
+    .ui-menu-item-disabled,
+    .ui-menu-item[data-ui-menu-item-state="disabled"] {
+        cursor: not-allowed;
+        background-color: transparent;
+        color: color-mix(
+            in srgb,
+            var(--ui-text-disabled) 42%,
+            var(--ui-background)
+        );
+    }
+
+    .ui-menu-item:disabled:hover,
+    .ui-menu-item[aria-disabled="true"]:hover,
+    .ui-menu-item-disabled:hover,
+    .ui-menu-item[data-ui-menu-item-state="disabled"]:hover {
+        background-color: transparent;
+        color: color-mix(
+            in srgb,
+            var(--ui-text-disabled) 42%,
+            var(--ui-background)
+        );
+    }
+
+    .ui-menu-item:disabled .ui-menu-item-check,
+    .ui-menu-item:disabled .ui-menu-item-submenu,
+    .ui-menu-item:disabled .ui-menu-item-shortcut,
+    .ui-menu-item[aria-disabled="true"] .ui-menu-item-check,
+    .ui-menu-item[aria-disabled="true"] .ui-menu-item-submenu,
+    .ui-menu-item[aria-disabled="true"] .ui-menu-item-shortcut,
+    .ui-menu-item-disabled .ui-menu-item-check,
+    .ui-menu-item-disabled .ui-menu-item-submenu,
+    .ui-menu-item-disabled .ui-menu-item-shortcut,
+    .ui-menu-item[data-ui-menu-item-state="disabled"] .ui-menu-item-check,
+    .ui-menu-item[data-ui-menu-item-state="disabled"] .ui-menu-item-submenu,
+    .ui-menu-item[data-ui-menu-item-state="disabled"] .ui-menu-item-shortcut {
+        background-color: transparent;
+        color: currentColor;
+    }
+
+    .ui-menu-item-label {
+        @apply min-w-0 flex-1 truncate;
+    }
+
+    .ui-menu-item-check,
+    .ui-menu-item-submenu {
+        @apply inline-flex shrink-0 items-center justify-center font-semibold;
+        inline-size: 1rem;
+        color: var(--ui-icon-secondary);
+    }
+
+    .ui-menu-item-check-icon,
+    .ui-menu-item-submenu-icon {
+        @apply h-4 w-4;
+    }
+
+    .ui-menu-item-shortcut {
+        @apply shrink-0 rounded px-1.5 py-0.5 text-[0.68rem] font-semibold;
+        background-color: var(--ui-layer-accent-01);
+        color: var(--ui-text-helper);
+    }
+
+    .ui-menu-divider {
+        block-size: 1px;
+        margin-block: 0.375rem;
+        border-block-start: 1px solid var(--ui-border-subtle-01);
+    }
+
+    .ui-menu-submenu-group {
+        @apply relative;
+    }
+
+    .ui-menu-submenu-panel {
+        @apply absolute z-30;
+        inset-block-start: -0.25rem;
+        inset-inline-start: calc(100% + 0.25rem);
+    }
+
+    .ui-menu-submenu-group:hover > .ui-menu-submenu-panel,
+    .ui-menu-submenu-panel[data-ui-menu-submenu-open="true"] {
+        display: grid;
+    }
+
+    .ui-menu-composition-rtl .ui-menu,
+    .ui-menu[dir="rtl"] {
+        direction: rtl;
+        text-align: start;
+    }
+
+    .ui-menu-composition-rtl .ui-menu-submenu-panel,
+    .ui-menu[dir="rtl"] .ui-menu-submenu-panel {
+        inset-inline-start: auto;
+        inset-inline-end: calc(100% + 0.25rem);
+    }
+
+    .ui-menu-composition-rtl .ui-menu-item-submenu-icon,
+    .ui-menu[dir="rtl"] .ui-menu-item-submenu-icon {
+        transform: rotate(180deg);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-menu-item {
+            transition: none;
+        }
+    }
+
+}

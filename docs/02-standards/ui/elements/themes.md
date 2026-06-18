@@ -189,11 +189,13 @@ Theme contexts must preserve a readable layer hierarchy.
 | Page background | Base app region color.                          | Main content region, docs page, dashboard background.              |
 | Layer 01        | Primary component/card surface above the page.  | `ui-card`, table shell, field group, settings panel.               |
 | Layer 02        | Nested surface above Layer 01.                  | Live-example panel, nested card, menu, popover, contained note.    |
-| Layer 03        | Deep nested or floating context when installed. | Modal content, drawer region, pattern-owned nested overlays.       |
+| Layer 03        | Third nested surface.                           | Deep contained component regions.                                  |
+| Layer 04        | Fourth nested surface.                          | Rare complex examples, overlays, or composed nested panels.        |
+| Layer 05        | Fifth nested surface before reset.              | Maximum preset stack depth before a new sibling context begins.    |
 | Overlay/scrim   | Obscures inactive page regions.                 | Modal, drawer, blocking overlay.                                   |
 | Inverse surface | Intentional contrast surface.                   | Tooltip, dark shell region, inverse callout, high-contrast moment. |
 
-A nested surface must use the next approved layer or an owning Pattern API. Do not simulate depth by choosing arbitrary gray values.
+A nested surface must use the next approved layer or an owning Pattern API. Light contexts alternate background and layer values through Layer 05. Dark contexts step one neutral shade lighter with each layer through Layer 05. Do not simulate depth by choosing arbitrary gray values.
 
 ### 3.5. Override model
 
@@ -226,7 +228,7 @@ Feature-local fixes such as `style="color: #fff"` or `.reports-dark-card { backg
 | Inline theme wrapper   | `[data-ui-theme="light"]` / `[data-ui-theme="dark"]` when installed                            | Pattern-owned nested theme context                               | A dark panel inside a light page when approved.                       |
 | Inverse wrapper        | `[data-ui-theme="inverse"]` or component-owned inverse class when installed                    | Tooltip, shell, overlay, or high-contrast moment                 | Inverse text/icon/border/focus roles.                                 |
 | Theme surfaces         | `--ui-surface`, `--ui-surface-elevated`                                                        | `ui-card`, shell cards, layout surfaces                          | `<section class="ui-card">...</section>`                              |
-| Theme layers           | `--ui-layer-01`, `--ui-layer-02`, `--ui-layer-03` when installed                               | Cards, nested panels, menus, overlays                            | `<aside style="background-color: var(--ui-layer-02);">...</aside>`    |
+| Theme layers           | `--ui-layer-01`, `--ui-layer-02`, `--ui-layer-03`, `--ui-layer-04`, `--ui-layer-05`             | Cards, nested panels, menus, overlays                            | `<aside style="background-color: var(--ui-layer-02);">...</aside>`    |
 | Theme text             | `--ui-text-primary`, `--ui-text-secondary`, `--ui-text-helper`, `--ui-text-inverse`            | Typography roles and component text                              | `<p class="ui-card-copy">Supporting copy</p>`                         |
 | Theme icons            | `--ui-icon-primary`, `--ui-icon-secondary`, `--ui-icon-inverse`, semantic icon roles           | Icons Element and Component APIs                                 | Heroicons using `currentColor` from resolved text/status/action role. |
 | Theme borders          | `--ui-border-subtle-01`, `--ui-border-strong-01`, `--ui-border-inverse` when installed         | Cards, fields, dividers, tables, overlays                        | `<div style="border-color: var(--ui-border-subtle-01);">...</div>`    |
@@ -552,7 +554,7 @@ Required sections:
 | Theme matrix             | Shows light and dark contexts at minimum. Include inline, inverse, and high-contrast contexts only where installed or mark them deferred.                 |
 | Token role comparison    | Shows the same token roles across contexts: surface, layer, text, border, icon, link, action, status, focus, field, skeleton/loading.                     |
 | Component preview matrix | Shows common components in supported themes: button, link, form field, card, table row, notification, badge/status, modal or overlay sample, icon button. |
-| Layer inheritance        | Shows page background, Layer 01, Layer 02, Layer 03 when installed, overlay, and inverse surface.                                                         |
+| Layer inheritance        | Shows page background, Layer 01, Layer 02, Layer 03, Layer 04, Layer 05, overlay, and inverse surface.                                                     |
 | Inline theme example     | Shows a nested context using an approved wrapper and documents whether it is implemented, partial, or deferred.                                           |
 | Inverse context example  | Shows tooltip/shell/overlay-like inverse treatment where installed.                                                                                       |
 | State matrix             | Shows hover, active/pressed, selected/current, focus-visible, disabled, loading, error, warning, success, and informational roles where applicable.       |

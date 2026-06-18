@@ -1,0 +1,80 @@
+/* ==========================================================================
+File: resources/css/components/combo-button.css
+Purpose: Combo Button component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/combo-button/
+
+Notes:
+
+* Defines Combo Button selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Combo Button composes Button and Menu behavior.
+  ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+   Base combo button
+   ---------------------------------------------------------------------- */
+
+    .ui-combo-button {
+        display: inline-flex;
+        column-gap: 1px;
+    }
+
+    .ui-combo-button .ui-menu-composition {
+        display: inline-flex;
+    }
+
+    .ui-combo-button-primary {
+        min-inline-size: calc(10rem - 3rem);
+    }
+
+    .ui-combo-button-sm .ui-combo-button-primary {
+        min-inline-size: calc(10rem - 2rem);
+    }
+
+    .ui-combo-button-md .ui-combo-button-primary {
+        min-inline-size: calc(10rem - 2.5rem);
+    }
+
+    .ui-combo-button-lg .ui-combo-button-primary {
+        min-inline-size: calc(10rem - 3rem);
+    }
+
+    .ui-combo-button-primary .ui-button {
+        inline-size: 100%;
+        max-inline-size: 14.9375rem;
+        min-inline-size: 6.9375rem;
+        border-start-end-radius: 0;
+        border-end-end-radius: 0;
+    }
+
+    .ui-combo-button-primary button {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .ui-combo-button-trigger.ui-button {
+        border-start-start-radius: 0;
+        border-end-start-radius: 0;
+    }
+
+    .ui-combo-button-trigger svg {
+        transition: transform var(--ui-duration-fast-02)
+            var(--ui-motion-standard-productive);
+    }
+
+    .ui-combo-button-open .ui-combo-button-trigger svg {
+        transform: rotate(180deg);
+    }
+
+    .ui-combo-button-top,
+    .ui-combo-button-top-start,
+    .ui-combo-button-top-end {
+        transform: translate(0, calc(-100% - 3rem));
+    }
+}

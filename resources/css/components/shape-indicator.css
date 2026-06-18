@@ -1,0 +1,55 @@
+/* ==========================================================================
+File: resources/css/components/shape-indicator.css
+Purpose: Shape Indicator component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/shape-indicator/
+
+Notes:
+
+* Defines Shape Indicator selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+  ========================================================================== */
+
+@layer components {
+    .ui-shape-indicator {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--ui-spacing-03);
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-label-01-font-size);
+        line-height: var(--ui-type-label-01-line-height);
+    }
+
+    .ui-shape-indicator-shape {
+        inline-size: 0.75rem;
+        block-size: 0.75rem;
+        flex: 0 0 auto;
+        background-color: currentColor;
+    }
+
+    .ui-shape-indicator-circle .ui-shape-indicator-shape {
+        border-radius: 50%;
+    }
+
+    .ui-shape-indicator-square .ui-shape-indicator-shape {
+        border-radius: 0;
+    }
+
+    .ui-shape-indicator-success {
+        color: var(--ui-support-success);
+    }
+
+    .ui-shape-indicator-warning {
+        color: var(--ui-support-warning);
+    }
+
+    .ui-shape-indicator-error {
+        color: var(--ui-support-error);
+    }
+
+    .ui-shape-indicator-info {
+        color: var(--ui-support-info);
+    }
+}

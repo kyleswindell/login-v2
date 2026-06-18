@@ -1,0 +1,84 @@
+/* ==========================================================================
+File: resources/css/components/toast.css
+Purpose: Toast compatibility target.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/notification/
+
+Notes:
+
+* Carbon owns this behavior as toast notification.
+* Keep implementation selectors in notification.css.
+* This file exists only as a named compatibility target for app migration.
+  ========================================================================== */
+
+@layer components {
+    /* Laravel UI toast API migrated from app.css after Carbon notification ownership audit. */
+    .ui-toast {
+        @apply ml-auto w-full max-w-md rounded-lg border px-4 py-3 text-sm shadow-xl;
+        box-shadow: 0 18px 30px
+            color-mix(in srgb, var(--ui-shadow-color) 30%, transparent);
+        opacity: 1;
+        transform: translateY(0);
+        transition:
+            opacity 160ms ease,
+            transform 160ms ease;
+        will-change: opacity, transform;
+    }
+
+    .ui-toast.is-entering,
+    .ui-toast.is-exiting {
+        opacity: 0;
+        transform: translateY(0.5rem);
+    }
+
+    .ui-toast-neutral {
+        border-color: var(--ui-notification-toast-neutral-border);
+        background-color: var(--ui-notification-toast-neutral-bg);
+        color: var(--ui-notification-toast-neutral-text);
+    }
+
+    .ui-toast-info {
+        border-color: var(--ui-notification-toast-info-border);
+        background-color: var(--ui-notification-toast-info-bg);
+        color: var(--ui-notification-toast-info-text);
+    }
+
+    .ui-toast-success {
+        border-color: var(--ui-notification-toast-success-border);
+        background-color: var(--ui-notification-toast-success-bg);
+        color: var(--ui-notification-toast-success-text);
+    }
+
+    .ui-toast-notice {
+        border-color: var(--ui-notification-toast-notice-border);
+        background-color: var(--ui-notification-toast-notice-bg);
+        color: var(--ui-notification-toast-notice-text);
+    }
+
+    .ui-toast-warning {
+        border-color: var(--ui-notification-toast-warning-border);
+        background-color: var(--ui-notification-toast-warning-bg);
+        color: var(--ui-notification-toast-warning-text);
+    }
+
+    .ui-toast-danger {
+        border-color: var(--ui-notification-toast-danger-border);
+        background-color: var(--ui-notification-toast-danger-bg);
+        color: var(--ui-notification-toast-danger-text);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-toast {
+            transition: none;
+        }
+
+        .ui-toast.is-entering,
+        .ui-toast.is-exiting {
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+
+}

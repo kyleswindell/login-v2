@@ -1,0 +1,73 @@
+/* ==========================================================================
+File: resources/css/components/modal.css
+Purpose: Modal component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/modal/
+
+Notes:
+
+* Defines Modal selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Shared overlay behavior belongs in base only when reused globally.
+  ========================================================================== */
+
+@layer components {
+    .ui-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 8000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--ui-overlay);
+    }
+
+    .ui-modal-open,
+    .ui-modal[data-open="true"] {
+        display: flex;
+    }
+
+    .ui-modal-container {
+        display: flex;
+        flex-direction: column;
+        inline-size: min(100% - 2rem, 48rem);
+        max-block-size: calc(100vh - 2rem);
+        background-color: var(--ui-layer-01);
+        color: var(--ui-text-primary);
+        box-shadow: var(--ui-shadow-overlay-panel);
+    }
+
+    .ui-modal-header,
+    .ui-modal-body,
+    .ui-modal-footer {
+        padding-inline: var(--ui-spacing-06);
+    }
+
+    .ui-modal-header {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: var(--ui-spacing-05);
+        padding-block: var(--ui-spacing-06) var(--ui-spacing-05);
+    }
+
+    .ui-modal-title {
+        margin: 0;
+        font-size: var(--ui-type-heading-03-font-size);
+        font-weight: var(--ui-type-heading-03-font-weight);
+        line-height: var(--ui-type-heading-03-line-height);
+    }
+
+    .ui-modal-body {
+        overflow: auto;
+        padding-block: 0 var(--ui-spacing-06);
+    }
+
+    .ui-modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1px;
+        padding-block: 0;
+    }
+}

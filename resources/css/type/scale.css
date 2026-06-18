@@ -1,0 +1,38 @@
+/* ==========================================================================
+   File: resources/css/type/scale.css
+   Purpose: Fixed type scale.
+   Carbon reference:
+
+   * reference/carbon-main/packages/type/src/scale.ts
+
+   Notes:
+   - Defines Carbon's 23-step type scale as rem values.
+   ========================================================================== */
+
+@layer base {
+    :root {
+        --ui-type-scale-01: 0.75rem; /* 12px */
+        --ui-type-scale-02: 0.875rem; /* 14px */
+        --ui-type-scale-03: 1rem; /* 16px */
+        --ui-type-scale-04: 1.125rem; /* 18px */
+        --ui-type-scale-05: 1.25rem; /* 20px */
+        --ui-type-scale-06: 1.5rem; /* 24px */
+        --ui-type-scale-07: 1.75rem; /* 28px */
+        --ui-type-scale-08: 2rem; /* 32px */
+        --ui-type-scale-09: 2.25rem; /* 36px */
+        --ui-type-scale-10: 2.625rem; /* 42px */
+        --ui-type-scale-11: 3rem; /* 48px */
+        --ui-type-scale-12: 3.375rem; /* 54px */
+        --ui-type-scale-13: 3.75rem; /* 60px */
+        --ui-type-scale-14: 4.25rem; /* 68px */
+        --ui-type-scale-15: 4.75rem; /* 76px */
+        --ui-type-scale-16: 5.25rem; /* 84px */
+        --ui-type-scale-17: 5.75rem; /* 92px */
+        --ui-type-scale-18: 6.375rem; /* 102px */
+        --ui-type-scale-19: 7rem; /* 112px */
+        --ui-type-scale-20: 7.625rem; /* 122px */
+        --ui-type-scale-21: 8.25rem; /* 132px */
+        --ui-type-scale-22: 9rem; /* 144px */
+        --ui-type-scale-23: 9.75rem; /* 156px */
+    }
+}

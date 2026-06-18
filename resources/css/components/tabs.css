@@ -1,0 +1,213 @@
+/* ==========================================================================
+File: resources/css/components/tabs.css
+Purpose: Tabs component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/tabs/_tabs.scss
+
+Notes:
+
+* Defines Tabs selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Tabs color values are provided by active theme tokens.
+  ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+   Base tabs
+   ---------------------------------------------------------------------- */
+
+    .ui-tabs {
+        min-inline-size: 0;
+    }
+
+    .ui-tabs-list {
+        display: flex;
+        min-inline-size: 0;
+        gap: 0;
+        overflow-x: auto;
+        border-block-end: 1px solid var(--ui-border-subtle-01);
+        scrollbar-width: none;
+    }
+
+    .ui-tabs-list::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* ----------------------------------------------------------------------
+   Tab controls
+   ---------------------------------------------------------------------- */
+
+    .ui-tabs-tab {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-block-size: 2.5rem;
+        flex-shrink: 0;
+        gap: var(--ui-spacing-03);
+        border: 0;
+        border-block-end: 2px solid transparent;
+        padding: var(--ui-spacing-03) var(--ui-spacing-05);
+        background-color: transparent;
+        color: var(--ui-text-secondary);
+        font-size: 0.875rem;
+        font-weight: 600;
+        line-height: 1.25rem;
+        transition:
+            background-color var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive),
+            color var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive),
+            border-color var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive);
+    }
+
+    .ui-tabs-tab:hover {
+        background-color: var(--ui-layer-hover-01);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-tabs-tab:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-tabs-tab[aria-selected="true"] {
+        border-color: var(--ui-border-interactive);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-tabs-tab:disabled {
+        background-color: transparent;
+        color: var(--ui-text-disabled);
+        cursor: not-allowed;
+    }
+
+    /* ----------------------------------------------------------------------
+   Contained variant
+   ---------------------------------------------------------------------- */
+
+    .ui-tabs-contained .ui-tabs-list {
+        border: 1px solid var(--ui-border-subtle-01);
+        border-radius: 0.5rem 0.5rem 0 0;
+        background-color: var(--ui-layer-02);
+    }
+
+    .ui-tabs-contained .ui-tabs-tab {
+        border-block-end-color: transparent;
+        background-color: var(--ui-layer-02);
+    }
+
+    .ui-tabs-contained .ui-tabs-tab[aria-selected="true"] {
+        background-color: var(--ui-layer-01);
+    }
+
+    .ui-tabs-panels {
+        border-color: var(--ui-border-subtle-01);
+    }
+
+    .ui-tabs-contained .ui-tabs-panels {
+        border: 1px solid var(--ui-border-subtle-01);
+        border-block-start: 0;
+        border-radius: 0 0 0.5rem 0.5rem;
+        background-color: var(--ui-layer-01);
+    }
+
+    /* ----------------------------------------------------------------------
+   Panels
+   ---------------------------------------------------------------------- */
+
+    .ui-tabs-panel {
+        padding: var(--ui-spacing-05);
+        color: var(--ui-text-secondary);
+        font-size: 0.875rem;
+        line-height: 1.5rem;
+    }
+
+    .ui-tabs-panel-title {
+        margin-block-end: var(--ui-spacing-02);
+        color: var(--ui-text-primary);
+        font-size: 0.875rem;
+        font-weight: 600;
+        line-height: 1.25rem;
+    }
+
+    /* ----------------------------------------------------------------------
+   Vertical orientation
+   ---------------------------------------------------------------------- */
+
+    .ui-tabs-vertical {
+        display: grid;
+        gap: 0;
+    }
+
+    .ui-tabs-vertical .ui-tabs-list {
+        flex-direction: column;
+        overflow-x: visible;
+        overflow-y: auto;
+        border-block-end: 0;
+        border-inline-end: 1px solid var(--ui-border-subtle-01);
+        max-block-size: 22rem;
+    }
+
+    .ui-tabs-vertical .ui-tabs-tab {
+        justify-content: space-between;
+        border-block-end: 0;
+        border-inline-end: 2px solid transparent;
+        text-align: start;
+    }
+
+    .ui-tabs-vertical .ui-tabs-panels {
+        min-block-size: 16rem;
+    }
+
+    @media (min-width: 1024px) {
+        .ui-tabs-vertical {
+            grid-template-columns: minmax(12rem, 0.28fr) minmax(0, 1fr);
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+   Tab content adornments
+   ---------------------------------------------------------------------- */
+
+    .ui-tabs-tab-icon {
+        flex-shrink: 0;
+        color: var(--ui-icon-secondary);
+    }
+
+    .ui-tabs-tab-secondary {
+        display: block;
+        color: var(--ui-text-helper);
+        font-size: 0.75rem;
+        font-weight: 500;
+        line-height: 1rem;
+    }
+
+    .ui-tabs-tab-dismiss {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: 1.25rem;
+        block-size: 1.25rem;
+        margin-inline-start: var(--ui-spacing-02);
+        border-radius: 0.25rem;
+        color: var(--ui-icon-secondary);
+    }
+
+    .ui-tabs-tab-dismiss:hover {
+        background-color: var(--ui-layer-hover-01);
+        color: var(--ui-icon-primary);
+    }
+
+    /* ----------------------------------------------------------------------
+   Reduced motion
+   ---------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-tabs-tab {
+            transition: none;
+        }
+    }
+}

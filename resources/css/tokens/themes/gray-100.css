@@ -1,0 +1,316 @@
+/* ==========================================================================
+File: resources/css/tokens/themes/gray-100.css
+Purpose: Gray 100 theme role tokens.
+Notes:
+
+* Maps theme roles to primitive palette values.
+* Do not place component selectors in this file.
+* Do not define raw hex values here unless a primitive value is missing.
+* Component token files should consume these theme roles where appropriate.
+* AI, chat, type, spacing, and layout tokens are intentionally excluded.
+  ========================================================================== */
+
+@layer base {
+    html[data-theme-resolved="gray-100"],
+    [data-theme-resolved="gray-100"] {
+        /* ------------------------------------------------------------------
+Scheme
+------------------------------------------------------------------ */
+        --ui-color-scheme: dark;
+
+        /* ------------------------------------------------------------------
+       Background
+       ------------------------------------------------------------------ */
+        --ui-background: var(--ui-gray-100);
+        --ui-background-inverse: var(--ui-gray-10);
+        --ui-background-brand: var(--ui-blue-60);
+
+        --ui-background-active: rgb(var(--ui-gray-50-rgb) / 0.4);
+        --ui-background-hover: rgb(var(--ui-gray-50-rgb) / 0.16);
+        --ui-background-inverse-hover: var(--ui-gray-10-hover);
+        --ui-background-selected: rgb(var(--ui-gray-50-rgb) / 0.24);
+        --ui-background-selected-hover: rgb(var(--ui-gray-50-rgb) / 0.32);
+
+        /* ------------------------------------------------------------------
+       Layer
+       ------------------------------------------------------------------ */
+        --ui-layer-01: var(--ui-gray-90);
+        --ui-layer-active-01: var(--ui-gray-70);
+        --ui-layer-background-01: var(--ui-gray-100);
+        --ui-layer-hover-01: var(--ui-gray-90-hover);
+        --ui-layer-selected-01: var(--ui-gray-80);
+        --ui-layer-selected-hover-01: var(--ui-gray-80-hover);
+
+        --ui-layer-02: var(--ui-gray-80);
+        --ui-layer-active-02: var(--ui-gray-60);
+        --ui-layer-background-02: var(--ui-gray-90);
+        --ui-layer-hover-02: var(--ui-gray-80-hover);
+        --ui-layer-selected-02: var(--ui-gray-70);
+        --ui-layer-selected-hover-02: var(--ui-gray-70-hover);
+
+        --ui-layer-03: var(--ui-gray-70);
+        --ui-layer-active-03: var(--ui-gray-50);
+        --ui-layer-background-03: var(--ui-gray-80);
+        --ui-layer-hover-03: var(--ui-gray-70-hover);
+        --ui-layer-selected-03: var(--ui-gray-60);
+        --ui-layer-selected-hover-03: var(--ui-gray-60-hover);
+
+        --ui-layer-selected-inverse: var(--ui-gray-10);
+        --ui-layer-selected-disabled: var(--ui-gray-40);
+
+        /* ------------------------------------------------------------------
+       Layer accent
+       ------------------------------------------------------------------ */
+        --ui-layer-accent-01: var(--ui-gray-80);
+        --ui-layer-accent-active-01: var(--ui-gray-60);
+        --ui-layer-accent-hover-01: var(--ui-gray-80-hover);
+
+        --ui-layer-accent-02: var(--ui-gray-70);
+        --ui-layer-accent-active-02: var(--ui-gray-50);
+        --ui-layer-accent-hover-02: var(--ui-gray-70-hover);
+
+        --ui-layer-accent-03: var(--ui-gray-60);
+        --ui-layer-accent-active-03: var(--ui-gray-80);
+        --ui-layer-accent-hover-03: var(--ui-gray-60-hover);
+
+        /* ------------------------------------------------------------------
+       Field
+       ------------------------------------------------------------------ */
+        --ui-field-01: var(--ui-gray-90);
+        --ui-field-hover-01: var(--ui-gray-90-hover);
+
+        --ui-field-02: var(--ui-gray-80);
+        --ui-field-hover-02: var(--ui-gray-80-hover);
+
+        --ui-field-03: var(--ui-gray-70);
+        --ui-field-hover-03: var(--ui-gray-70-hover);
+
+        /* ------------------------------------------------------------------
+       Border
+       ------------------------------------------------------------------ */
+        --ui-border-subtle-00: var(--ui-gray-80);
+
+        --ui-border-subtle-01: var(--ui-gray-70);
+        --ui-border-subtle-selected-01: var(--ui-gray-60);
+
+        --ui-border-subtle-02: var(--ui-gray-60);
+        --ui-border-subtle-selected-02: var(--ui-gray-50);
+
+        --ui-border-subtle-03: var(--ui-gray-60);
+        --ui-border-subtle-selected-03: var(--ui-gray-50);
+
+        --ui-border-strong-01: var(--ui-gray-60);
+        --ui-border-strong-02: var(--ui-gray-50);
+        --ui-border-strong-03: var(--ui-gray-40);
+
+        --ui-border-tile-01: var(--ui-gray-70);
+        --ui-border-tile-02: var(--ui-gray-60);
+        --ui-border-tile-03: var(--ui-gray-50);
+
+        --ui-border-inverse: var(--ui-gray-10);
+        --ui-border-interactive: var(--ui-blue-50);
+        --ui-border-disabled: rgb(var(--ui-gray-50-rgb) / 0.5);
+
+        /* ------------------------------------------------------------------
+       Text
+       ------------------------------------------------------------------ */
+        --ui-text-primary: var(--ui-gray-10);
+        --ui-text-secondary: var(--ui-gray-30);
+        --ui-text-placeholder: rgb(var(--ui-gray-10-rgb) / 0.4);
+        --ui-text-helper: var(--ui-gray-40);
+        --ui-text-error: var(--ui-red-40);
+        --ui-text-inverse: var(--ui-gray-100);
+
+        --ui-text-on-color: var(--ui-white);
+        --ui-text-on-color-disabled: rgb(var(--ui-white-rgb) / 0.25);
+        --ui-text-disabled: rgb(var(--ui-gray-10-rgb) / 0.25);
+
+        /* ------------------------------------------------------------------
+       Link
+       ------------------------------------------------------------------ */
+        --ui-link-primary: var(--ui-blue-40);
+        --ui-link-primary-hover: var(--ui-blue-30);
+        --ui-link-secondary: var(--ui-blue-30);
+
+        --ui-link-inverse: var(--ui-blue-60);
+        --ui-link-inverse-hover: var(--ui-blue-70);
+        --ui-link-inverse-active: var(--ui-gray-100);
+        --ui-link-inverse-visited: var(--ui-purple-60);
+
+        --ui-link-visited: var(--ui-purple-40);
+
+        --ui-chat-button: var(--ui-link-primary);
+        --ui-chat-button-hover: var(--ui-background-hover);
+        --ui-chat-button-text-hover: var(--ui-link-primary-hover);
+        --ui-chat-button-active: var(--ui-background-active);
+        --ui-chat-button-selected: var(--ui-background-selected);
+        --ui-chat-button-text-selected: var(--ui-text-secondary);
+
+        /* ------------------------------------------------------------------
+       Icon
+       ------------------------------------------------------------------ */
+        --ui-icon-primary: var(--ui-gray-10);
+        --ui-icon-secondary: var(--ui-gray-30);
+        --ui-icon-inverse: var(--ui-gray-100);
+
+        --ui-icon-on-color: var(--ui-white);
+        --ui-icon-on-color-disabled: rgb(var(--ui-white-rgb) / 0.25);
+        --ui-icon-disabled: rgb(var(--ui-gray-10-rgb) / 0.25);
+        --ui-icon-interactive: var(--ui-white);
+
+        /* ------------------------------------------------------------------
+       Support
+       ------------------------------------------------------------------ */
+        --ui-support-error: var(--ui-red-50);
+        --ui-support-success: var(--ui-green-40);
+        --ui-support-warning: var(--ui-yellow-30);
+        --ui-support-info: var(--ui-blue-50);
+
+        --ui-support-error-inverse: var(--ui-red-60);
+        --ui-support-success-inverse: var(--ui-green-50);
+        --ui-support-warning-inverse: var(--ui-yellow-30);
+        --ui-support-info-inverse: var(--ui-blue-70);
+
+        --ui-support-caution-minor: var(--ui-yellow-30);
+        --ui-support-caution-major: var(--ui-orange-40);
+        --ui-support-caution-undefined: var(--ui-purple-50);
+
+        /* ------------------------------------------------------------------
+       Focus
+       ------------------------------------------------------------------ */
+        --ui-focus: var(--ui-white);
+        --ui-focus-inset: var(--ui-gray-100);
+        --ui-focus-inverse: var(--ui-blue-60);
+
+        /* ------------------------------------------------------------------
+       Skeleton
+       ------------------------------------------------------------------ */
+        --ui-skeleton-background: color-mix(
+            in srgb,
+            var(--ui-gray-100) 93%,
+            var(--ui-white)
+        );
+        --ui-skeleton-element: var(--ui-gray-80);
+
+        /* ------------------------------------------------------------------
+       Miscellaneous
+       ------------------------------------------------------------------ */
+        --ui-interactive: var(--ui-blue-50);
+        --ui-highlight: var(--ui-blue-90);
+        --ui-overlay: rgb(var(--ui-black-rgb) / 0.6);
+        --ui-toggle-off: var(--ui-gray-60);
+        --ui-shadow: rgb(var(--ui-black-rgb) / 0.8);
+        --ui-shadow-color: var(--ui-black);
+
+        /* ------------------------------------------------------------------
+       Syntax highlighting
+       ------------------------------------------------------------------ */
+        --ui-syntax-comment: var(--ui-green-40);
+        --ui-syntax-line-comment: var(--ui-syntax-comment);
+        --ui-syntax-block-comment: var(--ui-syntax-comment);
+        --ui-syntax-doc-comment: var(--ui-syntax-comment);
+
+        --ui-syntax-string: var(--ui-text-primary);
+        --ui-syntax-doc-string: var(--ui-syntax-string);
+
+        --ui-syntax-keyword: var(--ui-blue-50);
+        --ui-syntax-operator-keyword: var(--ui-syntax-keyword);
+        --ui-syntax-control-keyword: var(--ui-purple-40);
+        --ui-syntax-definition-keyword: var(--ui-cyan-40);
+        --ui-syntax-module-keyword: var(--ui-purple-40);
+
+        --ui-syntax-variable: var(--ui-blue-30);
+        --ui-syntax-name: var(--ui-syntax-variable);
+        --ui-syntax-variable-name: var(--ui-syntax-variable);
+        --ui-syntax-label-name: var(--ui-syntax-variable);
+
+        --ui-syntax-attribute: var(--ui-cyan-40);
+        --ui-syntax-attribute-name: var(--ui-syntax-attribute);
+        --ui-syntax-property-name: var(--ui-syntax-attribute);
+
+        --ui-syntax-tag: var(--ui-teal-30);
+        --ui-syntax-tag-name: var(--ui-syntax-tag);
+        --ui-syntax-type: var(--ui-teal-30);
+        --ui-syntax-type-name: var(--ui-syntax-type);
+        --ui-syntax-class-name: var(--ui-syntax-type);
+        --ui-syntax-namespace: var(--ui-syntax-type);
+
+        --ui-syntax-macro-name: var(--ui-text-primary);
+        --ui-syntax-atom: var(--ui-syntax-macro-name);
+        --ui-syntax-literal: var(--ui-syntax-atom);
+        --ui-syntax-bool: var(--ui-syntax-atom);
+        --ui-syntax-null: var(--ui-syntax-atom);
+
+        --ui-syntax-self: var(--ui-syntax-tag);
+
+        --ui-syntax-number: var(--ui-green-30);
+        --ui-syntax-integer: var(--ui-syntax-number);
+        --ui-syntax-float: var(--ui-syntax-number);
+        --ui-syntax-unit: var(--ui-syntax-number);
+
+        --ui-syntax-character: var(--ui-syntax-string);
+        --ui-syntax-attribute-value: var(--ui-syntax-string);
+
+        --ui-syntax-special-string: var(--ui-purple-40);
+        --ui-syntax-regexp: var(--ui-purple-40);
+
+        --ui-syntax-escape: var(--ui-gray-20);
+        --ui-syntax-url: var(--ui-syntax-escape);
+        --ui-syntax-color: var(--ui-syntax-macro-name);
+
+        --ui-syntax-operator: var(--ui-gray-20);
+        --ui-syntax-deref-operator: var(--ui-syntax-operator);
+        --ui-syntax-arithmetic-operator: var(--ui-syntax-operator);
+        --ui-syntax-logic-operator: var(--ui-syntax-operator);
+        --ui-syntax-bitwise-operator: var(--ui-syntax-operator);
+        --ui-syntax-compare-operator: var(--ui-syntax-operator);
+        --ui-syntax-update-operator: var(--ui-syntax-operator);
+
+        --ui-syntax-definition-operator: var(--ui-syntax-definition-keyword);
+        --ui-syntax-type-operator: var(--ui-syntax-tag);
+        --ui-syntax-control-operator: var(--ui-syntax-module-keyword);
+        --ui-syntax-modifier: var(--ui-syntax-keyword);
+
+        --ui-syntax-punctuation: var(--ui-gray-20);
+        --ui-syntax-separator: var(--ui-syntax-punctuation);
+        --ui-syntax-bracket: var(--ui-syntax-punctuation);
+        --ui-syntax-angle-bracket: var(--ui-gray-50);
+        --ui-syntax-square-bracket: var(--ui-syntax-bracket);
+        --ui-syntax-paren: var(--ui-syntax-bracket);
+        --ui-syntax-brace: var(--ui-syntax-bracket);
+
+        --ui-syntax-content: var(--ui-text-primary);
+        --ui-syntax-list: var(--ui-syntax-content);
+        --ui-syntax-emphasis: var(--ui-syntax-content);
+        --ui-syntax-strong: var(--ui-syntax-content);
+        --ui-syntax-monospace: var(--ui-syntax-content);
+        --ui-syntax-strikethrough: var(--ui-syntax-content);
+
+        --ui-syntax-heading: var(--ui-cyan-40);
+        --ui-syntax-heading-1: var(--ui-syntax-heading);
+        --ui-syntax-heading-2: var(--ui-syntax-heading);
+        --ui-syntax-heading-3: var(--ui-syntax-heading);
+        --ui-syntax-heading-4: var(--ui-syntax-heading);
+        --ui-syntax-heading-5: var(--ui-syntax-heading);
+        --ui-syntax-heading-6: var(--ui-syntax-heading);
+
+        --ui-syntax-content-separator: var(--ui-syntax-punctuation);
+        --ui-syntax-quote: var(--ui-syntax-comment);
+        --ui-syntax-link: var(--ui-blue-50);
+        --ui-syntax-invalid: var(--ui-red-50);
+
+        --ui-syntax-meta: var(--ui-green-40);
+        --ui-syntax-document-meta: var(--ui-syntax-meta);
+        --ui-syntax-annotation: var(--ui-teal-40);
+        --ui-syntax-processing-instruction: var(--ui-syntax-string);
+        --ui-syntax-definition: var(--ui-cyan-40);
+        --ui-syntax-constant: var(--ui-blue-50);
+        --ui-syntax-function: var(--ui-yellow-30);
+        --ui-syntax-standard: var(--ui-blue-50);
+        --ui-syntax-local: var(--ui-blue-30);
+        --ui-syntax-special: var(--ui-blue-50);
+
+        --ui-syntax-inserted: var(--ui-green-60);
+        --ui-syntax-deleted: var(--ui-red-70);
+    }
+}

@@ -1,0 +1,101 @@
+/* ==========================================================================
+File: resources/css/tokens/components/status.css
+Purpose: Status component color tokens.
+Notes:
+
+* Defines status component tokens only.
+* Do not place component selectors in this file.
+* Do not define global theme role tokens in this file.
+* Do not use status component tokens as global semantic colors.
+  ========================================================================== */
+
+@layer base {
+    /* ----------------------------------------------------------------------
+Status component tokens: white theme
+---------------------------------------------------------------------- */
+    :root,
+    html[data-theme-resolved="light"],
+    html[data-theme-resolved="white"],
+    [data-theme-resolved="light"],
+    [data-theme-resolved="white"] {
+        --ui-status-red: var(--ui-red-60);
+        --ui-status-orange: var(--ui-orange-40);
+        --ui-status-orange-outline: var(--ui-orange-60);
+        --ui-status-yellow: var(--ui-yellow-30);
+        --ui-status-yellow-outline: var(--ui-yellow-60);
+        --ui-status-purple: var(--ui-purple-60);
+        --ui-status-green: var(--ui-green-50);
+        --ui-status-blue: var(--ui-blue-70);
+        --ui-status-gray: var(--ui-gray-60);
+
+        --ui-status-accessibility-background: var(--ui-white);
+    }
+
+    /* ----------------------------------------------------------------------
+   Status component tokens: gray 10 theme
+   ---------------------------------------------------------------------- */
+    html[data-theme-resolved="gray-10"],
+    [data-theme-resolved="gray-10"] {
+        --ui-status-red: var(--ui-red-60);
+        --ui-status-orange: var(--ui-orange-40);
+        --ui-status-orange-outline: var(--ui-orange-60);
+        --ui-status-yellow: var(--ui-yellow-30);
+        --ui-status-yellow-outline: var(--ui-yellow-60);
+        --ui-status-purple: var(--ui-purple-60);
+        --ui-status-green: var(--ui-green-50);
+        --ui-status-blue: var(--ui-blue-70);
+        --ui-status-gray: var(--ui-gray-60);
+
+        --ui-status-accessibility-background: var(--ui-white);
+    }
+
+    /* ----------------------------------------------------------------------
+   Status component tokens: gray 90 theme
+   ---------------------------------------------------------------------- */
+    html[data-theme-resolved="dark"],
+    html[data-theme-resolved="gray-90"],
+    [data-theme-resolved="dark"],
+    [data-theme-resolved="gray-90"] {
+        --ui-status-red: var(--ui-red-50);
+        --ui-status-orange: var(--ui-orange-40);
+        --ui-status-yellow: var(--ui-yellow-30);
+        --ui-status-purple: var(--ui-purple-50);
+        --ui-status-green: var(--ui-green-40);
+        --ui-status-blue: var(--ui-blue-50);
+        --ui-status-gray: var(--ui-gray-50);
+
+        /*
+       No separate dark-theme outline token is provided for orange/yellow
+       in the source mapping. These fall back to the base status color to
+       avoid inheriting the light-theme outline values.
+    */
+        --ui-status-orange-outline: var(--ui-status-orange);
+        --ui-status-yellow-outline: var(--ui-status-yellow);
+
+        --ui-status-accessibility-background: var(--ui-gray-100);
+    }
+
+    /* ----------------------------------------------------------------------
+   Status component tokens: gray 100 theme
+   ---------------------------------------------------------------------- */
+    html[data-theme-resolved="gray-100"],
+    [data-theme-resolved="gray-100"] {
+        --ui-status-red: var(--ui-red-50);
+        --ui-status-orange: var(--ui-orange-40);
+        --ui-status-yellow: var(--ui-yellow-30);
+        --ui-status-purple: var(--ui-purple-50);
+        --ui-status-green: var(--ui-green-40);
+        --ui-status-blue: var(--ui-blue-50);
+        --ui-status-gray: var(--ui-gray-50);
+
+        /*
+       No separate dark-theme outline token is provided for orange/yellow
+       in the source mapping. These fall back to the base status color to
+       avoid inheriting the light-theme outline values.
+    */
+        --ui-status-orange-outline: var(--ui-status-orange);
+        --ui-status-yellow-outline: var(--ui-status-yellow);
+
+        --ui-status-accessibility-background: var(--ui-gray-100);
+    }
+}

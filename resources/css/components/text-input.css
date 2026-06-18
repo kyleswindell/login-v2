@@ -1,0 +1,162 @@
+/* ==========================================================================
+File: resources/css/components/text-input.css
+Purpose: Text Input component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/text-input/
+* reference/carbon-main/packages/styles/scss/components/fluid-text-input/
+
+Notes:
+
+* Defines Text Input selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Text Input consumes form, type, spacing, motion, and theme tokens.
+  ========================================================================== */
+
+@layer components {
+    .ui-text-input-wrapper {
+        position: relative;
+        display: flex;
+        inline-size: 100%;
+    }
+
+    .ui-text-input {
+        --ui-text-input-size: 2.5rem;
+        --ui-text-input-padding-inline: var(--ui-spacing-05);
+
+        box-sizing: border-box;
+        inline-size: 100%;
+        block-size: var(--ui-text-input-size);
+        border: 0;
+        border-block-end: 1px solid var(--ui-border-strong-01);
+        padding: 0 var(--ui-text-input-padding-inline);
+        background-color: var(--ui-field-01);
+        color: var(--ui-text-primary);
+        font: inherit;
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+        transition:
+            background-color var(--ui-duration-fast-01) var(--ui-motion-standard-productive),
+            outline var(--ui-duration-fast-01) var(--ui-motion-standard-productive);
+    }
+
+    .ui-text-input:hover {
+        background-color: var(--ui-field-hover-01);
+    }
+
+    .ui-text-input:focus,
+    .ui-text-input:active {
+        outline-color: var(--ui-focus);
+    }
+
+    .ui-text-input::placeholder {
+        color: var(--ui-text-placeholder);
+        opacity: 1;
+    }
+
+    .ui-text-input-sm {
+        --ui-text-input-size: 2rem;
+    }
+
+    .ui-text-input-md {
+        --ui-text-input-size: 2.5rem;
+    }
+
+    .ui-text-input-lg {
+        --ui-text-input-size: 3rem;
+    }
+
+    .ui-text-input-light,
+    .ui-text-input-layer-02 {
+        background-color: var(--ui-field-02);
+    }
+
+    .ui-text-input-invalid,
+    .ui-text-input-warning {
+        padding-inline-end: var(--ui-spacing-08);
+    }
+
+    .ui-password-input,
+    .ui-text-input-password {
+        padding-inline-end: var(--ui-text-input-size);
+    }
+
+    .ui-text-input-invalid.ui-password-input,
+    .ui-text-input-warning.ui-password-input,
+    .ui-text-input-invalid.ui-text-input-password,
+    .ui-text-input-warning.ui-text-input-password {
+        padding-inline-end: calc(var(--ui-text-input-size) + 1.5rem);
+    }
+
+    .ui-text-input-invalid:not(:focus),
+    .ui-text-input-wrapper[data-invalid] > .ui-text-input:not(:focus) {
+        outline-color: var(--ui-support-error);
+    }
+
+    .ui-text-input-warning:not(:focus),
+    .ui-text-input-wrapper[data-warning] > .ui-text-input:not(:focus) {
+        outline-color: var(--ui-support-warning);
+    }
+
+    .ui-text-input:disabled,
+    .ui-text-input[aria-disabled="true"] {
+        border-block-end-color: transparent;
+        background-color: var(--ui-field-01);
+        color: var(--ui-text-disabled);
+        cursor: not-allowed;
+    }
+
+    .ui-text-input:disabled::placeholder {
+        color: var(--ui-text-disabled);
+    }
+
+    .ui-text-input-invalid-icon,
+    .ui-text-input-warning-icon {
+        position: absolute;
+        inset-block-start: 50%;
+        inset-inline-end: var(--ui-spacing-05);
+        inline-size: 1rem;
+        block-size: 1rem;
+        transform: translateY(-50%);
+    }
+
+    .ui-text-input-invalid-icon {
+        color: var(--ui-support-error);
+        fill: var(--ui-support-error);
+    }
+
+    .ui-text-input-warning-icon {
+        color: var(--ui-support-warning);
+        fill: var(--ui-support-warning);
+    }
+
+    .ui-password-toggle {
+        position: absolute;
+        inset-block: 0;
+        inset-inline-end: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--ui-text-input-size);
+        border: 0;
+        padding: 0;
+        background: transparent;
+        color: var(--ui-icon-primary);
+        cursor: pointer;
+    }
+
+    .ui-password-toggle:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-password-toggle:disabled {
+        color: var(--ui-icon-disabled);
+        cursor: not-allowed;
+    }
+}

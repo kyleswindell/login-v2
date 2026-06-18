@@ -1,0 +1,127 @@
+/* ==========================================================================
+File: resources/css/components/link.css
+Purpose: Link component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/link/_link.scss
+
+Notes:
+
+* Defines Link selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Link color values are provided by active theme and semantic tokens.
+  ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+   Base link
+   ---------------------------------------------------------------------- */
+
+    .ui-link {
+        display: inline-flex;
+        align-items: center;
+        color: var(--ui-link-primary);
+        font-weight: 400;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 0.25rem;
+        transition: color var(--ui-duration-fast-01)
+            var(--ui-motion-standard-productive);
+    }
+
+    /* ----------------------------------------------------------------------
+   Variants
+   ---------------------------------------------------------------------- */
+
+    .ui-link-standalone {
+        display: inline-flex;
+        text-decoration-line: underline;
+        text-decoration-color: transparent;
+    }
+
+    .ui-link-inline {
+        display: inline;
+        text-decoration-line: underline;
+        text-decoration-color: currentColor;
+    }
+
+    .ui-link-with-icon {
+        display: inline-flex;
+        gap: var(--ui-spacing-03);
+    }
+
+    /* ----------------------------------------------------------------------
+   Sizes
+   ---------------------------------------------------------------------- */
+
+    .ui-link-sm {
+        font-size: 0.75rem;
+        line-height: 1rem;
+    }
+
+    .ui-link-md {
+        font-size: 0.875rem;
+        line-height: 1.125rem;
+    }
+
+    .ui-link-lg {
+        font-size: 1rem;
+        line-height: 1.375rem;
+    }
+
+    /* ----------------------------------------------------------------------
+   Icons
+   ---------------------------------------------------------------------- */
+
+    .ui-link-icon {
+        inline-size: 1rem;
+        block-size: 1rem;
+        flex: 0 0 auto;
+        color: currentColor;
+    }
+
+    .ui-link-lg .ui-link-icon {
+        inline-size: 1.25rem;
+        block-size: 1.25rem;
+    }
+
+    /* ----------------------------------------------------------------------
+   Interactive states
+   ---------------------------------------------------------------------- */
+
+    .ui-link:hover,
+    .ui-link.is-hover {
+        color: var(--ui-link-primary-hover);
+        text-decoration-color: currentColor;
+    }
+
+    .ui-link:active,
+    .ui-link.is-active {
+        color: var(--ui-text-primary);
+        text-decoration-color: currentColor;
+    }
+
+    .ui-link:focus-visible,
+    .ui-link.is-focus {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: 2px;
+        border-radius: 0.125rem;
+        text-decoration-color: currentColor;
+    }
+
+    .ui-link[data-ui-link-visited-policy="example"],
+    .ui-link.is-visited {
+        color: var(--ui-link-visited);
+    }
+
+    /* ----------------------------------------------------------------------
+   Disabled and unavailable state
+   ---------------------------------------------------------------------- */
+
+    .ui-link-unavailable,
+    .ui-link-unavailable:hover {
+        color: var(--ui-text-disabled);
+        cursor: not-allowed;
+        text-decoration-color: transparent;
+    }
+}

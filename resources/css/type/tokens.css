@@ -1,0 +1,217 @@
+/* ==========================================================================
+   File: resources/css/type/tokens.css
+   Purpose: Named type role tokens.
+   Carbon reference:
+
+   * reference/carbon-main/packages/type/src/tokens.ts
+   * reference/carbon-main/packages/type/src/styles.ts
+
+   Notes:
+   - Defines named type style tokens only.
+   - Keeps app letter spacing at 0.
+   - V10 names are mapped where useful; V11 names are preferred.
+   ========================================================================== */
+
+@layer base {
+    :root {
+        /* App-level type system aliases */
+        --ui-type-productive-base-size: var(--ui-type-scale-02);
+        --ui-type-expressive-base-size: var(--ui-type-scale-03);
+        --ui-type-productive-heading-scale: fixed;
+        --ui-type-expressive-heading-scale: fixed-fluid;
+        --ui-type-fluid-min: var(--ui-type-scale-08);
+        --ui-type-fluid-max: var(--ui-type-scale-17);
+
+        /* Small roles */
+        --ui-type-caption-01-font-size: var(--ui-type-scale-01);
+        --ui-type-caption-01-font-weight: var(--ui-font-weight-regular);
+        --ui-type-caption-01-line-height: 1.33333;
+        --ui-type-caption-01-letter-spacing: 0;
+
+        --ui-type-caption-02-font-size: var(--ui-type-scale-02);
+        --ui-type-caption-02-font-weight: var(--ui-font-weight-regular);
+        --ui-type-caption-02-line-height: 1.28572;
+        --ui-type-caption-02-letter-spacing: 0;
+
+        --ui-type-label-01-font-size: var(--ui-type-scale-01);
+        --ui-type-label-01-font-weight: var(--ui-font-weight-regular);
+        --ui-type-label-01-line-height: 1.33333;
+        --ui-type-label-01-letter-spacing: 0;
+
+        --ui-type-label-02-font-size: var(--ui-type-scale-02);
+        --ui-type-label-02-font-weight: var(--ui-font-weight-regular);
+        --ui-type-label-02-line-height: 1.28572;
+        --ui-type-label-02-letter-spacing: 0;
+
+        --ui-type-helper-text-01-font-size: var(--ui-type-scale-01);
+        --ui-type-helper-text-01-font-weight: var(--ui-font-weight-regular);
+        --ui-type-helper-text-01-line-height: 1.33333;
+        --ui-type-helper-text-01-letter-spacing: 0;
+
+        --ui-type-helper-text-02-font-size: var(--ui-type-scale-02);
+        --ui-type-helper-text-02-font-weight: var(--ui-font-weight-regular);
+        --ui-type-helper-text-02-line-height: 1.28572;
+        --ui-type-helper-text-02-letter-spacing: 0;
+
+        --ui-type-legal-01-font-size: var(--ui-type-scale-01);
+        --ui-type-legal-01-font-weight: var(--ui-font-weight-regular);
+        --ui-type-legal-01-line-height: 1.33333;
+        --ui-type-legal-01-letter-spacing: 0;
+
+        --ui-type-legal-02-font-size: var(--ui-type-scale-02);
+        --ui-type-legal-02-font-weight: var(--ui-font-weight-regular);
+        --ui-type-legal-02-line-height: 1.28572;
+        --ui-type-legal-02-letter-spacing: 0;
+
+        /* Body roles */
+        --ui-type-body-compact-01-font-size: var(--ui-type-scale-02);
+        --ui-type-body-compact-01-font-weight: var(--ui-font-weight-regular);
+        --ui-type-body-compact-01-line-height: 1.28572;
+        --ui-type-body-compact-01-letter-spacing: 0;
+
+        --ui-type-body-compact-02-font-size: var(--ui-type-scale-03);
+        --ui-type-body-compact-02-font-weight: var(--ui-font-weight-regular);
+        --ui-type-body-compact-02-line-height: 1.375;
+        --ui-type-body-compact-02-letter-spacing: 0;
+
+        --ui-type-body-01-font-size: var(--ui-type-scale-02);
+        --ui-type-body-01-font-weight: var(--ui-font-weight-regular);
+        --ui-type-body-01-line-height: 1.42857;
+        --ui-type-body-01-letter-spacing: 0;
+
+        --ui-type-body-02-font-size: var(--ui-type-scale-03);
+        --ui-type-body-02-font-weight: var(--ui-font-weight-regular);
+        --ui-type-body-02-line-height: 1.5;
+        --ui-type-body-02-letter-spacing: 0;
+
+        /* Code roles */
+        --ui-type-code-01-font-family: var(--ui-font-family-mono);
+        --ui-type-code-01-font-size: var(--ui-type-scale-01);
+        --ui-type-code-01-font-weight: var(--ui-font-weight-regular);
+        --ui-type-code-01-line-height: 1.33333;
+        --ui-type-code-01-letter-spacing: 0;
+
+        --ui-type-code-02-font-family: var(--ui-font-family-mono);
+        --ui-type-code-02-font-size: var(--ui-type-scale-02);
+        --ui-type-code-02-font-weight: var(--ui-font-weight-regular);
+        --ui-type-code-02-line-height: 1.42857;
+        --ui-type-code-02-letter-spacing: 0;
+
+        /* Fixed heading roles */
+        --ui-type-heading-compact-01-font-size: var(--ui-type-scale-02);
+        --ui-type-heading-compact-01-font-weight: var(
+            --ui-font-weight-semibold
+        );
+        --ui-type-heading-compact-01-line-height: 1.28572;
+        --ui-type-heading-compact-01-letter-spacing: 0;
+
+        --ui-type-heading-compact-02-font-size: var(--ui-type-scale-03);
+        --ui-type-heading-compact-02-font-weight: var(
+            --ui-font-weight-semibold
+        );
+        --ui-type-heading-compact-02-line-height: 1.375;
+        --ui-type-heading-compact-02-letter-spacing: 0;
+
+        --ui-type-heading-03-font-size: var(--ui-type-scale-05);
+        --ui-type-heading-03-font-weight: var(--ui-font-weight-regular);
+        --ui-type-heading-03-line-height: 1.4;
+        --ui-type-heading-03-letter-spacing: 0;
+
+        --ui-type-heading-04-font-size: var(--ui-type-scale-07);
+        --ui-type-heading-04-font-weight: var(--ui-font-weight-regular);
+        --ui-type-heading-04-line-height: 1.28572;
+        --ui-type-heading-04-letter-spacing: 0;
+
+        --ui-type-heading-05-font-size: var(--ui-type-scale-08);
+        --ui-type-heading-05-font-weight: var(--ui-font-weight-regular);
+        --ui-type-heading-05-line-height: 1.25;
+        --ui-type-heading-05-letter-spacing: 0;
+
+        --ui-type-heading-06-font-size: var(--ui-type-scale-10);
+        --ui-type-heading-06-font-weight: var(--ui-font-weight-light);
+        --ui-type-heading-06-line-height: 1.199;
+        --ui-type-heading-06-letter-spacing: 0;
+
+        --ui-type-heading-07-font-size: var(--ui-type-scale-12);
+        --ui-type-heading-07-font-weight: var(--ui-font-weight-light);
+        --ui-type-heading-07-line-height: 1.199;
+        --ui-type-heading-07-letter-spacing: 0;
+
+        /* Fluid heading and display roles */
+        --ui-type-fluid-heading-03-font-size: var(
+            --ui-type-fluid-heading-03-size
+        );
+        --ui-type-fluid-heading-03-font-weight: var(--ui-font-weight-regular);
+        --ui-type-fluid-heading-03-line-height: 1.4;
+        --ui-type-fluid-heading-03-letter-spacing: 0;
+
+        --ui-type-fluid-heading-04-font-size: var(
+            --ui-type-fluid-heading-04-size
+        );
+        --ui-type-fluid-heading-04-font-weight: var(--ui-font-weight-regular);
+        --ui-type-fluid-heading-04-line-height: 1.28572;
+        --ui-type-fluid-heading-04-letter-spacing: 0;
+
+        --ui-type-fluid-heading-05-font-size: var(
+            --ui-type-fluid-heading-05-size
+        );
+        --ui-type-fluid-heading-05-font-weight: var(--ui-font-weight-light);
+        --ui-type-fluid-heading-05-line-height: 1.22;
+        --ui-type-fluid-heading-05-letter-spacing: 0;
+
+        --ui-type-fluid-heading-06-font-size: var(
+            --ui-type-fluid-heading-06-size
+        );
+        --ui-type-fluid-heading-06-font-weight: var(
+            --ui-font-weight-semibold
+        );
+        --ui-type-fluid-heading-06-line-height: 1.22;
+        --ui-type-fluid-heading-06-letter-spacing: 0;
+
+        --ui-type-fluid-paragraph-01-font-size: var(
+            --ui-type-fluid-paragraph-01-size
+        );
+        --ui-type-fluid-paragraph-01-font-weight: var(--ui-font-weight-light);
+        --ui-type-fluid-paragraph-01-line-height: 1.334;
+        --ui-type-fluid-paragraph-01-letter-spacing: 0;
+
+        --ui-type-fluid-display-01-font-size: var(
+            --ui-type-fluid-display-01-size
+        );
+        --ui-type-fluid-display-01-font-weight: var(--ui-font-weight-light);
+        --ui-type-fluid-display-01-line-height: 1.19;
+        --ui-type-fluid-display-01-letter-spacing: 0;
+
+        --ui-type-fluid-display-02-font-size: var(
+            --ui-type-fluid-display-02-size
+        );
+        --ui-type-fluid-display-02-font-weight: var(
+            --ui-font-weight-semibold
+        );
+        --ui-type-fluid-display-02-line-height: 1.19;
+        --ui-type-fluid-display-02-letter-spacing: 0;
+
+        --ui-type-fluid-display-03-font-size: var(
+            --ui-type-fluid-display-03-size
+        );
+        --ui-type-fluid-display-03-font-weight: var(--ui-font-weight-light);
+        --ui-type-fluid-display-03-line-height: 1.19;
+        --ui-type-fluid-display-03-letter-spacing: 0;
+
+        --ui-type-fluid-display-04-font-size: var(
+            --ui-type-fluid-display-04-size
+        );
+        --ui-type-fluid-display-04-font-weight: var(--ui-font-weight-light);
+        --ui-type-fluid-display-04-line-height: 1.19;
+        --ui-type-fluid-display-04-letter-spacing: 0;
+
+        /* Legacy/app code color aliases */
+        --ui-code-token-comment: var(--ui-syntax-comment);
+        --ui-code-token-keyword: var(--ui-syntax-keyword);
+        --ui-code-token-string: var(--ui-syntax-string);
+        --ui-code-token-number: var(--ui-syntax-number);
+        --ui-code-token-property: var(--ui-syntax-property-name);
+        --ui-code-token-punctuation: var(--ui-text-helper);
+        --ui-code-token-function: var(--ui-syntax-definition-keyword);
+    }
+}

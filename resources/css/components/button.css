@@ -1,0 +1,333 @@
+/* ==========================================================================
+File: resources/css/components/button.css
+Purpose: Button component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/button/
+
+Notes:
+
+* Defines Button selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Button color and state values are provided by tokens/components/buttons.css.
+  ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+   Base button
+   ---------------------------------------------------------------------- */
+
+    .ui-button {
+        --ui-button-size: 3rem;
+        --ui-button-padding-inline: var(--ui-spacing-05);
+        --ui-button-icon-size: 1rem;
+
+        box-sizing: border-box;
+        position: relative;
+        display: inline-flex;
+        flex-shrink: 0;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: var(--ui-spacing-05);
+        inline-size: max-content;
+        max-inline-size: 20rem;
+        min-block-size: var(--ui-button-size);
+        margin: 0;
+        border: 1px solid transparent;
+        border-radius: 0;
+        padding-block: calc((var(--ui-button-size) - 1lh) / 2 - 1px);
+        padding-inline: calc(var(--ui-button-padding-inline) - 1px)
+            calc((var(--ui-button-padding-inline) * 3) + var(--ui-button-icon-size) - 1px);
+        background-color: transparent;
+        color: inherit;
+        cursor: pointer;
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+        outline: none;
+        text-align: start;
+        text-decoration: none;
+        vertical-align: top;
+        transition:
+            background-color var(--ui-duration-fast-01) var(--ui-motion-standard-productive),
+            border-color var(--ui-duration-fast-01) var(--ui-motion-standard-productive),
+            box-shadow var(--ui-duration-fast-01) var(--ui-motion-standard-productive),
+            color var(--ui-duration-fast-01) var(--ui-motion-standard-productive),
+            outline var(--ui-duration-fast-01) var(--ui-motion-standard-productive);
+    }
+
+    .ui-button::-moz-focus-inner {
+        border: 0;
+        padding: 0;
+    }
+
+    .ui-button:focus-visible,
+    .ui-button.is-focus {
+        border-color: var(--ui-focus);
+        box-shadow:
+            inset 0 0 0 1px var(--ui-focus),
+            inset 0 0 0 2px var(--ui-background);
+    }
+
+    .ui-button:disabled,
+    .ui-button-disabled,
+    .ui-button[aria-disabled="true"] {
+        border-color: var(--ui-button-disabled);
+        background-color: var(--ui-button-disabled);
+        box-shadow: none;
+        color: var(--ui-text-on-color-disabled);
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    /* ----------------------------------------------------------------------
+   Variants
+   ---------------------------------------------------------------------- */
+
+    .ui-button-primary {
+        border-color: transparent;
+        background-color: var(--ui-button-primary);
+        color: var(--ui-text-on-color);
+    }
+
+    .ui-button-primary:hover,
+    .ui-button-primary.is-hover {
+        background-color: var(--ui-button-primary-hover);
+        color: var(--ui-text-on-color);
+    }
+
+    .ui-button-primary:active,
+    .ui-button-primary.is-active {
+        background-color: var(--ui-button-primary-active);
+    }
+
+    .ui-button-secondary {
+        border-color: transparent;
+        background-color: var(--ui-button-secondary);
+        color: var(--ui-text-on-color);
+    }
+
+    .ui-button-secondary:hover,
+    .ui-button-secondary.is-hover,
+    .ui-button-secondary:focus-visible,
+    .ui-button-secondary.is-focus {
+        background-color: var(--ui-button-secondary-hover);
+        color: var(--ui-text-on-color);
+    }
+
+    .ui-button-secondary:active,
+    .ui-button-secondary.is-active {
+        background-color: var(--ui-button-secondary-active);
+    }
+
+    .ui-button-tertiary {
+        border-color: var(--ui-button-tertiary);
+        background-color: transparent;
+        color: var(--ui-button-tertiary);
+    }
+
+    .ui-button-tertiary:hover,
+    .ui-button-tertiary.is-hover {
+        background-color: var(--ui-button-tertiary-hover);
+        color: var(--ui-text-inverse);
+    }
+
+    .ui-button-tertiary:focus-visible,
+    .ui-button-tertiary.is-focus {
+        background-color: var(--ui-button-tertiary);
+        color: var(--ui-text-inverse);
+    }
+
+    .ui-button-tertiary:active,
+    .ui-button-tertiary.is-active {
+        border-color: transparent;
+        background-color: var(--ui-button-tertiary-active);
+        color: var(--ui-text-inverse);
+    }
+
+    .ui-button-ghost {
+        border-color: transparent;
+        background-color: transparent;
+        color: var(--ui-link-primary);
+        padding-inline-end: calc(var(--ui-button-padding-inline) - 1px);
+    }
+
+    .ui-button-ghost:hover,
+    .ui-button-ghost.is-hover {
+        background-color: var(--ui-background-hover);
+        color: var(--ui-link-primary-hover);
+    }
+
+    .ui-button-ghost:active,
+    .ui-button-ghost.is-active {
+        background-color: var(--ui-background-active);
+        color: var(--ui-link-primary-hover);
+    }
+
+    .ui-button-danger {
+        border-color: transparent;
+        background-color: var(--ui-button-danger-primary);
+        color: var(--ui-text-on-color);
+    }
+
+    .ui-button-danger:hover,
+    .ui-button-danger.is-hover {
+        background-color: var(--ui-button-danger-hover);
+        color: var(--ui-text-on-color);
+    }
+
+    .ui-button-danger:active,
+    .ui-button-danger.is-active {
+        background-color: var(--ui-button-danger-active);
+    }
+
+    .ui-button-danger-tertiary {
+        border-color: var(--ui-button-danger-secondary);
+        background-color: transparent;
+        color: var(--ui-button-danger-secondary);
+    }
+
+    .ui-button-danger-tertiary:hover,
+    .ui-button-danger-tertiary.is-hover {
+        border-color: var(--ui-button-danger-hover);
+        background-color: var(--ui-button-danger-hover);
+        color: var(--ui-text-on-color);
+    }
+
+    .ui-button-danger-tertiary:focus-visible,
+    .ui-button-danger-tertiary.is-focus {
+        background-color: var(--ui-button-danger-primary);
+        color: var(--ui-text-on-color);
+    }
+
+    .ui-button-danger-tertiary:active,
+    .ui-button-danger-tertiary.is-active {
+        border-color: var(--ui-button-danger-active);
+        background-color: var(--ui-button-danger-active);
+        color: var(--ui-text-on-color);
+    }
+
+    .ui-button-danger-ghost {
+        border-color: transparent;
+        background-color: transparent;
+        color: var(--ui-button-danger-secondary);
+        padding-inline-end: calc(var(--ui-button-padding-inline) - 1px);
+    }
+
+    .ui-button-danger-ghost:hover,
+    .ui-button-danger-ghost.is-hover,
+    .ui-button-danger-ghost:active,
+    .ui-button-danger-ghost.is-active {
+        background-color: var(--ui-button-danger-hover);
+        color: var(--ui-text-on-color);
+    }
+
+    .ui-button-tertiary:disabled,
+    .ui-button-tertiary.ui-button-disabled,
+    .ui-button-ghost:disabled,
+    .ui-button-ghost.ui-button-disabled,
+    .ui-button-danger-tertiary:disabled,
+    .ui-button-danger-tertiary.ui-button-disabled,
+    .ui-button-danger-ghost:disabled,
+    .ui-button-danger-ghost.ui-button-disabled {
+        border-color: transparent;
+        background-color: transparent;
+        color: var(--ui-text-disabled);
+        outline: none;
+    }
+
+    /* ----------------------------------------------------------------------
+   Sizes
+   ---------------------------------------------------------------------- */
+
+    .ui-button-xs {
+        --ui-button-size: 1.5rem;
+        --ui-button-padding-inline: var(--ui-spacing-04);
+    }
+
+    .ui-button-sm {
+        --ui-button-size: 2rem;
+        --ui-button-padding-inline: var(--ui-spacing-05);
+    }
+
+    .ui-button-md {
+        --ui-button-size: 2.5rem;
+        --ui-button-padding-inline: var(--ui-spacing-05);
+    }
+
+    .ui-button-lg {
+        --ui-button-size: 3rem;
+        --ui-button-padding-inline: var(--ui-spacing-05);
+    }
+
+    .ui-button-xl {
+        --ui-button-size: 4rem;
+        --ui-button-padding-inline: var(--ui-spacing-06);
+    }
+
+    .ui-button-2xl {
+        --ui-button-size: 5rem;
+        --ui-button-padding-inline: var(--ui-spacing-07);
+    }
+
+    .ui-button-expressive {
+        font-size: var(--ui-type-body-compact-02-font-size);
+        font-weight: var(--ui-type-body-compact-02-font-weight);
+        line-height: var(--ui-type-body-compact-02-line-height);
+        letter-spacing: var(--ui-type-body-compact-02-letter-spacing);
+    }
+
+    /* ----------------------------------------------------------------------
+   Icons
+   ---------------------------------------------------------------------- */
+
+    .ui-button-icon {
+        position: absolute;
+        inset-block-start: calc((var(--ui-button-size) - var(--ui-button-icon-size)) / 2 - 1px);
+        inset-inline-end: var(--ui-button-padding-inline);
+        inline-size: var(--ui-button-icon-size);
+        block-size: var(--ui-button-icon-size);
+        flex: 0 0 auto;
+        margin-block-start: 1px;
+        color: currentColor;
+        fill: currentColor;
+    }
+
+    .ui-button-label {
+        min-inline-size: 0;
+    }
+
+    .ui-button-ghost .ui-button-icon,
+    .ui-button-danger-ghost .ui-button-icon {
+        position: static;
+        align-self: center;
+        margin-block-start: 0;
+        margin-inline-start: var(--ui-spacing-03);
+    }
+
+    .ui-button svg {
+        fill: currentColor;
+    }
+
+    .ui-button path[data-icon-path="inner-path"] {
+        fill: none;
+    }
+
+    /* ----------------------------------------------------------------------
+   Skeleton and loading states
+   ---------------------------------------------------------------------- */
+
+    .ui-button-skeleton {
+        inline-size: 9.375rem;
+        color: transparent;
+        cursor: default;
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+    .ui-button-loading {
+        cursor: progress;
+    }
+}

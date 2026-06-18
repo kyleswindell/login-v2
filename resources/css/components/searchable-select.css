@@ -1,0 +1,98 @@
+/* ==========================================================================
+File: resources/css/components/searchable-select.css
+Purpose: Searchable Select compatibility target.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/combo-box/
+* reference/carbon-main/packages/styles/scss/components/list-box/
+
+Notes:
+
+* Carbon has no one-to-one Searchable Select component.
+* Keep implementation selectors in combo-box.css and list-box.css.
+* This file exists only as a named compatibility target for app migration.
+  ========================================================================== */
+
+@layer components {
+    .ui-searchable-select {
+        position: relative;
+        inline-size: 100%;
+    }
+
+    .ui-searchable-select-trigger {
+        inline-size: 100%;
+    }
+
+    .ui-searchable-select-trigger-text {
+        min-inline-size: 0;
+        flex: 1 1 auto;
+    }
+
+    .ui-searchable-select-trigger-icon {
+        block-size: 1rem;
+        inline-size: 1rem;
+        color: var(--ui-icon-primary);
+    }
+
+    .ui-searchable-select-panel {
+        inline-size: 100%;
+    }
+
+    .ui-searchable-select-panel.hidden,
+    .ui-searchable-select-option.hidden,
+    .ui-searchable-select-empty.hidden {
+        display: none;
+    }
+
+    .ui-searchable-select-filter-shell {
+        position: relative;
+        border-block-end: 1px solid var(--ui-border-subtle-01);
+    }
+
+    .ui-searchable-select-icon {
+        position: absolute;
+        inset-block-start: 50%;
+        inset-inline-start: var(--ui-spacing-05);
+        transform: translateY(-50%);
+        color: var(--ui-icon-secondary);
+        pointer-events: none;
+    }
+
+    .ui-searchable-select-filter {
+        inline-size: 100%;
+        min-block-size: 2.5rem;
+        border: 0;
+        padding-block: 0;
+        padding-inline: var(--ui-spacing-09) var(--ui-spacing-05);
+        background-color: var(--ui-field-01);
+        color: var(--ui-text-primary);
+        font: inherit;
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+    }
+
+    .ui-searchable-select-filter:focus {
+        outline-color: var(--ui-focus);
+    }
+
+    .ui-searchable-select-options {
+        display: grid;
+        overflow-y: auto;
+        max-block-size: 13.75rem;
+    }
+
+    .ui-searchable-select-option {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: var(--ui-spacing-03);
+    }
+
+    .ui-searchable-select-empty {
+        margin: 0;
+        padding: var(--ui-spacing-05);
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        line-height: var(--ui-type-body-compact-01-line-height);
+    }
+}

@@ -1,0 +1,22 @@
+/* ==========================================================================
+File: resources/css/components/form-controls.css
+Purpose: Form controls compatibility target.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/form/
+* reference/carbon-main/packages/styles/scss/components/text-input/
+* reference/carbon-main/packages/styles/scss/components/text-area/
+* reference/carbon-main/packages/styles/scss/components/number-input/
+* reference/carbon-main/packages/styles/scss/components/checkbox/
+* reference/carbon-main/packages/styles/scss/components/radio-button/
+* reference/carbon-main/packages/styles/scss/components/toggle/
+* reference/carbon-main/packages/styles/scss/components/search/
+* reference/carbon-main/packages/styles/scss/components/slider/
+* reference/carbon-main/packages/styles/scss/components/file-uploader/
+
+Notes:
+
+* Carbon has no one-to-one Form Controls component.
+* Keep implementation selectors in the specific primitive control files.
+* This file exists only as an organizational compatibility target for app migration.
+  ========================================================================== */

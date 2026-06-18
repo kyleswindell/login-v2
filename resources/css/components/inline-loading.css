@@ -1,0 +1,47 @@
+/* ==========================================================================
+File: resources/css/components/inline-loading.css
+Purpose: Inline Loading component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/inline-loading/
+
+Notes:
+
+* Defines Inline Loading selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Depends on loading.css for spinner primitives.
+  ========================================================================== */
+
+@layer components {
+    .ui-inline-loading {
+        display: inline-flex;
+        align-items: center;
+        min-block-size: 2rem;
+        gap: var(--ui-spacing-03);
+        color: var(--ui-text-primary);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        line-height: var(--ui-type-body-compact-01-line-height);
+    }
+
+    .ui-inline-loading-animation {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: 1rem;
+        block-size: 1rem;
+        flex: 0 0 auto;
+    }
+
+    .ui-inline-loading-text {
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-inline-loading-success {
+        color: var(--ui-support-success);
+    }
+
+    .ui-inline-loading-error {
+        color: var(--ui-support-error);
+    }
+}

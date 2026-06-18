@@ -1,0 +1,50 @@
+@layer components {
+    .ui-tag-disclosure {
+        @apply relative inline-flex;
+    }
+
+    .ui-tag-disclosure-panel {
+        @apply absolute z-50 mt-1 flex min-w-48 flex-col border py-4 shadow-xl;
+        inset-block-start: 100%;
+        inset-inline-start: 0;
+        border-color: var(--ui-border-subtle-01);
+        background-color: var(--ui-layer-02);
+    }
+
+    .ui-tag-disclosure-panel[hidden] {
+        display: none;
+    }
+
+    .ui-tag-disclosure-panel-text-list {
+        @apply min-w-44 px-4;
+        color: var(--ui-text-primary);
+    }
+
+    .ui-tag-disclosure-panel-tag-list {
+        @apply min-w-48 px-4;
+    }
+
+    .ui-tag-disclosure-row + .ui-tag-disclosure-row {
+        margin-block-start: var(--ui-spacing-03);
+    }
+
+    .ui-reference-force-focus {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: 1px;
+    }
+
+    .ui-tag-dismissible.ui-reference-force-focus {
+        outline: 0;
+    }
+
+    .ui-tag-size-proof {
+        display: grid;
+        gap: 8px;
+    }
+
+    .ui-tag-size-proof-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+}

@@ -1,0 +1,270 @@
+/* ==========================================================================
+File: resources/css/components/select.css
+Purpose: Select component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/select/
+* reference/carbon-main/packages/styles/scss/components/fluid-select/
+
+Notes:
+
+* Defines Select selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Select consumes form, list-box, type, spacing, motion, and theme tokens.
+  ========================================================================== */
+
+@layer components {
+    .ui-select-field {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        inline-size: 100%;
+        min-inline-size: 0;
+    }
+
+    .ui-select-shell {
+        position: relative;
+        inline-size: 100%;
+    }
+
+    .ui-select {
+        --ui-select-size: 2.5rem;
+
+        display: block;
+        inline-size: 100%;
+        block-size: var(--ui-select-size);
+        border: 0;
+        border-block-end: 1px solid var(--ui-border-strong-01);
+        border-radius: 0;
+        appearance: none;
+        padding-block: 0;
+        padding-inline: var(--ui-spacing-05) var(--ui-spacing-09);
+        background-color: var(--ui-field-01);
+        color: var(--ui-text-primary);
+        cursor: pointer;
+        font: inherit;
+        font-size: var(--ui-type-body-compact-01-font-size);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        opacity: 1;
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+        text-overflow: ellipsis;
+        transition: outline var(--ui-duration-fast-01)
+            var(--ui-motion-standard-productive);
+    }
+
+    .ui-select:hover:not(:disabled) {
+        background-color: var(--ui-field-hover-01);
+    }
+
+    .ui-select:focus,
+    .ui-select:focus-visible {
+        color: var(--ui-text-primary);
+        outline-color: var(--ui-focus);
+    }
+
+    .ui-select:disabled,
+    .ui-select:hover:disabled {
+        border-block-end-color: transparent;
+        background-color: var(--ui-field-01);
+        color: var(--ui-text-disabled);
+        cursor: not-allowed;
+    }
+
+    .ui-select-field-xs .ui-select {
+        --ui-select-size: 1.5rem;
+        padding-inline-start: var(--ui-spacing-03);
+        padding-inline-end: var(--ui-spacing-07);
+    }
+
+    .ui-select-field-sm .ui-select {
+        --ui-select-size: 2rem;
+    }
+
+    .ui-select-field-lg .ui-select {
+        --ui-select-size: 3rem;
+    }
+
+    .ui-select-field-fluid .ui-select {
+        --ui-select-size: 4rem;
+        border-block-end-color: transparent;
+        padding-block-start: var(--ui-spacing-05);
+        background-color: transparent;
+    }
+
+    .ui-select-field-fluid .ui-select-shell {
+        min-block-size: 4rem;
+        border-block-end: 1px solid var(--ui-border-subtle-01);
+        background-color: var(--ui-field-01);
+    }
+
+    .ui-select-field-fluid:not(.ui-select-field-disabled):not(
+            .ui-select-field-skeleton
+        )
+        .ui-select-shell:hover {
+        background-color: var(--ui-field-hover-01);
+    }
+
+    .ui-select-field-fluid .ui-select:hover:not(:disabled) {
+        background-color: transparent;
+    }
+
+    .ui-select-fluid-label {
+        position: absolute;
+        z-index: 1;
+        inset-block-start: var(--ui-spacing-03);
+        inset-inline-start: var(--ui-spacing-05);
+        margin: 0;
+        pointer-events: none;
+    }
+
+    .ui-select-field-inline {
+        align-items: flex-start;
+        inline-size: fit-content;
+        max-inline-size: 100%;
+    }
+
+    .ui-select-field-inline > .ui-field-label {
+        inline-size: max-content;
+        max-inline-size: 100%;
+    }
+
+    .ui-select-field-inline .ui-select-shell {
+        display: inline-block;
+        inline-size: max-content;
+        max-inline-size: 100%;
+        background-color: transparent;
+    }
+
+    .ui-select-field-inline .ui-select {
+        inline-size: auto;
+        min-inline-size: 0;
+        max-inline-size: 100%;
+        border-block-end-color: transparent;
+        min-block-size: 2rem;
+        padding-inline-start: var(--ui-spacing-05);
+        padding-inline-end: var(--ui-spacing-09);
+        background-color: transparent;
+    }
+
+    .ui-select-field-inline .ui-select:hover:not(:disabled) {
+        background-color: var(--ui-layer-hover-01);
+    }
+
+    .ui-select-field-invalid .ui-select,
+    .ui-select-field-warning .ui-select {
+        padding-inline-end: var(--ui-spacing-10);
+    }
+
+    .ui-select-field-invalid .ui-select,
+    .ui-select-field-invalid .ui-select:focus,
+    .ui-select-field-invalid .ui-select:focus-visible,
+    .ui-select-field-invalid.ui-reference-force-focus .ui-select {
+        border-block-end-color: var(--ui-support-error);
+        outline-color: var(--ui-support-error);
+    }
+
+    .ui-select-field-warning .ui-select,
+    .ui-select-field-warning .ui-select:focus,
+    .ui-select-field-warning .ui-select:focus-visible,
+    .ui-select-field-warning.ui-reference-force-focus .ui-select {
+        border-block-end-color: var(--ui-support-warning);
+        outline-color: var(--ui-support-warning);
+    }
+
+    .ui-select-field-fluid .ui-select:focus,
+    .ui-select-field-fluid .ui-select:focus-visible {
+        outline: 0;
+    }
+
+    .ui-select-field-fluid .ui-select-shell:focus-within,
+    .ui-select-field-fluid.ui-reference-force-focus .ui-select-shell,
+    .ui-select-field-fluid.is-focus .ui-select-shell {
+        border-block-end-color: var(--ui-focus);
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-select-field-invalid .ui-select-shell:focus-within,
+    .ui-select-field-invalid.ui-reference-force-focus .ui-select-shell {
+        border-block-end-color: var(--ui-support-error);
+        outline-color: var(--ui-support-error);
+    }
+
+    .ui-select option {
+        background-color: var(--ui-layer-01);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-select option:checked {
+        background-color: var(--ui-layer-selected-01);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-select-chevron-icon,
+    .ui-select-status-icon {
+        position: absolute;
+        block-size: 1rem;
+        inline-size: 1rem;
+        inset-block-start: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+    }
+
+    .ui-select-chevron-icon {
+        inset-inline-end: var(--ui-spacing-05);
+        color: var(--ui-icon-primary);
+    }
+
+    .ui-select-field-inline .ui-select-chevron-icon {
+        inset-inline-end: var(--ui-spacing-05);
+    }
+
+    .ui-select:disabled ~ .ui-select-chevron-icon {
+        color: var(--ui-icon-disabled);
+    }
+
+    .ui-select-status-icon {
+        inset-inline-end: var(--ui-spacing-08);
+    }
+
+    .ui-select-status-icon-error {
+        color: var(--ui-support-error);
+    }
+
+    .ui-select-status-icon-warning {
+        color: var(--ui-support-warning);
+    }
+
+    .ui-select-readonly-value {
+        display: flex;
+        align-items: center;
+        min-block-size: 2.5rem;
+        border-block-end: 1px solid var(--ui-border-subtle-01);
+        padding-inline: var(--ui-spacing-05);
+        background-color: transparent;
+        color: var(--ui-text-primary);
+    }
+
+    .ui-select-readonly-text {
+        overflow: hidden;
+        min-inline-size: 0;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .ui-select-field-no-label .ui-select-shell {
+        margin-block-start: 0;
+    }
+
+    .ui-select-field-skeleton .ui-select {
+        color: transparent;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-select {
+            transition: none;
+        }
+    }
+}

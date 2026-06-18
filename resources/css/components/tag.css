@@ -1,0 +1,510 @@
+/* ==========================================================================
+File: resources/css/components/tag.css
+Purpose: Tag component styles.
+Notes:
+
+* Defines Tag selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Do not define component color token values here.
+* Tag color values are provided by tokens/components/tags.css.
+  ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+Base tag container
+---------------------------------------------------------------------- */
+
+    .ui-tag {
+        --ui-tag-background: var(
+            --ui-tag-type-background,
+            var(--ui-tag-background-gray)
+        );
+        --ui-tag-color: var(--ui-tag-type-color, var(--ui-tag-color-gray));
+        --ui-tag-hover: var(--ui-tag-type-hover, var(--ui-tag-hover-gray));
+        --ui-tag-border: var(--ui-tag-type-border, transparent);
+
+        box-sizing: border-box;
+        display: inline-flex;
+        align-items: center;
+        inline-size: fit-content;
+        max-inline-size: 100%;
+        flex: 0 1 auto;
+        gap: 0;
+
+        border-width: 0;
+        border-style: solid;
+        border-color: transparent;
+        border-radius: 16px;
+
+        padding-block: 0;
+
+        background-color: var(--ui-tag-background);
+        color: var(--ui-tag-color);
+
+        font-size: var(--ui-type-label-01-font-size);
+        font-weight: var(--ui-type-label-01-font-weight);
+        line-height: var(--ui-type-label-01-line-height);
+        letter-spacing: var(--ui-type-label-01-letter-spacing);
+
+        text-decoration: none;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    button.ui-tag {
+        appearance: none;
+        cursor: pointer;
+    }
+
+    /* ----------------------------------------------------------------------
+   Sizes
+   ---------------------------------------------------------------------- */
+
+    .ui-tag-sm {
+        block-size: 1.125rem;
+        min-block-size: 1.125rem;
+        max-block-size: 1.125rem;
+    }
+
+    .ui-tag-md {
+        block-size: 1.5rem;
+        min-block-size: 1.5rem;
+        max-block-size: 1.5rem;
+        padding-inline: var(--ui-spacing-03);
+    }
+
+    .ui-tag-lg {
+        block-size: 2rem;
+        min-block-size: 2rem;
+        max-block-size: 2rem;
+        padding-inline: var(--ui-spacing-04);
+    }
+
+    /* ----------------------------------------------------------------------
+   Label and truncation
+   ---------------------------------------------------------------------- */
+
+    .ui-tag-label {
+        display: inline-flex;
+        min-inline-size: 0;
+        align-items: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: var(--ui-type-label-01-line-height);
+        white-space: nowrap;
+    }
+
+    .ui-tag-truncate-start .ui-tag-label {
+        direction: rtl;
+        text-align: left;
+    }
+
+    .ui-tag-label-middle {
+        display: inline-flex;
+        align-items: center;
+        text-overflow: clip;
+    }
+
+    .ui-tag-label-start,
+    .ui-tag-label-end {
+        min-inline-size: 0;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .ui-tag-label-start {
+        text-overflow: ellipsis;
+    }
+
+    .ui-tag-label-end {
+        flex: 0 0 auto;
+        max-inline-size: 45%;
+    }
+
+    /* ----------------------------------------------------------------------
+   Icon and close affordance
+   ---------------------------------------------------------------------- */
+
+    .ui-tag-icon,
+    .ui-tag-close-icon {
+        inline-size: 1rem;
+        block-size: 1rem;
+        flex: 0 0 auto;
+        color: currentColor;
+    }
+
+    .ui-tag-icon {
+        margin-inline-end: var(--ui-spacing-02);
+    }
+
+    .ui-tag-close {
+        box-sizing: border-box;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: 1rem;
+        block-size: 1rem;
+        flex: 0 0 auto;
+
+        border: 0;
+        border-radius: 50%;
+        padding: 0;
+
+        appearance: none;
+        background: transparent;
+        color: currentColor;
+        cursor: pointer;
+    }
+
+    .ui-tag-close:hover:not(:disabled),
+    .ui-tag-dismissible.ui-reference-force-hover .ui-tag-close,
+    .ui-tag-dismissible.is-hover .ui-tag-close {
+        background-color: var(--ui-tag-hover);
+    }
+
+    .ui-tag-close:focus-visible,
+    .ui-tag-dismissible.ui-reference-force-focus .ui-tag-close,
+    .ui-tag-dismissible.is-focus .ui-tag-close {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+   Variant spacing: read-only
+   ---------------------------------------------------------------------- */
+
+    .ui-tag-read-only.ui-tag-lg:not(.ui-tag-has-icon) {
+        padding-inline: var(--ui-spacing-04);
+    }
+
+    .ui-tag-read-only.ui-tag-md:not(.ui-tag-has-icon),
+    .ui-tag-read-only.ui-tag-sm:not(.ui-tag-has-icon) {
+        padding-inline: var(--ui-spacing-03);
+    }
+
+    .ui-tag-read-only.ui-tag-lg.ui-tag-has-icon {
+        padding-inline-start: var(--ui-spacing-03);
+        padding-inline-end: var(--ui-spacing-04);
+    }
+
+    .ui-tag-read-only.ui-tag-md.ui-tag-has-icon,
+    .ui-tag-read-only.ui-tag-sm.ui-tag-has-icon {
+        padding-inline-start: var(--ui-spacing-02);
+        padding-inline-end: var(--ui-spacing-03);
+    }
+
+    /* ----------------------------------------------------------------------
+   Variant spacing: dismissible
+   ---------------------------------------------------------------------- */
+
+    .ui-tag-dismissible.ui-tag-lg:not(.ui-tag-has-icon) {
+        padding-inline-start: var(--ui-spacing-04);
+        padding-inline-end: var(--ui-spacing-03);
+    }
+
+    .ui-tag-dismissible.ui-tag-md:not(.ui-tag-has-icon) {
+        padding-inline-start: var(--ui-spacing-03);
+        padding-inline-end: var(--ui-spacing-02);
+    }
+
+    .ui-tag-dismissible.ui-tag-sm:not(.ui-tag-has-icon) {
+        padding-inline-start: var(--ui-spacing-03);
+        padding-inline-end: 1px;
+    }
+
+    .ui-tag-dismissible.ui-tag-lg.ui-tag-has-icon {
+        padding-inline-start: var(--ui-spacing-03);
+        padding-inline-end: var(--ui-spacing-03);
+    }
+
+    .ui-tag-dismissible.ui-tag-md.ui-tag-has-icon {
+        padding-inline-start: var(--ui-spacing-02);
+        padding-inline-end: var(--ui-spacing-02);
+    }
+
+    .ui-tag-dismissible.ui-tag-sm.ui-tag-has-icon {
+        padding-inline-start: var(--ui-spacing-02);
+        padding-inline-end: 1px;
+    }
+
+    .ui-tag-dismissible.ui-tag-lg .ui-tag-label {
+        margin-inline-end: var(--ui-spacing-04);
+    }
+
+    .ui-tag-dismissible.ui-tag-md .ui-tag-label,
+    .ui-tag-dismissible.ui-tag-sm .ui-tag-label {
+        margin-inline-end: var(--ui-spacing-03);
+    }
+
+    /* ----------------------------------------------------------------------
+   Variant spacing: operational and selectable
+   ---------------------------------------------------------------------- */
+
+    .ui-tag-operational.ui-tag-lg:not(.ui-tag-has-icon),
+    .ui-tag-selectable.ui-tag-lg:not(.ui-tag-has-icon) {
+        padding-inline: var(--ui-spacing-04);
+    }
+
+    .ui-tag-operational.ui-tag-md:not(.ui-tag-has-icon),
+    .ui-tag-operational.ui-tag-sm:not(.ui-tag-has-icon),
+    .ui-tag-selectable.ui-tag-md:not(.ui-tag-has-icon),
+    .ui-tag-selectable.ui-tag-sm:not(.ui-tag-has-icon) {
+        padding-inline: var(--ui-spacing-03);
+    }
+
+    .ui-tag-operational.ui-tag-lg.ui-tag-has-icon,
+    .ui-tag-selectable.ui-tag-lg.ui-tag-has-icon {
+        padding-inline-start: var(--ui-spacing-03);
+        padding-inline-end: var(--ui-spacing-04);
+    }
+
+    .ui-tag-operational.ui-tag-md.ui-tag-has-icon,
+    .ui-tag-operational.ui-tag-sm.ui-tag-has-icon,
+    .ui-tag-selectable.ui-tag-md.ui-tag-has-icon,
+    .ui-tag-selectable.ui-tag-sm.ui-tag-has-icon {
+        padding-inline-start: var(--ui-spacing-02);
+        padding-inline-end: var(--ui-spacing-03);
+    }
+
+    /* ----------------------------------------------------------------------
+   Component-token variants
+   ---------------------------------------------------------------------- */
+
+    .ui-tag-read-only,
+    .ui-tag-dismissible,
+    .ui-tag-operational {
+        --ui-tag-background: var(--ui-tag-type-background);
+        --ui-tag-color: var(--ui-tag-type-color);
+    }
+
+    .ui-tag-type-gray {
+        --ui-tag-type-background: var(--ui-tag-background-gray);
+        --ui-tag-type-color: var(--ui-tag-color-gray);
+        --ui-tag-type-hover: var(--ui-tag-hover-gray);
+        --ui-tag-type-border: var(--ui-tag-border-gray);
+    }
+
+    .ui-tag-type-cool-gray {
+        --ui-tag-type-background: var(--ui-tag-background-cool-gray);
+        --ui-tag-type-color: var(--ui-tag-color-cool-gray);
+        --ui-tag-type-hover: var(--ui-tag-hover-cool-gray);
+        --ui-tag-type-border: var(--ui-tag-border-cool-gray);
+    }
+
+    .ui-tag-type-warm-gray {
+        --ui-tag-type-background: var(--ui-tag-background-warm-gray);
+        --ui-tag-type-color: var(--ui-tag-color-warm-gray);
+        --ui-tag-type-hover: var(--ui-tag-hover-warm-gray);
+        --ui-tag-type-border: var(--ui-tag-border-warm-gray);
+    }
+
+    .ui-tag-type-red {
+        --ui-tag-type-background: var(--ui-tag-background-red);
+        --ui-tag-type-color: var(--ui-tag-color-red);
+        --ui-tag-type-hover: var(--ui-tag-hover-red);
+        --ui-tag-type-border: var(--ui-tag-border-red);
+    }
+
+    .ui-tag-type-magenta {
+        --ui-tag-type-background: var(--ui-tag-background-magenta);
+        --ui-tag-type-color: var(--ui-tag-color-magenta);
+        --ui-tag-type-hover: var(--ui-tag-hover-magenta);
+        --ui-tag-type-border: var(--ui-tag-border-magenta);
+    }
+
+    .ui-tag-type-purple {
+        --ui-tag-type-background: var(--ui-tag-background-purple);
+        --ui-tag-type-color: var(--ui-tag-color-purple);
+        --ui-tag-type-hover: var(--ui-tag-hover-purple);
+        --ui-tag-type-border: var(--ui-tag-border-purple);
+    }
+
+    .ui-tag-type-blue {
+        --ui-tag-type-background: var(--ui-tag-background-blue);
+        --ui-tag-type-color: var(--ui-tag-color-blue);
+        --ui-tag-type-hover: var(--ui-tag-hover-blue);
+        --ui-tag-type-border: var(--ui-tag-border-blue);
+    }
+
+    .ui-tag-type-cyan {
+        --ui-tag-type-background: var(--ui-tag-background-cyan);
+        --ui-tag-type-color: var(--ui-tag-color-cyan);
+        --ui-tag-type-hover: var(--ui-tag-hover-cyan);
+        --ui-tag-type-border: var(--ui-tag-border-cyan);
+    }
+
+    .ui-tag-type-teal {
+        --ui-tag-type-background: var(--ui-tag-background-teal);
+        --ui-tag-type-color: var(--ui-tag-color-teal);
+        --ui-tag-type-hover: var(--ui-tag-hover-teal);
+        --ui-tag-type-border: var(--ui-tag-border-teal);
+    }
+
+    .ui-tag-type-green {
+        --ui-tag-type-background: var(--ui-tag-background-green);
+        --ui-tag-type-color: var(--ui-tag-color-green);
+        --ui-tag-type-hover: var(--ui-tag-hover-green);
+        --ui-tag-type-border: var(--ui-tag-border-green);
+    }
+
+    /* ----------------------------------------------------------------------
+   Core-token variants
+   ---------------------------------------------------------------------- */
+
+    .ui-tag-type-high-contrast {
+        --ui-tag-type-background: var(--ui-background-inverse);
+        --ui-tag-type-color: var(--ui-text-inverse);
+        --ui-tag-type-hover: var(--ui-background-hover);
+        --ui-tag-type-border: var(--ui-border-inverse);
+    }
+
+    .ui-tag-type-outline {
+        --ui-tag-type-background: var(--ui-background);
+        --ui-tag-type-color: var(--ui-text-primary);
+        --ui-tag-type-hover: var(--ui-background-hover);
+        --ui-tag-type-border: var(--ui-border-inverse);
+    }
+
+    /* ----------------------------------------------------------------------
+   Interactive variants
+   ---------------------------------------------------------------------- */
+
+    .ui-tag-operational,
+    .ui-tag-selectable,
+    .ui-tag-type-high-contrast,
+    .ui-tag-type-outline {
+        border-width: 1px;
+    }
+
+    .ui-tag-operational,
+    .ui-tag-selectable {
+        border-color: var(--ui-tag-border);
+        border-style: solid;
+    }
+
+    .ui-tag-operational:not(:disabled):not(.ui-tag-disabled):hover,
+    .ui-tag-operational.ui-reference-force-hover,
+    .ui-tag-operational.is-hover {
+        background-color: var(--ui-tag-hover);
+    }
+
+    .ui-tag-operational:focus-visible,
+    .ui-tag-operational.ui-reference-force-focus,
+    .ui-tag-operational.is-focus,
+    .ui-tag-selectable:focus-visible,
+    .ui-tag-selectable.ui-reference-force-focus,
+    .ui-tag-selectable.is-focus {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+   Selectable state
+   ---------------------------------------------------------------------- */
+
+    .ui-tag-selectable {
+        --ui-tag-background: var(--ui-layer-01);
+        --ui-tag-color: var(--ui-text-primary);
+        --ui-tag-border: var(--ui-border-inverse);
+    }
+
+    .ui-tag-selectable:not(:disabled):not(.ui-tag-disabled):hover,
+    .ui-tag-selectable.ui-reference-force-hover,
+    .ui-tag-selectable.is-hover {
+        background-color: var(--ui-layer-hover-01);
+    }
+
+    .ui-tag-selectable.ui-tag-selected,
+    .ui-tag-selectable.is-selected,
+    .ui-tag-selectable[aria-pressed="true"],
+    .ui-tag-selectable[aria-selected="true"] {
+        --ui-tag-background: var(--ui-background-inverse);
+        --ui-tag-color: var(--ui-text-inverse);
+        --ui-tag-border: var(--ui-background-inverse);
+    }
+
+    /* ----------------------------------------------------------------------
+   Disabled state
+   ---------------------------------------------------------------------- */
+
+    .ui-tag-disabled,
+    .ui-tag:disabled,
+    .ui-tag-close:disabled {
+        cursor: not-allowed;
+    }
+
+    .ui-tag-disabled,
+    .ui-tag:disabled,
+    .ui-tag.is-disabled,
+    .ui-tag[aria-disabled="true"] {
+        --ui-tag-background: var(--ui-layer-01);
+        --ui-tag-color: var(--ui-text-disabled);
+        --ui-tag-border: var(--ui-border-disabled);
+    }
+
+    .ui-tag-type-outline.ui-tag-disabled,
+    .ui-tag-type-outline:disabled,
+    .ui-tag-type-outline.is-disabled,
+    .ui-tag-type-outline[aria-disabled="true"] {
+        --ui-tag-background: var(--ui-background-disabled, var(--ui-layer-01));
+        --ui-tag-color: var(--ui-text-disabled);
+        --ui-tag-border: var(--ui-border-disabled);
+    }
+
+    .ui-tag-disabled .ui-tag-icon,
+    .ui-tag-disabled .ui-tag-close-icon,
+    .ui-tag:disabled .ui-tag-icon,
+    .ui-tag:disabled .ui-tag-close-icon,
+    .ui-tag.is-disabled .ui-tag-icon,
+    .ui-tag.is-disabled .ui-tag-close-icon,
+    .ui-tag-close:disabled {
+        color: var(--ui-text-disabled);
+    }
+
+    /* ----------------------------------------------------------------------
+   Skeleton state
+   ---------------------------------------------------------------------- */
+
+    .ui-tag-skeleton,
+    .ui-tag.is-skeleton {
+        --ui-tag-background: var(--ui-skeleton-background);
+        --ui-tag-color: transparent;
+        --ui-tag-border: transparent;
+
+        pointer-events: none;
+    }
+
+    .ui-tag-skeleton .ui-tag-label,
+    .ui-tag.is-skeleton .ui-tag-label {
+        display: inline-block;
+        min-inline-size: 4rem;
+        border-radius: 16px;
+        background: linear-gradient(
+            90deg,
+            var(--ui-skeleton-background),
+            var(--ui-skeleton-element),
+            var(--ui-skeleton-background)
+        );
+        background-size: 200% 100%;
+        color: transparent;
+    }
+
+    .ui-tag-skeleton .ui-tag-icon,
+    .ui-tag-skeleton .ui-tag-close,
+    .ui-tag.is-skeleton .ui-tag-icon,
+    .ui-tag.is-skeleton .ui-tag-close {
+        visibility: hidden;
+    }
+
+    /* ----------------------------------------------------------------------
+   Tag groups
+   ---------------------------------------------------------------------- */
+
+    .ui-tag-group {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--ui-spacing-03, 0.5rem);
+    }
+}

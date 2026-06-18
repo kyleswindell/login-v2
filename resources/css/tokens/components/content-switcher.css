@@ -1,0 +1,61 @@
+/* ==========================================================================
+File: resources/css/tokens/components/content-switcher.css
+Purpose: Content switcher component color tokens.
+Notes:
+
+* Defines content switcher component tokens only.
+* Do not place component selectors in this file.
+* Do not define global theme role tokens in this file.
+* Do not use content switcher component tokens as global semantic colors.
+  ========================================================================== */
+
+@layer base {
+    /* ----------------------------------------------------------------------
+Content switcher component tokens: white theme
+---------------------------------------------------------------------- */
+    :root,
+    html[data-theme-resolved="light"],
+    html[data-theme-resolved="white"],
+    [data-theme-resolved="light"],
+    [data-theme-resolved="white"] {
+        --ui-content-switcher-selected: var(--ui-white);
+        --ui-content-switcher-background: var(--ui-gray-20);
+        --ui-content-switcher-background-hover: var(--ui-gray-20-hover);
+    }
+
+    /* ----------------------------------------------------------------------
+   Content switcher component tokens: gray 10 theme
+   ---------------------------------------------------------------------- */
+    html[data-theme-resolved="gray-10"],
+    [data-theme-resolved="gray-10"] {
+        --ui-content-switcher-selected: var(--ui-white);
+        --ui-content-switcher-background: var(--ui-gray-20);
+        --ui-content-switcher-background-hover: var(--ui-gray-20-hover);
+    }
+
+    /* ----------------------------------------------------------------------
+   Content switcher component tokens: gray 90 theme
+   ---------------------------------------------------------------------- */
+    html[data-theme-resolved="dark"],
+    html[data-theme-resolved="gray-90"],
+    [data-theme-resolved="dark"],
+    [data-theme-resolved="gray-90"] {
+        --ui-content-switcher-selected: rgb(var(--ui-gray-50-rgb) / 0.24);
+        --ui-content-switcher-background: rgb(var(--ui-black-rgb) / 0);
+        --ui-content-switcher-background-hover: rgb(
+            var(--ui-gray-50-rgb) / 0.12
+        );
+    }
+
+    /* ----------------------------------------------------------------------
+   Content switcher component tokens: gray 100 theme
+   ---------------------------------------------------------------------- */
+    html[data-theme-resolved="gray-100"],
+    [data-theme-resolved="gray-100"] {
+        --ui-content-switcher-selected: rgb(var(--ui-gray-50-rgb) / 0.24);
+        --ui-content-switcher-background: rgb(var(--ui-black-rgb) / 0);
+        --ui-content-switcher-background-hover: rgb(
+            var(--ui-gray-50-rgb) / 0.12
+        );
+    }
+}

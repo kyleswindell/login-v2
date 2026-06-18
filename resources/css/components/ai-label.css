@@ -1,0 +1,43 @@
+/* ==========================================================================
+File: resources/css/components/ai-label.css
+Purpose: AI Label component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/ai-label/
+* reference/carbon-main/packages/styles/scss/components/slug/ (legacy context only)
+
+Notes:
+
+* Defines AI Label selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+  ========================================================================== */
+
+@layer components {
+    .ui-ai-label {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--ui-spacing-02);
+        min-block-size: 1.5rem;
+        padding-inline: var(--ui-spacing-03);
+        border: 1px solid var(--ui-border-subtle-01);
+        background-color: var(--ui-layer-01);
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-label-01-font-size);
+        line-height: var(--ui-type-label-01-line-height);
+    }
+
+    .ui-ai-label-icon {
+        inline-size: 1rem;
+        block-size: 1rem;
+        color: var(--ui-icon-secondary);
+    }
+
+    .ui-ai-label-interactive {
+        cursor: pointer;
+    }
+
+    .ui-ai-label-interactive:hover {
+        background-color: var(--ui-layer-hover-01);
+    }
+}

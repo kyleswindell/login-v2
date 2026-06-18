@@ -1,0 +1,84 @@
+/* ==========================================================================
+File: resources/css/components/text-area.css
+Purpose: Text Area component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/text-area/
+* reference/carbon-main/packages/styles/scss/components/fluid-text-area/
+
+Notes:
+
+* Defines Text Area selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Text Area consumes form, type, spacing, motion, and theme tokens.
+  ========================================================================== */
+
+@layer components {
+    .ui-text-area-wrapper {
+        position: relative;
+        display: flex;
+        inline-size: 100%;
+    }
+
+    .ui-text-area {
+        box-sizing: border-box;
+        inline-size: 100%;
+        min-block-size: 2.5rem;
+        border: 0;
+        border-block-end: 1px solid var(--ui-border-strong-01);
+        padding: var(--ui-spacing-05);
+        background-color: var(--ui-field-01);
+        color: var(--ui-text-primary);
+        font: inherit;
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+        resize: vertical;
+        transition:
+            background-color var(--ui-duration-fast-01) var(--ui-motion-standard-productive),
+            outline var(--ui-duration-fast-01) var(--ui-motion-standard-productive);
+    }
+
+    .ui-text-area:hover {
+        background-color: var(--ui-field-hover-01);
+    }
+
+    .ui-text-area:focus,
+    .ui-text-area:active {
+        outline-color: var(--ui-focus);
+    }
+
+    .ui-text-area::placeholder {
+        color: var(--ui-text-placeholder);
+        opacity: 1;
+    }
+
+    .ui-text-area-invalid:not(:focus),
+    .ui-text-area-wrapper[data-invalid] > .ui-text-area:not(:focus) {
+        outline-color: var(--ui-support-error);
+    }
+
+    .ui-text-area-warning:not(:focus),
+    .ui-text-area-wrapper[data-warning] > .ui-text-area:not(:focus) {
+        outline-color: var(--ui-support-warning);
+    }
+
+    .ui-text-area:disabled,
+    .ui-text-area[aria-disabled="true"] {
+        border-block-end-color: transparent;
+        color: var(--ui-text-disabled);
+        cursor: not-allowed;
+    }
+
+    .ui-text-area-counter {
+        align-self: flex-end;
+        margin-block-start: var(--ui-spacing-02);
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-label-01-font-size);
+        line-height: var(--ui-type-label-01-line-height);
+    }
+}

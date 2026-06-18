@@ -1,0 +1,165 @@
+/* ==========================================================================
+File: resources/css/components/form.css
+Purpose: Form component foundation styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/form/
+
+Notes:
+
+* Defines Form foundation selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Control-specific rendering belongs in the owning control file.
+  ========================================================================== */
+
+@layer components {
+    .ui-field {
+        display: block;
+        min-inline-size: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+   Form item and fieldset
+   ---------------------------------------------------------------------- */
+
+    .ui-fieldset {
+        min-inline-size: 0;
+        margin: 0;
+        border: 0;
+        padding: 0;
+    }
+
+    .ui-form-item {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        align-items: flex-start;
+        min-inline-size: 0;
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+    }
+
+    .ui-form-fluid .ui-form-item {
+        inline-size: 100%;
+    }
+
+    /* ----------------------------------------------------------------------
+   Labels and helper text
+   ---------------------------------------------------------------------- */
+
+    .ui-label {
+        display: inline-block;
+        margin: 0 0 var(--ui-spacing-03);
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-label-01-font-size);
+        font-weight: var(--ui-type-label-01-font-weight);
+        line-height: 1rem;
+        letter-spacing: var(--ui-type-label-01-letter-spacing);
+        vertical-align: baseline;
+    }
+
+    .ui-label-no-margin {
+        margin-block-end: 0;
+    }
+
+    .ui-helper-text {
+        z-index: 0;
+        inline-size: 100%;
+        margin-block-start: var(--ui-spacing-02);
+        color: var(--ui-text-helper);
+        font-size: var(--ui-type-helper-text-01-font-size);
+        font-weight: var(--ui-type-helper-text-01-font-weight);
+        line-height: var(--ui-type-helper-text-01-line-height);
+        letter-spacing: var(--ui-type-helper-text-01-letter-spacing);
+        opacity: 1;
+    }
+
+    .ui-field-label {
+        display: inline-block;
+        margin-block-end: var(--ui-spacing-03);
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-label-01-font-size);
+        font-weight: var(--ui-type-label-01-font-weight);
+        line-height: var(--ui-type-label-01-line-height);
+        letter-spacing: var(--ui-type-label-01-letter-spacing);
+    }
+
+    .ui-field-required,
+    .ui-field-label-indicator {
+        color: var(--ui-text-helper);
+        font-weight: var(--ui-font-weight-regular);
+    }
+
+    .ui-field-helper,
+    .ui-field-error,
+    .ui-field-warning {
+        inline-size: 100%;
+        margin-block-start: var(--ui-spacing-02);
+        color: var(--ui-text-helper);
+        font-size: var(--ui-type-helper-text-01-font-size);
+        font-weight: var(--ui-type-helper-text-01-font-weight);
+        line-height: var(--ui-type-helper-text-01-line-height);
+        letter-spacing: var(--ui-type-helper-text-01-letter-spacing);
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+
+    .ui-field-error {
+        color: var(--ui-text-error);
+    }
+
+    .ui-field-warning {
+        color: var(--ui-text-primary);
+    }
+
+    .ui-label-disabled,
+    .ui-helper-text-disabled,
+    fieldset:disabled .ui-label,
+    fieldset:disabled .ui-helper-text {
+        color: var(--ui-text-disabled);
+    }
+
+    /* ----------------------------------------------------------------------
+   Validation and warning requirements
+   ---------------------------------------------------------------------- */
+
+    .ui-form-requirement {
+        display: none;
+        overflow: hidden;
+        max-block-size: 0;
+        margin: var(--ui-spacing-02) 0 0;
+        color: var(--ui-text-error);
+        font-size: var(--ui-type-helper-text-01-font-size);
+        font-weight: var(--ui-type-helper-text-01-font-weight);
+        line-height: var(--ui-type-helper-text-01-line-height);
+        letter-spacing: var(--ui-type-helper-text-01-letter-spacing);
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+
+    [data-invalid] ~ .ui-form-requirement,
+    .ui-field-invalid ~ .ui-form-requirement,
+    .ui-field-warning ~ .ui-form-requirement {
+        display: block;
+        overflow: visible;
+        max-block-size: 12.5rem;
+        font-weight: var(--ui-font-weight-regular);
+    }
+
+    .ui-field-warning ~ .ui-form-requirement {
+        color: var(--ui-text-primary);
+    }
+
+    .ui-form-fluid .ui-form-requirement {
+        margin: 0;
+        padding: var(--ui-spacing-03) 2.5rem var(--ui-spacing-03)
+            var(--ui-spacing-05);
+    }
+
+    input:not(output, [data-invalid]):-moz-ui-invalid {
+        box-shadow: none;
+    }
+}

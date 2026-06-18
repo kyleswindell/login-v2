@@ -1,0 +1,127 @@
+/* ==========================================================================
+File: resources/css/components/loading.css
+Purpose: Loading component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/loading/_loading.scss
+
+Notes:
+
+* Defines Loading selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Spinner colors are provided by semantic aliases.
+  ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+   Base loading container
+   ---------------------------------------------------------------------- */
+
+    .ui-loading {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--ui-spacing-04);
+        color: var(--ui-text-primary);
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+    }
+
+    .ui-loading[aria-busy="true"] {
+        cursor: progress;
+    }
+
+    /* ----------------------------------------------------------------------
+   Sizes
+   ---------------------------------------------------------------------- */
+
+    .ui-loading--lg {
+        flex-direction: column;
+        gap: var(--ui-spacing-04);
+        min-inline-size: 5.5rem;
+        text-align: center;
+    }
+
+    .ui-loading--sm {
+        display: inline-flex;
+        flex-direction: row;
+        min-inline-size: 1rem;
+        font-size: 0.875rem;
+    }
+
+    /* ----------------------------------------------------------------------
+   Overlay placement
+   ---------------------------------------------------------------------- */
+
+    .ui-loading--overlay {
+        position: absolute;
+        z-index: 10;
+        inset: 0;
+        background-color: var(--ui-overlay);
+        color: var(--ui-text-inverse);
+        pointer-events: auto;
+    }
+
+    .ui-loading--placement-page.ui-loading--overlay {
+        position: fixed;
+    }
+
+    /* ----------------------------------------------------------------------
+   Indicator and spinner
+   ---------------------------------------------------------------------- */
+
+    .ui-loading__indicator {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        border-radius: 9999px;
+    }
+
+    .ui-loading--lg .ui-loading__indicator {
+        inline-size: 5.5rem;
+        block-size: 5.5rem;
+    }
+
+    .ui-loading--sm .ui-loading__indicator {
+        inline-size: 1rem;
+        block-size: 1rem;
+        background-color: var(--ui-layer-accent-01);
+    }
+
+    .ui-loading__spinner {
+        display: block;
+        inline-size: 100%;
+        block-size: 100%;
+        border-style: solid;
+        border-color: var(--ui-spinner-track);
+        border-top-color: var(--ui-spinner-head);
+        border-radius: 9999px;
+        animation: ui-spin 0.8s linear infinite;
+    }
+
+    .ui-loading--lg .ui-loading__spinner {
+        border-width: 0.5rem;
+    }
+
+    .ui-loading--sm .ui-loading__spinner {
+        border-width: 0.125rem;
+    }
+
+    .ui-loading__label {
+        color: currentColor;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+    }
+
+    /* ----------------------------------------------------------------------
+   Reduced motion
+   ---------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-loading__spinner {
+            animation-duration: 1.6s;
+        }
+    }
+}

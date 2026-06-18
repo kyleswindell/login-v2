@@ -1,0 +1,321 @@
+/* ==========================================================================
+File: resources/css/components/action.css
+Purpose: Action compatibility styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/button/
+
+Notes:
+
+* Carbon has no one-to-one Action component.
+* This file preserves the app's legacy .ui-action API while consuming the
+  Carbon-derived button and semantic action token layers.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+  ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+   Base action
+   ---------------------------------------------------------------------- */
+
+    .ui-action {
+        --ui-action-bg: var(--ui-action-secondary-bg);
+        --ui-action-bg-hover: var(--ui-action-secondary-bg-hover);
+        --ui-action-bg-active: var(--ui-action-secondary-bg-active);
+        --ui-action-border: var(--ui-action-secondary-border);
+        --ui-action-border-hover: var(--ui-action-secondary-border-hover);
+        --ui-action-border-active: var(--ui-action-secondary-border-active);
+        --ui-action-text: var(--ui-action-secondary-text);
+        --ui-action-text-hover: var(--ui-action-secondary-text-hover);
+        --ui-action-text-active: var(--ui-action-secondary-text-active);
+
+        box-sizing: border-box;
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--ui-spacing-03);
+        min-block-size: 2.5rem;
+        max-inline-size: 20rem;
+        border: 1px solid var(--ui-action-border);
+        border-radius: 0;
+        padding: calc(var(--ui-spacing-04) - 1px)
+            calc(var(--ui-spacing-05) - 1px);
+        background-color: var(--ui-action-bg);
+        color: var(--ui-action-text);
+        cursor: pointer;
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+        text-align: center;
+        text-decoration: none;
+        transition:
+            background-color var(--ui-duration-fast-01) var(--ui-motion-standard-productive),
+            border-color var(--ui-duration-fast-01) var(--ui-motion-standard-productive),
+            color var(--ui-duration-fast-01) var(--ui-motion-standard-productive),
+            box-shadow var(--ui-duration-fast-01) var(--ui-motion-standard-productive);
+    }
+
+    .ui-action:hover {
+        border-color: var(--ui-action-border-hover);
+        background-color: var(--ui-action-bg-hover);
+        color: var(--ui-action-text-hover);
+    }
+
+    .ui-action:active,
+    .ui-action.is-active {
+        border-color: var(--ui-action-border-active);
+        background-color: var(--ui-action-bg-active);
+        color: var(--ui-action-text-active);
+    }
+
+    .ui-action:focus-visible,
+    .ui-action.is-focus {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: 2px;
+    }
+
+    .ui-action-with-icon {
+        justify-content: space-between;
+        padding-inline-end: calc(var(--ui-spacing-09) - 1px);
+    }
+
+    .ui-action-with-icon .ui-button-icon,
+    .ui-action-icon {
+        inline-size: 1rem;
+        block-size: 1rem;
+        color: currentColor;
+        fill: currentColor;
+    }
+
+    /* ----------------------------------------------------------------------
+   Solid variants
+   ---------------------------------------------------------------------- */
+
+    .ui-action-primary {
+        --ui-action-bg: var(--ui-action-primary-bg);
+        --ui-action-bg-hover: var(--ui-action-primary-bg-hover);
+        --ui-action-bg-active: var(--ui-action-primary-bg-active);
+        --ui-action-border: var(--ui-action-primary-border);
+        --ui-action-border-hover: var(--ui-action-primary-border-hover);
+        --ui-action-border-active: var(--ui-action-primary-border-active);
+        --ui-action-text: var(--ui-action-primary-text);
+        --ui-action-text-hover: var(--ui-action-primary-text-hover);
+        --ui-action-text-active: var(--ui-action-primary-text-active);
+    }
+
+    .ui-action-secondary {
+        --ui-action-bg: var(--ui-action-secondary-bg);
+        --ui-action-bg-hover: var(--ui-action-secondary-bg-hover);
+        --ui-action-bg-active: var(--ui-action-secondary-bg-active);
+        --ui-action-border: var(--ui-action-secondary-border);
+        --ui-action-border-hover: var(--ui-action-secondary-border-hover);
+        --ui-action-border-active: var(--ui-action-secondary-border-active);
+        --ui-action-text: var(--ui-action-secondary-text);
+        --ui-action-text-hover: var(--ui-action-secondary-text-hover);
+        --ui-action-text-active: var(--ui-action-secondary-text-active);
+    }
+
+    .ui-action-success {
+        --ui-action-bg: var(--ui-action-success-bg);
+        --ui-action-bg-hover: var(--ui-action-success-bg-hover);
+        --ui-action-bg-active: var(--ui-action-success-bg-hover);
+        --ui-action-border: var(--ui-action-success-border);
+        --ui-action-border-hover: var(--ui-action-success-border-hover);
+        --ui-action-border-active: var(--ui-action-success-border-hover);
+        --ui-action-text: var(--ui-action-success-text);
+        --ui-action-text-hover: var(--ui-action-success-text-hover);
+        --ui-action-text-active: var(--ui-action-success-text-hover);
+    }
+
+    .ui-action-warning {
+        --ui-action-bg: var(--ui-action-warning-bg);
+        --ui-action-bg-hover: var(--ui-action-warning-bg-hover);
+        --ui-action-bg-active: var(--ui-action-warning-bg-hover);
+        --ui-action-border: var(--ui-action-warning-border);
+        --ui-action-border-hover: var(--ui-action-warning-border-hover);
+        --ui-action-border-active: var(--ui-action-warning-border-hover);
+        --ui-action-text: var(--ui-action-warning-text);
+        --ui-action-text-hover: var(--ui-action-warning-text-hover);
+        --ui-action-text-active: var(--ui-action-warning-text-hover);
+    }
+
+    .ui-action-danger {
+        --ui-action-bg: var(--ui-action-danger-bg);
+        --ui-action-bg-hover: var(--ui-action-danger-bg-hover);
+        --ui-action-bg-active: var(--ui-action-danger-bg-active);
+        --ui-action-border: var(--ui-action-danger-border);
+        --ui-action-border-hover: var(--ui-action-danger-border-hover);
+        --ui-action-border-active: var(--ui-action-danger-border-active);
+        --ui-action-text: var(--ui-action-danger-text);
+        --ui-action-text-hover: var(--ui-action-danger-text-hover);
+        --ui-action-text-active: var(--ui-action-danger-text-active);
+    }
+
+    .ui-action-notice {
+        --ui-action-bg: var(--ui-action-notice-bg);
+        --ui-action-bg-hover: var(--ui-action-notice-bg-hover);
+        --ui-action-bg-active: var(--ui-action-notice-bg-hover);
+        --ui-action-border: var(--ui-action-notice-border);
+        --ui-action-border-hover: var(--ui-action-notice-border-hover);
+        --ui-action-border-active: var(--ui-action-notice-border-hover);
+        --ui-action-text: var(--ui-action-notice-text);
+        --ui-action-text-hover: var(--ui-action-notice-text-hover);
+        --ui-action-text-active: var(--ui-action-notice-text-hover);
+    }
+
+    .ui-action-info {
+        --ui-action-bg: var(--ui-action-info-bg);
+        --ui-action-bg-hover: var(--ui-action-info-bg-hover);
+        --ui-action-bg-active: var(--ui-action-info-bg-hover);
+        --ui-action-border: var(--ui-action-info-border);
+        --ui-action-border-hover: var(--ui-action-info-border-hover);
+        --ui-action-border-active: var(--ui-action-info-border-hover);
+        --ui-action-text: var(--ui-action-info-text);
+        --ui-action-text-hover: var(--ui-action-info-text-hover);
+        --ui-action-text-active: var(--ui-action-info-text-hover);
+    }
+
+    /* ----------------------------------------------------------------------
+   Ghost, soft, and outline modifiers
+   ---------------------------------------------------------------------- */
+
+    .ui-action-ghost {
+        --ui-action-bg: transparent;
+        --ui-action-bg-hover: var(--ui-action-ghost-bg-hover);
+        --ui-action-bg-active: var(--ui-action-ghost-bg-active);
+        --ui-action-border: transparent;
+        --ui-action-border-hover: transparent;
+        --ui-action-border-active: transparent;
+        --ui-action-text: var(--ui-action-ghost-text);
+        --ui-action-text-hover: var(--ui-action-ghost-text-hover);
+        --ui-action-text-active: var(--ui-action-ghost-text-active);
+    }
+
+    .ui-action-soft {
+        --ui-action-bg: var(--ui-action-soft-neutral-bg);
+        --ui-action-bg-hover: var(--ui-action-soft-neutral-bg-hover);
+        --ui-action-bg-active: var(--ui-action-soft-neutral-bg-hover);
+        --ui-action-border: var(--ui-action-soft-neutral-border);
+        --ui-action-border-hover: var(--ui-action-soft-neutral-border);
+        --ui-action-border-active: var(--ui-action-soft-neutral-border);
+        --ui-action-text: var(--ui-action-soft-neutral-text);
+        --ui-action-text-hover: var(--ui-action-soft-neutral-text);
+        --ui-action-text-active: var(--ui-action-soft-neutral-text);
+    }
+
+    .ui-action-primary.ui-action-soft {
+        --ui-action-bg: var(--ui-action-soft-primary-bg);
+        --ui-action-bg-hover: var(--ui-action-soft-primary-bg-hover);
+        --ui-action-border: var(--ui-action-soft-primary-border);
+        --ui-action-text: var(--ui-action-soft-primary-text);
+        --ui-action-text-hover: var(--ui-action-soft-primary-text);
+        --ui-action-text-active: var(--ui-action-soft-primary-text);
+    }
+
+    .ui-action-success.ui-action-soft {
+        --ui-action-bg: var(--ui-action-soft-success-bg);
+        --ui-action-bg-hover: var(--ui-action-soft-success-bg-hover);
+        --ui-action-border: var(--ui-action-soft-success-border);
+        --ui-action-text: var(--ui-action-soft-success-text);
+    }
+
+    .ui-action-warning.ui-action-soft {
+        --ui-action-bg: var(--ui-action-soft-warning-bg);
+        --ui-action-bg-hover: var(--ui-action-soft-warning-bg-hover);
+        --ui-action-border: var(--ui-action-soft-warning-border);
+        --ui-action-text: var(--ui-action-soft-warning-text);
+    }
+
+    .ui-action-danger.ui-action-soft {
+        --ui-action-bg: var(--ui-action-soft-danger-bg);
+        --ui-action-bg-hover: var(--ui-action-soft-danger-bg-hover);
+        --ui-action-border: var(--ui-action-soft-danger-border);
+        --ui-action-text: var(--ui-action-soft-danger-text);
+    }
+
+    .ui-action-notice.ui-action-soft {
+        --ui-action-bg: var(--ui-action-soft-notice-bg);
+        --ui-action-bg-hover: var(--ui-action-soft-notice-bg-hover);
+        --ui-action-border: var(--ui-action-soft-notice-border);
+        --ui-action-text: var(--ui-action-soft-notice-text);
+    }
+
+    .ui-action-info.ui-action-soft {
+        --ui-action-bg: var(--ui-action-soft-info-bg);
+        --ui-action-bg-hover: var(--ui-action-soft-info-bg-hover);
+        --ui-action-border: var(--ui-action-soft-info-border);
+        --ui-action-text: var(--ui-action-soft-info-text);
+    }
+
+    .ui-action-outline {
+        --ui-action-bg: transparent;
+        --ui-action-bg-hover: var(--ui-action-outline-neutral-bg-hover);
+        --ui-action-bg-active: var(--ui-action-outline-neutral-bg-hover);
+        --ui-action-border: var(--ui-action-outline-neutral-border);
+        --ui-action-border-hover: var(--ui-action-outline-neutral-border);
+        --ui-action-border-active: var(--ui-action-outline-neutral-border);
+        --ui-action-text: var(--ui-action-outline-neutral-text);
+        --ui-action-text-hover: var(--ui-action-outline-neutral-text);
+        --ui-action-text-active: var(--ui-action-outline-neutral-text);
+    }
+
+    .ui-action-primary.ui-action-outline,
+    .ui-action-tertiary.ui-action-outline {
+        --ui-action-border: var(--ui-action-outline-primary-border);
+        --ui-action-border-hover: var(--ui-action-outline-primary-border);
+        --ui-action-border-active: var(--ui-action-outline-primary-border);
+        --ui-action-text: var(--ui-action-outline-primary-text);
+        --ui-action-text-hover: var(--ui-action-outline-primary-text);
+        --ui-action-text-active: var(--ui-action-outline-primary-text);
+        --ui-action-bg-hover: var(--ui-action-outline-primary-bg-hover);
+        --ui-action-bg-active: var(--ui-action-outline-primary-bg-hover);
+    }
+
+    .ui-action-danger.ui-action-outline {
+        --ui-action-border: var(--ui-action-outline-danger-border);
+        --ui-action-text: var(--ui-action-outline-danger-text);
+        --ui-action-bg-hover: var(--ui-action-outline-danger-bg-hover);
+    }
+
+    .ui-action-success.ui-action-outline {
+        --ui-action-border: var(--ui-action-outline-success-border);
+        --ui-action-text: var(--ui-action-outline-success-text);
+        --ui-action-bg-hover: var(--ui-action-outline-success-bg-hover);
+    }
+
+    .ui-action-warning.ui-action-outline {
+        --ui-action-border: var(--ui-action-outline-warning-border);
+        --ui-action-text: var(--ui-action-outline-warning-text);
+        --ui-action-bg-hover: var(--ui-action-outline-warning-bg-hover);
+    }
+
+    .ui-action-notice.ui-action-outline {
+        --ui-action-border: var(--ui-action-outline-notice-border);
+        --ui-action-text: var(--ui-action-outline-notice-text);
+        --ui-action-bg-hover: var(--ui-action-outline-notice-bg-hover);
+    }
+
+    .ui-action-info.ui-action-outline {
+        --ui-action-border: var(--ui-action-outline-info-border);
+        --ui-action-text: var(--ui-action-outline-info-text);
+        --ui-action-bg-hover: var(--ui-action-outline-info-bg-hover);
+    }
+
+    .ui-action[data-ui-current="true"] {
+        background-color: var(--ui-layer-selected-01);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-action:disabled,
+    .ui-action[aria-disabled="true"],
+    .ui-action.is-disabled {
+        border-color: var(--ui-action-disabled-border);
+        background-color: var(--ui-action-disabled-bg);
+        color: var(--ui-action-disabled-text);
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+}

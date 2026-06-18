@@ -1,0 +1,62 @@
+/* ==========================================================================
+File: resources/css/components/progress-bar.css
+Purpose: Progress Bar component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/progress-bar/
+
+Notes:
+
+* Defines Progress Bar selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Progress colors consume theme and status tokens.
+  ========================================================================== */
+
+@layer components {
+    .ui-progress-bar {
+        display: flex;
+        flex-direction: column;
+        gap: var(--ui-spacing-03);
+        inline-size: 100%;
+    }
+
+    .ui-progress-bar-label-row {
+        display: flex;
+        justify-content: space-between;
+        gap: var(--ui-spacing-05);
+        color: var(--ui-text-primary);
+        font-size: var(--ui-type-label-01-font-size);
+        line-height: var(--ui-type-label-01-line-height);
+    }
+
+    .ui-progress-bar-track {
+        position: relative;
+        overflow: hidden;
+        inline-size: 100%;
+        block-size: 0.5rem;
+        background-color: var(--ui-layer-accent-01);
+    }
+
+    .ui-progress-bar-fill {
+        inline-size: var(--ui-progress-value, 0%);
+        block-size: 100%;
+        background-color: var(--ui-border-interactive);
+        transition: inline-size var(--ui-duration-fast-02)
+            var(--ui-motion-standard-productive);
+    }
+
+    .ui-progress-bar-indeterminate .ui-progress-bar-fill {
+        position: absolute;
+        inline-size: 40%;
+        animation: ui-progress-indeterminate 1.4s linear infinite;
+    }
+
+    .ui-progress-bar-error .ui-progress-bar-fill {
+        background-color: var(--ui-support-error);
+    }
+
+    .ui-progress-bar-success .ui-progress-bar-fill {
+        background-color: var(--ui-support-success);
+    }
+}

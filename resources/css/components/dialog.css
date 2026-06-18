@@ -1,0 +1,43 @@
+/* ==========================================================================
+File: resources/css/components/dialog.css
+Purpose: Dialog component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/dialog/
+
+Notes:
+
+* Defines Dialog selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Dialog is a compact overlay surface.
+  ========================================================================== */
+
+@layer components {
+    .ui-dialog {
+        inline-size: min(100% - 2rem, 32rem);
+        background-color: var(--ui-layer-01);
+        color: var(--ui-text-primary);
+        box-shadow: var(--ui-shadow-overlay-panel);
+    }
+
+    .ui-dialog-header,
+    .ui-dialog-body,
+    .ui-dialog-footer {
+        padding-inline: var(--ui-spacing-06);
+    }
+
+    .ui-dialog-header {
+        padding-block: var(--ui-spacing-06) var(--ui-spacing-04);
+    }
+
+    .ui-dialog-body {
+        padding-block-end: var(--ui-spacing-06);
+    }
+
+    .ui-dialog-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1px;
+    }
+}

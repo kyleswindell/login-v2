@@ -1,0 +1,86 @@
+/* ==========================================================================
+File: resources/css/components/flatpickr.css
+Purpose: Flatpickr compatibility target.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/date-picker/_flatpickr.scss
+
+Notes:
+
+* Flatpickr-specific bridge selectors should be added only when the app migration needs them.
+* Date Picker implementation selectors belong in date-picker.css.
+  ========================================================================== */
+
+@layer base {
+    /* Flatpickr date-picker bridge migrated from app.css after Carbon date-picker ownership audit. */
+    .flatpickr-calendar.ui-date-picker-calendar {
+        color: var(--ui-text-primary);
+        background: var(--ui-layer-01);
+        border: 1px solid var(--ui-border-subtle-01);
+        border-radius: 0;
+        box-shadow: 0 1rem 2rem
+            color-mix(in srgb, var(--ui-shadow-color) 24%, transparent);
+    }
+
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-months,
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-weekdays {
+        background: var(--ui-layer-01);
+    }
+
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-current-month,
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-weekday,
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day {
+        color: var(--ui-text-primary);
+    }
+
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.prevMonthDay,
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.nextMonthDay,
+    .flatpickr-calendar.ui-date-picker-calendar
+        .flatpickr-day.flatpickr-disabled {
+        color: var(--ui-text-disabled);
+    }
+
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day:hover,
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day:focus {
+        color: var(--ui-text-primary);
+        background: var(--ui-layer-hover-01);
+        border-color: var(--ui-layer-hover-01);
+    }
+
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.today {
+        border-color: transparent;
+        color: var(--ui-link-primary);
+    }
+
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.selected,
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.startRange,
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.endRange {
+        color: var(--ui-text-inverse);
+        background: var(--ui-background-inverse);
+        border-color: var(--ui-background-inverse);
+    }
+
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.inRange {
+        color: var(--ui-text-primary);
+        background: var(--ui-layer-selected-01);
+        border-color: var(--ui-layer-selected-01);
+        box-shadow:
+            -5px 0 0 var(--ui-layer-selected-01),
+            5px 0 0 var(--ui-layer-selected-01);
+    }
+
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-prev-month,
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-next-month {
+        inline-size: 2.5rem;
+        block-size: 2.5rem;
+        color: var(--ui-icon-primary);
+    }
+
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-prev-month svg,
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-next-month svg {
+        inline-size: 1rem;
+        block-size: 1rem;
+    }
+
+
+}

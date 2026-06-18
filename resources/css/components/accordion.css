@@ -1,0 +1,446 @@
+/* ==========================================================================
+File: resources/css/components/accordion.css
+Purpose: Accordion component styles.
+Notes:
+
+* Defines Accordion selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Do not define component color tokens here.
+* Accordion consumes theme, spacing, type, icon, focus, and skeleton tokens.
+  ========================================================================== */
+
+@layer components {
+    .ui-accordion {
+        inline-size: 100%;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        color: var(--ui-text-primary);
+    }
+
+    .ui-accordion-item {
+        display: list-item;
+        overflow: visible;
+        border-block-start: 1px solid var(--ui-border-subtle-01);
+        transition:
+            border-color 110ms cubic-bezier(0.2, 0, 0.38, 0.9),
+            background-color 110ms cubic-bezier(0.2, 0, 0.38, 0.9);
+    }
+
+    .ui-accordion-item:last-child {
+        border-block-end: 1px solid var(--ui-border-subtle-01);
+    }
+
+    .ui-accordion-item:not(.ui-accordion-item-active):not(
+            [data-ui-accordion-item-state="open"]
+        ):not(:has(.ui-accordion-trigger[aria-expanded="true"])):hover,
+    .ui-accordion-item:not(.ui-accordion-item-active):not(
+            [data-ui-accordion-item-state="open"]
+        ):not(:has(.ui-accordion-trigger[aria-expanded="true"])):hover
+        + .ui-accordion-item {
+        border-block-start-color: var(--ui-layer-hover-01);
+    }
+
+    .ui-accordion-item:not(.ui-accordion-item-active):not(
+            [data-ui-accordion-item-state="open"]
+        ):not(
+            :has(.ui-accordion-trigger[aria-expanded="true"])
+        ):last-child:hover {
+        border-block-end-color: var(--ui-layer-hover-01);
+    }
+
+    .ui-accordion-contained {
+        overflow: hidden;
+        border: 1px solid var(--ui-border-subtle-01);
+        background-color: var(--ui-layer-02);
+    }
+
+    .ui-accordion-contained .ui-accordion-item:first-child {
+        border-block-start: 0;
+    }
+
+    .ui-accordion-contained .ui-accordion-item:last-child {
+        border-block-end: 0;
+    }
+
+    .ui-accordion-heading {
+        margin: 0;
+    }
+
+    .ui-accordion-trigger {
+        appearance: none;
+        position: relative;
+        display: flex;
+        inline-size: 100%;
+        min-block-size: 2.5rem;
+        align-items: center;
+        justify-content: flex-start;
+        gap: var(--ui-spacing-05);
+        border: 0;
+        border-radius: 0;
+        margin: 0;
+        padding-block: 0;
+        padding-inline: var(--ui-spacing-05);
+        background-color: transparent;
+        color: var(--ui-text-primary);
+        cursor: pointer;
+        font: inherit;
+        text-align: start;
+        transition:
+            background-color 110ms cubic-bezier(0.2, 0, 0.38, 0.9),
+            color 110ms cubic-bezier(0.2, 0, 0.38, 0.9),
+            box-shadow 110ms cubic-bezier(0.2, 0, 0.38, 0.9);
+    }
+
+    .ui-accordion-compact .ui-accordion-trigger {
+        min-block-size: 2rem;
+        gap: var(--ui-spacing-04);
+        padding-inline: var(--ui-spacing-04);
+        font-size: 0.75rem;
+    }
+
+    .ui-accordion-trigger:hover {
+        background-color: var(--ui-layer-hover-01);
+        color: var(--ui-text-primary);
+        outline: none;
+    }
+
+    .ui-accordion-trigger:active,
+    .ui-accordion-trigger.is-active,
+    .ui-accordion-trigger[data-ui-accordion-active="true"] {
+        background-color: var(--ui-layer-active-01);
+    }
+
+    .ui-accordion-trigger:focus {
+        outline: none;
+    }
+
+    .ui-accordion-trigger:focus-visible,
+    .ui-accordion-trigger.is-focus,
+    .ui-accordion-trigger[data-ui-accordion-focus="true"] {
+        position: relative;
+        z-index: 2;
+        outline: none;
+        box-shadow:
+            0 -1px 0 0 var(--ui-focus),
+            inset 0 1px 0 0 var(--ui-focus),
+            inset 2px 0 0 0 var(--ui-focus),
+            0 1px 0 0 var(--ui-focus),
+            inset 0 -1px 0 0 var(--ui-focus),
+            inset -2px 0 0 0 var(--ui-focus);
+    }
+
+    .ui-accordion-trigger:disabled,
+    .ui-accordion-trigger[aria-disabled="true"],
+    .ui-accordion-item-disabled .ui-accordion-trigger,
+    .ui-accordion-item[data-ui-accordion-disabled="true"]
+        .ui-accordion-trigger {
+        cursor: not-allowed;
+        background-color: transparent;
+        color: var(--ui-text-disabled);
+    }
+
+    .ui-accordion-trigger:disabled:hover,
+    .ui-accordion-trigger[aria-disabled="true"]:hover,
+    .ui-accordion-item-disabled .ui-accordion-trigger:hover,
+    .ui-accordion-item[data-ui-accordion-disabled="true"]
+        .ui-accordion-trigger:hover {
+        background-color: transparent;
+    }
+
+    .ui-accordion-label {
+        min-inline-size: 0;
+        flex: 1 1 auto;
+    }
+
+    .ui-accordion-title {
+        display: block;
+        overflow: hidden;
+        color: inherit;
+        font-size: 0.875rem;
+        font-weight: 400;
+        line-height: 1.25rem;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .ui-accordion-meta {
+        display: block;
+        margin-block-start: var(--ui-spacing-02);
+        color: var(--ui-text-helper);
+        font-size: 0.75rem;
+        font-weight: 400;
+        line-height: 1rem;
+    }
+
+    .ui-accordion-icon {
+        inline-size: 1rem;
+        block-size: 1rem;
+        flex: 0 0 1rem;
+        color: var(--ui-icon-primary);
+        transform: rotate(-90deg);
+        transition:
+            transform 110ms cubic-bezier(0.2, 0, 0.38, 0.9),
+            color 110ms cubic-bezier(0.2, 0, 0.38, 0.9);
+    }
+
+    .ui-accordion-trigger:disabled .ui-accordion-icon,
+    .ui-accordion-trigger[aria-disabled="true"] .ui-accordion-icon,
+    .ui-accordion-item-disabled .ui-accordion-icon,
+    .ui-accordion-item[data-ui-accordion-disabled="true"] .ui-accordion-icon {
+        color: var(--ui-icon-disabled);
+    }
+
+    .ui-accordion-trigger[aria-expanded="true"] .ui-accordion-icon,
+    .ui-accordion-item-active .ui-accordion-icon,
+    .ui-accordion-item[data-ui-accordion-item-state="open"] .ui-accordion-icon {
+        transform: rotate(0deg);
+    }
+
+    .ui-accordion-icon-start .ui-accordion-trigger {
+        flex-direction: row;
+    }
+
+    .ui-accordion:not(.ui-accordion-icon-start) .ui-accordion-trigger {
+        flex-direction: row-reverse;
+    }
+
+    .ui-accordion-icon-start .ui-accordion-icon {
+        margin-inline-start: 0;
+        margin-inline-end: 0;
+    }
+
+    .ui-accordion:not(.ui-accordion-icon-start) .ui-accordion-icon {
+        margin-inline-start: auto;
+    }
+
+    .ui-accordion-panel {
+        block-size: auto;
+        max-block-size: none;
+        overflow: hidden;
+        background-color: transparent;
+        opacity: 1;
+        transition:
+            max-block-size 160ms cubic-bezier(0.2, 0, 0.38, 0.9),
+            opacity 110ms cubic-bezier(0.2, 0, 0.38, 0.9),
+            padding-block 110ms cubic-bezier(0.2, 0, 0.38, 0.9);
+    }
+
+    .ui-accordion-panel[hidden],
+    .ui-accordion-panel[data-ui-accordion-panel-open="false"] {
+        display: none;
+    }
+
+    .ui-accordion-panel[data-ui-accordion-animating="true"] {
+        display: block;
+        will-change: max-block-size, opacity;
+    }
+
+    .ui-accordion-contained .ui-accordion-panel {
+        background-color: var(--ui-layer-01);
+    }
+
+    .ui-accordion-body {
+        padding-block: var(--ui-spacing-04) var(--ui-spacing-06);
+        padding-inline: var(--ui-spacing-05);
+        color: var(--ui-text-secondary);
+        font-size: 0.875rem;
+        font-weight: 400;
+        line-height: 1.5rem;
+    }
+
+    .ui-accordion-compact .ui-accordion-body {
+        padding-block: var(--ui-spacing-03) var(--ui-spacing-05);
+        padding-inline: var(--ui-spacing-04);
+        font-size: 0.75rem;
+        line-height: 1.25rem;
+    }
+
+    @media (min-width: 30rem) {
+        .ui-accordion-body {
+            padding-inline-end: var(--ui-spacing-09);
+        }
+    }
+
+    @media (min-width: 40rem) {
+        .ui-accordion-body {
+            padding-inline-end: 25%;
+        }
+    }
+
+    .ui-accordion-scrollable .ui-accordion-body {
+        max-block-size: var(--ui-accordion-panel-max-height, 16rem);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+
+    /* ----------------------------------------------------------------------
+   Flush variant
+   ---------------------------------------------------------------------- */
+
+    .ui-accordion-flush .ui-accordion-item {
+        position: relative;
+        border-color: transparent;
+    }
+
+    .ui-accordion-flush .ui-accordion-item:last-child,
+    .ui-accordion-flush .ui-accordion-item:hover,
+    .ui-accordion-flush .ui-accordion-item:last-child:hover,
+    .ui-accordion-flush .ui-accordion-item:hover + .ui-accordion-item {
+        border-color: transparent;
+    }
+
+    .ui-accordion-flush .ui-accordion-item::before,
+    .ui-accordion-flush .ui-accordion-item::after {
+        position: absolute;
+        display: block;
+        block-size: 1px;
+        content: "";
+        inline-size: calc(100% - (var(--ui-spacing-05) * 2));
+        margin-inline-start: var(--ui-spacing-05);
+        transition: background-color 110ms cubic-bezier(0.2, 0, 0.38, 0.9);
+    }
+
+    .ui-accordion-flush .ui-accordion-item::before {
+        inset-block-start: -1px;
+        background-color: var(--ui-border-subtle-01);
+    }
+
+    .ui-accordion-flush .ui-accordion-item:last-child::after {
+        inset-block-end: -1px;
+        background-color: var(--ui-border-subtle-01);
+    }
+
+    .ui-accordion-flush .ui-accordion-trigger:hover {
+        position: relative;
+        z-index: 1;
+    }
+
+    .ui-accordion-flush .ui-accordion-trigger:hover::before,
+    .ui-accordion-flush .ui-accordion-trigger:hover::after {
+        position: absolute;
+        display: block;
+        block-size: 1px;
+        content: "";
+        inline-size: 100%;
+        inset-inline-start: 0;
+        background-color: var(--ui-layer-hover-01);
+        transition: background-color 110ms cubic-bezier(0.2, 0, 0.38, 0.9);
+    }
+
+    .ui-accordion-flush .ui-accordion-trigger:hover::before {
+        inset-block-start: -1px;
+    }
+
+    .ui-accordion-flush .ui-accordion-trigger:hover::after {
+        inset-block-end: -1px;
+    }
+
+    .ui-accordion-flush .ui-accordion-trigger:focus-visible::before,
+    .ui-accordion-flush .ui-accordion-trigger:focus-visible::after,
+    .ui-accordion-flush .ui-accordion-trigger.is-focus::before,
+    .ui-accordion-flush .ui-accordion-trigger.is-focus::after,
+    .ui-accordion-flush
+        .ui-accordion-trigger[data-ui-accordion-focus="true"]::before,
+    .ui-accordion-flush
+        .ui-accordion-trigger[data-ui-accordion-focus="true"]::after {
+        background-color: transparent;
+    }
+
+    .ui-accordion-flush .ui-accordion-body {
+        padding-inline-start: calc(var(--ui-spacing-05) + var(--ui-spacing-05));
+    }
+
+    .ui-accordion-flush.ui-accordion-icon-start .ui-accordion-body {
+        margin-inline-start: calc(var(--ui-spacing-05) + var(--ui-spacing-05));
+        padding-inline-start: var(--ui-spacing-05);
+    }
+
+    /* ----------------------------------------------------------------------
+   Skeleton state
+   ---------------------------------------------------------------------- */
+
+    .ui-accordion-skeleton .ui-accordion-trigger,
+    .ui-accordion.is-skeleton .ui-accordion-trigger {
+        cursor: default;
+        pointer-events: none;
+    }
+
+    .ui-accordion-skeleton .ui-accordion-trigger:hover,
+    .ui-accordion.is-skeleton .ui-accordion-trigger:hover {
+        background-color: transparent;
+    }
+
+    .ui-accordion-skeleton .ui-accordion-icon,
+    .ui-accordion.is-skeleton .ui-accordion-icon {
+        color: var(--ui-icon-primary);
+        pointer-events: none;
+    }
+
+    .ui-accordion-skeleton .ui-accordion-title,
+    .ui-accordion.is-skeleton .ui-accordion-title {
+        inline-size: min(14rem, 60%);
+        block-size: 1rem;
+        border-radius: 9999px;
+        background: linear-gradient(
+            90deg,
+            var(--ui-skeleton-background),
+            var(--ui-skeleton-element),
+            var(--ui-skeleton-background)
+        );
+        background-size: 200% 100%;
+        color: transparent;
+    }
+
+    .ui-accordion-skeleton .ui-accordion-meta,
+    .ui-accordion.is-skeleton .ui-accordion-meta {
+        display: none;
+    }
+
+    .ui-accordion-skeleton .ui-accordion-panel,
+    .ui-accordion.is-skeleton .ui-accordion-panel {
+        display: none;
+    }
+
+    /* ----------------------------------------------------------------------
+   RTL support
+   ---------------------------------------------------------------------- */
+
+    [dir="rtl"] .ui-accordion-icon-start .ui-accordion-trigger {
+        padding-inline-start: 0;
+        padding-inline-end: var(--ui-spacing-05);
+    }
+
+    [dir="rtl"] .ui-accordion-icon-start .ui-accordion-body {
+        margin-inline-start: 0;
+        margin-inline-end: calc(var(--ui-spacing-05) + var(--ui-spacing-05));
+    }
+
+    /* ----------------------------------------------------------------------
+   Reduced motion
+   ---------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-accordion-item,
+        .ui-accordion-trigger,
+        .ui-accordion-icon,
+        .ui-accordion-panel,
+        .ui-accordion-flush .ui-accordion-item::before,
+        .ui-accordion-flush .ui-accordion-item::after,
+        .ui-accordion-flush .ui-accordion-trigger:hover::before,
+        .ui-accordion-flush .ui-accordion-trigger:hover::after {
+            transition: none;
+        }
+    }
+
+    @media (forced-colors: active) {
+        .ui-accordion-trigger:focus-visible,
+        .ui-accordion-trigger.is-focus,
+        .ui-accordion-trigger[data-ui-accordion-focus="true"] {
+            outline: 2px solid Highlight;
+            outline-offset: -2px;
+            box-shadow: none;
+        }
+    }
+}

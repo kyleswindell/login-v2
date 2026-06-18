@@ -1,0 +1,72 @@
+/* ==========================================================================
+File: resources/css/components/file-uploader.css
+Purpose: File Uploader component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/file-uploader/
+
+Notes:
+
+* Defines File Uploader selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* File Uploader consumes form, button, type, spacing, and theme tokens.
+  ========================================================================== */
+
+@layer components {
+    .ui-file-uploader {
+        display: flex;
+        flex-direction: column;
+        gap: var(--ui-spacing-05);
+        inline-size: 100%;
+    }
+
+    .ui-file-uploader-drop-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-block-size: 6rem;
+        border: 1px dashed var(--ui-border-strong-01);
+        padding: var(--ui-spacing-06);
+        background-color: var(--ui-layer-01);
+        color: var(--ui-text-secondary);
+        text-align: center;
+    }
+
+    .ui-file-uploader-drop-container:hover {
+        background-color: var(--ui-layer-hover-01);
+    }
+
+    .ui-file-uploader-input {
+        position: absolute;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        inline-size: 1px;
+        block-size: 1px;
+        margin: -1px;
+        border: 0;
+        padding: 0;
+        white-space: nowrap;
+    }
+
+    .ui-file-uploader-item {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: var(--ui-spacing-05);
+        inline-size: 100%;
+        padding: var(--ui-spacing-03) var(--ui-spacing-05);
+        background-color: var(--ui-layer-01);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-file-uploader-item-invalid {
+        outline: 2px solid var(--ui-support-error);
+        outline-offset: -2px;
+    }
+
+    .ui-file-uploader-item-warning {
+        outline: 2px solid var(--ui-support-warning);
+        outline-offset: -2px;
+    }
+}

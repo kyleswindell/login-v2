@@ -1,0 +1,41 @@
+/* ==========================================================================
+File: resources/css/components/aspect-ratio.css
+Purpose: Aspect Ratio component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/aspect-ratio/
+
+Notes:
+
+* Defines Aspect Ratio selectors only.
+* Do not define primitive spacing or color tokens here.
+  ========================================================================== */
+
+@layer components {
+    .ui-aspect-ratio {
+        position: relative;
+        inline-size: 100%;
+        aspect-ratio: var(--ui-aspect-ratio, 1 / 1);
+    }
+
+    .ui-aspect-ratio-1x1 {
+        --ui-aspect-ratio: 1 / 1;
+    }
+
+    .ui-aspect-ratio-2x1 {
+        --ui-aspect-ratio: 2 / 1;
+    }
+
+    .ui-aspect-ratio-16x9 {
+        --ui-aspect-ratio: 16 / 9;
+    }
+
+    .ui-aspect-ratio-4x3 {
+        --ui-aspect-ratio: 4 / 3;
+    }
+
+    .ui-aspect-ratio > * {
+        inline-size: 100%;
+        block-size: 100%;
+    }
+}

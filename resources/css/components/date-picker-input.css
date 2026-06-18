@@ -1,0 +1,178 @@
+/* ==========================================================================
+File: resources/css/components/date-picker-input.css
+Purpose: Date Picker Input compatibility target.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/date-picker/
+
+Notes:
+
+* Carbon owns Date Picker input behavior inside date-picker.
+* Keep implementation selectors in date-picker.css.
+* This file exists only as a named compatibility target for app migration.
+  ========================================================================== */
+
+@layer base {
+    /* Laravel UI date-picker-input API migrated from app.css after Carbon date-picker ownership audit. */
+    .ui-date-picker-simple,
+    .ui-date-picker-single,
+    .ui-date-picker-range {
+        @apply min-w-0;
+    }
+
+    .ui-date-picker-range-fields {
+        @apply flex flex-wrap items-start gap-0;
+    }
+
+    .ui-date-picker-input-field {
+        @apply min-w-0;
+    }
+
+    .ui-date-picker-range .ui-date-picker-input-field {
+        inline-size: min(17rem, 100%);
+    }
+
+    .ui-date-picker-input-fluid
+        > .ui-field-label:not(.ui-date-picker-fluid-label) {
+        @apply sr-only;
+    }
+
+    .ui-date-picker-input-field .ui-date-picker-control {
+        @apply relative;
+    }
+
+    .ui-date-picker-input-field .ui-input-date {
+        @apply w-full;
+        min-inline-size: 0;
+        color: var(--ui-text-primary);
+        background-color: var(--ui-field-01);
+        border-color: var(--ui-border-strong);
+    }
+
+    .ui-date-picker-input-field
+        .ui-input-date:hover:not(:disabled):not([readonly]) {
+        cursor: text;
+        background-color: var(--ui-field-01);
+    }
+
+    .ui-date-picker-input-sm .ui-input-date {
+        block-size: 2rem;
+    }
+
+    .ui-date-picker-input-md .ui-input-date {
+        block-size: 2.5rem;
+    }
+
+    .ui-date-picker-input-lg .ui-input-date {
+        block-size: 3rem;
+    }
+
+    .ui-date-picker-input-fluid .ui-date-picker-control {
+        min-block-size: 4rem;
+        background-color: var(--ui-field-01);
+        border-block-end: 1px solid var(--ui-border-strong);
+    }
+
+    .ui-date-picker-input-fluid .ui-input-date {
+        block-size: auto;
+        min-block-size: 1.5rem;
+        padding-block-start: 1.75rem;
+        background-color: transparent;
+        border-color: transparent;
+    }
+
+    .ui-date-picker-input-fluid .ui-input-date:focus,
+    .ui-date-picker-input-fluid .ui-input-date:focus-visible,
+    .ui-date-picker-input-fluid.is-focus .ui-input-date {
+        outline: none;
+        box-shadow: none;
+    }
+
+    .ui-date-picker-input-fluid .ui-date-picker-control:focus-within,
+    .ui-date-picker-input-fluid.is-focus .ui-date-picker-control {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-date-picker-input-invalid .ui-input-date,
+    .ui-date-picker-input-invalid .ui-date-picker-control {
+        border-color: var(--ui-support-error);
+    }
+
+    .ui-date-picker-input-invalid .ui-input-date:focus,
+    .ui-date-picker-input-invalid .ui-input-date:focus-visible,
+    .ui-date-picker-input-invalid.is-focus .ui-input-date {
+        border-color: var(--ui-support-error);
+        box-shadow: inset 0 0 0 1px var(--ui-support-error);
+    }
+
+    .ui-date-picker-input-fluid.ui-date-picker-input-invalid
+        .ui-date-picker-control {
+        outline: 2px solid var(--ui-support-error);
+        outline-offset: -2px;
+    }
+
+    .ui-date-picker-input-warning .ui-date-picker-control {
+        border-color: var(--ui-support-warning);
+    }
+
+    .ui-date-picker-input-disabled .ui-input-date,
+    .ui-date-picker-input-disabled .ui-date-picker-control {
+        color: var(--ui-text-disabled);
+        background-color: var(--ui-field-01);
+        border-color: var(--ui-border-disabled);
+        cursor: not-allowed;
+    }
+
+    .ui-date-picker-input-disabled .ui-field-label,
+    .ui-date-picker-input-disabled .ui-field-helper,
+    .ui-date-picker-input-disabled .ui-date-picker-calendar-icon {
+        color: var(--ui-text-disabled);
+    }
+
+    .ui-date-picker-input-readonly .ui-input-date {
+        color: var(--ui-text-primary);
+        background-color: var(--ui-field-01);
+        border-color: var(--ui-border-subtle-01);
+    }
+
+    .ui-date-picker-calendar-icon,
+    .ui-date-picker-status-icon {
+        @apply pointer-events-none absolute;
+        inline-size: 1rem;
+        block-size: 1rem;
+        inset-block-start: 50%;
+        inset-inline-end: 1rem;
+        transform: translateY(-50%);
+    }
+
+    .ui-date-picker-input-fluid .ui-date-picker-calendar-icon,
+    .ui-date-picker-input-fluid .ui-date-picker-status-icon {
+        inset-block-start: 2rem;
+    }
+
+    .ui-date-picker-status-icon-error {
+        color: var(--ui-support-error);
+    }
+
+    .ui-date-picker-status-icon-warning {
+        color: var(--ui-support-warning);
+    }
+
+    .ui-date-picker-skeleton-row {
+        @apply flex flex-wrap gap-3;
+    }
+
+    .ui-date-picker-skeleton-field {
+        @apply block animate-pulse;
+        inline-size: min(17rem, 100%);
+        block-size: 2.5rem;
+        background-color: var(--ui-skeleton-background);
+    }
+
+    .ui-date-picker-skeleton-fluid .ui-date-picker-skeleton-field {
+        block-size: 4rem;
+    }
+
+
+}

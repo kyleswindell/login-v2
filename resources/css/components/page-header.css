@@ -1,0 +1,48 @@
+/* ==========================================================================
+File: resources/css/components/page-header.css
+Purpose: Page Header component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/page-header/
+
+Notes:
+
+* Defines Page Header selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Base page defaults belong in resources/css/base/.
+  ========================================================================== */
+
+@layer components {
+    .ui-page-header {
+        display: grid;
+        gap: var(--ui-spacing-05);
+        padding-block: var(--ui-spacing-07);
+        background-color: var(--ui-background);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-page-header-breadcrumb {
+        min-block-size: 1.5rem;
+    }
+
+    .ui-page-header-title {
+        margin: 0;
+        font-size: var(--ui-type-heading-05-font-size);
+        font-weight: var(--ui-type-heading-05-font-weight);
+        line-height: var(--ui-type-heading-05-line-height);
+    }
+
+    .ui-page-header-subtitle {
+        max-inline-size: 48rem;
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-body-02-font-size);
+        line-height: var(--ui-type-body-02-line-height);
+    }
+
+    .ui-page-header-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--ui-spacing-03);
+    }
+}

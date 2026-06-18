@@ -1,0 +1,34 @@
+/* ==========================================================================
+File: resources/css/components/overflow-menu.css
+Purpose: Overflow Menu component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/overflow-menu/
+
+Notes:
+
+* Defines Overflow Menu selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Overflow Menu composes Menu behavior.
+  ========================================================================== */
+
+@layer components {
+    .ui-overflow-menu {
+        position: relative;
+        display: inline-flex;
+    }
+
+    .ui-overflow-menu .ui-menu-composition {
+        display: inline-flex;
+    }
+
+    .ui-overflow-menu-trigger {
+        inline-size: 2.5rem;
+        block-size: 2.5rem;
+    }
+
+    .ui-overflow-menu-options {
+        min-inline-size: 10rem;
+    }
+}

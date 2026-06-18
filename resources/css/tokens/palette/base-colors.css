@@ -1,0 +1,459 @@
+/* ==========================================================================
+   File: resources/css/tokens/palette/base-colors.css
+   Purpose: Primitive swatch color values.
+   Notes:
+   - Defines raw color values only.
+   - Do not assign theme, semantic, or component meaning here.
+   - Theme and component token files consume these primitives.
+   - Hex values are paired with RGB channel values for opacity-based tokens.
+   ========================================================================== */
+
+@layer base {
+    :root {
+        /* ------------------------------------------------------------------
+           Black / white
+           ------------------------------------------------------------------ */
+        --ui-black: #000000;
+        --ui-black-100: var(--ui-black);
+        --ui-black-hover: #212121;
+
+        --ui-white: #ffffff;
+        --ui-white-0: var(--ui-white);
+        --ui-white-hover: #e8e8e8;
+
+        --ui-black-rgb: 0 0 0;
+        --ui-white-rgb: 255 255 255;
+
+        /* ------------------------------------------------------------------
+           Gray
+           ------------------------------------------------------------------ */
+        --ui-gray-10: #f4f4f4;
+        --ui-gray-20: #e0e0e0;
+        --ui-gray-30: #c6c6c6;
+        --ui-gray-40: #a8a8a8;
+        --ui-gray-50: #8d8d8d;
+        --ui-gray-60: #6f6f6f;
+        --ui-gray-70: #525252;
+        --ui-gray-80: #393939;
+        --ui-gray-90: #262626;
+        --ui-gray-100: #161616;
+
+        --ui-gray-10-rgb: 244 244 244;
+        --ui-gray-20-rgb: 224 224 224;
+        --ui-gray-30-rgb: 198 198 198;
+        --ui-gray-40-rgb: 168 168 168;
+        --ui-gray-50-rgb: 141 141 141;
+        --ui-gray-60-rgb: 111 111 111;
+        --ui-gray-70-rgb: 82 82 82;
+        --ui-gray-80-rgb: 57 57 57;
+        --ui-gray-90-rgb: 38 38 38;
+        --ui-gray-100-rgb: 22 22 22;
+
+        --ui-gray-10-hover: #e8e8e8;
+        --ui-gray-20-hover: #d1d1d1;
+        --ui-gray-30-hover: #b5b5b5;
+        --ui-gray-40-hover: #999999;
+        --ui-gray-50-hover: #7a7a7a;
+        --ui-gray-60-hover: #5e5e5e;
+        --ui-gray-70-hover: #636363;
+        --ui-gray-80-hover: #474747;
+        --ui-gray-90-hover: #333333;
+        --ui-gray-100-hover: #292929;
+
+        /* ------------------------------------------------------------------
+           Cool gray
+           ------------------------------------------------------------------ */
+        --ui-cool-gray-10: #f2f4f8;
+        --ui-cool-gray-20: #dde1e6;
+        --ui-cool-gray-30: #c1c7cd;
+        --ui-cool-gray-40: #a2a9b0;
+        --ui-cool-gray-50: #878d96;
+        --ui-cool-gray-60: #697077;
+        --ui-cool-gray-70: #4d5358;
+        --ui-cool-gray-80: #343a3f;
+        --ui-cool-gray-90: #21272a;
+        --ui-cool-gray-100: #121619;
+
+        --ui-cool-gray-10-rgb: 242 244 248;
+        --ui-cool-gray-20-rgb: 221 225 230;
+        --ui-cool-gray-30-rgb: 193 199 205;
+        --ui-cool-gray-40-rgb: 162 169 176;
+        --ui-cool-gray-50-rgb: 135 141 150;
+        --ui-cool-gray-60-rgb: 105 112 119;
+        --ui-cool-gray-70-rgb: 77 83 88;
+        --ui-cool-gray-80-rgb: 52 58 63;
+        --ui-cool-gray-90-rgb: 33 39 42;
+        --ui-cool-gray-100-rgb: 18 22 25;
+
+        --ui-cool-gray-10-hover: #e4e9f1;
+        --ui-cool-gray-20-hover: #cdd3da;
+        --ui-cool-gray-30-hover: #adb5bd;
+        --ui-cool-gray-40-hover: #9199a1;
+        --ui-cool-gray-50-hover: #757b85;
+        --ui-cool-gray-60-hover: #585e64;
+        --ui-cool-gray-70-hover: #5d646a;
+        --ui-cool-gray-80-hover: #434a51;
+        --ui-cool-gray-90-hover: #2b3236;
+        --ui-cool-gray-100-hover: #222a2f;
+
+        /* ------------------------------------------------------------------
+           Warm gray
+           ------------------------------------------------------------------ */
+        --ui-warm-gray-10: #f7f3f2;
+        --ui-warm-gray-20: #e5e0df;
+        --ui-warm-gray-30: #cac5c4;
+        --ui-warm-gray-40: #ada8a8;
+        --ui-warm-gray-50: #8f8b8b;
+        --ui-warm-gray-60: #726e6e;
+        --ui-warm-gray-70: #565151;
+        --ui-warm-gray-80: #3c3838;
+        --ui-warm-gray-90: #272525;
+        --ui-warm-gray-100: #171414;
+
+        --ui-warm-gray-10-rgb: 247 243 242;
+        --ui-warm-gray-20-rgb: 229 224 223;
+        --ui-warm-gray-30-rgb: 202 197 196;
+        --ui-warm-gray-40-rgb: 173 168 168;
+        --ui-warm-gray-50-rgb: 143 139 139;
+        --ui-warm-gray-60-rgb: 114 110 110;
+        --ui-warm-gray-70-rgb: 86 81 81;
+        --ui-warm-gray-80-rgb: 60 56 56;
+        --ui-warm-gray-90-rgb: 39 37 37;
+        --ui-warm-gray-100-rgb: 23 20 20;
+
+        --ui-warm-gray-10-hover: #f0e8e6;
+        --ui-warm-gray-20-hover: #d8d0cf;
+        --ui-warm-gray-30-hover: #b9b3b1;
+        --ui-warm-gray-40-hover: #9c9696;
+        --ui-warm-gray-50-hover: #7f7b7b;
+        --ui-warm-gray-60-hover: #605d5d;
+        --ui-warm-gray-70-hover: #696363;
+        --ui-warm-gray-80-hover: #4c4848;
+        --ui-warm-gray-90-hover: #343232;
+        --ui-warm-gray-100-hover: #2c2626;
+
+        /* ------------------------------------------------------------------
+           Blue
+           ------------------------------------------------------------------ */
+        --ui-blue-10: #edf5ff;
+        --ui-blue-20: #d0e2ff;
+        --ui-blue-30: #a6c8ff;
+        --ui-blue-40: #78a9ff;
+        --ui-blue-50: #4589ff;
+        --ui-blue-60: #0f62fe;
+        --ui-blue-70: #0043ce;
+        --ui-blue-80: #002d9c;
+        --ui-blue-90: #001d6c;
+        --ui-blue-100: #001141;
+
+        --ui-blue-10-rgb: 237 245 255;
+        --ui-blue-20-rgb: 208 226 255;
+        --ui-blue-30-rgb: 166 200 255;
+        --ui-blue-40-rgb: 120 169 255;
+        --ui-blue-50-rgb: 69 137 255;
+        --ui-blue-60-rgb: 15 98 254;
+        --ui-blue-70-rgb: 0 67 206;
+        --ui-blue-80-rgb: 0 45 156;
+        --ui-blue-90-rgb: 0 29 108;
+        --ui-blue-100-rgb: 0 17 65;
+
+        --ui-blue-10-hover: #dbebff;
+        --ui-blue-20-hover: #b8d3ff;
+        --ui-blue-30-hover: #8ab6ff;
+        --ui-blue-40-hover: #5c97ff;
+        --ui-blue-50-hover: #1f70ff;
+        --ui-blue-60-hover: #0050e6;
+        --ui-blue-70-hover: #0053ff;
+        --ui-blue-80-hover: #0039c7;
+        --ui-blue-90-hover: #00258a;
+        --ui-blue-100-hover: #001f75;
+
+        /* ------------------------------------------------------------------
+           Cyan
+           ------------------------------------------------------------------ */
+        --ui-cyan-10: #e5f6ff;
+        --ui-cyan-20: #bae6ff;
+        --ui-cyan-30: #82cfff;
+        --ui-cyan-40: #33b1ff;
+        --ui-cyan-50: #1192e8;
+        --ui-cyan-60: #0072c3;
+        --ui-cyan-70: #00539a;
+        --ui-cyan-80: #003a6d;
+        --ui-cyan-90: #012749;
+        --ui-cyan-100: #061727;
+
+        --ui-cyan-10-rgb: 229 246 255;
+        --ui-cyan-20-rgb: 186 230 255;
+        --ui-cyan-30-rgb: 130 207 255;
+        --ui-cyan-40-rgb: 51 177 255;
+        --ui-cyan-50-rgb: 17 146 232;
+        --ui-cyan-60-rgb: 0 114 195;
+        --ui-cyan-70-rgb: 0 83 154;
+        --ui-cyan-80-rgb: 0 58 109;
+        --ui-cyan-90-rgb: 1 39 73;
+        --ui-cyan-100-rgb: 6 23 39;
+
+        --ui-cyan-10-hover: #cceeff;
+        --ui-cyan-20-hover: #99daff;
+        --ui-cyan-30-hover: #57beff;
+        --ui-cyan-40-hover: #059fff;
+        --ui-cyan-50-hover: #0f7ec8;
+        --ui-cyan-60-hover: #005fa3;
+        --ui-cyan-70-hover: #0066bd;
+        --ui-cyan-80-hover: #00498a;
+        --ui-cyan-90-hover: #013360;
+        --ui-cyan-100-hover: #0b2947;
+
+        /* ------------------------------------------------------------------
+           Teal
+           ------------------------------------------------------------------ */
+        --ui-teal-10: #d9fbfb;
+        --ui-teal-20: #9ef0f0;
+        --ui-teal-30: #3ddbd9;
+        --ui-teal-40: #08bdba;
+        --ui-teal-50: #009d9a;
+        --ui-teal-60: #007d79;
+        --ui-teal-70: #005d5d;
+        --ui-teal-80: #004144;
+        --ui-teal-90: #022b30;
+        --ui-teal-100: #081a1c;
+
+        --ui-teal-10-rgb: 217 251 251;
+        --ui-teal-20-rgb: 158 240 240;
+        --ui-teal-30-rgb: 61 219 217;
+        --ui-teal-40-rgb: 8 189 186;
+        --ui-teal-50-rgb: 0 157 154;
+        --ui-teal-60-rgb: 0 125 121;
+        --ui-teal-70-rgb: 0 93 93;
+        --ui-teal-80-rgb: 0 65 68;
+        --ui-teal-90-rgb: 2 43 48;
+        --ui-teal-100-rgb: 8 26 28;
+
+        --ui-teal-10-hover: #acf6f6;
+        --ui-teal-20-hover: #57e5e5;
+        --ui-teal-30-hover: #25cac8;
+        --ui-teal-40-hover: #07aba9;
+        --ui-teal-50-hover: #008a87;
+        --ui-teal-60-hover: #006b68;
+        --ui-teal-70-hover: #007070;
+        --ui-teal-80-hover: #005357;
+        --ui-teal-90-hover: #033940;
+        --ui-teal-100-hover: #0f3034;
+
+        /* ------------------------------------------------------------------
+           Green
+           ------------------------------------------------------------------ */
+        --ui-green-10: #defbe6;
+        --ui-green-20: #a7f0ba;
+        --ui-green-30: #6fdc8c;
+        --ui-green-40: #42be65;
+        --ui-green-50: #24a148;
+        --ui-green-60: #198038;
+        --ui-green-70: #0e6027;
+        --ui-green-80: #044317;
+        --ui-green-90: #022d0d;
+        --ui-green-100: #071908;
+
+        --ui-green-10-rgb: 222 251 230;
+        --ui-green-20-rgb: 167 240 186;
+        --ui-green-30-rgb: 111 220 140;
+        --ui-green-40-rgb: 66 190 101;
+        --ui-green-50-rgb: 36 161 72;
+        --ui-green-60-rgb: 25 128 56;
+        --ui-green-70-rgb: 14 96 39;
+        --ui-green-80-rgb: 4 67 23;
+        --ui-green-90-rgb: 2 45 13;
+        --ui-green-100-rgb: 7 25 8;
+
+        --ui-green-10-hover: #b6f6c8;
+        --ui-green-20-hover: #74e792;
+        --ui-green-30-hover: #36ce5e;
+        --ui-green-40-hover: #3bab5a;
+        --ui-green-50-hover: #208e3f;
+        --ui-green-60-hover: #166f31;
+        --ui-green-70-hover: #11742f;
+        --ui-green-80-hover: #05521c;
+        --ui-green-90-hover: #033b11;
+        --ui-green-100-hover: #0d300f;
+
+        /* ------------------------------------------------------------------
+           Red
+           ------------------------------------------------------------------ */
+        --ui-red-10: #fff1f1;
+        --ui-red-20: #ffd7d9;
+        --ui-red-30: #ffb3b8;
+        --ui-red-40: #ff8389;
+        --ui-red-50: #fa4d56;
+        --ui-red-60: #da1e28;
+        --ui-red-70: #a2191f;
+        --ui-red-80: #750e13;
+        --ui-red-90: #520408;
+        --ui-red-100: #2d0709;
+
+        --ui-red-10-rgb: 255 241 241;
+        --ui-red-20-rgb: 255 215 217;
+        --ui-red-30-rgb: 255 179 184;
+        --ui-red-40-rgb: 255 131 137;
+        --ui-red-50-rgb: 250 77 86;
+        --ui-red-60-rgb: 218 30 40;
+        --ui-red-70-rgb: 162 25 31;
+        --ui-red-80-rgb: 117 14 19;
+        --ui-red-90-rgb: 82 4 8;
+        --ui-red-100-rgb: 45 7 9;
+
+        --ui-red-10-hover: #ffe0e0;
+        --ui-red-20-hover: #ffc2c5;
+        --ui-red-30-hover: #ff99a0;
+        --ui-red-40-hover: #ff6168;
+        --ui-red-50-hover: #ee0713;
+        --ui-red-60-hover: #b81922;
+        --ui-red-70-hover: #c21e25;
+        --ui-red-80-hover: #921118;
+        --ui-red-90-hover: #66050a;
+        --ui-red-100-hover: #540d11;
+
+        /* ------------------------------------------------------------------
+           Magenta
+           ------------------------------------------------------------------ */
+        --ui-magenta-10: #fff0f7;
+        --ui-magenta-20: #ffd6e8;
+        --ui-magenta-30: #ffafd2;
+        --ui-magenta-40: #ff7eb6;
+        --ui-magenta-50: #ee5396;
+        --ui-magenta-60: #d02670;
+        --ui-magenta-70: #9f1853;
+        --ui-magenta-80: #740937;
+        --ui-magenta-90: #510224;
+        --ui-magenta-100: #2a0a18;
+
+        --ui-magenta-10-rgb: 255 240 247;
+        --ui-magenta-20-rgb: 255 214 232;
+        --ui-magenta-30-rgb: 255 175 210;
+        --ui-magenta-40-rgb: 255 126 182;
+        --ui-magenta-50-rgb: 238 83 150;
+        --ui-magenta-60-rgb: 208 38 112;
+        --ui-magenta-70-rgb: 159 24 83;
+        --ui-magenta-80-rgb: 116 9 55;
+        --ui-magenta-90-rgb: 81 2 36;
+        --ui-magenta-100-rgb: 42 10 24;
+
+        --ui-magenta-10-hover: #ffe0ef;
+        --ui-magenta-20-hover: #ffbdda;
+        --ui-magenta-30-hover: #ff94c3;
+        --ui-magenta-40-hover: #ff57a0;
+        --ui-magenta-50-hover: #e3176f;
+        --ui-magenta-60-hover: #b0215f;
+        --ui-magenta-70-hover: #bf1d63;
+        --ui-magenta-80-hover: #8e0b43;
+        --ui-magenta-90-hover: #68032e;
+        --ui-magenta-100-hover: #53142f;
+
+        /* ------------------------------------------------------------------
+           Purple
+           ------------------------------------------------------------------ */
+        --ui-purple-10: #f6f2ff;
+        --ui-purple-20: #e8daff;
+        --ui-purple-30: #d4bbff;
+        --ui-purple-40: #be95ff;
+        --ui-purple-50: #a56eff;
+        --ui-purple-60: #8a3ffc;
+        --ui-purple-70: #6929c4;
+        --ui-purple-80: #491d8b;
+        --ui-purple-90: #31135e;
+        --ui-purple-100: #1c0f30;
+
+        --ui-purple-10-rgb: 246 242 255;
+        --ui-purple-20-rgb: 232 218 255;
+        --ui-purple-30-rgb: 212 187 255;
+        --ui-purple-40-rgb: 190 149 255;
+        --ui-purple-50-rgb: 165 110 255;
+        --ui-purple-60-rgb: 138 63 252;
+        --ui-purple-70-rgb: 105 41 196;
+        --ui-purple-80-rgb: 73 29 139;
+        --ui-purple-90-rgb: 49 19 94;
+        --ui-purple-100-rgb: 28 15 48;
+
+        --ui-purple-10-hover: #ede5ff;
+        --ui-purple-20-hover: #dcc7ff;
+        --ui-purple-30-hover: #c5a3ff;
+        --ui-purple-40-hover: #ae7aff;
+        --ui-purple-50-hover: #9352ff;
+        --ui-purple-60-hover: #7822fb;
+        --ui-purple-70-hover: #7c3dd6;
+        --ui-purple-80-hover: #5b24ad;
+        --ui-purple-90-hover: #40197b;
+        --ui-purple-100-hover: #341c59;
+
+        /* ------------------------------------------------------------------
+           Yellow
+           ------------------------------------------------------------------ */
+        --ui-yellow-10: #fcf4d6;
+        --ui-yellow-20: #fddc69;
+        --ui-yellow-30: #f1c21b;
+        --ui-yellow-40: #d2a106;
+        --ui-yellow-50: #b28600;
+        --ui-yellow-60: #8e6a00;
+        --ui-yellow-70: #684e00;
+        --ui-yellow-80: #483700;
+        --ui-yellow-90: #302400;
+        --ui-yellow-100: #1c1500;
+
+        --ui-yellow-10-rgb: 252 244 214;
+        --ui-yellow-20-rgb: 253 220 105;
+        --ui-yellow-30-rgb: 241 194 27;
+        --ui-yellow-40-rgb: 210 161 6;
+        --ui-yellow-50-rgb: 178 134 0;
+        --ui-yellow-60-rgb: 142 106 0;
+        --ui-yellow-70-rgb: 104 78 0;
+        --ui-yellow-80-rgb: 72 55 0;
+        --ui-yellow-90-rgb: 48 36 0;
+        --ui-yellow-100-rgb: 28 21 0;
+
+        --ui-yellow-10-hover: #f8e6a0;
+        --ui-yellow-20-hover: #fccd27;
+        --ui-yellow-30-hover: #ddb00e;
+        --ui-yellow-40-hover: #bc9005;
+        --ui-yellow-50-hover: #9e7700;
+        --ui-yellow-60-hover: #755800;
+        --ui-yellow-70-hover: #806000;
+        --ui-yellow-80-hover: #5c4600;
+        --ui-yellow-90-hover: #3d2e00;
+        --ui-yellow-100-hover: #332600;
+
+        /* ------------------------------------------------------------------
+           Orange
+           ------------------------------------------------------------------ */
+        --ui-orange-10: #fff2e8;
+        --ui-orange-20: #ffd9be;
+        --ui-orange-30: #ffb784;
+        --ui-orange-40: #ff832b;
+        --ui-orange-50: #eb6200;
+        --ui-orange-60: #ba4e00;
+        --ui-orange-70: #8a3800;
+        --ui-orange-80: #5e2900;
+        --ui-orange-90: #3e1a00;
+        --ui-orange-100: #231000;
+
+        --ui-orange-10-rgb: 255 242 232;
+        --ui-orange-20-rgb: 255 217 190;
+        --ui-orange-30-rgb: 255 183 132;
+        --ui-orange-40-rgb: 255 131 43;
+        --ui-orange-50-rgb: 235 98 0;
+        --ui-orange-60-rgb: 186 78 0;
+        --ui-orange-70-rgb: 138 56 0;
+        --ui-orange-80-rgb: 94 41 0;
+        --ui-orange-90-rgb: 62 26 0;
+        --ui-orange-100-rgb: 35 16 0;
+
+        --ui-orange-10-hover: #ffe2cc;
+        --ui-orange-20-hover: #ffc69e;
+        --ui-orange-30-hover: #ff9d57;
+        --ui-orange-40-hover: #fa6800;
+        --ui-orange-50-hover: #cc5500;
+        --ui-orange-60-hover: #9e4200;
+        --ui-orange-70-hover: #a84400;
+        --ui-orange-80-hover: #753300;
+        --ui-orange-90-hover: #522200;
+        --ui-orange-100-hover: #421e00;
+    }
+}

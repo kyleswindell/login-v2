@@ -1,0 +1,83 @@
+/* ==========================================================================
+File: resources/css/components/toggle.css
+Purpose: Toggle component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/toggle/
+
+Notes:
+
+* Defines Toggle selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Toggle consumes form, type, spacing, focus, and theme tokens.
+  ========================================================================== */
+
+@layer components {
+    .ui-toggle {
+        position: absolute;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        inline-size: 1px;
+        block-size: 1px;
+        margin: -1px;
+        border: 0;
+        padding: 0;
+        white-space: nowrap;
+    }
+
+    .ui-toggle-label {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--ui-spacing-03);
+        color: var(--ui-text-primary);
+        cursor: pointer;
+        font-size: var(--ui-type-body-compact-01-font-size);
+        line-height: var(--ui-type-body-compact-01-line-height);
+    }
+
+    .ui-toggle-switch {
+        position: relative;
+        inline-size: 3rem;
+        block-size: 1.5rem;
+        border-radius: 999px;
+        background-color: var(--ui-layer-selected-disabled);
+        transition: background-color var(--ui-duration-fast-01)
+            var(--ui-motion-standard-productive);
+    }
+
+    .ui-toggle-switch::before {
+        content: "";
+        position: absolute;
+        inset-block-start: 0.1875rem;
+        inset-inline-start: 0.1875rem;
+        inline-size: 1.125rem;
+        block-size: 1.125rem;
+        border-radius: 50%;
+        background-color: var(--ui-background);
+        transition: transform var(--ui-duration-fast-01)
+            var(--ui-motion-standard-productive);
+    }
+
+    .ui-toggle:checked + .ui-toggle-label .ui-toggle-switch {
+        background-color: var(--ui-support-success);
+    }
+
+    .ui-toggle:checked + .ui-toggle-label .ui-toggle-switch::before {
+        transform: translateX(1.5rem);
+    }
+
+    .ui-toggle:focus-visible + .ui-toggle-label .ui-toggle-switch {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: 2px;
+    }
+
+    .ui-toggle:disabled + .ui-toggle-label {
+        color: var(--ui-text-disabled);
+        cursor: not-allowed;
+    }
+
+    .ui-toggle:disabled + .ui-toggle-label .ui-toggle-switch {
+        background-color: var(--ui-layer-selected-disabled);
+    }
+}

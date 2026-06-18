@@ -1,0 +1,33 @@
+/* ==========================================================================
+File: resources/css/components/stack.css
+Purpose: Stack component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/stack/
+
+Notes:
+
+* Defines Stack selectors only.
+* Do not define primitive spacing tokens here.
+* Stack spacing consumes resources/css/tokens/spacing.css.
+  ========================================================================== */
+
+@layer components {
+    .ui-stack {
+        display: flex;
+        flex-direction: column;
+        gap: var(--ui-stack-gap, var(--ui-spacing-05));
+    }
+
+    .ui-stack-horizontal {
+        flex-direction: row;
+    }
+
+    .ui-stack-condensed {
+        --ui-stack-gap: var(--ui-spacing-03);
+    }
+
+    .ui-stack-spacious {
+        --ui-stack-gap: var(--ui-spacing-07);
+    }
+}

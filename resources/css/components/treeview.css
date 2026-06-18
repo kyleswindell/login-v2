@@ -1,0 +1,52 @@
+/* ==========================================================================
+File: resources/css/components/treeview.css
+Purpose: Treeview component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/treeview/
+
+Notes:
+
+* Defines Treeview selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+  ========================================================================== */
+
+@layer components {
+    .ui-treeview {
+        margin: 0;
+        padding: 0;
+        color: var(--ui-text-primary);
+        list-style: none;
+    }
+
+    .ui-treeview-node {
+        display: flex;
+        align-items: center;
+        min-block-size: 2rem;
+        padding-inline: var(--ui-spacing-03);
+        color: var(--ui-text-primary);
+        cursor: pointer;
+        font-size: var(--ui-type-body-compact-01-font-size);
+        line-height: var(--ui-type-body-compact-01-line-height);
+    }
+
+    .ui-treeview-node:hover {
+        background-color: var(--ui-layer-hover-01);
+    }
+
+    .ui-treeview-node[aria-selected="true"] {
+        background-color: var(--ui-layer-selected-01);
+    }
+
+    .ui-treeview-node:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-treeview-children {
+        margin: 0;
+        padding-inline-start: var(--ui-spacing-06);
+        list-style: none;
+    }
+}

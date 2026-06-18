@@ -1,0 +1,18 @@
+/* ==========================================================================
+   File: resources/css/type/font-weight.css
+   Purpose: Type font weight aliases.
+   Carbon reference:
+
+   * reference/carbon-main/packages/type/src/fontWeight.ts
+
+   Notes:
+   - Defines type weight tokens only.
+   ========================================================================== */
+
+@layer base {
+    :root {
+        --ui-font-weight-light: 300;
+        --ui-font-weight-regular: 400;
+        --ui-font-weight-semibold: 600;
+    }
+}

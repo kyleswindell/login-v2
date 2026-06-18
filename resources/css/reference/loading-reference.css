@@ -1,0 +1,61 @@
+@layer components {
+    .ui-loading-demo-surface--page
+        .ui-loading--placement-page.ui-loading--overlay {
+        position: absolute;
+    }
+
+    .ui-loading-demo-region,
+    .ui-loading-demo-surface,
+    .ui-loading-demo-modal,
+    .ui-loading-demo-panel {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--ui-border-subtle-01);
+        border-radius: 0.375rem;
+        padding: var(--ui-spacing-05);
+        background-color: var(--ui-layer-02);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-loading-demo-region {
+        min-block-size: 15rem;
+    }
+
+    .ui-loading-demo-region__content {
+        display: grid;
+        gap: var(--ui-spacing-04);
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-loading-demo-region__content h4,
+    .ui-loading-demo-surface h4 {
+        color: var(--ui-text-primary);
+        font-size: 0.875rem;
+        font-weight: 600;
+        line-height: 1.25rem;
+    }
+
+    .ui-loading-demo-surface {
+        min-block-size: 14rem;
+    }
+
+    .ui-loading-demo-surface--page {
+        min-block-size: 14rem;
+        background-color: var(--ui-background);
+    }
+
+    .ui-loading-demo-modal,
+    .ui-loading-demo-panel {
+        min-block-size: 10rem;
+        background-color: var(--ui-layer-01);
+    }
+
+    .ui-loading-inactive-proof {
+        display: flex;
+        align-items: center;
+        gap: var(--ui-spacing-03);
+        color: var(--ui-text-secondary);
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+    }
+}

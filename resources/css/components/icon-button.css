@@ -1,0 +1,64 @@
+/* ==========================================================================
+File: resources/css/components/icon-button.css
+Purpose: Icon button component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/button/
+
+Notes:
+
+* Defines Icon Button selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Button color and state values are provided by tokens/components/buttons.css.
+  ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+   Icon-only button
+   ---------------------------------------------------------------------- */
+
+    .ui-icon-button,
+    .ui-button-icon-only {
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--ui-button-size, 3rem);
+        block-size: var(--ui-button-size, 3rem);
+        min-block-size: var(--ui-button-size, 3rem);
+        padding: 0;
+    }
+
+    .ui-icon-button > :first-child,
+    .ui-button-icon-only > :first-child {
+        min-inline-size: 1rem;
+    }
+
+    .ui-icon-button .ui-button-icon,
+    .ui-button-icon-only .ui-button-icon {
+        position: static;
+        margin: 0;
+    }
+
+    .ui-icon-button.ui-button-expressive,
+    .ui-button-icon-only.ui-button-expressive {
+        --ui-button-icon-size: 1.25rem;
+    }
+
+    .ui-icon-button.ui-button-ghost:focus-visible,
+    .ui-button-icon-only.ui-button-ghost:focus-visible {
+        background-color: var(--ui-background-active);
+        box-shadow: inset 0 0 0 1px var(--ui-focus);
+    }
+
+    .ui-icon-button-selected,
+    .ui-button-icon-only.ui-button-selected {
+        background-color: var(--ui-background-selected);
+    }
+
+    .ui-icon-button:disabled,
+    .ui-icon-button[aria-disabled="true"],
+    .ui-button-icon-only:disabled,
+    .ui-button-icon-only[aria-disabled="true"] {
+        cursor: not-allowed;
+    }
+}

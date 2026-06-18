@@ -1,0 +1,219 @@
+/* ==========================================================================
+File: resources/css/components/code-snippet.css
+Purpose: Code Snippet component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/code-snippet/
+
+Notes:
+
+* Defines Code Snippet selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Copy feedback uses shared base feedback keyframes.
+  ========================================================================== */
+
+@layer components {
+    .ui-code-snippet {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: start;
+        inline-size: 100%;
+        background-color: var(--ui-layer-01);
+        color: var(--ui-text-primary);
+        font-family: var(--ui-font-family-mono);
+        font-size: var(--ui-type-code-01-font-size);
+        line-height: var(--ui-type-code-01-line-height);
+    }
+
+    .ui-code-snippet-content {
+        overflow: auto;
+        padding: var(--ui-spacing-05);
+    }
+
+    .ui-code-snippet-single {
+        align-items: center;
+    }
+
+    .ui-code-snippet-single .ui-code-snippet-content {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .ui-code-snippet-multi .ui-code-snippet-content {
+        max-block-size: 18rem;
+        white-space: pre;
+    }
+
+    .ui-code-snippet-copy {
+        align-self: stretch;
+    }
+}
+
+@layer components {
+    /* Laravel UI code-snippet shell API migrated from app.css after Carbon SCSS ownership audit. */
+    .ui-code-snippet-shell {
+        @apply relative w-full max-w-3xl overflow-visible;
+        --ui-code-snippet-layer: var(--ui-layer-02);
+        --ui-card-layer: var(--ui-code-snippet-layer);
+    }
+
+    .ui-code-snippet-shell-light {
+        --ui-code-snippet-layer: var(--ui-layer-01);
+    }
+
+    .ui-code-snippet-header {
+        @apply flex min-h-10 items-center justify-between gap-3 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em];
+        background-color: var(--ui-code-snippet-layer);
+        color: var(--ui-text-helper);
+    }
+
+    .ui-code-snippet-shell .ui-code-snippet {
+        @apply rounded-none border-0;
+        background-color: var(--ui-code-snippet-layer);
+    }
+
+    .ui-code-snippet-copy-control {
+        @apply absolute right-4 top-4 z-30;
+    }
+
+    .ui-code-snippet-copy-control .ui-copy-button {
+        @apply h-8 min-h-8 w-8 min-w-8 rounded-none border-0 p-0 shadow-none;
+        background-color: transparent;
+        color: var(--ui-icon-primary);
+    }
+
+    .ui-code-snippet-copy-control .ui-copy-button:hover,
+    .ui-code-snippet-copy-control .ui-copy-button.is-hover {
+        background-color: var(--ui-action-ghost-bg-hover);
+        color: var(--ui-action-ghost-text-hover);
+    }
+
+    .ui-code-snippet-copy-control .ui-copy-button:active,
+    .ui-code-snippet-copy-control .ui-copy-button.is-active {
+        background-color: var(--ui-action-ghost-bg-active);
+        color: var(--ui-action-ghost-text-active);
+    }
+
+    .ui-code-snippet-copy-control .ui-copy-button:disabled {
+        background-color: transparent;
+        color: var(--ui-icon-disabled);
+    }
+
+    .ui-code-snippet-shell[data-ui-code-copy-state="copied"]
+        .ui-code-snippet-copy-control
+        .ui-copy-button {
+        color: var(--ui-support-success);
+    }
+
+    .ui-code-snippet-footer {
+        @apply px-4 py-2;
+        background-color: var(--ui-code-snippet-layer);
+    }
+
+    .ui-code-snippet-toggle {
+        @apply min-h-10 px-4 py-2;
+    }
+
+
+}
+
+@layer components {
+    /* Laravel UI code-snippet base API migrated from app.css after Carbon SCSS ownership audit. */
+    .ui-code-snippet {
+        @apply overflow-x-auto rounded-lg border p-4 font-mono text-xs leading-6;
+        border-color: var(--ui-border-subtle-01);
+        background-color: var(--ui-layer-02);
+        color: var(--ui-text-primary);
+        max-width: 48rem;
+        scrollbar-gutter: stable;
+    }
+
+    .ui-code-snippet code {
+        @apply block;
+        width: max-content;
+        min-width: 100%;
+        white-space: pre;
+    }
+
+    .ui-code-snippet-shell-single .ui-code-snippet {
+        @apply min-h-10 py-2 pl-4 pr-12;
+    }
+
+    .ui-code-snippet-shell-multi .ui-code-snippet {
+        min-height: 18rem;
+        padding: 1rem 2.5rem 1rem 1rem;
+    }
+
+    .ui-code-snippet-shell-expandable[data-ui-code-snippet-expanded="false"]
+        .ui-code-snippet {
+        min-height: 0;
+        max-height: calc(
+            (var(--ui-code-snippet-collapsed-lines, 9) * 1.5rem) + 2rem
+        );
+        overflow-y: hidden;
+    }
+
+    .ui-code-snippet-shell-expandable[data-ui-code-snippet-expanded="true"]
+        .ui-code-snippet {
+        max-height: none;
+    }
+
+    .ui-code-snippet-inline {
+        @apply inline-flex min-h-4 items-center rounded-sm border-0 px-2 font-mono text-xs leading-4 transition;
+        background-color: var(--ui-layer-01);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-code-snippet-inline-copyable {
+        @apply cursor-pointer;
+    }
+
+    .ui-code-snippet-inline:hover,
+    .ui-code-snippet-inline-copyable.is-hover {
+        background-color: var(--ui-layer-hover-01);
+    }
+
+    .ui-code-snippet-inline:focus-visible,
+    .ui-code-snippet-shell:focus-within {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: 2px;
+    }
+
+    .ui-code-snippet-inline:active,
+    .ui-code-snippet-inline-copyable.is-active {
+        background-color: var(--ui-layer-active-01);
+    }
+
+    .ui-code-token-keyword {
+        color: var(--ui-code-token-keyword);
+    }
+
+    .ui-code-token-property {
+        color: var(--ui-code-token-property);
+    }
+
+    .ui-code-token-string {
+        color: var(--ui-code-token-string);
+    }
+
+    .ui-code-token-comment {
+        color: var(--ui-code-token-comment);
+    }
+
+    .ui-code-token-punctuation {
+        color: var(--ui-code-token-punctuation);
+    }
+
+    .ui-code-token-number {
+        color: var(--ui-code-token-number);
+    }
+
+    .ui-code-token-function {
+        color: var(--ui-code-token-function);
+    }
+
+
+}

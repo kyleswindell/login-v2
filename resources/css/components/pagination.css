@@ -1,0 +1,370 @@
+/* ==========================================================================
+File: resources/css/components/pagination.css
+Purpose: Pagination component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/pagination/
+
+Notes:
+
+* Defines Pagination selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Pagination composes Select and Button behavior.
+  ========================================================================== */
+
+@layer components {
+    .ui-pagination {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--ui-spacing-05);
+        inline-size: 100%;
+        min-block-size: 3rem;
+        border-block-start: 1px solid var(--ui-border-subtle-01);
+        background-color: var(--ui-layer-01);
+        color: var(--ui-text-primary);
+        font-size: var(--ui-type-body-compact-01-font-size);
+    }
+
+    .ui-pagination-left,
+    .ui-pagination-right {
+        display: flex;
+        align-items: center;
+        gap: var(--ui-spacing-05);
+    }
+
+    .ui-pagination-text {
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-pagination-nav {
+        display: inline-flex;
+        align-items: center;
+    }
+}
+
+@layer components {
+    /* Laravel UI pagination API migrated from app.css after Carbon SCSS ownership audit. */
+    .ui-pagination {
+        --ui-pagination-control-size: 2.5rem;
+        --ui-pagination-segment-padding: 1rem;
+        display: flex;
+        width: 100%;
+        min-width: 0;
+        color: var(--ui-text-primary);
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+    }
+
+    .ui-pagination-sm {
+        --ui-pagination-control-size: 2rem;
+        --ui-pagination-segment-padding: 1rem;
+    }
+
+    .ui-pagination-md {
+        --ui-pagination-control-size: 2.5rem;
+        --ui-pagination-segment-padding: 1rem;
+    }
+
+    .ui-pagination-lg {
+        --ui-pagination-control-size: 3rem;
+        --ui-pagination-segment-padding: 1rem;
+    }
+
+    .ui-pagination-pagination {
+        border: 1px solid var(--ui-border-subtle-01);
+        background-color: var(--ui-layer-01);
+    }
+
+    .ui-pagination-nav {
+        background-color: transparent;
+    }
+
+    .ui-pagination-align-left {
+        justify-content: flex-start;
+    }
+
+    .ui-pagination-align-right {
+        justify-content: flex-end;
+    }
+
+    .ui-pagination-bar {
+        display: flex;
+        width: 100%;
+        min-block-size: var(--ui-pagination-control-size);
+        align-items: stretch;
+        gap: 0;
+        padding-inline: 0;
+    }
+
+    .ui-pagination-left,
+    .ui-pagination-right,
+    .ui-pagination-page-size-segment,
+    .ui-pagination-page-select-segment,
+    .ui-pagination-range-segment,
+    .ui-pagination-controls,
+    .ui-pagination-nav-shell,
+    .ui-pagination-list {
+        display: flex;
+        align-items: center;
+    }
+
+    .ui-pagination-left {
+        flex: 1 1 auto;
+        min-inline-size: 0;
+    }
+
+    .ui-pagination-right {
+        flex: 0 0 auto;
+        margin-inline-start: auto;
+    }
+
+    .ui-pagination-page-size-segment,
+    .ui-pagination-page-select-segment,
+    .ui-pagination-range-segment {
+        min-block-size: var(--ui-pagination-control-size);
+    }
+
+    .ui-pagination-page-size-segment {
+        padding-inline-start: var(--ui-pagination-segment-padding);
+        padding-inline-end: var(--ui-pagination-segment-padding);
+        border-inline-end: 1px solid var(--ui-border-subtle-01);
+    }
+
+    .ui-pagination-page-size-segment .ui-pagination-label {
+        margin-inline-end: 0.5rem;
+    }
+
+    .ui-pagination-range-segment {
+        flex: 1 1 auto;
+        min-inline-size: 0;
+        padding-inline: var(--ui-pagination-segment-padding);
+    }
+
+    .ui-pagination-page-select-segment {
+        flex: 0 0 auto;
+        padding-inline-end: var(--ui-pagination-segment-padding);
+        border-inline-start: 1px solid var(--ui-border-subtle-01);
+    }
+
+    .ui-pagination-label {
+        gap: 0;
+        color: var(--ui-text-primary);
+        font-weight: 400;
+    }
+
+    .ui-pagination-range-segment {
+        color: var(--ui-text-secondary);
+        font-weight: 400;
+    }
+
+    .ui-pagination-select-field {
+        display: inline-flex;
+        width: auto;
+    }
+
+    .ui-pagination .ui-select-field-inline .ui-select-shell {
+        display: inline-flex;
+        min-block-size: var(--ui-pagination-control-size);
+        align-items: center;
+    }
+
+    .ui-pagination .ui-select-field-inline .ui-select {
+        min-block-size: var(--ui-pagination-control-size);
+        border-bottom-color: transparent;
+        background-color: transparent;
+        padding-block: 0;
+    }
+
+    .ui-pagination-page-size-select-field .ui-select {
+        padding-inline-start: 0.5rem;
+        padding-inline-end: 2.5rem;
+    }
+
+    .ui-pagination-page-number-select-field .ui-select {
+        padding-inline-start: 1rem;
+        padding-inline-end: 2rem;
+    }
+
+    .ui-pagination-page-number-select-field .ui-select-chevron-icon {
+        right: 0.5rem;
+    }
+
+    .ui-pagination-total-pages-label {
+        margin-inline-start: 0.5rem;
+        white-space: nowrap;
+    }
+
+    .ui-pagination-control:focus-visible,
+    .ui-pagination-page:focus-visible,
+    .ui-pagination-overflow-item:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-pagination-controls {
+        margin-inline-start: 0;
+    }
+
+    .ui-pagination-control-cell {
+        border-inline-start: 1px solid var(--ui-border-subtle-01);
+    }
+
+    .ui-pagination-nav-shell {
+        justify-content: inherit;
+        gap: 0;
+        min-inline-size: 0;
+        max-inline-size: 100%;
+    }
+
+    .ui-pagination-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        min-inline-size: 0;
+        max-inline-size: 100%;
+        overflow-x: auto;
+    }
+
+    .ui-pagination-item {
+        position: relative;
+        display: flex;
+        flex: 0 0 auto;
+    }
+
+    .ui-pagination-control,
+    .ui-pagination-page {
+        display: inline-flex;
+        min-inline-size: var(--ui-pagination-control-size);
+        min-block-size: var(--ui-pagination-control-size);
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        background-color: transparent;
+        color: var(--ui-text-primary);
+        font: inherit;
+        text-decoration: none;
+        transition:
+            background-color 120ms ease,
+            color 120ms ease,
+            box-shadow 120ms ease;
+    }
+
+    .ui-pagination-control-cell {
+        flex: 0 0 var(--ui-pagination-control-size);
+    }
+
+    .ui-pagination-control:hover,
+    .ui-pagination-page:hover,
+    .ui-pagination-overflow-trigger[aria-expanded="true"] {
+        background-color: var(--ui-layer-hover-01);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-pagination-control:active,
+    .ui-pagination-page:active {
+        background-color: var(--ui-layer-active-01);
+    }
+
+    .ui-pagination-page.is-current {
+        color: var(--ui-text-primary);
+        font-weight: 600;
+        box-shadow: inset 0 -4px 0 var(--ui-border-interactive);
+    }
+
+    .ui-pagination-control-icon {
+        color: var(--ui-icon-primary);
+    }
+
+    .ui-pagination-icon {
+        width: 1rem;
+        height: 1rem;
+        stroke: currentColor;
+    }
+
+    .ui-pagination-control.is-disabled,
+    .ui-pagination-control.is-disabled:hover,
+    .ui-pagination-page.is-disabled,
+    .ui-pagination-page.is-disabled:hover {
+        cursor: not-allowed;
+        background-color: transparent;
+        color: var(--ui-text-disabled);
+    }
+
+    .ui-pagination-control.is-disabled .ui-pagination-icon {
+        color: var(--ui-icon-disabled);
+    }
+
+    .ui-pagination-overflow {
+        position: relative;
+    }
+
+    .ui-pagination-overflow-menu {
+        position: absolute;
+        inset-block-start: calc(100% + 0.25rem);
+        inset-inline-start: 50%;
+        z-index: 40;
+        display: grid;
+        min-inline-size: 8rem;
+        max-block-size: 14rem;
+        overflow-y: auto;
+        border: 1px solid var(--ui-border-subtle-01);
+        background-color: var(--ui-layer-01);
+        box-shadow: var(--ui-shadow-floating);
+        transform: translateX(-50%);
+    }
+
+    .ui-pagination-overflow-item {
+        display: flex;
+        min-block-size: 2rem;
+        align-items: center;
+        padding-inline: 1rem;
+        color: var(--ui-text-primary);
+        text-decoration: none;
+    }
+
+    .ui-pagination-overflow-item:hover {
+        background-color: var(--ui-layer-hover-01);
+    }
+
+    .ui-pagination-small-breakpoint .ui-pagination-bar {
+        flex-wrap: nowrap;
+    }
+
+    .ui-pagination-small-breakpoint .ui-pagination-page-size-segment,
+    .ui-pagination-small-breakpoint .ui-pagination-page-select-segment {
+        display: none;
+    }
+
+    .ui-pagination-small-breakpoint .ui-pagination-range-segment {
+        padding-inline-start: var(--ui-pagination-segment-padding);
+    }
+
+    @media (max-width: 48rem) {
+        .ui-pagination-responsive .ui-pagination-bar {
+            flex-wrap: nowrap;
+        }
+
+        .ui-pagination-responsive .ui-pagination-page-size-segment,
+        .ui-pagination-responsive .ui-pagination-page-select-segment {
+            display: none;
+        }
+
+        .ui-pagination-responsive .ui-pagination-range-segment {
+            padding-inline-start: var(--ui-pagination-segment-padding);
+        }
+
+        .ui-pagination-responsive .ui-pagination-list {
+            max-inline-size: calc(100vw - 8rem);
+            overflow-x: visible;
+        }
+
+        .ui-pagination-responsive
+            .ui-pagination-item-page:not(.ui-pagination-item-current) {
+            display: none;
+        }
+    }
+
+
+}

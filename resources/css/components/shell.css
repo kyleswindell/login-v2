@@ -1,0 +1,13 @@
+/* ==========================================================================
+File: resources/css/components/shell.css
+Purpose: Shell compatibility target.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/ui-shell/
+
+Notes:
+
+* Carbon owns this behavior as ui-shell.
+* Keep implementation selectors in ui-shell.css.
+* This file exists only as a named compatibility target for app migration.
+  ========================================================================== */

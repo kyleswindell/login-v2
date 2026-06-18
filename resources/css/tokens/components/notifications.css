@@ -1,0 +1,117 @@
+/* ==========================================================================
+File: resources/css/tokens/components/notifications.css
+Purpose: Notification component color tokens.
+Notes:
+
+* Defines notification component tokens only.
+* Do not place component selectors in this file.
+* Do not define global theme role tokens in this file.
+* Do not use notification component tokens as global semantic colors.
+* These tokens may consume button and theme role tokens where the source
+  mapping intentionally references inverse/tertiary button behavior.
+  ========================================================================== */
+
+@layer base {
+    /* ----------------------------------------------------------------------
+Notification component tokens: white theme
+---------------------------------------------------------------------- */
+    :root,
+    html[data-theme-resolved="light"],
+    html[data-theme-resolved="white"],
+    [data-theme-resolved="light"],
+    [data-theme-resolved="white"] {
+        --ui-notification-background-error: var(--ui-red-10);
+        --ui-notification-background-success: var(--ui-green-10);
+        --ui-notification-background-info: var(--ui-blue-10);
+        --ui-notification-background-warning: var(--ui-yellow-10);
+
+        --ui-notification-action-hover: var(--ui-white);
+
+        --ui-notification-action-tertiary-inverse: var(--ui-white);
+        --ui-notification-action-tertiary-inverse-active: var(--ui-gray-30);
+        --ui-notification-action-tertiary-inverse-hover: var(--ui-gray-10);
+        --ui-notification-action-tertiary-inverse-text: var(--ui-gray-100);
+        --ui-notification-action-tertiary-inverse-text-on-color-disabled: rgb(
+            var(--ui-white-rgb) / 0.25
+        );
+    }
+
+    /* ----------------------------------------------------------------------
+   Notification component tokens: gray 10 theme
+   ---------------------------------------------------------------------- */
+    html[data-theme-resolved="gray-10"],
+    [data-theme-resolved="gray-10"] {
+        --ui-notification-background-error: var(--ui-red-10);
+        --ui-notification-background-success: var(--ui-green-10);
+        --ui-notification-background-info: var(--ui-blue-10);
+        --ui-notification-background-warning: var(--ui-yellow-10);
+
+        --ui-notification-action-hover: var(--ui-white);
+
+        --ui-notification-action-tertiary-inverse: var(--ui-white);
+        --ui-notification-action-tertiary-inverse-active: var(--ui-gray-30);
+        --ui-notification-action-tertiary-inverse-hover: var(--ui-gray-10);
+        --ui-notification-action-tertiary-inverse-text: var(--ui-gray-100);
+        --ui-notification-action-tertiary-inverse-text-on-color-disabled: rgb(
+            var(--ui-white-rgb) / 0.25
+        );
+    }
+
+    /* ----------------------------------------------------------------------
+   Notification component tokens: gray 90 theme
+   ---------------------------------------------------------------------- */
+    html[data-theme-resolved="dark"],
+    html[data-theme-resolved="gray-90"],
+    [data-theme-resolved="dark"],
+    [data-theme-resolved="gray-90"] {
+        --ui-notification-background-error: var(--ui-gray-80);
+        --ui-notification-background-success: var(--ui-gray-80);
+        --ui-notification-background-info: var(--ui-gray-80);
+        --ui-notification-background-warning: var(--ui-gray-80);
+
+        /*
+       The source mapping only defines action-hover for white and gray-10.
+       For dark themes, pin this to the hover value that corresponds to the
+       active notification background to prevent light-theme inheritance.
+    */
+        --ui-notification-action-hover: var(--ui-gray-80-hover);
+
+        --ui-notification-action-tertiary-inverse: var(--ui-blue-60);
+        --ui-notification-action-tertiary-inverse-active: var(--ui-blue-80);
+        --ui-notification-action-tertiary-inverse-hover: var(
+            --ui-blue-60-hover
+        );
+        --ui-notification-action-tertiary-inverse-text: var(--ui-white);
+        --ui-notification-action-tertiary-inverse-text-on-color-disabled: var(
+            --ui-gray-50
+        );
+    }
+
+    /* ----------------------------------------------------------------------
+   Notification component tokens: gray 100 theme
+   ---------------------------------------------------------------------- */
+    html[data-theme-resolved="gray-100"],
+    [data-theme-resolved="gray-100"] {
+        --ui-notification-background-error: var(--ui-gray-90);
+        --ui-notification-background-success: var(--ui-gray-90);
+        --ui-notification-background-info: var(--ui-gray-90);
+        --ui-notification-background-warning: var(--ui-gray-90);
+
+        /*
+       The source mapping only defines action-hover for white and gray-10.
+       For dark themes, pin this to the hover value that corresponds to the
+       active notification background to prevent light-theme inheritance.
+    */
+        --ui-notification-action-hover: var(--ui-gray-90-hover);
+
+        --ui-notification-action-tertiary-inverse: var(--ui-blue-60);
+        --ui-notification-action-tertiary-inverse-active: var(--ui-blue-80);
+        --ui-notification-action-tertiary-inverse-hover: var(
+            --ui-blue-60-hover
+        );
+        --ui-notification-action-tertiary-inverse-text: var(--ui-white);
+        --ui-notification-action-tertiary-inverse-text-on-color-disabled: var(
+            --ui-gray-50
+        );
+    }
+}

@@ -1,0 +1,108 @@
+/* ==========================================================================
+   File: resources/css/base/compatibility.css
+   Purpose: Transitional compatibility overrides for legacy utility-heavy markup.
+   Notes:
+   - Do not add component styling here.
+   - Prefer replacing these selectors with app-owned UI APIs during extraction.
+   ========================================================================== */
+
+@layer base {
+    html[data-theme-resolved="light"] .bg-slate-950 {
+        background-color: rgb(248 250 252) !important;
+    }
+
+    html[data-theme-resolved="light"] .bg-slate-950\/95,
+    html[data-theme-resolved="light"] .bg-slate-950\/90,
+    html[data-theme-resolved="light"] .bg-slate-950\/80,
+    html[data-theme-resolved="light"] .bg-slate-950\/75,
+    html[data-theme-resolved="light"] .bg-slate-950\/70,
+    html[data-theme-resolved="light"] .bg-slate-950\/40 {
+        background-color: rgb(248 250 252 / 0.96) !important;
+    }
+
+    html[data-theme-resolved="light"] .bg-slate-900,
+    html[data-theme-resolved="light"] .bg-slate-900\/95,
+    html[data-theme-resolved="light"] .bg-slate-900\/80,
+    html[data-theme-resolved="light"] .bg-slate-900\/70,
+    html[data-theme-resolved="light"] .bg-slate-900\/40 {
+        background-color: rgb(255 255 255) !important;
+    }
+
+    html[data-theme-resolved="light"] .bg-slate-700,
+    html[data-theme-resolved="light"] .bg-slate-800,
+    html[data-theme-resolved="light"] .bg-slate-800\/95,
+    html[data-theme-resolved="light"] .bg-slate-800\/80,
+    html[data-theme-resolved="light"] .bg-slate-700\/70,
+    html[data-theme-resolved="light"] .bg-slate-700\/60,
+    html[data-theme-resolved="light"] .bg-slate-900\/60,
+    html[data-theme-resolved="light"] .bg-slate-800\/30 {
+        background-color: rgb(241 245 249) !important;
+    }
+
+    html[data-theme-resolved="light"] .hover\:bg-slate-800:hover,
+    html[data-theme-resolved="light"] .hover\:bg-slate-700:hover,
+    html[data-theme-resolved="light"] .hover\:bg-slate-950:hover {
+        background-color: rgb(241 245 249) !important;
+    }
+
+    html[data-theme-resolved="light"] .border-slate-800,
+    html[data-theme-resolved="light"] .border-slate-700 {
+        border-color: rgb(203 213 225) !important;
+    }
+
+    html[data-theme-resolved="light"] .text-white,
+    html[data-theme-resolved="light"] .text-slate-100 {
+        color: rgb(15 23 42) !important;
+    }
+
+    html[data-theme-resolved="light"] .text-slate-200 {
+        color: rgb(30 41 59) !important;
+    }
+
+    html[data-theme-resolved="light"] .text-slate-300 {
+        color: rgb(51 65 85) !important;
+    }
+
+    html[data-theme-resolved="light"] .text-slate-400 {
+        color: rgb(71 85 105) !important;
+    }
+
+    html[data-theme-resolved="light"] .text-slate-500 {
+        color: rgb(100 116 139) !important;
+    }
+
+    html[data-theme-resolved="light"]
+        .placeholder\:text-slate-500::placeholder {
+        color: rgb(100 116 139) !important;
+    }
+
+    html[data-theme-resolved="light"] .shadow-black\/40,
+    html[data-theme-resolved="light"] .shadow-black\/30,
+    html[data-theme-resolved="light"] .shadow-black\/20 {
+        --tw-shadow-color: rgb(148 163 184 / 0.25) !important;
+    }
+
+    .ui-scrollbar {
+        scrollbar-width: thin;
+        scrollbar-color: var(--ui-scrollbar-thumb) var(--ui-scrollbar-track);
+    }
+
+    .ui-scrollbar::-webkit-scrollbar {
+        width: 0.75rem;
+    }
+
+    .ui-scrollbar::-webkit-scrollbar-track {
+        background-color: var(--ui-scrollbar-track);
+        border-radius: 9999px;
+    }
+
+    .ui-scrollbar::-webkit-scrollbar-thumb {
+        background-color: var(--ui-scrollbar-thumb);
+        border-radius: 9999px;
+        border: 2px solid var(--ui-scrollbar-track);
+    }
+
+    .ui-scrollbar::-webkit-scrollbar-thumb:hover {
+        background-color: var(--ui-scrollbar-thumb-hover);
+    }
+}

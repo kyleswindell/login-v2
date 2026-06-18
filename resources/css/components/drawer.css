@@ -1,0 +1,53 @@
+/* ==========================================================================
+File: resources/css/components/drawer.css
+Purpose: Drawer compatibility component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/modal/
+* reference/carbon-main/packages/styles/scss/components/dialog/
+
+Notes:
+
+* Carbon has no one-to-one Drawer component in this package.
+* Drawer is an app compatibility layer built from Modal/Dialog overlay behavior.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+  ========================================================================== */
+
+@layer components {
+    .ui-drawer {
+        position: fixed;
+        inset-block: 0;
+        inset-inline-end: 0;
+        z-index: 8000;
+        display: flex;
+        flex-direction: column;
+        inline-size: min(100%, 28rem);
+        background-color: var(--ui-layer-01);
+        color: var(--ui-text-primary);
+        box-shadow: var(--ui-shadow-overlay-panel);
+    }
+
+    .ui-drawer-header,
+    .ui-drawer-body,
+    .ui-drawer-footer {
+        padding-inline: var(--ui-spacing-06);
+    }
+
+    .ui-drawer-header {
+        padding-block: var(--ui-spacing-06) var(--ui-spacing-05);
+    }
+
+    .ui-drawer-body {
+        flex: 1 1 auto;
+        overflow: auto;
+        padding-block-end: var(--ui-spacing-06);
+    }
+
+    .ui-drawer-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1px;
+        padding-block: var(--ui-spacing-05);
+    }
+}

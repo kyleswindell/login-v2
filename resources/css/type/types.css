@@ -1,0 +1,12 @@
+/* ==========================================================================
+   File: resources/css/type/types.css
+   Purpose: CSS counterpart note for Carbon TypeScript type definitions.
+   Carbon reference:
+
+   * reference/carbon-main/packages/type/src/types.ts
+
+   Notes:
+   - Carbon types.ts is compile-time metadata for JavaScript consumers.
+   - CSS custom properties in tokens.css are the runtime contract here.
+   - No runtime CSS is required here.
+   ========================================================================== */

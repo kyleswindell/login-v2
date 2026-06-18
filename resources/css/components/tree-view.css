@@ -1,0 +1,13 @@
+/* ==========================================================================
+File: resources/css/components/tree-view.css
+Purpose: Tree View compatibility target.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/treeview/
+
+Notes:
+
+* Carbon owns this component as treeview.
+* Keep implementation selectors in treeview.css.
+* This file exists only as a named compatibility target for app migration.
+  ========================================================================== */

@@ -1,0 +1,66 @@
+/* ==========================================================================
+File: resources/css/components/combo-box.css
+Purpose: Combo Box component styles.
+Carbon reference:
+
+* reference/carbon-main/packages/styles/scss/components/combo-box/
+* reference/carbon-main/packages/styles/scss/components/fluid-combo-box/
+
+Notes:
+
+* Defines Combo Box selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Combo Box composes Text Input and List Box behavior.
+  ========================================================================== */
+
+@layer components {
+    .ui-combo-box:hover {
+        background-color: var(--ui-field-01);
+    }
+
+    .ui-combo-box .ui-list-box-field,
+    .ui-combo-box[data-invalid] .ui-list-box-field,
+    .ui-combo-box.ui-list-box-warning .ui-list-box-field {
+        padding: 0;
+    }
+
+    .ui-combo-box .ui-text-input {
+        block-size: 100%;
+        min-inline-size: 0;
+        border-block-end-color: transparent;
+    }
+
+    .ui-combo-box.ui-list-box-expanded .ui-text-input {
+        border-block-end-color: var(--ui-border-subtle-01);
+    }
+
+    .ui-combo-box-input-focus {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-combo-box .ui-list-box-menu-item:first-child.ui-list-box-menu-item-highlighted::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border: 2px solid var(--ui-focus);
+        border-block-start-width: 1px;
+        pointer-events: none;
+    }
+
+    .ui-combo-box-readonly,
+    .ui-combo-box-readonly:hover {
+        background-color: transparent;
+    }
+
+    .ui-combo-box-readonly .ui-text-input {
+        border-block-end-color: var(--ui-border-subtle-01);
+    }
+
+    .ui-combo-box-readonly .ui-list-box-menu-icon,
+    .ui-combo-box-readonly .ui-list-box-selection {
+        color: var(--ui-icon-disabled);
+        cursor: default;
+    }
+}

@@ -1,0 +1,124 @@
+/* ==========================================================================
+   File: resources/css/components/status.css
+   Purpose: Status and legacy badge display styles.
+   Notes:
+   - Defines rendered x-ui.badge and x-ui.status selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Status consumes component status tokens from tokens/components/status.css.
+   ========================================================================== */
+
+@layer components {
+    .ui-status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        border: 1px solid transparent;
+        border-radius: 9999px;
+        padding-block: 0.25rem;
+        padding-inline: 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        line-height: 1rem;
+        text-transform: uppercase;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    .ui-status-neutral {
+        background-color: var(--ui-status-neutral-bg);
+        color: var(--ui-status-neutral-text);
+    }
+
+    .ui-status-info {
+        background-color: var(--ui-status-info-bg);
+        color: var(--ui-status-info-text);
+    }
+
+    .ui-status-success {
+        background-color: var(--ui-status-success-bg);
+        color: var(--ui-status-success-text);
+    }
+
+    .ui-status-warning {
+        background-color: var(--ui-status-warning-bg);
+        color: var(--ui-status-warning-text);
+    }
+
+    .ui-status-danger {
+        background-color: var(--ui-status-danger-bg);
+        color: var(--ui-status-danger-text);
+    }
+
+    .ui-status-notice {
+        background-color: var(--ui-status-notice-bg);
+        color: var(--ui-status-notice-text);
+    }
+
+    .ui-status-outline {
+        border-color: currentColor;
+        background-color: transparent;
+    }
+
+    .ui-status-solid {
+        color: var(--ui-status-solid-text);
+    }
+
+    .ui-status-neutral.ui-status-solid {
+        background-color: var(--ui-status-neutral-solid-bg);
+    }
+
+    .ui-status-info.ui-status-solid {
+        background-color: var(--ui-status-info-solid-bg);
+    }
+
+    .ui-status-success.ui-status-solid {
+        background-color: var(--ui-status-success-solid-bg);
+    }
+
+    .ui-status-warning.ui-status-solid {
+        background-color: var(--ui-status-warning-solid-bg);
+    }
+
+    .ui-status-danger.ui-status-solid {
+        background-color: var(--ui-status-danger-solid-bg);
+    }
+
+    .ui-status-notice.ui-status-solid {
+        background-color: var(--ui-status-notice-solid-bg);
+    }
+
+    .ui-status-inline {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        line-height: 1rem;
+    }
+
+    .ui-status-inline-neutral {
+        color: var(--ui-status-neutral-text);
+    }
+
+    .ui-status-inline-info {
+        color: var(--ui-status-info-text);
+    }
+
+    .ui-status-inline-success {
+        color: var(--ui-status-success-text);
+    }
+
+    .ui-status-inline-warning {
+        color: var(--ui-status-warning-text);
+    }
+
+    .ui-status-inline-danger {
+        color: var(--ui-status-danger-text);
+    }
+
+    .ui-status-inline-notice {
+        color: var(--ui-status-notice-text);
+    }
+}

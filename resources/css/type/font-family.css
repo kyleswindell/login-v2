@@ -1,0 +1,39 @@
+/* ==========================================================================
+   File: resources/css/type/font-family.css
+   Purpose: Type font family aliases.
+   Carbon reference:
+
+   * reference/carbon-main/packages/type/src/fontFamily.ts
+
+   Notes:
+   - Defines font family tokens only.
+   - Preserves the app font stack instead of adopting IBM Plex.
+   ========================================================================== */
+
+@layer base {
+    :root {
+        --ui-font-family-sans: var(
+            --font-sans,
+            ui-sans-serif,
+            system-ui,
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            sans-serif
+        );
+        --ui-font-family-mono: var(
+            --font-mono,
+            ui-monospace,
+            SFMono-Regular,
+            Menlo,
+            Monaco,
+            Consolas,
+            "Liberation Mono",
+            "Courier New",
+            monospace
+        );
+        --ui-font-family-serif: Georgia, "Times New Roman", serif;
+        --ui-font-family-sans-condensed: var(--ui-font-family-sans);
+        --ui-font-family-sans-hebrew: var(--ui-font-family-sans);
+    }
+}

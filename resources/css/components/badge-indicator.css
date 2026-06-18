@@ -1,0 +1,64 @@
+/* ==========================================================================
+File: resources/css/components/badge-indicator.css
+Purpose: Badge indicator component styles.
+Notes:
+
+* Defines Badge indicator selectors only.
+* Do not define primitive palette tokens here.
+* Do not define theme role tokens here.
+* Badge indicator consumes support, text, spacing, and type tokens.
+  ========================================================================== */
+
+@layer components {
+    .ui-badge-indicator {
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-end: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        min-inline-size: var(--ui-spacing-03);
+        min-block-size: var(--ui-spacing-03);
+        max-block-size: var(--ui-spacing-05);
+
+        margin-block-start: var(--ui-spacing-03);
+        margin-inline-end: var(--ui-spacing-03);
+
+        padding-block-start: 0;
+        padding-block-end: var(--ui-spacing-01);
+        padding-inline: var(--ui-spacing-02);
+
+        border-radius: 100px;
+        background-color: var(--ui-support-error);
+        color: var(--ui-text-on-color);
+
+        font-size: 0.75rem;
+        font-weight: 400;
+        line-height: 1rem;
+        letter-spacing: 0;
+        white-space: nowrap;
+    }
+
+    .ui-badge-indicator-count,
+    .ui-badge-indicator[data-ui-badge-indicator-variant="count"] {
+        margin-block-start: var(--ui-spacing-02);
+        margin-inline-end: var(--ui-spacing-02);
+    }
+
+    .ui-badge-indicator-dot,
+    .ui-badge-indicator[data-ui-badge-indicator-variant="dot"] {
+        inline-size: var(--ui-spacing-03);
+        block-size: var(--ui-spacing-03);
+        min-inline-size: var(--ui-spacing-03);
+        min-block-size: var(--ui-spacing-03);
+        padding: 0;
+    }
+
+    .ui-badge-indicator-hidden,
+    .ui-badge-indicator[hidden],
+    .ui-badge-indicator[data-ui-badge-indicator-hidden="true"] {
+        display: none;
+    }
+}

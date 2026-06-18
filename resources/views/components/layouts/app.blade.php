@@ -8,7 +8,7 @@
     @include('components.layouts.app.head')
     <body
         @class([
-            'min-h-screen antialiased bg-slate-100 text-slate-900 dark:bg-slate-950 dark:text-slate-100',
+            'min-h-screen antialiased',
             'has-auth-shell' => auth()->check(),
         ])
         data-theme-update-url="{{ auth()->check() ? route('platform.account.preferences.update') : '' }}"

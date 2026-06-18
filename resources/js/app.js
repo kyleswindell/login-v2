@@ -1,15 +1,14 @@
-import './bootstrap';
-import './setup-sidebar';
-import './table-enhance';
-import './dashboard-sort';
-import './dashboard-proof-demo';
+import "./bootstrap";
+import "./setup-sidebar";
+import "./table-enhance";
+import "./dashboard-sort";
+import "./dashboard-proof-demo";
 
 import {
     initAccordions,
     initCheckboxes,
     initCodeSnippets,
     initContentSwitchers,
-    initDateRangePickers,
     initDropdowns,
     initDropdownActionMenus,
     initFilterPanels,
@@ -17,7 +16,6 @@ import {
     initInteractionFocus,
     initMenus,
     initMultiselects,
-    initPagination,
     initPopovers,
     initSearchControls,
     initSearchableSelects,
@@ -26,28 +24,26 @@ import {
     initStructuredLists,
     initTableSearchInputs,
     initTabs,
-    initTextInputs,
     initThemeModeControls,
-    initTiles,
     initTooltips,
     initTreeViews,
     refreshThemeMode,
-} from './ui-controls';
-import { initAuditLogDrawer, initErrorLogDrawer } from './log-drawers';
-import { initRealtimeNotifications } from './realtime-notifications';
+} from "./ui-controls";
+import { initAuditLogDrawer, initErrorLogDrawer } from "./log-drawers";
+import { initRealtimeNotifications } from "./realtime-notifications";
 import {
     initAccountMenu,
     initDocsTree,
     initMobileSidebarDock,
     initNotificationMenus,
     initSidebarToggle,
-} from './shell-ui';
+} from "./shell-ui";
 import {
     initUiReferenceComponentTabs,
     initUiReferenceOverlayDemos,
     initUiReferenceSidebarDisclosures,
     initUiReferenceTablesRemote,
-} from './ui-reference';
+} from "./ui-reference";
 
 const lifecycleInitializers = [
     initNotificationMenus,
@@ -68,17 +64,13 @@ const lifecycleInitializers = [
     initCheckboxes,
     initCodeSnippets,
     initMultiselects,
-    initPagination,
     initPopovers,
     initTooltips,
     initSliders,
     initTreeViews,
     initTabs,
-    initTextInputs,
     initContentSwitchers,
-    initDateRangePickers,
     initStructuredLists,
-    initTiles,
     initErrorLogDrawer,
     initAuditLogDrawer,
     initSidebarToggle,
@@ -97,14 +89,14 @@ const runLifecycleInitializer = (initializer) => {
 lifecycleInitializers.forEach((initializer) => {
     const run = () => runLifecycleInitializer(initializer);
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', run, { once: true });
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", run, { once: true });
     } else {
         run();
     }
 
-    document.addEventListener('livewire:navigated', run);
+    document.addEventListener("livewire:navigated", run);
 });
 
-document.addEventListener('livewire:navigating', refreshThemeMode);
-window.addEventListener('pageshow', refreshThemeMode);
+document.addEventListener("livewire:navigating", refreshThemeMode);
+window.addEventListener("pageshow", refreshThemeMode);

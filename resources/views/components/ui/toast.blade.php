@@ -33,7 +33,7 @@
             </div>
         @elseif ($dismissible)
             <div class="flex shrink-0 items-start gap-2">
-                <x-ui.button variant="ghost" size="xs">Dismiss</x-ui.button>
+                <x-ui.button semantic="ghost" size="xs">Dismiss</x-ui.button>
             </div>
         @endisset
     </div>

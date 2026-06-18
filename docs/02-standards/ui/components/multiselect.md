@@ -11,10 +11,13 @@ canonical_doc: docs/02-standards/ui/components/multiselect.md
 source_owner: /platform/ui-reference/components/multiselect
 blade_api:
   - x-ui.multiselect
-javascript_api: []
+javascript_api:
+  - initMultiselects exported from resources/js/ui-controls/multiselects.js
 source_files:
   - resources/views/components/ui/multiselect.blade.php
-  - resources/css/app.css
+  - resources/js/ui-controls/multiselects.js
+  - resources/css/components/multiselect.css
+  - resources/css/components/list-box.css
 foundation_elements:
   - color
   - spacing
@@ -120,8 +123,8 @@ Multiselect is the installed Login App 2.0 multi-value known-option selection AP
 | Canonical doc                | `docs/02-standards/ui/components/multiselect.md`                                                                                 |
 | Source owner                 | `/platform/ui-reference/components/multiselect`                                                                                  |
 | Blade API                    | `x-ui.multiselect`                                                                                                               |
-| JavaScript API               | No dedicated public JavaScript controller required for feature views                                                             |
-| Source files                 | `resources/views/components/ui/multiselect.blade.php`; `resources/css/app.css`                                                   |
+| JavaScript API               | `initMultiselects` through the app UI controls entry; feature views must not add local controllers                               |
+| Source files                 | `resources/views/components/ui/multiselect.blade.php`; `resources/js/ui-controls/multiselects.js`; `resources/css/components/multiselect.css`; `resources/css/components/list-box.css` |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, Icons, 2x Grid where composed in layouts                                             |
 | Carbon benchmark             | Carbon Dropdown/Multiselect and Tag guidance inform scope, option behavior, selected-value display, and accessibility boundaries |
 
@@ -151,6 +154,8 @@ The installed standard is:
 - Do not combine local Dropdown, Checkbox, Search, Tag, hidden inputs, and JavaScript to create a feature-owned multiselect.
 
 Carbon alignment note: Carbon treats multiselect as part of the dropdown/listbox family and uses tag behavior for selected values in some contexts. Login App maps those ideas to its own `x-ui.multiselect` API, app-owned `ui-*` classes, Foundation tokens, and UI Reference proof instead of adopting Carbon implementation classes directly.
+
+Multiselect is a custom ListBox consumer. It must emit `role="listbox"`, `aria-multiselectable="true"`, `role="option"`, `aria-selected`, shared `ui-list-box*` structure classes, and component-owned `data-ui-multiselect*` hooks. It must not use Menu roles or Menu item classes because options are values, not commands.
 
 ## 4. Public API
 
@@ -211,7 +216,7 @@ Use the Blade API instead of hand-building multiselect trigger, listbox, selecte
 | Root semantic element | Component-owned field wrapper with labelled trigger and option list/listbox semantics                                                                              |
 | Data attributes       | Component-owned attributes documented below. Feature views must not invent multiselect behavior attributes.                                                        |
 | CSS namespace         | App-owned `ui-*` multiselect classes documented by the implementation                                                                                              |
-| Source files          | `resources/views/components/ui/multiselect.blade.php`; `resources/css/app.css`                                                                                     |
+| Source files          | `resources/views/components/ui/multiselect.blade.php`; `resources/js/ui-controls/multiselects.js`; `resources/css/components/multiselect.css`; `resources/css/components/list-box.css` |
 
 ### 4.3. Props and options
 
@@ -476,6 +481,7 @@ Feature views must not create local multiselect classes, direct Carbon productio
 | Tab                | Reaches the field/trigger and required internal controls in predictable order.                         |
 | Enter / Space      | Opens the control and toggles focused options where appropriate.                                       |
 | Arrow keys         | Navigate available options when the menu is open.                                                      |
+| Home / End         | Move to the first or last enabled visible option when the menu is open.                                |
 | Escape             | Closes the menu and returns focus without losing existing selections.                                  |
 | Backspace / Delete | Removes a selected tag only when a tag/removal model is active and the tag/removal control is focused. |
 

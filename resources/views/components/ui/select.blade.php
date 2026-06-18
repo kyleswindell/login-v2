@@ -1,8 +1,9 @@
 @props([
     'name',
     'id' => null,
-    'label',
+    'label' => null,
     'options' => [],
+    'optionGroups' => null,
     'value' => null,
     'defaultValue' => null,
     'placeholder' => null,
@@ -17,11 +18,16 @@
     'size' => 'md',
     'variant' => 'default',
     'style' => 'default',
+    'inline' => false,
+    'noLabel' => false,
+    'hideLabel' => false,
+    'ariaLabel' => null,
     'disabled' => false,
     'readonly' => false,
     'readOnly' => false,
     'required' => false,
     'skeleton' => false,
+    'selectAttributes' => [],
 ])
 
 @php
@@ -30,38 +36,59 @@
     $helper = $helper ?? $helperText;
     $error = $error ?? ($invalid ? $invalidText : null);
     $warning = $warning ?? ($warn ? $warnText : null);
-    $size = in_array($size, ['sm', 'md', 'lg'], true) ? $size : 'md';
-    $requestedVariant = in_array($variant, ['default', 'inline', 'fluid'], true) ? $variant : 'default';
+    $size = in_array($size, ['xs', 'sm', 'md', 'lg'], true) ? $size : 'md';
+    $requestedVariant = $inline || $variant === 'inline' ? 'inline' : (in_array($variant, ['default', 'fluid'], true) ? $variant : 'default');
     $variant = $requestedVariant === 'inline' ? 'inline' : 'default';
     $fieldStyle = $style === 'fluid' || $requestedVariant === 'fluid' ? 'fluid' : 'default';
     $isInvalid = filled($error);
     $isWarning = ! $isInvalid && filled($warning);
     $isReadOnly = (bool) ($readonly || $readOnly);
     $isDisabled = (bool) ($disabled || $skeleton);
-    $helperId = $helper && ! $isInvalid && ! $isWarning ? $fieldId.'-helper' : null;
-    $statusId = $isInvalid || $isWarning || $skeleton ? $fieldId.'-status' : null;
+    $hasOwnLabel = ! $noLabel && filled($label);
+    $showSupportingText = ! $noLabel;
+    $helperId = $helper && ! $isInvalid && ! $isWarning && $showSupportingText ? $fieldId.'-helper' : null;
+    $statusId = ($isInvalid || $isWarning || $skeleton) && $showSupportingText ? $fieldId.'-status' : null;
     $describedBy = trim(collect([$helperId, $statusId])->filter()->implode(' '));
+    $providedAriaLabel = $ariaLabel ?? $attributes->get('aria-label');
+    $providedAriaLabelledBy = $attributes->get('aria-labelledby');
+    $rootAttributes = $attributes->except(['aria-label', 'aria-labelledby']);
+    $nativeSelectAttributes = (new \Illuminate\View\ComponentAttributeBag($selectAttributes))->except(['id', 'name']);
 
-    $flattenedOptions = collect($options)->flatMap(function ($option) {
-        $children = data_get($option, 'options');
-
-        if (is_iterable($children)) {
-            return collect($children);
-        }
-
-        return [$option];
+    $normalOptions = collect($options);
+    $groupedOptions = collect($optionGroups ?? [])->map(function ($group) {
+        return [
+            'label' => data_get($group, 'label', data_get($group, 'text')),
+            'disabled' => (bool) data_get($group, 'disabled', false),
+            'className' => data_get($group, 'className'),
+            'options' => collect(data_get($group, 'options', [])),
+        ];
     });
 
+    $embeddedGroups = $normalOptions->filter(fn ($option) => is_iterable(data_get($option, 'options')))->map(function ($group) {
+        return [
+            'label' => data_get($group, 'label', data_get($group, 'text', data_get($group, 'group'))),
+            'disabled' => (bool) data_get($group, 'disabled', false),
+            'className' => data_get($group, 'className'),
+            'options' => collect(data_get($group, 'options', [])),
+        ];
+    });
+
+    $standaloneOptions = $normalOptions->reject(fn ($option) => is_iterable(data_get($option, 'options')));
+    $allGroups = $embeddedGroups->concat($groupedOptions);
+    $flattenedOptions = $standaloneOptions->concat($allGroups->flatMap(fn ($group) => $group['options']));
     $selectedOption = $flattenedOptions->first(fn ($option) => (string) data_get($option, 'value') === (string) $selectedValue);
-    $selectedLabel = data_get($selectedOption, 'label', $selectedValue);
+    $selectedLabel = data_get($selectedOption, 'text', data_get($selectedOption, 'label', $selectedValue));
+    $labelId = $hasOwnLabel ? $fieldId.'-label' : null;
 @endphp
 
 <div
-    {{ $attributes->class([
+    {{ $rootAttributes->class([
         'ui-field',
         'ui-select-field',
         'ui-select-field-'.$fieldStyle,
         'ui-select-field-inline' => $variant === 'inline',
+        'ui-select-field-no-label' => $noLabel,
+        'ui-select-field-hidden-label' => $hideLabel,
         'ui-select-field-'.$size,
         'ui-select-field-invalid' => $isInvalid,
         'ui-select-field-warning' => $isWarning,
@@ -74,31 +101,44 @@
     data-ui-select-size="{{ $size }}"
     data-ui-select-variant="{{ $variant }}"
     data-ui-select-style="{{ $fieldStyle }}"
+    @if($noLabel) data-ui-select-no-label="true" @endif
+    @if($hideLabel) data-ui-select-hidden-label="true" @endif
     @if($skeleton) aria-busy="true" @endif
 >
-    @if ($fieldStyle !== 'fluid')
-        <label id="{{ $fieldId }}-label" for="{{ $isReadOnly ? $fieldId.'-value' : $fieldId }}" class="{{ $variant === 'inline' ? 'sr-only' : 'ui-field-label' }}">{{ $label }}</label>
+    @if ($hasOwnLabel && $fieldStyle !== 'fluid')
+        <label id="{{ $labelId }}" for="{{ $isReadOnly ? $fieldId.'-value' : $fieldId }}" @class(['ui-field-label', 'sr-only' => $hideLabel])>{{ $label }}</label>
     @endif
 
     @if ($isReadOnly)
         <input type="hidden" name="{{ $name }}" value="{{ $selectedValue }}">
-        <div class="ui-select-readonly-value" id="{{ $fieldId }}-value" aria-labelledby="{{ $fieldId }}-label" @if($describedBy !== '') aria-describedby="{{ $describedBy }}" @endif data-ui-select-readonly>
-            @if ($fieldStyle === 'fluid')
-                <span id="{{ $fieldId }}-label" class="ui-field-label ui-select-fluid-label">{{ $label }}</span>
+        <div
+            class="ui-select-readonly-value"
+            id="{{ $fieldId }}-value"
+            @if($labelId) aria-labelledby="{{ $labelId }}" @endif
+            @if(! $labelId && filled($providedAriaLabel)) aria-label="{{ $providedAriaLabel }}" @endif
+            @if(! $labelId && filled($providedAriaLabelledBy)) aria-labelledby="{{ $providedAriaLabelledBy }}" @endif
+            @if($describedBy !== '') aria-describedby="{{ $describedBy }}" @endif
+            data-ui-select-readonly
+        >
+            @if ($hasOwnLabel && $fieldStyle === 'fluid')
+                <span id="{{ $labelId }}" @class(['ui-field-label', 'ui-select-fluid-label', 'sr-only' => $hideLabel])>{{ $label }}</span>
             @endif
             <span class="ui-select-readonly-text">{{ filled($selectedLabel) ? $selectedLabel : ($placeholder ?? 'No selection') }}</span>
         </div>
     @else
         <div class="ui-select-shell">
-            @if ($fieldStyle === 'fluid')
-                <label id="{{ $fieldId }}-label" for="{{ $fieldId }}" class="ui-field-label ui-select-fluid-label">{{ $label }}</label>
+            @if ($hasOwnLabel && $fieldStyle === 'fluid')
+                <label id="{{ $labelId }}" for="{{ $fieldId }}" @class(['ui-field-label', 'ui-select-fluid-label', 'sr-only' => $hideLabel])>{{ $label }}</label>
             @endif
             <select
                 id="{{ $fieldId }}"
                 name="{{ $name }}"
-                class="ui-select"
+                {{ $nativeSelectAttributes->class(['ui-select']) }}
                 @required($required)
                 @disabled($isDisabled)
+                @if($labelId) aria-labelledby="{{ $labelId }}" @endif
+                @if(! $labelId && filled($providedAriaLabel)) aria-label="{{ $providedAriaLabel }}" @endif
+                @if(! $labelId && filled($providedAriaLabelledBy)) aria-labelledby="{{ $providedAriaLabelledBy }}" @endif
                 @if($isInvalid) aria-invalid="true" @endif
                 @if($isWarning) data-ui-field-warning="true" @endif
                 @if($describedBy !== '') aria-describedby="{{ $describedBy }}" @endif
@@ -107,26 +147,41 @@
                 @if($placeholder)
                     <option value="" @selected(blank($selectedValue)) @disabled($required)>{{ $placeholder }}</option>
                 @endif
-                @foreach($options as $option)
+                @foreach($standaloneOptions as $option)
                     @php
-                        $groupOptions = data_get($option, 'options');
-                        $groupLabel = data_get($option, 'label', data_get($option, 'group'));
+                        $optionValue = data_get($option, 'value');
+                        $optionText = data_get($option, 'text', data_get($option, 'label', $optionValue));
+                        $optionClass = data_get($option, 'className');
                     @endphp
-                    @if (is_iterable($groupOptions))
-                        <optgroup label="{{ $groupLabel }}">
-                            @foreach($groupOptions as $groupOption)
-                                @php $optionValue = data_get($groupOption, 'value'); @endphp
-                                <option value="{{ $optionValue }}" @selected((string) $optionValue === (string) $selectedValue) @disabled((bool) data_get($groupOption, 'disabled', false))>
-                                    {{ data_get($groupOption, 'label', $optionValue) }}
-                                </option>
-                            @endforeach
-                        </optgroup>
-                    @else
-                        @php $optionValue = data_get($option, 'value'); @endphp
-                        <option value="{{ $optionValue }}" @selected((string) $optionValue === (string) $selectedValue) @disabled((bool) data_get($option, 'disabled', false))>
-                            {{ data_get($option, 'label', $optionValue) }}
-                        </option>
-                    @endif
+                    <option
+                        value="{{ $optionValue }}"
+                        @selected((string) $optionValue === (string) $selectedValue)
+                        @disabled((bool) data_get($option, 'disabled', false))
+                        @if((bool) data_get($option, 'hidden', false)) hidden @endif
+                        @if(filled($optionClass)) class="{{ $optionClass }}" @endif
+                    >{{ $optionText }}</option>
+                @endforeach
+                @foreach($allGroups as $group)
+                    <optgroup
+                        label="{{ $group['label'] }}"
+                        @disabled($group['disabled'])
+                        @if(filled($group['className'])) class="{{ $group['className'] }}" @endif
+                    >
+                        @foreach($group['options'] as $groupOption)
+                            @php
+                                $optionValue = data_get($groupOption, 'value');
+                                $optionText = data_get($groupOption, 'text', data_get($groupOption, 'label', $optionValue));
+                                $optionClass = data_get($groupOption, 'className');
+                            @endphp
+                            <option
+                                value="{{ $optionValue }}"
+                                @selected((string) $optionValue === (string) $selectedValue)
+                                @disabled((bool) data_get($groupOption, 'disabled', false))
+                                @if((bool) data_get($groupOption, 'hidden', false)) hidden @endif
+                                @if(filled($optionClass)) class="{{ $optionClass }}" @endif
+                            >{{ $optionText }}</option>
+                        @endforeach
+                    </optgroup>
                 @endforeach
             </select>
             @if ($isInvalid)
@@ -138,14 +193,14 @@
         </div>
     @endif
 
-    @if ($helper && ! $isInvalid && ! $isWarning)
+    @if ($helper && ! $isInvalid && ! $isWarning && $showSupportingText)
         <p id="{{ $helperId }}" class="ui-field-helper">{{ $helper }}</p>
     @endif
-    @if ($isInvalid)
+    @if ($isInvalid && $showSupportingText)
         <p id="{{ $statusId }}" class="ui-field-error">{{ $error }}</p>
-    @elseif ($isWarning)
+    @elseif ($isWarning && $showSupportingText)
         <p id="{{ $statusId }}" class="ui-field-warning">{{ $warning }}</p>
-    @elseif ($skeleton)
+    @elseif ($skeleton && $showSupportingText)
         <p id="{{ $statusId }}" class="ui-field-helper">Options loading.</p>
     @endif
 </div>

@@ -31,7 +31,7 @@
 @endphp
 
 <div
-    class="ui-field ui-multiselect"
+    class="ui-field ui-list-box-wrapper ui-multiselect"
     data-ui-component="multiselect"
     data-ui-multiselect
     data-ui-multiselect-name="{{ $inputName }}"
@@ -52,7 +52,17 @@
 
     <button
         type="button"
-        class="ui-input ui-searchable-select-trigger ui-multiselect-trigger"
+        @class([
+            'ui-list-box',
+            'ui-list-box-field',
+            'ui-list-box-expanded' => $open,
+            'ui-list-box-disabled' => $isUnavailable,
+            'ui-list-box-invalid' => filled($error),
+            'ui-list-box-warning' => filled($warning) && blank($error),
+            'ui-input',
+            'ui-searchable-select-trigger',
+            'ui-multiselect-trigger',
+        ])
         aria-haspopup="listbox"
         aria-expanded="{{ $open ? 'true' : 'false' }}"
         aria-labelledby="{{ $fieldId }}-label"
@@ -71,10 +81,12 @@
                 <span class="ui-multiselect-placeholder">{{ $placeholder }}</span>
             @endforelse
         </span>
-        <span aria-hidden="true">v</span>
+        <span class="ui-list-box-menu-icon ui-multiselect-chevron" aria-hidden="true">
+            <x-heroicon-o-chevron-down class="ui-multiselect-chevron-icon" />
+        </span>
     </button>
 
-    <div class="ui-searchable-select-panel ui-multiselect-panel" role="listbox" aria-multiselectable="true" data-ui-multiselect-menu @if(! $open) hidden @endif>
+    <div @class(['ui-list-box-menu', 'ui-list-box-menu-open' => $open, 'ui-searchable-select-panel', 'ui-multiselect-panel']) role="listbox" aria-multiselectable="true" data-ui-multiselect-menu @if(! $open) hidden @endif>
         @if ($filterable)
             <div class="ui-searchable-select-filter-shell">
                 <input
@@ -111,14 +123,20 @@
                     @endphp
                     <button
                         type="button"
-                        class="ui-searchable-select-option ui-multiselect-option"
+                        @class([
+                            'ui-list-box-menu-item',
+                            'ui-list-box-menu-item-selected' => $isSelected,
+                            'ui-list-box-menu-item-disabled' => $optionDisabled,
+                            'ui-searchable-select-option',
+                            'ui-multiselect-option',
+                        ])
                         role="option"
                         aria-selected="{{ $isSelected ? 'true' : 'false' }}"
                         @disabled($optionDisabled)
                         data-ui-multiselect-option
                         data-ui-multiselect-option-value="{{ $optionValue }}"
                     >
-                        <span data-ui-multiselect-option-label>{{ data_get($option, 'label', $optionValue) }}</span>
+                        <span class="ui-list-box-menu-item-option" data-ui-multiselect-option-label>{{ data_get($option, 'label', $optionValue) }}</span>
                         <span aria-hidden="true" data-ui-multiselect-option-check>{{ $isSelected ? 'Selected' : '' }}</span>
                     </button>
                 @endforeach

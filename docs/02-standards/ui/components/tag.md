@@ -11,6 +11,7 @@ canonical_doc: docs/02-standards/ui/components/tag.md
 source_owner: /platform/ui-reference/components/tag
 blade_api:
   - x-ui.tag
+  - x-ui.tag-group
 related_components:
   - notification
   - tooltip
@@ -28,231 +29,229 @@ carbon_reference:
   - https://carbondesignsystem.com/components/tag/accessibility/
 ---
 
-# Tag Component API Standard
+# Tag Component Standard
 
-- [1. API summary](#1-api-summary)
-- [2. Status and ownership](#2-status-and-ownership)
-- [3. Installed standard](#3-installed-standard)
-- [4. Public API](#4-public-api)
-- [5. Anatomy](#5-anatomy)
-- [6. Variants, sizes, and states](#6-variants-sizes-and-states)
-- [7. Color tokens](#7-color-tokens)
-- [8. Structure](#8-structure)
-- [9. Overflow and grouping](#9-overflow-and-grouping)
-- [10. Accessibility and content](#10-accessibility-and-content)
-- [11. UI Reference requirements](#11-ui-reference-requirements)
-- [12. Testing and acceptance criteria](#12-testing-and-acceptance-criteria)
-- [13. Related APIs](#13-related-apis)
-- [14. References](#14-references)
+- [1. Ownership](#1-ownership)
+- [2. Public API](#2-public-api)
+- [3. Variants](#3-variants)
+- [4. Tag group](#4-tag-group)
+- [5. Structure and behavior](#5-structure-and-behavior)
+- [6. Color model](#6-color-model)
+- [7. UI Reference requirements](#7-ui-reference-requirements)
+- [8. Acceptance criteria](#8-acceptance-criteria)
 
-## 1. API summary
+## 1. Ownership
 
-Tag labels compact metadata, categorization, filter state, compact choices, or overflow tag disclosure without becoming a generic Button, Menu, Notification, Badge, or Status wrapper.
+The public API is `x-ui.tag`. Use it for compact metadata, filter tokens, selectable choices, and operational tag disclosure.
 
-Canonical API owner: `/platform/ui-reference/components/tag`.
+`x-ui.tag-group` owns tag grouping semantics, wrapping, spacing, accessible group labels, and optional `selection-mode="single|multiple"` declarations.
 
-The public API is `x-ui.tag`. Legacy `x-ui.badge` and `x-ui.status` usage may remain only as transitional status-taxonomy helpers; new compact label, filter-token, selectable, and operational tag usage must use `x-ui.tag`.
+Legacy `x-ui.badge` and `x-ui.status` are deprecated for new tag work. They may remain only as transitional status-taxonomy helpers until a later migration replaces legacy badge usage.
 
-## 2. Status and ownership
+Tags do not replace Notifications, Buttons, Menu buttons, Tabs, Breadcrumbs, or long-form feedback surfaces.
 
-| Field                        | Value                                                                                                   |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------- |
-| Status                       | Implemented pending review                                                                               |
-| System maturity              | Installed                                                                                                |
-| API layer                    | Component API                                                                                            |
-| Component slug               | `tag`                                                                                                    |
-| UI Reference route           | `/platform/ui-reference/components/tag`                                                                  |
-| Canonical doc                | `docs/02-standards/ui/components/tag.md`                                                                 |
-| Blade API                    | `x-ui.tag`                                                                                               |
-| Source files                 | `resources/views/components/ui/tag.blade.php`; `resources/css/app.css`                                  |
-| Foundation Elements consumed | Color, Spacing, Typography, Themes, Icons                                                                |
-| Carbon benchmark             | Carbon Tag usage, style, accessibility, and color-token guidance                                         |
-
-## 3. Installed standard
-
-- Implement all four variants: read-only, dismissible, selectable, and operational.
-- Use read-only tags for non-interactive category, metadata, or status labels.
-- Use dismissible tags for filter tokens or user-generated labels that can be removed through the close icon only.
-- Use selectable tags for compact choices that toggle selected/unselected state on the whole container.
-- Use operational tags for compact disclosure of additional or overflow tags.
-- Use small, medium, and large sizes.
-- Use component Tag color tokens for read-only, dismissible, and operational color families.
-- Use core tokens only for selectable tags.
-- Keep tag labels one line; truncate long labels with ellipsis and expose the full title through tooltip/title behavior.
-- Do not use tags for primary commands, navigation, explanatory feedback, or long-form copy.
-
-## 4. Public API
+## 2. Public API
 
 ```blade
-<x-ui.tag color="gray">Internal</x-ui.tag>
+<x-ui.tag text="Internal" />
 
-<x-ui.tag color="green" icon="heroicon-o-check-circle">
-    Verified
-</x-ui.tag>
+<x-ui.tag type="green" text="Verified" icon="heroicon-o-check-circle" />
 
-<x-ui.tag variant="dismissible" color="blue" remove-label="Remove region filter">
-    Region
-</x-ui.tag>
+<x-ui.tag
+    variant="dismissible"
+    type="blue"
+    text="Region"
+    dismiss-label="Remove region filter"
+/>
 
-<x-ui.tag variant="selectable" selected>
-    Open
-</x-ui.tag>
+<x-ui.tag variant="selectable" text="Open" selected />
 
-<x-ui.tag variant="operational" color="teal">
-    More tags
-</x-ui.tag>
+<x-ui.tag
+    variant="operational"
+    type="teal"
+    text="View more"
+    disclosure-target="tag-disclosure-text-list"
+/>
 ```
 
-| Prop/option            | Type                  | Default     | Allowed values                                                                                  | Notes |
-| ---------------------- | --------------------- | ----------- | ----------------------------------------------------------------------------------------------- | ----- |
-| Default slot / `label` | `string / HtmlString` | none        | Short visible text                                                                               | Required unless `skeleton=true`. |
-| `variant`              | `string`              | `read-only` | `read-only`, `dismissible`, `selectable`, `operational`                                          | `removable`, `selectable`, and `operational` boolean props remain compatibility aliases. |
-| `color` / `tone`       | `string`              | `gray`      | `gray`, `cool-gray`, `warm-gray`, `red`, `magenta`, `purple`, `blue`, `cyan`, `teal`, `green`, `high-contrast`, `outline` | Legacy `neutral/info/success/warning/error` map to the closest Tag colors. |
-| `size`                 | `string`              | `md`        | `sm`, `md`, `lg`                                                                                 | Required sizes are 18px, 24px, and 32px. |
-| `icon`                 | `string / null`       | `null`      | Approved Heroicon component alias                                                                | Decorative by default; visible text remains required. |
-| `removeLabel`          | `string / null`       | generated   | Specific action label                                                                            | Required for production dismissible tags when generated text is insufficient. |
-| `selected`             | `bool`                | `false`     | `true`, `false`                                                                                  | Selectable tags expose selected state with `aria-pressed`. |
-| `disabled`             | `bool`                | `false`     | `true`, `false`                                                                                  | Uses core disabled roles, not opacity-only styling. |
-| `skeleton`             | `bool`                | `false`     | `true`, `false`                                                                                  | Loading placeholder only. |
-| `truncate`             | `string / null`       | `null`      | `start`, `middle`, `end`                                                                         | Keeps the tag one line and pairs with `title`. |
-| `title`                | `string / null`       | `null`      | Full title text                                                                                  | Required when visible title is truncated. |
+| Prop | Default | Allowed values | Notes |
+| --- | --- | --- | --- |
+| `variant` | `read-only` | `read-only`, `dismissible`, `selectable`, `operational` | Required behavior owner. |
+| `type` | `gray` | `gray`, `cool-gray`, `warm-gray`, `red`, `magenta`, `purple`, `blue`, `cyan`, `teal`, `green`, `high-contrast`, `outline` | Component color role for read-only, dismissible, and operational tags. |
+| `size` | `md` | `sm`, `md`, `lg` | 18px, 24px, and 32px. |
+| `text` | none | short string | Required visible label. |
+| `icon` | `null` | approved icon component alias | Decorative by default. |
+| `disabled` | `false` | boolean | Uses disabled token hooks. |
+| `selected` | `false` | boolean | Selectable tag state. |
+| `defaultSelected` | `false` | boolean | Initial selectable state for live examples. |
+| `dismissLabel` | generated | string | Required when generated text is not specific enough. |
+| `dismissTooltipAlignment` | `center` | `start`, `center`, `end` | Hook for close-button tooltip alignment. |
+| `tagTitle` / `title` | generated from `text` | string | Full label text exposed on the label title. |
+| `truncate` | `null` | `start`, `middle`, `end` | Keeps the tag one line. |
+| `disclosureTarget` | `null` | element id | Operational disclosure target. |
 
-## 5. Anatomy
+Do not add `tone`, `color`, `label`, slot text, `removeLabel`, `removable`, `selectable`, or `operational` aliases unless a real migration requires compatibility.
 
-| Variant         | Decorative icon | Title | Container | Close icon | Border | Interactivity |
-| --------------- | --------------- | ----- | --------- | ---------- | ------ | ------------- |
-| Read-only       | Optional        | Required | Required | Not allowed | Not required by default | None |
-| Dismissible     | Optional        | Required | Required | Required | Not required by default | Close icon only |
-| Selectable      | Optional        | Required | Required | Not allowed | Required | Entire container toggles selected state |
-| Operational     | Optional        | Required | Required | Not allowed | Required | Entire container discloses additional tags |
+## 3. Variants
 
-Selectable and operational tags must include a visible border to distinguish them from read-only tags.
+| Variant | Element | Behavior |
+| --- | --- | --- |
+| Read-only | `span` | Noninteractive label for compact metadata. |
+| Dismissible | `span` plus close `button` | Only the close button removes the tag. |
+| Selectable | `button` | Whole tag toggles `aria-pressed` and selected styling. |
+| Operational | `button` | Whole tag toggles a related disclosure target and keeps `aria-expanded` synchronized. |
 
-## 6. Variants, sizes, and states
+Operational tags are not Menu buttons and do not get a default caret. Full Popover composition is owned by the Popover/Disclosure pattern after that surface is approved.
 
-| Variant     | Installed API | Required states |
-| ----------- | ------------- | --------------- |
-| Read-only   | `variant="read-only"` | Enabled, disabled when context requires unavailable metadata |
-| Dismissible | `variant="dismissible"` or `removable` | Enabled, hover, focus, disabled |
-| Selectable  | `variant="selectable"` or `selectable` | Enabled, hover, focus, selected, disabled |
-| Operational | `variant="operational"` or `operational` | Enabled, hover, focus, disabled, disclosed content proof |
-| Skeleton    | `skeleton` | Loading placeholder |
+## 4. Tag group
 
-| Size | API | Container height |
-| ---- | --- | ---------------- |
-| Small | `size="sm"` | 18px / 1.125rem |
-| Medium | `size="md"` | 24px / 1.5rem |
-| Large | `size="lg"` | 32px / 2rem |
+```blade
+<x-ui.tag-group label="Status filters" selection-mode="single">
+    <x-ui.tag variant="selectable" text="Open" selected />
+    <x-ui.tag variant="selectable" text="Closed" />
+</x-ui.tag-group>
+```
 
-## 7. Color tokens
+Tag group owns:
 
-Read-only, dismissible, and operational tags use component Tag color tokens. Selectable tags use core tokens only.
+- `role="group"`
+- accessible label
+- 8px wrapping gap
+- `data-ui-tag-selection-mode="single|multiple"` when selection behavior must be coordinated
 
-| Color | Background token | Background value | Text/icon token | Text/icon value | Hover token | Hover value | Border token | Border value |
-| ----- | ---------------- | ---------------- | --------------- | --------------- | ----------- | ----------- | ------------ | ------------ |
-| Gray | `$tag-background-gray` | `#e0e0e0` | `$tag-color-gray` | `#161616` | `$tag-hover-gray` | `#d1d1d1` | `$tag-border-gray` | `#a8a8a8` |
-| Cool gray | `$tag-background-cool-gray` | `#dde1e6` | `$tag-color-cool-gray` | `#121619` | `$tag-hover-cool-gray` | `#cdd3da` | `$tag-border-cool-gray` | `#a2a9b0` |
-| Warm gray | `$tag-background-warm-gray` | `#e5e0df` | `$tag-color-warm-gray` | `#171414` | `$tag-hover-warm-gray` | `#d8d0cf` | `$tag-border-warm-gray` | `#ada8a8` |
-| Red | `$tag-background-red` | `#ffd7d9` | `$tag-color-red` | `#a2191f` | `$tag-hover-red` | `#ffc2c5` | `$tag-border-red` | `#ff8389` |
-| Magenta | `$tag-background-magenta` | `#ffd6e8` | `$tag-color-magenta` | `#9f1853` | `$tag-hover-magenta` | `#ffbdda` | `$tag-border-magenta` | `#ff7eb6` |
-| Purple | `$tag-background-purple` | `#e8daff` | `$tag-color-purple` | `#6929c4` | `$tag-hover-purple` | `#dcc7ff` | `$tag-border-purple` | `#be95ff` |
-| Blue | `$tag-background-blue` | `#d0e2ff` | `$tag-color-blue` | `#0043ce` | `$tag-hover-blue` | `#b8d3ff` | `$tag-border-blue` | `#78a9ff` |
-| Cyan | `$tag-background-cyan` | `#bae6ff` | `$tag-color-cyan` | `#00539a` | `$tag-hover-cyan` | `#99daff` | `$tag-border-cyan` | `#33b1ff` |
-| Teal | `$tag-background-teal` | `#9ef0f0` | `$tag-color-teal` | `#005d5d` | `$tag-hover-teal` | `#57e5e5` | `$tag-border-teal` | `#08bdba` |
-| Green | `$tag-background-green` | `#a7f0ba` | `$tag-color-green` | `#0e6027` | `$tag-hover-green` | `#74e792` | `$tag-border-green` | `#42be65` |
+Tag JavaScript owns toggling behavior. The group does not become a full form-control framework in this pass.
 
-Selectable tag core colors:
+## 5. Structure and behavior
 
-| Element | Property | Token |
-| ------- | -------- | ----- |
-| Text | `color` | `$text-primary` |
-| Icon | `color` | `$icon-primary` |
-| Border | `border` | `$border-inverse` |
-| Background | `background-color` | `$layer` |
-| Hover background | `background-color` | `$layer-hover` |
-| Selected text | `color` | `$text-inverse` |
-| Selected background | `background-color` | `$background-inverse` |
+Tags are fixed-height inline-flex pills. Do not use vertical padding, icon size, or line-height to create the tag height.
 
-High contrast and outline styles use core tokens instead of the component color family.
+| Size | Height | Radius |
+| --- | ---: | ---: |
+| `sm` | 18px / 1.125rem | 16px |
+| `md` | 24px / 1.5rem | 16px |
+| `lg` | 32px / 2rem | 16px |
 
-## 8. Structure
+- Base tags use `display: inline-flex`, `align-items: center`, `width: fit-content`, `max-width: 100%`, `white-space: nowrap`, `font-size: 12px`, `font-weight: 400`, and `line-height: 1`.
+- Tag labels use `title` with the full text and `dir="ltr"` by default.
+- Tag labels remain single-line and truncate instead of wrapping.
+- End and start truncation use normal one-line ellipsis behavior.
+- Middle truncation uses split label markup so the start and end remain visible.
+- Decorative icons are 16px, inherit `currentColor`, and use the variant/size-specific icon-to-text spacing.
+- Dismissible close icons are 16px real buttons with their own 16px hit area and focus state.
+- Dismissible focus applies only to the close button, not the whole tag.
+- Selectable and operational variants have visible 1px borders and whole-tag focus states.
+- Disabled tags use disabled token hooks, not opacity-only styling.
 
-| Element | Small | Medium | Large |
-| ------- | ----- | ------ | ----- |
-| Container height | 18px | 24px | 32px |
-| Border radius | 16px | 16px | 16px |
-| Container padding | 8px left/right | 8px left/right | 12px left/right |
-| Decorative icon size | 16px | 16px | 16px |
-| Dismissible icon size | 16px | 16px | 16px |
+Read-only padding:
 
-Icon spacing must vary by size and icon purpose. Decorative icon spacing must not be reused blindly for the dismissible close icon.
+| Case | `lg` | `md` / `sm` |
+| --- | --- | --- |
+| No icon | 12px left/right | 8px left/right |
+| Decorative icon | 8px left, 4px icon gap, 12px right | 4px left, 4px icon gap, 8px right |
 
-## 9. Overflow and grouping
+Dismissible padding:
 
-- Long titles truncate with ellipsis and never wrap.
-- Truncated titles must expose the full title through browser tooltip/title behavior on hover and keyboard focus.
-- Truncation may occur at the start, middle, or end depending on the use case.
-- Tag groups use 8px spacing and may wrap while preserving scan order.
-- Dismissible filter tag groups must keep each close action independently focusable.
+| Size | Left text padding | Text-to-close gap | Close icon | Right close padding |
+| --- | ---: | ---: | ---: | ---: |
+| `lg` | 12px | 12px | 16px | 8px |
+| `md` | 8px | 8px | 16px | 4px |
+| `sm` | 8px | 8px | 16px | 1px |
 
-## 10. Accessibility and content
+Operational/selectable padding:
 
-- Visible tag text must carry meaning without relying on color alone.
-- Icons are decorative unless the visible text does not already communicate the meaning.
-- Dismissible close icons require a specific accessible label.
-- Selectable tags expose state with `aria-pressed`.
-- Operational tags expose disclosure semantics through the owning trigger/disclosure pattern.
-- Use short sentence-case labels.
-- Avoid vague tags such as `Other`, `Misc`, or `New` unless the data model defines them.
+| Case | `lg` | `md` / `sm` |
+| --- | --- | --- |
+| No icon | 12px left/right | 8px left/right |
+| Decorative icon | 8px left, 4px icon gap, 12px right | 4px left, 4px icon gap, 8px right |
 
-## 11. UI Reference requirements
+## 6. Color model
 
-The UI Reference page must render:
+Read-only, dismissible, and operational tags use Tag component color tokens. Selectable tags use core tokens only. They must not display red, blue, green, or other component color families.
 
-- Read-only tag.
-- Read-only tag with decorative icon.
-- Dismissible tag.
-- Dismissible tag with decorative icon.
-- Selectable tag, unselected and selected.
-- Operational tag and operational tag disclosing overflow content.
-- Disabled examples where applicable.
-- Skeleton example.
-- Small, medium, and large examples.
-- Overflow/truncated title examples with tooltip/title behavior.
-- Read-only, dismissible, and operational examples for every supported component color.
-- Selectable examples separately from component-color examples.
-- High contrast and outline examples.
-- Tag group, wrapping tag group, selectable group, and dismissible filter group.
+Each color type maps to component-scoped roles:
 
-## 12. Testing and acceptance criteria
+- `--ui-tag-background`
+- `--ui-tag-color`
+- `--ui-tag-hover`
+- `--ui-tag-border`
 
-- `/platform/ui-reference/components/tag` returns 200 for authorized users.
-- `x-ui.tag` is the canonical component name.
-- Legacy Badge/Status usage is documented as transitional or related, not the Tag owner.
-- All four variants render on the UI Reference page.
-- Dismissible tags render a close button.
-- Selectable tags render a bordered button and selected state.
-- Operational tags render a bordered trigger and overflow-disclosure example.
-- `sm`, `md`, and `lg` sizes render with exact component size classes.
-- Tag CSS includes component color tokens for all ten supported color families.
-- Selectable tags use core tokens only.
-- Truncated examples remain single-line and expose full text through `title`.
-- Tests assert live examples, component source, CSS tokens, and standard text.
+### Light theme values
 
-## 13. Related APIs
+White and Gray 10 themes use these values:
 
-| API | Route |
-| --- | ----- |
-| Notification | `/platform/ui-reference/components/notification` |
-| Tooltip | `/platform/ui-reference/components/tooltip` |
-| Popover | `/platform/ui-reference/components/popover` |
-| Button | `/platform/ui-reference/components/button` |
-| Components overview | `/platform/ui-reference/components` |
+| Type | Background | Text/Icon | Hover | Border |
+| --- | --- | --- | --- | --- |
+| `gray` | `#e0e0e0` | `#161616` | `#d1d1d1` | `#a8a8a8` |
+| `cool-gray` | `#dde1e6` | `#121619` | `#cdd3da` | `#a2a9b0` |
+| `warm-gray` | `#e5e0df` | `#171414` | `#d8d0cf` | `#ada8a8` |
+| `red` | `#ffd7d9` | `#a2191f` | `#ffc2c5` | `#ff8389` |
+| `magenta` | `#ffd6e8` | `#9f1853` | `#ffbdda` | `#ff7eb6` |
+| `purple` | `#e8daff` | `#6929c4` | `#dcc7ff` | `#be95ff` |
+| `blue` | `#d0e2ff` | `#0043ce` | `#b8d3ff` | `#78a9ff` |
+| `cyan` | `#bae6ff` | `#00539a` | `#99daff` | `#33b1ff` |
+| `teal` | `#9ef0f0` | `#005d5d` | `#57e5e5` | `#08bdba` |
+| `green` | `#a7f0ba` | `#0e6027` | `#74e792` | `#42be65` |
 
-## 14. References
+### Dark theme values
 
-- [Component Standards Index](index.md)
-- [Foundation Color](../elements/color.md)
-- [Foundation Typography](../elements/typography.md)
-- [Foundation Icons](../elements/icons.md)
-- Carbon Tag usage, style, color, and accessibility guidance inform the variant, state, size, overflow, and token coverage. Login App owns the `x-ui.tag` API and app-owned `ui-*` implementation contract.
+Gray 90 and Gray 100 themes use these values:
+
+| Type | Background | Text/Icon | Hover | Border |
+| --- | --- | --- | --- | --- |
+| `gray` | `#525252` | `#e0e0e0` | `#636363` | `#8d8d8d` |
+| `cool-gray` | `#4d5358` | `#dde1e6` | `#5d646a` | `#878d96` |
+| `warm-gray` | `#565151` | `#e5e0df` | `#696363` | `#8f8b8b` |
+| `red` | `#a2191f` | `#ffd7d9` | `#c21e25` | `#fa4d56` |
+| `magenta` | `#9f1853` | `#ffd6e8` | `#bf1d63` | `#ee5396` |
+| `purple` | `#6929c4` | `#e8daff` | `#7c3dd6` | `#a56eff` |
+| `blue` | `#0043ce` | `#d0e2ff` | `#0053ff` | `#4589ff` |
+| `cyan` | `#00539a` | `#bae6ff` | `#0066bd` | `#1192e8` |
+| `teal` | `#005d5d` | `#9ef0f0` | `#007070` | `#009d9a` |
+| `green` | `#0e6027` | `#a7f0ba` | `#11742f` | `#24a148` |
+
+### Variant rules
+
+- Read-only tags consume `--ui-tag-background` and `--ui-tag-color`; they do not have hover, focus, selected, or click states.
+- Dismissible tags consume `--ui-tag-background` and `--ui-tag-color`; close-target hover uses `--ui-tag-hover`; close-target focus uses `--ui-focus`.
+- Operational tags consume `--ui-tag-background`, `--ui-tag-color`, `--ui-tag-hover`, and `--ui-tag-border`; full-tag focus uses `--ui-focus`.
+- High contrast applies to read-only and dismissible tags and uses `--ui-background-inverse`, `--ui-text-inverse`, and `--ui-border-inverse`.
+- Outline applies to read-only and dismissible tags and uses `--ui-background`, `--ui-text-primary`, `--ui-icon-primary`, and `--ui-border-inverse`.
+- Disabled tags preserve geometry, remove interaction, and use disabled core tokens for text, icon, border, and background.
+- Skeleton tags preserve tag geometry and use skeleton background/element tokens.
+
+Do not promote tag color families into the global Color Element standard as generic roles.
+
+## 7. UI Reference requirements
+
+The Tag UI Reference page must show:
+
+- Approved variant tabs for Read-only, Dismissible, Selectable, and Operational.
+- Live dismissible removal.
+- Live selectable single-select and multiple-select groups.
+- Live operational disclosure using `x-ui.tag` as the trigger.
+- Small, medium, and large sizes.
+- Disabled, hover, focus, selected, and overflow examples where applicable.
+- Dedicated color token proof for all supported read-only and dismissible types.
+- Operational color proof for `gray`, `cool-gray`, `warm-gray`, `red`, `magenta`, `purple`, `blue`, `cyan`, `teal`, and `green`.
+- Selectable proof shown separately with core-token enabled, hover, focus, selected, disabled, and skeleton states.
+- Start, middle, and end truncation support where needed.
+- Related API boundaries that mark `x-ui.badge` as deprecated for new tag work.
+
+The UI Reference page must not use raw `<details>/<summary>` as the operational tag implementation.
+
+## 8. Acceptance criteria
+
+- `/platform/ui-reference/components/tag` renders authorized UI Reference examples.
+- Existing active `x-ui.tag` usages use canonical props.
+- `x-ui.tag-group` renders group semantics and selection-mode hooks.
+- Tag JavaScript initializes dismissible, selectable, and operational behavior idempotently.
+- Selectable tags expose `aria-pressed`.
+- Operational tags expose `aria-expanded` and target the paired disclosure element.
+- Middle truncation renders split label markup.
+- Read-only, dismissible, and operational tags consume the Tag component color matrix.
+- Selectable tags use core tokens only and do not expose component color families.
+- Dismissible close hover uses the component hover token.
+- Operational hover and border use the component hover/border tokens.
+- High contrast and outline use their documented token roles.
+- Disabled and skeleton states preserve tag geometry.
+- Tests assert structure, behavior hooks, and docs rather than preserving old aliases.

@@ -69,16 +69,13 @@
     @endif
     @if ($copyable)
         <div class="ui-code-snippet-copy-control">
-            <x-ui.icon-button
-                type="button"
-                icon="heroicon-o-clipboard-document"
+            <x-ui.copy-button
                 label="Copy to clipboard"
-                tooltip="{{ $resolvedCopyState === 'copied' ? 'Copied to clipboard' : 'Copy to clipboard' }}"
-                tooltip-placement="auto"
+                feedback="Copied to clipboard"
+                :copy-state="$resolvedCopyState"
                 size="sm"
-                semantic="ghost"
+                align="auto"
                 data-ui-code-copy-button
-                data-ui-code-copy-state="{{ $resolvedCopyState }}"
             />
         </div>
     @endif

@@ -8,7 +8,7 @@
             <x-slot:actions>
                 @if ($isEditing)
                     <x-ui.button
-                        variant="ghost"
+                        semantic="ghost"
                         wire:click="resetLayout"
                         wire:confirm="Reset your dashboard to the default layout?"
                     >
@@ -17,8 +17,7 @@
                 @endif
 
                 <x-ui.button
-                    :semantic="$isEditing ? 'success' : 'neutral'"
-                    :variant="$isEditing ? 'base' : 'outline'"
+                    semantic="primary"
                     wire:click="toggleLock"
                 >
                     @if ($isEditing)
@@ -71,7 +70,7 @@
                                 </span>
                                     <x-ui.button
                                         wire:click="toggleWidgetVisibility('{{ $slot['widget_key'] }}')"
-                                        variant="ghost"
+                                        semantic="ghost"
                                         size="xs"
                                         title="Hide widget"
                                     >
@@ -105,7 +104,7 @@
                                 @foreach ($hiddenSlots as $slot)
                                     <x-ui.button
                                         wire:click="toggleWidgetVisibility('{{ $slot['widget_key'] }}')"
-                                        variant="outline"
+                                        semantic="tertiary"
                                         size="xs"
                                     >
                                         <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

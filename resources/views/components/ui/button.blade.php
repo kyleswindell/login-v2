@@ -4,78 +4,87 @@
     'semantic' => 'primary',
     'variant' => null,
     'size' => 'lg',
+    'expressive' => false,
     'loading' => false,
     'disabled' => false,
     'icon' => null,
     'iconPosition' => 'trailing',
+    'dangerDescription' => null,
 ])
 
 @php
-    $semanticMap = [
-        'primary' => ['primary', 'base'],
-        'secondary' => ['secondary', 'base'],
-        'tertiary' => ['tertiary', 'outline'],
-        'ghost' => ['neutral', 'ghost'],
-        'danger' => ['danger', 'base'],
-        'danger-tertiary' => ['danger', 'outline'],
-        'danger-ghost' => ['danger', 'ghost'],
-        // Existing app aliases remain valid while the Component API moves to action hierarchy names.
-        'neutral' => ['neutral', 'base'],
-        'success' => ['success', 'base'],
-        'warning' => ['warning', 'base'],
-        'notice' => ['notice', 'base'],
-        'info' => ['info', 'base'],
+    $allowedSemantics = [
+        'primary',
+        'secondary',
+        'tertiary',
+        'ghost',
+        'danger',
+        'danger-tertiary',
+        'danger-ghost',
     ];
-    $allowedVariants = ['base', 'soft', 'outline', 'ghost'];
-    $sizeMap = [
-        'xs' => 'xs',
-        'sm' => 'sm',
-        'md' => 'md',
-        'lg' => 'lg',
-        'lg-expressive' => 'lg-expressive',
-        'xl' => 'xl',
-        '2xl' => '2xl',
-    ];
+    $allowedSizes = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'];
+    $resolvedSemantic = in_array($semantic, $allowedSemantics, true) ? $semantic : 'primary';
+    $resolvedSize = in_array($size, $allowedSizes, true) ? $size : 'lg';
+    $resolvedExpressive = (bool) $expressive;
 
-    [$resolvedSemantic, $semanticVariant] = $semanticMap[$semantic] ?? $semanticMap['primary'];
-    $resolvedVariant = in_array($variant, $allowedVariants, true) ? $variant : $semanticVariant;
-    $resolvedSize = $sizeMap[$size] ?? 'lg';
-
-    $classes = ['ui-action'];
-
-    if ($resolvedSemantic !== 'neutral') {
-        $classes[] = 'ui-action-'.$resolvedSemantic;
+    if ($size === 'lg-expressive') {
+        $resolvedSize = 'lg';
+        $resolvedExpressive = true;
     }
 
-    if ($resolvedVariant !== 'base') {
-        $classes[] = 'ui-action-'.$resolvedVariant;
+    if (! in_array($semantic, $allowedSemantics, true)) {
+        $resolvedSemantic = match ($semantic) {
+            'neutral', 'warning', 'notice', 'info' => 'tertiary',
+            'success' => 'primary',
+            default => 'primary',
+        };
     }
 
-    if ($resolvedSize !== 'md') {
-        $classes[] = 'ui-action-'.$resolvedSize;
+    if ($variant === 'outline' || $variant === 'soft') {
+        $resolvedSemantic = $resolvedSemantic === 'danger' ? 'danger-tertiary' : 'tertiary';
+    } elseif ($variant === 'ghost') {
+        $resolvedSemantic = str_starts_with($resolvedSemantic, 'danger') ? 'danger-ghost' : 'ghost';
     }
 
-    if ($resolvedVariant === 'ghost') {
-        $classes[] = '!border-0 !shadow-none';
-    }
-
-    $showInverseSpinner = $loading
-        && $resolvedVariant === 'base'
-        && $resolvedSemantic !== 'neutral';
-
-    $isLink = filled($href) && ! $disabled;
-
+    $isDisabled = $disabled || $loading;
+    $isLink = filled($href) && ! $isDisabled;
     $renderIcon = filled($icon) && $iconPosition === 'trailing';
+    $isDangerVariant = in_array($resolvedSemantic, ['danger', 'danger-tertiary', 'danger-ghost'], true);
+    $dangerDescriptionId = $isDangerVariant && filled($dangerDescription)
+        ? 'ui-button-danger-description-'.Str::uuid()
+        : null;
+    $existingDescribedBy = $attributes->get('aria-describedby');
+    $ariaDescribedBy = collect([$existingDescribedBy, $dangerDescriptionId])
+        ->filter()
+        ->implode(' ');
 
-    if ($renderIcon) {
-        $classes[] = 'ui-action-with-icon';
+    $classes = [
+        'ui-button',
+        'ui-button-'.$resolvedSemantic,
+        'ui-button-'.$resolvedSize,
+    ];
+
+    if ($resolvedExpressive) {
+        $classes[] = 'ui-button-expressive';
     }
+
+    if ($loading) {
+        $classes[] = 'ui-button-loading';
+    }
+
+    if ($isDisabled) {
+        $classes[] = 'ui-button-disabled';
+    }
+
+    $showInverseSpinner = $loading && in_array($resolvedSemantic, ['primary', 'secondary', 'danger'], true);
+    $componentAttributes = $attributes->except('aria-describedby');
 @endphp
 
 @if ($isLink)
     <a
         href="{{ $href }}"
-        {{ $attributes->class($classes)->merge(['data-ui-component' => 'button']) }}
+        @if (filled($ariaDescribedBy)) aria-describedby="{{ $ariaDescribedBy }}" @endif
+        {{ $componentAttributes->class($classes)->merge(['data-ui-component' => 'button']) }}
     >
         @if ($loading)
             <span @class(['ui-spinner', 'ui-spinner-inverse' => $showInverseSpinner]) aria-hidden="true"></span>
@@ -88,9 +97,10 @@
 @else
     <button
         type="{{ $type }}"
-        @disabled($disabled)
+        @disabled($isDisabled)
         @if ($loading) aria-busy="true" @endif
-        {{ $attributes->class($classes)->merge(['data-ui-component' => 'button']) }}
+        @if (filled($ariaDescribedBy)) aria-describedby="{{ $ariaDescribedBy }}" @endif
+        {{ $componentAttributes->class($classes)->merge(['data-ui-component' => 'button']) }}
     >
         @if ($loading)
             <span @class(['ui-spinner', 'ui-spinner-inverse' => $showInverseSpinner]) aria-hidden="true"></span>
@@ -100,4 +110,8 @@
             <x-dynamic-component :component="$icon" class="ui-button-icon" aria-hidden="true" />
         @endif
     </button>
+@endif
+
+@if (filled($dangerDescriptionId))
+    <span id="{{ $dangerDescriptionId }}" class="sr-only">{{ $dangerDescription }}</span>
 @endif

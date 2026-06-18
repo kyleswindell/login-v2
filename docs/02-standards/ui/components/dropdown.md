@@ -107,8 +107,8 @@ This component owns the single-select field, trigger, selected value display, op
 | JavaScript      | `initDropdowns` exported from the app UI controls entry when custom listbox behavior is installed. Do not add feature-local dropdown scripts.                                                                                                                    |
 | Data attributes | `data-ui-dropdown`, `data-ui-dropdown-trigger`, `data-ui-dropdown-field`, `data-ui-dropdown-chevron`, `data-ui-dropdown-menu`, `data-ui-dropdown-option`, `data-ui-dropdown-value`, `data-ui-dropdown-option-value`, `data-ui-dropdown-option-label`, `data-ui-dropdown-hidden-input`. |
 | Props/options   | `name`, `id`, `label`, `options`, `value`, `placeholder`, `helper`, `error`, `warning`, `size`, `variant`, `required`, `disabled`, `readonly`, `menuMaxHeight`, `placement`, `attributes`.                                                                       |
-| CSS namespace   | Use the app-owned `ui-*` namespace documented by the component implementation. Recommended namespaces are `ui-dropdown`, `ui-dropdown-trigger`, `ui-dropdown-menu`, `ui-dropdown-option`, `ui-field`, `ui-field-label`, `ui-field-helper`, and `ui-field-error`. |
-| Source files    | `resources/views/components/ui/dropdown.blade.php`, `resources/js/ui-controls/dropdowns.js`, `resources/css/app.css`, and UI Reference route `/platform/ui-reference/components/dropdown`.                                                                      |
+| CSS namespace   | Use the app-owned `ui-*` namespace documented by the component implementation. Dropdown owns `ui-dropdown*` classes and consumes shared `ui-list-box*` classes for custom listbox structure. |
+| Source files    | `resources/views/components/ui/dropdown.blade.php`, `resources/js/ui-controls/dropdowns.js`, `resources/css/components/dropdown.css`, `resources/css/components/list-box.css`, and UI Reference route `/platform/ui-reference/components/dropdown`. |
 
 Example call:
 
@@ -251,6 +251,8 @@ Do not use direct Carbon production classes such as `cds--dropdown` or `bx--drop
 
 Dropdown does not have decorative variants. It has installed single-select behavior, field styles, sizes, validation states, and explicit boundaries against nearby selection/action APIs.
 
+Dropdown is a custom listbox consumer. It must emit `aria-haspopup="listbox"`, `role="listbox"`, `role="option"`, `aria-selected`, `ui-list-box*` structure classes, and component-owned `data-ui-dropdown*` behavior hooks. It must not reuse Menu roles, Menu item classes, or action metadata because Dropdown options are values.
+
 | Name                           | Type               | Status               | API                                                                                        | Use when                                                                            |
 | ------------------------------ | ------------------ | -------------------- | ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------- |
 | Default single-select dropdown | Variant            | Approved API         | `variant="default"`                                                                        | User chooses one known option from a custom listbox.                                |
@@ -366,6 +368,7 @@ Do not hard-code raw color, spacing, font size, borders, focus rings, icon sourc
 - Open and closed dropdown states must use the same field width.
 - The trigger opens/closes the menu by click, tap, Enter, Space, or Down Arrow.
 - Arrow keys move through options once the menu is open.
+- Home and End move to the first and last enabled options.
 - Enter or Space selects the focused option and closes the menu.
 - Escape closes the menu without changing the selected value.
 - Tab closes the menu and moves focus to the next focusable element.

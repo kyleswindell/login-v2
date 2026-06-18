@@ -17,5 +17,5 @@
 @endif
 
 @if ($hasBody)
-    <span class="ui-tile__body">{{ $slot }}</span>
+    <div class="ui-tile__body">{{ $slot }}</div>
 @endif

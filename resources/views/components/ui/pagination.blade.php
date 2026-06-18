@@ -13,6 +13,11 @@
     'perPage' => null,
     'pageSize' => null,
     'pageSizeOptions' => [],
+    'pageSizes' => null,
+    'itemsPerPageText' => 'Items per page:',
+    'backwardText' => 'Previous page',
+    'forwardText' => 'Next page',
+    'pageNumberText' => 'Page number',
     'baseUrl' => '#',
     'pageName' => 'page',
     'pageSizeName' => 'per_page',
@@ -30,11 +35,12 @@
 @php
     $paginationId = $id ?? 'pagination-'.str()->random(8);
     $current = max(1, (int) $currentPage);
-    $last = max(1, (int) ($totalPages ?? $lastPage));
-    $current = min($current, $last);
     $pageSize = (int) ($pageSize ?? $perPage ?? 25);
     $total = $totalItems ?? $total;
     $total = $total === null ? null : max(0, (int) $total);
+    $derivedLast = $total !== null && $pageSize > 0 ? max(1, (int) ceil($total / $pageSize)) : null;
+    $last = max(1, (int) ($totalPages ?? $derivedLast ?? $lastPage));
+    $current = min($current, $last);
     $from = $total === null || $total === 0 ? null : (($current - 1) * $pageSize) + 1;
     $to = $total === null || $total === 0 ? null : min($total, $current * $pageSize);
 
@@ -57,7 +63,9 @@
     $previousPage = $current <= 1 ? ($loop ? $last : 1) : $current - 1;
     $nextPage = $current >= $last ? ($loop ? 1 : $last) : $current + 1;
 
-    $optionValues = collect($pageSizeOptions)->map(function ($option) {
+    $resolvedPageSizeOptions = filled($pageSizeOptions) ? $pageSizeOptions : ($pageSizes ?? []);
+
+    $optionValues = collect($resolvedPageSizeOptions)->map(function ($option) {
         if (is_array($option)) {
             return [
                 'value' => data_get($option, 'value', data_get($option, 'label')),
@@ -67,6 +75,10 @@
 
         return ['value' => $option, 'label' => (string) $option];
     })->filter(fn ($option) => filled($option['value']))->values();
+    $pageOptions = collect(range(1, $last))->map(fn (int $page) => [
+        'value' => $page,
+        'label' => (string) $page,
+    ])->all();
 
     $hrefFor = function (int $page, array $extra = []) use ($baseUrl, $pageName): string {
         if ($baseUrl === '#') {
@@ -135,85 +147,123 @@
 >
     @if ($resolvedVariant === 'pagination')
         <div class="ui-pagination-bar" data-ui-pagination-bar>
-            @if ($showItemsPerPage && $optionValues->isNotEmpty())
-                <form class="ui-pagination-page-size" method="GET" action="{{ $baseUrl === '#' ? '#' : $baseUrl }}" data-ui-pagination-page-size-form>
-                    <label class="ui-pagination-label" for="{{ $paginationId }}-page-size">Items per page:</label>
-                    <select
-                        id="{{ $paginationId }}-page-size"
-                        class="ui-pagination-select ui-pagination-select-page-size"
-                        name="{{ $pageSizeName }}"
-                        @disabled($isDisabled)
-                        data-ui-pagination-page-size
-                    >
-                        @foreach ($optionValues as $option)
-                            <option value="{{ $option['value'] }}" @selected((string) $option['value'] === (string) $pageSize)>{{ $option['label'] }}</option>
-                        @endforeach
-                    </select>
-                </form>
-            @endif
+            <div class="ui-pagination-left" data-ui-pagination-left>
+                @if ($showItemsPerPage && $optionValues->isNotEmpty())
+                    <div class="ui-pagination-page-size-segment" data-ui-pagination-page-size-segment>
+                        <label class="ui-pagination-label" for="{{ $paginationId }}-page-size">{{ $itemsPerPageText }}</label>
+                        <x-ui.select
+                            id="{{ $paginationId }}-page-size"
+                            name="{{ $pageSizeName }}"
+                            class="ui-pagination-select-field ui-pagination-page-size-select-field"
+                            inline
+                            no-label
+                            aria-label="{{ $itemsPerPageText }}"
+                            :options="$optionValues->all()"
+                            :value="$pageSize"
+                            :disabled="$isDisabled"
+                            :select-attributes="['data-ui-pagination-page-size' => true]"
+                        />
+                    </div>
+                @endif
 
-            @if ($showItemRange)
-                <p class="ui-pagination-range" data-ui-pagination-range>
-                    @if ($total === null)
-                        Page {{ $current }} of {{ $last }}
-                    @elseif ($total === 0)
-                        0 items
+                @if ($showItemRange)
+                    <p class="ui-pagination-range-segment" data-ui-pagination-range>
+                        @if ($total === null)
+                            Page {{ $current }} of {{ $last }}
+                        @elseif ($total === 0)
+                            0&ndash;0 of 0 items
+                        @else
+                            {{ $from }}&ndash;{{ $to }} of {{ $total }} items
+                        @endif
+                    </p>
+                @endif
+            </div>
+
+            <div class="ui-pagination-right" data-ui-pagination-right>
+                @if ($showPageSelector)
+                    <div class="ui-pagination-page-select-segment" data-ui-pagination-page-select-segment>
+                        <x-ui.select
+                            id="{{ $paginationId }}-page-select"
+                            name="{{ $pageName }}"
+                            class="ui-pagination-select-field ui-pagination-page-number-select-field"
+                            inline
+                            no-label
+                            aria-label="{{ $pageNumberText }}"
+                            :options="$pageOptions"
+                            :value="$current"
+                            :disabled="$isDisabled"
+                            :select-attributes="['data-ui-pagination-page-select' => true]"
+                        />
+                        <span class="ui-pagination-total-pages-label" data-ui-pagination-total-pages-label>of {{ $last }} {{ str('page')->plural($last) }}</span>
+                    </div>
+                @endif
+
+                <div class="ui-pagination-controls" data-ui-pagination-controls>
+                    @if($isInteractive)
+                        <button
+                            type="button"
+                            aria-label="{{ $backwardText }}"
+                            @class(['ui-pagination-control', 'ui-pagination-control-icon', 'ui-pagination-control-cell', 'is-disabled' => $isDisabled || ! $hasPrevious])
+                            @if($isDisabled || ! $hasPrevious) aria-disabled="true" tabindex="-1" @endif
+                            data-ui-pagination-prev
+                        >
+                            <x-heroicon-o-chevron-left class="ui-pagination-icon" aria-hidden="true" />
+                        </button>
+                        <button
+                            type="button"
+                            aria-label="{{ $forwardText }}"
+                            @class(['ui-pagination-control', 'ui-pagination-control-icon', 'ui-pagination-control-cell', 'is-disabled' => $isDisabled || ! $hasNext])
+                            @if($isDisabled || ! $hasNext) aria-disabled="true" tabindex="-1" @endif
+                            data-ui-pagination-next
+                        >
+                            <x-heroicon-o-chevron-right class="ui-pagination-icon" aria-hidden="true" />
+                        </button>
                     @else
-                        {{ $from }}-{{ $to }} of {{ $total }} items
+                        <a
+                            href="{{ $hrefFor($previousPage) }}"
+                            aria-label="{{ $backwardText }}"
+                            @class(['ui-pagination-control', 'ui-pagination-control-icon', 'ui-pagination-control-cell', 'is-disabled' => $isDisabled || ! $hasPrevious])
+                            @if($isDisabled || ! $hasPrevious) aria-disabled="true" tabindex="-1" @endif
+                            data-ui-pagination-prev
+                        >
+                            <x-heroicon-o-chevron-left class="ui-pagination-icon" aria-hidden="true" />
+                        </a>
+                        <a
+                            href="{{ $hrefFor($nextPage) }}"
+                            aria-label="{{ $forwardText }}"
+                            @class(['ui-pagination-control', 'ui-pagination-control-icon', 'ui-pagination-control-cell', 'is-disabled' => $isDisabled || ! $hasNext])
+                            @if($isDisabled || ! $hasNext) aria-disabled="true" tabindex="-1" @endif
+                            data-ui-pagination-next
+                        >
+                            <x-heroicon-o-chevron-right class="ui-pagination-icon" aria-hidden="true" />
+                        </a>
                     @endif
-                </p>
-            @endif
-
-            @if ($showPageSelector)
-                <label class="ui-pagination-label ui-pagination-page-selector" for="{{ $paginationId }}-page-select">
-                    <span class="sr-only">Current page</span>
-                    <select
-                        id="{{ $paginationId }}-page-select"
-                        class="ui-pagination-select ui-pagination-select-page-select"
-                        name="{{ $pageName }}"
-                        @disabled($isDisabled)
-                        data-ui-pagination-page-select
-                    >
-                        @foreach (range(1, $last) as $page)
-                            <option value="{{ $page }}" @selected($page === $current)>{{ $page }}</option>
-                        @endforeach
-                    </select>
-                    <span>of {{ $last }} {{ str('page')->plural($last) }}</span>
-                </label>
-            @endif
-
-            <div class="ui-pagination-controls" data-ui-pagination-controls>
+                </div>
+            </div>
+        </div>
+    @else
+        <div class="ui-pagination-nav-shell" data-ui-pagination-nav>
+            @if($isInteractive)
+                <button
+                    type="button"
+                    aria-label="{{ $backwardText }}"
+                    @class(['ui-pagination-control', 'ui-pagination-control-icon', 'is-disabled' => $isDisabled || ! $hasPrevious])
+                    @if($isDisabled || ! $hasPrevious) aria-disabled="true" tabindex="-1" @endif
+                    data-ui-pagination-prev
+                >
+                    <x-heroicon-o-chevron-left class="ui-pagination-icon" aria-hidden="true" />
+                </button>
+            @else
                 <a
                     href="{{ $hrefFor($previousPage) }}"
-                    aria-label="Previous page"
+                    aria-label="{{ $backwardText }}"
                     @class(['ui-pagination-control', 'ui-pagination-control-icon', 'is-disabled' => $isDisabled || ! $hasPrevious])
                     @if($isDisabled || ! $hasPrevious) aria-disabled="true" tabindex="-1" @endif
                     data-ui-pagination-prev
                 >
                     <x-heroicon-o-chevron-left class="ui-pagination-icon" aria-hidden="true" />
                 </a>
-                <a
-                    href="{{ $hrefFor($nextPage) }}"
-                    aria-label="Next page"
-                    @class(['ui-pagination-control', 'ui-pagination-control-icon', 'is-disabled' => $isDisabled || ! $hasNext])
-                    @if($isDisabled || ! $hasNext) aria-disabled="true" tabindex="-1" @endif
-                    data-ui-pagination-next
-                >
-                    <x-heroicon-o-chevron-right class="ui-pagination-icon" aria-hidden="true" />
-                </a>
-            </div>
-        </div>
-    @else
-        <div class="ui-pagination-nav-shell" data-ui-pagination-nav>
-            <a
-                href="{{ $hrefFor($previousPage) }}"
-                aria-label="Previous page"
-                @class(['ui-pagination-control', 'ui-pagination-control-icon', 'is-disabled' => $isDisabled || ! $hasPrevious])
-                @if($isDisabled || ! $hasPrevious) aria-disabled="true" tabindex="-1" @endif
-                data-ui-pagination-prev
-            >
-                <x-heroicon-o-chevron-left class="ui-pagination-icon" aria-hidden="true" />
-            </a>
+            @endif
 
             <ol class="ui-pagination-list" aria-label="Pages">
                 @foreach ($pageItems as $item)
@@ -228,16 +278,29 @@
                                 'ui-pagination-item-neighbor' => $page !== $current && $page !== 1 && $page !== $last,
                             ])
                         >
-                            <a
-                                href="{{ $hrefFor($page) }}"
-                                aria-label="Page {{ $page }}"
-                                @if($page === $current) aria-current="page" @endif
-                                @class(['ui-pagination-page', 'is-current' => $page === $current, 'is-disabled' => $isDisabled])
-                                @if($isDisabled) aria-disabled="true" tabindex="-1" @endif
-                                data-ui-pagination-page="{{ $page }}"
-                            >
-                                {{ $page }}
-                            </a>
+                            @if($isInteractive)
+                                <button
+                                    type="button"
+                                    aria-label="Page {{ $page }}"
+                                    @if($page === $current) aria-current="page" @endif
+                                    @class(['ui-pagination-page', 'is-current' => $page === $current, 'is-disabled' => $isDisabled])
+                                    @if($isDisabled) aria-disabled="true" tabindex="-1" @endif
+                                    data-ui-pagination-page="{{ $page }}"
+                                >
+                                    {{ $page }}
+                                </button>
+                            @else
+                                <a
+                                    href="{{ $hrefFor($page) }}"
+                                    aria-label="Page {{ $page }}"
+                                    @if($page === $current) aria-current="page" @endif
+                                    @class(['ui-pagination-page', 'is-current' => $page === $current, 'is-disabled' => $isDisabled])
+                                    @if($isDisabled) aria-disabled="true" tabindex="-1" @endif
+                                    data-ui-pagination-page="{{ $page }}"
+                                >
+                                    {{ $page }}
+                                </a>
+                            @endif
                         </li>
                     @else
                         @php
@@ -259,14 +322,25 @@
                                 </button>
                                 <div id="{{ $overflowId }}" class="ui-pagination-overflow-menu" role="menu" data-ui-pagination-overflow-menu hidden>
                                     @foreach ($overflowPages as $page)
-                                        <a
-                                            href="{{ $hrefFor($page) }}"
-                                            class="ui-pagination-overflow-item"
-                                            role="menuitem"
-                                            data-ui-pagination-overflow-page="{{ $page }}"
-                                        >
-                                            Page {{ $page }}
-                                        </a>
+                                        @if($isInteractive)
+                                            <button
+                                                type="button"
+                                                class="ui-pagination-overflow-item"
+                                                role="menuitem"
+                                                data-ui-pagination-overflow-page="{{ $page }}"
+                                            >
+                                                Page {{ $page }}
+                                            </button>
+                                        @else
+                                            <a
+                                                href="{{ $hrefFor($page) }}"
+                                                class="ui-pagination-overflow-item"
+                                                role="menuitem"
+                                                data-ui-pagination-overflow-page="{{ $page }}"
+                                            >
+                                                Page {{ $page }}
+                                            </a>
+                                        @endif
                                     @endforeach
                                 </div>
                             </div>
@@ -275,15 +349,27 @@
                 @endforeach
             </ol>
 
-            <a
-                href="{{ $hrefFor($nextPage) }}"
-                aria-label="Next page"
-                @class(['ui-pagination-control', 'ui-pagination-control-icon', 'is-disabled' => $isDisabled || ! $hasNext])
-                @if($isDisabled || ! $hasNext) aria-disabled="true" tabindex="-1" @endif
-                data-ui-pagination-next
-            >
-                <x-heroicon-o-chevron-right class="ui-pagination-icon" aria-hidden="true" />
-            </a>
+            @if($isInteractive)
+                <button
+                    type="button"
+                    aria-label="{{ $forwardText }}"
+                    @class(['ui-pagination-control', 'ui-pagination-control-icon', 'is-disabled' => $isDisabled || ! $hasNext])
+                    @if($isDisabled || ! $hasNext) aria-disabled="true" tabindex="-1" @endif
+                    data-ui-pagination-next
+                >
+                    <x-heroicon-o-chevron-right class="ui-pagination-icon" aria-hidden="true" />
+                </button>
+            @else
+                <a
+                    href="{{ $hrefFor($nextPage) }}"
+                    aria-label="{{ $forwardText }}"
+                    @class(['ui-pagination-control', 'ui-pagination-control-icon', 'is-disabled' => $isDisabled || ! $hasNext])
+                    @if($isDisabled || ! $hasNext) aria-disabled="true" tabindex="-1" @endif
+                    data-ui-pagination-next
+                >
+                    <x-heroicon-o-chevron-right class="ui-pagination-icon" aria-hidden="true" />
+                </a>
+            @endif
         </div>
     @endif
 </nav>

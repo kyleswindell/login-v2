@@ -10,7 +10,10 @@
                                 :logs-navigation="$logsNavigation"
                                 :setup-base-navigation="$setupBaseNavigation"
                                 :setup-admin-navigation="$setupAdminNavigation"
-                            />
+                                custom-panel-label="Page"
+                            >
+                                {{ $sidebar }}
+                            </x-layouts.mobile-sidebar>
 
                             <div class="hidden lg:block">
                                 {{ $sidebar }}

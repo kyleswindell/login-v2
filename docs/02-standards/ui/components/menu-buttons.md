@@ -107,7 +107,7 @@ Menu buttons must use the flexible UI Reference layout model. The page may use m
 | Data attributes | `data-ui-menu-button`, `data-ui-menu-trigger`, `data-ui-menu`, `data-ui-menu-item`, `data-ui-menu-placement`, `data-ui-combo-button`, `data-ui-overflow-menu`.                                                                                             |
 | Props/options   | Use the props documented in this standard. Do not add feature-local props without updating this Component standard and UI Reference proof.                                                                                                                |
 | CSS namespace   | `ui-menu-button`, `ui-overflow-menu`, `ui-combo-button`, `ui-menu`, `ui-menu-item`, and related app-owned `ui-*` classes.                                                                                                                                 |
-| Source files    | Expected owners: `resources/views/components/ui/menu-button.blade.php`, `resources/views/components/ui/combo-button.blade.php`, `resources/views/components/ui/overflow-menu.blade.php`, `resources/js/ui-controls/menus.js`, `resources/css/app.css`.       |
+| Source files    | Expected owners: `resources/views/components/ui/menu-button.blade.php`, `resources/views/components/ui/combo-button.blade.php`, `resources/views/components/ui/overflow-menu.blade.php`, `resources/views/components/ui/menu.blade.php`, `resources/views/components/ui/menu-item.blade.php`, `resources/js/ui-controls/menus.js`, `resources/css/components/menu-button.css`, `resources/css/components/combo-button.css`, `resources/css/components/overflow-menu.css`, `resources/css/components/menu.css`. |
 
 ### 4.1. Menu button example
 
@@ -157,7 +157,7 @@ Menu buttons must use the flexible UI Reference layout model. The page may use m
 | ----------- | ------------ | --------------: | --------- | ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------- |
 | `label`     | All triggers |        `string` | required  | non-empty string                                             | Visible for menu/combo. Accessible name for overflow.                                               |
 | `items`     | All menus    |         `array` | required  | item data contract                                           | Menu items must be simple actions or links.                                                         |
-| `type`      | Menu button  |        `string` | `primary` | `primary`, `tertiary`, `ghost`                               | Mirrors approved Button hierarchy. `tertiary` is the outline visual treatment in the UI Reference.   |
+| `type`      | Menu button  |        `string` | `primary` | `primary`, `tertiary`, `ghost`                               | Mirrors approved Button hierarchy.                                                                  |
 | `size`      | All triggers |        `string` | `md`      | `xs`, `sm`, `md`, `lg`                                       | Menu item height must match trigger size.                                                           |
 | `placement` | All menus    |        `string` | `auto`    | `auto`, `bottom-start`, `bottom-end`, `top-start`, `top-end` | Use `auto` unless a bounded surface requires a specific edge.                                       |
 | `align`     | All menus    |        `string` | `start`   | `start`, `end`                                               | Use `end` for right-aligned row/card overflow.                                                      |
@@ -175,7 +175,7 @@ Menu buttons must use the flexible UI Reference layout model. The page may use m
 | `label`         | `string` |      Yes | sentence-case command label      | Must describe the command or destination.                                  |
 | `action`        | `string` |     null | Conditional                      | app action name                                                            | Use for state-changing commands.                                    |
 | `href`          | `string` |     null | Conditional                      | trusted route/URL                                                          | Use for navigation items. Do not mix unclear action/link semantics. |
-| `method`        | `string` |       No | `GET`, `POST`, `PATCH`, `DELETE` | Destructive commands require explicit labels and confirmation when needed. |
+| `method`        | `string` |       No | `GET`, `POST`, `PATCH`, `DELETE` | Metadata only; non-GET execution still requires an owning form/controller contract. |
 | `tone`          | `string` |       No | `default`, `danger`              | `danger` is only for destructive menu items, not decoration.               |
 | `icon`          | `string` |     null | No                               | approved Heroicon alias                                                    | Icons are optional and must not be the only source of meaning.      |
 | `disabled`      |   `bool` |       No | `true`, `false`                  | Disabled items must expose reason in nearby copy or tooltip when needed.   |
@@ -268,7 +268,7 @@ Menu buttons consume Foundation Color, Spacing, Typography, Themes, Motion, and 
 ### 7.4. Token usage requirements:
 
 - Trigger color, border, icon, and focus treatment must come from the Button, Color, Icons, and Themes APIs.
-- Trigger hierarchy must follow Button style guidance exactly: primary menu triggers consume Button primary tokens, tertiary/outline triggers consume Button tertiary tokens, ghost/overflow triggers consume Button ghost tokens, and any approved secondary trigger must consume `--ui-action-secondary-*` rather than local neutral styling.
+- Trigger hierarchy must follow Button style guidance exactly: primary menu triggers consume Button primary tokens, tertiary triggers consume Button tertiary tokens, ghost/overflow triggers consume Button ghost tokens, and any approved secondary trigger must consume `--ui-action-secondary-*` rather than local neutral styling.
 - Labeled menu buttons must use the Button trailing-icon structure with the approved caret icon. The caret must render to the right of the label and must not wrap to a new text line.
 - Combo buttons must render as a joined split control: the primary action segment keeps the default rounded-start shape, the menu trigger segment keeps the rounded-end shape, and both segments remain separate focus targets.
 - Overflow menu triggers must be icon-only ghost buttons using the approved vertical ellipsis icon unless a product-level Icons decision approves another overflow icon.
@@ -404,9 +404,9 @@ Because Menu buttons are broad and matrix-heavy, the Live examples section may u
 | Required proof                    | Rendered behavior                                                                                                       | Variants/options shown                                                            |
 | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
 | Variant purpose matrix            | Compares Menu button, Overflow menu, and Combo button disposition with status and use case.                             | Menu button, Overflow menu, Combo button                                         |
-| Trigger style matrix              | Shows allowed trigger treatments and disallowed combinations.                                                           | Menu primary, Menu outline/tertiary, Menu ghost, Combo primary-only, Overflow ghost-only |
+| Trigger style matrix              | Shows allowed trigger treatments and disallowed combinations.                                                           | Menu primary, Menu tertiary, Menu ghost, Combo primary-only, Overflow ghost-only |
 | Size scale                        | Shows trigger and menu item height alignment across installed sizes.                                                    | Extra small, Small, Medium, Large                                                 |
-| Text trigger menu button          | A labeled trigger opens simple actions with equal importance.                                                           | Primary, Outline/tertiary, Ghost, Open, Disabled, Loading                        |
+| Text trigger menu button          | A labeled trigger opens simple actions with equal importance.                                                           | Primary, Tertiary, Ghost, Open, Disabled, Loading                        |
 | Icon-only overflow trigger        | Dense overflow trigger for table rows, cards, and compact toolbars.                                                     | Icon trigger, accessible label, tooltip if needed, hover, focus-visible, disabled |
 | Row/card overflow actions         | Overflow menu is composed inside a table row or card without owning external spacing.                                   | View, Edit/Rename, Archive/Delete danger item                                     |
 | Grouped secondary actions         | A visible primary Button remains separate while secondary actions are grouped in a Menu button or Overflow menu.        | Primary Button + Menu button, no multiple-primary group                           |

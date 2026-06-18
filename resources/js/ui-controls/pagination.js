@@ -93,9 +93,9 @@ const pageItems = (current, totalPages, pageWindow) => {
 };
 
 const createPageLink = (pagination, page, current) => {
-    const link = document.createElement('a');
+    const link = document.createElement('button');
 
-    link.href = '#';
+    link.type = 'button';
     link.className = `ui-pagination-page${page === current ? ' is-current' : ''}`;
     link.dataset.uiPaginationPage = String(page);
     link.setAttribute('aria-label', `Page ${page}`);
@@ -237,6 +237,7 @@ const syncPagination = (pagination) => {
     const hasNext = loop ? totalPages > 1 : current < totalPages;
     const pageSelect = pagination.querySelector('[data-ui-pagination-page-select]');
     const pageSizeSelect = pagination.querySelector('[data-ui-pagination-page-size]');
+    const totalPagesLabel = pagination.querySelector('[data-ui-pagination-total-pages-label]');
     const range = pagination.querySelector('[data-ui-pagination-range]');
 
     if (pageSelect instanceof HTMLSelectElement) {
@@ -248,13 +249,17 @@ const syncPagination = (pagination) => {
         pageSizeSelect.value = String(pageSize);
     }
 
+    if (totalPagesLabel instanceof HTMLElement) {
+        totalPagesLabel.textContent = `of ${totalPages} ${totalPages === 1 ? 'page' : 'pages'}`;
+    }
+
     if (range instanceof HTMLElement && totalItems !== null) {
         if (totalItems === 0) {
-            range.textContent = '0 items';
+            range.textContent = '0\u20130 of 0 items';
         } else {
             const from = ((current - 1) * pageSize) + 1;
             const to = Math.min(totalItems, current * pageSize);
-            range.textContent = `${from}-${to} of ${totalItems} items`;
+            range.textContent = `${from}\u2013${to} of ${totalItems} items`;
         }
     }
 

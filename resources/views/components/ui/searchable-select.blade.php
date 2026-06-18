@@ -35,7 +35,7 @@
     data-ui-component="searchable-select"
     data-ui-searchable-select
     data-ui-searchable-select-empty-label="{{ $emptyLabel }}"
-    class="ui-searchable-select"
+    class="ui-list-box-wrapper ui-searchable-select"
 >
     <input
         type="hidden"
@@ -50,7 +50,7 @@
 
     <button
         type="button"
-        class="ui-select ui-searchable-select-trigger"
+        class="ui-list-box ui-list-box-field ui-select ui-searchable-select-trigger"
         data-ui-searchable-select-trigger
         data-ui-searchable-select-label="{{ $placeholder }}"
         aria-haspopup="listbox"
@@ -58,7 +58,7 @@
         aria-controls="{{ $id }}__options"
         @disabled($disabled)
     >
-        <span class="ui-searchable-select-trigger-text" data-ui-searchable-select-trigger-text>
+        <span class="ui-list-box-label ui-searchable-select-trigger-text" data-ui-searchable-select-trigger-text>
             {{ $selectedLabel }}
         </span>
         <x-heroicon-o-chevron-up-down
@@ -68,7 +68,7 @@
         />
     </button>
 
-    <div class="ui-searchable-select-panel hidden" data-ui-searchable-select-panel>
+    <div class="ui-list-box-menu ui-searchable-select-panel hidden" data-ui-searchable-select-panel>
         <div class="ui-searchable-select-filter-shell">
             <label for="{{ $id }}__filter" class="sr-only">{{ $searchLabel }}</label>
             <span class="ui-searchable-select-icon">
@@ -94,14 +94,14 @@
             @foreach ($normalizedOptions as $option)
                 <button
                     type="button"
-                    class="ui-searchable-select-option"
+                    class="ui-list-box-menu-item ui-searchable-select-option"
                     data-ui-searchable-select-option
                     data-value="{{ $option['value'] }}"
                     data-label="{{ $option['label'] }}"
                     role="option"
                     aria-selected="{{ $selectedValue === $option['value'] ? 'true' : 'false' }}"
                 >
-                    <span>{{ $option['label'] }}</span>
+                    <span class="ui-list-box-menu-item-option">{{ $option['label'] }}</span>
                     @if ($selectedValue === $option['value'])
                         <x-heroicon-o-check
                             class="h-4 w-4 shrink-0"

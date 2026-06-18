@@ -16,7 +16,9 @@ javascript_api: []
 source_files:
   - resources/views/components/ui/button.blade.php
   - resources/views/components/ui/icon-button.blade.php
-  - resources/css/app.css
+  - resources/css/components/button.css
+  - resources/css/components/icon-button.css
+  - resources/css/tokens/components/buttons.css
 foundation_elements:
   - color
   - spacing
@@ -133,7 +135,7 @@ Button is the installed Login App 2.0 command API. It owns button semantics, act
 | Source owner                 | `/platform/ui-reference/components/button`                                                                                       |
 | Blade API                    | `x-ui.button`; `x-ui.icon-button`                                                                                                |
 | JavaScript API               | None required for baseline button behavior                                                                                       |
-| Source files                 | `resources/views/components/ui/button.blade.php`; `resources/views/components/ui/icon-button.blade.php`; `resources/css/app.css` |
+| Source files                 | `resources/views/components/ui/button.blade.php`; `resources/views/components/ui/icon-button.blade.php`; `resources/css/components/button.css`; `resources/css/components/icon-button.css` |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, Icons, 2x Grid where composed in layouts                                             |
 | Carbon benchmark             | Carbon Button usage, style, and accessibility guidance                                                                           |
 
@@ -208,17 +210,19 @@ Use the Blade APIs instead of hand-building button markup in feature views.
 | Root semantic element      | Native `button` unless an approved component/pattern explicitly renders a link CTA                                               |
 | Data attributes            | Use only data attributes documented by the Component API. Feature views must not invent button behavior attributes.              |
 | CSS namespace              | App-owned `ui-*` button classes documented by the component implementation                                                       |
-| Source files               | `resources/views/components/ui/button.blade.php`; `resources/views/components/ui/icon-button.blade.php`; `resources/css/app.css` |
+| Source files               | `resources/views/components/ui/button.blade.php`; `resources/views/components/ui/icon-button.blade.php`; `resources/css/components/button.css`; `resources/css/components/icon-button.css` |
 
 ### 4.3. Props and options
 
 | Prop/option    | Type            | Default                    | Allowed values                                                                           | Required                                                                 | Notes                                                                                                          |
 | -------------- | --------------- | -------------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
 | `semantic`     | `string`        | `primary`                  | `primary`, `secondary`, `tertiary`, `ghost`, `danger`, `danger-tertiary`, `danger-ghost` | No                                                                       | Use to select action hierarchy and destructive emphasis. `danger` means danger primary.                        |
-| `size`         | `string`        | `lg` or installed default  | `xs`, `sm`, `md`, `lg`, `lg-expressive`, `xl`, `2xl`                                     | No                                                                       | Must map to the approved seven-size scale. Do not mix sizes inside one button group.                           |
+| `size`         | `string`        | `lg` or installed default  | `xs`, `sm`, `md`, `lg`, `xl`, `2xl`                                                       | No                                                                       | Must map to the approved Carbon button size scale. Do not mix sizes inside one button group.                   |
+| `expressive`   | `bool`          | `false`                    | `true`, `false`                                                                          | No                                                                       | Expressive is a modifier on `size="lg"` only, not a standalone size value.                                     |
 | `type`         | `string`        | `button`                   | `button`, `submit`, `reset`                                                              | No                                                                       | Use `submit` only for the current form’s submit action. Avoid `reset` unless a Pattern explicitly approves it. |
 | `disabled`     | `bool`          | `false`                    | `true`, `false`                                                                          | No                                                                       | Disabled buttons are not focusable and cannot trigger commands.                                                |
 | `loading`      | `bool`          | `false`                    | `true`, `false`                                                                          | No                                                                       | Keeps the label visible, disables the command, and exposes pending state.                                      |
+| `dangerDescription` | `string / null` | `null`                | Short assistive destructive consequence copy                                              | Required when danger context needs extra screen-reader clarification       | Used only with danger variants; rendered as hidden text and referenced with `aria-describedby`.                |
 | `icon`         | `string / null` | `null`                     | Approved Heroicon alias/component                                                        | No                                                                       | Labeled buttons may use one trailing icon only.                                                                |
 | `iconPosition` | `string`        | `trailing`                 | `trailing`                                                                               | No                                                                       | Leading icons are not approved for labeled buttons.                                                            |
 | `ariaLabel`    | `label`         | `string / null`            | `null`                                                                                   | Short action label / Required for `x-ui.icon-button`                     | Must describe the action, not the icon shape.                                                                  |
@@ -247,11 +251,10 @@ Any prop not listed here is not public. If a feature needs another option, updat
 | `sm`            | Implemented / required proof | Small            | 32px / 2rem height for compact controls or dense table/tool rows.             |
 | `md`            | Implemented / required proof | Medium           | 40px / 2.5rem height for standard medium fields and dense forms.              |
 | `lg`            | Implemented / required proof | Large productive | 48px / 3rem height; default productive app button size for common software UI. |
-| `lg-expressive` | Implemented / required proof | Large expressive | 48px / 3rem height with expressive icon sizing for selected non-dense/editorial contexts only. |
 | `xl`            | Implemented / required proof | Extra large      | 64px / 4rem height for full-bleed or larger component surfaces when approved. |
 | `2xl`           | Implemented / required proof | 2XL              | 80px / 5rem height for full-screen or large overlay contexts only when Pattern-owned. |
 
-Do not mix different button sizes in one button group. If a group needs different visual weight, use semantic variants instead of size changes.
+Use `expressive` with `size="lg"` for the Carbon expressive button treatment. Expressive is not a size value. Do not mix different button sizes in one button group. If a group needs different visual weight, use semantic variants instead of size changes.
 
 ### 4.6. Icon button API
 
@@ -339,19 +342,19 @@ Primary, secondary, tertiary, danger primary, and danger tertiary buttons share 
 | Button without icon | padding-left | 16px / 1rem | `$spacing-05` | `--ui-button-padding-start: 1rem` |
 | Button without icon | padding-right | 64px / 4rem | `$spacing-10` | `--ui-button-padding-end: 4rem` |
 | Button with wrapped label | padding-top/bottom | Dynamic from installed size | n/a | `padding-block` is calculated from `--ui-button-height` and `--ui-button-label-line-height`; wrapped labels increase button height instead of compressing vertical spacing |
-| Button with trailing icon | padding-left/right | 16px / 1rem | `$spacing-05` | `ui-action-with-icon` sets both sides to 1rem |
-| Button with trailing icon | label-icon spacing | Dynamic, minimum 32px / 2rem | `$spacing-07` | Non-ghost `ui-action-with-icon` pins the icon to the right padding and lets label-icon space expand |
-| Icon-only button | padding-left/right | 16px / 1rem | `$spacing-05` | `x-ui.icon-button` size classes use 1rem inline padding |
+| Button with trailing icon | padding-left/right | 16px / 1rem | `$spacing-05` | `.ui-button .ui-button-icon` places the trailing icon on the end edge |
+| Button with trailing icon | label-icon spacing | Dynamic, minimum 32px / 2rem | `$spacing-07` | Non-ghost `.ui-button` keeps the icon pinned to the right padding and lets label-icon space expand |
+| Icon-only button | padding-left/right | 0 | `$spacing-00` | `.ui-button-icon-only` uses fixed square sizing instead of text-button inline padding |
 | Icon | svg | 16px x 16px | n/a | `ui-button-icon`, `ui-icon-button-icon` |
-| Expressive icon | svg | 20px x 20px | n/a | `lg-expressive` icon sizing only |
+| Expressive icon | svg | 20px x 20px | n/a | `ui-button-expressive` icon sizing only |
 | Focus | inset shadow | 1px | n/a | Visible focus uses token-backed focus styling and must remain visible in both themes |
 
 Ghost and danger ghost buttons follow the ghost structure:
 
 | Ghost structure | Property | px / rem | Carbon spacing token | Login App implementation |
 | --------------- | -------- | -------- | -------------------- | ------------------------ |
-| Ghost without icon | padding-left/right | 16px / 1rem | `$spacing-05` | `ui-action-ghost` uses equal 1rem inline padding |
-| Ghost with trailing icon | label-icon spacing | 8px / 0.5rem | `$spacing-03` | `ui-action-ghost` sets `--ui-button-gap: 0.5rem` |
+| Ghost without icon | padding-left/right | 16px / 1rem | `$spacing-05` | `ui-button-ghost` uses equal 1rem inline padding |
+| Ghost with trailing icon | label-icon spacing | 8px / 0.5rem | `$spacing-03` | `ui-button-ghost` uses compact label-icon spacing |
 | Ghost icon-only | padding-left/right | 16px / 1rem | `$spacing-05` | `x-ui.icon-button semantic="ghost"` keeps icon-button inline padding |
 
 ## 5. Allowed variants, options, and modifiers
@@ -369,10 +372,11 @@ Ghost and danger ghost buttons follow the ghost structure:
 | Small                | Size             | Implemented / required proof | `size="sm"`                  | Compact control pairing.                                                         |
 | Medium               | Size             | Implemented / required proof | `size="md"`                  | Medium control pairing.                                                          |
 | Large productive     | Size             | Implemented / required proof | `size="lg"`                  | Default product UI size.                                                         |
-| Large expressive     | Size             | Implemented / required proof | `size="lg-expressive"`       | Gated expressive moments.                                                        |
+| Large expressive     | Modifier         | Implemented / required proof | `size="lg" expressive`       | Gated expressive moments using Carbon's expressive button modifier.              |
 | Extra large          | Size             | Implemented / required proof | `size="xl"`                  | Larger component surfaces.                                                       |
 | 2XL                  | Size             | Implemented / required proof | `size="2xl"`                 | Full-screen/large overlay contexts only.                                         |
 | Loading              | Modifier/state   | Implemented                  | `loading`                    | Disable while pending and keep label visible.                                    |
+| Danger description   | Accessibility    | Implemented                  | `dangerDescription="..."`    | Hidden assistive consequence text for danger variants.                           |
 | Disabled             | State            | Implemented                  | `disabled`                   | Native disabled behavior.                                                        |
 | Trailing icon        | Modifier         | Implemented                  | `icon="..."`                 | Labeled buttons only; icon appears after label.                                  |
 | Icon-only            | Separate API     | Implemented                  | `x-ui.icon-button`           | Requires accessible label and tooltip.                                           |
@@ -430,11 +434,11 @@ Button color alignment must follow the Color Element’s Carbon coverage and val
 
 | Carbon token / role | Carbon responsibility | Login App token / API | Mapping status | Owner rule |
 | ------------------- | --------------------- | --------------------- | -------------- | ---------- |
-| `$button-primary`, `$button-primary-hover`, `$button-primary-active` | Primary button container and states | `<x-ui.button semantic="primary">`, `--ui-action-primary-*` | Same role / app value unless theme map records same value | Every primary action uses the same Button-owned primary action role. |
-| `$button-secondary`, `$button-secondary-hover`, `$button-secondary-active` | Secondary button container and states | `<x-ui.button semantic="secondary">`, `<x-ui.icon-button semantic="secondary">`, `--ui-action-secondary-*` | Same role / same Carbon gray value family | Light theme maps to Gray 80 `#393939`, Gray 80 hover `#4c4c4c`, and Gray 60 active `#6f6f6f`; dark theme maps to the corresponding lighter gray secondary family. Secondary action treatment is consistent in forms, modals, page headers, table toolbars, and Menu button triggers when they consume Button hierarchy. |
-| `$button-tertiary`, `$button-tertiary-hover`, `$button-tertiary-active` | Tertiary button text/border/container states | `<x-ui.button semantic="tertiary">`, `<x-ui.icon-button semantic="tertiary">`, `--ui-action-tertiary-*` | Same role / app value unless theme map records same value | Tertiary is a primary-color outline role, not neutral outline. Light/Gray 10 themes use primary border/text by default, then primary filled hover/active with inverse text. Gray 90/100 themes use white border/text by default, then white filled hover/active with primary-colored text. |
-| `$background-hover`, `$link-primary`, `$link-primary-hover` for ghost buttons | Ghost button low-emphasis affordance | `<x-ui.button semantic="ghost">`, `<x-ui.icon-button semantic="ghost">`, `--ui-action-ghost-*` | Same role / app value unless theme map records same value | Ghost buttons and icon buttons share the same Button-owned ghost role. |
-| `$button-danger-primary`, `$button-danger-hover`, `$button-danger-active`, `$button-danger-secondary` | Destructive button hierarchy and states | `semantic="danger"`, `semantic="danger-tertiary"`, `semantic="danger-ghost"`, `--ui-action-danger-*` | Same role / app value unless theme map records same value | Danger roles are destructive only and must not be reused for warning or negative emphasis. |
+| `$button-primary`, `$button-primary-hover`, `$button-primary-active` | Primary button container and states | `<x-ui.button semantic="primary">`, `--ui-button-primary*` | Same role / app value unless theme map records same value | Every primary action uses the same Button-owned primary action role. |
+| `$button-secondary`, `$button-secondary-hover`, `$button-secondary-active` | Secondary button container and states | `<x-ui.button semantic="secondary">`, `<x-ui.icon-button semantic="secondary">`, `--ui-button-secondary*` | Same role / same Carbon gray value family | Light theme maps to Gray 80 `#393939`, Gray 80 hover `#4c4c4c`, and Gray 60 active `#6f6f6f`; dark theme maps to the corresponding lighter gray secondary family. Secondary action treatment is consistent in forms, modals, page headers, table toolbars, and Menu button triggers when they consume Button hierarchy. |
+| `$button-tertiary`, `$button-tertiary-hover`, `$button-tertiary-active` | Tertiary button text/border/container states | `<x-ui.button semantic="tertiary">`, `<x-ui.icon-button semantic="tertiary">`, `--ui-button-tertiary*` | Same role / app value unless theme map records same value | Tertiary is a primary-color outline role, not neutral outline. Light/Gray 10 themes use primary border/text by default, then primary filled hover/active with inverse text. Gray 90/100 themes use white border/text by default, then white filled hover/active with primary-colored text. |
+| `$background-hover`, `$link-primary`, `$link-primary-hover` for ghost buttons | Ghost button low-emphasis affordance | `<x-ui.button semantic="ghost">`, `<x-ui.icon-button semantic="ghost">`, `--ui-background-hover`, `--ui-link-primary` | Same role / app value unless theme map records same value | Ghost buttons and icon buttons share the same Button-owned ghost role. |
+| `$button-danger-primary`, `$button-danger-hover`, `$button-danger-active`, `$button-danger-secondary` | Destructive button hierarchy and states | `semantic="danger"`, `semantic="danger-tertiary"`, `semantic="danger-ghost"`, `--ui-button-danger-*` | Same role / app value unless theme map records same value | Danger roles are destructive only and must not be reused for warning or negative emphasis. |
 | `$button-disabled`, `$text-on-color-disabled`, `$icon-on-color-disabled` | Disabled button surface, text, and icon roles | Disabled Button state tokens/classes | Same role / app value unless theme map records same value | Disabled treatment is state-specific and must not be used for secondary/low-emphasis styling. |
 | `$focus`, `$focus-inset` | Button focus ring and inset contrast | Button focus-visible token/classes using `--ui-focus*` | Same role / app value unless theme map records same value | Focus treatment must stay visible across every semantic variant. |
 
@@ -446,7 +450,6 @@ Allowed component classes should use the app-owned `ui-*` namespace documented b
 .ui-button
 .ui-button-primary
 .ui-button-secondary
-.ui-action-secondary
 .ui-button-tertiary
 .ui-button-ghost
 .ui-button-danger
@@ -456,7 +459,7 @@ Allowed component classes should use the app-owned `ui-*` namespace documented b
 .ui-button-sm
 .ui-button-md
 .ui-button-lg
-.ui-button-lg-expressive
+.ui-button-expressive
 .ui-button-xl
 .ui-button-2xl
 .ui-button-loading

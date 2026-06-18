@@ -68,7 +68,7 @@
     {{ $attributes->class([
         'ui-breadcrumb',
         'ui-breadcrumb-sm' => $resolvedSize === 'sm',
-        'ui-breadcrumb-trailing' => ! $includeCurrent,
+        'ui-breadcrumb-md' => $resolvedSize === 'md',
     ]) }}
     aria-label="{{ $ariaLabel }}"
     data-ui-component="breadcrumb"

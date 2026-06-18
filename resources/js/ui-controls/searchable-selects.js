@@ -29,7 +29,9 @@ export const initSearchableSelects = () => {
 
         const closePanel = ({ restoreFocus = false, clearSearch = true } = {}) => {
             panel.classList.add('hidden');
+            panel.classList.remove('ui-list-box-menu-open');
             trigger.setAttribute('aria-expanded', 'false');
+            trigger.classList.remove('ui-list-box-expanded');
 
             if (clearSearch && filterInput.value !== '') {
                 filterInput.value = '';
@@ -43,7 +45,9 @@ export const initSearchableSelects = () => {
 
         const openPanel = () => {
             panel.classList.remove('hidden');
+            panel.classList.add('ui-list-box-menu-open');
             trigger.setAttribute('aria-expanded', 'true');
+            trigger.classList.add('ui-list-box-expanded');
             window.requestAnimationFrame(() => {
                 filterInput.focus();
                 filterInput.select();
@@ -57,6 +61,7 @@ export const initSearchableSelects = () => {
             optionButtons.forEach((option) => {
                 const isSelected = option.dataset.value === selectedValue;
                 option.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+                option.classList.toggle('ui-list-box-menu-item-selected', isSelected);
 
                 const existingIcons = Array.from(option.querySelectorAll('[data-ui-searchable-select-check]'));
                 const [existingIcon, ...duplicateIcons] = existingIcons;

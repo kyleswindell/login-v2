@@ -10,20 +10,39 @@
     'disabled' => false,
 ])
 
-@php($resolvedPlacement = $placement ?? $align)
+@php
+    $requestedPlacement = $placement ?? $align;
+    $resolvedPlacement = match ($requestedPlacement) {
+        'start' => 'bottom-start',
+        'end' => 'bottom-end',
+        'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end' => $requestedPlacement,
+        default => 'bottom-end',
+    };
 
-<div class="ui-overflow-menu" data-ui-component="overflow-menu" data-ui-overflow-menu data-ui-overflow-menu-size="{{ $size }}">
+    $resolvedSize = in_array($size, ['xs', 'sm', 'md', 'lg'], true) ? $size : 'md';
+    $resolvedAriaLabel = $ariaLabel ?? $attributes->get('aria-label') ?? $label;
+    $rootAttributes = $attributes->except('aria-label');
+@endphp
+
+<div
+    {{ $rootAttributes->class(['ui-overflow-menu', 'ui-overflow-menu-'.$resolvedSize, 'ui-overflow-menu-open' => $open]) }}
+    data-ui-component="overflow-menu"
+    data-ui-overflow-menu
+    data-ui-overflow-menu-size="{{ $resolvedSize }}"
+>
     <x-ui.menu
         :items="$items"
-        :trigger-label="$ariaLabel ?? $label"
+        :trigger-label="$resolvedAriaLabel"
+        :trigger-tooltip="$tooltip"
         :menu-label="$label"
         trigger-kind="icon"
         trigger-icon="heroicon-o-ellipsis-vertical"
         trigger-variant="ghost"
-        :size="$size"
+        :size="$resolvedSize"
         :placement="$resolvedPlacement"
         :open="$open"
         :disabled="$disabled"
+        trigger-class="ui-overflow-menu-trigger"
         data-ui-menu-button-kind="overflow"
     />
 </div>

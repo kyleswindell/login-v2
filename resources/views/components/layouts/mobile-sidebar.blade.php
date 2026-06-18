@@ -4,9 +4,11 @@
     'logsNavigation' => [],
     'setupBaseNavigation' => [],
     'setupAdminNavigation' => [],
+    'customPanelLabel' => 'Page',
 ])
 
-@php($defaultPanel = request()->routeIs('platform.settings.*') ? 'settings' : (request()->routeIs('platform.setup.*') ? 'setup' : 'main'))
+@php($hasCustomPanel = isset($slot) && trim((string) $slot) !== '')
+@php($defaultPanel = $hasCustomPanel ? 'custom' : (request()->routeIs('platform.settings.*') ? 'settings' : (request()->routeIs('platform.setup.*') ? 'setup' : 'main')))
 
 <div class="flex h-full flex-col lg:hidden" data-mobile-sidebar-dock data-default-panel="{{ $defaultPanel }}">
     <div class="ui-shell-sidebar-divider relative mb-4 flex items-center justify-center border-b pb-3">
@@ -160,10 +162,22 @@
                 </nav>
             </div>
         </section>
+
+        @if($hasCustomPanel)
+            <section data-mobile-dock-panel="custom" class="hidden">
+                {{ $slot }}
+            </section>
+        @endif
     </div>
 
     <div class="ui-shell-mobile-dock absolute inset-x-3 bottom-3" role="tablist" aria-label="Navigation dock">
-        <div class="grid grid-cols-3 gap-2">
+        <div @class(['grid gap-2', 'grid-cols-4' => $hasCustomPanel, 'grid-cols-3' => ! $hasCustomPanel])>
+            @if($hasCustomPanel)
+                <button type="button" class="ui-shell-mobile-dock-button flex items-center justify-center rounded-lg px-2 py-2 text-xs font-semibold transition" data-mobile-dock-target="custom">
+                    <x-layouts.nav-icon icon="docs" />
+                    <span class="ml-1">{{ $customPanelLabel }}</span>
+                </button>
+            @endif
             <button type="button" class="ui-shell-mobile-dock-button flex items-center justify-center rounded-lg px-2 py-2 text-xs font-semibold transition" data-mobile-dock-target="main">
                 <x-layouts.nav-icon icon="home" />
                 <span class="ml-1">Main</span>

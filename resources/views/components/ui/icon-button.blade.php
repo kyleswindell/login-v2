@@ -19,40 +19,26 @@
     $accessibleLabel = $ariaLabel ?? $label ?? $tooltip ?? 'Icon button';
     $tooltipText = $tooltip ?? $label;
     $tooltipId = filled($tooltip) ? 'ui-tooltip-'.Str::uuid() : null;
-    $semanticMap = [
-        'primary' => ['primary', 'base'],
-        'secondary' => ['secondary', 'base'],
-        'tertiary' => ['tertiary', 'outline'],
-        'ghost' => ['neutral', 'ghost'],
-        'danger' => ['danger', 'base'],
-        'danger-tertiary' => ['danger', 'outline'],
-        'danger-ghost' => ['danger', 'ghost'],
-        'neutral' => ['neutral', 'base'],
-        'success' => ['success', 'base'],
-        'warning' => ['warning', 'base'],
-        'notice' => ['notice', 'base'],
-        'info' => ['info', 'base'],
-    ];
-    $allowedSizes = ['xs', 'sm', 'md', 'lg', 'lg-expressive', 'xl', '2xl'];
+    $allowedSemantics = ['primary', 'secondary', 'tertiary', 'ghost'];
+    $allowedSizes = ['xs', 'sm', 'md', 'lg'];
     $allowedTooltipPlacements = ['auto', 'top', 'right', 'bottom', 'left'];
     $allowedTooltipAlignments = ['start', 'center', 'end'];
     $allowedTooltipSizes = ['auto', 'single', 'multi', 'definition'];
-    [$resolvedSemantic, $resolvedVariant] = $semanticMap[$semantic] ?? $semanticMap['ghost'];
+    $resolvedSemantic = in_array($semantic, $allowedSemantics, true) ? $semantic : 'ghost';
     $resolvedSize = in_array($size, $allowedSizes, true) ? $size : 'md';
     $resolvedTooltipPlacement = in_array($tooltipPlacement, $allowedTooltipPlacements, true) ? $tooltipPlacement : 'top';
     $resolvedTooltipAlign = in_array($tooltipAlign, $allowedTooltipAlignments, true) ? $tooltipAlign : 'center';
     $resolvedTooltipSize = in_array($tooltipSize, $allowedTooltipSizes, true) ? $tooltipSize : 'single';
 
-    $classes = ['ui-icon-button', 'ui-icon-button-'.$resolvedSize];
     $isDisabled = $disabled || $loading;
-
-    if ($resolvedVariant !== 'base') {
-        $classes[] = 'ui-action-'.$resolvedVariant;
-    }
-
-    if ($resolvedSemantic !== 'neutral') {
-        $classes[] = 'ui-action-'.$resolvedSemantic;
-    }
+    $isLink = filled($href) && ! $isDisabled;
+    $classes = [
+        'ui-button',
+        'ui-button-'.$resolvedSemantic,
+        'ui-button-'.$resolvedSize,
+        'ui-button-icon-only',
+        'ui-icon-button',
+    ];
 @endphp
 
 @if (filled($tooltip))
@@ -79,7 +65,7 @@
         {{ $attributes->class($classes)->merge(['data-ui-component' => 'icon-button']) }}
     >
         @if (filled($icon))
-            <x-dynamic-component :component="$icon" class="ui-icon-button-icon" aria-hidden="true" />
+            <x-dynamic-component :component="$icon" class="ui-button-icon ui-icon-button-icon" aria-hidden="true" />
         @else
             {{ $slot }}
         @endif
@@ -97,7 +83,7 @@
         @if ($loading)
             <span class="ui-spinner" aria-hidden="true"></span>
         @elseif (filled($icon))
-            <x-dynamic-component :component="$icon" class="ui-icon-button-icon" aria-hidden="true" />
+            <x-dynamic-component :component="$icon" class="ui-button-icon ui-icon-button-icon" aria-hidden="true" />
         @else
             {{ $slot }}
         @endif

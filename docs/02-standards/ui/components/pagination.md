@@ -188,6 +188,16 @@ Carbon alignment note: Carbon defines pagination as a control for dividing large
 />
 ```
 
+The `variant="pagination"` bar must render the Carbon-aligned segment order below. Do not replace this with a grouped flex cluster or feature-local table footer.
+
+1. Items-per-page segment: visible `Items per page:` label plus composed `x-ui.select inline no-label` page-size control.
+2. Calculated range segment: `x–y of n items` using an en dash.
+3. Page-selector segment: composed `x-ui.select inline no-label` current-page control plus `of n pages` copy.
+4. Previous icon-button cell.
+5. Next icon-button cell.
+
+Pagination composes Select for both controls. Select owns the native select, visible chevron, internal value/icon spacing, focus, disabled, and read-only behavior. Pagination may pass native select data hooks through Select's `selectAttributes` API, but it must not render local select shells, local chevron icons, or pagination-owned select chrome classes.
+
 ### 4.3. Pagination nav
 
 ```blade
@@ -254,6 +264,11 @@ Use the Blade API instead of hand-building `<nav>`, page links, previous/next bu
 | `showItemRange` / `show-item-range`                                         | `bool`                     | `true`                                                           | `true`, `false`                                                                    | No                                   | Shows visible item range and total.                                                                                                    |
 | `showPageSelector` / `show-page-selector`                                   | `bool`                     | `true`                                                           | `true`, `false`                                                                    | No                                   | Shows current-page select in the pagination bar.                                                                                       |
 | `pageSizeOptions` / `page-size-options` / `array<int>` / `[10, 25, 50, 100]` | Approved positive integers | No                                                               | Keep options short and consistent across comparable views.                         |                                      |                                                                                                                                        |
+| `pageSizes`                                                                  | `array<int>`               | `null`                                                           | Approved positive integers                                                         | No                                   | Carbon-compatible alias for `pageSizeOptions`; `pageSizeOptions` wins when both are supplied.                                          |
+| `itemsPerPageText` / `items-per-page-text`                                   | `string`                   | `Items per page:`                                                | Localized label text                                                               | No                                   | Visible label for the page-size selector. Keep the colon unless localization requires different punctuation.                           |
+| `backwardText` / `backward-text`                                             | `string`                   | `Previous page`                                                  | Accessible control text                                                            | No                                   | Accessible label for the previous-page control.                                                                                        |
+| `forwardText` / `forward-text`                                               | `string`                   | `Next page`                                                      | Accessible control text                                                            | No                                   | Accessible label for the next-page control.                                                                                            |
+| `pageNumberText` / `page-number-text`                                        | `string`                   | `Page number`                                                    | Accessible selector text                                                           | No                                   | Accessible label for the current-page select.                                                                                          |
 | `pageSizeName` / `page-size-name` / `string` / `per_page`                    | Query parameter name       | No                                                               | Must match the controller/query contract.                                          |                                      |                                                                                                                                        |
 | `pageName` / `page-name` / `string` / `page`                                 | Query parameter name       | No                                                               | Use Laravel default unless multiple paginated regions require distinct page names. |                                      |                                                                                                                                        |
 | `preserveQuery` / `preserve-query` / `bool` / `true` / `true`, `false`       | No                         | Keeps filters, search, sort, and page size while changing pages. |                                                                                    |                                      |                                                                                                                                        |
@@ -292,6 +307,9 @@ Preferred input is a Laravel paginator object. When explicit pagination data is 
 | `data-ui-pagination-next`                         | Implemented when emitted | Component | Identifies next control.                                                                       |
 | `data-ui-pagination-page-size`                    | Implemented when emitted | Component | Identifies page-size selector.                                                                 |
 | `data-ui-pagination-page-select`                  | Implemented when emitted | Component | Identifies current-page selector in the pagination bar.                                        |
+| `data-ui-pagination-page-size-form`               | Implemented when emitted | Component | Identifies the page-size segment form wrapper for diagnostics and interactive examples.        |
+| `data-ui-pagination-range`                        | Implemented when emitted | Component | Identifies calculated range copy for interactive updates.                                      |
+| `data-ui-pagination-total-pages-label`            | Implemented when emitted | Component | Identifies total-page copy for interactive updates.                                           |
 | `data-ui-pagination-overflow`                     | Implemented when emitted | Component | Identifies the overflow ellipsis menu for hidden pages.                                        |
 | `data-ui-pagination-interactive="true"`           | Implemented when emitted | Component | Enables local example state updates without route navigation.                                  |
 | `data-ui-pagination-small-breakpoint="true"`      | Implemented when emitted | Component | Forces the UI Reference small-breakpoint proof state.                                          |
@@ -385,18 +403,21 @@ Carbon color role mapping:
 | `$border-interactive` | Selected/current page indicator | Current page border/indicator role | App border-interactive palette | Same role / app value | Current/selected state must be semantic and accessible. |
 | `$focus` | Page/nav focus treatment | Pagination link/button focus-visible | App focus palette | Same role / app value | Focus stays Color-owned. |
 
-Pagination structure and spacing:
+Pagination bar structure and spacing:
 
-| Element                         | Required structure / spacing                                                                 |
-| ------------------------------- | -------------------------------------------------------------------------------------------- |
-| Container                       | 1px border with 16px / 1rem horizontal padding for the pagination bar.                       |
-| Items-per-page select           | 8px / 0.5rem left padding and 16px / 1rem right padding; no left border splitting the label. |
-| Page selector                   | 16px / 1rem left padding and 8px / 0.5rem right padding.                                    |
-| Previous/next chevron icons     | 16px x 16px icon size.                                                                       |
-| Overflow/caret affordance icons | 16px x 16px icon size when iconography is used.                                              |
-| Small pagination                | 32px / 2rem control height.                                                                  |
-| Medium pagination               | 40px / 2.5rem control height.                                                                |
-| Large pagination                | 48px / 3rem control height.                                                                  |
+| Element / segment                    | Required structure / spacing                                                                                                  |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| Pagination bar container             | 1px border; no extra internal grid gap; no trailing space after next control.                                                  |
+| Items-per-page segment               | 16px / 1rem segment padding; right separator border; visible `Items per page:` label.                                          |
+| Items-per-page inline select shell   | 8px / 0.5rem left spacing from label/value area; 16px / 1rem right spacing after the chevron area; no left border split.      |
+| Calculated range segment             | 16px / 1rem left and right padding; copy renders `x–y of n items`.                                                            |
+| Page-selector segment                | 16px / 1rem left and right segment padding; left separator border; copy renders `[page select] of n pages`.                   |
+| Page-selector inline select shell    | 16px / 1rem left spacing before value; 8px / 0.5rem value-to-chevron and chevron-to-total-page-copy spacing.                  |
+| Previous and next cells              | Fixed cell width equal to pagination height; left separator border on each cell; icon centered.                               |
+| Select chevrons and prev/next icons  | 16px x 16px icon size; Select owns select chevrons; Pagination owns previous/next icons; icons inherit `currentColor`.        |
+| Small pagination                     | 32px / 2rem control height.                                                                                                   |
+| Medium pagination                    | 40px / 2.5rem control height.                                                                                                 |
+| Large pagination                     | 48px / 3rem control height.                                                                                                   |
 
 Data table size pairings:
 
@@ -415,8 +436,18 @@ Allowed component classes must use the app-owned `ui-*` namespace documented by 
 ```css
 .ui-pagination
 .ui-pagination-bar
+.ui-pagination-left
+.ui-pagination-right
+.ui-pagination-page-size-segment
+.ui-pagination-select-field
+.ui-pagination-page-size-select-field
+.ui-pagination-page-number-select-field
+.ui-pagination-range-segment
+.ui-pagination-page-select-segment
+.ui-pagination-total-pages-label
 .ui-pagination-nav-shell
 .ui-pagination-controls
+.ui-pagination-control-cell
 .ui-pagination-list
 .ui-pagination-item
 .ui-pagination-control
@@ -424,12 +455,7 @@ Allowed component classes must use the app-owned `ui-*` namespace documented by 
 .ui-pagination-overflow
 .ui-pagination-overflow-menu
 .ui-pagination-overflow-item
-.ui-pagination-page-size
 .ui-pagination-label
-.ui-pagination-select
-.ui-pagination-range
-.ui-pagination-select-page-size
-.ui-pagination-select-page-select
 .ui-pagination-pagination
 .ui-pagination-nav
 .ui-pagination-sm
@@ -448,6 +474,7 @@ Feature views must not create Bootstrap `.pagination`, local `.page-item`, local
 | ---------------------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `x-ui.pagination`                  | Implemented                 | Canonical record-set navigation API.                                                                                                                         |
 | Laravel paginator                  | Preferred                   | Preferred data object for URL, current page, last page, total, and per-page data.                                                                            |
+| `x-ui.select`                      | Internal/component-owned    | Required composition primitive for page-size and page-number controls. Pagination passes native select hooks through `selectAttributes` and does not own select chrome. |
 | `x-ui.button` / `x-ui.icon-button` | Internal/component-owned    | May be used by the component implementation for previous/next controls where controls are buttons. Feature views should not compose raw pagination controls. |
 | `x-ui.link`                        | Internal/component-owned    | May be used by the component implementation for page links where navigation changes URL.                                                                     |
 | Native select / Select styling     | Component-owned composition | Items-per-page and current-page selectors in the pagination bar.                                                                                              |

@@ -154,7 +154,7 @@ Clickable, selectable, and expandable tiles must use the feature-flag accessibil
 
 ## 5. Color And Layer Tokens
 
-Tiles are their own layer surface and remain on the same visual plane as page content. They must not use drop shadows.
+Tiles are their own layer surface and remain on the same visual plane as page content. They default to the first component surface layer, `--ui-layer-01`, and may be moved to the next contextual layer only by an owning parent surface or Pattern API. They must not use drop shadows.
 
 | Role | Token |
 | --- | --- |
@@ -167,13 +167,13 @@ Tiles are their own layer surface and remain on the same visual plane as page co
 | Focus border | `$focus` |
 | Hover background | `$layer-hover` |
 | Active background | `$layer-active` |
-| Selected background | `$layer-selected` |
-| Selected hover background | `$layer-selected-hover` |
+| Selected background | same `$layer` as enabled tile |
+| Selected hover background | `$layer-hover` |
 | Clickable icon | `$icon-interactive` |
 | Selectable/expandable icon | `$icon-primary` |
 | Disabled icon | `$icon-disabled` |
 
-Contextual layer tokens must resolve according to the layer where the tile is placed.
+Contextual layer tokens must resolve according to the layer where the tile is placed. Do not set Tile to Layer 02 globally to compensate for card-heavy UI Reference wrappers; fix the parent surface depth instead.
 
 ## 6. Structure
 
@@ -260,6 +260,8 @@ Grid proportion guidance:
 
 The Tile UI Reference page must render:
 
+- approved variant tabs for base tile, clickable tile, selectable tile, expandable tile, and expandable tile with interactive elements
+- applicable states inside each variant tab before live examples
 - base tile
 - clickable tile
 - selectable tile
@@ -269,9 +271,7 @@ The Tile UI Reference page must render:
 - focused clickable, selectable, expandable, internal CTA, and expansion-button states
 - single-select tile group
 - multi-select tile group
-- standard layout
-- vertical masonry layout
-- horizontal masonry layout
+- a separate layout section with tabs for standard, vertical masonry, and horizontal masonry layout
 - grid proportion table
 - boundary table for deferred or pattern-owned capabilities
 - developer implementation snippets using `x-ui.tile`
@@ -287,8 +287,10 @@ The Tile UI Reference page must render:
 - Single-select tiles use radio-style icons.
 - Multi-select tiles use checkbox-style icons.
 - Selectable icons appear in enabled state.
+- Selected selectable tiles only change the border and selection control; they do not add a custom selected background.
 - Expandable tile without internal interactive elements toggles from the full container.
 - Expandable tile with internal interactive elements toggles only from the bottom-right button.
+- Expandable tile with interactive elements does not apply full-container hover or focus treatment; only internal controls and the expansion button show interactive states.
 - Internal CTAs inside expandable tiles keep separate click targets.
 - Disabled state is visually distinct and removes interaction.
 - Focus state is visible for clickable, selectable, expandable, and interactive expandable expansion controls.

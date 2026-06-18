@@ -11,6 +11,8 @@
     'disabled' => false,
     'id' => null,
     'menuLabel' => null,
+    'triggerClass' => null,
+    'triggerTooltip' => null,
     'rtl' => false,
 ])
 
@@ -23,6 +25,7 @@
     $isIconTrigger = $triggerKind === 'icon' || filled($triggerIcon);
     $resolvedTriggerVariant = $triggerVariant ?? ($isIconTrigger ? 'ghost' : 'tertiary');
     $resolvedTriggerIcon = $triggerIcon ?? ($isIconTrigger ? 'heroicon-o-ellipsis-vertical' : null);
+    $resolvedTriggerClass = filled($triggerClass) ? $triggerClass : null;
     $visibleItems = collect($items)->reject(fn ($item) => $item['hidden'] ?? false);
     $reservesSelectionIndicator = $visibleItems->contains(fn ($item) => ($item['selected'] ?? false) || filled($item['selection_type'] ?? $item['selectionType'] ?? null));
 @endphp
@@ -40,7 +43,9 @@
             :semantic="$resolvedTriggerVariant"
             :size="$resolvedSize"
             :icon="$resolvedTriggerIcon"
+            :tooltip="$triggerTooltip"
             :disabled="$disabled"
+            :class="$resolvedTriggerClass"
             data-ui-menu-trigger
             aria-haspopup="menu"
             aria-expanded="{{ $open ? 'true' : 'false' }}"
@@ -52,6 +57,7 @@
             :size="$resolvedSize"
             icon="heroicon-o-chevron-down"
             :disabled="$disabled"
+            :class="$resolvedTriggerClass"
             data-ui-menu-trigger
             aria-haspopup="menu"
             aria-expanded="{{ $open ? 'true' : 'false' }}"
@@ -75,18 +81,29 @@
         @foreach ($visibleItems as $item)
             @php
                 $isDivider = ($item['divider'] ?? false) || (($item['type'] ?? 'item') === 'divider');
+                $hasLabel = filled($item['label'] ?? null);
                 $children = collect($item['children'] ?? [])->reject(fn ($child) => $child['hidden'] ?? false);
-                $hasSubmenu = $children->isNotEmpty() || ($item['submenu'] ?? false);
+                $hasSubmenu = $children->isNotEmpty();
                 $selectionType = $item['selection_type'] ?? $item['selectionType'] ?? null;
                 $resolvedSelectionType = $selectionType === 'multi' ? 'multiple' : $selectionType;
+                $isDangerItem = ($item['danger'] ?? false) || (($item['tone'] ?? null) === 'danger');
             @endphp
 
+            @continue(! $isDivider && ! $hasLabel)
+
+            @if ($item['dividerBefore'] ?? $item['divider_before'] ?? false)
+                <x-ui.menu-item type="divider" />
+            @endif
+
             @if ($isDivider)
-                <div class="ui-menu-divider" role="separator"></div>
+                <x-ui.menu-item type="divider" />
             @elseif ($children->isNotEmpty())
                 <div class="ui-menu-submenu-group" data-ui-menu-submenu>
                     <x-ui.menu-item
-                        :semantic="($item['danger'] ?? false) ? 'danger' : ($item['semantic'] ?? 'neutral')"
+                        :semantic="$item['semantic'] ?? 'neutral'"
+                        :tone="$item['tone'] ?? null"
+                        :danger="$isDangerItem"
+                        :danger-description="$item['dangerDescription'] ?? $item['danger_description'] ?? null"
                         :disabled="$item['disabled'] ?? false"
                         :shortcut="$item['shortcut'] ?? null"
                         submenu
@@ -108,16 +125,29 @@
                         @foreach ($children as $child)
                             @php
                                 $childIsDivider = ($child['divider'] ?? false) || (($child['type'] ?? 'item') === 'divider');
+                                $childHasLabel = filled($child['label'] ?? null);
                                 $childSelectionType = $child['selection_type'] ?? $child['selectionType'] ?? null;
                                 $resolvedChildSelectionType = $childSelectionType === 'multi' ? 'multiple' : $childSelectionType;
+                                $isDangerChild = ($child['danger'] ?? false) || (($child['tone'] ?? null) === 'danger');
                             @endphp
 
+                            @continue(! $childIsDivider && ! $childHasLabel)
+
+                            @if ($child['dividerBefore'] ?? $child['divider_before'] ?? false)
+                                <x-ui.menu-item type="divider" />
+                            @endif
+
                             @if ($childIsDivider)
-                                <div class="ui-menu-divider" role="separator"></div>
+                                <x-ui.menu-item type="divider" />
                             @else
                                 <x-ui.menu-item
                                     href="{{ $child['href'] ?? null }}"
-                                    :semantic="($child['danger'] ?? false) ? 'danger' : ($child['semantic'] ?? 'neutral')"
+                                    :semantic="$child['semantic'] ?? 'neutral'"
+                                    :tone="$child['tone'] ?? null"
+                                    :danger="$isDangerChild"
+                                    :danger-description="$child['dangerDescription'] ?? $child['danger_description'] ?? null"
+                                    :action="$child['action'] ?? null"
+                                    :method="$child['method'] ?? null"
                                     :current="$child['current'] ?? false"
                                     :selected="$child['selected'] ?? false"
                                     :disabled="$child['disabled'] ?? false"
@@ -136,7 +166,12 @@
             @else
                 <x-ui.menu-item
                     href="{{ $item['href'] ?? null }}"
-                    :semantic="($item['danger'] ?? false) ? 'danger' : ($item['semantic'] ?? 'neutral')"
+                    :semantic="$item['semantic'] ?? 'neutral'"
+                    :tone="$item['tone'] ?? null"
+                    :danger="$isDangerItem"
+                    :danger-description="$item['dangerDescription'] ?? $item['danger_description'] ?? null"
+                    :action="$item['action'] ?? null"
+                    :method="$item['method'] ?? null"
                     :current="$item['current'] ?? false"
                     :selected="$item['selected'] ?? false"
                     :disabled="$item['disabled'] ?? false"
@@ -152,5 +187,9 @@
                 </x-ui.menu-item>
             @endif
         @endforeach
+
+        @if (trim($slot->toHtml()) !== '')
+            {{ $slot }}
+        @endif
     </div>
 </div>

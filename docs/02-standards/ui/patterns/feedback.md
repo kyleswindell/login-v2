@@ -252,9 +252,7 @@ Use when a local action changes state and the user needs to understand what happ
 <div class="ui-feedback-handoff-row">
     <x-ui.inline-loading status="success" label="Saved" />
 
-    <x-ui.tag status="info">
-        Pending review
-    </x-ui.tag>
+    <x-ui.tag type="blue" text="Pending review" />
 
     <x-ui.link href="{{ route('requests.show', $request) }}">
         View request

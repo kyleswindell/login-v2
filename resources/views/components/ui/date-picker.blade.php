@@ -1,131 +1,67 @@
 @props([
-    'name',
-    'id' => null,
-    'label',
+    'datePickerType' => 'single',
     'value' => null,
     'defaultValue' => null,
-    'type' => 'date',
-    'min' => null,
+    'dateFormat' => 'Y-m-d',
+    'locale' => null,
     'minDate' => null,
-    'max' => null,
     'maxDate' => null,
-    'step' => null,
-    'required' => false,
-    'disabled' => false,
-    'readonly' => false,
-    'readOnly' => false,
-    'helper' => null,
-    'helperText' => null,
-    'error' => null,
-    'invalid' => false,
-    'invalidText' => null,
-    'warning' => null,
-    'warn' => false,
-    'warnText' => null,
-    'autocomplete' => null,
-    'placeholder' => null,
-    'dateFormat' => null,
-    'size' => 'md',
-    'style' => 'default',
-    'skeleton' => false,
+    'disable' => null,
+    'enable' => null,
+    'allowInput' => true,
+    'closeOnSelect' => null,
+    'inline' => false,
+    'appendTo' => null,
+    'prevMonthAriaLabel' => 'Previous month',
+    'nextMonthAriaLabel' => 'Next month',
+    'ariaDateFormat' => 'F j, Y',
 ])
 
 @php
-    $resolvedType = in_array($type, ['date', 'datetime-local'], true) ? $type : 'date';
-    $fieldId = $id ?? str($name)->slug('-')->toString();
+    $type = in_array($datePickerType, ['simple', 'single', 'range'], true) ? $datePickerType : 'single';
     $value = $value ?? $defaultValue;
-    $min = $min ?? $minDate;
-    $max = $max ?? $maxDate;
-    $helper = $helper ?? $helperText;
-    $error = $error ?? ($invalid ? $invalidText : null);
-    $warning = $warning ?? ($warn ? $warnText : null);
-    $size = in_array($size, ['sm', 'md', 'lg'], true) ? $size : 'md';
-    $fieldStyle = $style === 'fluid' ? 'fluid' : 'default';
-    $isInvalid = filled($error);
-    $isWarning = ! $isInvalid && filled($warning);
-    $isReadOnly = (bool) ($readonly || $readOnly);
-    $isDisabled = (bool) ($disabled || $skeleton);
-    $helperId = ($helper || $dateFormat) && ! $isInvalid && ! $isWarning ? $fieldId.'-helper' : null;
-    $statusId = $isInvalid || $isWarning || $skeleton ? $fieldId.'-status' : null;
-    $describedBy = trim(collect([$helperId, $statusId])->filter()->implode(' '));
-    $helperCopy = $helper ?? ($dateFormat ? 'Format: '.$dateFormat.'.' : null);
+
+    $normalizeList = static function ($value): array {
+        if ($value === null || $value === '') {
+            return [];
+        }
+
+        if (is_array($value)) {
+            return array_values(array_filter($value, static fn ($item) => $item !== null && $item !== ''));
+        }
+
+        return [$value];
+    };
+
+    $valueJson = json_encode($normalizeList($value), JSON_UNESCAPED_SLASHES);
+    $disableJson = json_encode($normalizeList($disable), JSON_UNESCAPED_SLASHES);
+    $enableJson = json_encode($normalizeList($enable), JSON_UNESCAPED_SLASHES);
+    $shouldCloseOnSelect = $closeOnSelect === null ? ($type !== 'range') : (bool) $closeOnSelect;
 @endphp
 
 <div
     {{ $attributes->class([
-        'ui-field',
         'ui-date-picker',
-        'ui-date-picker-'.$size,
-        'ui-date-picker-'.$fieldStyle,
-        'ui-date-picker-invalid' => $isInvalid,
-        'ui-date-picker-warning' => $isWarning,
-        'ui-date-picker-disabled' => $isDisabled,
-        'ui-date-picker-readonly' => $isReadOnly,
-        'ui-date-picker-skeleton' => $skeleton,
+        'ui-date-picker-'.$type,
     ]) }}
     data-ui-component="date-picker"
     data-ui-date-picker
-    data-ui-date-picker-type="{{ $resolvedType }}"
-    data-ui-date-picker-size="{{ $size }}"
-    data-ui-date-picker-style="{{ $fieldStyle }}"
-    @if($skeleton) aria-busy="true" @endif
+    data-ui-date-picker-type="{{ $type }}"
+    @if($type !== 'simple') data-ui-date-picker-flatpickr @endif
+    data-ui-date-picker-date-format="{{ $dateFormat }}"
+    data-ui-date-picker-value="{{ $valueJson }}"
+    data-ui-date-picker-allow-input="{{ $allowInput ? 'true' : 'false' }}"
+    data-ui-date-picker-close-on-select="{{ $shouldCloseOnSelect ? 'true' : 'false' }}"
+    data-ui-date-picker-inline="{{ $inline ? 'true' : 'false' }}"
+    data-ui-date-picker-aria-date-format="{{ $ariaDateFormat }}"
+    data-ui-date-picker-prev-month-aria-label="{{ $prevMonthAriaLabel }}"
+    data-ui-date-picker-next-month-aria-label="{{ $nextMonthAriaLabel }}"
+    @if($locale) data-ui-date-picker-locale="{{ $locale }}" @endif
+    @if($minDate) data-ui-date-picker-min-date="{{ $minDate }}" @endif
+    @if($maxDate) data-ui-date-picker-max-date="{{ $maxDate }}" @endif
+    @if($disableJson !== '[]') data-ui-date-picker-disable="{{ $disableJson }}" @endif
+    @if($enableJson !== '[]') data-ui-date-picker-enable="{{ $enableJson }}" @endif
+    @if($appendTo) data-ui-date-picker-append-to="{{ $appendTo }}" @endif
 >
-    <label id="{{ $fieldId }}-label" for="{{ $isReadOnly ? $fieldId.'-value' : $fieldId }}" class="ui-field-label">
-        {{ $label }}
-        @if ($required)
-            <span class="ui-field-required" aria-hidden="true">*</span>
-        @endif
-    </label>
-
-    @if ($isReadOnly)
-        <input type="hidden" name="{{ $name }}" value="{{ $value }}">
-        <div
-            id="{{ $fieldId }}-value"
-            class="ui-date-picker-readonly-value"
-            aria-labelledby="{{ $fieldId }}-label"
-            @if($describedBy !== '') aria-describedby="{{ $describedBy }}" @endif
-            data-ui-date-picker-readonly
-        >
-            {{ filled($value) ? $value : 'No date set' }}
-        </div>
-    @else
-        <div class="ui-date-picker-control">
-            <input
-                id="{{ $fieldId }}"
-                name="{{ $name }}"
-                type="{{ $resolvedType }}"
-                value="{{ $value }}"
-                @if($min) min="{{ $min }}" @endif
-                @if($max) max="{{ $max }}" @endif
-                @if($step) step="{{ $step }}" @endif
-                @if($autocomplete) autocomplete="{{ $autocomplete }}" @endif
-                @if($placeholder) placeholder="{{ $placeholder }}" @endif
-                @required($required)
-                @disabled($isDisabled)
-                @if($isInvalid) aria-invalid="true" @endif
-                @if($isWarning) data-ui-field-warning="true" @endif
-                @if($describedBy !== '') aria-describedby="{{ $describedBy }}" @endif
-                class="ui-input ui-input-date"
-                data-ui-date-picker-input
-            >
-
-            @if ($isInvalid)
-                <x-heroicon-o-x-circle class="ui-date-picker-status-icon ui-date-picker-status-icon-error" aria-hidden="true" />
-            @elseif ($isWarning)
-                <x-heroicon-o-exclamation-triangle class="ui-date-picker-status-icon ui-date-picker-status-icon-warning" aria-hidden="true" />
-            @endif
-        </div>
-    @endif
-
-    @if ($helperCopy && ! $isInvalid && ! $isWarning)
-        <p id="{{ $helperId }}" class="ui-field-helper">{{ $helperCopy }}</p>
-    @endif
-
-    @if ($isInvalid)
-        <p id="{{ $statusId }}" class="ui-field-error">{{ $error }}</p>
-    @elseif ($isWarning)
-        <p id="{{ $statusId }}" class="ui-field-warning">{{ $warning }}</p>
-    @elseif ($skeleton)
-        <p id="{{ $statusId }}" class="ui-field-helper">Date field loading.</p>
-    @endif
+    {{ $slot }}
 </div>

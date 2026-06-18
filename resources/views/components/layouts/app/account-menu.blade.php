@@ -16,7 +16,7 @@
                                         <div class="grid grid-cols-3 gap-1">
                                             <x-ui.button
                                                 type="button"
-                                                variant="ghost"
+                                                semantic="ghost"
                                                 size="xs"
                                                 class="w-full"
                                                 data-theme-mode-toggle
@@ -26,7 +26,7 @@
                                             >Light</x-ui.button>
                                             <x-ui.button
                                                 type="button"
-                                                variant="ghost"
+                                                semantic="ghost"
                                                 size="xs"
                                                 class="w-full"
                                                 data-theme-mode-toggle
@@ -36,7 +36,7 @@
                                             >Dark</x-ui.button>
                                             <x-ui.button
                                                 type="button"
-                                                variant="ghost"
+                                                semantic="ghost"
                                                 size="xs"
                                                 class="w-full"
                                                 data-theme-mode-toggle
@@ -58,7 +58,7 @@
 
                                     <form method="POST" action="{{ route('logout') }}" class="mt-2 border-t border-slate-800 pt-2">
                                         @csrf
-                                        <x-ui.button type="submit" semantic="danger" variant="ghost" class="w-full justify-start">
+                                        <x-ui.button type="submit" semantic="danger-ghost" class="w-full justify-start">
                                             Sign out
                                         </x-ui.button>
                                     </form>

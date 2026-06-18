@@ -22,10 +22,12 @@ data_attributes:
   - data-ui-code-show-more
 source_files:
   - resources/views/components/ui/code-snippet.blade.php
+  - resources/views/components/ui/copy-button.blade.php
   - resources/js/ui-controls/code-snippets.js
   - resources/js/ui-controls.js
   - resources/js/app.js
-  - resources/css/app.css
+  - resources/css/components/code-snippet.css
+  - resources/css/components/copy-button.css
   - resources/views/platform/ui-reference/components/live-examples/code-snippet.blade.php
 foundation_elements:
   - color
@@ -141,7 +143,7 @@ Carbon alignment note: Carbon documents inline, single-line, and multi-line code
 | JavaScript API               | `initCodeSnippets`                                                                                                                                         |
 | Data attributes              | `data-ui-component="code-snippet"`, `data-ui-code-snippet-variant`, `data-ui-code-copy-state`                                                              |
 | Props/options                | `variant`, `language`, `copyable`, `copyState`, `expandable`, `collapsedLines`, `light`, content slot                                                      |
-| Source files                 | `resources/views/components/ui/code-snippet.blade.php`; `resources/js/ui-controls/code-snippets.js`; `resources/css/app.css`; `resources/views/platform/ui-reference/components/live-examples/code-snippet.blade.php` |
+| Source files                 | `resources/views/components/ui/code-snippet.blade.php`; `resources/views/components/ui/copy-button.blade.php`; `resources/js/ui-controls/code-snippets.js`; `resources/css/components/code-snippet.css`; `resources/css/components/copy-button.css`; `resources/views/platform/ui-reference/components/live-examples/code-snippet.blade.php` |
 | CSS namespace                | `ui-code-snippet*` and `ui-code-token*`                                                                                                                    |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, Icons                                                                                                          |
 | Carbon benchmark             | Carbon Code snippet usage, style, and accessibility guidance                                                                                               |
@@ -235,7 +237,7 @@ Use the Blade API instead of hand-building code snippet markup in feature views 
 | Root semantic structure | `pre` and `code` for block snippets; inline variant renders inline `code` or copyable button plus `code`                                                   |
 | Data attributes         | `data-ui-component="code-snippet"`, `data-ui-code-snippet`, `data-ui-code-snippet-variant`, `data-ui-code-copy-state`, copy/show-more hooks                |
 | CSS namespace           | `ui-code-snippet*` and `ui-code-token*`                                                                                                                    |
-| Source files            | `resources/views/components/ui/code-snippet.blade.php`; `resources/js/ui-controls/code-snippets.js`; `resources/css/app.css`; `resources/views/platform/ui-reference/components/live-examples/code-snippet.blade.php` |
+| Source files            | `resources/views/components/ui/code-snippet.blade.php`; `resources/views/components/ui/copy-button.blade.php`; `resources/js/ui-controls/code-snippets.js`; `resources/css/components/code-snippet.css`; `resources/css/components/copy-button.css`; `resources/views/platform/ui-reference/components/live-examples/code-snippet.blade.php` |
 
 ### 4.3. Props and options
 

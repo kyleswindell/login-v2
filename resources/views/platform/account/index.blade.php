@@ -13,7 +13,7 @@
             description="Manage your profile identity and personal preferences."
         >
             <x-slot:actions>
-                <x-ui.button :href="route('platform.account.settings')" variant="outline">Edit Profile</x-ui.button>
+                <x-ui.button :href="route('platform.account.settings')" semantic="tertiary">Edit Profile</x-ui.button>
                 <x-ui.button :href="route('platform.account.preferences')" semantic="primary">Preferences</x-ui.button>
             </x-slot:actions>
         </x-ui.patterns.page-title-actions-row>
@@ -37,7 +37,7 @@
                 status-semantic="success"
             >
                 <x-slot:actions>
-                    <x-ui.button :href="route('platform.account.settings')" variant="outline" size="sm">Edit details</x-ui.button>
+                    <x-ui.button :href="route('platform.account.settings')" semantic="tertiary" size="sm">Edit details</x-ui.button>
                 </x-slot:actions>
 
                 <x-ui.patterns.key-value-display

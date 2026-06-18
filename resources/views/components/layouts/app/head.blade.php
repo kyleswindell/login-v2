@@ -17,8 +17,6 @@
                 root.dataset.themeMode = themeMode;
                 root.dataset.themeResolved = resolved;
                 root.classList.toggle('dark', resolved === 'dark');
-                root.style.backgroundColor = resolved === 'light' ? 'rgb(248 250 252)' : 'rgb(9 9 11)';
-                root.style.color = resolved === 'light' ? 'rgb(15 23 42)' : 'rgb(241 245 249)';
             })();
         </script>
         <script id="theme-boot-payload" type="application/json">{{ $themeBootPayload }}</script>

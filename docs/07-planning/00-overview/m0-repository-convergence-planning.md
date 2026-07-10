@@ -2,7 +2,7 @@
 DOC-META
 title: M0 Repository Convergence Planning
 doc_type: planning
-status: draft
+status: active
 owner: architecture
 canonical: true
 canonical_path: docs/07-planning/00-overview/m0-repository-convergence-planning.md
@@ -70,20 +70,20 @@ The milestone should leave the repository ready for bounded implementation issue
 
 ## 2. Status
 
-- Planning lifecycle: draft
-- Acceptance state: proposed M0 charter
-- Current implementation state: pre-M0 repository baseline has been merged into `main`
-- Owning GitHub issue: to be created or assigned when this charter is accepted
-- GitHub Project or milestone: M0
-- Baseline reference: record the exact accepted `main` commit SHA when this document is committed
+- Planning lifecycle: active
+- Acceptance state: accepted M0 charter
+- Current implementation state: Wave 0 governance setup is complete; Goals 01 and 02 are the active foundation workstreams
+- Owning GitHub issues: #17 through #26
+- GitHub Project: Login 2.0 Core Build Plan
+- GitHub milestone: M0 Planning Consolidation
+- Accepted pre-M0 baseline commit: `f906e0520e12b5f9eb93b9d35934407c2bbba366`
+- Accepted pre-M0 baseline date: 2026-07-10
 - Known gaps:
-  - the ten M0 parent goal issues do not yet exist
-  - issues #1 through #13 have not yet been formally reclassified beneath the goal structure
-  - several current standards are draft or incomplete relative to their planning sources
-  - the current test suite executes but is not authoritative or fully green
+  - the current test suite executes but is not yet authoritative or fully green
   - the exact target repository structure is not yet accepted
   - UI contract discovery and export behavior are not yet canonical
   - database current-to-target disposition is incomplete
+  - Goals 03 through 10 remain dependency-gated and require bounded child decomposition as their prerequisites stabilize
 
 This document owns milestone intent and acceptance structure. It must not become a parallel task board.
 
@@ -198,8 +198,8 @@ M0 planning must compare against the accepted repository state in `main`, not ag
 Record the exact accepted baseline commit here when this charter is merged:
 
 ```text
-M0 baseline commit: <commit-sha>
-M0 baseline date: <yyyy-mm-dd>
+M0 baseline commit: f906e0520e12b5f9eb93b9d35934407c2bbba366
+M0 baseline date: 2026-07-10
 ```
 
 ### 5.2 Baseline Contents
@@ -1358,7 +1358,7 @@ Define:
 
 ## 18. Existing M0 Issue Disposition
 
-This is the initial mapping of issues #1 through #13. Final closure or revision requires review against current `main`.
+This is the accepted Wave 0 mapping of issues #1 through #13 after review against the pre-M0 baseline in `main`.
 
 | Issue | Current Title                                                | Primary Parent Goal | Initial Disposition                  | Required Review                                                       |
 | ----- | ------------------------------------------------------------ | ------------------- | ------------------------------------ | --------------------------------------------------------------------- |
@@ -1369,12 +1369,12 @@ This is the initial mapping of issues #1 through #13. Final closure or revision 
 | #5    | Choose future admin URL prefix                               | Goal 03             | Retain                               | Link route compatibility work to Goal 09                              |
 | #6    | Choose first audit schema path                               | Goal 06             | Retain                               | Propagate into data, standards, and migration owners                  |
 | #7    | Choose service account model strategy                        | Goal 06             | Retain                               | Propagate into identity, access, security, data, and migration owners |
-| #8    | Replace root AGENTS.md with GitHub Project workflow guidance | Goal 10             | Audit for closure or narrow revision | Root guidance changed in the baseline                                 |
-| #9    | Normalize coding and file-building standards                 | Goal 08             | Audit for closure or narrow revision | Major standards rewrites exist in `main`                              |
-| #10   | Add file archetype standard                                  | Goal 08             | Audit for closure or narrow revision | `File Archetypes.md` exists in `main`                                 |
-| #11   | Add agent implementation checklist                           | Goal 10             | Audit for closure or narrow revision | Checklist exists in `main`                                            |
-| #12   | Add first-pass folder AGENTS.md routing files                | Goal 10             | Audit for closure or narrow revision | Verify every required path and routing rule                           |
-| #13   | Add login2-file-implementation skill                         | Goal 10             | Audit for closure or narrow revision | Verify exact skill content against exit criteria                      |
+| #8    | Replace root AGENTS.md with GitHub Project workflow guidance | Goal 10             | Completed                            | Closed after verification against the accepted baseline               |
+| #9    | Normalize coding and file-building standards                 | Goal 08             | Retained with narrowed scope          | Final reconciliation remains dependent on Goals 01, 03, and 10        |
+| #10   | Add file archetype standard                                  | Goal 08             | Completed                            | Closed after verification against the accepted baseline               |
+| #11   | Add agent implementation checklist                           | Goal 10             | Completed                            | Closed after verification against the accepted baseline               |
+| #12   | Add first-pass folder AGENTS.md routing files                | Goal 10             | Retained with narrowed scope          | Five required routing files remain and are dependency-aware            |
+| #13   | Add login2-file-implementation skill                         | Goal 10             | Completed                            | Closed after verification against the accepted baseline               |
 
 ### 18.1 Issue Reconciliation Rule
 
@@ -1429,12 +1429,14 @@ Goals 01 through 09
 
 ### 20.1 Wave 0 — Charter And Existing-Issue Reconciliation
 
-- accept this M0 charter
-- create ten parent goal issues
-- map issues #1 through #13 to primary parents
-- audit #8 through #13 against current `main`
-- close or revise already-satisfied work
-- record the exact M0 baseline commit
+- [x] accept this M0 charter
+- [x] create ten parent goal issues
+- [x] map issues #1 through #13 to primary parents
+- [x] audit #8 through #13 against current `main`
+- [x] close or revise already-satisfied work
+- [x] record the exact M0 baseline commit
+- [x] configure required GitHub Project fields and M0 metadata
+- [x] define the Goal 01 and Goal 02 child work packets
 
 ### 20.2 Wave 1 — Foundation
 

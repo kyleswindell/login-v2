@@ -31,7 +31,11 @@ This matrix tracks implementation ownership and sequencing. It does not replace 
 
 ## 2. Vocabulary Baseline
 
-[ADR-0005: Core, Modules, And UI Ownership Taxonomy](../01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md) defines three canonical source-of-truth ownership areas.
+[ADR-0005: Core, Modules, And UI Ownership Taxonomy](../01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md) defines the canonical source-of-truth ownership areas.
+
+[ADR-0006: Tenant, Instance, Workspace, Principal, Actor, And Invocation Vocabulary](../01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md) defines the canonical isolation, identity, assurance, event-attribution, and invocation terms.
+
+### Ownership
 
 | Owner | Meaning | Current Or Target Direction |
 | --- | --- | --- |
@@ -39,36 +43,71 @@ This matrix tracks implementation ownership and sequencing. It does not replace 
 | Modules | Optional, cohesive feature sets delivered as independently versioned, installable, and distributable Composer packages. | `Modules/{Module}` during current development; final package and repository topology is owned by Goal 03. |
 | UI | Reusable Elements, Components, Patterns, Layouts, CSS, JavaScript, icons, contracts, tests, and review evidence. | Primarily `resources/views/components`, `resources/css`, and `resources/js`; ownership follows responsibility rather than path. |
 
-Accepted rules:
+### Tenant And Runtime Scope
+
+```text
+Tenant
+└── exclusively owns one Instance
+    └── owns User Accounts
+        └── each authenticated Account receives a resolved Workspace
+```
+
+- One Tenant owns one Instance.
+- Instance is the logical isolation boundary.
+- Workspace is resolved per authenticated User Account and is not a stored container or database boundary.
+- The Internal Tenant follows the same model as clients.
+- Global Administration is an authorized Surface within Internal Tenant Workspaces.
+
+### Principal And Assurance
+
+```text
+Principal Identity
+├── Human Principal
+│   └── User Account
+│       └── User Identity
+└── Non-Human Principal
+    └── Non-Human Identity
+        ├── Service Account
+        ├── Workload Identity
+        └── Application Principal
+
+Request Assurance Context
+├── Machine Identity
+├── Network Identity
+└── Network Context
+```
+
+- User Accounts and User Identity records belong to one Tenant Instance.
+- There is no canonical global or implicit cross-Tenant User Identity.
+- Machine Identity is independent from NHI.
+- Network Identity is verified identity; Network Context is observed transport and risk evidence.
+
+### Actor And Invocation
+
+Actor attribution includes the Principal and applicable Machine Identity, Network Identity, and Network Context.
+
+Canonical Invocation Channels:
+
+- `interactive_web`
+- `api_request`
+- `webhook_request`
+- `console_command`
+- `queued_job`
+- `event_consumer`
+- `scheduled_task`
+- `internal_system`
+
+Jobs, commands, APIs, webhooks, events, and schedulers are execution mechanisms, not Principal or Actor types.
+
+### Accepted Compatibility Rules
 
 - `Platform` is retired as a peer source-of-truth owner.
-- Existing Platform responsibilities must resolve to Core or UI.
-- Existing `app/Platform` paths are transitional physical locations pending Goals 03 and 09.
-- A Core Capability is a distinct required capability within Core.
-- A Module need not be business-oriented; it must be optional, cohesive, and independently distributable.
-- Every Module must declare a stable Composer package identity and formal Module definition.
-- Modules may require and extend other Modules through explicit version constraints and public contracts.
-- Core must operate without optional Modules.
-- UI must not own domain policy, authorization, persistence, or Module behavior.
-- Ownership is separate from physical placement.
-- Ownership is separate from packaging.
-- A composed feature may involve multiple owners, but each distinct responsibility has one primary owner.
-
-Terminology compatibility:
-
-| Transitional Or Descriptive Term | Disposition |
-| --- | --- |
-| Core Capability | Retain as a subtype within Core. |
-| Platform / Platform Surface | Retire as peer ownership terminology; map the responsibility to Core or UI. |
-| Business Module | Retain only as a business-oriented subtype of Module. |
-| Shared UI / UI system | Retain descriptively; canonical owner label is UI. |
-| Resources | Repository location, not an owner. |
-| Surface | Rendered destination or interface, not an owner. |
-| Package | Packaging and distribution mechanism, not an owner. |
-| Feature | Unit of behavior, not an owner. |
-| Integration | Core- or Module-owned behavior, or a Module when optional and cohesive. |
-| Internal tool | Core when required; Module when optional and independently distributable. |
-
+- `App Instance` is a transitional descriptive alias for Instance.
+- `tenant_workspace`, `internal_workspace`, and separate control-plane Workspace models are superseded.
+- bare `Identity` should be qualified.
+- `Service Identity` as the umbrella is replaced by Non-Human Identity.
+- Workspace must not be used as persistent data scope.
+- source IP alone is not Machine Identity or Network Identity.
 ## 3. Source Docs
 
 | Area                                        | Source                                                                                                                         |
@@ -104,7 +143,7 @@ Terminology compatibility:
 | Module/package layout                       | [Module Layout Convention Implementation Planning](module-layout-convention-implementation-planning.md)                        |
 | Module UI surfaces                          | [Module UI Surface Implementation Planning](module-ui-surface-implementation-planning.md)                                      |
 | View surface composition                    | [View Surface Composition Planning](view-surface-composition-planning.md)                                                      |
-| Registry/workspace vocabulary               | [Registry, App Instance, Workspace, And Module Vocabulary Planning](registry-instance-workspace-module-vocabulary-planning.md) |
+| Tenant, Instance, Workspace, principal, Actor, and invocation vocabulary | [ADR-0006](../01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md) |
 
 Standards still needed or needing split from broader existing standards:
 

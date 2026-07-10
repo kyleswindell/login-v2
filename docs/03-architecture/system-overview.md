@@ -1,42 +1,100 @@
+<!--
+DOC-META
+title: System Overview
+doc_type: architecture
+status: active
+owner: architecture
+canonical: true
+canonical_path: docs/03-architecture/system-overview.md
+parent: docs/03-architecture/index.md
+template: docs/09-reference/templates/docs/_doc.md
+summary: Defines Login 2.0 as shared application code operating isolated one-Tenant Instances with User Account-specific Workspaces and authorized Global Administration.
+-->
+
 # System Overview
 
-This document defines the canonical scope and intent for System Overview.
+Parent: [Architecture Index](index.md)
 
-## System Model
+## 1. System Model
 
-Login App 2.0 is one Laravel codebase with three target contexts:
+Login 2.0 is one Laravel application codebase capable of operating isolated Tenant Instances.
 
-- `control_plane` for Parasolutions internal administration, support, tenant registry, provisioning, security, runtime readiness, and module governance
-- `internal_workspace` for Parasolutions' own business operations using shared workspace systems
-- `tenant_workspace` for client-specific workspace runtime
+Canonical ownership and runtime structure:
 
-Platform is the Parasolutions control plane. Platform is not itself a tenant.
+```text
+Tenant
+└── exclusively owns one Instance
+    └── owns User Accounts
+        └── each authenticated Account receives a resolved Workspace
+```
 
-Parasolutions may own an `internal_workspace` that behaves like a workspace for business modules. That workspace should use the same shared workspace module model intended for future client tenant workspaces.
+One Tenant owns one Instance, and one Instance belongs to one Tenant.
 
-## Foundation Direction
+An Instance is the logical data and configuration isolation boundary. Shared code or infrastructure does not imply shared Tenant state.
 
-Canonical stack definition is owned by:
+## 2. Internal Tenant
 
-- [Stack Overview](stack-overview.md)
+Parasolutions operates as the Internal Tenant and uses the same Instance, User Account, User Identity, and Workspace model as client Tenants.
 
-## Domain And Context Direction
+Authorized Internal Tenant Workspaces may render a Global Administration Surface. Global Administration is not a separate Tenant, Instance, Workspace, or identity realm.
 
-Control-plane administration is owned by Parasolutions. Tenant administration is owned per client workspace and resolved from domain metadata in the central platform database.
+## 3. Workspace
 
-Domain resolution is a runtime boundary concern, not a feature-level concern.
+Workspace is the User Account-specific runtime and user-experience scope assembled from:
 
-## Ownership Boundaries
+- Tenant and Instance resolution
+- Instance configuration and active Modules
+- User Account access
+- User Account personalization
 
-- shared core capabilities should be reusable across internal workspace and tenant workspace contexts
-- platform-management capabilities stay control-plane-only unless explicitly reclassified
-- tenant application data stays tenant-local except explicit control-plane metadata and operations data
-- Parasolutions internal workspace data should be separated from control-plane data before shared business modules are built
+Workspace is not a persistent data boundary.
 
-## Related
+## 4. Principal And Assurance Model
 
-- [Platform Context Model](platform-context-model.md)
-- [Platform Boundary](platform-boundary.md)
+Human access uses a Tenant-owned User Account as the Principal.
+
+Non-human access uses a Non-Human Identity such as a Service Account, Workload Identity, or Application Principal.
+
+Machine Identity, Network Identity, and Network Context may accompany either human or non-human Principals as independent assurance context.
+
+## 5. Execution Model
+
+Actor attribution preserves:
+
+- Principal
+- Machine Identity when available
+- Network Identity when available
+- Network Context when applicable
+- Invocation Channel
+- Action
+- Target
+- Result
+- Tenant Instance scope
+
+Canonical Invocation Channels are:
+
+- `interactive_web`
+- `api_request`
+- `webhook_request`
+- `console_command`
+- `queued_job`
+- `event_consumer`
+- `scheduled_task`
+- `internal_system`
+
+## 6. Ownership Boundaries
+
+- Core owns required base-application behavior and contracts.
+- Modules own optional distributable feature packages.
+- UI owns reusable Elements, Components, Patterns, Layouts, CSS, JavaScript, icons, contracts, tests, and review evidence.
+- Tenant and Instance state is isolated even when code and infrastructure are shared.
+- Global Administration requires explicit authorization and preserves Actor and target Tenant Instance scope independently.
+
+## 7. Related
+
+- [ADR-0005: Core, Modules, And UI Ownership Taxonomy](../01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md)
+- [ADR-0006: Tenant, Instance, Workspace, Principal, Actor, And Invocation Vocabulary](../01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md)
+- [Tenant, Instance, User Account, And Workspace Model](workspace-identity-model.md)
 - [Tenancy](tenancy.md)
-- [Core Platform Layer Model](subsystems/core-platform-layer-model.md)
-- [Application Structure](subsystems/application-structure.md)
+- [Module System](module-system.md)
+- [Auth Architecture](auth.md)

@@ -8,7 +8,7 @@ canonical: true
 canonical_path: docs/02-standards/logging/Audit Logging Standards.md
 parent: docs/02-standards/logging/index.md
 template: docs/09-reference/templates/docs/_doc.md
-summary: Defines accountable human and service events, stable names, event shape, after-commit recording, redaction, immutability, access, retention, and tests.
+summary: Defines accountable Action events using Principal-based Actor attribution, machine and network assurance, Invocation Channel, scope, redaction, immutability, and tests.
 -->
 
 # Audit Logging Standards
@@ -17,51 +17,157 @@ Parent: [Logging Standards Index](index.md)
 
 ## 1. Purpose
 
-Record who or what performed a meaningful action, what was affected, the result, and the safe evidence required for accountability and reconstruction.
+Record who or what performed or initiated a meaningful Action, what was affected, the result, the Tenant Instance scope, and the safe evidence required for accountability and reconstruction.
 
 ## 2. Event Semantics
 
-The owning domain defines event key, trigger, subject and target, safe change set, reason, and business meaning.
+The owning capability defines:
 
-Audit defines common storage and evidence rules.
+- Action key and meaning
+- Target meaning
+- trigger conditions
+- safe change set
+- reason requirements
+- business context
+
+Audit defines the common evidence envelope and storage rules.
 
 ## 3. Naming
 
-Use stable domain-first event names:
+Use stable domain-first Action names:
 
-    auth.login_succeeded
-    identity.user_suspended
-    access.role_updated
-    data.export_downloaded
-    secrets.rotated
+```text
+auth.login_succeeded
+identity.user_account_suspended
+access.role_updated
+data.export_downloaded
+secrets.rotated
+```
 
 Do not encode display labels into event keys.
 
-## 4. Actor Types
+## 4. Actor
 
-Support applicable:
+Actor is the full attributed operation initiator:
 
-- user
-- service
-- system
-- integration
+```text
+Actor
+├── Principal
+├── Machine Identity
+├── Network Identity
+└── Network Context
+```
+
+The Principal type must be one of the applicable persistent identity categories:
+
+- `user_account`
+- `service_account`
+- `workload`
+- `application`
+- `system`
+
+A named System Actor requires a stable key and bounded purpose.
+
+Do not classify these as Principal or Actor types:
+
 - job
 - console
-- unknown
+- API
+- webhook
+- scheduler
+- event
+- route
+- IP address
 
-Non-human actors require stable identity and owner where applicable.
+Those belong to Invocation Channel or other execution metadata.
 
-## 5. Event Shape
+Unknown Actor attribution is an error or compatibility condition, not a normal actor category.
 
-An event should support applicable event ID, occurred-at UTC, category, action, result, severity, actor type and ID, subject type and ID, target type and ID, request and correlation ID, session ID, route, command, job, service or integration, scope, reason, safe summary, redacted metadata, and safe change set.
+## 5. Invocation Channel
 
-## 6. Results
+Record the immediate applicable Invocation Channel:
 
-Use consistent results such as succeeded, failed, denied, skipped, and partial.
+- `interactive_web`
+- `api_request`
+- `webhook_request`
+- `console_command`
+- `queued_job`
+- `event_consumer`
+- `scheduled_task`
+- `internal_system`
+
+A channel does not replace Principal attribution and does not grant authority.
+
+## 6. Event Shape
+
+An audit event should support applicable:
+
+- event ID
+- occurred-at UTC
+- category
+- Action
+- Result
+- severity
+- Principal type and ID
+- User Account, NHI, or System Actor stable key
+- Machine Identity reference and safe assurance snapshot
+- Network Identity reference and verification state
+- Network Context
+- Invocation Channel
+- Subject and Target type and ID
+- Actor Tenant and Instance scope
+- target Tenant and Instance scope when different
+- request, trace, and correlation identifiers
+- session ID when applicable
+- route, command, job, event, or webhook metadata
+- reason or support-case reference
+- safe summary
+- redacted metadata
+- safe change set
+
+Do not store raw credentials, private keys, reusable tokens, authorization headers, cookies, MFA material, or secret-bearing certificates.
+
+## 7. Results
+
+Use consistent values such as:
+
+- succeeded
+- failed
+- denied
+- skipped
+- partial
 
 A failed expected authorization decision is not automatically an operational error.
 
-## 7. After Commit
+## 8. Scope
+
+Tenant-owned events must identify Tenant and Instance.
+
+Workspace may be recorded as resolved runtime context, but must not replace Tenant and Instance scope.
+
+Global Administration events must preserve:
+
+- Internal Tenant Actor scope
+- target Tenant
+- target Instance
+- explicit cross-Instance Action and Target
+
+## 9. Causal Attribution
+
+When an operation continues asynchronously, retain applicable correlation and initiating Principal evidence while attributing the current execution to its actual Principal.
+
+Example:
+
+```text
+Current Principal: export-worker Workload Identity
+Invocation Channel: queued_job
+Initiating User Account: 42
+Action: report.generated
+```
+
+Do not overwrite the current Actor with the original User Account when a Workload Identity performs the operation.
+
+## 10. After Commit
 
 Successful mutation events must be recorded after commit.
 
@@ -69,40 +175,68 @@ Rolled-back changes must not leave successful audit events.
 
 Failure and denial events may be recorded outside the mutation transaction when required.
 
-## 8. Change Sets
+## 11. Change Sets And Redaction
 
-Record only fields needed for accountability.
+Record only fields required for accountability.
 
 Mark sensitive fields and redact values.
 
 Preserve safe display labels where raw values are prohibited.
 
-## 9. Required Coverage
+## 12. Required Coverage
 
-Audit applicable authentication and recovery, user lifecycle, permissions and policies, elevated access, settings and security-policy changes, sensitive view and export, secret lifecycle, service-account and token lifecycle, deployment approval and rollback, evidence access, privacy and retention workflows, and business-domain changes.
+Audit applicable:
 
-## 10. Immutability
+- authentication and recovery
+- User Account lifecycle
+- roles, permissions, policies, and elevated access
+- Global Administration
+- settings and security-policy changes
+- sensitive reads and exports
+- secret and credential lifecycle
+- NHI lifecycle
+- API and webhook access
+- queued, scheduled, event-consumer, and console execution
+- deployment approval and rollback
+- evidence access
+- privacy and retention workflows
+- business-domain mutations
+
+## 13. Immutability
 
 Audit records must not be editable through normal application workflows.
 
 Corrections should append explanatory evidence rather than rewrite history.
 
-## 11. Access And Export
+## 14. Access, Export, And Retention
 
-Audit access and export require explicit permissions and scope.
+Audit access and export require explicit permissions and Tenant Instance scope.
 
 Sensitive evidence exports require private storage, recent authentication when applicable, and access audit.
 
-## 12. Retention
+Retention must preserve security and accountability needs while applying privacy, erasure, and legal-hold rules.
 
-Audit retention must preserve security and accountability needs while applying privacy and legal-hold rules.
+## 15. Tests
 
-## 13. Tests
+Verify:
 
-Verify event shape, actor types, after-commit behavior, rollback behavior, redaction, denial coverage, immutability, scope, and evidence access.
+- event shape
+- Principal type
+- Machine and Network assurance separation
+- Invocation Channel
+- Tenant and Instance scope
+- cross-Instance Global Administration attribution
+- after-commit and rollback behavior
+- redaction
+- denial coverage
+- immutability
+- evidence access
+- jobs and commands are not stored as Principal types
 
-## Related
+## 16. Related
 
+- [ADR-0006](../../01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md)
 - [Logging Standards](Logging%20Standards.md)
+- [Tenant And Scope Isolation Standards](../security/Tenant%20And%20Scope%20Isolation%20Standards.md)
 - [Digital Forensics Readiness And Evidence Handling Standards](../security/Digital%20Forensics%20Readiness%20And%20Evidence%20Handling%20Standards.md)
 - [Audit And Monitoring Core Planning](../../07-planning/02-core-capabilities/audit-monitoring-response/audit-monitoring-core-planning.md)

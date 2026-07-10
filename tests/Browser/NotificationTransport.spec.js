@@ -38,6 +38,9 @@ async function login(page, request, { waitForRealtime = false } = {}) {
 
     if (realtimeSubscription) {
         await realtimeSubscription;
+        await page
+            .locator('[data-notification-realtime-state="subscribed"]')
+            .waitFor({ state: "attached" });
     }
 }
 
@@ -108,11 +111,14 @@ test.describe("notification transport", () => {
             );
         });
 
-        await expect(
-            page.locator(
-                '[data-notification-toast-id="browser-transient-dedupe"]',
-            ),
-        ).toHaveCount(1);
+        const transientToast = page.locator(
+            '[data-notification-toast-id="browser-transient-dedupe"]',
+        );
+
+        await expect(transientToast).toHaveCount(1);
+        await expect(transientToast).toBeVisible();
+        await expect(transientToast).toBeInViewport();
+        await expect(transientToast).toContainText("The command completed.");
         expect(await unreadCount(page)).toBe(unreadBefore);
     });
 
@@ -129,6 +135,9 @@ test.describe("notification transport", () => {
         await secondPage.goto("/dashboard");
         await waitForNotificationRuntimes(secondPage);
         await secondPageRealtimeSubscription;
+        await secondPage
+            .locator('[data-notification-realtime-state="subscribed"]')
+            .waitFor({ state: "attached" });
 
         const firstTabUnreadBefore = await unreadCount(page);
         const secondTabUnreadBefore = await unreadCount(secondPage);
@@ -160,8 +169,17 @@ test.describe("notification transport", () => {
 
         const toastSelector = `[data-notification-toast-id="${payload.notification_id}"]`;
 
-        await expect(page.locator(toastSelector)).toHaveCount(1);
-        await expect(secondPage.locator(toastSelector)).toHaveCount(1);
+        const firstTabToast = page.locator(toastSelector);
+        const secondTabToast = secondPage.locator(toastSelector);
+
+        await expect(firstTabToast).toHaveCount(1);
+        await expect(firstTabToast).toBeVisible();
+        await expect(firstTabToast).toBeInViewport();
+        await expect(firstTabToast).toContainText("Test notification");
+        await expect(secondTabToast).toHaveCount(1);
+        await expect(secondTabToast).toBeVisible();
+        await expect(secondTabToast).toBeInViewport();
+        await expect(secondTabToast).toContainText("Test notification");
         await expect
             .poll(() => unreadCount(page))
             .toBe(firstTabUnreadBefore + 1);
@@ -169,9 +187,27 @@ test.describe("notification transport", () => {
             .poll(() => unreadCount(secondPage))
             .toBe(secondTabUnreadBefore + 1);
 
+        await page.locator("[data-notification-trigger]").click();
+        await secondPage.locator("[data-notification-trigger]").click();
+
+        const previewSelector = `[data-notification-preview-item][data-notification-id="${payload.notification_id}"]`;
+        const firstTabPreview = page
+            .locator(previewSelector)
+            .filter({ visible: true });
+        const secondTabPreview = secondPage
+            .locator(previewSelector)
+            .filter({ visible: true });
+
+        await expect(firstTabPreview).toHaveCount(1);
+        await expect(firstTabPreview).toBeVisible();
+        await expect(firstTabPreview).toContainText("Test notification");
+        await expect(secondTabPreview).toHaveCount(1);
+        await expect(secondTabPreview).toBeVisible();
+        await expect(secondTabPreview).toContainText("Test notification");
+
         await page.waitForTimeout(250);
 
-        await expect(page.locator(toastSelector)).toHaveCount(1);
-        await expect(secondPage.locator(toastSelector)).toHaveCount(1);
+        await expect(firstTabToast).toHaveCount(1);
+        await expect(secondTabToast).toHaveCount(1);
     });
 });

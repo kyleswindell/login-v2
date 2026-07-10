@@ -8,6 +8,9 @@ export default defineConfig(({ mode }) => {
     const appUrl = env.APP_URL || "http://localhost:8000";
     const browserTestUrl =
         env.PLAYWRIGHT_BASE_URL || "http://laravel.test:8000";
+    const reverbProxyTarget =
+        env.REVERB_DEV_PROXY_TARGET ||
+        `http://127.0.0.1:${env.REVERB_SERVER_PORT || 8080}`;
     const devServer = new URL(devServerUrl);
     const app = new URL(appUrl);
     const browserTest = new URL(browserTestUrl);
@@ -65,6 +68,13 @@ export default defineConfig(({ mode }) => {
                 host: devServer.hostname,
                 port: Number(devServer.port || 5173),
                 protocol: devServer.protocol === "https:" ? "wss" : "ws",
+            },
+            proxy: {
+                "/app": {
+                    target: reverbProxyTarget,
+                    changeOrigin: true,
+                    ws: true,
+                },
             },
             watch: {
                 ignored: ["**/storage/framework/views/**"],

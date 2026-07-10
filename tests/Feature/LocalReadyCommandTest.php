@@ -162,4 +162,19 @@ class LocalReadyCommandTest extends TestCase
             ->assertFailed();
 
         $result = app(LocalReviewEnvironment::class)->prepare(
-            envPath: $this->envPath
+            envPath: $this->envPath,
+            hotPath: $this->hotPath,
+            viteUrl: LocalReviewEnvironment::VITE_URL,
+            viteCheckUrl: 'http://node:5173',
+            appUrl: 'http://localhost:8000',
+        );
+        $viteJsCheck = collect($result['checks'])->firstWhere('name', 'vite js');
+
+        $this->assertIsArray($viteJsCheck);
+        $this->assertSame('failed', $viteJsCheck['status']);
+        $this->assertStringContainsString(
+            'did not allow browser origin http://localhost:8000',
+            $viteJsCheck['message'],
+        );
+    }
+}

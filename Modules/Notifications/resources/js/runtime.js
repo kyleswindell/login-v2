@@ -22,9 +22,11 @@ const presentedTransientToastIds = new Set();
 
 let currentApplyNotification = null;
 let currentCreateToast = null;
+let currentRealtimeRoot = null;
 let realtimeEcho = null;
 let realtimeChannelName = null;
 let realtimeConnectionSignature = null;
+let realtimeSubscribed = false;
 let transientToastEventsBound = false;
 
 const rememberBoundedId = (ids, id) => {
@@ -50,7 +52,45 @@ const rememberBoundedId = (ids, id) => {
 const persistentNotificationId = (notification) =>
     notification?.id || notification?.uuid || null;
 
+const resolveRealtimeEndpoint = () => {
+    const configuredEndpoint = {
+        host: import.meta.env.VITE_REVERB_HOST,
+        wsPort: Number(import.meta.env.VITE_REVERB_PORT ?? 80),
+        wssPort: Number(import.meta.env.VITE_REVERB_PORT ?? 443),
+        forceTLS: (import.meta.env.VITE_REVERB_SCHEME ?? "https") === "https",
+    };
+
+    if (!import.meta.env.DEV || !import.meta.env.VITE_DEV_SERVER_URL) {
+        return configuredEndpoint;
+    }
+
+    try {
+        const devServer = new URL(import.meta.env.VITE_DEV_SERVER_URL);
+        const port = Number(
+            devServer.port || (devServer.protocol === "https:" ? 443 : 80),
+        );
+
+        return {
+            host: devServer.hostname,
+            wsPort: port,
+            wssPort: port,
+            forceTLS: devServer.protocol === "https:",
+        };
+    } catch (error) {
+        return configuredEndpoint;
+    }
+};
+
+const setRealtimeState = (state) => {
+    if (currentRealtimeRoot instanceof HTMLElement) {
+        currentRealtimeRoot.dataset.notificationRealtimeState = state;
+    }
+};
+
 const disconnectRealtime = () => {
+    setRealtimeState("disconnected");
+    realtimeSubscribed = false;
+
     if (!realtimeEcho) {
         realtimeChannelName = null;
         realtimeConnectionSignature = null;
@@ -940,35 +980,39 @@ export const initNotificationRuntime = (root = document) => {
 
     if (!realtimeRoot || !userId) {
         disconnectRealtime();
+        currentRealtimeRoot = null;
 
         return;
     }
+
+    currentRealtimeRoot = realtimeRoot;
+    const realtimeEndpoint = resolveRealtimeEndpoint();
 
     const connectionSignature = JSON.stringify({
         userId: `${userId}`,
         realtimeAuthUrl,
         csrfToken,
         key: import.meta.env.VITE_REVERB_APP_KEY,
-        wsHost: import.meta.env.VITE_REVERB_HOST,
-        wsPort: Number(import.meta.env.VITE_REVERB_PORT ?? 80),
-        wssPort: Number(import.meta.env.VITE_REVERB_PORT ?? 443),
-        forceTLS: (import.meta.env.VITE_REVERB_SCHEME ?? "https") === "https",
+        ...realtimeEndpoint,
     });
 
     if (realtimeEcho && realtimeConnectionSignature === connectionSignature) {
+        setRealtimeState(realtimeSubscribed ? "subscribed" : "connecting");
+
         return;
     }
 
     disconnectRealtime();
+    setRealtimeState("connecting");
     window.Pusher = Pusher;
 
     realtimeEcho = new Echo({
         broadcaster: "reverb",
         key: import.meta.env.VITE_REVERB_APP_KEY,
-        wsHost: import.meta.env.VITE_REVERB_HOST,
-        wsPort: Number(import.meta.env.VITE_REVERB_PORT ?? 80),
-        wssPort: Number(import.meta.env.VITE_REVERB_PORT ?? 443),
-        forceTLS: (import.meta.env.VITE_REVERB_SCHEME ?? "https") === "https",
+        wsHost: realtimeEndpoint.host,
+        wsPort: realtimeEndpoint.wsPort,
+        wssPort: realtimeEndpoint.wssPort,
+        forceTLS: realtimeEndpoint.forceTLS,
         enabledTransports: ["ws", "wss"],
         authEndpoint: realtimeAuthUrl,
         authorizer: (channel) => ({
@@ -989,11 +1033,34 @@ export const initNotificationRuntime = (root = document) => {
         }),
     });
 
+    realtimeEcho.connector?.pusher?.connection?.bind(
+        "state_change",
+        ({ current }) => {
+            if (current === "connected" && realtimeSubscribed) {
+                return;
+            }
+
+            setRealtimeState(current || "connecting");
+        },
+    );
+    realtimeEcho.connector?.pusher?.connection?.bind("error", () => {
+        realtimeSubscribed = false;
+        setRealtimeState("error");
+    });
+
     realtimeChannelName = `App.Models.User.${userId}`;
     realtimeConnectionSignature = connectionSignature;
 
     realtimeEcho
         .private(realtimeChannelName)
+        .subscribed(() => {
+            realtimeSubscribed = true;
+            setRealtimeState("subscribed");
+        })
+        .error(() => {
+            realtimeSubscribed = false;
+            setRealtimeState("error");
+        })
         .listen(".notification.created", (event) => {
             currentApplyNotification?.(event.notification, {
                 toast: true,

@@ -75,7 +75,7 @@ Historical archived records already reserve:
 
 Next available identifier:
 
-- `ADR-0005`
+- `ADR-0006`
 
 Before assigning it, search active and archived decision paths again to confirm no newer record exists.
 
@@ -83,9 +83,9 @@ Never reuse or renumber a decision identifier.
 
 ## 5. Proposed Decisions
 
-No active proposed decision records are currently published.
+- [ADR-0005: Core, Modules, And UI Ownership Taxonomy](adr-0005-core-modules-ui-ownership-taxonomy.md) — Proposes Core, Modules, and UI as the three canonical source-of-truth ownership areas.
 
-Add proposed records here while they await authorized review.
+Proposed records are not accepted architecture until authorized review is recorded.
 
 ## 6. Accepted Decisions
 

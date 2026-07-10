@@ -6,14 +6,14 @@ status: implemented-pending-correction
 system_maturity: partial
 category: feedback-and-loading
 priority: tier-a-baseline-app-development
-ui_reference_route: /platform/ui-reference/components/inline-loading
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/inline-loading.md
-source_owner: /platform/ui-reference/components/inline-loading
+source_owner: not installed
 blade_api:
   - x-ui.inline-loading
 javascript_api: []
 source_files:
-  - resources/views/components/ui/inline-loading.blade.php
+  - resources/views/components/ui/inline-loading/index.blade.php
   - resources/css/app.css
 foundation_elements:
   - color
@@ -67,10 +67,10 @@ carbon_reference:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
   - [15.1. Required Live examples internal sections:](#151-required-live-examples-internal-sections)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
   - [16.1. Suggested automated assertions:](#161-suggested-automated-assertions)
@@ -81,7 +81,7 @@ carbon_reference:
 
 Inline loading shows short, local progress for a single pending action or nearby status update without blocking the page.
 
-Canonical API owner: `/platform/ui-reference/components/inline-loading`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
 Inline loading is the installed Login App 2.0 local pending-status API. It owns compact status semantics, spinner/status-icon treatment, short status copy, live-region behavior, reduced-motion behavior, and token-backed success, error, warning, info, and loading states. It does not own full-page loading, page overlays, skeleton screens, determinate progress, form validation, notification persistence, button hierarchy, table row layout, modal footer layout, or page-level workflow orchestration.
 
@@ -95,7 +95,7 @@ Inline loading is the installed Login App 2.0 local pending-status API. It owns 
 - Respect reduced-motion preferences for animated indicators.
 - Disable or replace associated interactive controls while a pending action is active.
 - Consume Foundation Element APIs for color, spacing, typography, themes, motion, and component-owned status icons.
-- Prove action-pending, local-save, polite-status, semantic-status, reduced-motion, and developer implementation behavior on the UI Reference page.
+- Prove action-pending, local-save, polite-status, semantic-status, reduced-motion, and developer implementation behavior on the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -118,16 +118,16 @@ Inline loading is the installed Login App 2.0 local pending-status API. It owns 
 | Component slug               | inline-loading                                                                    |
 | Category                     | Feedback and loading                                                              |
 | Priority                     | Tier A - Baseline app development                                                 |
-| UI Reference route           | `/platform/ui-reference/components/inline-loading`                                |
+| Rendered evidence route           | `not installed`                                |
 | Canonical doc                | `docs/02-standards/ui/components/inline-loading.md`                               |
-| Source owner                 | `/platform/ui-reference/components/inline-loading`                                |
+| Source owner                 | `not installed`                                |
 | Blade API                    | `x-ui.inline-loading`                                                             |
 | JavaScript API               | None required for baseline inline loading behavior                                |
-| Source files                 | `resources/views/components/ui/inline-loading.blade.php`; `resources/css/app.css` |
+| Source files                 | `resources/views/components/ui/inline-loading/index.blade.php`; `resources/css/app.css` |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, Icons where status icons are rendered |
 | Carbon benchmark             | Carbon Inline loading usage, style, and accessibility guidance                    |
 
-`Approved API` means the installed UI Reference examples exist, but the canonical public API, state definitions, prohibited usage, deferred gates, and regression expectations must be corrected so feature teams do not create local loading markup.
+`Approved API` means the installed rendered evidence examples exist, but the canonical public API, state definitions, prohibited usage, deferred gates, and regression expectations must be corrected so feature teams do not create local loading markup.
 
 ## 3. Installed standard
 
@@ -151,7 +151,7 @@ Inline loading is a compact status component for local actions that finish quick
 - Do not use inline loading for full-page loads, long-running progress, decorative emphasis, or unrelated status banners.
 - Do not use raw utility clusters, raw color values, arbitrary spacing, local icons, or custom JavaScript to create alternate inline loading behavior.
 
-Carbon alignment note: Carbon defines inline loading as a local indicator for an action being processed, commonly used with create, update, delete, table, button, and modal interactions. Carbon states are inactive, active, finished, and error. Login App maps active to `loading`, finished to `success`, keeps `error`, and adds app-approved `warning` and `info` statuses to match the installed semantic feedback set. Login App keeps its own Blade API, `ui-*` class namespace, token names, and UI Reference proof instead of adopting Carbon implementation classes directly.
+Carbon alignment note: Carbon defines inline loading as a local indicator for an action being processed, commonly used with create, update, delete, table, button, and modal interactions. Carbon states are inactive, active, finished, and error. Login App maps active to `loading`, finished to `success`, keeps `error`, and adds app-approved `warning` and `info` statuses to match the installed semantic feedback set. Login App keeps its own Blade API, `ui-*` class namespace, token names, and rendered evidence proof instead of adopting Carbon implementation classes directly.
 
 ## 4. Public API
 
@@ -220,7 +220,7 @@ Persistent error handling belongs to the owning form, notification, or workflow 
 | Root semantic role | Component-owned status/live-region markup, normally `role="status"` with polite updates                                                                                                                   |
 | Data attributes    | Component-owned test hooks only: `data-ui-component="inline-loading"` and `data-ui-status="{status}"` when emitted by the component. Feature views must not use data attributes to create local behavior. |
 | CSS namespace      | App-owned `ui-*` inline loading classes documented by the component implementation                                                                                                                        |
-| Source files       | `resources/views/components/ui/inline-loading.blade.php`; `resources/css/app.css`                                                                                                                         |
+| Source files       | `resources/views/components/ui/inline-loading/index.blade.php`; `resources/css/app.css`                                                                                                                         |
 
 ### 4.4. Props and options
 
@@ -233,7 +233,7 @@ Persistent error handling belongs to the owning form, notification, or workflow 
 | `id`         | `string / null` | `null`    | Valid document ID                                | No                                         | Use when another region needs `aria-describedby` or test targeting.                                                             |
 | `class`      | `string / null` | `null`    | Layout passthrough if supported                  | No                                         | Parent Patterns may pass placement classes. Do not use for local color, typography, motion, icon, state, or behavior overrides. |
 
-Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the UI Reference proof before use.
+Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the rendered evidence proof before use.
 
 ### 4.5. Status contract
 
@@ -251,7 +251,7 @@ Any prop not listed here is not public. If a feature needs another option, updat
 | ----------------------- | ----------- | ---------------------------------------------------- | -------------------------------------------------------------------------- |
 | `live="polite"`         | Implemented | Announces status text without stealing focus         | Default for visible status updates after a user action                     |
 | `live="off"`            | Implemented | Renders visible status without live announcement     | A parent Pattern or adjacent component already announces the same change   |
-| Assertive live behavior | Gated       | Requires accessibility review and UI Reference proof | Only for urgent state changes where delayed announcement would create risk |
+| Assertive live behavior | Gated       | Requires accessibility review and rendered evidence proof | Only for urgent state changes where delayed announcement would create risk |
 
 ### 4.7. Label contract
 
@@ -259,7 +259,7 @@ Any prop not listed here is not public. If a feature needs another option, updat
 | ------------------------ | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Visible `label` prop     | Implemented | Preferred mode. Use concise, concrete text for every visible status.                                                                                                                                                                |
 | Default slot label       | Implemented | Allowed when slot content is the only label source. Keep it text-only or simple inline text.                                                                                                                                        |
-| No visible label         | Gated       | Allowed only in compact Pattern-owned contexts where the surrounding field, row, or action already provides visible context and the component supplies an accessible equivalent. Requires UI Reference proof before production use. |
+| No visible label         | Gated       | Allowed only in compact Pattern-owned contexts where the surrounding field, row, or action already provides visible context and the component supplies an accessible equivalent. Requires rendered evidence proof before production use. |
 | Long descriptive content | Not allowed | Use Notification, helper text, or Pattern-owned content for detailed explanations.                                                                                                                                                  |
 
 ## 5. Allowed variants, options, and modifiers
@@ -282,7 +282,7 @@ Any prop not listed here is not public. If a feature needs another option, updat
 | Skeleton state                | Not owned         | none                                   | Use Skeleton states or Loading Pattern when implemented.                           |                                                                                     |
 | Full-page overlay             | Not owned         | none                                   | Use page-level Loading Pattern when implemented.                                   |                                                                                     |
 | Determinate progress          | Not owned         | none                                   | Use Progress indicator when progress value matters.                                |                                                                                     |
-| Custom status colors          | Not allowed       | none                                   | Requires Color Element update and UI Reference proof.                              |                                                                                     |
+| Custom status colors          | Not allowed       | none                                   | Requires Color Element update and rendered evidence proof.                              |                                                                                     |
 | Custom status icons           | Not allowed       | none                                   | Requires Icons Element and component update.                                       |                                                                                     |
 | Custom JavaScript transitions | Deferred          | none                                   | Parent framework may change props; component does not own a JavaScript controller. |                                                                                     |
 
@@ -465,20 +465,20 @@ Feature views must not create local spinner classes, raw utility clusters, arbit
 
 | Capability                               | Status        | Gate                                                                                                        |
 | ---------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------- |
-| Compact no-visible-label indicator       | Gated         | Requires accessible text equivalent, surrounding visible context, UI Reference proof, and regression tests. |
-| Assertive live announcements             | Gated         | Requires accessibility review, documented trigger conditions, and UI Reference proof.                       |
+| Compact no-visible-label indicator       | Gated         | Requires accessible text equivalent, surrounding visible context, rendered evidence proof, and regression tests. |
+| Assertive live announcements             | Gated         | Requires accessibility review, documented trigger conditions, and rendered evidence proof.                       |
 | Automatic success timeout or callback    | Deferred      | Parent state may transition manually. Component-owned timers require source implementation and tests.       |
 | Determinate progress value               | Not owned     | Use Progress indicator when implemented. Do not add `percent` or progress-bar behavior to Inline loading.   |
 | Full-page loading overlay                | Not owned     | Use Loading Pattern or page-level loading component when implemented.                                       |
 | Skeleton placeholder state               | Not owned     | Use Skeleton states when implemented and Pattern-approved.                                                  |
 | Bulk list/table loading orchestration    | Pattern-owned | Data table or Table toolbar Pattern must own multi-row or bulk loading behavior.                            |
-| Custom status icons                      | Not allowed   | Requires Icons Element update, component implementation update, and UI Reference proof.                     |
-| Custom semantic colors                   | Not allowed   | Requires Color Element update and UI Reference proof.                                                       |
+| Custom status icons                      | Not allowed   | Requires Icons Element update, component implementation update, and rendered evidence proof.                     |
+| Custom semantic colors                   | Not allowed   | Requires Color Element update and rendered evidence proof.                                                       |
 | Component-specific JavaScript controller | Deferred      | Requires documented public initializer, events, cleanup behavior, and tests.                                |
 
-Future extensions require an updated Component standard and UI Reference proof before production use.
+Future extensions require an updated Component standard and rendered evidence proof before production use.
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -487,9 +487,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -498,9 +498,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The Inline loading page is a compact feedback component reference. The Live examples card should use a status matrix plus scenario examples rather than a generic placeholder scaffold. It must show production component examples for implemented states and trigger conditions for deferred or gated capabilities.
 
@@ -522,7 +522,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/inline-loading` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
@@ -540,7 +540,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 ### 16.1. Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/inline-loading');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Inline loading');
@@ -574,17 +574,17 @@ $response->assertDontSee('Generic fallback');
 
 | API                          | Route                                                                    |
 | ---------------------------- | ------------------------------------------------------------------------ |
-| Button                       | `/platform/ui-reference/components/button`                               |
-| Notification                 | `/platform/ui-reference/components/notification`                         |
-| Modal                        | `/platform/ui-reference/components/modal`                                |
-| Progress indicator           | `/platform/ui-reference/components/progress-indicator`                   |
-| Forms pattern                | `/platform/ui-reference/patterns/forms`                                  |
-| Tables Pattern               | `/platform/ui-reference/patterns/tables`                                 |
-| Overlay/feedback pattern     | `/platform/ui-reference/patterns/overlays-feedback`                      |
-| Loading pattern              | `/platform/ui-reference/patterns/loading`                                |
-| Color element                | `/platform/ui-reference/elements/color`                                  |
-| Motion element               | `/platform/ui-reference/elements/motion`                                 |
-| Components overview          | `/platform/ui-reference/components`                                      |
+| Button                       | `not installed`                               |
+| Notification                 | `not installed`                         |
+| Modal                        | `not installed`                                |
+| Progress indicator           | `not installed`                   |
+| Forms pattern                | `not installed`                                  |
+| Tables Pattern               | `not installed`                                 |
+| Overlay/feedback pattern     | `not installed`                      |
+| Loading pattern              | `not installed`                                |
+| Color element                | `not installed`                                  |
+| Motion element               | `not installed`                                 |
+| Components overview          | `not installed`                                      |
 | Canonical inline loading doc | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Finline-loading.md` |
 
 ## 18. References
@@ -593,4 +593,4 @@ $response->assertDontSee('Generic fallback');
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon Inline loading usage, style, and accessibility guidance inform local pending-state scope, placement, status copy, state mapping, live-region behavior, and reduced-motion expectations. Login App keeps its own Blade API, `ui-*` namespace, semantic status values, token model, and UI Reference proof.
+- Carbon Inline loading usage, style, and accessibility guidance inform local pending-state scope, placement, status copy, state mapping, live-region behavior, and reduced-motion expectations. Login App keeps its own Blade API, `ui-*` namespace, semantic status values, token model, and rendered evidence proof.

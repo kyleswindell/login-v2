@@ -6,9 +6,9 @@ status: implemented
 system_maturity: baseline
 category: selection-controls
 priority: tier-a-baseline-app-development
-ui_reference_route: /platform/ui-reference/components/radio-button
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/radio-button.md
-source_owner: /platform/ui-reference/components/radio-button
+source_owner: not installed
 blade_api:
   - x-ui.radio-group
   - x-ui.radio-button
@@ -22,9 +22,9 @@ data_attributes:
   - data-ui-radio-input
 source_files:
   - resources/css/app.css
-  - resources/views/components/ui/radio-group.blade.php
-  - resources/views/components/ui/radio-button.blade.php
-  - resources/views/platform/ui-reference/components/radio-button.blade.php
+  - resources/views/components/ui/radio-group/index.blade.php
+  - resources/views/components/ui/radio-button/index.blade.php
+  - not installed
 foundation_elements:
   - color
   - spacing
@@ -86,10 +86,10 @@ carbon_reference:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
   - [15.1. Required Live examples internal sections:](#151-required-live-examples-internal-sections)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
   - [16.1. Suggested automated assertions:](#161-suggested-automated-assertions)
@@ -100,7 +100,7 @@ carbon_reference:
 
 Radio buttons choose exactly one option from a visible set of mutually exclusive choices.
 
-Canonical API owner: `/platform/ui-reference/components/radio-button`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
 Radio button is the installed Login App 2.0 single-choice selection API for visible option groups. It owns native radio semantics, group labeling, option labeling, selected/unselected states, group-level helper text, group-level validation, disabled and read-only group behavior, horizontal and vertical layout modes, token-backed focus/hover/validation states, and radio-specific content rules. It does not own multi-select choices, instant on/off settings, dropdown menus, custom segmented controls, table selection orchestration, form submission actions, validation summaries, or external spacing.
 
@@ -116,7 +116,7 @@ Radio button is the installed Login App 2.0 single-choice selection API for visi
 - Apply group-level validation to the group, not to a single option only.
 - Use visible error or warning messages and app-owned status icons where applicable.
 - Consume Foundation Element APIs for color, spacing, typography, themes, motion, and icons.
-- Prove vertical groups, horizontal groups, selected/unselected behavior, validation, disabled/read-only behavior, accessibility, content, and implementation behavior on the UI Reference page.
+- Prove vertical groups, horizontal groups, selected/unselected behavior, validation, disabled/read-only behavior, accessibility, content, and implementation behavior on the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -129,7 +129,7 @@ Radio button is the installed Login App 2.0 single-choice selection API for visi
 - Success, error, warning, or informational outcome messaging outside the group. Use Notification or the parent Pattern.
 - Custom JavaScript selection behavior, conditional reveal logic, or dynamic option loading. Gate through the owning Pattern or a scoped Component correction pass.
 
-Carbon alignment note: Carbon defines radio buttons as mutually exclusive choices, recommends visible group labels when helpful, prefers vertical layout when possible for readability, supports horizontal layout for short peer choices, treats error and warning as group states, uses `fieldset`, `legend`, `label`, and `for` to preserve accessibility, and documents a single tab stop with arrow-key movement inside the group. Login App maps those principles to native inputs, app-owned `ui-*` classes, Foundation Element tokens, server-validation handoff, and UI Reference proof rather than adopting Carbon implementation classes directly.
+Carbon alignment note: Carbon defines radio buttons as mutually exclusive choices, recommends visible group labels when helpful, prefers vertical layout when possible for readability, supports horizontal layout for short peer choices, treats error and warning as group states, uses `fieldset`, `legend`, `label`, and `for` to preserve accessibility, and documents a single tab stop with arrow-key movement inside the group. Login App maps those principles to native inputs, app-owned `ui-*` classes, Foundation Element tokens, server-validation handoff, and rendered evidence proof rather than adopting Carbon implementation classes directly.
 
 ## 2. Status and ownership
 
@@ -141,19 +141,19 @@ Carbon alignment note: Carbon defines radio buttons as mutually exclusive choice
 | Component slug               | radio-button                                                                                       |
 | Category                     | Selection controls                                                                                 |
 | Priority                     | Tier A - Baseline app development                                                                  |
-| UI Reference route           | `/platform/ui-reference/components/radio-button`                                                   |
+| Rendered evidence route           | `not installed`                                                   |
 | Canonical doc                | `docs/02-standards/ui/components/radio-button.md`                                                  |
-| Source owner                 | `/platform/ui-reference/components/radio-button`                                                   |
+| Source owner                 | `not installed`                                                   |
 | Blade API                    | `x-ui.radio-group`; `x-ui.radio-button`                                                            |
 | JavaScript API               | None approved for baseline radio behavior                                                          |
 | Data attributes              | `data-ui-radio-group`, `data-ui-radio-group-layout`, `data-ui-radio`, `data-ui-radio-input`       |
 | Props/options                | Blade props map option arrays, scalar selected value, helper/error/warning text, and group layout |
-| Source files                 | `resources/css/app.css`; `resources/views/components/ui/radio-group.blade.php`; `resources/views/components/ui/radio-button.blade.php`; UI Reference route |
+| Source files                 | `resources/css/app.css`; `resources/views/components/ui/radio-group/index.blade.php`; `resources/views/components/ui/radio-button/index.blade.php`; Rendered evidence route |
 | CSS namespace                | App-owned `ui-radio-group*` and `ui-radio*` classes                                                |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, Icons                                                  |
 | Carbon benchmark             | Carbon Radio button usage, style, and accessibility guidance                                       |
 
-`Approved API` means the radio group and option wrappers are installed, rendered in UI Reference, and must be used instead of local radio markup or checkbox-derived styling.
+`Approved API` means the radio group and option wrappers are installed, rendered in rendered evidence, and must be used instead of local radio markup or checkbox-derived styling.
 
 ## 3. Installed standard
 
@@ -214,7 +214,7 @@ The current public API is `x-ui.radio-group` plus `x-ui.radio-button`. The wrapp
 | Props/options         | `name`, `label`, `helper`, `error`, `warning`, `options`, scalar `value`, `orientation`/`layout`, `disabled`, `readonly`, `required`                    |
 | Root semantic element | Native `fieldset` containing native `<input type="radio">` controls                                                                                       |
 | CSS namespace         | `ui-radio-group`, `ui-radio-group-options`, `ui-radio-group-horizontal`, `ui-radio`, `ui-radio-control`, `ui-radio-input`, `ui-radio-box`, `ui-radio-*` |
-| Source files          | `resources/views/components/ui/radio-group.blade.php`; `resources/views/components/ui/radio-button.blade.php`; `resources/css/app.css`                  |
+| Source files          | `resources/views/components/ui/radio-group/index.blade.php`; `resources/views/components/ui/radio-button/index.blade.php`; `resources/css/app.css`                  |
 
 Feature views should use the wrappers directly unless an owning Pattern composes them. Do not create local radio partials, local segmented controls, or helper classes for the same role.
 
@@ -356,7 +356,7 @@ Do not use a read-only radio group when a simple text display would be clearer. 
 | `aria-describedby`    | ARIA                | Implemented                                                            | Required when helper/error/warning text exists               | Reference active helper, warning, or error message IDs.                                            |
 | `aria-invalid="true"` | ARIA                | Implemented for error state                                            | Required for invalid/error groups when implemented on inputs | Do not use for warnings that can be submitted.                                                     |
 | `aria-required`       | ARIA                | Optional when native required cannot express group requirement cleanly | Contextual                                                   | Use only when the installed markup requires an explicit group-level required announcement.         |
-| `data-ui-radio-*`     | Data attributes     | Implemented                                                            | Yes for rendered wrappers                                    | Used for UI Reference proof and safe source assertions, not for custom behavior controllers.       |
+| `data-ui-radio-*`     | Data attributes     | Implemented                                                            | Yes for rendered wrappers                                    | Used for rendered evidence proof and safe source assertions, not for custom behavior controllers.       |
 
 ### 4.9. Class contract
 
@@ -384,7 +384,7 @@ Do not use a read-only radio group when a simple text display would be clearer. 
 | `ui-radio-invalid`            | Validation state | Implemented  | Invalid group or option treatment.                                 |
 | `ui-radio-warning-state`      | Advisory state   | Implemented  | Warning group or option treatment.                                 |
 
-Feature views must not create additional `ui-radio-*`, `radio-button-*`, `radio-group-*`, or local field classes. New classes require source implementation, this standard update, UI Reference proof, and tests.
+Feature views must not create additional `ui-radio-*`, `radio-button-*`, `radio-group-*`, or local field classes. New classes require source implementation, this standard update, rendered evidence proof, and tests.
 
 ### 4.10. Gated future API contract
 
@@ -392,7 +392,7 @@ The baseline wrapper contract is installed. The following adjacent APIs remain g
 
 | Reserved API              | Current status            | Gate                                                                                                                                                 |
 | ------------------------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `x-ui.radio-card`         | Gated                     | Requires selectable tile/card semantics, keyboard behavior, focus treatment, content limits, and UI Reference proof.                                 |
+| `x-ui.radio-card`         | Gated                     | Requires selectable tile/card semantics, keyboard behavior, focus treatment, content limits, and rendered evidence proof.                                 |
 | `x-ui.radio-table-select` | Not owned by Radio button | Use Data table and Table toolbar Patterns.                                                                                                           |
 
 Do not create feature-local Blade components for gated radio variants.
@@ -534,7 +534,7 @@ Feature views must not create `form-check`, `form-check-input`, `radio-*`, `radi
 | `aria-required`                        | Optional                                                                 | Use only when native required semantics do not communicate group requirement sufficiently. |
 | Hidden input for read-only submission  | Approved with restrictions                                               | Use only to preserve a selected read-only value when visible radio controls are disabled.  |
 | Custom JavaScript selection controller | Not approved                                                             | Requires future documented JavaScript and data-attribute API.                              |
-| `data-ui-radio-*` attributes           | Approved for source and UI Reference proof                                | Use only for stable inspection and behavior-proof hooks; do not add custom controllers.    |
+| `data-ui-radio-*` attributes           | Approved for source and rendered evidence proof                                | Use only for stable inspection and behavior-proof hooks; do not add custom controllers.    |
 
 ## 8. Composition rules
 
@@ -600,7 +600,7 @@ Feature views must not create `form-check`, `form-check-input`, `radio-*`, `radi
 | --------------------------------------------------------- | ------------------------------------------------------------------------------- |
 | Most forms and settings                                   | Vertical group                                                                  |
 | Short peer choices such as `Active`, `Paused`, `Archived` | Horizontal group                                                                |
-| Dense filter group with short labels                      | Compact horizontal or compact vertical group when UI Reference proves the class |
+| Dense filter group with short labels                      | Compact horizontal or compact vertical group when rendered evidence proves the class |
 | Labels that may wrap                                      | Vertical group                                                                  |
 | Per-option descriptions                                   | Vertical group; gate description behavior if not already installed              |
 
@@ -671,19 +671,19 @@ Feature views must not create `form-check`, `form-check-input`, `radio-*`, `radi
 
 | Capability                               | Status                           | Gate                                                                                                                                                 |
 | ---------------------------------------- | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Tile/card radio variant                  | Gated                            | Requires selectable tile/card semantics, full-card click behavior, keyboard behavior, focus treatment, content limits, and UI Reference proof.       |
+| Tile/card radio variant                  | Gated                            | Requires selectable tile/card semantics, full-card click behavior, keyboard behavior, focus treatment, content limits, and rendered evidence proof.       |
 | Per-option descriptions                  | Implemented baseline             | Use only for concise supporting copy that wraps under the label and remains top-aligned.                                                              |
 | Conditional reveal fields                | Pattern-owned / gated            | Requires Forms Pattern ownership, focus order, announcement behavior, validation mapping, and tests.                                                 |
 | AI presence                              | Gated                            | Requires AI label, explainability popover, provenance/revert behavior if applicable, and accessibility proof before production use.                  |
 | Custom JavaScript radio controller       | Not approved                     | Native radio behavior is sufficient for baseline; any controller requires documented data attributes, lifecycle, keyboard behavior, and tests.       |
 | Radio table row selection                | Not owned by Radio button        | Use Data table and Table toolbar Patterns.                                                                                                           |
 | Segmented radio/button visual mode       | Not owned by Radio button        | Requires segmented control or content switcher standard.                                                                                             |
-| Additional layouts or sizes              | Not allowed                      | Requires Spacing, Typography, UI Reference, and regression-test updates.                                                                             |
-| Custom validation colors/icons           | Not allowed                      | Requires Color and Icons Element updates plus UI Reference proof.                                                                                    |
+| Additional layouts or sizes              | Not allowed                      | Requires Spacing, Typography, rendered evidence, and regression-test updates.                                                                             |
+| Custom validation colors/icons           | Not allowed                      | Requires Color and Icons Element updates plus rendered evidence proof.                                                                                    |
 
-Future extensions require an updated Component standard and UI Reference proof before production use.
+Future extensions require an updated Component standard and rendered evidence proof before production use.
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -692,9 +692,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -703,9 +703,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The Radio button page is a selection-control reference page. The Live examples card should use grouped examples, layout comparisons, state matrices, validation examples, selection guidance, and implementation examples rather than a single placeholder tab.
 
@@ -732,7 +732,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/radio-button` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
@@ -752,7 +752,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 ### 16.1. Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/radio-button');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Radio button');
@@ -797,23 +797,23 @@ $response->assertDontSee('form-check-input');
 
 | API                        | Route                                                                  |
 | -------------------------- | ---------------------------------------------------------------------- |
-| Components overview        | `/platform/ui-reference/components`                                    |
-| Checkbox                   | `/platform/ui-reference/components/checkbox`                           |
-| Toggle                     | `/platform/ui-reference/components/toggle`                             |
-| Select                     | `/platform/ui-reference/components/select`                             |
-| Text input                 | `/platform/ui-reference/components/text-input`                         |
-| Button                     | `/platform/ui-reference/components/button`                             |
-| Notification               | `/platform/ui-reference/components/notification`                       |
-| Data table                 | `/platform/ui-reference/components/data-table`                         |
-| Forms pattern              | `/platform/ui-reference/patterns/forms`                                |
-| Tables Pattern             | `/platform/ui-reference/patterns/tables`                               |
-| Navigation Pattern         | `/platform/ui-reference/patterns/navigation`                           |
-| Color element              | `/platform/ui-reference/elements/color`                                |
-| Spacing element            | `/platform/ui-reference/elements/spacing`                              |
-| Typography element         | `/platform/ui-reference/elements/typography`                           |
-| Themes element             | `/platform/ui-reference/elements/themes`                               |
-| Motion element             | `/platform/ui-reference/elements/motion`                               |
-| Icons element              | `/platform/ui-reference/elements/icons`                                |
+| Components overview        | `not installed`                                    |
+| Checkbox                   | `not installed`                           |
+| Toggle                     | `not installed`                             |
+| Select                     | `not installed`                             |
+| Text input                 | `not installed`                         |
+| Button                     | `not installed`                             |
+| Notification               | `not installed`                       |
+| Data table                 | `not installed`                         |
+| Forms pattern              | `not installed`                                |
+| Tables Pattern             | `not installed`                               |
+| Navigation Pattern         | `not installed`                           |
+| Color element              | `not installed`                                |
+| Spacing element            | `not installed`                              |
+| Typography element         | `not installed`                           |
+| Themes element             | `not installed`                               |
+| Motion element             | `not installed`                               |
+| Icons element              | `not installed`                                |
 | Canonical radio button doc | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Fradio-button.md` |
 | Carbon radio button usage  | `https://carbondesignsystem.com/components/radio-button/usage/`        |
 
@@ -823,4 +823,4 @@ $response->assertDontSee('form-check-input');
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon Radio button usage, style, and accessibility guidance inform mutually exclusive selection behavior, vertical/horizontal layout, group labeling, helper text, group-level validation, keyboard behavior, label click targets, warning/error states, and content rules. Login App keeps its own native-input API, `ui-*` namespace, server-validation handoff, Foundation Element tokens, and UI Reference proof.
+- Carbon Radio button usage, style, and accessibility guidance inform mutually exclusive selection behavior, vertical/horizontal layout, group labeling, helper text, group-level validation, keyboard behavior, label click targets, warning/error states, and content rules. Login App keeps its own native-input API, `ui-*` namespace, server-validation handoff, Foundation Element tokens, and rendered evidence proof.

@@ -4,7 +4,7 @@ slug: color
 api_layer: Foundation Element API
 guide_status: implemented
 system_maturity: implemented
-ui_reference_route: /platform/ui-reference/elements/color
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/elements/color.md
 carbon_reference:
   - https://carbondesignsystem.com/elements/color/overview/
@@ -64,13 +64,14 @@ related_patterns:
   - [11.1. Minimum app checks](#111-minimum-app-checks)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
   - [15.1. Required live examples](#151-required-live-examples)
   - [15.2. Required implementation status display](#152-required-implementation-status-display)
-  - [15.3. Required developer-facing text on UI Reference page](#153-required-developer-facing-text-on-ui-reference-page)
+  - [15.3. Required developer-facing text on rendered evidence page](#153-required-developer-facing-text-on-ui-reference-page)
+  - [15.4. Current rendered evidence page responsibility model](#154-current-ui-reference-page-responsibility-model)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
   - [16.1. Suggested automated assertions](#161-suggested-automated-assertions)
 - [17. Related APIs](#17-related-apis)
@@ -116,12 +117,12 @@ Use the Color Element API whenever the implementation needs a visual role. Do no
 | System maturity    | Implemented                                                                                           |
 | API layer          | Foundation Element API                                                                                |
 | Element slug       | color                                                                                                 |
-| UI Reference route | `/platform/ui-reference/elements/color`                                                               |
+| Rendered evidence route | `not installed`                                                               |
 | Canonical doc      | `docs/02-standards/ui/elements/color.md`                                                              |
 | Primary consumers  | Components, Patterns, page shell, form fields, actions, alerts, tables, overlays, documentation pages |
 | Carbon benchmark   | Carbon Color overview and usage                                                                       |
 
-`System maturity: Implemented` means Login App 2.0 has an installed semantic color-token direction and visible component usage. New token roles, aliases, themes, or semantic tones still require this standard and the UI Reference proof to be updated before feature use.
+`System maturity: Implemented` means Login App 2.0 has an installed semantic color-token direction and visible component usage. New token roles, aliases, themes, or semantic tones still require this standard and the rendered evidence proof to be updated before feature use.
 
 ## 3. Installed standard
 
@@ -137,7 +138,7 @@ Login App 2.0 uses Carbon's role-driven color architecture as a benchmark, while
 6. Use state-specific tokens for hover, active, selected, disabled, focus, loading, and validation states.
 7. Keep component-specific tokens inside their owning component contract.
 8. Match Carbon token coverage depth for adopted components and patterns, using app-owned token names and values.
-9. Prove all supported themes and high-contrast moments on the UI Reference page.
+9. Prove all supported themes and high-contrast moments on the rendered evidence page.
 
 ### 3.1. Installed role model
 
@@ -150,7 +151,7 @@ Login App 2.0 uses Carbon's role-driven color architecture as a benchmark, while
 | Border           | Key lines, dividers, field boundaries, card borders, focus-adjacent borders, and subtle/strong separations. | Cards, tables, panels, forms, list rows, menus, and page sections.                 |
 | Link             | Inline and standalone navigation affordances.                                                               | Navigation to another page, route, external resource, or documentation.            |
 | Action           | Primary, secondary, tertiary, ghost, and destructive action roles exposed through Component APIs.           | Buttons, icon buttons, menu triggers, and action bars.                             |
-| Status/support   | Semantic feedback roles for success, warning, danger/error, information, and neutral state.                 | Notifications, badges, validation, progress/status summaries, and system messages. |
+| Status/support   | Semantic feedback roles for success, warning, danger/error, information, and neutral state.                 | Notifications, tags, validation, progress/status summaries, and system messages. |
 | Focus            | Visible focus indication for keyboard and assistive-technology users.                                       | Every interactive element.                                                         |
 | Skeleton/loading | Loading placeholders and pending state surfaces.                                                            | Skeleton rows/cards/text, inline loading, page-region loading, and spinners.       |
 | Overlay/shadow   | Scrims, modal backdrops, elevation shadows, and high-contrast separators.                                   | Dialogs, drawers, popovers, menus, and elevated floating layers.                   |
@@ -159,7 +160,7 @@ Login App 2.0 uses Carbon's role-driven color architecture as a benchmark, while
 
 Login App surfaces must use the installed layer roles rather than arbitrary background colors.
 
-The dedicated UI Reference proof route is `/platform/ui-reference/elements/color/layering`. Use that page as the baseline when reviewing cards, component examples, code snippets, headers, footers, nested panels, menus, popovers, and table/form containers.
+The dedicated rendered evidence proof route is `not installed`. Use that page as the baseline when reviewing cards, component examples, code snippets, headers, footers, nested panels, menus, popovers, and table/form containers.
 
 Card headers, card bodies, and card footers share the same background layer by default. A card header must not switch to an accent/background token merely because it is a header, and a card footer must not switch layers merely because it is a footer. Header/footer separators are opt-in structural lines owned by the Component or Pattern API, not default card treatment.
 
@@ -182,11 +183,11 @@ Layer tokens must communicate hierarchy without producing decorative noise. If a
 
 | Semantic role | Installed meaning                                                     | Allowed usage                                                          | Not allowed                                                          |
 | ------------- | --------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| Success       | Completed, passed, active, saved, available.                          | Badges, notifications, form success, completion summaries.             | Decorative green highlights or positive emphasis unrelated to state. |
+| Success       | Completed, passed, active, saved, available.                          | Tags, notifications, form success, completion summaries.               | Decorative green highlights or positive emphasis unrelated to state. |
 | Warning       | Needs attention but is not blocking.                                  | Warnings, risky settings, soft validation, expiring states.            | Generic emphasis or visual decoration.                               |
 | Danger/error  | Blocking failure, validation error, destructive intent, failed state. | Error notifications, invalid fields, destructive buttons, failed jobs. | Styling ordinary negative copy without an error/destructive state.   |
 | Information   | Neutral contextual information.                                       | Informational alerts, helper notices, system context.                  | Replacing normal body copy or links.                                 |
-| Neutral       | Non-semantic metadata, category labels, inactive states.              | Metadata badges, default tags, secondary status.                       | Pretending unknown states are success/warning/error.                 |
+| Neutral       | Non-semantic metadata, category labels, inactive states.              | Metadata tags, default tags, secondary status.                         | Pretending unknown states are success/warning/error.                 |
 
 Do not rely on color alone for semantic meaning. Use visible text, icons, labels, or structural cues whenever color communicates state.
 
@@ -207,7 +208,7 @@ Do not rely on color alone for semantic meaning. Use visible text, icons, labels
 | Link              | `--ui-link`, `--ui-link-hover`, `--ui-link-visited` when installed                   | `ui-link`, navigation anchors, docs links                             | `<a class="ui-link" href="/platform/docs">Open docs</a>`                                |
 | Icon default      | `--ui-icon-primary`, `--ui-icon-secondary`                                           | Inline icons, component icons, menu icons                             | Icon color follows adjacent text unless semantic meaning is required.                   |
 | Icon inverse      | `--ui-icon-inverse`                                                                  | Icons on inverse surfaces                                             | Tooltip or dark shell icon treatment.                                                   |
-| Icon semantic     | `--ui-icon-success`, `--ui-icon-warning`, `--ui-icon-danger`, `--ui-icon-info`       | Status icons in notifications, badges, validation, and summary cards  | Error icon beside validation message.                                                   |
+| Icon semantic     | `--ui-icon-success`, `--ui-icon-warning`, `--ui-icon-danger`, `--ui-icon-info`       | Status icons in notifications, tags, validation, and summary cards    | Error icon beside validation message.                                                   |
 | Surface base      | `--ui-background`, `--ui-surface`                                                    | Page background, primary content region                               | `<main style="background: var(--ui-surface);">...</main>`                               |
 | Surface elevated  | `--ui-surface-elevated`                                                              | Elevated cards, panels, menus, popovers, overlays                     | `<article class="ui-card">...</article>`                                                |
 | Layer 01          | `--ui-layer-01`                                                                      | Cards, panels, table shells, base component surfaces                  | `<article class="ui-card">...</article>`                                                |
@@ -226,12 +227,12 @@ Do not rely on color alone for semantic meaning. Use visible text, icons, labels
 | Action tertiary   | `--ui-action-tertiary-*`                                                             | Tertiary or low-emphasis action APIs                                  | `<x-ui.button semantic="tertiary">View details</x-ui.button>`                           |
 | Action ghost      | `--ui-action-ghost-*`                                                                | Ghost buttons, icon buttons, and shell/menu actions                   | `<x-ui.icon-button icon="settings" label="Settings" />`                                 |
 | Action danger     | `--ui-action-danger-*`                                                               | Destructive button variants only                                      | `<x-ui.button semantic="danger-primary">Delete</x-ui.button>`                           |
-| Status success    | `--ui-status-success-bg`, `--ui-status-success-border`, `--ui-status-success-text`   | `x-ui.badge`, `x-ui.status`, notifications                            | `<x-ui.badge tone="success">Active</x-ui.badge>`                                        |
-| Status warning    | `--ui-status-warning-bg`, `--ui-status-warning-border`, `--ui-status-warning-text`   | Warning notifications, badges, validation                             | `<x-ui.badge tone="warning">Expiring</x-ui.badge>`                                      |
-| Status danger     | `--ui-status-danger-bg`, `--ui-status-danger-border`, `--ui-status-danger-text`      | Error notifications, invalid fields, failed states                    | `<x-ui.badge tone="danger">Failed</x-ui.badge>`                                         |
-| Status info       | `--ui-status-info-bg`, `--ui-status-info-border`, `--ui-status-info-text`            | Informational notices and badges                                      | `<x-ui.badge tone="info">Queued</x-ui.badge>`                                           |
-| Inline alert      | `ui-inline-alert`                                                                    | Inline notification/validation-like messages                          | `<div class="ui-inline-alert">...</div>`                                                |
-| Badge/status      | `x-ui.badge`, `x-ui.status`                                                          | Semantic and neutral compact labels                                   | `<x-ui.status tone="success">Synced</x-ui.status>`                                      |
+| Status success    | `--ui-status-success-bg`, `--ui-status-success-border`, `--ui-status-success-text`   | `x-ui.tag`, `x-ui.status`, notifications                              | `<x-ui.tag label="Active" tone="success" />`                                            |
+| Status warning    | `--ui-status-warning-bg`, `--ui-status-warning-border`, `--ui-status-warning-text`   | Warning notifications, tags, validation                               | `<x-ui.tag label="Expiring" tone="warning" />`                                          |
+| Status danger     | `--ui-status-danger-bg`, `--ui-status-danger-border`, `--ui-status-danger-text`      | Error notifications, invalid fields, failed states                    | `<x-ui.tag label="Failed" tone="danger" />`                                             |
+| Status info       | `--ui-status-info-bg`, `--ui-status-info-border`, `--ui-status-info-text`            | Informational notices and tags                                        | `<x-ui.tag label="Queued" tone="info" />`                                               |
+| Inline notification | `ui-inline-notification`                                                           | Inline notification/validation-like messages                          | `<x-ui.notification.inline kind="info">...</x-ui.notification.inline>`                  |
+| Tag/status        | `x-ui.tag`, `x-ui.status`                                                            | Semantic and neutral compact labels                                   | `<x-ui.status tone="success">Synced</x-ui.status>`                                      |
 | Card surface      | `ui-card`, `ui-shell-card`                                                           | Token-backed card/shell surfaces                                      | `<section class="ui-card">...</section>`                                                |
 | Card text         | `ui-card-title`, `ui-card-copy`                                                      | Token-backed title/body copy roles                                    | `<p class="ui-card-copy">Supporting copy</p>`                                           |
 | Code token colors | `--ui-code-token-*`                                                                  | Code snippet syntax roles                                             | `<pre class="ui-code-snippet"><code>...</code></pre>`                                   |
@@ -240,7 +241,7 @@ Do not rely on color alone for semantic meaning. Use visible text, icons, labels
 
 Action tertiary must stay mapped to the primary-color Button tertiary role, not neutral outline. In light and Gray 10 themes, tertiary uses primary border/text by default and primary filled hover/active states with inverse text. In Gray 90/100 themes, tertiary uses white border/text by default and white filled hover/active states with primary-colored text.
 
-Only use Token API rows as installed standards where the variable, helper, class, or component exists in the application. If a token is listed as an alias or queued role and is not yet present in the compiled token map, do not use it in feature code until the token is added and proven on the UI Reference route.
+Only use Token API rows as installed standards where the variable, helper, class, or component exists in the application. If a token is listed as an alias or queued role and is not yet present in the compiled token map, do not use it in feature code until the token is added and proven on the Rendered evidence route.
 
 ### 4.1. Token status rules
 
@@ -254,7 +255,9 @@ Only use Token API rows as installed standards where the variable, helper, class
 
 ### 4.2. Carbon coverage and value mapping contract
 
-Carbon is the completeness benchmark for Login App color role coverage. The app may use Carbon token names as source evidence, but production APIs must expose app-owned roles such as `--ui-text-primary`, `--ui-layer-01`, or `--ui-action-secondary-bg`.
+Carbon core color tokens are the source-of-truth model for Login App color role coverage and value alignment. The app may expose app-owned `--ui-*` variables, but those variables must map to Carbon core role families unless this standard records an intentional deviation.
+
+Most components consume core Color tokens directly. Component color tokens are approved only for Carbon's Button, Content switcher, Notification, and Tag component-token families. Do not create component color token families for Status, UI shell, Modal, Table, Form, List, Loading, or other components unless this standard, the owning Component standard, rendered evidence proof, and token-governance tests are updated in the same pass.
 
 For every Carbon color token or documented color role that Login App adopts, the owning Element, Component, or Pattern standard must record:
 
@@ -264,7 +267,7 @@ For every Carbon color token or documented color role that Login App adopts, the
 4. The reason for any value deviation.
 5. The owner that must keep the mapping consistent everywhere the Carbon role would apply.
 
-If Carbon role `A` maps to Login App value `B`, every adopted use of Carbon role `A` must map to the same app-owned role/value unless a different owner documents a separate semantic role. For example, if Carbon `$button-secondary` maps to `--ui-action-secondary-bg`, every secondary Button, combo-button secondary action, modal secondary action, and table-toolbar secondary action must consume that same app-owned secondary action role.
+If Carbon role `A` maps to Login App value `B`, every adopted use of Carbon role `A` must map to the same app-owned role/value unless a different owner documents a separate semantic role. For example, if Carbon `$button-secondary` maps to the Button component token family, every secondary Button and Button-owned trigger must consume that same Button-owned role. Other components must use the nearest core Color role instead of creating a local secondary-action token.
 
 Do not create local equivalents such as `--ui-modal-secondary-bg`, `--ui-table-secondary-bg`, or `--ui-widget-secondary-bg` for the same Carbon role unless the owning Pattern standard records why the role is semantically different.
 
@@ -302,11 +305,11 @@ This baseline maps the core Carbon coverage model into Login App owner surfaces.
 | `$border-subtle-*`, `$border-strong-*`, `$border-interactive`, `$border-disabled`, `$border-inverse` | Color Element | `--ui-border-*` | Borders, dividers, field bottoms, selected states, and inverse boundaries must use documented border roles. |
 | `$link-primary`, `$link-primary-hover`, `$link-visited`, `$link-inverse` | Link Component + Color Element | `--ui-link*`, `ui-link` | Links must consume Link API roles; do not style anchors with arbitrary action colors. |
 | `$focus`, `$focus-inset`, `$focus-inverse` | Color Element + all interactive Components | `--ui-focus*` | Focus must be visible and token-backed across surfaces; do not remove focus to match static visuals. |
-| `$support-*`, `$support-*-inverse`, caution/support roles | Color Element + Notification/Status/Tag Components | `--ui-status-*`, validation/status APIs | Support colors are semantic only and require non-color cues. |
-| `$button-*` | Button Component | `<x-ui.button semantic="...">`, `--ui-action-*` | Button variants must map to app action roles consistently across page headers, forms, modals, table toolbars, and empty states. |
+| `$support-*`, `$support-*-inverse`, caution/support roles | Color Element + semantic consumers | `--ui-support-*`, validation/status APIs | Support colors are semantic only and require non-color cues. |
+| `$button-*` | Button Component | `<x-ui.button semantic="...">`, `--ui-button-*` component tokens | Button variants must map to Carbon Button component tokens consistently across Button-owned triggers and actions. |
+| `$notification-*` component token families | Notification Component | Installed Notification component token aliases | Notification surfaces and actions may consume Notification component tokens; non-notification feedback consumes core Support/Text/Icon roles. |
 | `$tag-*` component token families | Tag Component | Tag tone/variant API and app-owned tag tokens when installed | All-color tag rows remain verification-gated; do not infer local tag palettes. |
 | `$content-switcher-*` | Content Switcher Component | Installed Content switcher component token aliases | Component-owned; do not express as generic tabs/buttons unless the Component standard maps it. |
-| Data table toolbar and batch action roles | Data Table Component + Table Pattern | `x-ui.data-table-toolbar`, table/batch action tokens when installed | Toolbar rows stay component-owned; Table Pattern consumes them. |
 | `$skeleton-element`, `$skeleton-background` | Color Element + Loading/Skeleton APIs | `--ui-skeleton-*` when installed; current loading utilities until then | Skeleton roles are global/loading-owned; do not fake skeletons with local gray blocks. |
 | AI tokens such as `$ai-*` | AI-specific Component/Pattern gates | No general app-wide token until approved | AI token adoption remains gated and must not leak into non-AI components. |
 
@@ -327,7 +330,7 @@ Required role-family coverage:
 
 ### 4.5. Implementation audit checklist
 
-Use this checklist when comparing `resources/css/app.css`, component classes, and UI Reference examples against the canonical Carbon-to-Login mapping:
+Use this checklist when comparing `resources/css/app.css`, component classes, and rendered evidence examples against the canonical Carbon-to-Login mapping:
 
 - Inventory every `--ui-*` color variable and classify it as global Color-owned, Component-owned, Pattern-owned, alias, queued, or obsolete.
 - For each adopted Carbon token or role, verify exactly one app-owned token/API family owns the role unless a Component or Pattern standard documents a separate semantic reason.
@@ -336,7 +339,7 @@ Use this checklist when comparing `resources/css/app.css`, component classes, an
 - Flag raw color utilities, raw hex/RGB/HSL values, Tailwind color clusters, and feature-local variables in Blade, CSS, and JS-rendered markup.
 - Verify component-owned color variables are not consumed outside their owner component.
 - Verify Pattern standards compose Component and Element roles instead of defining new color families for the same Carbon role.
-- Verify UI Reference examples demonstrate default, hover/focus where practical, disabled, selected/current, validation/status, and inverse/high-contrast states for mapped roles.
+- Verify rendered evidence examples demonstrate default, hover/focus where practical, disabled, selected/current, validation/status, and inverse/high-contrast states for mapped roles.
 - Record `Needs verification`, `Documented anomaly`, `Source-inferred`, and `Docs-source conflict` rows as blocked until promoted by the owning standard.
 
 ## 5. CSS variable API
@@ -355,7 +358,7 @@ Use only the CSS variables and token aliases listed in the Token API table or th
 | `--ui-border-*`     | Implemented / expanding | Color Element                          | Dividers, borders, rules, and key lines.                                 | Cards, fields, tables, panels, menus, overlays.              |
 | `--ui-link*`        | Implemented / queued    | Color + Link Component                 | Link text and link states.                                               | `ui-link` and link-owned APIs only.                          |
 | `--ui-action-*`     | Implemented / queued    | Button/Menu button Components          | Action colors and action states.                                         | Button, icon-button, menu-button APIs only.                  |
-| `--ui-status-*`     | Implemented / queued    | Color + Notification/Tag/Badge APIs    | Semantic feedback colors.                                                | Notification, badge, status, validation, progress summaries. |
+| `--ui-status-*`     | Implemented / queued    | Color + Notification/Tag/Status APIs   | Semantic feedback colors.                                                | Notification, tag, status, validation, progress summaries. |
 | `--ui-focus*`       | Implemented / queued    | Color Element                          | Keyboard focus indication.                                               | All interactive elements.                                    |
 | `--ui-skeleton-*`   | Queued / loading-owned  | Loading/Skeleton Components            | Skeleton placeholders.                                                   | Loading and skeleton APIs only.                              |
 | `--ui-code-token-*` | Implemented             | Code Snippet Component / Color Element | Syntax highlighting roles.                                               | Code snippet rendering only.                                 |
@@ -385,7 +388,7 @@ Example:
 
 ## 6. Utility class/helper API
 
-Allowed utility classes, Blade helpers, and component wrappers are those listed in the Token API table and demonstrated by the UI Reference route.
+Allowed utility classes, Blade helpers, and component wrappers are those listed in the Token API table and demonstrated by the Rendered evidence route.
 
 ### 6.1. Allowed classes and helpers
 
@@ -397,12 +400,12 @@ Allowed utility classes, Blade helpers, and component wrappers are those listed 
 | `ui-card-copy`       | Implemented               | Secondary supporting copy              | Descriptions and supporting paragraphs.                 |
 | `ui-kicker`          | Implemented               | Helper/metadata text                   | Small section labels and metadata.                      |
 | `ui-link`            | Implemented               | Link color and link states             | Navigation and documentation links.                     |
-| `ui-inline-alert`    | Implemented where present | Semantic message surface               | Inline feedback or page-local status.                   |
+| `ui-inline-notification` | Implemented where present | Semantic message surface               | Inline feedback or page-local status.                   |
 | `ui-spinner`         | Implemented               | Loading indicator color                | Local pending work through Loading/Inline Loading APIs. |
 | `ui-code-snippet`    | Implemented               | Code surface and syntax tokens         | Code examples only.                                     |
 | `<x-ui.button>`      | Implemented               | Action variants and states             | Button actions.                                         |
 | `<x-ui.icon-button>` | Implemented where present | Icon-only action color and focus roles | Icon-only actions with accessible labels.               |
-| `<x-ui.badge>`       | Implemented where present | Compact semantic/neutral status        | Badges and small statuses.                              |
+| `<x-ui.tag>`         | Implemented where present | Compact semantic/neutral status        | Tags and small statuses.                                |
 | `<x-ui.status>`      | Implemented where present | Text/status indicator pair             | Status summaries and metadata.                          |
 
 ### 6.2. Allowed Tailwind usage
@@ -464,7 +467,7 @@ Do not use the Color Element API to:
 | Primary action         | `<x-ui.button semantic="primary">` or the Button API.                      |
 | Destructive action     | Approved danger Button variant.                                            |
 | Navigation text        | `ui-link` or Link Component API.                                           |
-| Status badge           | `<x-ui.badge tone="success / warning / danger / info / neutral">`.         |
+| Status tag             | `<x-ui.tag label="Active" tone="success" />`.                    |
 | Inline error           | Field/Notification API with danger/error tone.                             |
 | Page surface           | `ui-card`, app shell wrapper, or Pattern-owned surface.                    |
 | Nested content surface | `--ui-layer-02` through approved card/panel/reference classes.             |
@@ -482,7 +485,7 @@ Components and Patterns must consume this Element through documented tokens, uti
 | Button Component                  | Semantic action props and button-owned tokens.                   | Use raw blue, gray, red, or Tailwind color classes for button variants. |
 | Link Component                    | `ui-link` or Link API states.                                    | Style ordinary anchors with arbitrary color values.                     |
 | Notification Component            | Semantic status tones and non-color labels/icons.                | Use color-only alerts without status text.                              |
-| Tag/Badge Component               | Neutral or semantic tone props.                                  | Use semantic colors as decorative category labels.                      |
+| Tag Component                     | Neutral or semantic tone props.                                  | Use semantic colors as decorative category labels.                      |
 | Form Pattern and field components | Field, border, helper, validation, and disabled roles.           | Put validation colors directly into feature views.                      |
 | Data Table Component/Pattern      | Layer, border, selected, hover, focus, and status tokens.        | Use table-specific arbitrary row colors.                                |
 | Modal/Overlay Pattern             | Overlay, surface, shadow, border, inverse/focus roles.           | Define custom backdrops or modal surfaces per feature.                  |
@@ -496,7 +499,7 @@ Component APIs may expose semantic props such as:
 
 ```blade
 <x-ui.button semantic="primary">Save</x-ui.button>
-<x-ui.badge tone="success">Active</x-ui.badge>
+<x-ui.tag label="Active" tone="success" />
 <x-ui.notification tone="danger">Unable to save changes.</x-ui.notification>
 ```
 
@@ -504,7 +507,7 @@ Feature views must not directly map those props to raw values. The component own
 
 ## 9. Theme behavior
 
-This Element must remain valid in supported light, dark, inline, inverse, and high-contrast contexts when those contexts apply. Theme behavior is proven on the UI Reference page.
+This Element must remain valid in supported light, dark, inline, inverse, and high-contrast contexts when those contexts apply. Theme behavior is proven on the rendered evidence page.
 
 ### 9.1. Supported theme contexts
 
@@ -557,8 +560,8 @@ Interactive states such as hover, active, selected, focus-visible, disabled, loa
 | Loading            | Use loading/skeleton roles and reduced-motion-safe treatment.                     | Loading/Inline Loading APIs.           |
 | Validation error   | Use danger/error roles plus visible text and accessible association.              | Field/Notification APIs.               |
 | Validation warning | Use warning roles plus visible text and accessible association.                   | Field/Notification APIs.               |
-| Success            | Use success roles plus status text or icon.                                       | Notification/Badge/Status APIs.        |
-| Information        | Use info roles plus status text.                                                  | Notification/Badge/Status APIs.        |
+| Success            | Use success roles plus status text or icon.                                       | Notification/Tag/Status APIs.          |
+| Information        | Use info roles plus status text.                                                  | Notification/Tag/Status APIs.          |
 | Empty              | Use neutral surface/text/icon roles; do not imply error unless there is an error. | Component or Pattern API.              |
 
 ### 10.1. State-token rules
@@ -618,22 +621,22 @@ Additional prohibitions:
 
 ## 13. Deferred or gated capabilities
 
-- No additional capability is approved without updating this Element standard and UI Reference proof.
+- No additional capability is approved without updating this Element standard and rendered evidence proof.
 
 | Capability                                   | Status                       | Gate                                                                       |
 | -------------------------------------------- | ---------------------------- | -------------------------------------------------------------------------- |
-| Full Carbon coverage/value alignment         | In progress                  | Requires component and pattern standards to add Carbon-to-Login mapping tables, app value sources, deviation reasons, and UI Reference proof. |
+| Full Carbon coverage/value alignment         | In progress                  | Requires component and pattern standards to add Carbon-to-Login mapping tables, app value sources, deviation reasons, and rendered evidence proof. |
 | Full theme switcher                          | Gated by Theme API           | Requires supported theme list, token coverage, and component test matrix.  |
 | Forced-colors/high-contrast custom overrides | Gated                        | Requires accessibility audit and browser support expectations.             |
 | Data visualization palette                   | Deferred                     | Requires chart/data-viz Pattern API and contrast/legend rules.             |
 | Brand/accent palette expansion               | Deferred                     | Requires product/design approval and semantic role definition.             |
-| Component-specific token export              | Component-owned              | Each component must document Carbon coverage, app token/API mapping, value source, and deviation reason before feature use. |
+| Additional component color token export      | Gated                        | Only Button, Content switcher, Notification, and Tag are approved. Any other component-token family requires this standard, the owning Component standard, rendered evidence proof, and tests to change together. |
 | Skeleton token family                        | Loading-owned / queued       | Requires Loading/Skeleton Component API and rendered examples.             |
 | Shadow/elevation token family                | Overlay/Theme-owned / queued | Requires overlay, modal, popover, and shell behavior docs.                 |
 
 Deferred or gated capabilities must not be approximated with raw colors or one-off variables.
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 
 ### 14.1. Implementation checklist
 
@@ -646,7 +649,7 @@ Deferred or gated capabilities must not be approximated with raw colors or one-o
 | Prohibited usage            | Feature code, Components, and Patterns are told what they must not redefine locally.                                              |
 | Tests                       | Route/content/API assertions are defined to prove the Element contract.                                                           |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 
 | Requirement          | Visual proof expectation                                                                                            |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------- |
@@ -656,9 +659,9 @@ Deferred or gated capabilities must not be approximated with raw colors or one-o
 | Accessibility proof  | Contrast, focus, semantics, hit targets, reduced motion, or equivalent Element constraints are shown or documented. |
 | Related APIs         | Consuming Components, Patterns, source files, and the canonical standard are linked.                                |
 | Manual review        | The page provides enough rendered proof for visual review without opening source code first.                        |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The Color UI Reference page must prove the installed Color API with live app-rendered examples. Screenshots are not sufficient.
+The Color rendered evidence page must prove the installed Color API with live app-rendered examples. Screenshots are not sufficient.
 
 Required sections and examples:
 
@@ -677,10 +680,10 @@ Required sections and examples:
 | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | Theme-aware swatches      | Token swatches rendered from app CSS variables.                                                                                        | Light/default, dark if supported, inverse/high-contrast examples where implemented. |
 | Token groups              | Visual rows for text, icon, surface/layer, field, border, link, action, status, focus, loading/skeleton roles.                         | Token name, value source, allowed consumer, and status.                             |
-| Layering model            | Nested page/card/panel/example surfaces on `/platform/ui-reference/elements/color` and the dedicated `/platform/ui-reference/elements/color/layering` route. | `--ui-layer-01`, `--ui-layer-02`, elevated surface, border roles, readable text.    |
+| Layering model            | Nested page/card/panel/example surfaces on `not installed` and the dedicated `not installed` route. | `--ui-layer-01`, `--ui-layer-02`, elevated surface, border roles, readable text.    |
 | Background layering route | Five-layer stacks, cards with same-layer headers/footers, nested examples, code/documentation containers, and form/container examples. | `--ui-background`, `--ui-layer-01`, `--ui-layer-02`, `--ui-layer-03`, `--ui-layer-04`, `--ui-layer-05`, and border roles. |
 | Interaction states        | Component examples in default, hover preview, active/pressed, selected, focus-visible, disabled, loading, validation where applicable. | State-specific token labels and notes that state tokens are not static colors.      |
-| Semantic support colors   | Success, warning, danger/error, info, neutral.                                                                                         | Badge/status/notification examples with text or icons, not color alone.             |
+| Semantic support colors   | Success, warning, danger/error, info, neutral.                                                                                         | Tag/status/notification examples with text or icons, not color alone.               |
 | Contrast moments          | Text, icon, focus, border, inverse, and disabled examples.                                                                             | Pass/fail notes or implementation warnings where applicable.                        |
 | Common app examples       | Button, link, notification, field, table selected row, status tag, icon button, inverse tooltip/toggletip.                             | Production classes/components instead of screenshots.                               |
 | Prohibited usage examples | Small side-by-side “do not” examples.                                                                                                  | Raw hex, decorative status colors, hover-as-static, color-only status.              |
@@ -697,9 +700,9 @@ The page must show:
 - Deferred/gated capabilities.
 - Token status legend: implemented, alias, queued, component-owned, pattern-owned.
 
-### 15.3. Required developer-facing text on UI Reference page
+### 15.3. Required developer-facing text on rendered evidence page
 
-The UI Reference page should include this text or equivalent:
+The rendered evidence page should include this text or equivalent:
 
 > Use role-based Color tokens, classes, and component props instead of raw values. The token role stays stable even when theme values change.
 
@@ -709,9 +712,25 @@ The UI Reference page should include this text or equivalent:
 
 > Component APIs own their own color mappings. Feature views should call the component API instead of styling local variants.
 
+### 15.4. Current rendered evidence page responsibility model
+
+The Color reference implementation keeps durable API truth in `resources/views/elements/color/contract.php` and rendered evidence presentation in `resources/views/elements/color/reference.php` plus `resources/views/elements/color/reference/**`.
+
+Current page ownership:
+
+| Page | Responsibility | Must not own |
+| ---- | -------------- | ------------ |
+| Overview | Installed Color API summary, role families, source orientation, and navigation to focused detail pages. | Token catalogs, large example galleries, or duplicated usage rules. |
+| Usage | Role-selection rules, consumer responsibilities, and do/don't boundaries. | Token tables or live examples used as filler content. |
+| Tokens | Core theme tokens, component token groups, token purpose, swatches, and token source files. | Usage decision guidance repeated from the Usage page. |
+| Layering | Nested surface order, field placement, focus placement, and layer-specific do/don't rules. | General Color examples or separated surface lists that do not show nesting. |
+| Examples | The canonical live proofs currently active for display: anatomy, interaction states, and themes. | Token catalogs, layer theory, or source lists unrelated to the displayed examples. |
+
+Only examples declared by the Color contract and selected by the Color reference pages should render in the Examples page. Parked or future example files may exist under `resources/views/elements/color/examples/**`, but they are not active rendered evidence examples until they are registered by `contract.php` and selected by `reference.php`.
+
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/elements/color` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page renders live examples with app CSS/JS rather than screenshots only.
 - The page shows token/class/helper API references, allowed usage, prohibited usage, accessibility constraints, and implementation status.
 - Theme-aware swatches render from actual CSS variables rather than hard-coded sample blocks.
@@ -719,7 +738,7 @@ The UI Reference page should include this text or equivalent:
 - Layering examples show base/page, Layer 01, Layer 02, Layer 03, Layer 04, and Layer 05 surfaces.
 - Interaction examples show default, hover, active/pressed, selected/current where applicable, focus-visible, disabled, loading, and validation states.
 - Semantic examples show success, warning, danger/error, information, and neutral states with non-color cues.
-- Common app examples include button, link, notification/alert, form field, selected table row or selected item, status tag/badge, icon button, and inverse tooltip/toggletip where implemented.
+- Common app examples include button, link, notification/alert, form field, selected table row or selected item, status tag, icon button, and inverse tooltip/toggletip where implemented.
 - Prohibited examples or notes explicitly warn against raw hex values, Tailwind color utilities in feature views, decorative support colors, hover tokens as static colors, and color-only status.
 - The page links to related Component and Pattern APIs that consume Color.
 - Tests assert that generic fallback content is absent and that all required sections render.
@@ -733,25 +752,25 @@ The UI Reference page should include this text or equivalent:
 - Assert semantic labels `success`, `warning`, `danger`, `information`, and `neutral` are visible.
 - Assert focus guidance is visible.
 - Assert raw-color examples appear only inside prohibited-usage documentation, not in implementation examples.
-- Assert developer examples use canonical classes/components such as `ui-card`, `ui-link`, `<x-ui.button>`, and `<x-ui.badge>` where available.
+- Assert developer examples use canonical classes/components such as `ui-card`, `ui-link`, `<x-ui.button>`, and `<x-ui.tag>` where available.
 
 ## 17. Related APIs
 
 | API                     | Route                                                         |
 | ----------------------- | ------------------------------------------------------------- |
-| Themes element          | `/platform/ui-reference/elements/themes`                      |
-| Typography element      | `/platform/ui-reference/elements/typography`                  |
-| Icons element           | `/platform/ui-reference/elements/icons`                       |
-| Motion element          | `/platform/ui-reference/elements/motion`                      |
-| Spacing element         | `/platform/ui-reference/elements/spacing`                     |
-| Button component        | `/platform/ui-reference/components/button`                    |
-| Link component          | `/platform/ui-reference/components/link`                      |
-| Notification component  | `/platform/ui-reference/components/notification`              |
-| Tag/Badge component     | `/platform/ui-reference/components/tag`                       |
-| Text input component    | `/platform/ui-reference/components/text-input`                |
-| Data table component    | `/platform/ui-reference/components/data-table`                |
-| Form patterns           | `/platform/ui-reference/patterns/forms`                       |
-| Overlay/action patterns | `/platform/ui-reference/patterns/overlays-feedback`           |
+| Themes element          | `not installed`                      |
+| Typography element      | `not installed`                  |
+| Icons element           | `not installed`                       |
+| Motion element          | `not installed`                      |
+| Spacing element         | `not installed`                     |
+| Button component        | `not installed`                    |
+| Link component          | `not installed`                      |
+| Notification component  | `not installed`              |
+| Tag component           | `not installed`                       |
+| Text input component    | `not installed`                |
+| Data table component    | `not installed`                |
+| Form patterns           | `not installed`                       |
+| Overlay/action patterns | `not installed`           |
 | Canonical color doc     | `/platform/docs?path=02-standards%2Fui%2Felements%2Fcolor.md` |
 | Carbon color overview   | `https://carbondesignsystem.com/elements/color/overview/`     |
 | Carbon color usage      | `https://carbondesignsystem.com/elements/color/usage/`        |
@@ -762,6 +781,6 @@ The UI Reference page should include this text or equivalent:
 - [Foundation Elements Standards](index.md)
 - [Component Standards Index](../components/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon color tokens inform the role-driven architecture. Login App keeps its own semantic CSS variables and values.
-- Carbon's default themes, core token groups, layering model, and interaction-state concepts are used as a completeness benchmark, not copied as a one-to-one token implementation.
+- Carbon core color tokens and the adopted Carbon component-token families are the source-of-truth model for role coverage and value alignment. Login App keeps app-owned CSS variable names while preserving Carbon role intent.
+- Carbon's default themes, core token groups, layering model, and interaction-state concepts are used as the implementation benchmark. Deviations require an owning standard, value source, and reason.
 - The Carbon token master inventory is support evidence. Canonical standards must promote only the adopted role, app-owned token/API, value source, mapping status, and deviation reason needed for implementation.

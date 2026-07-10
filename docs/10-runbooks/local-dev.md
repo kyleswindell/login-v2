@@ -1,211 +1,246 @@
+<!--
+DOC-META
+title: Local Development
+doc_type: runbook
+status: active
+owner: ops
+canonical: true
+canonical_path: docs/10-runbooks/local-dev.md
+parent: docs/10-runbooks/index.md
+template: docs/09-reference/templates/docs/_runbook.md
+summary: Defines first-time and routine local startup, verification, reset, and shutdown procedures for the Docker-based Login 2.0 development environment.
+-->
+
 # Local Development
 
-This document defines the canonical scope and intent for Local Development.
+Parent: [Runbook Index](index.md)
 
-## Required Local Tooling
+## Purpose
 
-Docker Compose is the preferred local development path. The local PHP CLI is still useful for quick Composer and Artisan checks outside Docker.
+Start, verify, use, reset, and stop the local Login 2.0 development environment.
 
-Required before running the full local stack:
+## Use When
 
-* Docker Desktop or Docker Engine with Compose support
+Use for:
 
-Required before running Composer/Laravel commands outside Docker:
+- first local setup
+- routine startup
+- database reset recovery
+- local test execution
+- local service verification
+- routine shutdown
 
-* PHP 8.3
-* Composer
-* Node.js and npm for Vite frontend asset builds
-* `curl`
-* `dom`
-* `intl`
-* `mbstring`
-* `xml`
-* `xmlreader`
-* `xmlwriter`
-* `zip`
-* `pdo_pgsql`
-* `pgsql`
-* `pdo_sqlite`, optional for Laravel's default in-memory PHPUnit configuration until the test database is switched to PostgreSQL
-* `unzip`
+## Do Not Use When
 
-## Current Database Direction
+Do not use this runbook for:
 
-App 2.0 uses PostgreSQL from the start.
+- staging or production deployment
+- parallel writable worktrees
+- destructive cleanup of unknown Docker projects
+- production data restoration
 
-The Docker Compose local platform database is:
+## Prerequisites
 
-* database: `platform_app`
-* user: `platform_app`
-* password: `secret`
-* host from inside containers: `postgres`
-* host from the machine running Docker: `127.0.0.1:5432`
+Required:
 
-These values are local-development placeholders only.
+- Docker Desktop or Docker Engine
+- Docker Compose
+- Git
+- repository checkout
+- Node.js and npm on the host for the default Vite path
 
-## Timezones
+Optional local CLI tooling:
 
-Store application timestamps in UTC unless a feature-specific canonical doc states otherwise.
+- PHP 8.3
+- Composer
+- PostgreSQL extensions
+- Redis extension
 
-Display user-facing timestamps in the signed-in user's timezone when available. `APP_TIMEZONE` should remain `UTC` in environment files unless an explicit decision record changes that default.
+Local credentials and database values in this runbook are development-only.
 
-## Redis
+## First-Time Setup
 
-Redis is the default local cache and queue backend in `.env.example`.
+From the repository root:
 
-The Docker Compose Redis host is `redis` inside containers and `127.0.0.1:6379` from the machine running Docker.
+    cp .env.example .env
+    docker compose run --rm app sh -lc "composer install && php artisan key:generate"
+    docker compose up --build -d
 
-## Docker Compose
+Install host frontend dependencies:
 
-Start from the repository root:
+    npm install
 
-```bash
-cp .env.example .env
-docker compose run --rm app sh -lc "composer install && php artisan key:generate"
-docker compose up --build -d
-```
+Start host Vite in a separate terminal:
 
-In a host terminal, start Vite:
+    npm run dev:host
 
-```bash
-npm run dev:host
-```
+Prepare browser-review state:
 
-Default local URLs:
+    docker compose exec app php artisan local:ready
 
-* Laravel app: `http://localhost:8000`
-* Vite dev server: `http://localhost:5173`
-* Mailpit dashboard: `http://localhost:8025`
+## Routine Startup
 
-Before authenticated local browser review, run:
+From the repository root:
 
-```bash
-docker compose exec app php artisan local:ready
-```
+    docker compose up -d
 
-or, when using local PHP/npm directly:
+Start host Vite:
 
-```bash
-npm run local:ready
-```
+    npm run dev:host
 
-This command normalizes `public/hot`, aligns the browser-facing Reverb host with the app URL, checks the local app, Vite endpoints, and Reverb TCP port, and upserts the review user `test@example.com` / `password` with platform review/admin access. After Docker database resets, rerun this command instead of manually recreating the user or rewriting `public/hot`.
+Verify browser-review readiness:
 
-For LAN review, pass the browser-reachable URLs so Vite and websocket clients do not fall back to stale localhost values:
+    docker compose exec app php artisan local:ready
 
-```bash
-docker compose exec app php artisan local:ready --app-url=http://192.168.50.10:8000 --vite-url=http://192.168.50.10:5173
-```
+## Expected Services
 
-The Compose stack includes:
+Default active services:
 
-* `app`: PHP 8.3 CLI container running Laravel's local server
-* `node`: optional Node 22 container running Vite under the `docker-vite` profile
-* `reverb`: Laravel Reverb websocket server for local realtime notification review
-* `postgres`: PostgreSQL 16
-* `redis`: Redis 7
-* `mailpit`: local email capture
+- app
+- reverb
+- postgres
+- redis
+- mailpit
 
-On Windows, the default local review path is to run Vite on the host with `npm run dev:host` instead of using the Docker `node` service. This avoids Docker bind-mount CSS transform hangs while keeping Laravel, PostgreSQL, Redis, and Mailpit in Docker. The host Vite server binds to `0.0.0.0` so the app container can verify it through `host.docker.internal`, while Laravel serves browser asset URLs through `http://localhost:5173`.
+The Docker `node` service is opt-in through the `docker-vite` profile.
 
-Use the Docker Vite service only when explicitly testing the containerized Node path:
+## Local URLs
 
-```bash
-docker compose --profile docker-vite up node
-docker compose exec app php artisan local:ready --vite-check-url=http://node:5173
-```
+- application: `http://localhost:8000`
+- Vite: `http://localhost:5173`
+- Mailpit: `http://localhost:8025`
+- Reverb: `ws://localhost:8080`
 
-The Docker Vite service enables polling by default for Windows bind mounts. Restart the `node` service once if the Docker Vite path appears stale; use host-run Vite as the default local review path.
+## Verification
 
-Realtime notification review expects Reverb to be running:
+Run:
 
-```bash
-docker compose up -d reverb
-docker compose exec app php artisan local:ready
-```
+    docker compose ps
+    docker compose exec app php artisan about
+    docker compose exec app php artisan migrate:status
+    docker compose exec app php artisan test
+    npm run build
 
-`local:ready` normalizes local `.env` to `BROADCAST_CONNECTION=reverb`, binds the Reverb server to `0.0.0.0:8080`, and points the browser-facing Reverb host at the app URL host.
+Expected:
 
-Compose mounts `vendor/` and `node_modules/` as Docker named volumes. That keeps Composer and npm dependency trees out of each checkout or disposable worker worktree while preserving them for the active Compose project. Use `docker compose down --volumes` when intentionally clearing those dependency volumes.
+- required containers are running
+- PostgreSQL is healthy
+- Laravel uses `pgsql`
+- cache and queue use Redis
+- migrations are current
+- tests pass
+- frontend build passes
 
-## Verification Commands
+## Browser Review User
 
-After `docker compose up --build` is running, use a second terminal from the repository root:
+`php artisan local:ready` creates or updates the local-only review account:
 
-```bash
-docker compose ps
-docker compose exec app php artisan about
-docker compose exec app php artisan migrate
-docker compose exec app php artisan test
-```
+- email: `test@example.com`
+- password: `password`
 
-If the stack is not already running and the dependency volume may be empty, run one-off Artisan commands through Composer first:
+This account must never be used as a staging or production default.
 
-```bash
-docker compose run --rm app sh -lc "composer install && php artisan test"
-```
+## Host Vite
 
-Expected baseline:
+Default Windows browser review uses:
 
-* all five services are up
-* `postgres` reports healthy
-* Laravel reports database driver `pgsql`
-* Laravel reports cache and queue drivers `redis`
-* Laravel reports mail driver `smtp`
-* migrations run against PostgreSQL
-* the default Laravel tests pass
+    npm run dev:host
 
-This baseline was verified locally after Docker Desktop WSL integration was enabled.
+Do not use the Docker `node` service unless testing that path specifically.
 
-## Local-First Development Policy
+For Docker Vite:
 
-The restored local development stack is the default verification surface for ordinary implementation work.
+    docker compose --profile docker-vite up -d node
+    docker compose exec app php artisan local:ready --vite-check-url=http://node:5173
 
-Use local Docker Compose for:
+Restart the optional node service with:
 
-* scoped feature tests
-* focused UI Reference and platform route checks
-* migrations and seed/data-shape checks
-* frontend build checks when the change affects compiled assets
-* browser review against `localhost` when shared staging is not required
+    docker compose --profile docker-vite restart node
 
-Do not push or deploy to the server just to answer questions that the local stack can answer. Server/staging deployment should be reserved for:
+## Reverb
 
-* review-ready checkpoints that need a shared manual review URL
-* fixes that must be revalidated by someone outside the local workstation
-* environment-specific behavior that cannot be proven locally
-* final promotion or close-out paths required by the active workflow
+Ensure Reverb is running:
 
-This keeps server commits, deploy work, and workflow write-up overhead focused on reviewable milestones instead of implementation micro-steps.
+    docker compose up -d reverb
+    docker compose exec app php artisan local:ready
 
-Local manual review may inspect scoped uncommitted changes on the same working tree. Once that local review accepts a change-queue item or tightly coupled group, create the scoped implementation commit before moving that work to passed review. Shared review still requires the commit, push, and deploy to happen before review begins.
+## LAN Review
 
-## Frontend Assets
+Use browser-reachable URLs:
 
-Laravel includes Vite frontend tooling. Node.js/npm must be available before running:
+    docker compose exec app php artisan local:ready --app-url=http://192.168.50.10:8000 --vite-url=http://192.168.50.10:5173
 
-```bash
-npm install
-npm run build
-```
+Replace the IP with the current development host.
 
-If local Windows/WSL Node tooling is unreliable, prefer handling Node through Docker Compose once the local development stack is finalized.
+## Database Reset
 
-For Windows host browser review, prefer:
+For a local-only destructive reset:
 
-```bash
-npm run dev:host
-docker compose exec app php artisan local:ready
-```
+    docker compose exec app php artisan migrate:fresh --seed
+    docker compose exec app php artisan local:ready
 
-For browser-review asset troubleshooting, use [Local Browser Review Setup](local-browser-review.md). Agents should not repeatedly move `public/hot`, cache-bust Vite modules, or restart the Node service during ordinary UI iteration.
+Confirm no needed local data exists before running `migrate:fresh`.
 
-## Notes
+## Dependency Volume Reset
 
-Laravel's default scaffold creates a SQLite placeholder during `composer create-project`. This project removes that placeholder because PostgreSQL is the intended platform database.
+Only when intentionally clearing dependencies:
+
+    docker compose down --volumes
+    docker compose run --rm app sh -lc "composer install && php artisan key:generate"
+    docker compose up --build -d
+    npm install
+
+This removes Compose-managed volumes for the current project.
+
+## Failure Handling
+
+If Laravel fails:
+
+    docker compose logs app --tail=200
+
+If PostgreSQL fails:
+
+    docker compose logs postgres --tail=200
+
+If Redis fails:
+
+    docker compose logs redis --tail=200
+
+If Reverb fails:
+
+    docker compose logs reverb --tail=200
+
+If Vite appears stale:
+
+1. confirm `npm run dev:host` is running
+2. run `docker compose exec app php artisan local:ready`
+3. restart host Vite once
+4. rerun readiness
+5. use built assets only after `npm run build` succeeds
+
+Do not loop through cache busting, hot-file moves, and repeated restarts.
+
+## Shutdown
+
+Stop services:
+
+    docker compose down
+
+Preserve volumes unless intentional cleanup is required.
+
+## Completion Criteria
+
+Local development is ready when:
+
+- required services are running
+- migrations are current
+- `local:ready` passes
+- the login route loads
+- Vite assets load
+- Reverb is reachable
+- required tests pass
 
 ## Related
 
-* [Runbook Index](index.md)
-* [00-start-here](../00-start-here.md)
-* [Stack - Docker Compose](../09-reference/architecture/phase-2-stack-and-ui-system-notes.md)
-* [Stack - Laravel](../09-reference/architecture/phase-2-stack-and-ui-system-notes.md)
+- [Local Browser Review](local-browser-review.md)
+- [Parallel Worktree Setup](parallel-worktree-setup.md)

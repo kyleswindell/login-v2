@@ -89,8 +89,8 @@ These roles were required by the Carbon-to-Login standards mapping and were adde
 
 | Area | Current state | Risk | Correction direction |
 | ---- | ------------- | ---- | -------------------- |
-| Button/action roles | CSS exposes the canonical Button semantic alias surface while retaining `neutral`, `success`, `warning`, `notice`, `info`, `soft-*`, and `outline-*` compatibility roles. | Agents may still use status/action colors as visual Button variants unless ownership is clarified. | Token work is complete; future API cleanup should narrow or deprecate status-colored Button aliases through the Button standard and UI Reference proof. |
-| Notification/status roles | CSS exposes `--ui-notification-*` as the canonical full-message feedback surface and keeps `--ui-alert-*` as compatibility aliases. Compact badges/status pills continue to use `--ui-status-*`. | Feature views can still bypass component APIs with raw utilities. | Token work is complete; migration work should replace raw notification/status styling with `x-ui.inline-alert`, `x-ui.toast`, `x-ui.badge`, `x-ui.status`, or app-owned classes. |
+| Button/action roles | CSS exposes the canonical Button semantic alias surface while retaining `neutral`, `success`, `warning`, `notice`, `info`, `soft-*`, and `outline-*` compatibility roles. | Agents may still use status/action colors as visual Button variants unless ownership is clarified. | Token work is complete; future API cleanup should narrow or deprecate status-colored Button aliases through the Button standard and rendered evidence proof. |
+| Notification/status roles | CSS exposes `--ui-notification-*` as the canonical full-message feedback surface and keeps `--ui-alert-*` as compatibility aliases. Compact tag/status pills continue to use `--ui-status-*`. | Feature views can still bypass component APIs with raw utilities. | Token work is complete; migration work should replace raw notification/status styling with `x-ui.notification.inline`, `x-ui.notification.toast`, `x-ui.tag`, `x-ui.status`, or app-owned classes. |
 | Link roles | CSS has app-level `--ui-link`, `--ui-link-hover`, secondary, inverse active, inverse visited, and legacy `--ui-link-text*` aliases. | Components may still consume older link names. | Token work is complete; migrate consumers gradually where touched. |
 | Surface aliases | CSS has `--ui-canvas`, `--ui-surface`, `--ui-surface-elevated`, `--ui-layer-*`, and `--ui-background-*`. | Background/surface/layer roles may be used interchangeably without depth rules. | Token work is complete; enforce depth usage in component/pattern reviews. |
 | Login-provider tokens | CSS has provider-specific login button tokens. | Provider buttons could be mistaken for generic Button hierarchy. | Keep provider tokens as Login Pattern owned exceptions with Button-compatible focus/disabled/on-color roles. No additional generic token work is required. |
@@ -98,7 +98,7 @@ These roles were required by the Carbon-to-Login standards mapping and were adde
 
 ## Raw Color Utility Hotspots
 
-Raw Tailwind color utility classes remain in app and UI Reference surfaces. Excluding `resources/views/welcome.blade.php`, the post-UI Reference examples/status/table-index/notifications migration scan found:
+Raw Tailwind color utility classes remain in app and rendered evidence surfaces. Excluding `resources/views/welcome.blade.php`, the post-rendered evidence examples/status/table-index/notifications migration scan found:
 
 | Measure | Count |
 | ------- | ----- |
@@ -109,7 +109,7 @@ Remaining matches by area:
 
 | Area | Matches |
 | ---- | ------- |
-| UI Reference | 61 |
+| rendered evidence | 61 |
 | Platform Settings | 48 |
 | Other / uncategorized views | 34 |
 | Other Platform pages | 13 |
@@ -124,17 +124,17 @@ Highest-count hotspots:
 | `resources/views/platform/docs/index.blade.php` | 7 | Platform docs index surface. |
 | `resources/views/platform/settings/general-email.blade.php` | 7 | Platform Settings form/surface page. |
 | `resources/views/platform/settings/general-localization.blade.php` | 7 | Platform Settings form/surface page. |
-| `resources/views/platform/ui-reference/index/error-drawer.blade.php` | 7 | UI Reference index drawer proof. |
+| `retired reference viewer path` | 7 | rendered evidence index drawer proof. |
 | `resources/views/platform/settings/general-company-information.blade.php` | 7 | Platform Settings form/surface page. |
-| `resources/views/platform/ui-reference/patterns/tables/state-validation.blade.php` | 6 | UI Reference table state proof. |
+| `retired reference viewer path` | 6 | rendered evidence table state proof. |
 | `resources/views/platform/settings/notifications.blade.php` | 5 | Platform Settings notification page. |
-| `resources/views/platform/ui-reference/components/overview.blade.php` | 5 | UI Reference component catalog overview. |
-| `resources/views/platform/ui-reference/index/audit-drawer.blade.php` | 5 | UI Reference index drawer proof. |
-| `resources/views/platform/ui-reference/patterns/layout.blade.php` | 5 | UI Reference layout pattern examples. |
-| `resources/views/platform/ui-reference/patterns/starters.blade.php` | 5 | UI Reference starter catalog examples. |
-| `resources/views/platform/ui-reference/patterns/tables/audit.blade.php` | 5 | UI Reference audit table proof. |
-| `resources/views/platform/ui-reference/patterns/tables/error.blade.php` | 5 | UI Reference error table proof. |
-| `resources/views/platform/ui-reference/patterns/tables/workspace.blade.php` | 5 | UI Reference workspace table proof. |
+| `retired reference viewer path` | 5 | rendered evidence component catalog overview. |
+| `retired reference viewer path` | 5 | rendered evidence index drawer proof. |
+| `retired reference viewer path` | 5 | rendered evidence layout pattern examples. |
+| `retired reference viewer path` | 5 | rendered evidence starter catalog examples. |
+| `retired reference viewer path` | 5 | rendered evidence audit table proof. |
+| `retired reference viewer path` | 5 | rendered evidence error table proof. |
+| `retired reference viewer path` | 5 | rendered evidence workspace table proof. |
 
 The light-theme compatibility block in `app.css` remaps slate utility classes at runtime:
 
@@ -144,7 +144,7 @@ The light-theme compatibility block in `app.css` remaps slate utility classes at
 - `.placeholder:text-slate-*`
 - `.shadow-black/*`
 
-That block is a compatibility bridge, not standards-compliant implementation. It is still required because 169 targeted raw utility matches remain outside the migrated shell/runtime/forms/actions/overlays/navigation/user-form/log/UI Reference example/notification files. Remove it only after raw color utility consumers are migrated to app-owned `ui-*` classes and token roles.
+That block is a compatibility bridge, not standards-compliant implementation. It is still required because 169 targeted raw utility matches remain outside the migrated shell/runtime/forms/actions/overlays/navigation/user-form/log/rendered evidence example/notification files. Remove it only after raw color utility consumers are migrated to app-owned `ui-*` classes and token roles.
 
 ## Gated Carbon Roles Not To Implement Yet
 
@@ -162,20 +162,20 @@ That block is a compatibility bridge, not standards-compliant implementation. It
    - `resources/views/components/layouts/app/sidebar.blade.php`
    - `resources/views/components/layouts/mobile-sidebar.blade.php`
    - `resources/views/platform/settings/_sidebar.blade.php`
-   - `resources/js/shell-ui.js`
+   - `resources/js/ui-controls/ui-shell.js`
    - `resources/js/realtime-notifications.js`
-2. Done: migrate the top UI Reference and production hotspots:
-   - `resources/views/platform/ui-reference/components/forms.blade.php`
-   - `resources/views/platform/ui-reference/components/actions.blade.php`
-   - `resources/views/platform/ui-reference/patterns/overlays.blade.php`
-   - `resources/views/platform/ui-reference/patterns/navigation.blade.php`
+2. Done: migrate the top rendered evidence and production hotspots:
+   - `retired reference viewer path`
+   - `retired reference viewer path`
+   - `retired reference viewer path`
+   - `retired reference viewer path`
    - `resources/views/platform/users/partials/form.blade.php`
    - `resources/views/platform/error-logs/index.blade.php`
    - `resources/views/platform/error-logs/show.blade.php`
    - `resources/views/platform/audit-logs/index.blade.php`
    - `resources/views/platform/audit-logs/show.blade.php`
-3. Done: migrate the remaining top UI Reference table/index/status/example hotspots and `resources/views/platform/notifications/index.blade.php`.
-4. Continue with Platform Settings pages, UI Reference drawer/table proof partials, Platform Docs index, component overview, layout, and starter catalog surfaces.
+3. Done: migrate the remaining top rendered evidence table/index/status/example hotspots and `resources/views/platform/notifications/index.blade.php`.
+4. Continue with Platform Settings pages, rendered evidence drawer/table proof partials, Platform Docs index, component overview, layout, and starter catalog surfaces.
 5. Remove the light-theme slate compatibility override only after raw utility consumers are eliminated or intentionally exempted.
 
 ## Validation Guidance For The Next Pass
@@ -183,8 +183,8 @@ That block is a compatibility bridge, not standards-compliant implementation. It
 Use focused checks only:
 
 - CSS source assertions for required aliases and absence of new raw color utilities in changed files.
-- Component-specific feature tests only for touched UI Reference/component routes.
+- Component-specific feature tests only for touched rendered evidence/component routes.
 - `npm run lint:docs:guardrails` if docs are updated.
 - `npm run build` after CSS/JS changes.
 
-Do not run the full UI Reference feature file for this audit or for narrow token-alias edits.
+Do not run the full rendered evidence feature file for this audit or for narrow token-alias edits.

@@ -6,9 +6,9 @@ status: implemented-pending-manual-review
 system_maturity: partial
 category: navigation-and-disclosure
 priority: tier-b-common-reusable-component
-ui_reference_route: /platform/ui-reference/components/tabs
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/tabs.md
-source_owner: /platform/ui-reference/components/tabs
+source_owner: not installed
 blade_api:
   - x-ui.tabs
 javascript_api:
@@ -20,7 +20,7 @@ data_attributes:
   - data-ui-tabs-panel
   - data-ui-tabs-dismiss
 source_files:
-  - resources/views/components/ui/tabs.blade.php
+  - resources/views/components/ui/tabs/index.blade.php
   - resources/js/ui-controls/tabs.js
   - resources/css/app.css
 foundation_elements:
@@ -76,10 +76,10 @@ carbon_reference:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
   - [15.1. Required Live examples internal sections:](#151-required-live-examples-internal-sections)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
   - [16.1. Suggested automated assertions:](#161-suggested-automated-assertions)
@@ -90,7 +90,7 @@ carbon_reference:
 
 Tabs switch between peer panels while keeping the user in the same task context.
 
-Canonical API owner: `/platform/ui-reference/components/tabs`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
 Tabs is the installed Login App 2.0 peer-panel switching API. It owns tablist semantics, tab-panel relationships, selected and unselected states, keyboard navigation, activation mode, scrollable horizontal tablists, contained and line visual variants, optional icons, optional dismiss buttons, disabled tabs, vertical tab layout, and token-backed tab states. It does not own primary site navigation, breadcrumbs, linear progress, required workflow steps, page routing, table filtering, comparison views, or page-level layout.
 
@@ -105,7 +105,7 @@ Tabs is the installed Login App 2.0 peer-panel switching API. It owns tablist se
 - Support horizontal overflow through scrolling instead of wrapping.
 - Initialize keyboard, selected-state, panel visibility, dismissible, and overflow behavior through `initTabs`.
 - Consume Foundation Element APIs for color, spacing, typography, themes, and motion.
-- Prove variants, item data, keyboard behavior, overflow, responsive handoff, and prohibited usage on the UI Reference page.
+- Prove variants, item data, keyboard behavior, overflow, responsive handoff, and prohibited usage on the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -127,21 +127,21 @@ Tabs is the installed Login App 2.0 peer-panel switching API. It owns tablist se
 | Component slug               | `tabs`                                                                                                      |
 | Category                     | Navigation and disclosure                                                                                   |
 | Priority                     | Tier B - Common reusable component                                                                          |
-| UI Reference route           | `/platform/ui-reference/components/tabs`                                                                    |
+| Rendered evidence route           | `not installed`                                                                    |
 | Canonical doc                | `docs/02-standards/ui/components/tabs.md`                                                                   |
-| Source owner                 | `/platform/ui-reference/components/tabs`                                                                    |
+| Source owner                 | `not installed`                                                                    |
 | Blade API                    | `x-ui.tabs`                                                                                                 |
 | JavaScript API               | `initTabs` from `resources/js/ui-controls/tabs.js`                                                          |
 | Data attributes              | App-owned `data-ui-tabs*` attributes emitted by the component implementation                                |
-| Source files                 | `resources/views/components/ui/tabs.blade.php`; `resources/js/ui-controls/tabs.js`; `resources/css/app.css` |
+| Source files                 | `resources/views/components/ui/tabs/index.blade.php`; `resources/js/ui-controls/tabs.js`; `resources/css/app.css` |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion                                                                  |
 | Carbon benchmark             | Carbon Tabs usage, style, and accessibility guidance                                                        |
 
-`Implemented - pending manual review` means the component API, JavaScript initializer, and UI Reference route exist, but this standard must make the installed Tabs contract explicit and replace placeholder language such as “Allowed variants: None” with the real installed variants, options, states, and gates.
+`Implemented - pending manual review` means the component API, JavaScript initializer, and Rendered evidence route exist, but this standard must make the installed Tabs contract explicit and replace placeholder language such as “Allowed variants: None” with the real installed variants, options, states, and gates.
 
 ## 3. Installed standard
 
-Tabs has a corrected component-specific UI Reference page with canonical app examples, rendered variants, and recovery assertions.
+Tabs has a corrected component-specific rendered evidence page with canonical app examples, rendered variants, and recovery assertions.
 
 ### 3.1. The installed standard is:
 
@@ -248,7 +248,7 @@ Use the Blade API instead of hand-building tablist, tab, panel, and keyboard beh
 | Root semantic element | Tablist and paired tab panels emitted by the component                                                      |
 | Data attributes       | `data-ui-tabs*` attributes emitted by the component implementation                                          |
 | CSS namespace         | App-owned `ui-*` tabs classes documented by this standard                                                   |
-| Source files          | `resources/views/components/ui/tabs.blade.php`; `resources/js/ui-controls/tabs.js`; `resources/css/app.css` |
+| Source files          | `resources/views/components/ui/tabs/index.blade.php`; `resources/js/ui-controls/tabs.js`; `resources/css/app.css` |
 
 ### 4.3. `x-ui.tabs` props and options
 
@@ -265,7 +265,7 @@ Use the Blade API instead of hand-building tablist, tab, panel, and keyboard beh
 | `scrollable`      | `bool`          | `true` for horizontal overflow | `true`, `false`                 | No                                                  | Horizontal tabs scroll instead of wrapping.                                                                    |
 | `class`           | `string / null` | `null`                         | Layout passthrough if supported | No                                                  | Parent Patterns may pass layout classes. Do not use for local color, typography, state, or behavior overrides. |
 
-Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and UI Reference proof before production use.
+Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and rendered evidence proof before production use.
 
 ### 4.4. Tab item data contract
 
@@ -276,7 +276,7 @@ Each entry in the `tabs` prop must use this contract.
 | `id`             | `string`        | Strongly recommended                                                         | Stable unique tab ID. Required when selected state, dismissal, or tests need deterministic references. |
 | `label`          | `string`        | Yes unless icon-only tab has `ariaLabel`                                     | Visible tab text. Use short panel descriptors.                                                         |
 | `panel`          | `string         | \Illuminate\Contracts\Support\Htmlable`                                      | Yes                                                                                                    | Rendered panel content. Escape unsafe strings before passing. |
-| `icon`           | `string / null` | No                                                                           | Approved Heroicon alias/component. Use as a leading icon only.                                         |
+| `icon`           | `string / null` | No                                                                           | Internal icon alias/component. Use as a leading icon only.                                         |
 | `ariaLabel`      | `string / null` | Required for icon-only tabs                                                  | Accessible tab name. Must describe the panel, not the icon.                                            |
 | `tooltip`        | `string / null` | Required for icon-only production tabs when tooltip integration is installed | Tooltip text should match or clarify `ariaLabel`.                                                      |
 | `secondaryLabel` | `string / null` | No                                                                           | Use only for contained tabs that need compact secondary context.                                       |
@@ -285,7 +285,7 @@ Each entry in the `tabs` prop must use this contract.
 | `dismissible`    | `bool`          | No                                                                           | Use only for user-created or user-curated tabs.                                                        |
 | `dismissLabel`   | `string / null` | Required when `dismissible` is true                                          | Accessible name for dismiss action, such as `Close Draft 103`.                                         |
 | `href`           | `string / null` | Not public for installed client-side tabs                                    | Use Navigation Pattern for route navigation.                                                           |
-| `badge`          | `string         | int                                                                          | null`                                                                                                  | Deferred                                                      | Requires Badge/Tag integration and UI Reference proof before production use. |
+| `badge`          | `string/int`    | No                                                                           | Deferred count/tag indicator value. Requires Tag or count-indicator integration and rendered evidence proof before production use. |
 
 ### 4.5. JavaScript API
 
@@ -324,7 +324,7 @@ These attributes are app-owned implementation hooks. They are emitted by the Bla
 | `data-ui-tabs-panel`   | Component/JavaScript | Panel associated with one tab.                  |
 | `data-ui-tabs-dismiss` | Component/JavaScript | Optional dismiss control for user-created tabs. |
 
-Do not author new `data-*` hooks for tabs behavior in feature views. Additions require an update to the component, standard, JavaScript initializer, and UI Reference proof.
+Do not author new `data-*` hooks for tabs behavior in feature views. Additions require an update to the component, standard, JavaScript initializer, and rendered evidence proof.
 
 ## 5. Allowed variants, options, and modifiers
 
@@ -345,7 +345,7 @@ Do not author new `data-*` hooks for tabs behavior in feature views. Additions r
 | Small                              | Size        | Implemented / required proof                  | `size="sm"`                                                                              | Compact cards, toolbars, or constrained panels.                                          |
 | Medium                             | Size        | Implemented / required proof                  | `size="md"`                                                                              | Default app tab size.                                                                    |
 | Large                              | Size        | Implemented / required proof                  | `size="lg"`                                                                              | Larger surfaces only when Pattern-owned.                                                 |
-| Badge/count tab                    | Modifier    | Deferred                                      | none                                                                                     | Requires Badge/Tag integration and UI Reference proof.                                   |
+| Count/tag tab                      | Modifier    | Deferred                                      | none                                                                                     | Requires Tag or count-indicator integration and rendered evidence proof.                      |
 | Route/navigation tab               | Gated       | Pattern-owned                                 | none                                                                                     | Use Navigation Pattern unless the tablist remains in-page and peer-panel based.          |
 | Nested tabs                        | Gated       | none                                          | Requires Pattern approval to avoid navigation confusion.                                 |                                                                                          |
 | Closable unsaved tab workflow      | Gated       | `dismissible` plus Pattern-owned confirmation | Requires unsaved-change confirmation and focus recovery rules.                           |                                                                                          |
@@ -371,9 +371,9 @@ Do not author new `data-*` hooks for tabs behavior in feature views. Additions r
 | Icon-only             | Implemented / gated                             | Requires accessible name and tooltip behavior.                                                                                |
 | Empty                 | Not allowed                                     | Do not render a tablist with fewer than two available tabs. Render the panel content directly.                                |
 | Loading               | Not applicable                                  | Tabs switch peer panels; use Inline loading or Skeleton inside the panel when panel content is pending.                       |
-| Error/warning/success | Not owned by Tabs                               | Use Notification, Tag/Badge, or panel content. A future Badge integration is deferred.                                        |
+| Error/warning/success | Not owned by Tabs                               | Use Notification, Tag, or panel content. A future Tag/count integration is deferred.                                           |
 | Read-only             | Not applicable                                  | Tabs are navigation controls. Render static content instead if switching is not allowed.                                      |
-| Validation            | Not applicable                                  | Validation belongs to fields/forms inside panels. Tabs may expose summaries only through a future Badge/Notification Pattern. |
+| Validation            | Not applicable                                  | Validation belongs to fields/forms inside panels. Tabs may expose summaries only through a future Tag/Notification Pattern.   |
 
 States must be represented through the installed Component API and token-backed classes. Do not create state-only local CSS outside the API.
 
@@ -400,7 +400,7 @@ Tabs consumes Foundation Color, Spacing, Typography, Themes, and Motion.
 | Typography  | Tab label, secondary label, icon-only tooltip text through Tooltip API, and panel heading relationships.                                                                   |
 | Themes      | Light/dark/inverse token resolution for selected, unselected, hover, focus-visible, disabled, contained, and vertical states.                                              |
 | Motion      | Short productive transitions for selected indicator, panel visibility, scroll affordance, and dismiss entry/exit where installed; must respect reduced-motion preferences. |
-| Icons       | Approved Heroicons for leading tab icons, icon-only tabs, and dismiss controls when enabled.                                                                               |
+| Icons       | Internal icon components for leading tab icons, icon-only tabs, and dismiss controls when enabled.                                                                               |
 | 2x Grid     | Parent Pattern placement for vertical tabs, page sections, cards, modals, and side panels.                                                                                 |
 
 Carbon color role mapping:
@@ -457,7 +457,7 @@ Feature views must not create local `tabs-*`, `tab-*`, Bootstrap `.nav-tabs`, ra
 - Dismissible tabs are allowed only for user-created or user-curated content.
 - Dismissing the selected tab must move selection and focus to a predictable remaining tab.
 - Icon-only tabs require accessible names and Tooltip Pattern behavior.
-- Do not mix icon-only and text tabs in the same structural tablist unless the UI Reference proves the combined pattern.
+- Do not mix icon-only and text tabs in the same structural tablist unless the rendered evidence proves the combined pattern.
 - Do not put unrelated workflows in sibling tabs.
 - Do not use tabs for steps that must be completed in order.
 - Do not use tabs for route-level navigation or site navigation.
@@ -566,20 +566,20 @@ Feature views must not create local `tabs-*`, `tab-*`, Bootstrap `.nav-tabs`, ra
 
 | Capability                           | Status                | Gate                                                                                                         |
 | ------------------------------------ | --------------------- | ------------------------------------------------------------------------------------------------------------ |
-| Badge/count tabs                     | Deferred              | Requires Badge/Tag integration, status semantics, overflow rules, and UI Reference proof.                    |
+| Count/tag tabs                       | Deferred              | Requires Tag or count-indicator integration, status semantics, overflow rules, and rendered evidence proof.       |
 | Route-aware tabs                     | Gated / Pattern-owned | Requires Navigation Pattern approval and proof that the tabs are still peer panels in the same task context. |
 | Nested tabs                          | Gated                 | Requires Pattern approval, heading hierarchy, keyboard proof, and visual separation rules.                   |
-| Mixed icon-only and text tablists    | Gated                 | Requires accessibility review and UI Reference proof.                                                        |
+| Mixed icon-only and text tablists    | Gated                 | Requires accessibility review and rendered evidence proof.                                                        |
 | Closable unsaved tab workflow        | Gated                 | Requires unsaved-change confirmation, focus recovery, and Pattern ownership.                                 |
 | Async panel loading                  | Deferred              | Requires loading, error, retry, and focus-management semantics inside panels.                                |
-| Drag-reorderable tabs                | Deferred              | Requires keyboard reordering, pointer behavior, persistence rules, and UI Reference proof.                   |
+| Drag-reorderable tabs                | Deferred              | Requires keyboard reordering, pointer behavior, persistence rules, and rendered evidence proof.                   |
 | Multi-row tabs                       | Not allowed           | Horizontal tabs must scroll instead of wrapping.                                                             |
-| Arbitrary status color tabs          | Not allowed           | Requires Color Element and status Badge integration updates.                                                 |
+| Arbitrary status color tabs          | Not allowed           | Requires Color Element and status Tag integration updates.                                                   |
 | Direct Carbon implementation classes | Not allowed           | Login App keeps app-owned Blade, JavaScript, and `ui-*` CSS APIs.                                            |
 
-Future extensions require an updated Component standard and UI Reference proof before production use.
+Future extensions require an updated Component standard and rendered evidence proof before production use.
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -588,9 +588,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -599,9 +599,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The Tabs page is a scenario-driven component reference page. The Live examples card may use tabs, matrices, state tables, overflow examples, and keyboard examples. It must not render fake controls for deferred capabilities.
 
@@ -618,13 +618,13 @@ The Tabs page is a scenario-driven component reference page. The Live examples c
 | Dismissible behavior             | User-created tabs can be closed and focus recovers predictably.                                                                               | Dismissible, Dismiss label, Selected tab close, Unselected tab close                                                     |
 | Responsive and overflow behavior | Horizontal tabs scroll instead of wrapping and vertical tabs hand off at small breakpoints.                                                   | Overflow scroll, Scroll affordances, No wrapping, Small breakpoint handoff                                               |
 | Developer implementation         | Canonical calls, props, item data contract, initializer, and data attributes render as real code examples.                                    | `x-ui.tabs`, `tabs` prop, `variant`, `orientation`, `activation`, `initTabs`, `data-ui-tabs*`                            |
-| Prohibited and deferred examples | The page shows unsupported primary navigation, progress, multi-row tabs, nested tabs, route tabs, and status badges as not approved or gated. | Deferred gates, prohibited usage, approved alternatives                                                                  |
+| Prohibited and deferred examples | The page shows unsupported primary navigation, progress, multi-row tabs, nested tabs, route tabs, and status tag/count indicators as not approved or gated. | Deferred gates, prohibited usage, approved alternatives                                                                  |
 
 The page must not display generic fallback/reference sections or placeholder developer comments. It must show the actual installed API, rendered variants, rendered states, option contract, prohibited usage, deferred gates, JavaScript initializer requirements, data attribute contract, and Foundation Elements consumed.
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/tabs` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
@@ -638,7 +638,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 - The page includes icon-leading and icon-only examples with accessibility requirements.
 - The page includes dismissible tabs only as user-created or user-curated content.
 - ARIA examples show `role="tablist"`, `role="tab"`, `role="tabpanel"`, `aria-controls`, `aria-labelledby`, and `aria-selected`.
-- Deferred examples render trigger conditions instead of fake badge tabs, route tabs, nested tabs, async panels, or drag-reorder tabs.
+- Deferred examples render trigger conditions instead of fake count/tag tabs, route tabs, nested tabs, async panels, or drag-reorder tabs.
 - The page contains no generic placeholder content.
 - Tests assert stale labels and legacy scaffolding remain absent when they are not part of approved UI copy.
 - Tests assert no raw Bootstrap tab markup, hard-coded color, arbitrary local spacing, feature-local tabs class system, local JavaScript tabs controller, or direct Carbon production class is presented as approved.
@@ -646,7 +646,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 ### 16.1. Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/tabs');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Tabs');
@@ -671,7 +671,7 @@ $response->assertSee('Horizontal tabs scroll instead of wrapping');
 $response->assertDontSee('Component-specific API pending correction');
 $response->assertDontSee('<li>None.</li>', false);
 $response->assertDontSee('Use only documented props/options');
-$response->assertDontSee('See UI Reference developer implementation section');
+$response->assertDontSee('See rendered evidence developer implementation section');
 $response->assertDontSee('Live Examples Card');
 $response->assertDontSee('Reference Examples');
 $response->assertDontSee('Legacy Contract Summary');
@@ -687,23 +687,23 @@ $response->assertDontSee('bx--');
 
 | API                      | Route                                                          |
 | ------------------------ | -------------------------------------------------------------- |
-| Button                   | `/platform/ui-reference/components/button`                     |
-| Icon button              | `/platform/ui-reference/components/button`                     |
-| Breadcrumb               | `/platform/ui-reference/components/breadcrumb`                 |
-| Progress indicator       | `/platform/ui-reference/components/progress-indicator`         |
-| Menu                     | `/platform/ui-reference/components/menu`                       |
-| Select                   | `/platform/ui-reference/components/select`                     |
-| Radio button             | `/platform/ui-reference/components/radio-button`               |
-| Navigation patterns      | `/platform/ui-reference/patterns/navigation`                   |
-| Layout Pattern           | `/platform/ui-reference/patterns/layout`                       |
-| Forms pattern            | `/platform/ui-reference/patterns/forms`                        |
-| Overlay/feedback pattern | `/platform/ui-reference/patterns/overlays-feedback`            |
-| Color element            | `/platform/ui-reference/elements/color`                        |
-| Spacing element          | `/platform/ui-reference/elements/spacing`                      |
-| Typography element       | `/platform/ui-reference/elements/typography`                   |
-| Themes element           | `/platform/ui-reference/elements/themes`                       |
-| Motion element           | `/platform/ui-reference/elements/motion`                       |
-| Components overview      | `/platform/ui-reference/components`                            |
+| Button                   | `not installed`                     |
+| Icon button              | `not installed`                     |
+| Breadcrumb               | `not installed`                 |
+| Progress indicator       | `not installed`         |
+| Menu                     | `not installed`                       |
+| Select                   | `not installed`                     |
+| Radio button             | `not installed`               |
+| Navigation patterns      | `not installed`                   |
+| Layout Pattern           | `not installed`                       |
+| Forms pattern            | `not installed`                        |
+| Overlay/feedback pattern | `not installed`            |
+| Color element            | `not installed`                        |
+| Spacing element          | `not installed`                      |
+| Typography element       | `not installed`                   |
+| Themes element           | `not installed`                       |
+| Motion element           | `not installed`                       |
+| Components overview      | `not installed`                            |
 | Canonical tabs doc       | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Ftabs.md` |
 | Carbon tabs usage        | `https://carbondesignsystem.com/components/tabs/usage/`        |
 
@@ -713,4 +713,4 @@ $response->assertDontSee('bx--');
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon Tabs usage, style, and accessibility guidance inform related-view usage, line/contained/vertical treatment, scrollable overflow, selected/unselected styling, disabled and dismissible treatment, keyboard operation, and ARIA expectations. Login App keeps its own Blade API, JavaScript initializer, app-owned data attributes, `ui-*` class contract, and UI Reference proof.
+- Carbon Tabs usage, style, and accessibility guidance inform related-view usage, line/contained/vertical treatment, scrollable overflow, selected/unselected styling, disabled and dismissible treatment, keyboard operation, and ARIA expectations. Login App keeps its own Blade API, JavaScript initializer, app-owned data attributes, `ui-*` class contract, and rendered evidence proof.

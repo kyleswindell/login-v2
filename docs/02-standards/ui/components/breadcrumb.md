@@ -6,15 +6,15 @@ status: implemented-pending-manual-review
 system_maturity: implemented
 category: navigation-and-disclosure
 priority: tier-a-baseline-app-development
-ui_reference_route: /platform/ui-reference/components/breadcrumb
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/breadcrumb.md
-source_owner: /platform/ui-reference/components/breadcrumb
+source_owner: not installed
 blade_api:
   - x-ui.breadcrumb
 javascript_api:
   - initMenus
 source_files:
-  - resources/views/components/ui/breadcrumb.blade.php
+  - resources/views/components/ui/breadcrumb/index.blade.php
   - resources/js/ui-controls/menus.js
   - resources/js/ui-controls.js
   - resources/css/app.css
@@ -72,10 +72,10 @@ carbon_reference:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
   - [15.1. Required live examples and option proof:](#151-required-live-examples-and-option-proof)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
   - [16.1. Suggested automated assertions:](#161-suggested-automated-assertions)
@@ -86,7 +86,7 @@ carbon_reference:
 
 Breadcrumbs show a user where the current view sits in the app information architecture.
 
-Canonical API owner: `/platform/ui-reference/components/breadcrumb`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
 Breadcrumb is the installed Login App 2.0 orientation and parent-navigation API. It owns breadcrumb trail semantics, hierarchy order, link styling, separator treatment, current-page treatment, truncation/overflow behavior, and overflow-menu handoff. It does not own primary navigation, wizard progress, tabbed peer-view switching, previous-page history behavior, or app-shell navigation structure.
 
@@ -121,12 +121,12 @@ Breadcrumb is the installed Login App 2.0 orientation and parent-navigation API.
 | Component slug               | breadcrumb                                                                                                                                        |
 | Category                     | Navigation and disclosure                                                                                                                         |
 | Priority                     | Tier A - Baseline app development                                                                                                                 |
-| UI Reference route           | `/platform/ui-reference/components/breadcrumb`                                                                                                    |
+| Rendered evidence route           | `not installed`                                                                                                    |
 | Canonical doc                | `docs/02-standards/ui/components/breadcrumb.md`                                                                                                   |
-| Source owner                 | `/platform/ui-reference/components/breadcrumb`                                                                                                    |
+| Source owner                 | `not installed`                                                                                                    |
 | Blade API                    | `x-ui.breadcrumb`                                                                                                                                 |
 | JavaScript API               | `initMenus` for overflow-menu behavior only                                                                                                       |
-| Source files                 | `resources/views/components/ui/breadcrumb.blade.php`; `resources/js/ui-controls/menus.js`; `resources/js/ui-controls.js`; `resources/css/app.css` |
+| Source files                 | `resources/views/components/ui/breadcrumb/index.blade.php`; `resources/js/ui-controls/menus.js`; `resources/js/ui-controls.js`; `resources/css/app.css` |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, Icons, 2x Grid                                                                                        |
 | Carbon benchmark             | Carbon Breadcrumb usage, style, and accessibility guidance                                                                                        |
 
@@ -134,7 +134,7 @@ Breadcrumb is the installed Login App 2.0 orientation and parent-navigation API.
 
 ## 3. Installed standard
 
-Breadcrumb has a corrected component-specific UI Reference page with canonical app examples, rendered options, and recovery assertions.
+Breadcrumb has a corrected component-specific rendered evidence page with canonical app examples, rendered options, and recovery assertions.
 
 ### The installed standard is:
 
@@ -191,7 +191,7 @@ Use the Blade API instead of hand-building breadcrumb markup in feature views.
 | Data attributes  | Use only data attributes documented by the Component API. Feature views must not invent breadcrumb behavior attributes.              |
 | Props/options    | Use only documented props/options.                                                                                                   |
 | CSS namespace    | Use the app-owned `ui-*` namespace documented by the component implementation.                                                       |
-| Source files     | `resources/views/components/ui/breadcrumb.blade.php`; `resources/js/ui-controls/menus.js`; `resources/css/app.css`                   |
+| Source files     | `resources/views/components/ui/breadcrumb/index.blade.php`; `resources/js/ui-controls/menus.js`; `resources/css/app.css`                   |
 
 ### 4.3. Props and options
 
@@ -205,7 +205,7 @@ Use the Blade API instead of hand-building breadcrumb markup in feature views.
 | `maxVisible` | `int / null`            | installed default | positive integer                      | No       | Use only when the visible count needs a reviewed override. Otherwise rely on the default fluid overflow rules.                             |
 | `class`      | `string / null`         | `null`            | layout class passthrough if supported | No       | Parent Patterns own external spacing. Do not use this for local color, typography, or behavior changes.                                   |
 
-Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the UI Reference proof before use.
+Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the rendered evidence proof before use.
 
 ### 4.4. Item data contract
 
@@ -269,7 +269,7 @@ Expected allowed classes:
 .ui-breadcrumb-md
 ```
 
-If the installed class names differ, the UI Reference developer implementation section and this standard must be updated together.
+If the installed class names differ, the rendered evidence developer implementation section and this standard must be updated together.
 
 Do not create feature-local `breadcrumb-*`, Bootstrap breadcrumb overrides, raw utility clusters, or component-specific color/spacing classes for the same UI role.
 
@@ -466,9 +466,9 @@ Do not hard-code link color, separator spacing, focus ring, typography size, men
 - Do not make the current page an interactive link when it is listed.
 - Do not treat the current page as disabled UI. It is static text and must remain readable.
 - Do not create disabled breadcrumb links.
-- Do not put actions, menus, filters, toggles, status badges, or form controls inside breadcrumb trails.
+- Do not put actions, menus, filters, toggles, status tags or indicators, or form controls inside breadcrumb trails.
 - Do not invent a feature-local overflow menu. Use the installed Menu/Menu buttons API handoff.
-- Do not import local separator icons or override separator behavior without updating this Component standard and UI Reference proof.
+- Do not import local separator icons or override separator behavior without updating this Component standard and rendered evidence proof.
 
 ## 13. Deferred or gated capabilities
 
@@ -476,15 +476,15 @@ Do not hard-code link color, separator spacing, focus ring, typography size, men
 | ------------------------------------------------------------------- | ----------- | -------------------------------------------------------------------------- |
 | Path-based breadcrumbs                                              | Deferred    | Requires product-approved session-history behavior and consistency rules.  |
 | Custom separator styles                                             | Deferred    | Requires design/system owner approval and accessibility review.            |
-| Dynamic responsive breadcrumb compression beyond installed small-breakpoint overflow | Deferred | Requires updated component API, tests, and UI Reference proof.             |
+| Dynamic responsive breadcrumb compression beyond installed small-breakpoint overflow | Deferred | Requires updated component API, tests, and rendered evidence proof.             |
 | Multiple breadcrumb landmarks on one page                           | Gated       | Requires unique `ariaLabel` values and page-level accessibility review.    |
 | Icon-leading breadcrumb items                                       | Gated       | Requires approved navigation pattern and icon accessibility review.        |
 | Disabled breadcrumb links                                           | Not allowed | Parent items must link to valid destinations; current item is static text. |
 | Breadcrumb as progress indicator                                    | Not allowed | Use Progress indicator.                                                    |
 
-Future extensions require an updated Component standard and UI Reference proof before implementation.
+Future extensions require an updated Component standard and rendered evidence proof before implementation.
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -493,9 +493,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -504,9 +504,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The Breadcrumb page may use a compact matrix layout instead of Accordion-style tabs because Breadcrumb is primarily a size/option component, not a scenario-heavy disclosure component.
 
@@ -525,7 +525,7 @@ The page must include the installed API, states, options, prohibited usage, defe
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/breadcrumb` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page uses the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
@@ -563,21 +563,21 @@ $response->assertDontSee('Bootstrap breadcrumb');
 
 | API                             | Route                                                                 |
 | ------------------------------- | --------------------------------------------------------------------- |
-| Components overview             | `/platform/ui-reference/components`                                   |
-| Menu buttons / overflow menu    | `/platform/ui-reference/components/menu-buttons`                      |
-| Tooltip                         | `/platform/ui-reference/components/tooltip`                           |
-| Progress indicator              | `/platform/ui-reference/components/progress-indicator`                |
-| Tabs                            | `/platform/ui-reference/components/tabs`                              |
-| UI shell                        | `/platform/ui-reference/components/ui-shell`                          |
-| Navigation pattern              | `/platform/ui-reference/patterns/navigation`                          |
-| Layout pattern                  | `/platform/ui-reference/patterns/layout`                              |
+| Components overview             | `not installed`                                   |
+| Menu buttons / overflow menu    | `not installed`                      |
+| Tooltip                         | `not installed`                           |
+| Progress indicator              | `not installed`                |
+| Tabs                            | `not installed`                              |
+| UI shell                        | `not installed`                          |
+| Navigation pattern              | `not installed`                          |
+| Layout pattern                  | `not installed`                              |
 | Planned navigation shell API    | See [UI API Registry](../api-registry.md)                             |
 | Planned page header API         | See [UI API Registry](../api-registry.md)                             |
-| Color element                   | `/platform/ui-reference/elements/color`                               |
-| Spacing element                 | `/platform/ui-reference/elements/spacing`                             |
-| Typography element              | `/platform/ui-reference/elements/typography`                          |
-| Themes element                  | `/platform/ui-reference/elements/themes`                              |
-| Icons element                   | `/platform/ui-reference/elements/icons`                               |
+| Color element                   | `not installed`                               |
+| Spacing element                 | `not installed`                             |
+| Typography element              | `not installed`                          |
+| Themes element                  | `not installed`                              |
+| Icons element                   | `not installed`                               |
 | Canonical breadcrumb doc        | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Fbreadcrumb.md`  |
 | Carbon breadcrumb usage         | `https://carbondesignsystem.com/components/breadcrumb/usage/`         |
 | Carbon breadcrumb style         | `https://carbondesignsystem.com/components/breadcrumb/style/`         |

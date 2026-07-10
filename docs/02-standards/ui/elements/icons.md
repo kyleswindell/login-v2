@@ -4,7 +4,7 @@ slug: icons
 api_layer: Foundation Element API
 guide_status: implemented
 system_maturity: partial
-ui_reference_route: /platform/ui-reference/elements/icons
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/elements/icons.md
 carbon_reference:
   - https://carbondesignsystem.com/elements/icons/usage/
@@ -61,10 +61,10 @@ related_patterns:
 - [12. Content contract](#12-content-contract)
 - [13. Prohibited usage](#13-prohibited-usage)
 - [14. Deferred or gated capabilities](#14-deferred-or-gated-capabilities)
-- [15. Implementation and UI Reference Checklist](#15-implementation-and-ui-reference-checklist)
+- [15. Implementation and Rendered Evidence Checklist](#15-implementation-and-ui-reference-checklist)
   - [15.1. Implementation checklist](#151-implementation-checklist)
-  - [15.2. UI Reference proof checklist](#152-ui-reference-proof-checklist)
-- [16. UI Reference requirements](#16-ui-reference-requirements)
+  - [15.2. rendered evidence proof checklist](#152-ui-reference-proof-checklist)
+- [16. Rendered evidence requirements](#16-ui-reference-requirements)
 - [17. Testing and acceptance criteria](#17-testing-and-acceptance-criteria)
   - [17.1. Suggested automated assertions](#171-suggested-automated-assertions)
 - [18. Related APIs](#18-related-apis)
@@ -110,21 +110,21 @@ Use the Icons Element API whenever the implementation needs a compact symbol. Do
 | System maturity        | Partial                                                                                                |
 | API layer              | Foundation Element API                                                                                 |
 | Element slug           | icons                                                                                                  |
-| UI Reference route     | `/platform/ui-reference/elements/icons`                                                                |
+| Rendered evidence route     | `not installed`                                                                |
 | Canonical doc          | `docs/02-standards/ui/elements/icons.md`                                                               |
-| Installed icon library | Heroicons                                                                                              |
+| Installed icon library | Internal Blade icon library in `resources/views/components/icons/`                                     |
 | Primary consumers      | Buttons, links, menus, notifications, tags, fields, tables, app shell, navigation, documentation pages |
 | Carbon benchmark       | Carbon Icons usage and library                                                                         |
 
-`System maturity: Partial` means Login App 2.0 has an installed Heroicons direction and existing icon use, but the complete approved icon inventory, canonical wrappers, and UI Reference proof may still be expanding. Feature work must use the icon names, sizes, wrappers, and accessibility rules documented here and proven by the UI Reference route.
+`System maturity: Partial` means Login App 2.0 has an internal icon library and existing icon use, but the complete approved icon inventory, canonical wrappers, and rendered evidence proof may still be expanding. Feature work must use the internal icon names, sizes, wrappers, and accessibility rules documented here and proven by the Rendered evidence route. External icon libraries are placeholders only when no suitable internal icon exists yet.
 
 ## 3. Installed standard
 
-Heroicons-backed UI icon usage for actions, navigation, statuses, and affordances.
+Internal icon-library-backed UI icon usage for actions, navigation, statuses, and affordances.
 
-Login App 2.0 uses Carbon's icon guidance as a benchmark for sizing, alignment, color, target size, and accessibility, while using Heroicons as the installed app icon library. The installed standard is:
+Login App 2.0 uses Carbon's icon guidance as a benchmark for sizing, alignment, color, target size, and accessibility, while using the internal Blade icon library as the installed app icon source. The installed standard is:
 
-1. Use Heroicons as the default and only approved UI icon library.
+1. Use internal icons from `resources/views/components/icons/` as the primary approved UI icon library.
 2. Use icons only when they clarify action, status, navigation, affordance, or field meaning.
 3. Use `currentColor` so icons inherit approved text, action, status, or icon color roles.
 4. Keep UI icons monochrome.
@@ -133,7 +133,7 @@ Login App 2.0 uses Carbon's icon guidance as a benchmark for sizing, alignment, 
 7. Give icon-only controls an accessible name.
 8. Hide decorative icons from assistive technology.
 9. Do not use icons as a substitute for required labels, visible validation, or primary content.
-10. Do not import another icon set without a separate decision record and an update to this Element standard.
+10. Do not use an external icon when a suitable internal icon exists. External icons may appear only as documented placeholders until an internal replacement is established.
 
 ### 3.1. Installed icon size model
 
@@ -145,7 +145,7 @@ Login App 2.0 uses Carbon's icon guidance as a benchmark for sizing, alignment, 
 | Large utility icon   | `h-8 w-8`                              |                32px | Rare high-emphasis UI moments, documentation examples, lightweight non-illustrative empty states. | Do not use as a pictogram replacement.                  |
 | Icon-only target     | `h-11 w-11` wrapper with centered icon | 44px target minimum | Icon-only buttons, table action buttons, toolbar controls, shell controls.                        | Target size is the clickable area, not the SVG artwork. |
 
-Do not create local sizes such as `h-[18px]`, `w-[22px]`, `size-7`, or arbitrary SVG dimensions unless this standard and the UI Reference route are updated.
+Do not create local sizes such as `h-[18px]`, `w-[22px]`, `size-7`, or arbitrary SVG dimensions unless this standard and the Rendered evidence route are updated.
 
 ### 3.2. Installed icon role model
 
@@ -153,7 +153,7 @@ Do not create local sizes such as `h-[18px]`, `w-[22px]`, `size-7`, or arbitrary
 | ---------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- | ----------------------------------------------------------------- |
 | Action     | The icon helps identify an action.                                                           | Button, icon button, menu button, row action, toolbar action.        | Cog icon in a settings action.                                    |
 | Navigation | The icon helps identify destination or movement.                                             | App shell, breadcrumb-adjacent affordance, menu item, sidebar item.  | Arrow or home icon in navigation.                                 |
-| Status     | The icon reinforces semantic state.                                                          | Notification, badge/status, validation, progress summary.            | Check circle for success, exclamation for warning.                |
+| Status     | The icon reinforces semantic state.                                                          | Notification, tag/status, validation, progress summary.              | Check circle for success, exclamation for warning.                |
 | Affordance | The icon communicates expandable, dismissible, sortable, filterable, or selectable behavior. | Accordion, dropdown, select, menu, table, modal close, search clear. | Chevron, X mark, funnel, sort indicator.                          |
 | Decoration | The icon adds no unique information.                                                         | Rare, component-owned visual support only.                           | Decorative chevron where text and ARIA already communicate state. |
 
@@ -161,32 +161,32 @@ When an icon is meaningful, it must have a programmatic name or be paired with v
 
 ## 4. Token API
 
-| Token/helper                        | Variable or value                                                 | Allowed API/consumer                                     | Example                                                                                                               |
-| ----------------------------------- | ----------------------------------------------------------------- | -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| Dense UI icon                       | `currentColor` from text/status/action token; `h-4 w-4`           | Heroicon inline, menu item, table row, validation hint   | `<x-heroicon-o-check-circle class="h-4 w-4" aria-hidden="true" />`                                                    |
-| Action icon                         | `currentColor` from button/menu item; `h-5 w-5`                   | Button, icon button, menu button, toolbar action         | `<x-heroicon-o-cog-6-tooth class="h-5 w-5" aria-hidden="true" />`                                                     |
-| Roomy icon                          | `currentColor`; `h-6 w-6`                                         | Larger action rows, notices, prominent utility controls  | `<x-heroicon-o-information-circle class="h-6 w-6" aria-hidden="true" />`                                              |
-| Large utility icon                  | `currentColor`; `h-8 w-8`                                         | Documentation or rare high-emphasis utility states       | `<x-heroicon-o-shield-check class="h-8 w-8" aria-hidden="true" />`                                                    |
-| Icon-only control                   | `h-11 w-11` target with centered `h-5 w-5` icon                   | `<x-ui.icon-button>`, toolbar controls, table actions    | `<button class="inline-flex h-11 w-11 items-center justify-center" aria-label="Open filters">...</button>`            |
-| Text-paired icon                    | `inline-flex items-center gap-2`; icon inherits text color        | Links, buttons, menu items, status rows                  | `<span class="inline-flex items-center gap-2"><x-heroicon-o-check class="h-4 w-4" aria-hidden="true" /> Saved</span>` |
-| Status success icon                 | `currentColor` from success token                                 | Notification, status badge, validation summary           | `<x-heroicon-o-check-circle class="h-4 w-4" aria-hidden="true" />`                                                    |
-| Status warning icon                 | `currentColor` from warning token                                 | Warning message, warning badge, risk notice              | `<x-heroicon-o-exclamation-triangle class="h-4 w-4" aria-hidden="true" />`                                            |
-| Status danger icon                  | `currentColor` from danger/error token                            | Error message, destructive notice, invalid field summary | `<x-heroicon-o-x-circle class="h-4 w-4" aria-hidden="true" />`                                                        |
-| Status info icon                    | `currentColor` from info token                                    | Informational notification, helper notice                | `<x-heroicon-o-information-circle class="h-4 w-4" aria-hidden="true" />`                                              |
-| Decorative icon                     | `aria-hidden="true" focusable="false"` where applicable           | Visual affordances already described by text/ARIA        | `<x-heroicon-o-chevron-down class="h-4 w-4" aria-hidden="true" />`                                                    |
-| Meaningful standalone icon          | Accessible name through wrapper or component prop                 | Icon-only button, status summary, navigation control     | `<x-ui.icon-button icon="funnel" label="Open filters" />`                                                             |
-| Tooltip-supported icon-only control | Accessible label plus visible tooltip where required by component | Icon-only button, overflow action, table row action      | `<x-ui.icon-button icon="trash" label="Delete user" tooltip="Delete user" />`                                         |
+| Token/helper                        | Variable or value                                                 | Allowed API/consumer                                     | Example                                                                                                              |
+| ----------------------------------- | ----------------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| Dense UI icon                       | `currentColor` from text/status/action token; `h-4 w-4`           | Internal icon inline, menu item, table row, validation hint | `<x-ui.icon name="checkmark--filled" class="h-4 w-4" aria-hidden="true" />`                                                    |
+| Action icon                         | `currentColor` from button/menu item; `h-5 w-5`                   | Button, icon button, menu button, toolbar action         | `<x-ui.icon name="settings" class="h-5 w-5" aria-hidden="true" />`                                                           |
+| Roomy icon                          | `currentColor`; `h-6 w-6`                                         | Larger action rows, notices, prominent utility controls  | `<x-ui.icon name="information" class="h-6 w-6" aria-hidden="true" />`                                                        |
+| Large utility icon                  | `currentColor`; `h-8 w-8`                                         | Documentation or rare high-emphasis utility states       | `<x-ui.icon name="information" class="h-8 w-8" aria-hidden="true" />`                                                        |
+| Icon-only control                   | `h-11 w-11` target with centered `h-5 w-5` icon                   | `<x-ui.icon-button>`, toolbar controls, table actions    | `<button class="inline-flex h-11 w-11 items-center justify-center" aria-label="Open filters">...</button>`           |
+| Text-paired icon                    | `inline-flex items-center gap-2`; icon inherits text color        | Links, buttons, menu items, status rows                  | `<span class="inline-flex items-center gap-2"><x-ui.icon name="checkmark" class="h-4 w-4" aria-hidden="true" /> Saved</span>` |
+| Status success icon                 | `currentColor` from success token                                 | Notification, status tag, validation summary             | `<x-ui.icon name="checkmark--filled" class="h-4 w-4" aria-hidden="true" />`                                                    |
+| Status warning icon                 | `currentColor` from warning token                                 | Warning message, warning tag, risk notice                | `<x-ui.icon name="warning--filled" class="h-4 w-4" aria-hidden="true" />`                                                     |
+| Status danger icon                  | `currentColor` from danger/error token                            | Error message, destructive notice, invalid field summary | `<x-ui.icon name="error--filled" class="h-4 w-4" aria-hidden="true" />`                                                       |
+| Status info icon                    | `currentColor` from info token                                    | Informational notification, helper notice                | `<x-ui.icon name="information" class="h-4 w-4" aria-hidden="true" />`                                                        |
+| Decorative icon                     | `aria-hidden="true" focusable="false"` where applicable           | Visual affordances already described by text/ARIA        | `<x-ui.icon name="chevron--down" class="h-4 w-4" aria-hidden="true" />`                                                        |
+| Meaningful standalone icon          | Accessible name through wrapper or component prop                 | Icon-only button, status summary, navigation control     | `<x-ui.icon-button icon="filter" label="Open filters" />`                                                            |
+| Tooltip-supported icon-only control | Accessible label plus visible tooltip where required by component | Icon-only button, overflow action, table row action      | `<x-ui.icon-button icon="trash-can" label="Delete user" tooltip="Delete user" />`                                        |
 
 Only use Token API rows as installed standards where the helper, class, component, or icon name exists in the application. If a proposed icon helper is not yet present in the installed API, do not invent a local helper in feature code.
 
 ### 4.1. Approved icon inventory rules
 
-The UI Reference route owns the approved icon table. Each approved icon entry should define:
+The Rendered evidence route owns the approved icon table. Each approved icon entry should define:
 
 | Field                | Required value                                                       |
 | -------------------- | -------------------------------------------------------------------- |
-| Icon name            | The canonical Heroicons name or app alias.                           |
-| Style                | Outline or solid, when the app has a reason to expose both.          |
+| Icon name            | The canonical internal icon component name or approved app alias.     |
+| Style                | Outline, filled, or source-specific style when the app exposes both.  |
 | Role                 | Action, navigation, status, affordance, or decorative.               |
 | Default size         | `h-4 w-4`, `h-5 w-5`, `h-6 w-6`, or `h-8 w-8`.                       |
 | Color source         | Adjacent text, action token, status token, or component-owned token. |
@@ -199,22 +199,22 @@ Do not add an icon to feature code first and document it later. Add or confirm t
 
 Aliases should be used only when the app exposes them through a canonical helper, config map, or component prop. These examples describe the intended alias model and should not be treated as implemented helper names unless they exist in code.
 
-| App alias   | Heroicons candidate                         | Role                         | Typical consumer                             |
-| ----------- | ------------------------------------------- | ---------------------------- | -------------------------------------------- |
-| `check`     | `check` / `check-circle`                    | Success, completion, confirm | Status, notification, button.                |
-| `warning`   | `exclamation-triangle`                      | Warning                      | Notification, validation, risk notice.       |
-| `error`     | `x-circle` / `exclamation-circle`           | Error/failure                | Validation, notification, failed job.        |
-| `info`      | `information-circle`                        | Information                  | Helper notice, notification.                 |
-| `settings`  | `cog-6-tooth`                               | Configuration                | Menu item, toolbar action.                   |
-| `filter`    | `funnel`                                    | Filtering                    | Table toolbar, search/filter panel.          |
-| `search`    | `magnifying-glass`                          | Search                       | Search component.                            |
-| `close`     | `x-mark`                                    | Dismissal                    | Modal, tag, toast, panel close.              |
-| `open-menu` | `ellipsis-horizontal` / `ellipsis-vertical` | Overflow menu                | Menu buttons, table actions.                 |
-| `expand`    | `chevron-down` / `chevron-right`            | Disclosure                   | Accordion, select, dropdown, tree view.      |
-| `external`  | `arrow-top-right-on-square`                 | External link                | Link component.                              |
-| `delete`    | `trash`                                     | Destructive action           | Button/menu item with destructive treatment. |
+| App alias   | Internal icon candidate                    | Role                         | Typical consumer                             |
+| ----------- | ------------------------------------------ | ---------------------------- | -------------------------------------------- |
+| `check`     | `checkmark` / `checkmark-filled`           | Success, completion, confirm | Status, notification, button.                |
+| `warning`   | `warning` / `warning-filled`               | Warning                      | Notification, validation, risk notice.       |
+| `error`     | `error-filled` / `error-outline`           | Error/failure                | Validation, notification, failed job.        |
+| `info`      | `information`                              | Information                  | Helper notice, notification.                 |
+| `settings`  | `settings` / `settings-adjust`             | Configuration                | Menu item, toolbar action.                   |
+| `filter`    | `filter` / `filter-edit` / `filter-remove` | Filtering                    | Table toolbar, search/filter panel.          |
+| `search`    | `search` / `search-advanced`               | Search                       | Search component.                            |
+| `close`     | `close` / `close-large`                    | Dismissal                    | Modal, tag, toast, panel close.              |
+| `open-menu` | `overflow-menu-horizontal` / `overflow-menu-vertical` | Overflow menu                | Menu buttons, table actions.                 |
+| `expand`    | `chevron-down` / `chevron-right`           | Disclosure                   | Accordion, select, dropdown, tree view.      |
+| `external`  | `launch` / `arrow-up-right`                | External link                | Link component.                              |
+| `delete`    | `trash-can`                                | Destructive action           | Button/menu item with destructive treatment. |
 
-Icon aliases should improve consistency. They should not obscure the actual installed Heroicons dependency or create a second icon library.
+Icon aliases should improve consistency. They should not obscure the actual installed internal icon component or create a second icon library.
 
 ## 5. CSS variable API
 
@@ -227,7 +227,7 @@ Icons should normally inherit color from the surrounding component or text throu
 | `--ui-text-*`   | Implemented / expanding | Color Element             | Text hierarchy and helper text.      | Icons paired with text, muted metadata icons, documentation icons.     |
 | `--ui-icon-*`   | Implemented / expanding | Color + Icons Elements    | Icon-specific color aliases.         | Functional icons where a dedicated icon role exists.                   |
 | `--ui-action-*` | Component-owned         | Button/Menu button APIs   | Action foreground/background states. | Icons inside action components only.                                   |
-| `--ui-status-*` | Implemented / queued    | Color + status components | Semantic status color.               | Status icons in notifications, badges, validation, and summaries.      |
+| `--ui-status-*` | Implemented / queued    | Color + status components | Semantic status color.               | Status icons in notifications, tags, validation, and summaries.        |
 | `--ui-focus*`   | Implemented / queued    | Color Element             | Focus-visible treatment.             | Icon-only control wrappers, not the icon SVG itself.                   |
 | `--ui-border-*` | Implemented / expanding | Color Element             | Boundaries around icon containers.   | Icon buttons, tags, and status containers when owned by the component. |
 
@@ -240,7 +240,7 @@ Rules:
 
 ## 6. Utility class/helper API
 
-Allowed utility classes, Blade helpers, and component wrappers are those listed in the Token API table and demonstrated by the UI Reference route.
+Allowed utility classes, Blade helpers, and component wrappers are those listed in the Token API table and demonstrated by the Rendered evidence route.
 
 ### 6.1. Allowed utility classes
 
@@ -261,14 +261,15 @@ Allowed utility classes, Blade helpers, and component wrappers are those listed 
 
 | API                                   | Status                              | Use                                                                                  |
 | ------------------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------ |
-| `<x-heroicon-o-{name}>`               | Implemented                         | Default outline Heroicons usage.                                                     |
-| `<x-heroicon-s-{name}>`               | Allowed only where documented       | Solid Heroicons for status or high-emphasis use if approved by the owning Component. |
+| `<x-ui.icon name="{manifest-name}">`  | Implemented                         | Default internal icon component usage.                                               |
+| `<x-heroicon-o-{name}>`               | Placeholder only                    | External fallback when no suitable internal icon exists yet.                         |
+| `<x-heroicon-s-{name}>`               | Placeholder only where documented   | External fallback for status or high-emphasis use until an internal icon exists.     |
 | `<x-ui.icon-button>`                  | Implemented or target Component API | Icon-only action control with label, tooltip, target, and focus behavior.            |
 | `<x-ui.button icon="...">`            | Component-owned                     | Button with icon and visible text.                                                   |
-| `<x-ui.badge tone="..." icon="...">`  | Component-owned                     | Compact status/metadata with semantic icon when supported.                           |
+| `<x-ui.tag tone="..." icon="...">`    | Component-owned                     | Compact status/metadata with semantic icon when supported.                           |
 | `<x-ui.status tone="..." icon="...">` | Component-owned                     | Status row or status chip with semantic icon when supported.                         |
 
-If a Blade wrapper is not installed, do not fake it with local partials. Either use the approved Heroicons component directly under this standard or add the wrapper through the owning Component API.
+If a Blade wrapper is not installed, do not fake it with local partials. Use the approved internal icon directly under this standard, or add the wrapper through the owning Component API. Use external icon components only as documented placeholders when no suitable internal icon exists.
 
 ### 6.3. Canonical code examples
 
@@ -276,7 +277,7 @@ Dense status icon with visible text:
 
 ```blade
 <span class="inline-flex items-center gap-1.5" style="color: var(--ui-text-success);">
-    <x-heroicon-o-check-circle class="h-4 w-4 shrink-0" aria-hidden="true" />
+    <x-ui.icon name="checkmark--filled" class="h-4 w-4 shrink-0" aria-hidden="true" />
     <span>Saved</span>
 </span>
 ```
@@ -289,14 +290,14 @@ Icon-only native button with accessible name:
     class="inline-flex h-11 w-11 items-center justify-center rounded-md"
     aria-label="Open filters"
 >
-    <x-heroicon-o-funnel class="h-5 w-5" aria-hidden="true" />
+    <x-ui.icon name="filter" class="h-5 w-5" aria-hidden="true" />
 </button>
 ```
 
 Icon paired with app button API:
 
 ```blade
-<x-ui.button semantic="secondary" icon="arrow-right" icon-position="end">
+<x-ui.button semantic="secondary" icon="arrow--right" icon-position="end">
     Continue
 </x-ui.button>
 ```
@@ -304,7 +305,7 @@ Icon paired with app button API:
 Decorative affordance icon:
 
 ```blade
-<x-heroicon-o-chevron-down class="h-4 w-4" aria-hidden="true" />
+<x-ui.icon name="chevron--down" class="h-4 w-4" aria-hidden="true" />
 ```
 
 ## 7. Allowed usage
@@ -320,7 +321,7 @@ Decorative affordance icon:
 | Trigger a visible action with text            | Button with optional icon.                                     | Icon-only button unless space is constrained and the action is obvious. |
 | Trigger a compact action without visible text | Icon button with accessible label and tooltip where required.  | Raw SVG inside a button without a label.                                |
 | Navigate to another page/resource             | Link with optional leading/trailing icon.                      | Button or icon-only control unless the Component API owns the behavior. |
-| Show semantic status                          | Status/Notification/Badge component with optional status icon. | Colored icon alone.                                                     |
+| Show semantic status                          | Status/Notification/Tag component with optional status icon.    | Colored icon alone.                                                     |
 | Show validation meaning                       | Field component validation UI with icon and visible message.   | Icon without text.                                                      |
 | Represent disclosure or expansion             | Owning Component affordance icon.                              | Feature-local chevron logic.                                            |
 | Provide large explanatory artwork             | Pictogram.                                                     | Oversized UI icon.                                                      |
@@ -349,7 +350,7 @@ Components and Patterns must consume this Element through documented tokens, uti
 | Link                              | Owns inline, standalone, external, and icon-leading/trailing behavior.                         |
 | Menu buttons/Menu                 | Own icon alignment in triggers and menu items. Overflow trigger must have an accessible name.  |
 | Notification                      | Owns semantic icon selection and status color.                                                 |
-| Tag/Badge/Status                  | Own compact semantic icon usage and removal icon behavior.                                     |
+| Tag/Status                        | Own compact semantic icon usage and removal icon behavior.                                     |
 | Text input/Search/Select/Dropdown | Own field affordance icons, clear icons, error/warning icons, and disabled/read-only behavior. |
 | Data table                        | Own row action icons, sort icons, selected/current row icons, and overflow action icons.       |
 | Tooltip/Toggletip                 | Own help icons, accessible triggers, and interactive/non-interactive boundaries.               |
@@ -365,7 +366,7 @@ Components and Patterns must consume this Element through documented tokens, uti
 
 ## 9. Theme behavior
 
-This Element must remain valid in supported light, dark, inline, inverse, and high-contrast contexts when those contexts apply. Theme behavior is proven on the UI Reference page.
+This Element must remain valid in supported light, dark, inline, inverse, and high-contrast contexts when those contexts apply. Theme behavior is proven on the rendered evidence page.
 
 Icons must inherit from theme-safe roles. The icon SVG should not carry a local color that fails when the surrounding theme changes.
 
@@ -391,7 +392,7 @@ Icons themselves do not own interaction states. The owning Component or Pattern 
 | Selected/current | Semantic selected/current state must be visible beyond icon color alone.               | Component/Pattern.                 |
 | Focus-visible    | Focus ring appears on the interactive wrapper, not the SVG alone.                      | Component/Pattern + Color Element. |
 | Disabled         | Icon is disabled through owning control state.                                         | Component/Pattern.                 |
-| Loading          | Use Loading/Inline loading APIs. Do not spin arbitrary Heroicons.                      | Loading Component.                 |
+| Loading          | Use Loading/Inline loading APIs. Do not spin arbitrary icons.                          | Loading Component.                 |
 | Validation       | Pair validation icon with visible text and field state.                                | Field Component/Form Pattern.      |
 | Empty            | Use approved empty-state component or Pictogram when illustrative support is required. | Pattern/Pictograms Element.        |
 
@@ -439,11 +440,11 @@ Avoid vague accessible names such as `Icon`, `Settings icon`, `Click`, `More`, o
 ## 13. Prohibited usage
 
 - Do not bypass this Element API with one-off raw values, local utility clusters, or custom design tokens.
-- Heroicons remain the default app icon library.
+- Internal icons remain the default app icon library.
 - Use 16px icons for dense UI; use larger sizes only when the layout requires it.
 - Icons are monochrome and theme-aware through `currentColor`.
-- Do not import another icon set without a separate decision record.
-- Do not use raw inline SVG copied into feature views when an approved Heroicons component or app wrapper exists.
+- Do not import another icon set without a separate decision record and a documented internal-library gap.
+- Do not use raw inline SVG copied into feature views when an approved internal icon component or app wrapper exists.
 - Do not use icons as decoration when they add no meaning or hierarchy.
 - Do not use icon color alone to communicate status, validation, selection, or danger.
 - Do not create arbitrary icon sizes or local SVG dimensions.
@@ -458,17 +459,17 @@ Avoid vague accessible names such as `Icon`, `Settings icon`, `Click`, `More`, o
 
 | Capability                         | Status       | Gate                                                                                                  |
 | ---------------------------------- | ------------ | ----------------------------------------------------------------------------------------------------- |
-| Alternate icon library             | Not approved | Requires decision record, migration plan, token review, accessibility review, and UI Reference proof. |
-| App-wide icon alias helper         | Gated        | Requires canonical icon map, API docs, tests, and UI Reference inventory.                             |
-| Solid Heroicons as a general style | Gated        | Requires component-by-component approval; outline remains default unless documented.                  |
+| Alternate icon library             | Placeholder only | Requires documented internal icon gap, decision record for durable adoption, migration plan, token review, accessibility review, and rendered evidence proof. |
+| App-wide icon alias helper         | Gated        | Requires canonical icon map, API docs, tests, and rendered evidence inventory.                             |
+| External icon set as a general style | Gated      | Requires component-by-component approval; internal icons remain default unless documented.             |
 | Animated icons                     | Deferred     | Requires Motion standard, reduced-motion behavior, and owning Component API.                          |
 | Custom SVG icons                   | Gated        | Requires inventory entry, accessible treatment, sizing rule, source ownership, and design review.     |
 | Duotone/multi-color icons          | Not approved | Conflicts with monochrome/currentColor standard unless a new standard is approved.                    |
-| Icon-only destructive actions      | Gated        | Requires Button/Icon button Component approval and explicit UI Reference proof.                       |
+| Icon-only destructive actions      | Gated        | Requires Button/Icon button Component approval and explicit rendered evidence proof.                       |
 
-No additional capability is approved without updating this Element standard and UI Reference proof.
+No additional capability is approved without updating this Element standard and rendered evidence proof.
 
-## 15. Implementation and UI Reference Checklist
+## 15. Implementation and Rendered Evidence Checklist
 
 ### 15.1. Implementation checklist
 
@@ -481,7 +482,7 @@ No additional capability is approved without updating this Element standard and 
 | Prohibited usage            | Feature code, Components, and Patterns are told what they must not redefine locally.                                              |
 | Tests                       | Route/content/API assertions are defined to prove the Element contract.                                                           |
 
-### 15.2. UI Reference proof checklist
+### 15.2. rendered evidence proof checklist
 
 | Requirement          | Visual proof expectation                                                                                            |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------- |
@@ -491,16 +492,16 @@ No additional capability is approved without updating this Element standard and 
 | Accessibility proof  | Contrast, focus, semantics, hit targets, reduced motion, or equivalent Element constraints are shown or documented. |
 | Related APIs         | Consuming Components, Patterns, source files, and the canonical standard are linked.                                |
 | Manual review        | The page provides enough rendered proof for visual review without opening source code first.                        |
-## 16. UI Reference requirements
+## 16. Rendered evidence requirements
 
-The `/platform/ui-reference/elements/icons` route must prove this standard with rendered app code, not screenshots only.
+The `not installed` route must prove this standard with rendered app code, not screenshots only.
 
 Required sections and examples:
 
-1. Approved Heroicons table.
+1. Approved internal icon inventory.
    - Searchable or grouped approved icon inventory.
    - Icon name or app alias.
-   - Heroicons source name.
+   - Internal source component name.
    - Role: action, navigation, status, affordance, decorative.
    - Default size.
    - Accessible treatment.
@@ -546,34 +547,34 @@ Required sections and examples:
    - Status color surface.
    - Disabled state.
 9. Developer API examples.
-   - Direct Heroicons usage.
+   - Direct internal icon usage.
    - `<x-ui.icon-button>` usage when installed.
    - Button with icon usage.
    - Decorative icon usage.
    - Status icon with visible text.
 
-The UI Reference page may use matrices, grouped examples, comparison grids, or tabbed examples. It must not require a tab-only layout.
+The rendered evidence page may use matrices, grouped examples, comparison grids, or tabbed examples. It must not require a tab-only layout.
 
 ## 17. Testing and acceptance criteria
 
-- `/platform/ui-reference/elements/icons` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page renders live examples with app CSS/JS rather than screenshots only.
 - The page shows token/class/helper API references, allowed usage, prohibited usage, accessibility constraints, and implementation status.
-- The page renders the approved Heroicons table or inventory group.
+- The page renders the approved internal icon table or inventory group.
 - The page renders 16px, 20px, 24px, and 32px icon artwork examples.
 - The page distinguishes icon artwork size from the 44px minimum icon-only control target.
 - The page renders at least one icon paired with visible text.
 - The page renders at least one icon-only control with an accessible name.
 - The page renders success, warning, danger/error, and information status icon examples with visible text.
 - The page documents decorative versus meaningful icon treatment.
-- The page states that Heroicons is the approved app library.
-- The page states that alternate icon sets, arbitrary icon sizes, and raw copied SVGs are prohibited unless the standard is updated.
+- The page states that the internal Blade icon library is the approved app library.
+- The page states that external icon sets, arbitrary icon sizes, and raw copied SVGs are prohibited unless an internal icon gap is documented and the standard is updated.
 
 ### 17.1. Suggested automated assertions
 
 - Assert route status `200` for authorized users.
 - Assert the page includes `data-ui-reference-element="icons"` or equivalent route-specific marker.
-- Assert the page includes `Heroicons`.
+- Assert the page includes `resources/views/components/icons` or equivalent internal-library marker.
 - Assert the page includes `h-4 w-4`, `h-5 w-5`, `h-6 w-6`, and `h-8 w-8` examples or equivalent rendered labels.
 - Assert the page includes `44px` and `h-11 w-11` or equivalent target-size proof.
 - Assert the page includes `currentColor`.
@@ -585,17 +586,17 @@ The UI Reference page may use matrices, grouped examples, comparison grids, or t
 
 | API                    | Route                                                         |
 | ---------------------- | ------------------------------------------------------------- |
-| Color element          | `/platform/ui-reference/elements/color`                       |
-| Spacing element        | `/platform/ui-reference/elements/spacing`                     |
-| Typography element     | `/platform/ui-reference/elements/typography`                  |
-| Pictograms element     | `/platform/ui-reference/elements/pictograms`                  |
-| Button component       | `/platform/ui-reference/components/button`                    |
-| Link component         | `/platform/ui-reference/components/link`                      |
-| Menu buttons component | `/platform/ui-reference/components/menu-buttons`              |
-| Notification component | `/platform/ui-reference/components/notification`              |
-| Tag component          | `/platform/ui-reference/components/tag`                       |
-| Search component       | `/platform/ui-reference/components/search`                    |
-| Tooltip component      | `/platform/ui-reference/components/tooltip`                   |
+| Color element          | `not installed`                       |
+| Spacing element        | `not installed`                     |
+| Typography element     | `not installed`                  |
+| Pictograms element     | `not installed`                  |
+| Button component       | `not installed`                    |
+| Link component         | `not installed`                      |
+| Menu buttons component | `not installed`              |
+| Notification component | `not installed`              |
+| Tag component          | `not installed`                       |
+| Search component       | `not installed`                    |
+| Tooltip component      | `not installed`                   |
 | Canonical icons doc    | `/platform/docs?path=02-standards%2Fui%2Felements%2Ficons.md` |
 | Carbon icons usage     | `https://carbondesignsystem.com/elements/icons/usage/`        |
 | Carbon icons library   | `https://carbondesignsystem.com/elements/icons/library/`      |
@@ -605,4 +606,4 @@ The UI Reference page may use matrices, grouped examples, comparison grids, or t
 - [Foundation Elements Standards](index.md)
 - [Component Standards Index](../components/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon icon guidance informs sizing, touch targets, color, contrast, and alignment. Login App uses Heroicons as its installed icon library.
+- Carbon icon guidance informs sizing, touch targets, color, contrast, and alignment. Login App uses its internal Blade icon library as the installed icon source.

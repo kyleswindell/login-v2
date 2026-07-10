@@ -6,9 +6,9 @@ status: implemented-pending-review
 system_maturity: installed
 category: feedback-and-loading
 priority: tier-a-baseline-app-development
-ui_reference_route: /platform/ui-reference/components/loading
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/loading.md
-source_owner: /platform/ui-reference/components/loading
+source_owner: not installed
 blade_api:
   - x-ui.loading
 javascript_api: []
@@ -20,8 +20,8 @@ data_attributes:
   - data-ui-loading-overlay
 source_files:
   - resources/css/app.css
-  - resources/views/components/ui/loading.blade.php
-  - resources/views/platform/ui-reference/components/live-examples/loading.blade.php
+  - resources/views/components/ui/loading/index.blade.php
+  - not installed
 foundation_elements:
   - color
   - spacing
@@ -81,10 +81,10 @@ carbon_reference:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
   - [15.1. Required Live examples internal sections:](#151-required-live-examples-internal-sections)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
   - [16.1. Suggested automated assertions:](#161-suggested-automated-assertions)
@@ -95,7 +95,7 @@ carbon_reference:
 
 Loading provides large blocking and small inline indicators for unknown-duration pending work while the system retrieves data, saves changes, or performs processing.
 
-Canonical API owner: `/platform/ui-reference/components/loading`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
 Loading is the installed Login App 2.0 pending-state API for non-interactive loading feedback. It owns the `x-ui.loading` Blade API, large and small spinner presentation, optional label text, loading overlay visuals, placement classes, reduced-motion behavior, token-backed loading colors, and loading-specific accessibility requirements. It does not own button-in-progress completion behavior, determinate progress, notification outcomes, modal focus trapping, inert background management, table data fetching, form validation, or external layout spacing.
 
@@ -111,7 +111,7 @@ Loading is the installed Login App 2.0 pending-state API for non-interactive loa
 - Respect reduced-motion preferences for animated spinner and skeleton states.
 - Keep loading indicators non-interactive and out of the tab order.
 - Consume Foundation Element APIs for color, spacing, typography, themes, and motion.
-- Prove large loading, small loading, placement, overlay, inactive state, reduced-motion, accessibility, and implementation behavior on the UI Reference page.
+- Prove large loading, small loading, placement, overlay, inactive state, reduced-motion, accessibility, and implementation behavior on the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -123,7 +123,7 @@ Loading is the installed Login App 2.0 pending-state API for non-interactive loa
 - Data table sorting, pagination, filter, or empty-state behavior. Use Data table or Table toolbar Patterns.
 - External spacing around a loading component. Parent Patterns own placement, grouping, spacing, and workflow orchestration.
 
-Carbon alignment note: Carbon treats loading indicators as visual feedback for pending work, uses two spinner sizes, recommends skeleton states for progressive/full-screen content loading, discourages multiple simultaneous loading indicators, and requires programmatic status updates for assistive technology. Login App maps those principles to app-owned `ui-*` classes, native semantics, and UI Reference proof rather than adopting Carbon implementation classes directly.
+Carbon alignment note: Carbon treats loading indicators as visual feedback for pending work, uses two spinner sizes, recommends skeleton states for progressive/full-screen content loading, discourages multiple simultaneous loading indicators, and requires programmatic status updates for assistive technology. Login App maps those principles to app-owned `ui-*` classes, native semantics, and rendered evidence proof rather than adopting Carbon implementation classes directly.
 
 ## 2. Status and ownership
 
@@ -135,14 +135,14 @@ Carbon alignment note: Carbon treats loading indicators as visual feedback for p
 | Component slug               | loading                                                                                                |
 | Category                     | Feedback and loading                                                                                   |
 | Priority                     | Tier A - Baseline app development                                                                      |
-| UI Reference route           | `/platform/ui-reference/components/loading`                                                            |
+| Rendered evidence route           | `not installed`                                                            |
 | Canonical doc                | `docs/02-standards/ui/components/loading.md`                                                           |
-| Source owner                 | `/platform/ui-reference/components/loading`                                                            |
+| Source owner                 | `not installed`                                                            |
 | Blade API                    | `x-ui.loading`                                                                                         |
 | JavaScript API               | None required for baseline loading behavior                                                            |
 | Data attributes              | `data-ui-loading`, `data-ui-loading-active`, `data-ui-loading-size`, `data-ui-loading-placement`, `data-ui-loading-overlay` |
 | Props/options                | `id`, `active`, `size`, `placement`, `label`, `overlay`, `disableRelatedActions`, `ariaLabel`, `ariaLive`, `attributes` |
-| Source files                 | `resources/views/components/ui/loading.blade.php`; `resources/css/app.css`; `resources/views/platform/ui-reference/components/live-examples/loading.blade.php` |
+| Source files                 | `resources/views/components/ui/loading/index.blade.php`; `resources/css/app.css`; `not installed` |
 | CSS namespace                | App-owned `ui-loading*` classes                                                                         |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion                                                             |
 | Carbon benchmark             | Carbon Loading usage, style, accessibility, Loading Pattern, and Inline loading accessibility guidance |
@@ -199,7 +199,7 @@ The current public API is `x-ui.loading`.
 | Slots                 | Not applicable until a Blade wrapper is installed                                             |
 | Root semantic element | Native `div`, `section`, `tbody`, or context-appropriate container with status semantics      |
 | CSS namespace         | `ui-loading*`                                                                                 |
-| Source files          | `resources/views/components/ui/loading.blade.php`; `resources/css/app.css`; `resources/views/platform/ui-reference/components/live-examples/loading.blade.php` |
+| Source files          | `resources/views/components/ui/loading/index.blade.php`; `resources/css/app.css`; `not installed` |
 
 Feature views must use `x-ui.loading` instead of creating local spinner markup.
 
@@ -269,7 +269,7 @@ Inactive loading renders no indicator.
 | `ui-loading__spinner` | Element | Implemented | Token-backed circular spinner. |
 | `ui-loading__label` | Element | Implemented | Optional visible label text. |
 
-Feature views must not create additional `ui-loading-*` classes. New classes require source implementation, this standard update, UI Reference proof, and tests.
+Feature views must not create additional `ui-loading-*` classes. New classes require source implementation, this standard update, rendered evidence proof, and tests.
 
 ### 4.7. Option contract
 
@@ -285,7 +285,7 @@ Feature views must not create additional `ui-loading-*` classes. New classes req
 | `ariaLabel` | string / null | label or `Loading` | Accessible name | No | Required when there is no visible label. |
 | `ariaLive` | string | `polite` | `off`, `polite`, `assertive` | No | Use assertive only for urgent blocking changes. |
 
-Any API not listed here is not public. If a feature needs a new loading shape, wrapper, status, data attribute, or JavaScript behavior, update the component implementation, this standard, UI Reference proof, and tests before production use.
+Any API not listed here is not public. If a feature needs a new loading shape, wrapper, status, data attribute, or JavaScript behavior, update the component implementation, this standard, rendered evidence proof, and tests before production use.
 
 ## 5. Allowed variants, options, and modifiers
 
@@ -516,19 +516,19 @@ Feature views must not create `spinner-*`, `loader-*`, `skeleton-*`, `placeholde
 | Capability                                     | Status                | Gate                                                                                                                                            |
 | ---------------------------------------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | Public `x-ui.skeleton` Blade wrapper           | Deferred              | Requires shape props, label behavior, reduced-motion proof, responsive behavior, and tests.                                                     |
-| Custom skeleton shape API                      | Gated                 | Requires tokenized dimensions, layout constraints, no fake content, UI Reference matrix, and accessibility proof.                               |
+| Custom skeleton shape API                      | Gated                 | Requires tokenized dimensions, layout constraints, no fake content, rendered evidence matrix, and accessibility proof.                               |
 | Full focus/inert overlay orchestration         | Pattern-owned / gated | Requires Overlay/feedback Pattern approval, inert behavior, scroll locking, focus return, status announcement, reduced-motion proof, and tests. |
 | Determinate progress or percentage             | Not owned by Loading  | Requires Progress indicator API. Do not add percentage behavior to Loading.                                                                     |
 | Inline loading replacement for buttons/actions | Not owned by Loading  | Use Inline loading or Button loading behavior.                                                                                                  |
 | Data-fetch JavaScript controller               | Deferred              | Requires documented data attributes, lifecycle events, cancellation/error handling, no feature-local controller forks, and tests.               |
 | Loading timeout/escalation behavior            | Gated                 | Requires Pattern owner, Notification handoff, retry/cancel rules, and accessibility proof.                                                      |
-| AI generation loading treatment                | Gated                 | Requires AI labeling/explainability standard, status copy rules, cancellation behavior, and UI Reference proof.                                 |
-| Additional spinner sizes                       | Not allowed           | Requires Spacing, Typography, Motion, and UI Reference updates.                                                                                 |
-| Custom status colors                           | Not allowed           | Requires Color Element standard update and UI Reference proof.                                                                                  |
+| AI generation loading treatment                | Gated                 | Requires AI labeling/explainability standard, status copy rules, cancellation behavior, and rendered evidence proof.                                 |
+| Additional spinner sizes                       | Not allowed           | Requires Spacing, Typography, Motion, and rendered evidence updates.                                                                                 |
+| Custom status colors                           | Not allowed           | Requires Color Element standard update and rendered evidence proof.                                                                                  |
 
-Future extensions require an updated Component standard and UI Reference proof before production use.
+Future extensions require an updated Component standard and rendered evidence proof before production use.
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -537,9 +537,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -548,9 +548,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The Loading page is a broad feedback reference page. It should use matrices, grouped examples, state tables, placement examples, and implementation examples rather than a simple tab-only scaffold.
 
@@ -576,7 +576,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/loading` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
@@ -598,7 +598,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 ### 16.1. Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/loading');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Loading');
@@ -640,22 +640,22 @@ $response->assertDontSee('btn btn-primary');
 
 | API                           | Route                                                             |
 | ----------------------------- | ----------------------------------------------------------------- |
-| Components overview           | `/platform/ui-reference/components`                               |
-| Inline loading                | `/platform/ui-reference/components/inline-loading`                |
-| Button                        | `/platform/ui-reference/components/button`                        |
-| Notification                  | `/platform/ui-reference/components/notification`                  |
-| Progress indicator            | `/platform/ui-reference/components/progress-indicator`            |
-| Modal                         | `/platform/ui-reference/components/modal`                         |
-| Data table                    | `/platform/ui-reference/components/data-table`                    |
-| Forms pattern                 | `/platform/ui-reference/patterns/forms`                           |
-| Tables Pattern                | `/platform/ui-reference/patterns/tables`                          |
-| Overlay and feedback patterns | `/platform/ui-reference/patterns/overlays-feedback`               |
-| Layout Pattern                | `/platform/ui-reference/patterns/layout`                          |
-| Color element                 | `/platform/ui-reference/elements/color`                           |
-| Spacing element               | `/platform/ui-reference/elements/spacing`                         |
-| Typography element            | `/platform/ui-reference/elements/typography`                      |
-| Themes element                | `/platform/ui-reference/elements/themes`                          |
-| Motion element                | `/platform/ui-reference/elements/motion`                          |
+| Components overview           | `not installed`                               |
+| Inline loading                | `not installed`                |
+| Button                        | `not installed`                        |
+| Notification                  | `not installed`                  |
+| Progress indicator            | `not installed`            |
+| Modal                         | `not installed`                         |
+| Data table                    | `not installed`                    |
+| Forms pattern                 | `not installed`                           |
+| Tables Pattern                | `not installed`                          |
+| Overlay and feedback patterns | `not installed`               |
+| Layout Pattern                | `not installed`                          |
+| Color element                 | `not installed`                           |
+| Spacing element               | `not installed`                         |
+| Typography element            | `not installed`                      |
+| Themes element                | `not installed`                          |
+| Motion element                | `not installed`                          |
 | Canonical loading doc         | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Floading.md` |
 | Carbon loading usage          | `https://carbondesignsystem.com/components/loading/usage/`        |
 | Carbon loading pattern        | `https://carbondesignsystem.com/patterns/loading-pattern/`        |
@@ -666,4 +666,4 @@ $response->assertDontSee('btn btn-primary');
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon Loading usage, style, accessibility, and Loading Pattern guidance inform spinner sizing, skeleton selection, multiple-indicator avoidance, status announcements, and reduced-motion requirements. Login App keeps its own `x-ui.loading` API, `ui-*` namespace, Foundation Element tokens, and UI Reference proof.
+- Carbon Loading usage, style, accessibility, and Loading Pattern guidance inform spinner sizing, skeleton selection, multiple-indicator avoidance, status announcements, and reduced-motion requirements. Login App keeps its own `x-ui.loading` API, `ui-*` namespace, Foundation Element tokens, and rendered evidence proof.

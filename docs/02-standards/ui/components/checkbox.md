@@ -6,17 +6,17 @@ status: implemented-pending-review
 system_maturity: implemented
 category: selection-controls
 priority: tier-a-baseline-app-development
-ui_reference_route: /platform/ui-reference/components/checkbox
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/checkbox.md
-source_owner: /platform/ui-reference/components/checkbox
+source_owner: not installed
 blade_api:
   - x-ui.checkbox
   - x-ui.checkbox-group
 javascript_api:
   - initCheckboxes
 source_files:
-  - resources/views/components/ui/checkbox.blade.php
-  - resources/views/components/ui/checkbox-group.blade.php
+  - resources/views/components/ui/checkbox/index.blade.php
+  - resources/views/components/ui/checkbox-group/index.blade.php
   - resources/js/ui-controls/checkboxes.js
   - resources/js/ui-controls.js
   - resources/js/app.js
@@ -73,12 +73,12 @@ carbon_reference:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
   - [15.1. Required component contract display](#151-required-component-contract-display)
-  - [15.2. The UI Reference page must show:](#152-the-ui-reference-page-must-show)
+  - [15.2. The rendered evidence page must show:](#152-the-ui-reference-page-must-show)
   - [15.3. Required developer examples](#153-required-developer-examples)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
   - [16.1. Suggested automated assertions:](#161-suggested-automated-assertions)
@@ -89,7 +89,7 @@ carbon_reference:
 
 Checkbox supports independent choices and multi-select groups.
 
-Canonical API owner: `/platform/ui-reference/components/checkbox`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
 Checkbox is the installed Login App 2.0 selection-control API for zero-or-more choice sets. It owns native checkbox semantics, group semantics, labels, helper/error/warning text, selected/unselected state, indeterminate parent state, disabled/read-only treatment, focus styling, token-backed validation states, and checkbox-specific content rules. It does not own single-choice selection, immediate setting toggles, hidden option menus, table bulk-selection workflows, or form layout orchestration.
 
@@ -103,7 +103,7 @@ Checkbox is the installed Login App 2.0 selection-control API for zero-or-more c
 - Support component and group-level disabled, read-only, error, warning, and helper text treatments.
 - Keep group labels, helper text, validation text, and item labels accessible.
 - Use Foundation Element APIs for color, spacing, typography, themes, motion, and icons.
-- Prove independent, grouped, settings, validation, and indeterminate usage on the UI Reference page.
+- Prove independent, grouped, settings, validation, and indeterminate usage on the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -126,20 +126,20 @@ Checkbox is the installed Login App 2.0 selection-control API for zero-or-more c
 | Component slug               | checkbox                                                                                                                              |
 | Category                     | Selection controls                                                                                                                    |
 | Priority                     | Tier A - Baseline app development                                                                                                     |
-| UI Reference route           | `/platform/ui-reference/components/checkbox`                                                                                          |
+| Rendered evidence route           | `not installed`                                                                                          |
 | Canonical doc                | `docs/02-standards/ui/components/checkbox.md`                                                                                         |
-| Source owner                 | `/platform/ui-reference/components/checkbox`                                                                                          |
+| Source owner                 | `not installed`                                                                                          |
 | Blade API                    | `x-ui.checkbox`; `x-ui.checkbox-group`                                                                                                |
 | JavaScript API               | None required for baseline selected/unselected behavior                                                                               |
-| Source files                 | `resources/views/components/ui/checkbox.blade.php`; `resources/views/components/ui/checkbox-group.blade.php`; `resources/js/ui-controls/checkboxes.js`; `resources/css/app.css` |
+| Source files                 | `resources/views/components/ui/checkbox/index.blade.php`; `resources/views/components/ui/checkbox-group/index.blade.php`; `resources/js/ui-controls/checkboxes.js`; `resources/css/app.css` |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, Icons where validation/status icons are rendered                                          |
 | Carbon benchmark             | Carbon Checkbox usage, style, and accessibility guidance                                                                              |
 
-`Implemented Pending Review` means the checkbox UI is installed as a real zero-or-more selection API and is awaiting manual UI Reference approval.
+`Implemented Pending Review` means the checkbox UI is installed as a real zero-or-more selection API and is awaiting manual rendered evidence approval.
 
 ## 3. Installed standard
 
-Checkbox now has component-specific UI Reference examples that consume approved Foundation Elements.
+Checkbox now has component-specific rendered evidence examples that consume approved Foundation Elements.
 
 ### The installed standard is:
 
@@ -176,10 +176,9 @@ Carbon alignment note: Carbon defines Checkbox for multiple selections, not mutu
 ```blade
 <x-ui.checkbox-group
     name="notification_channels"
-    legend="Notification channels"
-    :options="$notificationChannels"
-    :selected="$selectedChannels"
-    helper="Choose every channel this workspace may use."
+    legend-text="Notification channels"
+    :items="$notificationChannels"
+    helper-text="Choose every channel this workspace may use."
 />
 ```
 
@@ -189,7 +188,8 @@ Carbon alignment note: Carbon defines Checkbox for multiple selections, not mutu
     value="accepted"
     label="I accept the terms"
     required
-    error="You must accept the terms before continuing."
+    invalid
+    invalid-text="You must accept the terms before continuing."
 />
 ```
 
@@ -216,9 +216,9 @@ Use the Blade APIs instead of hand-building checkbox markup in feature views.
 | Group semantic element        | `fieldset` with `legend` for related groups when the component owns the group label                                                                                                                                                                                                 |
 | Data attributes               | Use only data attributes documented by the Component API. Feature views must not invent checkbox behavior attributes.                                                                                                                                                               |
 | CSS namespace                 | App-owned `ui-*` checkbox classes documented by the component implementation                                                                                                                                                                                                        |
-| Source files                  | `resources/views/components/ui/checkbox.blade.php`; `resources/views/components/ui/checkbox-group.blade.php`; `resources/css/app.css`                                                                                                                                               |
+| Source files                  | `resources/views/components/ui/checkbox/index.blade.php`; `resources/views/components/ui/checkbox-group/index.blade.php`; `resources/css/app.css`                                                                                                                                               |
 
-If either Blade alias is not currently installed, this correction must add it or explicitly mark it deferred before the UI Reference page can be accepted. Do not leave the page with `Component-specific API pending correction` as its developer example.
+If either Blade alias is not currently installed, this correction must add it or explicitly mark it deferred before the rendered evidence page can be accepted. Do not leave the page with `Component-specific API pending correction` as its developer example.
 
 ### 4.3. Props and options: `x-ui.checkbox`
 
@@ -231,41 +231,42 @@ If either Blade alias is not currently installed, this correction must add it or
 | `checked`       | `bool`                | `false`   | `true`, `false`                 | No       | Represents selected state.                                                                                                  |
 | `indeterminate` | `bool`                | `false`   | `true`, `false`                 | No       | Only for parent/child or bulk-selection summary state. Must expose mixed state accessibly.                                  |
 | `disabled`      | `bool`                | `false`   | `true`, `false`                 | No       | Disabled checkboxes are unavailable and should not submit changed values.                                                   |
-| `readonly`      | `bool`                | `false`   | `true`, `false`                 | No       | Use for non-editable displayed value when the value should remain perceivable. Confirm implementation semantics before use. |
+| `read-only`     | `bool`                | `false`   | `true`, `false`                 | No       | Use for non-editable displayed value when the value should remain perceivable. Confirm implementation semantics before use. |
 | `required`      | `bool`                | `false`   | `true`, `false`                 | No       | Most required logic should be validated by the owning form.                                                                 |
-| `helper`        | `string / null`       | `null`    | short helper text               | No       | Use for item-specific helper text only. Prefer group-level helper text for groups.                                          |
-| `error`         | `string / null`       | `null`    | validation copy                 | No       | Applies invalid treatment and error copy.                                                                                   |
-| `warning`       | `string / null`       | `null`    | warning copy                    | No       | Applies warning treatment without blocking form submission.                                                                 |
-| `description`   | `string / null`       | `null`    | short supporting copy           | No       | Use sparingly; long explanations belong in visible content or Toggletip.                                                    |
+| `helper-text`   | `string / null`       | `null`    | short helper text               | No       | Use for item-specific helper text only. Prefer group-level helper text for groups.                                          |
+| `invalid`       | `bool`                | `false`   | `true`, `false`                 | No       | Applies invalid treatment.                                                                                                  |
+| `invalid-text`  | `string / null`       | `null`    | validation copy                 | No       | Provides invalid-state message text.                                                                                        |
+| `warn`          | `bool`                | `false`   | `true`, `false`                 | No       | Applies warning treatment without blocking form submission.                                                                 |
+| `warn-text`     | `string / null`       | `null`    | warning copy                    | No       | Provides warning-state message text.                                                                                        |
 | `class`         | `string / null`       | `null`    | layout passthrough if supported | No       | Parent Patterns may pass layout classes. Do not use for local color, typography, state, or behavior overrides.              |
 
-Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the UI Reference proof before use.
+Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the rendered evidence proof before use.
 
 ### 4.4. Props and options: `x-ui.checkbox-group`
 
 | Prop/option   | Type            | Default                             | Allowed values           | Required | Notes                                                                      |
 | ------------- | --------------- | ----------------------------------- | ------------------------ | -------- | -------------------------------------------------------------------------- |
-| `name`        | `string`        | required                            | valid form field name    | Yes      | Use a shared name for related options.                                     |
-| `legend`      | `string`        | required unless externally labelled | short group label        | Usually  | Required when the group owns its label.                                    |
-| `options`     | `array`         | required                            | option objects or arrays | Yes      | Each option must include label and value.                                  |
-| `selected`    | `array`         | `[]`                                | selected values          | No       | Controls checked values.                                                   |
-| `orientation` | `string`        | `vertical`                          | `vertical`, `horizontal` | No       | Vertical is default. Horizontal is only for short predictable sets.        |
-| `helper`      | `string / null` | `null`                              | short group helper copy  | No       | Group-level helper text.                                                   |
-| `error`       | `string / null` | `null`                              | group validation copy    | No       | Applies error state to the group.                                          |
-| `warning`     | `string / null` | `null`                              | group warning copy       | No       | Applies warning state to the group.                                        |
-| `disabled`    | `bool`          | `false`                             | `true`, `false`          | No       | Disables every option unless an option explicitly owns a stricter state.   |
-| `readonly`    | `bool`          | `false`                             | `true`, `false`          | No       | Makes the group non-editable while preserving readable choices.            |
-| `required`    | `bool`          | `false`                             | `true`, `false`          | No       | Use when at least one option is required and the owning form validates it. |
-| `nested`      | `bool`          | `false`                             | `true`, `false`          | No       | Only for approved parent/child option structures.                          |
+| `name`         | `string`        | required                            | valid form field name    | Yes      | Use a shared name for related options.                                     |
+| `legend-text`  | `string`        | required unless externally labelled | short group label        | Usually  | Required when the group owns its label.                                    |
+| `items`        | `array`         | `[]`                                | item objects or arrays   | Yes      | Each item must include label and value. Checked state is owned per item.   |
+| `orientation`  | `string`        | `vertical`                          | `vertical`, `horizontal` | No       | Vertical is default. Horizontal is only for short predictable sets.        |
+| `helper-text`  | `string / null` | `null`                              | short group helper copy  | No       | Group-level helper text.                                                   |
+| `invalid`      | `bool`          | `false`                             | `true`, `false`          | No       | Applies invalid state to the group.                                       |
+| `invalid-text` | `string / null` | `null`                              | group validation copy    | No       | Provides invalid-state message text.                                      |
+| `warn`         | `bool`          | `false`                             | `true`, `false`          | No       | Applies warning state to the group.                                       |
+| `warn-text`    | `string / null` | `null`                              | group warning copy       | No       | Provides warning-state message text.                                      |
+| `disabled`     | `bool`          | `false`                             | `true`, `false`          | No       | Disables every option unless an option explicitly owns a stricter state.   |
+| `read-only`    | `bool`          | `false`                             | `true`, `false`          | No       | Makes the group non-editable while preserving readable choices.            |
 
 ### 4.5. Option data contract
 
 ```php
-$options = [
+$items = [
     [
         'label' => 'Security alerts',
         'value' => 'security',
-        'helper' => 'Recommended for every administrator.',
+        'helperText' => 'Recommended for every administrator.',
+        'checked' => true,
         'disabled' => false,
     ],
     [
@@ -277,13 +278,13 @@ $options = [
 
 | Option key | Required | Notes                                                                                   |
 | ---------- | -------- | --------------------------------------------------------------------------------------- |
-| `label`    | Yes      | Visible label. Keep concise and sentence case.                                          |
-| `value`    | Yes      | Submitted value.                                                                        |
-| `checked`  | No       | May be used by individual checkbox rendering, but group `selected` should be preferred. |
-| `disabled` | No       | Option-level disabled state.                                                            |
-| `readonly` | No       | Option-level read-only state when supported.                                            |
-| `helper`   | No       | Short item-specific helper text. Avoid long descriptions.                               |
-| `children` | No       | Only for approved nested parent/child groups.                                           |
+| `label`       | Yes      | Visible label. Keep concise and sentence case.            |
+| `value`       | Yes      | Submitted value.                                          |
+| `checked`     | No       | Selected state for that item.                            |
+| `disabled`    | No       | Option-level disabled state.                              |
+| `readOnly`    | No       | Option-level read-only state when supported.              |
+| `helperText`  | No       | Short item-specific helper text. Avoid long descriptions. |
+| `indeterminate` | No     | Parent or summary mixed state when the relationship is real. |
 
 ## 5. Allowed variants, options, and modifiers
 
@@ -293,14 +294,14 @@ Checkbox does not have app-approved decorative visual variants. The installed AP
 | -------------------------- | -------------- | --------------------------------------------------------------- | ----------------------------------- | ------------------------------------------------------------------------ |
 | Independent checkbox       | Usage mode     | Implemented / required proof                                    | `x-ui.checkbox`                     | One choice can be selected independently of nearby controls.             |
 | Multi-select group         | Usage mode     | Implemented / required proof                                    | `x-ui.checkbox-group`               | Users can select zero, one, or many options from a visible set.          |
-| Validation group           | Usage mode     | Implemented / required proof                                    | `error`, `warning`, `required`      | A form needs group-level validation or warning copy.                     |
-| Group states               | Usage mode     | Implemented / required proof                                    | `helper`, `disabled`, `readonly`, `error`, `warning` | Group state applies to all relevant options with one group message. |
-| Parent/child indeterminate | State/modifier | Implemented / required proof                                    | nested option `children`; `initCheckboxes` | Parent summary represents selected children and owns the mixed state. |
+| Validation group           | Usage mode     | Implemented / required proof                                    | `invalid`, `invalid-text`, `warn`, `warn-text` | A form needs group-level validation or warning copy.                     |
+| Group states               | Usage mode     | Implemented / required proof                                    | `helper-text`, `disabled`, `read-only`, `invalid`, `warn` | Group state applies to all relevant options with one group message. |
+| Parent/child indeterminate | State/modifier | Implemented / required proof                                    | item `indeterminate`; `initCheckboxes` | Parent summary represents selected children and owns the mixed state. |
 | Vertical group             | Layout option  | Implemented                                                     | `orientation="vertical"`            | Default group layout for readability.                                    |
 | Horizontal group           | Layout option  | Implemented only when proven; otherwise Deferred                | `orientation="horizontal"`          | Short predictable sets where row order remains clear.                    |
 | AI label presence          | Modifier       | Deferred / gated                                                | Not public                          | Do not render unless AI Label and an approved AI-assisted feature exist. |
 
-Do not document Carbon-only variants or AI presence as implemented unless Login App has installed the API and the UI Reference route proves it with live rendered examples.
+Do not document Carbon-only variants or AI presence as implemented unless Login App has installed the API and the Rendered evidence route proves it with live rendered examples.
 
 ## 6. States
 
@@ -345,7 +346,7 @@ Uses Foundation Color, Spacing, Typography, Themes, Motion, and Icons where vali
 | Typography         | Group labels, checkbox labels, helper copy, error copy, and warning copy use approved type roles.                              |
 | Themes             | Checkbox states must remain readable in supported light and dark contexts.                                                     |
 | Motion             | Checkbox state change should not depend on non-essential motion. Reduced-motion preference must not degrade state clarity.     |
-| Icons              | Error and warning icons, if rendered, must use approved Heroicons or component-owned SVGs through the Icons Element API.       |
+| Icons              | Error and warning icons, if rendered, must use internal icon components or component-owned SVGs through the Icons Element API.       |
 
 Carbon color role mapping:
 
@@ -466,22 +467,22 @@ The visual checkbox box must remain 16px by 16px, use a subtle rounded corner, a
 - Do not vertically center wrapped multi-line labels against the checkbox control.
 - Do not use support colors decoratively.
 - Do not create local checkbox spacing or local validation colors in feature views.
-- Do not render Carbon AI presence on Checkbox unless Login App has an approved AI feature, AI Label standard, and UI Reference proof.
+- Do not render Carbon AI presence on Checkbox unless Login App has an approved AI feature, AI Label standard, and rendered evidence proof.
 
 ## 13. Deferred or gated capabilities
 
 | Capability                                | Status                                                                   | Gate                                                                                                              |
 | ----------------------------------------- | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
-| Horizontal group layout                   | Implemented only when proven; otherwise Deferred                         | UI Reference must show readable scan order, wrapping, and keyboard order.                                         |
-| Nested parent/child group helper          | Implemented only when the API exposes nested options; otherwise Deferred | Requires synchronized parent, child, and indeterminate state behavior.                                            |
+| Horizontal group layout                   | Implemented only when proven; otherwise Deferred                         | rendered evidence must show readable scan order, wrapping, and keyboard order.                                         |
+| Parent/child indeterminate helper         | Implemented only through item-level `indeterminate`; otherwise Deferred | Requires synchronized parent, child, and indeterminate state behavior.                                            |
 | AI label presence                         | Deferred / gated                                                         | Requires approved AI-assisted feature, AI Label Component API, explainability behavior, and accessibility review. |
 | Async checkbox option loading             | Deferred                                                                 | Requires Pattern-owned loading, error, retry, and persistence behavior.                                           |
 | Virtualized large checkbox groups         | Deferred                                                                 | Requires searchable/multiselect review; may belong to Multiselect or Pattern API instead.                         |
 | Custom non-native checkbox implementation | Not allowed by default                                                   | Requires explicit accessibility review and proof that native semantics cannot satisfy the requirement.            |
 
-No additional capability is approved without updating this Component standard and UI Reference proof.
+No additional capability is approved without updating this Component standard and rendered evidence proof.
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -490,9 +491,9 @@ No additional capability is approved without updating this Component standard an
 | States                     | Default, non-visual hover, persistent focus, disabled, validation, selected, unselected, indeterminate, and not-applicable states are defined as relevant. |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -501,9 +502,9 @@ No additional capability is approved without updating this Component standard an
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The Checkbox page may use tabs, grouped examples, state matrices, or comparison grids inside Live examples. It must not use generic fallback sections or placeholder developer examples.
 
@@ -513,12 +514,12 @@ The Checkbox page may use tabs, grouped examples, state matrices, or comparison 
 | Multi-select group               | Several visible choices can be selected at the same time under one group label.                            | Vertical group, selected/unselected mix, group helper text.                                             |
 | State matrix                     | Individual state treatments are visible without turning each state into a separate live variant.           | Persistent focus, disabled, read-only, error with icon/message, warning with icon/message, selected and unselected bases. |
 | Group states                     | Helper, disabled, read-only, error, and warning states apply to the group without repeating messages.      | Group label, bottom helper text, one error/warning message below the group, option-level highlighting.  |
-| Parent-child indeterminate group | Parent checkbox summarizes child selections and displays mixed state only when some children are selected. | Nested options, selected children, unselected children, parent checked/unchecked/mixed sync, parent toggles all mutable children. |
+| Parent-child indeterminate group | Parent checkbox summarizes child selections and displays mixed state only when some children are selected. | Parent item `indeterminate`, selected children, unselected children, parent checked/unchecked/mixed sync, parent toggles all mutable children. |
 | Overflow and alignment           | Long labels wrap instead of truncating and align from the top of the checkbox control.                     | Multiline single label, long wrapping group label, vertical default, horizontal short-label group.       |
 
 ### 15.1. Required component contract display
 
-### 15.2. The UI Reference page must show:
+### 15.2. The rendered evidence page must show:
 
 - Installed API and canonical Blade calls.
 - Props/options for individual checkbox and checkbox group.
@@ -545,10 +546,9 @@ The page must render production code examples, not placeholders:
 ```blade
 <x-ui.checkbox-group
     name="channels"
-    legend="Notification channels"
-    :options="$channels"
-    :selected="$selectedChannels"
-    helper="Choose every channel this workspace may use."
+    legend-text="Notification channels"
+    :items="$channels"
+    helper-text="Choose every channel this workspace may use."
 />
 ```
 
@@ -557,13 +557,14 @@ The page must render production code examples, not placeholders:
     name="terms"
     label="Accept terms"
     required
-    error="Accept the terms before continuing."
+    invalid
+    invalid-text="Accept the terms before continuing."
 />
 ```
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/checkbox` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The page does not show `Component-specific API pending correction` as the example call.
@@ -579,7 +580,7 @@ The page must render production code examples, not placeholders:
 ### 16.1. Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/checkbox');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Checkbox');
@@ -611,17 +612,17 @@ $response->assertDontSee('generic fallback');
 
 | API                           | Route                                                                   |
 | ----------------------------- | ----------------------------------------------------------------------- |
-| Radio button                  | `/platform/ui-reference/components/radio-button`                        |
-| Toggle                        | `/platform/ui-reference/components/toggle`                              |
-| Select                        | `/platform/ui-reference/components/select`                              |
-| Dropdown                      | `/platform/ui-reference/components/dropdown`                            |
-| Multiselect                   | `/platform/ui-reference/components/multiselect`                         |
-| Data table                    | `/platform/ui-reference/components/data-table`                          |
-| Inline loading                | `/platform/ui-reference/components/inline-loading`                      |
-| Notification                  | `/platform/ui-reference/components/notification`                        |
-| Form patterns                 | `/platform/ui-reference/patterns/forms`                                 |
+| Radio button                  | `not installed`                        |
+| Toggle                        | `not installed`                              |
+| Select                        | `not installed`                              |
+| Dropdown                      | `not installed`                            |
+| Multiselect                   | `not installed`                         |
+| Data table                    | `not installed`                          |
+| Inline loading                | `not installed`                      |
+| Notification                  | `not installed`                        |
+| Form patterns                 | `not installed`                                 |
 | Table toolbar planned API     | `docs/02-standards/ui/api-registry.md#planned-pattern-and-feature-apis` |
-| Components overview           | `/platform/ui-reference/components`                                     |
+| Components overview           | `not installed`                                     |
 | Canonical checkbox doc        | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Fcheckbox.md`      |
 | Carbon Checkbox usage         | `https://carbondesignsystem.com/components/checkbox/usage/`             |
 | Carbon Checkbox style         | `https://carbondesignsystem.com/components/checkbox/style/`             |

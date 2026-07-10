@@ -5,9 +5,9 @@ status: implemented-pending-review
 api_layer: component
 category: actions
 priority: tier-b-common-reusable-component
-ui_reference_route: /platform/ui-reference/components/menu-buttons
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/menu-buttons.md
-source_owner: /platform/ui-reference/components/menu-buttons
+source_owner: not installed
 foundation_elements:
   - color
   - spacing
@@ -52,10 +52,10 @@ related_patterns:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
 - [17. Related APIs](#17-related-apis)
 - [18. References](#18-references)
@@ -64,7 +64,7 @@ related_patterns:
 
 Menu buttons expose grouped secondary actions from a button trigger.
 
-Canonical API owner: `/platform/ui-reference/components/menu-buttons`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
 Menu buttons are an Action Component API. They compose the Button API, Menu behavior, Icons, Motion, and token-backed surfaces to reveal simple command choices. They do not own form selection, free-text entry, complex filtering, navigation hierarchy, or workflow orchestration.
 
@@ -77,9 +77,9 @@ Menu buttons are an Action Component API. They compose the Button API, Menu beha
 | Component slug     | menu-buttons                                                             |
 | Category           | Actions                                                                  |
 | Priority           | Tier B - Common reusable component                                       |
-| UI Reference route | /platform/ui-reference/components/menu-buttons                           |
+| Rendered evidence route | not installed                           |
 | Canonical doc      | docs/02-standards/ui/components/menu-buttons.md                          |
-| Source owner       | /platform/ui-reference/components/menu-buttons                           |
+| Source owner       | not installed                           |
 | Depends on         | Button, Menu behavior, Icons, Motion, Color, Spacing, Typography, Themes |
 
 ## 3. Installed standard
@@ -96,7 +96,7 @@ The installed standard must distinguish three dispositions:
 
 This page is component-specific. Do not use this standard as a broad Action, Button, Dropdown, Popover, or Menu correction. If another component needs a similar rule, update that component’s own standard.
 
-Menu buttons must use the flexible UI Reference layout model. The page may use matrices, size scales, state tables, grouped examples, and full-width demonstrations instead of forcing every example into an Accordion-style tabbed layout.
+Menu buttons must use the flexible rendered evidence layout model. The page may use matrices, size scales, state tables, grouped examples, and full-width demonstrations instead of forcing every example into an Accordion-style tabbed layout.
 
 ## 4. Public API
 
@@ -105,9 +105,9 @@ Menu buttons must use the flexible UI Reference layout model. The page may use m
 | Blade           | `x-ui.menu-button`, `x-ui.combo-button`, `x-ui.overflow-menu`.                                                                                                                                                                                            |
 | JavaScript      | `initMenus` exported from `resources/js/ui-controls/menus.js` or the app-owned equivalent menu initializer.                                                                                                                                               |
 | Data attributes | `data-ui-menu-button`, `data-ui-menu-trigger`, `data-ui-menu`, `data-ui-menu-item`, `data-ui-menu-placement`, `data-ui-combo-button`, `data-ui-overflow-menu`.                                                                                             |
-| Props/options   | Use the props documented in this standard. Do not add feature-local props without updating this Component standard and UI Reference proof.                                                                                                                |
+| Props/options   | Use the props documented in this standard. Do not add feature-local props without updating this Component standard and rendered evidence proof.                                                                                                                |
 | CSS namespace   | `ui-menu-button`, `ui-overflow-menu`, `ui-combo-button`, `ui-menu`, `ui-menu-item`, and related app-owned `ui-*` classes.                                                                                                                                 |
-| Source files    | Expected owners: `resources/views/components/ui/menu-button.blade.php`, `resources/views/components/ui/combo-button.blade.php`, `resources/views/components/ui/overflow-menu.blade.php`, `resources/views/components/ui/menu.blade.php`, `resources/views/components/ui/menu-item.blade.php`, `resources/js/ui-controls/menus.js`, `resources/css/components/menu-button.css`, `resources/css/components/combo-button.css`, `resources/css/components/overflow-menu.css`, `resources/css/components/menu.css`. |
+| Source files    | Expected owners: `resources/views/components/ui/menu-button/index.blade.php`, `resources/views/components/ui/combo-button/index.blade.php`, `resources/views/components/ui/overflow-menu/index.blade.php`, `resources/views/components/ui/menu/index.blade.php`, `resources/views/components/ui/menu-item/index.blade.php`, `resources/js/ui-controls/menus.js`, `resources/css/components/menu-button.css`, `resources/css/components/combo-button.css`, `resources/css/components/overflow-menu.css`, `resources/css/components/menu.css`. |
 
 ### 4.1. Menu button example
 
@@ -163,7 +163,7 @@ Menu buttons must use the flexible UI Reference layout model. The page may use m
 | `align`     | All menus    |        `string` | `start`   | `start`, `end`                                               | Use `end` for right-aligned row/card overflow.                                                      |
 | `disabled`  | Trigger      |          `bool` | `false`   | `true`, `false`                                              | Disabled trigger cannot open a menu.                                                                |
 | `loading`   | Trigger      |          `bool` | `false`   | `true`, `false`                                              | Loading trigger is disabled and keeps a readable label.                                             |
-| `icon`      | Menu button  | `string / null` | caret     | approved Heroicon alias                                      | Menu button trigger uses caret by default. Do not use decorative icons as meaning.                  |
+| `icon`      | Menu button  | `string / null` | caret     | internal icon alias                                      | Menu button trigger uses caret by default. Do not use decorative icons as meaning.                  |
 | `ariaLabel` | Overflow     | `string / null` | `label`   | non-empty string                                             | Required when the visible trigger is icon-only.                                                     |
 | `tooltip`   | Overflow     | `string / null` | `null`    | short text                                                   | Required when the overflow trigger needs visible explanation.                                       |
 | `fluid`     | Menu/combo   |          `bool` | `false`   | gated                                                        | Do not use until fluid-width trigger and menu behavior is tested. Ghost triggers must not be fluid. |
@@ -177,7 +177,7 @@ Menu buttons must use the flexible UI Reference layout model. The page may use m
 | `href`          | `string` |     null | Conditional                      | trusted route/URL                                                          | Use for navigation items. Do not mix unclear action/link semantics. |
 | `method`        | `string` |       No | `GET`, `POST`, `PATCH`, `DELETE` | Metadata only; non-GET execution still requires an owning form/controller contract. |
 | `tone`          | `string` |       No | `default`, `danger`              | `danger` is only for destructive menu items, not decoration.               |
-| `icon`          | `string` |     null | No                               | approved Heroicon alias                                                    | Icons are optional and must not be the only source of meaning.      |
+| `icon`          | `string` |     null | No                               | internal icon alias                                                    | Icons are optional and must not be the only source of meaning.      |
 | `disabled`      |   `bool` |       No | `true`, `false`                  | Disabled items must expose reason in nearby copy or tooltip when needed.   |
 | `dividerBefore` |   `bool` |       No | `true`, `false`                  | Use sparingly to separate destructive or distinct groups.                  |
 
@@ -364,7 +364,7 @@ Components own internal semantics and styling. Parent Patterns own grouping, ext
 
 | Capability                      | Status                     | Gate                                                                                                                                     |
 | ------------------------------- | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| Custom combo variants           | Gated                      | Requires a product decision and UI Reference proof before combo buttons can use non-primary visual hierarchy.                            |
+| Custom combo variants           | Gated                      | Requires a product decision and rendered evidence proof before combo buttons can use non-primary visual hierarchy.                            |
 | Fluid menu/combo                | Gated                      | Requires trigger/menu width matching, responsive behavior, and tests. Ghost triggers remain non-fluid.                                   |
 | Nested menus                    | Not implemented            | Requires separate accessibility and keyboard-navigation decision. Prefer a page, modal, or Pattern-owned flow.                           |
 | Searchable menu                 | Not implemented            | Use Search, Dropdown, Select, or a future Combo box API.                                                                                 |
@@ -373,9 +373,9 @@ Components own internal semantics and styling. Parent Patterns own grouping, ext
 | Custom overflow icon            | Gated                      | Requires product-level decision and Icons Element update. Default overflow icon remains preferred.                                       |
 | Persistent selected menu values | Not applicable             | Use Dropdown, Select, Tabs, Content switcher, or navigation APIs.                                                                        |
 
-No additional capability is approved without updating this Component standard and UI Reference proof.
+No additional capability is approved without updating this Component standard and rendered evidence proof.
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -384,9 +384,9 @@ No additional capability is approved without updating this Component standard an
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -395,9 +395,9 @@ No additional capability is approved without updating this Component standard an
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 Because Menu buttons are broad and matrix-heavy, the Live examples section may use a full-width reference layout with variant matrices, trigger-style matrices, size scales, state tables, grouped examples, placement examples, and developer implementation examples. It must not be forced into the Accordion tab-only model.
 
@@ -419,7 +419,7 @@ Because Menu buttons are broad and matrix-heavy, the Live examples section may u
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/menu-buttons` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred or gated capabilities render trigger conditions instead of fake controls.
 - The page shows Menu button, Overflow menu, and Combo button disposition.
@@ -441,17 +441,17 @@ Because Menu buttons are broad and matrix-heavy, the Live examples section may u
 
 | API                            | Route                                             |
 | ------------------------------ | ------------------------------------------------- |
-| Button                         | /platform/ui-reference/components/button          |
-| Menu                           | /platform/ui-reference/components/menu            |
-| Dropdown                       | /platform/ui-reference/components/dropdown        |
-| Select                         | /platform/ui-reference/components/select          |
-| Tooltip                        | /platform/ui-reference/components/tooltip         |
-| Popover                        | /platform/ui-reference/components/popover         |
-| Modal                          | /platform/ui-reference/components/modal           |
-| Data table                     | /platform/ui-reference/components/data-table      |
-| Table patterns                 | /platform/ui-reference/patterns/tables            |
-| Overlays and feedback patterns | /platform/ui-reference/patterns/overlays-feedback |
-| Components overview            | /platform/ui-reference/components                 |
+| Button                         | not installed          |
+| Menu                           | not installed            |
+| Dropdown                       | not installed        |
+| Select                         | not installed          |
+| Tooltip                        | not installed         |
+| Popover                        | not installed         |
+| Modal                          | not installed           |
+| Data table                     | not installed      |
+| Table patterns                 | not installed            |
+| Overlays and feedback patterns | not installed |
+| Components overview            | not installed                 |
 
 ## 18. References
 

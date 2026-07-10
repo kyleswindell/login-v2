@@ -6,9 +6,9 @@ status: implemented-pending-review
 system_maturity: complete
 category: data-display
 priority: tier-c-contextual-or-deferred
-ui_reference_route: /platform/ui-reference/components/structured-list
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/structured-list.md
-source_owner: /platform/ui-reference/components/structured-list
+source_owner: not installed
 blade_api:
   - x-ui.structured-list
 native_api:
@@ -22,8 +22,8 @@ native_api:
 javascript_api:
   - initStructuredLists
 source_files:
-  - resources/views/components/ui/structured-list.blade.php
-  - resources/views/platform/ui-reference/components/live-examples/structured-list.blade.php
+  - resources/views/components/ui/structured-list/index.blade.php
+  - not installed
   - resources/js/ui-controls/structured-lists.js
   - resources/css/app.css
 foundation_elements:
@@ -85,10 +85,10 @@ carbon_reference:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
   - [15.1. Required Live examples internal sections:](#151-required-live-examples-internal-sections)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
   - [16.1. Suggested automated assertions:](#161-suggested-automated-assertions)
@@ -99,7 +99,7 @@ carbon_reference:
 
 Structured list compares rich rows where a full data table would be excessive.
 
-Canonical API owner: `/platform/ui-reference/components/structured-list`. Use this Component API instead of creating local markup, styling, density, alignment, selection, skeleton, or responsive behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, density, alignment, selection, skeleton, or responsive behavior for the same UI role.
 
 Structured list is the installed Login App 2.0 API for compact row/column comparison where users need more structure than a simple List but do not need Data table functionality. It owns simple table semantics, column headers, row headers, rich row content, density, alignment, row separators, selected/current presentation where composed with native controls, loading/empty states, wrapping/overflow behavior, and responsive layout. It does not own sorting, filtering, pagination, bulk actions, column resizing, row expansion, editable cells, drag-and-drop, row action menus, or deep data-table workflows.
 
@@ -115,7 +115,7 @@ Structured list is the installed Login App 2.0 API for compact row/column compar
 - Preserve readable wrapping for rich row content.
 - Provide empty and loading/skeleton states for data-backed structured lists.
 - Consume Foundation Element APIs for color, spacing, typography, themes, motion, and 2x Grid where placement is relevant.
-- Prove default, condensed, selectable, selected, focus, disabled, empty, loading/skeleton, overflow, responsive, and implementation behavior on the UI Reference page.
+- Prove default, condensed, selectable, selected, focus, disabled, empty, loading/skeleton, overflow, responsive, and implementation behavior on the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -127,7 +127,7 @@ Structured list is the installed Login App 2.0 API for compact row/column compar
 - Form field validation. Use field Components and Forms Pattern.
 - External spacing, page placement, data fetching, sorting, filtering, selection persistence, and workflow orchestration. Parent Patterns own those responsibilities.
 
-Carbon alignment note: Carbon treats Structured list as a row/column comparison component with column headers, rich rows, default and condensed height sizes, hang and flush alignment, and an optional selectable mode. Carbon also notes that flush alignment is not paired with selectable functionality. Login App maps those completeness principles to native table markup, app-owned `ui-*` classes, visible native selection controls, Foundation tokens, and route-owned UI Reference proof rather than adopting Carbon implementation classes directly.
+Carbon alignment note: Carbon treats Structured list as a row/column comparison component with column headers, rich rows, default and condensed height sizes, hang and flush alignment, and an optional selectable mode. Carbon also notes that flush alignment is not paired with selectable functionality. Login App maps those completeness principles to native table markup, app-owned `ui-*` classes, visible native selection controls, Foundation tokens, and route-owned rendered evidence proof rather than adopting Carbon implementation classes directly.
 
 ## 2. Status and ownership
 
@@ -139,17 +139,17 @@ Carbon alignment note: Carbon treats Structured list as a row/column comparison 
 | Component slug               | `structured-list`                                                                                              |
 | Category                     | Data display                                                                                                   |
 | Priority                     | Tier C - Contextual or deferred                                                                                |
-| UI Reference route           | `/platform/ui-reference/components/structured-list`                                                            |
+| Rendered evidence route           | `not installed`                                                            |
 | Canonical doc                | `docs/02-standards/ui/components/structured-list.md`                                                           |
-| Source owner                 | `/platform/ui-reference/components/structured-list`                                                            |
+| Source owner                 | `not installed`                                                            |
 | Blade API                    | `x-ui.structured-list`                                                                                        |
 | Native API                   | `<table>` with `<caption>`, `<thead>`, `<tbody>`, `<tr>`, `<th>`, and `<td>`                                   |
 | JavaScript API               | `initStructuredLists` for selectable full-row click and arrow-key movement                                     |
-| Source files                 | `resources/views/components/ui/structured-list.blade.php`; `resources/views/platform/ui-reference/components/live-examples/structured-list.blade.php`; `resources/js/ui-controls/structured-lists.js`; `resources/css/app.css` |
+| Source files                 | `resources/views/components/ui/structured-list/index.blade.php`; `not installed`; `resources/js/ui-controls/structured-lists.js`; `resources/css/app.css` |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, 2x Grid where composed in layouts                                  |
 | Carbon benchmark             | Carbon Structured list usage, style, code, and accessibility guidance                                          |
 
-`Implemented Pending Review` means the installed Blade API, UI Reference examples, JavaScript behavior, CSS contract, and tests are in place and ready for manual review against this standard.
+`Implemented Pending Review` means the installed Blade API, rendered evidence examples, JavaScript behavior, CSS contract, and tests are in place and ready for manual review against this standard.
 
 ## 3. Installed standard
 
@@ -165,8 +165,8 @@ Structured list is represented through the installed `x-ui.structured-list` Blad
 - Use `.ui-structured-list` as the required root class for app-owned table layout, typography, borders, density, alignment, state, theme, and responsive behavior.
 - Use `.ui-structured-list-condensed` only for short, dense administrative comparisons.
 - Use `.ui-structured-list-hang` for the default hanging alignment where row content aligns under the header structure.
-- Use `.ui-structured-list-flush` only for non-selectable structured lists where the UI Reference proves the layout.
-- Use `.ui-structured-list-selectable` only when rows include visible native radio or checkbox controls and the UI Reference proves selection behavior.
+- Use `.ui-structured-list-flush` only for non-selectable structured lists where the rendered evidence proves the layout.
+- Use `.ui-structured-list-selectable` only when rows include visible native radio or checkbox controls and the rendered evidence proves selection behavior.
 - Keep native controls as the selection source of truth. The JavaScript helper may add full-row click and arrow-key movement, but it must keep checked state, selected row state, and disabled state synchronized.
 - Use `.ui-structured-list-row-selected` only as a visual companion to a checked native control or current-row state.
 - Use empty-state copy instead of rendering an empty table as the only feedback.
@@ -306,7 +306,7 @@ Use `x-ui.structured-list` and its emitted native table structure instead of han
 | JavaScript          | `initStructuredLists` for selectable full-row click, Space, ArrowDown, and ArrowUp behavior          |
 | Data attributes     | `data-ui-structured-list*` hooks for size, alignment, background, selectable rows, radios, and state |
 | CSS namespace       | App-owned `ui-structured-list*` classes documented by this standard and the component implementation |
-| Source owner        | `/platform/ui-reference/components/structured-list`                                                  |
+| Source owner        | `not installed`                                                  |
 | Token ownership     | Foundation Color, Spacing, Typography, Themes, Motion, and 2x Grid where composed in layouts         |
 
 ### 4.3. Markup and class contract
@@ -339,7 +339,7 @@ Use `x-ui.structured-list` and its emitted native table structure instead of han
 | `.ui-structured-list-empty`          | Empty state class   | Implemented / required proof                      | Optional                                         | Use instead of an empty table alone.                                           |
 | `.ui-structured-list-skeleton`       | Loading state class | Implemented / required proof                      | Optional                                         | Use for data-backed loading rows.                                              |
 
-Any class, attribute, prop, or behavior not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the UI Reference proof before use.
+Any class, attribute, prop, or behavior not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the rendered evidence proof before use.
 
 ### 4.4. Alignment contract
 
@@ -385,7 +385,7 @@ Any class, attribute, prop, or behavior not listed here is not public. If a feat
 | Rich row content             | Content option   | Implemented / required proof                      | Text, small metadata, and approved inline Components inside cells                  | Keep content concise and scannable.                                  |
 | Row actions                  | Mode             | Not owned by Structured list                      | none                                                                               | Use Data table, Contained list, or Pattern-owned action composition. |
 | Sorting/filtering/pagination | Mode             | Not owned by Structured list                      | none                                                                               | Use Data table.                                                      |
-| Zebra striping               | Visual modifier  | Gated                                             | none                                                                               | Requires token role, contrast proof, and UI Reference proof.         |
+| Zebra striping               | Visual modifier  | Gated                                             | none                                                                               | Requires token role, contrast proof, and rendered evidence proof.         |
 | Custom borders/density       | Modifier         | Not allowed                                       | none                                                                               | Use installed classes only.                                          |
 
 ## 6. States
@@ -431,7 +431,7 @@ Structured list does not expose an icon API. Icons may appear only through appro
 | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Color       | Header text, row text, muted text, row separators, selected row surface, current row treatment, disabled text, skeleton surface, and theme contrast. |
 | Spacing     | Cell padding, row height, condensed row height, header gap, alignment offsets, row separator placement, and responsive stack gaps.                   |
-| Typography  | Column headers, row headers, body cells, metadata, wrapping, truncation boundary, and code-snippet examples on the UI Reference page.                |
+| Typography  | Column headers, row headers, body cells, metadata, wrapping, truncation boundary, and code-snippet examples on the rendered evidence page.                |
 | Themes      | Light/dark token resolution for surfaces, text, borders, selected/current state, disabled state, and loading state.                                  |
 | Motion      | Short productive transitions for loading/skeleton or selected/current state when installed; reduced-motion support required.                         |
 | 2x Grid     | Parent placement, max width, responsive columns, and alignment with form/detail layouts.                                                             |
@@ -592,11 +592,11 @@ Feature views must not create `structured-list-*`, Bootstrap table variants, raw
 - Do not pair flush alignment with selectable rows.
 - Do not place row action menus or bulk toolbars inside baseline Structured list.
 - Do not truncate essential row content without an approved disclosure path.
-- Do not render placeholder copy such as `Component-specific API pending correction` or `Allowed variants: None` on the implemented UI Reference page.
+- Do not render placeholder copy such as `Component-specific API pending correction` or `Allowed variants: None` on the implemented rendered evidence page.
 
 ## 13. Deferred or gated capabilities
 
-No deferred capability blocks the installed `x-ui.structured-list` API. Future extensions still require an updated Component standard and UI Reference proof before production use.
+No deferred capability blocks the installed `x-ui.structured-list` API. Future extensions still require an updated Component standard and rendered evidence proof before production use.
 
 | Capability                                           | Status                                                         | Gate                                                                                                        |
 | ---------------------------------------------------- | -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -606,12 +606,12 @@ No deferred capability blocks the installed `x-ui.structured-list` API. Future e
 | Multi-select structured list                         | Gated / Pattern-owned                                          | Requires Checkbox composition, selection count, bulk action ownership, persistence, and tests.              |
 | Sortable/filterable/paginated structured list        | Not owned by Structured list                                   | Use Data table.                                                                                             |
 | Row actions                                          | Pattern-owned / use Data table or Contained list               | Requires action placement, keyboard behavior, responsive behavior, and tests.                               |
-| Expandable rows                                      | Deferred / use Accordion or Data table expansion when approved | Requires disclosure semantics, keyboard behavior, and UI Reference proof.                                   |
+| Expandable rows                                      | Deferred / use Accordion or Data table expansion when approved | Requires disclosure semantics, keyboard behavior, and rendered evidence proof.                                   |
 | Zebra striping                                       | Gated                                                          | Requires Color/Theme proof, contrast review, row state interaction rules, and tests.                        |
 | Custom column widths                                 | Gated                                                          | Requires responsive proof and owner contract.                                                               |
 | Virtualized long structured list                     | Not owned by Structured list                                   | Use Data table or a future Pattern with performance/accessibility proof.                                    |
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -620,9 +620,9 @@ No deferred capability blocks the installed `x-ui.structured-list` API. Future e
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -631,9 +631,9 @@ No deferred capability blocks the installed `x-ui.structured-list` API. Future e
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The Structured list page is a data-display component reference page. It should use grouped examples, density comparison, alignment comparison, state tables, selection-boundary examples, empty/loading proof, responsive proof, and developer implementation examples. It does not need to force every example into the Accordion-style tab model.
 
@@ -658,7 +658,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/structured-list` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
@@ -679,7 +679,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 ### 16.1. Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/structured-list');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Structured list');
@@ -723,26 +723,26 @@ For implementation tests, add page-specific assertions that rendered examples in
 
 | API                           | Route                                                                     |
 | ----------------------------- | ------------------------------------------------------------------------- |
-| Components overview           | `/platform/ui-reference/components`                                       |
-| List                          | `/platform/ui-reference/components/list`                                  |
-| Contained list                | `/platform/ui-reference/components/contained-list`                        |
-| Data table                    | `/platform/ui-reference/components/data-table`                            |
-| Tile                          | `/platform/ui-reference/components/tile`                                  |
-| Checkbox                      | `/platform/ui-reference/components/checkbox`                              |
-| Radio button                  | `/platform/ui-reference/components/radio-button`                          |
-| Link                          | `/platform/ui-reference/components/link`                                  |
-| Loading                       | `/platform/ui-reference/components/loading`                               |
-| Inline loading                | `/platform/ui-reference/components/inline-loading`                        |
-| Forms pattern                 | `/platform/ui-reference/patterns/forms`                                   |
-| Tables Pattern                | `/platform/ui-reference/patterns/tables`                                  |
-| Layout Pattern                | `/platform/ui-reference/patterns/layout`                                  |
-| Overlay and feedback patterns | `/platform/ui-reference/patterns/overlays-feedback`                       |
-| Color element                 | `/platform/ui-reference/elements/color`                                   |
-| Spacing element               | `/platform/ui-reference/elements/spacing`                                 |
-| Typography element            | `/platform/ui-reference/elements/typography`                              |
-| Motion element                | `/platform/ui-reference/elements/motion`                                  |
-| Themes element                | `/platform/ui-reference/elements/themes`                                  |
-| 2x Grid element               | `/platform/ui-reference/elements/2x-grid`                                 |
+| Components overview           | `not installed`                                       |
+| List                          | `not installed`                                  |
+| Contained list                | `not installed`                        |
+| Data table                    | `not installed`                            |
+| Tile                          | `not installed`                                  |
+| Checkbox                      | `not installed`                              |
+| Radio button                  | `not installed`                          |
+| Link                          | `not installed`                                  |
+| Loading                       | `not installed`                               |
+| Inline loading                | `not installed`                        |
+| Forms pattern                 | `not installed`                                   |
+| Tables Pattern                | `not installed`                                  |
+| Layout Pattern                | `not installed`                                  |
+| Overlay and feedback patterns | `not installed`                       |
+| Color element                 | `not installed`                                   |
+| Spacing element               | `not installed`                                 |
+| Typography element            | `not installed`                              |
+| Motion element                | `not installed`                                  |
+| Themes element                | `not installed`                                  |
+| 2x Grid element               | `not installed`                                 |
 | Canonical structured list doc | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Fstructured-list.md` |
 | Carbon structured list usage  | `https://carbondesignsystem.com/components/structured-list/usage/`        |
 
@@ -752,4 +752,4 @@ For implementation tests, add page-specific assertions that rendered examples in
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon Structured list usage, style, code, and accessibility guidance inform row/column anatomy, default and condensed density, hang and flush alignment, selectable boundaries, row content guidance, and accessibility concerns. Login App keeps its own native markup contract, app-owned `ui-*` class namespace, Foundation Element token model, route ownership, and UI Reference proof requirements.
+- Carbon Structured list usage, style, code, and accessibility guidance inform row/column anatomy, default and condensed density, hang and flush alignment, selectable boundaries, row content guidance, and accessibility concerns. Login App keeps its own native markup contract, app-owned `ui-*` class namespace, Foundation Element token model, route ownership, and rendered evidence proof requirements.

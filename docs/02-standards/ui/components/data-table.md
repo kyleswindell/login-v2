@@ -6,20 +6,20 @@ status: implemented-pending-review
 system_maturity: partial
 category: data-display
 priority: tier-a-baseline-app-development
-ui_reference_route: /platform/ui-reference/components/data-table
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/data-table.md
-source_owner: /platform/ui-reference/components/data-table
+source_owner: not installed
 blade_api:
   - x-ui.data-table
-  - x-ui.data-table-toolbar
-  - x-ui.data-table-empty-state
+  - x-ui.data-table.toolbar
+  - x-ui.data-table.empty-state
   - x-ui.data-table-skeleton
 javascript_api: []
 source_files:
-  - resources/views/components/ui/data-table.blade.php
-  - resources/views/components/ui/data-table-toolbar.blade.php
-  - resources/views/components/ui/data-table-empty-state.blade.php
-  - resources/views/components/ui/data-table-skeleton.blade.php
+  - resources/views/components/ui/data-table/index.blade.php
+  - resources/views/components/ui/data-table/toolbar/index.blade.php
+  - resources/views/components/ui/data-table/empty-state.blade.php
+  - resources/views/components/ui/data-table-skeleton/index.blade.php
   - resources/css/app.css
 foundation_elements:
   - color
@@ -79,11 +79,11 @@ carbon_reference:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
-  - [15.1. The UI Reference page must also show:](#151-the-ui-reference-page-must-also-show)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
+  - [15.1. The rendered evidence page must also show:](#151-the-ui-reference-page-must-also-show)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
 - [17. Related APIs](#17-related-apis)
 - [18. References](#18-references)
@@ -92,7 +92,7 @@ carbon_reference:
 
 Data table organizes comparable records into aligned columns.
 
-Canonical API owner: `/platform/ui-reference/components/data-table`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
 Data table is the installed Login App 2.0 API for tabular record display, scan hierarchy, sortable columns, row actions, loading/empty/error table states, responsive overflow handling, and composition with table-adjacent controls. It does not own server queries, feature-specific filters, pagination state, export workflows, bulk-action business logic, or page-level layout.
 
@@ -104,7 +104,7 @@ Data table is the installed Login App 2.0 API for tabular record display, scan h
 - Support approved density, sorting, row action, loading, empty, error, selected/current, disabled-action, and responsive overflow states.
 - Compose with Search, Button, Checkbox, Radio button, Menu buttons, Loading, Tag, and Pagination APIs where those controls appear inside or near the table.
 - Consume Foundation Element APIs for color, spacing, typography, themes, motion, icons, and 2x Grid.
-- Prove table examples with production UI in the UI Reference page.
+- Prove table examples with production UI in the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -123,15 +123,15 @@ Data table is the installed Login App 2.0 API for tabular record display, scan h
 | Component slug     | data-table                                                                                                                                                                      |
 | Category           | Data display                                                                                                                                                                    |
 | Priority           | Tier A - Baseline app development                                                                                                                                               |
-| UI Reference route | `/platform/ui-reference/components/data-table`                                                                                                                                  |
+| Rendered evidence route | `not installed`                                                                                                                                  |
 | Canonical doc      | `docs/02-standards/ui/components/data-table.md`                                                                                                                                 |
-| Source owner       | `/platform/ui-reference/components/data-table`                                                                                                                                  |
+| Source owner       | `not installed`                                                                                                                                  |
 | System maturity    | Partial                                                                                                                                                                         |
 | Correction outcome | The page/API documents exact table examples, states, row sizes, toolbar sizing, sorting, row actions, loading, empty, error, responsive overflow, Pagination composition, and gated selection/expansion boundaries. |
 
 ## 3. Installed standard
 
-Data table now has component-specific UI Reference examples that consume approved Foundation Elements.
+Data table now has component-specific rendered evidence examples that consume approved Foundation Elements.
 
 The installed standard is a semantic table API for comparable records. A table must have a clear data purpose, a meaningful accessible name, stable column headers, readable row spacing, visible row hover/focus states where applicable, and explicit loading/empty/error states.
 
@@ -202,29 +202,29 @@ The reusable Blade API is required by this standard and must replace placeholder
 ```blade
 <x-ui.data-table :columns="$columns" :rows="$rows" row-actions>
     <x-slot:toolbar>
-        <x-ui.data-table-toolbar>
+        <x-ui.data-table.toolbar>
             <x-ui.search name="users_search" label="Search users" />
             <x-ui.button semantic="ghost">Export</x-ui.button>
-        </x-ui.data-table-toolbar>
+        </x-ui.data-table.toolbar>
     </x-slot:toolbar>
 </x-ui.data-table>
 ```
 
-Use the canonical API instead of hand-building feature-local table wrappers. If the implementation has not yet installed the Blade component, the UI Reference correction must install it or explicitly mark the missing reusable API as a blocking gap. Do not leave `Component-specific API pending correction` in the standard or rendered page.
+Use the canonical API instead of hand-building feature-local table wrappers. If the implementation has not yet installed the Blade component, the rendered evidence correction must install it or explicitly mark the missing reusable API as a blocking gap. Do not leave `Component-specific API pending correction` in the standard or rendered page.
 
 ### 4.2. API surfaces
 
 | API surface           | Installed value                                                                                                                                                                                                                                                              |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Primary Blade API     | `x-ui.data-table`                                                                                                                                                                                                                                                            |
-| Toolbar Blade API     | `x-ui.data-table-toolbar`                                                                                                                                                                                                                                                    |
-| Empty state Blade API | `x-ui.data-table-empty-state`                                                                                                                                                                                                                                                |
+| Toolbar Blade API     | `x-ui.data-table.toolbar`                                                                                                                                                                                                                                                    |
+| Empty state Blade API | `x-ui.data-table.empty-state`                                                                                                                                                                                                                                                |
 | Skeleton Blade API    | `x-ui.data-table-skeleton`                                                                                                                                                                                                                                                   |
 | JavaScript            | No dedicated baseline JavaScript controller is required for static rendering. Sorting, filtering, pagination, row expansion, or server updates are Pattern/feature-owned unless a table controller is explicitly installed and documented.                                   |
 | Data attributes       | `data-ui-data-table`, `data-ui-data-table-toolbar`, `data-ui-data-table-row`, `data-ui-data-table-cell`, `data-ui-data-table-sort`, `data-ui-data-table-empty`, `data-ui-data-table-loading` where implemented by the component.                                             |
 | Root semantic element | Native `<table>` inside an overflow-safe wrapper.                                                                                                                                                                                                                            |
 | CSS namespace         | App-owned `ui-*` table classes documented by the component implementation.                                                                                                                                                                                                   |
-| Source files          | `resources/views/components/ui/data-table.blade.php`; `resources/views/components/ui/data-table-toolbar.blade.php`; `resources/views/components/ui/data-table-empty-state.blade.php`; `resources/views/components/ui/data-table-skeleton.blade.php`; `resources/css/app.css` |
+| Source files          | `resources/views/components/ui/data-table/index.blade.php`; `resources/views/components/ui/data-table/toolbar/index.blade.php`; `resources/views/components/ui/data-table/empty-state.blade.php`; `resources/views/components/ui/data-table-skeleton/index.blade.php`; `resources/css/app.css` |
 
 ### 4.3. Props and options
 
@@ -253,7 +253,7 @@ Use the canonical API instead of hand-building feature-local table wrappers. If 
 | `striped`          | `bool`          | `false`           | `true`, `false`                    | No          | Zebra striping is deferred unless explicitly approved and proven.                                                                      |
 | `class`            | `string / null` | `null`            | Layout passthrough if supported    | No          | Parent Patterns may pass layout classes. Do not use for local color, row-height, typography, border, or state overrides.               |
 
-Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the UI Reference proof before use.
+Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the rendered evidence proof before use.
 
 ### 4.4. Column data contract
 
@@ -364,7 +364,7 @@ Data table has app-approved table modes and modifiers. It does not have decorati
 | Toolbar size pairing   | Toolbar option                | Approved API                               | `toolbarSize="sm|lg"` / toolbar `size`     | Toolbar controls must pair with compact or standard row rhythm.                            | Small toolbars are paired with large rows or large toolbars with compact rows.   |
 | Standard density       | Compatibility density         | Approved API                               | `density="standard"`                       | Existing callers need default admin table rhythm.                                          | New work can set `size="md"` directly.                                           |
 | Compact density        | Compatibility density         | Approved API                               | `density="compact"`                        | Existing callers need dense admin rows or repeated management rows.                         | New work can set `size="sm"` directly.                                           |
-| Table toolbar          | Composition option            | Approved API                               | `toolbar` slot / `x-ui.data-table-toolbar` | Global table search, filter, export, view, or settings actions exist.                      | The action belongs to an individual row.                                         |
+| Table toolbar          | Composition option            | Approved API                               | `toolbar` slot / `x-ui.data-table.toolbar` | Global table search, filter, export, view, or settings actions exist.                      | The action belongs to an individual row.                                         |
 | Row actions            | Composition option            | Approved API                               | `rowActions` / row action slot             | Each row has a small set of row-specific actions.                                          | The action applies to selected rows or the whole table.                          |
 | Loading/skeleton table | State modifier                | Approved API                               | `loading` / `x-ui.data-table-skeleton`     | Table rows are loading or refreshing.                                                      | The entire page is unavailable; use a Pattern-owned page loading state.          |
 | Empty table            | State modifier                | Approved API                               | `emptyTitle`, `emptyDescription`           | No records exist or current filters return no records.                                     | The table failed to load; use error state.                                       |
@@ -421,7 +421,7 @@ Data table consumes Foundation Color, Spacing, Typography, Themes, Icons, Motion
 | Spacing            | Header spacing, toolbar spacing, cell padding, row density, action spacing, and empty-state spacing.                                  |
 | Typography         | Table title, description, column header text, cell text, helper/empty/error text, and status labels.                                  |
 | Themes             | Table must remain readable in supported light, dark, inline, inverse, and high-contrast contexts.                                     |
-| Icons              | Sort indicators, row action triggers, empty/error icons if approved, and status icons through Heroicons.                              |
+| Icons              | Sort indicators, row action triggers, empty/error icons if approved, and status icons through internal icon components.                              |
 | Motion             | Loading/skeleton and menu/toolbar interactions must respect reduced-motion preferences.                                               |
 | 2x Grid            | Parent layouts place the table in page regions; table itself does not redefine page grid.                                             |
 
@@ -538,7 +538,7 @@ Allowed helpers/classes are the public Data table API classes documented above. 
 
 | Capability                 | Status           | Gate                                                                                                                                    | Approved alternative today                                                 |
 | -------------------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| Checkbox row selection     | Gated            | Requires selection state contract, header checkbox indeterminate behavior, batch action bar, keyboard behavior, and UI Reference proof. | Use row actions or a separate Checkbox group Pattern.                      |
+| Checkbox row selection     | Gated            | Requires selection state contract, header checkbox indeterminate behavior, batch action bar, keyboard behavior, and rendered evidence proof. | Use row actions or a separate Checkbox group Pattern.                      |
 | Radio row selection        | Gated            | Requires single-select state contract and clear action ownership.                                                                       | Use Radio button group when the choices do not require full table columns. |
 | Batch actions              | Gated            | Requires selected-row state, batch toolbar, cancel/deselect behavior, and destructive-action guidance.                                  | Use row actions or Pattern-owned management workflow.                      |
 | Expandable rows            | Gated            | Requires expansion control, panel semantics, content boundary, loading behavior, and keyboard/focus behavior.                           | Link to a detail page, side panel, Modal, or Accordion where appropriate.  |
@@ -548,9 +548,9 @@ Allowed helpers/classes are the public Data table API classes documented above. 
 | Sticky header/columns      | Deferred         | Requires overflow, keyboard, zoom, and responsive review.                                                                               | Keep table in main content with enough space.                              |
 | AI presence                | Do not implement | Requires approved AI-assisted feature, AI label standard, explainability content, and legal/product review.                             | Use normal status, tag, or notification APIs.                              |
 
-No deferred capability may be implemented locally. Future extensions require an updated Component standard and UI Reference proof.
+No deferred capability may be implemented locally. Future extensions require an updated Component standard and rendered evidence proof.
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -559,9 +559,9 @@ No deferred capability may be implemented locally. Future extensions require an 
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -570,9 +570,9 @@ No deferred capability may be implemented locally. Future extensions require an 
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 Data table is a broad, matrix-heavy component. Its Live examples card may use grouped sections, matrices, comparison grids, state tables, and full-width demonstrations instead of the simple Accordion-style tab-only model.
 
@@ -590,7 +590,7 @@ Data table is a broad, matrix-heavy component. Its Live examples card may use gr
 | Selection and batch-action gate | If not implemented, show trigger conditions rather than fake selectable UI. If implemented, render real checkbox/radio selection and batch action behavior. | Checkbox selection gated, radio selection gated, batch action bar gated, indeterminate header checkbox gate                |
 | Expandable-row gate             | If not implemented, show trigger conditions rather than fake expandable rows. If implemented, render a real expansion control and panel.                    | Expandable rows gated, expandable + selectable gated, expanded loading skeleton gate                                       |
 
-### 15.1. The UI Reference page must also show:
+### 15.1. The rendered evidence page must also show:
 
 - Installed API table.
 - Column and row data contracts.
@@ -603,7 +603,7 @@ Data table is a broad, matrix-heavy component. Its Live examples card may use gr
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/data-table` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The page does not contain `Component-specific API pending correction`.
@@ -617,12 +617,12 @@ Data table is a broad, matrix-heavy component. Its Live examples card may use gr
 - The page links to Pagination as the owner for paging controls.
 - The page distinguishes Data table from List, Structured list, Tile/Card, Checkbox, Radio button, and Select/Dropdown-style selection controls.
 - The page uses app-owned `ui-*` classes and does not use Carbon production classes such as `cds--data-table` or `bx--data-table`.
-- The canonical doc link on the UI Reference page points to `docs/02-standards/ui/components/data-table.md`.
+- The canonical doc link on the rendered evidence page points to `docs/02-standards/ui/components/data-table.md`.
 
 Suggested feature assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/data-table');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Data table');
@@ -654,19 +654,19 @@ $response->assertDontSee('tier-2/data-table.md');
 
 | API                   | Route                                               | Relationship                                                                            |
 | --------------------- | --------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| Pagination            | `/platform/ui-reference/components/pagination`      | Owns page navigation controls below table content.                                      |
-| Search                | `/platform/ui-reference/components/search`          | Owns search input and clear/loading behavior used in table toolbar.                     |
-| Checkbox              | `/platform/ui-reference/components/checkbox`        | Owns multi-select controls when row selection is implemented.                           |
-| Radio button          | `/platform/ui-reference/components/radio-button`    | Owns single-select row controls when implemented.                                       |
-| Button                | `/platform/ui-reference/components/button`          | Owns toolbar and row action buttons.                                                    |
-| Menu buttons          | `/platform/ui-reference/components/menu-buttons`    | Owns row overflow and toolbar overflow action menus.                                    |
-| Loading               | `/platform/ui-reference/components/loading`         | Owns loading family; Data table prefers skeleton rows for table content.                |
-| Tag                   | `/platform/ui-reference/components/tag`             | Owns status/metadata tags inside cells.                                                 |
-| Structured list       | `/platform/ui-reference/components/structured-list` | Alternative for comparable rows without full table behavior.                            |
-| List                  | `/platform/ui-reference/components/list`            | Alternative for content-only lists.                                                     |
-| Table patterns        | `/platform/ui-reference/patterns/tables`            | Own higher-level filter, bulk-action, server pagination, and data-management workflows. |
-| Data/content patterns | `/platform/ui-reference/patterns/data-content`      | Own data page composition and object-detail workflows.                                  |
-| Components overview   | `/platform/ui-reference/components`                 | Component catalog owner.                                                                |
+| Pagination            | `not installed`      | Owns page navigation controls below table content.                                      |
+| Search                | `not installed`          | Owns search input and clear/loading behavior used in table toolbar.                     |
+| Checkbox              | `not installed`        | Owns multi-select controls when row selection is implemented.                           |
+| Radio button          | `not installed`    | Owns single-select row controls when implemented.                                       |
+| Button                | `not installed`          | Owns toolbar and row action buttons.                                                    |
+| Menu buttons          | `not installed`    | Owns row overflow and toolbar overflow action menus.                                    |
+| Loading               | `not installed`         | Owns loading family; Data table prefers skeleton rows for table content.                |
+| Tag                   | `not installed`             | Owns status/metadata tags inside cells.                                                 |
+| Structured list       | `not installed` | Alternative for comparable rows without full table behavior.                            |
+| List                  | `not installed`            | Alternative for content-only lists.                                                     |
+| Table patterns        | `not installed`            | Own higher-level filter, bulk-action, server pagination, and data-management workflows. |
+| Data/content patterns | `not installed`      | Own data page composition and object-detail workflows.                                  |
+| Components overview   | `not installed`                 | Component catalog owner.                                                                |
 
 ## 18. References
 

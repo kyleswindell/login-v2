@@ -6,9 +6,9 @@ status: implemented-pending-correction
 system_maturity: partial
 category: feedback-and-loading
 priority: tier-b-common-reusable-component
-ui_reference_route: /platform/ui-reference/components/progress-indicator
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/progress-indicator.md
-source_owner: /platform/ui-reference/components/progress-indicator
+source_owner: not installed
 blade_api:
   - x-ui.progress-indicator
   - x-ui.progress-step
@@ -17,8 +17,8 @@ data_attributes:
   - data-ui-progress-indicator
   - data-ui-progress-step
 source_files:
-  - resources/views/components/ui/progress-indicator.blade.php
-  - resources/views/components/ui/progress-step.blade.php
+  - resources/views/components/ui/progress-indicator/index.blade.php
+  - resources/views/components/ui/progress-step/index.blade.php
   - resources/css/app.css
 foundation_elements:
   - color
@@ -73,10 +73,10 @@ carbon_reference:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
   - [15.1. Required Live examples internal sections:](#151-required-live-examples-internal-sections)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
   - [16.1. Suggested automated assertions:](#161-suggested-automated-assertions)
@@ -87,9 +87,9 @@ carbon_reference:
 
 Progress indicator shows a user position in a linear step flow.
 
-Canonical API owner: `/platform/ui-reference/components/progress-indicator`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
-Progress indicator is the installed Login App 2.0 linear step-flow status API. It owns step order, completed/current/incomplete/error/warning step states, horizontal and vertical layouts, optional step descriptions, optional step metadata, responsive overflow treatment, semantic current-step exposure, token-backed connector styling, and UI Reference proof for step-flow navigation status. It does not own task loading, indeterminate progress, upload progress, form validation logic, wizard routing, step persistence, or page-level workflow orchestration.
+Progress indicator is the installed Login App 2.0 linear step-flow status API. It owns step order, completed/current/incomplete/error/warning step states, horizontal and vertical layouts, optional step descriptions, optional step metadata, responsive overflow treatment, semantic current-step exposure, token-backed connector styling, and rendered evidence proof for step-flow navigation status. It does not own task loading, indeterminate progress, upload progress, form validation logic, wizard routing, step persistence, or page-level workflow orchestration.
 
 ### 1.1. Canonical API responsibilities:
 
@@ -102,7 +102,7 @@ Progress indicator is the installed Login App 2.0 linear step-flow status API. I
 - Preserve a readable label for each step.
 - Provide non-color status cues through icons, text, and semantic attributes.
 - Consume Foundation Element APIs for color, spacing, typography, themes, motion, icons, and 2x Grid where composed in layouts.
-- Prove step flow, current/completed/error states, vertical/horizontal layouts, responsive behavior, and developer implementation examples on the UI Reference page.
+- Prove step flow, current/completed/error states, vertical/horizontal layouts, responsive behavior, and developer implementation examples on the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -123,17 +123,17 @@ Progress indicator is the installed Login App 2.0 linear step-flow status API. I
 | Component slug               | `progress-indicator`                                                                                                                           |
 | Category                     | Feedback and loading                                                                                                                           |
 | Priority                     | Tier B - Common reusable component                                                                                                             |
-| UI Reference route           | `/platform/ui-reference/components/progress-indicator`                                                                                         |
+| Rendered evidence route           | `not installed`                                                                                         |
 | Canonical doc                | `docs/02-standards/ui/components/progress-indicator.md`                                                                                        |
-| Source owner                 | `/platform/ui-reference/components/progress-indicator`                                                                                         |
+| Source owner                 | `not installed`                                                                                         |
 | Blade API                    | `x-ui.progress-indicator`; `x-ui.progress-step`                                                                                                |
 | JavaScript API               | No dedicated JavaScript controller required for installed status-only behavior                                                                 |
 | Data attributes              | App-owned `data-ui-progress-indicator`; `data-ui-progress-step` when emitted by the component implementation                                   |
-| Source files                 | `resources/views/components/ui/progress-indicator.blade.php`; `resources/views/components/ui/progress-step.blade.php`; `resources/css/app.css` |
+| Source files                 | `resources/views/components/ui/progress-indicator/index.blade.php`; `resources/views/components/ui/progress-step/index.blade.php`; `resources/css/app.css` |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, Icons, 2x Grid where composed in layouts                                                           |
 | Carbon benchmark             | Carbon Progress indicator usage, style, and accessibility guidance                                                                             |
 
-`Approved API` means the UI Reference route and component-specific examples exist, but the canonical documentation must replace placeholder API language with the installed step-flow contract, explicit variants/options/states, deferred gates, and regression requirements.
+`Approved API` means the Rendered evidence route and component-specific examples exist, but the canonical documentation must replace placeholder API language with the installed step-flow contract, explicit variants/options/states, deferred gates, and regression requirements.
 
 ## 3. Installed standard
 
@@ -159,7 +159,7 @@ Progress indicator is installed as a step-flow status component. The approved pu
 - Do not animate progress connectors in a way that violates reduced-motion preferences.
 - Do not use this component for indeterminate loading, file uploads, background task progress, breadcrumbs, tabs, or decorative timelines.
 
-Carbon alignment note: Carbon documents progress indicators as step-flow components that help users track progress through a task and places them in full pages, modals, and side panels. Carbon step states include complete, current, and not-started, with state-specific visual treatment. Login App maps those principles to its own Blade API, `ui-*` classes, Heroicons, semantic status text, and UI Reference proof rather than adopting Carbon implementation classes directly.
+Carbon alignment note: Carbon documents progress indicators as step-flow components that help users track progress through a task and places them in full pages, modals, and side panels. Carbon step states include complete, current, and not-started, with state-specific visual treatment. Login App maps those principles to its own Blade API, `ui-*` classes, internal icon components, semantic status text, and rendered evidence proof rather than adopting Carbon implementation classes directly.
 
 ## 4. Public API
 
@@ -247,7 +247,7 @@ Use the Blade APIs instead of hand-building step lists, connectors, icons, or st
 | Root semantic element | Ordered list or component-owned equivalent with an accessible label                                                                            |
 | Data attributes       | `data-ui-progress-indicator`; `data-ui-progress-step` only when emitted by the component implementation                                        |
 | CSS namespace         | App-owned `ui-*` progress indicator classes documented by this standard                                                                        |
-| Source files          | `resources/views/components/ui/progress-indicator.blade.php`; `resources/views/components/ui/progress-step.blade.php`; `resources/css/app.css` |
+| Source files          | `resources/views/components/ui/progress-indicator/index.blade.php`; `resources/views/components/ui/progress-step/index.blade.php`; `resources/css/app.css` |
 
 ### 4.3. `x-ui.progress-indicator` props and options
 
@@ -263,7 +263,7 @@ Use the Blade APIs instead of hand-building step lists, connectors, icons, or st
 | `show-descriptions` | `bool`          | `true`       | `true`, `false`                 | No                         | May be false in compact horizontal layouts.                                                                    |
 | `class`             | `string / null` | `null`       | Layout passthrough if supported | No                         | Parent Patterns may pass layout classes. Do not use for local state, color, typography, or behavior overrides. |
 
-Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and UI Reference proof before use.
+Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and rendered evidence proof before use.
 
 ### 4.4. `x-ui.progress-step` props and options
 
@@ -274,7 +274,7 @@ Any prop not listed here is not public. If a feature needs another option, updat
 | `description`             | `string / null` | `null`         | Short helper text                                                   | No       | Recommended for vertical layouts and complex steps.                         |
 | `key` / `value` / `string | int             | null` / `null` | Stable step identifier                                              | No       | Required when workflow routing or state persistence references the step.    |  |  |
 | `href`                    | `string / null` | `null`         | Internal route URL                                                  | Gated    | Use only with `interactive=true` and validation-safe back navigation.       |
-| `icon`                    | `string / null` | status-derived | Approved Heroicon alias/component                                   | No       | Custom icons are rarely needed; status icons should remain component-owned. |
+| `icon`                    | `string / null` | status-derived | Internal icon alias/component                                   | No       | Custom icons are rarely needed; status icons should remain component-owned. |
 | `disabled`                | `bool`          | `false`        | `true`, `false`                                                     | No       | Equivalent to `status="disabled"` when provided.                            |
 | `meta`                    | `string / null` | `null`         | Short auxiliary text                                                | No       | Use sparingly for optional due dates or counts.                             |
 
@@ -329,7 +329,7 @@ When `steps` is passed to `x-ui.progress-indicator`, each step must use this con
 | Percent progress            | Not applicable | none                                 | Use Progress bar when installed.                                    |                                                                      |
 | Indeterminate loading       | Not applicable | none                                 | Use Inline loading, Loading, or Skeleton.                           |                                                                      |
 | Skeleton progress indicator | Not applicable | none                                 | Use Skeleton for pending page structure, not a fake step indicator. |                                                                      |
-| Multi-branch step flow      | Deferred       | none                                 | Requires Pattern-owned workflow and UI Reference proof.             |                                                                      |
+| Multi-branch step flow      | Deferred       | none                                 | Requires Pattern-owned workflow and rendered evidence proof.             |                                                                      |
 | Nested steps                | Not allowed    | none                                 | Keep the indicator linear and one level deep.                       |                                                                      |
 
 ## 6. States
@@ -379,7 +379,7 @@ Progress indicator consumes Foundation Color, Spacing, Typography, Themes, Motio
 | Typography  | Step label, optional description, optional metadata, hidden status text, and truncated label behavior.                        |
 | Themes      | Light/dark/inverse token resolution for markers, connectors, labels, icons, and states.                                       |
 | Motion      | Productive state transitions where installed; must respect reduced-motion preferences.                                        |
-| Icons       | Heroicons for complete, error, warning, and optional status indicators.                                                       |
+| Icons       | Internal icon components for complete, error, warning, and optional status indicators.                                                       |
 | 2x Grid     | Parent-owned placement in page, modal, side-panel, form, or workflow layouts.                                                 |
 
 Carbon color role mapping:
@@ -522,21 +522,21 @@ Feature views must not create local `progress-*`, `stepper-*`, `wizard-*`, Boots
 
 | Capability                      | Status        | Gate                                                                                                                     |
 | ------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Interactive step navigation     | Gated         | Requires parent Pattern ownership, validation-safe routing, focus behavior, disabled-step rules, and UI Reference proof. |
+| Interactive step navigation     | Gated         | Requires parent Pattern ownership, validation-safe routing, focus behavior, disabled-step rules, and rendered evidence proof. |
 | Clickable future steps          | Gated         | Requires workflow proof that users may safely jump ahead.                                                                |
-| Multi-branch progress indicator | Deferred      | Requires Pattern-owned model, content rules, and UI Reference proof.                                                     |
+| Multi-branch progress indicator | Deferred      | Requires Pattern-owned model, content rules, and rendered evidence proof.                                                     |
 | Nested substeps                 | Not allowed   | Use a Pattern-owned wizard or checklist. The installed indicator is one level deep.                                      |
 | Percent progress                | Not owned     | Use Progress bar when installed.                                                                                         |
 | Indeterminate loading           | Not owned     | Use Inline loading, Loading, or Skeleton.                                                                                |
 | Async upload/import progress    | Pattern-owned | Requires progress bar/loading APIs and workflow-specific messaging.                                                      |
-| Animated connector progress     | Gated         | Requires Motion Element approval, reduced-motion proof, and UI Reference proof.                                          |
-| Custom status colors            | Not allowed   | Requires Color Element update and UI Reference proof.                                                                    |
+| Animated connector progress     | Gated         | Requires Motion Element approval, reduced-motion proof, and rendered evidence proof.                                          |
+| Custom status colors            | Not allowed   | Requires Color Element update and rendered evidence proof.                                                                    |
 | Arbitrary icons                 | Not allowed   | Requires Icons Element update and component proof.                                                                       |
-| Arbitrary sizes                 | Not allowed   | Requires Typography, Spacing, and UI Reference updates.                                                                  |
+| Arbitrary sizes                 | Not allowed   | Requires Typography, Spacing, and rendered evidence updates.                                                                  |
 
-Future extensions require an updated Component standard and UI Reference proof before production use.
+Future extensions require an updated Component standard and rendered evidence proof before production use.
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -545,9 +545,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -556,9 +556,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The Progress indicator page is a workflow-status reference page. The Live examples card may use grouped examples, state matrices, layout comparisons, responsive examples, and developer implementation examples. It must not render fake loading, fake progress-bar, or fake wizard-routing behavior.
 
@@ -581,7 +581,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/progress-indicator` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
@@ -601,7 +601,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 ### 16.1. Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/progress-indicator');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Progress indicator');
@@ -624,7 +624,7 @@ $response->assertSee('Interactive step navigation');
 $response->assertDontSee('Component-specific API pending correction');
 $response->assertDontSee('<li>None.</li>', false);
 $response->assertDontSee('Use only documented props/options');
-$response->assertDontSee('See UI Reference developer implementation section');
+$response->assertDontSee('See rendered evidence developer implementation section');
 $response->assertDontSee('Live Examples Card');
 $response->assertDontSee('Reference Examples');
 $response->assertDontSee('Legacy Contract Summary');
@@ -639,21 +639,21 @@ $response->assertDontSee('bx--');
 
 | API                              | Route                                                                        |
 | -------------------------------- | ---------------------------------------------------------------------------- |
-| Button                           | `/platform/ui-reference/components/button`                                   |
-| Inline loading                   | `/platform/ui-reference/components/inline-loading`                           |
-| Notification                     | `/platform/ui-reference/components/notification`                             |
-| Progress bar                     | `/platform/ui-reference/components/progress-bar`                             |
-| Tabs                             | `/platform/ui-reference/components/tabs`                                     |
-| Forms pattern                    | `/platform/ui-reference/patterns/forms`                                      |
-| Overlay/feedback pattern         | `/platform/ui-reference/patterns/overlays-feedback`                          |
-| Layout Pattern                   | `/platform/ui-reference/patterns/layout`                                     |
-| Color element                    | `/platform/ui-reference/elements/color`                                      |
-| Spacing element                  | `/platform/ui-reference/elements/spacing`                                    |
-| Typography element               | `/platform/ui-reference/elements/typography`                                 |
-| Themes element                   | `/platform/ui-reference/elements/themes`                                     |
-| Motion element                   | `/platform/ui-reference/elements/motion`                                     |
-| Icons element                    | `/platform/ui-reference/elements/icons`                                      |
-| Components overview              | `/platform/ui-reference/components`                                          |
+| Button                           | `not installed`                                   |
+| Inline loading                   | `not installed`                           |
+| Notification                     | `not installed`                             |
+| Progress bar                     | `not installed`                             |
+| Tabs                             | `not installed`                                     |
+| Forms pattern                    | `not installed`                                      |
+| Overlay/feedback pattern         | `not installed`                          |
+| Layout Pattern                   | `not installed`                                     |
+| Color element                    | `not installed`                                      |
+| Spacing element                  | `not installed`                                    |
+| Typography element               | `not installed`                                 |
+| Themes element                   | `not installed`                                     |
+| Motion element                   | `not installed`                                     |
+| Icons element                    | `not installed`                                      |
+| Components overview              | `not installed`                                          |
 | Canonical progress indicator doc | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Fprogress-indicator.md` |
 | Carbon progress indicator usage  | `https://carbondesignsystem.com/components/progress-indicator/usage/`        |
 
@@ -663,4 +663,4 @@ $response->assertDontSee('bx--');
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon Progress indicator usage, style, and accessibility guidance inform step-flow placement, complete/current/not-started status treatment, linear task-progress usage, and accessibility review expectations. Login App keeps its own Blade API, Heroicons icon standard, app-owned `ui-*` classes, semantic status mapping, and UI Reference proof.
+- Carbon Progress indicator usage, style, and accessibility guidance inform step-flow placement, complete/current/not-started status treatment, linear task-progress usage, and accessibility review expectations. Login App keeps its own Blade API, internal icon standard, app-owned `ui-*` classes, semantic status mapping, and rendered evidence proof.

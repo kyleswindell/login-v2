@@ -8,28 +8,30 @@ Use this index for quick lookup. The owning `patterns/{pattern}.md` file remains
 - [3. Pattern Contract](#3-pattern-contract)
 - [4. Pattern Checklist Template](#4-pattern-checklist-template)
   - [4.1. Implementation checklist](#41-implementation-checklist)
-  - [4.2. UI Reference proof checklist](#42-ui-reference-proof-checklist)
+  - [4.2. rendered evidence proof checklist](#42-ui-reference-proof-checklist)
 - [5. Related](#5-related)
 
 ## 1. Pattern Matrix
 
-| Pattern                  | Disposition  | Composition owner                                                    | Consumed Elements                          | Coordinated Components                                                                    | UI Reference route                                   | Planned sub-APIs                            |
+| Pattern                  | Disposition  | Composition owner                                                    | Consumed Elements                          | Coordinated Components                                                                    | Rendered evidence route                                   | Planned sub-APIs                            |
 | ------------------------ | ------------ | -------------------------------------------------------------------- | ------------------------------------------ | ----------------------------------------------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------- |
 | Boundary and validation  | Approved API | validation placement, blocked/error boundaries                       | Color, Typography, Spacing, Icons          | Text input, Select, Checkbox, Notification, Tag                                           | represented through Forms/Feedback pages             | validation summary refinements              |
-| Data and content         | Approved API | read-only detail, key-value, identity/content composition            | 2x Grid, Spacing, Typography, Color        | Structured list, Data table, Tile, Tag, Code snippet                                      | `/platform/ui-reference/patterns/data-content`       | content browser, enhanced detail surfaces   |
-| Feedback                 | Approved API | inline/page feedback composition                                     | Color, Typography, Icons, Motion           | Notification, Tag, Loading, Inline loading                                                | `/platform/ui-reference/patterns/overlays-feedback`  | feedback/notification boundary cleanup      |
-| Forms                    | Approved API | form sections, rows, validation summary, actions                     | Spacing, Typography, Color, Icons, Motion  | Text input, Select, Dropdown, Checkbox, Radio, Toggle, Date picker, File uploader, Button | `/platform/ui-reference/patterns/forms`              | scheduling, complex field groups            |
+| Common Actions           | Approved API | repeated action meaning, hierarchy, permission, loading, feedback, primitive readiness | Color, Spacing, Typography, Icons, Motion  | Button, Link, Menu, Modal, Checkbox, Toggle, Tooltip, Toggletip, Notification             | `not installed`     | action-set implemented; confirmation, destructive flows, primitive readiness |
+| Data and content         | Approved API | read-only detail, key-value, identity/content composition            | 2x Grid, Spacing, Typography, Color        | Structured list, Data table, Tile, Tag, Code snippet                                      | `not installed`       | content browser, enhanced detail surfaces   |
+| Feedback                 | Approved API | inline/page feedback composition                                     | Color, Typography, Icons, Motion           | Notification, Tag, Loading, Inline loading                                                | `not installed`  | feedback/notification boundary cleanup      |
+| Forms                    | Approved API | form sections, rows, validation summary, actions                     | Spacing, Typography, Color, Icons, Motion  | Text input, Select, Dropdown, Checkbox, Radio, Toggle, Date picker, File uploader, Button | `not installed`              | scheduling, complex field groups            |
 | Interactions             | Approved API | interaction rules across composed surfaces                           | Motion, Color, Icons, Typography           | Button, Menu, Tabs, Modal, Tooltip                                                        | represented through data/content and component pages | dedicated route decision                    |
-| Layout                   | Approved API | page structure, content sections, grid composition, dashboard layout | 2x Grid, Spacing, Themes, Color            | Breadcrumb, Tabs, Tile, Data table, UI shell sections                                     | `/platform/ui-reference/patterns/layout`             | page header, dashboard grid, widget shell   |
-| Navigation               | Approved API | app shell, subnavigation, search/filter navigation                   | 2x Grid, Spacing, Color, Icons, Typography | Breadcrumb, Tabs, Menu, Menu buttons, Search, UI shell                                    | `/platform/ui-reference/patterns/navigation`         | navigation shell, filters/search-filter bar |
-| Notifications and toasts | Approved API | transient and persistent notification behavior                       | Color, Typography, Icons, Motion           | Notification, Tag, Button, Link                                                           | `/platform/ui-reference/patterns/overlays-feedback`  | notification/toast boundary confirmation    |
-| Overlays and actions     | Approved API | blocking/nonblocking overlay composition and action placement        | Color, Spacing, Typography, Motion, Icons  | Modal, Tooltip, Toggletip, Popover, Button, Menu                                          | `/platform/ui-reference/patterns/overlays-feedback`  | drawer/side panel, dropdown action menu     |
+| Layout                   | Approved API | page structure, content sections, grid composition, dashboard layout | 2x Grid, Spacing, Themes, Color            | Breadcrumb, Tabs, Tile, Data table, UI shell sections                                     | `not installed`             | page header, dashboard grid, widget shell   |
+| Navigation               | Approved API | app shell, subnavigation, search/filter navigation                   | 2x Grid, Spacing, Color, Icons, Typography | Breadcrumb, Tabs, Menu, Menu buttons, Search, UI shell                                    | `not installed`         | navigation shell, filters/search-filter bar |
+| Notifications and toasts | Approved API | transient and persistent notification behavior                       | Color, Typography, Icons, Motion           | Notification, Tag, Button, Link                                                           | `not installed`  | notification/toast boundary confirmation    |
+| Overlays and actions     | Approved API | blocking/nonblocking overlay composition and action placement        | Color, Spacing, Typography, Motion, Icons  | Modal, Tooltip, Toggletip, Popover, Button, Menu                                          | `not installed`  | drawer/side panel, dropdown action menu     |
 
 ## 2. Planned Pattern Gaps
 
 These names are tracked in [UI API Registry](../api-registry.md) until they receive owning standards and routes:
 
 - table toolbar
+- common actions source and rendered evidence proof
 - page header
 - navigation shell
 - text toolbar
@@ -45,11 +47,13 @@ These names are tracked in [UI API Registry](../api-registry.md) until they rece
 
 ## 3. Pattern Contract
 
-Every Pattern standard must define the Pattern API, required composition, optional composition, consumed Element APIs, owned/coordinated Component APIs, allowed variants/layout options, state ownership, responsive behavior, accessibility/content contracts, prohibited usage, deferred gates, UI Reference requirements, and tests.
+Every Pattern standard must define the Pattern API, required composition, optional composition, consumed Element APIs, owned/coordinated Component APIs, allowed variants/layout options, state ownership, responsive behavior, accessibility/content contracts, prohibited usage, deferred gates, Rendered evidence requirements, and tests.
+
+Implementation-facing Pattern test criteria live in [Pattern Test Requirements](../test-requirements/patterns.md). Pattern tests must verify composition-level Element consumption and approved Component usage without overriding component-owned internals.
 
 ## 4. Pattern Checklist Template
 
-Every Pattern standard must include `## Implementation and UI Reference Checklist`.
+Every Pattern standard must include `## Implementation and Rendered Evidence Checklist`.
 
 ### 4.1. Implementation checklist
 
@@ -62,7 +66,7 @@ Every Pattern standard must include `## Implementation and UI Reference Checklis
 | Accessibility/content      | Define page/workflow semantics, heading structure, focus flow, status messaging, action labels, and non-color meaning.               |
 | Tests                      | Define route/content/API assertions that prove the Pattern and coordinated Component usage.                                          |
 
-### 4.2. UI Reference proof checklist
+### 4.2. rendered evidence proof checklist
 
 | Requirement            | Visual proof expectation                                                                                                 |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------ |
@@ -79,4 +83,5 @@ Every Pattern standard must include `## Implementation and UI Reference Checklis
 - [UI API Registry](../api-registry.md)
 - [Foundation Elements](../elements/index.md)
 - [Component API Standards](../components/index.md)
+- [Pattern Test Requirements](../test-requirements/patterns.md)
 - [Pattern checklist](checklist.md)

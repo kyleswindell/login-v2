@@ -5,17 +5,17 @@ status: implemented-standard
 api_layer: Component API
 category: Data display
 priority: Tier B - Common reusable component
-ui_reference_route: /platform/ui-reference/components/contained-list
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/contained-list.md
-source_owner: /platform/ui-reference/components/contained-list
+source_owner: not installed
 blade_api:
   - x-ui.contained-list
   - x-ui.contained-list-item
 javascript_api: []
 data_attributes: []
 source_files:
-  - resources/views/components/ui/contained-list.blade.php
-  - resources/views/components/ui/contained-list-item.blade.php
+  - resources/views/components/ui/contained-list/index.blade.php
+  - resources/views/components/ui/contained-list-item/index.blade.php
   - resources/css/app.css
 carbon_reference:
   - https://carbondesignsystem.com/components/contained-list/usage/
@@ -70,9 +70,9 @@ related_patterns:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. UI Reference requirements](#14-ui-reference-requirements)
+- [14. Rendered evidence requirements](#14-ui-reference-requirements)
   - [14.1. Required Live examples:](#141-required-live-examples)
-  - [14.2. Required UI Reference assertions](#142-required-ui-reference-assertions)
+  - [14.2. Required rendered evidence assertions](#142-required-ui-reference-assertions)
     - [14.2.1. The page must show:](#1421-the-page-must-show)
     - [14.2.2. The page must not show:](#1422-the-page-must-not-show)
 - [15. Testing and acceptance criteria](#15-testing-and-acceptance-criteria)
@@ -84,7 +84,7 @@ related_patterns:
 
 Contained list organizes related repeated rows inside a bounded surface such as a page region, sidebar, drawer, disclosure region, compact panel, or contextual review area.
 
-Canonical API owner: `/platform/ui-reference/components/contained-list`. Use this Component API instead of creating local repeated-row markup, local card-list styling, or local row-action behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local repeated-row markup, local card-list styling, or local row-action behavior for the same UI role.
 
 Contained list is the installed Login App 2.0 bounded row-list API. It owns the list container, heading/header region, repeated row structure, row dividers, row density, row metadata, optional row icons, optional row-level actions, empty/loading/error states, and token-backed contained-surface behavior. It does not own table comparison, bulk selection, sorting, pagination, complex filtering, hierarchical trees, accordion disclosure, page-level navigation, or feature-specific business behavior.
 
@@ -96,7 +96,7 @@ Contained list is the installed Login App 2.0 bounded row-list API. It owns the 
 - Provide consistent row spacing, dividers, title/header treatment, and bounded-surface styling.
 - Preserve native link/button behavior for interactive rows and row actions.
 - Consume Foundation Element APIs for color, spacing, typography, themes, icons, and motion where applicable.
-- Prove variants, row content, row actions, states, accessibility behavior, and alternatives on the UI Reference page.
+- Prove variants, row content, row actions, states, accessibility behavior, and alternatives on the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -117,17 +117,17 @@ Contained list is the installed Login App 2.0 bounded row-list API. It owns the 
 | Component slug               | `contained-list`                                                                                                                                 |
 | Category                     | Data display                                                                                                                                     |
 | Priority                     | Tier B - Common reusable component                                                                                                               |
-| UI Reference route           | `/platform/ui-reference/components/contained-list`                                                                                               |
+| Rendered evidence route           | `not installed`                                                                                               |
 | Canonical doc                | `docs/02-standards/ui/components/contained-list.md`                                                                                              |
-| Source owner                 | `/platform/ui-reference/components/contained-list`                                                                                               |
+| Source owner                 | `not installed`                                                                                               |
 | Blade API                    | `x-ui.contained-list`; `x-ui.contained-list-item`                                                                                                |
 | JavaScript API               | None required for installed contained-list behavior                                                                                              |
 | Data attributes              | None required for installed behavior                                                                                                             |
-| Source files                 | `resources/views/components/ui/contained-list.blade.php`; `resources/views/components/ui/contained-list-item.blade.php`; `resources/css/app.css` |
+| Source files                 | `resources/views/components/ui/contained-list/index.blade.php`; `resources/views/components/ui/contained-list-item/index.blade.php`; `resources/css/app.css` |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Icons, Motion where interactive or transitional states appear                                                |
 | Carbon benchmark             | Carbon Contained list usage, style, and accessibility guidance                                                                                   |
 
-`Implemented standard` means this component is approved as the expected production standard for bounded repeated row groups. The UI Reference page must render production examples and implementation guidance, not a deferred catalog entry.
+`Implemented standard` means this component is approved as the expected production standard for bounded repeated row groups. The rendered evidence page must render production examples and implementation guidance, not a deferred catalog entry.
 
 ## 3. Installed standard
 
@@ -152,7 +152,7 @@ Use Contained list when related repeated rows need to sit inside a bounded surfa
 - Use app-owned `ui-*` classes and approved Component APIs only.
 - Do not use local utility clusters, local icons, arbitrary spacing, or fake table/list hybrids for contained-list behavior.
 
-Carbon alignment note: Carbon describes contained lists as a way to organize related content in smaller UI spaces such as cards, sidebars, and disclosure situations, with a header column of information, multiple item rows, inline actions, and interactive elements. Login App maps that guidance to its own `x-ui.contained-list`, `x-ui.contained-list-item`, `ui-*` class namespace, Heroicons icon standard, Element tokens, and UI Reference proof.
+Carbon alignment note: Carbon describes contained lists as a way to organize related content in smaller UI spaces such as cards, sidebars, and disclosure situations, with a header column of information, multiple item rows, inline actions, and interactive elements. Login App maps that guidance to its own `x-ui.contained-list`, `x-ui.contained-list-item`, `ui-*` class namespace, internal icon standard, Element tokens, and rendered evidence proof.
 
 ## 4. Public API
 
@@ -166,7 +166,7 @@ Use explicit item children when row content needs custom Blade composition.
         title="Profile updated"
         description="Kyle Swindell changed account settings."
         meta="Today at 9:42 AM"
-        icon="heroicon-o-user-circle"
+        icon="user"
     />
 
     <x-ui.contained-list-item
@@ -174,7 +174,7 @@ Use explicit item children when row content needs custom Blade composition.
         description="A password reset email was sent."
         meta="Yesterday"
         status="info"
-        icon="heroicon-o-key"
+        icon="locked"
     />
 </x-ui.contained-list>
 ```
@@ -198,7 +198,7 @@ Use linked rows only when the entire row is one navigation target.
         title="Acme Tenant"
         description="Active workspace"
         href="{{ route('tenants.show', $tenant) }}"
-        icon="heroicon-o-building-office"
+        icon="apps"
     />
 </x-ui.contained-list>
 ```
@@ -219,7 +219,7 @@ Use row actions when each row has a small, row-owned command.
             </x-ui.button>
 
             <x-ui.icon-button
-                icon="heroicon-o-x-mark"
+                icon="close"
                 label="Cancel invitation for laura@example.com"
                 semantic="ghost"
                 size="sm"
@@ -249,7 +249,7 @@ Use the empty state when a bounded list has no rows.
 | Root semantic element | Section/region plus list semantics, depending on title and context                                                                               |
 | Data attributes       | None required for installed behavior. Feature views must not invent contained-list behavior attributes.                                          |
 | CSS namespace         | App-owned `ui-*` contained-list classes documented by the component implementation                                                               |
-| Source files          | `resources/views/components/ui/contained-list.blade.php`; `resources/views/components/ui/contained-list-item.blade.php`; `resources/css/app.css` |
+| Source files          | `resources/views/components/ui/contained-list/index.blade.php`; `resources/views/components/ui/contained-list-item/index.blade.php`; `resources/css/app.css` |
 
 ### 4.3. `x-ui.contained-list` props and options
 
@@ -262,9 +262,9 @@ Use the empty state when a bounded list has no rows.
 | `variant`                                | `string` | `on-page` | `on-page`, `disclosed` | Optional                              | Defines surface treatment.                                    |
 | `size`                                   | `string` | `md`      | `sm`, `md`, `lg`, `xl` | Optional                              | Controls row density. Do not mix row sizes inside one list.   |
 | `description`                            | `string / null` | `null`                 | Short helper text                     | Optional                                                      | Use when the list purpose needs additional context.                             |
-| `titleIcon` / `title-icon`               | `string / null` | `null`                 | Approved Heroicon component name      | Optional                                                      | Decorative list-title icon. Must not replace title text.                        |
+| `titleIcon` / `title-icon`               | `string / null` | `null`                 | Internal icon component name      | Optional                                                      | Decorative list-title icon. Must not replace title text.                        |
 | `headerActionLabel` / `header-action-label` | `string / null` | `null`              | Short accessible label                | Optional                                                      | Renders one compact header icon action for list-local search/filter entry points or similar actions. |
-| `headerActionIcon` / `header-action-icon` | `string / null` | `heroicon-o-magnifying-glass` | Approved Heroicon component name | Optional                                                      | Icon for the header action.                                                      |
+| `headerActionIcon` / `header-action-icon` | `string / null` | `search` | Internal icon component name | Optional                                                      | Icon for the header action.                                                      |
 | `headerActionHref` / `header-action-href` | `string / null` | `null`              | URL / route                           | Optional                                                      | When provided, the header action is a link; otherwise it is a button.            |
 | `insetDividers` / `inset-dividers`       | `bool`   | `false`  | `true`, `false`        | Optional                              | Insets row dividers to avoid rule-line collisions near adjacent components.      |
 | `stickyHeader` / `sticky-header`         | `bool`   | `false`  | `true`, `false`        | Optional / constrained                | Use only when the parent context owns scrolling and keyboard/screen-reader behavior remains clear. |
@@ -282,7 +282,7 @@ Use the empty state when a bounded list has no rows.
 | `description`  | `string / null` | `null`                                | Short secondary row text                | Optional                                                   | Keep structurally consistent across the list.                                                               |
 | `meta`         | `string / null` | `null`                                | Date, count, label, or compact metadata | Optional                                                   | Use consistently; do not overload with long copy.                                                           |
 | `href`         | `string / null` | `null`                                | Approved route/URL                      | Optional                                                   | Makes the row a single navigational target. Do not combine whole-row link with conflicting nested controls. |
-| `icon`         | `string / null` | `null`                                | Approved Heroicon alias/component       | Optional                                                   | Decorative by default unless status semantics require text support.                                         |
+| `icon`         | `string / null` | `null`                                | Internal icon alias/component       | Optional                                                   | Decorative by default unless status semantics require text support.                                         |
 | `status`       | `string / null` | `null`                                | `info`, `success`, `warning`, `error`   | Optional                                                   | Use for real semantic state only.                                                                           |
 | `actionItems` / item `actions` | `array` | `[]`                                  | Approved row action entries             | Optional                                                   | Data-driven row actions render Button or Icon button APIs. Rows with actions are not whole-row links.       |
 | `current`      | `bool`     | `false` | `true`, `false`                       | Optional                                | Marks the current row within this list context.            |
@@ -308,7 +308,7 @@ When `items` is passed to `x-ui.contained-list`, each item must use this shape.
 | `disabled`    | `bool`   | No       | Unavailable row marker.                          |
 | `actions`     | `array / null`  | No                                               | Row action data only when the component implementation supports action rendering. Prefer explicit slots for complex actions. |
 
-Any option not listed here is not public. If a feature needs another contained-list option, update the component implementation, this standard, and UI Reference proof before production use.
+Any option not listed here is not public. If a feature needs another contained-list option, update the component implementation, this standard, and rendered evidence proof before production use.
 
 ## 5. Allowed variants, options, and modifiers
 
@@ -444,7 +444,7 @@ Feature views must not create local `contained-list-*`, `card-list-*`, `panel-li
 - A contained list must not replace List when the content is simple text-only documentation.
 - A contained list must not replace Tile/Card composition when each item needs independent card structure, rich media, or multiple independent actions.
 - A contained list must not become a navigation menu unless a Navigation Pattern owns that behavior.
-- Sticky headers and scrollable row bodies require a constrained parent scroll region and UI Reference proof before use.
+- Sticky headers and scrollable row bodies require a constrained parent scroll region and rendered evidence proof before use.
 - Search/filter behavior remains Pattern-owned; Contained list may expose a header action entry point or sit below a Search/Filter control.
 - Empty and loading states must preserve the list title/context.
 
@@ -551,11 +551,11 @@ Feature views must not create local `contained-list-*`, `card-list-*`, `panel-li
 | Complex inline forms inside rows  | Not allowed by default | Use Forms Pattern or Drawer/Modal handoff.                                                   |
 | Custom status palettes            | Not allowed            | Requires Color/Icon/Status standard update.                                                  |
 
-Future extensions require an updated Component standard and UI Reference proof before production use.
+Future extensions require an updated Component standard and rendered evidence proof before production use.
 
-## 14. UI Reference requirements
+## 14. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The Contained list page must render production examples through the documented API. It must not read as a deferred catalog page.
 
@@ -583,7 +583,7 @@ The Contained list page must render production examples through the documented A
 
 The page must include canonical Blade examples for `x-ui.contained-list`, `x-ui.contained-list-item`, item data, linked rows, row actions, empty states, and status rows. It must link to this canonical standard and to consumed Element and Component standards.
 
-### 14.2. Required UI Reference assertions
+### 14.2. Required rendered evidence assertions
 
 #### 14.2.1. The page must show:
 
@@ -611,7 +611,7 @@ The page must include canonical Blade examples for `x-ui.contained-list`, `x-ui.
 
 ## 15. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/contained-list` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The page presents `x-ui.contained-list` and `x-ui.contained-list-item` as the production API.
@@ -625,7 +625,7 @@ The page must include canonical Blade examples for `x-ui.contained-list`, `x-ui.
 ### 15.1. Suggested feature test assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/contained-list');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Contained list');
@@ -661,25 +661,25 @@ $response->assertDontSee('bx--');
 
 | API                            | Route                                                                    |
 | ------------------------------ | ------------------------------------------------------------------------ |
-| Components overview            | `/platform/ui-reference/components`                                      |
-| List                           | `/platform/ui-reference/components/list`                                 |
-| Structured list                | `/platform/ui-reference/components/structured-list`                      |
-| Data table                     | `/platform/ui-reference/components/data-table`                           |
-| Tile                           | `/platform/ui-reference/components/tile`                                 |
-| Accordion                      | `/platform/ui-reference/components/accordion`                            |
-| Button                         | `/platform/ui-reference/components/button`                               |
-| Icon button                    | `/platform/ui-reference/components/button`                               |
-| Link                           | `/platform/ui-reference/components/link`                                 |
-| Loading                        | `/platform/ui-reference/components/loading`                              |
-| Search                         | `/platform/ui-reference/components/search`                               |
-| Data/content patterns          | `/platform/ui-reference/patterns/data-content`                           |
-| Overlays and feedback patterns | `/platform/ui-reference/patterns/overlays-feedback`                      |
-| Color element                  | `/platform/ui-reference/elements/color`                                  |
-| Spacing element                | `/platform/ui-reference/elements/spacing`                                |
-| Typography element             | `/platform/ui-reference/elements/typography`                             |
-| Themes element                 | `/platform/ui-reference/elements/themes`                                 |
-| Icons element                  | `/platform/ui-reference/elements/icons`                                  |
-| Motion element                 | `/platform/ui-reference/elements/motion`                                 |
+| Components overview            | `not installed`                                      |
+| List                           | `not installed`                                 |
+| Structured list                | `not installed`                      |
+| Data table                     | `not installed`                           |
+| Tile                           | `not installed`                                 |
+| Accordion                      | `not installed`                            |
+| Button                         | `not installed`                               |
+| Icon button                    | `not installed`                               |
+| Link                           | `not installed`                                 |
+| Loading                        | `not installed`                              |
+| Search                         | `not installed`                               |
+| Data/content patterns          | `not installed`                           |
+| Overlays and feedback patterns | `not installed`                      |
+| Color element                  | `not installed`                                  |
+| Spacing element                | `not installed`                                |
+| Typography element             | `not installed`                             |
+| Themes element                 | `not installed`                                 |
+| Icons element                  | `not installed`                                  |
+| Motion element                 | `not installed`                                 |
 | Canonical contained list doc   | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Fcontained-list.md` |
 | Carbon contained list usage    | `https://carbondesignsystem.com/components/contained-list/usage/`        |
 
@@ -689,4 +689,4 @@ $response->assertDontSee('bx--');
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon Contained list usage, style, and accessibility guidance informs bounded-surface list usage, on-page/disclosed list expectations, row content, inline actions, interactive elements, status/accessibility considerations, and size/state coverage. Login App keeps its own Blade API, Heroicons icon standard, app-owned `ui-*` class contract, Element token model, and UI Reference proof.
+- Carbon Contained list usage, style, and accessibility guidance informs bounded-surface list usage, on-page/disclosed list expectations, row content, inline actions, interactive elements, status/accessibility considerations, and size/state coverage. Login App keeps its own Blade API, internal icon standard, app-owned `ui-*` class contract, Element token model, and rendered evidence proof.

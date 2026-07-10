@@ -6,9 +6,9 @@ status: implemented-pending-manual-review
 system_maturity: partial
 category: navigation-and-disclosure
 priority: tier-b-common-reusable-component
-ui_reference_route: /platform/ui-reference/components/content-switcher
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/content-switcher.md
-source_owner: resources/views/components/ui/content-switcher.blade.php
+source_owner: resources/views/components/ui/content-switcher/index.blade.php
 blade_api:
   - x-ui.content-switcher
 javascript_api:
@@ -19,7 +19,7 @@ data_attributes:
   - data-ui-content-switcher-option
   - data-ui-content-switcher-panel
 source_files:
-  - resources/views/components/ui/content-switcher.blade.php
+  - resources/views/components/ui/content-switcher/index.blade.php
   - resources/js/ui-controls/content-switchers.js
   - resources/css/app.css
 foundation_elements:
@@ -47,7 +47,7 @@ carbon_reference:
 
 Content switcher switches compact peer views inside the same workflow region without implying primary navigation, form selection, or task progress.
 
-Canonical API owner: `resources/views/components/ui/content-switcher.blade.php`. Use `x-ui.content-switcher` instead of local segmented-control markup.
+Canonical API owner: `resources/views/components/ui/content-switcher/index.blade.php`. Use `x-ui.content-switcher` instead of local segmented-control markup.
 
 Content switcher owns compact peer-view option groups, selected/unselected state, disabled options, optional icons, optional panel switching, focus treatment, keyboard behavior, and its component token aliases. It does not own route navigation, command actions, workflow progress, or form value submission.
 
@@ -60,12 +60,12 @@ Content switcher owns compact peer-view option groups, selected/unselected state
 | Component slug | `content-switcher` |
 | Category | Navigation and disclosure |
 | Priority | Tier B - Common reusable component |
-| UI Reference route | `/platform/ui-reference/components/content-switcher` |
+| Rendered evidence route | `not installed` |
 | Canonical doc | `docs/02-standards/ui/components/content-switcher.md` |
-| Source owner | `resources/views/components/ui/content-switcher.blade.php` |
+| Source owner | `resources/views/components/ui/content-switcher/index.blade.php` |
 | Blade API | `x-ui.content-switcher` |
 | JavaScript API | `initContentSwitchers` from `resources/js/ui-controls/content-switchers.js` |
-| Source files | `resources/views/components/ui/content-switcher.blade.php`; `resources/js/ui-controls/content-switchers.js`; `resources/css/app.css` |
+| Source files | `resources/views/components/ui/content-switcher/index.blade.php`; `resources/js/ui-controls/content-switchers.js`; `resources/css/app.css` |
 
 ## Public API
 
@@ -100,7 +100,7 @@ Approved props:
 - Local panel switching.
 - No-panel mode when a nearby parent component or Pattern owns the switched content region.
 
-Icon-only options remain gated until Tooltip ownership and accessible name requirements are added to the component standard and UI Reference proof.
+Icon-only options remain gated until Tooltip ownership and accessible name requirements are added to the component standard and rendered evidence proof.
 
 ## States
 
@@ -191,7 +191,7 @@ These aliases map to the app-owned Color Element roles. Do not use direct Carbon
 - URL/hash persistence.
 - Remote-loaded panels.
 
-## Implementation And UI Reference Checklist
+## Implementation And Rendered Evidence Checklist
 
 | Requirement | Standard expectation |
 | --- | --- |
@@ -200,11 +200,11 @@ These aliases map to the app-owned Color Element roles. Do not use direct Carbon
 | States | Default, hover, focus-visible, selected, and disabled are token-backed. |
 | Accessibility/content | Tablist semantics, roving focus, panel relationships, concise labels, and disabled behavior are present. |
 | Element consumption | Color, Spacing, Typography, Themes, and Motion are consumed through app-owned roles. |
-| Tests | Source/API assertions and UI Reference route assertions block deferred fallback content. |
+| Tests | Source/API assertions and Rendered evidence route assertions block deferred fallback content. |
 
-## UI Reference Requirements
+## Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 Required live examples:
 
@@ -216,7 +216,7 @@ Required live examples:
 
 ## Testing And Acceptance Criteria
 
-- `/platform/ui-reference/components/content-switcher` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page renders `x-ui.content-switcher` examples instead of deferred trigger-condition placeholders.
 - Rendered output includes `data-ui-component="content-switcher"`, `data-ui-content-switcher`, `data-ui-content-switcher-option`, and `data-ui-content-switcher-panel`.
 - Source assertions verify `initContentSwitchers` is exported and registered in `resources/js/app.js`.
@@ -226,11 +226,11 @@ Required live examples:
 
 | API | Route |
 | --- | --- |
-| Tabs | `/platform/ui-reference/components/tabs` |
-| Radio button | `/platform/ui-reference/components/radio-button` |
-| Toggle | `/platform/ui-reference/components/toggle` |
-| Button | `/platform/ui-reference/components/button` |
-| Navigation Pattern | `/platform/ui-reference/patterns/navigation` |
+| Tabs | `not installed` |
+| Radio button | `not installed` |
+| Toggle | `not installed` |
+| Button | `not installed` |
+| Navigation Pattern | `not installed` |
 
 ## References
 

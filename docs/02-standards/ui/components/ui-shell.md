@@ -6,16 +6,16 @@ status: implemented-pending-correction
 system_maturity: partial-pattern-owned
 category: shell
 priority: tier-a-baseline-app-development
-ui_reference_route: /platform/ui-reference/components/ui-shell
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/ui-shell.md
-source_owner: /platform/ui-reference/patterns/navigation
+source_owner: not installed
 blade_api: []
 javascript_api: []
 data_attributes: []
 source_files:
   - resources/views/layouts/app.blade.php
   - resources/css/app.css
-  - resources/views/platform/ui-reference/components/ui-shell.blade.php
+  - not installed
 foundation_elements:
   - color
   - spacing
@@ -79,10 +79,10 @@ carbon_reference:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
   - [15.1. Required Live examples internal sections:](#151-required-live-examples-internal-sections)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
   - [16.1. Suggested automated assertions:](#161-suggested-automated-assertions)
@@ -93,9 +93,9 @@ carbon_reference:
 
 UI shell frames the global app experience with persistent orientation, navigation, account access, utility actions, skip-link behavior, and responsive shell regions.
 
-Canonical API owner: `/platform/ui-reference/components/ui-shell`. Use this Component API entry instead of creating local markup, styling, or behavior for the same shell role.
+Canonical API owner: `not installed`. Use this Component API entry instead of creating local markup, styling, or behavior for the same shell role.
 
-UI shell is an installed, pattern-owned Component API. The component catalog route documents the shell contract, but production ownership belongs to the Navigation Pattern at `/platform/ui-reference/patterns/navigation`. Feature work must not create page-local headers, sidebars, mobile drawers, account menus, notification action areas, skip links, or responsive shell wrappers. The app layout and Navigation Pattern own those surfaces.
+UI shell is an installed, pattern-owned Component API. The component catalog route documents the shell contract, but production ownership belongs to the Navigation Pattern at `not installed`. Feature work must not create page-local headers, sidebars, mobile drawers, account menus, notification action areas, skip links, or responsive shell wrappers. The app layout and Navigation Pattern own those surfaces.
 
 ### 1.1. ### Canonical API responsibilities:
 
@@ -107,11 +107,11 @@ UI shell is an installed, pattern-owned Component API. The component catalog rou
 - Preserve responsive collapse and overflow behavior through the Navigation Pattern.
 - Keep shell landmarks, labels, focus-visible behavior, icon labels, and reduced-motion behavior consistent.
 - Consume Foundation Element APIs for color, spacing, typography, themes, icons, motion, and 2x Grid.
-- Prove header baseline, left panel, account menu, notification/action area, mobile/collapsed behavior, and deferred right-panel behavior on the UI Reference page.
+- Prove header baseline, left panel, account menu, notification/action area, mobile/collapsed behavior, and deferred right-panel behavior on the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
-- Page-specific headings, page actions, breadcrumbs, and page-level layout. Use Page header and the owning page Pattern.
+- Page-specific headings, page actions, breadcrumbs, route-level page tabs, and page-level layout. Use `x-shell.page-header` for the shell page header composition and the owning Layout or Navigation Pattern for page placement.
 - Table action bars, filter bars, and row actions. Use Table toolbar and Data table Patterns.
 - Modal, drawer, overlay, inert-state, and focus-trap behavior outside the shell navigation contract. Use Modal and Overlay/feedback Patterns.
 - Inline command styling. Use Button, Icon button, Link, or Menu buttons.
@@ -120,7 +120,7 @@ UI shell is an installed, pattern-owned Component API. The component catalog rou
 - Route authorization, user role resolution, unread notification counts, and account data retrieval.
 - Feature-local shell variants.
 
-Carbon alignment note: Carbon describes UI shell as a persistent navigation framework made from header, left panel, and right panel pieces that can work independently or together. Carbon positions the header as the highest-level navigation, the left panel as optional product navigation, and the right panel as additional system-level actions tied to header icons. Login App maps those principles to a Navigation Pattern-owned shell, app-owned `ui-*` classes, Laravel layout composition, Foundation Element tokens, and UI Reference proof rather than adopting Carbon implementation classes directly.
+Carbon alignment note: Carbon describes UI shell as a persistent navigation framework made from header, left panel, and right panel pieces that can work independently or together. Carbon positions the header as the highest-level navigation, the left panel as optional product navigation, and the right panel as additional system-level actions tied to header icons. Login App maps those principles to a Navigation Pattern-owned shell, app-owned `ui-*` classes, Laravel layout composition, Foundation Element tokens, and rendered evidence proof rather than adopting Carbon implementation classes directly.
 
 ## 2. Status and ownership
 
@@ -132,21 +132,21 @@ Carbon alignment note: Carbon describes UI shell as a persistent navigation fram
 | Component slug               | ui-shell                                                                                                                                |
 | Category                     | Shell                                                                                                                                   |
 | Priority                     | Tier A - Baseline app development                                                                                                       |
-| UI Reference route           | `/platform/ui-reference/components/ui-shell`                                                                                            |
+| Rendered evidence route           | `not installed`                                                                                            |
 | Canonical doc                | `docs/02-standards/ui/components/ui-shell.md`                                                                                           |
-| Source owner                 | `/platform/ui-reference/patterns/navigation`                                                                                            |
+| Source owner                 | `not installed`                                                                                            |
 | Blade API                    | No standalone public `x-ui.shell` wrapper is approved                                                                                   |
 | JavaScript API               | No public JavaScript controller or initializer is approved                                                                              |
 | Data attributes              | None approved as a public Component API                                                                                                 |
 | Props/options                | No public Blade props; shell options are Navigation Pattern-owned layout modes and classes                                              |
-| Source files                 | `resources/views/layouts/app.blade.php`; `resources/css/app.css`; `resources/views/platform/ui-reference/components/ui-shell.blade.php` |
+| Source files                 | `resources/views/layouts/app.blade.php`; `resources/css/app.css`; `not installed` |
 | CSS namespace                | App-owned `ui-shell*` classes documented by the implementation                                                                          |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Icons, Motion, 2x Grid                                                                              |
 | Carbon benchmark             | Carbon UI shell header, left panel, right panel, accessibility, and global header guidance                                              |
 
-`Approved API` means the shell experience and UI Reference route exist, but the canonical documentation, rendered examples, and regression tests must be corrected to replace placeholder copy with the installed shell and Navigation Pattern contract.
+`Approved API` means the shell experience and Rendered evidence route exist, but the canonical documentation, rendered examples, and regression tests must be corrected to replace placeholder copy with the installed shell and Navigation Pattern contract.
 
-`Pattern-owned` means the component catalog documents the role and proof requirements, while production composition and shell behavior are owned by `/platform/ui-reference/patterns/navigation` and the app layout.
+`Pattern-owned` means the component catalog documents the role and proof requirements, while production composition and shell behavior are owned by `not installed` and the app layout.
 
 ## 3. Installed standard
 
@@ -196,18 +196,18 @@ Use UI shell for the authenticated app frame only. The shell should be rendered 
 
 ### 4.1. API status
 
-The current public API is layout markup plus app-owned CSS classes. A dedicated Blade component such as `x-ui.shell`, `x-ui.shell-header`, or `x-ui.shell-sidebar` is reserved for a future correction pass and must not be used in production until installed, documented, rendered in UI Reference, and tested.
+The current public API is layout markup plus app-owned CSS classes. A dedicated Blade component such as `x-ui.shell`, `x-ui.shell-header`, or `x-ui.shell-sidebar` is reserved for a future correction pass and must not be used in production until installed, documented, rendered in rendered evidence, and tested.
 
 | API surface           | Installed value                                                                                                                         |
 | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
 | Blade                 | No standalone public shell Blade wrapper approved                                                                                       |
-| Layout owner          | App layout and `/platform/ui-reference/patterns/navigation`                                                                             |
+| Layout owner          | App layout and `not installed`                                                                             |
 | JavaScript            | No public shell JavaScript controller or initializer approved                                                                           |
 | Data attributes       | None approved as a public shell behavior API                                                                                            |
 | Props/options         | No Blade props; use Pattern-owned layout modes and documented classes                                                                   |
 | Root semantic element | Native landmarks: header, nav, main, aside where appropriate                                                                            |
 | CSS namespace         | `ui-shell*`                                                                                                                             |
-| Source files          | `resources/views/layouts/app.blade.php`; `resources/css/app.css`; `resources/views/platform/ui-reference/components/ui-shell.blade.php` |
+| Source files          | `resources/views/layouts/app.blade.php`; `resources/css/app.css`; `not installed` |
 
 Feature views may render content inside the shell’s main slot/region only. They must not instantiate or override the shell frame.
 
@@ -238,20 +238,20 @@ Feature views may render content inside the shell’s main slot/region only. The
             <a class="ui-shell__nav-link" href="{{ route('dashboard') }}" aria-current="page">
                 Dashboard
             </a>
-            <a class="ui-shell__nav-link" href="{{ route('platform.ui-reference.index') }}">
-                UI Reference
+            <a class="ui-shell__nav-link" href="{{ url('#') }}">
+                rendered evidence
             </a>
         </nav>
 
         <div class="ui-shell__actions" aria-label="Header actions">
             <x-ui.icon-button
-                icon="heroicon-o-bell"
+                icon="notification"
                 label="Open notifications"
                 semantic="ghost"
             />
 
             <x-ui.icon-button
-                icon="heroicon-o-user-circle"
+                icon="user"
                 label="Open account menu"
                 semantic="ghost"
             />
@@ -259,11 +259,11 @@ Feature views may render content inside the shell’s main slot/region only. The
     </header>
 
     <aside class="ui-shell__sidebar" id="app-sidebar" aria-label="Section navigation">
-        <nav class="ui-shell__sidebar-nav" aria-label="UI Reference navigation">
-            <a class="ui-shell__sidebar-link" href="{{ route('platform.ui-reference.components') }}" aria-current="page">
+        <nav class="ui-shell__sidebar-nav" aria-label="rendered evidence navigation">
+            <a class="ui-shell__sidebar-link" href="{{ url('#') }}" aria-current="page">
                 Components
             </a>
-            <a class="ui-shell__sidebar-link" href="{{ route('platform.ui-reference.patterns') }}">
+            <a class="ui-shell__sidebar-link" href="{{ url('#') }}">
                 Patterns
             </a>
         </nav>
@@ -292,8 +292,8 @@ This markup documents the canonical ownership boundary. Production may use the a
     </nav>
 
     <div class="ui-shell__actions" aria-label="Header actions">
-        <x-ui.icon-button icon="heroicon-o-bell" label="Open notifications" semantic="ghost" />
-        <x-ui.icon-button icon="heroicon-o-user-circle" label="Open account menu" semantic="ghost" />
+        <x-ui.icon-button icon="notification" label="Open notifications" semantic="ghost" />
+        <x-ui.icon-button icon="user" label="Open account menu" semantic="ghost" />
     </div>
 </header>
 ```
@@ -305,10 +305,10 @@ Header links and icon actions must use installed Link, Button, Icon button, and 
 ```blade
 <aside class="ui-shell__sidebar" id="app-sidebar" aria-label="Section navigation">
     <nav class="ui-shell__sidebar-nav" aria-label="Platform navigation">
-        <a class="ui-shell__sidebar-link" href="{{ route('platform.ui-reference.components') }}" aria-current="page">
+        <a class="ui-shell__sidebar-link" href="{{ url('#') }}" aria-current="page">
             Components
         </a>
-        <a class="ui-shell__sidebar-link" href="{{ route('platform.ui-reference.patterns') }}">
+        <a class="ui-shell__sidebar-link" href="{{ url('#') }}">
             Patterns
         </a>
     </nav>
@@ -322,20 +322,20 @@ Use the left panel when the product area needs secondary navigation that should 
 ```blade
 <div class="ui-shell__actions" aria-label="Header actions">
     <x-ui.icon-button
-        icon="heroicon-o-question-mark-circle"
+        icon="help"
         label="Open help"
         semantic="ghost"
     />
 
     <x-ui.icon-button
-        icon="heroicon-o-bell"
+        icon="notification"
         label="Open notifications"
         semantic="ghost"
     />
 
     {{-- Menu behavior is owned by Menu buttons or the Navigation Pattern. --}}
     <x-ui.icon-button
-        icon="heroicon-o-user-circle"
+        icon="user"
         label="Open account menu"
         semantic="ghost"
     />
@@ -386,13 +386,13 @@ The disclosure button must update `aria-expanded` when the panel opens or closes
 | `ui-shell__right-panel`       | Region                | Deferred                             | Future right-side system panel.               |
 | `ui-shell__switcher`          | Region                | Deferred                             | Future product/property switcher.             |
 
-Feature views must not create additional `ui-shell-*`, `app-shell-*`, `navbar-*`, `sidebar-*`, or local shell classes. New classes require source implementation, this standard update, UI Reference proof, and tests.
+Feature views must not create additional `ui-shell-*`, `app-shell-*`, `navbar-*`, `sidebar-*`, or local shell classes. New classes require source implementation, this standard update, rendered evidence proof, and tests.
 
 ### 4.8. Reserved future Blade contract
 
 | Reserved API              | Current status | Gate                                                                                                      |
 | ------------------------- | -------------- | --------------------------------------------------------------------------------------------------------- |
-| `x-ui.shell`              | Deferred       | Requires source file, slot contract, layout options, landmark behavior, UI Reference examples, and tests. |
+| `x-ui.shell`              | Deferred       | Requires source file, slot contract, layout options, landmark behavior, rendered evidence examples, and tests. |
 | `x-ui.shell-header`       | Deferred       | Requires brand/nav/action slots, current-state mapping, icon action rules, and tests.                     |
 | `x-ui.shell-sidebar`      | Deferred       | Requires item data contract, nested group rules, responsive/collapse behavior, and tests.                 |
 | `x-ui.shell-account-menu` | Deferred       | Requires Menu buttons integration, accessible labels, dismissal, focus return, and tests.                 |
@@ -422,7 +422,7 @@ Do not create feature-local Blade components with these names.
 | Product switcher         | Region/control        | Deferred                          | `ui-shell__switcher` reserved                                  | Requires right-panel gate.                                        |
 | Third navigation tier    | Behavior              | Not allowed in shell              | none                                                           | Use in-page Tabs/Breadcrumb/Pattern.                              |
 | Local shell variant      | Variant               | Not allowed                       | none                                                           | Do not create page-local shells.                                  |
-| Custom header utility    | Extension             | Gated                             | none                                                           | Requires action owner, icon label, focus, and UI Reference proof. |
+| Custom header utility    | Extension             | Gated                             | none                                                           | Requires action owner, icon label, focus, and rendered evidence proof. |
 | Shell loading state      | State                 | Not applicable                    | none                                                           | Loading belongs inside page content or specific actions.          |
 | Shell validation state   | State                 | Not applicable                    | none                                                           | Validation belongs to Forms Pattern and fields.                   |
 
@@ -473,7 +473,7 @@ UI shell consumes Foundation Color, Spacing, Typography, Themes, Icons, Motion, 
 | Spacing     | Header height, action target spacing, nav item padding, sidebar width/gaps, skip-link offset, main content offset, mobile drawer spacing, and shell-to-content grid alignment. |
 | Typography  | Brand text, navigation labels, account labels, utility labels, sidebar group headings, and menu labels.                                                                        |
 | Themes      | Light, dark, and inverse token resolution for shell zones and nested controls.                                                                                                 |
-| Icons       | Approved Heroicons for menu toggle, account, notifications, help, settings, and utility actions.                                                                               |
+| Icons       | Internal icon components for menu toggle, account, notifications, help, settings, and utility actions.                                                                               |
 | Motion      | Collapse/open transitions, menu toggle feedback, sidebar reveal, scrim fade, and reduced-motion behavior.                                                                      |
 | 2x Grid     | Main content alignment, page gutters, shell offsets, sidebar/content relationship, and responsive layout zones.                                                                |
 
@@ -534,6 +534,8 @@ Feature views must not create `app-shell-*`, `layout-shell-*`, `navbar-*`, `side
 - Put user/account actions in the account menu.
 - Put utility actions such as notifications, help, settings, or global search in the header action area only when those actions are installed and labeled.
 - Put page-level actions in Page header, not in the shell header, unless the action is global to the application.
+- Compose page breadcrumbs, page title, page subtitle, and page-title actions through `x-shell.page-title` inside `x-shell.page-header`.
+- Compose route-level page navigation through `x-shell.page-tabs` inside `x-shell.page-header`; do not replace it with `x-ui.tabs`, which owns in-page tab-panel behavior.
 - Use one current-location indicator per navigation set.
 - Use native landmarks: `header`, `nav`, `aside`, and `main` where appropriate.
 - Use native links for navigation and native buttons for disclosure/actions.
@@ -580,7 +582,8 @@ Feature views must not create `app-shell-*`, `layout-shell-*`, `navbar-*`, `side
 | Narrow viewport navigation                                               | Pattern-owned mobile/collapsed shell.                     |
 | Additional system-level panel tied to a header icon                      | Deferred right panel gate.                                |
 | Product/property switcher                                                | Deferred switcher/right-panel gate.                       |
-| Page-specific actions                                                    | Page header Pattern.                                      |
+| Page-specific actions                                                    | `x-shell.page-header` plus Page header Pattern ownership. |
+| Route-level page navigation                                              | `x-shell.page-tabs` through `x-shell.page-header`.        |
 | In-page peer switching                                                   | Tabs or Content switcher when installed.                  |
 
 ## 10. Accessibility contract
@@ -626,6 +629,7 @@ Feature views must not create `app-shell-*`, `layout-shell-*`, `navbar-*`, `side
 - Do not create feature-local `x-ui.shell`, `x-shell`, `x-sidebar`, `x-header`, `x-nav`, or equivalent wrappers.
 - Do not create page-local app headers, sidebars, account menus, or notification/action areas.
 - Do not create local shell or tab behavior outside the owner route.
+- Do not use `x-ui.tabs` for route-level page navigation that belongs to `x-shell.page-tabs`.
 - Do not use navigation primitives for task progress unless a future component contract explicitly allows it.
 - Do not hide critical navigation behind an unlabelled icon or inaccessible overflow control.
 - Do not use icon-only shell actions without accessible names.
@@ -643,7 +647,7 @@ Feature views must not create `app-shell-*`, `layout-shell-*`, `navbar-*`, `side
 
 | Capability                                 | Status      | Gate                                                                                                                                      |
 | ------------------------------------------ | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| Public `x-ui.shell` Blade wrapper          | Deferred    | Requires source file, slot contract, layout props, landmark mapping, UI Reference examples, migration guidance, and tests.                |
+| Public `x-ui.shell` Blade wrapper          | Deferred    | Requires source file, slot contract, layout props, landmark mapping, rendered evidence examples, migration guidance, and tests.                |
 | Public shell header/sidebar Blade wrappers | Deferred    | Requires brand/nav/action slots, item data contract, current-route mapping, responsive behavior, and tests.                               |
 | Right panel                                | Deferred    | Requires anchored trigger, open/closed state, dismissal behavior, focus management, responsive behavior, reduced-motion proof, and tests. |
 | Product/property switcher                  | Deferred    | Requires switcher placement, item grouping, keyboard behavior, selected/current rules, right-panel relationship, and tests.               |
@@ -652,13 +656,13 @@ Feature views must not create `app-shell-*`, `layout-shell-*`, `navbar-*`, `side
 | Multi-level sidebar beyond two levels      | Not allowed | Use in-page navigation such as Tabs, Breadcrumb, or section Patterns.                                                                     |
 | Shell-specific JavaScript controller       | Deferred    | Requires documented data attributes, lifecycle, responsive behavior, focus management, and tests.                                         |
 | Public shell data attributes               | Deferred    | Requires documented behavior contract and regression tests.                                                                               |
-| Public/auth shell variant                  | Gated       | Requires separate layout contract, route scope, accessibility proof, and UI Reference examples.                                           |
-| Custom header utility                      | Gated       | Requires action owner, accessible label, icon source approval, placement rule, and UI Reference proof.                                    |
-| Custom theme or brand color shell          | Not allowed | Requires Themes and Color Element standard updates plus UI Reference proof.                                                               |
+| Public/auth shell variant                  | Gated       | Requires separate layout contract, route scope, accessibility proof, and rendered evidence examples.                                           |
+| Custom header utility                      | Gated       | Requires action owner, accessible label, icon source approval, placement rule, and rendered evidence proof.                                    |
+| Custom theme or brand color shell          | Not allowed | Requires Themes and Color Element standard updates plus rendered evidence proof.                                                               |
 
-Future extensions require an updated Component standard and UI Reference proof before production use.
+Future extensions require an updated Component standard and rendered evidence proof before production use.
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -667,9 +671,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -678,9 +682,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The UI shell page is a broad shell/navigation reference page. The Live examples card should use full-width shell diagrams, region maps, state matrices, responsive examples, and implementation examples rather than a simple tab-only scaffold.
 
@@ -708,12 +712,12 @@ The page must not display generic fallback/reference sections or placeholder dev
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/ui-shell` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
 - The page identifies UI shell as `Approved API`.
-- The page identifies `/platform/ui-reference/patterns/navigation` as the production source owner.
+- The page identifies `not installed` as the production source owner.
 - The page states that no standalone public `x-ui.shell` Blade wrapper is approved yet.
 - The page shows canonical shell layout markup with `ui-shell`, `ui-shell__header`, `ui-shell__sidebar`, `ui-shell__main`, and `ui-shell__skip-link`.
 - The page renders header baseline, left panel, account menu, notification/action area, mobile/collapsed behavior, skip-link behavior, and current-location examples.
@@ -728,13 +732,13 @@ The page must not display generic fallback/reference sections or placeholder dev
 ### 16.1. Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/ui-shell');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('UI shell');
 $response->assertSee('Approved API');
 $response->assertSee('Pattern-owned');
-$response->assertSee('/platform/ui-reference/patterns/navigation');
+$response->assertSee('not installed');
 $response->assertSee('ui-shell');
 $response->assertSee('ui-shell__header');
 $response->assertSee('ui-shell__sidebar');
@@ -774,26 +778,26 @@ $response->assertDontSee('offcanvas');
 
 | API                               | Route                                                                   |
 | --------------------------------- | ----------------------------------------------------------------------- |
-| Components overview               | `/platform/ui-reference/components`                                     |
-| Navigation pattern                | `/platform/ui-reference/patterns/navigation`                            |
-| Layout Pattern                    | `/platform/ui-reference/patterns/layout`                                |
-| Breadcrumb                        | `/platform/ui-reference/components/breadcrumb`                          |
-| Link                              | `/platform/ui-reference/components/link`                                |
-| Button                            | `/platform/ui-reference/components/button`                              |
-| Icon button                       | `/platform/ui-reference/components/button`                              |
-| Menu buttons                      | `/platform/ui-reference/components/menu-buttons`                        |
-| Notification                      | `/platform/ui-reference/components/notification`                        |
-| Tooltip                           | `/platform/ui-reference/components/tooltip`                             |
-| Modal                             | `/platform/ui-reference/components/modal`                               |
-| Tables Pattern                    | `/platform/ui-reference/patterns/tables`                                |
-| Overlay and feedback patterns     | `/platform/ui-reference/patterns/overlays-feedback`                     |
-| Color element                     | `/platform/ui-reference/elements/color`                                 |
-| Spacing element                   | `/platform/ui-reference/elements/spacing`                               |
-| Typography element                | `/platform/ui-reference/elements/typography`                            |
-| Themes element                    | `/platform/ui-reference/elements/themes`                                |
-| Icons element                     | `/platform/ui-reference/elements/icons`                                 |
-| Motion element                    | `/platform/ui-reference/elements/motion`                                |
-| 2x Grid element                   | `/platform/ui-reference/elements/2x-grid`                               |
+| Components overview               | `not installed`                                     |
+| Navigation pattern                | `not installed`                            |
+| Layout Pattern                    | `not installed`                                |
+| Breadcrumb                        | `not installed`                          |
+| Link                              | `not installed`                                |
+| Button                            | `not installed`                              |
+| Icon button                       | `not installed`                              |
+| Menu buttons                      | `not installed`                        |
+| Notification                      | `not installed`                        |
+| Tooltip                           | `not installed`                             |
+| Modal                             | `not installed`                               |
+| Tables Pattern                    | `not installed`                                |
+| Overlay and feedback patterns     | `not installed`                     |
+| Color element                     | `not installed`                                 |
+| Spacing element                   | `not installed`                               |
+| Typography element                | `not installed`                            |
+| Themes element                    | `not installed`                                |
+| Icons element                     | `not installed`                                 |
+| Motion element                    | `not installed`                                |
+| 2x Grid element                   | `not installed`                               |
 | Canonical UI shell doc            | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Fui-shell.md`      |
 | Carbon UI shell header usage      | `https://carbondesignsystem.com/components/UI-shell-header/usage/`      |
 | Carbon UI shell left panel usage  | `https://carbondesignsystem.com/components/UI-shell-left-panel/usage/`  |
@@ -805,4 +809,4 @@ $response->assertDontSee('offcanvas');
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon UI shell header, left panel, right panel, accessibility, and global header guidance inform shell region ownership, header/left/right panel distinctions, persistent navigation behavior, skip-link and keyboard expectations, responsive movement of navigation, and right-panel deferral. Login App keeps its own Navigation Pattern ownership, app layout composition, `ui-*` namespace, Foundation Element tokens, and UI Reference proof.
+- Carbon UI shell header, left panel, right panel, accessibility, and global header guidance inform shell region ownership, header/left/right panel distinctions, persistent navigation behavior, skip-link and keyboard expectations, responsive movement of navigation, and right-panel deferral. Login App keeps its own Navigation Pattern ownership, app layout composition, `ui-*` namespace, Foundation Element tokens, and rendered evidence proof.

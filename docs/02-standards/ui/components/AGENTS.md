@@ -7,7 +7,7 @@
 
 Component standards only. This folder owns primitive and baseline reusable Component API contracts as flat `components/{component}.md` files.
 
-Component docs define public Blade/CSS/JS/helper APIs where present, allowed variants/options/modifiers, states, composition boundaries, content and accessibility contracts, prohibited usage, deferred gates, UI Reference proof requirements, and tests.
+Component docs define public Blade/CSS/JS/helper APIs where present, allowed variants/options/modifiers, states, composition boundaries, content and accessibility contracts, prohibited usage, deferred gates, rendered evidence proof requirements, and tests.
 
 ## 2. Read Order
 

@@ -6,9 +6,9 @@ api_layer: Component API
 system_maturity: standard
 category: data-display
 priority: tier-c-contextual-component
-ui_reference_route: /platform/ui-reference/components/tree-view
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/tree-view.md
-source_owner: /platform/ui-reference/components/tree-view
+source_owner: not installed
 blade_api:
   - x-ui.tree-view
 javascript_api:
@@ -22,11 +22,10 @@ data_attributes:
   - data-ui-tree-selected
   - data-ui-tree-active
 source_files:
-  - resources/views/components/ui/tree-view.blade.php
-  - resources/views/components/ui/tree-node.blade.php
-  - resources/js/components/tree-view.js
+  - resources/views/components/ui/tree-view/index.blade.php
+  - resources/js/ui-controls/tree-views.js
   - resources/css/app.css
-  - resources/views/platform/ui-reference/components/tree-view.blade.php
+  - not installed
 foundation_elements:
   - color
   - spacing
@@ -85,7 +84,7 @@ carbon_reference:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. UI Reference requirements](#14-ui-reference-requirements)
+- [14. Rendered evidence requirements](#14-ui-reference-requirements)
   - [14.1. Required Live examples internal sections:](#141-required-live-examples-internal-sections)
 - [15. Testing and acceptance criteria](#15-testing-and-acceptance-criteria)
   - [15.1. Suggested automated assertions:](#151-suggested-automated-assertions)
@@ -96,7 +95,7 @@ carbon_reference:
 
 Tree view displays nested hierarchical data that users can browse, expand, collapse, and optionally select inside a bounded page region.
 
-Canonical API owner: `/platform/ui-reference/components/tree-view`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
 Tree view is the installed Login App 2.0 hierarchy-browse Component API. It owns tree semantics, node rendering, branch and leaf behavior, expand/collapse behavior, selected and active node treatment, optional node icons, keyboard navigation, focus management inside the tree, token-backed indentation, and tree-specific accessibility rules. It does not own global app navigation, breadcrumbs, tabular comparison, one-level disclosure, feature-specific data loading, persistence, permission rules, or external page layout.
 
@@ -112,7 +111,7 @@ Tree view is the installed Login App 2.0 hierarchy-browse Component API. It owns
 - Support small and extra-small density for bounded hierarchy regions.
 - Preserve visible focus, hover, active, selected, expanded, collapsed, disabled, loading, and empty states.
 - Consume Foundation Element APIs for color, spacing, typography, themes, motion, icons, and 2x Grid.
-- Prove branch, leaf, expansion, selection, active state, density, keyboard, accessibility, and implementation behavior on the UI Reference page.
+- Prove branch, leaf, expansion, selection, active state, density, keyboard, accessibility, and implementation behavior on the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -125,7 +124,7 @@ Tree view is the installed Login App 2.0 hierarchy-browse Component API. It owns
 - Lazy loading, search inside tree, drag-and-drop ordering, persistence, and feature-specific action results. Feature modules and Patterns own those behaviors.
 - External spacing, region headings, page layout, filter placement, and workflow orchestration. Parent Patterns own those decisions.
 
-Carbon alignment note: Carbon defines Tree view as a nested hierarchy with branch nodes, leaf nodes, and caret controls for expanding or collapsing children. Carbon accessibility guidance emphasizes built-in keyboard operation, and Carbon code guidance separates active/selected state in its controllable implementation. Login App maps those principles to `x-ui.tree-view`, app-owned `ui-*` classes, documented node data, Foundation Element tokens, and UI Reference proof rather than adopting Carbon implementation classes directly.
+Carbon alignment note: Carbon defines Tree view as a nested hierarchy with branch nodes, leaf nodes, and caret controls for expanding or collapsing children. Carbon accessibility guidance emphasizes built-in keyboard operation, and Carbon code guidance separates active/selected state in its controllable implementation. Login App maps those principles to `x-ui.tree-view`, app-owned `ui-*` classes, documented node data, Foundation Element tokens, and rendered evidence proof rather than adopting Carbon implementation classes directly.
 
 ## 2. Status and ownership
 
@@ -137,19 +136,19 @@ Carbon alignment note: Carbon defines Tree view as a nested hierarchy with branc
 | Component slug               | tree-view                                                                                                                                                                                                                                         |
 | Category                     | Data display                                                                                                                                                                                                                                      |
 | Priority                     | Tier C - Contextual component                                                                                                                                                                                                                     |
-| UI Reference route           | `/platform/ui-reference/components/tree-view`                                                                                                                                                                                                     |
+| Rendered evidence route           | `not installed`                                                                                                                                                                                                     |
 | Canonical doc                | `docs/02-standards/ui/components/tree-view.md`                                                                                                                                                                                                    |
-| Source owner                 | `/platform/ui-reference/components/tree-view`                                                                                                                                                                                                     |
+| Source owner                 | `not installed`                                                                                                                                                                                                     |
 | Blade API                    | `x-ui.tree-view`                                                                                                                                                                                                                                  |
 | JavaScript API               | `initTreeViews`                                                                                                                                                                                                                                   |
 | Data attributes              | `data-ui-component="tree-view"`; `data-ui-tree-view`; `data-ui-tree-node`; `data-ui-tree-node-id`; `data-ui-tree-expanded`; `data-ui-tree-selected`; `data-ui-tree-active`                                                                        |
 | Props/options                | `nodes`, `selected`, `active`, `expanded`, `selectionMode`, `size`, `showIcons`, `label`, `emptyText`                                                                                                                                             |
-| Source files                 | `resources/views/components/ui/tree-view.blade.php`; `resources/views/components/ui/tree-node.blade.php`; `resources/js/components/tree-view.js`; `resources/css/app.css`; `resources/views/platform/ui-reference/components/tree-view.blade.php` |
+| Source files                 | `resources/views/components/ui/tree-view/index.blade.php`; `resources/js/ui-controls/tree-views.js`; `resources/css/app.css`; `not installed` |
 | CSS namespace                | App-owned `ui-tree-view*` classes                                                                                                                                                                                                                 |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, Icons, 2x Grid                                                                                                                                                                                        |
 | Carbon benchmark             | Carbon Tree view usage, style, accessibility, and code guidance                                                                                                                                                                                   |
 
-`Implemented standard` means the canonical documentation defines the finished expected API and the UI Reference page must prove the installed behavior with production examples. It must not present Tree view as deferred catalog content.
+`Implemented standard` means the canonical documentation defines the finished expected API and the rendered evidence page must prove the installed behavior with production examples. It must not present Tree view as deferred catalog content.
 
 ## 3. Installed standard
 
@@ -170,7 +169,7 @@ Use Tree view when a bounded page region needs to expose a nested hierarchy with
 - Use `selectionMode="none"` for browse-only trees where nodes only expand/collapse.
 - Use `selectionMode="multi"` only in Pattern-approved workflows that explicitly require multi-selection and prove keyboard behavior.
 - Use `showIcons` only when icons clarify node type and remain consistent within comparable levels.
-- Use `size="sm"` by default and `size="xs"` only in dense bounded panels where UI Reference proves readability.
+- Use `size="sm"` by default and `size="xs"` only in dense bounded panels where rendered evidence proves readability.
 - Keep all expansion, selection, and active-state behavior synchronized with documented ARIA/state attributes.
 - Keep keyboard navigation inside the tree consistent across all tree examples.
 - Use Feature or Pattern ownership for data loading, persistence, search, lazy loading, row details, and actions triggered by node selection.
@@ -237,7 +236,7 @@ Use the Blade API instead of hand-building nested tree markup in feature views.
 | Node semantic element     | Node rows with `role="treeitem"` when custom semantics are used                                                                                                            |
 | Data attributes           | `data-ui-component="tree-view"`, `data-ui-tree-view`, `data-ui-tree-node`, `data-ui-tree-node-id`, `data-ui-tree-expanded`, `data-ui-tree-selected`, `data-ui-tree-active` |
 | CSS namespace             | `ui-tree-view*`                                                                                                                                                            |
-| Source files              | `resources/views/components/ui/tree-view.blade.php`; `resources/views/components/ui/tree-node.blade.php`; `resources/js/components/tree-view.js`; `resources/css/app.css`  |
+| Source files              | `resources/views/components/ui/tree-view/index.blade.php`; `resources/js/ui-controls/tree-views.js`; `resources/css/app.css`  |
 
 ### 4.3. Props and options
 
@@ -255,7 +254,7 @@ Use the Blade API instead of hand-building nested tree markup in feature views.
 | `disabled`                         | `bool`   | `false`               | `true`, `false`                     | No                                          | Disables interaction for the full tree only when required. Prefer node-level disabled. |
 | `class`                            | `string  | null`                 | `null`                              | Layout passthrough if supported             | No                                                                                     | Parent Patterns may pass layout classes only; not local state/color overrides. |
 
-Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and UI Reference proof before use.
+Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and rendered evidence proof before use.
 
 ### 4.4. Node data contract
 
@@ -266,7 +265,7 @@ $nodes = [
     [
         'id' => 'workspace',
         'label' => 'Workspace',
-        'icon' => 'heroicon-o-folder',
+        'icon' => 'apps',
         'expanded' => true,
         'selected' => false,
         'active' => false,
@@ -275,7 +274,7 @@ $nodes = [
             [
                 'id' => 'workspace.security',
                 'label' => 'Security',
-                'icon' => 'heroicon-o-shield-check',
+                'icon' => 'settings--check',
                 'children' => [
                     [
                         'id' => 'workspace.security.policies',
@@ -294,7 +293,7 @@ $nodes = [
 | `id`       | `string` | Yes      | Stable unique ID. Do not derive from visible label alone.                       |
 | `label`    | `string` | Yes      | Visible node label.                                                             |
 | `children` | `array   | null`    | No                                                                              | Presence of child nodes makes the node a branch.                             |
-| `icon`     | `string  | null`    | No                                                                              | Approved Heroicon alias/component. Requires consistent alignment.            |
+| `icon`     | `string  | null`    | No                                                                              | Internal icon alias/component. Requires consistent alignment.            |
 | `expanded` | `bool`   | No       | Node-level initial expansion state. May be overridden by prop-level `expanded`. |
 | `selected` | `bool`   | No       | Node-level selected state. May be overridden by prop-level `selected`.          |
 | `active`   | `bool`   | No       | Node-level active state. May be overridden by prop-level `active`.              |
@@ -343,7 +342,7 @@ Feature views must not invent additional `data-ui-tree-*` attributes without upd
 | `ui-tree-view__node--active`    | State     | Implemented                                         | Node is active/current focus target.                                  |
 | `ui-tree-view__node--disabled`  | State     | Implemented                                         | Node is disabled.                                                     |
 
-Feature views must not create additional `tree-*`, `nested-list-*`, local `ui-tree-*`, Bootstrap, or Carbon classes for the same role. New classes require source implementation, this standard update, UI Reference proof, and tests.
+Feature views must not create additional `tree-*`, `nested-list-*`, local `ui-tree-*`, Bootstrap, or Carbon classes for the same role. New classes require source implementation, this standard update, rendered evidence proof, and tests.
 
 ## 5. Allowed variants, options, and modifiers
 
@@ -602,11 +601,11 @@ The standard Tree view API is implemented. The following advanced capabilities r
 | Virtualized tree          | Gated            | Requires focus, screen reader, scroll, active descendant, and performance review.                           | No.                             |
 | Context menus on nodes    | Gated            | Requires Menu buttons ownership, focus return, keyboard behavior, and selected/active state rules.          | No.                             |
 
-Future extensions require an updated Component standard and UI Reference proof before production use.
+Future extensions require an updated Component standard and rendered evidence proof before production use.
 
-## 14. UI Reference requirements
+## 14. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The Tree view page is a behavior-heavy component reference page. The Live examples card should use scenario sections, keyboard notes, state matrices, hierarchy examples, implementation examples, and related-boundary comparisons rather than a placeholder deferred page.
 
@@ -635,7 +634,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 
 ## 15. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/tree-view` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples.
 - Gated APIs render trigger conditions instead of fake controls.
@@ -654,7 +653,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 ### 15.1. Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/tree-view');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Tree view');
@@ -701,27 +700,27 @@ $response->assertDontSee('bx--tree-view');
 
 | API                            | Route                                                                |
 | ------------------------------ | -------------------------------------------------------------------- |
-| Components overview            | `/platform/ui-reference/components`                                  |
-| Accordion                      | `/platform/ui-reference/components/accordion`                        |
-| Breadcrumb                     | `/platform/ui-reference/components/breadcrumb`                       |
-| Data table                     | `/platform/ui-reference/components/data-table`                       |
-| Structured list                | `/platform/ui-reference/components/structured-list`                  |
-| Checkbox                       | `/platform/ui-reference/components/checkbox`                         |
-| Radio button                   | `/platform/ui-reference/components/radio-button`                     |
-| Search                         | `/platform/ui-reference/components/search`                           |
-| Select                         | `/platform/ui-reference/components/select`                           |
-| Menu buttons                   | `/platform/ui-reference/components/menu-buttons`                     |
-| UI shell                       | `/platform/ui-reference/components/ui-shell`                         |
-| Navigation pattern             | `/platform/ui-reference/patterns/navigation`                         |
-| Data/content patterns          | `/platform/ui-reference/patterns/data-content`                       |
-| Forms pattern                  | `/platform/ui-reference/patterns/forms`                              |
-| Color element                  | `/platform/ui-reference/elements/color`                              |
-| Spacing element                | `/platform/ui-reference/elements/spacing`                            |
-| Typography element             | `/platform/ui-reference/elements/typography`                         |
-| Themes element                 | `/platform/ui-reference/elements/themes`                             |
-| Motion element                 | `/platform/ui-reference/elements/motion`                             |
-| Icons element                  | `/platform/ui-reference/elements/icons`                              |
-| 2x Grid element                | `/platform/ui-reference/elements/2x-grid`                            |
+| Components overview            | `not installed`                                  |
+| Accordion                      | `not installed`                        |
+| Breadcrumb                     | `not installed`                       |
+| Data table                     | `not installed`                       |
+| Structured list                | `not installed`                  |
+| Checkbox                       | `not installed`                         |
+| Radio button                   | `not installed`                     |
+| Search                         | `not installed`                           |
+| Select                         | `not installed`                           |
+| Menu buttons                   | `not installed`                     |
+| UI shell                       | `not installed`                         |
+| Navigation pattern             | `not installed`                         |
+| Data/content patterns          | `not installed`                       |
+| Forms pattern                  | `not installed`                              |
+| Color element                  | `not installed`                              |
+| Spacing element                | `not installed`                            |
+| Typography element             | `not installed`                         |
+| Themes element                 | `not installed`                             |
+| Motion element                 | `not installed`                             |
+| Icons element                  | `not installed`                              |
+| 2x Grid element                | `not installed`                            |
 | Canonical tree view doc        | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Ftree-view.md`  |
 | Carbon tree view usage         | `https://carbondesignsystem.com/components/tree-view/usage/`         |
 | Carbon tree view accessibility | `https://carbondesignsystem.com/components/tree-view/accessibility/` |
@@ -732,6 +731,6 @@ $response->assertDontSee('bx--tree-view');
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon Tree view usage guidance informs branch, leaf, caret, nested hierarchy, and related-component boundaries. Login App keeps its own `x-ui.tree-view` API, `ui-*` namespace, node data contract, Foundation Element tokens, and UI Reference proof.
+- Carbon Tree view usage guidance informs branch, leaf, caret, nested hierarchy, and related-component boundaries. Login App keeps its own `x-ui.tree-view` API, `ui-*` namespace, node data contract, Foundation Element tokens, and rendered evidence proof.
 - Carbon Tree view accessibility guidance informs keyboard operation, focus expectations, ARIA tree/treeitem behavior, expanded/collapsed state, selected state, and screen reader testing requirements.
 - Carbon Tree view code guidance informs the distinction between selected and active state in controllable implementations; Login App defines those roles directly in this standard.

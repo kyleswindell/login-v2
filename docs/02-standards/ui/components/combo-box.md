@@ -5,9 +5,9 @@ status: queued-gap
 api_layer: Component API
 category: Inputs
 priority: Tier B - Common reusable component
-ui_reference_route: /platform/ui-reference/components/combo-box
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/combo-box.md
-source_owner: /platform/ui-reference/components/combo-box
+source_owner: not installed
 foundation_elements:
   - color
   - spacing
@@ -38,8 +38,8 @@ related_patterns:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
 - [17. Related APIs](#17-related-apis)
 - [18. References](#18-references)
@@ -48,7 +48,7 @@ related_patterns:
 
 Combo box is the future Component API owner for typed known-option selection, typeahead filtering, highlighted suggestions, clear control behavior, and optional custom-value entry.
 
-Canonical API owner: `/platform/ui-reference/components/combo-box`. This page exists so Combo box is not treated as a Dropdown variant or hidden inside Multiselect.
+Canonical API owner: `not installed`. This page exists so Combo box is not treated as a Dropdown variant or hidden inside Multiselect.
 
 ## 2. Status and ownership
 
@@ -59,9 +59,9 @@ Canonical API owner: `/platform/ui-reference/components/combo-box`. This page ex
 | Component slug     | combo-box                                     |
 | Category           | Inputs                                        |
 | Priority           | Tier B - Common reusable component            |
-| UI Reference route | `/platform/ui-reference/components/combo-box` |
+| Rendered evidence route | `not installed` |
 | Canonical doc      | `docs/02-standards/ui/components/combo-box.md` |
-| Source owner       | `/platform/ui-reference/components/combo-box` |
+| Source owner       | `not installed` |
 
 ## 3. Installed standard
 
@@ -84,7 +84,7 @@ The installed standard is the boundary:
 | Blade         | No public API approved. |
 | JavaScript    | No public API approved. |
 | CSS namespace | `resources/css/components/combo-box.css` is a Carbon SCSS-derived visual target only until Blade/API work is approved. |
-| Route         | `/platform/ui-reference/components/combo-box` |
+| Route         | `not installed` |
 
 ## 5. Allowed variants, options, and modifiers
 
@@ -92,7 +92,7 @@ None are approved for production use.
 
 ## 6. States
 
-Queued states include default, open, highlighted suggestion, selected value, typed query, clearable, disabled, read-only, invalid, warning, loading, empty, and custom-value pending. These states are not complete until the public API, JavaScript behavior, accessibility contract, and UI Reference proof are implemented.
+Queued states include default, open, highlighted suggestion, selected value, typed query, clearable, disabled, read-only, invalid, warning, loading, empty, and custom-value pending. These states are not complete until the public API, JavaScript behavior, accessibility contract, and rendered evidence proof are implemented.
 
 ## 7. Token, class, and helper usage
 
@@ -123,9 +123,9 @@ Option labels must remain short and text-first. Helper, empty, loading, error, a
 
 ## 13. Deferred or gated capabilities
 
-Combo box remains gated until a concrete workflow requires typed known-option selection or custom-value entry and the component API pass defines the full Blade, CSS, JavaScript, accessibility, and UI Reference contract.
+Combo box remains gated until a concrete workflow requires typed known-option selection or custom-value entry and the component API pass defines the full Blade, CSS, JavaScript, accessibility, and rendered evidence contract.
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 
 ### 14.1. Implementation checklist
 
@@ -136,7 +136,7 @@ Combo box remains gated until a concrete workflow requires typed known-option se
 | Accessibility/content      | Keyboard, focus, ARIA, naming, helper, error, warning, and option announcement behavior are defined. |
 | Foundation dependencies    | Color, Spacing, Typography, Themes, Motion, and Icons are consumed through approved tokens/classes. |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 
 | Area | Requirement |
 | ---- | ----------- |
@@ -144,15 +144,15 @@ Combo box remains gated until a concrete workflow requires typed known-option se
 | Boundaries | Link Dropdown, Multiselect, Select, Text input, Search, and Forms Pattern boundaries. |
 | Tests | Assert the route renders as queued until the API is implemented, then assert public Blade/CSS/JS behavior. |
 
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must exist as a standalone route while queued. It must not render fake working Combo box controls before the actual API is approved.
+The rendered evidence page must exist as a standalone route while queued. It must not render fake working Combo box controls before the actual API is approved.
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/combo-box` renders as a standalone queued-gap component page.
+- `not installed` renders as a standalone queued-gap component page.
 - The page states that no public Combo box API is approved.
-- Dropdown UI Reference does not render Combo box as a Dropdown variant.
+- Dropdown rendered evidence does not render Combo box as a Dropdown variant.
 
 ## 17. Related APIs
 
@@ -164,4 +164,4 @@ The UI Reference page must exist as a standalone route while queued. It must not
 
 ## 18. References
 
-- Carbon Combo box guidance is reference material for the later API pass. Login App will keep app-owned Blade, CSS, JavaScript, token, and UI Reference contracts.
+- Carbon Combo box guidance is reference material for the later API pass. Login App will keep app-owned Blade, CSS, JavaScript, token, and rendered evidence contracts.

@@ -6,15 +6,15 @@ status: implemented-pending-manual-review
 system_maturity: implemented
 category: navigation-and-disclosure
 priority: tier-b-common-reusable-component
-ui_reference_route: /platform/ui-reference/components/accordion
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/accordion.md
-source_owner: /platform/ui-reference/components/accordion
+source_owner: not installed
 blade_api:
   - x-ui.accordion
 javascript_api:
   - initAccordions
 source_files:
-  - resources/views/components/ui/accordion.blade.php
+  - resources/views/components/ui/accordion/index.blade.php
   - resources/js/ui-controls/accordions.js
   - resources/js/ui-controls.js
   - resources/css/app.css
@@ -66,10 +66,10 @@ carbon_reference:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
   - [16.1. Route and authorization](#161-route-and-authorization)
   - [16.2. Page scaffold assertions](#162-page-scaffold-assertions)
@@ -84,7 +84,7 @@ carbon_reference:
 
 Use accordion to reveal optional supporting content within the current page context.
 
-Canonical API owner: `/platform/ui-reference/components/accordion`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
 Accordion is the installed Login App 2.0 disclosure API. It owns local expand/collapse semantics, trigger state, panel visibility, animation behavior, and accordion-specific styling. It does not own page-level spacing, workflow orchestration, primary navigation, wizard/progress behavior, validation recovery, or required task instructions.
 
@@ -98,7 +98,7 @@ Accordion is the installed Login App 2.0 disclosure API. It owns local expand/co
 - Optional contained/contextual surface usage.
 - Optional capped scrollable panel behavior for approved secondary reference content.
 - Theme-aware color, border, text, icon, focus, spacing, and motion behavior.
-- UI Reference proof of supported examples, states, and variants.
+- rendered evidence proof of supported examples, states, and variants.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -120,16 +120,16 @@ Accordion is the installed Login App 2.0 disclosure API. It owns local expand/co
 | Component slug               | accordion                                                                                                                                             |
 | Category                     | Navigation and disclosure                                                                                                                             |
 | Priority                     | Tier B - Common reusable component                                                                                                                    |
-| UI Reference route           | `/platform/ui-reference/components/accordion`                                                                                                         |
+| Rendered evidence route           | `not installed`                                                                                                         |
 | Canonical doc                | `docs/02-standards/ui/components/accordion.md`                                                                                                        |
-| Source owner                 | `/platform/ui-reference/components/accordion`                                                                                                         |
+| Source owner                 | `not installed`                                                                                                         |
 | Blade API                    | `x-ui.accordion`                                                                                                                                      |
 | JavaScript API               | `initAccordions`                                                                                                                                      |
-| Source files                 | `resources/views/components/ui/accordion.blade.php`; `resources/js/ui-controls/accordions.js`; `resources/js/ui-controls.js`; `resources/css/app.css` |
+| Source files                 | `resources/views/components/ui/accordion/index.blade.php`; `resources/js/ui-controls/accordions.js`; `resources/js/ui-controls.js`; `resources/css/app.css` |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion                                                                                                            |
 | Carbon benchmark             | Carbon Accordion usage, style, and accessibility guidance                                                                                             |
 
-`Implemented - pending manual review` means the installed API and UI Reference proof exist, but implementation, accessibility, and docs-path alignment still require final manual verification before the component is marked fully reviewed.
+`Implemented - pending manual review` means the installed API and rendered evidence proof exist, but implementation, accessibility, and docs-path alignment still require final manual verification before the component is marked fully reviewed.
 
 ## 3. Installed standard
 
@@ -176,7 +176,7 @@ Use the Blade API instead of hand-building accordion markup in feature views.
 | Alignment data attribute  | `data-ui-accordion-alignment`                                |
 | Icon data attribute       | `data-ui-accordion-icon-alignment`                           |
 | CSS namespace             | `ui-accordion*`                                              |
-| Component route owner     | `/platform/ui-reference/components/accordion`                |
+| Component route owner     | `not installed`                |
 
 ### 4.3. Props and options
 
@@ -572,9 +572,9 @@ Do not:
 | Per-item custom icon alignment | Deferred    | Requires Icons Element update and accessibility review.                                      |
 | Drag/reorder accordion items   | Deferred    | Requires separate sortable pattern and keyboard interaction contract.                        |
 
-Future extensions require an updated Component standard and UI Reference proof before feature implementation.
+Future extensions require an updated Component standard and rendered evidence proof before feature implementation.
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -583,9 +583,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -594,9 +594,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold:
+The rendered evidence page must render the approved five-card scaffold:
 
 1. Purpose.
 2. Use cases.
@@ -617,7 +617,7 @@ Required rendered proof:
 | Form assistance accordion      | Optional guidance for form settings that should not replace visible labels or validation. | Compact assistance disclosure |
 | Icon alignment                 | Whole-accordion chevron placement remains consistent across all rows in an instance.      | End alignment, Start alignment |
 
-### The UI Reference page must also show:
+### The rendered evidence page must also show:
 
 - Purpose Card with implementation status.
 - Use Cases Card with 50/50 `Use when` and `Do not use when` content.
@@ -633,7 +633,7 @@ Required rendered proof:
 - Props/options.
 - Deferred/gated capabilities, if any.
 
-Required anatomy labels for the UI Reference page:
+Required anatomy labels for the rendered evidence page:
 
 - Group.
 - Item.
@@ -648,7 +648,7 @@ Required anatomy labels for the UI Reference page:
 - Body.
 - Metadata.
 
-Required state labels for the UI Reference page:
+Required state labels for the rendered evidence page:
 
 - Collapsed.
 - Expanded.
@@ -665,7 +665,7 @@ Required state labels for the UI Reference page:
 
 ### 16.1. Route and authorization
 
-- `/platform/ui-reference/components/accordion` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - Unauthorized users cannot access the route.
 - The route renders the current canonical doc path: `docs/02-standards/ui/components/accordion.md`.
 - The route must not link to the deprecated `docs/02-standards/ui/components/tier-1/accordion.md` path after the documentation migration is complete.
@@ -723,17 +723,17 @@ Required state labels for the UI Reference page:
 
 | API                        | Route                                               | Use instead when                                                              |
 | -------------------------- | --------------------------------------------------- | ----------------------------------------------------------------------------- |
-| Tabs                       | `/platform/ui-reference/components/tabs`            | Users switch between peer views or sections of comparable importance.         |
-| Structured list            | `/platform/ui-reference/components/structured-list` | Users need to scan comparable row-like content.                               |
-| Modal                      | `/platform/ui-reference/components/modal`           | Users must complete or confirm a focused task.                                |
-| Popover                    | `/platform/ui-reference/components/popover`         | Floating interactive content is required and the Popover API is implemented.  |
-| Toggletip                  | `/platform/ui-reference/components/toggletip`       | Short contextual help needs a focusable trigger and dismissible rich content. |
-| Tooltip                    | `/platform/ui-reference/components/tooltip`         | Non-interactive hover/focus assistance is enough.                             |
-| Help/documentation pattern | `/platform/ui-reference/patterns/data-content`      | The page needs documentation or help composition beyond one component.        |
-| Forms/settings patterns    | `/platform/ui-reference/patterns/forms`             | Form layout, validation, and required guidance are the owner.                 |
-| 2x Grid Element            | `/platform/ui-reference/elements/2x-grid`           | Page-level placement and responsive columns are needed.                       |
-| Spacing Element            | `/platform/ui-reference/elements/spacing`           | Parent-owned external spacing or layout rhythm is needed.                     |
-| Motion Element             | `/platform/ui-reference/elements/motion`            | Motion or reduced-motion behavior needs adjustment.                           |
+| Tabs                       | `not installed`            | Users switch between peer views or sections of comparable importance.         |
+| Structured list            | `not installed` | Users need to scan comparable row-like content.                               |
+| Modal                      | `not installed`           | Users must complete or confirm a focused task.                                |
+| Popover                    | `not installed`         | Floating interactive content is required and the Popover API is implemented.  |
+| Toggletip                  | `not installed`       | Short contextual help needs a focusable trigger and dismissible rich content. |
+| Tooltip                    | `not installed`         | Non-interactive hover/focus assistance is enough.                             |
+| Help/documentation pattern | `not installed`      | The page needs documentation or help composition beyond one component.        |
+| Forms/settings patterns    | `not installed`             | Form layout, validation, and required guidance are the owner.                 |
+| 2x Grid Element            | `not installed`           | Page-level placement and responsive columns are needed.                       |
+| Spacing Element            | `not installed`           | Parent-owned external spacing or layout rhythm is needed.                     |
+| Motion Element             | `not installed`            | Motion or reduced-motion behavior needs adjustment.                           |
 
 ## 18. References
 
@@ -744,4 +744,4 @@ Required state labels for the UI Reference page:
 - Carbon Accordion usage: `https://carbondesignsystem.com/components/accordion/usage/`
 - Carbon Accordion style: `https://carbondesignsystem.com/components/accordion/style/`
 - Carbon Accordion accessibility: `https://carbondesignsystem.com/components/accordion/accessibility/`
-- Carbon informs the Accordion completeness benchmark for anatomy, alignment, placement, content, states, keyboard behavior, and accessibility. Login App owns the installed Blade, JavaScript, CSS, token, and UI Reference API.
+- Carbon informs the Accordion completeness benchmark for anatomy, alignment, placement, content, states, keyboard behavior, and accessibility. Login App owns the installed Blade, JavaScript, CSS, token, and rendered evidence API.

@@ -6,9 +6,9 @@ status: implemented-pending-correction
 system_maturity: partial
 category: inputs
 priority: tier-b-common-reusable-component
-ui_reference_route: /platform/ui-reference/components/file-uploader
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/file-uploader.md
-source_owner: /platform/ui-reference/components/file-uploader
+source_owner: not installed
 blade_api:
   - native input[type="file"] composed with app-owned ui-* field and file-uploader classes
 javascript_api: []
@@ -60,10 +60,10 @@ carbon_reference:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
   - [16.1. Suggested automated assertions:](#161-suggested-automated-assertions)
 - [17. Related APIs](#17-related-apis)
@@ -73,9 +73,9 @@ carbon_reference:
 
 File uploader collects one or more user-selected files through an accessible native file input.
 
-Canonical API owner: `/platform/ui-reference/components/file-uploader`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
-File uploader is the installed Login App 2.0 file-selection field API. It owns native file-input composition, labels, helper copy, file constraints, validation messaging, disabled/loading/read-only treatment, token-backed field states, and UI Reference proof for installed button upload behavior. It does not own upload storage, malware scanning, server validation rules, asynchronous upload transport, drag-and-drop behavior, image previews, file transformation, or workflow layout.
+File uploader is the installed Login App 2.0 file-selection field API. It owns native file-input composition, labels, helper copy, file constraints, validation messaging, disabled/loading/read-only treatment, token-backed field states, and rendered evidence proof for installed button upload behavior. It does not own upload storage, malware scanning, server validation rules, asynchronous upload transport, drag-and-drop behavior, image previews, file transformation, or workflow layout.
 
 ### 1.1. Canonical API responsibilities:
 
@@ -86,14 +86,14 @@ File uploader is the installed Login App 2.0 file-selection field API. It owns n
 - Support accepted file type hints through the native `accept` attribute while requiring server-side validation outside the component.
 - Represent disabled, read-only, validation, and loading states through installed app field classes and native attributes where valid.
 - Use app-owned `ui-*` field and file-uploader classes instead of raw utility clusters or custom file-field chrome.
-- Prove installed button upload, validation, disabled/read-only, loading, and drag-drop deferral behavior on the UI Reference page.
+- Prove installed button upload, validation, disabled/read-only, loading, and drag-drop deferral behavior on the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
 - File persistence, disk selection, storage drivers, signed URLs, virus scanning, or import processing.
 - Server-side validation rules, request classes, policy checks, or controller behavior.
 - Asynchronous upload, upload progress bars, retry queues, chunked upload, or client-side file previews.
-- Drag-and-drop file handling. That remains deferred until a JavaScript owner, accessibility contract, and UI Reference proof are installed.
+- Drag-and-drop file handling. That remains deferred until a JavaScript owner, accessibility contract, and rendered evidence proof are installed.
 - External layout, form grouping, submit/cancel actions, and workflow orchestration. Parent Forms and Overlay/feedback Patterns own those responsibilities.
 
 ## 2. Status and ownership
@@ -106,18 +106,18 @@ File uploader is the installed Login App 2.0 file-selection field API. It owns n
 | Component slug               | `file-uploader`                                                                                                 |
 | Category                     | Inputs                                                                                                          |
 | Priority                     | Tier B - Common reusable component                                                                              |
-| UI Reference route           | `/platform/ui-reference/components/file-uploader`                                                               |
+| Rendered evidence route           | `not installed`                                                               |
 | Canonical doc                | `docs/02-standards/ui/components/file-uploader.md`                                                              |
-| Source owner                 | `/platform/ui-reference/components/file-uploader`                                                               |
+| Source owner                 | `not installed`                                                               |
 | Blade API                    | Native `<input type="file">` composed with app-owned `ui-*` field and file-uploader classes                     |
 | Dedicated Blade component    | Not public until `x-ui.file-uploader` is implemented, documented, and proven                                    |
 | JavaScript API               | None required for installed button upload behavior                                                              |
 | Data attributes              | None required for installed behavior                                                                            |
-| Source files                 | `resources/css/app.css`; UI Reference implementation owned by `/platform/ui-reference/components/file-uploader` |
+| Source files                 | `resources/css/app.css`; rendered evidence implementation owned by `not installed` |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes                                                                              |
 | Carbon benchmark             | Carbon File uploader usage, style, and accessibility guidance                                                   |
 
-`Approved API` means the UI Reference route and component-specific examples exist, but the canonical document must replace placeholder API text with the installed native-input contract, explicit field states, and deferred drag-drop gates.
+`Approved API` means the Rendered evidence route and component-specific examples exist, but the canonical document must replace placeholder API text with the installed native-input contract, explicit field states, and deferred drag-drop gates.
 
 ## 3. Installed standard
 
@@ -139,7 +139,7 @@ File uploader is installed as a native-input field composition. The approved pro
 - Represent validation through `.ui-field-error` or `.ui-field-warning` and message IDs referenced by `aria-describedby`.
 - Use `aria-invalid="true"` only for blocking error states, not for warnings.
 - Render existing or previously uploaded files as a server-rendered file list when needed.
-- Keep drag-and-drop examples deferred. The UI Reference page may show trigger conditions and alternatives, but must not render a fake drop zone as production API.
+- Keep drag-and-drop examples deferred. The rendered evidence page may show trigger conditions and alternatives, but must not render a fake drop zone as production API.
 
 Carbon alignment note: Carbon documents both button-based and drag-and-drop uploaders, file selection through one or more files, small/medium/large height alignment, accessible keyboard operation, and assistive-technology exposure for errors and file-removal buttons. Login App maps the installed portion to a native file input plus app-owned field classes, and explicitly defers drag-and-drop, asynchronous progress, and dedicated JavaScript behavior until they have app-owned implementation proof.
 
@@ -254,7 +254,7 @@ Do not hand-build local file upload controls outside this contract.
 | Root semantic element     | Native file input inside an app field wrapper                                                                         |
 | Data attributes           | None required for installed behavior. Feature views must not invent data attributes for file upload behavior.         |
 | CSS namespace             | App-owned `ui-*` classes documented in this standard                                                                  |
-| Source ownership          | UI Reference owner route `/platform/ui-reference/components/file-uploader`; shared styling in `resources/css/app.css` |
+| Source ownership          | rendered evidence owner route `not installed`; shared styling in `resources/css/app.css` |
 
 ### 4.3. Markup and option contract
 
@@ -274,7 +274,7 @@ Do not hand-build local file upload controls outside this contract.
 | `aria-busy`        | `true             | null`           | omitted                      | `true` on wrapper while pending               | Required for loading state                                                       | Pair with disabled input and status copy. |
 | `readonly`         | not valid         | not supported   | none                         | Not applicable                                | Do not place `readonly` on file inputs. Render a read-only file summary instead. |
 
-Any option not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the UI Reference proof before use.
+Any option not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the rendered evidence proof before use.
 
 ### 4.4. Installed state class contract
 
@@ -327,9 +327,9 @@ Client-side selected-file previews are not part of the installed API because no 
 | Read-only summary         | State/mode   | Implemented                          | `.ui-field-readonly` plus `.ui-file-list`                                                    | Render existing files without a chooser.                 |
 | Loading                   | State        | Implemented                          | `.ui-field-loading`, `aria-busy="true"`, disabled input, status copy                         | Use while upload/import work is pending.                 |
 | Existing file list        | Composition  | Implemented for server-rendered data | `.ui-file-list`, `.ui-file-item`                                                             | Use for current files or validation return state.        |
-| Upload progress           | Deferred     | none                                 | Requires async upload owner, progress semantics, cancellation rules, and UI Reference proof. |                                                          |
+| Upload progress           | Deferred     | none                                 | Requires async upload owner, progress semantics, cancellation rules, and rendered evidence proof. |                                                          |
 | Client-side preview       | Deferred     | none                                 | Requires JavaScript owner and accessibility review.                                          |                                                          |
-| Drag-drop uploader        | Deferred     | none                                 | UI Reference must show trigger conditions and alternatives, not a fake drop zone.            |                                                          |
+| Drag-drop uploader        | Deferred     | none                                 | rendered evidence must show trigger conditions and alternatives, not a fake drop zone.            |                                                          |
 | Dedicated Blade component | Deferred     | `<x-ui.file-uploader>` not public    | Requires implementation, documented props, tests, and examples.                              |                                                          |
 | Custom button chrome      | Not allowed  | none                                 | Do not replace native file input with one-off local markup.                                  |                                                          |
 | Directory upload          | Not allowed  | none                                 | Requires separate workflow and browser support review before approval.                       |                                                          |
@@ -505,19 +505,19 @@ Feature views must not create local `file-upload-*`, `upload-*`, Bootstrap input
 
 | Capability                           | Status                                   | Gate                                                                                                                                                              |
 | ------------------------------------ | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `x-ui.file-uploader` Blade component | Deferred                                 | Requires source implementation, prop contract, accessibility review, UI Reference proof, and tests.                                                               |
-| Drag-and-drop uploader               | Deferred                                 | Requires JavaScript owner, keyboard-operable drop target, drag-over/drop states, error handling, reduced-motion review if motion is used, and UI Reference proof. |
+| `x-ui.file-uploader` Blade component | Deferred                                 | Requires source implementation, prop contract, accessibility review, rendered evidence proof, and tests.                                                               |
+| Drag-and-drop uploader               | Deferred                                 | Requires JavaScript owner, keyboard-operable drop target, drag-over/drop states, error handling, reduced-motion review if motion is used, and rendered evidence proof. |
 | Async upload progress                | Deferred                                 | Requires upload service contract, progress semantics, retry/cancel behavior, Inline loading or Progress API integration, and tests.                               |
 | Client-side validation controller    | Deferred                                 | Requires documented validation rules, server/client parity, message mapping, and accessibility proof.                                                             |
 | Client-side selected-file list       | Deferred                                 | Requires JavaScript owner, filename overflow behavior, removal controls, and screen-reader announcements.                                                         |
-| Image/file preview                   | Deferred                                 | Requires content security review, file type handling, alt/text behavior, and UI Reference proof.                                                                  |
+| Image/file preview                   | Deferred                                 | Requires content security review, file type handling, alt/text behavior, and rendered evidence proof.                                                                  |
 | Directory upload                     | Not implemented                          | Requires browser support review, server contract, and Pattern approval.                                                                                           |
 | Custom visual drop zone              | Not allowed until drag-drop is installed | Use native button upload instead.                                                                                                                                 |
 | Arbitrary size variants              | Not public                               | Must be approved through Form Pattern and field sizing standards before use.                                                                                      |
 
-Future extensions require an updated Component standard and UI Reference proof before production use.
+Future extensions require an updated Component standard and rendered evidence proof before production use.
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -526,9 +526,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -537,9 +537,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The File uploader page is an input component reference page. The Live examples card should use grouped field examples and state tables rather than a fake full uploader application. Deferred behavior must appear as trigger conditions and alternatives, not as production controls.
 
@@ -561,7 +561,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/file-uploader` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
@@ -582,7 +582,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 ### 16.1. Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/file-uploader');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('File uploader');
@@ -616,17 +616,17 @@ $response->assertDontSee('bx--');
 
 | API                         | Route                                                                   |
 | --------------------------- | ----------------------------------------------------------------------- |
-| Button                      | `/platform/ui-reference/components/button`                              |
-| Inline loading              | `/platform/ui-reference/components/inline-loading`                      |
-| Notification                | `/platform/ui-reference/components/notification`                        |
-| Text input                  | `/platform/ui-reference/components/text-input`                          |
-| Forms pattern               | `/platform/ui-reference/patterns/forms`                                 |
-| Overlay/feedback pattern    | `/platform/ui-reference/patterns/overlays-feedback`                     |
-| Color element               | `/platform/ui-reference/elements/color`                                 |
-| Spacing element             | `/platform/ui-reference/elements/spacing`                               |
-| Typography element          | `/platform/ui-reference/elements/typography`                            |
-| Themes element              | `/platform/ui-reference/elements/themes`                                |
-| Components overview         | `/platform/ui-reference/components`                                     |
+| Button                      | `not installed`                              |
+| Inline loading              | `not installed`                      |
+| Notification                | `not installed`                        |
+| Text input                  | `not installed`                          |
+| Forms pattern               | `not installed`                                 |
+| Overlay/feedback pattern    | `not installed`                     |
+| Color element               | `not installed`                                 |
+| Spacing element             | `not installed`                               |
+| Typography element          | `not installed`                            |
+| Themes element              | `not installed`                                |
+| Components overview         | `not installed`                                     |
 | Canonical file uploader doc | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Ffile-uploader.md` |
 | Carbon file uploader usage  | `https://carbondesignsystem.com/components/file-uploader/usage/`        |
 
@@ -636,4 +636,4 @@ $response->assertDontSee('bx--');
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon File uploader usage, style, and accessibility guidance inform native file selection, helper/validation content, sizing alignment, keyboard operation, error exposure, and drag-and-drop deferral. Login App keeps its own app-owned `ui-*` class contract, native Blade markup, server-validation expectations, and UI Reference proof.
+- Carbon File uploader usage, style, and accessibility guidance inform native file selection, helper/validation content, sizing alignment, keyboard operation, error exposure, and drag-and-drop deferral. Login App keeps its own app-owned `ui-*` class contract, native Blade markup, server-validation expectations, and rendered evidence proof.

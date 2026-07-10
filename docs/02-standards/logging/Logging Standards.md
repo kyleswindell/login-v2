@@ -1,91 +1,78 @@
+<!--
+DOC-META
+title: Logging Standards
+doc_type: standard
+status: draft
+owner: ops
+canonical: true
+canonical_path: docs/02-standards/logging/Logging Standards.md
+parent: docs/02-standards/logging/index.md
+template: docs/09-reference/templates/docs/_doc.md
+summary: Defines shared audit and monitoring channel selection, correlation, sensitive-data safety, fallback, ownership, and completion requirements.
+-->
+
 # Logging Standards
 
-This document defines the canonical scope and intent for Logging Standards.
+Parent: [Logging Standards Index](index.md)
 
-## Event Logs
+## 1. Purpose
 
-Use platform audit logs for meaningful platform events.
+Define shared rules for Audit and Monitoring without combining their responsibilities.
 
-Required event log qualities:
+## 2. Channel Selection
 
-* stable event name
-* actor user ID when available
-* subject type and subject ID when applicable
-* safe metadata
-* request and trace correlation when available
-* IP address when available
+Use Audit for accountable actions.
 
-Security-relevant event coverage should include:
+Use Monitoring for failures, health, and operational state.
 
-* authentication success and failure
-* rate-limit or abuse-defense triggers
-* MFA challenge, satisfaction, bypass, or rejection outcomes
-* account linking and unlinking
-* privilege or policy changes affecting auth, access, or secrets
+Use both when an accountable action also failed unexpectedly.
 
-## Error Logs
+## 3. Ownership
 
-Use application error logs for exceptions and operational failures.
+Domains own the meaning of their audit events.
 
-Required error log qualities:
+Audit owns event storage, common shape, query behavior, redaction enforcement, and evidence access.
 
-* severity level
-* message
-* exception class when applicable
-* file and line when applicable
-* safe context
-* request URL, method, IP, and user ID when available
+Monitoring owns error records, failed jobs, health, telemetry, detection inputs, and operational alerting.
 
-## Current Storage Model
+## 4. Correlation
 
-Current App 2.0 stores platform audit events in `platform_audit_logs` and operational failures in `central_error_logs`.
+Use request and correlation identifiers across applicable audit, errors, jobs, notifications, exports, integrations, deployments, and evidence.
 
-Planned tenancy phase:
+## 5. Sensitive Data
 
-* tenant-visible audit logs become tenant-local
-* central error logs remain centralized
-* security-relevant events may be mirrored centrally and per tenant
+Never log raw passwords, MFA values or secrets, recovery codes, full tokens, private keys, authorization headers, cookies, secret-manager values, or unrestricted personal or business payloads.
 
-## Sensitive Data
+## 6. Safe Context
 
-Never log plaintext passwords, tokens, secrets, full session payloads, or raw tenant credentials.
+Prefer IDs, stable event keys, safe labels, classifications, counts, fingerprints, status, result, request identifiers, and trace identifiers.
 
-Avoid logging high-risk PII unless there is a support or security reason and the retention plan is explicit. Prefer IDs, stable event names, and safe metadata over raw payload dumps.
+## 7. Fallback
 
-Security logs should capture decision context without storing reusable credentials, raw provider callback payloads, full authorization headers, or secret-manager values.
+Logging failures must not cause a second outage.
 
-## Fail-Safe Behavior
+Use safe framework fallback channels when database-backed logging fails.
 
-Logging code must not create a second outage. If database logging fails, fall back to Laravel's normal file/channel logging.
+Fallback must preserve redaction.
 
-## Event Naming
+## 8. Retention
 
-Use dot-separated, domain-first event names:
+Audit and Monitoring may require different retention.
 
-* `auth.login_succeeded`
-* `auth.login_failed`
-* `auth.login_throttled`
-* `auth.logout`
-* `auth.mfa_challenged`
-* `auth.mfa_satisfied`
-* `auth.mfa_rejected`
-* `auth.identity_linked`
-* `auth.identity_unlinked`
-* `tenant.provisioning_started`
-* `tenant.domain_attached`
+Retention must consider evidence, privacy, incident, performance, and legal-hold requirements.
 
-## Correlation
+## 9. Access
 
-Prefer a request ID on every inbound HTTP request. Reuse that identifier consistently across:
+Log and evidence access requires least privilege and target scope.
 
-* audit log rows
-* error log rows
-* fallback file logs
-* future queue, worker, and external telemetry integrations
+Detailed error logs and raw audit context remain app-instance-local by default.
+
+## 10. Completion
+
+A new security-sensitive workflow is incomplete until its required audit, monitoring, correlation, redaction, and tests are defined.
 
 ## Related
 
-* [Event And Error Logging](../../04-features/logging/event-and-error-logging.md)
-* [Logging Data Contract](../../06-database/feature-contracts/logging.md)
-* [Coding Standards](../coding/Coding%20Standards.md)
-* [Tenant Safety Standards](../security/Tenant%20Safety%20Standards.md)
+- [Audit Logging Standards](Audit%20Logging%20Standards.md)
+- [Monitoring And Alerting Standards](Monitoring%20And%20Alerting%20Standards.md)
+- [Audit And Monitoring Core Planning](../../07-planning/02-core-capabilities/audit-monitoring-response/audit-monitoring-core-planning.md)

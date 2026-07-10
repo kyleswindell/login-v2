@@ -5,9 +5,9 @@ status: implemented-standard
 api_layer: Pattern API
 pattern_slug: data-and-content
 category: Data and content
-ui_reference_route: /platform/ui-reference/patterns/data-content
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/patterns/data-and-content.md
-owner_route: /platform/ui-reference/patterns/data-content
+owner_route: not installed
 consumed_elements:
   - color
   - spacing
@@ -59,10 +59,10 @@ related_patterns:
   - [15.4. Actions](#154-actions)
 - [16. Prohibited usage](#16-prohibited-usage)
 - [17. Deferred or gated capabilities](#17-deferred-or-gated-capabilities)
-- [18. Implementation and UI Reference Checklist](#18-implementation-and-ui-reference-checklist)
+- [18. Implementation and Rendered Evidence Checklist](#18-implementation-and-ui-reference-checklist)
   - [18.1. Implementation checklist](#181-implementation-checklist)
-  - [18.2. UI Reference proof checklist](#182-ui-reference-proof-checklist)
-- [19. UI Reference requirements](#19-ui-reference-requirements)
+  - [18.2. rendered evidence proof checklist](#182-ui-reference-proof-checklist)
+- [19. Rendered evidence requirements](#19-ui-reference-requirements)
 - [20. Testing and acceptance criteria](#20-testing-and-acceptance-criteria)
 - [21. Related APIs](#21-related-apis)
 - [22. References](#22-references)
@@ -83,10 +83,10 @@ Patterns are goal-oriented compositions. Components own reusable controls and lo
 | API layer          | Pattern API                                         |
 | Pattern slug       | data-and-content                                    |
 | Category           | Data and content                                    |
-| Owner route        | `/platform/ui-reference/patterns/data-content`      |
+| Owner route        | `not installed`      |
 | Canonical path     | `docs/02-standards/ui/patterns/data-and-content.md` |
-| UI Reference proof | `/platform/ui-reference/patterns/data-content`      |
-| Source owner       | `/platform/ui-reference/patterns/data-content`      |
+| rendered evidence proof | `not installed`      |
+| Source owner       | `not installed`      |
 
 ## 3. Installed standard
 
@@ -113,22 +113,22 @@ This Pattern API does not own feature-specific business behavior. Feature module
 
 The installed Pattern API includes these app-owned composition targets.
 
-| Pattern API                           | Status                        | Purpose                                                                                    | Example                                                   |
-| ------------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------------- |
-| `x-ui.patterns.key-value-display`     | Implemented / target standard | Display short read-only label/value relationships.                                         | Account metadata, audit fields, role details.             |
-| `x-ui.patterns.data-list-item`        | Implemented / target standard | Render a repeated summary row or content item without table semantics.                     | Activity item, integration summary, small record preview. |
-| `x-ui.patterns.identity-summary-card` | Implemented / target standard | Summarize a user, tenant, workspace, or entity identity.                                   | User card, tenant card, organization summary.             |
-| Empty state composition               | Implemented standard          | Explain that no records or content exist yet and optionally provide one clear next action. | No users, no integrations, no audit events.               |
-| Content section block                 | Implemented standard          | Group read-only text or content under a clear heading.                                     | About this workspace, billing notes, policy summary.      |
+| Pattern API                        | Status                        | Purpose                                                                                    | Example                                                   |
+| ---------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------------- |
+| `x-patterns.key-value-display`     | Implemented / target standard | Display short read-only label/value relationships.                                         | Account metadata, audit fields, role details.             |
+| `x-patterns.data-list-item`        | Implemented / target standard | Render a repeated summary row or content item without table semantics.                     | Activity item, integration summary, small record preview. |
+| `x-patterns.identity-summary-card` | Implemented / target standard | Summarize a user, tenant, workspace, or entity identity.                                   | User card, tenant card, organization summary.             |
+| Empty state composition            | Implemented standard          | Explain that no records or content exist yet and optionally provide one clear next action. | No users, no integrations, no audit events.               |
+| Content section block              | Implemented standard          | Group read-only text or content under a clear heading.                                     | About this workspace, billing notes, policy summary.      |
 
 ### 4.1. Example calls
 
 ```blade
-<x-ui.patterns.key-value-display :items="$details" />
+<x-patterns.key-value-display :items="$details" />
 ```
 
 ```blade
-<x-ui.patterns.data-list-item
+<x-patterns.data-list-item
     title="Workspace created"
     meta="System event"
     href="/platform/audit/123"
@@ -136,7 +136,7 @@ The installed Pattern API includes these app-owned composition targets.
 ```
 
 ```blade
-<x-ui.patterns.identity-summary-card
+<x-patterns.identity-summary-card
     title="Acme Workspace"
     subtitle="Production tenant"
     :meta="$workspaceMeta"
@@ -144,7 +144,7 @@ The installed Pattern API includes these app-owned composition targets.
 ```
 
 ```blade
-<x-ui.patterns.empty-state
+<x-patterns.empty-state
     title="No audit events yet"
     message="Events will appear here after activity is recorded."
     action-label="Refresh activity"
@@ -193,7 +193,7 @@ Optional composition is allowed only when it supports the information-display go
 | Skeleton state             | Implemented standard   | Use only when the final content shape is known.                                              |
 | Secondary inline action    | Allowed with restraint | Use Link or low-emphasis Button; keep the read-only hierarchy primary.                       |
 | Help or documentation link | Allowed                | Use Link; do not use Button for reference navigation.                                        |
-| Compact status marker      | Allowed                | Use Tag, Badge/Status if installed, or Notification when message-level feedback is required. |
+| Compact status marker      | Allowed                | Use Tag or Status if installed, or Notification when message-level feedback is required.     |
 
 ## 7. Consumed Element APIs
 
@@ -218,14 +218,14 @@ Do not introduce feature-local colors for summary cards, empty states, list rows
 
 Carbon color composition mapping:
 
-| Pattern need | Carbon benchmark role | Login App owner to compose | Mapping rule |
-| ------------ | --------------------- | -------------------------- | ------------ |
-| Read-only detail/key-value content | Text, layer, border roles | Color Element + Typography Element | Use global text/surface/border roles; do not create local summary palettes. |
-| Repeated record lists and selectable summaries | Structured list, Tile, Tree view, Data table row state roles | Owning Component standard | Hover, selected, current, disabled, and focus states remain child Component-owned. |
-| Metadata and status chips | Tag token rows and support/status roles | Tag Component + Notification/Status APIs | Tags own compact labels; unresolved Tag all-color rows remain verification-gated. |
-| Empty/unavailable states | Typography, Button, Link, Notification, Pictograms | Child Components + Pattern layout | Empty states compose text, optional pictogram, and one clear action without new colors. |
-| Skeleton placeholders | `$skeleton-background`, `$skeleton-element` | Loading/Skeleton roles | Skeleton colors are Loading-owned; do not fake with local gray utilities. |
-| Tables, filters, and search result regions | Data table, Search, Checkbox, Radio, Select, Dropdown, Tag, Pagination rows | Data Table and filter child Components | This Pattern may arrange data/content regions, but table/filter color state belongs to the child APIs. |
+| Pattern need                                   | Carbon benchmark role                                                       | Login App owner to compose               | Mapping rule                                                                                           |
+| ---------------------------------------------- | --------------------------------------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Read-only detail/key-value content             | Text, layer, border roles                                                   | Color Element + Typography Element       | Use global text/surface/border roles; do not create local summary palettes.                            |
+| Repeated record lists and selectable summaries | Structured list, Tile, Tree view, Data table row state roles                | Owning Component standard                | Hover, selected, current, disabled, and focus states remain child Component-owned.                     |
+| Metadata and status chips                      | Tag token rows and support/status roles                                     | Tag Component + Notification/Status APIs | Tags own compact labels; unresolved Tag all-color rows remain verification-gated.                      |
+| Empty/unavailable states                       | Typography, Button, Link, Notification, Pictograms                          | Child Components + Pattern layout        | Empty states compose text, optional pictogram, and one clear action without new colors.                |
+| Skeleton placeholders                          | `$skeleton-background`, `$skeleton-element`                                 | Loading/Skeleton roles                   | Skeleton colors are Loading-owned; do not fake with local gray utilities.                              |
+| Tables, filters, and search result regions     | Data table, Search, Checkbox, Radio, Select, Dropdown, Tag, Pagination rows | Data Table and filter child Components   | This Pattern may arrange data/content regions, but table/filter color state belongs to the child APIs. |
 
 ### 7.2. Spacing and grid
 
@@ -288,7 +288,7 @@ Rules:
 - Use theme-aware layer, border, text, focus, and status tokens.
 - Do not hard-code light-only card colors.
 - Nested cards and rows must preserve layer contrast.
-- Inverse or high-contrast examples require explicit UI Reference proof before production use.
+- Inverse or high-contrast examples require explicit rendered evidence proof before production use.
 
 ## 8. Owned Component APIs
 
@@ -546,16 +546,16 @@ Examples:
 
 | Capability                        | Status   | Trigger condition                                                                  | Required before implementation                                             |
 | --------------------------------- | -------- | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| Advanced selectable content grid  | Deferred | Users need selectable card/grid summaries with keyboard and screen reader support. | Tile review, selection-control review, state contract, UI Reference proof. |
+| Advanced selectable content grid  | Deferred | Users need selectable card/grid summaries with keyboard and screen reader support. | Tile review, selection-control review, state contract, rendered evidence proof. |
 | Drag/reorder content list         | Deferred | Users need to reorder read-only summaries.                                         | Keyboard drag model, persistence contract, motion/reduced-motion contract. |
 | Bulk action content selection     | Deferred | Users need to select multiple content cards or list items for shared actions.      | Selection model, toolbar pattern, accessibility review.                    |
 | Async incremental content loading | Gated    | Content loads page-by-page or section-by-section.                                  | Loading, error, retry, and focus-management contract.                      |
 | Virtualized content list          | Deferred | Large record lists exceed normal DOM/rendering limits.                             | Performance, keyboard, screen reader, and scroll-position contract.        |
 | Rich media content block          | Gated    | Product content requires image/video/media summaries.                              | Media accessibility, loading, fallback, and layout contract.               |
 
-No deferred capability may be implemented locally inside a feature module. Add or update the Pattern standard and UI Reference proof first.
+No deferred capability may be implemented locally inside a feature module. Add or update the Pattern standard and rendered evidence proof first.
 
-## 18. Implementation and UI Reference Checklist
+## 18. Implementation and Rendered Evidence Checklist
 ### 18.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                      |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
@@ -566,7 +566,7 @@ No deferred capability may be implemented locally inside a feature module. Add o
 | Accessibility/content      | Page/workflow semantics, heading structure, focus flow, status messaging, action labels, and non-color meaning are defined.               |
 | Tests                      | Route/content/API assertions prove the Pattern and coordinated Component usage.                                                           |
 
-### 18.2. UI Reference proof checklist
+### 18.2. rendered evidence proof checklist
 | Requirement            | Visual proof expectation                                                                                                           |
 | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | Live compositions      | The page renders production-like composed examples, not isolated primitive samples.                                                |
@@ -575,9 +575,9 @@ No deferred capability may be implemented locally inside a feature module. Add o
 | Variants/states        | Required layout variants, responsive states, empty/loading/error/blocked states, or explicit gates are visible.                    |
 | Related APIs           | Coordinated Components, consumed Elements, planned sub-APIs, source files, and canonical docs are linked.                          |
 | Manual review          | The page provides enough rendered proof for visual review of composition, hierarchy, responsive behavior, and workflow boundaries. |
-## 19. UI Reference requirements
+## 19. Rendered evidence requirements
 
-The UI Reference page must render the approved Pattern page scaffold:
+The rendered evidence page must render the approved Pattern page scaffold:
 
 1. Purpose.
 2. Use cases.
@@ -585,11 +585,11 @@ The UI Reference page must render the approved Pattern page scaffold:
 4. Live examples.
 5. Related Elements, Components, and Patterns.
 
-The UI Reference page must show rendered examples of the approved pattern compositions, not abstract notes only.
+The rendered evidence page must show rendered examples of the approved pattern compositions, not abstract notes only.
 
 | Required proof              | Rendered behavior                                                                                                         | APIs shown                                                        |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
-| Key-value detail            | A read-only detail group with short labels, wrapping values, and empty-value handling.                                    | Typography, Spacing, Color, `x-ui.patterns.key-value-display`.    |
+| Key-value detail            | A read-only detail group with short labels, wrapping values, and empty-value handling.                                    | Typography, Spacing, Color, `x-patterns.key-value-display`.       |
 | Identity summary card       | A compact entity/person/workspace summary with title, subtitle, metadata, and optional status tag.                        | Tile/Card composition, Tag, Link, Button where applicable.        |
 | Data list item              | A repeated content item with title, metadata, optional status, and optional navigation link.                              | List or Structured list, Link, Tag.                               |
 | Empty state                 | A specific empty state with title, message, and optional single action.                                                   | Button or Link, Icons where meaningful, Typography.               |
@@ -607,7 +607,7 @@ Deferred capabilities must appear as explicit gated disposition rows with trigge
 
 ## 20. Testing and acceptance criteria
 
-- `/platform/ui-reference/patterns/data-content` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page renders live examples using app CSS/JS and app-owned Blade/component APIs where available.
 - The page links to `docs/02-standards/ui/patterns/data-and-content.md`.
 - The page shows the installed Pattern API, consumed Element APIs, consumed Component APIs, prohibited usage, deferred gates, and related APIs.
@@ -616,7 +616,7 @@ Deferred capabilities must appear as explicit gated disposition rows with trigge
 - No Pattern example hard-codes Foundation Element decisions that already have approved APIs.
 - No Pattern example uses local raw colors, arbitrary spacing, local icon sourcing, or one-off focus treatments.
 - Deferred capabilities are represented with trigger conditions and prohibited local workarounds.
-- The UI Reference page does not render fake advanced selectable grids, drag/reorder lists, bulk action selection, or virtualized content lists as implemented examples.
+- The rendered evidence page does not render fake advanced selectable grids, drag/reorder lists, bulk action selection, or virtualized content lists as implemented examples.
 - The route does not contain placeholder language such as `Pattern-specific API pending correction`, `Component-specific API pending correction`, `Legacy Contract Summary`, or `Reference Examples`.
 - The route does not link to deprecated `tier-1` or `tier-2` component docs paths.
 - The route does not use direct Carbon production classes such as `cds--` or `bx--`.
@@ -625,21 +625,21 @@ Deferred capabilities must appear as explicit gated disposition rows with trigge
 
 | API                | Route                                               |
 | ------------------ | --------------------------------------------------- |
-| List               | `/platform/ui-reference/components/list`            |
-| Structured list    | `/platform/ui-reference/components/structured-list` |
-| Tile               | `/platform/ui-reference/components/tile`            |
-| Tag                | `/platform/ui-reference/components/tag`             |
-| Link               | `/platform/ui-reference/components/link`            |
-| Button             | `/platform/ui-reference/components/button`          |
-| Notification       | `/platform/ui-reference/components/notification`    |
-| Loading            | `/platform/ui-reference/components/loading`         |
-| Data table         | `/platform/ui-reference/components/data-table`      |
-| Tables Pattern     | `/platform/ui-reference/patterns/tables`            |
-| Forms Pattern      | `/platform/ui-reference/patterns/forms`             |
-| Color Element      | `/platform/ui-reference/elements/color`             |
-| Spacing Element    | `/platform/ui-reference/elements/spacing`           |
-| Typography Element | `/platform/ui-reference/elements/typography`        |
-| 2x Grid Element    | `/platform/ui-reference/elements/2x-grid`           |
+| List               | `not installed`            |
+| Structured list    | `not installed` |
+| Tile               | `not installed`            |
+| Tag                | `not installed`             |
+| Link               | `not installed`            |
+| Button             | `not installed`          |
+| Notification       | `not installed`    |
+| Loading            | `not installed`         |
+| Data table         | `not installed`      |
+| Tables Pattern     | `not installed`            |
+| Forms Pattern      | `not installed`             |
+| Color Element      | `not installed`             |
+| Spacing Element    | `not installed`           |
+| Typography Element | `not installed`        |
+| 2x Grid Element    | `not installed`           |
 
 ## 22. References
 
@@ -655,4 +655,4 @@ Deferred capabilities must appear as explicit gated disposition rows with trigge
 - [Button Component Standard](../components/button.md)
 - [Notification Component Standard](../components/notification.md)
 - [Data Table Component Standard](../components/data-table.md)
-- Carbon Pattern guidance informs the goal-based composition model. Login App owns its own Pattern APIs, implementation gates, and UI Reference proof requirements.
+- Carbon Pattern guidance informs the goal-based composition model. Login App owns its own Pattern APIs, implementation gates, and rendered evidence proof requirements.

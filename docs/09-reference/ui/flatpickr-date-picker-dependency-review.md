@@ -19,7 +19,7 @@ Flatpickr is used only for calendar behavior:
 - `date-picker-type="simple"` does not initialize Flatpickr.
 - Time Picker is out of scope for this dependency.
 
-The app owns Blade component props, accessibility labels, UI Reference examples, and all visual treatment.
+The app owns Blade component props, accessibility labels, rendered evidence examples, and all visual treatment.
 
 ## Options Used
 
@@ -63,7 +63,7 @@ Flatpickr documents `rangePlugin` as beta. The app accepts that boundary because
 Risk controls:
 
 - Import the plugin only in `resources/js/ui-controls/date-picker.js`.
-- Keep range proof covered in UI Reference.
+- Keep range proof covered in rendered evidence.
 - Keep the second input as a child input, not as a separate Flatpickr instance.
 - Re-review if Flatpickr changes plugin stability or API shape.
 
@@ -71,7 +71,7 @@ Official plugins reference: https://flatpickr.js.org/plugins/
 
 ## Localization And Formatting
 
-Date formats use Flatpickr format tokens. The rendered input value, helper text, and UI Reference copy must agree. Locale usage must be verified against Flatpickr localization support before a new locale is represented as approved.
+Date formats use Flatpickr format tokens. The rendered input value, helper text, and rendered evidence copy must agree. Locale usage must be verified against Flatpickr localization support before a new locale is represented as approved.
 
 Official examples: https://flatpickr.js.org/examples/
 Official localization reference: https://flatpickr.js.org/localization/

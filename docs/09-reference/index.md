@@ -14,6 +14,7 @@ Support and research notes only. This branch does not define canonical implement
 
 - [UI Support References](ui/index.md)
 - [Documentation Support References](documentation/index.md)
+- [Security Support References](security/asvs-level-2-evidence-matrix.md)
 
 ## Architecture Support Notes
 
@@ -30,8 +31,6 @@ Support and research notes only. This branch does not define canonical implement
 - [UI UX External System Review And Baseline Matrix](ui/UI%20UX%20External%20System%20Review%20And%20Baseline%20Matrix.md)
 - [UI UX Component Coverage Matrix](ui/UI%20UX%20Component%20Coverage%20Matrix.md)
 - [UI UX Contract Rollout Tracker](ui/UI%20UX%20Contract%20Rollout%20Tracker.md)
-- [UI UX Tier 1 UI Reference Implementation Checklist](ui/UI%20UX%20Tier%201%20UI%20Reference%20Implementation%20Checklist.md)
-- [UI UX Status And Badge Production Rollout Checklist](ui/UI%20UX%20Status%20And%20Badge%20Production%20Rollout%20Checklist.md)
 
 ## Documentation Support Notes
 
@@ -40,6 +39,10 @@ Support and research notes only. This branch does not define canonical implement
 - [Modern Commenting Standards Research](documentation/Modern%20Commenting%20Standards%20Research.md)
 - [Commenting Review Checklist](documentation/Commenting%20Review%20Checklist.md)
 - [Vault Structure Review Checklist](documentation/Vault%20Structure%20Review%20Checklist.md)
+
+## Security Support Notes
+
+- [ASVS Level 2 Evidence Matrix](security/asvs-level-2-evidence-matrix.md)
 
 ## Related
 

@@ -3,9 +3,9 @@ title: Navigation Pattern API
 slug: navigation
 status: implemented-standard
 api_layer: Pattern API
-owner_route: /platform/ui-reference/patterns/navigation
+owner_route: not installed
 canonical_path: docs/02-standards/ui/patterns/navigation.md
-ui_reference_proof: /platform/ui-reference/patterns/navigation
+rendered_evidence_route: null
 consumed_elements:
   - 2x-grid
   - color
@@ -48,10 +48,10 @@ related_patterns:
   - [15. Content contract](#15-content-contract)
   - [16. Prohibited usage](#16-prohibited-usage)
   - [17. Deferred or gated capabilities](#17-deferred-or-gated-capabilities)
-  - [Implementation and UI Reference Checklist](#implementation-and-ui-reference-checklist)
+  - [Implementation and Rendered Evidence Checklist](#implementation-and-ui-reference-checklist)
     - [Implementation checklist](#implementation-checklist)
-    - [UI Reference proof checklist](#ui-reference-proof-checklist)
-  - [19. UI Reference requirements](#19-ui-reference-requirements)
+    - [rendered evidence proof checklist](#ui-reference-proof-checklist)
+  - [19. Rendered evidence requirements](#19-ui-reference-requirements)
   - [20. Testing and acceptance criteria](#20-testing-and-acceptance-criteria)
   - [21. Related APIs](#21-related-apis)
   - [22. References](#22-references)
@@ -72,10 +72,10 @@ Carbon describes patterns as reusable combinations of components and templates t
 | API layer          | Pattern API                                   |
 | Pattern slug       | navigation                                    |
 | Category           | Navigation and wayfinding                     |
-| Owner route        | `/platform/ui-reference/patterns/navigation`  |
+| Owner route        | `not installed`  |
 | Canonical path     | `docs/02-standards/ui/patterns/navigation.md` |
-| UI Reference proof | `/platform/ui-reference/patterns/navigation`  |
-| Source owner       | `/platform/ui-reference/patterns/navigation`  |
+| rendered evidence proof | `not installed`  |
+| Source owner       | `not installed`  |
 
 ## 3. Installed standard
 
@@ -94,33 +94,39 @@ The installed standard owns these app-level composition decisions:
 
 ## 4. Pattern API
 
-| Pattern API                        | Status                         | Purpose                                                                                   | Notes                                                                          |
-| ---------------------------------- | ------------------------------ | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| `x-ui.patterns.page-header`        | Implemented / canonical target | Composes page title, description, breadcrumbs, and page actions.                          | Parent pattern owns external spacing and action placement.                     |
-| `x-ui.patterns.sub-navigation-bar` | Implemented / canonical target | Composes local page navigation or peer section switching.                                 | Use Tabs when the UI switches peer content sections.                           |
-| `x-ui.patterns.search-filter-bar`  | Implemented / canonical target | Composes scoped Search, filters, and supporting actions.                                  | Filtering behavior is Pattern-owned; Search owns the text input control.       |
-| Breadcrumb composition             | Implemented                    | Composes Breadcrumb inside page header or route context.                                  | Breadcrumb Component owns trail semantics and overflow menu behavior.          |
-| Page title and actions row         | Implemented                    | Places primary and supporting page-level actions.                                         | Button/Menu buttons own the controls. Pattern owns placement and grouping.     |
-| UI shell composition               | Implemented / pattern-owned    | Composes global header, navigation regions, account menu, action area, and content frame. | Shell layout is Pattern-owned even when represented in the Component catalog.  |
-| Search/filter navigation           | Implemented / pattern-owned    | Coordinates search scope, filters, result context, and reset/clear affordances.           | Search Component owns field behavior; Pattern owns query/filter orchestration. |
+| Pattern API                     | Status                         | Purpose                                                                                   | Notes                                                                          |
+| ------------------------------- | ------------------------------ | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `x-shell.page-header`           | Installed shell composition / Pattern bridge | Composes `x-shell.page-title` and optional `x-shell.page-tabs` for route-level page navigation. | Parent Layout/Navigation Pattern owns external spacing and any future standalone Page header Pattern API. |
+| `x-patterns.sub-navigation-bar` | Implemented / canonical target | Composes local page navigation or peer section switching.                                 | Use Tabs when the UI switches peer content sections.                           |
+| `x-patterns.search-filter-bar`  | Implemented / canonical target | Composes scoped Search, filters, and supporting actions.                                  | Filtering behavior is Pattern-owned; Search owns the text input control.       |
+| Breadcrumb composition          | Implemented                    | Composes Breadcrumb inside page header or route context.                                  | Breadcrumb Component owns trail semantics and overflow menu behavior.          |
+| Page title and actions row      | Implemented                    | Places primary and supporting page-level actions.                                         | Button/Menu buttons own the controls. Pattern owns placement and grouping.     |
+| UI shell composition            | Implemented / pattern-owned    | Composes global header, navigation regions, account menu, action area, and content frame. | Shell layout is Pattern-owned even when represented in the Component catalog.  |
+| Search/filter navigation        | Implemented / pattern-owned    | Coordinates search scope, filters, result context, and reset/clear affordances.           | Search Component owns field behavior; Pattern owns query/filter orchestration. |
+
+Shared action vocabulary, including command vs navigation, reset vs clear, and link vs button decisions, belongs to [Common Actions](common-actions/index.md). Navigation owns active/current state, route hierarchy, and navigation-region composition.
 
 ### 4.1. Canonical composition examples
 
 ```blade
-<x-ui.patterns.page-header
+<x-shell.page-header
     title="Users"
-    description="Manage account access, roles, and status."
-    :breadcrumbs="$breadcrumbs"
-    :actions="$actions"
-/>
+    subtitle="Manage account access, roles, and status."
+    :breadcrumb-items="$breadcrumbs"
+    :tab-items="$tabs"
+>
+    <x-ui.button>Create user</x-ui.button>
+</x-shell.page-header>
+```
+
+`x-shell.page-tabs` is for route/current-page navigation only. Use `x-ui.tabs` for in-page tab-panel behavior or peer content switching; do not substitute it for the shell page-tabs rail.
+
+```blade
+<x-patterns.sub-navigation-bar :items="$sections" current="overview" />
 ```
 
 ```blade
-<x-ui.patterns.sub-navigation-bar :items="$sections" current="overview" />
-```
-
-```blade
-<x-ui.patterns.search-filter-bar
+<x-patterns.search-filter-bar
     search-name="q"
     search-label="Search users"
     :filters="$filters"
@@ -128,7 +134,7 @@ The installed standard owns these app-level composition decisions:
 />
 ```
 
-These examples document the intended Pattern API shape. If the project has not yet installed a named Blade wrapper for one of these compositions, feature work must either use the documented owner route examples exactly or update this Pattern standard and UI Reference proof before introducing a new wrapper.
+These examples document the intended Pattern API shape. If the project has not yet installed a named Blade wrapper for one of these compositions, feature work must either use the documented owner route examples exactly or update this Pattern standard and rendered evidence proof before introducing a new wrapper.
 
 ## 5. Required composition
 
@@ -156,7 +162,7 @@ Navigation Pattern implementations may compose only approved Element, Component,
 | Optional composition                | Status                                       | Usage                                                                                          |
 | ----------------------------------- | -------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | Overflow breadcrumb menu            | Implemented through Breadcrumb/Menu behavior | Use when the breadcrumb trail exceeds the allowed visible item count.                          |
-| Tab overflow control                | Gated until installed in Tabs                | Use only when Tabs defines the overflow API and UI Reference proof.                            |
+| Tab overflow control                | Gated until installed in Tabs                | Use only when Tabs defines the overflow API and rendered evidence proof.                            |
 | Account menu area                   | Implemented / shell-owned                    | Use inside the global shell; Menu buttons own trigger/menu behavior.                           |
 | Notification action area            | Implemented / shell-owned                    | Use in the shell or page header only when notifications/actions are approved.                  |
 | Search/filter bar reset action      | Implemented / Pattern-owned                  | Use when scoped filters/search can be cleared together.                                        |
@@ -180,14 +186,14 @@ Navigation Pattern implementations consume these Foundation Element APIs:
 
 Carbon color composition mapping:
 
-| Pattern need | Carbon benchmark role | Login App owner to compose | Mapping rule |
-| ------------ | --------------------- | -------------------------- | ------------ |
-| Links, breadcrumbs, current-route anchors | Link and Breadcrumb link/text/focus rows | Link/Breadcrumb Components + Color Element | Navigation composes current context; Link/Breadcrumb own link colors. |
-| Local tabs and section switching | Tabs selected, hover, focus, disabled, contained rows | Tabs Component | Pattern chooses tabs vs links; Tabs owns selected and tablist colors. |
-| Page and shell actions | Button/Menu button token families | Button and Menu buttons Components | Navigation places actions; Button/Menu buttons own hierarchy, danger, disabled, and focus colors. |
-| Search/filter navigation | Search, field, filter components, Tag, Pagination rows | Search and filter child Components | Pattern owns scope/orchestration; controls own field/status colors. |
-| Shell/header/sidebar surfaces and current item state | Layer/background/text/icon/border/focus roles | UI Shell Component + Color/Theme Elements | Shell and side-nav roles must be app-owned `ui-*` classes, not local utility clusters. |
-| Notification/action shell slots | Notification/Button/Menu rows | Notification and action Components | Pattern may reserve slots; child APIs own visual color treatment. |
+| Pattern need                                         | Carbon benchmark role                                  | Login App owner to compose                 | Mapping rule                                                                                      |
+| ---------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------ | ------------------------------------------------------------------------------------------------- |
+| Links, breadcrumbs, current-route anchors            | Link and Breadcrumb link/text/focus rows               | Link/Breadcrumb Components + Color Element | Navigation composes current context; Link/Breadcrumb own link colors.                             |
+| Local tabs and section switching                     | Tabs selected, hover, focus, disabled, contained rows  | Tabs Component                             | Pattern chooses tabs vs links; Tabs owns selected and tablist colors.                             |
+| Page and shell actions                               | Button/Menu button token families                      | Button and Menu buttons Components         | Navigation places actions; Button/Menu buttons own hierarchy, danger, disabled, and focus colors. |
+| Search/filter navigation                             | Search, field, filter components, Tag, Pagination rows | Search and filter child Components         | Pattern owns scope/orchestration; controls own field/status colors.                               |
+| Shell/header/sidebar surfaces and current item state | Layer/background/text/icon/border/focus roles          | UI Shell Component + Color/Theme Elements  | Shell and side-nav roles must be app-owned `ui-*` classes, not local utility clusters.            |
+| Notification/action shell slots                      | Notification/Button/Menu rows                          | Notification and action Components         | Pattern may reserve slots; child APIs own visual color treatment.                                 |
 
 Do not hard-code color, spacing, font size, icon source, focus style, motion timing, breakpoint behavior, or theme-specific values inside Navigation Pattern views.
 
@@ -221,7 +227,7 @@ Navigation Patterns do not own the internals of Breadcrumb, Tabs, Button, Link, 
 | Shell navigation                    | Implemented / Pattern-owned            | The global app frame needs persistent navigation and account/action areas.                  | Shell composition owns responsive collapse and repeated-region accessibility.                                                          |
 | Account menu area                   | Implemented / shell-owned              | Authenticated shell needs profile/account/session actions.                                  | Use Menu buttons/Menu behavior; do not create custom account dropdowns.                                                                |
 | Notification/action area            | Implemented / shell-owned              | Shell needs global notification or utility actions.                                         | Use Button/Menu buttons/Notification APIs.                                                                                             |
-| Right-panel shell behavior          | Deferred                               | A concrete workflow needs persistent side detail, inspection, or contextual utility region. | Requires updated Pattern standard, UI Reference proof, focus/order review, and responsive rules.                                       |
+| Right-panel shell behavior          | Deferred                               | A concrete workflow needs persistent side detail, inspection, or contextual utility region. | Requires updated Pattern standard, rendered evidence proof, focus/order review, and responsive rules.                                       |
 | Vertical tabs as primary navigation | Not allowed                            | Not applicable.                                                                             | Use shell navigation, visible sections, or another approved Pattern.                                                                   |
 
 ## 10. State ownership
@@ -246,7 +252,7 @@ Navigation Patterns own context and composition states. Child Components own loc
 - Horizontal tabs scroll, overflow, or defer to an approved responsive Tabs behavior instead of wrapping unpredictably.
 - Page title/actions stack predictably at narrow widths: title and description remain readable, and actions retain priority order.
 - Primary actions stay discoverable; secondary actions may move to Menu buttons when the page width cannot support all visible controls.
-- Search/filter bars stack in a predictable order: scope/search first, filters second, actions/reset third unless the UI Reference proves a different order.
+- Search/filter bars stack in a predictable order: scope/search first, filters second, actions/reset third unless the rendered evidence proves a different order.
 - Shell regions collapse predictably at narrow widths and preserve keyboard access to global navigation, account actions, and content.
 - Repeated shell regions must preserve skip-link behavior and content-first keyboard recovery.
 - Long labels wrap only where the child Component allows wrapping. Breadcrumbs and tabs use truncation/overflow rules instead of multi-line wrapping.
@@ -324,14 +330,14 @@ Navigation Patterns must:
 | Capability                     | Status                         | Trigger condition                                                                                                                           | Prohibited workaround                                                                   |
 | ------------------------------ | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
 | Right-panel shell behavior     | Deferred                       | A concrete workflow requires persistent side detail, inspection, or contextual utility while preserving main content.                       | Do not create local right panels, sticky sidebars, or floating inspectors.              |
-| Tab overflow control           | Gated                          | Tabs Component defines overflow behavior, keyboard handling, and UI Reference proof.                                                        | Do not build local tab dropdowns or wrapped tab rows.                                   |
+| Tab overflow control           | Gated                          | Tabs Component defines overflow behavior, keyboard handling, and rendered evidence proof.                                                        | Do not build local tab dropdowns or wrapped tab rows.                                   |
 | Collapsible sub-navigation     | Gated                          | A real narrow-width local navigation need exists and the Pattern defines focus, current state, and disclosure behavior.                     | Do not replace local nav with ad hoc accordions or menus.                               |
 | Global search shell slot       | Gated                          | Product requires global search across app entities and Search/Navigation patterns define scope, results, keyboard, and no-results behavior. | Do not add a local header search input that looks global but searches only one feature. |
 | Notification center shell slot | Gated                          | Product requires global notification history or unread actions.                                                                             | Do not create shell notification icons without Notification/Menu ownership.             |
 | Multi-level shell navigation   | Gated                          | Information architecture requires nested global navigation.                                                                                 | Do not use Tree view or nested custom menus until keyboard/ARIA ownership is approved.  |
 | Mobile drawer shell navigation | Gated if not already installed | Product requires mobile shell navigation beyond simple collapse.                                                                            | Do not add custom off-canvas drawers outside the shell Pattern.                         |
 
-## Implementation and UI Reference Checklist
+## Implementation and Rendered Evidence Checklist
 ### Implementation checklist
 | Requirement                | Standard expectation                                                                                                                      |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
@@ -342,7 +348,7 @@ Navigation Patterns must:
 | Accessibility/content      | Page/workflow semantics, heading structure, focus flow, status messaging, action labels, and non-color meaning are defined.               |
 | Tests                      | Route/content/API assertions prove the Pattern and coordinated Component usage.                                                           |
 
-### UI Reference proof checklist
+### rendered evidence proof checklist
 | Requirement            | Visual proof expectation                                                                                                           |
 | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | Live compositions      | The page renders production-like composed examples, not isolated primitive samples.                                                |
@@ -351,9 +357,9 @@ Navigation Patterns must:
 | Variants/states        | Required layout variants, responsive states, empty/loading/error/blocked states, or explicit gates are visible.                    |
 | Related APIs           | Coordinated Components, consumed Elements, planned sub-APIs, source files, and canonical docs are linked.                          |
 | Manual review          | The page provides enough rendered proof for visual review of composition, hierarchy, responsive behavior, and workflow boundaries. |
-## 19. UI Reference requirements
+## 19. Rendered evidence requirements
 
-The UI Reference page must show rendered examples of approved Navigation Pattern compositions, not abstract notes only.
+The rendered evidence page must show rendered examples of approved Navigation Pattern compositions, not abstract notes only.
 
 | Required proof                 | Rendered behavior                                                                                                           | APIs shown                                                  |
 | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
@@ -366,7 +372,7 @@ The UI Reference page must show rendered examples of approved Navigation Pattern
 | Shell navigation composition   | Header, side/global navigation, account menu area, notification/action area, and content region render as a composed shell. | UI shell, Link, Button, Menu buttons, Icons, 2x Grid        |
 | Responsive navigation behavior | Breadcrumbs truncate, tabs/section navigation do not wrap unpredictably, shell regions collapse predictably.                | Breadcrumb, Tabs, UI shell, 2x Grid                         |
 | Deferred right-panel gate      | Right-panel shell behavior appears as a gated disposition row with trigger conditions.                                      | Deferred gate, not fake UI                                  |
-| Component boundary comparison  | UI Reference explains Breadcrumb vs Tabs vs Shell navigation vs Progress indicator vs Link/Button.                          | Related APIs                                                |
+| Component boundary comparison  | rendered evidence explains Breadcrumb vs Tabs vs Shell navigation vs Progress indicator vs Link/Button.                          | Related APIs                                                |
 
 The page must link to this canonical standard and to consumed Element and Component standards.
 
@@ -376,7 +382,7 @@ Examples must use app-owned tokens, classes, helpers, and Blade components where
 
 ## 20. Testing and acceptance criteria
 
-- `/platform/ui-reference/patterns/navigation` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed Pattern API, required composition, optional composition, prohibited usage, deferred gates, and consumed Element/Component APIs.
 - Rendered examples include required composition markers for page title/actions, breadcrumb hierarchy, tabs/local navigation, search/filter navigation, page action overflow, and shell navigation composition.
 - Breadcrumb examples truncate or overflow instead of wrapping.
@@ -386,7 +392,7 @@ Examples must use app-owned tokens, classes, helpers, and Blade components where
 - Page action examples show one primary action per region.
 - Deferred capabilities render trigger conditions and prohibited workarounds instead of fake production controls.
 - No Pattern example hard-codes Foundation Element decisions that already have approved APIs.
-- The rendered UI Reference links to consumed Component and Element standards.
+- The rendered rendered evidence links to consumed Component and Element standards.
 - The canonical docs link points to `docs/02-standards/ui/patterns/navigation.md`.
 - Deprecated `tier-1` or `tier-2` component paths do not appear as canonical links.
 
@@ -411,24 +417,25 @@ $response->assertDontSee('tier-2');
 
 | API                      | Route                                                  |
 | ------------------------ | ------------------------------------------------------ |
-| Breadcrumb               | `/platform/ui-reference/components/breadcrumb`         |
-| Tabs                     | `/platform/ui-reference/components/tabs`               |
-| Link                     | `/platform/ui-reference/components/link`               |
-| Button                   | `/platform/ui-reference/components/button`             |
-| Menu buttons             | `/platform/ui-reference/components/menu-buttons`       |
-| Search                   | `/platform/ui-reference/components/search`             |
-| UI shell                 | `/platform/ui-reference/components/ui-shell`           |
-| Progress indicator       | `/platform/ui-reference/components/progress-indicator` |
-| Data and content Pattern | `/platform/ui-reference/patterns/data-content`         |
-| Forms Pattern            | `/platform/ui-reference/patterns/forms`                |
-| Tables Pattern           | `/platform/ui-reference/patterns/tables`               |
-| 2x Grid element          | `/platform/ui-reference/elements/2x-grid`              |
-| Spacing element          | `/platform/ui-reference/elements/spacing`              |
-| Color element            | `/platform/ui-reference/elements/color`                |
-| Typography element       | `/platform/ui-reference/elements/typography`           |
-| Icons element            | `/platform/ui-reference/elements/icons`                |
-| Motion element           | `/platform/ui-reference/elements/motion`               |
-| Themes element           | `/platform/ui-reference/elements/themes`               |
+| Breadcrumb               | `not installed`         |
+| Tabs                     | `not installed`               |
+| Link                     | `not installed`               |
+| Button                   | `not installed`             |
+| Menu buttons             | `not installed`       |
+| Common Actions patterns  | `docs/02-standards/ui/patterns/common-actions/index.md` |
+| Search                   | `not installed`             |
+| UI shell                 | `not installed`           |
+| Progress indicator       | `not installed` |
+| Data and content Pattern | `not installed`         |
+| Forms Pattern            | `not installed`                |
+| Tables Pattern           | `not installed`               |
+| 2x Grid element          | `not installed`              |
+| Spacing element          | `not installed`              |
+| Color element            | `not installed`                |
+| Typography element       | `not installed`           |
+| Icons element            | `not installed`                |
+| Motion element           | `not installed`               |
+| Themes element           | `not installed`               |
 
 ## 22. References
 

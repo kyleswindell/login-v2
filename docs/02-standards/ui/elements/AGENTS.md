@@ -7,7 +7,7 @@
 
 Foundation Element standards only. This folder owns the installed Element APIs below Components and Patterns: grid, color, icons, pictograms, motion, spacing, themes, typography, and related token behavior.
 
-Element docs define token names, CSS variables, utilities/helpers, theme/state behavior, prohibited usage, UI Reference proof requirements, and tests.
+Element docs define token names, CSS variables, utilities/helpers, theme/state behavior, prohibited usage, rendered evidence proof requirements, and tests.
 
 ## 2. Read Order
 

@@ -4,7 +4,7 @@ slug: spacing
 guide_status: implemented
 system_maturity: partial
 api_layer: Foundation Element API
-ui_reference_route: /platform/ui-reference/elements/spacing
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/elements/spacing.md
 related_elements:
   - 2x-grid
@@ -40,10 +40,10 @@ related_patterns:
 - [11. Accessibility contract](#11-accessibility-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
   - [15.1. Spacing scale](#151-spacing-scale)
   - [15.2. Margin examples](#152-margin-examples)
   - [15.3. Padding examples](#153-padding-examples)
@@ -62,7 +62,7 @@ Spacing controls layout rhythm, component padding, content relationships, densit
 
 Spacing is a Foundation Element API. Component and Pattern APIs must consume it instead of redefining local values.
 
-This document defines the installed Login App 2.0 spacing contract: what spacing values are allowed, which utility classes map to those values, which layer owns spacing, how density is selected, and what the UI Reference page must prove with live rendered examples.
+This document defines the installed Login App 2.0 spacing contract: what spacing values are allowed, which utility classes map to those values, which layer owns spacing, how density is selected, and what the rendered evidence page must prove with live rendered examples.
 
 ## 2. Status and ownership
 
@@ -72,7 +72,7 @@ This document defines the installed Login App 2.0 spacing contract: what spacing
 | System maturity    | Partial                                  |
 | API layer          | Foundation Element API                   |
 | Element slug       | spacing                                  |
-| UI Reference route | /platform/ui-reference/elements/spacing  |
+| Rendered evidence route | not installed  |
 | Canonical doc      | docs/02-standards/ui/elements/spacing.md |
 
 ## 3. Installed standard
@@ -130,25 +130,25 @@ Not allowed:
 
 ## 4. Token API
 
-| Token/helper           | Variable or value                                                                     | Allowed API/consumer                                     | Example                                                            |
-| ---------------------- | ------------------------------------------------------------------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------ |
-| `$spacing-01`          | `0.125rem` / `2px`                                                                    | `gap-0.5`, `p-0.5`, component micro-offsets              | Fine separator or hairline relationship.                           |
-| `$spacing-02`          | `0.25rem` / `4px`                                                                     | `gap-1`, `p-1`, compact icon/text spacing                | Icon-to-label or tight metadata relationship.                      |
-| `$spacing-03`          | `0.5rem` / `8px`                                                                      | `gap-2`, `p-2`, `space-y-2`                              | Label to helper relationship.                                      |
-| `$spacing-04`          | `0.75rem` / `12px`                                                                    | `gap-3`, `p-3`, compact card internals                   | Compact field group or small inline cluster.                       |
-| `$spacing-05`          | `1rem` / `16px`                                                                       | `gap-4`, `p-4`, standard card/panel internals            | Standard compact panel rhythm.                                     |
-| `$spacing-06`          | `1.5rem` / `24px`                                                                     | `gap-6`, `p-6`, standard form group rhythm               | Form section or card content grouping.                             |
-| `$spacing-07`          | `2rem` / `32px`                                                                       | `gap-8`, `p-8`, section separation                       | Page section separation.                                           |
-| `$spacing-08`          | `2.5rem` / `40px`                                                                     | `gap-10`, `p-10`, spacious section rhythm                | Wider dashboard or landing-style grouping.                         |
-| `$spacing-09`          | `3rem` / `48px`                                                                       | `gap-12`, `p-12`, large region rhythm                    | Major page section separation.                                     |
-| `$spacing-10`          | `4rem` / `64px`                                                                       | `gap-16`, `p-16`, rare large region spacing              | Large empty-state or onboarding panel.                             |
-| `$spacing-11`          | `5rem` / `80px`                                                                       | `gap-20`, `p-20`, rare layout spacing                    | Large visual pause or hero-like section.                           |
-| `$spacing-12`          | `6rem` / `96px`                                                                       | `gap-24`, `p-24`, rare layout spacing                    | Large empty region or high-level page composition.                 |
-| `$spacing-13`          | `10rem` / `160px`                                                                     | `gap-40`, `p-40`, large layout spacing only              | Rare large empty/hero-like spacing.                                |
-| Parent stack gap       | Approved `gap-*` values from this scale                                               | Flex, grid, form, toolbar, and content stack wrappers    | `<div class="grid gap-4">...</div>`                                |
-| Component padding      | Approved `p-*`, `px-*`, `py-*`, `pt-*`, `pr-*`, `pb-*`, `pl-*` values from this scale | Component source, `ui-card`, fields, table cells, panels | `<article class="ui-card">...</article>`                           |
-| External layout margin | Approved `m-*`, `mx-*`, `my-*`, `mt-*`, `mr-*`, `mb-*`, `ml-*` values from this scale | Parent layout or Pattern only                            | `<section class="mt-8">...</section>`                              |
-| Dashboard grid spacing | `--ui-dashboard-grid-row-size` / `--ui-dashboard-grid-gap`                            | `x-ui.patterns.dashboard-grid`                           | `<x-ui.patterns.dashboard-grid>...</x-ui.patterns.dashboard-grid>` |
+| Token/helper           | Variable or value                                                                     | Allowed API/consumer                                     | Example                                                      |
+| ---------------------- | ------------------------------------------------------------------------------------- | -------------------------------------------------------- | ------------------------------------------------------------ |
+| `$spacing-01`          | `0.125rem` / `2px`                                                                    | `gap-0.5`, `p-0.5`, component micro-offsets              | Fine separator or hairline relationship.                     |
+| `$spacing-02`          | `0.25rem` / `4px`                                                                     | `gap-1`, `p-1`, compact icon/text spacing                | Icon-to-label or tight metadata relationship.                |
+| `$spacing-03`          | `0.5rem` / `8px`                                                                      | `gap-2`, `p-2`, `space-y-2`                              | Label to helper relationship.                                |
+| `$spacing-04`          | `0.75rem` / `12px`                                                                    | `gap-3`, `p-3`, compact card internals                   | Compact field group or small inline cluster.                 |
+| `$spacing-05`          | `1rem` / `16px`                                                                       | `gap-4`, `p-4`, standard card/panel internals            | Standard compact panel rhythm.                               |
+| `$spacing-06`          | `1.5rem` / `24px`                                                                     | `gap-6`, `p-6`, standard form group rhythm               | Form section or card content grouping.                       |
+| `$spacing-07`          | `2rem` / `32px`                                                                       | `gap-8`, `p-8`, section separation                       | Page section separation.                                     |
+| `$spacing-08`          | `2.5rem` / `40px`                                                                     | `gap-10`, `p-10`, spacious section rhythm                | Wider dashboard or landing-style grouping.                   |
+| `$spacing-09`          | `3rem` / `48px`                                                                       | `gap-12`, `p-12`, large region rhythm                    | Major page section separation.                               |
+| `$spacing-10`          | `4rem` / `64px`                                                                       | `gap-16`, `p-16`, rare large region spacing              | Large empty-state or onboarding panel.                       |
+| `$spacing-11`          | `5rem` / `80px`                                                                       | `gap-20`, `p-20`, rare layout spacing                    | Large visual pause or hero-like section.                     |
+| `$spacing-12`          | `6rem` / `96px`                                                                       | `gap-24`, `p-24`, rare layout spacing                    | Large empty region or high-level page composition.           |
+| `$spacing-13`          | `10rem` / `160px`                                                                     | `gap-40`, `p-40`, large layout spacing only              | Rare large empty/hero-like spacing.                          |
+| Parent stack gap       | Approved `gap-*` values from this scale                                               | Flex, grid, form, toolbar, and content stack wrappers    | `<div class="grid gap-4">...</div>`                          |
+| Component padding      | Approved `p-*`, `px-*`, `py-*`, `pt-*`, `pr-*`, `pb-*`, `pl-*` values from this scale | Component source, `ui-card`, fields, table cells, panels | `<article class="ui-card">...</article>`                     |
+| External layout margin | Approved `m-*`, `mx-*`, `my-*`, `mt-*`, `mr-*`, `mb-*`, `ml-*` values from this scale | Parent layout or Pattern only                            | `<section class="mt-8">...</section>`                        |
+| Dashboard grid spacing | `--ui-dashboard-grid-row-size` / `--ui-dashboard-grid-gap`                            | `x-patterns.dashboard-grid`                              | `<x-patterns.dashboard-grid>...</x-patterns.dashboard-grid>` |
 
 The table above is the public spacing API for feature implementation. If a value or helper does not appear here or in a component/pattern-specific standard, it is not approved for new UI work.
 
@@ -182,11 +182,11 @@ Not approved:
 </div>
 ```
 
-If a new semantic spacing alias is needed, update this Element standard, the consuming component or pattern doc, and the UI Reference proof before using it in feature code.
+If a new semantic spacing alias is needed, update this Element standard, the consuming component or pattern doc, and the rendered evidence proof before using it in feature code.
 
 ## 6. Utility class/helper API
 
-Allowed utility classes, Blade helpers, and component wrappers are those listed in the Token API table and demonstrated by the UI Reference route.
+Allowed utility classes, Blade helpers, and component wrappers are those listed in the Token API table and demonstrated by the Rendered evidence route.
 
 ### 6.1. Allowed utility families
 
@@ -292,7 +292,7 @@ Components and Patterns must consume this Element through documented tokens, uti
 
 ## 9. Theme behavior
 
-This Element must remain valid in supported light, dark, inline, inverse, and high-contrast contexts when those contexts apply. Theme behavior is proven on the UI Reference page.
+This Element must remain valid in supported light, dark, inline, inverse, and high-contrast contexts when those contexts apply. Theme behavior is proven on the rendered evidence page.
 
 Spacing values are not theme-specific. The same spacing token keeps the same value across themes. Theme changes may alter color, border, shadow, or layer tokens, but must not create layout shifts or change spacing rhythm unless a documented Pattern explicitly changes density.
 
@@ -358,17 +358,17 @@ Not allowed:
 
 ## 13. Deferred or gated capabilities
 
-No additional capability is approved without updating this Element standard and UI Reference proof.
+No additional capability is approved without updating this Element standard and rendered evidence proof.
 
 | Capability                                                     | Status       | Gate                                                                                  |
 | -------------------------------------------------------------- | ------------ | ------------------------------------------------------------------------------------- |
-| New spacing values outside `$spacing-01` - `$spacing-13`       | Not approved | Requires Element standard update, UI Reference proof, and consuming API update.       |
+| New spacing values outside `$spacing-01` - `$spacing-13`       | Not approved | Requires Element standard update, rendered evidence proof, and consuming API update.       |
 | Semantic CSS variables such as `--ui-spacing-05`               | Deferred     | Requires token build pipeline decision and migration plan.                            |
 | Component-owned external margin exceptions                     | Gated        | Requires component standard update explaining why parent ownership is not sufficient. |
-| Density scale beyond current compact/default/spacious patterns | Gated        | Requires Pattern standard, component mapping, and UI Reference examples.              |
+| Density scale beyond current compact/default/spacious patterns | Gated        | Requires Pattern standard, component mapping, and rendered evidence examples.              |
 | Arbitrary viewport-based spacing formulas                      | Not approved | Use breakpoint-based token step changes instead.                                      |
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 
 ### 14.1. Implementation checklist
 
@@ -381,7 +381,7 @@ No additional capability is approved without updating this Element standard and 
 | Prohibited usage            | Feature code, Components, and Patterns are told what they must not redefine locally.                                              |
 | Tests                       | Route/content/API assertions are defined to prove the Element contract.                                                           |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 
 | Requirement          | Visual proof expectation                                                                                            |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------- |
@@ -391,9 +391,9 @@ No additional capability is approved without updating this Element standard and 
 | Accessibility proof  | Contrast, focus, semantics, hit targets, reduced motion, or equivalent Element constraints are shown or documented. |
 | Related APIs         | Consuming Components, Patterns, source files, and the canonical standard are linked.                                |
 | Manual review        | The page provides enough rendered proof for visual review without opening source code first.                        |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The `/platform/ui-reference/elements/spacing` page must render live examples with application CSS/JS, not screenshots only.
+The `not installed` page must render live examples with application CSS/JS, not screenshots only.
 
 Required live sections:
 
@@ -452,7 +452,7 @@ Required live sections:
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/elements/spacing` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page renders live examples with app CSS/JS rather than screenshots only.
 - The page shows token/class/helper API references, allowed usage, prohibited usage, accessibility constraints, and implementation status.
 - The page renders all thirteen approved spacing tokens with rem and px values.
@@ -464,7 +464,7 @@ Required live sections:
 ### 16.1. Suggested automated assertions:
 
 ```text
-GET /platform/ui-reference/elements/spacing -> 200 for authorized users
+GET not installed -> 200 for authorized users
 assertSee('$spacing-01')
 assertSee('$spacing-13')
 assertSee('Component internal spacing')
@@ -481,11 +481,11 @@ assertSee('density examples')
 
 | API                     | Route                                                         |
 | ----------------------- | ------------------------------------------------------------- |
-| 2x Grid element         | /platform/ui-reference/elements/2x-grid                       |
-| Typography element      | /platform/ui-reference/elements/typography                    |
-| Themes element          | /platform/ui-reference/elements/themes                        |
-| Form patterns           | /platform/ui-reference/patterns/forms                         |
-| Layout patterns         | /platform/ui-reference/patterns/layout                        |
+| 2x Grid element         | not installed                       |
+| Typography element      | not installed                    |
+| Themes element          | not installed                        |
+| Form patterns           | not installed                         |
+| Layout patterns         | not installed                        |
 | Canonical spacing doc   | /platform/docs?path=02-standards%2Fui%2Felements%2Fspacing.md |
 | Carbon spacing overview | https://carbondesignsystem.com/elements/spacing/overview/     |
 

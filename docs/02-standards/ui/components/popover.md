@@ -5,9 +5,9 @@ status: implemented-standard
 api_layer: Component API
 category: Navigation and disclosure
 priority: Tier C - Contextual component
-ui_reference_route: /platform/ui-reference/components/popover
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/popover.md
-source_owner: /platform/ui-reference/components/popover
+source_owner: not installed
 carbon_reference: https://carbondesignsystem.com/components/popover/usage/
 consumes:
   - color
@@ -52,7 +52,7 @@ related_patterns:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. UI Reference requirements](#14-ui-reference-requirements)
+- [14. Rendered evidence requirements](#14-ui-reference-requirements)
 - [15. Testing and acceptance criteria](#15-testing-and-acceptance-criteria)
   - [15.1. Recommended regression assertions](#151-recommended-regression-assertions)
 - [16. Related APIs](#16-related-apis)
@@ -62,7 +62,7 @@ related_patterns:
 
 Popover presents a temporary floating layer of supporting content attached to a trigger.
 
-Canonical API owner: `/platform/ui-reference/components/popover`. Use this Component API instead of creating local floating panels, custom positioned layers, tooltip-like hybrids, menu hybrids, or ad hoc disclosure overlays for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local floating panels, custom positioned layers, tooltip-like hybrids, menu hybrids, or ad hoc disclosure overlays for the same UI role.
 
 Popover is the app-owned Component API for non-blocking floating content that may contain readable supporting content and limited interactive controls. It is not a command menu, selection menu, tooltip, modal, or replacement for visible page content.
 
@@ -75,9 +75,9 @@ Popover is the app-owned Component API for non-blocking floating content that ma
 | Component slug     | popover                                      |
 | Category           | Navigation and disclosure                    |
 | Priority           | Tier C - Contextual component                |
-| UI Reference route | `/platform/ui-reference/components/popover`  |
+| Rendered evidence route | `not installed`  |
 | Canonical doc      | `docs/02-standards/ui/components/popover.md` |
-| Source owner       | `/platform/ui-reference/components/popover`  |
+| Source owner       | `not installed`  |
 | Blade owner        | `x-ui.popover`                               |
 | JavaScript owner   | `initPopovers`                               |
 | CSS namespace      | `ui-popover*`                                |
@@ -115,7 +115,7 @@ Use Popover only when content must appear near a trigger and does not justify a 
 | Data attributes | `data-ui-popover`, `data-ui-popover-trigger`, `data-ui-popover-panel`, `data-ui-popover-close`                     |
 | Props/options   | `id`, `placement`, `align`, `size`, `tip`, `caret`, `triggerKind`, `triggerIcon`, `interaction`, `closeable`, `open`, `disabled`, `label`, `panelLabel`, `strategy` |
 | CSS namespace   | `ui-popover`, `ui-popover-trigger`, `ui-popover-panel`, `ui-popover-content`, `ui-popover-caret`                   |
-| Source files    | `resources/views/components/ui/popover.blade.php`; `resources/js/ui-controls/popovers.js`; `resources/css/app.css` |
+| Source files    | `resources/views/components/ui/popover/index.blade.php`; `resources/js/ui-controls/popovers.js`; `resources/css/app.css` |
 
 Example call:
 
@@ -150,10 +150,10 @@ Example call:
 | `tip`        | string | `caret`  | `none`, `caret`, `tab`                   | Defines the visual connector between trigger and panel.              |
 | `caret`      | bool   | `null`   | `true`, `false`, `null`                  | Backward-compatible alias; `false` resolves to `tip="none"`.        |
 | `triggerKind` | string | `icon` | `icon`, `button`, `ghost`                | Defines the rendered trigger shape.                                  |
-| `triggerIcon` | string | `heroicon-o-information-circle` | approved icon component | Icon used by icon trigger mode.                                      |
+| `triggerIcon` | string | `information` | approved icon component | Icon used by icon trigger mode.                                      |
 | `interaction` | string | `click` | `click`, `hover`, `focus`                | Opens the panel according to the approved disclosure trigger mode.   |
 | `closeable`  | bool   | `true`   | `true`, `false`                          | Adds an internal close button for panels with richer content.        |
-| `open`       | bool   | `false`  | `true`, `false`                          | Initial open state for UI Reference proof or controlled integration. |
+| `open`       | bool   | `false`  | `true`, `false`                          | Initial open state for rendered evidence proof or controlled integration. |
 | `disabled`   | bool   | `false`  | `true`, `false`                          | Disables the trigger and prevents the panel from opening.            |
 | `label`      | string | `null`   | accessible trigger label                 | Required when the trigger is icon-only.                              |
 | `panelLabel` | string | required | accessible panel label                   | Describes the panel content for assistive technology.                |
@@ -309,7 +309,7 @@ Carbon color role mapping:
 .ui-popover-size-lg
 ```
 
-Do not add feature-local popover classes. Extend this Component API standard and UI Reference proof before adding new namespace entries.
+Do not add feature-local popover classes. Extend this Component API standard and rendered evidence proof before adding new namespace entries.
 
 ## 8. Composition rules
 
@@ -413,7 +413,7 @@ Popover content must be concise and task-bound.
 
 ## 13. Deferred or gated capabilities
 
-The core Popover API is implemented as the expected standard. Advanced capabilities require an updated Component standard and UI Reference proof before use.
+The core Popover API is implemented as the expected standard. Advanced capabilities require an updated Component standard and rendered evidence proof before use.
 
 | Capability              | Status      | Requirement                                                                                  |
 | ----------------------- | ----------- | -------------------------------------------------------------------------------------------- |
@@ -427,11 +427,11 @@ The core Popover API is implemented as the expected standard. Advanced capabilit
 | Command menu behavior   | Not allowed | Use Menu buttons/Menu.                                                                       |
 | Known-option selection  | Not allowed | Use Dropdown or Select.                                                                      |
 
-## 14. UI Reference requirements
+## 14. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
-The Popover UI Reference page must render production examples through the installed Component API.
+The Popover rendered evidence page must render production examples through the installed Component API.
 
 | Required proof           | Rendered behavior                                                                                  | Variants/options shown                                          |
 | ------------------------ | -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
@@ -447,7 +447,7 @@ The Popover UI Reference page must render production examples through the instal
 
 ## 15. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/popover` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows status `Implemented standard`.
 - The page shows the installed `x-ui.popover` API.
 - The page shows `initPopovers`.
@@ -497,15 +497,15 @@ $response->assertDontSee('tier-2');
 
 | API                            | Route                                               |
 | ------------------------------ | --------------------------------------------------- |
-| Tooltip                        | `/platform/ui-reference/components/tooltip`         |
-| Toggletip                      | `/platform/ui-reference/components/toggletip`       |
-| Modal                          | `/platform/ui-reference/components/modal`           |
-| Menu buttons                   | `/platform/ui-reference/components/menu-buttons`    |
-| Dropdown                       | `/platform/ui-reference/components/dropdown`        |
-| Contained list                 | `/platform/ui-reference/components/contained-list`  |
-| Overlays and feedback patterns | `/platform/ui-reference/patterns/overlays-feedback` |
-| Disclosure behavior owner      | `/platform/ui-reference/patterns/overlays-feedback` |
-| Components overview            | `/platform/ui-reference/components`                 |
+| Tooltip                        | `not installed`         |
+| Toggletip                      | `not installed`       |
+| Modal                          | `not installed`           |
+| Menu buttons                   | `not installed`    |
+| Dropdown                       | `not installed`        |
+| Contained list                 | `not installed`  |
+| Overlays and feedback patterns | `not installed` |
+| Disclosure behavior owner      | `not installed` |
+| Components overview            | `not installed`                 |
 
 ## 17. References
 

@@ -9,7 +9,7 @@
 
 UI standards only. This folder owns final Login App UI API expectations for Foundation Elements, Components, Patterns, and the stable UI API inventory.
 
-Standards define public API contracts, allowed tokens/classes/helpers/components, supported variants/options/states, prohibited usage, deferred gates, UI Reference requirements, and testing expectations. UI Reference pages are the live rendered proof of these standards.
+Standards define public API contracts, allowed tokens/classes/helpers/components, supported variants/options/states, prohibited usage, deferred gates, Rendered evidence requirements, and testing expectations. rendered evidence pages are the live rendered proof of these standards.
 
 Implementation progress, queue state, review state, and worklog status belong in `docs/08-active/`, not in this standards folder.
 
@@ -25,18 +25,18 @@ Implementation progress, queue state, review state, and worklog status belong in
 
 ## 3. UI API Standards Preflight
 
-Before any UI source or UI Reference edit, identify the primary UI API standard for the surface being changed and read that standard's table of contents. Then read these sections when present:
+Before any UI source or rendered evidence edit, identify the primary UI API standard for the surface being changed and read that standard's table of contents. Then read these sections when present:
 
 - `Related APIs`
 - `Token, class, and helper usage`
 - `Accessibility contract`
 - `Content contract`
-- `UI Reference requirements`
-- `Implementation and UI Reference Checklist`
+- `Rendered evidence requirements`
+- `Implementation and Rendered Evidence Checklist`
 
 Open related API standards when the requested change touches those dependencies. For example, sidebar navigation work must check the Navigation or Layout Pattern standard plus related Motion, Icons, Spacing, Typography, Color, and Theme Element standards as applicable.
 
-Inspect the installed source API and any current UI Reference live examples before editing. If the primary standard or `Related APIs` section is missing enough behavior guidance for a behavior-heavy UI change, stop and queue a standards gap instead of inventing local behavior.
+Inspect the installed source API and any current rendered evidence live examples before editing. If the primary standard or `Related APIs` section is missing enough behavior guidance for a behavior-heavy UI change, stop and queue a standards gap instead of inventing local behavior.
 
 Active UI worklogs must include a `UI API Standards Preflight` section with: primary API, standards reviewed, related APIs consulted, Foundation Elements consumed, source/live examples inspected, motion/accessibility/layout requirements, and visual-review notes.
 

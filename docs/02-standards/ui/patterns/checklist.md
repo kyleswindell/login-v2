@@ -7,8 +7,8 @@ system_maturity: partial-family-rollout
 category: pattern-library
 priority: pattern-library-baseline
 canonical_doc: docs/02-standards/ui/patterns/checklist.md
-source_owner: /platform/ui-reference/patterns
-ui_reference_route: /platform/ui-reference/patterns
+source_owner: not installed
+rendered_evidence_route: null
 related_indexes:
   - docs/02-standards/ui/patterns/index.md
   - docs/02-standards/ui/patterns/boundary-and-validation.md
@@ -42,11 +42,11 @@ foundation_elements:
   - [8.6. State ownership](#86-state-ownership)
   - [8.7. Accessibility](#87-accessibility)
   - [8.8. Content](#88-content)
-  - [8.9. UI Reference proof](#89-ui-reference-proof)
+  - [8.9. rendered evidence proof](#89-ui-reference-proof)
   - [8.10. Testing](#810-testing)
 - [9. Pattern family checklist](#9-pattern-family-checklist)
 - [10. Pattern standard review checklist](#10-pattern-standard-review-checklist)
-- [11. UI Reference validation](#11-ui-reference-validation)
+- [11. rendered evidence validation](#11-ui-reference-validation)
 - [12. Regression checks](#12-regression-checks)
 - [13. Read guidance](#13-read-guidance)
 - [14. Update workflow](#14-update-workflow)
@@ -57,11 +57,11 @@ foundation_elements:
 
 This document is the canonical implementation checklist hub for Login App 2.0 Pattern API standards.
 
-Pattern standards define reusable goal-oriented compositions built from Element APIs and Component APIs. They are not abstract design articles. They are implementation contracts for composition, state ownership, responsive behavior, accessibility, content, UI Reference proof, and tests.
+Pattern standards define reusable goal-oriented compositions built from Element APIs and Component APIs. They are not abstract design articles. They are implementation contracts for composition, state ownership, responsive behavior, accessibility, content, rendered evidence proof, and tests.
 
 Use this checklist when creating, correcting, or reviewing Pattern standards under `docs/02-standards/ui/patterns`.
 
-Carbon alignment note: Carbon describes patterns as best-practice solutions for how users achieve goals through reusable combinations of components and templates that address common objectives with sequences and flows. Login App applies that concept through app-owned Pattern API standards, route-owned UI Reference proof, Foundation Element consumption, and installed Component composition rather than copying Carbon implementation classes.
+Carbon alignment note: Carbon describes patterns as best-practice solutions for how users achieve goals through reusable combinations of components and templates that address common objectives with sequences and flows. Login App applies that concept through app-owned Pattern API standards, route-owned rendered evidence proof, Foundation Element consumption, and installed Component composition rather than copying Carbon implementation classes.
 
 ## 2. Status and ownership
 
@@ -72,9 +72,9 @@ Carbon alignment note: Carbon describes patterns as best-practice solutions for 
 | API layer                    | Pattern API Checklist                                      |
 | Checklist slug               | `pattern-library-checklist`                                |
 | Canonical doc                | `docs/02-standards/ui/patterns/checklist.md`               |
-| Source owner                 | `/platform/ui-reference/patterns`                          |
-| UI Reference owner           | `/platform/ui-reference/patterns`                          |
-| Applies to                   | Pattern standards and Pattern UI Reference pages           |
+| Source owner                 | `not installed`                          |
+| rendered evidence owner           | `not installed`                          |
+| Applies to                   | Pattern standards and Pattern rendered evidence pages           |
 | Related boundary doc         | `docs/02-standards/ui/patterns/boundary-and-validation.md` |
 | Related Pattern index        | `docs/02-standards/ui/patterns/index.md`                   |
 | Related Component checklist  | `docs/02-standards/ui/components/checklist.md`             |
@@ -96,7 +96,7 @@ Use this checklist to verify that every Pattern standard:
 - Defines content rules for headings, labels, actions, helper text, empty states, and status copy.
 - Defines prohibited local implementations.
 - Defines deferred or gated extensions.
-- Defines UI Reference proof requirements.
+- Defines rendered evidence proof requirements.
 - Defines route, source, and test expectations.
 
 Every Pattern checklist item must be evaluated against the installed API-contract structure in [Pattern API Standards](index.md).
@@ -115,7 +115,7 @@ A Pattern may own:
 - Accessibility relationships across Components.
 - Workflow-level feedback and error placement.
 - Content hierarchy and copy patterns.
-- UI Reference proof for the full composition.
+- rendered evidence proof for the full composition.
 
 A Pattern must not own:
 
@@ -127,7 +127,7 @@ A Pattern must not own:
 
 ## 5. Component and Pattern boundary
 
-Component and Pattern boundaries, implementation rules, shared checklist format, cross-cutting constraints, UI Reference validation, and Batch B exit criteria are owned by:
+Component and Pattern boundaries, implementation rules, shared checklist format, cross-cutting constraints, rendered evidence validation, and Batch B exit criteria are owned by:
 
 - [Pattern Boundary And Validation](boundary-and-validation.md)
 
@@ -137,7 +137,7 @@ Read that file when any of these are unclear:
 - Whether spacing/layout is owned by a Component, Pattern, or page route.
 - Whether state is owned by a child Component or parent Pattern.
 - Whether a proposed API should be installed, deferred, gated, or rejected.
-- Whether UI Reference proof is sufficient for Pattern acceptance.
+- Whether rendered evidence proof is sufficient for Pattern acceptance.
 - Whether a test belongs to a Component, Pattern, or route feature test.
 
 Default boundary rule:
@@ -169,12 +169,12 @@ Every Pattern standard must define these sections in this order unless the Patte
 15. Content contract.
 16. Prohibited usage.
 17. Deferred or gated capabilities.
-18. UI Reference requirements.
+18. Rendered evidence requirements.
 19. Testing and acceptance criteria.
 20. Related APIs.
 21. References.
 
-Every section must be concrete and reviewable. Do not leave placeholder copy such as `Pattern implementation pending`, `Use documented components`, `See UI Reference`, or `Variants: None` when the Pattern has layout options, state modes, responsive modes, or composition variants.
+Every section must be concrete and reviewable. Do not leave placeholder copy such as `Pattern implementation pending`, `Use documented components`, `See rendered evidence`, or `Variants: None` when the Pattern has layout options, state modes, responsive modes, or composition variants.
 
 ## 7. Required Pattern front matter
 
@@ -191,9 +191,9 @@ status: implemented-pending-correction
 system_maturity: partial
 category: pattern-family
 priority: pattern-priority
-ui_reference_route: /platform/ui-reference/patterns/pattern-slug
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/patterns/pattern-slug.md
-source_owner: /platform/ui-reference/patterns/pattern-slug
+source_owner: not installed
 consumed_elements:
   - color
   - spacing
@@ -212,7 +212,7 @@ Allowed status values:
 | ------------------------------------- | ----------------------------------------------------------------------------------------- |
 | `Implemented`                         | Pattern is installed, documented, proved, and tested.                                     |
 | `Implemented - pending manual review` | Pattern is installed and documented but needs human review before being marked complete.  |
-| `Approved API`                        | Pattern exists but docs, UI Reference proof, tests, or API boundaries need correction.    |
+| `Approved API`                        | Pattern exists but docs, rendered evidence proof, tests, or API boundaries need correction.    |
 | `Partial`                             | Some Pattern behavior is installed but major variants/states remain incomplete.           |
 | `Deferred`                            | No production Pattern API is approved yet.                                                |
 | `Not implemented`                     | Pattern is not installed and should not be used.                                          |
@@ -221,7 +221,7 @@ Allowed status values:
 
 ## 8. Global implementation checklist
 
-Use this checklist for every Pattern standard and UI Reference page.
+Use this checklist for every Pattern standard and rendered evidence page.
 
 ### 8.1. Scope and goal
 
@@ -313,11 +313,11 @@ Use this checklist for every Pattern standard and UI Reference page.
 | Action copy follows Component rules | Button and Link labels follow their Component content contracts.                     |
 | No placeholder copy remains         | `Lorem ipsum`, `TODO`, `Sample text`, or implementation-pending copy is not allowed. |
 
-### 8.9. UI Reference proof
+### 8.9. rendered evidence proof
 
 | Check                             | Requirement                                                                                                                           |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| Route exists                      | `/platform/ui-reference/patterns/{slug}` returns 200 for authorized users when the Pattern is installed.                              |
+| Route exists                      | `not installed{slug}` returns 200 for authorized users when the Pattern is installed.                              |
 | Five-card scaffold renders        | Purpose, Use cases, Pattern contract, Live examples, and Related components and patterns render in order.                             |
 | Live examples are production-like | Examples compose installed Components and app-owned classes.                                                                          |
 | Variants/layouts render visually  | Supported variants, layout options, densities, alignments, and responsive modes are rendered, not only listed.                        |
@@ -330,7 +330,7 @@ Use this checklist for every Pattern standard and UI Reference page.
 
 | Check                                       | Requirement                                                                                                             |
 | ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| Authorized route test exists                | Installed Pattern UI Reference route returns 200 for authorized users.                                                  |
+| Authorized route test exists                | Installed Pattern Rendered evidence route returns 200 for authorized users.                                                  |
 | Unauthorized route behavior is covered      | Admin-only or platform authorization behavior is tested where applicable.                                               |
 | Section assertions exist                    | Tests assert required cards/sections are visible.                                                                       |
 | API assertions exist                        | Tests assert installed Components, classes, routes, and composition names are visible.                                  |
@@ -344,6 +344,7 @@ Detailed pattern-family checklists live in focused child files so implementation
 
 | Pattern family                           | Child file                                                 | Primary scope                                                                                              |
 | ---------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Common Actions Patterns                  | [common-actions/index.md](common-actions/index.md)         | Repeated action meaning, hierarchy, permission handling, loading, failure feedback, primitive readiness, confirmation, destructive action, and command/navigation wording. |
 | Form Patterns                            | [forms.md](forms.md)                                       | Form layout, field groups, validation summaries, submit/cancel placement, helper/error/status composition. |
 | Data And Content Patterns                | [data-and-content.md](data-and-content.md)                 | Tables, lists, cards, content sections, empty states, metadata, comparison, content review flows.          |
 | Navigation Patterns                      | [navigation.md](navigation.md)                             | Breadcrumb/page hierarchy, tabs/view navigation, shell navigation, local navigation, current state.        |
@@ -372,12 +373,12 @@ For each individual Pattern standard, verify the following before marking the st
 | Content          | Copy rules are concrete and tied to user action/recovery.                                                                                                                  |
 | Prohibited usage | Raw utilities, direct Carbon classes, Bootstrap/local classes, raw tokens, fake APIs, local JS, and one-off markup are rejected.                                           |
 | Deferred/gated   | Future behavior has explicit gates and approved alternatives.                                                                                                              |
-| UI Reference     | Route proof, live examples, state proof, implementation snippets, and related links exist.                                                                                 |
+| rendered evidence     | Route proof, live examples, state proof, implementation snippets, and related links exist.                                                                                 |
 | Tests            | Route, visible proof, absence, and accessibility-critical assertions exist.                                                                                                |
 
-## 11. UI Reference validation
+## 11. rendered evidence validation
 
-Every installed Pattern UI Reference page must render the approved five-card scaffold:
+Every installed Pattern rendered evidence page must render the approved five-card scaffold:
 
 1. Purpose.
 2. Use cases.
@@ -414,7 +415,7 @@ Pattern tests should include absence checks for stale placeholders and prohibite
 Suggested baseline assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/patterns/{slug}');
+$response = $this->actingAs($admin)->get('not installed{slug}');
 
 $response->assertOk();
 $response->assertSee('Purpose');
@@ -464,7 +465,7 @@ When correcting a Pattern standard:
 7. Define accessibility and content contracts.
 8. Define prohibited local implementations.
 9. Define deferred or gated capabilities.
-10. Define UI Reference proof.
+10. Define rendered evidence proof.
 11. Define route and regression tests.
 12. Update only the scoped Pattern doc and any directly required child checklist/reference file.
 
@@ -489,7 +490,7 @@ Do not run a broad Pattern-library rewrite during a narrow Pattern task.
 | Foundation Elements Standards            | [../elements/index.md](../elements/index.md)               |
 | UI Standards Index                       | [../index.md](../index.md)                                 |
 | UI API Registry                          | [../api-registry.md](../api-registry.md)                   |
-| UI Reference Pattern Library             | `/platform/ui-reference/patterns`                          |
+| rendered evidence Pattern Library             | `not installed`                          |
 | Carbon Patterns overview                 | `https://carbondesignsystem.com/patterns/overview/`        |
 
 ## 16. References
@@ -498,4 +499,4 @@ Do not run a broad Pattern-library rewrite during a narrow Pattern task.
 - [Pattern Boundary And Validation](boundary-and-validation.md)
 - [Component Implementation Checklist](../components/checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
-- Carbon Patterns overview is used as the external completeness benchmark for defining Patterns as reusable goal-oriented component/template combinations. Login App keeps its own Pattern API contract, app-owned Component composition, Foundation Element token model, route ownership, UI Reference proof, and tests.
+- Carbon Patterns overview is used as the external completeness benchmark for defining Patterns as reusable goal-oriented component/template combinations. Login App keeps its own Pattern API contract, app-owned Component composition, Foundation Element token model, route ownership, rendered evidence proof, and tests.

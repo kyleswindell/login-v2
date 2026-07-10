@@ -1,157 +1,363 @@
+
+### 0.1. Feature Development Standards
+
+```md
+<!--
+DOC-META
+title: Feature Development Standards
+doc_type: standard
+status: active
+owner: docs
+canonical: true
+canonical_path: docs/02-standards/coding/Feature Development Standards.md
+parent: docs/02-standards/index.md
+template: docs/09-reference/templates/docs/_doc.md
+summary: Defines standards for developing Core Capabilities, Platform Surfaces, Business Modules, Shared UI features, and their documentation, permissions, settings, audit, and verification.
+-->
+
 # Feature Development Standards
 
-This document defines the canonical scope and intent for Feature Development Standards.
+This document defines development standards for discrete capabilities and surfaces in Login App 2.0.
 
-## Scope
+- [1. Purpose](#1-purpose)
+- [2. Current Vocabulary](#2-current-vocabulary)
+- [3. Ownership Decision Before Implementation](#3-ownership-decision-before-implementation)
+- [4. Layer Ownership](#4-layer-ownership)
+  - [4.1. Core Capability](#41-core-capability)
+  - [4.2. Platform Surface](#42-platform-surface)
+  - [4.3. Business Module](#43-business-module)
+  - [4.4. Shared UI](#44-shared-ui)
+- [5. Canonical Feature Doc](#5-canonical-feature-doc)
+- [6. UI Ownership Standard](#6-ui-ownership-standard)
+- [7. Setup, Settings, And Preferences](#7-setup-settings-and-preferences)
+- [8. Permissions](#8-permissions)
+- [9. Audit, Monitoring, And Error Reporting](#9-audit-monitoring-and-error-reporting)
+- [10. Data Table UX Standard](#10-data-table-ux-standard)
+- [11. Tests And Verification](#11-tests-and-verification)
+- [12. Planning And Close-Out](#12-planning-and-close-out)
+- [13. Related](#13-related)
 
-These standards apply to all discrete features built in Login App 2.0 (V2).
+---
 
-## Naming Convention
+## 1. Purpose
 
-The term **feature** is the canonical term for a discrete V2 product capability.
+Ensure new and changed functionality is planned, owned, implemented, documented, authorized, audited, and verified in the correct layer.
 
-Use "feature" in:
+---
 
-* canonical feature docs under `docs/04-features/`
-* planning notes
-* code namespaces and directory names (e.g. `app/Platform/Notifications/`, `app/Platform/Settings/`)
-* permission slugs (e.g. `platform.notifications.manage`, `platform.audit-logs.view`)
+## 2. Current Vocabulary
 
-The term **module** is reserved for two specific purposes only:
+Use current project vocabulary.
 
-* V1 Perfex modules — for V1 conventions, see [Legacy V1 Perfex Module Development Standards](../../09-reference/documentation/Legacy%20V1%20Perfex%20Module%20Development%20Standards.md)
-* future tenant module policy — the data-model concept of enabling and disabling features per tenant account (reflected in the `module_key` column on settings and notification records)
+| Term             | Meaning                                                                                                                                  |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Core Capability  | Required platform, security, identity, access, data, audit, monitoring, notification, settings, or system capability under `app/Core/*`. |
+| Platform Surface | Shell, navigation, dashboard, setup, docs, UI reference, or registry-driven presentation under `app/Platform/*`.                         |
+| Business Module  | Tenant/workspace business work area under `Modules/*`.                                                                                   |
+| Shared UI        | UI primitives, patterns, shell, layouts, CSS, JS controls, and UI reference assets.                                                      |
+| Feature Document | Canonical behavior document under `docs/04-features/`, when a capability or surface has user/admin/system behavior to describe.          |
 
-Do not use "module" or "feature-set" as general synonyms for "feature" in V2 docs, code, or planning notes.
+The word “feature” may still be used for canonical behavior documentation, but it must not erase the implementation owner.
 
-## Platform Boundary Decision
+Do not use “module” as a generic synonym for any capability. In current architecture, `Modules/*` means Business Modules.
 
-Before implementing any new V2 feature, answer these questions and record the answers in the feature's canonical doc before implementation starts:
+---
 
-1. Is this a shared core-app capability, platform-management capability, or tenantization capability?
-2. Which database owns the record?
-3. Which panel or route space owns the UI?
-4. What logs must stay central versus tenant-local?
-5. What parts are shared infrastructure versus tenant-facing capability?
-6. If this is tenant-optional, which migrations and seeders install its schema for selected tenants?
-7. What is the difference between installed, enabled, disabled, and unavailable states for this feature?
+## 3. Ownership Decision Before Implementation
 
-See [Platform And Tenant Application Boundary](../../03-architecture/platform-boundary.md) for the full decision framework.
+Before implementing new behavior, answer:
 
-For Phase 2 and later work, also use [Phase 2 - Route And Panel Ownership Map](../../07-planning/phases/phase-2/Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md) when deciding whether a screen belongs to the shared core app, platform-management layer, tenant context, Filament, Livewire, or custom Blade.
+1. Is this a Core Capability, Platform Surface, Business Module, Shared UI change, or documentation/ops-only change?
+2. Which layer owns the durable behavior?
+3. Which canonical doc owns the behavior?
+4. Which routes, panels, views, commands, jobs, or APIs expose it?
+5. Which database tables, config keys, registry entries, or payloads does it affect?
+6. Which permissions, policies, gates, middleware, or access rules apply?
+7. Which audit, monitoring, notification, or error-reporting behavior applies?
+8. Which tests or manual review surfaces prove the change?
+9. Which planning note or GitHub issue owns the implementation slice?
+10. Which docs must be updated when the implementation is complete?
 
-## Filament Usage Standard
+Record answers in the GitHub issue, planning note, or canonical document before broad implementation begins.
 
-Every implementation batch that includes UI work must explicitly pause and ask:
+---
 
-* does utilizing Filament apply here?
+## 4. Layer Ownership
 
-If yes, document why Filament is the correct UI owner for that surface.
+### 4.1. Core Capability
 
-If no, document why not and evaluate the next most appropriate UI option:
+Use Core for required system capabilities such as:
 
-1. Livewire/custom Blade for reactive or specialized app UI.
-2. Existing Tailwind/Blade component patterns for standard server-rendered pages.
-3. A reviewed template or component library if the batch needs broader visual design support.
-4. Fully custom UI only when the available framework patterns do not fit the use case.
+- Auth
+- Identity
+- Access
+- DataGovernance
+- DataProtection
+- Security
+- Audit
+- Monitoring
+- Notifications
+- Settings
+- Preferences
+- Support
 
-Filament often fits CRUD-heavy admin records, table/filter/detail viewers, operational admin forms, settings/setup pages, and platform-management records. It may not fit specialized viewers, public/customer-facing pages, highly custom dashboards, or workflows where provisioning/module logic is the main concern.
+Core must not contain business-module domain workflows unless the workflow is truly cross-cutting platform infrastructure.
 
-Filament resources, pages, and actions must call existing services or actions for business mutations. They must not become the only place where business rules, audit logging, notification dispatching, or tenant/module state transitions exist.
+### 4.2. Platform Surface
 
-Every Filament implementation must declare:
+Use Platform for:
 
-* panel owner and route path
-* auth guard and permission gate/policy
-* database context
-* canonical feature doc owner
-* whether the screen is shared core, platform-management, tenant-only, or hybrid
-* which services/actions handle business behavior
+- shell
+- navigation
+- dashboard
+- setup
+- docs viewer
+- UI reference
+- registry-driven aggregation
+- presentation of Core/Module contributions
 
-## Setup And Settings Planning Requirement
+Platform may aggregate and render contributions. It must not become the owner of business rules, authorization truth, audit truth, or data-protection truth.
 
-Every feature introduced in V2 must map its Setup sidebar entry and Settings pages during feature design — before implementation starts.
+### 4.3. Business Module
 
-This is a documentation procedure requirement, not a code enforcement:
+Use `Modules/*` for tenant/workspace business work areas.
 
-* The feature's planning note must include a Setup and Settings section describing all intended entries.
-* At minimum one real editable setting must exist before the Setup entry appears in the UI.
-* Stub pages with no editable fields must not ship as visible Setup entries.
+Business Modules must consume Core capabilities for:
 
-This requirement is reviewed during planning note review before implementation begins.
+- auth
+- access
+- audit
+- notifications
+- settings/preferences
+- data protection
+- security
+- monitoring
 
-## Phase Kickoff Deliverable Review Requirement
+Business Modules must not redefine platform-level infrastructure.
 
-When feature work belongs to a phase plan, phase deliverables must be explicitly reviewed and signed off before implementation starts.
+### 4.4. Shared UI
 
-Required phase-kickoff checks:
+Use Shared UI for reusable primitives, patterns, shell components, component CSS, JS controls, and reference examples.
 
-* confirm feature-level deliverables align to phase-level deliverables
-* confirm final UI ownership outcomes are explicit for each affected surface
-* confirm verification expectations are defined (tests, staging checks, visual review, doc sync)
-* confirm any deferred scope is declared before coding starts, not after batch close-out
+Shared UI must be domain-free unless explicitly scoped as a pattern or feature surface.
 
-## Feature Settings Registration Rule
+---
 
-A feature's Setup sidebar entry must not be created until at least one real editable setting exists for that feature.
+## 5. Canonical Feature Doc
 
-Settings must:
+When behavior is user/admin/system visible, create or update a canonical feature doc under:
 
-* be written through `SettingsService`
-* be permission-gated appropriately
-* be included in the feature's Settings section in its canonical doc and planning note before the entry ships
+- `docs/04-features/`
 
-## Permissions
+The feature doc must state:
 
-* Use the permission slug format `platform.{feature-name}.{action}` for platform features.
-* Register gates in `AppServiceProvider`.
-* Seed all permissions in the permissions seeder.
-* Do not hard-code permission strings outside the gate definitions.
+- purpose
+- implementation status
+- behavior contract
+- users and actors
+- UI surfaces
+- data model
+- permissions/security
+- tenant or workspace considerations
+- validation
+- notifications/audit/monitoring
+- setup/settings when applicable
+- tests and verification
+- known gaps
 
-## Audit And Error Logging
+Use:
 
-* Log audit-worthy actions through the audit log pipeline (`PlatformAuditLog`).
-* Log operational failures through the central error log (`CentralErrorLog`).
-* At minimum, log settings changes as audit events.
+- [Feature Spec Template](../../09-reference/templates/docs/_feature-spec.md)
 
-## Data Table UX Standard
+Feature docs must link back to relevant planning notes while planning remains active.
 
-When a feature includes a tabular data view intended for regular operator use, ship a complete table interaction baseline in the same feature cycle:
+Planning notes must link to the canonical feature doc.
 
-* search/filter capability (global search or scoped filters)
-* pagination support
-* rows-per-page selector where row count can grow materially
-* visible result summary (for example: showing X to Y of Z entries)
-* prominent row action buttons (do not rely on plain text links for primary actions)
+---
 
-Required baseline layout order for app-owned Blade tables:
+## 6. UI Ownership Standard
+
+Before implementing UI work, identify the UI owner:
+
+- Shared UI primitive
+- Shared UI pattern
+- Platform Surface
+- Core-owned account/admin surface
+- Business Module surface
+- Filament/admin resource when appropriate
+- Livewire/custom Blade surface when appropriate
+
+Do not assume Filament owns all admin UI.
+
+Filament may fit CRUD-heavy admin records, table/filter/detail viewers, operational admin forms, settings/setup pages, and platform-management records.
+
+Filament may not fit specialized viewers, UI reference work, component library work, public/customer-facing pages, highly custom dashboards, or workflows where module/domain logic is the main concern.
+
+Filament resources, pages, and actions must call existing services or actions for business mutations. They must not become the only place where business rules, audit logging, notification dispatching, or state transitions exist.
+
+Every UI implementation must declare:
+
+- surface owner
+- route path or panel owner
+- auth guard and permission gate/policy
+- database or context owner
+- canonical doc owner
+- service/action owner for mutations
+- manual visual review needs
+
+Codex must not make independent visual design decisions for spacing, layout, hierarchy, or interaction changes without explicit direction.
+
+---
+
+## 7. Setup, Settings, And Preferences
+
+Every new capability that has configuration must identify whether the behavior belongs to:
+
+- Setup
+- Settings
+- Preferences
+- Module configuration
+- Environment/config file
+- Database-backed registry or contribution system
+
+A visible Setup or Settings entry must not ship until there is at least one real editable setting or meaningful view.
+
+Stub pages with no useful fields must not ship as visible navigation entries.
+
+Settings must be:
+
+- permission-gated
+- documented
+- validated
+- audited when changes are significant
+- owned by the capability that defines the setting
+
+Do not hard-code settings behavior only in views.
+
+---
+
+## 8. Permissions
+
+Protected behavior must declare permissions before implementation is considered complete.
+
+Permission planning should identify:
+
+- ability/action
+- subject/actor
+- target/resource
+- owning capability or module
+- policy/gate/middleware location
+- audit expectations
+- tests for allowed and denied paths
+
+Do not hard-code permission strings throughout the codebase.
+
+Do not rely on UI visibility as authorization.
+
+Business Modules must consume Core Access patterns rather than redefining authorization infrastructure.
+
+---
+
+## 9. Audit, Monitoring, And Error Reporting
+
+Audit-worthy actions must flow through the audit pipeline owned by Core Audit.
+
+Operational failures must flow through logging or monitoring owned by the appropriate Core/Platform infrastructure.
+
+At minimum, audit:
+
+- settings changes
+- role/permission changes
+- MFA/security changes
+- user lifecycle changes
+- export/download requests for sensitive data
+- destructive actions
+- admin/security-sensitive actions
+
+Monitoring should capture operational failures, failed jobs, health checks, anomalies, and security signals when applicable.
+
+---
+
+## 10. Data Table UX Standard
+
+When a feature includes a tabular data view intended for regular operator use, provide a complete table interaction baseline unless the table is intentionally tiny or static.
+
+Baseline expectations:
+
+- search or filter capability
+- pagination when row count can grow materially
+- rows-per-page selector when useful
+- visible result summary
+- prominent row actions
+- clear empty state
+- accessible labels and controls
+- permission-aware actions
+
+Recommended app-owned Blade table order:
 
 1. page title/subtitle row
-2. optional table stats row
-3. table action row (left-aligned actions such as `Create`, `Settings`, `Export`)
-4. filter row (if scoped filters apply)
+2. optional stats row
+3. table action row
+4. filter row when scoped filters apply
 5. table
-6. table footer controls:
-   * bottom-left: rows selector + result summary
-   * bottom-right: `Prev` / page selector / `Next`
+6. footer controls:
+   - bottom-left: rows selector and result summary
+   - bottom-right: previous / page selector / next
 
-Apply this intelligently:
+Apply intelligently:
 
-* use client-side table behavior for small-to-medium in-memory lists
-* use server-side filtering/pagination for large datasets or expensive queries
-* avoid adding fake table controls for tiny static tables where they reduce clarity
+- use client-side behavior for small-to-medium in-memory lists
+- use server-side filtering/pagination for large or expensive datasets
+- avoid fake controls for tiny static tables
 
-## Canonical Feature Doc
+---
 
-Every feature must have a canonical doc under `docs/04-features/` registered in [Feature Index](../../04-features/index.md).
+## 11. Tests And Verification
 
-The canonical doc must be kept current with implementation status and must link back to its source planning note.
+Every feature/capability change should define verification before implementation starts.
 
-## Related
+Use:
 
-* [Legacy V1 Perfex Module Development Standards](../../09-reference/documentation/Legacy%20V1%20Perfex%20Module%20Development%20Standards.md) — V1 Perfex module conventions only
-* [Implementation Status And Development Sync Standard](../documentation/Implementation%20Status%20And%20Development%20Sync%20Standard.md)
-* [Platform And Tenant Application Boundary](../../03-architecture/platform-boundary.md)
-* [Phase 2 - Route And Panel Ownership Map](../../07-planning/phases/phase-2/Phase%202%20-%20Route%20And%20Panel%20Ownership%20Map.md)
-* [Stack Notes: Filament And Livewire](../../09-reference/architecture/phase-2-stack-and-ui-system-notes.md)
-* [Feature Index](../../04-features/index.md)
+- feature tests for user-visible behavior and database effects
+- unit tests for isolated service logic
+- policy/access tests for protected behavior
+- browser/manual visual review for design-sensitive UI
+- regression tests for bug fixes
+- docs checks when documentation behavior changes
+- build checks when assets change
+
+Test both successful and denied paths for auth/access-sensitive behavior.
+
+---
+
+## 12. Planning And Close-Out
+
+Before implementation starts, confirm:
+
+- issue scope is clear
+- owner layer is identified
+- canonical docs are identified
+- affected data/security boundaries are understood
+- verification is known
+- UI review surface is known when applicable
+
+Before completion, confirm:
+
+- code is done for the accepted scope
+- canonical docs reflect current behavior
+- planning docs reflect implementation status
+- tests or verification are recorded
+- known gaps are explicit
+- follow-up issues are tracked or reported
+
+---
+
+## 13. Related
+
+- [Coding Standards](Coding%20Standards.md)
+- [File Building Standards](File%20Building%20Standards.md)
+- [Testing Standards](Testing%20Standards.md)
+- [Implementation Status And Development Sync Standard](../documentation/Implementation%20Status%20And%20Development%20Sync%20Standard.md)
+- [Platform And Tenant Application Boundary](../../03-architecture/platform-boundary.md)
+- [Feature Index](../../04-features/index.md)
+- [Feature Spec Template](../../09-reference/templates/docs/_feature-spec.md)

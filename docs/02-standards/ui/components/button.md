@@ -6,16 +6,16 @@ status: implemented-pending-review
 system_maturity: partial
 category: actions
 priority: tier-a-baseline-app-development
-ui_reference_route: /platform/ui-reference/components/button
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/button.md
-source_owner: /platform/ui-reference/components/button
+source_owner: not installed
 blade_api:
   - x-ui.button
   - x-ui.icon-button
 javascript_api: []
 source_files:
-  - resources/views/components/ui/button.blade.php
-  - resources/views/components/ui/icon-button.blade.php
+  - resources/views/components/ui/button/index.blade.php
+  - resources/views/components/ui/icon-button/index.blade.php
   - resources/css/components/button.css
   - resources/css/components/icon-button.css
   - resources/css/tokens/components/buttons.css
@@ -59,7 +59,7 @@ carbon_reference:
   - [4.1. Canonical calls](#41-canonical-calls)
   - [4.2. API surfaces](#42-api-surfaces)
   - [4.3. Props and options](#43-props-and-options)
-  - [4.4. Semantic variant contract](#44-semantic-variant-contract)
+  - [4.4. Kind and semantic compatibility contract](#44-kind-and-semantic-compatibility-contract)
   - [4.5. Size contract](#45-size-contract)
   - [4.6. Icon button API](#46-icon-button-api)
   - [4.7. Button group contract](#47-button-group-contract)
@@ -79,10 +79,10 @@ carbon_reference:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
   - [15.1. Required Live examples internal sections:](#151-required-live-examples-internal-sections)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
   - [16.1. Suggested automated assertions:](#161-suggested-automated-assertions)
@@ -93,7 +93,7 @@ carbon_reference:
 
 Buttons choose, confirm, or reveal a user command with explicit action hierarchy.
 
-Canonical API owner: `/platform/ui-reference/components/button`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
 Button is the installed Login App 2.0 command API. It owns button semantics, action hierarchy, visual emphasis, semantic danger treatment, disabled/loading behavior, icon-button behavior, focus styling, token-backed states, and button-specific content rules. It does not own page-level layout, form workflow orchestration, modal footer placement, table toolbar composition, navigation, menu disclosure, or task-progress behavior.
 
@@ -101,14 +101,14 @@ Button is the installed Login App 2.0 command API. It owns button semantics, act
 
 - Render command controls through `x-ui.button` and `x-ui.icon-button`.
 - Preserve native button semantics for state-changing actions.
-- Express action hierarchy through approved semantic variants.
+- Express action hierarchy through approved Button kinds and compatibility variants.
 - Express density and surface fit through approved size options.
 - Preserve visible focus, hover, active, disabled, and loading states.
 - Support labeled buttons with optional trailing icons.
 - Support icon-only buttons only when an accessible label and tooltip behavior are provided.
 - Prevent destructive icon-only buttons.
 - Consume Foundation Element APIs for color, spacing, typography, themes, motion, and icons.
-- Prove variant, size, state, grouping, icon, content, and implementation behavior on the UI Reference page.
+- Prove variant, size, state, grouping, icon, content, and implementation behavior on the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -130,16 +130,16 @@ Button is the installed Login App 2.0 command API. It owns button semantics, act
 | Component slug               | button                                                                                                                           |
 | Category                     | Actions                                                                                                                          |
 | Priority                     | Tier A - Baseline app development                                                                                                |
-| UI Reference route           | `/platform/ui-reference/components/button`                                                                                       |
+| Rendered evidence route           | `not installed`                                                                                       |
 | Canonical doc                | `docs/02-standards/ui/components/button.md`                                                                                      |
-| Source owner                 | `/platform/ui-reference/components/button`                                                                                       |
+| Source owner                 | `not installed`                                                                                       |
 | Blade API                    | `x-ui.button`; `x-ui.icon-button`                                                                                                |
 | JavaScript API               | None required for baseline button behavior                                                                                       |
-| Source files                 | `resources/views/components/ui/button.blade.php`; `resources/views/components/ui/icon-button.blade.php`; `resources/css/components/button.css`; `resources/css/components/icon-button.css` |
+| Source files                 | `resources/views/components/ui/button/index.blade.php`; `resources/views/components/ui/icon-button/index.blade.php`; `resources/css/components/button.css`; `resources/css/components/icon-button.css` |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, Icons, 2x Grid where composed in layouts                                             |
 | Carbon benchmark             | Carbon Button usage, style, and accessibility guidance                                                                           |
 
-`Approved API` means the installed component exists and the UI Reference page must prove Button as a broad matrix-heavy component rather than a simple tab-only example page.
+`Approved API` means the installed component exists and the rendered evidence page must prove Button as a broad matrix-heavy component rather than a simple tab-only example page.
 
 ## 3. Installed standard
 
@@ -149,7 +149,8 @@ Button requires an expanded matrix-style reference layout because variants, size
 
 - Render standard command controls through `<x-ui.button>`.
 - Render icon-only command controls through `<x-ui.icon-button>`.
-- Use the `semantic` prop to select action hierarchy and danger treatment.
+- Use the `kind` prop to select action hierarchy and danger treatment.
+- Keep `semantic` only as a compatibility alias when `kind` is not provided.
 - Use the `size` prop to select the approved size scale.
 - Use native `<button>` behavior for state-changing commands.
 - Use `type="submit"` only when the button submits the current form.
@@ -171,34 +172,34 @@ Carbon alignment note: Carbon defines Button as an action trigger, allows one pr
 ### 4.1. Canonical calls
 
 ```blade
-<x-ui.button semantic="primary">Save changes</x-ui.button>
+<x-ui.button kind="primary">Save changes</x-ui.button>
 ```
 
 ```blade
-<x-ui.button semantic="secondary" type="button">Cancel</x-ui.button>
+<x-ui.button kind="secondary" type="button">Cancel</x-ui.button>
 ```
 
 ```blade
-<x-ui.button semantic="danger" type="submit" loading>
+<x-ui.button kind="danger" type="submit" loading>
     Delete tenant
 </x-ui.button>
 ```
 
 ```blade
-<x-ui.button semantic="ghost" icon="heroicon-o-arrow-top-right-on-square">
+<x-ui.button kind="ghost" icon="launch">
     Open report
 </x-ui.button>
 ```
 
 ```blade
 <x-ui.icon-button
-    icon="heroicon-o-cog-6-tooth"
+    icon="settings"
     label="Open settings"
-    semantic="ghost"
+    kind="ghost"
 />
 ```
 
-Use the Blade APIs instead of hand-building button markup in feature views.
+Use the Blade APIs instead of hand-building button markup in feature views. Older labeled Button calls such as `<x-ui.button semantic="primary">Save changes</x-ui.button>` remain accepted for compatibility, but new `x-ui.button` usage must prefer `kind`.
 
 ### 4.2. API surfaces
 
@@ -210,38 +211,41 @@ Use the Blade APIs instead of hand-building button markup in feature views.
 | Root semantic element      | Native `button` unless an approved component/pattern explicitly renders a link CTA                                               |
 | Data attributes            | Use only data attributes documented by the Component API. Feature views must not invent button behavior attributes.              |
 | CSS namespace              | App-owned `ui-*` button classes documented by the component implementation                                                       |
-| Source files               | `resources/views/components/ui/button.blade.php`; `resources/views/components/ui/icon-button.blade.php`; `resources/css/components/button.css`; `resources/css/components/icon-button.css` |
+| Source files               | `resources/views/components/ui/button/index.blade.php`; `resources/views/components/ui/icon-button/index.blade.php`; `resources/css/components/button.css`; `resources/css/components/icon-button.css` |
 
 ### 4.3. Props and options
 
-| Prop/option    | Type            | Default                    | Allowed values                                                                           | Required                                                                 | Notes                                                                                                          |
-| -------------- | --------------- | -------------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
-| `semantic`     | `string`        | `primary`                  | `primary`, `secondary`, `tertiary`, `ghost`, `danger`, `danger-tertiary`, `danger-ghost` | No                                                                       | Use to select action hierarchy and destructive emphasis. `danger` means danger primary.                        |
-| `size`         | `string`        | `lg` or installed default  | `xs`, `sm`, `md`, `lg`, `xl`, `2xl`                                                       | No                                                                       | Must map to the approved Carbon button size scale. Do not mix sizes inside one button group.                   |
-| `expressive`   | `bool`          | `false`                    | `true`, `false`                                                                          | No                                                                       | Expressive is a modifier on `size="lg"` only, not a standalone size value.                                     |
-| `type`         | `string`        | `button`                   | `button`, `submit`, `reset`                                                              | No                                                                       | Use `submit` only for the current form’s submit action. Avoid `reset` unless a Pattern explicitly approves it. |
-| `disabled`     | `bool`          | `false`                    | `true`, `false`                                                                          | No                                                                       | Disabled buttons are not focusable and cannot trigger commands.                                                |
-| `loading`      | `bool`          | `false`                    | `true`, `false`                                                                          | No                                                                       | Keeps the label visible, disables the command, and exposes pending state.                                      |
-| `dangerDescription` | `string / null` | `null`                | Short assistive destructive consequence copy                                              | Required when danger context needs extra screen-reader clarification       | Used only with danger variants; rendered as hidden text and referenced with `aria-describedby`.                |
-| `icon`         | `string / null` | `null`                     | Approved Heroicon alias/component                                                        | No                                                                       | Labeled buttons may use one trailing icon only.                                                                |
-| `iconPosition` | `string`        | `trailing`                 | `trailing`                                                                               | No                                                                       | Leading icons are not approved for labeled buttons.                                                            |
-| `ariaLabel`    | `label`         | `string / null`            | `null`                                                                                   | Short action label / Required for `x-ui.icon-button`                     | Must describe the action, not the icon shape.                                                                  |
-| `tooltip`      | `string / null` | mirrors label if installed | Short visible tooltip copy                                                               | Required for icon-only usage when the component owns tooltip integration | Tooltip text should match or clarify the accessible label.                                                     |
-| `class`        | `string / null` | `null`                     | layout class passthrough if supported                                                    | No                                                                       | Parent Patterns may pass layout classes. Do not use for local color, typography, state, or behavior overrides. |
+| Prop/option    | Type            | Default                    | Allowed values                                                                                                                                       | Required                                                           | Notes                                                                                                                                                          |
+| -------------- | --------------- | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `kind`         | `string / null` | `null`                     | `primary`, `secondary`, `tertiary`, `ghost`, `danger`, `danger--primary`, `danger--tertiary`, `danger--ghost`                                       | No                                                                 | Canonical visual and semantic Button kind. Takes precedence over `semantic` when both are provided.                                                |
+| `semantic`     | `string`        | `primary`                  | `primary`, `secondary`, `tertiary`, `ghost`, `danger`, `danger--primary`, `danger--tertiary`, `danger--ghost`, `danger-primary`, `danger-tertiary`, `danger-ghost`, `neutral`, `warning`, `notice`, `info`, `success` | No | Compatibility alias used only when `kind` is not provided. `danger-tertiary` and `danger-ghost` normalize to the installed double-modifier classes. |
+| `variant`      | `string / null` | `null`                     | `outline`, `soft`, `ghost`                                                                                                                          | No                                                                 | Compatibility visual alias. `outline` and `soft` map to `tertiary` or `danger--tertiary`; `ghost` maps to `ghost` or `danger--ghost`.              |
+| `size`         | `string`        | `lg` or installed default  | `xs`, `sm`, `md`, `lg`, `xl`, `2xl`; compatibility input `lg-expressive`                                                                            | No                                                                 | Must map to the approved size scale. `lg-expressive` resolves to `size="lg"` plus expressive mode. Do not mix sizes inside one button group.       |
+| `expressive`   | `bool`          | `false`                    | `true`, `false`                                                                                                                                      | No                                                                 | Expressive is a modifier on `size="lg"` only, not a standalone size value.                                                                         |
+| `href`         | `string / null` | `null`                     | Link destination                                                                                                                                     | No                                                                 | Renders an anchor only when interactive. Disabled or loading `href` buttons render as native disabled buttons.                                      |
+| `type`         | `string`        | `button`                   | `button`, `submit`, `reset`                                                                                                                          | No                                                                 | Use `submit` only for the current form’s submit action. Avoid `reset` unless a Pattern explicitly approves it.                                     |
+| `disabled`     | `bool`          | `false`                    | `true`, `false`                                                                                                                                      | No                                                                 | Disabled buttons are not focusable and cannot trigger commands.                                                                                    |
+| `loading`      | `bool`          | `false`                    | `true`, `false`                                                                                                                                      | No                                                                 | Keeps the label visible, disables the command, and exposes pending state.                                                                          |
+| `dangerDescription` | `string / null` | `null`                | Short assistive destructive consequence copy                                                                                                         | Required when danger context needs extra screen-reader clarification | Used only with danger variants; rendered as hidden text and merged with any existing `aria-describedby`.                                           |
+| `icon`         | `string / null` | `null`                     | Internal icon alias/component                                                                                                                        | No                                                                 | Labeled buttons may use one trailing decorative icon only.                                                                                         |
+| `iconPosition` | `string`        | `trailing`                 | `trailing`                                                                                                                                           | No                                                                 | Only trailing is approved; non-trailing requests are ignored by the current implementation.                                                        |
+| `ariaLabel`    | `label`         | `string / null`            | `null`                                                                                                                                               | Short action label / Required for `x-ui.icon-button`               | Must describe the action, not the icon shape.                                                                                                      |
+| `tooltip`      | `string / null` | mirrors label if installed | Short visible tooltip copy                                                                                                                           | Required for icon-only usage when the component owns tooltip integration | Tooltip text should match or clarify the accessible label.                                                                                         |
+| `class`        | `string / null` | `null`                     | layout class passthrough if supported                                                                                                                | No                                                                 | Parent Patterns may pass layout classes. Do not use for local color, typography, state, or behavior overrides.                                     |
 
-Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the UI Reference proof before use.
+Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the rendered evidence proof before use.
 
-### 4.4. Semantic variant contract
+### 4.4. Kind and semantic compatibility contract
 
-| Semantic value    | Status      | Purpose                                                 | Use when                                                                                   | Do not use when                                                                    |
-| ----------------- | ----------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------- |
-| `primary`         | Implemented | Highest-emphasis principal action                       | One main action should guide the current region or workflow                                | A second primary already exists in the same region, except temporary focused flows |
-| `secondary`       | Implemented | Negative or backing action paired with a primary action | Pairing with a primary action, commonly Cancel or Back                                     | In isolation or for positive actions                                               |
-| `tertiary`        | Implemented | Medium/low-emphasis action                              | Independent secondary tasks, page header actions, empty states, or grouped support actions | Fluid/full-width arrangements unless explicitly approved                           |
-| `ghost`           | Implemented | Lowest-emphasis supplementary action                    | Inline support actions, card actions, table toolbar actions, cancel actions in some flows  | A primary or required next action                                                  |
-| `danger`          | Implemented | High-emphasis destructive action                        | Destructive action is the required or primary step in the flow                             | Destructive action is one of several secondary options                             |
-| `danger-tertiary` | Implemented | Lower-emphasis destructive action                       | Destructive action is available but not the primary next step                              | Mixed with incompatible tertiary groups                                            |
-| `danger-ghost`    | Implemented | Lowest-emphasis destructive action                      | Rare secondary destructive commands in dense contexts                                      | Paired with primary or tertiary in combinations that obscure hierarchy             |
+| Canonical `kind` value | `semantic` compatibility value | Status      | Purpose                                                 | Use when                                                                                   | Do not use when                                                                    |
+| ---------------------- | ------------------------------ | ----------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------- |
+| `primary`              | `primary`                      | Implemented | Highest-emphasis principal action                       | One main action should guide the current region or workflow                                | A second primary already exists in the same region, except temporary focused flows |
+| `secondary`            | `secondary`                    | Implemented | Negative or backing action paired with a primary action | Pairing with a primary action, commonly Cancel or Back                                     | In isolation or for positive actions                                               |
+| `tertiary`             | `tertiary`                     | Implemented | Medium/low-emphasis action                              | Independent secondary tasks, page header actions, empty states, or grouped support actions | Fluid/full-width arrangements unless explicitly approved                           |
+| `ghost`                | `ghost`                        | Implemented | Lowest-emphasis supplementary action                    | Inline support actions, card actions, table toolbar actions, cancel actions in some flows  | A primary or required next action                                                  |
+| `danger` or `danger--primary` | `danger` or `danger-primary` | Implemented | High-emphasis destructive action                        | Destructive action is the required or primary step in the flow                             | Destructive action is one of several secondary options                             |
+| `danger--tertiary`     | `danger-tertiary`              | Implemented | Lower-emphasis destructive action                       | Destructive action is available but not the primary next step                              | Mixed with incompatible tertiary groups                                            |
+| `danger--ghost`        | `danger-ghost`                 | Implemented | Lowest-emphasis destructive action                      | Rare secondary destructive commands in dense contexts                                      | Paired with primary or tertiary in combinations that obscure hierarchy             |
 
 ### 4.5. Size contract
 
@@ -254,7 +258,7 @@ Any prop not listed here is not public. If a feature needs another option, updat
 | `xl`            | Implemented / required proof | Extra large      | 64px / 4rem height for full-bleed or larger component surfaces when approved. |
 | `2xl`           | Implemented / required proof | 2XL              | 80px / 5rem height for full-screen or large overlay contexts only when Pattern-owned. |
 
-Use `expressive` with `size="lg"` for the Carbon expressive button treatment. Expressive is not a size value. Do not mix different button sizes in one button group. If a group needs different visual weight, use semantic variants instead of size changes.
+Use `expressive` with `size="lg"` for the Carbon expressive button treatment. `lg-expressive` remains a compatibility input that resolves to `size="lg"` plus expressive mode; it is not emitted as a size class. Do not mix different button sizes in one button group. If a group needs different visual weight, use Button kinds instead of size changes.
 
 ### 4.6. Icon button API
 
@@ -262,9 +266,9 @@ Use `expressive` with `size="lg"` for the Carbon expressive button treatment. Ex
 
 ```blade
 <x-ui.icon-button
-    icon="heroicon-o-pencil-square"
+    icon="edit"
     label="Edit workspace"
-    semantic="ghost"
+    kind="ghost"
     size="md"
 />
 ```
@@ -275,13 +279,13 @@ Use `expressive` with `size="lg"` for the Carbon expressive button treatment. Ex
 | Accessible name  | Required through `label` or `ariaLabel`.                                                      |
 | Tooltip          | Always required for icon-only buttons; copy must explain the action if clicked.               |
 | Target size      | Minimum 44px interactive target.                                                              |
-| Icon library     | Heroicons only unless the Icons Element standard is updated.                                  |
+| Icon library     | internal icon components only unless the Icons Element standard is updated.                                  |
 | Danger treatment | Danger icon-only buttons are prohibited for destructive actions. Use a labeled danger button. |
 | Menu disclosure  | Use Menu buttons, not Button, when the icon opens a menu.                                     |
 
 ### 4.7. Button group contract
 
-There is no standalone public Button group Blade API unless `x-ui.button-group` is explicitly installed and documented. Button grouping is usually owned by the parent Pattern, but the Button standard defines allowed combinations, order, width, spacing, layout direction, and icon consistency. Use app-owned `ui-button-group`, `ui-button-group-equal`, `ui-button-group-fluid`, and `ui-button-group-vertical` classes when a parent Pattern needs the installed Button group treatment.
+There is no standalone public Button group Blade API unless `x-ui.button-group` is explicitly installed and documented. Button grouping is usually owned by the parent Pattern, but the Button standard defines allowed combinations, order, width, spacing, layout direction, and icon consistency. The installed Button CSS exposes `ui-btn-set`, `ui-btn-set--stacked`, `ui-btn-set--fluid`, and `ui-btn-set__fluid-inner` as component-owned group proof selectors; treat those as Button-owned CSS structure, not a public replacement for an uninstalled `x-ui.button-group` helper.
 
 Button groups versus Menu buttons:
 
@@ -306,7 +310,7 @@ Button group layout and icon consistency:
 - Fluid groups fill the available parent width and keep each non-ghost button on the same width track.
 - Icons are optional in Button groups, but usage must be consistent: either every button in the group has an icon or no button in the group has an icon.
 - Do not add icons to only some buttons in a group.
-- The Button UI Reference page should render compact proof examples for horizontal static, horizontal fluid, vertical static, vertical fluid, all-icons, and no-icons groups; it should not render every allowed combination as a live example.
+- The Button rendered evidence page should render compact proof examples for horizontal static, horizontal fluid, vertical static, vertical fluid, all-icons, and no-icons groups; it should not render every allowed combination as a live example.
 
 Recommended groups with a primary action:
 
@@ -339,35 +343,36 @@ Primary, secondary, tertiary, danger primary, and danger tertiary buttons share 
 
 | Button structure | Property | px / rem | Carbon spacing token | Login App implementation |
 | ---------------- | -------- | -------- | -------------------- | ------------------------ |
-| Button without icon | padding-left | 16px / 1rem | `$spacing-05` | `--ui-button-padding-start: 1rem` |
-| Button without icon | padding-right | 64px / 4rem | `$spacing-10` | `--ui-button-padding-end: 4rem` |
-| Button with wrapped label | padding-top/bottom | Dynamic from installed size | n/a | `padding-block` is calculated from `--ui-button-height` and `--ui-button-label-line-height`; wrapped labels increase button height instead of compressing vertical spacing |
-| Button with trailing icon | padding-left/right | 16px / 1rem | `$spacing-05` | `.ui-button .ui-button-icon` places the trailing icon on the end edge |
-| Button with trailing icon | label-icon spacing | Dynamic, minimum 32px / 2rem | `$spacing-07` | Non-ghost `.ui-button` keeps the icon pinned to the right padding and lets label-icon space expand |
-| Icon-only button | padding-left/right | 0 | `$spacing-00` | `.ui-button-icon-only` uses fixed square sizing instead of text-button inline padding |
-| Icon | svg | 16px x 16px | n/a | `ui-button-icon`, `ui-icon-button-icon` |
-| Expressive icon | svg | 20px x 20px | n/a | `ui-button-expressive` icon sizing only |
-| Focus | inset shadow | 1px | n/a | Visible focus uses token-backed focus styling and must remain visible in both themes |
+| Button root | block size | Size driven | n/a | `.ui-btn` uses `--ui-btn-height`, which resolves from `ui-layout--size-*` and `--ui-layout-size-height-*`. |
+| Button root | inline padding | Size driven | `$spacing-*` | `.ui-btn` uses `--ui-btn-padding-inline`, resolved from approved spacing tokens per size. |
+| Button with wrapped label | padding-top/bottom | Dynamic from installed size | n/a | `padding-block` is calculated from `--ui-btn-height` and capped by `--ui-btn-padding-block-max`; wrapped labels increase button height instead of compressing vertical spacing. |
+| Button with trailing icon | icon placement | Dynamic from installed size | `$spacing-*` | `.ui-btn__icon` is positioned at the end edge using `--ui-btn-padding-inline` and `--ui-btn-icon-size`. |
+| Button label | label wrapper | n/a | n/a | `.ui-btn__label` owns text wrapping and alignment inside the button root. |
+| Icon-only button | square sizing | Driven by button height | `$spacing-00` | `.ui-btn--icon-only` is internal CSS support; public icon-only usage belongs to `x-ui.icon-button`. |
+| Icon | svg | 16px x 16px baseline | n/a | `.ui-btn__icon` uses `--ui-btn-icon-size`; expressive mode may increase the value through `.ui-btn--expressive`. |
+| Focus | inset shadow | 1px | n/a | Visible focus uses `--ui-btn-focus-color`, resolving to the global focus token. |
 
 Ghost and danger ghost buttons follow the ghost structure:
 
 | Ghost structure | Property | px / rem | Carbon spacing token | Login App implementation |
 | --------------- | -------- | -------- | -------------------- | ------------------------ |
-| Ghost without icon | padding-left/right | 16px / 1rem | `$spacing-05` | `ui-button-ghost` uses equal 1rem inline padding |
-| Ghost with trailing icon | label-icon spacing | 8px / 0.5rem | `$spacing-03` | `ui-button-ghost` uses compact label-icon spacing |
-| Ghost icon-only | padding-left/right | 16px / 1rem | `$spacing-05` | `x-ui.icon-button semantic="ghost"` keeps icon-button inline padding |
+| Ghost without icon | padding-left/right | Size driven | `$spacing-*` | `.ui-btn--ghost` uses the installed `.ui-btn` padding contract. |
+| Ghost with trailing icon | label-icon spacing | Compact from installed CSS | `$spacing-*` | `.ui-btn--ghost .ui-btn__icon` uses the installed compact end-edge icon treatment. |
+| Ghost icon-only | square sizing | Driven by button height | `$spacing-00` | `x-ui.icon-button kind="ghost"` renders through `.ui-btn--icon-only` support. |
 
 ## 5. Allowed variants, options, and modifiers
 
 | Name                 | Type             | Status                       | API                          | Notes                                                                            |
 | -------------------- | ---------------- | ---------------------------- | ---------------------------- | -------------------------------------------------------------------------------- |
-| Primary              | Semantic variant | Implemented                  | `semantic="primary"`         | Principal action.                                                                |
-| Secondary            | Semantic variant | Implemented                  | `semantic="secondary"`       | Pair with primary as negative/backing action.                                    |
-| Tertiary             | Semantic variant | Implemented                  | `semantic="tertiary"`        | Lower-emphasis action that may stand alone.                                      |
-| Ghost                | Semantic variant | Implemented                  | `semantic="ghost"`           | Lowest-emphasis action.                                                          |
-| Danger primary       | Semantic variant | Implemented                  | `semantic="danger"`          | Primary destructive action.                                                      |
-| Danger tertiary      | Semantic variant | Implemented                  | `semantic="danger-tertiary"` | Lower-emphasis destructive action.                                               |
-| Danger ghost         | Semantic variant | Implemented                  | `semantic="danger-ghost"`    | Lowest-emphasis destructive action.                                              |
+| Primary              | Kind             | Implemented                  | `kind="primary"`             | Principal action.                                                                |
+| Secondary            | Kind             | Implemented                  | `kind="secondary"`           | Pair with primary as negative/backing action.                                    |
+| Tertiary             | Kind             | Implemented                  | `kind="tertiary"`            | Lower-emphasis action that may stand alone.                                      |
+| Ghost                | Kind             | Implemented                  | `kind="ghost"`               | Lowest-emphasis action.                                                          |
+| Danger primary       | Kind             | Implemented                  | `kind="danger"` or `kind="danger--primary"` | Primary destructive action.                                           |
+| Danger tertiary      | Kind             | Implemented                  | `kind="danger--tertiary"`    | Lower-emphasis destructive action; `semantic="danger-tertiary"` remains accepted as compatibility. |
+| Danger ghost         | Kind             | Implemented                  | `kind="danger--ghost"`       | Lowest-emphasis destructive action; `semantic="danger-ghost"` remains accepted as compatibility. |
+| Semantic aliases     | Compatibility    | Implemented                  | `semantic="..."`             | Legacy input used only when `kind` is not provided.                              |
+| Variant aliases      | Compatibility    | Implemented                  | `variant="outline"`, `variant="soft"`, `variant="ghost"` | Legacy input that resolves to tertiary or ghost kinds while preserving danger intent. |
 | Extra small          | Size             | Implemented / required proof | `size="xs"`                  | Dense confined layouts.                                                          |
 | Small                | Size             | Implemented / required proof | `size="sm"`                  | Compact control pairing.                                                         |
 | Medium               | Size             | Implemented / required proof | `size="md"`                  | Medium control pairing.                                                          |
@@ -382,13 +387,13 @@ Ghost and danger ghost buttons follow the ghost structure:
 | Icon-only            | Separate API     | Implemented                  | `x-ui.icon-button`           | Requires accessible label and tooltip.                                           |
 | Leading icon         | Modifier         | Not allowed                  | none                         | Do not place icons before labels in labeled buttons.                             |
 | Danger icon-only     | Modifier         | Not allowed                  | none                         | Destructive actions require visible text.                                        |
-| Fluid/hanging button | Modifier         | Deferred                     | none                         | Requires Pattern-specific approval and UI Reference proof before production use. |
+| Fluid/hanging button | Modifier         | Deferred                     | none                         | Requires Pattern-specific approval and rendered evidence proof before production use. |
 
 ## 6. States
 
 | State          | Status         | Implementation requirement                                                               |
 | -------------- | -------------- | ---------------------------------------------------------------------------------------- |
-| Default        | Implemented    | Renders approved semantic, size, label, and optional trailing icon.                      |
+| Default        | Implemented    | Renders approved kind, size, label, and optional trailing icon.                          |
 | Hover          | Implemented    | Token-backed hover treatment; must not be used as static styling.                        |
 | Focus-visible  | Implemented    | Token-backed focus ring visible in all supported themes.                                 |
 | Active/pressed | Implemented    | Token-backed pressed state for mouse/touch activation.                                   |
@@ -423,9 +428,9 @@ Button consumes Foundation Color, Spacing, Typography, Themes, Motion, Icons, an
 | Color       | Semantic action backgrounds, text, icon, border, danger, disabled, hover, active, and focus roles.       |
 | Spacing     | Internal padding, icon gap, group gap when the parent Pattern delegates local grouping to the component. |
 | Typography  | Button label size, weight, line-height, wrapping behavior, and icon-label alignment.                     |
-| Themes      | Light/dark/inverse token resolution for every semantic variant.                                          |
+| Themes      | Light/dark/inverse token resolution for every Button kind.                                               |
 | Motion      | Short productive transition for hover, focus, active, and loading entry where applicable.                |
-| Icons       | Heroicons for trailing icons and icon-only controls.                                                     |
+| Icons       | Internal icon components for trailing icons and icon-only controls.                                      |
 | 2x Grid     | Page, form, toolbar, modal, or card placement through Pattern-owned layout.                              |
 
 Carbon color role mapping:
@@ -434,41 +439,55 @@ Button color alignment must follow the Color Element’s Carbon coverage and val
 
 | Carbon token / role | Carbon responsibility | Login App token / API | Mapping status | Owner rule |
 | ------------------- | --------------------- | --------------------- | -------------- | ---------- |
-| `$button-primary`, `$button-primary-hover`, `$button-primary-active` | Primary button container and states | `<x-ui.button semantic="primary">`, `--ui-button-primary*` | Same role / app value unless theme map records same value | Every primary action uses the same Button-owned primary action role. |
-| `$button-secondary`, `$button-secondary-hover`, `$button-secondary-active` | Secondary button container and states | `<x-ui.button semantic="secondary">`, `<x-ui.icon-button semantic="secondary">`, `--ui-button-secondary*` | Same role / same Carbon gray value family | Light theme maps to Gray 80 `#393939`, Gray 80 hover `#4c4c4c`, and Gray 60 active `#6f6f6f`; dark theme maps to the corresponding lighter gray secondary family. Secondary action treatment is consistent in forms, modals, page headers, table toolbars, and Menu button triggers when they consume Button hierarchy. |
-| `$button-tertiary`, `$button-tertiary-hover`, `$button-tertiary-active` | Tertiary button text/border/container states | `<x-ui.button semantic="tertiary">`, `<x-ui.icon-button semantic="tertiary">`, `--ui-button-tertiary*` | Same role / app value unless theme map records same value | Tertiary is a primary-color outline role, not neutral outline. Light/Gray 10 themes use primary border/text by default, then primary filled hover/active with inverse text. Gray 90/100 themes use white border/text by default, then white filled hover/active with primary-colored text. |
-| `$background-hover`, `$link-primary`, `$link-primary-hover` for ghost buttons | Ghost button low-emphasis affordance | `<x-ui.button semantic="ghost">`, `<x-ui.icon-button semantic="ghost">`, `--ui-background-hover`, `--ui-link-primary` | Same role / app value unless theme map records same value | Ghost buttons and icon buttons share the same Button-owned ghost role. |
-| `$button-danger-primary`, `$button-danger-hover`, `$button-danger-active`, `$button-danger-secondary` | Destructive button hierarchy and states | `semantic="danger"`, `semantic="danger-tertiary"`, `semantic="danger-ghost"`, `--ui-button-danger-*` | Same role / app value unless theme map records same value | Danger roles are destructive only and must not be reused for warning or negative emphasis. |
+| `$button-primary`, `$button-primary-hover`, `$button-primary-active` | Primary button container and states | `<x-ui.button kind="primary">`, `--ui-button-primary*` | Same role / app value unless theme map records same value | Every primary action uses the same Button-owned primary action role. |
+| `$button-secondary`, `$button-secondary-hover`, `$button-secondary-active` | Secondary button container and states | `<x-ui.button kind="secondary">`, `<x-ui.icon-button kind="secondary">`, `--ui-button-secondary*` | Same role / same Carbon gray value family | Light theme maps to Gray 80 `#393939`, Gray 80 hover `#4c4c4c`, and Gray 60 active `#6f6f6f`; dark theme maps to the corresponding lighter gray secondary family. Secondary action treatment is consistent in forms, modals, page headers, table toolbars, and Menu button triggers when they consume Button hierarchy. |
+| `$button-tertiary`, `$button-tertiary-hover`, `$button-tertiary-active` | Tertiary button text/border/container states | `<x-ui.button kind="tertiary">`, `<x-ui.icon-button kind="tertiary">`, `--ui-button-tertiary*` | Same role / app value unless theme map records same value | Tertiary is a primary-color outline role, not neutral outline. Light/Gray 10 themes use primary border/text by default, then primary filled hover/active with inverse text. Gray 90/100 themes use white border/text by default, then white filled hover/active with primary-colored text. |
+| `$background-hover`, `$link-primary`, `$link-primary-hover` for ghost buttons | Ghost button low-emphasis affordance | `<x-ui.button kind="ghost">`, `<x-ui.icon-button kind="ghost">`, `--ui-background-hover`, `--ui-link-primary` | Same role / app value unless theme map records same value | Ghost buttons and icon buttons share the same Button-owned ghost role. |
+| `$button-danger-primary`, `$button-danger-hover`, `$button-danger-active`, `$button-danger-secondary` | Destructive button hierarchy and states | `kind="danger"`, `kind="danger--tertiary"`, `kind="danger--ghost"`, `--ui-button-danger-primary`, `--ui-button-danger-secondary`, `--ui-button-danger-hover`, `--ui-button-danger-active` | Same role / app value unless theme map records same value | Danger roles use shared destructive hover/active tokens and must not be reused for warning or negative emphasis. |
 | `$button-disabled`, `$text-on-color-disabled`, `$icon-on-color-disabled` | Disabled button surface, text, and icon roles | Disabled Button state tokens/classes | Same role / app value unless theme map records same value | Disabled treatment is state-specific and must not be used for secondary/low-emphasis styling. |
-| `$focus`, `$focus-inset` | Button focus ring and inset contrast | Button focus-visible token/classes using `--ui-focus*` | Same role / app value unless theme map records same value | Focus treatment must stay visible across every semantic variant. |
+| `$focus`, `$focus-inset` | Button focus ring and inset contrast | Button focus-visible token/classes using `--ui-focus*` | Same role / app value unless theme map records same value | Focus treatment must stay visible across every Button kind. |
 
 ### 7.3. CSS namespace
 
 Allowed component classes should use the app-owned `ui-*` namespace documented by the implementation. Acceptable class families include:
 
 ```css
-.ui-button
-.ui-button-primary
-.ui-button-secondary
-.ui-button-tertiary
-.ui-button-ghost
-.ui-button-danger
-.ui-button-danger-tertiary
-.ui-button-danger-ghost
-.ui-button-xs
-.ui-button-sm
-.ui-button-md
-.ui-button-lg
-.ui-button-expressive
-.ui-button-xl
-.ui-button-2xl
-.ui-button-loading
-.ui-button-icon
+.ui-btn
+.ui-btn--primary
+.ui-btn--secondary
+.ui-btn--tertiary
+.ui-btn--ghost
+.ui-btn--danger
+.ui-btn--danger--primary
+.ui-btn--danger--tertiary
+.ui-btn--danger--ghost
+.ui-btn--xs
+.ui-btn--sm
+.ui-btn--md
+.ui-btn--lg
+.ui-btn--xl
+.ui-btn--2xl
+.ui-layout--size-xs
+.ui-layout--size-sm
+.ui-layout--size-md
+.ui-layout--size-lg
+.ui-layout--size-xl
+.ui-layout--size-2xl
+.ui-btn--expressive
+.ui-btn--loading
+.ui-btn--disabled
+.ui-btn--icon-only
+.ui-btn__label
+.ui-btn__icon
 .ui-icon-button
-.ui-button-group
-.ui-button-group-equal
-.ui-button-group-fluid
-.ui-button-group-vertical
+.ui-icon-button__icon
+.ui-spinner
+.ui-spinner-inverse
+.ui-visually-hidden
+.ui-btn-set
+.ui-btn-set--stacked
+.ui-btn-set--fluid
+.ui-btn-set__fluid-inner
 ```
 
 Feature views must not create `btn-*`, Bootstrap `.btn`, local `button-*`, raw utility clusters, arbitrary hex colors, arbitrary spacing, custom focus rings, or component-local danger treatments for the same UI role.
@@ -513,14 +532,14 @@ Feature views must not create `btn-*`, Bootstrap `.btn`, local `button-*`, raw u
 
 | Need                                            | Use                                 |
 | ----------------------------------------------- | ----------------------------------- |
-| Main positive action in a region                | `semantic="primary"`                |
-| Cancel/back action paired with a primary action | `semantic="secondary"`              |
-| Independent lower-emphasis action               | `semantic="tertiary"`               |
-| Supplementary or flush container action         | `semantic="ghost"`                  |
-| Required destructive action                     | `semantic="danger"`                 |
-| Secondary destructive action                    | `semantic="danger-tertiary"`        |
-| Lowest-emphasis destructive action              | `semantic="danger-ghost"`           |
-| Dense toolbar action with recognizable icon     | `x-ui.icon-button semantic="ghost"` |
+| Main positive action in a region                | `kind="primary"`                    |
+| Cancel/back action paired with a primary action | `kind="secondary"`                  |
+| Independent lower-emphasis action               | `kind="tertiary"`                   |
+| Supplementary or flush container action         | `kind="ghost"`                      |
+| Required destructive action                     | `kind="danger"`                     |
+| Secondary destructive action                    | `kind="danger--tertiary"`           |
+| Lowest-emphasis destructive action              | `kind="danger--ghost"`              |
+| Dense toolbar action with recognizable icon     | `x-ui.icon-button kind="ghost"`     |
 
 ## 10. Accessibility contract
 
@@ -572,16 +591,16 @@ Feature views must not create `btn-*`, Bootstrap `.btn`, local `button-*`, raw u
 
 | Capability                    | Status                            | Gate                                                                                         |
 | ----------------------------- | --------------------------------- | -------------------------------------------------------------------------------------------- |
-| Fluid/hanging button behavior | Deferred                          | Requires Pattern owner, source implementation, accessibility review, and UI Reference proof. |
+| Fluid/hanging button behavior | Deferred                          | Requires Pattern owner, source implementation, accessibility review, and rendered evidence proof. |
 | `x-ui.button-group` helper    | Deferred unless already installed | Requires documented public API, group alignment rules, responsive stacking rules, and tests. |
 | Split/combo button behavior   | Not owned by Button               | Use Menu buttons. Do not add split behavior to Button.                                       |
 | Button-as-link CTA            | Gated                             | Requires explicit Pattern approval showing why Link alone is not correct.                    |
-| Custom semantic colors        | Not allowed                       | Requires Color Element standard update and UI Reference proof.                               |
-| Additional sizes              | Not allowed                       | Requires Typography, Spacing, and UI Reference updates.                                      |
+| Custom semantic colors        | Not allowed                       | Requires Color Element standard update and rendered evidence proof.                               |
+| Additional sizes              | Not allowed                       | Requires Typography, Spacing, and rendered evidence updates.                                      |
 
-Future extensions require an updated Component standard and UI Reference proof before production use.
+Future extensions require an updated Component standard and rendered evidence proof before production use.
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -590,9 +609,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -601,9 +620,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The Button page is a broad component reference page. It must not be forced into the Accordion-style live-example tab model. The Live examples card may use a full-width reference layout with matrices, comparison grids, state tables, size scales, grouped examples, and implementation examples.
 
@@ -611,7 +630,7 @@ The Button page is a broad component reference page. It must not be forced into 
 
 | Required proof           | Rendered behavior                                                                                                   | Variants/options shown                                                                        |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| Variant purpose matrix   | Each semantic variant is rendered with a short purpose/use note.                                                    | Primary, Secondary, Tertiary, Ghost, Danger primary, Danger tertiary, Danger ghost            |
+| Variant purpose matrix   | Each Button kind is rendered with a short purpose/use note.                                                         | Primary, Secondary, Tertiary, Ghost, Danger primary, Danger tertiary, Danger ghost            |
 | Size scale               | All approved sizes render with consistent labels and visual scale.                                                  | Extra small, Small, Medium, Large productive, Large expressive, Extra large, 2XL              |
 | State matrix             | State examples render using production component code and token-backed classes.                                     | Default, Hover, Focus-visible, Active/pressed, Disabled, Loading, Danger states               |
 | Form submission action   | Primary submit, secondary save/back/cancel, and loading/disabled submit examples stay grouped at the end of a form. | Primary, Secondary, Loading submit, Disabled submit                                           |
@@ -628,7 +647,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/button` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
@@ -651,7 +670,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 ### 16.1. Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/button');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Button');
@@ -683,18 +702,18 @@ $response->assertDontSee('btn btn-primary');
 
 | API                       | Route                                                            |
 | ------------------------- | ---------------------------------------------------------------- |
-| Link                      | `/platform/ui-reference/components/link`                         |
-| Menu buttons              | `/platform/ui-reference/components/menu-buttons`                 |
-| Tooltip                   | `/platform/ui-reference/components/tooltip`                      |
-| Inline loading            | `/platform/ui-reference/components/inline-loading`               |
-| Modal                     | `/platform/ui-reference/components/modal`                        |
-| Notification              | `/platform/ui-reference/components/notification`                 |
-| Forms pattern             | `/platform/ui-reference/patterns/forms`                          |
-| Tables pattern            | `/platform/ui-reference/patterns/tables`                         |
-| Layout pattern            | `/platform/ui-reference/patterns/layout`                         |
+| Link                      | `not installed`                         |
+| Menu buttons              | `not installed`                 |
+| Tooltip                   | `not installed`                      |
+| Inline loading            | `not installed`               |
+| Modal                     | `not installed`                        |
+| Notification              | `not installed`                 |
+| Forms pattern             | `not installed`                          |
+| Tables pattern            | `not installed`                         |
+| Layout pattern            | `not installed`                         |
 | Planned table toolbar API | See [UI API Registry](../api-registry.md)                        |
 | Planned page header API   | See [UI API Registry](../api-registry.md)                        |
-| Components overview       | `/platform/ui-reference/components`                              |
+| Components overview       | `not installed`                              |
 | Canonical button doc      | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Fbutton.md` |
 | Carbon button usage       | `https://carbondesignsystem.com/components/button/usage/`        |
 
@@ -704,4 +723,4 @@ $response->assertDontSee('btn btn-primary');
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon Button usage, style, and accessibility guidance inform action hierarchy, sizing, grouping, label, icon, loading, and accessibility rules. Login App keeps its own Blade API, Heroicons icon standard, semantic prop names, CSS variable model, and UI Reference proof.
+- Carbon Button usage, style, and accessibility guidance inform action hierarchy, sizing, grouping, label, icon, loading, and accessibility rules. Login App keeps its own Blade API, internal icon standard, `kind` prop names, semantic compatibility aliases, CSS variable model, and rendered evidence proof.

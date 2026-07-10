@@ -1,114 +1,151 @@
-# Local Browser Review Setup
+<!--
+DOC-META
+title: Local Browser Review
+doc_type: runbook
+status: active
+owner: ops
+canonical: true
+canonical_path: docs/10-runbooks/local-browser-review.md
+parent: docs/10-runbooks/index.md
+template: docs/09-reference/templates/docs/_runbook.md
+summary: Defines repeatable local browser-review readiness and troubleshooting for Laravel, Vite, Docker, Reverb, and authenticated review routes.
+-->
 
-This runbook owns repeatable local browser-review readiness for Laravel, Vite, Docker, and a Windows host browser.
+# Local Browser Review
 
-## Standard Command
+Parent: [Runbook Index](index.md)
 
-From the repository root, with the Docker Compose app/services stack running and host Vite started:
+## Purpose
 
-```bash
-npm run dev:host
-```
+Prepare a reliable local browser-review surface for authenticated Login 2.0 UI and realtime behavior.
 
-Then run:
+## Prerequisites
 
-```bash
-docker compose exec app php artisan local:ready
-```
+- local Docker stack running
+- host Node.js dependencies installed
+- host Vite available
+- current local database
+- no other process using ports 8000, 5173, or 8080
 
-When using local PHP/npm directly:
+## Standard Procedure
 
-```bash
-npm run local:ready
-```
+Start host Vite:
 
-The readiness command:
+    npm run dev:host
 
-- writes `public/hot` as `http://localhost:5173`
-- normalizes the local broadcast connection to Reverb and the browser-facing Reverb host from the app URL
-- verifies Vite JavaScript and CSS at `http://localhost:5173` when run on the host
-- verifies host-run Vite JavaScript and CSS through `http://host.docker.internal:5173` when run inside the Docker app container
-- verifies Reverb accepts a TCP connection on port `8080`
-- verifies the app login route at `http://localhost:8000/login`
-- upserts `test@example.com` / `password`
-- assigns the `platform_super_admin` role for protected local review routes
-- prints the app URL and credentials
+In another terminal:
 
-Run it after Docker database resets, local startup, or before authenticated browser review. Do not manually reseed the local user or rewrite `public/hot` unless the command itself is being debugged.
+    docker compose exec app php artisan local:ready
 
-## Vite Mode
+Open:
 
-Default Windows local review uses host-run Vite, not the Docker `node` service:
+- `http://localhost:8000/login`
 
-```bash
-npm run dev:host
-docker compose exec app php artisan local:ready
-```
+Use the local-only review account documented in [Local Development](local-dev.md).
 
-The host Vite process binds to `0.0.0.0` so Docker can reach it through `host.docker.internal`, while the browser still loads assets from `http://localhost:5173`.
+## What Readiness Verifies
 
-The Docker `node` service is opt-in under the `docker-vite` profile. Use it only when explicitly testing containerized Node:
+The readiness command should:
 
-```bash
-docker compose --profile docker-vite up node
-docker compose exec app php artisan local:ready --vite-check-url=http://node:5173
-```
-
-Docker Vite enables polling by default for Windows bind mounts. If CSS or JavaScript still appears stale when using the Docker `node` service, restart that service once and rerun `local:ready`; do not keep restarting or cache-busting in a loop.
-
-## Realtime Notifications
-
-Realtime notification testing is part of local review. The Compose stack includes a `reverb` service on port `8080`, and `local:ready` normalizes `.env` to:
-
-```env
-BROADCAST_CONNECTION=reverb
-REVERB_SERVER_HOST=0.0.0.0
-REVERB_SERVER_PORT=8080
-```
-
-When the page is loaded at `http://localhost:8000`, the browser connects to `ws://localhost:8080`. When using LAN review, pass the LAN app and Vite URLs to `local:ready` so the browser connects to the LAN Reverb host instead of stale localhost values.
+- normalize `public/hot`
+- verify host Vite through the browser and container paths
+- normalize local Reverb configuration
+- verify Reverb TCP reachability
+- verify the login route
+- create or update the local review user
+- assign required local review access
+- print review URLs and credentials
 
 ## Asset Mode
 
-For a Windows host browser reviewing the Docker stack, `public/hot` should contain:
+For host Vite, `public/hot` should contain:
 
-```text
-http://localhost:5173
-```
+    http://localhost:5173
 
-Do not use `http://0.0.0.0:5173` for the host browser. The readiness command owns this normalization.
+Do not use `http://0.0.0.0:5173` as the browser asset URL.
 
 ## LAN Review
 
-When reviewing through a LAN URL, pass the browser-reachable app and Vite URLs:
+Run:
 
-```bash
-docker compose exec app php artisan local:ready --app-url=http://192.168.50.10:8000 --vite-url=http://192.168.50.10:5173
-```
+    docker compose exec app php artisan local:ready --app-url=http://192.168.50.10:8000 --vite-url=http://192.168.50.10:5173
 
-The readiness command uses the app URL host as the browser-facing Reverb host. If the page is loaded at `http://192.168.50.10:8000`, the frontend must connect to `ws://192.168.50.10:8080`, not `ws://localhost:8080`.
+Replace the IP with the current host.
 
-Built-asset review is a fallback only when:
+The browser-facing Reverb host must match the application host.
+
+## Docker Vite
+
+Use only for explicit containerized Node testing:
+
+    docker compose --profile docker-vite up -d node
+    docker compose exec app php artisan local:ready --vite-check-url=http://node:5173
+
+## Realtime Review
+
+Verify:
+
+- unread count updates without refresh
+- notification preview updates
+- inbox updates
+- toast appears
+- read or dismiss state synchronizes across tabs
+
+## Built-Asset Fallback
+
+Use built assets only when:
 
 - `npm run build` passes
-- `php artisan local:ready` confirms the local app is reachable
-- Vite hot serving is confirmed broken
+- application readiness passes
+- Vite hot serving remains unavailable after one restart
 
-If that fallback is needed, record the environment issue once and restore the normal hot-file state with `php artisan local:ready` afterward.
+Restore normal hot-file state afterward with:
 
-## Troubleshooting Limit
+    docker compose exec app php artisan local:ready
 
-If browser behavior appears stale:
+## Failure Handling
 
-1. Confirm `npm run dev:host` is running.
-2. Run `docker compose exec app php artisan local:ready`.
-3. If Vite JavaScript or CSS fails, restart the host Vite process once.
-4. Run `docker compose exec app php artisan local:ready` again.
-5. If Vite is still stale or unreachable, switch to built assets only after `npm run build` passes.
+If assets are stale:
 
-Do not keep restarting, cache-busting, opening fresh tabs, or moving `public/hot` in loops. Treat repeated stale-module behavior as an environment issue and use built assets for review until the tooling issue is fixed.
+1. confirm Vite is running
+2. rerun readiness
+3. restart Vite once
+4. rerun readiness
+5. inspect Vite output
+6. use built assets temporarily
+
+If Reverb fails:
+
+    docker compose logs reverb --tail=200
+    docker compose restart reverb
+    docker compose exec app php artisan local:ready
+
+If the login route fails:
+
+    docker compose logs app --tail=200
+    docker compose exec app php artisan route:list --path=login
+
+## Stop Conditions
+
+Stop when:
+
+- the environment is not local
+- the command would alter staging or production
+- ports belong to another worktree
+- database reset would destroy needed data
+- the readiness command changes unexpected production-like values
+
+## Completion Criteria
+
+Browser review is ready when:
+
+- application loads
+- Vite assets load
+- authenticated review account works
+- Reverb connects
+- expected interactive behavior is testable
 
 ## Related
 
-- [Local Dev](local-dev.md)
-- [Batch Workflow - Work Batch](batch-workflow/work-batch.md)
+- [Local Development](local-dev.md)
+- [Realtime Notifications And Reverb](realtime-notifications-and-reverb.md)

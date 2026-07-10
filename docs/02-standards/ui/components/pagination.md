@@ -6,16 +6,16 @@ status: implemented-pending-review
 system_maturity: complete
 category: data-display
 priority: tier-a-baseline-app-development
-ui_reference_route: /platform/ui-reference/components/pagination
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/pagination.md
-source_owner: /platform/ui-reference/components/pagination
+source_owner: not installed
 blade_api:
   - x-ui.pagination
 javascript_api:
   - initPagination
 source_files:
-  - resources/views/components/ui/pagination.blade.php
-  - resources/views/platform/ui-reference/components/live-examples/pagination.blade.php
+  - resources/views/components/ui/pagination/index.blade.php
+  - not installed
   - resources/js/ui-controls/pagination.js
   - resources/css/app.css
 foundation_elements:
@@ -75,10 +75,10 @@ carbon_reference:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
   - [15.1. Required Live examples internal sections:](#151-required-live-examples-internal-sections)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
   - [16.1. Suggested automated assertions:](#161-suggested-automated-assertions)
@@ -89,7 +89,7 @@ carbon_reference:
 
 Pagination moves through segmented record sets and gives users controlled navigation across pages of data.
 
-Canonical API owner: `/platform/ui-reference/components/pagination`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
 Pagination is the installed Login App 2.0 record-set navigation API. It owns page navigation semantics, previous/next controls, current-page treatment, disabled boundary controls, overflow menus, result count copy, optional page-size selection, pagination bar layout, pagination nav layout, size variants, focus styling, responsive behavior, and token-backed states. It does not own data querying, table layout, list layout, filtering, sorting, search state, empty-state messaging, route authorization, or server-side pagination logic.
 
@@ -106,7 +106,7 @@ Pagination is the installed Login App 2.0 record-set navigation API. It owns pag
 - Preserve query-string state when filters, search, or sorting are active.
 - Render loading/skeleton-adjacent states through approved Loading or Inline loading composition instead of local spinner markup.
 - Consume Foundation Element APIs for color, spacing, typography, themes, icons, and 2x Grid where layout placement is proven.
-- Prove pagination bar, pagination nav, page-size selector, page selector, disabled boundary, overflow menu, looping, empty/small-data boundary, loading/skeleton handoff, responsive, and developer implementation behavior on the UI Reference page.
+- Prove pagination bar, pagination nav, page-size selector, page selector, disabled boundary, overflow menu, looping, empty/small-data boundary, loading/skeleton handoff, responsive, and developer implementation behavior on the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -128,16 +128,16 @@ Pagination is the installed Login App 2.0 record-set navigation API. It owns pag
 | Component slug               | pagination                                                                          |
 | Category                     | Data display                                                                        |
 | Priority                     | Tier A - Baseline app development                                                   |
-| UI Reference route           | `/platform/ui-reference/components/pagination`                                      |
+| Rendered evidence route           | `not installed`                                      |
 | Canonical doc                | `docs/02-standards/ui/components/pagination.md`                                     |
-| Source owner                 | `/platform/ui-reference/components/pagination`                                      |
+| Source owner                 | `not installed`                                      |
 | Blade API                    | `x-ui.pagination`                                                                   |
-| JavaScript API               | `initPagination` private lifecycle initializer for overflow menus and UI Reference/local state examples |
-| Source files                 | `resources/views/components/ui/pagination.blade.php`; `resources/views/platform/ui-reference/components/live-examples/pagination.blade.php`; `resources/js/ui-controls/pagination.js`; `resources/css/app.css` |
+| JavaScript API               | `initPagination` private lifecycle initializer for overflow menus and rendered evidence/local state examples |
+| Source files                 | `resources/views/components/ui/pagination/index.blade.php`; `not installed`; `resources/js/ui-controls/pagination.js`; `resources/css/app.css` |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Icons, 2x Grid where composed in data layouts   |
 | Carbon benchmark             | Carbon Pagination usage, style, and accessibility guidance                          |
 
-`Implemented Pending Review` means the installed component, UI Reference page, canonical docs, and tests show Pagination as a data-navigation component with real API calls, state coverage, overflow behavior, page-size behavior, accessibility labels, and responsive rules.
+`Implemented Pending Review` means the installed component, rendered evidence page, canonical docs, and tests show Pagination as a data-navigation component with real API calls, state coverage, overflow behavior, page-size behavior, accessibility labels, and responsive rules.
 
 ## 3. Installed standard
 
@@ -161,7 +161,7 @@ Pagination is the standard way to navigate a segmented record set after a server
 - Do not render empty, fake, or decorative page controls.
 - Do not create local table-pagination bars, local page-size selectors, raw utility clusters, raw colors, local icons, or custom JavaScript for the same UI role.
 
-Carbon alignment note: Carbon defines pagination as a control for dividing large content sets across pages and giving users control over how many items appear per page. Carbon also separates pagination from data table behavior, documents page navigation and page-size controls, and requires accessible names for page, previous, and next controls. Login App maps those principles to its own `x-ui.pagination` API, `ui-*` class namespace, app tokens, Laravel-friendly data contract, and UI Reference proof instead of adopting Carbon implementation classes directly.
+Carbon alignment note: Carbon defines pagination as a control for dividing large content sets across pages and giving users control over how many items appear per page. Carbon also separates pagination from data table behavior, documents page navigation and page-size controls, and requires accessible names for page, previous, and next controls. Login App maps those principles to its own `x-ui.pagination` API, `ui-*` class namespace, app tokens, Laravel-friendly data contract, and rendered evidence proof instead of adopting Carbon implementation classes directly.
 
 ## 4. Public API
 
@@ -233,13 +233,13 @@ Use the Blade API instead of hand-building `<nav>`, page links, previous/next bu
 | API surface           | Installed value                                                                                            |
 | --------------------- | ---------------------------------------------------------------------------------------------------------- |
 | Blade API             | `x-ui.pagination`                                                                                          |
-| JavaScript            | `initPagination` lifecycle initializer owns overflow menu behavior and interactive UI Reference/local pagination examples; feature data fetching remains parent-owned |
+| JavaScript            | `initPagination` lifecycle initializer owns overflow menu behavior and interactive rendered evidence/local pagination examples; feature data fetching remains parent-owned |
 | Root semantic element | Component-owned navigation landmark, normally `<nav aria-label="...">`                                     |
 | Page controls         | Links for URL navigation; buttons only when parent state owner handles client-side pagination              |
 | Page-size selector    | Component-owned select composition when `showItemsPerPage` is enabled                                      |
 | Data attributes       | Component-owned attributes documented below. Feature views must not invent pagination behavior attributes. |
 | CSS namespace         | App-owned `ui-*` pagination classes documented by the component implementation                             |
-| Source files          | `resources/views/components/ui/pagination.blade.php`; `resources/css/app.css`                              |
+| Source files          | `resources/views/components/ui/pagination/index.blade.php`; `resources/css/app.css`                              |
 
 ### 4.6. Props and options
 
@@ -276,7 +276,7 @@ Use the Blade API instead of hand-building `<nav>`, page links, previous/next bu
 | `disabled`                                                                   | `bool`                     | `false`                                                          | `true`, `false`                                                                    | No                                   | Disables all controls when the owning region is unavailable.                                                                           |
 | `class`                                                                      | `string                    | null`                                                            | `null`                                                                             | Layout passthrough if supported      | No                                                                                                                                     | Parent Patterns may pass placement classes only. Do not use for color, typography, state, or behavior overrides. |
 
-Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the UI Reference proof before use.
+Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the rendered evidence proof before use.
 
 ### 4.7. Data contract
 
@@ -312,7 +312,7 @@ Preferred input is a Laravel paginator object. When explicit pagination data is 
 | `data-ui-pagination-total-pages-label`            | Implemented when emitted | Component | Identifies total-page copy for interactive updates.                                           |
 | `data-ui-pagination-overflow`                     | Implemented when emitted | Component | Identifies the overflow ellipsis menu for hidden pages.                                        |
 | `data-ui-pagination-interactive="true"`           | Implemented when emitted | Component | Enables local example state updates without route navigation.                                  |
-| `data-ui-pagination-small-breakpoint="true"`      | Implemented when emitted | Component | Forces the UI Reference small-breakpoint proof state.                                          |
+| `data-ui-pagination-small-breakpoint="true"`      | Implemented when emitted | Component | Forces the rendered evidence small-breakpoint proof state.                                          |
 | Feature-local data attributes                     | Not allowed              | none      | Do not create local pagination state, loading, responsive, or interaction behavior attributes. |
 
 ## 5. Allowed variants, options, and modifiers
@@ -337,7 +337,7 @@ Preferred input is a Laravel paginator object. When explicit pagination data is 
 | Infinite scroll                      | Not owned                   | none                                               | Use a dedicated Pattern if installed; do not add infinite behavior to Pagination. |                                                                               |
 | Jump-to-page input                   | Deferred                    | none                                               | Requires Number input, validation, keyboard, and URL-state proof.                 |                                                                               |
 | First/last controls                  | Deferred unless implemented | none                                               | Requires API, icon labels, disabled states, and responsive proof.                 |                                                                               |
-| Interactive local examples           | Lifecycle behavior          | Implemented / UI Reference only                    | `interactive`                                                                     | Updates example page/page-size state without owning parent data fetching.     |
+| Interactive local examples           | Lifecycle behavior          | Implemented / rendered evidence only                    | `interactive`                                                                     | Updates example page/page-size state without owning parent data fetching.     |
 | Custom page-size options per feature | Gated                       | `pageSizeOptions` with Pattern approval            | Use only when data type or performance requires different values.                 |                                                                               |
 
 ## 6. States
@@ -587,7 +587,7 @@ Feature views must not create Bootstrap `.pagination`, local `.page-item`, local
 - Do not pair Pagination and infinite scroll for the same record set.
 - Do not rely on color alone for current, disabled, or active state.
 - Do not disable controls only visually.
-- Do not use feature-local JavaScript to update query strings, focus, or record regions unless a Pattern explicitly owns client-side pagination. Use the installed `initPagination` initializer for component overflow behavior and UI Reference/local examples.
+- Do not use feature-local JavaScript to update query strings, focus, or record regions unless a Pattern explicitly owns client-side pagination. Use the installed `initPagination` initializer for component overflow behavior and rendered evidence/local examples.
 - Do not truncate page-size labels or current-page summaries so far that meaning is lost.
 - Do not allow pagination controls to wrap into an unreadable order on small screens.
 - Do not put Pagination above the record set as the only navigation unless a Pattern explicitly proves top-and-bottom pagination.
@@ -596,20 +596,20 @@ Feature views must not create Bootstrap `.pagination`, local `.page-item`, local
 
 | Capability                                   | Status                              | Gate                                                                                                           |
 | -------------------------------------------- | ----------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| Unknown-total/cursor pagination              | Gated                               | Requires explicit data contract, copy rules, previous/next semantics, disabled states, and UI Reference proof. |
+| Unknown-total/cursor pagination              | Gated                               | Requires explicit data contract, copy rules, previous/next semantics, disabled states, and rendered evidence proof. |
 | Jump-to-page input                           | Deferred                            | Requires Number input, validation, submit behavior, error messaging, keyboard behavior, and route-state tests. |
 | First/last page controls                     | Deferred unless already implemented | Requires icon/text labels, disabled states, responsive proof, and route-state tests.                           |
 | Load more mode                               | Pattern-owned / Deferred            | Requires Data list/Search results Pattern ownership; do not add to Pagination without a new mode.              |
 | Infinite scroll                              | Not owned                           | Requires a dedicated Pattern with loading, focus, announcement, and footer access rules.                       |
 | Client-side data pagination controller       | Pattern-owned / Deferred            | Data fetching, loading announcements, and focus movement after a data reload remain Pattern-owned.             |
-| Multiple independent paginators on one route | Gated                               | Requires distinct `pageName` values, labels, query-state handling, and UI Reference proof.                     |
+| Multiple independent paginators on one route | Gated                               | Requires distinct `pageName` values, labels, query-state handling, and rendered evidence proof.                     |
 | Custom page-size option sets                 | Gated                               | Requires performance/design justification and Pattern-level consistency review.                                |
-| Custom pagination icons                      | Not allowed                         | Requires Icons Element update and UI Reference proof.                                                          |
-| Custom density or control size               | Not allowed                         | Requires Spacing, Typography, and UI Reference updates.                                                        |
+| Custom pagination icons                      | Not allowed                         | Requires Icons Element update and rendered evidence proof.                                                          |
+| Custom density or control size               | Not allowed                         | Requires Spacing, Typography, and rendered evidence updates.                                                        |
 
-Future extensions require an updated Component standard and UI Reference proof before production use.
+Future extensions require an updated Component standard and rendered evidence proof before production use.
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -618,9 +618,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -629,9 +629,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The Pagination page is a data-navigation component reference. The Live examples card should use a matrix or grouped examples rather than a simple scenario-only tab model. It must render production component examples for implemented states and explicit trigger conditions for deferred or gated capabilities.
 
@@ -656,7 +656,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/pagination` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
@@ -681,7 +681,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 ### 16.1. Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/pagination');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Pagination');
@@ -720,22 +720,22 @@ $response->assertDontSee('Generic ' . 'fallback');
 
 | API                      | Route                                                                |
 | ------------------------ | -------------------------------------------------------------------- |
-| Button                   | `/platform/ui-reference/components/button`                           |
-| Icon button              | `/platform/ui-reference/components/button`                           |
-| Link                     | `/platform/ui-reference/components/link`                             |
-| Select                   | `/platform/ui-reference/components/select`                           |
-| Loading                  | `/platform/ui-reference/components/loading`                          |
-| Inline loading           | `/platform/ui-reference/components/inline-loading`                   |
-| Data table               | `/platform/ui-reference/components/data-table`                       |
-| Tables Pattern           | `/platform/ui-reference/patterns/tables`                             |
-| Data list pattern        | `/platform/ui-reference/patterns/data-list`                          |
-| Search results pattern   | `/platform/ui-reference/patterns/search-results`                     |
-| Forms pattern            | `/platform/ui-reference/patterns/forms`                              |
-| Color element            | `/platform/ui-reference/elements/color`                              |
-| Spacing element          | `/platform/ui-reference/elements/spacing`                            |
-| Typography element       | `/platform/ui-reference/elements/typography`                         |
-| Themes element           | `/platform/ui-reference/elements/themes`                             |
-| Components overview      | `/platform/ui-reference/components`                                  |
+| Button                   | `not installed`                           |
+| Icon button              | `not installed`                           |
+| Link                     | `not installed`                             |
+| Select                   | `not installed`                           |
+| Loading                  | `not installed`                          |
+| Inline loading           | `not installed`                   |
+| Data table               | `not installed`                       |
+| Tables Pattern           | `not installed`                             |
+| Data list pattern        | `not installed`                          |
+| Search results pattern   | `not installed`                     |
+| Forms pattern            | `not installed`                              |
+| Color element            | `not installed`                              |
+| Spacing element          | `not installed`                            |
+| Typography element       | `not installed`                         |
+| Themes element           | `not installed`                             |
+| Components overview      | `not installed`                                  |
 | Canonical pagination doc | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Fpagination.md` |
 | Carbon pagination usage  | `https://carbondesignsystem.com/components/pagination/usage/`        |
 
@@ -745,4 +745,4 @@ $response->assertDontSee('Generic ' . 'fallback');
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon Pagination usage, style, and accessibility guidance inform record-set navigation scope, page-size behavior, pagination/data-table separation, current-page treatment, previous/next naming, disabled controls, overflow behavior, and accessible labelling. Login App keeps its own Blade API, Laravel-friendly data contract, `ui-*` namespace, Foundation tokens, and UI Reference proof.
+- Carbon Pagination usage, style, and accessibility guidance inform record-set navigation scope, page-size behavior, pagination/data-table separation, current-page treatment, previous/next naming, disabled controls, overflow behavior, and accessible labelling. Login App keeps its own Blade API, Laravel-friendly data contract, `ui-*` namespace, Foundation tokens, and rendered evidence proof.

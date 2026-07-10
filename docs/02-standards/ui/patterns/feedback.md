@@ -6,9 +6,9 @@ status: implemented-standard
 system_maturity: implemented
 category: overlays-feedback
 priority: tier-a-baseline-app-development
-ui_reference_route: /platform/ui-reference/patterns/overlays-feedback
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/patterns/feedback.md
-source_owner: /platform/ui-reference/patterns/overlays-feedback
+source_owner: not installed
 pattern_api:
   - page-level-feedback-region
   - inline-recovery-block
@@ -18,7 +18,7 @@ pattern_api:
 blade_api: []
 javascript_api: []
 source_files:
-  - resources/views/platform/ui-reference/patterns/overlays-feedback.blade.php
+  - not installed
   - resources/css/app.css
 foundation_elements:
   - color
@@ -73,10 +73,10 @@ carbon_reference:
 - [15. Content contract](#15-content-contract)
 - [16. Prohibited usage](#16-prohibited-usage)
 - [17. Deferred or gated capabilities](#17-deferred-or-gated-capabilities)
-- [18. Implementation and UI Reference Checklist](#18-implementation-and-ui-reference-checklist)
+- [18. Implementation and Rendered Evidence Checklist](#18-implementation-and-ui-reference-checklist)
   - [18.1. Implementation checklist](#181-implementation-checklist)
-  - [18.2. UI Reference proof checklist](#182-ui-reference-proof-checklist)
-- [19. UI Reference requirements](#19-ui-reference-requirements)
+  - [18.2. rendered evidence proof checklist](#182-ui-reference-proof-checklist)
+- [19. Rendered evidence requirements](#19-ui-reference-requirements)
 - [20. Testing and acceptance criteria](#20-testing-and-acceptance-criteria)
 - [21. Related APIs](#21-related-apis)
 - [22. References](#22-references)
@@ -85,7 +85,7 @@ carbon_reference:
 
 Feedback patterns define how status, error, success, progress, unavailable, and recovery messages appear across composed UI surfaces.
 
-Canonical API owner: `/platform/ui-reference/patterns/overlays-feedback`. Use this Pattern API when feedback belongs to a workflow, page region, data region, form, or recovery path instead of one standalone Component instance.
+Canonical API owner: `not installed`. Use this Pattern API when feedback belongs to a workflow, page region, data region, form, or recovery path instead of one standalone Component instance.
 
 Feedback is an installed Login App 2.0 Pattern API. It owns feedback placement, priority, persistence boundaries, recovery-action grouping, loading composition, validation-summary composition, page-region unavailable states, and status handoff between local and persistent messages. It does not redefine Notification, Inline loading, Loading, Progress bar, Button, Link, Tag, Icon, Color, Spacing, Typography, Motion, or Theme primitives.
 
@@ -100,7 +100,7 @@ Canonical Pattern responsibilities:
 - Provide loading-placeholder composition for page regions and data regions.
 - Define status handoff from local pending feedback to persistent success/error/recovery feedback.
 - Keep feedback accessible through appropriate live-region urgency, keyboard reachable recovery controls, and non-color-only status meaning.
-- Prove all approved feedback compositions on `/platform/ui-reference/patterns/overlays-feedback`.
+- Prove all approved feedback compositions on `not installed`.
 
 Non-owned responsibilities:
 
@@ -118,10 +118,10 @@ Non-owned responsibilities:
 | System maturity              | Implemented                                                                                                                            |
 | API layer                    | Pattern API                                                                                                                            |
 | Pattern slug                 | feedback                                                                                                                               |
-| Owner route                  | `/platform/ui-reference/patterns/overlays-feedback`                                                                                    |
-| UI Reference proof           | `/platform/ui-reference/patterns/overlays-feedback`                                                                                    |
+| Owner route                  | `not installed`                                                                                    |
+| rendered evidence proof           | `not installed`                                                                                    |
 | Canonical doc                | `docs/02-standards/ui/patterns/feedback.md`                                                                                            |
-| Source owner                 | `/platform/ui-reference/patterns/overlays-feedback`                                                                                    |
+| Source owner                 | `not installed`                                                                                    |
 | Pattern API                  | Page-level feedback region; inline recovery block; validation summary composition; loading placeholder composition; status handoff row |
 | JavaScript API               | None public. Feature modules may own workflow state; Pattern examples must not require feature-local feedback scripts.                 |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, Icons, 2x Grid                                                                             |
@@ -267,9 +267,9 @@ Use when a local action changes state and the user needs to understand what happ
 | Pattern helper            | None required by default. Compose approved Components in approved feedback regions.                                                                       |
 | Blade Components consumed | `x-ui.notification`, `x-ui.inline-loading`, `x-ui.loading`, `x-ui.progress-bar`, `x-ui.button`, `x-ui.link`, `x-ui.tag` where installed                   |
 | JavaScript                | No public Pattern-level JavaScript API. Feature modules own workflow state; Components own local behavior.                                                |
-| Data attributes           | Pattern-owned test hooks only when emitted by the UI Reference or installed Pattern source. Feature modules must not invent feedback behavior attributes. |
+| Data attributes           | Pattern-owned test hooks only when emitted by the rendered evidence or installed Pattern source. Feature modules must not invent feedback behavior attributes. |
 | CSS namespace             | App-owned `ui-feedback*` pattern classes for grouping and layout only                                                                                     |
-| Source owner              | `/platform/ui-reference/patterns/overlays-feedback`                                                                                                       |
+| Source owner              | `not installed`                                                                                                       |
 
 ### 4.7. Pattern-owned data attributes
 
@@ -306,7 +306,7 @@ Feedback Pattern examples must compose only approved Component and Element APIs.
 
 | Optional composition         | Status                                          | Use when                                                                           | Gate or boundary                                                                                    |
 | ---------------------------- | ----------------------------------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| Toast handoff                | Gated                                           | A non-critical background update can be acknowledged without interrupting the page | Requires Notification/Toast API, timeout policy, focus/announcement policy, and UI Reference proof. |
+| Toast handoff                | Gated                                           | A non-critical background update can be acknowledged without interrupting the page | Requires Notification/Toast API, timeout policy, focus/announcement policy, and rendered evidence proof. |
 | Persistent notification link | Implemented through Link                        | The message needs a clear navigation or documentation path                         | Link text must describe destination or recovery outcome.                                            |
 | Retry action                 | Implemented through Button                      | A failed load/save/sync can be retried safely                                      | Feature module owns retry business logic and duplicate-submit protection.                           |
 | Dismiss action               | Implemented through Notification when available | Message is non-critical and does not block recovery                                | Critical errors, validation summaries, and unavailable states must not auto-dismiss.                |
@@ -417,7 +417,7 @@ Patterns own message priority and placement. Components own semantic status vari
 - Use Button for action execution and Link for navigation.
 - Use success feedback sparingly and keep it short.
 - Do not auto-dismiss critical errors, validation summaries, unavailable states, or recovery instructions.
-- Do not show loading, success, and error messages for the same action at the same time unless the UI Reference explicitly proves a handoff row.
+- Do not show loading, success, and error messages for the same action at the same time unless the rendered evidence explicitly proves a handoff row.
 - Do not use Tag as the only explanation for an error requiring recovery.
 - Do not use status color as decoration.
 - Do not create local feedback CSS or JavaScript when a Component API exists.
@@ -514,7 +514,7 @@ Selection matrix:
 
 | Capability                              | Status                   | Gate                                                                                                                                              |
 | --------------------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Persistent notification center behavior | Gated                    | Requires feature owner, retention rules, read/unread rules, storage model, routing, notification priority, accessibility, and UI Reference proof. |
+| Persistent notification center behavior | Gated                    | Requires feature owner, retention rules, read/unread rules, storage model, routing, notification priority, accessibility, and rendered evidence proof. |
 | Toast handoff                           | Gated                    | Requires Toast/Notification API, timeout policy, pause-on-hover/focus behavior, announcement policy, and tests.                                   |
 | Cross-route feedback persistence        | Gated                    | Requires session/flash/message bus policy, duplicate suppression, routing behavior, and tests.                                                    |
 | Bulk action result summary              | Gated                    | Requires table/list Pattern ownership, partial-success copy, retry grouping, and row-level status handoff.                                        |
@@ -524,9 +524,9 @@ Selection matrix:
 | Skeleton-region orchestration           | Pattern-owned / Deferred | Requires Loading Pattern proof for region skeletons and state handoff.                                                                            |
 | Custom status categories                | Not allowed              | Requires Color, Icons, Notification, Tag, and Pattern standard updates.                                                                           |
 
-Future extensions require an updated Pattern standard and UI Reference proof before production use.
+Future extensions require an updated Pattern standard and rendered evidence proof before production use.
 
-## 18. Implementation and UI Reference Checklist
+## 18. Implementation and Rendered Evidence Checklist
 ### 18.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                      |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
@@ -537,7 +537,7 @@ Future extensions require an updated Pattern standard and UI Reference proof bef
 | Accessibility/content      | Page/workflow semantics, heading structure, focus flow, status messaging, action labels, and non-color meaning are defined.               |
 | Tests                      | Route/content/API assertions prove the Pattern and coordinated Component usage.                                                           |
 
-### 18.2. UI Reference proof checklist
+### 18.2. rendered evidence proof checklist
 | Requirement            | Visual proof expectation                                                                                                           |
 | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | Live compositions      | The page renders production-like composed examples, not isolated primitive samples.                                                |
@@ -546,11 +546,11 @@ Future extensions require an updated Pattern standard and UI Reference proof bef
 | Variants/states        | Required layout variants, responsive states, empty/loading/error/blocked states, or explicit gates are visible.                    |
 | Related APIs           | Coordinated Components, consumed Elements, planned sub-APIs, source files, and canonical docs are linked.                          |
 | Manual review          | The page provides enough rendered proof for visual review of composition, hierarchy, responsive behavior, and workflow boundaries. |
-## 19. UI Reference requirements
+## 19. Rendered evidence requirements
 
-The UI Reference page must show rendered examples of the approved pattern compositions, not abstract notes only. It must link to this canonical standard and to consumed Element and Component standards. Deferred capabilities must appear as explicit gated disposition rows with trigger conditions, not as fake complete examples. Examples must use app-owned tokens, classes, helpers, and Blade components where available.
+The rendered evidence page must show rendered examples of the approved pattern compositions, not abstract notes only. It must link to this canonical standard and to consumed Element and Component standards. Deferred capabilities must appear as explicit gated disposition rows with trigger conditions, not as fake complete examples. Examples must use app-owned tokens, classes, helpers, and Blade components where available.
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Pattern contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Pattern contract, Live examples, and Related components and patterns.
 
 Required Live examples internal sections:
 
@@ -572,7 +572,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 
 ## 20. Testing and acceptance criteria
 
-- `/platform/ui-reference/patterns/overlays-feedback` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page links to `docs/02-standards/ui/patterns/feedback.md` or the canonical docs route for this standard.
 - The page shows installed Pattern API, states, variants/options, prohibited usage, deferred gates, and consumed Foundation Elements.
 - Rendered examples include the required composition markers and consumed Component links.
@@ -591,7 +591,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/patterns/overlays-feedback');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Feedback');
@@ -628,23 +628,23 @@ $response->assertDontSee('btn btn-primary');
 
 | API                      | Route                                                            |
 | ------------------------ | ---------------------------------------------------------------- |
-| Notification             | `/platform/ui-reference/components/notification`                 |
-| Inline loading           | `/platform/ui-reference/components/inline-loading`               |
-| Loading                  | `/platform/ui-reference/components/loading`                      |
-| Progress bar             | `/platform/ui-reference/components/progress-bar`                 |
-| Button                   | `/platform/ui-reference/components/button`                       |
-| Link                     | `/platform/ui-reference/components/link`                         |
-| Tag                      | `/platform/ui-reference/components/tag`                          |
-| Icon element             | `/platform/ui-reference/elements/icons`                          |
-| Color element            | `/platform/ui-reference/elements/color`                          |
-| Spacing element          | `/platform/ui-reference/elements/spacing`                        |
-| Typography element       | `/platform/ui-reference/elements/typography`                     |
-| Motion element           | `/platform/ui-reference/elements/motion`                         |
-| Themes element           | `/platform/ui-reference/elements/themes`                         |
-| Forms pattern            | `/platform/ui-reference/patterns/forms`                          |
-| Table toolbar planned gap | `/platform/ui-reference/patterns/tables`                         |
-| Loading pattern          | `/platform/ui-reference/patterns/loading`                        |
-| Pattern overview         | `/platform/ui-reference/patterns`                                |
+| Notification             | `not installed`                 |
+| Inline loading           | `not installed`               |
+| Loading                  | `not installed`                      |
+| Progress bar             | `not installed`                 |
+| Button                   | `not installed`                       |
+| Link                     | `not installed`                         |
+| Tag                      | `not installed`                          |
+| Icon element             | `not installed`                          |
+| Color element            | `not installed`                          |
+| Spacing element          | `not installed`                        |
+| Typography element       | `not installed`                     |
+| Motion element           | `not installed`                         |
+| Themes element           | `not installed`                         |
+| Forms pattern            | `not installed`                          |
+| Table toolbar planned gap | `not installed`                         |
+| Loading pattern          | `not installed`                        |
+| Pattern overview         | `not installed`                                |
 | Canonical feedback doc   | `/platform/docs?path=02-standards%2Fui%2Fpatterns%2Ffeedback.md` |
 | Carbon patterns overview | `https://carbondesignsystem.com/patterns/overview/`              |
 

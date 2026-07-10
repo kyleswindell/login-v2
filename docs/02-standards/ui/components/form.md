@@ -6,9 +6,9 @@ status: app-specific-exception
 system_maturity: catalog-only-pattern-owned
 category: form-structure
 priority: tier-a-baseline-app-development
-ui_reference_route: /platform/ui-reference/components/form
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/form.md
-source_owner: /platform/ui-reference/patterns/forms
+source_owner: not installed
 blade_api: []
 javascript_api: []
 data_attributes: []
@@ -60,10 +60,10 @@ carbon_reference:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
   - [16.1. Suggested automated assertions:](#161-suggested-automated-assertions)
 - [17. Related APIs](#17-related-apis)
@@ -73,19 +73,19 @@ carbon_reference:
 
 Form sections, inline field rows, validation summaries, and action bars provide structure around input components inside a form workflow.
 
-Canonical API owner: `/platform/ui-reference/components/form`. Use this Component API entry as the disposition and discoverability standard for the form structure role. Do not create local markup, styling, or behavior that attempts to install a standalone Form Component API.
+Canonical API owner: `not installed`. Use this Component API entry as the disposition and discoverability standard for the form structure role. Do not create local markup, styling, or behavior that attempts to install a standalone Form Component API.
 
-Form is an app-specific exception. The component catalog entry exists because form structure is a baseline UI role, but production composition ownership belongs to the Forms Pattern at `/platform/ui-reference/patterns/forms`. Individual input primitives are owned by their field Component APIs. Submit, cancel, loading, and destructive actions are owned by Button and the parent Pattern.
+Form is an app-specific exception. The component catalog entry exists because form structure is a baseline UI role, but production composition ownership belongs to the Forms Pattern at `not installed`. Individual input primitives are owned by their field Component APIs. Submit, cancel, loading, and destructive actions are owned by Button and the parent Pattern.
 
 ### 1.1. Canonical API responsibilities:
 
-- Preserve the `/platform/ui-reference/components/form` catalog route.
+- Preserve the `not installed` catalog route.
 - Document that no standalone production Form Blade API is approved.
 - Route production form composition to the Forms Pattern.
 - Reserve `section`, `inline row`, `summary`, and `actions` as future gated composition roles.
 - Prevent speculative local `form-*`, Bootstrap, raw utility, or custom JavaScript implementations.
-- Define the accessibility, content, token, testing, and UI Reference requirements that must be satisfied before a future Form Component API can be installed.
-- Prove the current exception state, approved alternatives, deferred gates, prohibited usage, and related APIs on the UI Reference page.
+- Define the accessibility, content, token, testing, and Rendered evidence requirements that must be satisfied before a future Form Component API can be installed.
+- Prove the current exception state, approved alternatives, deferred gates, prohibited usage, and related APIs on the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -108,9 +108,9 @@ Carbon alignment note: Carbon treats Form as a configurable composition with opt
 | Component slug               | form                                                                 |
 | Category                     | Form structure                                                       |
 | Priority                     | Tier A - Baseline app development                                    |
-| UI Reference route           | `/platform/ui-reference/components/form`                             |
+| Rendered evidence route           | `not installed`                             |
 | Canonical doc                | `docs/02-standards/ui/components/form.md`                            |
-| Source owner                 | `/platform/ui-reference/patterns/forms`                              |
+| Source owner                 | `not installed`                              |
 | Blade API                    | No standalone production Form Blade API approved                     |
 | JavaScript API               | None approved                                                        |
 | Data attributes              | None approved                                                        |
@@ -136,7 +136,7 @@ Production form work must follow this rule:
 - Use Button for submit, cancel, loading, disabled, and destructive actions.
 - Use Notification or the approved Forms Pattern summary area for form-level status messaging when the pattern has installed that behavior.
 - Use server-side validation as the source of truth unless a documented feature owner adds an approved client-side validation contract.
-- Do not use a standalone `x-ui.form` API in production until it is explicitly implemented, documented, rendered in UI Reference, and tested.
+- Do not use a standalone `x-ui.form` API in production until it is explicitly implemented, documented, rendered in rendered evidence, and tested.
 - Do not create feature-local form structure classes or JavaScript to fill the gap.
 
 Current installed disposition:
@@ -144,7 +144,7 @@ Current installed disposition:
 | Role                  | Installed disposition                                   | Production rule                                                                                                          |
 | --------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | Semantic form wrapper | Native HTML, feature-owned action/method                | Use `<form>` only for submission semantics, CSRF, method spoofing, and native behavior. Do not use it as a styling hook. |
-| Form layout           | Pattern-owned                                           | Use `/platform/ui-reference/patterns/forms` guidance and approved field components.                                      |
+| Form layout           | Pattern-owned                                           | Use `not installed` guidance and approved field components.                                      |
 | Form section          | Deferred Component role; Pattern-owned today            | Do not create local section wrappers that pretend to be a Component API.                                                 |
 | Inline row            | Deferred Component role; Pattern-owned today            | Use only Pattern-approved composition for horizontally related fields.                                                   |
 | Validation summary    | Deferred Component role; Pattern-owned today            | Use approved pattern/status messaging; do not build custom local summaries.                                              |
@@ -166,7 +166,7 @@ No standalone public Form Component API is installed.
 | Props/options   | None approved   | A standalone component has no public props until implementation is approved.                                                    |
 | Slots           | None approved   | No standalone Form slots are public.                                                                                            |
 | CSS namespace   | Reserved only   | `ui-form*` classes must not be used in production unless implemented by the source owner and documented here.                   |
-| Source owner    | Forms Pattern   | `/platform/ui-reference/patterns/forms` owns production composition.                                                            |
+| Source owner    | Forms Pattern   | `not installed` owns production composition.                                                            |
 
 ### 4.2. Approved production composition today
 
@@ -193,7 +193,7 @@ The names below are reserved for a possible future implementation. They are not 
 
 | Reserved role | Possible future public surface                     | Current status | Gate                                                                                                         |
 | ------------- | -------------------------------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------ |
-| Form root     | `x-ui.form` or Pattern-owned equivalent            | Deferred       | Requires approved source file, props, slots, semantic contract, tests, and UI Reference production examples. |
+| Form root     | `x-ui.form` or Pattern-owned equivalent            | Deferred       | Requires approved source file, props, slots, semantic contract, tests, and rendered evidence production examples. |
 | Section       | `x-ui.form.section` or Pattern-owned equivalent    | Deferred       | Requires heading/description/fieldset rules, spacing tokens, validation behavior, and responsive proof.      |
 | Inline row    | `x-ui.form.inline-row` or Pattern-owned equivalent | Deferred       | Requires field-width rules, stacking behavior, error-height behavior, and mobile proof.                      |
 | Summary       | `x-ui.form.summary` or Pattern-owned equivalent    | Deferred       | Requires error/warning/success/info semantics, links, focus rules, and assistive technology proof.           |
@@ -229,13 +229,13 @@ The following entries are cataloged so developers can distinguish approved produ
 | Actions                     | Composition role               | Deferred Component role / Button and Pattern-owned today | None as Component API | Submit, cancel, destructive, and loading actions.                                                |
 | Required/optional indicator | Content/accessibility modifier | Pattern-owned                                            | None as Component API | Must be consistent within a product area and programmatically expressed at field level.          |
 | Two-column layout           | Layout mode                    | Pattern-owned                                            | Forms Pattern         | Must collapse to one column on mobile and align to the grid.                                     |
-| Fluid form style            | Mode                           | Gated / not implemented at Component layer               | None                  | Requires source implementation, spacing rules, field support, and UI Reference proof before use. |
+| Fluid form style            | Mode                           | Gated / not implemented at Component layer               | None                  | Requires source implementation, spacing rules, field support, and rendered evidence proof before use. |
 | AI presence                 | Modifier                       | Gated / not implemented                                  | None                  | Requires explicit AI component contract and explainability behavior before use.                  |
 | Client-side validation      | Behavior                       | Deferred                                                 | None                  | Requires JS controller, data attributes, accessibility review, and server-validation fallback.   |
 | Multi-step form             | Pattern                        | Pattern-owned / gated                                    | Forms Pattern         | Do not add to Form Component without Pattern approval.                                           |
 | Sticky actions              | Pattern modifier               | Gated                                                    | None                  | Requires scroll, focus, keyboard, and responsive behavior proof.                                 |
 
-Do not represent deferred roles as production controls. The UI Reference page must show trigger conditions and approved alternatives instead of fake form components.
+Do not represent deferred roles as production controls. The rendered evidence page must show trigger conditions and approved alternatives instead of fake form components.
 
 ## 6. States
 
@@ -283,7 +283,7 @@ Form consumes Foundation Color, Spacing, Typography, and Themes through the Form
 
 ### 7.3. CSS namespace
 
-The app-owned `ui-*` namespace is reserved for an approved implementation. These names are allowed only after source implementation and UI Reference proof exist:
+The app-owned `ui-*` namespace is reserved for an approved implementation. These names are allowed only after source implementation and rendered evidence proof exist:
 
 ```css
 .ui-form
@@ -339,7 +339,7 @@ Use this Component API standard when:
 
 - A developer needs to know whether a standalone Form Component API exists.
 - A feature is considering local form sections, inline rows, summaries, or action bars.
-- A UI Reference page needs to document the Form component disposition.
+- A rendered evidence page needs to document the Form component disposition.
 - A future correction pass needs the gates for installing Form as a real Component API.
 
 Use the Forms Pattern when:
@@ -411,14 +411,14 @@ Role selection:
 
 ## 12. Prohibited usage
 
-- Do not install or use a standalone Form Blade API without updating this standard, source files, UI Reference proof, and tests.
+- Do not install or use a standalone Form Blade API without updating this standard, source files, rendered evidence proof, and tests.
 - Do not create feature-local `x-form`, `x-ui.form`, `x-ui.form-section`, or equivalent wrappers.
 - Do not create local form section, inline row, summary, or action-bar components for one feature.
 - Do not use raw utility clusters to define form spacing, validation colors, grid columns, or focus states.
 - Do not use raw colors, hard-coded spacing, local icons, custom focus rings, or custom JavaScript for form structure.
 - Do not use Bootstrap `.form-group`, `.form-control`, `.row`, `.col-*`, or `.btn` classes as Login App form APIs.
 - Do not use direct Carbon production classes in Login App markup.
-- Do not render unsupported deferred roles as production UI in the UI Reference page.
+- Do not render unsupported deferred roles as production UI in the rendered evidence page.
 - Do not display fake inputs, fake validation controls, or placeholder developer comments as installed examples.
 - Do not bypass field Component APIs for controls that already have an installed component.
 - Do not place destructive form actions without visible destructive copy and an escape path.
@@ -429,22 +429,22 @@ Role selection:
 
 | Capability                          | Status                | Gate                                                                                                                         |
 | ----------------------------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| Standalone Form Blade API           | Deferred              | Requires approved source file, root semantic contract, props, slots, tests, and UI Reference production examples.            |
+| Standalone Form Blade API           | Deferred              | Requires approved source file, root semantic contract, props, slots, tests, and rendered evidence production examples.            |
 | Form section API                    | Deferred              | Requires heading/description rules, fieldset/legend guidance, spacing tokens, responsive behavior, and validation proof.     |
 | Inline row API                      | Deferred              | Requires grid/width rules, mobile stacking, error-height behavior, label alignment, and RTL proof.                           |
 | Validation summary API              | Deferred              | Requires error/warning/success/info variants, ARIA contract, summary-to-field navigation, focus behavior, and tests.         |
 | Actions API                         | Deferred              | Requires Button integration, action order rules, loading/disabled behavior, destructive action rules, and responsive proof.  |
 | Client-side validation controller   | Deferred              | Requires server fallback, data attribute API, validation timing rules, screen-reader behavior, and no custom per-feature JS. |
 | Autosave or dirty-state behavior    | Gated                 | Requires explicit workflow Pattern, state persistence rules, unsaved-change warning contract, and tests.                     |
-| Fluid form style                    | Gated                 | Requires field component support, spacing/alignment contract, responsive proof, and UI Reference examples.                   |
+| Fluid form style                    | Gated                 | Requires field component support, spacing/alignment contract, responsive proof, and rendered evidence examples.                   |
 | AI presence in forms                | Gated                 | Requires AI label/explainability contract, source owner approval, and accessibility review.                                  |
 | Multi-step or accordion forms       | Pattern-owned / gated | Requires Forms Pattern approval and step/disclosure accessibility proof.                                                     |
 | Sticky action bar                   | Pattern-owned / gated | Requires scroll behavior, focus order, keyboard access, mobile proof, and Button integration.                                |
-| Form builder/schema-generated forms | Not implemented       | Requires separate architecture decision, validation model, security review, and UI Reference proof.                          |
+| Form builder/schema-generated forms | Not implemented       | Requires separate architecture decision, validation model, security review, and rendered evidence proof.                          |
 
 Future extensions require a scoped component correction pass. Do not implement them opportunistically inside feature work.
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -453,9 +453,9 @@ Future extensions require a scoped component correction pass. Do not implement t
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -464,9 +464,9 @@ Future extensions require a scoped component correction pass. Do not implement t
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The Form page is an exception/disposition page. The Live examples card must show deferral proof, ownership boundaries, approved alternatives, and gate conditions. It must not render fake Form Component controls as if they are installed.
 
@@ -490,13 +490,13 @@ The page must not display generic fallback/reference sections or placeholder dev
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/form` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API disposition, states, variants/options, prohibited usage, deferred gates, and consumed Foundation Elements.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
 - Implemented/native semantics render as approved alternatives; deferred APIs render trigger conditions instead of fake controls.
 - No generic placeholder content appears.
 - The page states that no standalone Form Blade API is approved.
-- The page identifies `/platform/ui-reference/patterns/forms` as the production composition owner.
+- The page identifies `not installed` as the production composition owner.
 - The page shows `section`, `inline row`, `summary`, and `actions` as deferred or Pattern-owned roles, not installed Form Component variants.
 - The page documents that JavaScript API, data attributes, props/options, and slots are not approved for a standalone Form Component.
 - The page shows native form semantics, Laravel CSRF/method usage, installed field components, and Button actions as the approved production path.
@@ -508,14 +508,14 @@ The page must not display generic fallback/reference sections or placeholder dev
 ### 16.1. Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/form');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Form');
 $response->assertSee('App-specific exception');
 $response->assertSee('Pattern-owned');
 $response->assertSee('No standalone public Form Component API is installed');
-$response->assertSee('/platform/ui-reference/patterns/forms');
+$response->assertSee('not installed');
 $response->assertSee('section');
 $response->assertSee('inline row');
 $response->assertSee('summary');
@@ -544,21 +544,21 @@ $response->assertDontSee('form-control');
 
 | API                 | Route                                                          |
 | ------------------- | -------------------------------------------------------------- |
-| Components overview | `/platform/ui-reference/components`                            |
-| Forms pattern       | `/platform/ui-reference/patterns/forms`                        |
-| Button              | `/platform/ui-reference/components/button`                     |
-| Text input          | `/platform/ui-reference/components/text-input`                 |
-| Select              | `/platform/ui-reference/components/select`                     |
-| Checkbox            | `/platform/ui-reference/components/checkbox`                   |
-| Radio button        | `/platform/ui-reference/components/radio-button`               |
-| Toggle              | `/platform/ui-reference/components/toggle`                     |
-| Notification        | `/platform/ui-reference/components/notification`               |
-| Inline loading      | `/platform/ui-reference/components/inline-loading`             |
-| Modal               | `/platform/ui-reference/components/modal`                      |
-| Color element       | `/platform/ui-reference/elements/color`                        |
-| Spacing element     | `/platform/ui-reference/elements/spacing`                      |
-| Typography element  | `/platform/ui-reference/elements/typography`                   |
-| Themes element      | `/platform/ui-reference/elements/themes`                       |
+| Components overview | `not installed`                            |
+| Forms pattern       | `not installed`                        |
+| Button              | `not installed`                     |
+| Text input          | `not installed`                 |
+| Select              | `not installed`                     |
+| Checkbox            | `not installed`                   |
+| Radio button        | `not installed`               |
+| Toggle              | `not installed`                     |
+| Notification        | `not installed`               |
+| Inline loading      | `not installed`             |
+| Modal               | `not installed`                      |
+| Color element       | `not installed`                        |
+| Spacing element     | `not installed`                      |
+| Typography element  | `not installed`                   |
+| Themes element      | `not installed`                       |
 | Canonical form doc  | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Fform.md` |
 
 ## 18. References

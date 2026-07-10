@@ -6,9 +6,9 @@ status: implemented-pending-review
 system_maturity: installed
 category: inputs
 priority: tier-a-baseline-app-development
-ui_reference_route: /platform/ui-reference/components/select
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/select.md
-source_owner: /platform/ui-reference/components/select
+source_owner: not installed
 blade_api:
   - x-ui.select
 javascript_api: []
@@ -17,7 +17,7 @@ data_attributes:
   - data-ui-select-field
   - data-ui-select
 source_files:
-  - resources/views/components/ui/select.blade.php
+  - resources/views/components/ui/select/index.blade.php
   - resources/css/components/select.css
 foundation_elements:
   - color
@@ -72,10 +72,10 @@ carbon_reference:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
   - [15.1. Required Live examples internal sections:](#151-required-live-examples-internal-sections)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
   - [16.1. Suggested automated assertions:](#161-suggested-automated-assertions)
@@ -84,9 +84,9 @@ carbon_reference:
 
 Native select chooses one option from a short known list.
 
-Canonical API owner: `/platform/ui-reference/components/select`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
-Select is the installed Login App 2.0 native single-selection field API. It owns native `<select>` composition, visible labels, helper copy, placeholder-like prompt options, validation messaging, disabled/read-only treatment, token-backed field states, option grouping where needed, and UI Reference proof for short known lists. It does not own searchable selection, remote option loading, multi-select chips, combobox behavior, custom dropdown panels, autocomplete, filtering, or menu actions.
+Select is the installed Login App 2.0 native single-selection field API. It owns native `<select>` composition, visible labels, helper copy, placeholder-like prompt options, validation messaging, disabled/read-only treatment, token-backed field states, option grouping where needed, and rendered evidence proof for short known lists. It does not own searchable selection, remote option loading, multi-select chips, combobox behavior, custom dropdown panels, autocomplete, filtering, or menu actions.
 
 ### 1.1. Canonical API responsibilities:
 
@@ -97,7 +97,7 @@ Select is the installed Login App 2.0 native single-selection field API. It owns
 - Support optional prompt options, disabled placeholder options, grouped options, required selection, disabled state, read-only summary state, warning state, error state, and loading/pending state.
 - Use app-owned field classes instead of raw utility clusters, Bootstrap form-select classes, or custom dropdown chrome.
 - Keep option lists short enough to scan. Use a deferred/gated combobox or Pattern-owned picker for long or searchable lists.
-- Prove installed states, validation, disabled/read-only behavior, option contracts, and native composition on the UI Reference page.
+- Prove installed states, validation, disabled/read-only behavior, option contracts, and native composition on the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -117,18 +117,18 @@ Select is the installed Login App 2.0 native single-selection field API. It owns
 | Component slug               | `select`                                                                                                 |
 | Category                     | Inputs                                                                                                   |
 | Priority                     | Tier A - Baseline app development                                                                        |
-| UI Reference route           | `/platform/ui-reference/components/select`                                                               |
+| Rendered evidence route           | `not installed`                                                               |
 | Canonical doc                | `docs/02-standards/ui/components/select.md`                                                              |
-| Source owner                 | `/platform/ui-reference/components/select`                                                               |
+| Source owner                 | `not installed`                                                               |
 | Blade API                    | `x-ui.select`                                                                                            |
 | Dedicated Blade component    | Installed public API backed by native `<select>` behavior                                                |
 | JavaScript API               | None required for installed native select behavior                                                       |
 | Data attributes              | `data-ui-component="select"`, `data-ui-select-field`, `data-ui-select`                                  |
-| Source files                 | `resources/views/components/ui/select.blade.php`; `resources/css/components/select.css`; `/platform/ui-reference/components/select` |
+| Source files                 | `resources/views/components/ui/select/index.blade.php`; `resources/css/components/select.css`; `not installed` |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Icons                                                                |
 | Carbon benchmark             | Carbon Select and Dropdown usage/style/accessibility guidance                                            |
 
-`Approved API` means `x-ui.select` is the public native single-value form-select API. It preserves browser-controlled option-list behavior while the app owns labels, helper/validation copy, field states, sizes, inline/fluid treatments, and UI Reference proof.
+`Approved API` means `x-ui.select` is the public native single-value form-select API. It preserves browser-controlled option-list behavior while the app owns labels, helper/validation copy, field states, sizes, inline/fluid treatments, and rendered evidence proof.
 
 ## 3. Installed standard
 
@@ -221,7 +221,7 @@ Use this component API instead of hand-building select controls in feature views
 | Root semantic element     | Native `<select>`                                                                                            |
 | Data attributes           | `data-ui-component="select"`, `data-ui-select-field`, `data-ui-select`                                      |
 | CSS namespace             | `ui-select*` plus shared `ui-field*` classes documented in this standard                                     |
-| Source files              | `resources/views/components/ui/select.blade.php`; `resources/css/components/select.css`; `/platform/ui-reference/components/select` |
+| Source files              | `resources/views/components/ui/select/index.blade.php`; `resources/css/components/select.css`; `not installed` |
 
 ### 4.3. Prop and option contract
 
@@ -254,7 +254,7 @@ Use this component API instead of hand-building select controls in feature views
 | `multiple`             | boolean attribute            | not supported | none                       | Not applicable                  | Not part of this component API. Use Checkbox or future Multi-select/Combobox.              |
 | `readonly`             | not valid                    | not supported | none                       | Not applicable                  | Render a read-only value summary instead.                                                  |
 
-Any option not listed here is not public. If a feature needs another option, update the component implementation, this standard, and UI Reference proof before use.
+Any option not listed here is not public. If a feature needs another option, update the component implementation, this standard, and rendered evidence proof before use.
 
 ### 4.4. Installed class contract
 
@@ -421,7 +421,7 @@ Carbon color role mapping:
 | `$field`, `$field-hover` | Select field background and hover state | `ui-select`, `ui-select-shell`, `ui-field`, `--ui-field`, `--ui-field-hover` | App field palette | Same role / app value | Default select uses the field surface on the native control; fluid select uses the full shell as the field surface. |
 | `$border-strong`, `$border-subtle` | Default field border-bottom, fluid shell border, and read-only border | `ui-select` / `ui-select-shell` border role | App border palette | Same role / app value | Select must not define local border colors. Inline select is intentionally borderless. |
 | `$text-primary`, `$text-secondary`, `$text-helper`, `$text-disabled` | Select value, label, helper, and disabled text | `ui-select`, `ui-field-*` text roles | App text palette | Same role / app value | Browser option rendering may be OS-owned; the visible control uses app roles. |
-| `$icon-primary`, `$icon-disabled` | Select chevron/icon states | `ui-select-chevron-icon` / chevron role | App icon palette | Same role / app value | Icons must use approved Heroicons/app icon wrappers and inherit currentColor where possible. |
+| `$icon-primary`, `$icon-disabled` | Select chevron/icon states | `ui-select-chevron-icon` / chevron role | App icon palette | Same role / app value | Icons must use internal icon components/app icon wrappers and inherit currentColor where possible. |
 | `$support-error`, `$text-error`, `$support-warning` | Invalid/warning border, icon, and message roles | Field validation state classes | App status palette | Same role / app value | Validation mapping is shared across field components. |
 | `$focus` | Focus field border/ring | `ui-select:focus-visible`, `ui-select-shell:focus-within`, `--ui-focus` | App focus palette | Same role / app value | Default focus is applied to the native control; fluid focus is applied to the full shell. Error focus uses the error support role. |
 | `transparent` | Inline select field background and border | `variant="inline"` | Component variant rule | Adopted for installed inline select | Inline select is borderless and lower visual weight; do not implement inline select styling ad hoc in feature views. |
@@ -568,16 +568,16 @@ Feature views must not create local `select-*`, `dropdown-*`, `combobox-*`, Boot
 | ------------------------------------ | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | Compact/table-toolbar select         | Gated                                         | Requires Table toolbar or Filters Pattern proof for density, label visibility, and responsive behavior.                      |
 | Multi-select                         | Deferred                                      | Requires dedicated component/API, selected-item display, keyboard behavior, error states, and tests.                         |
-| Searchable select / Combobox         | Deferred                                      | Requires JavaScript owner, text input/listbox semantics, keyboard behavior, async/no-results states, and UI Reference proof. |
+| Searchable select / Combobox         | Deferred                                      | Requires JavaScript owner, text input/listbox semantics, keyboard behavior, async/no-results states, and rendered evidence proof. |
 | Async/remote options                 | Deferred                                      | Requires loading, error, retry, empty, stale-data, and focus behavior contracts.                                             |
 | Custom dropdown chrome               | Not allowed until a separate API is installed | Native select remains the production API.                                                                                    |
 | Select-as-navigation                 | Gated                                         | Requires Pattern ownership, change confirmation rules when destructive, and keyboard/screen-reader behavior proof.           |
-| Arbitrary sizes                      | Not allowed                                   | Requires Spacing, Typography, and UI Reference updates.                                                                      |
+| Arbitrary sizes                      | Not allowed                                   | Requires Spacing, Typography, and rendered evidence updates.                                                                      |
 | Direct Carbon implementation classes | Not allowed                                   | Login App keeps app-owned Blade/markup, CSS, and `ui-*` classes.                                                             |
 
-Future extensions require an updated Component standard and UI Reference proof before production use.
+Future extensions require an updated Component standard and rendered evidence proof before production use.
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -586,9 +586,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -597,9 +597,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The Select page is a baseline input component reference page. The Live examples card should use grouped field examples, state matrices, and implementation examples rather than fake custom dropdowns.
 
@@ -621,7 +621,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/select` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
@@ -649,7 +649,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 ### 16.1. Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/select');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Select');
@@ -670,7 +670,7 @@ $response->assertSee('optgroup');
 $response->assertDontSee('Component-specific API pending correction');
 $response->assertDontSee('<li>None.</li>', false);
 $response->assertDontSee('Use only documented props/options');
-$response->assertDontSee('See UI Reference developer implementation section');
+$response->assertDontSee('See rendered evidence developer implementation section');
 $response->assertDontSee('Live Examples Card');
 $response->assertDontSee('Reference Examples');
 $response->assertDontSee('Legacy Contract Summary');
@@ -687,21 +687,21 @@ $response->assertDontSee('bx--');
 
 | API                  | Route                                                            |
 | -------------------- | ---------------------------------------------------------------- |
-| Text input           | `/platform/ui-reference/components/text-input`                   |
-| Checkbox             | `/platform/ui-reference/components/checkbox`                     |
-| Radio button         | `/platform/ui-reference/components/radio-button`                 |
-| Toggle               | `/platform/ui-reference/components/toggle`                       |
-| Menu                 | `/platform/ui-reference/components/menu`                         |
-| Button               | `/platform/ui-reference/components/button`                       |
-| Forms pattern        | `/platform/ui-reference/patterns/forms`                          |
-| Tables Pattern       | `/platform/ui-reference/patterns/tables`                         |
-| Navigation Pattern   | `/platform/ui-reference/patterns/navigation`                     |
-| Color element        | `/platform/ui-reference/elements/color`                          |
-| Spacing element      | `/platform/ui-reference/elements/spacing`                        |
-| Typography element   | `/platform/ui-reference/elements/typography`                     |
-| Themes element       | `/platform/ui-reference/elements/themes`                         |
-| Icons element        | `/platform/ui-reference/elements/icons`                          |
-| Components overview  | `/platform/ui-reference/components`                              |
+| Text input           | `not installed`                   |
+| Checkbox             | `not installed`                     |
+| Radio button         | `not installed`                 |
+| Toggle               | `not installed`                       |
+| Menu                 | `not installed`                         |
+| Button               | `not installed`                       |
+| Forms pattern        | `not installed`                          |
+| Tables Pattern       | `not installed`                         |
+| Navigation Pattern   | `not installed`                     |
+| Color element        | `not installed`                          |
+| Spacing element      | `not installed`                        |
+| Typography element   | `not installed`                     |
+| Themes element       | `not installed`                         |
+| Icons element        | `not installed`                          |
+| Components overview  | `not installed`                              |
 | Canonical select doc | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Fselect.md` |
 | Carbon select usage  | `https://carbondesignsystem.com/components/select/usage/`        |
 
@@ -711,4 +711,4 @@ $response->assertDontSee('bx--');
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon Select and Dropdown usage/style/accessibility guidance inform native selection states, validation/read-only handling, option content guidance, and the boundary between native Select, Dropdown, Multiselect, and Combobox behavior. Login App keeps its own native Blade composition, server-validation expectations, app-owned `ui-*` class contract, and UI Reference proof.
+- Carbon Select and Dropdown usage/style/accessibility guidance inform native selection states, validation/read-only handling, option content guidance, and the boundary between native Select, Dropdown, Multiselect, and Combobox behavior. Login App keeps its own native Blade composition, server-validation expectations, app-owned `ui-*` class contract, and rendered evidence proof.

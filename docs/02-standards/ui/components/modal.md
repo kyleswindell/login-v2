@@ -6,14 +6,14 @@ status: implemented-pending-correction
 system_maturity: partial
 category: overlays
 priority: tier-a-baseline-app-development
-ui_reference_route: /platform/ui-reference/components/modal
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/modal.md
-source_owner: /platform/ui-reference/components/modal
+source_owner: not installed
 blade_api:
   - x-ui.modal
 javascript_api: []
 source_files:
-  - resources/views/components/ui/modal.blade.php
+  - resources/views/components/ui/modal/index.blade.php
   - resources/css/app.css
   - resources/js/app.js
 foundation_elements:
@@ -77,10 +77,10 @@ carbon_reference:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
   - [15.1. Required Live examples internal sections:](#151-required-live-examples-internal-sections)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
 - [17. Related APIs](#17-related-apis)
@@ -90,7 +90,7 @@ carbon_reference:
 
 Modal interrupts the current page for a required decision, urgent task-specific information, or a contained task that must be completed or dismissed before the user returns to the page.
 
-Canonical API owner: `/platform/ui-reference/components/modal`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
 Modal is the installed Login App 2.0 blocking overlay API. It owns dialog semantics, overlay treatment, open and closed states, initial focus, focus containment, focus return, close button behavior, Escape and outside-click rules, size selection, footer action structure, responsive body scrolling, reduced-motion behavior, and token-backed modal surfaces. It does not own page layout, form validation rules, submit workflow orchestration, table row actions, persistent notifications, multi-step wizard state, or page-level loading.
 
@@ -106,7 +106,7 @@ Modal is the installed Login App 2.0 blocking overlay API. It owns dialog semant
 - Define variant, size, dismissal, footer, and focus behavior through documented props and data attributes.
 - Use `x-ui.button` for modal footer actions.
 - Consume Foundation Element APIs for color, spacing, typography, themes, motion, icons, and 2x grid sizing behavior.
-- Prove confirmation, form, read-only detail, destructive action, dismissal, focus, reduced-motion, and deferred wizard behavior on the UI Reference page.
+- Prove confirmation, form, read-only detail, destructive action, dismissal, focus, reduced-motion, and deferred wizard behavior on the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -129,20 +129,20 @@ Modal is the installed Login App 2.0 blocking overlay API. It owns dialog semant
 | Component slug               | modal                                                                                                                                                       |
 | Category                     | Overlays                                                                                                                                                    |
 | Priority                     | Tier A - Baseline app development                                                                                                                           |
-| UI Reference route           | `/platform/ui-reference/components/modal`                                                                                                                   |
+| Rendered evidence route           | `not installed`                                                                                                                   |
 | Canonical doc                | `docs/02-standards/ui/components/modal.md`                                                                                                                  |
-| Source owner                 | `/platform/ui-reference/components/modal`                                                                                                                   |
+| Source owner                 | `not installed`                                                                                                                   |
 | Blade API                    | `x-ui.modal`                                                                                                                                                |
 | JavaScript API               | No dedicated feature JavaScript controller required; modal behavior must be component-owned or app-bootstrap-owned                                          |
-| Source files                 | `resources/views/components/ui/modal.blade.php`; `resources/css/app.css`; `resources/js/app.js` if the installed focus/open-close behavior is script-backed |
+| Source files                 | `resources/views/components/ui/modal/index.blade.php`; `resources/css/app.css`; `resources/js/app.js` if the installed focus/open-close behavior is script-backed |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, Icons, 2x Grid                                                                                                  |
 | Carbon benchmark             | Carbon Modal usage, style, and accessibility guidance                                                                                                       |
 
-`Approved API` means the installed component and UI Reference examples exist, but the canonical public API, variant definitions, dismissal rules, focus contract, footer composition, deferred wizard behavior, and regression expectations must be corrected so feature teams do not create local overlay markup or custom modal scripts.
+`Approved API` means the installed component and rendered evidence examples exist, but the canonical public API, variant definitions, dismissal rules, focus contract, footer composition, deferred wizard behavior, and regression expectations must be corrected so feature teams do not create local overlay markup or custom modal scripts.
 
 ## 3. Installed standard
 
-Modal has component-specific UI Reference examples that consume approved Foundation Elements and installed Button/Form/Feedback APIs.
+Modal has component-specific rendered evidence examples that consume approved Foundation Elements and installed Button/Form/Feedback APIs.
 
 ### The installed standard is:
 
@@ -165,7 +165,7 @@ Modal has component-specific UI Reference examples that consume approved Foundat
 - Respect reduced-motion preferences for overlay, dialog, and state transitions.
 - Do not create raw overlays, local focus traps, local Escape handlers, one-off modal sizing classes, or feature-specific modal JavaScript.
 
-Carbon alignment note: Carbon defines modals as blocking dialogs for immediate responses, urgent task-specific information, confirmations, and contained tasks. Carbon documents passive, transactional, danger, acknowledgment, and progress modal variants; four responsive sizes; header/body/footer anatomy; fixed header/footer with vertically scrolling body; focus containment; variant-specific initial focus; Escape dismissal; and clear modal-versus-notification boundaries. Login App maps those principles to its own `x-ui.modal`, `x-ui.button`, `ui-*` classes, Foundation tokens, and UI Reference proof. Carbon implementation classes, framework feature flags, and AI styling are not Login App public APIs.
+Carbon alignment note: Carbon defines modals as blocking dialogs for immediate responses, urgent task-specific information, confirmations, and contained tasks. Carbon documents passive, transactional, danger, acknowledgment, and progress modal variants; four responsive sizes; header/body/footer anatomy; fixed header/footer with vertically scrolling body; focus containment; variant-specific initial focus; Escape dismissal; and clear modal-versus-notification boundaries. Login App maps those principles to its own `x-ui.modal`, `x-ui.button`, `ui-*` classes, Foundation tokens, and rendered evidence proof. Carbon implementation classes, framework feature flags, and AI styling are not Login App public APIs.
 
 ## 4. Public API
 
@@ -317,7 +317,7 @@ Use these Blade and data-attribute APIs instead of hand-building overlay markup,
 | Root semantic element       | Component-owned dialog surface with `role="dialog"`, `aria-modal="true"`, and title labelling                                                    |
 | Data attributes             | Use only the documented trigger, close, initial-focus, and component-owned state hooks. Feature views must not invent modal behavior attributes. |
 | CSS namespace               | App-owned `ui-*` modal classes documented by the component implementation                                                                        |
-| Source files                | `resources/views/components/ui/modal.blade.php`; `resources/css/app.css`; `resources/js/app.js` if behavior is script-backed                     |
+| Source files                | `resources/views/components/ui/modal/index.blade.php`; `resources/css/app.css`; `resources/js/app.js` if behavior is script-backed                     |
 
 ### 4.6. Props and options
 
@@ -336,7 +336,7 @@ Use these Blade and data-attribute APIs instead of hand-building overlay markup,
 | `returnFocusTo`   | `return-focus-to` | `string / null` | auto trigger                                           | Valid trigger target ID when automatic trigger tracking is unavailable              | No / Prefer automatic return through `data-ui-modal-trigger`. Use only when the modal has no standard trigger relationship.             |
 | `class`           | `string / null`   | `null`          | Layout passthrough if supported                        | No                                                                                  | Parent Patterns may pass placement hooks only. Do not use for color, width, z-index, animation, focus, or state overrides.              |
 
-Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the UI Reference proof before use.
+Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the rendered evidence proof before use.
 
 ### 4.7. Slots
 
@@ -381,7 +381,7 @@ Feature teams must not add custom modal data attributes, local query selectors, 
 | `sm`              | Implemented / required proof | Standard confirmation, destructive confirmation, or compact read-only detail        | Body copy creates long line lengths or components feel cramped                                                                                  |
 | `md`              | Implemented                  | required proof                                                                      | Default form modal, detail modal, or contained task with several controls / The task is brief enough for `xs`/`sm` or complex enough for a page |
 | `lg`              | Implemented / required proof | Complex contained content such as wider forms or approved component composition     | The largest modal still requires extensive scrolling; use a full page                                                                           |
-| Custom width      | Not allowed                  | none                                                                                | Requires 2x Grid, spacing, responsive, and UI Reference updates                                                                                 |
+| Custom width      | Not allowed                  | none                                                                                | Requires 2x Grid, spacing, responsive, and rendered evidence updates                                                                                 |
 | Full-screen modal | Deferred / Pattern-owned     | none                                                                                | Use a page or gated overlay Pattern until installed                                                                                             |
 
 ### 4.11. Dismissal contract
@@ -414,7 +414,7 @@ Feature teams must not add custom modal data attributes, local query selectors, 
 | Passive/read-only modal    | Variant        | Implemented                               | `variant="passive"`                                           | Urgent read-only detail with close behavior.                      |
 | Danger modal               | Variant        | Implemented                               | `variant="danger"`                                            | Destructive confirmation with visible danger action.              |
 | Acknowledgment modal       | Variant        | Implemented / required proof              | `variant="acknowledgment"`                                    | Single acknowledgement action for task-specific information.      |
-| Progress/wizard modal      | Variant        | Deferred                                  | none                                                          | UI Reference shows trigger conditions and alternatives only.      |
+| Progress/wizard modal      | Variant        | Deferred                                  | none                                                          | rendered evidence shows trigger conditions and alternatives only.      |
 | Extra small size           | Size           | Implemented / required proof              | `size="xs"`                                                   | Short confirmations and direct messages.                          |
 | Small size                 | Size           | Implemented / required proof              | `size="sm"`                                                   | Standard compact confirmation/detail.                             |
 | Medium size                | Size           | Implemented / required proof              | `size="md"`                                                   | Default form/contained task size.                                 |
@@ -431,7 +431,7 @@ Feature teams must not add custom modal data attributes, local query selectors, 
 | Reduced motion             | State/modifier | Implemented                               | automatic through Foundation Motion                           | Overlay and dialog transitions respect reduced motion.            |
 | Custom width or placement  | Modifier       | Not allowed                               | none                                                          | Requires component and 2x Grid update.                            |
 | Nested modal               | Composition    | Not allowed                               | none                                                          | Use one modal at a time.                                          |
-| AI presence styling        | Modifier       | Not implemented                           | none                                                          | Requires AI standard and UI Reference proof before use.           |
+| AI presence styling        | Modifier       | Not implemented                           | none                                                          | Requires AI standard and rendered evidence proof before use.           |
 
 ## 6. States
 
@@ -457,7 +457,7 @@ Feature teams must not add custom modal data attributes, local query selectors, 
 | Responsive/mobile             | Implemented / required proof  | Modal sizes adapt to supported breakpoints and remain usable on narrow screens.                                                |
 | Reduced motion                | Implemented                   | Motion preferences are honored while preserving open/closed state clarity.                                                     |
 | Stacked/nested                | Not allowed                   | Only one blocking modal may be active at a time.                                                                               |
-| Wizard/progress               | Deferred                      | UI Reference documents trigger conditions and alternatives; no fake production control.                                        |
+| Wizard/progress               | Deferred                      | rendered evidence documents trigger conditions and alternatives; no fake production control.                                        |
 
 States must be represented through the installed Component API and token-backed classes. Do not create state-only local CSS outside the API.
 
@@ -668,21 +668,21 @@ Feature views must not create local overlay classes, z-index stacks, raw utility
 
 | Capability                                | Status                   | Gate                                                                                                                                                                                        |
 | ----------------------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Wizard/progress modal                     | Deferred                 | Requires Pattern owner, step state API, keyboard model, focus rules per step, footer button rules, route/escape behavior, validation rules, UI Reference proof, and tests.                  |
+| Wizard/progress modal                     | Deferred                 | Requires Pattern owner, step state API, keyboard model, focus rules per step, footer button rules, route/escape behavior, validation rules, rendered evidence proof, and tests.                  |
 | Forced non-dismissible modal              | Gated                    | Requires product, accessibility, and security/compliance approval; must document why Escape/close is not allowed and provide an accessible escape or completion path.                       |
 | Modal body loading overlay                | Gated                    | Requires Loading Pattern integration, inert body content, disabled footer action rules, reduced-motion proof, and tests. Use Button loading or Inline loading for short pending work today. |
-| Full-screen/mobile sheet modal            | Deferred / Pattern-owned | Requires responsive Pattern, focus/scroll behavior, and UI Reference proof. Use a page when content exceeds large modal constraints.                                                        |
+| Full-screen/mobile sheet modal            | Deferred / Pattern-owned | Requires responsive Pattern, focus/scroll behavior, and rendered evidence proof. Use a page when content exceeds large modal constraints.                                                        |
 | Alertdialog role                          | Gated                    | Requires accessibility review and explicit criteria for urgent destructive/critical messages. Default modal role remains `dialog`.                                                          |
 | System-generated automatic modal          | Gated                    | Requires product and accessibility review. Modals should normally open from user action.                                                                                                    |
 | Nested or stacked modals                  | Not allowed              | Use one modal at a time or redesign the flow.                                                                                                                                               |
-| Custom modal width or placement           | Not allowed              | Requires 2x Grid, Spacing, responsive, and UI Reference updates.                                                                                                                            |
-| AI presence styling                       | Not implemented          | Requires AI design standard, token mapping, explainability behavior, and UI Reference proof.                                                                                                |
+| Custom modal width or placement           | Not allowed              | Requires 2x Grid, Spacing, responsive, and rendered evidence updates.                                                                                                                            |
+| AI presence styling                       | Not implemented          | Requires AI design standard, token mapping, explainability behavior, and rendered evidence proof.                                                                                                |
 | Custom close icon or icon set             | Not allowed              | Requires Icons Element update and component proof.                                                                                                                                          |
 | Component-specific feature JavaScript API | Deferred                 | Requires documented initializer, events, cleanup behavior, and tests. Feature views must not add local scripts.                                                                             |
 
-Future extensions require an updated Component standard and UI Reference proof before production use.
+Future extensions require an updated Component standard and rendered evidence proof before production use.
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 
 ### 14.1. Implementation checklist
 
@@ -693,9 +693,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
@@ -705,9 +705,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The Modal page is a scenario-driven overlay reference. The Live examples card should use tabs or grouped scenarios for confirmation, form, read-only detail, destructive action, and wizard deferred proof. It should also include compact matrices for size, dismissal, initial focus, footer action structure, reduced motion, and developer implementation.
 
@@ -735,7 +735,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/modal` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
@@ -757,7 +757,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/modal');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Modal');
@@ -794,24 +794,24 @@ $response->assertDontSee('Generic ' . 'fallback');
 
 | API                           | Route                                                          |
 | ----------------------------- | -------------------------------------------------------------- |
-| Button                        | `/platform/ui-reference/components/button`                     |
-| Tooltip                       | `/platform/ui-reference/components/tooltip`                    |
-| Inline loading                | `/platform/ui-reference/components/inline-loading`             |
-| Notification                  | `/platform/ui-reference/components/notification`               |
-| Text input                    | `/platform/ui-reference/components/text-input`                 |
-| Select                        | `/platform/ui-reference/components/select`                     |
-| Overlay and feedback patterns | `/platform/ui-reference/patterns/overlays-feedback`            |
-| Forms pattern                 | `/platform/ui-reference/patterns/forms`                        |
-| Loading pattern               | `/platform/ui-reference/patterns/loading`                      |
-| Layout Pattern                | `/platform/ui-reference/patterns/layout`                       |
-| Color element                 | `/platform/ui-reference/elements/color`                        |
-| Spacing element               | `/platform/ui-reference/elements/spacing`                      |
-| Typography element            | `/platform/ui-reference/elements/typography`                   |
-| Themes element                | `/platform/ui-reference/elements/themes`                       |
-| Motion element                | `/platform/ui-reference/elements/motion`                       |
-| Icons element                 | `/platform/ui-reference/elements/icons`                        |
-| 2x Grid element               | `/platform/ui-reference/elements/2x-grid`                      |
-| Components overview           | `/platform/ui-reference/components`                            |
+| Button                        | `not installed`                     |
+| Tooltip                       | `not installed`                    |
+| Inline loading                | `not installed`             |
+| Notification                  | `not installed`               |
+| Text input                    | `not installed`                 |
+| Select                        | `not installed`                     |
+| Overlay and feedback patterns | `not installed`            |
+| Forms pattern                 | `not installed`                        |
+| Loading pattern               | `not installed`                      |
+| Layout Pattern                | `not installed`                       |
+| Color element                 | `not installed`                        |
+| Spacing element               | `not installed`                      |
+| Typography element            | `not installed`                   |
+| Themes element                | `not installed`                       |
+| Motion element                | `not installed`                       |
+| Icons element                 | `not installed`                        |
+| 2x Grid element               | `not installed`                      |
+| Components overview           | `not installed`                            |
 | Canonical modal doc           | `/platform/docs?path=02-standards%2Fui%2Components%2Fmodal.md` |
 | Carbon modal usage            | `https://carbondesignsystem.com/components/modal/usage/`       |
 
@@ -821,4 +821,4 @@ $response->assertDontSee('Generic ' . 'fallback');
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon Modal usage, style, and accessibility guidance inform blocking-dialog scope, variants, sizing, anatomy, focus containment, dismissal rules, footer composition, overflow behavior, and modal-versus-notification boundaries. Login App keeps its own Blade API, data attributes, `ui-*` namespace, token model, and UI Reference proof.
+- Carbon Modal usage, style, and accessibility guidance inform blocking-dialog scope, variants, sizing, anatomy, focus containment, dismissal rules, footer composition, overflow behavior, and modal-versus-notification boundaries. Login App keeps its own Blade API, data attributes, `ui-*` namespace, token model, and rendered evidence proof.

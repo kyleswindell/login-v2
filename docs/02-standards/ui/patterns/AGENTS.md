@@ -4,7 +4,7 @@
 
 Pattern standards only. This folder owns reusable UI composition APIs as flat `patterns/{pattern}.md` files.
 
-Pattern docs define what the pattern composes, which Element APIs it consumes, which Component APIs it owns or coordinates, allowed layout options, state ownership, responsive behavior, prohibited usage, deferred gates, UI Reference proof requirements, and tests.
+Pattern docs define what the pattern composes, which Element APIs it consumes, which Component APIs it owns or coordinates, allowed layout options, state ownership, responsive behavior, prohibited usage, deferred gates, rendered evidence proof requirements, and tests.
 
 ## Read Order
 

@@ -1,50 +1,82 @@
+<!--
+DOC-META
+title: Runbook Index
+doc_type: index
+status: active
+owner: ops
+canonical: true
+canonical_path: docs/10-runbooks/index.md
+parent: docs/00-start-here.md
+template: docs/09-reference/templates/docs/_index.md
+summary: Routes current operator-executable local development, repository synchronization, deployment, service, scheduler, realtime, and logging procedures.
+-->
+
 # Runbook Index
 
-This index provides canonical navigation and scope for this branch.
+Parent: [Start Here](../00-start-here.md)
 
-## Purpose
+## 1. Purpose
 
-Canonical hub for operational procedures and environment execution steps.
+This branch owns current repeatable operational procedures.
 
-## Scope
+Use:
 
-Operations procedures only. This branch does not own architecture structure, feature behavior contracts, schema design ownership, or planning sequence ownership.
+- [Runbook Documentation Standards](../02-standards/documentation/Runbook%20Documentation%20Standards.md)
 
-## Core Runbooks
+## 2. Development Operations
 
-- [Deployment](deployment.md)
-- [Local Dev](local-dev.md)
-- [Local Browser Review Setup](local-browser-review.md)
-- [Backup](backup.md)
-- [Cron](cron.md)
+- [Local Development](local-dev.md)
+- [Local Browser Review](local-browser-review.md)
+- [Parallel Worktree Setup](parallel-worktree-setup.md)
+- [Multi-Device Repository Sync](multi-device-repository-sync.md)
 
-## Environment And Procedure Runbooks
+## 3. Deployment Operations
 
-- [Batch Workflow](batch-workflow.md)
-- [Batch Workflow - Active Workspace](batch-workflow/active-workspace.md)
-- [Batch Workflow - Work Batch](batch-workflow/work-batch.md)
-- [Batch Workflow - Manual Review](batch-workflow/manual-review.md)
-- [Batch Workflow - Review And Finalize](batch-workflow/review-and-finalize.md)
-- [Git Batch Commit Workflow](git-batch-commit-workflow.md)
-- [Git Batch Commit Workflow - Commit Checkpoints](git-batch-commit-workflow/commit-checkpoints.md)
-- [Git Batch Commit Workflow - Push And Parallel Branches](git-batch-commit-workflow/push-and-parallel-branches.md)
+- [Deployment Hub](deployment.md)
 - [Server Readiness](server-readiness.md)
 - [Server Bootstrap](server-bootstrap.md)
-- [Deployment Workflow](deployment-workflow.md)
 - [Staging Deployment](staging-deployment.md)
-- [Git Remote And Multi-Device Workflow](git-remote-and-multi-device-workflow.md)
-- [Agent Sessions And Parallel Work](agent-sessions-and-parallel-work.md)
-- [Agent Token Efficiency](agent-token-efficiency.md)
-- [Repo-Local Agent Memory](repo-local-agent-memory.md)
-- [Branch-Based Batch Integration](branch-based-batch-integration.md)
-- [Advisory Session Scope Claims](advisory-session-scope-claims.md)
+
+Production deployment and rollback runbooks are not yet published. Do not treat the staging procedure as production authorization.
+
+## 4. Service Operations
+
+- [Scheduler Operations](scheduler-operations.md)
 - [Realtime Notifications And Reverb](realtime-notifications-and-reverb.md)
 - [Logging Operations](logging-operations.md)
-- [Console Proof Paths](console-proof-paths.md)
-- [Phase 0 Deployment And Environment Checks](phase-0-deployment-and-environment-checks.md)
 
-## Related
+## 5. Removed Workflow Families
 
-- [00-start-here](../00-start-here.md)
-- [Database Index](../06-database/index.md)
+The deprecated batch workflow and batch commit workflow are not active runbooks.
+
+Their durable generic rules were promoted to:
+
+- [Git Change Scope And Commit Standards](../02-standards/coding/Git%20Change%20Scope%20And%20Commit%20Standards.md)
+- [Agent Session Concurrency And Worktree Standards](../02-standards/coding-agents/Agent%20Session%20Concurrency%20And%20Worktree%20Standards.md)
+- [Agent Context And Retrieval Standards](../02-standards/coding-agents/Agent%20Context%20And%20Retrieval%20Standards.md)
+- [Repo-Local Agent Memory Standards](../02-standards/coding-agents/Repo-Local%20Agent%20Memory%20Standards.md)
+
+Do not recreate `/docs/08-active/`, change-queue, batch-start, work-batch, or batch-finalize ownership.
+
+## 6. Planned Operational Gaps
+
+The following require future planning and implementation before publication as active runbooks:
+
+- backup execution
+- database restore
+- restore drills
+- production deployment
+- production rollback
+- incident response
+- compromised credential response
+- queue failure recovery
+- cache failure recovery
+- disaster recovery
+
+Track these through planning and GitHub issues rather than placeholder runbooks.
+
+## 7. Related
+
+- [Start Here](../00-start-here.md)
+- [Documentation Standards Index](../02-standards/documentation/index.md)
 - [Platform Production Server Policy](../02-standards/security/platform-production-server-policy.md)

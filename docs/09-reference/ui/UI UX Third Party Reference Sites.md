@@ -4,13 +4,13 @@ This document defines the canonical scope and intent for UI UX Third Party Refer
 
 ## Purpose
 
-Capture useful third-party UI reference sites that may inform future standards work, implementation review, or design exploration.
+Capture useful third-party rendered evidence sites that may inform future standards work, implementation review, or design exploration.
 
 This note is support material only. It does not define canonical rules or replace `docs/02-standards/ui/`.
 
 ## Scope
 
-External UI reference links and short usage notes only.
+External rendered evidence links and short usage notes only.
 
 ## Reference Sites
 
@@ -33,14 +33,14 @@ External UI reference links and short usage notes only.
 ### Iconography
 
 - [Heroicons](https://heroicons.com/)
-  Useful as the approved icon-set reference for icon names, glyph selection, and semantic icon mapping.
+  Useful as a third-party fallback and comparison reference when the internal `x-icons.*` library does not yet have a suitable glyph.
 
 ## Placement Notes
 
 - component and layout examples fit best under UI support and implementation research
 - typography-related references should support, but not replace, canonical typography standards
 - palette tools should remain research-only until explicitly translated into approved token decisions
-- icon references should stay aligned with the canonical Heroicons direction already defined in standards
+- icon references should stay aligned with the canonical internal icon components direction already defined in standards
 
 ## Related
 

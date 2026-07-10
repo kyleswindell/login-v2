@@ -1,27 +1,62 @@
-# docs/10-runbooks AGENTS.md
+# AGENTS.md
 
-## Purpose
+## Folder Purpose
 
-Operations only. This branch owns runbooks, deployment steps, local-dev procedures, workflow operations, and repeatable execution guidance.
+This folder owns repeatable operator-executable procedures.
 
-## Read Order
+It does not own standards, architecture, feature behavior, schema, planning, delivery status, agent governance, or historical environment logs.
+
+## Required Reading
 
 1. Read `index.md`.
-2. Open only the runbook for the operation being performed.
-3. For batch work, use `batch-workflow.md`, then the matching child file under `batch-workflow/`, plus the specific git/deploy runbook required by the current workflow state.
-4. For active-batch commit questions, use `git-batch-commit-workflow.md`, then the matching child file under `git-batch-commit-workflow/`.
-5. For local-review commit timing, use `local-dev.md`, `batch-workflow/commit-and-deployment.md`, and `git-batch-commit-workflow/commit-checkpoints.md`.
-6. For prompt scope, read budgets, or long-file context control, use `agent-token-efficiency.md`.
+2. Open only the runbook for the named operation.
+3. Read [Runbook Documentation Standards](../02-standards/documentation/Runbook%20Documentation%20Standards.md).
+4. Read governing security, database, deployment, or coding standards when linked by the runbook.
+
+## Execution Rules
+
+Before executing a runbook:
+
+- identify the target environment
+- identify the authorized operator
+- confirm prerequisites
+- confirm backup or rollback requirements
+- confirm required approvals
+- confirm evidence requirements
+- stop when commands, paths, ownership, or recovery are unclear
+
+Do not infer authorization for:
+
+- deployment
+- migration
+- service restart
+- permission change
+- destructive command
+- secret rotation
+- data restoration
+- production access
 
 ## Avoid
 
-- Do not read every runbook before implementation.
-- Do not store product behavior, architecture, or schema truth here.
-- Do not improvise deployment or external-state actions outside the documented runbook.
-- Do not push implementation iterations when local review can answer the question.
+- Do not read every runbook.
+- Do not preserve deprecated batch workflow procedures.
+- Do not place agent rules or skills here.
+- Do not record historical command transcripts in current runbooks.
+- Do not use operator-specific absolute paths when variables or configured aliases suffice.
+- Do not place secrets or customer data in runbooks.
 
-## Long Files
+## Verification
 
-- `agent-sessions-and-parallel-work.md` is governance-heavy. Open it for concurrency, ownership, or worktree questions only.
-- `batch-workflow.md` is the workflow hub. Use its read path instead of opening every child runbook.
-- `agent-token-efficiency.md` owns read-budget and workflow-prompt controls. Use it before broad searches or long-file loads.
+Runbooks must define:
+
+- objective success checks
+- failure handling
+- rollback or explicit no-rollback limits
+- escalation
+- completion criteria
+
+## Related
+
+- [Runbook Index](index.md)
+- [Runbook Documentation Standards](../02-standards/documentation/Runbook%20Documentation%20Standards.md)
+- [Documentation Standards Index](../02-standards/documentation/index.md)

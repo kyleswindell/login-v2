@@ -4,9 +4,9 @@ slug: pictograms
 api_layer: Foundation Element API
 guide_status: implemented
 system_maturity: needs-audit
-ui_reference_route: /platform/ui-reference/elements/pictograms
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/elements/pictograms.md
-source_owner: /platform/ui-reference/elements/pictograms
+source_owner: not installed
 asset_source: gated
 blade_api: []
 css_variable_api:
@@ -64,11 +64,11 @@ carbon_reference:
   - [8.2. Consumer rules:](#82-consumer-rules)
 - [9. Theme behavior](#9-theme-behavior)
   - [9.1. Theme rules:](#91-theme-rules)
-  - [9.2. Required UI Reference theme proof:](#92-required-ui-reference-theme-proof)
+  - [9.2. Required rendered evidence theme proof:](#92-required-ui-reference-theme-proof)
 - [10. State behavior](#10-state-behavior)
 - [11. Prohibited usage](#11-prohibited-usage)
 - [12. Deferred or gated capabilities](#12-deferred-or-gated-capabilities)
-- [13. UI Reference requirements](#13-ui-reference-requirements)
+- [13. Rendered evidence requirements](#13-ui-reference-requirements)
 - [14. Testing and acceptance criteria](#14-testing-and-acceptance-criteria)
 - [15. Related APIs](#15-related-apis)
 - [16. References](#16-references)
@@ -90,7 +90,7 @@ This standard is implemented as a governance and sizing contract. The production
 - Define container, clearance, theme, accessibility, responsive, and reduced-motion rules.
 - Reserve app-owned `ui-pictogram*` classes and CSS variables for an approved source implementation.
 - Prevent local asset imports, arbitrary recoloring, cropping, distortion, and one-off illustration systems.
-- Provide UI Reference proof for the current queued/gated disposition.
+- Provide rendered evidence proof for the current queued/gated disposition.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -111,9 +111,9 @@ Carbon alignment note: Carbon separates pictograms from icons, defines productiv
 | System maturity         | Needs audit                                                                             |
 | API layer               | Foundation Element API                                                                  |
 | Element slug            | pictograms                                                                              |
-| UI Reference route      | `/platform/ui-reference/elements/pictograms`                                            |
+| Rendered evidence route      | `not installed`                                            |
 | Canonical doc           | `docs/02-standards/ui/elements/pictograms.md`                                           |
-| Source owner            | `/platform/ui-reference/elements/pictograms`                                            |
+| Source owner            | `not installed`                                            |
 | Asset source            | Gated; no production source approved                                                    |
 | Blade API               | None approved                                                                           |
 | JavaScript API          | None approved                                                                           |
@@ -122,7 +122,7 @@ Carbon alignment note: Carbon separates pictograms from icons, defines productiv
 | Primary consumers       | Empty state, Data/content Pattern, onboarding/help surfaces, blocked/unavailable states |
 | Carbon benchmark        | Carbon Pictograms usage, library, and code guidance                                     |
 
-`Implemented` means the Element standard and UI Reference route define the contract. `Needs audit` means production asset source, exact class implementation, source files, and rendered examples must be audited before pictograms can be treated as a fully installed asset API.
+`Implemented` means the Element standard and Rendered evidence route define the contract. `Needs audit` means production asset source, exact class implementation, source files, and rendered examples must be audited before pictograms can be treated as a fully installed asset API.
 
 ## 3. Installed standard
 
@@ -141,8 +141,8 @@ Use this standard when a Component or Pattern needs a larger illustrative symbol
 | Expressive pictogram usage    | Gated                      | Expressive/high-presence pictograms require Pattern or product approval.                                                                            |
 | Asset source                  | Gated                      | No Carbon, third-party, stock, AI-generated, or feature-local assets may be imported yet.                                                           |
 | Public Blade wrapper          | Not approved               | No `x-ui.pictogram` API is installed.                                                                                                               |
-| Public CSS utility classes    | Reserved / needs audit     | `ui-pictogram*` classes may appear in UI Reference as queued API names, but feature code must not depend on them until implementation is confirmed. |
-| UI Reference placeholders     | Approved for proof only    | The UI Reference may use neutral placeholder panels to show size, clearance, and theme behavior without pretending an asset is approved.            |
+| Public CSS utility classes    | Reserved / needs audit     | `ui-pictogram*` classes may appear in rendered evidence as queued API names, but feature code must not depend on them until implementation is confirmed. |
+| rendered evidence placeholders     | Approved for proof only    | The rendered evidence may use neutral placeholder panels to show size, clearance, and theme behavior without pretending an asset is approved.            |
 
 ### 3.2. Installed use rules:
 
@@ -160,7 +160,7 @@ Use this standard when a Component or Pattern needs a larger illustrative symbol
 
 ## 4. Token API
 
-Pictogram tokens define size and disposition rules. Because the production asset source is gated, token names are installed as the canonical contract and must be proven in UI Reference before feature use.
+Pictogram tokens define size and disposition rules. Because the production asset source is gated, token names are installed as the canonical contract and must be proven in rendered evidence before feature use.
 
 | Token/helper           | Variable or value                                                                             | Status                                | Allowed API/consumer                                            | Example                                               |
 | ---------------------- | --------------------------------------------------------------------------------------------- | ------------------------------------- | --------------------------------------------------------------- | ----------------------------------------------------- |
@@ -205,7 +205,7 @@ The following CSS variables are the reserved public variable surface for a futur
 - Do not redefine these variables in feature views, Components, or Patterns.
 - Do not introduce feature-local variables such as `--empty-illustration-size`, `--onboarding-icon-size`, or `--help-graphic-size`.
 - Do not couple pictogram sizing to raw arbitrary values, Bootstrap utilities, or inline styles.
-- If the approved implementation changes these values, update this standard, the UI Reference proof, and regression tests together.
+- If the approved implementation changes these values, update this standard, the rendered evidence proof, and regression tests together.
 
 ## 6. Utility class/helper API
 
@@ -232,7 +232,7 @@ No production Blade helper or asset-rendering wrapper is approved yet.
 
 | API                         | Status                 | Rule                                                                                                                  |
 | --------------------------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `.ui-pictogram`             | Reserved / needs audit | Base class for approved future pictogram assets. Do not use in feature code until UI Reference proves implementation. |
+| `.ui-pictogram`             | Reserved / needs audit | Base class for approved future pictogram assets. Do not use in feature code until rendered evidence proves implementation. |
 | `.ui-pictogram--productive` | Reserved               | Future default style disposition.                                                                                     |
 | `.ui-pictogram--expressive` | Gated                  | Future high-presence disposition requiring approval.                                                                  |
 | `.ui-pictogram--sm`         | Reserved               | Future 64px class.                                                                                                    |
@@ -243,7 +243,7 @@ No production Blade helper or asset-rendering wrapper is approved yet.
 | `x-ui.pictogram`            | Deferred               | Requires approved source file, asset registry, props, accessibility rules, theme behavior, and tests.                 |
 | Asset import helper         | Deferred               | Requires ADR, package/source decision, build pipeline, naming rules, and tests.                                       |
 
-Until a production asset source is approved, UI Reference examples may show neutral placeholder boxes or outlined illustrative containers to prove size, placement, and theme behavior. Those placeholders must be labeled as placeholders and must not be copied into production features as fake pictograms.
+Until a production asset source is approved, rendered evidence examples may show neutral placeholder boxes or outlined illustrative containers to prove size, placement, and theme behavior. Those placeholders must be labeled as placeholders and must not be copied into production features as fake pictograms.
 
 ## 7. Allowed usage
 
@@ -288,15 +288,15 @@ Components and Patterns must consume this Element through documented tokens, uti
 
 | Consumer                           | Route                                          | Usage                                                                                    |
 | ---------------------------------- | ---------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| Empty state / Data-content Pattern | `/platform/ui-reference/patterns/data-content` | Empty, blocked, unavailable, and no-results state visuals.                               |
-| Interaction Pattern                | `/platform/ui-reference/patterns/interactions` | No-results recovery visuals where approved by Data-content ownership.                    |
-| Layout Pattern                     | `/platform/ui-reference/patterns/layout`       | Explanatory panels, feature cards, and onboarding sections.                              |
-| Navigation Pattern                 | `/platform/ui-reference/patterns/navigation`   | Help or onboarding panels only when approved; not nav icons.                             |
-| Loading Component                  | `/platform/ui-reference/components/loading`    | Boundary only; Loading owns skeleton/spinner states, not pictograms.                     |
-| Icons Element                      | `/platform/ui-reference/elements/icons`        | Boundary only; Icons handles UI-scale glyphs, not illustrative pictograms.               |
-| Color Element                      | `/platform/ui-reference/elements/color`        | Supplies token-backed color behavior when a source implementation permits color mapping. |
-| Spacing Element                    | `/platform/ui-reference/elements/spacing`      | Supplies gaps, clearance, and layout spacing around pictogram containers.                |
-| Themes Element                     | `/platform/ui-reference/elements/themes`       | Supplies theme context and contrast expectations.                                        |
+| Empty state / Data-content Pattern | `not installed` | Empty, blocked, unavailable, and no-results state visuals.                               |
+| Interaction Pattern                | `not installed` | No-results recovery visuals where approved by Data-content ownership.                    |
+| Layout Pattern                     | `not installed`       | Explanatory panels, feature cards, and onboarding sections.                              |
+| Navigation Pattern                 | `not installed`   | Help or onboarding panels only when approved; not nav icons.                             |
+| Loading Component                  | `not installed`    | Boundary only; Loading owns skeleton/spinner states, not pictograms.                     |
+| Icons Element                      | `not installed`        | Boundary only; Icons handles UI-scale glyphs, not illustrative pictograms.               |
+| Color Element                      | `not installed`        | Supplies token-backed color behavior when a source implementation permits color mapping. |
+| Spacing Element                    | `not installed`      | Supplies gaps, clearance, and layout spacing around pictogram containers.                |
+| Themes Element                     | `not installed`       | Supplies theme context and contrast expectations.                                        |
 
 ### 8.2. Consumer rules:
 
@@ -320,7 +320,7 @@ Pictograms must remain valid in supported light, dark, inline, inverse, and high
 - If the approved asset source includes theme-specific variants, use the documented variant mapping only.
 - If no theme-safe asset exists, omit the pictogram rather than forcing a local edit.
 
-### 9.2. Required UI Reference theme proof:
+### 9.2. Required rendered evidence theme proof:
 
 | Theme context  | Required proof                                                         |
 | -------------- | ---------------------------------------------------------------------- |
@@ -345,7 +345,7 @@ Pictograms are non-interactive illustrative assets. They do not own hover, activ
 | Loading                    | Not applicable          | Use Loading, skeleton, or the owning Pattern.                                                         |
 | Validation                 | Not applicable          | Use field Components, Forms Pattern, or Notification.                                                 |
 | Error/warning/success/info | Not applicable as state | Use Notification, Tag, or status components for semantic feedback.                                    |
-| Animated                   | Gated                   | Animated pictograms require Motion Element approval, reduced-motion behavior, and UI Reference proof. |
+| Animated                   | Gated                   | Animated pictograms require Motion Element approval, reduced-motion behavior, and rendered evidence proof. |
 | Reduced motion             | Gated                   | Required if animated pictograms are ever approved.                                                    |
 | Responsive scaling         | Implemented rule        | Scale only through approved size tokens/classes and preserve aspect ratio.                            |
 | Overflow/crop              | Not allowed             | Do not crop, mask, or truncate pictograms.                                                            |
@@ -373,23 +373,23 @@ Pictograms are non-interactive illustrative assets. They do not own hover, activ
 
 | Capability                            | Status       | Gate                                                                                                                                                                 |
 | ------------------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Production asset library              | Gated        | Requires ADR/source decision, license review, asset inventory, naming convention, build pipeline, theme proof, and UI Reference examples.                            |
+| Production asset library              | Gated        | Requires ADR/source decision, license review, asset inventory, naming convention, build pipeline, theme proof, and rendered evidence examples.                            |
 | Carbon pictogram adoption             | Gated        | Requires explicit decision to adopt Carbon assets, package/source choice, license review, import path, tree-shaking/build proof, and no direct Carbon class leakage. |
 | Custom Login App pictogram set        | Gated        | Requires art direction, asset ownership, export standards, accessibility review, and implementation plan.                                                            |
 | Public `x-ui.pictogram` Blade wrapper | Deferred     | Requires source file, asset registry, props, size mapping, alt/decorative behavior, theme behavior, and tests.                                                       |
 | Public asset registry/helper          | Deferred     | Requires approved source, namespaced identifiers, missing-asset fallback, build validation, and tests.                                                               |
-| Expressive pictograms                 | Gated        | Requires product/Pattern approval, large-size context, usage limit, theme proof, and UI Reference example.                                                           |
+| Expressive pictograms                 | Gated        | Requires product/Pattern approval, large-size context, usage limit, theme proof, and rendered evidence example.                                                           |
 | Animated pictograms                   | Gated        | Requires Motion Element approval, reduced-motion fallback, pause/stop behavior if needed, and tests.                                                                 |
 | Theme-specific pictogram variants     | Gated        | Requires source support, token mapping, and visual regression proof.                                                                                                 |
 | AI-generated pictograms               | Not approved | Requires legal/source review, editorial approval, asset standard, and repeatability rules.                                                                           |
 | Inline SVG editing                    | Not approved | Requires approved wrapper and path-level styling policy.                                                                                                             |
-| Additional sizes                      | Gated        | Requires Spacing Element update, UI Reference proof, and regression tests.                                                                                           |
+| Additional sizes                      | Gated        | Requires Spacing Element update, rendered evidence proof, and regression tests.                                                                                           |
 
 New reusable illustration capability belongs in this Element doc only after a concrete app use case and source decision exist.
 
-## 13. UI Reference requirements
+## 13. Rendered evidence requirements
 
-The UI Reference page must render Element proof, not abstract notes only. Because production assets are gated, the page must explicitly show the queued asset-library disposition instead of fake complete pictograms.
+The rendered evidence page must render Element proof, not abstract notes only. Because production assets are gated, the page must explicitly show the queued asset-library disposition instead of fake complete pictograms.
 
 Required proof:
 
@@ -414,7 +414,7 @@ The page must not present placeholder boxes as approved assets. It must label pl
 
 ## 14. Testing and acceptance criteria
 
-- `/platform/ui-reference/elements/pictograms` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page identifies Pictograms as a Foundation Element API.
 - The page identifies Guide status as `Implemented` and System maturity as `Needs audit`.
 - The page states that production asset source is gated.
@@ -427,7 +427,7 @@ The page must not present placeholder boxes as approved assets. It must label pl
 - The page shows theme behavior expectations for light, dark, layered, inverse, and high-contrast contexts.
 - The page links to consuming Component and Pattern standards.
 - Deferred capabilities are represented with trigger conditions and prohibited local workarounds.
-- No UI Reference example imports unapproved assets, direct Carbon assets, third-party pictograms, feature-local SVGs, or fake production artwork.
+- No rendered evidence example imports unapproved assets, direct Carbon assets, third-party pictograms, feature-local SVGs, or fake production artwork.
 - No example uses pictograms as button icons, nav icons, logos, status icons, or loading indicators.
 - No example hard-codes Foundation Element decisions that already have approved APIs.
 - Tests assert no generic placeholder content appears.
@@ -437,7 +437,7 @@ The page must not present placeholder boxes as approved assets. It must label pl
 Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/elements/pictograms');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Pictograms');
@@ -473,18 +473,18 @@ $response->assertDontSee('<svg');
 
 | API                                | Route                                                              |
 | ---------------------------------- | ------------------------------------------------------------------ |
-| Foundation Elements overview       | `/platform/ui-reference/elements`                                  |
-| Empty state / Data-content Pattern | `/platform/ui-reference/patterns/data-content`                     |
-| Interaction Pattern                | `/platform/ui-reference/patterns/interactions`                     |
-| Layout Pattern                     | `/platform/ui-reference/patterns/layout`                           |
-| Icons Element                      | `/platform/ui-reference/elements/icons`                            |
-| Color Element                      | `/platform/ui-reference/elements/color`                            |
-| Spacing Element                    | `/platform/ui-reference/elements/spacing`                          |
-| Typography Element                 | `/platform/ui-reference/elements/typography`                       |
-| Themes Element                     | `/platform/ui-reference/elements/themes`                           |
-| Motion Element                     | `/platform/ui-reference/elements/motion`                           |
-| Loading Component                  | `/platform/ui-reference/components/loading`                        |
-| Notification Component             | `/platform/ui-reference/components/notification`                   |
+| Foundation Elements overview       | `not installed`                                  |
+| Empty state / Data-content Pattern | `not installed`                     |
+| Interaction Pattern                | `not installed`                     |
+| Layout Pattern                     | `not installed`                           |
+| Icons Element                      | `not installed`                            |
+| Color Element                      | `not installed`                            |
+| Spacing Element                    | `not installed`                          |
+| Typography Element                 | `not installed`                       |
+| Themes Element                     | `not installed`                           |
+| Motion Element                     | `not installed`                           |
+| Loading Component                  | `not installed`                        |
+| Notification Component             | `not installed`                   |
 | Canonical pictograms doc           | `/platform/docs?path=02-standards%2Fui%2Felements%2Fpictograms.md` |
 | Carbon pictograms usage            | `https://carbondesignsystem.com/elements/pictograms/usage/`        |
 | Carbon pictograms library          | `https://carbondesignsystem.com/elements/pictograms/library/`      |

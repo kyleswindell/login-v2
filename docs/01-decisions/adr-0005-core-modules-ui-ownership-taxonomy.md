@@ -137,7 +137,7 @@ Examples:
 
 Extension means contribution through published contracts, events, registries, actions, relationships, page sections, tabs, widgets, or other explicit extension points. It does not mean unrestricted access to another Module's internal implementation.
 
-Composer owns package installation and version resolution. Login 2.0 owns runtime enablement, application-instance assignment, tenant or workspace assignment, dependency validation, activation order, extension registration, disable protection, and uninstall protection.
+Composer owns package installation and version resolution. Login 2.0 owns runtime enablement, application-instance assignment, assignment to other accepted scopes, dependency validation, activation order, extension registration, disable protection, and uninstall protection.
 
 ### 7.3 UI
 
@@ -274,7 +274,7 @@ Not selected because optional cohesive features may be operational, administrati
 - current folders, routes, tables, manifests, and registries may remain during transition
 - future migrations must preserve compatibility explicitly
 - Module installation and updates should occur through controlled deployment workflows
-- tenants on one deployed application instance normally execute the same installed Module version, while enablement and assignment may vary
+- all scopes within one deployed application instance normally execute the same installed Module version, while enablement and assignment may vary according to the accepted scope model
 
 ## 14. Implementation Implications
 

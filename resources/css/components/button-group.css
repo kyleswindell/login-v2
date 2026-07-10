@@ -1,35 +1,40 @@
 /* ==========================================================================
-File: resources/css/components/button-group.css
-Purpose: Button group helper styles.
-Carbon reference:
+   File: resources/css/components/button-group.css
+   Purpose: Button Set and Button Group helper styles.
 
-* reference/carbon-main/packages/styles/scss/components/button/
+   Carbon reference:
+   - reference/carbon-main/packages/styles/scss/components/button/
 
-Notes:
-
-* Defines Button group selectors only.
-* Button group is a class helper, not a standalone public Blade API.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Button color and state values are provided by tokens/components/buttons.css.
-  ========================================================================== */
+   Notes:
+   - Defines Button Set and Button Group layout selectors only.
+   - Canonical Button Set selectors use .ui-btn-set and .ui-btn.
+   - Legacy .ui-button-set / .ui-button-group aliases remain supported as
+     compatibility selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Button color and state values are provided by tokens/components/buttons.css.
+   ========================================================================== */
 
 @layer components {
     /* ----------------------------------------------------------------------
-   Button set
-   ---------------------------------------------------------------------- */
+       Button Set / Button Group base
+       ---------------------------------------------------------------------- */
 
+    .ui-btn-set,
     .ui-button-set,
     .ui-button-group {
         display: flex;
         align-items: stretch;
+        inline-size: 100%;
     }
 
+    .ui-btn-set--stacked,
     .ui-button-set-stacked,
     .ui-button-group-vertical {
         flex-direction: column;
     }
 
+    .ui-btn-set .ui-btn,
     .ui-button-set .ui-button,
     .ui-button-set .ui-action,
     .ui-button-group .ui-button,
@@ -38,6 +43,11 @@ Notes:
         max-inline-size: 12.25rem;
     }
 
+    /* ----------------------------------------------------------------------
+       Button separators
+       ---------------------------------------------------------------------- */
+
+    .ui-btn-set .ui-btn:not(:focus):not(:focus-visible),
     .ui-button-set .ui-button:not(:focus-visible),
     .ui-button-set .ui-action:not(:focus-visible),
     .ui-button-group .ui-button:not(:focus-visible),
@@ -45,10 +55,13 @@ Notes:
         box-shadow: -1px 0 0 0 var(--ui-button-separator);
     }
 
+    .ui-btn-set .ui-btn:first-of-type:not(:focus):not(:focus-visible),
     .ui-button-set .ui-button:first-of-type:not(:focus-visible),
     .ui-button-set .ui-action:first-of-type:not(:focus-visible),
     .ui-button-group .ui-button:first-of-type:not(:focus-visible),
     .ui-button-group .ui-action:first-of-type:not(:focus-visible),
+    .ui-btn-set .ui-btn:focus + .ui-btn,
+    .ui-btn-set .ui-btn:focus-visible + .ui-btn,
     .ui-button-set .ui-button:focus-visible + .ui-button,
     .ui-button-set .ui-button:focus-visible + .ui-action,
     .ui-button-set .ui-action:focus-visible + .ui-button,
@@ -60,6 +73,7 @@ Notes:
         box-shadow: inherit;
     }
 
+    .ui-btn-set--stacked .ui-btn:not(:focus):not(:focus-visible),
     .ui-button-set-stacked .ui-button:not(:focus-visible),
     .ui-button-set-stacked .ui-action:not(:focus-visible),
     .ui-button-group-vertical .ui-button:not(:focus-visible),
@@ -67,6 +81,7 @@ Notes:
         box-shadow: 0 -1px 0 0 var(--ui-button-separator);
     }
 
+    .ui-btn-set--stacked .ui-btn:first-of-type:not(:focus):not(:focus-visible),
     .ui-button-set-stacked .ui-button:first-of-type:not(:focus-visible),
     .ui-button-set-stacked .ui-action:first-of-type:not(:focus-visible),
     .ui-button-group-vertical .ui-button:first-of-type:not(:focus-visible),
@@ -74,23 +89,63 @@ Notes:
         box-shadow: inherit;
     }
 
+    .ui-btn-set .ui-btn.ui-btn--disabled {
+        box-shadow: -1px 0 0 0 var(--ui-icon-on-color-disabled);
+    }
+
+    .ui-btn-set .ui-btn.ui-btn--disabled:first-of-type {
+        box-shadow: none;
+    }
+
+    .ui-btn-set--stacked .ui-btn.ui-btn--disabled {
+        box-shadow: 0 -1px 0 0 var(--ui-layer-selected-disabled);
+    }
+
+    .ui-btn-set--stacked .ui-btn.ui-btn--disabled:first-of-type {
+        box-shadow: none;
+    }
+
+    .ui-btn-set .ui-btn.ui-btn--loading {
+        border-color: transparent;
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    [dir="rtl"] .ui-btn-set .ui-btn:not(:focus):not(:focus-visible),
+    [dir="rtl"] .ui-button-set .ui-button:not(:focus-visible),
+    [dir="rtl"] .ui-button-set .ui-action:not(:focus-visible),
+    [dir="rtl"] .ui-button-group .ui-button:not(:focus-visible),
+    [dir="rtl"] .ui-button-group .ui-action:not(:focus-visible) {
+        box-shadow: 1px 0 0 0 var(--ui-button-separator);
+    }
+
+    /* ----------------------------------------------------------------------
+       Fluid Button Set
+       ---------------------------------------------------------------------- */
+
+    .ui-btn-set--fluid,
     .ui-button-set-fluid,
     .ui-button-group-fluid {
         container-type: inline-size;
+        display: flex;
+        align-items: stretch;
         inline-size: 100%;
     }
 
+    .ui-btn-set__fluid-inner,
     .ui-button-set-fluid-inner,
     .ui-button-group-fluid-inner {
-        --ui-button-set-direction: row;
+        --ui-btn-set-flex-direction: row;
 
         display: flex;
-        flex-direction: var(--ui-button-set-direction);
+        flex-direction: var(--ui-btn-set-flex-direction);
         align-items: stretch;
         justify-content: flex-end;
         inline-size: 100%;
+        max-inline-size: 100%;
     }
 
+    .ui-btn-set--fluid .ui-btn-set__fluid-inner .ui-btn,
     .ui-button-set-fluid-inner .ui-button,
     .ui-button-set-fluid-inner .ui-action,
     .ui-button-group-fluid-inner .ui-button,
@@ -99,6 +154,16 @@ Notes:
         max-inline-size: 14.5rem;
     }
 
+    .ui-btn-set--fluid .ui-btn-set__fluid-inner--auto-stack .ui-btn,
+    .ui-button-set-fluid-inner-auto-stack .ui-button,
+    .ui-button-set-fluid-inner-auto-stack .ui-action,
+    .ui-button-group-fluid-inner-auto-stack .ui-button,
+    .ui-button-group-fluid-inner-auto-stack .ui-action {
+        min-inline-size: 11rem;
+    }
+
+    .ui-btn-set--fluid .ui-btn-set__fluid-inner .ui-btn--ghost,
+    .ui-btn-set--fluid .ui-btn-set__fluid-inner .ui-btn--danger--ghost,
     .ui-button-set-fluid-inner .ui-button-ghost,
     .ui-button-set-fluid-inner .ui-button-danger-ghost,
     .ui-button-group-fluid-inner .ui-button-ghost,
@@ -108,25 +173,218 @@ Notes:
         padding-inline-start: var(--ui-spacing-07);
     }
 
-    @container (width <= 44rem) {
-        .ui-button-set-fluid-inner-auto-stack,
-        .ui-button-group-fluid-inner-auto-stack {
-            --ui-button-set-direction: column;
+    /* ----------------------------------------------------------------------
+       Fluid width modifiers
+       ---------------------------------------------------------------------- */
+
+    .ui-btn-set--fluid.ui-btn-set--width-half,
+    .ui-button-set-fluid.ui-button-set-width-half {
+        justify-content: flex-end;
+    }
+
+    .ui-btn-set--fluid.ui-btn-set--width-half .ui-btn-set__fluid-inner,
+    .ui-button-set-fluid.ui-button-set-width-half .ui-button-set-fluid-inner {
+        inline-size: 50%;
+    }
+
+    .ui-btn-set--fluid.ui-btn-set--width-full .ui-btn-set__fluid-inner,
+    .ui-btn-set--fluid.ui-btn-set--align-stretch .ui-btn-set__fluid-inner,
+    .ui-button-set-fluid.ui-button-set-width-full .ui-button-set-fluid-inner,
+    .ui-button-set-fluid.ui-button-set-align-stretch
+        .ui-button-set-fluid-inner {
+        inline-size: 100%;
+    }
+
+    .ui-btn-set--fluid.ui-btn-set--width-half
+        .ui-btn-set__fluid-inner
+        > .ui-btn,
+    .ui-btn-set--fluid.ui-btn-set--width-full
+        .ui-btn-set__fluid-inner
+        > .ui-btn,
+    .ui-btn-set--fluid.ui-btn-set--align-stretch
+        .ui-btn-set__fluid-inner
+        > .ui-btn,
+    .ui-button-set-fluid.ui-button-set-width-half
+        .ui-button-set-fluid-inner
+        > .ui-button,
+    .ui-button-set-fluid.ui-button-set-width-half
+        .ui-button-set-fluid-inner
+        > .ui-action,
+    .ui-button-set-fluid.ui-button-set-width-full
+        .ui-button-set-fluid-inner
+        > .ui-button,
+    .ui-button-set-fluid.ui-button-set-width-full
+        .ui-button-set-fluid-inner
+        > .ui-action {
+        flex: 1 1 0;
+        inline-size: 100%;
+        min-inline-size: 0;
+        max-inline-size: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Fluid alignment modifiers
+       ---------------------------------------------------------------------- */
+
+    .ui-btn-set--fluid.ui-btn-set--align-start,
+    .ui-button-set-fluid.ui-button-set-align-start {
+        justify-content: flex-start;
+    }
+
+    .ui-btn-set--fluid.ui-btn-set--align-end,
+    .ui-button-set-fluid.ui-button-set-align-end {
+        justify-content: flex-end;
+    }
+
+    .ui-btn-set--fluid.ui-btn-set--align-stretch,
+    .ui-button-set-fluid.ui-button-set-align-stretch {
+        justify-content: stretch;
+    }
+
+    /* ----------------------------------------------------------------------
+       Fluid auto-stack
+       ---------------------------------------------------------------------- */
+
+    @container (width <= 11rem) {
+        .ui-btn-set__fluid-inner--auto-stack:has(:nth-child(1):last-child),
+        .ui-button-set-fluid-inner-auto-stack:has(:nth-child(1):last-child),
+        .ui-button-group-fluid-inner-auto-stack:has(:nth-child(1):last-child) {
+            --ui-btn-set-flex-direction: column;
         }
 
-        .ui-button-set-fluid-inner-auto-stack .ui-button,
-        .ui-button-set-fluid-inner-auto-stack .ui-action,
-        .ui-button-group-fluid-inner-auto-stack .ui-button,
-        .ui-button-group-fluid-inner-auto-stack .ui-action {
+        .ui-btn-set__fluid-inner--auto-stack:has(:nth-child(1):last-child)
+            .ui-btn,
+        .ui-button-set-fluid-inner-auto-stack:has(:nth-child(1):last-child)
+            .ui-button,
+        .ui-button-set-fluid-inner-auto-stack:has(:nth-child(1):last-child)
+            .ui-action,
+        .ui-button-group-fluid-inner-auto-stack:has(:nth-child(1):last-child)
+            .ui-button,
+        .ui-button-group-fluid-inner-auto-stack:has(:nth-child(1):last-child)
+            .ui-action {
+            flex: initial;
+            inline-size: 100%;
+            max-inline-size: none;
+        }
+    }
+
+    @container (width <= 22rem) {
+        .ui-btn-set__fluid-inner--auto-stack:has(:nth-child(2):last-child),
+        .ui-button-set-fluid-inner-auto-stack:has(:nth-child(2):last-child),
+        .ui-button-group-fluid-inner-auto-stack:has(:nth-child(2):last-child) {
+            --ui-btn-set-flex-direction: column;
+        }
+
+        .ui-btn-set__fluid-inner--auto-stack:has(:nth-child(2):last-child)
+            .ui-btn,
+        .ui-button-set-fluid-inner-auto-stack:has(:nth-child(2):last-child)
+            .ui-button,
+        .ui-button-set-fluid-inner-auto-stack:has(:nth-child(2):last-child)
+            .ui-action,
+        .ui-button-group-fluid-inner-auto-stack:has(:nth-child(2):last-child)
+            .ui-button,
+        .ui-button-group-fluid-inner-auto-stack:has(:nth-child(2):last-child)
+            .ui-action {
+            flex: initial;
+            inline-size: 100%;
+            max-inline-size: none;
+        }
+    }
+
+    @container (width <= 33rem) {
+        .ui-btn-set__fluid-inner--auto-stack:has(:nth-child(3):last-child),
+        .ui-button-set-fluid-inner-auto-stack:has(:nth-child(3):last-child),
+        .ui-button-group-fluid-inner-auto-stack:has(:nth-child(3):last-child) {
+            --ui-btn-set-flex-direction: column;
+        }
+
+        .ui-btn-set__fluid-inner--auto-stack:has(:nth-child(3):last-child)
+            .ui-btn,
+        .ui-button-set-fluid-inner-auto-stack:has(:nth-child(3):last-child)
+            .ui-button,
+        .ui-button-set-fluid-inner-auto-stack:has(:nth-child(3):last-child)
+            .ui-action,
+        .ui-button-group-fluid-inner-auto-stack:has(:nth-child(3):last-child)
+            .ui-button,
+        .ui-button-group-fluid-inner-auto-stack:has(:nth-child(3):last-child)
+            .ui-action {
+            flex: initial;
+            inline-size: 100%;
+            max-inline-size: none;
+        }
+    }
+
+    @container (width <= 44rem) {
+        .ui-btn-set__fluid-inner--auto-stack:has(:nth-child(4):last-child),
+        .ui-button-set-fluid-inner-auto-stack:has(:nth-child(4):last-child),
+        .ui-button-group-fluid-inner-auto-stack:has(:nth-child(4):last-child) {
+            --ui-btn-set-flex-direction: column;
+        }
+
+        .ui-btn-set__fluid-inner--auto-stack:has(:nth-child(4):last-child)
+            .ui-btn,
+        .ui-button-set-fluid-inner-auto-stack:has(:nth-child(4):last-child)
+            .ui-button,
+        .ui-button-set-fluid-inner-auto-stack:has(:nth-child(4):last-child)
+            .ui-action,
+        .ui-button-group-fluid-inner-auto-stack:has(:nth-child(4):last-child)
+            .ui-button,
+        .ui-button-group-fluid-inner-auto-stack:has(:nth-child(4):last-child)
+            .ui-action {
+            flex: initial;
             inline-size: 100%;
             max-inline-size: none;
         }
 
-        .ui-button-set-fluid-inner-auto-stack .ui-button-ghost,
-        .ui-button-group-fluid-inner-auto-stack .ui-button-ghost {
-            padding-inline-start: var(--ui-spacing-05);
+        .ui-btn-set__fluid-inner:has(:nth-child(2):last-child) .ui-btn,
+        .ui-button-set-fluid-inner:has(:nth-child(2):last-child) .ui-button,
+        .ui-button-set-fluid-inner:has(:nth-child(2):last-child) .ui-action,
+        .ui-button-group-fluid-inner:has(:nth-child(2):last-child) .ui-button,
+        .ui-button-group-fluid-inner:has(:nth-child(2):last-child) .ui-action {
+            flex-basis: 50%;
+            max-inline-size: none;
         }
     }
+
+    @container (width <= 33rem) {
+        .ui-btn-set__fluid-inner:has(:nth-child(1):last-child) .ui-btn,
+        .ui-button-set-fluid-inner:has(:nth-child(1):last-child) .ui-button,
+        .ui-button-set-fluid-inner:has(:nth-child(1):last-child) .ui-action,
+        .ui-button-group-fluid-inner:has(:nth-child(1):last-child) .ui-button,
+        .ui-button-group-fluid-inner:has(:nth-child(1):last-child) .ui-action {
+            flex: 1 1 100%;
+            max-inline-size: none;
+        }
+    }
+
+    /*
+     * Half-width fluid sets intentionally keep the inner wrapper at 50%
+     * above narrow mobile widths, even when the Carbon single-button rule
+     * allows the button itself to fill its local inner wrapper.
+     */
+    @container (width > 22rem) {
+        .ui-btn-set--fluid.ui-btn-set--width-half .ui-btn-set__fluid-inner {
+            inline-size: 50%;
+        }
+
+        .ui-btn-set--fluid.ui-btn-set--width-half
+            .ui-btn-set__fluid-inner
+            > .ui-btn {
+            flex: 1 1 0;
+            inline-size: 100%;
+            max-inline-size: none;
+        }
+    }
+
+    @container (width <= 22rem) {
+        .ui-btn-set--fluid.ui-btn-set--width-half .ui-btn-set__fluid-inner {
+            inline-size: 100%;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Equal button group helper
+       ---------------------------------------------------------------------- */
 
     .ui-button-group-equal {
         display: inline-grid;
@@ -140,12 +398,5 @@ Notes:
     .ui-button-group-equal .ui-action {
         inline-size: 100%;
         justify-content: flex-start;
-    }
-
-    [dir="rtl"] .ui-button-set .ui-button:not(:focus-visible),
-    [dir="rtl"] .ui-button-set .ui-action:not(:focus-visible),
-    [dir="rtl"] .ui-button-group .ui-button:not(:focus-visible),
-    [dir="rtl"] .ui-button-group .ui-action:not(:focus-visible) {
-        box-shadow: 1px 0 0 0 var(--ui-button-separator);
     }
 }

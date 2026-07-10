@@ -1,0 +1,248 @@
+/* ==========================================================================
+   File: resources/css/components/data-table-sort.css
+   Purpose: Data Table sortable header styles.
+
+   Notes:
+   - Defines Data Table sort selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - AI label / slug / decorator sort-header branches are intentionally
+     excluded.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Sortable table
+       ---------------------------------------------------------------------- */
+
+    .ui-data-table-sort th,
+    .ui-data-table--sort th,
+    .ui-data-table th[aria-sort] {
+        block-size: var(--ui-spacing-09);
+        border-block-start: none;
+        border-block-end: none;
+        padding: 0;
+    }
+
+    .ui-table-sort-description,
+    .ui-table-sort__description {
+        display: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Sort button
+       ---------------------------------------------------------------------- */
+
+    .ui-table-sort {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        inline-size: 100%;
+        min-block-size: 100%;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        padding-inline-start: var(--ui-spacing-05);
+        background-color: var(--ui-layer-accent);
+        color: var(--ui-text-primary);
+        cursor: pointer;
+        font: inherit;
+        line-height: 1;
+        text-align: start;
+        transition:
+            background-color var(--ui-duration-fast-01)
+                var(--ui-motion-entrance-productive),
+            outline var(--ui-duration-fast-01)
+                var(--ui-motion-entrance-productive);
+    }
+
+    .ui-table-sort::-moz-focus-inner {
+        border: 0;
+    }
+
+    .ui-table-sort:focus,
+    .ui-table-sort:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-table-sort:hover {
+        background-color: var(
+            --ui-data-table-column-hover,
+            var(--ui-layer-selected-hover)
+        );
+    }
+
+    .ui-table-sort:focus svg,
+    .ui-table-sort:focus-visible svg,
+    .ui-table-sort:hover svg {
+        opacity: 1;
+    }
+
+    .ui-data-table.ui-data-table-sort th > .ui-table-header-label,
+    .ui-data-table.ui-data-table--sort th > .ui-table-header-label {
+        padding-inline: var(--ui-spacing-05);
+        line-height: 1;
+    }
+
+    /* ----------------------------------------------------------------------
+       Sort flex content
+       ---------------------------------------------------------------------- */
+
+    th .ui-table-sort-flex,
+    th .ui-table-sort__flex {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        inline-size: 100%;
+        block-size: 100%;
+        min-block-size: 3rem;
+    }
+
+    .ui-data-table-top-aligned-header th .ui-table-sort-flex,
+    .ui-data-table-top-aligned-header th .ui-table-sort__flex,
+    .ui-data-table--top-aligned-header th .ui-table-sort-flex,
+    .ui-data-table--top-aligned-header th .ui-table-sort__flex {
+        align-items: flex-start;
+    }
+
+    .ui-table-sort-icon,
+    .ui-table-sort__icon,
+    .ui-table-sort-icon-unsorted,
+    .ui-table-sort__icon-unsorted {
+        flex-shrink: 0;
+        margin-inline: var(--ui-spacing-03) var(--ui-spacing-05);
+        fill: currentColor;
+        opacity: 0;
+        transition:
+            opacity var(--ui-duration-fast-01)
+                var(--ui-motion-entrance-productive),
+            transform var(--ui-duration-fast-01)
+                var(--ui-motion-entrance-productive);
+    }
+
+    .ui-table-sort-icon,
+    .ui-table-sort__icon {
+        opacity: 1;
+    }
+
+    .ui-table-sort-icon-unsorted,
+    .ui-table-sort__icon-unsorted {
+        opacity: 0;
+    }
+
+    .ui-table-sort:hover .ui-table-sort-icon-unsorted,
+    .ui-table-sort:hover .ui-table-sort__icon-unsorted,
+    .ui-table-sort:focus .ui-table-sort-icon-unsorted,
+    .ui-table-sort:focus .ui-table-sort__icon-unsorted,
+    .ui-table-sort:focus-visible .ui-table-sort-icon-unsorted,
+    .ui-table-sort:focus-visible .ui-table-sort__icon-unsorted {
+        opacity: 1;
+    }
+
+    th[aria-sort="ascending"] .ui-table-sort-icon,
+    th[aria-sort="ascending"] .ui-table-sort__icon {
+        transform: rotate(180deg);
+        opacity: 1;
+    }
+
+    th[aria-sort="descending"] .ui-table-sort-icon,
+    th[aria-sort="descending"] .ui-table-sort__icon {
+        transform: rotate(0);
+        opacity: 1;
+    }
+
+    th[aria-sort="none"] .ui-table-sort-icon,
+    th[aria-sort="none"] .ui-table-sort__icon {
+        opacity: 0;
+    }
+
+    th[aria-sort="none"] .ui-table-sort:hover .ui-table-sort-icon-unsorted,
+    th[aria-sort="none"] .ui-table-sort:hover .ui-table-sort__icon-unsorted,
+    th[aria-sort="none"] .ui-table-sort:focus .ui-table-sort-icon-unsorted,
+    th[aria-sort="none"] .ui-table-sort:focus .ui-table-sort__icon-unsorted {
+        opacity: 1;
+    }
+
+    .ui-table-sort-header,
+    .ui-table-sort__header {
+        padding: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Size adjustments
+       ---------------------------------------------------------------------- */
+
+    .ui-data-table-xs .ui-table-sort,
+    .ui-data-table--xs .ui-table-sort {
+        min-block-size: 1.5rem;
+    }
+
+    .ui-data-table-sm .ui-table-sort,
+    .ui-data-table--sm .ui-table-sort {
+        min-block-size: 2rem;
+    }
+
+    .ui-data-table-md .ui-table-sort,
+    .ui-data-table--md .ui-table-sort {
+        min-block-size: 2.5rem;
+    }
+
+    .ui-data-table-xl .ui-table-sort,
+    .ui-data-table--xl .ui-table-sort {
+        min-block-size: 4rem;
+    }
+
+    .ui-data-table-xs th .ui-table-sort-flex,
+    .ui-data-table-xs th .ui-table-sort__flex,
+    .ui-data-table--xs th .ui-table-sort-flex,
+    .ui-data-table--xs th .ui-table-sort__flex {
+        min-block-size: 1.5rem;
+    }
+
+    .ui-data-table-sm th .ui-table-sort-flex,
+    .ui-data-table-sm th .ui-table-sort__flex,
+    .ui-data-table--sm th .ui-table-sort-flex,
+    .ui-data-table--sm th .ui-table-sort__flex {
+        min-block-size: 2rem;
+    }
+
+    .ui-data-table-md th .ui-table-sort-flex,
+    .ui-data-table-md th .ui-table-sort__flex,
+    .ui-data-table--md th .ui-table-sort-flex,
+    .ui-data-table--md th .ui-table-sort__flex {
+        min-block-size: 2.5rem;
+    }
+
+    .ui-data-table-xl th .ui-table-sort-flex,
+    .ui-data-table-xl th .ui-table-sort__flex,
+    .ui-data-table--xl th .ui-table-sort-flex,
+    .ui-data-table--xl th .ui-table-sort__flex {
+        min-block-size: 4rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-table-sort,
+        .ui-table-sort-icon,
+        .ui-table-sort__icon,
+        .ui-table-sort-icon-unsorted,
+        .ui-table-sort__icon-unsorted {
+            transition: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-table-sort:focus,
+        .ui-table-sort:focus-visible {
+            outline-color: Highlight;
+        }
+    }
+}

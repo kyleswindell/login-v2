@@ -1,10 +1,6 @@
 /* ==========================================================================
    File: resources/css/tokens/semantic/index.css
-   Purpose: App semantic alias token entrypoint.
-   Notes:
-   - Semantic aliases load after primitive, theme, and component tokens.
-   - App aliases may consume theme and component tokens.
-   - Global role tokens should not map backward from component aliases.
+   Purpose: Semantic token entrypoint.
    ========================================================================== */
 
 @import "./app-aliases.css";

@@ -6,19 +6,19 @@
     </div>
 
     @if (session('status'))
-        <x-ui.inline-alert semantic="success">
+        <x-ui.notification.inline kind="success">
             {{ session('status') }}
-        </x-ui.inline-alert>
+        </x-ui.notification.inline>
     @endif
 
     @if ($errors->any())
-        <x-ui.inline-alert semantic="danger">
+        <x-ui.notification.inline kind="error">
             <ul class="space-y-1">
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
             </ul>
-        </x-ui.inline-alert>
+        </x-ui.notification.inline>
     @endif
 
     <form method="POST" action="{{ $action }}" enctype="multipart/form-data" class="ui-platform-surface p-8">
@@ -134,7 +134,9 @@
             <fieldset>
                 <legend class="ui-platform-text-strong text-sm font-semibold">Role Assignment</legend>
                 <div class="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-                    @php($selectedRoles = collect(old('roles', $user?->roles->pluck('name')->all() ?? [])))
+                    @php
+                        $selectedRoles = collect(old('roles', $user?->roles->pluck('name')->all() ?? []));
+                    @endphp
                     @foreach ($roles as $role)
                         <label class="ui-platform-subtle-surface flex items-center gap-3 px-4 py-3 text-sm ui-platform-text">
                             <input
@@ -179,6 +181,61 @@
             </a>
         </div>
     </form>
+
+    @if ($user)
+        @php
+            $totpMethod = $user->totpMfaMethod()->first();
+            $hasConfirmedMfa = $user->hasConfirmedTotpMfa();
+            $hasPendingMfa = filled($totpMethod?->pending_secret);
+            $mfaRequired = $user->hasMfaPolicyRequirement();
+        @endphp
+
+        <div class="ui-platform-surface p-8">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                <div>
+                    <p class="ui-platform-kicker text-sm font-medium uppercase tracking-[0.3em]">Account Security</p>
+                    <h2 class="ui-platform-text-strong mt-3 text-2xl font-semibold">Multi-Factor Authentication</h2>
+                    <p class="ui-platform-text-muted mt-2 text-sm">Admin controls for this user account.</p>
+                </div>
+
+                <div class="grid gap-3 text-sm sm:grid-cols-2 lg:min-w-96">
+                    <div class="ui-platform-subtle-surface p-4">
+                        <p class="ui-platform-kicker text-xs font-semibold uppercase tracking-[0.2em]">Requirement</p>
+                        <p class="ui-platform-text-strong mt-2 font-medium">{{ $mfaRequired ? 'Required' : 'Not required' }}</p>
+                    </div>
+                    <div class="ui-platform-subtle-surface p-4">
+                        <p class="ui-platform-kicker text-xs font-semibold uppercase tracking-[0.2em]">Enrollment</p>
+                        <p class="ui-platform-text-strong mt-2 font-medium">
+                            @if ($hasConfirmedMfa)
+                                Enrolled
+                            @elseif ($hasPendingMfa)
+                                Setup pending
+                            @else
+                                Not enrolled
+                            @endif
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui-platform-border mt-6 flex flex-wrap gap-3 border-t pt-6">
+                <form method="POST" action="{{ route('platform.users.mfa-requirement', $user) }}">
+                    @csrf
+                    <input type="hidden" name="mfa_required" value="{{ $mfaRequired ? '0' : '1' }}">
+                    <button type="submit" class="ui-action {{ $mfaRequired ? '' : 'ui-action-primary' }}">
+                        {{ $mfaRequired ? 'Disable MFA Requirement' : 'Require MFA' }}
+                    </button>
+                </form>
+
+                <form method="POST" action="{{ route('platform.users.mfa-reset', $user) }}">
+                    @csrf
+                    <button type="submit" class="ui-action" {{ ! $hasConfirmedMfa && ! $hasPendingMfa ? 'disabled' : '' }}>
+                        Reset MFA Enrollment
+                    </button>
+                </form>
+            </div>
+        </div>
+    @endif
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {

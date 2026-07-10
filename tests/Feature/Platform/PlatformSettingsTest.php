@@ -3,7 +3,11 @@
 namespace Tests\Feature\Platform;
 
 use App\Models\User;
-use App\Platform\Settings\SettingsService;
+use App\Modules\Notifications\Services\NotificationPermissions;
+use App\Modules\Roles\Services\RoleCatalog;
+use App\Modules\Settings\Services\SettingsPermissions;
+use App\Modules\Settings\Services\Store;
+use Database\Seeders\PlatformRolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -32,40 +36,52 @@ class PlatformSettingsTest extends TestCase
         }
     }
 
-    public function test_authorized_users_can_view_all_settings_pages(): void
+    public function test_authorized_users_can_view_current_settings_pages(): void
     {
         $this->actingAsPlatformSuperAdmin();
 
-        $this->get('/platform/settings/general')
+        $this->get('/settings')
             ->assertOk()
-            ->assertSee('Platform General')
-            ->assertSee('data-ui-component="searchable-select"', false)
-            ->assertSee('data-ui-searchable-select-trigger', false);
-        $this->get('/platform/settings/general/company-information')->assertOk()->assertSee('Company Information');
-        $this->get('/platform/settings/general/localization')->assertOk()->assertSee('Localization');
-        $this->get('/platform/settings/general/email')->assertOk()->assertSee('Email');
-        $this->get('/platform/settings/general/system-update')->assertOk()->assertSee('System Update');
-        $this->get('/platform/settings/general/system-server-info')->assertOk()->assertSee('System/Server Info');
+            ->assertSee('Settings')
+            ->assertSee('Manage app-wide settings and module-provided configuration pages.')
+            ->assertSee('data-settings-landing-tile', false)
+            ->assertSee('data-settings-route="platform.settings.notifications"', false)
+            ->assertSee('Notification Defaults')
+            ->assertDontSee('Company Information')
+            ->assertDontSee('Localization')
+            ->assertDontSee('System Update')
+            ->assertDontSee('System/Server Info');
+        $this->get('/platform/settings')
+            ->assertOk()
+            ->assertSee('Settings')
+            ->assertSee('Manage app-wide settings and module-provided configuration pages.')
+            ->assertSee('Notification Defaults');
         $this->get('/platform/settings/notifications')->assertOk()->assertSee('Notification Defaults');
-        $this->get('/platform/settings/audit-logs')->assertOk()->assertSee('Audit Settings');
-        $this->get('/platform/settings/docs')->assertOk()->assertSee('Vault Access');
-        $this->get('/platform/settings/users')->assertOk()->assertSee('User Defaults');
     }
 
-    public function test_platform_reviewer_can_view_all_settings_pages_but_cannot_update_them(): void
+    public function test_deprecated_settings_get_pages_redirect_to_settings_landing(): void
     {
-        $this->actingAsPlatformReviewer();
+        $this->actingAsPlatformSuperAdmin();
 
-        $this->get('/platform/settings/general')->assertOk()->assertSee('Platform General');
-        $this->get('/platform/settings/general/company-information')->assertOk()->assertSee('Company Information');
-        $this->get('/platform/settings/general/localization')->assertOk()->assertSee('Localization');
-        $this->get('/platform/settings/general/email')->assertOk()->assertSee('Email');
-        $this->get('/platform/settings/general/system-update')->assertOk()->assertSee('System Update');
-        $this->get('/platform/settings/general/system-server-info')->assertOk()->assertSee('System/Server Info');
+        foreach ($this->deprecatedSettingsPageRoutes() as $url) {
+            $this->get($url)->assertRedirect('/settings');
+        }
+    }
+
+    public function test_permissioned_viewer_can_view_current_settings_pages_but_cannot_update_them(): void
+    {
+        $this->seed(PlatformRolesAndPermissionsSeeder::class);
+
+        $user = User::factory()->create();
+        $user->givePermissionTo([
+            SettingsPermissions::VIEW,
+            NotificationPermissions::SETTINGS_VIEW,
+        ]);
+
+        $this->actingAs($user);
+
+        $this->get('/settings')->assertOk()->assertSee('Settings');
         $this->get('/platform/settings/notifications')->assertOk()->assertSee('Notification Defaults');
-        $this->get('/platform/settings/audit-logs')->assertOk()->assertSee('Audit Settings');
-        $this->get('/platform/settings/docs')->assertOk()->assertSee('Vault Access');
-        $this->get('/platform/settings/users')->assertOk()->assertSee('User Defaults');
 
         $this->post('/platform/settings/general', [
             'display_name' => 'Reviewer Attempt',
@@ -79,15 +95,60 @@ class PlatformSettingsTest extends TestCase
         $this->actingAsPlatformSuperAdmin();
 
         $this->get('/platform/administration/settings')
-            ->assertRedirect('/platform/settings/general');
+            ->assertRedirect('/settings');
     }
 
-    public function test_platform_reviewer_is_redirected_from_target_settings_route(): void
+    public function test_settings_sidebar_renders_module_surface_navigation_and_current_state(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $response = $this->get('/platform/settings/notifications')
+            ->assertOk();
+
+        $html = $response->getContent();
+
+        foreach ([
+            'Settings',
+            'Notification Defaults',
+        ] as $text) {
+            $this->assertStringContainsString($text, $html);
+        }
+
+        foreach ([
+            'Notifications Setup',
+            'Documentation Setup',
+            'Audit Logs Setup',
+            'Error Logs Setup',
+            'Staff Setup',
+            'Audit Logs',
+            'Audit Settings',
+            'Documentation Vault',
+            'Vault Access',
+            'Platform Users',
+            'User Defaults',
+            'General',
+            'Company Information',
+            'Localization',
+            'System Update',
+            'System/Server Info',
+        ] as $text) {
+            $this->assertStringNotContainsString($text, $html);
+        }
+
+        $notificationUrl = preg_quote(url('/platform/settings/notifications'), '#');
+
+        $this->assertMatchesRegularExpression(
+            '#<a[^>]*href="'.$notificationUrl.'"[^>]*class="[^"]*is-current#',
+            $html,
+        );
+    }
+
+    public function test_permissioned_viewer_is_redirected_from_target_settings_route(): void
     {
         $this->actingAsPlatformReviewer();
 
         $this->get('/platform/administration/settings')
-            ->assertRedirect('/platform/settings/general');
+            ->assertRedirect('/settings');
     }
 
     public function test_company_information_settings_can_be_updated(): void
@@ -102,17 +163,7 @@ class PlatformSettingsTest extends TestCase
         ])->assertRedirect();
 
         $this->assertDatabaseHas('settings', ['group_key' => 'general_company', 'key' => 'name']);
-        $this->assertSame('(123) 456-7890', app(SettingsService::class)->get('general_company', 'phone'));
-    }
-
-    public function test_company_information_surface_uses_shared_phone_input_baseline(): void
-    {
-        $this->actingAsPlatformSuperAdmin();
-
-        $this->get('/platform/settings/general/company-information')
-            ->assertOk()
-            ->assertSee('data-ui-phone-input', false)
-            ->assertSee('placeholder="(555) 555-5555"', false);
+        $this->assertSame('(123) 456-7890', app(Store::class)->get('general_company', 'phone'));
     }
 
     public function test_localization_settings_can_be_updated(): void
@@ -305,7 +356,7 @@ class PlatformSettingsTest extends TestCase
         $this->actingAsPlatformSuperAdmin();
 
         $this->post('/platform/settings/users', [
-            'default_role' => 'platform_admin',
+            'default_role' => RoleCatalog::ADMIN,
             'default_active' => '1',
         ])->assertRedirect();
 
@@ -345,6 +396,8 @@ class PlatformSettingsTest extends TestCase
     private function settingsRoutes(): array
     {
         return [
+            '/settings',
+            '/platform/settings',
             '/platform/settings/general',
             '/platform/settings/general/company-information',
             '/platform/settings/general/localization',
@@ -352,10 +405,20 @@ class PlatformSettingsTest extends TestCase
             '/platform/settings/general/system-update',
             '/platform/settings/general/system-server-info',
             '/platform/settings/notifications',
-            '/platform/settings/audit-logs',
-            '/platform/settings/docs',
-            '/platform/settings/users',
             '/platform/administration/settings',
+        ];
+    }
+
+    /** @return list<string> */
+    private function deprecatedSettingsPageRoutes(): array
+    {
+        return [
+            '/platform/settings/general',
+            '/platform/settings/general/company-information',
+            '/platform/settings/general/localization',
+            '/platform/settings/general/email',
+            '/platform/settings/general/system-update',
+            '/platform/settings/general/system-server-info',
         ];
     }
 }

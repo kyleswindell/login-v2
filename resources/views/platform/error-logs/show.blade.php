@@ -21,10 +21,10 @@
                     <div class="flex flex-col gap-1">
                         <dt class="text-xs uppercase tracking-[0.2em] ui-platform-text-muted">Severity</dt>
                         <dd>
-                            <x-ui.badge
-                                :status="match ($log->severity) { 'warning' => 'warning', 'error', 'critical' => 'danger', 'info' => 'info', default => 'neutral' }"
+                            <x-ui.tag
                                 :label="$log->severity"
-                                :show-icon="false"
+                                :tone="match ($log->severity) { 'warning' => 'warning', 'error', 'critical' => 'danger', 'info' => 'info', default => 'neutral' }"
+                                size="sm"
                             />
                         </dd>
                     </div>
@@ -32,9 +32,9 @@
                         <dt class="text-xs uppercase tracking-[0.2em] ui-platform-text-muted">Handled</dt>
                         <dd>
                             @if ($log->handled)
-                                <x-ui.badge label="Handled" semantic="success" :show-icon="false" />
+                                <x-ui.tag label="Handled" tone="success" size="sm" />
                             @else
-                                <x-ui.badge label="Unhandled" semantic="danger" :show-icon="false" />
+                                <x-ui.tag label="Unhandled" tone="danger" size="sm" />
                             @endif
                         </dd>
                     </div>

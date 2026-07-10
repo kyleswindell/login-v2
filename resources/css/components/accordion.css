@@ -1,124 +1,130 @@
 /* ==========================================================================
-File: resources/css/components/accordion.css
-Purpose: Accordion component styles.
-Notes:
+   File: resources/css/components/accordion.css
+   Purpose: Accordion component styles.
 
-* Defines Accordion selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Do not define component color tokens here.
-* Accordion consumes theme, spacing, type, icon, focus, and skeleton tokens.
-  ========================================================================== */
+   Notes:
+   - Defines Accordion selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports default, start, end, active, expanding, collapsing,
+     disabled, flush, skeleton, RTL, reduced-motion, starting-style,
+     and forced-colors states.
+   ========================================================================== */
 
 @layer components {
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
     .ui-accordion {
+        --ui-accordion-height: var(
+            --ui-layout-size-height-local,
+            var(--ui-spacing-08)
+        );
+        --ui-accordion-padding-inline: var(
+            --ui-layout-density-padding-inline-local,
+            var(--ui-spacing-05)
+        );
+
+        box-sizing: border-box;
         inline-size: 100%;
         margin: 0;
+        border: 0;
         padding: 0;
+        font: inherit;
         list-style: none;
-        color: var(--ui-text-primary);
+        vertical-align: baseline;
     }
 
-    .ui-accordion-item {
+    /* ----------------------------------------------------------------------
+       Item
+       ---------------------------------------------------------------------- */
+
+    .ui-accordion-item,
+    .ui-accordion__item {
         display: list-item;
         overflow: visible;
-        border-block-start: 1px solid var(--ui-border-subtle-01);
-        transition:
-            border-color 110ms cubic-bezier(0.2, 0, 0.38, 0.9),
-            background-color 110ms cubic-bezier(0.2, 0, 0.38, 0.9);
+        border-block-start: 1px solid var(--ui-border-subtle);
+        transition: border-color var(--ui-motion-standard-productive)
+            var(--ui-duration-fast-02);
     }
 
-    .ui-accordion-item:last-child {
-        border-block-end: 1px solid var(--ui-border-subtle-01);
-    }
-
-    .ui-accordion-item:not(.ui-accordion-item-active):not(
-            [data-ui-accordion-item-state="open"]
-        ):not(:has(.ui-accordion-trigger[aria-expanded="true"])):hover,
-    .ui-accordion-item:not(.ui-accordion-item-active):not(
-            [data-ui-accordion-item-state="open"]
-        ):not(:has(.ui-accordion-trigger[aria-expanded="true"])):hover
-        + .ui-accordion-item {
-        border-block-start-color: var(--ui-layer-hover-01);
+    .ui-accordion-item:last-child,
+    .ui-accordion__item:last-child {
+        border-block-end: 1px solid var(--ui-border-subtle);
     }
 
     .ui-accordion-item:not(.ui-accordion-item-active):not(
-            [data-ui-accordion-item-state="open"]
-        ):not(
-            :has(.ui-accordion-trigger[aria-expanded="true"])
+            .ui-accordion__item--active
+        ):hover,
+    .ui-accordion-item:not(.ui-accordion-item-active):not(
+            .ui-accordion__item--active
+        ):hover
+        + .ui-accordion-item,
+    .ui-accordion-item:not(.ui-accordion-item-active):not(
+            .ui-accordion__item--active
+        ):hover
+        + .ui-accordion__item,
+    .ui-accordion__item:not(.ui-accordion-item-active):not(
+            .ui-accordion__item--active
+        ):hover,
+    .ui-accordion__item:not(.ui-accordion-item-active):not(
+            .ui-accordion__item--active
+        ):hover
+        + .ui-accordion-item,
+    .ui-accordion__item:not(.ui-accordion-item-active):not(
+            .ui-accordion__item--active
+        ):hover
+        + .ui-accordion__item {
+        border-block-start-color: var(--ui-layer-hover);
+    }
+
+    .ui-accordion-item:not(.ui-accordion-item-active):not(
+            .ui-accordion__item--active
+        ):last-child:hover,
+    .ui-accordion__item:not(.ui-accordion-item-active):not(
+            .ui-accordion__item--active
         ):last-child:hover {
-        border-block-end-color: var(--ui-layer-hover-01);
+        border-block-end-color: var(--ui-layer-hover);
     }
 
-    .ui-accordion-contained {
-        overflow: hidden;
-        border: 1px solid var(--ui-border-subtle-01);
-        background-color: var(--ui-layer-02);
-    }
+    /* ----------------------------------------------------------------------
+       Heading
+       ---------------------------------------------------------------------- */
 
-    .ui-accordion-contained .ui-accordion-item:first-child {
-        border-block-start: 0;
-    }
-
-    .ui-accordion-contained .ui-accordion-item:last-child {
-        border-block-end: 0;
-    }
-
-    .ui-accordion-heading {
-        margin: 0;
-    }
-
-    .ui-accordion-trigger {
-        appearance: none;
+    .ui-accordion-heading,
+    .ui-accordion__heading {
         position: relative;
         display: flex;
-        inline-size: 100%;
-        min-block-size: 2.5rem;
+        box-sizing: border-box;
+        flex-direction: row-reverse;
         align-items: center;
         justify-content: flex-start;
-        gap: var(--ui-spacing-05);
-        border: 0;
-        border-radius: 0;
+        inline-size: 100%;
+        min-block-size: var(--ui-accordion-height);
         margin: 0;
-        padding-block: 0;
-        padding-inline: var(--ui-spacing-05);
-        background-color: transparent;
+        border: 0;
+        padding: 0;
+        padding-inline-end: var(--ui-accordion-padding-inline);
+        background: none;
         color: var(--ui-text-primary);
         cursor: pointer;
         font: inherit;
-        text-align: start;
-        transition:
-            background-color 110ms cubic-bezier(0.2, 0, 0.38, 0.9),
-            color 110ms cubic-bezier(0.2, 0, 0.38, 0.9),
-            box-shadow 110ms cubic-bezier(0.2, 0, 0.38, 0.9);
+        text-align: inherit;
+        vertical-align: baseline;
+        appearance: none;
+        transition: background-color var(--ui-motion-standard-productive)
+            var(--ui-duration-fast-02);
     }
 
-    .ui-accordion-compact .ui-accordion-trigger {
-        min-block-size: 2rem;
-        gap: var(--ui-spacing-04);
-        padding-inline: var(--ui-spacing-04);
-        font-size: 0.75rem;
-    }
-
-    .ui-accordion-trigger:hover {
-        background-color: var(--ui-layer-hover-01);
-        color: var(--ui-text-primary);
+    .ui-accordion-heading:hover,
+    .ui-accordion__heading:hover {
+        background-color: var(--ui-layer-hover);
         outline: none;
     }
 
-    .ui-accordion-trigger:active,
-    .ui-accordion-trigger.is-active,
-    .ui-accordion-trigger[data-ui-accordion-active="true"] {
-        background-color: var(--ui-layer-active-01);
-    }
-
-    .ui-accordion-trigger:focus {
-        outline: none;
-    }
-
-    .ui-accordion-trigger:focus-visible,
-    .ui-accordion-trigger.is-focus,
-    .ui-accordion-trigger[data-ui-accordion-focus="true"] {
+    .ui-accordion-heading:focus,
+    .ui-accordion__heading:focus {
         position: relative;
         z-index: 2;
         outline: none;
@@ -131,155 +137,290 @@ Notes:
             inset -2px 0 0 0 var(--ui-focus);
     }
 
-    .ui-accordion-trigger:disabled,
-    .ui-accordion-trigger[aria-disabled="true"],
-    .ui-accordion-item-disabled .ui-accordion-trigger,
-    .ui-accordion-item[data-ui-accordion-disabled="true"]
-        .ui-accordion-trigger {
-        cursor: not-allowed;
+    .ui-accordion-heading[disabled],
+    .ui-accordion__heading[disabled] {
         background-color: transparent;
         color: var(--ui-text-disabled);
+        cursor: not-allowed;
     }
 
-    .ui-accordion-trigger:disabled:hover,
-    .ui-accordion-trigger[aria-disabled="true"]:hover,
-    .ui-accordion-item-disabled .ui-accordion-trigger:hover,
-    .ui-accordion-item[data-ui-accordion-disabled="true"]
-        .ui-accordion-trigger:hover {
+    .ui-accordion-heading[disabled] .ui-accordion-arrow,
+    .ui-accordion-heading[disabled] .ui-accordion__arrow,
+    .ui-accordion__heading[disabled] .ui-accordion-arrow,
+    .ui-accordion__heading[disabled] .ui-accordion__arrow {
+        fill: var(--ui-icon-disabled);
+    }
+
+    .ui-accordion-heading[disabled]:hover::before,
+    .ui-accordion__heading[disabled]:hover::before {
         background-color: transparent;
     }
 
-    .ui-accordion-label {
-        min-inline-size: 0;
-        flex: 1 1 auto;
+    .ui-accordion-item-disabled,
+    .ui-accordion-item--disabled,
+    .ui-accordion__item--disabled,
+    .ui-accordion-item-disabled + .ui-accordion-item,
+    .ui-accordion-item-disabled + .ui-accordion__item,
+    .ui-accordion-item--disabled + .ui-accordion-item,
+    .ui-accordion-item--disabled + .ui-accordion__item,
+    .ui-accordion__item--disabled + .ui-accordion-item,
+    .ui-accordion__item--disabled + .ui-accordion__item {
+        border-block-start: 1px solid var(--ui-border-subtle);
     }
 
-    .ui-accordion-title {
-        display: block;
-        overflow: hidden;
-        color: inherit;
-        font-size: 0.875rem;
-        font-weight: 400;
-        line-height: 1.25rem;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+    li.ui-accordion-item-disabled:last-of-type,
+    li.ui-accordion-item--disabled:last-of-type,
+    li.ui-accordion__item--disabled:last-of-type {
+        border-block-end: 1px solid var(--ui-border-subtle);
     }
 
-    .ui-accordion-meta {
-        display: block;
-        margin-block-start: var(--ui-spacing-02);
-        color: var(--ui-text-helper);
-        font-size: 0.75rem;
-        font-weight: 400;
-        line-height: 1rem;
-    }
+    /* ----------------------------------------------------------------------
+       Arrow
+       ---------------------------------------------------------------------- */
 
-    .ui-accordion-icon {
+    .ui-accordion-arrow,
+    .ui-accordion__arrow {
+        flex: 0 0 1rem;
         inline-size: 1rem;
         block-size: 1rem;
-        flex: 0 0 1rem;
-        color: var(--ui-icon-primary);
-        transform: rotate(-90deg);
-        transition:
-            transform 110ms cubic-bezier(0.2, 0, 0.38, 0.9),
-            color 110ms cubic-bezier(0.2, 0, 0.38, 0.9);
+        fill: var(--ui-icon-primary);
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+        transform: rotate(-270deg);
+        transition: all var(--ui-duration-fast-02)
+            var(--ui-motion-standard-productive);
     }
 
-    .ui-accordion-trigger:disabled .ui-accordion-icon,
-    .ui-accordion-trigger[aria-disabled="true"] .ui-accordion-icon,
-    .ui-accordion-item-disabled .ui-accordion-icon,
-    .ui-accordion-item[data-ui-accordion-disabled="true"] .ui-accordion-icon {
-        color: var(--ui-icon-disabled);
+    /* ----------------------------------------------------------------------
+       Title
+       ---------------------------------------------------------------------- */
+
+    .ui-accordion-title,
+    .ui-accordion__title {
+        z-index: 1;
+        inline-size: 100%;
+        padding-inline-start: var(--ui-spacing-05);
+        color: var(--ui-text-primary);
+        font-size: var(--ui-type-body-01-font-size);
+        font-weight: var(--ui-type-body-01-font-weight);
+        line-height: var(--ui-type-body-01-line-height);
+        letter-spacing: var(--ui-type-body-01-letter-spacing);
+        text-align: start;
     }
 
-    .ui-accordion-trigger[aria-expanded="true"] .ui-accordion-icon,
-    .ui-accordion-item-active .ui-accordion-icon,
-    .ui-accordion-item[data-ui-accordion-item-state="open"] .ui-accordion-icon {
-        transform: rotate(0deg);
-    }
+    /* ----------------------------------------------------------------------
+       Wrapper and content
+       ---------------------------------------------------------------------- */
 
-    .ui-accordion-icon-start .ui-accordion-trigger {
-        flex-direction: row;
-    }
-
-    .ui-accordion:not(.ui-accordion-icon-start) .ui-accordion-trigger {
-        flex-direction: row-reverse;
-    }
-
-    .ui-accordion-icon-start .ui-accordion-icon {
-        margin-inline-start: 0;
-        margin-inline-end: 0;
-    }
-
-    .ui-accordion:not(.ui-accordion-icon-start) .ui-accordion-icon {
-        margin-inline-start: auto;
-    }
-
-    .ui-accordion-panel {
-        block-size: auto;
-        max-block-size: none;
-        overflow: hidden;
-        background-color: transparent;
-        opacity: 1;
-        transition:
-            max-block-size 160ms cubic-bezier(0.2, 0, 0.38, 0.9),
-            opacity 110ms cubic-bezier(0.2, 0, 0.38, 0.9),
-            padding-block 110ms cubic-bezier(0.2, 0, 0.38, 0.9);
-    }
-
-    .ui-accordion-panel[hidden],
-    .ui-accordion-panel[data-ui-accordion-panel-open="false"] {
+    .ui-accordion-wrapper,
+    .ui-accordion__wrapper {
         display: none;
+        overflow: hidden;
+        max-block-size: 0;
+        padding: 0;
+        opacity: 0;
+        writing-mode: horizontal-tb;
+        transition: all var(--ui-duration-fast-02)
+            var(--ui-motion-entrance-productive) allow-discrete;
     }
 
-    .ui-accordion-panel[data-ui-accordion-animating="true"] {
-        display: block;
-        will-change: max-block-size, opacity;
+    .ui-accordion-content,
+    .ui-accordion__content {
+        padding-inline: var(--ui-accordion-padding-inline);
     }
 
-    .ui-accordion-contained .ui-accordion-panel {
-        background-color: var(--ui-layer-01);
-    }
-
-    .ui-accordion-body {
-        padding-block: var(--ui-spacing-04) var(--ui-spacing-06);
-        padding-inline: var(--ui-spacing-05);
-        color: var(--ui-text-secondary);
-        font-size: 0.875rem;
-        font-weight: 400;
-        line-height: 1.5rem;
-    }
-
-    .ui-accordion-compact .ui-accordion-body {
-        padding-block: var(--ui-spacing-03) var(--ui-spacing-05);
-        padding-inline: var(--ui-spacing-04);
-        font-size: 0.75rem;
-        line-height: 1.25rem;
-    }
-
-    @media (min-width: 30rem) {
-        .ui-accordion-body {
+    @media (width >= 30rem) {
+        .ui-accordion-content,
+        .ui-accordion__content {
             padding-inline-end: var(--ui-spacing-09);
         }
     }
 
-    @media (min-width: 40rem) {
-        .ui-accordion-body {
+    @media (width >= 40rem) {
+        .ui-accordion-content,
+        .ui-accordion__content {
             padding-inline-end: 25%;
         }
     }
 
-    .ui-accordion-scrollable .ui-accordion-body {
-        max-block-size: var(--ui-accordion-panel-max-height, 16rem);
-        overflow-y: auto;
-        overscroll-behavior: contain;
+    .ui-accordion-content > p,
+    .ui-accordion__content > p {
+        font-size: var(--ui-type-body-01-font-size);
+        font-weight: var(--ui-type-body-01-font-weight);
+        line-height: var(--ui-type-body-01-line-height);
+        letter-spacing: var(--ui-type-body-01-letter-spacing);
     }
 
     /* ----------------------------------------------------------------------
-   Flush variant
+   App accordion Blade adapter alignment
+   ----------------------------------------------------------------------
+   The Blade adapter exposes label/meta and data-hook classes while preserving
+   Carbon-compatible heading, arrow, wrapper, and content anatomy.
    ---------------------------------------------------------------------- */
 
-    .ui-accordion-flush .ui-accordion-item {
+    .ui-accordion-label {
+        z-index: 1;
+        display: flex;
+        min-inline-size: 0;
+        flex: 1 1 auto;
+        flex-direction: column;
+        gap: var(--ui-spacing-01);
+        padding-inline-start: var(--ui-spacing-05);
+        text-align: start;
+    }
+
+    .ui-accordion-label .ui-accordion-title {
+        inline-size: auto;
+        padding-inline-start: 0;
+    }
+
+    .ui-accordion-meta {
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-label-01-font-size, 0.75rem);
+        font-weight: var(--ui-type-label-01-font-weight, 400);
+        line-height: var(--ui-type-label-01-line-height, 1.33333);
+        letter-spacing: var(--ui-type-label-01-letter-spacing, 0.32px);
+        text-align: start;
+    }
+
+    .ui-accordion--start .ui-accordion-label {
+        margin-inline-end: var(--ui-spacing-05);
+    }
+
+    .ui-accordion--start .ui-accordion-label .ui-accordion-title {
+        margin-inline-end: 0;
+    }
+
+    .ui-accordion-contained {
+        background-color: var(--ui-layer);
+    }
+
+    .ui-accordion-contained > .ui-accordion-item:first-child,
+    .ui-accordion-contained > .ui-accordion__item:first-child {
+        border-block-start: 0;
+    }
+
+    .ui-accordion-contained > .ui-accordion-item:last-child,
+    .ui-accordion-contained > .ui-accordion__item:last-child {
+        border-block-end: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Start alignment
+       ---------------------------------------------------------------------- */
+
+    .ui-accordion-start .ui-accordion-heading,
+    .ui-accordion-start .ui-accordion__heading,
+    .ui-accordion--start .ui-accordion-heading,
+    .ui-accordion--start .ui-accordion__heading {
+        flex-direction: row;
+    }
+
+    .ui-accordion-start .ui-accordion-arrow,
+    .ui-accordion-start .ui-accordion__arrow,
+    .ui-accordion--start .ui-accordion-arrow,
+    .ui-accordion--start .ui-accordion__arrow {
+        margin: 2px 0 0 var(--ui-accordion-padding-inline);
+    }
+
+    .ui-accordion-start .ui-accordion-title,
+    .ui-accordion-start .ui-accordion__title,
+    .ui-accordion--start .ui-accordion-title,
+    .ui-accordion--start .ui-accordion__title {
+        margin-inline-end: var(--ui-spacing-05);
+    }
+
+    .ui-accordion-start .ui-accordion-content,
+    .ui-accordion-start .ui-accordion__content,
+    .ui-accordion--start .ui-accordion-content,
+    .ui-accordion--start .ui-accordion__content {
+        margin-inline-start: calc(
+            var(--ui-accordion-padding-inline) + var(--ui-spacing-05)
+        );
+    }
+
+    /* ----------------------------------------------------------------------
+       Expanding and collapsing
+       ---------------------------------------------------------------------- */
+
+    .ui-accordion-item-collapsing .ui-accordion-content,
+    .ui-accordion-item-collapsing .ui-accordion__content,
+    .ui-accordion-item--collapsing .ui-accordion-content,
+    .ui-accordion-item--collapsing .ui-accordion__content,
+    .ui-accordion__item--collapsing .ui-accordion-content,
+    .ui-accordion__item--collapsing .ui-accordion__content,
+    .ui-accordion-item-expanding .ui-accordion-content,
+    .ui-accordion-item-expanding .ui-accordion__content,
+    .ui-accordion-item--expanding .ui-accordion-content,
+    .ui-accordion-item--expanding .ui-accordion__content,
+    .ui-accordion__item--expanding .ui-accordion-content,
+    .ui-accordion__item--expanding .ui-accordion__content {
+        display: block;
+    }
+
+    /* ----------------------------------------------------------------------
+       Active item
+       ---------------------------------------------------------------------- */
+
+    .ui-accordion-item-active,
+    .ui-accordion-item--active,
+    .ui-accordion__item--active {
+        overflow: visible;
+    }
+
+    .ui-accordion-item-active > .ui-accordion-wrapper,
+    .ui-accordion-item-active > .ui-accordion__wrapper,
+    .ui-accordion-item--active > .ui-accordion-wrapper,
+    .ui-accordion-item--active > .ui-accordion__wrapper,
+    .ui-accordion__item--active > .ui-accordion-wrapper,
+    .ui-accordion__item--active > .ui-accordion__wrapper {
+        display: block;
+        overflow: visible;
+        max-block-size: fit-content;
+        padding-block: var(--ui-spacing-03);
+        padding-block-end: var(--ui-spacing-06);
+        opacity: 1;
+    }
+
+    .ui-accordion-item-active > .ui-accordion-heading > .ui-accordion-arrow,
+    .ui-accordion-item-active > .ui-accordion-heading > .ui-accordion__arrow,
+    .ui-accordion-item-active > .ui-accordion__heading > .ui-accordion-arrow,
+    .ui-accordion-item-active > .ui-accordion__heading > .ui-accordion__arrow,
+    .ui-accordion-item--active > .ui-accordion-heading > .ui-accordion-arrow,
+    .ui-accordion-item--active > .ui-accordion-heading > .ui-accordion__arrow,
+    .ui-accordion-item--active > .ui-accordion__heading > .ui-accordion-arrow,
+    .ui-accordion-item--active > .ui-accordion__heading > .ui-accordion__arrow,
+    .ui-accordion__item--active > .ui-accordion-heading > .ui-accordion-arrow,
+    .ui-accordion__item--active > .ui-accordion-heading > .ui-accordion__arrow,
+    .ui-accordion__item--active > .ui-accordion__heading > .ui-accordion-arrow,
+    .ui-accordion__item--active
+        > .ui-accordion__heading
+        > .ui-accordion__arrow {
+        fill: var(--ui-icon-primary);
+        transform: rotate(-90deg);
+    }
+
+    @starting-style {
+        .ui-accordion-item-active > .ui-accordion-wrapper,
+        .ui-accordion-item-active > .ui-accordion__wrapper,
+        .ui-accordion-item--active > .ui-accordion-wrapper,
+        .ui-accordion-item--active > .ui-accordion__wrapper,
+        .ui-accordion__item--active > .ui-accordion-wrapper,
+        .ui-accordion__item--active > .ui-accordion__wrapper {
+            max-block-size: 0;
+            padding: 0;
+            opacity: 0;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Flush variant
+       ---------------------------------------------------------------------- */
+
+    .ui-accordion-flush .ui-accordion-item,
+    .ui-accordion-flush .ui-accordion__item,
+    .ui-accordion--flush .ui-accordion-item,
+    .ui-accordion--flush .ui-accordion__item {
         position: relative;
         border-color: transparent;
     }
@@ -287,160 +428,315 @@ Notes:
     .ui-accordion-flush .ui-accordion-item:last-child,
     .ui-accordion-flush .ui-accordion-item:hover,
     .ui-accordion-flush .ui-accordion-item:last-child:hover,
-    .ui-accordion-flush .ui-accordion-item:hover + .ui-accordion-item {
+    .ui-accordion-flush .ui-accordion-item:hover + .ui-accordion-item,
+    .ui-accordion-flush .ui-accordion-item:hover + .ui-accordion__item,
+    .ui-accordion-flush .ui-accordion__item:last-child,
+    .ui-accordion-flush .ui-accordion__item:hover,
+    .ui-accordion-flush .ui-accordion__item:last-child:hover,
+    .ui-accordion-flush .ui-accordion__item:hover + .ui-accordion-item,
+    .ui-accordion-flush .ui-accordion__item:hover + .ui-accordion__item,
+    .ui-accordion--flush .ui-accordion-item:last-child,
+    .ui-accordion--flush .ui-accordion-item:hover,
+    .ui-accordion--flush .ui-accordion-item:last-child:hover,
+    .ui-accordion--flush .ui-accordion-item:hover + .ui-accordion-item,
+    .ui-accordion--flush .ui-accordion-item:hover + .ui-accordion__item,
+    .ui-accordion--flush .ui-accordion__item:last-child,
+    .ui-accordion--flush .ui-accordion__item:hover,
+    .ui-accordion--flush .ui-accordion__item:last-child:hover,
+    .ui-accordion--flush .ui-accordion__item:hover + .ui-accordion-item,
+    .ui-accordion--flush .ui-accordion__item:hover + .ui-accordion__item {
         border-color: transparent;
     }
 
     .ui-accordion-flush .ui-accordion-item::before,
-    .ui-accordion-flush .ui-accordion-item::after {
+    .ui-accordion-flush .ui-accordion-item::after,
+    .ui-accordion-flush .ui-accordion__item::before,
+    .ui-accordion-flush .ui-accordion__item::after,
+    .ui-accordion--flush .ui-accordion-item::before,
+    .ui-accordion--flush .ui-accordion-item::after,
+    .ui-accordion--flush .ui-accordion__item::before,
+    .ui-accordion--flush .ui-accordion__item::after {
         position: absolute;
         display: block;
+        inline-size: calc(100% - var(--ui-spacing-05) - var(--ui-spacing-05));
         block-size: 1px;
-        content: "";
-        inline-size: calc(100% - (var(--ui-spacing-05) * 2));
         margin-inline-start: var(--ui-spacing-05);
-        transition: background-color 110ms cubic-bezier(0.2, 0, 0.38, 0.9);
+        content: "";
+        transition: background var(--ui-motion-standard-productive)
+            var(--ui-duration-fast-02);
     }
 
-    .ui-accordion-flush .ui-accordion-item::before {
+    .ui-accordion-flush .ui-accordion-item::before,
+    .ui-accordion-flush .ui-accordion__item::before,
+    .ui-accordion--flush .ui-accordion-item::before,
+    .ui-accordion--flush .ui-accordion__item::before {
+        background: var(--ui-border-subtle);
         inset-block-start: -1px;
-        background-color: var(--ui-border-subtle-01);
     }
 
-    .ui-accordion-flush .ui-accordion-item:last-child::after {
+    .ui-accordion-flush .ui-accordion-item:last-child::after,
+    .ui-accordion-flush .ui-accordion__item:last-child::after,
+    .ui-accordion--flush .ui-accordion-item:last-child::after,
+    .ui-accordion--flush .ui-accordion__item:last-child::after {
+        background: var(--ui-border-subtle);
         inset-block-end: -1px;
-        background-color: var(--ui-border-subtle-01);
     }
 
-    .ui-accordion-flush .ui-accordion-trigger:hover {
+    .ui-accordion-flush .ui-accordion-heading:hover,
+    .ui-accordion-flush .ui-accordion__heading:hover,
+    .ui-accordion--flush .ui-accordion-heading:hover,
+    .ui-accordion--flush .ui-accordion__heading:hover {
         position: relative;
         z-index: 1;
     }
 
-    .ui-accordion-flush .ui-accordion-trigger:hover::before,
-    .ui-accordion-flush .ui-accordion-trigger:hover::after {
+    .ui-accordion-flush .ui-accordion-heading:hover::before,
+    .ui-accordion-flush .ui-accordion-heading:hover::after,
+    .ui-accordion-flush .ui-accordion__heading:hover::before,
+    .ui-accordion-flush .ui-accordion__heading:hover::after,
+    .ui-accordion--flush .ui-accordion-heading:hover::before,
+    .ui-accordion--flush .ui-accordion-heading:hover::after,
+    .ui-accordion--flush .ui-accordion__heading:hover::before,
+    .ui-accordion--flush .ui-accordion__heading:hover::after {
         position: absolute;
         display: block;
-        block-size: 1px;
-        content: "";
         inline-size: 100%;
+        block-size: 1px;
+        background: var(--ui-layer-hover);
+        content: "";
         inset-inline-start: 0;
-        background-color: var(--ui-layer-hover-01);
-        transition: background-color 110ms cubic-bezier(0.2, 0, 0.38, 0.9);
+        transition: background var(--ui-motion-standard-productive)
+            var(--ui-duration-fast-02);
     }
 
-    .ui-accordion-flush .ui-accordion-trigger:hover::before {
+    .ui-accordion-flush .ui-accordion-heading:hover::before,
+    .ui-accordion-flush .ui-accordion__heading:hover::before,
+    .ui-accordion--flush .ui-accordion-heading:hover::before,
+    .ui-accordion--flush .ui-accordion__heading:hover::before {
         inset-block-start: -1px;
     }
 
-    .ui-accordion-flush .ui-accordion-trigger:hover::after {
+    .ui-accordion-flush .ui-accordion-heading:hover::after,
+    .ui-accordion-flush .ui-accordion__heading:hover::after,
+    .ui-accordion--flush .ui-accordion-heading:hover::after,
+    .ui-accordion--flush .ui-accordion__heading:hover::after {
         inset-block-end: -1px;
     }
 
-    .ui-accordion-flush .ui-accordion-trigger:focus-visible::before,
-    .ui-accordion-flush .ui-accordion-trigger:focus-visible::after,
-    .ui-accordion-flush .ui-accordion-trigger.is-focus::before,
-    .ui-accordion-flush .ui-accordion-trigger.is-focus::after,
-    .ui-accordion-flush
-        .ui-accordion-trigger[data-ui-accordion-focus="true"]::before,
-    .ui-accordion-flush
-        .ui-accordion-trigger[data-ui-accordion-focus="true"]::after {
-        background-color: transparent;
-    }
-
-    .ui-accordion-flush .ui-accordion-body {
-        padding-inline-start: calc(var(--ui-spacing-05) + var(--ui-spacing-05));
-    }
-
-    .ui-accordion-flush.ui-accordion-icon-start .ui-accordion-body {
-        margin-inline-start: calc(var(--ui-spacing-05) + var(--ui-spacing-05));
-        padding-inline-start: var(--ui-spacing-05);
+    .ui-accordion-flush .ui-accordion-heading:hover:focus::before,
+    .ui-accordion-flush .ui-accordion-heading:hover:focus::after,
+    .ui-accordion-flush .ui-accordion__heading:hover:focus::before,
+    .ui-accordion-flush .ui-accordion__heading:hover:focus::after,
+    .ui-accordion--flush .ui-accordion-heading:hover:focus::before,
+    .ui-accordion--flush .ui-accordion-heading:hover:focus::after,
+    .ui-accordion--flush .ui-accordion__heading:hover:focus::before,
+    .ui-accordion--flush .ui-accordion__heading:hover:focus::after {
+        background: none;
     }
 
     /* ----------------------------------------------------------------------
-   Skeleton state
-   ---------------------------------------------------------------------- */
+       Skeleton state
+       ---------------------------------------------------------------------- */
 
-    .ui-accordion-skeleton .ui-accordion-trigger,
-    .ui-accordion.is-skeleton .ui-accordion-trigger {
+    .ui-accordion.ui-skeleton .ui-accordion-heading,
+    .ui-accordion.ui-skeleton .ui-accordion__heading,
+    .ui-accordion.ui-skeleton .ui-accordion-button,
+    .ui-accordion.ui-skeleton .ui-accordion__button {
+        cursor: default;
+    }
+
+    .ui-accordion.ui-skeleton .ui-accordion-arrow,
+    .ui-accordion.ui-skeleton .ui-accordion__arrow {
+        fill: var(--ui-icon-primary);
         cursor: default;
         pointer-events: none;
     }
 
-    .ui-accordion-skeleton .ui-accordion-trigger:hover,
-    .ui-accordion.is-skeleton .ui-accordion-trigger:hover {
+    .ui-accordion.ui-skeleton .ui-accordion-arrow:hover,
+    .ui-accordion.ui-skeleton .ui-accordion-arrow:focus,
+    .ui-accordion.ui-skeleton .ui-accordion-arrow:active,
+    .ui-accordion.ui-skeleton .ui-accordion__arrow:hover,
+    .ui-accordion.ui-skeleton .ui-accordion__arrow:focus,
+    .ui-accordion.ui-skeleton .ui-accordion__arrow:active {
+        border: none;
+        cursor: default;
+        outline: none;
+    }
+
+    .ui-accordion.ui-skeleton .ui-accordion-heading:hover::before,
+    .ui-accordion.ui-skeleton .ui-accordion__heading:hover::before,
+    .ui-accordion.ui-skeleton .ui-accordion-heading:hover,
+    .ui-accordion.ui-skeleton .ui-accordion__heading:hover {
         background-color: transparent;
     }
 
-    .ui-accordion-skeleton .ui-accordion-icon,
-    .ui-accordion.is-skeleton .ui-accordion-icon {
-        color: var(--ui-icon-primary);
-        pointer-events: none;
+    .ui-accordion-end.ui-skeleton .ui-accordion-arrow,
+    .ui-accordion-end.ui-skeleton .ui-accordion__arrow,
+    .ui-accordion--end.ui-skeleton .ui-accordion-arrow,
+    .ui-accordion--end.ui-skeleton .ui-accordion__arrow {
+        margin-inline-start: var(--ui-spacing-05);
     }
 
-    .ui-accordion-skeleton .ui-accordion-title,
-    .ui-accordion.is-skeleton .ui-accordion-title {
-        inline-size: min(14rem, 60%);
-        block-size: 1rem;
-        border-radius: 9999px;
-        background: linear-gradient(
-            90deg,
-            var(--ui-skeleton-background),
-            var(--ui-skeleton-element),
-            var(--ui-skeleton-background)
-        );
-        background-size: 200% 100%;
-        color: transparent;
+    .ui-skeleton .ui-accordion-heading:focus .ui-accordion-arrow,
+    .ui-skeleton .ui-accordion-heading:focus .ui-accordion__arrow,
+    .ui-skeleton .ui-accordion__heading:focus .ui-accordion-arrow,
+    .ui-skeleton .ui-accordion__heading:focus .ui-accordion__arrow {
+        border: none;
+        cursor: default;
+        outline: none;
     }
 
-    .ui-accordion-skeleton .ui-accordion-meta,
-    .ui-accordion.is-skeleton .ui-accordion-meta {
-        display: none;
+    .ui-accordion-title.ui-skeleton-text,
+    .ui-accordion-title.ui-skeleton__text,
+    .ui-accordion__title.ui-skeleton-text,
+    .ui-accordion__title.ui-skeleton__text {
+        margin-block-end: 0;
     }
 
-    .ui-accordion-skeleton .ui-accordion-panel,
-    .ui-accordion.is-skeleton .ui-accordion-panel {
-        display: none;
+    .ui-accordion.ui-skeleton .ui-accordion-title,
+    .ui-accordion.ui-skeleton .ui-accordion__title {
+        margin-inline-start: var(--ui-spacing-05);
     }
 
     /* ----------------------------------------------------------------------
-   RTL support
-   ---------------------------------------------------------------------- */
+       RTL
+       ---------------------------------------------------------------------- */
 
-    [dir="rtl"] .ui-accordion-icon-start .ui-accordion-trigger {
+    [dir="rtl"] .ui-accordion-start .ui-accordion-heading,
+    [dir="rtl"] .ui-accordion-start .ui-accordion__heading,
+    [dir="rtl"] .ui-accordion--start .ui-accordion-heading,
+    [dir="rtl"] .ui-accordion--start .ui-accordion__heading {
+        padding-inline: var(--ui-accordion-padding-inline) 0;
+    }
+
+    [dir="rtl"] .ui-accordion-start .ui-accordion-title,
+    [dir="rtl"] .ui-accordion-start .ui-accordion__title,
+    [dir="rtl"] .ui-accordion--start .ui-accordion-title,
+    [dir="rtl"] .ui-accordion--start .ui-accordion__title {
+        margin-inline-end: 0;
         padding-inline-start: 0;
-        padding-inline-end: var(--ui-spacing-05);
-    }
-
-    [dir="rtl"] .ui-accordion-icon-start .ui-accordion-body {
-        margin-inline-start: 0;
-        margin-inline-end: calc(var(--ui-spacing-05) + var(--ui-spacing-05));
     }
 
     /* ----------------------------------------------------------------------
-   Reduced motion
-   ---------------------------------------------------------------------- */
+       Reduced motion
+       ---------------------------------------------------------------------- */
 
-    @media (prefers-reduced-motion: reduce) {
+    @media screen and (prefers-reduced-motion: reduce) {
         .ui-accordion-item,
-        .ui-accordion-trigger,
-        .ui-accordion-icon,
-        .ui-accordion-panel,
+        .ui-accordion__item,
+        .ui-accordion-heading,
+        .ui-accordion__heading,
+        .ui-accordion-arrow,
+        .ui-accordion__arrow,
+        .ui-accordion-wrapper,
+        .ui-accordion__wrapper,
         .ui-accordion-flush .ui-accordion-item::before,
         .ui-accordion-flush .ui-accordion-item::after,
-        .ui-accordion-flush .ui-accordion-trigger:hover::before,
-        .ui-accordion-flush .ui-accordion-trigger:hover::after {
+        .ui-accordion-flush .ui-accordion__item::before,
+        .ui-accordion-flush .ui-accordion__item::after,
+        .ui-accordion--flush .ui-accordion-item::before,
+        .ui-accordion--flush .ui-accordion-item::after,
+        .ui-accordion--flush .ui-accordion__item::before,
+        .ui-accordion--flush .ui-accordion__item::after,
+        .ui-accordion-flush .ui-accordion-heading:hover::before,
+        .ui-accordion-flush .ui-accordion-heading:hover::after,
+        .ui-accordion-flush .ui-accordion__heading:hover::before,
+        .ui-accordion-flush .ui-accordion__heading:hover::after,
+        .ui-accordion--flush .ui-accordion-heading:hover::before,
+        .ui-accordion--flush .ui-accordion-heading:hover::after,
+        .ui-accordion--flush .ui-accordion__heading:hover::before,
+        .ui-accordion--flush .ui-accordion__heading:hover::after {
             transition: none;
         }
     }
 
-    @media (forced-colors: active) {
-        .ui-accordion-trigger:focus-visible,
-        .ui-accordion-trigger.is-focus,
-        .ui-accordion-trigger[data-ui-accordion-focus="true"] {
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-accordion-heading:focus,
+        .ui-accordion__heading:focus {
             outline: 2px solid Highlight;
-            outline-offset: -2px;
             box-shadow: none;
+        }
+
+        .ui-accordion-item,
+        .ui-accordion__item,
+        .ui-accordion-item:last-child,
+        .ui-accordion__item:last-child,
+        .ui-accordion-item-disabled,
+        .ui-accordion-item--disabled,
+        .ui-accordion__item--disabled {
+            border-color: CanvasText;
+        }
+
+        .ui-accordion-heading,
+        .ui-accordion__heading,
+        .ui-accordion-title,
+        .ui-accordion__title,
+        .ui-accordion-content,
+        .ui-accordion__content {
+            color: CanvasText;
+        }
+
+        .ui-accordion-heading:hover,
+        .ui-accordion__heading:hover {
+            background-color: Highlight;
+            color: HighlightText;
+        }
+
+        .ui-accordion-heading:hover .ui-accordion-title,
+        .ui-accordion-heading:hover .ui-accordion__title,
+        .ui-accordion__heading:hover .ui-accordion-title,
+        .ui-accordion__heading:hover .ui-accordion__title {
+            color: HighlightText;
+        }
+
+        .ui-accordion-arrow,
+        .ui-accordion__arrow {
+            fill: CanvasText;
+        }
+
+        .ui-accordion-heading:hover .ui-accordion-arrow,
+        .ui-accordion-heading:hover .ui-accordion__arrow,
+        .ui-accordion__heading:hover .ui-accordion-arrow,
+        .ui-accordion__heading:hover .ui-accordion__arrow {
+            fill: HighlightText;
+        }
+
+        .ui-accordion-heading[disabled],
+        .ui-accordion__heading[disabled] {
+            color: GrayText;
+        }
+
+        .ui-accordion-heading[disabled] .ui-accordion-arrow,
+        .ui-accordion-heading[disabled] .ui-accordion__arrow,
+        .ui-accordion__heading[disabled] .ui-accordion-arrow,
+        .ui-accordion__heading[disabled] .ui-accordion__arrow {
+            fill: GrayText;
+        }
+
+        .ui-accordion-flush .ui-accordion-item::before,
+        .ui-accordion-flush .ui-accordion-item::after,
+        .ui-accordion-flush .ui-accordion__item::before,
+        .ui-accordion-flush .ui-accordion__item::after,
+        .ui-accordion--flush .ui-accordion-item::before,
+        .ui-accordion--flush .ui-accordion-item::after,
+        .ui-accordion--flush .ui-accordion__item::before,
+        .ui-accordion--flush .ui-accordion__item::after {
+            background: CanvasText;
+        }
+
+        .ui-accordion-flush .ui-accordion-heading:hover::before,
+        .ui-accordion-flush .ui-accordion-heading:hover::after,
+        .ui-accordion-flush .ui-accordion__heading:hover::before,
+        .ui-accordion-flush .ui-accordion__heading:hover::after,
+        .ui-accordion--flush .ui-accordion-heading:hover::before,
+        .ui-accordion--flush .ui-accordion-heading:hover::after,
+        .ui-accordion--flush .ui-accordion__heading:hover::before,
+        .ui-accordion--flush .ui-accordion__heading:hover::after {
+            background: Highlight;
         }
     }
 }

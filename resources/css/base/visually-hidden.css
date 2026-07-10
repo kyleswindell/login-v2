@@ -1,0 +1,23 @@
+/* ==========================================================================
+   File: resources/css/base/visually-hidden.css
+   Purpose: Visually hidden accessibility utilities.
+   Notes:
+   - Defines screen-reader/assistive-text utilities only.
+   - Content remains available to assistive technologies while being visually
+     hidden.
+   ========================================================================== */
+
+@layer utilities {
+    :where(.ui-assistive-text, .ui-visually-hidden) {
+        position: absolute;
+        overflow: hidden;
+        margin: -1px;
+        border: 0;
+        padding: 0;
+        block-size: 1px;
+        inline-size: 1px;
+        clip: rect(0, 0, 0, 0);
+        visibility: inherit;
+        white-space: nowrap;
+    }
+}

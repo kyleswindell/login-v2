@@ -1,8 +1,8 @@
 /* ==========================================================================
    File: resources/css/components/status.css
-   Purpose: Status and legacy badge display styles.
+   Purpose: Status display styles.
    Notes:
-   - Defines rendered x-ui.badge and x-ui.status selectors only.
+   - Defines rendered x-ui.status selectors only.
    - Do not define primitive palette tokens here.
    - Do not define theme role tokens here.
    - Status consumes component status tokens from tokens/components/status.css.

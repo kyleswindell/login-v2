@@ -1,4 +1,4 @@
-<x-ui.patterns.widget-shell
+<x-patterns.widget-shell
     title="Recent Audit Activity"
     description="Latest 10 platform audit log entries."
     :meta="['Activity widget']"
@@ -33,4 +33,4 @@
             </tbody>
         </table>
     </div>
-</x-ui.patterns.widget-shell>
+</x-patterns.widget-shell>

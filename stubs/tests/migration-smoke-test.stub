@@ -1,0 +1,24 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
+use Tests\TestCase;
+
+final class {{ class }} extends TestCase
+{
+    use RefreshDatabase;
+
+    public function test_schema_is_verified_against_postgresql(): void
+    {
+        self::assertSame('pgsql', DB::connection()->getDriverName());
+    }
+
+    public function test_expected_schema_contract_exists(): void
+    {
+        self::markTestIncomplete('Verify the expected tables, columns, indexes, and constraints.');
+    }
+}

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Automated test coverage. This folder owns feature, unit, and integration tests that verify application behavior and UI Reference contracts.
+Automated test coverage. This folder owns feature, unit, and integration tests that verify application behavior and public UI contracts.
 
 ## Read Order
 

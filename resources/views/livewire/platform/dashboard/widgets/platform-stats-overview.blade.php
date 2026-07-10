@@ -1,4 +1,4 @@
-<x-ui.patterns.widget-shell
+<x-patterns.widget-shell
     title="Platform Overview"
     description="Current account and notification totals."
     :meta="['Summary widget']"
@@ -15,4 +15,4 @@
             </article>
         @endforeach
     </div>
-</x-ui.patterns.widget-shell>
+</x-patterns.widget-shell>

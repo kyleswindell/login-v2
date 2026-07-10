@@ -2,14 +2,16 @@
 
 namespace App\Providers;
 
-use App\Filament\Widgets\DevelopmentToolsWidget;
-use App\Filament\Widgets\PlatformErrorHealth;
-use App\Filament\Widgets\PlatformStatsOverview;
-use App\Filament\Widgets\RecentAuditActivity;
-use App\Filament\Widgets\SystemNotificationsWidget;
+use App\Core\Modules\Definitions;
+use App\Core\Modules\PackageLoader;
+use App\Core\Modules\Repository;
+use App\Core\Runtime\Resolver;
 use App\Models\User;
+use App\Modules\Notifications\Services\NotificationPermissions;
+use App\Modules\Roles\Services\RoleCatalog;
+use App\Modules\Settings\Services\SettingsPermissions;
+use App\Modules\Settings\Services\Store;
 use App\Platform\Dashboard\WidgetRegistry;
-use App\Platform\Settings\SettingsService;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -17,38 +19,24 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        $this->app->singleton(Repository::class, fn () => Definitions::repository());
+        $this->app->singleton(Resolver::class, fn () => new Resolver($this->app['config']));
         $this->app->singleton(WidgetRegistry::class, fn () => new WidgetRegistry());
     }
 
     public function boot(): void
     {
-        $this->registerDashboardWidgets();
+        $this->registerModulePackages();
         $this->registerGates();
     }
 
-    private function registerDashboardWidgets(): void
+    private function registerModulePackages(): void
     {
-        $registry = $this->app->make(WidgetRegistry::class);
-
-        $registry->register('platform_stats',       PlatformStatsOverview::class);
-        $registry->register('error_health',          PlatformErrorHealth::class);
-        $registry->register('audit_activity',        RecentAuditActivity::class);
-        $registry->register('notifications_summary', SystemNotificationsWidget::class);
-        $registry->register('development_tools',     DevelopmentToolsWidget::class);
+        $this->app->make(PackageLoader::class)->load(Definitions::packageDefinitions());
     }
 
     private function registerGates(): void
     {
-        // Keep the super-admin bypass centralized so feature policies can stay focused on
-        // normal role/permission checks instead of duplicating privileged override logic.
-        Gate::before(function (User $user, string $ability): ?bool {
-            if ($user->hasRole('platform_super_admin')) {
-                return true;
-            }
-
-            return null;
-        });
-
         Gate::define('manage-platform-users', function (User $user): bool {
             return $user->can('platform.users.manage');
         });
@@ -63,21 +51,41 @@ class AppServiceProvider extends ServiceProvider
                 return false;
             }
 
-            $accessScope = app(SettingsService::class)->get(
+            $accessScope = app(Store::class)->get(
                 'docs',
                 'access_scope',
                 'all_platform_users',
             );
 
             if ($accessScope === 'super_admins_only') {
-                return $user->hasRole('platform_super_admin');
+                return $user->hasRole(RoleCatalog::SUPER_ADMIN);
             }
 
             return true;
         });
 
+        Gate::define(NotificationPermissions::VIEW, function (User $user): bool {
+            return $this->hasPermission($user, NotificationPermissions::VIEW)
+                || $this->hasPermission($user, NotificationPermissions::MANAGE);
+        });
+
+        Gate::define(NotificationPermissions::SETTINGS_VIEW, function (User $user): bool {
+            return $this->hasPermission($user, NotificationPermissions::SETTINGS_VIEW)
+                || $this->hasPermission($user, NotificationPermissions::SETTINGS_UPDATE)
+                || $this->hasPermission($user, NotificationPermissions::MANAGE);
+        });
+
+        Gate::define(NotificationPermissions::SETTINGS_UPDATE, function (User $user): bool {
+            return $this->hasPermission($user, NotificationPermissions::SETTINGS_UPDATE)
+                || $this->hasPermission($user, NotificationPermissions::MANAGE);
+        });
+
+        Gate::define(NotificationPermissions::MANAGE, function (User $user): bool {
+            return $this->hasPermission($user, NotificationPermissions::MANAGE);
+        });
+
         Gate::define('view-platform-notifications', function (User $user): bool {
-            return $user->can('platform.notifications.view');
+            return Gate::forUser($user)->allows(NotificationPermissions::VIEW);
         });
 
         Gate::define('view-platform-audit-logs', function (User $user): bool {
@@ -88,17 +96,42 @@ class AppServiceProvider extends ServiceProvider
             return $user->can('platform.error-logs.view');
         });
 
-        Gate::define('view-platform-ui-reference', function (User $user): bool {
-            return $user->can('platform.ui-reference.view');
+        Gate::define(SettingsPermissions::VIEW, function (User $user): bool {
+            return $this->hasPermission($user, SettingsPermissions::VIEW)
+                || $this->hasPermission($user, SettingsPermissions::UPDATE)
+                || $this->hasPermission($user, SettingsPermissions::MANAGE);
+        });
+
+        Gate::define(SettingsPermissions::UPDATE, function (User $user): bool {
+            return $this->hasPermission($user, SettingsPermissions::UPDATE)
+                || $this->hasPermission($user, SettingsPermissions::MANAGE);
+        });
+
+        Gate::define(SettingsPermissions::MANAGE, function (User $user): bool {
+            return $this->hasPermission($user, SettingsPermissions::MANAGE);
         });
 
         Gate::define('view-platform-settings', function (User $user): bool {
-            return $user->can('platform.settings.view')
-                || $user->can('platform.settings.manage');
+            return Gate::forUser($user)->allows(SettingsPermissions::VIEW);
         });
 
         Gate::define('manage-platform-settings', function (User $user): bool {
-            return $user->can('platform.settings.manage');
+            return Gate::forUser($user)->allows(SettingsPermissions::UPDATE);
         });
+
+        Gate::define('view-platform-security-checklist', function (User $user): bool {
+            return $user->can('platform.security-checklist.view')
+                || $user->can('platform.security-checklist.manage');
+        });
+
+        Gate::define('manage-platform-security-checklist', function (User $user): bool {
+            return $user->can('platform.security-checklist.manage');
+        });
+    }
+
+    private function hasPermission(User $user, string $permission): bool
+    {
+        return $user->getAllPermissions()
+            ->contains(fn (mixed $userPermission): bool => ($userPermission->name ?? null) === $permission);
     }
 }

@@ -1,4 +1,4 @@
-<x-ui.patterns.widget-shell
+<x-patterns.widget-shell
     title="Error Health"
     description="Recent platform error volume."
     :meta="['Summary widget']"
@@ -15,4 +15,4 @@
             </article>
         @endforeach
     </div>
-</x-ui.patterns.widget-shell>
+</x-patterns.widget-shell>

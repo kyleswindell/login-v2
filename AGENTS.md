@@ -4,311 +4,492 @@
 
 This repository contains Login App 2.0, a Laravel-based platform intended to replace the current customized Perfex 1.0 foundation over time.
 
+This file defines persistent repository rules for Codex and other AI coding agents. It is an execution contract, not a product specification.
+
+---
+
+## Operating Model
+
+- GitHub Issues are the current work packets.
+- GitHub Projects are the sequencing and status layer.
+- Pull requests are the review and implementation evidence layer.
+- `/docs/` is the canonical source of product, architecture, standards, planning, database, runbook, and governance truth.
+- `AGENTS.md` files and `.agents/skills/` are agent guidance only. They must route agents to canonical docs instead of duplicating canonical truth.
+
+Do not use the old `/docs/08-active/` batch workflow unless the user explicitly asks to inspect, archive, migrate, or recover historical batch material.
+
+Deprecated workflow terms such as `batch-start`, `work-batch`, `change-queue`, `Implemented Pending Review`, and `Passed Review` are historical unless an issue explicitly says otherwise.
+
 ---
 
 ## Core Principles
 
-- Treat this repository as the source of truth for App 2.0.
+- Treat this repository as the source of truth for Login App 2.0.
 - Keep the Perfex 1.0 repository as reference only unless explicitly instructed otherwise.
-- Use Laravel, Filament, Livewire, PostgreSQL, Redis, and Apache/PHP-FPM as the locked foundation unless a decision record changes that.
-- Support arbitrary tenant admin domains from day one.
-- Keep tenants isolated with one tenant database and one PostgreSQL role per tenant.
-- Prefer data-driven tenant configuration over file-copy-driven behavior.
-- Do not build meaningful untracked application code directly on the production server.
+- Use the stack and runtime already present in this repository unless a decision record changes it.
+- Do not introduce new framework, database, queue, cache, auth, UI, deployment, or infrastructure dependencies without explicit approval.
+- Prefer data-driven configuration over file-copy-driven behavior.
+- Do not build meaningful untracked application code directly on a production server.
+- Make narrow, reviewable changes.
+- Do not “clean up” unrelated files while completing a scoped issue.
+- Stop when scope, ownership, or expected behavior is unclear.
 
 ---
 
 ## Canonical Documentation Rules
 
-- Treat `/docs/` as the canonical root for all active documentation.
-- Ignore `/docs/_archive/` unless explicitly requested.
-- Do not introduce legacy documentation paths or outdated references.
+Treat `/docs/` as the canonical root for active documentation.
 
-### Branch Responsibilities
+Ignore these unless explicitly requested:
 
-- `01-decisions` → ADRs and elevated decision records only  
-- `02-standards` → rules only  
-- `03-architecture` → system structure only  
-- `04-features` → behavior only  
-- `05-flows` → execution paths only  
-- `06-database` → schema and constraints only  
-- `07-planning` → sequencing and intent only  
-- `09-reference` → non-canonical support only  
-- `10-runbooks` → operations only  
+- `/docs/_archive/`
+- historical phase or batch records
+- old `/docs/08-active/` workflow state
+- long research artifacts not named by the issue
+
+Do not introduce legacy documentation paths or outdated references.
+
+### Documentation Branch Responsibilities
+
+- `docs/01-decisions/` → ADRs and elevated decision records only.
+- `docs/02-standards/` → rules and standards only.
+- `docs/03-architecture/` → system structure and boundaries only.
+- `docs/04-features/` → user/system behavior only.
+- `docs/05-flows/` → execution paths only.
+- `docs/06-database/` → schema, tables, constraints, and data contracts only.
+- `docs/07-planning/` → sequencing, implementation intent, and planning matrices only.
+- `docs/09-reference/` → non-canonical support/reference material only.
+- `docs/10-runbooks/` → operations and recovery procedures only.
+- `docs/11-ai/` → AI review/governance artifacts only when an issue explicitly targets that area.
 
 Always respect branch ownership. Do not duplicate or reassign responsibility across branches.
 
 ---
 
-## Active Workspace (`/docs/08-active/`)
+## Source-of-Truth Priority
 
-- `/docs/08-active/` represents the current batch workspace.
-- It is the only location where active batch state is stored.
-- Only batch workflows (`batch-start`, `work-batch`, `integrate-work-batch-branch`, `batch-update-manual-review-status`, `batch-review-and-finalize`) may modify it.
-- Do not manually alter its structure outside those workflows.
-- Active `change-queue.md` items should use stable queue IDs in the format `P<phase>-<batch>-CQ-###`.
-- `In Progress` is the active claim state for the current `work-batch` owner on a targeted queue item.
-- `work-batch` must move a targeted queue item from `Ready To Implement` to `In Progress` when implementation begins, and must move it out of `In Progress` to an outcome state before claiming another queue item unless the pass genuinely stops mid-item.
-- `Implemented Pending Review` is reserved for queue items that are actually reviewable on the required review surface; if deployment is required for review, the item does not belong there until that deploy succeeds.
-- Local development may be the review surface when the reviewer is inspecting the same working tree, but accepted local-review work must be committed before moving to `Passed Review`.
-- In branch-based parallel execution, `/docs/08-active/` remains a singleton integrator-owned workspace; worker branches may read it for context but must not update it directly.
-- Keep exploratory review discussion in chat until an agent normalizes it into concise queue language.
-- When discussing an existing queue item in chat, reference its queue ID when available.
+When instructions conflict, use this priority order:
 
----
+1. Explicit user instruction in the current task.
+2. Security/safety requirements.
+3. Root `AGENTS.md`.
+4. Nearest folder-level `AGENTS.md`.
+5. Canonical docs in `/docs/`.
+6. Existing implementation patterns.
+7. Agent skill guidance.
+8. Inference.
 
-## Implementation and Docs Sync
-
-- When implementing a planned system, update canonical docs and related planning notes in the same work cycle.
-- Planning notes must reflect current implementation status.
-- Canonical system docs and planning notes must remain linked.
-- If a reviewed batch or phase changes parent planning truth but the current workflow does not own those planning files directly, run the scoped docs sync path in the same work cycle:
-  - `review-docs-sync`
-  - `implement-docs-sync-fix`
-- Use that docs sync path for roadmap, phase-index, deferment, and parent planning-status synchronization instead of broadening active batch lifecycle skills beyond their owned scope.
+If conflict remains after reading the relevant sources, stop and ask.
 
 ---
 
-## Code and Documentation Discipline
+## GitHub Issue Workflow
 
-- Only modify files directly required for the current scope.
-- Do not include unrelated changes in commits.
-- If unrelated issues are found during active batch implementation work:
-  - record them in `/docs/08-active/notes.md`
-  - do not fix them immediately
-- If unrelated issues are found during review-only governance or documentation audit work:
-  - record them in the active review file under `docs/11-ai/active-doc-reviews/`
-  - update the review ledger entry if the finding changes the audit status
-  - do not push them into `/docs/08-active/` unless they belong to the current active batch
+For implementation work, start from the GitHub issue or the user-provided task.
 
-- Prefer minimal, explicit changes over broad rewrites.
-- Maintain consistency with existing naming, tokens, and patterns.
+Before editing files:
+
+- Identify the issue number or task scope.
+- Identify the intended owner area: Core, Platform, Module, Docs, Ops, UI, or Tests.
+- Identify the canonical docs that govern the change.
+- Identify the expected files or folders in scope.
+- Identify likely tests or verification commands.
+- Check the working tree and avoid unrelated changes.
+
+Do not create, edit, close, relabel, or reprioritize GitHub issues or Project fields unless the user explicitly asks.
+
+Do not create broad “future work” issues unless requested. If a related issue is found during implementation, mention it in the final report instead of expanding scope.
 
 ---
 
-## Git and Deployment Rules
+## Architecture Boundaries
 
-- Follow `docs/10-runbooks/git-batch-commit-workflow.md` for active batch execution commits only.
-- Active batch commits must:
-  - map to a single batch and a single concern
-  - include only files touched for that scope
-- Use the restored local development stack as the default verification surface; do not push or deploy implementation micro-steps to the server when local validation is sufficient.
-- Local development review may inspect uncommitted scoped changes, but accepted queue-item work must be committed before the item is treated as passed review.
-- If staging, server, or another shared surface is required for review, commit, push, and deploy before calling the item reviewable.
-- When one work pass handles multiple change-queue items, the worklog must identify the targeted queue IDs, grouping rationale, affected files by item or tightly coupled group, validation performed, and review surface used.
+Use these ownership rules unless a canonical decision record changes them.
 
-- Use batch checkpoints for active batch execution:
-  - batch initialized
-  - implementation save points
-  - review-ready
-  - finalized
+### Core Capabilities
 
-- For non-batch review or governance work:
-  - keep one commit scoped to one review, sync pass, or governance concern
-  - include only files directly required for that review or governance update
-  - do not force batch checkpoint naming onto review-only work
+`app/Core/*` owns required platform, security, identity, authorization, data, audit, monitoring, notification, settings, and system capabilities.
 
-- For branch-based parallel batch execution:
-  - worker branch commits must map to one queue item and one concern
-  - worker branch commits must not update `/docs/08-active/`
-  - integration commits own `/docs/08-active/` state reconciliation, deploy gating, and review-surface publication
+Examples:
 
-- Only commit when the work is scoped, intentional, and reviewable.
+- `Auth`
+- `Identity`
+- `Access`
+- `DataGovernance`
+- `DataProtection`
+- `Security`
+- `Audit`
+- `Monitoring`
+- `Notifications`
+- `Settings`
+- `Preferences`
+- `Support`
+
+Core capabilities may expose routes, services, policies, events, migrations, tests, and admin/account surfaces when they own the underlying system responsibility.
+
+### Platform Surfaces
+
+`app/Platform/*` owns presentation and aggregation surfaces.
+
+Examples:
+
+- Shell
+- Navigation
+- Dashboard
+- Setup
+- Docs
+- Surface/rendering aggregation
+
+Platform code must not own business rules, authorization policy truth, audit truth, data protection truth, or module domain logic.
+
+### Business Modules
+
+`Modules/*` owns tenant/workspace business work areas.
+
+Examples:
+
+- Customers
+- Inventory
+- Orders
+- Shipments
+- Reports
+- Projects
+- Support
+- Websites
+
+Business modules must consume Core capabilities instead of redefining authentication, authorization, audit, notifications, settings, data protection, or security rules.
+
+### Shared UI
+
+- `resources/views/components/ui/*` owns UI primitives and baseline components.
+- `resources/views/components/patterns/*` owns reusable composition patterns.
+- `resources/views/components/shell/*` and layout components own frame/shell structure.
+- URL views should remain thin and compose ViewModels, page data, patterns, and UI primitives.
+- Registry-driven renderers belong under the owning Platform/Core surface, not inside generic UI primitives.
+
+---
+
+## Implementation Rules
+
+- Only modify files directly required for the current issue/task.
+- Prefer small explicit changes over broad rewrites.
+- Preserve existing naming, conventions, tokens, contracts, and public APIs unless the issue requires a change.
+- Do not move files across architecture boundaries without a planning doc or explicit instruction.
+- Do not change behavior while “just reorganizing” unless the issue explicitly asks for both.
+- Do not add new abstractions before there is a repeated implementation need.
+- Do not silently delete or replace existing tests.
+- Do not use generated code as a substitute for understanding the existing implementation.
+- Do not leave temporary debugging output, dump statements, console logs, or commented-out code.
+- Do not log secrets, tokens, MFA material, authorization headers, cookies, or sensitive personal data.
+- Use FormRequest validation, policies/gates, middleware, and domain/service guardrails according to existing Laravel conventions.
+- Do not use state-changing GET routes.
+- Do not bypass authorization checks on protected routes or actions.
+- Do not expose protected files through public storage.
+
+---
+
+## Documentation Sync
+
+When implementation changes canonical behavior, update the relevant docs in the same work cycle.
+
+Update docs only where ownership matches the change:
+
+- Standards changes go in `docs/02-standards/`.
+- Architecture boundary changes go in `docs/03-architecture/`.
+- Feature behavior changes go in `docs/04-features/`.
+- Flow changes go in `docs/05-flows/`.
+- Schema/table changes go in `docs/06-database/`.
+- Sequencing/planning changes go in `docs/07-planning/`.
+- Operational procedure changes go in `docs/10-runbooks/`.
+
+Do not update docs broadly to make unrelated documentation “look current.”
+
+If implementation and docs disagree, do not guess. Identify the conflict and ask which source should be corrected unless the issue already provides the answer.
+
+---
+
+## UI and Component Work Rules
+
+Codex is not the primary visual design authority for this repository.
+
+For UI work, Codex may implement narrowly scoped changes only when the target component, contract, reference file, CSS file, expected behavior, and review surface are specified.
+
+Do not redesign layouts, spacing, visual hierarchy, component structure, or interaction behavior from screenshots alone. Manual visual approval remains required for design-sensitive work.
+
+### UI Tiers
+
+- Tier 1 = primitives and baseline components.
+- Tier 2 = reusable patterns.
+- Tier 3 = feature/module/application surfaces.
+
+Rules:
+
+- Do not bypass tiers.
+- Do not redefine primitives at higher tiers.
+- Do not duplicate component logic in feature views.
+- Component contracts and direct source evidence must stay aligned with implementation.
+- Tests must cover public component contracts and important rendering states when applicable.
+- CSS and Blade files must include the repository’s required file/header comments and relevant section comments.
+- Use the unified icon component pattern where icons are required.
+- Do not introduce one-off CSS when a token, primitive, utility, or existing component pattern should own the behavior.
+- Do not make broad visual “improvements” without explicit direction.
+
+For UI changes, report whether manual visual review is still required.
+
+---
+
+## Testing and Verification
+
+Use the narrowest verification that proves the change.
+
+Prefer targeted tests first, then broader suites when needed.
+
+Common verification surfaces may include:
+
+- PHPUnit or Pest feature/unit tests.
+- Laravel route/controller/request/policy tests.
+- UI surface/component rendering tests.
+- Browser tests when the issue involves real UI behavior.
+- Static checks, formatters, or build commands already present in the repo.
+- Vite/build verification when CSS/JS/assets change.
+
+Do not claim tests passed unless they were run successfully.
+
+If tests cannot be run, state why and identify the minimum command the user should run.
+
+If a test fails outside the scope of the change, do not fix it unless instructed. Report it separately.
+
+---
+
+## Git and Commit Rules
+
+Before editing or committing:
+
+- Run or inspect `git status`.
+- Identify unrelated dirty files.
+- Do not overwrite unrelated changes.
+- Do not stage unrelated changes.
+- Do not use `git add .` unless the user explicitly approves and the working tree is known clean except for the current scoped work.
+
+Commits should be scoped to one issue or one tightly related concern.
+
+Only commit when the work is intentional, reviewable, and limited to the accepted scope.
+
+Do not push, deploy, tag, release, reset, rebase, force-push, clean, or delete branches unless explicitly instructed.
+
+If the repository already has a large dirty working tree, protect unrelated work by staging explicit file paths only.
+
+---
+
+## Deployment and External-State Rules
+
+Do not perform external-state changes without explicit approval.
+
+External-state changes include:
+
+- Deployment.
+- Staging publication.
+- Production changes.
+- Database migrations against shared environments.
+- New dependencies.
+- Infrastructure changes.
+- GitHub Project/Issue mutation.
+- Secret rotation.
+- Cache clearing on shared environments.
+- Destructive file/database operations.
+
+Local development verification is preferred when sufficient.
 
 ---
 
 ## Agent Execution Rules
 
-- Only one agent may modify canonical docs or code in a session.
-- Separate:
-  - prompt generation
-  - implementation
-  - review
-- Do not combine review and implementation in the same step.
-- Before executing a batch workflow step, explicitly state which workflow is being entered.
-- If a batch workflow step was explicitly requested by the user, it may be executed without an extra confirmation step.
-- If a batch workflow step is only inferred from the conversation and it will modify `/docs/08-active/`, canonical docs, or code, ask for confirmation before executing it.
-- Do not enter `work-batch` from methodology, review, diagnosis, planning, or "what should we do?" discussion. Treat those prompts as read-only unless the user explicitly says to implement, execute `work-batch`, or provides a paste-ready work-batch prompt.
-- Exception: when the user provides clear manual-review feedback that unambiguously maps to existing active-batch items or to a concise new finding, that feedback itself authorizes `batch-update-manual-review-status`; do not stop just to confirm that the review-status skill should be executed.
-- Read-only analysis, workflow interpretation, and prompt generation do not require confirmation.
-- If a read-only planning, research, audit, or review session becomes ready to write while another writable session already owns the current working tree, stop before editing and require either:
-  - a separate branch plus separate worktree for the new writable session
-  - or an explicit handoff of writable ownership into the current session
-- After completing a batch workflow step, report which workflow was executed, which files were updated, and what state changed.
-- Review-only audit work must use `docs/11-ai/active-doc-reviews/` as its canonical artifact path and must not be treated as active batch workflow execution unless the user explicitly switches into a batch workflow step.
+Separate these phases unless the user explicitly asks to combine them:
+
+- planning
+- implementation
+- review
+- remediation
+
+Read-only planning, diagnosis, source review, and prompt generation do not require confirmation.
+
+Writable work requires a clear scope.
+
+Before writable work, state:
+
+- the issue/task being handled
+- the intended file scope
+- the governing docs or contracts
+- the verification plan
+
+After writable work, report:
+
+- files changed
+- behavior changed
+- docs updated
+- tests run and results
+- known remaining risks or manual review needs
+
+Do not continue into a higher-risk task just because a previous scoped change succeeded.
 
 ---
 
-## Batch Workflow Enforcement
+## Folder-Level Instruction Rules
 
-- Always execute batch work through:
-  - `batch-start`
-  - `work-batch`
-  - `integrate-work-batch-branch`
-  - `batch-update-manual-review-status`
-  - `batch-review-and-finalize`
+Before broad file traversal, read the nearest applicable folder-level `AGENTS.md`.
 
-- Required workflow notice format before execution:
-  - name the workflow step being executed
-  - name the file scope that will be modified
-  - if the step is inferred, request confirmation before making changes
-- For `batch-update-manual-review-status`, clear mappable manual-review feedback counts as sufficient authorization even when the step is inferred from the review conversation; only stop if the finding mapping or requested state change is ambiguous.
+For work inside `docs/`, read `docs/AGENTS.md` and then the relevant branch-level `AGENTS.md` when one exists.
 
-- Required workflow completion notice after execution:
-  - name the workflow step that completed
-  - summarize the files updated
-  - summarize the resulting state change
+Use folder-level `AGENTS.md` files as retrieval maps and local operating rules. Do not copy agent-specific language from folder-level files into human-facing canonical docs.
 
-- Do not:
-  - skip batch initialization
-  - mix multiple batches
-  - introduce Tier 2 or Tier 3 work into a Tier 1 batch
+Prefer:
 
----
+- indexes
+- headings
+- exact issue references
+- exact contract files
+- exact planning sections
+- targeted file reads
 
-## Review-Only Governance Work
+Avoid whole-repo or whole-branch context loading unless the task requires it.
 
-- Use review files under `docs/11-ai/active-doc-reviews/` for non-batch documentation and agent-governance audits.
-- Use the review ledger at `docs/11-ai/active-doc-reviews/index.md` to track actual review and implementation status.
-- Keep review, implementation, and re-review as separate steps even when they happen in the same broader session.
-- Do not store review-only governance state in `/docs/08-active/` unless the review is explicitly about the current active batch workspace.
-- When implementing a review-only fix, update the scoped review file and ledger entry in the same work cycle.
+When a folder-level `AGENTS.md` conflicts with this root file, this root file wins.
 
 ---
 
 ## Agent Instruction Surfaces
 
-- `AGENTS.md` owns persistent repo rules and operating boundaries.
-- Folder-level `AGENTS.md` files own local read-scope guidance, retrieval boundaries, and agent-only orientation for their folder tree.
+- Root `AGENTS.md` owns persistent repo-wide rules and operating boundaries.
+- Folder-level `AGENTS.md` files own local read-scope guidance, retrieval boundaries, and folder-specific rules.
 - `.agents/skills/` owns executable workflow playbooks.
-- canonical `docs/` owns durable product, architecture, planning, database, runbook, and review/governance truth.
-- `.agents/memory/` owns non-canonical repo-local working memory only.
-- `.agents/baselines/` owns exportable generic starter packs.
-- If a memory note becomes a durable repo rule, workflow behavior, canonical system truth, or reusable starter-pack improvement, promote it into the correct owner surface instead of leaving it in memory.
+- `/docs/` owns durable product, architecture, planning, database, runbook, and governance truth.
+- `.agents/memory/` may own non-canonical repo-local working memory only.
+- `.agents/baselines/` may own exportable generic starter packs only.
+
+If a memory note reveals durable system truth, promote it into the correct canonical docs owner.
+
+If a memory note reveals durable agent operating behavior, promote it into `AGENTS.md`, a folder-level `AGENTS.md`, or a skill file.
+
+Do not store secrets, credentials, tokens, raw customer data, or production-only sensitive values in agent memory, skills, docs, comments, or logs.
 
 ---
 
-## Folder-Level Read Scope
+## Skills Policy
 
-- Before broad file traversal, read the nearest applicable folder-level `AGENTS.md`.
-- For work inside `docs/`, read `docs/AGENTS.md` and then the relevant branch-level `AGENTS.md` when one exists before opening long canonical docs.
-- Use folder-level `AGENTS.md` files as agent-only retrieval maps; do not copy their agent-specific language into human-facing canonical docs.
-- Treat Obsidian links as discovery aids, not as permission to load every linked file into context.
-- Prefer indexes, headings, exact queue items, and targeted section reads over whole-branch or whole-repo context loading.
-- Do not read archive folders, long research artifacts, or unrelated workflow history unless the task explicitly requires them.
-- When a folder-level `AGENTS.md` conflicts with this root file, this root file wins.
+Skills are repeatable execution playbooks. They are not canonical documentation.
+
+Use skills for workflows such as:
+
+- implementing from a GitHub issue
+- syncing docs after implementation
+- maintaining UI component contracts
+- performing security foundation changes
+- reviewing PRs against Login 2.0 boundaries
+
+Skills must route to canonical docs instead of duplicating large documentation blocks.
+
+If a skill conflicts with this root file, this root file wins.
+
+Do not create new skills unless the workflow is expected to repeat.
 
 ---
 
 ## Repo-Local Agent Memory
 
-- `.agents/memory/` is the repo-local home for non-canonical, non-production-facing agent memory.
-- Use `.agents/memory/` for durable agent support material such as:
-  - operator preferences
-  - repo heuristics and recurring gotchas
-  - compressed project-context summaries
-  - non-canonical open loops and handoff notes
-  - ephemeral session summaries that should not live in chat alone
-- Do NOT use `.agents/memory/` for:
-  - canonical product, architecture, planning, database, or runbook truth that belongs in `docs/`
-  - active batch workflow state that belongs in `/docs/08-active/`
-  - worker-branch integration handoff artifacts that belong in `.agents/batch-branch-handoffs/`
-  - secrets, credentials, tokens, raw customer data, or production-only sensitive values
-- If repo-local memory reveals durable system truth, promote that truth into its canonical `docs/` owner rather than treating `.agents/memory/` as the final source of truth.
-- If repo-local memory reveals durable agent operating rules, workflow behavior, or reusable starter-pack improvements, promote them into `AGENTS.md`, the relevant skill file, or `.agents/baselines/` respectively.
-- Keep repo-local memory concise, prunable, and explicitly dated or reviewable when practical.
-- Prefer updating existing memory notes over creating overlapping ones.
+`.agents/memory/` is optional, non-canonical, and prunable.
+
+Allowed uses:
+
+- operator preferences
+- recurring repository gotchas
+- compressed context summaries
+- non-canonical open loops
+- temporary handoff notes
+
+Not allowed:
+
+- canonical product truth
+- canonical architecture truth
+- canonical planning truth
+- active issue status
+- secrets or sensitive data
+- customer data
+- production-only information
+
+Prefer updating existing memory notes over creating overlapping notes.
 
 ---
 
-## Concurrency Support Matrix
+## Concurrency Rules
 
-- Supported: one writable session in one working tree.
-- Supported: multiple read-only planning, audit, or review sessions in the same folder while one writer owns edits.
-- Supported by default: one writable runtime batch worker plus one integrator/doc-review/change-queue writer, with the integrator owning `/docs/08-active/`, review state, staging, and final merge/promotion.
-- Supported by exception only: multiple writable sessions when each writable session has its own branch, worktree, and explicitly accepted scope.
-- Supported by exception only: multiple Codex app project threads when each writable thread uses its own worktree and owned scope.
-- Supported by exception only: multiple parallel queue-item workers in separate branches/worktrees when a single integrator session serializes `/docs/08-active/` updates, deploy ownership, and final merge/promotion.
-- Supported by exception only: spawned child agents as worker executors when they are explicitly bound to the assigned dedicated branch/worktree and complete the full worker contract.
-- Supported: spawned child agents for bounded read-only sidecar work inside an already-owned writable context.
-- Not supported: concurrent `batch-start` or `work-batch` execution against the same shared `/docs/08-active/` workspace.
-- Not supported: multiple writable sessions editing the same working tree folder at the same time.
-- Not supported: splitting active-batch queue items across multiple writers by treating `In Progress` or advisory scope claims as per-item locks inside the same shared `/docs/08-active/` workspace.
-- Not supported: concurrent review-ledger final writes without serialization, because `doc-review-####` and `doc-sync-####` IDs are sequential and the shared index is a collision point.
-- Staging review ownership is single-branch at a time; only one non-`main` review branch should own staging during manual QA.
+Default rule: one writable agent/session per working tree.
 
-Coordination notes:
+Supported:
 
-- worktree isolation is the real safety boundary for concurrent writable work
-- for normal active-batch execution, prefer one runtime worker thread plus one integrator/doc-review/change-queue writer
-- use multiple worker worktrees only after explicit operator approval for a temporary, bounded parallel burst
-- prefer a Codex app project thread for the single worker worktree; use spawned child agents as worker executors only by exception when they are explicitly bound to the assigned dedicated branch/worktree, stay out of `/docs/08-active/`, and complete commit plus handoff requirements
-- advisory scope claims are coordination aids only and do not guarantee protection
-- use `.agents/session-scope-claims.json` only as a lightweight visibility layer, not as a lock
-- a session that began read-only must not silently become a same-folder writer while another writable session is active; it must either move to its own branch/worktree or remain read-only
-- writes to `.agents/memory/` are still ordinary repo writes and follow the same one-writer-per-worktree rule
-- for `batch-start` and `work-batch`, the writable claim scope is the whole `/docs/08-active/` workspace; queue item IDs may appear only as descriptive context inside that broader claim
-- use `.agents/batch-branch-handoffs/` for worker-to-integrator handoff artifacts; those files coordinate branch integration but do not replace the singleton ownership of `/docs/08-active/`
+- one writable session in one working tree
+- multiple read-only planning/review sessions while one writer owns edits
+- multiple writable sessions only when each has its own branch, worktree, and accepted scope
+
+Not supported:
+
+- multiple writable sessions editing the same working tree
+- silently switching a read-only session into a writer while another writer owns the tree
+- treating advisory notes as file locks
+- relying on issue status as a concurrency lock
+- overwriting unrelated dirty changes
+
+Worktree isolation is the real safety boundary for concurrent writable work.
 
 ---
 
 ## Automation Policy
 
-Default rule:
+Default rule: if the next step is unclear, stop and ask.
 
-- if the next step is unclear, stop and ask
+Always allowed:
 
-Automation tiers:
+- read-only analysis
+- source review
+- documentation review
+- workflow interpretation
+- prompt drafting
+- test recommendation
 
-- Tier A: always allowed
-  - read-only analysis
-  - workflow interpretation
-  - prompt generation
-  - standards and source review
-- Tier B: allowed within the active scoped workflow
-  - narrow in-scope updates that the current workflow explicitly owns
-  - matching review-ledger or active-workspace state updates required by that workflow
-  - targeted verification tied directly to that workflow
-- Tier C: explicit approval or workflow-specific authorization required
-  - deploy, publish, or other external-state changes
-  - new dependencies
-  - infrastructure, auth, database, or architecture changes
-  - destructive resets, archive moves, or workspace-clearing steps
-- Tier D: stop and ask
-  - scope ambiguity
-  - ownership ambiguity
-  - conflicting standards or source inputs
-  - multiple plausible implementation directions with materially different outcomes
+Allowed within an accepted scope:
 
-Continuation rule:
+- narrow implementation
+- targeted docs sync
+- targeted tests
+- targeted formatting
+- final summary
 
-- continue automatically only while scope, risk, and ownership remain unchanged inside the current workflow
-- crossing from read-only research, planning, audit, or review into writable execution counts as an ownership/risk change when another writer already owns the current working tree; stop and require separate branch/worktree setup or explicit writable handoff before editing
-- if the next action increases risk or changes workflow type, stop and ask unless the user already requested that exact workflow step
+Requires explicit approval:
 
-Workflow-specific authorization note:
+- new dependencies
+- auth/security/database architecture changes
+- data migrations
+- deployment or staging publication
+- destructive operations
+- broad refactors
+- mass formatting
+- GitHub issue/project mutations
+- work outside the current issue scope
 
-- an explicitly requested batch workflow step authorizes the normal actions that workflow requires when its own completion criteria are met
-- for `work-batch`, local development review does not require push or staging deployment; it does require a scoped commit after accepted local review and before passed-review state
-- for `work-batch`, shared manual visual review includes scoped commit, push, and canonical staging deployment when the pass is review-ready
-- do not stop for a second approval in that case unless a documented deployment precondition is missing or the workflow would need to improvise an unapproved execution path
+Stop and ask when:
 
----
-
-## UI and Component Standards
-
-- Tier 1 = primitives and baseline components  
-- Tier 2 = reusable patterns  
-- Tier 3 = feature modules  
-
-Rules:
-- Do not bypass tiers
-- Do not redefine primitives at higher tiers
-- UI Reference must reflect actual component behavior
+- scope is ambiguous
+- ownership is ambiguous
+- docs conflict
+- tests fail in a way that changes the plan
+- UI behavior requires design judgment
+- security implications are unclear
+- multiple implementation paths have materially different tradeoffs
 
 ---
 
 ## Important Docs
+
+Start with these when the issue does not name a more specific source:
 
 - `docs/00-start-here.md`
 - `docs/02-standards/index.md`
@@ -317,16 +498,36 @@ Rules:
 - `docs/05-flows/index.md`
 - `docs/06-database/index.md`
 - `docs/07-planning/index.md`
+- `docs/07-planning/core-service-build-plan-matrix.md`
+- `docs/07-planning/view-surface-composition-planning.md`
 - `docs/09-reference/index.md`
 - `docs/10-runbooks/index.md`
+
+Security-sensitive work should also inspect the relevant files under:
+
+- `docs/02-standards/security/`
+- `docs/07-planning/*security*`
+- `docs/07-planning/*audit*`
+- `docs/07-planning/*access*`
+- `docs/07-planning/*data*`
+- `docs/07-planning/*threat*`
+
+UI-sensitive work should also inspect the relevant files under:
+
+- `docs/02-standards/ui/`
+- `docs/09-reference/ui/`
+- `resources/views/components/`
+- `resources/css/`
 
 ---
 
 ## Final Rule
 
 If a change cannot be clearly tied to:
-- one batch
-- one concern
+
+- one GitHub issue or explicit user task
+- one accepted scope
 - one canonical owner
+- one verification path
 
 then do not implement it yet.

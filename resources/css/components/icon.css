@@ -1,0 +1,79 @@
+/* ==========================================================================
+   File: resources/css/components/icon.css
+   Purpose: Icon component styles.
+
+   Notes:
+   - Defines icon component selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - SVG paths inherit color through currentColor.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Base icon
+       ---------------------------------------------------------------------- */
+
+    .ui-icon {
+        display: inline-block;
+        flex: 0 0 auto;
+        inline-size: 1rem;
+        block-size: 1rem;
+        color: inherit;
+        fill: currentColor;
+        vertical-align: text-bottom;
+    }
+
+    .ui-icon * {
+        fill: currentColor;
+    }
+
+    /* ----------------------------------------------------------------------
+       Sizes
+       ---------------------------------------------------------------------- */
+
+    .ui-icon--xs {
+        inline-size: 0.75rem;
+        block-size: 0.75rem;
+    }
+
+    .ui-icon--sm,
+    .ui-icon--md {
+        inline-size: 1rem;
+        block-size: 1rem;
+    }
+
+    .ui-icon--lg {
+        inline-size: 1.25rem;
+        block-size: 1.25rem;
+    }
+
+    .ui-icon--xl {
+        inline-size: 1.5rem;
+        block-size: 1.5rem;
+    }
+
+    .ui-icon--2xl {
+        inline-size: 2rem;
+        block-size: 2rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Missing icon
+       ---------------------------------------------------------------------- */
+
+    .ui-icon--missing {
+        opacity: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Skeleton
+       ---------------------------------------------------------------------- */
+
+    .ui-icon--skeleton {
+        display: inline-block;
+        inline-size: 1rem;
+        block-size: 1rem;
+        background-color: var(--ui-skeleton-element);
+    }
+}

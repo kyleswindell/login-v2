@@ -1,0 +1,307 @@
+/* ==========================================================================
+   File: resources/css/components/toast-notification.css
+   Purpose: Toast Notification component styles.
+
+   Notes:
+   - Defines Toast Notification selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Shared notification family variables live in notification.css.
+   ========================================================================== */
+
+@layer components {
+    .ui-toast-notification {
+        --ui-notification-accent-color: var(--ui-support-info-inverse);
+        --ui-notification-background-color: var(--ui-background-inverse);
+
+        box-sizing: border-box;
+        display: flex;
+        inline-size: var(--ui-notification-toast-width, 18rem);
+        block-size: auto;
+        margin: 0;
+        border: 0;
+        border-inline-start: var(--ui-notification-border-width, 3px) solid
+            var(--ui-notification-accent-color);
+        padding: 0;
+        padding-inline-start: 0.8125rem;
+        background: var(--ui-notification-background-color);
+        box-shadow: 0 2px 6px 0 rgb(0 0 0 / 0.2);
+        color: var(--ui-text-inverse);
+    }
+
+    .ui-toast-notification *,
+    .ui-toast-notification *::before,
+    .ui-toast-notification *::after {
+        box-sizing: inherit;
+    }
+
+    @media (min-width: 99rem) {
+        .ui-toast-notification {
+            inline-size: var(--ui-notification-toast-width-max, 22rem);
+        }
+    }
+
+    .ui-toast-notification:not(.ui-toast-notification-low-contrast):not(
+            .ui-toast-notification--low-contrast
+        )
+        a {
+        color: var(--ui-link-inverse);
+    }
+
+    .ui-toast-notification a {
+        text-decoration: none;
+    }
+
+    .ui-toast-notification a:hover {
+        text-decoration: underline;
+    }
+
+    .ui-toast-notification a:focus {
+        outline: 1px solid var(--ui-link-inverse);
+    }
+
+    .ui-toast-notification.ui-toast-notification-low-contrast a:focus,
+    .ui-toast-notification.ui-toast-notification--low-contrast a:focus {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    /* ----------------------------------------------------------------------
+       Variants
+       ---------------------------------------------------------------------- */
+
+    .ui-toast-notification-error,
+    .ui-toast-notification--error {
+        --ui-notification-accent-color: var(--ui-support-error-inverse);
+        --ui-notification-background-color: var(--ui-background-inverse);
+    }
+
+    .ui-toast-notification-success,
+    .ui-toast-notification--success {
+        --ui-notification-accent-color: var(--ui-support-success-inverse);
+        --ui-notification-background-color: var(--ui-background-inverse);
+    }
+
+    .ui-toast-notification-info,
+    .ui-toast-notification-info-square,
+    .ui-toast-notification--info,
+    .ui-toast-notification--info-square {
+        --ui-notification-accent-color: var(--ui-support-info-inverse);
+        --ui-notification-background-color: var(--ui-background-inverse);
+    }
+
+    .ui-toast-notification-warning,
+    .ui-toast-notification-warning-alt,
+    .ui-toast-notification--warning,
+    .ui-toast-notification--warning-alt {
+        --ui-notification-accent-color: var(--ui-support-warning-inverse);
+        --ui-notification-background-color: var(--ui-background-inverse);
+    }
+
+    /* ----------------------------------------------------------------------
+       Low contrast
+       ---------------------------------------------------------------------- */
+
+    .ui-toast-notification-low-contrast,
+    .ui-toast-notification--low-contrast {
+        color: var(--ui-text-primary);
+    }
+
+    .ui-toast-notification-low-contrast.ui-toast-notification-error,
+    .ui-toast-notification--low-contrast.ui-toast-notification--error {
+        --ui-notification-accent-color: var(--ui-support-error);
+        --ui-notification-background-color: var(
+            --ui-notification-background-error
+        );
+    }
+
+    .ui-toast-notification-low-contrast.ui-toast-notification-success,
+    .ui-toast-notification--low-contrast.ui-toast-notification--success {
+        --ui-notification-accent-color: var(--ui-support-success);
+        --ui-notification-background-color: var(
+            --ui-notification-background-success
+        );
+    }
+
+    .ui-toast-notification-low-contrast.ui-toast-notification-info,
+    .ui-toast-notification-low-contrast.ui-toast-notification-info-square,
+    .ui-toast-notification--low-contrast.ui-toast-notification--info,
+    .ui-toast-notification--low-contrast.ui-toast-notification--info-square {
+        --ui-notification-accent-color: var(--ui-support-info);
+        --ui-notification-background-color: var(
+            --ui-notification-background-info
+        );
+    }
+
+    .ui-toast-notification-low-contrast.ui-toast-notification-warning,
+    .ui-toast-notification-low-contrast.ui-toast-notification-warning-alt,
+    .ui-toast-notification--low-contrast.ui-toast-notification--warning,
+    .ui-toast-notification--low-contrast.ui-toast-notification--warning-alt {
+        --ui-notification-accent-color: var(--ui-support-warning);
+        --ui-notification-background-color: var(
+            --ui-notification-background-warning
+        );
+    }
+
+    .ui-toast-notification-low-contrast .ui-toast-notification-subtitle,
+    .ui-toast-notification-low-contrast .ui-toast-notification__subtitle,
+    .ui-toast-notification-low-contrast .ui-toast-notification-caption,
+    .ui-toast-notification-low-contrast .ui-toast-notification__caption,
+    .ui-toast-notification--low-contrast .ui-toast-notification-subtitle,
+    .ui-toast-notification--low-contrast .ui-toast-notification__subtitle,
+    .ui-toast-notification--low-contrast .ui-toast-notification-caption,
+    .ui-toast-notification--low-contrast .ui-toast-notification__caption {
+        color: var(--ui-text-primary);
+    }
+
+    .ui-toast-notification-low-contrast .ui-toast-notification-close-icon,
+    .ui-toast-notification-low-contrast .ui-toast-notification__close-icon,
+    .ui-toast-notification--low-contrast .ui-toast-notification-close-icon,
+    .ui-toast-notification--low-contrast .ui-toast-notification__close-icon {
+        fill: var(--ui-icon-primary);
+    }
+
+    .ui-toast-notification-low-contrast
+        .ui-toast-notification-close-button:focus,
+    .ui-toast-notification-low-contrast
+        .ui-toast-notification__close-button:focus,
+    .ui-toast-notification--low-contrast
+        .ui-toast-notification-close-button:focus,
+    .ui-toast-notification--low-contrast
+        .ui-toast-notification__close-button:focus {
+        outline-color: var(--ui-focus);
+    }
+
+    /* ----------------------------------------------------------------------
+       Icon and details
+       ---------------------------------------------------------------------- */
+
+    .ui-toast-notification-icon,
+    .ui-toast-notification__icon {
+        flex-shrink: 0;
+        margin-block-start: var(--ui-spacing-05);
+        margin-inline-end: var(--ui-spacing-05);
+        fill: var(--ui-notification-accent-color);
+    }
+
+    .ui-toast-notification-warning
+        .ui-toast-notification-icon
+        path[opacity="0"],
+    .ui-toast-notification--warning
+        .ui-toast-notification__icon
+        path[opacity="0"],
+    .ui-toast-notification-warning-alt
+        .ui-toast-notification-icon
+        path:first-of-type,
+    .ui-toast-notification--warning-alt
+        .ui-toast-notification__icon
+        path:first-of-type {
+        fill: var(--ui-black, #000000);
+        opacity: 1;
+    }
+
+    .ui-toast-notification-details,
+    .ui-toast-notification__details {
+        margin-block-end: var(--ui-spacing-05);
+        margin-inline-end: var(--ui-spacing-05);
+    }
+
+    .ui-toast-notification-title,
+    .ui-toast-notification__title {
+        margin-block-start: var(--ui-spacing-05);
+        font-size: var(--ui-type-heading-compact-01-font-size);
+        font-weight: var(--ui-font-weight-semibold);
+        line-height: var(--ui-type-heading-compact-01-line-height);
+        letter-spacing: var(--ui-type-heading-compact-01-letter-spacing);
+        word-break: break-word;
+    }
+
+    .ui-toast-notification-subtitle,
+    .ui-toast-notification__subtitle {
+        margin-block: 0 var(--ui-spacing-05);
+        color: var(--ui-text-inverse);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+        word-break: break-word;
+    }
+
+    .ui-toast-notification-caption,
+    .ui-toast-notification__caption {
+        padding-block-start: var(--ui-spacing-03);
+        color: var(--ui-text-inverse);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+    }
+
+    /* ----------------------------------------------------------------------
+       Close button
+       ---------------------------------------------------------------------- */
+
+    .ui-toast-notification-close-button,
+    .ui-toast-notification__close-button {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--ui-notification-close-size, 3rem);
+        min-inline-size: var(--ui-notification-close-size, 3rem);
+        block-size: var(--ui-notification-close-size, 3rem);
+        min-block-size: var(--ui-notification-close-size, 3rem);
+        margin-inline-start: auto;
+        border: none;
+        padding: 0;
+        background-color: transparent;
+        cursor: pointer;
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+        transition:
+            outline var(--ui-transition-base, var(--ui-duration-fast-02))
+                var(--ui-motion-standard-productive),
+            background-color
+                var(--ui-transition-base, var(--ui-duration-fast-02))
+                var(--ui-motion-standard-productive);
+    }
+
+    .ui-toast-notification-close-button:focus,
+    .ui-toast-notification-close-button:focus-visible,
+    .ui-toast-notification__close-button:focus,
+    .ui-toast-notification__close-button:focus-visible {
+        outline-color: var(--ui-focus-inverse);
+    }
+
+    .ui-toast-notification-close-icon,
+    .ui-toast-notification__close-icon {
+        fill: var(--ui-icon-inverse);
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-toast-notification {
+            outline: 1px solid CanvasText;
+        }
+
+        .ui-toast-notification-close-button:focus,
+        .ui-toast-notification-close-button:focus-visible,
+        .ui-toast-notification__close-button:focus,
+        .ui-toast-notification__close-button:focus-visible {
+            outline-color: Highlight;
+        }
+
+        .ui-toast-notification-icon,
+        .ui-toast-notification__icon {
+            fill: CanvasText;
+        }
+
+        .ui-toast-notification-error .ui-toast-notification-icon,
+        .ui-toast-notification--error .ui-toast-notification__icon {
+            fill: Mark;
+        }
+    }
+}

@@ -1,0 +1,177 @@
+import { expect, test } from "@playwright/test";
+import { waitForApp } from "./support/waitForApp.js";
+
+const email = process.env.PLAYWRIGHT_TEST_EMAIL ?? "test@example.com";
+const password = process.env.PLAYWRIGHT_TEST_PASSWORD ?? "password";
+
+async function login(page, request, { waitForRealtime = false } = {}) {
+    const scriptFailures = [];
+
+    page.on("requestfailed", (failedRequest) => {
+        if (failedRequest.resourceType() === "script") {
+            scriptFailures.push(
+                `${failedRequest.url()}: ${failedRequest.failure()?.errorText || "request failed"}`,
+            );
+        }
+    });
+
+    await waitForApp(request);
+    await page.goto("/login");
+    await page.getByLabel("Email or username").fill(email);
+    await page.getByRole("button", { name: "Continue" }).click();
+    await page.locator("#password").fill(password);
+
+    const realtimeSubscription = waitForRealtime
+        ? waitForNotificationSubscription(page)
+        : null;
+
+    await page.getByRole("button", { name: "Log in" }).click();
+    await page.waitForURL("**/dashboard");
+    await page.waitForLoadState("domcontentloaded");
+
+    expect(
+        scriptFailures,
+        `Browser JavaScript failed to load:\n${scriptFailures.join("\n")}`,
+    ).toEqual([]);
+
+    await waitForNotificationRuntimes(page);
+
+    if (realtimeSubscription) {
+        await realtimeSubscription;
+    }
+}
+
+function waitForNotificationSubscription(page) {
+    return new Promise((resolve) => {
+        page.on("websocket", (websocket) => {
+            websocket.on("framereceived", ({ payload }) => {
+                try {
+                    const message = JSON.parse(payload);
+
+                    if (
+                        message.event ===
+                            "pusher_internal:subscription_succeeded" &&
+                        String(message.channel || "").startsWith(
+                            "private-App.Models.User.",
+                        )
+                    ) {
+                        resolve();
+                    }
+                } catch (error) {
+                    // Ignore protocol frames that are not JSON messages.
+                }
+            });
+        });
+    });
+}
+
+async function waitForNotificationRuntimes(page) {
+    await page
+        .locator('[data-transient-notifications-init="1"]')
+        .waitFor({ state: "attached" });
+    await page
+        .locator('[data-dashboard-test-notification-bound="true"]')
+        .waitFor({ state: "attached" });
+}
+
+async function unreadCount(page) {
+    const text = await page
+        .locator("[data-notification-trigger-summary]")
+        .textContent();
+
+    return Number.parseInt(text?.trim() || "0", 10);
+}
+
+test.describe("notification transport", () => {
+    test("deduplicates explicit transient toast IDs", async ({
+        page,
+        request,
+    }) => {
+        await login(page, request);
+
+        const unreadBefore = await unreadCount(page);
+
+        await page.evaluate(() => {
+            const payload = {
+                id: "browser-transient-dedupe",
+                kind: "success",
+                title: "Saved",
+                subtitle: "The command completed.",
+                timeout: 0,
+            };
+
+            window.dispatchEvent(
+                new CustomEvent("notifications:toast", { detail: payload }),
+            );
+            window.dispatchEvent(
+                new CustomEvent("notifications:toast", { detail: payload }),
+            );
+        });
+
+        await expect(
+            page.locator(
+                '[data-notification-toast-id="browser-transient-dedupe"]',
+            ),
+        ).toHaveCount(1);
+        expect(await unreadCount(page)).toBe(unreadBefore);
+    });
+
+    test("presents one persistent toast per tab after repeated lifecycle initialization", async ({
+        context,
+        page,
+        request,
+    }) => {
+        await login(page, request, { waitForRealtime: true });
+
+        const secondPage = await context.newPage();
+        const secondPageRealtimeSubscription =
+            waitForNotificationSubscription(secondPage);
+        await secondPage.goto("/dashboard");
+        await waitForNotificationRuntimes(secondPage);
+        await secondPageRealtimeSubscription;
+
+        const firstTabUnreadBefore = await unreadCount(page);
+        const secondTabUnreadBefore = await unreadCount(secondPage);
+
+        await page.evaluate(() => {
+            document.dispatchEvent(new CustomEvent("livewire:navigated"));
+            document.dispatchEvent(new CustomEvent("livewire:navigated"));
+        });
+
+        const responsePromise = page.waitForResponse(
+            (response) =>
+                response.url().endsWith("/dashboard/test-notification") &&
+                response.request().method() === "POST",
+        );
+
+        await page
+            .getByRole("button", { name: "Generate test notification" })
+            .click();
+
+        const response = await responsePromise;
+        const payload = await response.json();
+
+        expect(response.status()).toBe(201);
+        expect(Object.keys(payload).sort()).toEqual([
+            "created",
+            "notification_id",
+        ]);
+        expect(payload.created).toBe(true);
+
+        const toastSelector = `[data-notification-toast-id="${payload.notification_id}"]`;
+
+        await expect(page.locator(toastSelector)).toHaveCount(1);
+        await expect(secondPage.locator(toastSelector)).toHaveCount(1);
+        await expect
+            .poll(() => unreadCount(page))
+            .toBe(firstTabUnreadBefore + 1);
+        await expect
+            .poll(() => unreadCount(secondPage))
+            .toBe(secondTabUnreadBefore + 1);
+
+        await page.waitForTimeout(250);
+
+        await expect(page.locator(toastSelector)).toHaveCount(1);
+        await expect(secondPage.locator(toastSelector)).toHaveCount(1);
+    });
+});

@@ -1,0 +1,14 @@
+/* ==========================================================================
+   File: resources/css/patterns/index.css
+   Purpose: Pattern CSS entrypoint.
+   Notes:
+   - Loads page/workflow pattern styles.
+   - Import after components/index.css.
+   ========================================================================== */
+
+@import "./dashboard.css";
+@import "./empty-state.css";
+@import "./page-header.css";
+@import "./search-filter.css";
+@import "./forms/index.css";
+@import "./account.css";

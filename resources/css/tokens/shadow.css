@@ -1,0 +1,21 @@
+/* ==========================================================================
+   File: resources/css/tokens/shadow.css
+   Purpose: Global shadow tokens.
+   Notes:
+   - Defines shadow value tokens only.
+   - Component CSS should consume --ui-shadow-* aliases.
+   - Utility classes belong in resources/css/base/shadow.css.
+   ========================================================================== */
+
+@layer base {
+    :root {
+        --ui-shadow-color: var(--ui-shadow, rgb(var(--ui-black-rgb) / 0.3));
+
+        --ui-shadow-floating: 0 2px 6px var(--ui-shadow-color);
+        --ui-shadow-floating-top: 0 -2px 6px var(--ui-shadow-color);
+
+        --ui-shadow-popover: var(--ui-shadow-floating);
+        --ui-shadow-dropdown: var(--ui-shadow-floating);
+        --ui-shadow-menu: var(--ui-shadow-floating);
+    }
+}

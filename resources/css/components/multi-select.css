@@ -1,0 +1,581 @@
+/* ==========================================================================
+   File: resources/css/components/multi-select.css
+   Purpose: Multiselect component styles.
+
+   Notes:
+   - Defines Multiselect selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports default, filterable, inline, select-all, selected,
+     expanded, disabled, readonly, tag, checkbox, menu-item,
+     highlighted, input-focused, and reduced-motion states.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
+    .ui-multi-select,
+    .ui-multi-select {
+        box-sizing: border-box;
+    }
+
+    /* ----------------------------------------------------------------------
+       List box field
+       ---------------------------------------------------------------------- */
+
+    .ui-multi-select .ui-list-box-field-wrapper,
+    .ui-multi-select .ui-list-box__field--wrapper,
+    .ui-multi-select .ui-list-box-field-wrapper,
+    .ui-multi-select .ui-list-box__field--wrapper {
+        display: inline-flex;
+        align-items: center;
+        inline-size: 100%;
+        block-size: calc(100% + 1px);
+    }
+
+    .ui-multi-select .ui-list-box-field,
+    .ui-multi-select .ui-list-box__field,
+    .ui-multi-select .ui-list-box-field,
+    .ui-multi-select .ui-list-box__field {
+        block-size: 100%;
+    }
+
+    .ui-multi-select .ui-list-box-field:focus,
+    .ui-multi-select .ui-list-box__field:focus,
+    .ui-multi-select .ui-list-box-field:focus,
+    .ui-multi-select .ui-list-box__field:focus {
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+    }
+
+    .ui-multi-select-filterable .ui-list-box-field,
+    .ui-multi-select-filterable .ui-list-box__field,
+    .ui-multi-select--filterable .ui-list-box-field,
+    .ui-multi-select--filterable .ui-list-box__field,
+    .ui-multi-select-filterable .ui-list-box-field,
+    .ui-multi-select-filterable .ui-list-box__field,
+    .ui-multi-select--filterable .ui-list-box-field,
+    .ui-multi-select--filterable .ui-list-box__field {
+        padding: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Tags
+       ---------------------------------------------------------------------- */
+
+    .ui-multi-select .ui-tag,
+    .ui-multi-select .ui-tag {
+        min-inline-size: auto;
+        margin: 0 var(--ui-spacing-03) 0 var(--ui-spacing-05);
+    }
+
+    /* ----------------------------------------------------------------------
+       Menu
+       ---------------------------------------------------------------------- */
+
+    .ui-multi-select .ui-list-box-menu,
+    .ui-multi-select .ui-list-box__menu,
+    .ui-multi-select .ui-list-box-menu,
+    .ui-multi-select .ui-list-box__menu {
+        min-inline-size: auto;
+    }
+
+    .ui-multi-select:not(.ui-list-box-expanded) .ui-list-box-menu,
+    .ui-multi-select:not(.ui-list-box-expanded) .ui-list-box__menu,
+    .ui-multi-select:not(.ui-list-box--expanded) .ui-list-box-menu,
+    .ui-multi-select:not(.ui-list-box--expanded) .ui-list-box__menu,
+    .ui-multi-select:not(.ui-list-box-expanded) .ui-list-box-menu,
+    .ui-multi-select:not(.ui-list-box-expanded) .ui-list-box__menu,
+    .ui-multi-select:not(.ui-list-box--expanded) .ui-list-box-menu,
+    .ui-multi-select:not(.ui-list-box--expanded) .ui-list-box__menu {
+        visibility: hidden;
+    }
+
+    /* ----------------------------------------------------------------------
+       Select all treatment
+       ---------------------------------------------------------------------- */
+
+    .ui-multi-select.ui-multi-select-selectall
+        .ui-list-box-menu-item:first-child
+        .ui-list-box-menu-item-option,
+    .ui-multi-select.ui-multi-select-selectall
+        .ui-list-box-menu-item:first-child
+        .ui-list-box__menu-item__option,
+    .ui-multi-select.ui-multi-select-selectall
+        .ui-list-box__menu-item:first-child
+        .ui-list-box-menu-item-option,
+    .ui-multi-select.ui-multi-select-selectall
+        .ui-list-box__menu-item:first-child
+        .ui-list-box__menu-item__option,
+    .ui-multi-select.ui-multi-select--selectall
+        .ui-list-box-menu-item:first-child
+        .ui-list-box-menu-item-option,
+    .ui-multi-select.ui-multi-select--selectall
+        .ui-list-box-menu-item:first-child
+        .ui-list-box__menu-item__option,
+    .ui-multi-select.ui-multi-select--selectall
+        .ui-list-box__menu-item:first-child
+        .ui-list-box-menu-item-option,
+    .ui-multi-select.ui-multi-select--selectall
+        .ui-list-box__menu-item:first-child
+        .ui-list-box__menu-item__option {
+        margin: 0;
+        border-block-end: 1px solid var(--ui-border-subtle-01);
+        padding: 0.6875rem var(--ui-spacing-05);
+    }
+
+    .ui-multi-select.ui-multi-select-selectall
+        .ui-list-box-menu-item:nth-child(2)
+        .ui-list-box-menu-item-option,
+    .ui-multi-select.ui-multi-select-selectall
+        .ui-list-box-menu-item:nth-child(2)
+        .ui-list-box__menu-item__option,
+    .ui-multi-select.ui-multi-select-selectall
+        .ui-list-box__menu-item:nth-child(2)
+        .ui-list-box-menu-item-option,
+    .ui-multi-select.ui-multi-select-selectall
+        .ui-list-box__menu-item:nth-child(2)
+        .ui-list-box__menu-item__option,
+    .ui-multi-select.ui-multi-select--selectall
+        .ui-list-box-menu-item:nth-child(2)
+        .ui-list-box-menu-item-option,
+    .ui-multi-select.ui-multi-select--selectall
+        .ui-list-box-menu-item:nth-child(2)
+        .ui-list-box__menu-item__option,
+    .ui-multi-select.ui-multi-select--selectall
+        .ui-list-box__menu-item:nth-child(2)
+        .ui-list-box-menu-item-option,
+    .ui-multi-select.ui-multi-select--selectall
+        .ui-list-box__menu-item:nth-child(2)
+        .ui-list-box__menu-item__option {
+        border-block-start: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Checkbox options
+       ---------------------------------------------------------------------- */
+
+    .ui-multi-select .ui-list-box-menu-item-option .ui-checkbox-wrapper,
+    .ui-multi-select .ui-list-box-menu-item-option .ui-checkbox__wrapper,
+    .ui-multi-select .ui-list-box__menu-item__option .ui-checkbox-wrapper,
+    .ui-multi-select .ui-list-box__menu-item__option .ui-checkbox__wrapper,
+    .ui-multi-select .ui-list-box-menu-item-option .ui-checkbox-wrapper,
+    .ui-multi-select .ui-list-box-menu-item-option .ui-checkbox__wrapper,
+    .ui-multi-select .ui-list-box__menu-item__option .ui-checkbox-wrapper,
+    .ui-multi-select .ui-list-box__menu-item__option .ui-checkbox__wrapper {
+        display: flex;
+        align-items: center;
+        inline-size: 100%;
+        block-size: 100%;
+    }
+
+    .ui-multi-select .ui-list-box-menu-item-option .ui-checkbox-label,
+    .ui-multi-select .ui-list-box__menu-item__option .ui-checkbox-label,
+    .ui-multi-select .ui-list-box-menu-item-option .ui-checkbox-label,
+    .ui-multi-select .ui-list-box__menu-item__option .ui-checkbox-label {
+        display: inline-block;
+        overflow: hidden;
+        inline-size: 100%;
+        padding-inline-start: 1.75rem;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .ui-multi-select .ui-list-box-menu-item-option .ui-checkbox-label::before,
+    .ui-multi-select .ui-list-box__menu-item__option .ui-checkbox-label::before,
+    .ui-multi-select .ui-list-box-menu-item-option .ui-checkbox-label::before,
+    .ui-multi-select .ui-list-box__menu-item__option .ui-checkbox-label::before {
+        margin-block: 0;
+    }
+
+    .ui-multi-select
+        .ui-list-box-menu-item-option
+        .ui-checkbox:indeterminate
+        + .ui-checkbox-label::after,
+    .ui-multi-select
+        .ui-list-box__menu-item__option
+        .ui-checkbox:indeterminate
+        + .ui-checkbox-label::after,
+    .ui-multi-select
+        .ui-list-box-menu-item-option
+        .ui-checkbox:indeterminate
+        + .ui-checkbox-label::after,
+    .ui-multi-select
+        .ui-list-box__menu-item__option
+        .ui-checkbox:indeterminate
+        + .ui-checkbox-label::after {
+        inset-block-start: 0.5625rem;
+    }
+
+    .ui-multi-select .ui-list-box-menu-item-option .ui-checkbox-label::after,
+    .ui-multi-select .ui-list-box__menu-item__option .ui-checkbox-label::after,
+    .ui-multi-select .ui-list-box-menu-item-option .ui-checkbox-label::after,
+    .ui-multi-select .ui-list-box__menu-item__option .ui-checkbox-label::after {
+        inset-block-start: 0.3125rem;
+    }
+
+    .ui-multi-select .ui-list-box-menu-item-option > .ui-form-item,
+    .ui-multi-select .ui-list-box__menu-item__option > .ui-form-item,
+    .ui-multi-select .ui-list-box-menu-item-option > .ui-form-item,
+    .ui-multi-select .ui-list-box__menu-item__option > .ui-form-item {
+        flex-direction: row;
+        margin: 0;
+    }
+
+    .ui-multi-select
+        .ui-list-box-menu-item
+        .ui-checkbox:checked
+        ~ .ui-checkbox-label-text,
+    .ui-multi-select
+        .ui-list-box__menu-item
+        .ui-checkbox:checked
+        ~ .ui-checkbox-label-text,
+    .ui-multi-select
+        .ui-list-box-menu-item
+        .ui-checkbox:checked
+        ~ .ui-checkbox-label-text,
+    .ui-multi-select
+        .ui-list-box__menu-item
+        .ui-checkbox:checked
+        ~ .ui-checkbox-label-text {
+        color: var(--ui-text-primary);
+    }
+
+    /* ----------------------------------------------------------------------
+       Filterable variant
+       ---------------------------------------------------------------------- */
+
+    .ui-multi-select-filterable,
+    .ui-multi-select--filterable,
+    .ui-multi-select-filterable,
+    .ui-multi-select--filterable {
+        transition: outline-color var(--ui-duration-fast-01)
+            var(--ui-motion-standard-productive);
+    }
+
+    .ui-multi-select-filterable.ui-combo-box .ui-text-input,
+    .ui-multi-select--filterable.ui-combo-box .ui-text-input,
+    .ui-multi-select-filterable.ui-combo-box .ui-text-input,
+    .ui-multi-select--filterable.ui-combo-box .ui-text-input {
+        border: 2px solid transparent;
+        background-clip: padding-box;
+        outline: none;
+    }
+
+    .ui-multi-select-filterable-input-focused,
+    .ui-multi-select--filterable--input-focused,
+    .ui-multi-select-filterable-input-focused,
+    .ui-multi-select--filterable--input-focused,
+    .ui-multi-select
+        .ui-list-box-field-wrapper-input-focused:has(
+            button[aria-expanded="false"]
+        ),
+    .ui-multi-select
+        .ui-list-box-field-wrapper-input-focused:has(
+            button[aria-expanded="true"]
+        ),
+    .ui-multi-select
+        .ui-list-box__field--wrapper--input-focused:has(
+            button[aria-expanded="false"]
+        ),
+    .ui-multi-select
+        .ui-list-box__field--wrapper--input-focused:has(
+            button[aria-expanded="true"]
+        ),
+    .ui-multi-select
+        .ui-list-box-field-wrapper-input-focused:has(
+            button[aria-expanded="false"]
+        ),
+    .ui-multi-select
+        .ui-list-box-field-wrapper-input-focused:has(
+            button[aria-expanded="true"]
+        ),
+    .ui-multi-select
+        .ui-list-box__field--wrapper--input-focused:has(
+            button[aria-expanded="false"]
+        ),
+    .ui-multi-select
+        .ui-list-box__field--wrapper--input-focused:has(
+            button[aria-expanded="true"]
+        ) {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-multi-select.ui-list-box-expanded
+        .ui-list-box-field-wrapper:has(
+            button[aria-activedescendant]:not([aria-activedescendant=""])
+        ),
+    .ui-multi-select.ui-list-box-expanded
+        .ui-list-box__field--wrapper:has(
+            button[aria-activedescendant]:not([aria-activedescendant=""])
+        ),
+    .ui-multi-select.ui-list-box--expanded
+        .ui-list-box-field-wrapper:has(
+            button[aria-activedescendant]:not([aria-activedescendant=""])
+        ),
+    .ui-multi-select.ui-list-box--expanded
+        .ui-list-box__field--wrapper:has(
+            button[aria-activedescendant]:not([aria-activedescendant=""])
+        ),
+    .ui-multi-select-filterable.ui-list-box-expanded:has(
+            input[aria-activedescendant]:not([aria-activedescendant=""])
+        ),
+    .ui-multi-select-filterable.ui-list-box--expanded:has(
+            input[aria-activedescendant]:not([aria-activedescendant=""])
+        ),
+    .ui-multi-select--filterable.ui-list-box-expanded:has(
+            input[aria-activedescendant]:not([aria-activedescendant=""])
+        ),
+    .ui-multi-select--filterable.ui-list-box--expanded:has(
+            input[aria-activedescendant]:not([aria-activedescendant=""])
+        ) {
+        outline-width: 1px;
+        outline-offset: -1px;
+    }
+
+    .ui-multi-select-filterable .ui-list-box-selection-multi,
+    .ui-multi-select-filterable .ui-list-box__selection--multi,
+    .ui-multi-select--filterable .ui-list-box-selection-multi,
+    .ui-multi-select--filterable .ui-list-box__selection--multi,
+    .ui-multi-select-filterable .ui-list-box-selection-multi,
+    .ui-multi-select-filterable .ui-list-box__selection--multi,
+    .ui-multi-select--filterable .ui-list-box-selection-multi,
+    .ui-multi-select--filterable .ui-list-box__selection--multi {
+        margin: 0 0 0 var(--ui-spacing-05);
+    }
+
+    .ui-multi-select-filterable.ui-multi-select-inline,
+    .ui-multi-select-filterable.ui-multi-select--inline,
+    .ui-multi-select--filterable.ui-multi-select-inline,
+    .ui-multi-select--filterable.ui-multi-select--inline,
+    .ui-multi-select-filterable.ui-multi-select-inline,
+    .ui-multi-select-filterable.ui-multi-select--inline,
+    .ui-multi-select--filterable.ui-multi-select-inline,
+    .ui-multi-select--filterable.ui-multi-select--inline,
+    .ui-multi-select-filterable.ui-multi-select-inline .ui-text-input,
+    .ui-multi-select-filterable.ui-multi-select--inline .ui-text-input,
+    .ui-multi-select--filterable.ui-multi-select-inline .ui-text-input,
+    .ui-multi-select--filterable.ui-multi-select--inline .ui-text-input,
+    .ui-multi-select-filterable.ui-multi-select-inline .ui-text-input,
+    .ui-multi-select-filterable.ui-multi-select--inline .ui-text-input,
+    .ui-multi-select--filterable.ui-multi-select-inline .ui-text-input,
+    .ui-multi-select--filterable.ui-multi-select--inline .ui-text-input {
+        border-block-end: 0;
+        background-color: transparent;
+    }
+
+    .ui-multi-select-filterable.ui-list-box-disabled:hover:not(
+            .ui-multi-select-filterable
+        )
+        .ui-text-input,
+    .ui-multi-select-filterable.ui-list-box--disabled:hover:not(
+            .ui-multi-select--filterable
+        )
+        .ui-text-input,
+    .ui-multi-select--filterable.ui-list-box-disabled:hover:not(
+            .ui-multi-select-filterable
+        )
+        .ui-text-input,
+    .ui-multi-select--filterable.ui-list-box--disabled:hover:not(
+            .ui-multi-select--filterable
+        )
+        .ui-text-input {
+        background-color: var(--ui-field);
+    }
+
+    /* ----------------------------------------------------------------------
+       Selected and highlighted options
+       ---------------------------------------------------------------------- */
+
+    .ui-multi-select-filterable.ui-multi-select-selected
+        .ui-list-box-menu-item:first-child.ui-list-box-menu-item-highlighted::before,
+    .ui-multi-select-filterable.ui-multi-select-selected
+        .ui-list-box-menu-item:first-child.ui-list-box__menu-item--highlighted::before,
+    .ui-multi-select-filterable.ui-multi-select-selected
+        .ui-list-box__menu-item:first-child.ui-list-box-menu-item-highlighted::before,
+    .ui-multi-select-filterable.ui-multi-select-selected
+        .ui-list-box__menu-item:first-child.ui-list-box__menu-item--highlighted::before,
+    .ui-multi-select--filterable.ui-multi-select--selected
+        .ui-list-box-menu-item:first-child.ui-list-box-menu-item-highlighted::before,
+    .ui-multi-select--filterable.ui-multi-select--selected
+        .ui-list-box-menu-item:first-child.ui-list-box__menu-item--highlighted::before,
+    .ui-multi-select--filterable.ui-multi-select--selected
+        .ui-list-box__menu-item:first-child.ui-list-box-menu-item-highlighted::before,
+    .ui-multi-select--filterable.ui-multi-select--selected
+        .ui-list-box__menu-item:first-child.ui-list-box__menu-item--highlighted::before,
+    .ui-multi-select.ui-multi-select-selected
+        .ui-list-box-menu-item:first-child.ui-list-box-menu-item-highlighted::before,
+    .ui-multi-select.ui-multi-select-selected
+        .ui-list-box-menu-item:first-child.ui-list-box__menu-item--highlighted::before,
+    .ui-multi-select.ui-multi-select-selected
+        .ui-list-box__menu-item:first-child.ui-list-box-menu-item-highlighted::before,
+    .ui-multi-select.ui-multi-select-selected
+        .ui-list-box__menu-item:first-child.ui-list-box__menu-item--highlighted::before,
+    .ui-multi-select.ui-multi-select--selected
+        .ui-list-box-menu-item:first-child.ui-list-box-menu-item-highlighted::before,
+    .ui-multi-select.ui-multi-select--selected
+        .ui-list-box-menu-item:first-child.ui-list-box__menu-item--highlighted::before,
+    .ui-multi-select.ui-multi-select--selected
+        .ui-list-box__menu-item:first-child.ui-list-box-menu-item-highlighted::before,
+    .ui-multi-select.ui-multi-select--selected
+        .ui-list-box__menu-item:first-child.ui-list-box__menu-item--highlighted::before {
+        position: absolute;
+        inline-size: 100%;
+        block-size: 100%;
+        border: 2px solid var(--ui-focus);
+        border-block-start: 1px solid var(--ui-focus);
+        content: "";
+    }
+
+    .ui-multi-select-filterable.ui-multi-select-selected
+        .ui-list-box-menu-item:first-child.ui-list-box-menu-item-highlighted,
+    .ui-multi-select-filterable.ui-multi-select-selected
+        .ui-list-box-menu-item:first-child.ui-list-box__menu-item--highlighted,
+    .ui-multi-select-filterable.ui-multi-select-selected
+        .ui-list-box__menu-item:first-child.ui-list-box-menu-item-highlighted,
+    .ui-multi-select-filterable.ui-multi-select-selected
+        .ui-list-box__menu-item:first-child.ui-list-box__menu-item--highlighted,
+    .ui-multi-select--filterable.ui-multi-select--selected
+        .ui-list-box-menu-item:first-child.ui-list-box-menu-item-highlighted,
+    .ui-multi-select--filterable.ui-multi-select--selected
+        .ui-list-box-menu-item:first-child.ui-list-box__menu-item--highlighted,
+    .ui-multi-select--filterable.ui-multi-select--selected
+        .ui-list-box__menu-item:first-child.ui-list-box-menu-item-highlighted,
+    .ui-multi-select--filterable.ui-multi-select--selected
+        .ui-list-box__menu-item:first-child.ui-list-box__menu-item--highlighted,
+    .ui-multi-select.ui-multi-select-selected
+        .ui-list-box-menu-item:first-child.ui-list-box-menu-item-highlighted,
+    .ui-multi-select.ui-multi-select-selected
+        .ui-list-box-menu-item:first-child.ui-list-box__menu-item--highlighted,
+    .ui-multi-select.ui-multi-select-selected
+        .ui-list-box__menu-item:first-child.ui-list-box-menu-item-highlighted,
+    .ui-multi-select.ui-multi-select-selected
+        .ui-list-box__menu-item:first-child.ui-list-box__menu-item--highlighted,
+    .ui-multi-select.ui-multi-select--selected
+        .ui-list-box-menu-item:first-child.ui-list-box-menu-item-highlighted,
+    .ui-multi-select.ui-multi-select--selected
+        .ui-list-box-menu-item:first-child.ui-list-box__menu-item--highlighted,
+    .ui-multi-select.ui-multi-select--selected
+        .ui-list-box__menu-item:first-child.ui-list-box-menu-item-highlighted,
+    .ui-multi-select.ui-multi-select--selected
+        .ui-list-box__menu-item:first-child.ui-list-box__menu-item--highlighted {
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+    }
+
+    .ui-multi-select-filterable.ui-multi-select-selected .ui-text-input,
+    .ui-multi-select-filterable.ui-multi-select--selected .ui-text-input,
+    .ui-multi-select--filterable.ui-multi-select-selected .ui-text-input,
+    .ui-multi-select--filterable.ui-multi-select--selected .ui-text-input,
+    .ui-multi-select.ui-multi-select-selected .ui-list-box-field,
+    .ui-multi-select.ui-multi-select-selected .ui-list-box__field,
+    .ui-multi-select.ui-multi-select--selected .ui-list-box-field,
+    .ui-multi-select.ui-multi-select--selected .ui-list-box__field {
+        padding-inline-start: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Readonly variant
+       ---------------------------------------------------------------------- */
+
+    .ui-multi-select.ui-multi-select-readonly,
+    .ui-multi-select.ui-multi-select-readonly:hover,
+    .ui-multi-select.ui-multi-select--readonly,
+    .ui-multi-select.ui-multi-select--readonly:hover,
+    .ui-multi-select.ui-multi-select-readonly,
+    .ui-multi-select.ui-multi-select-readonly:hover,
+    .ui-multi-select.ui-multi-select--readonly,
+    .ui-multi-select.ui-multi-select--readonly:hover {
+        border-block-end-color: var(--ui-border-subtle);
+        background-color: transparent;
+    }
+
+    .ui-multi-select.ui-multi-select-readonly .ui-list-box-menu-icon svg,
+    .ui-multi-select.ui-multi-select-readonly .ui-list-box__menu-icon svg,
+    .ui-multi-select.ui-multi-select--readonly .ui-list-box-menu-icon svg,
+    .ui-multi-select.ui-multi-select--readonly .ui-list-box__menu-icon svg,
+    .ui-multi-select.ui-multi-select-readonly .ui-list-box-menu-icon svg,
+    .ui-multi-select.ui-multi-select-readonly .ui-list-box__menu-icon svg,
+    .ui-multi-select.ui-multi-select--readonly .ui-list-box-menu-icon svg,
+    .ui-multi-select.ui-multi-select--readonly .ui-list-box__menu-icon svg {
+        fill: var(--ui-icon-disabled);
+    }
+
+    .ui-multi-select.ui-multi-select-readonly .ui-tag-filter,
+    .ui-multi-select.ui-multi-select-readonly .ui-tag--filter,
+    .ui-multi-select.ui-multi-select-readonly .ui-tag-close-icon:hover,
+    .ui-multi-select.ui-multi-select-readonly .ui-tag__close-icon:hover,
+    .ui-multi-select.ui-multi-select--readonly .ui-tag-filter,
+    .ui-multi-select.ui-multi-select--readonly .ui-tag--filter,
+    .ui-multi-select.ui-multi-select--readonly .ui-tag-close-icon:hover,
+    .ui-multi-select.ui-multi-select--readonly .ui-tag__close-icon:hover,
+    .ui-multi-select.ui-multi-select-readonly .ui-tag-filter,
+    .ui-multi-select.ui-multi-select-readonly .ui-tag--filter,
+    .ui-multi-select.ui-multi-select-readonly .ui-tag-close-icon:hover,
+    .ui-multi-select.ui-multi-select-readonly .ui-tag__close-icon:hover,
+    .ui-multi-select.ui-multi-select--readonly .ui-tag-filter,
+    .ui-multi-select.ui-multi-select--readonly .ui-tag--filter,
+    .ui-multi-select.ui-multi-select--readonly .ui-tag-close-icon:hover,
+    .ui-multi-select.ui-multi-select--readonly .ui-tag__close-icon:hover {
+        background-color: transparent;
+        color: var(--ui-text-primary);
+        cursor: default;
+    }
+
+    .ui-multi-select.ui-multi-select-readonly .ui-tag-filter,
+    .ui-multi-select.ui-multi-select-readonly .ui-tag--filter,
+    .ui-multi-select.ui-multi-select--readonly .ui-tag-filter,
+    .ui-multi-select.ui-multi-select--readonly .ui-tag--filter,
+    .ui-multi-select.ui-multi-select-readonly .ui-tag-filter,
+    .ui-multi-select.ui-multi-select-readonly .ui-tag--filter,
+    .ui-multi-select.ui-multi-select--readonly .ui-tag-filter,
+    .ui-multi-select.ui-multi-select--readonly .ui-tag--filter {
+        box-shadow: 0 0 0 1px var(--ui-border-subtle);
+    }
+
+    .ui-multi-select.ui-multi-select-readonly .ui-tag-filter svg,
+    .ui-multi-select.ui-multi-select-readonly .ui-tag--filter svg,
+    .ui-multi-select.ui-multi-select--readonly .ui-tag-filter svg,
+    .ui-multi-select.ui-multi-select--readonly .ui-tag--filter svg,
+    .ui-multi-select.ui-multi-select-readonly .ui-tag-filter svg,
+    .ui-multi-select.ui-multi-select-readonly .ui-tag--filter svg,
+    .ui-multi-select.ui-multi-select--readonly .ui-tag-filter svg,
+    .ui-multi-select.ui-multi-select--readonly .ui-tag--filter svg {
+        fill: var(--ui-icon-disabled);
+    }
+
+    .ui-multi-select.ui-multi-select-readonly .ui-list-box-field,
+    .ui-multi-select.ui-multi-select-readonly .ui-list-box__field,
+    .ui-multi-select.ui-multi-select-readonly .ui-list-box-menu-icon,
+    .ui-multi-select.ui-multi-select-readonly .ui-list-box__menu-icon,
+    .ui-multi-select.ui-multi-select--readonly .ui-list-box-field,
+    .ui-multi-select.ui-multi-select--readonly .ui-list-box__field,
+    .ui-multi-select.ui-multi-select--readonly .ui-list-box-menu-icon,
+    .ui-multi-select.ui-multi-select--readonly .ui-list-box__menu-icon,
+    .ui-multi-select.ui-multi-select-readonly .ui-list-box-field,
+    .ui-multi-select.ui-multi-select-readonly .ui-list-box__field,
+    .ui-multi-select.ui-multi-select-readonly .ui-list-box-menu-icon,
+    .ui-multi-select.ui-multi-select-readonly .ui-list-box__menu-icon,
+    .ui-multi-select.ui-multi-select--readonly .ui-list-box-field,
+    .ui-multi-select.ui-multi-select--readonly .ui-list-box__field,
+    .ui-multi-select.ui-multi-select--readonly .ui-list-box-menu-icon,
+    .ui-multi-select.ui-multi-select--readonly .ui-list-box__menu-icon {
+        cursor: default;
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        .ui-multi-select-filterable,
+        .ui-multi-select--filterable,
+        .ui-multi-select-filterable,
+        .ui-multi-select--filterable {
+            transition: none;
+        }
+    }
+}

@@ -9,13 +9,18 @@
         "dev:host": "vite --host 0.0.0.0",
         "dev:lan": "vite --host 192.168.50.10 --port 5173",
         "lint:docs:guardrails": "node scripts/check-docs-guardrails.mjs",
-        "local:ready": "php artisan local:ready"
+        "local:ready": "php artisan local:ready",
+        "test:browser": "playwright test"
     },
     "devDependencies": {
+        "@playwright/test": "^1.61.1",
+        "@prettier/plugin-php": "^0.24.0",
         "@tailwindcss/vite": "^4.0.0",
         "axios": "^1.15.0",
         "concurrently": "^9.0.1",
         "laravel-vite-plugin": "^3.0.0",
+        "prettier": "^3.9.4",
+        "prettier-plugin-blade": "^3.2.2",
         "tailwindcss": "^4.0.0",
         "vite": "^8.0.0"
     },

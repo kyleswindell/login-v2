@@ -1,0 +1,280 @@
+/* ==========================================================================
+   File: resources/css/components/data-table-expandable.css
+   Purpose: Data Table expandable row styles.
+
+   Notes:
+   - Defines expandable Data Table row selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - AI label / slug / decorator branches are intentionally excluded.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Parent / child rows
+       ---------------------------------------------------------------------- */
+
+    .ui-data-table tr.ui-parent-row:first-of-type td {
+        border-block-start: 1px solid var(--ui-border-subtle);
+    }
+
+    .ui-expandable-row-hidden td,
+    .ui-expandable-row--hidden td {
+        inline-size: auto;
+        border-block-start: 0;
+        padding: var(--ui-spacing-05);
+    }
+
+    tr.ui-parent-row:not(.ui-expandable-row) + tr[data-child-row] {
+        block-size: 0;
+        transition: block-size var(--ui-duration-moderate-01)
+            var(--ui-motion-standard-productive);
+    }
+
+    tr.ui-parent-row:not(.ui-expandable-row) + tr[data-child-row] td {
+        border: 0;
+        padding-block: 0;
+        background-color: var(--ui-layer-hover);
+        transition:
+            padding var(--ui-duration-moderate-01)
+                var(--ui-motion-standard-productive),
+            background-color var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive);
+    }
+
+    tr.ui-parent-row:not(.ui-expandable-row)
+        + tr[data-child-row]
+        td
+        .ui-child-row-inner-container {
+        overflow: hidden;
+        max-block-size: 0;
+    }
+
+    tr.ui-parent-row.ui-expandable-row + tr[data-child-row] {
+        transition:
+            block-size var(--ui-duration-moderate-01)
+                var(--ui-motion-standard-productive),
+            background-color var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive);
+    }
+
+    tr.ui-parent-row.ui-expandable-row + tr[data-child-row] td {
+        border-block-end: 1px solid var(--ui-border-subtle);
+        padding-inline-start: 3.5rem;
+        transition:
+            padding-bottom var(--ui-duration-moderate-01)
+                var(--ui-motion-standard-productive),
+            transform var(--ui-duration-moderate-01)
+                var(--ui-motion-standard-productive);
+    }
+
+    tbody:has(td.ui-table-column-checkbox)
+        > tr.ui-expandable-row[data-child-row]
+        td {
+        padding-inline-start: 5.5rem;
+    }
+
+    tr.ui-parent-row.ui-expandable-row
+        + tr[data-child-row]
+        td
+        .ui-child-row-inner-container {
+        max-block-size: 100%;
+        padding-block: 1rem 1.5rem;
+    }
+
+    .ui-parent-row.ui-expandable-row > td,
+    .ui-parent-row.ui-expandable-row + tr[data-child-row] > td {
+        border-block-end: 1px solid var(--ui-border-subtle);
+        box-shadow: 0 1px var(--ui-border-subtle);
+    }
+
+    .ui-parent-row:not(.ui-expandable-row) + tr[data-child-row] > td {
+        box-shadow: none;
+    }
+
+    .ui-parent-row.ui-expandable-row > td:first-of-type {
+        box-shadow: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Hover states
+       ---------------------------------------------------------------------- */
+
+    tr.ui-parent-row:not(.ui-expandable-row) td,
+    tr.ui-parent-row.ui-expandable-row td,
+    tr.ui-parent-row.ui-expandable-row {
+        transition:
+            block-size var(--ui-duration-moderate-01)
+                var(--ui-motion-standard-productive),
+            background-color var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive),
+            border-color var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive);
+    }
+
+    tr.ui-parent-row:not(.ui-expandable-row):first-of-type:hover td {
+        border-block-start: 1px solid var(--ui-border-subtle);
+        border-block-end: 1px solid var(--ui-border-subtle);
+    }
+
+    tr.ui-parent-row.ui-expandable-row:hover td {
+        border-block-start: 1px solid var(--ui-border-subtle);
+        border-block-end: 1px solid var(--ui-border-subtle);
+        background-color: var(--ui-layer-hover);
+        color: var(--ui-text-primary);
+    }
+
+    tr.ui-parent-row.ui-expandable-row:hover td:first-of-type {
+        border-block-end: 1px solid var(--ui-layer-hover);
+    }
+
+    tr.ui-parent-row.ui-expandable-row:hover + tr[data-child-row] td {
+        border-block-start: 1px solid var(--ui-layer-hover);
+    }
+
+    tr.ui-parent-row.ui-expandable-row:hover
+        + tr[data-child-row]
+        .ui-child-row-inner-container {
+        background-color: transparent;
+    }
+
+    /* ----------------------------------------------------------------------
+       Expand column
+       ---------------------------------------------------------------------- */
+
+    .ui-table-expand {
+        padding: 0;
+    }
+
+    .ui-table-expand-button,
+    .ui-table-expand__button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: 100%;
+        block-size: 100%;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    .ui-table-expand-button:focus,
+    .ui-table-expand-button:focus-visible,
+    .ui-table-expand__button:focus,
+    .ui-table-expand__button:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-table-expand-button:disabled,
+    .ui-table-expand__button:disabled {
+        cursor: not-allowed;
+    }
+
+    .ui-table-expand-svg,
+    .ui-table-expand__svg {
+        fill: var(--ui-icon-primary);
+        transition: transform var(--ui-duration-fast-02)
+            var(--ui-motion-standard-productive);
+    }
+
+    .ui-table-expand-button:disabled .ui-table-expand-svg,
+    .ui-table-expand__button:disabled .ui-table-expand__svg {
+        fill: var(--ui-icon-disabled);
+    }
+
+    .ui-expandable-row .ui-table-expand-svg,
+    .ui-expandable-row .ui-table-expand__svg,
+    .ui-parent-row.ui-expandable-row .ui-table-expand-svg,
+    .ui-parent-row.ui-expandable-row .ui-table-expand__svg {
+        transform: rotate(90deg);
+    }
+
+    [dir="rtl"] .ui-expandable-row .ui-table-expand-svg,
+    [dir="rtl"] .ui-expandable-row .ui-table-expand__svg,
+    [dir="rtl"] .ui-parent-row.ui-expandable-row .ui-table-expand-svg,
+    [dir="rtl"] .ui-parent-row.ui-expandable-row .ui-table-expand__svg {
+        transform: rotate(-90deg);
+    }
+
+    /* ----------------------------------------------------------------------
+       Size adjustments
+       ---------------------------------------------------------------------- */
+
+    .ui-data-table-xs tr td.ui-table-expand,
+    .ui-data-table--xs tr td.ui-table-expand {
+        padding-block-start: 0.25rem;
+    }
+
+    .ui-data-table-sm tr td.ui-table-expand,
+    .ui-data-table--sm tr td.ui-table-expand {
+        padding-block-start: 0.5rem;
+    }
+
+    .ui-data-table-xl th.ui-table-expand,
+    .ui-data-table--xl th.ui-table-expand {
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .ui-data-table-xs tr.ui-parent-row .ui-table-column-checkbox,
+    .ui-data-table-sm tr.ui-parent-row .ui-table-column-checkbox,
+    .ui-data-table--xs tr.ui-parent-row .ui-table-column-checkbox,
+    .ui-data-table--sm tr.ui-parent-row .ui-table-column-checkbox {
+        align-items: flex-start;
+    }
+
+    /* ----------------------------------------------------------------------
+       Selected expandable rows
+       ---------------------------------------------------------------------- */
+
+    tr.ui-parent-row.ui-data-table-selected.ui-expandable-row:hover td,
+    tr.ui-parent-row.ui-data-table--selected.ui-expandable-row:hover td {
+        border-block-start-color: var(--ui-data-table-column-hover);
+        border-block-end-color: var(--ui-data-table-column-hover);
+        background-color: var(--ui-data-table-column-hover);
+    }
+
+    tr.ui-data-table-selected.ui-expandable-row + tr[data-child-row] td,
+    tr.ui-data-table--selected.ui-expandable-row + tr[data-child-row] td {
+        background-color: var(--ui-layer-selected);
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+        tr.ui-parent-row:not(.ui-expandable-row) + tr[data-child-row],
+        tr.ui-parent-row:not(.ui-expandable-row) + tr[data-child-row] td,
+        tr.ui-parent-row.ui-expandable-row + tr[data-child-row],
+        tr.ui-parent-row.ui-expandable-row + tr[data-child-row] td,
+        tr.ui-parent-row:not(.ui-expandable-row) td,
+        tr.ui-parent-row.ui-expandable-row td,
+        tr.ui-parent-row.ui-expandable-row,
+        .ui-table-expand-svg,
+        .ui-table-expand__svg {
+            transition: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-table-expand-button:focus,
+        .ui-table-expand-button:focus-visible,
+        .ui-table-expand__button:focus,
+        .ui-table-expand__button:focus-visible {
+            outline-color: Highlight;
+        }
+
+        .ui-table-expand-button:disabled .ui-table-expand-svg,
+        .ui-table-expand__button:disabled .ui-table-expand__svg {
+            fill: GrayText;
+        }
+    }
+}

@@ -1,20 +1,26 @@
-@props(['icon' => 'circle'])
+{{-- ==========================================================================
+    File: resources/views/components/layouts/nav-icon.blade.php
+    Purpose: Legacy navigation icon adapter.
 
-@php
-    $component = match ($icon) {
-        'home' => 'heroicon-o-home',
-        'users' => 'heroicon-o-users',
-        'docs' => 'heroicon-o-document-text',
-        'bell' => 'heroicon-o-bell',
-        'audit-log' => 'heroicon-o-clipboard-document-list',
-        'error-log' => 'heroicon-o-exclamation-triangle',
-        'settings' => 'heroicon-o-cog-6-tooth',
-        default => null,
-    };
-@endphp
+    Notes:
+    - Uses x-ui.icon instead of x-dynamic-component so missing or invalid icon
+      names cannot break the full view.
+    - This component is transitional. New code should call x-ui.icon directly.
+    ========================================================================== --}}
 
-@if ($component)
-    <x-dynamic-component :component="$component" class="h-4 w-4" aria-hidden="true" />
-@else
-    <span class="h-4 w-4 rounded-full bg-current/30" aria-hidden="true"></span>
-@endif
+@props([
+    'icon' => 'empty',
+    'size' => 'md',
+    'decorative' => true,
+    'label' => null,
+    'labelledby' => null,
+])
+
+<x-ui.icon
+    :name="$icon"
+    :size="$size"
+    :decorative="$decorative"
+    :label="$label"
+    :labelledby="$labelledby"
+    {{ $attributes }}
+/>

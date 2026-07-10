@@ -1,55 +1,163 @@
 /* ==========================================================================
-File: resources/css/components/shape-indicator.css
-Purpose: Shape Indicator component styles.
-Carbon reference:
+   File: resources/css/components/shape-indicator.css
+   Purpose: Shape Indicator component styles.
+   Reference source:
 
-* reference/carbon-main/packages/styles/scss/components/shape-indicator/
+   * reference/carbon-main/packages/styles/scss/components/shape-indicator/_shape-indicator.scss
 
-Notes:
-
-* Defines Shape Indicator selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-  ========================================================================== */
+   Notes:
+   - Defines Shape Indicator selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Uses status/icon indicator tokens for severity/status color mapping.
+   ========================================================================== */
 
 @layer components {
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
     .ui-shape-indicator {
-        display: inline-flex;
+        display: flex;
         align-items: center;
-        gap: var(--ui-spacing-03);
         color: var(--ui-text-secondary);
-        font-size: var(--ui-type-label-01-font-size);
-        line-height: var(--ui-type-label-01-line-height);
+        font-size: var(--ui-type-helper-text-01-font-size);
+        font-weight: var(--ui-type-helper-text-01-font-weight);
+        line-height: var(--ui-type-helper-text-01-line-height);
+        letter-spacing: var(--ui-type-helper-text-01-letter-spacing);
     }
 
-    .ui-shape-indicator-shape {
-        inline-size: 0.75rem;
-        block-size: 0.75rem;
-        flex: 0 0 auto;
-        background-color: currentColor;
+    .ui-shape-indicator svg {
+        align-self: center;
+        margin-inline-end: var(--ui-spacing-03);
+        fill: currentColor;
     }
 
-    .ui-shape-indicator-circle .ui-shape-indicator-shape {
-        border-radius: 50%;
+    .ui-shape-indicator-14,
+    .ui-shape-indicator--14 {
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
     }
 
-    .ui-shape-indicator-square .ui-shape-indicator-shape {
-        border-radius: 0;
+    /* ----------------------------------------------------------------------
+       Severity / status colors
+       ---------------------------------------------------------------------- */
+
+    .ui-shape-indicator-failed,
+    .ui-shape-indicator--failed,
+    .ui-shape-indicator-critical,
+    .ui-shape-indicator--critical,
+    .ui-shape-indicator-high,
+    .ui-shape-indicator--high {
+        color: var(--ui-status-red, var(--ui-support-error));
+        fill: currentColor;
     }
 
-    .ui-shape-indicator-success {
-        color: var(--ui-support-success);
+    .ui-shape-indicator-medium,
+    .ui-shape-indicator--medium {
+        color: var(--ui-status-orange, var(--ui-support-warning));
+        fill: currentColor;
     }
 
-    .ui-shape-indicator-warning {
-        color: var(--ui-support-warning);
+    .ui-shape-indicator-medium path:first-of-type,
+    .ui-shape-indicator--medium path:first-of-type {
+        fill: var(--ui-status-orange-outline, currentColor);
     }
 
-    .ui-shape-indicator-error {
-        color: var(--ui-support-error);
+    .ui-shape-indicator-low,
+    .ui-shape-indicator--low {
+        color: var(--ui-status-yellow, var(--ui-support-warning));
+        fill: currentColor;
     }
 
-    .ui-shape-indicator-info {
-        color: var(--ui-support-info);
+    .ui-shape-indicator-low path:nth-of-type(2),
+    .ui-shape-indicator--low path:nth-of-type(2) {
+        fill: var(--ui-status-yellow-outline, currentColor);
+    }
+
+    .ui-shape-indicator-cautious,
+    .ui-shape-indicator--cautious {
+        color: var(--ui-status-yellow, var(--ui-support-warning));
+        fill: currentColor;
+    }
+
+    .ui-shape-indicator-cautious path:first-of-type,
+    .ui-shape-indicator--cautious path:first-of-type {
+        fill: var(--ui-status-yellow-outline, currentColor);
+    }
+
+    .ui-shape-indicator-undefined,
+    .ui-shape-indicator--undefined {
+        color: var(--ui-status-purple, var(--ui-support-info));
+        fill: currentColor;
+    }
+
+    .ui-shape-indicator-stable,
+    .ui-shape-indicator--stable {
+        color: var(--ui-status-green, var(--ui-support-success));
+        fill: currentColor;
+    }
+
+    .ui-shape-indicator-informative,
+    .ui-shape-indicator--informative {
+        color: var(--ui-status-blue, var(--ui-support-info));
+        fill: currentColor;
+    }
+
+    .ui-shape-indicator-incomplete,
+    .ui-shape-indicator--incomplete {
+        color: var(--ui-text-secondary);
+        fill: currentColor;
+    }
+
+    .ui-shape-indicator-incomplete path:nth-of-type(2),
+    .ui-shape-indicator--incomplete path:nth-of-type(2) {
+        fill: var(--ui-status-blue, var(--ui-support-info));
+    }
+
+    .ui-shape-indicator-draft,
+    .ui-shape-indicator--draft {
+        color: var(--ui-status-gray, var(--ui-text-secondary));
+        fill: currentColor;
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-shape-indicator svg {
+            fill: currentColor;
+        }
+
+        .ui-shape-indicator-failed,
+        .ui-shape-indicator--failed,
+        .ui-shape-indicator-critical,
+        .ui-shape-indicator--critical,
+        .ui-shape-indicator-high,
+        .ui-shape-indicator--high {
+            color: Mark;
+        }
+
+        .ui-shape-indicator-stable,
+        .ui-shape-indicator--stable,
+        .ui-shape-indicator-informative,
+        .ui-shape-indicator--informative,
+        .ui-shape-indicator-medium,
+        .ui-shape-indicator--medium,
+        .ui-shape-indicator-low,
+        .ui-shape-indicator--low,
+        .ui-shape-indicator-cautious,
+        .ui-shape-indicator--cautious,
+        .ui-shape-indicator-undefined,
+        .ui-shape-indicator--undefined,
+        .ui-shape-indicator-incomplete,
+        .ui-shape-indicator--incomplete,
+        .ui-shape-indicator-draft,
+        .ui-shape-indicator--draft {
+            color: CanvasText;
+        }
     }
 }

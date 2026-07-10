@@ -1,0 +1,855 @@
+/* ==========================================================================
+   File: resources/css/components/ui-shell/side-nav.css
+   Purpose: UI shell side navigation styles.
+
+   Source: Converted from the UI shell side-nav SCSS mixin.
+   Notes:
+   - Sass variables are converted to app design tokens.
+   - Sass helper values such as mini-units() and convert.to-rem() are converted
+     to static rem values.
+   - Sass mixins are expanded directly where they emit CSS behavior.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Side-nav > Panel
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-side-nav {
+        position: fixed;
+        z-index: var(--ui-z-index-shell-side-nav);
+        overflow: hidden;
+        background-color: var(--ui-background);
+        color: var(--ui-text-secondary);
+        inline-size: var(--ui-shell-side-nav-collapsed-inline-size);
+        inset-block: 0;
+        inset-inline-start: 0;
+        max-inline-size: var(--ui-shell-side-nav-expanded-inline-size);
+        transition:
+            inline-size var(--ui-shell-transition-expand),
+            transform var(--ui-shell-transition-expand);
+        will-change: inline-size;
+    }
+
+    .ui-shell-side-nav--ux {
+        inline-size: var(--ui-shell-side-nav-expanded-inline-size);
+        inset-block-start: var(--ui-shell-header-block-size);
+    }
+
+    @media (max-width: 65.98rem) {
+        .ui-shell-side-nav--ux {
+            inline-size: 0;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Rail
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-side-nav--rail {
+        inline-size: var(--ui-shell-side-nav-collapsed-inline-size);
+    }
+
+    .ui-shell-side-nav--hidden {
+        inline-size: 0;
+    }
+
+    .ui-shell-side-nav--expanded {
+        inline-size: var(--ui-shell-side-nav-expanded-inline-size);
+    }
+
+    .ui-shell-side-nav__overlay {
+        position: fixed;
+        background-color: transparent;
+        block-size: 0;
+        inline-size: 0;
+        inset-block-start: var(--ui-shell-header-block-size);
+        inset-inline-start: 0;
+        opacity: 0;
+        transition:
+            opacity var(--ui-shell-transition-collapse),
+            background-color var(--ui-shell-transition-collapse);
+    }
+
+    @media (max-width: 65.98rem) {
+        .ui-shell-side-nav__overlay-active {
+            z-index: var(--ui-z-index-shell-side-nav-overlay);
+            background-color: var(--ui-overlay);
+            block-size: 100vh;
+            inline-size: 100vw;
+            opacity: 1;
+            transition:
+                opacity var(--ui-shell-transition-collapse),
+                background-color var(--ui-shell-transition-collapse);
+        }
+    }
+
+    .ui-shell-header ~ .ui-shell-side-nav {
+        block-size: calc(100% - var(--ui-shell-header-block-size));
+        inset-block-start: var(--ui-shell-header-block-size);
+    }
+
+    .ui-shell-side-nav--fixed {
+        inline-size: var(--ui-shell-side-nav-expanded-inline-size);
+    }
+
+    .ui-shell-side-nav--collapsed {
+        inline-size: var(--ui-shell-side-nav-expanded-inline-size);
+        transform: translateX(
+            calc(-1 * var(--ui-shell-side-nav-expanded-inline-size))
+        );
+    }
+
+    /* ----------------------------------------------------------------------
+       Side-nav > Navigation
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-side-nav__navigation {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* ----------------------------------------------------------------------
+       Side-nav > Title / Details
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-side-nav__title {
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        inline-size: 100%;
+        block-size: var(--ui-shell-header-block-size);
+        margin: 0;
+        border-block-end: var(--ui-shell-header-border-width) solid
+            var(--ui-border-subtle);
+        padding: 0 var(--ui-shell-header-menu-item-padding-inline);
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-font-weight-regular);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: 0.16px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .ui-shell-side-nav__subtitle {
+        display: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Side-nav > Navigation > Item(s)
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-side-nav__items {
+        box-sizing: border-box;
+        overflow: hidden;
+        flex: 1 1 0%;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .ui-shell-side-nav:hover .ui-shell-side-nav__items,
+    .ui-shell-side-nav--fixed .ui-shell-side-nav__items,
+    .ui-shell-side-nav--expanded .ui-shell-side-nav__items {
+        overflow-y: auto;
+    }
+
+    .ui-shell-side-nav--ux .ui-shell-side-nav__items {
+        overflow-y: auto;
+    }
+
+    .ui-shell-side-nav__item {
+        overflow: hidden;
+        block-size: auto;
+        inline-size: auto;
+    }
+
+    .ui-shell-side-nav--ux .ui-shell-side-nav__item {
+        block-size: auto;
+        inline-size: auto;
+    }
+
+    .ui-shell-side-nav a.ui-shell-header__menu-item:hover,
+    .ui-shell-side-nav
+        .ui-shell-header__menu-title[aria-expanded="true"]:hover {
+        background-color: var(--ui-background-hover);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-shell-side-nav__item:not(.ui-shell-side-nav__item--active)
+        > .ui-shell-side-nav__link:hover
+        > span,
+    .ui-shell-side-nav__item:not(.ui-shell-side-nav__item--active)
+        .ui-shell-side-nav__menu-item
+        > .ui-shell-side-nav__link:hover
+        > span {
+        color: var(--ui-text-primary);
+    }
+
+    .ui-shell-side-nav__item--large {
+        block-size: auto;
+    }
+
+    /* ----------------------------------------------------------------------
+       Side-nav > Navigation > Divider
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-side-nav__divider {
+        margin: var(--ui-spacing-03)
+            var(--ui-shell-header-menu-item-padding-inline);
+        background-color: var(--ui-border-subtle);
+        block-size: var(--ui-shell-header-border-width);
+        list-style-type: none;
+    }
+
+    .ui-shell-side-nav__divider hr {
+        border: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Side-nav > Navigation > {Menu, Submenu}
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-side-nav__submenu {
+        box-sizing: border-box;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 1rem;
+        column-gap: var(--ui-spacing-03);
+        align-items: center;
+        inline-size: 100%;
+        padding: 0 var(--ui-shell-header-menu-item-padding-inline);
+        margin: 0;
+        border: 0;
+        appearance: none;
+        background: none;
+        block-size: var(--ui-shell-side-nav-row-block-size);
+        color: var(--ui-text-secondary);
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.875rem;
+        font-weight: var(--ui-font-weight-semibold);
+        letter-spacing: 0.16px;
+        line-height: 1.125rem;
+        text-align: start;
+        outline: var(--ui-shell-focus-outline-width) solid transparent;
+        outline-offset: var(--ui-shell-focus-outline-offset);
+        transition:
+            color var(--ui-shell-motion-duration-fast),
+            background-color var(--ui-shell-motion-duration-fast),
+            outline var(--ui-shell-motion-duration-fast);
+        user-select: none;
+    }
+
+    .ui-shell-side-nav__submenu::-moz-focus-inner {
+        border: 0;
+    }
+
+    .ui-shell-side-nav__submenu:hover {
+        background-color: var(--ui-background-hover);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-shell-side-nav__submenu:focus {
+        outline: var(--ui-shell-focus-outline-width) solid var(--ui-focus);
+        outline-offset: var(--ui-shell-focus-outline-offset);
+    }
+
+    .ui-shell-side-nav__submenu-title {
+        overflow: hidden;
+        min-inline-size: 0;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-align: start;
+    }
+
+    .ui-shell-side-nav__icon.ui-shell-side-nav__submenu-chevron {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        justify-self: end;
+        flex: 0 0 var(--ui-shell-side-nav-icon-size);
+        inline-size: var(--ui-shell-side-nav-icon-size);
+        block-size: var(--ui-shell-side-nav-icon-size);
+        margin: 0;
+    }
+
+    .ui-shell-side-nav__submenu-chevron > svg {
+        display: block;
+        block-size: var(--ui-shell-side-nav-icon-size);
+        inline-size: var(--ui-shell-side-nav-icon-size);
+        transition: transform var(--ui-shell-motion-duration-fast);
+    }
+
+    .ui-shell-side-nav__submenu[aria-expanded="true"]
+        .ui-shell-side-nav__submenu-chevron
+        > svg {
+        transform: rotate(180deg);
+    }
+
+    .ui-shell-side-nav__item--large .ui-shell-side-nav__submenu {
+        block-size: var(--ui-shell-header-block-size);
+    }
+
+    .ui-shell-side-nav__item--active .ui-shell-side-nav__submenu:hover {
+        background-color: var(--ui-background-selected);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-shell-side-nav__item--active
+        .ui-shell-side-nav__submenu[aria-expanded="false"] {
+        position: relative;
+        background-color: var(--ui-background-selected);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-shell-side-nav__item--active
+        .ui-shell-side-nav__submenu[aria-expanded="false"]::before {
+        position: absolute;
+        background-color: var(--ui-border-interactive);
+        content: "";
+        inline-size: var(--ui-shell-side-nav-current-indicator-size);
+        inset-block: 0;
+        inset-inline-start: 0;
+    }
+
+    .ui-shell-side-nav__item--active .ui-shell-side-nav__submenu-title {
+        color: var(--ui-text-primary);
+        font-weight: var(--ui-font-weight-semibold);
+    }
+
+    .ui-shell-side-nav__item--active .ui-shell-side-nav__icon > svg {
+        fill: var(--ui-icon-primary);
+    }
+
+    .ui-shell-side-nav__menu {
+        box-sizing: border-box;
+        display: block;
+        max-block-size: 0;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        visibility: hidden;
+        list-style: none;
+    }
+
+    .ui-shell-side-nav__submenu[aria-expanded="true"]
+        + .ui-shell-side-nav__menu {
+        max-block-size: var(--ui-shell-side-nav-submenu-max-block-size);
+        visibility: inherit;
+    }
+
+    .ui-shell-side-nav__menu a.ui-shell-side-nav__link {
+        block-size: var(--ui-shell-side-nav-row-block-size);
+        font-weight: var(--ui-font-weight-regular);
+        min-block-size: var(--ui-shell-side-nav-row-block-size);
+        padding-inline-start: var(--ui-shell-content-padding);
+    }
+
+    .ui-shell-side-nav__item.ui-shell-side-nav__item--icon
+        a.ui-shell-side-nav__link {
+        padding-inline-start: var(
+            --ui-shell-side-nav-icon-link-padding-inline-start
+        );
+    }
+
+    .ui-shell-side-nav__menu a.ui-shell-side-nav__link--current,
+    .ui-shell-side-nav__menu a.ui-shell-side-nav__link[aria-current="page"],
+    a.ui-shell-side-nav__link--current {
+        background-color: var(--ui-background-selected);
+    }
+
+    .ui-shell-side-nav__menu a.ui-shell-side-nav__link--current > span,
+    .ui-shell-side-nav__menu
+        a.ui-shell-side-nav__link[aria-current="page"]
+        > span,
+    a.ui-shell-side-nav__link--current > span {
+        color: var(--ui-text-primary);
+        font-weight: var(--ui-font-weight-semibold);
+    }
+
+    /* ----------------------------------------------------------------------
+       Side-nav > Link
+       ---------------------------------------------------------------------- */
+
+    a.ui-shell-side-nav__link,
+    .ui-shell-side-nav a.ui-shell-header__menu-item,
+    .ui-shell-side-nav
+        .ui-shell-header__menu-title[aria-expanded="true"]
+        + .ui-shell-header__menu {
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding: 0 var(--ui-shell-header-menu-item-padding-inline);
+        min-block-size: var(--ui-shell-side-nav-row-block-size);
+        text-decoration: none;
+        outline: var(--ui-shell-focus-outline-width) solid transparent;
+        outline-offset: var(--ui-shell-focus-outline-offset);
+        font-size: 0.875rem;
+        font-weight: var(--ui-font-weight-semibold);
+        letter-spacing: 0.16px;
+        line-height: 1.125rem;
+        transition:
+            color var(--ui-shell-motion-duration-fast),
+            background-color var(--ui-shell-motion-duration-fast),
+            outline var(--ui-shell-motion-duration-fast);
+    }
+
+    .ui-shell-side-nav__item--large a.ui-shell-side-nav__link {
+        block-size: var(--ui-shell-header-block-size);
+    }
+
+    a.ui-shell-side-nav__link > .ui-shell-side-nav__link-text,
+    .ui-shell-side-nav
+        a.ui-shell-header__menu-item
+        .ui-shell-text-truncate-end {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: var(--ui-text-secondary);
+        font-size: 0.875rem;
+        letter-spacing: 0.1px;
+        line-height: 1.25rem;
+        user-select: none;
+    }
+
+    a.ui-shell-side-nav__link:focus,
+    .ui-shell-side-nav a.ui-shell-header__menu-item:focus {
+        outline: var(--ui-shell-focus-outline-width) solid var(--ui-focus);
+        outline-offset: var(--ui-shell-focus-outline-offset);
+    }
+
+    a.ui-shell-side-nav__link[aria-current="page"],
+    a.ui-shell-side-nav__link--current {
+        background-color: var(--ui-background-selected);
+        font-weight: var(--ui-font-weight-semibold);
+    }
+
+    a.ui-shell-side-nav__link[aria-current="page"]
+        .ui-shell-side-nav__link-text,
+    a.ui-shell-side-nav__link--current .ui-shell-side-nav__link-text {
+        color: var(--ui-text-primary);
+    }
+
+    a.ui-shell-side-nav__link[aria-current="page"]::before,
+    a.ui-shell-side-nav__link--current::before {
+        position: absolute;
+        background-color: var(--ui-border-interactive);
+        content: "";
+        inline-size: var(--ui-shell-side-nav-current-indicator-size);
+        inset-block: 0;
+        inset-inline-start: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Side-nav > Icons
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-side-nav__icon {
+        display: flex;
+        flex: 0 0 var(--ui-shell-side-nav-icon-size);
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ui-shell-side-nav__icon:not(.ui-shell-side-nav__submenu-chevron) {
+        margin-inline-end: var(--ui-shell-side-nav-icon-gap);
+    }
+
+    .ui-shell-side-nav__icon > svg {
+        block-size: var(--ui-shell-side-nav-icon-size);
+        fill: var(--ui-icon-secondary);
+        inline-size: var(--ui-shell-side-nav-icon-size);
+    }
+
+    .ui-shell-side-nav__icon > svg.ui-shell-side-nav-collapse-icon {
+        display: none;
+    }
+
+    .ui-shell-side-nav--expanded
+        .ui-shell-side-nav__icon
+        > svg.ui-shell-side-nav-expand-icon {
+        display: none;
+    }
+
+    .ui-shell-side-nav--expanded
+        .ui-shell-side-nav__icon
+        > svg.ui-shell-side-nav-collapse-icon {
+        display: block;
+    }
+
+    /* ----------------------------------------------------------------------
+       Variants - Fixed
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-side-nav--fixed a.ui-shell-side-nav__link,
+    .ui-shell-side-nav--fixed .ui-shell-side-nav__submenu {
+        padding-inline-start: var(--ui-shell-header-menu-item-padding-inline);
+    }
+
+    .ui-shell-side-nav--fixed
+        .ui-shell-side-nav__item:not(.ui-shell-side-nav__item--icon)
+        .ui-shell-side-nav__menu
+        a.ui-shell-side-nav__link {
+        padding-inline-start: var(--ui-shell-content-padding);
+    }
+
+    /* ----------------------------------------------------------------------
+       Variants - Header Nav Links in Side Nav
+       ---------------------------------------------------------------------- */
+
+    @media (max-width: 65.98rem) {
+        .ui-shell-side-nav .ui-shell-header__nav {
+            display: block;
+        }
+    }
+
+    .ui-shell-side-nav__header-navigation {
+        box-sizing: border-box;
+        display: none;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    @media (max-width: 65.98rem) {
+        .ui-shell-side-nav__header-navigation {
+            position: relative;
+            display: block;
+            margin-block-end: var(--ui-spacing-07);
+        }
+    }
+
+    .ui-shell-side-nav__header-divider::after {
+        position: absolute;
+        background: var(--ui-border-subtle);
+        block-size: var(--ui-shell-header-border-width);
+        content: "";
+        inline-size: calc(100% - 32px);
+        inset-block-end: -1rem;
+        inset-inline-start: 1rem;
+    }
+
+    .ui-shell-side-nav a.ui-shell-header__menu-item {
+        justify-content: space-between;
+        color: var(--ui-text-secondary);
+        white-space: nowrap;
+    }
+
+    .ui-shell-side-nav a.ui-shell-header__menu-item[aria-expanded="true"] {
+        background-color: transparent;
+    }
+
+    .ui-shell-side-nav
+        .ui-shell-header__menu-title[aria-expanded="true"]
+        + .ui-shell-header__menu {
+        padding: 0;
+        background-color: transparent;
+        box-shadow: none;
+        inline-size: 100%;
+        inset-block-end: inherit;
+        transform: none;
+    }
+
+    .ui-shell-side-nav
+        .ui-shell-header__menu-title[aria-expanded="true"]
+        + .ui-shell-header__menu
+        li {
+        inline-size: 100%;
+    }
+
+    .ui-shell-side-nav
+        .ui-shell-header__menu-title[aria-expanded="true"]
+        + .ui-shell-header__menu
+        a.ui-shell-header__menu-item {
+        font-weight: var(--ui-font-weight-regular);
+        padding-inline-start: var(
+            --ui-shell-side-nav-header-menu-item-padding-inline-start
+        );
+    }
+
+    .ui-shell-side-nav
+        .ui-shell-header__menu-title[aria-expanded="true"]
+        + .ui-shell-header__menu
+        a.ui-shell-header__menu-item:hover {
+        background-color: var(--ui-background-hover);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-shell-side-nav
+        .ui-shell-header__menu-title[aria-expanded="true"]
+        + .ui-shell-header__menu
+        a.ui-shell-header__menu-item--current:hover {
+        background-color: var(--ui-layer-selected-hover);
+    }
+
+    .ui-shell-side-nav
+        .ui-shell-side-nav__header-navigation
+        a.ui-shell-header__menu-item[aria-current="page"]::after,
+    .ui-shell-side-nav
+        .ui-shell-side-nav__header-navigation
+        .ui-shell-header__menu-item--current::after {
+        block-size: calc(
+            100% + (var(--ui-shell-header-focus-border-width) * 2)
+        );
+        inline-size: var(--ui-shell-side-nav-current-indicator-size);
+    }
+
+    .ui-shell-side-nav .ui-shell-header__menu a.ui-shell-header__menu-item {
+        block-size: inherit;
+    }
+
+    .ui-shell-side-nav
+        a.ui-shell-header__menu-item:hover
+        .ui-shell-header__menu-arrow,
+    .ui-shell-side-nav
+        a.ui-shell-header__menu-item:focus
+        .ui-shell-header__menu-arrow,
+    .ui-shell-side-nav .ui-shell-header__menu-arrow {
+        fill: var(--ui-icon-secondary);
+    }
+
+    /* ----------------------------------------------------------------------
+   Side nav row surface contract
+   ---------------------------------------------------------------------- */
+
+    .ui-shell-side-nav__list,
+    .ui-shell-side-nav__menu {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        row-gap: 0;
+        gap: 0;
+    }
+
+    .ui-shell-side-nav__item {
+        display: block;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .ui-shell-side-nav__link,
+    .ui-shell-side-nav__submenu {
+        box-sizing: border-box;
+        inline-size: 100%;
+        margin: 0;
+        border: 0;
+        background-color: transparent;
+        color: var(--ui-text-secondary);
+        text-decoration: none;
+    }
+
+    .ui-shell-side-nav__link {
+        display: flex;
+        align-items: center;
+    }
+
+    .ui-shell-side-nav__submenu {
+        align-items: center;
+    }
+
+    .ui-shell-side-nav__link:hover,
+    .ui-shell-side-nav__submenu:hover {
+        background-color: var(--ui-layer-hover);
+        color: var(--ui-text-primary);
+        text-decoration: none;
+    }
+
+    .ui-shell-side-nav__link:active,
+    .ui-shell-side-nav__submenu:active {
+        background-color: var(--ui-layer-active);
+    }
+
+    .ui-shell-side-nav__link--current,
+    .ui-shell-side-nav__link[aria-current="page"],
+    .ui-shell-side-nav__link[data-current],
+    .ui-shell-side-nav__submenu[aria-expanded="true"][data-ui-shell-side-nav-menu-current="true"] {
+        background-color: var(--ui-layer-selected);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-shell-side-nav__link--current:hover,
+    .ui-shell-side-nav__link[aria-current="page"]:hover,
+    .ui-shell-side-nav__link[data-current]:hover {
+        background-color: var(--ui-layer-selected-hover);
+    }
+
+    .ui-shell-side-nav__link > *,
+    .ui-shell-side-nav__submenu > * {
+        min-inline-size: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+   Side nav nested menu row surface contract
+   ---------------------------------------------------------------------- */
+
+    .ui-shell-side-nav__menu-panel,
+    [data-ui-shell-side-nav-menu-panel] {
+        margin: 0;
+        padding: 0;
+    }
+
+    .ui-shell-side-nav__menu-panel .ui-shell-side-nav__list,
+    .ui-shell-side-nav__menu-panel .ui-shell-side-nav__menu,
+    [data-ui-shell-side-nav-menu-panel] .ui-shell-side-nav__list,
+    [data-ui-shell-side-nav-menu-panel] .ui-shell-side-nav__menu {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        row-gap: 0;
+        gap: 0;
+    }
+
+    .ui-shell-side-nav__menu-panel .ui-shell-side-nav__item,
+    [data-ui-shell-side-nav-menu-panel] .ui-shell-side-nav__item {
+        display: block;
+        inline-size: 100%;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .ui-shell-side-nav__menu-panel .ui-shell-side-nav__link,
+    .ui-shell-side-nav__menu-panel .ui-shell-side-nav__submenu,
+    [data-ui-shell-side-nav-menu-panel] .ui-shell-side-nav__link,
+    [data-ui-shell-side-nav-menu-panel] .ui-shell-side-nav__submenu {
+        box-sizing: border-box;
+        inline-size: 100%;
+        margin: 0;
+        border: 0;
+        background-color: transparent;
+        color: var(--ui-text-secondary);
+        text-decoration: none;
+    }
+
+    /* Nested indentation belongs inside the clickable row, not on the parent list. */
+    .ui-shell-side-nav__menu-panel .ui-shell-side-nav__link,
+    [data-ui-shell-side-nav-menu-panel] .ui-shell-side-nav__link {
+        padding-inline-start: var(--ui-shell-side-nav-nested-indent);
+    }
+
+    /* Nested expandable trigger rows get the same full-row surface. */
+    .ui-shell-side-nav__menu-panel .ui-shell-side-nav__submenu,
+    [data-ui-shell-side-nav-menu-panel] .ui-shell-side-nav__submenu {
+        padding-inline-start: var(--ui-shell-side-nav-nested-indent);
+    }
+
+    .ui-shell-side-nav__menu-panel .ui-shell-side-nav__link:hover,
+    .ui-shell-side-nav__menu-panel .ui-shell-side-nav__submenu:hover,
+    [data-ui-shell-side-nav-menu-panel] .ui-shell-side-nav__link:hover,
+    [data-ui-shell-side-nav-menu-panel] .ui-shell-side-nav__submenu:hover {
+        background-color: var(--ui-layer-hover);
+        color: var(--ui-text-primary);
+        text-decoration: none;
+    }
+
+    .ui-shell-side-nav__menu-panel .ui-shell-side-nav__link:active,
+    .ui-shell-side-nav__menu-panel .ui-shell-side-nav__submenu:active,
+    [data-ui-shell-side-nav-menu-panel] .ui-shell-side-nav__link:active,
+    [data-ui-shell-side-nav-menu-panel] .ui-shell-side-nav__submenu:active {
+        background-color: var(--ui-layer-active);
+    }
+
+    .ui-shell-side-nav__menu-panel .ui-shell-side-nav__link--current,
+    .ui-shell-side-nav__menu-panel
+        .ui-shell-side-nav__link[aria-current="page"],
+    .ui-shell-side-nav__menu-panel .ui-shell-side-nav__link[data-current],
+    [data-ui-shell-side-nav-menu-panel] .ui-shell-side-nav__link--current,
+    [data-ui-shell-side-nav-menu-panel]
+        .ui-shell-side-nav__link[aria-current="page"],
+    [data-ui-shell-side-nav-menu-panel] .ui-shell-side-nav__link[data-current] {
+        background-color: var(--ui-layer-selected);
+        color: var(--ui-text-primary);
+    }
+    /* ----------------------------------------------------------------------
+   Side nav top inset
+   ---------------------------------------------------------------------- */
+
+    .ui-shell-side-nav__items {
+        padding-block-start: var(--ui-spacing-05);
+    }
+
+    /* ----------------------------------------------------------------------
+   Side-nav > Header / Area title
+   ----------------------------------------------------------------------
+   Carbon does not provide a desktop side-nav title row. This is an app shell
+   extension for the local area title shown above the side-nav items.
+   ---------------------------------------------------------------------- */
+
+    .ui-shell-side-nav__navigation {
+        block-size: 100%;
+        min-block-size: 0;
+    }
+
+    .ui-shell-side-nav__header,
+    .ui-shell-side-nav__title {
+        box-sizing: border-box;
+        display: flex;
+        flex: 0 0 var(--ui-shell-header-block-size);
+        align-items: center;
+        inline-size: 100%;
+        min-block-size: var(--ui-shell-header-block-size);
+        margin: 0;
+        border-block-end: var(--ui-shell-header-border-width) solid
+            var(--ui-border-subtle);
+        padding: 0 var(--ui-shell-header-menu-item-padding-inline);
+        overflow: hidden;
+        background-color: var(--ui-background);
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-shell-side-nav__header-content,
+    .ui-shell-side-nav__title {
+        min-inline-size: 0;
+        inline-size: 100%;
+        color: inherit;
+        font-size: var(--ui-type-body-compact-01-font-size, 0.875rem);
+        font-weight: var(--ui-font-weight-regular, 400);
+        line-height: var(--ui-type-body-compact-01-line-height, 1.25rem);
+        letter-spacing: 0.16px;
+    }
+
+    .ui-shell-side-nav__header-content {
+        display: flex;
+        align-items: center;
+    }
+
+    .ui-shell-side-nav__header-content > *,
+    .ui-shell-side-nav__header [data-app-sidebar-area-title],
+    .ui-shell-side-nav__title {
+        min-inline-size: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* When a custom header/title exists, it owns the top spacing. */
+    .ui-shell-side-nav__header + .ui-shell-side-nav__items,
+    .ui-shell-side-nav__title + .ui-shell-side-nav__items {
+        padding-block-start: 0;
+    }
+
+    /* Collapsed/rail state may hide the app-specific title without changing rows. */
+    .ui-shell-side-nav__header[data-ui-shell-side-nav-header-expanded="false"] {
+        flex-basis: 0;
+        min-block-size: 0;
+        block-size: 0;
+        border-block-end: 0;
+        padding-block: 0;
+    }
+
+    .ui-shell-side-nav__header[data-ui-shell-side-nav-header-expanded="false"]
+        .ui-shell-side-nav__header-content {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .ui-shell-side-nav__header[data-ui-shell-side-nav-header-expanded="false"]
+        + .ui-shell-side-nav__items {
+        padding-block-start: var(--ui-spacing-05);
+    }
+}

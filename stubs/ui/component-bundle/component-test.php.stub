@@ -1,0 +1,197 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tests\Feature\Ui\Components;
+
+use Illuminate\Testing\TestView;
+use Tests\TestCase;
+
+final class {{ class }} extends TestCase
+{
+    public function test_default_render_exposes_the_required_component_contract(): void
+    {
+        $view = $this->renderComponent();
+
+        $this->assertRequiredContract((string) $view);
+    }
+
+    public function test_default_slot_content_is_rendered(): void
+    {
+        $this->renderComponent(slot: 'Expected component content')
+            ->assertSeeText('Expected component content');
+    }
+
+    public function test_supported_caller_attributes_are_forwarded_without_removing_required_contract_values(): void
+    {
+        $view = $this->renderComponent(
+            attributes: 'class="custom-component-class" data-test-id="custom-component" aria-label="Custom component label"',
+        );
+
+        $view
+            ->assertSeeHtml('custom-component-class')
+            ->assertSeeHtml('data-test-id="custom-component"')
+            ->assertSeeHtml('aria-label="Custom component label"');
+
+        $this->assertRequiredContract((string) $view);
+    }
+
+    public function test_contract_identity_matches_the_component_bundle(): void
+    {
+        $contract = $this->contract();
+
+        $this->assertSame(
+            '{{ component }}',
+            $contract['identity']['slug'] ?? null,
+        );
+
+        $this->assertSame(
+            '{{ label }}',
+            $contract['identity']['label'] ?? null,
+        );
+
+        $this->assertSame(
+            'x-ui.{{ component }}',
+            $contract['identity']['component'] ?? null,
+        );
+    }
+
+    public function test_contract_source_paths_match_the_component_bundle(): void
+    {
+        $source = $this->contract()['source'] ?? [];
+
+        $this->assertContains(
+            '{{ bladePath }}',
+            $source['blade'] ?? [],
+        );
+
+        $this->assertContains(
+            '{{ cssPath }}',
+            $source['css'] ?? [],
+        );
+
+        $this->assertContains(
+            '{{ contractPath }}',
+            $source['contract'] ?? [],
+        );
+
+        $this->assertContains(
+            '{{ docsPath }}',
+            $source['docs'] ?? [],
+        );
+    }
+
+    public function test_approved_props_render_the_expected_markup(): void
+    {
+        self::markTestIncomplete(
+            'Add assertions for every public prop that changes rendered markup.',
+        );
+    }
+
+    public function test_approved_variants_emit_the_expected_classes_and_attributes(): void
+    {
+        self::markTestIncomplete(
+            'Add assertions for every contract-approved variant.',
+        );
+    }
+
+    public function test_approved_sizes_emit_the_expected_classes_and_attributes(): void
+    {
+        self::markTestIncomplete(
+            'Add assertions for every contract-approved size, or remove this test when the component has no size API.',
+        );
+    }
+
+    public function test_supported_states_follow_the_documented_precedence(): void
+    {
+        self::markTestIncomplete(
+            'Add assertions for default, disabled, invalid, warning, selected, expanded, or other supported states and their precedence.',
+        );
+    }
+
+    public function test_semantics_and_accessibility_match_the_public_contract(): void
+    {
+        self::markTestIncomplete(
+            'Assert native element choice, roles, labels, ARIA relationships, focus-related attributes, and hidden assistive content.',
+        );
+    }
+
+    public function test_conditional_content_is_rendered_only_when_requested(): void
+    {
+        self::markTestIncomplete(
+            'Assert optional icons, labels, messages, decorators, actions, or subcomponents.',
+        );
+    }
+
+    public function test_invalid_or_conflicting_api_values_follow_the_enforcement_contract(): void
+    {
+        self::markTestIncomplete(
+            'Assert the documented warning, fallback, rejection, or precedence behavior for invalid API combinations.',
+        );
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function renderComponent(
+        string $attributes = '',
+        string $slot = 'Component content',
+        array $data = [],
+    ): TestView {
+        return $this->blade(
+            sprintf(
+                '<x-ui.{{ component }} %s>%s</x-ui.{{ component }}>',
+                $attributes,
+                $slot,
+            ),
+            $data,
+        );
+    }
+
+    private function assertRequiredContract(string $rendered): void
+    {
+        $contract = $this->contract();
+
+        foreach ($contract['class_contract']['required'] ?? [] as $class) {
+            $this->assertStringContainsString(
+                $class,
+                $rendered,
+                sprintf('Required component class [%s] was not rendered.', $class),
+            );
+        }
+
+        foreach ($contract['api']['data_attributes'] ?? [] as $attribute) {
+            if (($attribute['required'] ?? false) !== true) {
+                continue;
+            }
+
+            $name = $attribute['name'] ?? null;
+
+            if (! is_string($name) || $name === '') {
+                self::fail('A required contract data attribute is missing its name.');
+            }
+
+            $needle = array_key_exists('value', $attribute)
+                ? sprintf('%s="%s"', $name, (string) $attribute['value'])
+                : $name;
+
+            $this->assertStringContainsString(
+                $needle,
+                $rendered,
+                sprintf('Required component data attribute [%s] was not rendered.', $name),
+            );
+        }
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function contract(): array
+    {
+        $contract = require base_path('{{ contractPath }}');
+
+        $this->assertIsArray($contract);
+
+        return $contract;
+    }
+}

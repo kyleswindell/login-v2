@@ -1,0 +1,82 @@
+/* ==========================================================================
+   File: resources/css/components/ui-shell/switcher.css
+   Purpose: UI shell switcher styles.
+
+   Source: Converted from the UI shell switcher SCSS mixin.
+   Notes:
+   - Sass variables are converted to app design tokens.
+   - Sass spacing values and convert.to-rem() calls are converted to static rem
+     values.
+   - Sass mixins are expanded directly where they emit CSS behavior.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Header Switcher
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-switcher {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-shell-switcher__item {
+        block-size: 2rem;
+        inline-size: 100%;
+    }
+
+    .ui-shell-switcher__item:nth-child(1) {
+        margin-block-start: 1rem;
+    }
+
+    .ui-shell-switcher__item--divider {
+        display: block;
+        border: none;
+        margin: 0.5rem 1rem;
+        background: var(--ui-border-subtle);
+        block-size: 1px;
+        inline-size: 14rem;
+    }
+
+    .ui-shell-switcher__item-link {
+        display: block;
+        padding: 0.375rem 1rem;
+        block-size: 2rem;
+        color: var(--ui-text-secondary);
+        font-size: 0.875rem;
+        font-weight: 600;
+        letter-spacing: 0.16px;
+        line-height: 1.125rem;
+        text-decoration: none;
+    }
+
+    .ui-shell-switcher__item-link:hover:not(
+            .ui-shell-switcher__item-link--selected
+        ) {
+        background: var(--ui-layer-hover);
+        color: var(--ui-text-primary);
+        cursor: pointer;
+    }
+
+    .ui-shell-switcher__item-link:focus {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-shell-switcher__item-link:active {
+        background: var(--ui-layer-active);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-shell-switcher__item-link--selected {
+        background: var(--ui-layer-selected);
+        color: var(--ui-text-primary);
+    }
+}

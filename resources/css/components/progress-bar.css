@@ -1,62 +1,355 @@
 /* ==========================================================================
-File: resources/css/components/progress-bar.css
-Purpose: Progress Bar component styles.
-Carbon reference:
+   File: resources/css/components/progress-bar.css
+   Purpose: Progress Bar component styles.
 
-* reference/carbon-main/packages/styles/scss/components/progress-bar/
-
-Notes:
-
-* Defines Progress Bar selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Progress colors consume theme and status tokens.
-  ========================================================================== */
+   Notes:
+   - Defines Progress Bar selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports default, small, big, indeterminate, inline, indented,
+     finished, error, helper text, status icon, RTL, and forced-colors states.
+   ========================================================================== */
 
 @layer components {
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
     .ui-progress-bar {
-        display: flex;
-        flex-direction: column;
-        gap: var(--ui-spacing-03);
-        inline-size: 100%;
+        --ui-progress-bar-padding-inline: var(
+            --ui-layout-density-padding-inline-local,
+            var(--ui-spacing-05)
+        );
+
+        color: var(--ui-text-primary);
     }
 
-    .ui-progress-bar-label-row {
+    /* ----------------------------------------------------------------------
+       Label
+       ---------------------------------------------------------------------- */
+
+    .ui-progress-bar-label,
+    .ui-progress-bar__label {
         display: flex;
         justify-content: space-between;
-        gap: var(--ui-spacing-05);
+        min-inline-size: 3rem;
+        margin-block-end: var(--ui-spacing-03);
         color: var(--ui-text-primary);
-        font-size: var(--ui-type-label-01-font-size);
-        line-height: var(--ui-type-label-01-line-height);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
     }
 
-    .ui-progress-bar-track {
-        position: relative;
+    .ui-progress-bar-label-text,
+    .ui-progress-bar__label-text {
         overflow: hidden;
-        inline-size: 100%;
-        block-size: 0.5rem;
-        background-color: var(--ui-layer-accent-01);
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
-    .ui-progress-bar-fill {
-        inline-size: var(--ui-progress-value, 0%);
+    /* ----------------------------------------------------------------------
+       Track and bar
+       ---------------------------------------------------------------------- */
+
+    .ui-progress-bar-track,
+    .ui-progress-bar__track {
+        position: relative;
+        inline-size: 100%;
+        min-inline-size: 3rem;
+        block-size: 0.5rem;
+        background-color: var(--ui-border-subtle);
+    }
+
+    .ui-progress-bar-big .ui-progress-bar-track,
+    .ui-progress-bar-big .ui-progress-bar__track,
+    .ui-progress-bar--big .ui-progress-bar-track,
+    .ui-progress-bar--big .ui-progress-bar__track {
+        block-size: 0.5rem;
+    }
+
+    .ui-progress-bar-small .ui-progress-bar-track,
+    .ui-progress-bar-small .ui-progress-bar__track,
+    .ui-progress-bar--small .ui-progress-bar-track,
+    .ui-progress-bar--small .ui-progress-bar__track {
+        block-size: 0.25rem;
+    }
+
+    .ui-progress-bar-bar,
+    .ui-progress-bar__bar {
+        display: block;
+        inline-size: 100%;
         block-size: 100%;
-        background-color: var(--ui-border-interactive);
-        transition: inline-size var(--ui-duration-fast-02)
+        background-color: currentColor;
+        color: var(--ui-interactive, var(--ui-border-interactive));
+        transform: scaleX(var(--ui-progress-bar-scale, 0));
+        transform-origin: 0 center;
+        transition: transform var(--ui-duration-fast-02)
             var(--ui-motion-standard-productive);
     }
 
-    .ui-progress-bar-indeterminate .ui-progress-bar-fill {
+    [dir="rtl"] .ui-progress-bar-bar,
+    [dir="rtl"] .ui-progress-bar__bar {
+        transform-origin: 100% center;
+    }
+
+    /* ----------------------------------------------------------------------
+       Indeterminate state
+       ---------------------------------------------------------------------- */
+
+    .ui-progress-bar-indeterminate .ui-progress-bar-track::after,
+    .ui-progress-bar-indeterminate .ui-progress-bar__track::after,
+    .ui-progress-bar--indeterminate .ui-progress-bar-track::after,
+    .ui-progress-bar--indeterminate .ui-progress-bar__track::after {
         position: absolute;
-        inline-size: 40%;
-        animation: ui-progress-indeterminate 1.4s linear infinite;
+        inset: 0;
+        background-image: linear-gradient(
+            90deg,
+            var(--ui-interactive, var(--ui-border-interactive)) 12.5%,
+            transparent 12.5%
+        );
+        background-position-x: 0%;
+        background-size: 200% 100%;
+        content: "";
+        animation: ui-progress-bar-indeterminate 1400ms linear infinite;
     }
 
-    .ui-progress-bar-error .ui-progress-bar-fill {
-        background-color: var(--ui-support-error);
+    [dir="rtl"] .ui-progress-bar-indeterminate .ui-progress-bar-track::after,
+    [dir="rtl"] .ui-progress-bar-indeterminate .ui-progress-bar__track::after,
+    [dir="rtl"] .ui-progress-bar--indeterminate .ui-progress-bar-track::after,
+    [dir="rtl"] .ui-progress-bar--indeterminate .ui-progress-bar__track::after {
+        animation-name: ui-progress-bar-indeterminate-rtl;
     }
 
-    .ui-progress-bar-success .ui-progress-bar-fill {
-        background-color: var(--ui-support-success);
+    @keyframes ui-progress-bar-indeterminate {
+        0% {
+            background-position-x: 25%;
+        }
+
+        80%,
+        100% {
+            background-position-x: -105%;
+        }
+    }
+
+    @keyframes ui-progress-bar-indeterminate-rtl {
+        0% {
+            background-position-x: -105%;
+        }
+
+        80%,
+        100% {
+            background-position-x: 25%;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Helper text and status icon
+       ---------------------------------------------------------------------- */
+
+    .ui-progress-bar-helper-text,
+    .ui-progress-bar__helper-text {
+        margin-block-start: var(--ui-spacing-03);
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-helper-text-01-font-size);
+        font-weight: var(--ui-type-helper-text-01-font-weight);
+        line-height: var(--ui-type-helper-text-01-line-height);
+        letter-spacing: var(--ui-type-helper-text-01-letter-spacing);
+    }
+
+    .ui-progress-bar-status-icon,
+    .ui-progress-bar__status-icon {
+        flex-shrink: 0;
+        margin-inline-start: var(--ui-progress-bar-padding-inline);
+        color: currentColor;
+        fill: currentColor;
+    }
+
+    /* ----------------------------------------------------------------------
+       Finished / error states
+       ---------------------------------------------------------------------- */
+
+    .ui-progress-bar-finished .ui-progress-bar-bar,
+    .ui-progress-bar-finished .ui-progress-bar__bar,
+    .ui-progress-bar-finished .ui-progress-bar-status-icon,
+    .ui-progress-bar-finished .ui-progress-bar__status-icon,
+    .ui-progress-bar--finished .ui-progress-bar-bar,
+    .ui-progress-bar--finished .ui-progress-bar__bar,
+    .ui-progress-bar--finished .ui-progress-bar-status-icon,
+    .ui-progress-bar--finished .ui-progress-bar__status-icon {
+        color: var(--ui-support-success);
+    }
+
+    .ui-progress-bar-error .ui-progress-bar-bar,
+    .ui-progress-bar-error .ui-progress-bar__bar,
+    .ui-progress-bar-error .ui-progress-bar-status-icon,
+    .ui-progress-bar-error .ui-progress-bar__status-icon,
+    .ui-progress-bar--error .ui-progress-bar-bar,
+    .ui-progress-bar--error .ui-progress-bar__bar,
+    .ui-progress-bar--error .ui-progress-bar-status-icon,
+    .ui-progress-bar--error .ui-progress-bar__status-icon {
+        color: var(--ui-support-error);
+    }
+
+    .ui-progress-bar-error .ui-progress-bar-helper-text,
+    .ui-progress-bar-error .ui-progress-bar__helper-text,
+    .ui-progress-bar--error .ui-progress-bar-helper-text,
+    .ui-progress-bar--error .ui-progress-bar__helper-text {
+        color: var(--ui-text-error);
+    }
+
+    .ui-progress-bar-finished .ui-progress-bar-bar,
+    .ui-progress-bar-finished .ui-progress-bar__bar,
+    .ui-progress-bar-error .ui-progress-bar-bar,
+    .ui-progress-bar-error .ui-progress-bar__bar,
+    .ui-progress-bar--finished .ui-progress-bar-bar,
+    .ui-progress-bar--finished .ui-progress-bar__bar,
+    .ui-progress-bar--error .ui-progress-bar-bar,
+    .ui-progress-bar--error .ui-progress-bar__bar {
+        transform: scaleX(1);
+    }
+
+    /* ----------------------------------------------------------------------
+       Inline variant
+       ---------------------------------------------------------------------- */
+
+    .ui-progress-bar-inline,
+    .ui-progress-bar--inline {
+        display: flex;
+        align-items: center;
+    }
+
+    .ui-progress-bar-inline .ui-progress-bar-label,
+    .ui-progress-bar-inline .ui-progress-bar__label,
+    .ui-progress-bar--inline .ui-progress-bar-label,
+    .ui-progress-bar--inline .ui-progress-bar__label {
+        flex-shrink: 0;
+        margin-block-end: 0;
+        margin-inline-end: var(--ui-progress-bar-padding-inline);
+    }
+
+    .ui-progress-bar-inline .ui-progress-bar-track,
+    .ui-progress-bar-inline .ui-progress-bar__track,
+    .ui-progress-bar--inline .ui-progress-bar-track,
+    .ui-progress-bar--inline .ui-progress-bar__track {
+        flex-basis: 0;
+        flex-grow: 1;
+    }
+
+    .ui-progress-bar-inline .ui-progress-bar-helper-text,
+    .ui-progress-bar-inline .ui-progress-bar__helper-text,
+    .ui-progress-bar--inline .ui-progress-bar-helper-text,
+    .ui-progress-bar--inline .ui-progress-bar__helper-text {
+        position: absolute;
+        overflow: hidden;
+        margin: -1px;
+        border: 0;
+        padding: 0;
+        inline-size: 1px;
+        block-size: 1px;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+    }
+
+    .ui-progress-bar-finished.ui-progress-bar-inline .ui-progress-bar-track,
+    .ui-progress-bar-finished.ui-progress-bar-inline .ui-progress-bar__track,
+    .ui-progress-bar-error.ui-progress-bar-inline .ui-progress-bar-track,
+    .ui-progress-bar-error.ui-progress-bar-inline .ui-progress-bar__track,
+    .ui-progress-bar--finished.ui-progress-bar--inline .ui-progress-bar-track,
+    .ui-progress-bar--finished.ui-progress-bar--inline .ui-progress-bar__track,
+    .ui-progress-bar--error.ui-progress-bar--inline .ui-progress-bar-track,
+    .ui-progress-bar--error.ui-progress-bar--inline .ui-progress-bar__track {
+        position: absolute;
+        overflow: hidden;
+        margin: -1px;
+        border: 0;
+        padding: 0;
+        inline-size: 1px;
+        block-size: 1px;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+    }
+
+    .ui-progress-bar-finished.ui-progress-bar-inline .ui-progress-bar-label,
+    .ui-progress-bar-finished.ui-progress-bar-inline .ui-progress-bar__label,
+    .ui-progress-bar-error.ui-progress-bar-inline .ui-progress-bar-label,
+    .ui-progress-bar-error.ui-progress-bar-inline .ui-progress-bar__label,
+    .ui-progress-bar--finished.ui-progress-bar--inline .ui-progress-bar-label,
+    .ui-progress-bar--finished.ui-progress-bar--inline .ui-progress-bar__label,
+    .ui-progress-bar--error.ui-progress-bar--inline .ui-progress-bar-label,
+    .ui-progress-bar--error.ui-progress-bar--inline .ui-progress-bar__label {
+        flex-shrink: 1;
+        justify-content: flex-start;
+        margin-inline-end: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Indented variant
+       ---------------------------------------------------------------------- */
+
+    .ui-progress-bar-indented .ui-progress-bar-label,
+    .ui-progress-bar-indented .ui-progress-bar__label,
+    .ui-progress-bar-indented .ui-progress-bar-helper-text,
+    .ui-progress-bar-indented .ui-progress-bar__helper-text,
+    .ui-progress-bar--indented .ui-progress-bar-label,
+    .ui-progress-bar--indented .ui-progress-bar__label,
+    .ui-progress-bar--indented .ui-progress-bar-helper-text,
+    .ui-progress-bar--indented .ui-progress-bar__helper-text {
+        padding-inline: var(--ui-progress-bar-padding-inline);
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-progress-bar-bar,
+        .ui-progress-bar__bar,
+        .ui-progress-bar-indeterminate .ui-progress-bar-track::after,
+        .ui-progress-bar-indeterminate .ui-progress-bar__track::after,
+        .ui-progress-bar--indeterminate .ui-progress-bar-track::after,
+        .ui-progress-bar--indeterminate .ui-progress-bar__track::after {
+            animation: none;
+            transition: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-progress-bar-track,
+        .ui-progress-bar__track {
+            forced-color-adjust: none;
+            background-color: Canvas;
+            outline: 2px solid rgb(0 0 0 / 0);
+            outline-offset: -2px;
+        }
+
+        .ui-progress-bar-bar,
+        .ui-progress-bar__bar {
+            background-color: CanvasText;
+        }
+
+        .ui-progress-bar-finished .ui-progress-bar-status-icon,
+        .ui-progress-bar-finished .ui-progress-bar__status-icon,
+        .ui-progress-bar--finished .ui-progress-bar-status-icon,
+        .ui-progress-bar--finished .ui-progress-bar__status-icon {
+            color: CanvasText;
+            fill: CanvasText;
+        }
+
+        .ui-progress-bar-error .ui-progress-bar-status-icon,
+        .ui-progress-bar-error .ui-progress-bar__status-icon,
+        .ui-progress-bar--error .ui-progress-bar-status-icon,
+        .ui-progress-bar--error .ui-progress-bar__status-icon,
+        .ui-progress-bar-error .ui-progress-bar-helper-text,
+        .ui-progress-bar-error .ui-progress-bar__helper-text,
+        .ui-progress-bar--error .ui-progress-bar-helper-text,
+        .ui-progress-bar--error .ui-progress-bar__helper-text {
+            color: Mark;
+            fill: Mark;
+        }
     }
 }

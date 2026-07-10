@@ -1,53 +1,355 @@
 /* ==========================================================================
-File: resources/css/components/pagination-nav.css
-Purpose: Pagination Nav component styles.
-Carbon reference:
+   File: resources/css/components/pagination-nav.css
+   Purpose: Pagination Nav component styles.
 
-* reference/carbon-main/packages/styles/scss/components/pagination-nav/
-
-Notes:
-
-* Defines Pagination Nav selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-  ========================================================================== */
+   Notes:
+   - Defines Pagination Nav selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports page links, active state, disabled state, direction buttons,
+     select-based page control, equal sizing through layout tokens, RTL icons,
+     and reduced-motion behavior.
+   ========================================================================== */
 
 @layer components {
-    .ui-pagination-nav-list {
-        display: inline-flex;
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
+    .ui-pagination-nav {
+        --ui-pagination-nav-height: var(
+            --ui-layout-size-height-local,
+            var(--ui-layout-size-height-lg, 3rem)
+        );
+
+        /*
+         * Component layout context:
+         * Equivalent size range: sm through lg, default lg.
+         */
+        --ui-layout-size-height-min: var(--ui-layout-size-height-sm);
+        --ui-layout-size-height-max: var(--ui-layout-size-height-lg);
+        --ui-layout-size-height: var(
+            --ui-layout-size-height-context,
+            var(--ui-layout-size-height-lg)
+        );
+
+        box-sizing: border-box;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        color: var(--ui-text-primary);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: 0;
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+    }
+
+    .ui-pagination-nav *,
+    .ui-pagination-nav *::before,
+    .ui-pagination-nav *::after {
+        box-sizing: inherit;
+    }
+
+    .ui-pagination-nav-list,
+    .ui-pagination-nav__list {
+        display: flex;
         align-items: center;
-        gap: var(--ui-spacing-02);
         margin: 0;
         padding: 0;
         list-style: none;
     }
 
-    .ui-pagination-nav-item {
-        display: inline-flex;
+    .ui-pagination-nav-list-item,
+    .ui-pagination-nav__list-item {
+        padding: 0;
     }
 
-    .ui-pagination-nav-link {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-inline-size: 2rem;
-        block-size: 2rem;
-        padding-inline: var(--ui-spacing-03);
+    .ui-pagination-nav-list-item:first-child,
+    .ui-pagination-nav__list-item:first-child {
+        padding-inline-start: 0;
+    }
+
+    .ui-pagination-nav-list-item:last-child,
+    .ui-pagination-nav__list-item:last-child {
+        padding-inline-end: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Page control
+       ---------------------------------------------------------------------- */
+
+    .ui-pagination-nav-page,
+    .ui-pagination-nav__page {
+        position: relative;
+        display: block;
+        min-inline-size: var(--ui-pagination-nav-height);
+        margin: 0;
+        border: 0;
+        border-radius: 0;
+        padding: calc((var(--ui-pagination-nav-height) - 0.875rem) / 2)
+            var(--ui-spacing-02);
+        appearance: none;
+        background: none;
         color: var(--ui-text-primary);
+        cursor: pointer;
+        font: inherit;
+        font-weight: var(--ui-font-weight-regular);
+        line-height: 1;
+        outline: 0;
+        text-align: center;
         text-decoration: none;
+        user-select: none;
+        transition:
+            background-color var(--ui-duration-fast-02)
+                var(--ui-motion-standard-productive),
+            color var(--ui-duration-fast-02)
+                var(--ui-motion-standard-productive);
     }
 
-    .ui-pagination-nav-link:hover {
-        background-color: var(--ui-layer-hover-01);
+    .ui-pagination-nav-page::-moz-focus-inner,
+    .ui-pagination-nav__page::-moz-focus-inner {
+        border: 0;
     }
 
-    .ui-pagination-nav-link[aria-current="page"] {
-        background-color: var(--ui-layer-selected-01);
+    .ui-pagination-nav-page:hover,
+    .ui-pagination-nav__page:hover {
+        background-color: var(--ui-background-hover);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-pagination-nav-page:focus,
+    .ui-pagination-nav-page:focus-visible,
+    .ui-pagination-nav__page:focus,
+    .ui-pagination-nav__page:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-pagination-nav-page::after,
+    .ui-pagination-nav__page::after,
+    .ui-pagination-nav-select-icon-wrapper::after,
+    .ui-pagination-nav__select-icon-wrapper::after {
+        position: absolute;
+        inset-block-end: 0;
+        inset-inline-start: 50%;
+        display: block;
+        inline-size: 0;
+        block-size: var(--ui-spacing-02);
+        background-color: var(--ui-border-interactive);
+        content: "";
+        opacity: 0;
+        transition: inline-size var(--ui-duration-fast-02)
+            var(--ui-motion-standard-productive);
+    }
+
+    .ui-pagination-nav-page-active,
+    .ui-pagination-nav-page--active,
+    .ui-pagination-nav__page--active {
+        background-color: initial;
+        color: var(--ui-text-primary);
         font-weight: var(--ui-font-weight-semibold);
     }
 
-    .ui-pagination-nav-link:focus-visible {
-        outline: 2px solid var(--ui-focus);
-        outline-offset: -2px;
+    .ui-pagination-nav-page-active::after,
+    .ui-pagination-nav-page--active::after,
+    .ui-pagination-nav__page--active::after,
+    .ui-pagination-nav-page-active
+        + .ui-pagination-nav-select-icon-wrapper::after,
+    .ui-pagination-nav-page-active
+        + .ui-pagination-nav__select-icon-wrapper::after,
+    .ui-pagination-nav-page--active
+        + .ui-pagination-nav-select-icon-wrapper::after,
+    .ui-pagination-nav-page--active
+        + .ui-pagination-nav__select-icon-wrapper::after,
+    .ui-pagination-nav__page--active
+        + .ui-pagination-nav-select-icon-wrapper::after,
+    .ui-pagination-nav__page--active
+        + .ui-pagination-nav__select-icon-wrapper::after {
+        inset-inline-start: calc(50% - (var(--ui-spacing-05) * 0.5));
+        inline-size: var(--ui-spacing-05);
+        opacity: 1;
+    }
+
+    .ui-pagination-nav-page:disabled,
+    .ui-pagination-nav-page-disabled,
+    .ui-pagination-nav-page--disabled,
+    .ui-pagination-nav__page:disabled,
+    .ui-pagination-nav__page--disabled {
+        background: none;
+        color: color-mix(in srgb, var(--ui-text-secondary) 50%, transparent);
+        cursor: not-allowed;
+        outline: none;
+        pointer-events: none;
+    }
+
+    .ui-pagination-nav-icon,
+    .ui-pagination-nav__icon {
+        fill: currentColor;
+        pointer-events: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Direction controls
+       ---------------------------------------------------------------------- */
+
+    .ui-pagination-nav-page-direction,
+    .ui-pagination-nav-page--direction,
+    .ui-pagination-nav__page--direction {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--ui-spacing-09);
+        block-size: var(--ui-spacing-09);
+        line-height: 0;
+    }
+
+    .ui-pagination-nav-page-direction::after,
+    .ui-pagination-nav-page--direction::after,
+    .ui-pagination-nav__page--direction::after {
+        display: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Select page control
+       ---------------------------------------------------------------------- */
+
+    .ui-pagination-nav-select,
+    .ui-pagination-nav__select {
+        position: relative;
+    }
+
+    .ui-pagination-nav-page-select,
+    .ui-pagination-nav-page--select,
+    .ui-pagination-nav__page--select {
+        max-block-size: var(--ui-pagination-nav-height);
+        appearance: none;
+        text-indent: calc(50% - 4.5px);
+    }
+
+    @-moz-document url-prefix() {
+        .ui-pagination-nav-page-select,
+        .ui-pagination-nav-page--select,
+        .ui-pagination-nav__page--select {
+            text-indent: 0;
+        }
+    }
+
+    .ui-pagination-nav-select-icon-wrapper,
+    .ui-pagination-nav__select-icon-wrapper {
+        position: absolute;
+        inset-block-start: 0;
+        inline-size: 100%;
+        block-size: 100%;
+        pointer-events: none;
+    }
+
+    .ui-pagination-nav-page-active
+        + .ui-pagination-nav-select-icon-wrapper
+        .ui-pagination-nav-select-icon,
+    .ui-pagination-nav-page-active
+        + .ui-pagination-nav__select-icon-wrapper
+        .ui-pagination-nav__select-icon,
+    .ui-pagination-nav-page--active
+        + .ui-pagination-nav-select-icon-wrapper
+        .ui-pagination-nav-select-icon,
+    .ui-pagination-nav-page--active
+        + .ui-pagination-nav__select-icon-wrapper
+        .ui-pagination-nav__select-icon,
+    .ui-pagination-nav__page--active
+        + .ui-pagination-nav-select-icon-wrapper
+        .ui-pagination-nav-select-icon,
+    .ui-pagination-nav__page--active
+        + .ui-pagination-nav__select-icon-wrapper
+        .ui-pagination-nav__select-icon {
+        display: none;
+    }
+
+    .ui-pagination-nav-select-icon,
+    .ui-pagination-nav__select-icon {
+        position: absolute;
+        inset-block-start: calc(50% - (var(--ui-spacing-05) * 0.25));
+        inset-inline-start: calc(50% - (var(--ui-spacing-05) * 0.5));
+        pointer-events: none;
+        fill: currentColor;
+    }
+
+    /* ----------------------------------------------------------------------
+       Accessibility label
+       ---------------------------------------------------------------------- */
+
+    .ui-pagination-nav-accessibility-label,
+    .ui-pagination-nav__accessibility-label {
+        position: absolute;
+        overflow: hidden;
+        margin: -1px;
+        border: 0;
+        padding: 0;
+        inline-size: 1px;
+        block-size: 1px;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+    }
+
+    /* ----------------------------------------------------------------------
+       RTL
+       ---------------------------------------------------------------------- */
+
+    [dir="rtl"] .ui-pagination-nav-list-item svg,
+    [dir="rtl"] .ui-pagination-nav__list-item svg {
+        transform: rotate(0.5turn);
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-pagination-nav-page,
+        .ui-pagination-nav__page,
+        .ui-pagination-nav-page::after,
+        .ui-pagination-nav__page::after,
+        .ui-pagination-nav-select-icon-wrapper::after,
+        .ui-pagination-nav__select-icon-wrapper::after {
+            transition: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-pagination-nav-page:focus,
+        .ui-pagination-nav-page:focus-visible,
+        .ui-pagination-nav__page:focus,
+        .ui-pagination-nav__page:focus-visible {
+            outline-color: Highlight;
+        }
+
+        .ui-pagination-nav-page-active::after,
+        .ui-pagination-nav-page--active::after,
+        .ui-pagination-nav__page--active::after,
+        .ui-pagination-nav-page-active
+            + .ui-pagination-nav-select-icon-wrapper::after,
+        .ui-pagination-nav-page-active
+            + .ui-pagination-nav__select-icon-wrapper::after,
+        .ui-pagination-nav-page--active
+            + .ui-pagination-nav-select-icon-wrapper::after,
+        .ui-pagination-nav-page--active
+            + .ui-pagination-nav__select-icon-wrapper::after,
+        .ui-pagination-nav__page--active
+            + .ui-pagination-nav-select-icon-wrapper::after,
+        .ui-pagination-nav__page--active
+            + .ui-pagination-nav__select-icon-wrapper::after {
+            background-color: Highlight;
+        }
+
+        .ui-pagination-nav-page:disabled,
+        .ui-pagination-nav-page-disabled,
+        .ui-pagination-nav-page--disabled,
+        .ui-pagination-nav__page:disabled,
+        .ui-pagination-nav__page--disabled {
+            color: GrayText;
+        }
     }
 }

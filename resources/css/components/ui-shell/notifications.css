@@ -1,0 +1,12 @@
+/* ==========================================================================
+   File: resources/css/components/ui-shell/notifications.css
+   Purpose: Imports Notifications module shell notification styles.
+
+   Notes:
+   - The actual Notifications module styles live with the Notifications module.
+   - Keep notification bell, badge, popover, panel, row, and footer styles in:
+     Modules/Notifications/resources/css/notifications.css
+   - This bridge keeps ui-shell/index.css import order stable.
+   ========================================================================== */
+
+@import "../../../../Modules/Notifications/resources/css/notifications.css";

@@ -97,6 +97,7 @@ Verify browser-review readiness:
 Default active services:
 
 - app
+- queue
 - reverb
 - postgres
 - redis
@@ -159,9 +160,9 @@ Restart the optional node service with:
 
 ## Reverb
 
-Ensure Reverb is running:
+Ensure Reverb and the queue worker are running:
 
-    docker compose up -d reverb
+    docker compose up -d reverb queue
     docker compose exec app php artisan local:ready
 
 ## LAN Review
@@ -210,6 +211,11 @@ If Reverb fails:
 
     docker compose logs reverb --tail=200
 
+If queued jobs or realtime broadcasts are not processed:
+
+    docker compose logs queue --tail=200
+    docker compose exec app php artisan queue:failed
+
 If Vite appears stale:
 
 1. confirm `npm run dev:host` is running
@@ -238,6 +244,7 @@ Local development is ready when:
 - the login route loads
 - Vite assets load
 - Reverb is reachable
+- the queue worker is processing queued broadcasts
 - required tests pass
 
 ## Related

@@ -1,0 +1,210 @@
+/* ==========================================================================
+   File: resources/css/components/fluid-search.css
+   Purpose: Fluid Search component styles.
+
+   Notes:
+   - Defines Fluid Search selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports fluid search height, floating label, scroll-hidden label
+     text, input spacing, magnifier positioning, close button treatment,
+     focus underline behavior, disabled state, reduced-motion, and
+     forced-colors behavior.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
+    .ui-search-fluid,
+    .ui-search--fluid {
+        block-size: 4rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Label
+       ---------------------------------------------------------------------- */
+
+    .ui-search-fluid .ui-label,
+    .ui-search--fluid .ui-label {
+        position: absolute;
+        z-index: 1;
+        display: flex;
+        overflow: initial;
+        align-items: center;
+        inline-size: calc(100% - 2rem);
+        block-size: 1rem;
+        margin: 0;
+        clip: initial;
+        inset-block-start: 0.8125rem;
+        inset-inline-start: var(--ui-spacing-05);
+        white-space: initial;
+    }
+
+    .ui-search-fluid .ui-label::-webkit-scrollbar,
+    .ui-search--fluid .ui-label::-webkit-scrollbar,
+    .ui-search-fluid .ui-label .ui-toggletip-label::-webkit-scrollbar,
+    .ui-search--fluid .ui-label .ui-toggletip-label::-webkit-scrollbar {
+        display: none;
+    }
+
+    .ui-search-fluid .ui-label:not(:has(.ui-toggletip-label)),
+    .ui-search--fluid .ui-label:not(:has(.ui-toggletip-label)),
+    .ui-search-fluid .ui-label .ui-toggletip-label,
+    .ui-search--fluid .ui-label .ui-toggletip-label {
+        overflow-x: scroll;
+        white-space: nowrap;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Input
+       ---------------------------------------------------------------------- */
+
+    .ui-search-fluid .ui-search-input,
+    .ui-search--fluid .ui-search-input {
+        block-size: 100%;
+        padding: 2rem 5.5rem 0.8125rem var(--ui-spacing-05);
+    }
+
+    /* ----------------------------------------------------------------------
+       Magnifier icon
+       ---------------------------------------------------------------------- */
+
+    .ui-search-fluid .ui-search-magnifier-icon,
+    .ui-search--fluid .ui-search-magnifier-icon {
+        color: var(--ui-icon-primary);
+        inset: auto 1rem 0.8125rem auto;
+        transform: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Close button
+       ---------------------------------------------------------------------- */
+
+    .ui-search-fluid .ui-search-close,
+    .ui-search--fluid .ui-search-close {
+        inline-size: 2.5rem;
+        block-size: 2.5rem;
+        border: none;
+        inset: auto 3rem 0 auto;
+        transition: background-color var(--ui-duration-fast-01)
+            var(--ui-motion-standard-productive);
+    }
+
+    .ui-search-fluid .ui-search-input:focus ~ .ui-search-close:hover,
+    .ui-search--fluid .ui-search-input:focus ~ .ui-search-close:hover {
+        outline: none;
+    }
+
+    .ui-search-fluid .ui-search-close::after,
+    .ui-search--fluid .ui-search-close::after {
+        position: absolute;
+        display: block;
+        inline-size: 100%;
+        block-size: 0.125rem;
+        content: "";
+        inset-block-end: 0;
+        inset-inline-start: 0;
+    }
+
+    .ui-search-fluid .ui-search-input:focus ~ .ui-search-close::after,
+    .ui-search--fluid .ui-search-input:focus ~ .ui-search-close::after {
+        background: var(--ui-focus);
+    }
+
+    .ui-search-fluid
+        .ui-search-input:not(:focus)
+        ~ .ui-search-close:not([disabled])::after,
+    .ui-search--fluid
+        .ui-search-input:not(:focus)
+        ~ .ui-search-close:not([disabled])::after {
+        block-size: 1px;
+        background: var(--ui-border-strong);
+    }
+
+    .ui-search-fluid .ui-search-close svg,
+    .ui-search--fluid .ui-search-close svg {
+        margin-block-end: 0.125rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Disabled state
+       ---------------------------------------------------------------------- */
+
+    .ui-search-fluid .ui-search-input:disabled ~ .ui-search-close:hover::before,
+    .ui-search--fluid
+        .ui-search-input:disabled
+        ~ .ui-search-close:hover::before {
+        background: var(--ui-border-subtle);
+    }
+
+    .ui-search-fluid.ui-search-disabled .ui-label,
+    .ui-search-fluid.ui-search--disabled .ui-label,
+    .ui-search--fluid.ui-search-disabled .ui-label,
+    .ui-search--fluid.ui-search--disabled .ui-label {
+        color: var(--ui-text-disabled);
+        cursor: not-allowed;
+    }
+
+    .ui-search-fluid.ui-search-disabled .ui-search-input[disabled],
+    .ui-search-fluid.ui-search--disabled .ui-search-input[disabled],
+    .ui-search--fluid.ui-search-disabled .ui-search-input[disabled],
+    .ui-search--fluid.ui-search--disabled .ui-search-input[disabled] {
+        border-block-end: 1px solid var(--ui-border-subtle);
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        .ui-search-fluid .ui-search-close,
+        .ui-search--fluid .ui-search-close {
+            transition: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-search-fluid .ui-label,
+        .ui-search--fluid .ui-label,
+        .ui-search-fluid .ui-search-input,
+        .ui-search--fluid .ui-search-input,
+        .ui-search-fluid .ui-search-magnifier-icon,
+        .ui-search--fluid .ui-search-magnifier-icon {
+            color: CanvasText;
+        }
+
+        .ui-search-fluid .ui-search-input:focus ~ .ui-search-close::after,
+        .ui-search--fluid .ui-search-input:focus ~ .ui-search-close::after {
+            background: Highlight;
+        }
+
+        .ui-search-fluid
+            .ui-search-input:not(:focus)
+            ~ .ui-search-close:not([disabled])::after,
+        .ui-search--fluid
+            .ui-search-input:not(:focus)
+            ~ .ui-search-close:not([disabled])::after {
+            background: CanvasText;
+        }
+
+        .ui-search-fluid.ui-search-disabled .ui-label,
+        .ui-search-fluid.ui-search--disabled .ui-label,
+        .ui-search--fluid.ui-search-disabled .ui-label,
+        .ui-search--fluid.ui-search--disabled .ui-label,
+        .ui-search-fluid.ui-search-disabled .ui-search-input[disabled],
+        .ui-search-fluid.ui-search--disabled .ui-search-input[disabled],
+        .ui-search--fluid.ui-search-disabled .ui-search-input[disabled],
+        .ui-search--fluid.ui-search--disabled .ui-search-input[disabled] {
+            color: GrayText;
+            border-block-end-color: GrayText;
+        }
+    }
+}

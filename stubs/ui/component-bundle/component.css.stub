@@ -1,0 +1,74 @@
+/* ==========================================================================
+   File: {{ cssPath }}
+   Purpose: {{ label }} component styles.
+
+   Notes:
+   - Defines {{ label }} selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Keep selectors aligned with {{ bladePath }} and {{ contractPath }}.
+   - Use existing --ui-* tokens before introducing component-local values.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
+    /*
+     * Define .ui-{{ component }} only after the emitted Blade class contract
+     * has been confirmed.
+     */
+
+    /* ----------------------------------------------------------------------
+       Structure
+       ---------------------------------------------------------------------- */
+
+    /*
+     * Add component-owned structural selectors.
+     */
+
+    /* ----------------------------------------------------------------------
+       Variants
+       ---------------------------------------------------------------------- */
+
+    /*
+     * Add only contract-approved variants.
+     */
+
+    /* ----------------------------------------------------------------------
+       States
+       ---------------------------------------------------------------------- */
+
+    /*
+     * Add only contract-approved states.
+     */
+
+    /* ----------------------------------------------------------------------
+       Responsive behavior
+       ---------------------------------------------------------------------- */
+
+    /*
+     * Add responsive behavior only where required by the component contract.
+     */
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        /*
+         * Disable or reduce non-essential motion.
+         */
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        /*
+         * Add system-color overrides only where required.
+         */
+    }
+}

@@ -1,0 +1,104 @@
+/* ==========================================================================
+   File: resources/css/base/layer.css
+   Purpose: Layer scope aliases.
+   Notes:
+   - Defines layer scope selectors only.
+   - Do not define primitive palette values here.
+   - Do not define theme role values here.
+   - Numbered layer values are owned by theme files.
+   - Components may consume generic layer aliases when they need to respond
+     to nesting depth.
+   ========================================================================== */
+
+@layer base {
+    :root,
+    .ui-layer-one {
+        --ui-layer: var(--ui-layer-01);
+        --ui-layer-active: var(--ui-layer-active-01);
+        --ui-layer-background: var(
+            --ui-layer-background-01,
+            var(--ui-background)
+        );
+        --ui-layer-hover: var(--ui-layer-hover-01);
+        --ui-layer-selected: var(--ui-layer-selected-01);
+        --ui-layer-selected-hover: var(--ui-layer-selected-hover-01);
+
+        --ui-layer-accent: var(--ui-layer-accent-01);
+        --ui-layer-accent-hover: var(--ui-layer-accent-hover-01);
+        --ui-layer-accent-active: var(
+            --ui-layer-accent-active-01,
+            var(--ui-layer-active-01)
+        );
+
+        --ui-field: var(--ui-field-01);
+        --ui-field-hover: var(--ui-field-hover-01);
+
+        --ui-border-subtle: var(--ui-border-subtle-00);
+        --ui-border-subtle-selected: var(--ui-border-subtle-selected-01);
+        --ui-border-strong: var(--ui-border-strong-01);
+        --ui-border-tile: var(--ui-border-tile-01);
+    }
+
+    .ui-layer-two {
+        --ui-layer: var(--ui-layer-02);
+        --ui-layer-active: var(--ui-layer-active-02);
+        --ui-layer-background: var(
+            --ui-layer-background-02,
+            var(--ui-layer-01)
+        );
+        --ui-layer-hover: var(--ui-layer-hover-02);
+        --ui-layer-selected: var(--ui-layer-selected-02);
+        --ui-layer-selected-hover: var(--ui-layer-selected-hover-02);
+
+        --ui-layer-accent: var(--ui-layer-accent-02);
+        --ui-layer-accent-hover: var(--ui-layer-accent-hover-02);
+        --ui-layer-accent-active: var(
+            --ui-layer-accent-active-02,
+            var(--ui-layer-active-02)
+        );
+
+        --ui-field: var(--ui-field-02);
+        --ui-field-hover: var(--ui-field-hover-02);
+
+        --ui-border-subtle: var(--ui-border-subtle-01);
+        --ui-border-subtle-selected: var(--ui-border-subtle-selected-02);
+        --ui-border-strong: var(--ui-border-strong-02);
+        --ui-border-tile: var(--ui-border-tile-02);
+    }
+
+    .ui-layer-three {
+        --ui-layer: var(--ui-layer-03);
+        --ui-layer-active: var(--ui-layer-active-03);
+        --ui-layer-background: var(
+            --ui-layer-background-03,
+            var(--ui-layer-02)
+        );
+        --ui-layer-hover: var(--ui-layer-hover-03);
+        --ui-layer-selected: var(--ui-layer-selected-03);
+        --ui-layer-selected-hover: var(--ui-layer-selected-hover-03);
+
+        --ui-layer-accent: var(--ui-layer-accent-03);
+        --ui-layer-accent-hover: var(--ui-layer-accent-hover-03);
+        --ui-layer-accent-active: var(
+            --ui-layer-accent-active-03,
+            var(--ui-layer-active-03)
+        );
+
+        --ui-field: var(--ui-field-03);
+        --ui-field-hover: var(--ui-field-hover-03);
+
+        --ui-border-subtle: var(--ui-border-subtle-02);
+        --ui-border-subtle-selected: var(--ui-border-subtle-selected-03);
+        --ui-border-strong: var(--ui-border-strong-03);
+        --ui-border-tile: var(--ui-border-tile-03);
+    }
+
+    .ui-layer-one.ui-layer-with-background,
+    .ui-layer-one.ui-layer__with-background,
+    .ui-layer-two.ui-layer-with-background,
+    .ui-layer-two.ui-layer__with-background,
+    .ui-layer-three.ui-layer-with-background,
+    .ui-layer-three.ui-layer__with-background {
+        background-color: var(--ui-layer-background);
+    }
+}

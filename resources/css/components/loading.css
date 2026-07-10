@@ -1,127 +1,223 @@
 /* ==========================================================================
 File: resources/css/components/loading.css
 Purpose: Loading component styles.
-Carbon reference:
 
-* reference/carbon-main/packages/styles/scss/components/loading/_loading.scss
+Carbon references:
+- reference/carbon-main/packages/styles/scss/components/loading/_loading.scss
+- reference/carbon-main/packages/styles/scss/components/loading/_animation.scss
+- reference/carbon-main/packages/styles/scss/components/loading/_functions.scss
+- reference/carbon-main/packages/styles/scss/components/loading/_vars.scss
 
 Notes:
-
-* Defines Loading selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Spinner colors are provided by semantic aliases.
-  ========================================================================== */
+- Implements Carbon's SVG stroke-based loading indicator.
+- Does not define primitive palette or theme role tokens.
+- Spinner colors are supplied through semantic aliases.
+========================================================================== */
 
 @layer components {
     /* ----------------------------------------------------------------------
-   Base loading container
-   ---------------------------------------------------------------------- */
+    Base loading indicator
+    ---------------------------------------------------------------------- */
 
     .ui-loading {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: var(--ui-spacing-04);
-        color: var(--ui-text-primary);
-        font-size: 0.875rem;
-        line-height: 1.25rem;
-    }
-
-    .ui-loading[aria-busy="true"] {
-        cursor: progress;
-    }
-
-    /* ----------------------------------------------------------------------
-   Sizes
-   ---------------------------------------------------------------------- */
-
-    .ui-loading--lg {
-        flex-direction: column;
-        gap: var(--ui-spacing-04);
-        min-inline-size: 5.5rem;
-        text-align: center;
-    }
-
-    .ui-loading--sm {
-        display: inline-flex;
-        flex-direction: row;
-        min-inline-size: 1rem;
-        font-size: 0.875rem;
-    }
-
-    /* ----------------------------------------------------------------------
-   Overlay placement
-   ---------------------------------------------------------------------- */
-
-    .ui-loading--overlay {
-        position: absolute;
-        z-index: 10;
-        inset: 0;
-        background-color: var(--ui-overlay);
-        color: var(--ui-text-inverse);
-        pointer-events: auto;
-    }
-
-    .ui-loading--placement-page.ui-loading--overlay {
-        position: fixed;
-    }
-
-    /* ----------------------------------------------------------------------
-   Indicator and spinner
-   ---------------------------------------------------------------------- */
-
-    .ui-loading__indicator {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        flex: 0 0 auto;
-        border-radius: 9999px;
-    }
-
-    .ui-loading--lg .ui-loading__indicator {
-        inline-size: 5.5rem;
+        box-sizing: border-box;
+        display: inline-block;
+        padding: 0;
+        border: 0;
+        margin: 0;
+        animation-duration: 690ms;
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+        animation-name: ui-loading-rotate;
+        animation-timing-function: linear;
         block-size: 5.5rem;
+        inline-size: 5.5rem;
+        vertical-align: middle;
     }
 
-    .ui-loading--sm .ui-loading__indicator {
-        inline-size: 1rem;
-        block-size: 1rem;
-        background-color: var(--ui-layer-accent-01);
-    }
-
-    .ui-loading__spinner {
-        display: block;
-        inline-size: 100%;
-        block-size: 100%;
-        border-style: solid;
-        border-color: var(--ui-spinner-track);
-        border-top-color: var(--ui-spinner-head);
-        border-radius: 9999px;
-        animation: ui-spin 0.8s linear infinite;
-    }
-
-    .ui-loading--lg .ui-loading__spinner {
-        border-width: 0.5rem;
-    }
-
-    .ui-loading--sm .ui-loading__spinner {
-        border-width: 0.125rem;
-    }
-
-    .ui-loading__label {
-        color: currentColor;
-        font-size: 0.875rem;
-        line-height: 1.25rem;
+    .ui-loading *,
+    .ui-loading *::before,
+    .ui-loading *::after {
+        box-sizing: inherit;
     }
 
     /* ----------------------------------------------------------------------
-   Reduced motion
-   ---------------------------------------------------------------------- */
+    SVG and stroke structure
+    ---------------------------------------------------------------------- */
 
-    @media (prefers-reduced-motion: reduce) {
-        .ui-loading__spinner {
-            animation-duration: 1.6s;
+    .ui-loading__svg {
+        display: block;
+        fill: transparent;
+        block-size: 100%;
+        inline-size: 100%;
+    }
+
+    .ui-loading__svg circle {
+        animation-duration: 10ms;
+        animation-name: ui-loading-init-stroke;
+        animation-timing-function: var(
+            --ui-motion-standard-easing,
+            cubic-bezier(0.2, 0, 0.38, 0.9)
+        );
+        fill: transparent;
+        stroke-dasharray: 276.4608 276.4608;
+        stroke-linecap: butt;
+        stroke-width: 10;
+    }
+
+    .ui-loading__stroke {
+        stroke: var(--ui-spinner-head);
+        stroke-dashoffset: 52.527552;
+    }
+
+    /* ----------------------------------------------------------------------
+    Small loading indicator
+    ---------------------------------------------------------------------- */
+
+    .ui-loading--small {
+        block-size: 1rem;
+        inline-size: 1rem;
+        line-height: 1rem;
+    }
+
+    .ui-loading--small .ui-loading__svg circle {
+        stroke-width: 16;
+    }
+
+    .ui-loading--small .ui-loading__stroke {
+        stroke-dashoffset: 143.759616;
+    }
+
+    .ui-loading__background {
+        stroke: var(--ui-spinner-track);
+        stroke-dashoffset: -22;
+    }
+
+    /*
+     * Negative stroke-dashoffset values are not supported consistently by
+     * Safari. This matches Carbon's Safari-specific fallback.
+     */
+
+    @supports (hanging-punctuation: first) and (font: -apple-system-body) and
+        (-webkit-appearance: none) {
+        circle.ui-loading__background {
+            stroke-dasharray: 265;
+            stroke-dashoffset: 0;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+    Stop state
+    ---------------------------------------------------------------------- */
+
+    .ui-loading--stop {
+        animation:
+            ui-loading-rotate-end-p1 700ms
+                var(--ui-motion-ease-out, cubic-bezier(0, 0, 0.38, 0.9))
+                forwards,
+            ui-loading-rotate-end-p2 700ms
+                var(--ui-motion-ease-out, cubic-bezier(0, 0, 0.38, 0.9)) 700ms
+                forwards;
+    }
+
+    .ui-loading--stop .ui-loading__svg circle {
+        animation-delay: 700ms;
+        animation-duration: 700ms;
+        animation-fill-mode: forwards;
+        animation-name: ui-loading-stroke-end;
+        animation-timing-function: var(
+            --ui-motion-ease-out,
+            cubic-bezier(0, 0, 0.38, 0.9)
+        );
+    }
+
+    /* ----------------------------------------------------------------------
+    Overlay
+    ---------------------------------------------------------------------- */
+
+    .ui-loading-overlay {
+        position: fixed;
+        z-index: var(--ui-z-index-overlay, 8000);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--ui-overlay);
+        block-size: 100%;
+        inline-size: 100%;
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        transition: background-color var(--ui-duration-slow-02, 720ms)
+            var(
+                --ui-motion-standard-expressive,
+                cubic-bezier(0.4, 0.14, 0.3, 1)
+            );
+    }
+
+    .ui-loading-overlay--stop {
+        display: none;
+    }
+
+    /* ----------------------------------------------------------------------
+    Rotation animations
+    ---------------------------------------------------------------------- */
+
+    @keyframes ui-loading-rotate {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes ui-loading-rotate-end-p1 {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes ui-loading-rotate-end-p2 {
+        100% {
+            transform: rotate(-360deg);
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+    Stroke animations
+    ---------------------------------------------------------------------- */
+
+    @keyframes ui-loading-init-stroke {
+        0% {
+            stroke-dashoffset: 276.4608;
+        }
+
+        100% {
+            stroke-dashoffset: 52.527552;
+        }
+    }
+
+    @keyframes ui-loading-stroke-end {
+        0% {
+            stroke-dashoffset: 52.527552;
+        }
+
+        100% {
+            stroke-dashoffset: 276.4608;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+    Reduced motion
+    ---------------------------------------------------------------------- */
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        .ui-loading__svg circle {
+            animation: none;
+        }
+
+        .ui-loading--stop .ui-loading__svg circle {
+            animation: none;
         }
     }
 }

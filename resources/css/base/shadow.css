@@ -1,0 +1,29 @@
+/* ==========================================================================
+   File: resources/css/base/shadow.css
+   Purpose: Shadow utility classes.
+   Notes:
+   - Defines utility classes only.
+   - Shadow values are owned by resources/css/tokens/shadow.css.
+   ========================================================================== */
+
+@layer utilities {
+    :where(.ui-shadow-floating) {
+        box-shadow: var(--ui-shadow-floating);
+    }
+
+    :where(.ui-shadow-floating-top) {
+        box-shadow: var(--ui-shadow-floating-top);
+    }
+
+    :where(.ui-shadow-popover) {
+        box-shadow: var(--ui-shadow-popover);
+    }
+
+    :where(.ui-shadow-dropdown) {
+        box-shadow: var(--ui-shadow-dropdown);
+    }
+
+    :where(.ui-shadow-menu) {
+        box-shadow: var(--ui-shadow-menu);
+    }
+}

@@ -1,48 +1,277 @@
 /* ==========================================================================
-File: resources/css/components/page-header.css
-Purpose: Page Header component styles.
-Carbon reference:
+   File: resources/css/components/page-header.css
+   Purpose: Page Header component styles.
 
-* reference/carbon-main/packages/styles/scss/components/page-header/
-
-Notes:
-
-* Defines Page Header selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Base page defaults belong in resources/css/base/.
-  ========================================================================== */
+   Notes:
+   - Defines Page Header selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports breadcrumb bar, breadcrumb actions, content title area,
+     contextual actions, page actions, subtitle, body, hero image, tabs,
+     tags, responsive title layout, and hidden state handling.
+   ========================================================================== */
 
 @layer components {
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
     .ui-page-header {
+        background-color: var(--ui-layer-01);
+        border-block-end: 1px solid var(--ui-border-subtle-01);
+    }
+
+    /* ----------------------------------------------------------------------
+       Breadcrumb bar
+       ---------------------------------------------------------------------- */
+
+    .ui-page-header-breadcrumb-bar,
+    .ui-page-header__breadcrumb-bar {
+        block-size: 2.5rem;
+    }
+
+    .ui-page-header-breadcrumb-bar .ui-subgrid,
+    .ui-page-header__breadcrumb-bar .ui-subgrid {
+        block-size: 100%;
+    }
+
+    .ui-page-header-breadcrumb-container,
+    .ui-page-header__breadcrumb-container {
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        inline-size: 100%;
+        block-size: 100%;
+    }
+
+    .ui-page-header-breadcrumb-bar-border,
+    .ui-page-header__breadcrumb-bar-border {
+        border-block-end: 1px solid var(--ui-border-subtle-01);
+    }
+
+    .ui-page-header-breadcrumb-wrapper,
+    .ui-page-header__breadcrumb-wrapper {
+        display: inline-flex;
+    }
+
+    .ui-page-header-breadcrumb-icon,
+    .ui-page-header__breadcrumb__icon {
+        margin-inline-end: var(--ui-spacing-03);
+    }
+
+    /* ----------------------------------------------------------------------
+       Breadcrumb actions
+       ---------------------------------------------------------------------- */
+
+    .ui-page-header-breadcrumb-actions,
+    .ui-page-header__breadcrumb__actions {
+        display: inline-flex;
+    }
+
+    .ui-page-header-breadcrumb-content-actions,
+    .ui-page-header__breadcrumb__content-actions {
+        margin-inline-end: var(--ui-spacing-04);
+    }
+
+    .ui-page-header-breadcrumb-actions-flush .ui-css-grid,
+    .ui-page-header__breadcrumb__actions-flush .ui-css-grid {
+        padding-inline-end: 0;
+    }
+
+    .ui-page-header-breadcrumb-actions-flush .ui-css-grid-column,
+    .ui-page-header__breadcrumb__actions-flush .ui-css-grid-column {
+        margin-inline-end: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Content
+       ---------------------------------------------------------------------- */
+
+    .ui-page-header-content,
+    .ui-page-header__content {
+        padding: var(--ui-spacing-06) 0;
+    }
+
+    .ui-page-header-content-title-wrapper,
+    .ui-page-header__content__title-wrapper {
         display: grid;
         gap: var(--ui-spacing-05);
-        padding-block: var(--ui-spacing-07);
-        background-color: var(--ui-background);
-        color: var(--ui-text-primary);
+        grid-template-columns: auto minmax(
+                var(--pageheader-title-grid-width, 0),
+                1fr
+            );
+        min-block-size: 2.5rem;
+        margin-block-end: 1rem;
     }
 
-    .ui-page-header-breadcrumb {
-        min-block-size: 1.5rem;
-    }
-
-    .ui-page-header-title {
-        margin: 0;
-        font-size: var(--ui-type-heading-05-font-size);
-        font-weight: var(--ui-type-heading-05-font-weight);
-        line-height: var(--ui-type-heading-05-line-height);
-    }
-
-    .ui-page-header-subtitle {
-        max-inline-size: 48rem;
-        color: var(--ui-text-secondary);
-        font-size: var(--ui-type-body-02-font-size);
-        line-height: var(--ui-type-body-02-line-height);
-    }
-
-    .ui-page-header-actions {
+    .ui-page-header-content-start,
+    .ui-page-header__content__start {
         display: flex;
         flex-wrap: wrap;
-        gap: var(--ui-spacing-03);
+        gap: var(--ui-spacing-05);
+    }
+
+    .ui-page-header-content-title-container,
+    .ui-page-header__content__title-container {
+        display: flex;
+    }
+
+    .ui-page-header-content-title-container .ui-definition-term,
+    .ui-page-header__content__title-container .ui-definition-term {
+        border-block-end: none;
+    }
+
+    .ui-page-header-content-contextual-actions,
+    .ui-page-header__content__contextual-actions {
+        display: flex;
+    }
+
+    .ui-page-header-content-title,
+    .ui-page-header__content__title {
+        display: -webkit-box;
+        overflow: hidden;
+        max-inline-size: 40rem;
+        color: var(--ui-text-primary);
+        font-size: var(--ui-type-productive-heading-04-font-size);
+        font-weight: var(--ui-type-productive-heading-04-font-weight);
+        line-height: var(--ui-type-productive-heading-04-line-height);
+        letter-spacing: var(--ui-type-productive-heading-04-letter-spacing);
+        text-overflow: ellipsis;
+        white-space: normal;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    }
+
+    .ui-page-header-content:has(.ui-page-header-content-contextual-actions)
+        .ui-page-header-content-title,
+    .ui-page-header-content:has(.ui-page-header__content__contextual-actions)
+        .ui-page-header-content-title,
+    .ui-page-header__content:has(.ui-page-header-content-contextual-actions)
+        .ui-page-header__content__title,
+    .ui-page-header__content:has(.ui-page-header__content__contextual-actions)
+        .ui-page-header__content__title {
+        -webkit-line-clamp: 1;
+    }
+
+    .ui-page-header-content-icon,
+    .ui-page-header__content__icon {
+        margin-inline-end: var(--ui-spacing-05);
+    }
+
+    .ui-page-header-content-subtitle,
+    .ui-page-header__content__subtitle {
+        margin-block-end: var(--ui-spacing-03);
+        color: var(--ui-text-primary);
+        font-size: var(--ui-type-productive-heading-03-font-size);
+        font-weight: var(--ui-type-productive-heading-03-font-weight);
+        line-height: var(--ui-type-productive-heading-03-line-height);
+        letter-spacing: var(--ui-type-productive-heading-03-letter-spacing);
+    }
+
+    .ui-page-header-content-body,
+    .ui-page-header__content__body {
+        max-inline-size: 40rem;
+        margin-block-start: var(--ui-spacing-03);
+        color: var(--ui-text-primary);
+        font-size: var(--ui-type-body-01-font-size);
+        font-weight: var(--ui-type-body-01-font-weight);
+        line-height: var(--ui-type-body-01-line-height);
+        letter-spacing: var(--ui-type-body-01-letter-spacing);
+    }
+
+    /* ----------------------------------------------------------------------
+       Page actions
+       ---------------------------------------------------------------------- */
+
+    .ui-page-header-content-page-actions,
+    .ui-page-header__content__page-actions {
+        display: flex;
+        justify-content: right;
+    }
+
+    .ui-page-header-content-page-actions
+        .ui-menu-button__trigger:not(.ui-btn--ghost),
+    .ui-page-header__content__page-actions
+        .ui-menu-button__trigger:not(.ui-btn--ghost) {
+        min-inline-size: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Hidden state
+       ---------------------------------------------------------------------- */
+
+    [data-hidden]:not([data-fixed]) {
+        display: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Hero image
+       ---------------------------------------------------------------------- */
+
+    .ui-page-header-hero-image,
+    .ui-page-header__hero-image {
+        display: flex;
+        overflow: hidden;
+        align-items: center;
+        justify-content: flex-end;
+        block-size: 100%;
+    }
+
+    /* ----------------------------------------------------------------------
+       Tabs
+       ---------------------------------------------------------------------- */
+
+    .ui-page-header-tab-bar,
+    .ui-page-header__tab-bar {
+        margin-inline-start: calc(var(--ui-spacing-05) * -1);
+    }
+
+    .ui-page-header-tab-bar-tablist,
+    .ui-page-header__tab-bar--tablist {
+        display: grid;
+        gap: var(--ui-spacing-10);
+        grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    /* ----------------------------------------------------------------------
+       Tags
+       ---------------------------------------------------------------------- */
+
+    .ui-page-header-tags,
+    .ui-page-header__tags {
+        display: flex;
+        align-items: center;
+        justify-content: right;
+    }
+
+    .ui-page-header-tags-popover-list,
+    .ui-page-header__tags-popover-list {
+        display: flex;
+        flex-direction: column;
+        padding: var(--ui-spacing-05);
+    }
+
+    .ui-page-header-tag-item,
+    .ui-page-header__tag-item {
+        flex-shrink: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Responsive behavior
+       ---------------------------------------------------------------------- */
+
+    @media (width <= 42rem) {
+        .ui-page-header-content-title-wrapper,
+        .ui-page-header__content__title-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: var(--ui-spacing-05);
+        }
+
+        .ui-page-header-content-page-actions,
+        .ui-page-header__content__page-actions {
+            justify-content: left;
+            margin-block-start: 0;
+        }
     }
 }

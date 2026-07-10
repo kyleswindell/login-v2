@@ -1,101 +1,1541 @@
 /* ==========================================================================
-File: resources/css/components/number-input.css
-Purpose: Number Input component styles.
-Carbon reference:
+   File: resources/css/components/number-input.css
+   Purpose: Number Input component styles.
 
-* reference/carbon-main/packages/styles/scss/components/number-input/
-* reference/carbon-main/packages/styles/scss/components/fluid-number-input/
-
-Notes:
-
-* Defines Number Input selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Number Input consumes form, button, type, spacing, motion, and theme tokens.
-  ========================================================================== */
+   Notes:
+   - Defines Number Input selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports default, small, medium, large, invalid, warning, disabled,
+     readonly, no-label, no-steppers, control buttons, rule dividers,
+     AI label/decorator, skeleton, reduced-motion, and forced-colors states.
+   ========================================================================== */
 
 @layer components {
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
+    .ui-number,
     .ui-number-input {
         position: relative;
         display: flex;
+        box-sizing: border-box;
+        flex-direction: column;
         inline-size: 100%;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        font: inherit;
+        vertical-align: baseline;
     }
 
-    .ui-number-input-field {
-        --ui-number-input-size: 2.5rem;
+    /* ----------------------------------------------------------------------
+       Input wrapper
+       ---------------------------------------------------------------------- */
 
+    .ui-number-input-wrapper,
+    .ui-number__input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .ui-number .ui-number-input-wrapper-warning input[type="number"],
+    .ui-number .ui-number-input-wrapper-warning input[type="text"],
+    .ui-number .ui-number__input-wrapper--warning input[type="number"],
+    .ui-number .ui-number__input-wrapper--warning input[type="text"],
+    .ui-number-input .ui-number-input-wrapper-warning input[type="number"],
+    .ui-number-input .ui-number-input-wrapper-warning input[type="text"],
+    .ui-number-input .ui-number__input-wrapper--warning input[type="number"],
+    .ui-number-input .ui-number__input-wrapper--warning input[type="text"] {
+        padding-inline-end: 8rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Input
+       ---------------------------------------------------------------------- */
+
+    .ui-number input[type="number"],
+    .ui-number input[type="text"],
+    .ui-number-input input[type="number"],
+    .ui-number-input input[type="text"] {
+        display: inline-flex;
+        box-sizing: border-box;
         inline-size: 100%;
-        block-size: var(--ui-number-input-size);
+        min-inline-size: 9.375rem;
+        block-size: 2.5rem;
+        margin: 0;
         border: 0;
-        border-block-end: 1px solid var(--ui-border-strong-01);
-        padding: 0 calc(var(--ui-number-input-size) * 2) 0 var(--ui-spacing-05);
-        background-color: var(--ui-field-01);
+        border-block-end: 1px solid var(--ui-border-strong);
+        border-radius: 0;
+        padding-inline: var(--ui-spacing-05) var(--ui-spacing-12);
+        background-color: var(--ui-field);
         color: var(--ui-text-primary);
-        font: inherit;
+        font-family: var(--ui-font-family-sans);
         font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: 400;
         line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
         outline: 2px solid transparent;
         outline-offset: -2px;
+        appearance: textfield;
         transition:
-            background-color var(--ui-duration-fast-01) var(--ui-motion-standard-productive),
-            outline var(--ui-duration-fast-01) var(--ui-motion-standard-productive);
+            background-color var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive),
+            outline var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive);
+        -moz-appearance: textfield;
     }
 
-    .ui-number-input-field:hover {
-        background-color: var(--ui-field-hover-01);
-    }
-
-    .ui-number-input-field:focus {
-        outline-color: var(--ui-focus);
-    }
-
-    .ui-number-input-field:disabled {
-        color: var(--ui-text-disabled);
-        cursor: not-allowed;
-    }
-
-    .ui-number-input-field-invalid:not(:focus),
-    .ui-number-input[data-invalid] .ui-number-input-field:not(:focus) {
-        outline-color: var(--ui-support-error);
-    }
-
-    .ui-number-input-field-warning:not(:focus),
-    .ui-number-input[data-warning] .ui-number-input-field:not(:focus) {
-        outline-color: var(--ui-support-warning);
-    }
-
-    .ui-number-input-controls {
-        position: absolute;
-        inset-block: 0;
-        inset-inline-end: 0;
-        display: grid;
-        grid-template-columns: repeat(2, var(--ui-number-input-size, 2.5rem));
-        block-size: 100%;
-    }
-
-    .ui-number-input-control {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border: 0;
-        border-inline-start: 1px solid var(--ui-border-subtle-01);
-        padding: 0;
-        background-color: transparent;
-        color: var(--ui-icon-primary);
-        cursor: pointer;
-    }
-
-    .ui-number-input-control:hover {
-        background-color: var(--ui-layer-hover-01);
-    }
-
-    .ui-number-input-control:focus-visible {
+    .ui-number input[type="number"]:focus,
+    .ui-number input[type="text"]:focus,
+    .ui-number-input input[type="number"]:focus,
+    .ui-number-input input[type="text"]:focus {
         outline: 2px solid var(--ui-focus);
         outline-offset: -2px;
     }
 
-    .ui-number-input-control:disabled {
-        color: var(--ui-icon-disabled);
+    .ui-number input[type="number"]:disabled,
+    .ui-number input[type="text"]:disabled,
+    .ui-number-input input[type="number"]:disabled,
+    .ui-number-input input[type="text"]:disabled {
+        background-color: var(--ui-field);
+        color: var(--ui-text-disabled);
         cursor: not-allowed;
+    }
+
+    .ui-number input[type="number"]:disabled ~ .ui-number-controls,
+    .ui-number input[type="number"]:disabled ~ .ui-number__controls,
+    .ui-number input[type="text"]:disabled ~ .ui-number-controls,
+    .ui-number input[type="text"]:disabled ~ .ui-number__controls,
+    .ui-number-input input[type="number"]:disabled ~ .ui-number-controls,
+    .ui-number-input input[type="number"]:disabled ~ .ui-number__controls,
+    .ui-number-input input[type="text"]:disabled ~ .ui-number-controls,
+    .ui-number-input input[type="text"]:disabled ~ .ui-number__controls {
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    .ui-number input[type="number"]:disabled ~ .ui-number-controls svg,
+    .ui-number input[type="number"]:disabled ~ .ui-number__controls svg,
+    .ui-number input[type="text"]:disabled ~ .ui-number-controls svg,
+    .ui-number input[type="text"]:disabled ~ .ui-number__controls svg,
+    .ui-number-input input[type="number"]:disabled ~ .ui-number-controls svg,
+    .ui-number-input input[type="number"]:disabled ~ .ui-number__controls svg,
+    .ui-number-input input[type="text"]:disabled ~ .ui-number-controls svg,
+    .ui-number-input input[type="text"]:disabled ~ .ui-number__controls svg {
+        fill: var(--ui-icon-disabled);
+    }
+
+    .ui-number input[type="number"]::-ms-clear,
+    .ui-number input[type="text"]::-ms-clear,
+    .ui-number-input input[type="number"]::-ms-clear,
+    .ui-number-input input[type="text"]::-ms-clear {
+        display: none;
+    }
+
+    .ui-number input[type="number"]::-webkit-inner-spin-button,
+    .ui-number-input input[type="number"]::-webkit-inner-spin-button {
+        appearance: none;
+    }
+
+    .ui-number input[type="number"][data-invalid],
+    .ui-number input[type="text"][data-invalid],
+    .ui-number-input input[type="number"][data-invalid],
+    .ui-number-input input[type="text"][data-invalid] {
+        padding-inline-end: 8rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Size variants
+       ---------------------------------------------------------------------- */
+
+    .ui-number-lg.ui-number input[type="number"],
+    .ui-number-lg.ui-number input[type="text"],
+    .ui-number--lg.ui-number input[type="number"],
+    .ui-number--lg.ui-number input[type="text"],
+    .ui-number-input-lg.ui-number-input input[type="number"],
+    .ui-number-input-lg.ui-number-input input[type="text"],
+    .ui-number-input--lg.ui-number-input input[type="number"],
+    .ui-number-input--lg.ui-number-input input[type="text"],
+    .ui-number-lg input[type="number"],
+    .ui-number-lg input[type="text"],
+    .ui-number--lg input[type="number"],
+    .ui-number--lg input[type="text"] {
+        block-size: 3rem;
+        padding-inline-end: 7rem;
+    }
+
+    .ui-number-lg.ui-number input[type="number"][data-invalid],
+    .ui-number-lg.ui-number input[type="text"][data-invalid],
+    .ui-number--lg.ui-number input[type="number"][data-invalid],
+    .ui-number--lg.ui-number input[type="text"][data-invalid],
+    .ui-number-input-lg.ui-number-input input[type="number"][data-invalid],
+    .ui-number-input-lg.ui-number-input input[type="text"][data-invalid],
+    .ui-number-input--lg.ui-number-input input[type="number"][data-invalid],
+    .ui-number-input--lg.ui-number-input input[type="text"][data-invalid],
+    .ui-number-lg input[type="number"][data-invalid],
+    .ui-number-lg input[type="text"][data-invalid],
+    .ui-number--lg input[type="number"][data-invalid],
+    .ui-number--lg input[type="text"][data-invalid] {
+        padding-inline-end: 9rem;
+    }
+
+    .ui-number-lg .ui-number-input-wrapper-warning input[type="number"],
+    .ui-number-lg .ui-number-input-wrapper-warning input[type="text"],
+    .ui-number-lg .ui-number__input-wrapper--warning input[type="number"],
+    .ui-number-lg .ui-number__input-wrapper--warning input[type="text"],
+    .ui-number--lg .ui-number-input-wrapper-warning input[type="number"],
+    .ui-number--lg .ui-number-input-wrapper-warning input[type="text"],
+    .ui-number--lg .ui-number__input-wrapper--warning input[type="number"],
+    .ui-number--lg .ui-number__input-wrapper--warning input[type="text"] {
+        padding-inline-end: 9rem;
+    }
+
+    .ui-number-sm.ui-number input[type="number"],
+    .ui-number-sm.ui-number input[type="text"],
+    .ui-number--sm.ui-number input[type="number"],
+    .ui-number--sm.ui-number input[type="text"],
+    .ui-number-input-sm.ui-number-input input[type="number"],
+    .ui-number-input-sm.ui-number-input input[type="text"],
+    .ui-number-input--sm.ui-number-input input[type="number"],
+    .ui-number-input--sm.ui-number-input input[type="text"],
+    .ui-number-sm input[type="number"],
+    .ui-number-sm input[type="text"],
+    .ui-number--sm input[type="number"],
+    .ui-number--sm input[type="text"] {
+        block-size: 2rem;
+        padding-inline-end: 5rem;
+    }
+
+    .ui-number-sm.ui-number input[type="number"][data-invalid],
+    .ui-number-sm.ui-number input[type="text"][data-invalid],
+    .ui-number--sm.ui-number input[type="number"][data-invalid],
+    .ui-number--sm.ui-number input[type="text"][data-invalid],
+    .ui-number-input-sm.ui-number-input input[type="number"][data-invalid],
+    .ui-number-input-sm.ui-number-input input[type="text"][data-invalid],
+    .ui-number-input--sm.ui-number-input input[type="number"][data-invalid],
+    .ui-number-input--sm.ui-number-input input[type="text"][data-invalid],
+    .ui-number-sm input[type="number"][data-invalid],
+    .ui-number-sm input[type="text"][data-invalid],
+    .ui-number--sm input[type="number"][data-invalid],
+    .ui-number--sm input[type="text"][data-invalid] {
+        padding-inline-end: 7rem;
+    }
+
+    .ui-number-sm .ui-number-input-wrapper-warning input[type="number"],
+    .ui-number-sm .ui-number-input-wrapper-warning input[type="text"],
+    .ui-number-sm .ui-number__input-wrapper--warning input[type="number"],
+    .ui-number-sm .ui-number__input-wrapper--warning input[type="text"],
+    .ui-number--sm .ui-number-input-wrapper-warning input[type="number"],
+    .ui-number--sm .ui-number-input-wrapper-warning input[type="text"],
+    .ui-number--sm .ui-number__input-wrapper--warning input[type="number"],
+    .ui-number--sm .ui-number__input-wrapper--warning input[type="text"] {
+        padding-inline-end: 7rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Controls
+       ---------------------------------------------------------------------- */
+
+    .ui-number-controls,
+    .ui-number__controls {
+        position: absolute;
+        display: flex;
+        box-sizing: border-box;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        inline-size: 5rem;
+        block-size: 100%;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        font: inherit;
+        inset-block-start: 50%;
+        inset-inline-end: 0;
+        transform: translateY(-50%);
+        vertical-align: baseline;
+    }
+
+    .ui-number-lg .ui-number-controls,
+    .ui-number-lg .ui-number__controls,
+    .ui-number--lg .ui-number-controls,
+    .ui-number--lg .ui-number__controls {
+        inline-size: var(--ui-spacing-12);
+    }
+
+    .ui-number-sm .ui-number-controls,
+    .ui-number-sm .ui-number__controls,
+    .ui-number--sm .ui-number-controls,
+    .ui-number--sm .ui-number__controls {
+        inline-size: 4rem;
+    }
+
+    .ui-number-control-btn,
+    .ui-number__control-btn {
+        position: relative;
+        display: inline-flex;
+        box-sizing: border-box;
+        flex: 1 1 0;
+        align-items: center;
+        justify-content: center;
+        inline-size: 2.5rem;
+        block-size: 100%;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        background: none;
+        color: var(--ui-icon-primary);
+        cursor: default;
+        font: inherit;
+        text-align: inherit;
+        vertical-align: baseline;
+        appearance: none;
+    }
+
+    .ui-number-lg .ui-number-control-btn,
+    .ui-number-lg .ui-number__control-btn,
+    .ui-number--lg .ui-number-control-btn,
+    .ui-number--lg .ui-number__control-btn {
+        inline-size: 3rem;
+    }
+
+    .ui-number-sm .ui-number-control-btn,
+    .ui-number-sm .ui-number__control-btn,
+    .ui-number--sm .ui-number-control-btn,
+    .ui-number--sm .ui-number__control-btn {
+        inline-size: 2rem;
+    }
+
+    .ui-number-control-btn svg,
+    .ui-number__control-btn svg {
+        fill: currentColor;
+    }
+
+    .ui-number-control-btn:focus,
+    .ui-number__control-btn:focus {
+        color: var(--ui-icon-primary);
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-number-control-btn:hover,
+    .ui-number__control-btn:hover {
+        background-color: var(--ui-field-hover);
+        box-shadow: 0 -1px 0 var(--ui-border-strong) inset;
+        color: var(--ui-icon-primary);
+        cursor: pointer;
+    }
+
+    .ui-number-control-btn:disabled,
+    .ui-number__control-btn:disabled {
+        border-block-end-color: transparent;
+        color: var(--ui-text-disabled);
+        cursor: not-allowed;
+    }
+
+    .ui-number-control-btn.down-icon,
+    .ui-number__control-btn.down-icon {
+        order: 1;
+    }
+
+    .ui-number-control-btn.up-icon,
+    .ui-number__control-btn.up-icon {
+        order: 2;
+    }
+
+    /* ----------------------------------------------------------------------
+       Controls with invalid and focused inputs
+       ---------------------------------------------------------------------- */
+
+    .ui-number
+        input[type="number"][data-invalid]
+        ~ .ui-number-controls
+        .ui-number-control-btn,
+    .ui-number
+        input[type="number"][data-invalid]
+        ~ .ui-number-controls
+        .ui-number__control-btn,
+    .ui-number
+        input[type="number"][data-invalid]
+        ~ .ui-number__controls
+        .ui-number-control-btn,
+    .ui-number
+        input[type="number"][data-invalid]
+        ~ .ui-number__controls
+        .ui-number__control-btn,
+    .ui-number
+        input[type="text"][data-invalid]
+        ~ .ui-number-controls
+        .ui-number-control-btn,
+    .ui-number
+        input[type="text"][data-invalid]
+        ~ .ui-number-controls
+        .ui-number__control-btn,
+    .ui-number
+        input[type="text"][data-invalid]
+        ~ .ui-number__controls
+        .ui-number-control-btn,
+    .ui-number
+        input[type="text"][data-invalid]
+        ~ .ui-number__controls
+        .ui-number__control-btn {
+        border-block-end-color: var(--ui-support-error);
+    }
+
+    .ui-number
+        input[type="number"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn,
+    .ui-number
+        input[type="number"]:focus
+        ~ .ui-number-controls
+        .ui-number__control-btn,
+    .ui-number
+        input[type="number"]:focus
+        ~ .ui-number__controls
+        .ui-number-control-btn,
+    .ui-number
+        input[type="number"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn,
+    .ui-number
+        input[type="text"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn,
+    .ui-number
+        input[type="text"]:focus
+        ~ .ui-number-controls
+        .ui-number__control-btn,
+    .ui-number
+        input[type="text"]:focus
+        ~ .ui-number__controls
+        .ui-number-control-btn,
+    .ui-number
+        input[type="text"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn {
+        border-width: 2px 0;
+        border-style: solid;
+        border-color: var(--ui-focus);
+        box-shadow: none;
+        outline-offset: -2px;
+    }
+
+    .ui-number
+        input[type="number"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn:last-of-type:hover,
+    .ui-number
+        input[type="number"]:focus
+        ~ .ui-number-controls
+        .ui-number__control-btn:last-of-type:hover,
+    .ui-number
+        input[type="number"]:focus
+        ~ .ui-number__controls
+        .ui-number-control-btn:last-of-type:hover,
+    .ui-number
+        input[type="number"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn:last-of-type:hover,
+    .ui-number
+        input[type="text"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn:last-of-type:hover,
+    .ui-number
+        input[type="text"]:focus
+        ~ .ui-number-controls
+        .ui-number__control-btn:last-of-type:hover,
+    .ui-number
+        input[type="text"]:focus
+        ~ .ui-number__controls
+        .ui-number-control-btn:last-of-type:hover,
+    .ui-number
+        input[type="text"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn:last-of-type:hover {
+        box-shadow: -4px 0 0 -2px var(--ui-focus) inset;
+    }
+
+    .ui-number
+        input[type="number"][data-invalid]:not(:focus)
+        ~ .ui-number-controls
+        .ui-number-control-btn:hover,
+    .ui-number
+        input[type="number"][data-invalid]:not(:focus)
+        ~ .ui-number-controls
+        .ui-number__control-btn:hover,
+    .ui-number
+        input[type="number"][data-invalid]:not(:focus)
+        ~ .ui-number__controls
+        .ui-number-control-btn:hover,
+    .ui-number
+        input[type="number"][data-invalid]:not(:focus)
+        ~ .ui-number__controls
+        .ui-number__control-btn:hover,
+    .ui-number
+        input[type="text"][data-invalid]:not(:focus)
+        ~ .ui-number-controls
+        .ui-number-control-btn:hover,
+    .ui-number
+        input[type="text"][data-invalid]:not(:focus)
+        ~ .ui-number-controls
+        .ui-number__control-btn:hover,
+    .ui-number
+        input[type="text"][data-invalid]:not(:focus)
+        ~ .ui-number__controls
+        .ui-number-control-btn:hover,
+    .ui-number
+        input[type="text"][data-invalid]:not(:focus)
+        ~ .ui-number__controls
+        .ui-number__control-btn:hover {
+        border-width: 2px 0;
+        border-style: solid;
+        border-color: var(--ui-support-error);
+        box-shadow: none;
+        outline-offset: -2px;
+    }
+
+    .ui-number
+        input[type="number"][data-invalid]:not(:focus)
+        ~ .ui-number-controls
+        .ui-number-control-btn:last-of-type:hover,
+    .ui-number
+        input[type="number"][data-invalid]:not(:focus)
+        ~ .ui-number-controls
+        .ui-number__control-btn:last-of-type:hover,
+    .ui-number
+        input[type="number"][data-invalid]:not(:focus)
+        ~ .ui-number__controls
+        .ui-number-control-btn:last-of-type:hover,
+    .ui-number
+        input[type="number"][data-invalid]:not(:focus)
+        ~ .ui-number__controls
+        .ui-number__control-btn:last-of-type:hover,
+    .ui-number
+        input[type="text"][data-invalid]:not(:focus)
+        ~ .ui-number-controls
+        .ui-number-control-btn:last-of-type:hover,
+    .ui-number
+        input[type="text"][data-invalid]:not(:focus)
+        ~ .ui-number-controls
+        .ui-number__control-btn:last-of-type:hover,
+    .ui-number
+        input[type="text"][data-invalid]:not(:focus)
+        ~ .ui-number__controls
+        .ui-number-control-btn:last-of-type:hover,
+    .ui-number
+        input[type="text"][data-invalid]:not(:focus)
+        ~ .ui-number__controls
+        .ui-number__control-btn:last-of-type:hover {
+        box-shadow: -4px 0 0 -2px var(--ui-support-error) inset;
+    }
+
+    .ui-number
+        input[type="number"][data-invalid]:not(:focus)
+        ~ .ui-number-controls
+        .ui-number-control-btn:focus:hover,
+    .ui-number
+        input[type="number"][data-invalid]:not(:focus)
+        ~ .ui-number-controls
+        .ui-number__control-btn:focus:hover,
+    .ui-number
+        input[type="number"][data-invalid]:not(:focus)
+        ~ .ui-number__controls
+        .ui-number-control-btn:focus:hover,
+    .ui-number
+        input[type="number"][data-invalid]:not(:focus)
+        ~ .ui-number__controls
+        .ui-number__control-btn:focus:hover,
+    .ui-number
+        input[type="text"][data-invalid]:not(:focus)
+        ~ .ui-number-controls
+        .ui-number-control-btn:focus:hover,
+    .ui-number
+        input[type="text"][data-invalid]:not(:focus)
+        ~ .ui-number-controls
+        .ui-number__control-btn:focus:hover,
+    .ui-number
+        input[type="text"][data-invalid]:not(:focus)
+        ~ .ui-number__controls
+        .ui-number-control-btn:focus:hover,
+    .ui-number
+        input[type="text"][data-invalid]:not(:focus)
+        ~ .ui-number__controls
+        .ui-number__control-btn:focus:hover {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    /* ----------------------------------------------------------------------
+       Rule dividers
+       ---------------------------------------------------------------------- */
+
+    .ui-number-rule-divider,
+    .ui-number__rule-divider {
+        position: absolute;
+        z-index: var(--ui-z-index-overlay, 8000);
+        inline-size: 1px;
+        block-size: 1rem;
+        background-color: var(--ui-border-subtle);
+    }
+
+    .ui-number-rule-divider:first-of-type,
+    .ui-number__rule-divider:first-of-type {
+        order: 0;
+    }
+
+    .ui-number-controls .ui-number-rule-divider:first-of-type,
+    .ui-number-controls .ui-number__rule-divider:first-of-type,
+    .ui-number__controls .ui-number-rule-divider:first-of-type,
+    .ui-number__controls .ui-number__rule-divider:first-of-type {
+        background-color: transparent;
+        inset-inline-start: 0;
+    }
+
+    .ui-number-invalid
+        + .ui-number-controls
+        .ui-number-rule-divider:first-of-type,
+    .ui-number-invalid
+        + .ui-number-controls
+        .ui-number__rule-divider:first-of-type,
+    .ui-number-invalid
+        + .ui-number__controls
+        .ui-number-rule-divider:first-of-type,
+    .ui-number-invalid
+        + .ui-number__controls
+        .ui-number__rule-divider:first-of-type,
+    .ui-number__invalid
+        + .ui-number-controls
+        .ui-number-rule-divider:first-of-type,
+    .ui-number__invalid
+        + .ui-number-controls
+        .ui-number__rule-divider:first-of-type,
+    .ui-number__invalid
+        + .ui-number__controls
+        .ui-number-rule-divider:first-of-type,
+    .ui-number__invalid
+        + .ui-number__controls
+        .ui-number__rule-divider:first-of-type {
+        background-color: var(--ui-border-subtle);
+    }
+
+    .ui-number-light .ui-number-rule-divider,
+    .ui-number-light .ui-number__rule-divider,
+    .ui-number--light .ui-number-rule-divider,
+    .ui-number--light .ui-number__rule-divider,
+    .ui-number-light
+        .ui-number-invalid
+        + .ui-number-controls
+        .ui-number-rule-divider:first-of-type,
+    .ui-number-light
+        .ui-number-invalid
+        + .ui-number-controls
+        .ui-number__rule-divider:first-of-type,
+    .ui-number-light
+        .ui-number__invalid
+        + .ui-number__controls
+        .ui-number-rule-divider:first-of-type,
+    .ui-number-light
+        .ui-number__invalid
+        + .ui-number__controls
+        .ui-number__rule-divider:first-of-type,
+    .ui-number--light
+        .ui-number-invalid
+        + .ui-number-controls
+        .ui-number-rule-divider:first-of-type,
+    .ui-number--light
+        .ui-number-invalid
+        + .ui-number-controls
+        .ui-number__rule-divider:first-of-type,
+    .ui-number--light
+        .ui-number__invalid
+        + .ui-number__controls
+        .ui-number-rule-divider:first-of-type,
+    .ui-number--light
+        .ui-number__invalid
+        + .ui-number__controls
+        .ui-number__rule-divider:first-of-type {
+        background-color: var(--ui-border-subtle-02);
+    }
+
+    .ui-number
+        input[type="number"]:disabled
+        + .ui-number-controls
+        .ui-number-rule-divider:first-of-type,
+    .ui-number
+        input[type="number"]:disabled
+        + .ui-number-controls
+        .ui-number__rule-divider:first-of-type,
+    .ui-number
+        input[type="number"]:disabled
+        + .ui-number__controls
+        .ui-number-rule-divider:first-of-type,
+    .ui-number
+        input[type="number"]:disabled
+        + .ui-number__controls
+        .ui-number__rule-divider:first-of-type,
+    .ui-number
+        input[type="text"]:disabled
+        + .ui-number-controls
+        .ui-number-rule-divider:first-of-type,
+    .ui-number
+        input[type="text"]:disabled
+        + .ui-number-controls
+        .ui-number__rule-divider:first-of-type,
+    .ui-number
+        input[type="text"]:disabled
+        + .ui-number__controls
+        .ui-number-rule-divider:first-of-type,
+    .ui-number
+        input[type="text"]:disabled
+        + .ui-number__controls
+        .ui-number__rule-divider:first-of-type {
+        background-color: transparent;
+    }
+
+    .ui-number
+        input[type="number"]:disabled
+        + .ui-number-controls
+        .ui-number-rule-divider,
+    .ui-number
+        input[type="number"]:disabled
+        + .ui-number-controls
+        .ui-number__rule-divider,
+    .ui-number
+        input[type="number"]:disabled
+        + .ui-number__controls
+        .ui-number-rule-divider,
+    .ui-number
+        input[type="number"]:disabled
+        + .ui-number__controls
+        .ui-number__rule-divider,
+    .ui-number
+        input[type="text"]:disabled
+        + .ui-number-controls
+        .ui-number-rule-divider,
+    .ui-number
+        input[type="text"]:disabled
+        + .ui-number-controls
+        .ui-number__rule-divider,
+    .ui-number
+        input[type="text"]:disabled
+        + .ui-number__controls
+        .ui-number-rule-divider,
+    .ui-number
+        input[type="text"]:disabled
+        + .ui-number__controls
+        .ui-number__rule-divider {
+        background-color: var(--ui-icon-disabled);
+    }
+
+    .ui-number-control-btn:focus ~ .ui-number-rule-divider,
+    .ui-number-control-btn:focus ~ .ui-number__rule-divider,
+    .ui-number__control-btn:focus ~ .ui-number-rule-divider,
+    .ui-number__control-btn:focus ~ .ui-number__rule-divider,
+    .ui-number-control-btn.down-icon:hover ~ .ui-number-rule-divider,
+    .ui-number-control-btn.down-icon:hover ~ .ui-number__rule-divider,
+    .ui-number__control-btn.down-icon:hover ~ .ui-number-rule-divider,
+    .ui-number__control-btn.down-icon:hover ~ .ui-number__rule-divider,
+    .ui-number-control-btn.up-icon:hover + .ui-number-rule-divider,
+    .ui-number-control-btn.up-icon:hover + .ui-number__rule-divider,
+    .ui-number__control-btn.up-icon:hover + .ui-number-rule-divider,
+    .ui-number__control-btn.up-icon:hover + .ui-number__rule-divider,
+    .ui-number-control-btn.down-icon:focus ~ .ui-number-rule-divider,
+    .ui-number-control-btn.down-icon:focus ~ .ui-number__rule-divider,
+    .ui-number__control-btn.down-icon:focus ~ .ui-number-rule-divider,
+    .ui-number__control-btn.down-icon:focus ~ .ui-number__rule-divider,
+    .ui-number-control-btn.up-icon:focus + .ui-number-rule-divider,
+    .ui-number-control-btn.up-icon:focus + .ui-number__rule-divider,
+    .ui-number__control-btn.up-icon:focus + .ui-number-rule-divider,
+    .ui-number__control-btn.up-icon:focus + .ui-number__rule-divider {
+        background-color: transparent;
+    }
+
+    .ui-number-controls:hover .ui-number-control-btn::after,
+    .ui-number-controls:hover .ui-number__control-btn::after,
+    .ui-number__controls:hover .ui-number-control-btn::after,
+    .ui-number__controls:hover .ui-number__control-btn::after,
+    .ui-number-controls:focus-within .ui-number-control-btn::after,
+    .ui-number-controls:focus-within .ui-number__control-btn::after,
+    .ui-number__controls:focus-within .ui-number-control-btn::after,
+    .ui-number__controls:focus-within .ui-number__control-btn::after {
+        display: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Invalid and warning icons
+       ---------------------------------------------------------------------- */
+
+    .ui-number-invalid,
+    .ui-number__invalid {
+        position: absolute;
+        fill: var(--ui-support-error);
+        inset-inline-end: var(--ui-spacing-12);
+    }
+
+    .ui-number-lg .ui-number-invalid,
+    .ui-number-lg .ui-number__invalid,
+    .ui-number--lg .ui-number-invalid,
+    .ui-number--lg .ui-number__invalid {
+        inset-inline-end: 7rem;
+    }
+
+    .ui-number-sm .ui-number-invalid,
+    .ui-number-sm .ui-number__invalid,
+    .ui-number--sm .ui-number-invalid,
+    .ui-number--sm .ui-number__invalid {
+        inset-inline-end: 5rem;
+    }
+
+    .ui-number-invalid + .ui-number-rule-divider,
+    .ui-number-invalid + .ui-number__rule-divider,
+    .ui-number__invalid + .ui-number-rule-divider,
+    .ui-number__invalid + .ui-number__rule-divider {
+        position: absolute;
+        inset-inline-end: 5rem;
+    }
+
+    .ui-number-lg .ui-number-invalid + .ui-number-rule-divider,
+    .ui-number-lg .ui-number-invalid + .ui-number__rule-divider,
+    .ui-number-lg .ui-number__invalid + .ui-number-rule-divider,
+    .ui-number-lg .ui-number__invalid + .ui-number__rule-divider,
+    .ui-number--lg .ui-number-invalid + .ui-number-rule-divider,
+    .ui-number--lg .ui-number-invalid + .ui-number__rule-divider,
+    .ui-number--lg .ui-number__invalid + .ui-number-rule-divider,
+    .ui-number--lg .ui-number__invalid + .ui-number__rule-divider {
+        inset-inline-end: var(--ui-spacing-12);
+    }
+
+    .ui-number-sm .ui-number-invalid + .ui-number-rule-divider,
+    .ui-number-sm .ui-number-invalid + .ui-number__rule-divider,
+    .ui-number-sm .ui-number__invalid + .ui-number-rule-divider,
+    .ui-number-sm .ui-number__invalid + .ui-number__rule-divider,
+    .ui-number--sm .ui-number-invalid + .ui-number-rule-divider,
+    .ui-number--sm .ui-number-invalid + .ui-number__rule-divider,
+    .ui-number--sm .ui-number__invalid + .ui-number-rule-divider,
+    .ui-number--sm .ui-number__invalid + .ui-number__rule-divider {
+        inset-inline-end: 4rem;
+    }
+
+    .ui-number-invalid-warning,
+    .ui-number__invalid--warning {
+        fill: var(--ui-support-warning);
+    }
+
+    .ui-number-invalid-warning path:first-of-type,
+    .ui-number__invalid--warning path:first-of-type {
+        fill: var(--ui-black-100);
+        opacity: 1;
+    }
+
+    /* ----------------------------------------------------------------------
+       No label variant
+       ---------------------------------------------------------------------- */
+
+    .ui-number-nolabel .ui-label + .ui-form-helper-text,
+    .ui-number-nolabel .ui-label + .ui-form__helper-text,
+    .ui-number--nolabel .ui-label + .ui-form-helper-text,
+    .ui-number--nolabel .ui-label + .ui-form__helper-text {
+        margin-block-start: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       No steppers variant
+       ---------------------------------------------------------------------- */
+
+    .ui-number-nosteppers input[type="number"],
+    .ui-number-nosteppers input[type="text"],
+    .ui-number--nosteppers input[type="number"],
+    .ui-number--nosteppers input[type="text"] {
+        padding-inline-end: 0;
+    }
+
+    .ui-number-nosteppers input[type="number"][data-invalid],
+    .ui-number-nosteppers input[type="text"][data-invalid],
+    .ui-number--nosteppers input[type="number"][data-invalid],
+    .ui-number--nosteppers input[type="text"][data-invalid],
+    .ui-number-nosteppers .ui-number-input-wrapper-warning input[type="number"],
+    .ui-number-nosteppers .ui-number-input-wrapper-warning input[type="text"],
+    .ui-number-nosteppers
+        .ui-number__input-wrapper--warning
+        input[type="number"],
+    .ui-number-nosteppers .ui-number__input-wrapper--warning input[type="text"],
+    .ui-number--nosteppers
+        .ui-number-input-wrapper-warning
+        input[type="number"],
+    .ui-number--nosteppers .ui-number-input-wrapper-warning input[type="text"],
+    .ui-number--nosteppers
+        .ui-number__input-wrapper--warning
+        input[type="number"],
+    .ui-number--nosteppers
+        .ui-number__input-wrapper--warning
+        input[type="text"] {
+        padding-inline-end: 3rem;
+    }
+
+    .ui-number-nosteppers .ui-number-invalid,
+    .ui-number-nosteppers .ui-number__invalid,
+    .ui-number--nosteppers .ui-number-invalid,
+    .ui-number--nosteppers .ui-number__invalid {
+        inset-inline-end: 1rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Readonly variant
+       ---------------------------------------------------------------------- */
+
+    .ui-number-readonly input[type="number"],
+    .ui-number-readonly input[type="text"],
+    .ui-number--readonly input[type="number"],
+    .ui-number--readonly input[type="text"] {
+        border-block-end-color: var(--ui-border-subtle);
+        background: transparent;
+    }
+
+    .ui-number-readonly .ui-number-control-btn,
+    .ui-number-readonly .ui-number__control-btn,
+    .ui-number--readonly .ui-number-control-btn,
+    .ui-number--readonly .ui-number__control-btn {
+        color: var(--ui-icon-disabled);
+        pointer-events: none;
+    }
+
+    .ui-number-readonly .ui-number-control-btn:hover,
+    .ui-number-readonly .ui-number__control-btn:hover,
+    .ui-number--readonly .ui-number-control-btn:hover,
+    .ui-number--readonly .ui-number__control-btn:hover {
+        background-color: transparent;
+        cursor: pointer;
+    }
+
+    .ui-number-readonly
+        input[type="number"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn:hover,
+    .ui-number-readonly
+        input[type="number"]:focus
+        ~ .ui-number-controls
+        .ui-number__control-btn:hover,
+    .ui-number-readonly
+        input[type="number"]:focus
+        ~ .ui-number__controls
+        .ui-number-control-btn:hover,
+    .ui-number-readonly
+        input[type="number"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn:hover,
+    .ui-number-readonly
+        input[type="text"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn:hover,
+    .ui-number-readonly
+        input[type="text"]:focus
+        ~ .ui-number-controls
+        .ui-number__control-btn:hover,
+    .ui-number-readonly
+        input[type="text"]:focus
+        ~ .ui-number__controls
+        .ui-number-control-btn:hover,
+    .ui-number-readonly
+        input[type="text"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn:hover,
+    .ui-number--readonly
+        input[type="number"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn:hover,
+    .ui-number--readonly
+        input[type="number"]:focus
+        ~ .ui-number-controls
+        .ui-number__control-btn:hover,
+    .ui-number--readonly
+        input[type="number"]:focus
+        ~ .ui-number__controls
+        .ui-number-control-btn:hover,
+    .ui-number--readonly
+        input[type="number"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn:hover,
+    .ui-number--readonly
+        input[type="text"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn:hover,
+    .ui-number--readonly
+        input[type="text"]:focus
+        ~ .ui-number-controls
+        .ui-number__control-btn:hover,
+    .ui-number--readonly
+        input[type="text"]:focus
+        ~ .ui-number__controls
+        .ui-number-control-btn:hover,
+    .ui-number--readonly
+        input[type="text"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn:hover {
+        outline: none;
+    }
+
+    .ui-number-readonly
+        .ui-number-controls:hover
+        .ui-number-rule-divider:not(:first-of-type),
+    .ui-number-readonly
+        .ui-number-controls:hover
+        .ui-number__rule-divider:not(:first-of-type),
+    .ui-number-readonly
+        .ui-number__controls:hover
+        .ui-number-rule-divider:not(:first-of-type),
+    .ui-number-readonly
+        .ui-number__controls:hover
+        .ui-number__rule-divider:not(:first-of-type),
+    .ui-number--readonly
+        .ui-number-controls:hover
+        .ui-number-rule-divider:not(:first-of-type),
+    .ui-number--readonly
+        .ui-number-controls:hover
+        .ui-number__rule-divider:not(:first-of-type),
+    .ui-number--readonly
+        .ui-number__controls:hover
+        .ui-number-rule-divider:not(:first-of-type),
+    .ui-number--readonly
+        .ui-number__controls:hover
+        .ui-number__rule-divider:not(:first-of-type) {
+        background-color: var(--ui-border-subtle);
+    }
+
+    /* ----------------------------------------------------------------------
+       AI label / decorator positioning
+       ---------------------------------------------------------------------- */
+
+    .ui-number-input-wrapper-decorator
+        .ui-number-input-inner-wrapper-decorator
+        > *,
+    .ui-number-input-wrapper-decorator
+        .ui-number__input-inner-wrapper--decorator
+        > *,
+    .ui-number__input-wrapper--decorator
+        .ui-number-input-inner-wrapper-decorator
+        > *,
+    .ui-number__input-wrapper--decorator
+        .ui-number__input-inner-wrapper--decorator
+        > *,
+    .ui-number-input-wrapper-slug .ui-ai-label,
+    .ui-number-input-wrapper-slug .ui-slug,
+    .ui-number__input-wrapper--slug .ui-ai-label,
+    .ui-number__input-wrapper--slug .ui-slug {
+        position: absolute;
+        inset-block-start: 50%;
+        inset-inline-end: var(--ui-spacing-12);
+        transform: translateY(-50%);
+    }
+
+    .ui-number-input-wrapper-decorator
+        .ui-number-input-inner-wrapper-decorator:not(:has(.ui-ai-label))
+        > *,
+    .ui-number-input-wrapper-decorator
+        .ui-number__input-inner-wrapper--decorator:not(:has(.ui-ai-label))
+        > *,
+    .ui-number__input-wrapper--decorator
+        .ui-number-input-inner-wrapper-decorator:not(:has(.ui-ai-label))
+        > *,
+    .ui-number__input-wrapper--decorator
+        .ui-number__input-inner-wrapper--decorator:not(:has(.ui-ai-label))
+        > * {
+        block-size: 1rem;
+    }
+
+    .ui-number-input-wrapper-decorator
+        .ui-number-input-inner-wrapper-decorator
+        > *::before,
+    .ui-number-input-wrapper-decorator
+        .ui-number__input-inner-wrapper--decorator
+        > *::before,
+    .ui-number__input-wrapper--decorator
+        .ui-number-input-inner-wrapper-decorator
+        > *::before,
+    .ui-number__input-wrapper--decorator
+        .ui-number__input-inner-wrapper--decorator
+        > *::before,
+    .ui-number-input-wrapper-decorator .ui-number-control-btn::before,
+    .ui-number-input-wrapper-decorator .ui-number-control-btn::after,
+    .ui-number-input-wrapper-decorator .ui-number__control-btn::before,
+    .ui-number-input-wrapper-decorator .ui-number__control-btn::after,
+    .ui-number__input-wrapper--decorator .ui-number-control-btn::before,
+    .ui-number__input-wrapper--decorator .ui-number-control-btn::after,
+    .ui-number__input-wrapper--decorator .ui-number__control-btn::before,
+    .ui-number__input-wrapper--decorator .ui-number__control-btn::after,
+    .ui-number-input-wrapper-slug .ui-ai-label::before,
+    .ui-number-input-wrapper-slug .ui-slug::before,
+    .ui-number-input-wrapper-slug .ui-number-control-btn::before,
+    .ui-number-input-wrapper-slug .ui-number-control-btn::after,
+    .ui-number-input-wrapper-slug .ui-number__control-btn::before,
+    .ui-number-input-wrapper-slug .ui-number__control-btn::after,
+    .ui-number__input-wrapper--slug .ui-ai-label::before,
+    .ui-number__input-wrapper--slug .ui-slug::before,
+    .ui-number__input-wrapper--slug .ui-number-control-btn::before,
+    .ui-number__input-wrapper--slug .ui-number-control-btn::after,
+    .ui-number__input-wrapper--slug .ui-number__control-btn::before,
+    .ui-number__input-wrapper--slug .ui-number__control-btn::after {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1rem;
+        background-color: var(--ui-border-subtle);
+        content: "";
+    }
+
+    .ui-number-input-wrapper-decorator
+        .ui-number-input-inner-wrapper-decorator
+        > *::before,
+    .ui-number-input-wrapper-decorator
+        .ui-number__input-inner-wrapper--decorator
+        > *::before,
+    .ui-number__input-wrapper--decorator
+        .ui-number-input-inner-wrapper-decorator
+        > *::before,
+    .ui-number__input-wrapper--decorator
+        .ui-number__input-inner-wrapper--decorator
+        > *::before,
+    .ui-number-input-wrapper-slug .ui-ai-label::before,
+    .ui-number-input-wrapper-slug .ui-slug::before,
+    .ui-number__input-wrapper--slug .ui-ai-label::before,
+    .ui-number__input-wrapper--slug .ui-slug::before {
+        display: none;
+        inset-inline-start: -1rem;
+    }
+
+    .ui-number-input-wrapper-decorator
+        .ui-number-input-inner-wrapper-decorator
+        .ui-ai-label--revert::before,
+    .ui-number-input-wrapper-decorator
+        .ui-number__input-inner-wrapper--decorator
+        .ui-ai-label--revert::before,
+    .ui-number__input-wrapper--decorator
+        .ui-number-input-inner-wrapper-decorator
+        .ui-ai-label--revert::before,
+    .ui-number__input-wrapper--decorator
+        .ui-number__input-inner-wrapper--decorator
+        .ui-ai-label--revert::before,
+    .ui-number-input-wrapper-slug .ui-ai-label--revert::before,
+    .ui-number-input-wrapper-slug .ui-slug--revert::before,
+    .ui-number__input-wrapper--slug .ui-ai-label--revert::before,
+    .ui-number__input-wrapper--slug .ui-slug--revert::before {
+        inset-block-start: 0.5rem;
+        inset-inline-start: -0.5rem;
+    }
+
+    .ui-number-control-btn::after,
+    .ui-number__control-btn::after {
+        display: block;
+        inset-inline-end: 0;
+    }
+
+    .ui-number-input-wrapper-decorator .ui-number-control-btn::before,
+    .ui-number-input-wrapper-decorator .ui-number__control-btn::before,
+    .ui-number__input-wrapper--decorator .ui-number-control-btn::before,
+    .ui-number__input-wrapper--decorator .ui-number__control-btn::before,
+    .ui-number-input-wrapper-slug .ui-number-control-btn::before,
+    .ui-number-input-wrapper-slug .ui-number__control-btn::before,
+    .ui-number__input-wrapper--slug .ui-number-control-btn::before,
+    .ui-number__input-wrapper--slug .ui-number__control-btn::before {
+        display: block;
+        inset-inline-end: var(--ui-spacing-08);
+    }
+
+    .ui-number-input-wrapper-decorator .ui-number-control-btn:focus::before,
+    .ui-number-input-wrapper-decorator .ui-number__control-btn:focus::before,
+    .ui-number__input-wrapper--decorator .ui-number-control-btn:focus::before,
+    .ui-number__input-wrapper--decorator .ui-number__control-btn:focus::before,
+    .ui-number-input-wrapper-slug .ui-number-control-btn:focus::before,
+    .ui-number-input-wrapper-slug .ui-number__control-btn:focus::before,
+    .ui-number__input-wrapper--slug .ui-number-control-btn:focus::before,
+    .ui-number__input-wrapper--slug .ui-number__control-btn:focus::before,
+    .ui-number-control-btn:hover::after,
+    .ui-number-control-btn:hover::before,
+    .ui-number__control-btn:hover::after,
+    .ui-number__control-btn:hover::before {
+        display: none;
+    }
+
+    .ui-number-control-btn:hover::after,
+    .ui-number-control-btn:hover::before,
+    .ui-number__control-btn:hover::after,
+    .ui-number__control-btn:hover::before {
+        inset-inline-end: 0;
+    }
+
+    .ui-number-input-wrapper:has(.ui-number-control-btn:hover)
+        ~ .ui-number-input-wrapper-decorator::after,
+    .ui-number-input-wrapper:has(.ui-number-control-btn:hover)
+        ~ .ui-number__input-wrapper--decorator::after,
+    .ui-number-input-wrapper:has(.ui-number-control-btn:hover)
+        ~ .ui-number-input-wrapper-slug::after,
+    .ui-number-input-wrapper:has(.ui-number-control-btn:hover)
+        ~ .ui-number__input-wrapper--slug::after,
+    .ui-number__input-wrapper:has(.ui-number__control-btn:hover)
+        ~ .ui-number-input-wrapper-decorator::after,
+    .ui-number__input-wrapper:has(.ui-number__control-btn:hover)
+        ~ .ui-number__input-wrapper--decorator::after,
+    .ui-number__input-wrapper:has(.ui-number__control-btn:hover)
+        ~ .ui-number-input-wrapper-slug::after,
+    .ui-number__input-wrapper:has(.ui-number__control-btn:hover)
+        ~ .ui-number__input-wrapper--slug::after {
+        display: none;
+    }
+
+    .ui-number-control-btn:has(.up-icon)::after,
+    .ui-number-control-btn:has(.up-icon)::before,
+    .ui-number__control-btn:has(.up-icon)::after,
+    .ui-number__control-btn:has(.up-icon)::before {
+        display: none;
+    }
+
+    .ui-number-input-wrapper-decorator .ui-number-invalid,
+    .ui-number-input-wrapper-decorator .ui-number__invalid,
+    .ui-number__input-wrapper--decorator .ui-number-invalid,
+    .ui-number__input-wrapper--decorator .ui-number__invalid,
+    .ui-number-input-wrapper-slug .ui-number-invalid,
+    .ui-number-input-wrapper-slug .ui-number__invalid,
+    .ui-number__input-wrapper--slug .ui-number-invalid,
+    .ui-number__input-wrapper--slug .ui-number__invalid {
+        inset-inline-end: calc(var(--ui-spacing-13) - var(--ui-spacing-05));
+    }
+
+    .ui-number-input-wrapper-decorator:has(.ui-number-invalid)
+        .ui-number-input-inner-wrapper-decorator
+        > *::before,
+    .ui-number-input-wrapper-decorator:has(.ui-number__invalid)
+        .ui-number__input-inner-wrapper--decorator
+        > *::before,
+    .ui-number__input-wrapper--decorator:has(.ui-number-invalid)
+        .ui-number-input-inner-wrapper-decorator
+        > *::before,
+    .ui-number__input-wrapper--decorator:has(.ui-number__invalid)
+        .ui-number__input-inner-wrapper--decorator
+        > *::before,
+    .ui-number-input-wrapper-slug:has(.ui-number-invalid) .ui-ai-label::before,
+    .ui-number-input-wrapper-slug:has(.ui-number-invalid) .ui-slug::before,
+    .ui-number-input-wrapper-slug:has(.ui-number__invalid) .ui-ai-label::before,
+    .ui-number-input-wrapper-slug:has(.ui-number__invalid) .ui-slug::before,
+    .ui-number__input-wrapper--slug:has(.ui-number-invalid)
+        .ui-ai-label::before,
+    .ui-number__input-wrapper--slug:has(.ui-number-invalid) .ui-slug::before,
+    .ui-number__input-wrapper--slug:has(.ui-number__invalid)
+        .ui-ai-label::before,
+    .ui-number__input-wrapper--slug:has(.ui-number__invalid) .ui-slug::before {
+        display: block;
+    }
+
+    .ui-number .ui-number-input-wrapper-decorator input[data-invalid],
+    .ui-number
+        .ui-number-input-wrapper-decorator.ui-number-input-wrapper-warning
+        input,
+    .ui-number
+        .ui-number-input-wrapper-decorator.ui-number__input-wrapper--warning
+        input,
+    .ui-number .ui-number__input-wrapper--decorator input[data-invalid],
+    .ui-number
+        .ui-number__input-wrapper--decorator.ui-number-input-wrapper-warning
+        input,
+    .ui-number
+        .ui-number__input-wrapper--decorator.ui-number__input-wrapper--warning
+        input,
+    .ui-number .ui-number-input-wrapper-slug input[data-invalid],
+    .ui-number
+        .ui-number-input-wrapper-slug.ui-number-input-wrapper-warning
+        input,
+    .ui-number
+        .ui-number-input-wrapper-slug.ui-number__input-wrapper--warning
+        input,
+    .ui-number .ui-number__input-wrapper--slug input[data-invalid],
+    .ui-number
+        .ui-number__input-wrapper--slug.ui-number-input-wrapper-warning
+        input,
+    .ui-number
+        .ui-number__input-wrapper--slug.ui-number__input-wrapper--warning
+        input {
+        padding-inline-end: 9rem;
+    }
+
+    .ui-number-input-wrapper-decorator
+        input[type="number"]:has(
+            ~ .ui-number-input-inner-wrapper-decorator .ui-ai-label
+        ):not(
+            :has(
+                ~ .ui-number-input-inner-wrapper-decorator .ui-ai-label--revert
+            )
+        ),
+    .ui-number-input-wrapper-decorator
+        input[type="number"]:has(
+            ~ .ui-number__input-inner-wrapper--decorator .ui-ai-label
+        ):not(
+            :has(
+                ~ .ui-number__input-inner-wrapper--decorator
+                    .ui-ai-label--revert
+            )
+        ),
+    .ui-number__input-wrapper--decorator
+        input[type="number"]:has(
+            ~ .ui-number-input-inner-wrapper-decorator .ui-ai-label
+        ):not(
+            :has(
+                ~ .ui-number-input-inner-wrapper-decorator .ui-ai-label--revert
+            )
+        ),
+    .ui-number__input-wrapper--decorator
+        input[type="number"]:has(
+            ~ .ui-number__input-inner-wrapper--decorator .ui-ai-label
+        ):not(
+            :has(
+                ~ .ui-number__input-inner-wrapper--decorator
+                    .ui-ai-label--revert
+            )
+        ),
+    .ui-number-input-wrapper-slug
+        input[type="number"]:has(~ .ui-ai-label):not(
+            :has(~ .ui-ai-label--revert)
+        ),
+    .ui-number-input-wrapper-slug
+        input[type="number"]:has(~ .ui-slug):not(:has(~ .ui-slug--revert)),
+    .ui-number-input-wrapper-slug input[type="number"]:disabled,
+    .ui-number__input-wrapper--slug
+        input[type="number"]:has(~ .ui-ai-label):not(
+            :has(~ .ui-ai-label--revert)
+        ),
+    .ui-number__input-wrapper--slug
+        input[type="number"]:has(~ .ui-slug):not(:has(~ .ui-slug--revert)),
+    .ui-number__input-wrapper--slug input[type="number"]:disabled,
+    .ui-number-input-wrapper-decorator
+        input[type="text"]:has(
+            ~ .ui-number-input-inner-wrapper-decorator .ui-ai-label
+        ):not(
+            :has(
+                ~ .ui-number-input-inner-wrapper-decorator .ui-ai-label--revert
+            )
+        ),
+    .ui-number-input-wrapper-decorator
+        input[type="text"]:has(
+            ~ .ui-number__input-inner-wrapper--decorator .ui-ai-label
+        ):not(
+            :has(
+                ~ .ui-number__input-inner-wrapper--decorator
+                    .ui-ai-label--revert
+            )
+        ),
+    .ui-number__input-wrapper--decorator
+        input[type="text"]:has(
+            ~ .ui-number-input-inner-wrapper-decorator .ui-ai-label
+        ):not(
+            :has(
+                ~ .ui-number-input-inner-wrapper-decorator .ui-ai-label--revert
+            )
+        ),
+    .ui-number__input-wrapper--decorator
+        input[type="text"]:has(
+            ~ .ui-number__input-inner-wrapper--decorator .ui-ai-label
+        ):not(
+            :has(
+                ~ .ui-number__input-inner-wrapper--decorator
+                    .ui-ai-label--revert
+            )
+        ),
+    .ui-number-input-wrapper-slug
+        input[type="text"]:has(~ .ui-ai-label):not(
+            :has(~ .ui-ai-label--revert)
+        ),
+    .ui-number-input-wrapper-slug
+        input[type="text"]:has(~ .ui-slug):not(:has(~ .ui-slug--revert)),
+    .ui-number-input-wrapper-slug input[type="text"]:disabled,
+    .ui-number__input-wrapper--slug
+        input[type="text"]:has(~ .ui-ai-label):not(
+            :has(~ .ui-ai-label--revert)
+        ),
+    .ui-number__input-wrapper--slug
+        input[type="text"]:has(~ .ui-slug):not(:has(~ .ui-slug--revert)),
+    .ui-number__input-wrapper--slug input[type="text"]:disabled {
+        background: var(--ui-ai-gradient, var(--ui-field));
+        padding-inline-end: 9.0625rem;
+    }
+
+    .ui-number-input-wrapper-decorator .ui-number-rule-divider,
+    .ui-number-input-wrapper-decorator .ui-number__rule-divider,
+    .ui-number__input-wrapper--decorator .ui-number-rule-divider,
+    .ui-number__input-wrapper--decorator .ui-number__rule-divider,
+    .ui-number-input-wrapper-slug .ui-number-rule-divider,
+    .ui-number-input-wrapper-slug .ui-number__rule-divider,
+    .ui-number__input-wrapper--slug .ui-number-rule-divider,
+    .ui-number__input-wrapper--slug .ui-number__rule-divider {
+        display: none;
+    }
+
+    .ui-number-input-wrapper-decorator .ui-number-control-btn:hover,
+    .ui-number-input-wrapper-decorator .ui-number__control-btn:hover,
+    .ui-number__input-wrapper--decorator .ui-number-control-btn:hover,
+    .ui-number__input-wrapper--decorator .ui-number__control-btn:hover,
+    .ui-number-input-wrapper-slug .ui-number-control-btn:hover,
+    .ui-number-input-wrapper-slug .ui-number__control-btn:hover,
+    .ui-number__input-wrapper--slug .ui-number-control-btn:hover,
+    .ui-number__input-wrapper--slug .ui-number__control-btn:hover {
+        box-shadow: 0 -1px 0 var(--ui-ai-border-strong, var(--ui-border-strong))
+            inset;
+    }
+
+    /* ----------------------------------------------------------------------
+       Skeleton
+       ---------------------------------------------------------------------- */
+
+    .ui-number.ui-skeleton,
+    .ui-number-input.ui-skeleton {
+        position: relative;
+        overflow: hidden;
+        inline-size: 100%;
+        background-color: var(--ui-skeleton-background);
+    }
+
+    .ui-number.ui-skeleton::before,
+    .ui-number-input.ui-skeleton::before {
+        position: absolute;
+        inset: 0;
+        background: var(--ui-skeleton-element);
+        content: "";
+        animation: ui-skeleton-pulse 3000ms ease-in-out infinite;
+    }
+
+    .ui-number.ui-skeleton input[type="number"],
+    .ui-number.ui-skeleton input[type="text"],
+    .ui-number-input.ui-skeleton input[type="number"],
+    .ui-number-input.ui-skeleton input[type="text"] {
+        display: none;
+    }
+
+    .ui-number.ui-skeleton.ui-number-sm,
+    .ui-number.ui-skeleton.ui-number--sm,
+    .ui-number-input.ui-skeleton.ui-number-input-sm,
+    .ui-number-input.ui-skeleton.ui-number-input--sm {
+        block-size: var(--ui-spacing-07);
+    }
+
+    .ui-number.ui-skeleton.ui-number-md,
+    .ui-number.ui-skeleton.ui-number--md,
+    .ui-number-input.ui-skeleton.ui-number-input-md,
+    .ui-number-input.ui-skeleton.ui-number-input--md {
+        block-size: var(--ui-spacing-08);
+    }
+
+    .ui-number.ui-skeleton.ui-number-lg,
+    .ui-number.ui-skeleton.ui-number--lg,
+    .ui-number-input.ui-skeleton.ui-number-input-lg,
+    .ui-number-input.ui-skeleton.ui-number-input--lg {
+        block-size: var(--ui-spacing-09);
+    }
+
+    @keyframes ui-skeleton-pulse {
+        0% {
+            opacity: 0.3;
+        }
+
+        50% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0.3;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        .ui-number input[type="number"],
+        .ui-number input[type="text"],
+        .ui-number-input input[type="number"],
+        .ui-number-input input[type="text"],
+        .ui-number.ui-skeleton::before,
+        .ui-number-input.ui-skeleton::before {
+            animation: none;
+            transition: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-number input[type="number"],
+        .ui-number input[type="text"],
+        .ui-number-input input[type="number"],
+        .ui-number-input input[type="text"] {
+            border-block-end-color: CanvasText;
+            background-color: Canvas;
+            color: CanvasText;
+        }
+
+        .ui-number input[type="number"]:focus,
+        .ui-number input[type="text"]:focus,
+        .ui-number-input input[type="number"]:focus,
+        .ui-number-input input[type="text"]:focus,
+        .ui-number-control-btn:hover,
+        .ui-number-control-btn:focus,
+        .ui-number__control-btn:hover,
+        .ui-number__control-btn:focus {
+            outline: 2px solid Highlight;
+            outline-offset: -2px;
+        }
+
+        .ui-number-control-btn,
+        .ui-number__control-btn {
+            outline: 1px solid CanvasText;
+            outline-offset: -1px;
+        }
+
+        .ui-number-control-btn:hover,
+        .ui-number-control-btn:focus,
+        .ui-number__control-btn:hover,
+        .ui-number__control-btn:focus {
+            background-color: Highlight;
+            color: HighlightText;
+        }
+
+        .ui-number-control-btn:hover svg,
+        .ui-number-control-btn:focus svg,
+        .ui-number__control-btn:hover svg,
+        .ui-number__control-btn:focus svg {
+            fill: HighlightText;
+        }
+
+        .ui-number input[type="number"]:disabled,
+        .ui-number input[type="text"]:disabled,
+        .ui-number-input input[type="number"]:disabled,
+        .ui-number-input input[type="text"]:disabled,
+        .ui-number-control-btn:disabled,
+        .ui-number__control-btn:disabled {
+            color: GrayText;
+        }
+
+        .ui-number input[type="number"]:disabled ~ .ui-number-controls svg,
+        .ui-number input[type="number"]:disabled ~ .ui-number__controls svg,
+        .ui-number input[type="text"]:disabled ~ .ui-number-controls svg,
+        .ui-number input[type="text"]:disabled ~ .ui-number__controls svg {
+            fill: GrayText;
+        }
+
+        .ui-number-invalid,
+        .ui-number__invalid {
+            fill: Mark;
+        }
+
+        .ui-number-invalid-warning,
+        .ui-number__invalid--warning {
+            fill: CanvasText;
+        }
+
+        .ui-number-rule-divider,
+        .ui-number__rule-divider {
+            background-color: CanvasText;
+        }
     }
 }

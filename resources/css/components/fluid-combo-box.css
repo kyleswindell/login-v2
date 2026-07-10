@@ -1,0 +1,158 @@
+/* ==========================================================================
+   File: resources/css/components/fluid-combo-box.css
+   Purpose: Fluid Combo Box variant styles.
+
+   Notes:
+   - Defines Fluid Combo Box selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - This is a Combo Box variant layered on top of List Box and Fluid List Box.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Combo box field
+       ---------------------------------------------------------------------- */
+
+    .ui-list-box-wrapper-fluid .ui-combo-box .ui-list-box-field,
+    .ui-list-box-wrapper-fluid .ui-combo-box .ui-list-box__field,
+    .ui-list-box__wrapper--fluid .ui-combo-box .ui-list-box-field,
+    .ui-list-box__wrapper--fluid .ui-combo-box .ui-list-box__field {
+        overflow: visible;
+        padding: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Combo box input
+       ---------------------------------------------------------------------- */
+
+    .ui-list-box-wrapper-fluid .ui-combo-box .ui-text-input,
+    .ui-list-box__wrapper--fluid .ui-combo-box .ui-text-input {
+        overflow: hidden;
+        padding-block: 2.0625rem 0.8125rem;
+        padding-inline: var(--ui-spacing-05) var(--ui-spacing-10);
+        text-overflow: ellipsis;
+        transition: none;
+        white-space: nowrap;
+    }
+
+    /* ----------------------------------------------------------------------
+       Selection and menu icon positioning
+       ---------------------------------------------------------------------- */
+
+    .ui-list-box-wrapper-fluid .ui-combo-box .ui-list-box-selection,
+    .ui-list-box-wrapper-fluid .ui-combo-box .ui-list-box__selection,
+    .ui-list-box__wrapper--fluid .ui-combo-box .ui-list-box-selection,
+    .ui-list-box__wrapper--fluid .ui-combo-box .ui-list-box__selection {
+        inset-block: auto 0.625rem;
+        transform: none;
+    }
+
+    .ui-list-box-wrapper-fluid .ui-combo-box .ui-list-box-menu-icon,
+    .ui-list-box-wrapper-fluid .ui-combo-box .ui-list-box__menu-icon,
+    .ui-list-box__wrapper--fluid .ui-combo-box .ui-list-box-menu-icon,
+    .ui-list-box__wrapper--fluid .ui-combo-box .ui-list-box__menu-icon {
+        inset-block-end: 0.875rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Invalid / warning icon positioning
+       ---------------------------------------------------------------------- */
+
+    .ui-list-box-wrapper-fluid
+        .ui-list-box[data-invalid]
+        .ui-list-box-field
+        .ui-text-input
+        + .ui-list-box-invalid-icon,
+    .ui-list-box-wrapper-fluid
+        .ui-list-box[data-invalid]
+        .ui-list-box__field
+        .ui-text-input
+        + .ui-list-box__invalid-icon,
+    .ui-list-box-wrapper-fluid
+        .ui-list-box-warning
+        .ui-list-box-field
+        .ui-text-input
+        + .ui-list-box-invalid-icon,
+    .ui-list-box-wrapper-fluid
+        .ui-list-box-warning
+        .ui-list-box__field
+        .ui-text-input
+        + .ui-list-box__invalid-icon,
+    .ui-list-box-wrapper-fluid
+        .ui-list-box--warning
+        .ui-list-box-field
+        .ui-text-input
+        + .ui-list-box-invalid-icon,
+    .ui-list-box-wrapper-fluid
+        .ui-list-box--warning
+        .ui-list-box__field
+        .ui-text-input
+        + .ui-list-box__invalid-icon,
+    .ui-list-box__wrapper--fluid
+        .ui-list-box[data-invalid]
+        .ui-list-box-field
+        .ui-text-input
+        + .ui-list-box-invalid-icon,
+    .ui-list-box__wrapper--fluid
+        .ui-list-box[data-invalid]
+        .ui-list-box__field
+        .ui-text-input
+        + .ui-list-box__invalid-icon,
+    .ui-list-box__wrapper--fluid
+        .ui-list-box-warning
+        .ui-list-box-field
+        .ui-text-input
+        + .ui-list-box-invalid-icon,
+    .ui-list-box__wrapper--fluid
+        .ui-list-box-warning
+        .ui-list-box__field
+        .ui-text-input
+        + .ui-list-box__invalid-icon,
+    .ui-list-box__wrapper--fluid
+        .ui-list-box--warning
+        .ui-list-box-field
+        .ui-text-input
+        + .ui-list-box-invalid-icon,
+    .ui-list-box__wrapper--fluid
+        .ui-list-box--warning
+        .ui-list-box__field
+        .ui-text-input
+        + .ui-list-box__invalid-icon {
+        inset-inline-end: var(--ui-spacing-05);
+    }
+
+    /* ----------------------------------------------------------------------
+       Menu placement
+       ---------------------------------------------------------------------- */
+
+    .ui-list-box-wrapper-fluid
+        :not(.ui-list-box-up):not(.ui-list-box--up)
+        .ui-combo-box
+        .ui-list-box-menu,
+    .ui-list-box-wrapper-fluid
+        :not(.ui-list-box-up):not(.ui-list-box--up)
+        .ui-combo-box
+        .ui-list-box__menu,
+    .ui-list-box__wrapper--fluid
+        :not(.ui-list-box-up):not(.ui-list-box--up)
+        .ui-combo-box
+        .ui-list-box-menu,
+    .ui-list-box__wrapper--fluid
+        :not(.ui-list-box-up):not(.ui-list-box--up)
+        .ui-combo-box
+        .ui-list-box__menu {
+        inset-block-start: calc(100% + 1px);
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-list-box-wrapper-fluid .ui-combo-box .ui-text-input,
+        .ui-list-box__wrapper--fluid .ui-combo-box .ui-text-input {
+            transition: none;
+        }
+    }
+}

@@ -70,7 +70,6 @@ class LocalReadyCommandTest extends TestCase
         $this->assertTrue(Hash::check(LocalReviewEnvironment::PASSWORD, $user->password));
         $this->assertTrue($user->is_active);
         $this->assertTrue($user->hasRole(LocalReviewEnvironment::ROLE));
-        $this->assertTrue($user->can('platform.ui-reference.view'));
     }
 
     public function test_it_is_safe_to_rerun_after_a_database_reset_or_existing_user_change(): void
@@ -109,14 +108,17 @@ class LocalReadyCommandTest extends TestCase
         $this->assertTrue(Hash::check(LocalReviewEnvironment::PASSWORD, $user->password));
         $this->assertTrue($user->is_active);
         $this->assertTrue($user->hasRole(LocalReviewEnvironment::ROLE));
-        $this->assertTrue($user->can('platform.ui-reference.view'));
     }
 
     public function test_it_checks_vite_javascript_css_and_app_routes(): void
     {
         Http::fake([
-            'http://node:5173/resources/js/app.js' => Http::response('', 200),
-            'http://node:5173/resources/css/app.css' => Http::response('', 200),
+            'http://node:5173/resources/js/app.js' => Http::response('', 200, [
+                'Access-Control-Allow-Origin' => 'http://localhost:8000',
+            ]),
+            'http://node:5173/resources/css/app.css' => Http::response('', 200, [
+                'Access-Control-Allow-Origin' => 'http://localhost:8000',
+            ]),
             'http://localhost:8000/login' => Http::response('', 200),
         ]);
 
@@ -132,8 +134,32 @@ class LocalReadyCommandTest extends TestCase
             ->expectsOutputToContain('[ok] app:')
             ->assertSuccessful();
 
-        Http::assertSent(fn ($request): bool => $request->url() === 'http://node:5173/resources/js/app.js');
-        Http::assertSent(fn ($request): bool => $request->url() === 'http://node:5173/resources/css/app.css');
+        Http::assertSent(fn ($request): bool => $request->url() === 'http://node:5173/resources/js/app.js'
+            && $request->hasHeader('Origin', 'http://localhost:8000'));
+        Http::assertSent(fn ($request): bool => $request->url() === 'http://node:5173/resources/css/app.css'
+            && $request->hasHeader('Origin', 'http://localhost:8000'));
         Http::assertSent(fn ($request): bool => $request->url() === 'http://localhost:8000/login');
     }
-}
+
+    public function test_it_rejects_vite_assets_that_do_not_allow_the_browser_origin(): void
+    {
+        Http::fake([
+            'http://node:5173/resources/js/app.js' => Http::response('', 200),
+            'http://node:5173/resources/css/app.css' => Http::response('', 200, [
+                'Access-Control-Allow-Origin' => 'http://localhost:8000',
+            ]),
+            'http://localhost:8000/login' => Http::response('', 200),
+        ]);
+
+        $this->artisan('local:ready', [
+            '--env-path' => $this->envPath,
+            '--hot-path' => $this->hotPath,
+            '--app-url' => 'http://localhost:8000',
+            '--vite-url' => LocalReviewEnvironment::VITE_URL,
+            '--vite-check-url' => 'http://node:5173',
+        ])
+            ->expectsOutputToContain('[failed] vite js:')
+            ->assertFailed();
+
+        $result = app(LocalReviewEnvironment::class)->prepare(
+            envPath: $this->envPath

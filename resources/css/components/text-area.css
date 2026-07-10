@@ -1,84 +1,304 @@
 /* ==========================================================================
-File: resources/css/components/text-area.css
-Purpose: Text Area component styles.
-Carbon reference:
+   File: resources/css/components/text-area.css
+   Purpose: Text Area component styles.
+   Reference source:
 
-* reference/carbon-main/packages/styles/scss/components/text-area/
-* reference/carbon-main/packages/styles/scss/components/fluid-text-area/
+   * reference/carbon-main/packages/styles/scss/components/text-area/_text-area.scss
 
-Notes:
-
-* Defines Text Area selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Text Area consumes form, type, spacing, motion, and theme tokens.
-  ========================================================================== */
+   Notes:
+   - Defines Text Area selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports standard, invalid, warning, disabled, readonly, skeleton,
+     column-width, label-wrapper, and density states.
+   - AI label / slug decorator branches are intentionally not implemented here.
+   ========================================================================== */
 
 @layer components {
-    .ui-text-area-wrapper {
+    /* ----------------------------------------------------------------------
+       Wrapper
+       ---------------------------------------------------------------------- */
+
+    .ui-text-area-wrapper,
+    .ui-text-area__wrapper {
+        /*
+         * Component density context:
+         * Carbon equivalent: layout.use("density", default: "normal")
+         */
+        --ui-layout-density-padding-inline: var(
+            --ui-layout-density-padding-inline-context,
+            var(--ui-layout-density-padding-inline-normal)
+        );
+
+        --ui-text-area-padding-inline: var(
+            --ui-layout-density-padding-inline-local,
+            var(--ui-spacing-05)
+        );
+
         position: relative;
         display: flex;
         inline-size: 100%;
+        max-inline-size: 100%;
     }
+
+    .ui-text-area-wrapper-cols,
+    .ui-text-area__wrapper--cols {
+        inline-size: auto;
+    }
+
+    .ui-form-item:has(.ui-text-area-wrapper-cols),
+    .ui-form-item:has(.ui-text-area__wrapper--cols) {
+        inline-size: fit-content;
+    }
+
+    .ui-text-area-label-wrapper,
+    .ui-text-area__label-wrapper {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        inline-size: 100%;
+    }
+
+    /* ----------------------------------------------------------------------
+       Base textarea
+       ---------------------------------------------------------------------- */
 
     .ui-text-area {
         box-sizing: border-box;
         inline-size: 100%;
+        min-inline-size: 10rem;
+        block-size: 100%;
         min-block-size: 2.5rem;
+        margin: 0;
         border: 0;
-        border-block-end: 1px solid var(--ui-border-strong-01);
-        padding: var(--ui-spacing-05);
-        background-color: var(--ui-field-01);
-        color: var(--ui-text-primary);
-        font: inherit;
-        font-size: var(--ui-type-body-compact-01-font-size);
-        font-weight: var(--ui-type-body-compact-01-font-weight);
-        line-height: var(--ui-type-body-compact-01-line-height);
-        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+        border-block-end: 1px solid var(--ui-border-strong);
+        padding: 0.6875rem var(--ui-text-area-padding-inline);
         outline: 2px solid transparent;
         outline-offset: -2px;
+        background-color: var(--ui-field);
+        color: var(--ui-text-primary);
+        font-family: inherit;
+        font-size: var(--ui-type-body-01-font-size);
+        font-weight: var(--ui-type-body-01-font-weight);
+        line-height: var(--ui-type-body-01-line-height);
+        letter-spacing: var(--ui-type-body-01-letter-spacing);
         resize: vertical;
+        vertical-align: baseline;
         transition:
-            background-color var(--ui-duration-fast-01) var(--ui-motion-standard-productive),
-            outline var(--ui-duration-fast-01) var(--ui-motion-standard-productive);
+            background-color var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive),
+            outline var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive);
     }
 
-    .ui-text-area:hover {
-        background-color: var(--ui-field-hover-01);
+    .ui-text-area *,
+    .ui-text-area *::before,
+    .ui-text-area *::after {
+        box-sizing: inherit;
     }
 
     .ui-text-area:focus,
     .ui-text-area:active {
-        outline-color: var(--ui-focus);
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
     }
 
     .ui-text-area::placeholder {
-        color: var(--ui-text-placeholder);
+        color: var(--ui-text-placeholder, var(--ui-text-helper));
+        font-size: var(--ui-type-body-01-font-size);
+        font-weight: var(--ui-type-body-01-font-weight);
+        line-height: var(--ui-type-body-01-line-height);
+        letter-spacing: var(--ui-type-body-01-letter-spacing);
         opacity: 1;
     }
 
-    .ui-text-area-invalid:not(:focus),
-    .ui-text-area-wrapper[data-invalid] > .ui-text-area:not(:focus) {
-        outline-color: var(--ui-support-error);
+    .ui-text-area-light,
+    .ui-text-area--light {
+        background-color: var(--ui-field-02);
     }
 
-    .ui-text-area-warning:not(:focus),
-    .ui-text-area-wrapper[data-warning] > .ui-text-area:not(:focus) {
-        outline-color: var(--ui-support-warning);
+    /* ----------------------------------------------------------------------
+       Invalid / warning icons
+       ---------------------------------------------------------------------- */
+
+    .ui-text-area-invalid-icon,
+    .ui-text-area__invalid-icon {
+        position: absolute;
+        inset-block-start: var(--ui-spacing-04);
+        inset-inline-end: var(--ui-text-area-padding-inline);
+        color: var(--ui-support-error);
+        fill: currentColor;
     }
+
+    .ui-text-area-invalid-icon-warning,
+    .ui-text-area__invalid-icon--warning {
+        color: var(--ui-support-warning);
+        fill: currentColor;
+    }
+
+    .ui-text-area-invalid-icon-warning path[fill],
+    .ui-text-area__invalid-icon--warning path[fill] {
+        fill: var(--ui-black, #000000);
+        opacity: 1;
+    }
+
+    .ui-text-area-invalid,
+    .ui-text-area--invalid {
+        outline: 2px solid var(--ui-support-error);
+        outline-offset: -2px;
+    }
+
+    .ui-text-area-warning,
+    .ui-text-area-warn,
+    .ui-text-area--warning,
+    .ui-text-area--warn {
+        padding-inline-end: var(--ui-spacing-08);
+    }
+
+    .ui-text-area-invalid,
+    .ui-text-area--invalid {
+        padding-inline-end: var(--ui-spacing-08);
+    }
+
+    .ui-text-area-counter-alert,
+    .ui-text-area__counter-alert {
+        position: absolute;
+        overflow: hidden;
+        margin: -1px;
+        border: 0;
+        padding: 0;
+        inline-size: 1px;
+        block-size: 1px;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+    }
+
+    /* ----------------------------------------------------------------------
+       Disabled
+       ---------------------------------------------------------------------- */
 
     .ui-text-area:disabled,
-    .ui-text-area[aria-disabled="true"] {
-        border-block-end-color: transparent;
+    .ui-text-area[disabled],
+    .ui-text-area[aria-disabled="true"],
+    .ui-text-area[data-disabled="true"],
+    .ui-text-area[data-ui-disabled="true"] {
+        border-block-end: 1px solid transparent;
+        background-color: var(--ui-field);
         color: var(--ui-text-disabled);
         cursor: not-allowed;
+        outline: none;
+        resize: none;
+        -webkit-text-fill-color: var(--ui-text-disabled);
     }
 
-    .ui-text-area-counter {
-        align-self: flex-end;
-        margin-block-start: var(--ui-spacing-02);
-        color: var(--ui-text-secondary);
-        font-size: var(--ui-type-label-01-font-size);
-        line-height: var(--ui-type-label-01-line-height);
+    .ui-text-area:disabled::placeholder,
+    .ui-text-area[disabled]::placeholder,
+    .ui-text-area[aria-disabled="true"]::placeholder,
+    .ui-text-area[data-disabled="true"]::placeholder,
+    .ui-text-area[data-ui-disabled="true"]::placeholder {
+        color: var(--ui-text-disabled);
+        opacity: 1;
+    }
+
+    /* ----------------------------------------------------------------------
+       Readonly
+       ---------------------------------------------------------------------- */
+
+    .ui-text-area-wrapper-readonly .ui-text-area,
+    .ui-text-area__wrapper--readonly .ui-text-area,
+    .ui-text-area[readonly],
+    .ui-text-area[aria-readonly="true"],
+    .ui-text-area[data-readonly="true"],
+    .ui-text-area[data-ui-readonly="true"] {
+        border-block-end-color: var(--ui-border-subtle);
+        background-color: transparent;
+        cursor: default;
+    }
+
+    /* ----------------------------------------------------------------------
+       Skeleton
+       ---------------------------------------------------------------------- */
+
+    .ui-text-area.ui-skeleton,
+    .ui-text-area-skeleton {
+        position: relative;
+        overflow: hidden;
+        inline-size: 100%;
+        block-size: 6.25rem;
+        border-block-end: 0;
+        background-color: var(--ui-skeleton-element);
+        color: transparent;
+        pointer-events: none;
+    }
+
+    .ui-text-area.ui-skeleton::placeholder,
+    .ui-text-area-skeleton::placeholder {
+        color: transparent;
+    }
+
+    .ui-text-area.ui-skeleton::before,
+    .ui-text-area-skeleton::before {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            var(--ui-skeleton-background, rgb(255 255 255 / 0.18)),
+            transparent
+        );
+        content: "";
+        animation: ui-skeleton-shimmer 1.5s infinite linear;
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-text-area {
+            transition: none;
+        }
+
+        .ui-text-area.ui-skeleton::before,
+        .ui-text-area-skeleton::before {
+            animation: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-text-area:focus,
+        .ui-text-area:active {
+            outline-color: Highlight;
+        }
+
+        .ui-text-area-invalid,
+        .ui-text-area--invalid {
+            outline-color: Mark;
+        }
+
+        .ui-text-area:disabled,
+        .ui-text-area[disabled],
+        .ui-text-area[aria-disabled="true"],
+        .ui-text-area[data-disabled="true"],
+        .ui-text-area[data-ui-disabled="true"] {
+            color: GrayText;
+            -webkit-text-fill-color: GrayText;
+        }
+
+        .ui-text-area-invalid-icon,
+        .ui-text-area__invalid-icon {
+            color: Mark;
+            fill: Mark;
+        }
+
+        .ui-text-area-invalid-icon-warning,
+        .ui-text-area__invalid-icon--warning {
+            color: CanvasText;
+            fill: CanvasText;
+        }
     }
 }

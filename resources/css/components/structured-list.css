@@ -1,215 +1,499 @@
 /* ==========================================================================
-File: resources/css/components/structured-list.css
-Purpose: Structured List component styles.
-Carbon reference:
+   File: resources/css/components/structured-list.css
+   Purpose: Structured List component styles.
+   Reference source:
 
-* reference/carbon-main/packages/styles/scss/components/structured-list/
+   * reference/carbon-main/packages/styles/scss/components/structured-list/_structured-list.scss
+   * reference/carbon-main/packages/styles/scss/components/structured-list/_mixins.scss
 
-Notes:
-
-* Defines Structured List selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-  ========================================================================== */
+   Notes:
+   - Defines Structured List selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports standard, condensed, flush, selection, selected, skeleton,
+     focus, nowrap, icon, and row/cell table-display states.
+   ========================================================================== */
 
 @layer components {
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
     .ui-structured-list {
+        box-sizing: border-box;
+        display: table;
         inline-size: 100%;
+        overflow-x: auto;
+        margin: 0;
+        border: 0;
         border-collapse: collapse;
-        color: var(--ui-text-primary);
+        border-spacing: 0;
+        padding: 0;
+        background-color: var(--ui-layer, var(--ui-layer-01));
+    }
+
+    .ui-structured-list *,
+    .ui-structured-list *::before,
+    .ui-structured-list *::after {
+        box-sizing: inherit;
+    }
+
+    /* ----------------------------------------------------------------------
+       Head / body / rows
+       ---------------------------------------------------------------------- */
+
+    .ui-structured-list-thead {
+        display: table-header-group;
+        vertical-align: middle;
+    }
+
+    .ui-structured-list-tbody {
+        display: table-row-group;
+        vertical-align: middle;
     }
 
     .ui-structured-list-row {
-        display: grid;
-        grid-template-columns: var(--ui-structured-list-columns, repeat(2, minmax(0, 1fr)));
-        border-block-end: 1px solid var(--ui-border-subtle-01);
+        display: table-row;
+        border-block-start: 1px solid var(--ui-border-subtle);
+        transition: background-color var(--ui-duration-fast-02)
+            var(--ui-motion-standard-productive);
     }
 
-    .ui-structured-list-row:hover {
-        background-color: var(--ui-layer-hover-01);
+    .ui-structured-list-tbody .ui-structured-list-row:last-child {
+        border-block-end: 1px solid var(--ui-border-subtle);
     }
 
-    .ui-structured-list-cell {
-        padding: var(--ui-spacing-04) var(--ui-spacing-05);
-        font-size: var(--ui-type-body-compact-01-font-size);
-        line-height: var(--ui-type-body-compact-01-line-height);
+    .ui-structured-list-row-header,
+    .ui-structured-list-row--header-row {
+        border: none;
+        cursor: inherit;
     }
 
-    .ui-structured-list-header .ui-structured-list-cell {
-        color: var(--ui-text-secondary);
+    .ui-structured-list-row-focused-within,
+    .ui-structured-list-row--focused-within,
+    .ui-structured-list-row:focus-within {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    /* ----------------------------------------------------------------------
+       Header cells
+       ---------------------------------------------------------------------- */
+
+    .ui-structured-list-th {
+        box-sizing: border-box;
+        display: table-cell;
+        block-size: 2.5rem;
+        margin: 0;
+        border: 0;
+        padding: var(--ui-spacing-05) var(--ui-spacing-03) var(--ui-spacing-03);
+        color: var(--ui-text-primary);
+        font-size: var(--ui-type-heading-compact-01-font-size);
         font-weight: var(--ui-font-weight-semibold);
-    }
-}
-
-@layer components {
-    /* Laravel UI structured-list API migrated from app.css after Carbon SCSS ownership audit. */
-    .ui-structured-list-shell {
-        @apply w-full overflow-x-auto;
+        line-height: var(--ui-type-heading-compact-01-line-height);
+        letter-spacing: var(--ui-type-heading-compact-01-letter-spacing);
+        text-align: start;
+        text-transform: none;
+        vertical-align: top;
     }
 
-    .ui-structured-list {
-        @apply w-full table-auto border-collapse text-left text-sm;
-        min-width: 31.25rem;
+    /* ----------------------------------------------------------------------
+       Body cells
+       ---------------------------------------------------------------------- */
+
+    .ui-structured-list-td {
+        box-sizing: border-box;
+        position: relative;
+        display: table-cell;
+        max-inline-size: 36rem;
+        margin: 0;
+        border: 0;
+        padding: var(--ui-spacing-05) var(--ui-spacing-03) var(--ui-spacing-06);
         color: var(--ui-text-secondary);
-        background-color: transparent;
+        font-size: var(--ui-type-body-01-font-size);
+        font-weight: var(--ui-type-body-01-font-weight);
+        line-height: var(--ui-type-body-01-line-height);
+        letter-spacing: var(--ui-type-body-01-letter-spacing);
+        transition: color var(--ui-duration-fast-02)
+            var(--ui-motion-standard-productive);
     }
 
-    .ui-structured-list-background {
-        background-color: var(--ui-layer-01);
+    .ui-structured-list-row .ui-structured-list-td:first-of-type,
+    .ui-structured-list-row .ui-structured-list-th:first-of-type {
+        padding-inline-start: var(--ui-spacing-05);
     }
 
-    .ui-structured-list-header {
-        @apply align-bottom font-semibold;
-        height: auto;
-        max-height: 3.75rem;
-        padding: 1rem 1rem 0.5rem;
-        border-bottom: 1px solid var(--ui-border-subtle-01);
-        color: var(--ui-text-primary);
-        background-color: transparent;
-        line-height: 1.25rem;
+    .ui-structured-list-content-nowrap,
+    .ui-structured-list-content--nowrap {
+        white-space: nowrap;
     }
 
-    .ui-structured-list-background .ui-structured-list-header {
-        background-color: var(--ui-layer-01);
+    /* ----------------------------------------------------------------------
+       Condensed variant
+       ---------------------------------------------------------------------- */
+
+    .ui-structured-list-condensed .ui-structured-list-td,
+    .ui-structured-list-condensed .ui-structured-list-th,
+    .ui-structured-list--condensed .ui-structured-list-td,
+    .ui-structured-list--condensed .ui-structured-list-th {
+        padding: var(--ui-spacing-03);
     }
 
-    .ui-structured-list-header[data-ui-structured-list-header-truncate="true"] {
-        @apply overflow-hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
+    /* ----------------------------------------------------------------------
+       Flush variant
+       ---------------------------------------------------------------------- */
+
+    .ui-structured-list-flush .ui-structured-list-row .ui-structured-list-td,
+    .ui-structured-list-flush .ui-structured-list-row .ui-structured-list-th,
+    .ui-structured-list-flush
+        .ui-structured-list-row
+        .ui-structured-list-td:first-of-type,
+    .ui-structured-list-flush
+        .ui-structured-list-row
+        .ui-structured-list-th:first-of-type,
+    .ui-structured-list--flush .ui-structured-list-row .ui-structured-list-td,
+    .ui-structured-list--flush .ui-structured-list-row .ui-structured-list-th,
+    .ui-structured-list--flush
+        .ui-structured-list-row
+        .ui-structured-list-td:first-of-type,
+    .ui-structured-list--flush
+        .ui-structured-list-row
+        .ui-structured-list-th:first-of-type {
+        padding-inline: 0 var(--ui-spacing-05);
     }
 
-    .ui-structured-list-row {
-        border-bottom: 1px solid var(--ui-border-subtle-01);
-        background-color: transparent;
+    /* ----------------------------------------------------------------------
+       Selection variant
+       ---------------------------------------------------------------------- */
+
+    .ui-structured-list-selection .ui-structured-list-td,
+    .ui-structured-list-selection .ui-structured-list-th,
+    .ui-structured-list--selection .ui-structured-list-td,
+    .ui-structured-list--selection .ui-structured-list-th {
+        padding-inline: var(--ui-spacing-05);
     }
 
-    .ui-structured-list-body .ui-structured-list-row:last-child {
-        border-bottom: 0;
-    }
-
-    .ui-structured-list-cell {
-        @apply align-top font-normal;
-        min-height: 3.75rem;
-        padding: 1rem 1rem 1.5rem;
-        color: var(--ui-text-secondary);
-        background-color: transparent;
-        line-height: 1.5rem;
-    }
-
-    .ui-structured-list-background .ui-structured-list-cell {
-        background-color: var(--ui-layer-01);
-    }
-
-    .ui-structured-list-row-header {
-        color: var(--ui-text-primary);
-        font-weight: 600;
-    }
-
-    .ui-structured-list-cell-description {
-        @apply mt-1 block font-normal;
-        color: var(--ui-text-secondary);
-    }
-
-    .ui-structured-list-flush .ui-structured-list-header,
-    .ui-structured-list-flush .ui-structured-list-cell {
-        padding-left: 0;
-    }
-
-    .ui-structured-list-condensed .ui-structured-list-header {
-        padding-top: 0.5rem;
-        padding-bottom: 0.5rem;
-    }
-
-    .ui-structured-list-condensed .ui-structured-list-cell {
-        min-height: 2.25rem;
-        padding-top: 0.5rem;
-        padding-bottom: 0.5rem;
-    }
-
-    .ui-structured-list-selectable
-        .ui-structured-list-row[data-ui-structured-list-selectable-row] {
+    .ui-structured-list-selection
+        .ui-structured-list-row:hover:not(.ui-structured-list-row-header):not(
+            .ui-structured-list-row--header-row
+        ):not(.ui-structured-list-row-selected):not(
+            .ui-structured-list-row--selected
+        ),
+    .ui-structured-list--selection
+        .ui-structured-list-row:hover:not(.ui-structured-list-row-header):not(
+            .ui-structured-list-row--header-row
+        ):not(.ui-structured-list-row-selected):not(
+            .ui-structured-list-row--selected
+        ) {
+        border-color: var(--ui-layer-hover);
+        background-color: var(--ui-layer-hover);
         cursor: pointer;
     }
 
-    .ui-structured-list-selectable
-        .ui-structured-list-row[data-ui-structured-list-selectable-row]:hover {
-        background-color: var(--ui-layer-hover-01);
+    .ui-structured-list-selection
+        .ui-structured-list-row:hover:not(.ui-structured-list-row-header):not(
+            .ui-structured-list-row--header-row
+        ):not(.ui-structured-list-row-selected):not(
+            .ui-structured-list-row--selected
+        )
+        + .ui-structured-list-row,
+    .ui-structured-list--selection
+        .ui-structured-list-row:hover:not(.ui-structured-list-row-header):not(
+            .ui-structured-list-row--header-row
+        ):not(.ui-structured-list-row-selected):not(
+            .ui-structured-list-row--selected
+        )
+        + .ui-structured-list-row {
+        border-color: var(--ui-layer-hover);
     }
 
-    .ui-structured-list-selectable
-        .ui-structured-list-row[data-ui-structured-list-selectable-row]:hover
-        .ui-structured-list-cell {
+    .ui-structured-list-selection .ui-structured-list-row-selected,
+    .ui-structured-list-selection .ui-structured-list-row--selected,
+    .ui-structured-list--selection .ui-structured-list-row-selected,
+    .ui-structured-list--selection .ui-structured-list-row--selected,
+    .ui-structured-list--selection
+        .ui-structured-list-row[data-ui-selected="true"],
+    .ui-structured-list--selection
+        .ui-structured-list-row[aria-selected="true"] {
+        border-color: var(--ui-layer-selected);
+        background-color: var(--ui-layer-selected);
+    }
+
+    .ui-structured-list-selection
+        .ui-structured-list-row-selected
+        + .ui-structured-list-row,
+    .ui-structured-list-selection
+        .ui-structured-list-row--selected
+        + .ui-structured-list-row,
+    .ui-structured-list--selection
+        .ui-structured-list-row-selected
+        + .ui-structured-list-row,
+    .ui-structured-list--selection
+        .ui-structured-list-row--selected
+        + .ui-structured-list-row,
+    .ui-structured-list--selection
+        .ui-structured-list-row[data-ui-selected="true"]
+        + .ui-structured-list-row,
+    .ui-structured-list--selection
+        .ui-structured-list-row[aria-selected="true"]
+        + .ui-structured-list-row {
+        border-color: var(--ui-layer-selected);
+    }
+
+    .ui-structured-list-selection
+        .ui-structured-list-row:hover:not(.ui-structured-list-row-header):not(
+            .ui-structured-list-row--header-row
+        )
+        > .ui-structured-list-td,
+    .ui-structured-list-selection
+        .ui-structured-list-row-selected
+        > .ui-structured-list-td,
+    .ui-structured-list-selection
+        .ui-structured-list-row--selected
+        > .ui-structured-list-td,
+    .ui-structured-list--selection
+        .ui-structured-list-row:hover:not(.ui-structured-list-row-header):not(
+            .ui-structured-list-row--header-row
+        )
+        > .ui-structured-list-td,
+    .ui-structured-list--selection
+        .ui-structured-list-row-selected
+        > .ui-structured-list-td,
+    .ui-structured-list--selection
+        .ui-structured-list-row--selected
+        > .ui-structured-list-td,
+    .ui-structured-list--selection
+        .ui-structured-list-row[data-ui-selected="true"]
+        > .ui-structured-list-td,
+    .ui-structured-list--selection
+        .ui-structured-list-row[aria-selected="true"]
+        > .ui-structured-list-td {
         color: var(--ui-text-primary);
-        background-color: transparent;
     }
 
-    .ui-structured-list-row-selected,
-    .ui-structured-list-row-selected .ui-structured-list-cell {
-        color: var(--ui-text-primary);
-        background-color: var(--ui-layer-selected-01);
+    .ui-structured-list-selection .ui-structured-list-td:last-child,
+    .ui-structured-list--selection .ui-structured-list-td:last-child {
+        inline-size: var(--ui-spacing-07);
+        padding-inline-start: 0;
     }
 
-    .ui-structured-list-selectable .ui-structured-list-row-selected:hover,
-    .ui-structured-list-selectable
-        .ui-structured-list-row-selected:hover
-        .ui-structured-list-cell {
-        background-color: var(--ui-layer-selected-hover-01);
+    /* ----------------------------------------------------------------------
+       Selection input / icon
+       ---------------------------------------------------------------------- */
+
+    .ui-structured-list-input {
+        position: absolute;
+        overflow: hidden;
+        margin: -1px;
+        border: 0;
+        padding: 0;
+        inline-size: 1px;
+        block-size: 1px;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
     }
 
-    .ui-structured-list-row-disabled,
-    .ui-structured-list-row-disabled .ui-structured-list-cell,
-    .ui-structured-list-row-disabled .ui-structured-list-row-header {
-        color: var(--ui-text-disabled);
-        cursor: not-allowed;
+    .ui-structured-list-input + .ui-structured-list-td {
+        text-align: end;
     }
 
-    .ui-structured-list-selection-cell {
-        width: 3rem;
-        padding-left: 1rem;
-        padding-right: 1rem;
+    .ui-structured-list-svg,
+    .ui-structured-list-icon,
+    .ui-structured-list__icon {
+        display: inline-block;
+        margin-block-start: var(--ui-spacing-01);
+        color: transparent;
+        fill: currentColor;
+        vertical-align: top;
+        transition:
+            color var(--ui-duration-fast-02)
+                var(--ui-motion-standard-productive),
+            fill var(--ui-duration-fast-02) var(--ui-motion-standard-productive);
     }
 
-    .ui-structured-list-radio {
-        @apply h-4 w-4 align-middle;
-        accent-color: var(--ui-icon-primary);
+    .ui-structured-list-input:checked
+        + .ui-structured-list-row
+        .ui-structured-list-svg,
+    .ui-structured-list-input:checked
+        + .ui-structured-list-td
+        .ui-structured-list-svg,
+    .ui-structured-list-input:checked
+        ~ .ui-structured-list-td
+        .ui-structured-list-svg,
+    .ui-structured-list-row-selected .ui-structured-list-svg,
+    .ui-structured-list-row--selected .ui-structured-list-svg,
+    .ui-structured-list-row[data-ui-selected="true"] .ui-structured-list-svg,
+    .ui-structured-list-row[aria-selected="true"] .ui-structured-list-svg,
+    .ui-structured-list-row-selected .ui-structured-list-icon,
+    .ui-structured-list-row--selected .ui-structured-list-icon,
+    .ui-structured-list-row[data-ui-selected="true"] .ui-structured-list-icon,
+    .ui-structured-list-row[aria-selected="true"] .ui-structured-list-icon,
+    .ui-structured-list-row-selected .ui-structured-list__icon,
+    .ui-structured-list-row--selected .ui-structured-list__icon,
+    .ui-structured-list-row[data-ui-selected="true"] .ui-structured-list__icon,
+    .ui-structured-list-row[aria-selected="true"] .ui-structured-list__icon {
+        color: var(--ui-icon-primary);
+        fill: currentColor;
     }
 
-    .ui-structured-list-radio:focus-visible {
-        outline: 2px solid var(--ui-focus);
-        outline-offset: 2px;
+    .ui-structured-list-visible-icons .ui-structured-list-svg,
+    .ui-structured-list--visible-icons .ui-structured-list-svg,
+    .ui-structured-list[data-ui-visible-icons="true"] .ui-structured-list-svg {
+        color: var(--ui-icon-secondary);
+        fill: currentColor;
     }
 
-    .ui-structured-list-radio:disabled {
-        accent-color: var(--ui-icon-disabled);
-        cursor: not-allowed;
+    .ui-structured-list--selection
+        .ui-structured-list-td:first-child:has(.ui-structured-list__icon),
+    .ui-structured-list--selection
+        .ui-structured-list-td:first-child:has(.ui-structured-list-icon) {
+        inline-size: var(--ui-spacing-07);
+        padding-inline-end: 0;
     }
 
-    .ui-structured-list-row:focus-within {
-        box-shadow: inset 0 0 0 2px var(--ui-focus);
+    /* ----------------------------------------------------------------------
+       Skeleton state
+       ---------------------------------------------------------------------- */
+
+    .ui-structured-list.ui-skeleton,
+    .ui-structured-list-skeleton {
+        cursor: default;
+        pointer-events: none;
     }
 
-    .ui-structured-list-empty {
-        @apply py-2 text-sm;
-        color: var(--ui-text-secondary);
+    .ui-structured-list.ui-skeleton .ui-structured-list-th:first-child,
+    .ui-structured-list-skeleton .ui-structured-list-th:first-child {
+        inline-size: 8%;
     }
 
-    .ui-structured-list-skeleton-line {
-        @apply block h-4 w-full max-w-48;
-        background: linear-gradient(
-            90deg,
-            var(--ui-skeleton-background),
-            var(--ui-skeleton-element),
-            var(--ui-skeleton-background)
-        );
-        background-size: 200% 100%;
+    .ui-structured-list.ui-skeleton .ui-structured-list-th:nth-child(3n + 2),
+    .ui-structured-list-skeleton .ui-structured-list-th:nth-child(3n + 2) {
+        inline-size: 30%;
     }
 
-    .ui-structured-list-radio-placeholder {
-        @apply block h-4 w-4 rounded-full;
+    .ui-structured-list.ui-skeleton .ui-structured-list-th:nth-child(3n + 3),
+    .ui-structured-list-skeleton .ui-structured-list-th:nth-child(3n + 3) {
+        inline-size: 15%;
+    }
+
+    .ui-structured-list.ui-skeleton span,
+    .ui-structured-list-skeleton span {
+        position: relative;
+        display: block;
+        overflow: hidden;
+        inline-size: 75%;
+        block-size: 1rem;
         background-color: var(--ui-skeleton-element);
     }
 
+    .ui-structured-list.ui-skeleton span::before,
+    .ui-structured-list-skeleton span::before {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            var(--ui-skeleton-background, rgb(255 255 255 / 0.18)),
+            transparent
+        );
+        content: "";
+        animation: ui-skeleton-shimmer 1.5s infinite linear;
+    }
 
+    .ui-structured-list.ui-structured-list-selection.ui-skeleton
+        .ui-structured-list-th:first-child,
+    .ui-structured-list.ui-structured-list--selection.ui-skeleton
+        .ui-structured-list-th:first-child,
+    .ui-structured-list-skeleton.ui-structured-list-selection
+        .ui-structured-list-th:first-child,
+    .ui-structured-list-skeleton.ui-structured-list--selection
+        .ui-structured-list-th:first-child {
+        inline-size: 5%;
+    }
+
+    .ui-structured-list.ui-structured-list-selection.ui-skeleton
+        .ui-structured-list-th:first-child
+        span,
+    .ui-structured-list.ui-structured-list--selection.ui-skeleton
+        .ui-structured-list-th:first-child
+        span,
+    .ui-structured-list-skeleton.ui-structured-list-selection
+        .ui-structured-list-th:first-child
+        span,
+    .ui-structured-list-skeleton.ui-structured-list--selection
+        .ui-structured-list-th:first-child
+        span {
+        display: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-structured-list-row,
+        .ui-structured-list-td,
+        .ui-structured-list-svg,
+        .ui-structured-list-icon,
+        .ui-structured-list__icon {
+            transition: none;
+        }
+
+        .ui-structured-list.ui-skeleton span::before,
+        .ui-structured-list-skeleton span::before {
+            animation: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-structured-list-row-focused-within,
+        .ui-structured-list-row--focused-within,
+        .ui-structured-list-row:focus-within {
+            outline-color: Highlight;
+        }
+
+        .ui-structured-list-selection .ui-structured-list-row-selected,
+        .ui-structured-list-selection .ui-structured-list-row--selected,
+        .ui-structured-list--selection .ui-structured-list-row-selected,
+        .ui-structured-list--selection .ui-structured-list-row--selected,
+        .ui-structured-list--selection
+            .ui-structured-list-row[data-ui-selected="true"],
+        .ui-structured-list--selection
+            .ui-structured-list-row[aria-selected="true"] {
+            forced-color-adjust: none;
+            background-color: SelectedItem;
+            color: SelectedItemText;
+        }
+
+        .ui-structured-list-selection
+            .ui-structured-list-row-selected
+            > .ui-structured-list-td,
+        .ui-structured-list-selection
+            .ui-structured-list-row--selected
+            > .ui-structured-list-td,
+        .ui-structured-list--selection
+            .ui-structured-list-row-selected
+            > .ui-structured-list-td,
+        .ui-structured-list--selection
+            .ui-structured-list-row--selected
+            > .ui-structured-list-td,
+        .ui-structured-list--selection
+            .ui-structured-list-row[data-ui-selected="true"]
+            > .ui-structured-list-td,
+        .ui-structured-list--selection
+            .ui-structured-list-row[aria-selected="true"]
+            > .ui-structured-list-td {
+            color: SelectedItemText;
+        }
+
+        .ui-structured-list-svg,
+        .ui-structured-list-icon,
+        .ui-structured-list__icon {
+            forced-color-adjust: auto;
+        }
+    }
 }

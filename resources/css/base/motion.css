@@ -1,0 +1,301 @@
+/* ==========================================================================
+   File: resources/css/base/motion.css
+   Purpose: Shared motion presets and lifecycle states.
+
+   Notes:
+   - Motion presets define complete duration, easing, distance, transform, and
+     opacity behavior.
+   - Runtime only toggles data-ui-motion-state.
+   - Runtime must not calculate motion duration, distance, easing, size, or
+     buckets.
+   - Collapse motion may set block-size inline because CSS cannot transition
+     from auto to 0.
+   ========================================================================== */
+
+@layer base {
+    /* ----------------------------------------------------------------------
+       Shared lifecycle states
+       ---------------------------------------------------------------------- */
+
+    [data-ui-motion] {
+        --ui-motion-duration-enter: var(--ui-duration-moderate-01);
+        --ui-motion-duration-exit: var(--ui-duration-fast-02);
+        --ui-motion-easing-enter: var(--ui-motion-entrance-productive);
+        --ui-motion-easing-exit: var(--ui-motion-exit-productive);
+        --ui-motion-distance: 0;
+
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+
+    [data-ui-motion-state="entering"],
+    [data-ui-motion-state="exiting"] {
+        will-change: opacity, transform;
+    }
+
+    [data-ui-motion-state="measuring"] {
+        visibility: hidden !important;
+        pointer-events: none !important;
+        transition: none !important;
+    }
+
+    [data-ui-motion-state="closed"] {
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Fade preset
+       ---------------------------------------------------------------------- */
+
+    [data-ui-motion="fade"] {
+        --ui-motion-duration-enter: var(--ui-duration-fast-02);
+        --ui-motion-duration-exit: var(--ui-duration-fast-01);
+
+        transition:
+            opacity var(--ui-motion-duration-enter)
+                var(--ui-motion-easing-enter),
+            visibility 0ms linear 0ms;
+    }
+
+    [data-ui-motion="fade"][data-ui-motion-state="closed"],
+    [data-ui-motion="fade"][data-ui-motion-state="entering"],
+    [data-ui-motion="fade"][data-ui-motion-state="exiting"] {
+        opacity: 0;
+    }
+
+    [data-ui-motion="fade"][data-ui-motion-state="open"] {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    [data-ui-motion="fade"][data-ui-motion-state="exiting"] {
+        transition-duration: var(--ui-motion-duration-exit);
+        transition-timing-function: var(--ui-motion-easing-exit);
+        pointer-events: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Popover menu preset
+       ---------------------------------------------------------------------- */
+
+    [data-ui-motion="popover-menu"] {
+        --ui-motion-distance: var(--ui-motion-travel-long, var(--ui-layout-05));
+        --ui-motion-duration-enter: var(--ui-duration-moderate-02);
+        --ui-motion-duration-exit: var(--ui-duration-fast-02);
+
+        transform-origin: top right;
+        transition:
+            opacity var(--ui-motion-duration-enter)
+                var(--ui-motion-easing-enter),
+            transform var(--ui-motion-duration-enter)
+                var(--ui-motion-easing-enter),
+            visibility 0ms linear 0ms;
+    }
+
+    [data-ui-motion="popover-menu"][data-ui-motion-state="closed"],
+    [data-ui-motion="popover-menu"][data-ui-motion-state="entering"] {
+        opacity: 0;
+        transform: translate3d(0, calc(-1 * var(--ui-motion-distance)), 0);
+    }
+
+    [data-ui-motion="popover-menu"][data-ui-motion-state="open"] {
+        visibility: visible;
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+
+    [data-ui-motion="popover-menu"][data-ui-motion-state="exiting"] {
+        opacity: 0;
+        transform: translate3d(
+            0,
+            calc(-1 * var(--ui-motion-travel-short, var(--ui-spacing-05))),
+            0
+        );
+        transition-duration: var(--ui-motion-duration-exit);
+        transition-timing-function: var(--ui-motion-easing-exit);
+        pointer-events: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Shell switcher / large menu preset
+       ---------------------------------------------------------------------- */
+
+    [data-ui-motion="shell-switcher"] {
+        --ui-motion-distance: var(--ui-motion-travel-drawer, 20rem);
+        --ui-motion-duration-enter: var(--ui-duration-slow-01);
+        --ui-motion-duration-exit: var(--ui-duration-moderate-02);
+
+        transform-origin: top right;
+        transition:
+            opacity var(--ui-motion-duration-enter)
+                var(--ui-motion-easing-enter),
+            transform var(--ui-motion-duration-enter)
+                var(--ui-motion-easing-enter),
+            visibility 0ms linear 0ms;
+    }
+
+    [data-ui-motion="shell-switcher"][data-ui-motion-state="closed"],
+    [data-ui-motion="shell-switcher"][data-ui-motion-state="entering"] {
+        opacity: 0;
+        transform: translate3d(var(--ui-motion-distance), 0, 0);
+    }
+
+    [data-ui-motion="shell-switcher"][data-ui-motion-state="open"] {
+        visibility: visible;
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+
+    [data-ui-motion="shell-switcher"][data-ui-motion-state="exiting"] {
+        opacity: 0;
+        transform: translate3d(
+            var(--ui-motion-travel-panel, var(--ui-layout-06)),
+            0,
+            0
+        );
+        transition-duration: var(--ui-motion-duration-exit);
+        transition-timing-function: var(--ui-motion-easing-exit);
+        pointer-events: none;
+    }
+
+    [dir="rtl"]
+        [data-ui-motion="shell-switcher"][data-ui-motion-state="closed"],
+    [dir="rtl"]
+        [data-ui-motion="shell-switcher"][data-ui-motion-state="entering"] {
+        transform: translate3d(calc(-1 * var(--ui-motion-distance)), 0, 0);
+    }
+
+    [dir="rtl"]
+        [data-ui-motion="shell-switcher"][data-ui-motion-state="exiting"] {
+        transform: translate3d(
+            calc(-1 * var(--ui-motion-travel-panel, var(--ui-layout-06))),
+            0,
+            0
+        );
+    }
+
+    /* ----------------------------------------------------------------------
+       Row dismiss preset
+       ---------------------------------------------------------------------- */
+
+    [data-ui-motion="row-dismiss"] {
+        --ui-motion-distance: var(
+            --ui-motion-travel-short,
+            var(--ui-spacing-05)
+        );
+        --ui-motion-duration-exit: var(--ui-duration-moderate-01);
+
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+        transition:
+            opacity var(--ui-motion-duration-exit) var(--ui-motion-easing-exit),
+            transform var(--ui-motion-duration-exit)
+                var(--ui-motion-easing-exit),
+            block-size var(--ui-motion-duration-exit)
+                var(--ui-motion-easing-exit),
+            min-block-size var(--ui-motion-duration-exit)
+                var(--ui-motion-easing-exit),
+            max-block-size var(--ui-motion-duration-exit)
+                var(--ui-motion-easing-exit);
+    }
+
+    [data-ui-motion="row-dismiss"][data-ui-motion-state="exiting"] {
+        opacity: 0;
+        transform: translate3d(var(--ui-motion-distance), 0, 0);
+        pointer-events: none;
+    }
+
+    [dir="rtl"] [data-ui-motion="row-dismiss"][data-ui-motion-state="exiting"] {
+        transform: translate3d(calc(-1 * var(--ui-motion-distance)), 0, 0);
+    }
+
+    /* ----------------------------------------------------------------------
+       Toast preset
+       ---------------------------------------------------------------------- */
+
+    [data-ui-motion="toast"] {
+        --ui-motion-distance: var(
+            --ui-motion-travel-medium,
+            var(--ui-layout-03)
+        );
+        --ui-motion-duration-enter: var(--ui-duration-moderate-01);
+        --ui-motion-duration-exit: var(--ui-duration-fast-02);
+
+        transition:
+            opacity var(--ui-motion-duration-enter)
+                var(--ui-motion-easing-enter),
+            transform var(--ui-motion-duration-enter)
+                var(--ui-motion-easing-enter),
+            visibility 0ms linear 0ms;
+    }
+
+    [data-ui-motion="toast"][data-ui-motion-state="closed"],
+    [data-ui-motion="toast"][data-ui-motion-state="entering"] {
+        opacity: 0;
+        transform: translate3d(0, calc(-1 * var(--ui-motion-distance)), 0);
+    }
+
+    [data-ui-motion="toast"][data-ui-motion-state="open"] {
+        visibility: visible;
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+
+    [data-ui-motion="toast"][data-ui-motion-state="exiting"] {
+        opacity: 0;
+        transform: translate3d(var(--ui-motion-distance), 0, 0);
+        transition-duration: var(--ui-motion-duration-exit);
+        transition-timing-function: var(--ui-motion-easing-exit);
+        pointer-events: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Modal preset
+       ---------------------------------------------------------------------- */
+
+    [data-ui-motion="modal"] {
+        --ui-motion-duration-enter: var(--ui-duration-moderate-02);
+        --ui-motion-duration-exit: var(--ui-duration-fast-02);
+
+        transform-origin: center;
+        transition:
+            opacity var(--ui-motion-duration-enter)
+                var(--ui-motion-easing-enter),
+            transform var(--ui-motion-duration-enter)
+                var(--ui-motion-easing-enter),
+            visibility 0ms linear 0ms;
+    }
+
+    [data-ui-motion="modal"][data-ui-motion-state="closed"],
+    [data-ui-motion="modal"][data-ui-motion-state="entering"] {
+        opacity: 0;
+        transform: scale(0.985);
+    }
+
+    [data-ui-motion="modal"][data-ui-motion-state="open"] {
+        visibility: visible;
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    [data-ui-motion="modal"][data-ui-motion-state="exiting"] {
+        opacity: 0;
+        transform: scale(0.985);
+        transition-duration: var(--ui-motion-duration-exit);
+        transition-timing-function: var(--ui-motion-easing-exit);
+        pointer-events: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+        [data-ui-motion] {
+            transition-duration: 1ms !important;
+            animation-duration: 1ms !important;
+            transform: none !important;
+        }
+    }
+}

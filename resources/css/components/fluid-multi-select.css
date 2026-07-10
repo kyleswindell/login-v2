@@ -1,0 +1,153 @@
+/* ==========================================================================
+   File: resources/css/components/fluid-multi-select.css
+   Purpose: Fluid Multiselect component styles.
+
+   Notes:
+   - Defines Fluid Multiselect selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports fluid list-box wrapper focus behavior, filter tag
+     positioning, filterable input border treatment, combo-box field
+     alignment, and fluid menu offset positioning.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Wrapper focus behavior
+       ---------------------------------------------------------------------- */
+
+    .ui-multi-select-wrapper.ui-list-box-wrapper-fluid-focus:not(
+            .ui-multi-select-filterable-wrapper
+        )
+        .ui-list-box-field-wrapper-input-focused,
+    .ui-multi-select-wrapper.ui-list-box-wrapper-fluid-focus:not(
+            .ui-multi-select--filterable__wrapper
+        )
+        .ui-list-box__field--wrapper--input-focused,
+    .ui-multi-select__wrapper.ui-list-box__wrapper--fluid--focus:not(
+            .ui-multi-select-filterable-wrapper
+        )
+        .ui-list-box-field-wrapper-input-focused,
+    .ui-multi-select__wrapper.ui-list-box__wrapper--fluid--focus:not(
+            .ui-multi-select--filterable__wrapper
+        )
+        .ui-list-box__field--wrapper--input-focused {
+        outline: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Filter tags
+       ---------------------------------------------------------------------- */
+
+    .ui-list-box-wrapper-fluid .ui-tag.ui-tag-filter,
+    .ui-list-box-wrapper-fluid .ui-tag.ui-tag--filter,
+    .ui-list-box__wrapper--fluid .ui-tag.ui-tag-filter,
+    .ui-list-box__wrapper--fluid .ui-tag.ui-tag--filter {
+        margin-block-start: 1.25rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Filterable field
+       ---------------------------------------------------------------------- */
+
+    .ui-list-box-wrapper-fluid
+        .ui-multi-select-filterable
+        .ui-list-box-field
+        .ui-text-input,
+    .ui-list-box-wrapper-fluid
+        .ui-multi-select-filterable
+        .ui-list-box__field
+        .ui-text-input,
+    .ui-list-box-wrapper-fluid
+        .ui-multi-select--filterable
+        .ui-list-box-field
+        .ui-text-input,
+    .ui-list-box-wrapper-fluid
+        .ui-multi-select--filterable
+        .ui-list-box__field
+        .ui-text-input,
+    .ui-list-box__wrapper--fluid
+        .ui-multi-select-filterable
+        .ui-list-box-field
+        .ui-text-input,
+    .ui-list-box__wrapper--fluid
+        .ui-multi-select-filterable
+        .ui-list-box__field
+        .ui-text-input,
+    .ui-list-box__wrapper--fluid
+        .ui-multi-select--filterable
+        .ui-list-box-field
+        .ui-text-input,
+    .ui-list-box__wrapper--fluid
+        .ui-multi-select--filterable
+        .ui-list-box__field
+        .ui-text-input {
+        border-block-end: 1px solid transparent;
+    }
+
+    .ui-list-box-wrapper-fluid
+        .ui-multi-select-filterable.ui-combo-box
+        .ui-list-box-field,
+    .ui-list-box-wrapper-fluid
+        .ui-multi-select-filterable.ui-combo-box
+        .ui-list-box__field,
+    .ui-list-box-wrapper-fluid
+        .ui-multi-select--filterable.ui-combo-box
+        .ui-list-box-field,
+    .ui-list-box-wrapper-fluid
+        .ui-multi-select--filterable.ui-combo-box
+        .ui-list-box__field,
+    .ui-list-box__wrapper--fluid
+        .ui-multi-select-filterable.ui-combo-box
+        .ui-list-box-field,
+    .ui-list-box__wrapper--fluid
+        .ui-multi-select-filterable.ui-combo-box
+        .ui-list-box__field,
+    .ui-list-box__wrapper--fluid
+        .ui-multi-select--filterable.ui-combo-box
+        .ui-list-box-field,
+    .ui-list-box__wrapper--fluid
+        .ui-multi-select--filterable.ui-combo-box
+        .ui-list-box__field {
+        align-items: baseline;
+    }
+
+    /* ----------------------------------------------------------------------
+       Menu offset
+       ---------------------------------------------------------------------- */
+
+    .ui-list-box-wrapper-fluid.ui-multi-select-filterable-wrapper:not(
+            .ui-list-box-up
+        )
+        .ui-list-box-menu,
+    .ui-list-box-wrapper-fluid.ui-multi-select-filterable-wrapper:not(
+            .ui-list-box--up
+        )
+        .ui-list-box__menu,
+    .ui-list-box-wrapper-fluid.ui-multi-select--filterable__wrapper:not(
+            .ui-list-box-up
+        )
+        .ui-list-box-menu,
+    .ui-list-box-wrapper-fluid.ui-multi-select--filterable__wrapper:not(
+            .ui-list-box--up
+        )
+        .ui-list-box__menu,
+    .ui-list-box__wrapper--fluid.ui-multi-select-filterable-wrapper:not(
+            .ui-list-box-up
+        )
+        .ui-list-box-menu,
+    .ui-list-box__wrapper--fluid.ui-multi-select-filterable-wrapper:not(
+            .ui-list-box--up
+        )
+        .ui-list-box__menu,
+    .ui-list-box__wrapper--fluid.ui-multi-select--filterable__wrapper:not(
+            .ui-list-box-up
+        )
+        .ui-list-box-menu,
+    .ui-list-box__wrapper--fluid.ui-multi-select--filterable__wrapper:not(
+            .ui-list-box--up
+        )
+        .ui-list-box__menu {
+        inset-block-start: calc(100% + 0.0625rem);
+    }
+}

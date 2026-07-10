@@ -1,0 +1,33 @@
+/* ==========================================================================
+   File: resources/css/base/index.css
+   Purpose: Base CSS entrypoint.
+   Notes:
+   - Loads global reset, document defaults, accessibility utilities, and
+     shared foundation utilities.
+   - Import after tokens/index.css.
+   - Import before type/index.css and components/index.css.
+   ========================================================================== */
+
+@import "./reset.css";
+@import "./document.css";
+
+@import "./animation.css";
+@import "./motion.css";
+@import "./compatibility.css";
+@import "./component-reset.css";
+@import "./control-reset.css";
+@import "./field-layer.css";
+@import "./focus.css";
+@import "./forced-colors.css";
+@import "./grid.css";
+@import "./layer.css";
+@import "./layout-context.css";
+@import "./aspect-ratio.css";
+@import "./responsive-visibility.css";
+@import "./shadow.css";
+@import "./text-overflow.css";
+@import "./transform.css";
+@import "./typography.css";
+@import "./visually-hidden.css";
+@import "./state.css";
+@import "./skeleton.css";

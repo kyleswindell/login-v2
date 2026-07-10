@@ -2,7 +2,7 @@
 
 ## Purpose
 
-CSS source for the app-owned UI system, Tailwind theme seed overrides, compatibility overrides, and UI Reference proof styling.
+CSS source for the app-owned UI system, Tailwind theme seed overrides, compatibility overrides, and shared styling.
 
 ## Read Order
 

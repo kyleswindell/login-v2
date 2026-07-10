@@ -1,95 +1,127 @@
+/**
+ * File: resources/js/app.js
+ * Purpose: Main browser entry point for app scripts and UI initializers.
+ *
+ * Notes:
+ * - Imports global app scripts.
+ * - Runs UI control lifecycle initializers on page load and Livewire navigation.
+ */
+
 import "./bootstrap";
-import "./setup-sidebar";
 import "./table-enhance";
 import "./dashboard-sort";
-import "./dashboard-proof-demo";
 
 import {
+    initMotion,
     initAccordions,
     initCheckboxes,
     initCodeSnippets,
+    initComboBoxes,
     initContentSwitchers,
     initDatePickers,
+    initDialogs,
+    initDataTables,
+    initDocsTree,
     initDropdowns,
     initDropdownActionMenus,
+    initFileUploaders,
     initFilterPanels,
     initInternalPhoneInputs,
     initInteractionFocus,
+    initInlineLoading,
+    initLoading,
     initMenus,
     initMultiselects,
+    initNumberInputs,
+    initSideNavs,
     initPagination,
+    initPaginationNav,
     initPopovers,
+    initNotifications,
+    initAppHeaderSearch,
     initSearchControls,
     initSearchableSelects,
+    initSelectControls,
     initSelectableOptionStates,
     initSliders,
     initStructuredLists,
     initTableSearchInputs,
     initTabs,
     initTags,
+    initTextAreas,
     initTextInputs,
+    initFormSubmitState,
     initThemeModeControls,
     initTiles,
+    initToggles,
     initTooltips,
+    initToggletips,
     initTreeViews,
+    initUiShell,
+    initDestructiveActions,
     refreshThemeMode,
 } from "./ui-controls";
+
 import { initAuditLogDrawer, initErrorLogDrawer } from "./log-drawers";
-import { initRealtimeNotifications } from "./realtime-notifications";
+import { initDashboardTestNotification } from "./dashboard-test-notification";
 import {
-    initAccountMenu,
-    initDocsTree,
-    initMobileSidebarDock,
-    initNotificationMenus,
-    initSidebarToggle,
-} from "./shell-ui";
-import {
-    initUiReferenceComponentTabs,
-    initUiReferenceOverlayDemos,
-    initUiReferenceSidebarDisclosures,
-    initUiReferenceTablesRemote,
-} from "./ui-reference";
+    initAppHeaderNotifications,
+    initNotificationRuntime,
+} from "/Modules/Notifications/resources/js";
 
 const lifecycleInitializers = [
-    initNotificationMenus,
-    initAccountMenu,
+    initMotion,
     initDocsTree,
-    initMobileSidebarDock,
     initAccordions,
     initFilterPanels,
     initTableSearchInputs,
     initSelectableOptionStates,
     initSearchableSelects,
+    initSelectControls,
     initSearchControls,
     initDropdowns,
+    initComboBoxes,
     initInternalPhoneInputs,
     initInteractionFocus,
+    initLoading,
+    initInlineLoading,
     initDropdownActionMenus,
     initMenus,
     initCheckboxes,
+    initToggles,
+    initToggletips,
     initCodeSnippets,
     initMultiselects,
     initPagination,
+    initPaginationNav,
     initPopovers,
+    initDialogs,
+    initNotifications,
+    initAppHeaderNotifications,
+    initNotificationRuntime,
     initTooltips,
+    initNumberInputs,
     initSliders,
+    initFileUploaders,
     initTreeViews,
     initTabs,
     initTextInputs,
+    initTextAreas,
+    initFormSubmitState,
     initContentSwitchers,
     initDatePickers,
     initStructuredLists,
+    initDataTables,
+    initDestructiveActions,
     initTiles,
     initTags,
+    initUiShell,
+    initSideNavs,
+    initAppHeaderSearch,
     initErrorLogDrawer,
     initAuditLogDrawer,
-    initSidebarToggle,
     initThemeModeControls,
-    initUiReferenceSidebarDisclosures,
-    initUiReferenceComponentTabs,
-    initUiReferenceOverlayDemos,
-    initUiReferenceTablesRemote,
-    initRealtimeNotifications,
+    initDashboardTestNotification,
 ];
 
 const runLifecycleInitializer = (initializer) => {
@@ -106,6 +138,14 @@ lifecycleInitializers.forEach((initializer) => {
     }
 
     document.addEventListener("livewire:navigated", run);
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    initDestructiveActions(document);
+});
+
+document.addEventListener("livewire:navigated", () => {
+    initDestructiveActions(document);
 });
 
 document.addEventListener("livewire:navigating", refreshThemeMode);

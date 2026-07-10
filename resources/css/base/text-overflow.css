@@ -1,0 +1,49 @@
+/* ==========================================================================
+   File: resources/css/base/text-overflow.css
+   Purpose: Text overflow and truncation utilities.
+   Notes:
+   - Defines reusable text overflow utilities only.
+   - Component-specific label truncation may still be defined in component CSS
+     when layout requires a more specific selector.
+   ========================================================================== */
+
+@layer utilities {
+    /*
+     * Block ellipsis.
+     * Equivalent to source text-overflow().
+     */
+    :where(.ui-overflow-ellipsis, .ui-text-overflow) {
+        display: block;
+        overflow-x: hidden;
+        min-inline-size: 0;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /*
+     * End truncation.
+     * Equivalent to source text-truncate-end.
+     */
+    :where(.ui-text-truncate-end, .ui-truncate-end) {
+        display: inline-block;
+        overflow: hidden;
+        inline-size: 100%;
+        min-inline-size: 0;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /*
+     * Front truncation.
+     * Equivalent to source text-truncate-front.
+     */
+    :where(.ui-text-truncate-front, .ui-truncate-front) {
+        display: inline-block;
+        overflow: hidden;
+        direction: rtl;
+        inline-size: 100%;
+        min-inline-size: 0;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}

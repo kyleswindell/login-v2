@@ -1,101 +1,790 @@
 /* ==========================================================================
-File: resources/css/components/search.css
-Purpose: Search component styles.
-Carbon reference:
+   File: resources/css/components/search.css
+   Purpose: Search component styles.
 
-* reference/carbon-main/packages/styles/scss/components/search/
-* reference/carbon-main/packages/styles/scss/components/fluid-search/
-
-Notes:
-
-* Defines Search selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Search consumes form, type, spacing, motion, and theme tokens.
-  ========================================================================== */
+   Notes:
+   - Defines Search selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports standard, light, disabled, skeleton, expandable, expanded,
+     close button, search button, magnifier, and tooltip-trigger states.
+   ========================================================================== */
 
 @layer components {
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
     .ui-search {
+        --ui-search-height: var(
+            --ui-layout-size-height-local,
+            var(--ui-layout-size-height-md, 2.5rem)
+        );
+
+        /*
+         * Component layout context:
+         * Equivalent size range: xs through lg, default md.
+         */
+        --ui-layout-size-height-min: var(--ui-layout-size-height-xs);
+        --ui-layout-size-height-max: var(--ui-layout-size-height-lg);
+        --ui-layout-size-height: var(
+            --ui-layout-size-height-context,
+            var(--ui-layout-size-height-md)
+        );
+
+        box-sizing: border-box;
         position: relative;
         display: flex;
         align-items: center;
         inline-size: 100%;
     }
 
-    .ui-search-input {
-        --ui-search-size: 2.5rem;
-
-        inline-size: 100%;
-        block-size: var(--ui-search-size);
-        border: 0;
-        border-block-end: 1px solid var(--ui-border-strong-01);
-        padding: 0 var(--ui-search-size);
-        background-color: var(--ui-field-01);
-        color: var(--ui-text-primary);
-        font: inherit;
-        font-size: var(--ui-type-body-compact-01-font-size);
-        line-height: var(--ui-type-body-compact-01-line-height);
-        outline: 2px solid transparent;
-        outline-offset: -2px;
-        transition:
-            background-color var(--ui-duration-fast-01) var(--ui-motion-standard-productive),
-            outline var(--ui-duration-fast-01) var(--ui-motion-standard-productive);
+    .ui-search *,
+    .ui-search *::before,
+    .ui-search *::after {
+        box-sizing: inherit;
     }
 
-    .ui-search-input:hover {
-        background-color: var(--ui-field-hover-01);
+    .ui-search .ui-label {
+        position: absolute;
+        overflow: hidden;
+        margin: -1px;
+        border: 0;
+        padding: 0;
+        inline-size: 1px;
+        block-size: 1px;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+    }
+
+    /* ----------------------------------------------------------------------
+       Input
+       ---------------------------------------------------------------------- */
+
+    .ui-search-input {
+        box-sizing: border-box;
+        order: 1;
+        inline-size: 100%;
+        block-size: var(--ui-search-height);
+        margin: 0;
+        border: none;
+        border-block-end: 1px solid var(--ui-border-strong);
+        padding: 0 var(--ui-search-height);
+        appearance: none;
+        background-color: var(--ui-field);
+        color: var(--ui-text-primary);
+        font-family: inherit;
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+        text-overflow: ellipsis;
+        transition:
+            background-color var(--ui-duration-fast-02)
+                var(--ui-motion-standard-productive),
+            outline var(--ui-duration-fast-02)
+                var(--ui-motion-standard-productive);
     }
 
     .ui-search-input:focus {
-        outline-color: var(--ui-focus);
-    }
-
-    .ui-search-input::placeholder {
-        color: var(--ui-text-placeholder);
-        opacity: 1;
-    }
-
-    .ui-search-sm .ui-search-input {
-        --ui-search-size: 2rem;
-    }
-
-    .ui-search-lg .ui-search-input {
-        --ui-search-size: 3rem;
-    }
-
-    .ui-search-icon,
-    .ui-search-clear {
-        position: absolute;
-        inset-block-start: 50%;
-        transform: translateY(-50%);
-    }
-
-    .ui-search-icon {
-        inset-inline-start: var(--ui-spacing-05);
-        color: var(--ui-icon-secondary);
-    }
-
-    .ui-search-clear {
-        inset-inline-end: 0;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        inline-size: var(--ui-search-size, 2.5rem);
-        block-size: var(--ui-search-size, 2.5rem);
-        border: 0;
-        padding: 0;
-        background: transparent;
-        color: var(--ui-icon-primary);
-        cursor: pointer;
-    }
-
-    .ui-search-clear:focus-visible {
         outline: 2px solid var(--ui-focus);
         outline-offset: -2px;
     }
 
-    .ui-search-input:disabled {
+    .ui-search-input::placeholder {
+        color: var(--ui-text-placeholder, var(--ui-text-helper));
+        opacity: 1;
+    }
+
+    .ui-search-input::-ms-clear {
+        display: none;
+    }
+
+    .ui-search-input::-webkit-search-decoration,
+    .ui-search-input::-webkit-search-cancel-button,
+    .ui-search-input::-webkit-search-results-button,
+    .ui-search-input::-webkit-search-results-decoration {
+        display: none;
+        appearance: none;
+        -webkit-appearance: none;
+    }
+
+    .ui-search-input[disabled],
+    .ui-search-input:disabled,
+    .ui-search-input[aria-disabled="true"],
+    .ui-search-input[data-disabled="true"],
+    .ui-search-input[data-ui-disabled="true"] {
+        border-block-end: 1px solid transparent;
+        background-color: var(--ui-field);
         color: var(--ui-text-disabled);
         cursor: not-allowed;
+        -webkit-text-fill-color: var(--ui-text-disabled);
+    }
+
+    .ui-search-input[disabled]::placeholder,
+    .ui-search-input:disabled::placeholder,
+    .ui-search-input[aria-disabled="true"]::placeholder,
+    .ui-search-input[data-disabled="true"]::placeholder,
+    .ui-search-input[data-ui-disabled="true"]::placeholder {
+        color: var(--ui-field);
+        opacity: 1;
+    }
+
+    /* ----------------------------------------------------------------------
+       Light variant
+       ---------------------------------------------------------------------- */
+
+    .ui-search-light .ui-search-input,
+    .ui-search--light .ui-search-input {
+        background-color: var(--ui-field-02);
+    }
+
+    .ui-search-light .ui-search-close::before,
+    .ui-search--light .ui-search-close::before {
+        background-color: var(--ui-field-02);
+    }
+
+    /* ----------------------------------------------------------------------
+       Magnifier
+       ---------------------------------------------------------------------- */
+
+    .ui-search-magnifier-icon {
+        position: absolute;
+        z-index: 2;
+        inset-block-start: 50%;
+        inset-inline-start: calc((var(--ui-search-height) - 1rem) / 2);
+        inline-size: 1rem;
+        block-size: 1rem;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        color: var(--ui-icon-secondary);
+        fill: currentColor;
+        pointer-events: none;
+        transform: translateY(-50%);
+    }
+
+    .ui-search-magnifier {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ui-search-magnifier-tooltip {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ui-search-magnifier-tooltip .ui-search-magnifier {
+        position: relative;
+    }
+
+    /* ----------------------------------------------------------------------
+       Close / clear button
+       ---------------------------------------------------------------------- */
+
+    .ui-search-close {
+        box-sizing: border-box;
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-end: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--ui-search-height);
+        block-size: var(--ui-search-height);
+        margin: 0;
+        border-width: 0 0 1px;
+        border-style: solid;
+        border-color: transparent;
+        padding: 0;
+        appearance: none;
+        background: transparent;
+        color: var(--ui-icon-primary);
+        cursor: pointer;
+        fill: currentColor;
+        font: inherit;
+        opacity: 1;
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+        visibility: inherit;
+    }
+
+    .ui-search-close::-moz-focus-inner {
+        border: 0;
+    }
+
+    .ui-search-close:hover {
+        border-block-end: 1px solid var(--ui-border-strong);
+        background-color: var(--ui-field-hover);
+    }
+
+    .ui-search-close:focus,
+    .ui-search-close:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-search-close:active {
+        background-color: var(--ui-background-selected);
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-search-close svg {
+        position: relative;
+        z-index: 1;
+        fill: currentColor;
+    }
+
+    .ui-search-close-hidden,
+    .ui-search-close--hidden {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .ui-search-input:focus ~ .ui-search-close:hover {
+        border-block-end-color: transparent;
+        background-color: transparent;
+        outline: none;
+    }
+
+    .ui-search-input:focus ~ .ui-search-close:hover::after {
+        position: absolute;
+        inset-block: var(--ui-spacing-01);
+        inset-inline: 0 var(--ui-spacing-01);
+        background-color: var(--ui-field-hover);
+        content: "";
+        pointer-events: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Search submit button
+       ---------------------------------------------------------------------- */
+
+    .ui-search-button {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--ui-search-height);
+        block-size: var(--ui-search-height);
+        margin-inline-start: var(--ui-spacing-01);
+        border-width: 0 0 1px;
+        border-style: solid;
+        border-color: transparent;
+        padding: 0;
+        appearance: none;
+        background-color: var(--ui-field);
+        color: var(--ui-icon-primary);
+        cursor: pointer;
+        fill: currentColor;
+        font: inherit;
+        opacity: 1;
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+        visibility: inherit;
+    }
+
+    .ui-search-button::-moz-focus-inner {
+        border: 0;
+    }
+
+    .ui-search-button svg {
+        fill: currentColor;
+        vertical-align: middle;
+    }
+
+    .ui-search-button:hover {
+        background-color: var(--ui-field-hover);
+    }
+
+    .ui-search-button:focus,
+    .ui-search-button:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-search-button:active {
+        background-color: var(--ui-background-selected);
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-search ~ .ui-search-button {
+        inline-size: var(--ui-search-height);
+        block-size: var(--ui-search-height);
+    }
+
+    /* ----------------------------------------------------------------------
+       Disabled state
+       ---------------------------------------------------------------------- */
+
+    .ui-search-disabled .ui-search-close,
+    .ui-search--disabled .ui-search-close,
+    .ui-search-disabled.ui-search-expandable .ui-search-magnifier,
+    .ui-search--disabled.ui-search--expandable .ui-search-magnifier {
+        cursor: not-allowed;
+        outline: none;
+    }
+
+    .ui-search-disabled .ui-search-close:hover,
+    .ui-search--disabled .ui-search-close:hover,
+    .ui-search-disabled.ui-search-expandable .ui-search-magnifier:hover,
+    .ui-search--disabled.ui-search--expandable .ui-search-magnifier:hover {
+        border-block-end-color: transparent;
+        background-color: transparent;
+    }
+
+    .ui-search-disabled .ui-search-close:hover::before,
+    .ui-search--disabled .ui-search-close:hover::before,
+    .ui-search-disabled.ui-search-expandable .ui-search-magnifier:hover::before,
+    .ui-search--disabled.ui-search--expandable
+        .ui-search-magnifier:hover::before {
+        background-color: transparent;
+    }
+
+    .ui-search-disabled svg,
+    .ui-search--disabled svg {
+        fill: var(--ui-icon-on-color-disabled);
+    }
+
+    /* ----------------------------------------------------------------------
+       Skeleton
+       ---------------------------------------------------------------------- */
+
+    .ui-skeleton .ui-search-input,
+    .ui-search-skeleton .ui-search-input {
+        position: relative;
+        overflow: hidden;
+        inline-size: 100%;
+        border-block-end: 0;
+        background-color: var(--ui-skeleton-element);
+        color: transparent;
+        pointer-events: none;
+    }
+
+    .ui-skeleton .ui-search-input::placeholder,
+    .ui-search-skeleton .ui-search-input::placeholder {
+        color: transparent;
+    }
+
+    .ui-skeleton .ui-search-input::before,
+    .ui-search-skeleton .ui-search-input::before {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            var(--ui-skeleton-background, rgb(255 255 255 / 0.18)),
+            transparent
+        );
+        content: "";
+        animation: ui-skeleton-shimmer 1.5s infinite linear;
+    }
+
+    /* ----------------------------------------------------------------------
+   Expandable search
+   ---------------------------------------------------------------------- */
+
+    .ui-search-expandable,
+    .ui-search--expandable {
+        display: inline-flex;
+        align-items: stretch;
+        flex: 0 0 var(--ui-search-height);
+        inline-size: var(--ui-search-height);
+        min-inline-size: var(--ui-search-height);
+        max-inline-size: var(--ui-search-height);
+        block-size: var(--ui-search-height);
+        overflow: hidden;
+        border-block-end: 1px solid transparent;
+        background-color: transparent;
+        transition:
+            inline-size var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive),
+            max-inline-size var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive);
+    }
+
+    .ui-search-expandable.ui-search-expanded,
+    .ui-search--expandable.ui-search--expanded {
+        flex-basis: 28rem;
+        inline-size: 28rem;
+        min-inline-size: 28rem;
+        max-inline-size: min(28rem, calc(100vw - var(--ui-search-height)));
+        overflow: visible;
+        border-block-end-color: var(--ui-border-strong);
+        background-color: var(--ui-field);
+    }
+
+    .ui-search-expandable.ui-search-expanded:focus-within,
+    .ui-search--expandable.ui-search--expanded:focus-within {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    /* Magnifier trigger box */
+
+    .ui-search-expandable .ui-search-magnifier,
+    .ui-search--expandable .ui-search-magnifier {
+        position: relative;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 var(--ui-search-height);
+        inline-size: var(--ui-search-height);
+        min-inline-size: var(--ui-search-height);
+        max-inline-size: var(--ui-search-height);
+        block-size: var(--ui-search-height);
+        margin: 0;
+        border: 0;
+        padding: 0;
+        appearance: none;
+        background-color: transparent;
+        color: var(--ui-icon-secondary);
+        cursor: pointer;
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+    }
+
+    .ui-search-expandable .ui-search-magnifier:hover,
+    .ui-search--expandable .ui-search-magnifier:hover {
+        background-color: var(--ui-background-hover);
+        color: var(--ui-icon-primary);
+    }
+
+    .ui-search-expandable .ui-search-magnifier:focus,
+    .ui-search-expandable .ui-search-magnifier:focus-visible,
+    .ui-search--expandable .ui-search-magnifier:focus,
+    .ui-search--expandable .ui-search-magnifier:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-search-expandable.ui-search-expanded .ui-search-magnifier,
+    .ui-search--expandable.ui-search--expanded .ui-search-magnifier {
+        background-color: transparent;
+        color: var(--ui-icon-secondary);
+        cursor: default;
+        pointer-events: none;
+    }
+
+    .ui-search-expandable.ui-search-expanded .ui-search-magnifier:hover,
+    .ui-search--expandable.ui-search--expanded .ui-search-magnifier:hover {
+        background-color: transparent;
+        color: var(--ui-icon-secondary);
+    }
+
+    .ui-search-expandable.ui-search-expanded .ui-search-magnifier:focus,
+    .ui-search-expandable.ui-search-expanded .ui-search-magnifier:focus-visible,
+    .ui-search--expandable.ui-search--expanded .ui-search-magnifier:focus,
+    .ui-search--expandable.ui-search--expanded
+        .ui-search-magnifier:focus-visible {
+        outline: none;
+    }
+
+    .ui-search-expandable .ui-search-magnifier-icon,
+    .ui-search--expandable .ui-search-magnifier-icon,
+    .ui-search-expandable .ui-search-magnifier > svg,
+    .ui-search--expandable .ui-search-magnifier > svg {
+        position: static;
+        display: block;
+        flex: 0 0 auto;
+        inline-size: 1.25rem;
+        block-size: 1.25rem;
+        margin: 0;
+        fill: currentColor;
+        pointer-events: none;
+        transform: none;
+    }
+
+    /* Input */
+
+    .ui-search-expandable .ui-search-input,
+    .ui-search--expandable .ui-search-input {
+        flex: 0 1 0;
+        inline-size: 0;
+        min-inline-size: 0;
+        block-size: var(--ui-search-height);
+        border-block-end-color: transparent;
+        padding: 0;
+        opacity: 0;
+        pointer-events: none;
+        transition:
+            inline-size var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive),
+            padding var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive),
+            opacity var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive);
+    }
+
+    .ui-search-expandable .ui-search-input::placeholder,
+    .ui-search--expandable .ui-search-input::placeholder {
+        opacity: 0;
+        transition: opacity var(--ui-duration-fast-01)
+            var(--ui-motion-standard-productive);
+    }
+
+    .ui-search-expandable.ui-search-expanded .ui-search-input,
+    .ui-search--expandable.ui-search--expanded .ui-search-input {
+        flex: 1 1 auto;
+        inline-size: auto;
+        min-inline-size: 0;
+        padding: 0 var(--ui-search-height) 0 0;
+        border-block-end-color: transparent;
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .ui-search-expandable.ui-search-expanded .ui-search-input:focus,
+    .ui-search--expandable.ui-search--expanded .ui-search-input:focus {
+        outline: none;
+    }
+
+    .ui-search-expandable.ui-search-expanded .ui-search-input::placeholder,
+    .ui-search--expandable.ui-search--expanded .ui-search-input::placeholder {
+        opacity: 1;
+    }
+
+    /* Close button */
+
+    .ui-search-expandable .ui-search-close,
+    .ui-search--expandable .ui-search-close {
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-end: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 var(--ui-search-height);
+        inline-size: var(--ui-search-height);
+        min-inline-size: var(--ui-search-height);
+        max-inline-size: var(--ui-search-height);
+        block-size: var(--ui-search-height);
+        border-block-end-color: transparent;
+        background-color: transparent;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+            opacity var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive),
+            visibility var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive),
+            background-color var(--ui-duration-fast-02)
+                var(--ui-motion-standard-productive);
+    }
+
+    .ui-search-expandable.ui-search-expanded .ui-search-close,
+    .ui-search--expandable.ui-search--expanded .ui-search-close {
+        opacity: 1;
+        visibility: inherit;
+    }
+
+    .ui-search-expandable.ui-search-expanded .ui-search-close:hover,
+    .ui-search--expandable.ui-search--expanded .ui-search-close:hover {
+        background-color: var(--ui-background-hover);
+    }
+
+    .ui-search-expandable .ui-search-close > svg,
+    .ui-search--expandable .ui-search-close > svg {
+        display: block;
+        inline-size: 1.25rem;
+        block-size: 1.25rem;
+        fill: currentColor;
+    }
+
+    .ui-search-expandable.ui-search-expanded .ui-search-close:focus,
+    .ui-search-expandable.ui-search-expanded .ui-search-close:focus-visible,
+    .ui-search--expandable.ui-search--expanded .ui-search-close:focus,
+    .ui-search--expandable.ui-search--expanded .ui-search-close:focus-visible {
+        outline: none;
+    }
+
+    /* Disabled expandable search */
+
+    .ui-search-expandable.ui-search-disabled .ui-search-magnifier,
+    .ui-search--expandable.ui-search--disabled .ui-search-magnifier {
+        cursor: not-allowed;
+        outline: none;
+    }
+
+    .ui-search-expandable.ui-search-disabled .ui-search-magnifier:hover,
+    .ui-search--expandable.ui-search--disabled .ui-search-magnifier:hover {
+        background-color: transparent;
+    }
+
+    .ui-search-expandable.ui-search-disabled svg,
+    .ui-search--expandable.ui-search--disabled svg {
+        fill: var(--ui-icon-disabled);
+    }
+
+    /* ----------------------------------------------------------------------
+   Expandable search button box sizing correction
+   ---------------------------------------------------------------------- */
+
+    .ui-search.ui-search-expandable,
+    .ui-search.ui-search--expandable {
+        --ui-search-action-size: var(--ui-search-height);
+
+        background-color: transparent;
+    }
+
+    .ui-search.ui-search-expandable.ui-search-expanded,
+    .ui-search.ui-search--expandable.ui-search--expanded {
+        background-color: var(--ui-field);
+    }
+
+    .ui-search.ui-search-expandable > .ui-search-magnifier,
+    .ui-search.ui-search--expandable > .ui-search-magnifier {
+        box-sizing: border-box;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        flex: 0 0 var(--ui-search-action-size);
+        inline-size: var(--ui-search-action-size);
+        width: var(--ui-search-action-size);
+        min-inline-size: var(--ui-search-action-size);
+        min-width: var(--ui-search-action-size);
+        max-inline-size: var(--ui-search-action-size);
+        max-width: var(--ui-search-action-size);
+
+        block-size: var(--ui-search-action-size);
+        height: var(--ui-search-action-size);
+        min-block-size: var(--ui-search-action-size);
+        min-height: var(--ui-search-action-size);
+        max-block-size: var(--ui-search-action-size);
+        max-height: var(--ui-search-action-size);
+
+        margin: 0;
+        border: 0;
+        padding: 0;
+        background-color: transparent;
+        line-height: 0;
+    }
+
+    .ui-search.ui-search-expandable > .ui-search-magnifier > svg,
+    .ui-search.ui-search--expandable > .ui-search-magnifier > svg {
+        box-sizing: border-box;
+        display: block;
+        flex: 0 0 auto;
+        inline-size: 1.25rem;
+        width: 1.25rem;
+        block-size: 1.25rem;
+        height: 1.25rem;
+        margin: 0;
+    }
+
+    .ui-search.ui-search-expandable.ui-search-expanded > .ui-search-magnifier,
+    .ui-search.ui-search--expandable.ui-search--expanded
+        > .ui-search-magnifier {
+        pointer-events: none;
+        background-color: transparent;
+    }
+
+    .ui-search.ui-search-expandable > .ui-search-close,
+    .ui-search.ui-search--expandable > .ui-search-close {
+        box-sizing: border-box;
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-end: 0;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        flex: 0 0 var(--ui-search-action-size);
+        inline-size: var(--ui-search-action-size);
+        width: var(--ui-search-action-size);
+        min-inline-size: var(--ui-search-action-size);
+        min-width: var(--ui-search-action-size);
+        max-inline-size: var(--ui-search-action-size);
+        max-width: var(--ui-search-action-size);
+
+        block-size: var(--ui-search-action-size);
+        height: var(--ui-search-action-size);
+        min-block-size: var(--ui-search-action-size);
+        min-height: var(--ui-search-action-size);
+        max-block-size: var(--ui-search-action-size);
+        max-height: var(--ui-search-action-size);
+
+        margin: 0;
+        border: 0;
+        padding: 0;
+        background-color: transparent;
+        line-height: 0;
+    }
+
+    .ui-search.ui-search-expandable > .ui-search-close > svg,
+    .ui-search.ui-search--expandable > .ui-search-close > svg {
+        box-sizing: border-box;
+        display: block;
+        flex: 0 0 auto;
+        inline-size: 1.25rem;
+        width: 1.25rem;
+        block-size: 1.25rem;
+        height: 1.25rem;
+        margin: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-search,
+        .ui-search-input,
+        .ui-search-close,
+        .ui-search-button,
+        .ui-search-expandable,
+        .ui-search--expandable,
+        .ui-search-expandable .ui-search-input,
+        .ui-search--expandable .ui-search-input,
+        .ui-search-expandable .ui-search-input::placeholder,
+        .ui-search--expandable .ui-search-input::placeholder,
+        .ui-skeleton .ui-search-input::before,
+        .ui-search-skeleton .ui-search-input::before {
+            animation: none;
+            transition: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-search-input:focus,
+        .ui-search-close:focus,
+        .ui-search-close:focus-visible,
+        .ui-search-button:focus,
+        .ui-search-button:focus-visible,
+        .ui-search-expandable .ui-search-magnifier:focus,
+        .ui-search-expandable .ui-search-magnifier:focus-visible,
+        .ui-search--expandable .ui-search-magnifier:focus,
+        .ui-search--expandable .ui-search-magnifier:focus-visible {
+            outline-color: Highlight;
+        }
+
+        .ui-search-input[disabled],
+        .ui-search-input:disabled,
+        .ui-search-input[aria-disabled="true"],
+        .ui-search-input[data-disabled="true"],
+        .ui-search-input[data-ui-disabled="true"] {
+            color: GrayText;
+            -webkit-text-fill-color: GrayText;
+        }
+
+        .ui-search-disabled svg,
+        .ui-search--disabled svg,
+        .ui-search-expandable.ui-search-disabled svg,
+        .ui-search--expandable.ui-search--disabled svg {
+            fill: GrayText;
+        }
     }
 }

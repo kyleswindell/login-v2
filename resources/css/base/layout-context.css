@@ -1,0 +1,220 @@
+/* ==========================================================================
+   File: resources/css/base/layout-context.css
+   Purpose: Contextual layout size and density utilities.
+   Notes:
+   - Defines selector behavior for contextual layout tokens.
+   - Raw values are owned by resources/css/tokens/layout.css and spacing.css.
+   - Components may consume:
+     --ui-layout-size-height-local
+     --ui-layout-density-padding-inline-local
+   ========================================================================== */
+
+@layer base {
+    /* ----------------------------------------------------------------------
+       Size context
+       ---------------------------------------------------------------------- */
+
+    .ui-layout-size-xs {
+        --ui-layout-size-height-context: var(--ui-layout-size-height-xs);
+        --ui-layout-size-height: var(--ui-layout-size-height-context);
+    }
+
+    .ui-layout-size-sm {
+        --ui-layout-size-height-context: var(--ui-layout-size-height-sm);
+        --ui-layout-size-height: var(--ui-layout-size-height-context);
+    }
+
+    .ui-layout-size-md {
+        --ui-layout-size-height-context: var(--ui-layout-size-height-md);
+        --ui-layout-size-height: var(--ui-layout-size-height-context);
+    }
+
+    .ui-layout-size-lg {
+        --ui-layout-size-height-context: var(--ui-layout-size-height-lg);
+        --ui-layout-size-height: var(--ui-layout-size-height-context);
+    }
+
+    .ui-layout-size-xl {
+        --ui-layout-size-height-context: var(--ui-layout-size-height-xl);
+        --ui-layout-size-height: var(--ui-layout-size-height-context);
+    }
+
+    .ui-layout-size-2xl {
+        --ui-layout-size-height-context: var(--ui-layout-size-height-2xl);
+        --ui-layout-size-height: var(--ui-layout-size-height-context);
+    }
+
+    /* ----------------------------------------------------------------------
+       Size default constraints
+       ---------------------------------------------------------------------- */
+
+    .ui-layout-constraint-size-default-xs {
+        --ui-layout-size-height: var(
+            --ui-layout-size-height-context,
+            var(--ui-layout-size-height-xs)
+        );
+    }
+
+    .ui-layout-constraint-size-default-sm {
+        --ui-layout-size-height: var(
+            --ui-layout-size-height-context,
+            var(--ui-layout-size-height-sm)
+        );
+    }
+
+    .ui-layout-constraint-size-default-md {
+        --ui-layout-size-height: var(
+            --ui-layout-size-height-context,
+            var(--ui-layout-size-height-md)
+        );
+    }
+
+    .ui-layout-constraint-size-default-lg {
+        --ui-layout-size-height: var(
+            --ui-layout-size-height-context,
+            var(--ui-layout-size-height-lg)
+        );
+    }
+
+    .ui-layout-constraint-size-default-xl {
+        --ui-layout-size-height: var(
+            --ui-layout-size-height-context,
+            var(--ui-layout-size-height-xl)
+        );
+    }
+
+    .ui-layout-constraint-size-default-2xl {
+        --ui-layout-size-height: var(
+            --ui-layout-size-height-context,
+            var(--ui-layout-size-height-2xl)
+        );
+    }
+
+    /* ----------------------------------------------------------------------
+       Size min constraints
+       ---------------------------------------------------------------------- */
+
+    .ui-layout-constraint-size-min-xs {
+        --ui-layout-size-height-min: var(--ui-layout-size-height-xs);
+    }
+
+    .ui-layout-constraint-size-min-sm {
+        --ui-layout-size-height-min: var(--ui-layout-size-height-sm);
+    }
+
+    .ui-layout-constraint-size-min-md {
+        --ui-layout-size-height-min: var(--ui-layout-size-height-md);
+    }
+
+    .ui-layout-constraint-size-min-lg {
+        --ui-layout-size-height-min: var(--ui-layout-size-height-lg);
+    }
+
+    .ui-layout-constraint-size-min-xl {
+        --ui-layout-size-height-min: var(--ui-layout-size-height-xl);
+    }
+
+    .ui-layout-constraint-size-min-2xl {
+        --ui-layout-size-height-min: var(--ui-layout-size-height-2xl);
+    }
+
+    /* ----------------------------------------------------------------------
+       Size max constraints
+       ---------------------------------------------------------------------- */
+
+    .ui-layout-constraint-size-max-xs {
+        --ui-layout-size-height-max: var(--ui-layout-size-height-xs);
+    }
+
+    .ui-layout-constraint-size-max-sm {
+        --ui-layout-size-height-max: var(--ui-layout-size-height-sm);
+    }
+
+    .ui-layout-constraint-size-max-md {
+        --ui-layout-size-height-max: var(--ui-layout-size-height-md);
+    }
+
+    .ui-layout-constraint-size-max-lg {
+        --ui-layout-size-height-max: var(--ui-layout-size-height-lg);
+    }
+
+    .ui-layout-constraint-size-max-xl {
+        --ui-layout-size-height-max: var(--ui-layout-size-height-xl);
+    }
+
+    .ui-layout-constraint-size-max-2xl {
+        --ui-layout-size-height-max: var(--ui-layout-size-height-2xl);
+    }
+
+    /* ----------------------------------------------------------------------
+       Density context
+       ---------------------------------------------------------------------- */
+
+    .ui-layout-density-condensed {
+        --ui-layout-density-padding-inline-context: var(
+            --ui-layout-density-padding-inline-condensed
+        );
+        --ui-layout-density-padding-inline: var(
+            --ui-layout-density-padding-inline-context
+        );
+    }
+
+    .ui-layout-density-normal {
+        --ui-layout-density-padding-inline-context: var(
+            --ui-layout-density-padding-inline-normal
+        );
+        --ui-layout-density-padding-inline: var(
+            --ui-layout-density-padding-inline-context
+        );
+    }
+
+    /* ----------------------------------------------------------------------
+       Density default constraints
+       ---------------------------------------------------------------------- */
+
+    .ui-layout-constraint-density-default-condensed {
+        --ui-layout-density-padding-inline: var(
+            --ui-layout-density-padding-inline-context,
+            var(--ui-layout-density-padding-inline-condensed)
+        );
+    }
+
+    .ui-layout-constraint-density-default-normal {
+        --ui-layout-density-padding-inline: var(
+            --ui-layout-density-padding-inline-context,
+            var(--ui-layout-density-padding-inline-normal)
+        );
+    }
+
+    /* ----------------------------------------------------------------------
+       Density min constraints
+       ---------------------------------------------------------------------- */
+
+    .ui-layout-constraint-density-min-condensed {
+        --ui-layout-density-padding-inline-min: var(
+            --ui-layout-density-padding-inline-condensed
+        );
+    }
+
+    .ui-layout-constraint-density-min-normal {
+        --ui-layout-density-padding-inline-min: var(
+            --ui-layout-density-padding-inline-normal
+        );
+    }
+
+    /* ----------------------------------------------------------------------
+       Density max constraints
+       ---------------------------------------------------------------------- */
+
+    .ui-layout-constraint-density-max-condensed {
+        --ui-layout-density-padding-inline-max: var(
+            --ui-layout-density-padding-inline-condensed
+        );
+    }
+
+    .ui-layout-constraint-density-max-normal {
+        --ui-layout-density-padding-inline-max: var(
+            --ui-layout-density-padding-inline-normal
+        );
+    }
+}

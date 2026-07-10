@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Accordion behavior fixture</title>
+</head>
+<body>
+    <main>
+        <div class="ui-accordion" data-ui-component="accordion" data-ui-accordion="multiple-accordion" data-ui-accordion-mode="multiple" data-ui-accordion-alignment="default" data-ui-accordion-icon-alignment="end">
+            <section class="ui-accordion-item" data-ui-accordion-item data-ui-accordion-item-open="false">
+                <h3 class="ui-accordion-heading">
+                    <button id="multiple-a-trigger" type="button" class="ui-accordion-trigger" aria-expanded="false" aria-controls="multiple-a-panel" data-ui-accordion-trigger>
+                        <span class="ui-accordion-label"><span class="ui-accordion-title">Multiple A</span></span>
+                    </button>
+                </h3>
+                <div id="multiple-a-panel" class="ui-accordion-panel" role="region" aria-labelledby="multiple-a-trigger" data-ui-accordion-panel data-ui-accordion-panel-open="false" hidden>
+                    <div class="ui-accordion-body"><p>Multiple A body</p></div>
+                </div>
+            </section>
+            <section class="ui-accordion-item" data-ui-accordion-item data-ui-accordion-item-open="false">
+                <h3 class="ui-accordion-heading">
+                    <button id="multiple-disabled-trigger" type="button" class="ui-accordion-trigger" aria-expanded="false" aria-controls="multiple-disabled-panel" data-ui-accordion-trigger disabled>
+                        <span class="ui-accordion-label"><span class="ui-accordion-title">Disabled item</span></span>
+                    </button>
+                </h3>
+                <div id="multiple-disabled-panel" class="ui-accordion-panel" role="region" aria-labelledby="multiple-disabled-trigger" data-ui-accordion-panel data-ui-accordion-panel-open="false" hidden>
+                    <div class="ui-accordion-body"><p>Disabled body</p></div>
+                </div>
+            </section>
+        </div>
+
+        <div class="ui-accordion" data-ui-component="accordion" data-ui-accordion="single-accordion" data-ui-accordion-mode="single" data-ui-accordion-alignment="default" data-ui-accordion-icon-alignment="end">
+            <section class="ui-accordion-item" data-ui-accordion-item data-ui-accordion-item-open="true">
+                <h3 class="ui-accordion-heading">
+                    <button id="single-a-trigger" type="button" class="ui-accordion-trigger" aria-expanded="true" aria-controls="single-a-panel" data-ui-accordion-trigger>
+                        <span class="ui-accordion-label"><span class="ui-accordion-title">Single A</span></span>
+                    </button>
+                </h3>
+                <div id="single-a-panel" class="ui-accordion-panel" role="region" aria-labelledby="single-a-trigger" data-ui-accordion-panel data-ui-accordion-panel-open="true">
+                    <div class="ui-accordion-body"><p>Single A body</p></div>
+                </div>
+            </section>
+            <section class="ui-accordion-item" data-ui-accordion-item data-ui-accordion-item-open="false">
+                <h3 class="ui-accordion-heading">
+                    <button id="single-b-trigger" type="button" class="ui-accordion-trigger" aria-expanded="false" aria-controls="single-b-panel" data-ui-accordion-trigger>
+                        <span class="ui-accordion-label"><span class="ui-accordion-title">Single B</span></span>
+                    </button>
+                </h3>
+                <div id="single-b-panel" class="ui-accordion-panel" role="region" aria-labelledby="single-b-trigger" data-ui-accordion-panel data-ui-accordion-panel-open="false" hidden>
+                    <div class="ui-accordion-body"><p>Single B body</p></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+/* ==========================================================================
+   File: resources/css/base/transform.css
+   Purpose: Transform and rotation utilities.
+   Notes:
+   - Defines reusable transform utilities only.
+   - Component-specific icon rotation may still live in component CSS.
+   - Use --ui-rotate-deg, --ui-rotate-speed, and --ui-rotate-origin for
+     custom rotation behavior.
+   ========================================================================== */
+
+@layer utilities {
+    :where(.ui-rotate) {
+        --ui-rotate-deg: 0deg;
+        --ui-rotate-speed: var(--ui-duration-fast-02);
+        --ui-rotate-origin: center;
+
+        transform: rotate(var(--ui-rotate-deg));
+        transform-origin: var(--ui-rotate-origin);
+        transition: transform var(--ui-rotate-speed)
+            var(--ui-motion-standard-productive);
+    }
+
+    :where(.ui-rotate-90) {
+        --ui-rotate-deg: 90deg;
+    }
+
+    :where(.ui-rotate-180) {
+        --ui-rotate-deg: 180deg;
+    }
+
+    :where(.ui-rotate-270) {
+        --ui-rotate-deg: 270deg;
+    }
+
+    :where(.ui-rotate-expanded, [aria-expanded="true"].ui-rotate) {
+        --ui-rotate-deg: 180deg;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.ui-rotate) {
+            transition: none;
+        }
+    }
+}

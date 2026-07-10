@@ -10,9 +10,9 @@
         </div>
 
         @if (session('status'))
-            <div class="ui-inline-alert ui-inline-alert-success">
+            <x-ui.notification.inline kind="success">
                 {{ session('status') }}
-            </div>
+            </x-ui.notification.inline>
         @endif
 
         <div class="flex flex-wrap items-center gap-3">
@@ -74,12 +74,16 @@
                                 <p class="mt-1 text-slate-400">{{ $user->email }}</p>
                             </td>
                             <td class="px-6 py-4">
-                                <x-ui.badge :status="$user->is_active ? 'active' : 'inactive'" :show-icon="false" />
+                                <x-ui.tag
+                                    :label="$user->is_active ? 'active' : 'inactive'"
+                                    :tone="$user->is_active ? 'success' : 'neutral'"
+                                    size="sm"
+                                />
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex flex-wrap gap-2">
                                     @forelse ($user->roles as $role)
-                                        <x-ui.badge :label="$role->name" semantic="neutral" variant="outline" :show-icon="false" />
+                                        <x-ui.tag :label="$role->name" type="outline" size="sm" />
                                     @empty
                                         <span class="text-slate-500">No roles assigned</span>
                                     @endforelse

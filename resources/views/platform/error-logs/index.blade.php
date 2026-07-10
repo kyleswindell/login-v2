@@ -83,12 +83,6 @@
             </div>
         </form>
 
-        <div class="flex flex-wrap items-center gap-3">
-            <a wire:navigate href="{{ route('platform.setup.error-logs') }}" class="ui-action ui-action-warning">
-                Error Setup
-            </a>
-        </div>
-
         <div class="ui-platform-table-shell">
             <table class="min-w-full ui-platform-table-body">
                 <thead class="ui-platform-table-head">
@@ -109,7 +103,11 @@
                                 {{ $log->occurredAtForTimezone($viewerTimezone)?->format('M j, Y g:i A T') ?? '—' }}
                             </td>
                             <td class="px-6 py-4">
-                                <x-ui.badge :status="match ($log->severity) { 'warning' => 'warning', 'error', 'critical' => 'danger', default => 'neutral' }" :label="$log->severity" :show-icon="false" />
+                                <x-ui.tag
+                                    :label="$log->severity"
+                                    :tone="match ($log->severity) { 'warning' => 'warning', 'error', 'critical' => 'danger', 'info' => 'info', default => 'neutral' }"
+                                    size="sm"
+                                />
                             </td>
                             <td class="max-w-xs px-6 py-4">
                                 <p class="truncate font-semibold ui-platform-text-strong">{{ $log->message }}</p>
@@ -122,9 +120,9 @@
                             </td>
                             <td class="px-6 py-4">
                                 @if ($log->handled)
-                                    <x-ui.badge label="Handled" semantic="success" :show-icon="false" />
+                                    <x-ui.tag label="Handled" tone="success" size="sm" />
                                 @else
-                                    <x-ui.badge label="Unhandled" semantic="danger" :show-icon="false" />
+                                    <x-ui.tag label="Unhandled" tone="danger" size="sm" />
                                 @endif
                             </td>
                             <td class="px-6 py-4 ui-platform-text-muted">

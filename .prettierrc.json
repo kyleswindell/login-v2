@@ -1,0 +1,15 @@
+{
+    "useTabs": false,
+    "tabWidth": 4,
+    "endOfLine": "lf",
+    "plugins": ["@prettier/plugin-php", "prettier-plugin-blade"],
+    "overrides": [
+        {
+            "files": ["*.blade.php", "**/*.blade.php"],
+            "options": {
+                "parser": "blade",
+                "bladePhpFormattingTargets": ["echo", "directiveArgs", "phpTag"]
+            }
+        }
+    ]
+}

@@ -1,0 +1,78 @@
+<x-layouts.app
+    title="Platform User Settings"
+    page-title="User Defaults"
+    page-subtitle="Configure default role assignment and active state for newly created platform users."
+    :reserve-page-tabs="true"
+>
+    <x-ui.grid-column tag="section" span="100" lg="12" xlg="12">
+        @if (session('success'))
+            <div class="rounded-md border border-emerald-500/30 bg-emerald-500/10 px-5 py-4 text-sm font-medium text-emerald-300">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <form method="POST" action="{{ route('platform.settings.users.update') }}" class="rounded-lg border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-black/30">
+            @csrf
+
+            <div class="grid gap-6 md:grid-cols-2">
+                <div>
+                    <label for="default_role" class="block text-sm font-semibold text-slate-200">Default Role</label>
+                    <p class="mt-1 text-xs text-slate-500">Role assigned to new platform users when no role is specified at creation.</p>
+                    <select
+                        id="default_role"
+                        name="default_role"
+                        class="mt-3 w-full rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 focus:border-slate-500 focus:outline-none focus:ring-0"
+                    >
+                        <option value="default" @selected(old('default_role', $defaultRole) === 'default')>Default</option>
+                        <option value="user" @selected(old('default_role', $defaultRole) === 'user')>User</option>
+                        <option value="manager" @selected(old('default_role', $defaultRole) === 'manager')>Manager</option>
+                        <option value="admin" @selected(old('default_role', $defaultRole) === 'admin')>Admin</option>
+                        <option value="super_admin" @selected(old('default_role', $defaultRole) === 'super_admin')>Super Admin</option>
+                    </select>
+                    @error('default_role')
+                        <p class="mt-2 text-xs text-rose-400">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <fieldset>
+                        <legend class="text-sm font-semibold text-slate-200">Default Active State</legend>
+                        <p class="mt-1 text-xs text-slate-500">Whether new platform users are set as active immediately upon creation.</p>
+
+                        <div class="mt-3 space-y-2">
+                            <label class="flex cursor-pointer items-center gap-3">
+                                <input
+                                    type="radio"
+                                    name="default_active"
+                                    value="1"
+                                    @checked((bool) old('default_active', $defaultActive))
+                                    class="accent-slate-300"
+                                >
+                                <span class="text-sm text-slate-200">Active</span>
+                            </label>
+                            <label class="flex cursor-pointer items-center gap-3">
+                                <input
+                                    type="radio"
+                                    name="default_active"
+                                    value="0"
+                                    @checked(! (bool) old('default_active', $defaultActive))
+                                    class="accent-slate-300"
+                                >
+                                <span class="text-sm text-slate-200">Inactive (requires manual activation)</span>
+                            </label>
+                        </div>
+                    </fieldset>
+                    @error('default_active')
+                        <p class="mt-2 text-xs text-rose-400">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="mt-8 border-t border-slate-800 pt-6">
+                <button type="submit" class="rounded-md bg-slate-700/60 px-6 py-3 text-sm font-semibold text-slate-200 ring-1 ring-slate-500/40 transition hover:bg-slate-700/80 hover:text-white">
+                    Save User Settings
+                </button>
+            </div>
+        </form>
+    </x-ui.grid-column>
+</x-layouts.app>

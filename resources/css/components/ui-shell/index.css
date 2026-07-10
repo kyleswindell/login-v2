@@ -1,0 +1,17 @@
+/* ==========================================================================
+   File: resources/css/components/ui-shell/index.css
+   Purpose: UI Shell component family imports.
+
+   Notes:
+   - Keep this file import-only.
+   - UI shell rules live in focused files under resources/css/components/ui-shell/.
+   - Previous split backed up at resources/css/components/ui-shell-backup-20260618-213405.
+   ========================================================================== */
+
+@import "./content.css";
+@import "./header.css";
+@import "./header-panel.css";
+@import "./header-actions.css";
+@import "./notifications.css";
+@import "./side-nav.css";
+@import "./switcher.css";

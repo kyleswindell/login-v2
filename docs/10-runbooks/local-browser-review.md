@@ -49,6 +49,7 @@ The readiness command should:
 
 - normalize `public/hot`
 - verify host Vite through the browser and container paths
+- verify Vite authorizes the application origin for browser module scripts
 - normalize local Reverb configuration
 - verify Reverb TCP reachability
 - verify the login route
@@ -80,6 +81,10 @@ Use only for explicit containerized Node testing:
 
     docker compose --profile docker-vite up -d node
     docker compose exec app php artisan local:ready --vite-check-url=http://node:5173
+
+The Playwright container opens the application through
+`http://laravel.test:8000`. Vite must allow that origin for module scripts even
+when `public/hot` points to a host or LAN Vite URL.
 
 ## Realtime Review
 
@@ -113,6 +118,12 @@ If assets are stale:
 4. rerun readiness
 5. inspect Vite output
 6. use built assets temporarily
+
+If CSS loads but JavaScript behavior is absent, inspect the browser console for
+blocked `@vite/client` or `resources/js/app.js` requests. A CORS failure means
+the current application origin is missing from the Vite development allowlist;
+do not diagnose downstream runtime or realtime behavior until module scripts
+load successfully.
 
 If Reverb fails:
 

@@ -1,138 +1,1083 @@
 /* ==========================================================================
-File: resources/css/components/content-switcher.css
-Purpose: Content Switcher component styles.
-Carbon reference:
+   File: resources/css/components/content-switcher.css
+   Purpose: Content Switcher component styles.
 
-* reference/carbon-main/packages/styles/scss/components/content-switcher/
+   Carbon reference:
+   - reference/carbon-main/packages/styles/scss/components/content-switcher/
 
-Notes:
-
-* Defines Content Switcher selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Content Switcher color values are provided by tokens/components/content-switcher.css.
-  ========================================================================== */
+   Notes:
+   - Defines Content Switcher selectors only.
+   - Canonical switch root emitted by x-ui.switch:
+     .ui-content-switcher-btn
+   - Legacy compatibility aliases:
+     .ui-content-switcher-button
+     .ui-content-switcher-option
+   - Component token file owns:
+     --ui-content-switcher-background
+     --ui-content-switcher-background-hover
+     --ui-content-switcher-selected
+   - Default selected state uses inverse layer/text tokens.
+   - Low contrast variant uses content-switcher component tokens.
+   ========================================================================== */
 
 @layer components {
+    /* ----------------------------------------------------------------------
+       Content switcher root
+       ---------------------------------------------------------------------- */
+
     .ui-content-switcher {
-        display: inline-flex;
-        inline-size: fit-content;
+        --ui-content-switcher-height: 2.5rem;
+        --ui-content-switcher-radius: 0.25rem;
+        --ui-content-switcher-option-min-inline-size: 8rem;
+        --ui-content-switcher-option-padding-inline: var(--ui-spacing-05);
+        --ui-content-switcher-outline-color: var(--ui-border-inverse);
+        --ui-content-switcher-divider-color: var(--ui-border-subtle);
+        --ui-content-switcher-hover-background: var(--ui-layer-hover);
+        --ui-content-switcher-selected-background: var(
+            --ui-layer-selected-inverse,
+            var(--ui-background-inverse)
+        );
+        --ui-content-switcher-selected-color: var(--ui-text-inverse);
+        --ui-content-switcher-focus-inset: var(
+            --ui-focus-inset,
+            var(--ui-background)
+        );
+
+        box-sizing: border-box;
+        position: relative;
+        display: flex;
+        justify-content: space-evenly;
+        inline-size: 100%;
         max-inline-size: 100%;
-        block-size: 2.5rem;
+        block-size: var(--ui-content-switcher-height);
+        min-inline-size: 0;
+        border-radius: var(--ui-content-switcher-radius);
+        background-color: transparent;
+        outline: 1px solid var(--ui-content-switcher-outline-color);
+        outline-offset: -1px;
+        overflow: hidden;
+        isolation: isolate;
     }
 
-    .ui-content-switcher-button {
+    .ui-content-switcher:has(
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):disabled
+    ) {
+        --ui-content-switcher-outline-color: var(--ui-border-disabled);
+    }
+
+    .ui-content-switcher-list {
+        display: flex;
+        inline-size: 100%;
+        max-inline-size: 100%;
+        min-inline-size: 0;
+        block-size: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: transparent;
+    }
+
+    /* ----------------------------------------------------------------------
+       Content switcher options
+       ---------------------------------------------------------------------- */
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ) {
+        position: relative;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-inline-size: 4rem;
-        border: 1px solid var(--ui-border-interactive);
-        border-inline-end-width: 0;
-        padding: 0 var(--ui-spacing-05);
-        background-color: var(--ui-content-switcher-background);
-        color: var(--ui-text-primary);
+        flex: 1 1 0;
+        inline-size: 100%;
+        min-inline-size: var(--ui-content-switcher-option-min-inline-size);
+        block-size: 100%;
+        min-block-size: 0;
+        box-sizing: border-box;
+        margin: 0;
+        border: 0;
+        border-block-start: 1px solid var(--ui-content-switcher-outline-color);
+        border-block-end: 1px solid var(--ui-content-switcher-outline-color);
+        padding: 0 var(--ui-content-switcher-option-padding-inline);
+        appearance: none;
+        overflow: hidden;
+        background-color: transparent;
+        color: var(--ui-text-secondary);
         cursor: pointer;
+        font: inherit;
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-font-weight-regular);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        text-align: center;
+        text-decoration: none;
+        white-space: nowrap;
+        transition:
+            background-color var(--ui-duration-fast-02)
+                var(--ui-motion-standard-productive),
+            color var(--ui-duration-fast-02)
+                var(--ui-motion-standard-productive),
+            box-shadow var(--ui-duration-fast-02)
+                var(--ui-motion-standard-productive);
+    }
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )::before {
+        position: absolute;
+        z-index: 2;
+        display: block;
+        inline-size: 1px;
+        block-size: 1rem;
+        inset-block-start: 50%;
+        inset-inline-start: 0;
+        background-color: var(--ui-content-switcher-divider-color);
+        content: "";
+        pointer-events: none;
+        transform: translateY(-50%);
+    }
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )::after {
+        position: absolute;
+        z-index: 0;
+        display: block;
+        inline-size: 100%;
+        block-size: 100%;
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        border-radius: var(--ui-content-switcher-radius);
+        background-color: var(--ui-content-switcher-selected-background);
+        content: "";
+        pointer-events: none;
+        transform: scaleY(0);
+        transform-origin: bottom;
+        transition:
+            transform var(--ui-duration-fast-02)
+                var(--ui-motion-standard-productive),
+            background-color var(--ui-duration-fast-02)
+                var(--ui-motion-standard-productive),
+            box-shadow var(--ui-duration-fast-02)
+                var(--ui-motion-standard-productive);
+    }
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):first-child {
+        border-start-start-radius: var(--ui-content-switcher-radius);
+        border-end-start-radius: var(--ui-content-switcher-radius);
+        box-shadow: inset 1px 0 0 0 var(--ui-content-switcher-outline-color);
+    }
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):last-child {
+        border-start-end-radius: var(--ui-content-switcher-radius);
+        border-end-end-radius: var(--ui-content-switcher-radius);
+        box-shadow: inset -1px 0 0 0 var(--ui-content-switcher-outline-color);
+    }
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):first-child::before,
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):first-of-type::before {
+        background-color: transparent;
+    }
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):hover {
+        z-index: 3;
+        background-color: var(--ui-content-switcher-hover-background);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):active {
+        background-color: var(
+            --ui-content-switcher-background-active,
+            var(--ui-content-switcher-hover-background)
+        );
+        color: var(--ui-text-primary);
+    }
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):focus {
+        outline: none;
+    }
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):focus-visible {
+        z-index: 4;
+        box-shadow:
+            inset 0 0 0 2px var(--ui-focus),
+            inset 0 0 0 3px var(--ui-content-switcher-focus-inset);
+    }
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):focus::before,
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):focus
+        + :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )::before,
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):hover::before,
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):hover
+        + :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )::before {
+        background-color: transparent;
+    }
+
+    /* ----------------------------------------------------------------------
+       Selected state
+       ---------------------------------------------------------------------- */
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        ),
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )[aria-selected="true"] {
+        z-index: 3;
+        border-block-color: transparent;
+        background-color: transparent;
+        color: var(--ui-content-switcher-selected-color);
+        font-weight: var(--ui-font-weight-semibold);
+    }
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        ):first-child,
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        ):last-child,
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )[aria-selected="true"]:first-child,
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )[aria-selected="true"]:last-child {
+        box-shadow: none;
+    }
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        )::after,
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )[aria-selected="true"]::after {
+        transform: scaleY(1);
+    }
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        ):hover,
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )[aria-selected="true"]:hover {
+        background-color: transparent;
+        color: var(--ui-content-switcher-selected-color);
+    }
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        )::before,
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        )
+        + :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )::before,
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )[aria-selected="true"]::before,
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )[aria-selected="true"]
+        + :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )::before {
+        background-color: transparent;
+    }
+
+    /* ----------------------------------------------------------------------
+       Disabled state
+       ---------------------------------------------------------------------- */
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):disabled {
+        border-color: var(--ui-border-disabled);
+        background-color: transparent;
+        color: var(--ui-text-disabled);
+        cursor: not-allowed;
+    }
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):disabled:hover {
+        background-color: transparent;
+        color: var(--ui-text-disabled);
+    }
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):disabled::after {
+        display: none;
+    }
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):disabled::before,
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):disabled:hover
+        + :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):disabled::before {
+        background-color: var(--ui-border-disabled);
+    }
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        ):disabled,
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )[aria-selected="true"]:disabled {
+        border-color: transparent;
+        background-color: var(
+            --ui-button-disabled,
+            var(--ui-background-disabled)
+        );
+        color: var(--ui-text-disabled);
+    }
+
+    /* ----------------------------------------------------------------------
+       Sizes
+       ---------------------------------------------------------------------- */
+
+    .ui-content-switcher-sm,
+    .ui-content-switcher--sm,
+    .ui-content-switcher.ui-layout--size-sm {
+        --ui-content-switcher-height: 2rem;
+        --ui-content-switcher-option-min-inline-size: 6.5rem;
+        --ui-content-switcher-option-padding-inline: var(--ui-spacing-03);
+    }
+
+    .ui-content-switcher-sm
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ),
+    .ui-content-switcher--sm
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ),
+    .ui-content-switcher.ui-layout--size-sm
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ) {
+        font-size: var(--ui-type-label-01-font-size);
+        line-height: var(--ui-type-label-01-line-height);
+    }
+
+    .ui-content-switcher-lg,
+    .ui-content-switcher--lg,
+    .ui-content-switcher.ui-layout--size-lg {
+        --ui-content-switcher-height: 3rem;
+        --ui-content-switcher-option-min-inline-size: 9rem;
+        --ui-content-switcher-option-padding-inline: var(--ui-spacing-06);
+    }
+
+    .ui-content-switcher-lg
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ),
+    .ui-content-switcher--lg
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ),
+    .ui-content-switcher.ui-layout--size-lg
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ) {
         font-size: var(--ui-type-body-compact-01-font-size);
         line-height: var(--ui-type-body-compact-01-line-height);
     }
 
-    .ui-content-switcher-button:last-child {
-        border-inline-end-width: 1px;
+    /* ----------------------------------------------------------------------
+   Fluid / constrained container variant
+   ----------------------------------------------------------------------
+   Allows content switchers to fit narrow popovers, panels, and toolbars
+   without feature-local option width overrides.
+   ---------------------------------------------------------------------- */
+
+    .ui-content-switcher[data-ui-content-switcher-fluid="true"],
+    .ui-content-switcher--fluid,
+    .ui-content-switcher-fluid {
+        --ui-content-switcher-option-min-inline-size: 0;
+
+        inline-size: 100%;
+        max-inline-size: 100%;
     }
 
-    .ui-content-switcher-button:hover {
-        background-color: var(--ui-content-switcher-background-hover);
+    .ui-content-switcher[data-ui-content-switcher-fluid="true"]
+        .ui-content-switcher-list,
+    .ui-content-switcher--fluid .ui-content-switcher-list,
+    .ui-content-switcher-fluid .ui-content-switcher-list {
+        inline-size: 100%;
+        max-inline-size: 100%;
+        min-inline-size: 0;
     }
 
-    .ui-content-switcher-button-selected,
-    .ui-content-switcher-button[aria-selected="true"] {
-        background-color: var(--ui-content-switcher-selected);
-        color: var(--ui-text-primary);
+    .ui-content-switcher[data-ui-content-switcher-fluid="true"]
+        .ui-content-switcher-button,
+    .ui-content-switcher[data-ui-content-switcher-fluid="true"]
+        .ui-content-switcher-btn,
+    .ui-content-switcher[data-ui-content-switcher-fluid="true"]
+        .ui-content-switcher-option,
+    .ui-content-switcher--fluid .ui-content-switcher-button,
+    .ui-content-switcher--fluid .ui-content-switcher-btn,
+    .ui-content-switcher--fluid .ui-content-switcher-option,
+    .ui-content-switcher-fluid .ui-content-switcher-button,
+    .ui-content-switcher-fluid .ui-content-switcher-btn,
+    .ui-content-switcher-fluid .ui-content-switcher-option {
+        flex: 1 1 0;
+        inline-size: auto;
+        min-inline-size: 0;
+        max-inline-size: none;
     }
 
-    .ui-content-switcher-button:focus-visible {
-        outline: 2px solid var(--ui-focus);
-        outline-offset: -2px;
+    .ui-content-switcher[data-ui-content-switcher-fluid="true"]
+        .ui-content-switcher__label,
+    .ui-content-switcher[data-ui-content-switcher-fluid="true"]
+        .ui-content-switcher-label,
+    .ui-content-switcher--fluid .ui-content-switcher__label,
+    .ui-content-switcher--fluid .ui-content-switcher-label,
+    .ui-content-switcher-fluid .ui-content-switcher__label,
+    .ui-content-switcher-fluid .ui-content-switcher-label {
+        min-inline-size: 0;
+        max-inline-size: 100%;
     }
 
-    .ui-content-switcher-button:disabled {
-        color: var(--ui-text-disabled);
-        cursor: not-allowed;
-    }
-}
+    /* ----------------------------------------------------------------------
+       Low contrast variant
+       ---------------------------------------------------------------------- */
 
-@layer components {
-    /* Laravel UI content-switcher API migrated from app.css after Carbon SCSS ownership audit. */
-    .ui-content-switcher {
-        @apply min-w-0;
-    }
+    .ui-content-switcher--low-contrast,
+    .ui-content-switcher-low-contrast,
+    .ui-content-switcher[data-ui-content-switcher-low-contrast="true"] {
+        --ui-content-switcher-outline-color: var(--ui-border-strong);
+        --ui-content-switcher-divider-color: var(--ui-border-strong);
+        --ui-content-switcher-hover-background: var(
+            --ui-content-switcher-background-hover,
+            var(--ui-layer-hover)
+        );
+        --ui-content-switcher-selected-background: var(
+            --ui-content-switcher-selected,
+            var(--ui-layer-selected)
+        );
+        --ui-content-switcher-selected-color: var(--ui-text-primary);
+        --ui-content-switcher-focus-inset: var(
+            --ui-content-switcher-background,
+            var(--ui-layer)
+        );
 
-    .ui-content-switcher-list {
-        @apply inline-flex max-w-full min-w-0 overflow-x-auto border;
-        border-color: var(--ui-content-switcher-border);
-        background-color: var(--ui-content-switcher-background);
-    }
-
-    .ui-content-switcher-option {
-        @apply inline-flex min-h-10 shrink-0 items-center justify-center gap-2 border-r px-4 py-2 text-sm font-semibold transition;
-        min-inline-size: 8rem;
-        border-color: var(--ui-content-switcher-divider);
-        background-color: var(--ui-content-switcher-background);
-        color: var(--ui-content-switcher-text);
-    }
-
-    .ui-content-switcher-option:last-child {
-        border-inline-end-width: 0;
+        background-color: var(--ui-content-switcher-background, transparent);
     }
 
-    .ui-content-switcher-option:hover {
-        background-color: var(--ui-content-switcher-background-hover);
-        color: var(--ui-content-switcher-text-hover);
+    .ui-content-switcher--low-contrast
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        ),
+    .ui-content-switcher-low-contrast
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        ),
+    .ui-content-switcher[data-ui-content-switcher-low-contrast="true"]
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        ),
+    .ui-content-switcher--low-contrast
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )[aria-selected="true"],
+    .ui-content-switcher-low-contrast
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )[aria-selected="true"],
+    .ui-content-switcher[data-ui-content-switcher-low-contrast="true"]
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )[aria-selected="true"] {
+        font-size: var(--ui-type-heading-compact-01-font-size, inherit);
+        font-weight: var(--ui-font-weight-semibold);
+        line-height: var(--ui-type-heading-compact-01-line-height, inherit);
     }
 
-    .ui-content-switcher-option:focus-visible {
-        outline: 2px solid var(--ui-focus);
-        outline-offset: -2px;
+    .ui-content-switcher--low-contrast
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        )::after,
+    .ui-content-switcher-low-contrast
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        )::after,
+    .ui-content-switcher[data-ui-content-switcher-low-contrast="true"]
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        )::after,
+    .ui-content-switcher--low-contrast
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )[aria-selected="true"]::after,
+    .ui-content-switcher-low-contrast
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )[aria-selected="true"]::after,
+    .ui-content-switcher[data-ui-content-switcher-low-contrast="true"]
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )[aria-selected="true"]::after {
+        background-color: var(
+            --ui-content-switcher-selected,
+            var(--ui-layer-selected)
+        );
+        box-shadow: inset 0 0 0 1px var(--ui-border-inverse);
     }
 
-    .ui-content-switcher-option[aria-selected="true"] {
-        background-color: var(--ui-content-switcher-selected);
-        color: var(--ui-content-switcher-selected-text);
-        box-shadow: inset 0 0 0 1px var(--ui-content-switcher-selected-border);
-    }
-
-    .ui-content-switcher-option:disabled {
-        cursor: not-allowed;
+    .ui-content-switcher--low-contrast
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        ):disabled,
+    .ui-content-switcher-low-contrast
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        ):disabled,
+    .ui-content-switcher[data-ui-content-switcher-low-contrast="true"]
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        ):disabled,
+    .ui-content-switcher--low-contrast
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )[aria-selected="true"]:disabled,
+    .ui-content-switcher-low-contrast
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )[aria-selected="true"]:disabled,
+    .ui-content-switcher[data-ui-content-switcher-low-contrast="true"]
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )[aria-selected="true"]:disabled {
         border-color: var(--ui-border-disabled);
-        background-color: var(--ui-content-switcher-background-disabled);
+        background-color: var(
+            --ui-content-switcher-selected,
+            var(--ui-layer-selected)
+        );
         color: var(--ui-text-disabled);
     }
 
-    .ui-content-switcher-sm .ui-content-switcher-option {
-        @apply min-h-8 px-3 py-1.5 text-xs;
-        min-inline-size: 6.5rem;
+    /* ----------------------------------------------------------------------
+       Icon support
+       ---------------------------------------------------------------------- */
+
+    .ui-content-switcher__icon,
+    .ui-content-switcher-icon {
+        position: relative;
+        z-index: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: 1rem;
+        block-size: 1rem;
+        flex-shrink: 0;
+        color: var(--ui-icon-secondary);
+        fill: currentColor;
     }
 
-    .ui-content-switcher-icon {
-        @apply h-4 w-4 shrink-0;
-        color: currentColor;
+    .ui-content-switcher__icon svg,
+    .ui-content-switcher-icon svg {
+        inline-size: 1rem;
+        block-size: 1rem;
+        fill: currentColor;
     }
+
+    .ui-content-switcher__icon + span,
+    .ui-content-switcher-icon + span {
+        margin-inline-start: var(--ui-spacing-03);
+    }
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):hover
+        .ui-content-switcher__icon,
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):focus
+        .ui-content-switcher__icon,
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):hover
+        .ui-content-switcher-icon,
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):focus
+        .ui-content-switcher-icon {
+        color: var(--ui-icon-primary);
+    }
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        )
+        .ui-content-switcher__icon,
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        )
+        .ui-content-switcher-icon,
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )[aria-selected="true"]
+        .ui-content-switcher__icon,
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )[aria-selected="true"]
+        .ui-content-switcher-icon {
+        color: var(--ui-icon-inverse, currentColor);
+    }
+
+    .ui-content-switcher--low-contrast
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        )
+        .ui-content-switcher__icon,
+    .ui-content-switcher-low-contrast
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        )
+        .ui-content-switcher__icon,
+    .ui-content-switcher[data-ui-content-switcher-low-contrast="true"]
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        )
+        .ui-content-switcher__icon,
+    .ui-content-switcher--low-contrast
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        )
+        .ui-content-switcher-icon,
+    .ui-content-switcher-low-contrast
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        )
+        .ui-content-switcher-icon,
+    .ui-content-switcher[data-ui-content-switcher-low-contrast="true"]
+        :where(
+            .ui-content-switcher--selected,
+            .ui-content-switcher-button-selected,
+            .ui-content-switcher-option-selected
+        )
+        .ui-content-switcher-icon,
+    .ui-content-switcher--low-contrast
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )[aria-selected="true"]
+        :where(.ui-content-switcher__icon, .ui-content-switcher-icon),
+    .ui-content-switcher-low-contrast
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )[aria-selected="true"]
+        :where(.ui-content-switcher__icon, .ui-content-switcher-icon),
+    .ui-content-switcher[data-ui-content-switcher-low-contrast="true"]
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )[aria-selected="true"]
+        :where(.ui-content-switcher__icon, .ui-content-switcher-icon) {
+        color: var(--ui-icon-primary);
+    }
+
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ):disabled
+        :where(.ui-content-switcher__icon, .ui-content-switcher-icon) {
+        color: var(--ui-icon-disabled, var(--ui-text-disabled));
+    }
+
+    .ui-content-switcher__label,
+    .ui-content-switcher-label {
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        max-inline-size: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* ----------------------------------------------------------------------
+       Icon-only variant
+       ---------------------------------------------------------------------- */
+
+    .ui-content-switcher--icon-only,
+    .ui-content-switcher-icon-only {
+        justify-content: flex-start;
+        inline-size: fit-content;
+    }
+
+    .ui-content-switcher--icon-only
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ),
+    .ui-content-switcher-icon-only
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        ),
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn--icon-only,
+            .ui-content-switcher-button--icon-only,
+            .ui-content-switcher-option--icon-only
+        ),
+    .ui-content-switcher
+        :where(
+            .ui-content-switcher-btn,
+            .ui-content-switcher-button,
+            .ui-content-switcher-option
+        )[data-ui-switch-icon-only="true"] {
+        min-inline-size: var(--ui-content-switcher-height);
+        padding-inline: 0;
+    }
+
+    .ui-content-switcher-lg.ui-content-switcher--icon-only svg,
+    .ui-content-switcher--lg.ui-content-switcher--icon-only svg,
+    .ui-content-switcher-lg.ui-content-switcher-icon-only svg,
+    .ui-content-switcher--lg.ui-content-switcher-icon-only svg,
+    .ui-content-switcher.ui-layout--size-lg
+        :where(.ui-content-switcher__icon, .ui-content-switcher-icon)
+        svg {
+        inline-size: 1.25rem;
+        block-size: 1.25rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Optional panels
+       ---------------------------------------------------------------------- */
 
     .ui-content-switcher-panels {
-        @apply mt-4 rounded-lg border;
-        border-color: var(--ui-border-subtle-01);
-        background-color: var(--ui-layer-01);
+        margin-block-start: var(--ui-spacing-05);
+        border: 1px solid var(--ui-border-subtle);
+        background-color: var(--ui-layer);
     }
 
     .ui-content-switcher-panel {
-        @apply p-4 text-sm leading-6;
+        padding: var(--ui-spacing-05);
         color: var(--ui-text-secondary);
+        font-size: var(--ui-type-body-01-font-size);
+        line-height: var(--ui-type-body-01-line-height);
     }
 
     .ui-content-switcher-panel-title {
-        @apply mb-1 text-sm font-semibold;
+        margin-block-end: var(--ui-spacing-02);
         color: var(--ui-text-primary);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-font-weight-semibold);
+        line-height: var(--ui-type-body-compact-01-line-height);
     }
 
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
 
+    @media (forced-colors: active) {
+        .ui-content-switcher {
+            outline-color: ButtonText;
+        }
+
+        .ui-content-switcher
+            :where(
+                .ui-content-switcher-btn,
+                .ui-content-switcher-button,
+                .ui-content-switcher-option
+            ) {
+            border-color: ButtonText;
+            color: ButtonText;
+        }
+
+        .ui-content-switcher
+            :where(
+                .ui-content-switcher-btn,
+                .ui-content-switcher-button,
+                .ui-content-switcher-option
+            )::before {
+            background-color: ButtonText;
+        }
+
+        .ui-content-switcher
+            :where(
+                .ui-content-switcher--selected,
+                .ui-content-switcher-button-selected,
+                .ui-content-switcher-option-selected
+            ),
+        .ui-content-switcher
+            :where(
+                .ui-content-switcher-btn,
+                .ui-content-switcher-button,
+                .ui-content-switcher-option
+            )[aria-selected="true"] {
+            color: HighlightText;
+        }
+
+        .ui-content-switcher
+            :where(
+                .ui-content-switcher--selected,
+                .ui-content-switcher-button-selected,
+                .ui-content-switcher-option-selected
+            )::after,
+        .ui-content-switcher
+            :where(
+                .ui-content-switcher-btn,
+                .ui-content-switcher-button,
+                .ui-content-switcher-option
+            )[aria-selected="true"]::after {
+            background-color: Highlight;
+        }
+
+        .ui-content-switcher
+            :where(
+                .ui-content-switcher-btn,
+                .ui-content-switcher-button,
+                .ui-content-switcher-option
+            ):focus-visible {
+            outline: 2px solid Highlight;
+            outline-offset: -2px;
+            box-shadow: none;
+        }
+    }
 }

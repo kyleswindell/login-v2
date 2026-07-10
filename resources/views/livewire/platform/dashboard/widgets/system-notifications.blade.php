@@ -1,4 +1,4 @@
-<x-ui.patterns.widget-shell
+<x-patterns.widget-shell
     title="Notifications"
     description="Your latest unread platform notifications."
     :meta="['Activity widget']"
@@ -28,4 +28,4 @@
             <p class="text-sm text-slate-400">No unread notifications.</p>
         @endforelse
     </div>
-</x-ui.patterns.widget-shell>
+</x-patterns.widget-shell>

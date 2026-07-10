@@ -1,0 +1,35 @@
+/**
+ * File: {{ path }}
+ * Purpose: {{ label }} behavior.
+ *
+ * Notes:
+ * - Initialization must be idempotent.
+ * - Keep behavior aligned with the owning Blade and contract files.
+ * - Do not place authorization or business rules in this control.
+ */
+
+const COMPONENT_SELECTOR = "[data-ui-{{ component }}]";
+const BOUND_ATTR = "data-ui-{{ component }}-initialized";
+
+function bindComponent(component) {
+    if (!(component instanceof HTMLElement)) {
+        return;
+    }
+
+    if (component.hasAttribute(BOUND_ATTR)) {
+        return;
+    }
+
+    component.setAttribute(BOUND_ATTR, "true");
+
+    /*
+     * Register component-owned event behavior here.
+     *
+     * Prefer delegated event handling when the control contains repeated or
+     * dynamically inserted child controls.
+     */
+}
+
+export function {{ initializer }}(root = document) {
+    root.querySelectorAll(COMPONENT_SELECTOR).forEach(bindComponent);
+}

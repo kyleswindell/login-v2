@@ -3,6 +3,7 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
+use App\Modules\Roles\Services\RoleCatalog;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Models\Permission;
@@ -21,7 +22,7 @@ class AuthorizationTest extends TestCase
         ]);
 
         $role = Role::query()->create([
-            'name' => 'platform_admin',
+            'name' => RoleCatalog::ADMIN,
             'guard_name' => 'web',
         ]);
 
@@ -33,16 +34,16 @@ class AuthorizationTest extends TestCase
         $this->assertTrue($user->can('platform.users.view'));
     }
 
-    public function test_platform_super_admin_bypasses_normal_permission_checks(): void
+    public function test_super_admin_bypasses_normal_permission_checks(): void
     {
         $user = User::factory()->create();
 
         Role::query()->create([
-            'name' => 'platform_super_admin',
+            'name' => RoleCatalog::SUPER_ADMIN,
             'guard_name' => 'web',
         ]);
 
-        $user->assignRole('platform_super_admin');
+        $user->assignRole(RoleCatalog::SUPER_ADMIN);
 
         $this->assertTrue(Gate::forUser($user)->allows('platform.anything'));
     }

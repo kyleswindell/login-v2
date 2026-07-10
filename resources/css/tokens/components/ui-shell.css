@@ -1,0 +1,221 @@
+/* ==========================================================================
+   File: resources/css/tokens/components/ui-shell.css
+   Purpose: UI shell sizing, spacing, layering, layout, and motion tokens.
+   ========================================================================== */
+
+@layer base {
+    :root {
+        /*
+        |--------------------------------------------------------------------------
+        | UI Shell Header
+        |--------------------------------------------------------------------------
+        */
+
+        --ui-shell-header-block-size: var(--ui-spacing-09); /* 3rem */
+        --ui-shell-header-action-size: var(--ui-shell-header-block-size);
+        --ui-shell-header-action-icon-size: var(--ui-icon-size-01);
+        --ui-shell-header-name-padding-inline-start: var(--ui-spacing-05);
+        --ui-shell-header-name-padding-inline-end: var(--ui-spacing-07);
+        --ui-shell-header-name-padding-inline-start-condensed: var(
+            --ui-spacing-03
+        );
+        --ui-shell-header-nav-padding-inline-start: var(--ui-spacing-05);
+        --ui-shell-header-nav-divider-block-size: var(--ui-spacing-06);
+        --ui-shell-header-menu-item-padding-inline: var(--ui-spacing-05);
+        --ui-shell-header-menu-arrow-margin-inline-start: var(--ui-spacing-03);
+        --ui-shell-header-menu-inline-size: 12.5rem;
+
+        /*
+        |--------------------------------------------------------------------------
+        | UI Shell Header Actions
+        |--------------------------------------------------------------------------
+        */
+
+        --ui-shell-header-notification-badge-size: 1rem;
+        --ui-shell-header-notification-badge-offset: 0.375rem;
+        --ui-shell-header-notification-badge-font-size: 0.625rem;
+        --ui-shell-header-account-avatar-size: 2rem;
+        --ui-shell-header-account-avatar-large-size: 2.5rem;
+        --ui-shell-header-account-identity-max-inline-size: 12rem;
+        --ui-shell-header-account-trigger-min-inline-size: var(
+            --ui-shell-header-menu-inline-size
+        );
+        --ui-shell-header-account-trigger-max-inline-size: 18rem;
+        --ui-shell-header-account-trigger-collapsed-inline-size: var(
+            --ui-shell-header-action-size
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | UI Shell Search
+        |--------------------------------------------------------------------------
+        */
+
+        --ui-shell-header-search-block-size: var(--ui-shell-header-block-size);
+        --ui-shell-header-search-expanded-inline-size: 24rem;
+
+        /*
+        |--------------------------------------------------------------------------
+        | UI Shell Popovers / Notifications
+        |--------------------------------------------------------------------------
+        */
+
+        --ui-shell-header-account-popover-inline-size: 20rem;
+        --ui-shell-header-notifications-popover-inline-size: 24rem;
+        --ui-shell-header-popover-viewport-gutter: var(--ui-spacing-05);
+        --ui-shell-header-notifications-menu-max-block-size: calc(
+            100vh - var(--ui-shell-header-block-size) -
+                var(--ui-shell-header-popover-viewport-gutter)
+        );
+        --ui-shell-notifications-header-min-block-size: var(--ui-spacing-10);
+        --ui-shell-notifications-filter-badge-size: var(
+            --ui-shell-header-action-icon-size
+        );
+        --ui-shell-notifications-filter-badge-padding-inline: var(
+            --ui-shell-header-notification-badge-offset
+        );
+        --ui-shell-notifications-filter-badge-font-size: var(
+            --ui-type-label-01-font-size
+        );
+        --ui-shell-notifications-section-label-min-block-size: var(
+            --ui-spacing-08
+        );
+        --ui-shell-notification-row-min-block-size: var(--ui-spacing-11);
+        --ui-shell-notification-status-column-size: var(
+            --ui-shell-header-action-icon-size
+        );
+        --ui-shell-notification-status-size: 0.75rem;
+        --ui-shell-notification-status-margin-block-start: var(
+            --ui-spacing-02
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | UI Shell Side Navigation / Panels
+        |--------------------------------------------------------------------------
+        */
+
+        --ui-shell-side-nav-collapsed-inline-size: var(
+            --ui-shell-header-block-size
+        );
+        --ui-shell-side-nav-expanded-inline-size: 16rem;
+        --ui-shell-side-nav-row-block-size: var(--ui-spacing-07);
+        --ui-shell-side-nav-large-row-block-size: var(
+            --ui-shell-header-block-size
+        );
+        --ui-shell-side-nav-nested-indent: calc(
+            var(--ui-spacing-05) + var(--ui-spacing-06)
+        );
+        --ui-shell-side-nav-icon-link-padding-inline-start: 4.5rem;
+        --ui-shell-side-nav-header-menu-item-padding-inline-start: 4.25rem;
+        --ui-shell-side-nav-icon-size: var(--ui-icon-size-01);
+        --ui-shell-side-nav-icon-gap: var(--ui-spacing-06);
+        --ui-shell-side-nav-current-indicator-size: 0.25rem;
+        --ui-shell-side-nav-submenu-max-block-size: 93.75rem;
+        --ui-shell-header-panel-inline-size: var(
+            --ui-shell-side-nav-expanded-inline-size
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | UI Shell Content
+        |--------------------------------------------------------------------------
+        */
+
+        --ui-shell-content-padding: var(--ui-spacing-07);
+        --ui-shell-page-title-padding-block-start: var(--ui-spacing-05);
+        --ui-shell-page-title-padding-block-end: var(--ui-spacing-07);
+        --ui-shell-page-title-padding-inline: var(--ui-spacing-07);
+        --ui-shell-page-title-breadcrumb-margin-block-end: var(
+            --ui-spacing-04
+        );
+        --ui-shell-page-title-breadcrumb-gap: var(--ui-spacing-02);
+        --ui-shell-page-title-content-margin-block-start: var(--ui-spacing-06);
+        --ui-shell-page-header-padding-block-start: var(
+            --ui-shell-page-title-padding-block-start
+        );
+        --ui-shell-page-header-padding-block-end: var(
+            --ui-shell-page-title-padding-block-end
+        );
+        --ui-shell-page-header-padding-inline: var(
+            --ui-shell-page-title-padding-inline
+        );
+        --ui-shell-page-header-breadcrumb-margin-block-end: var(
+            --ui-shell-page-title-breadcrumb-margin-block-end
+        );
+        --ui-shell-page-header-breadcrumb-gap: var(
+            --ui-shell-page-title-breadcrumb-gap
+        );
+        --ui-shell-page-header-content-margin-block-start: var(
+            --ui-shell-page-title-content-margin-block-start
+        );
+        --ui-shell-page-tabs-block-size: var(--ui-shell-header-block-size);
+        --ui-shell-page-tabs-reserved-block-size: var(
+            --ui-shell-page-tabs-block-size
+        );
+        --ui-shell-page-tabs-padding-inline: var(
+            --ui-shell-page-title-padding-inline
+        );
+        --ui-shell-page-tabs-link-padding-inline: var(
+            --ui-shell-header-menu-item-padding-inline
+        );
+        --ui-shell-page-tabs-current-indicator-size: var(
+            --ui-shell-header-current-indicator-size
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | UI Shell Borders / Indicators / Focus
+        |--------------------------------------------------------------------------
+        */
+
+        --ui-shell-header-border-width: 1px;
+        --ui-shell-header-focus-border-width: 2px;
+        --ui-shell-header-current-indicator-size: 3px;
+        --ui-shell-header-current-focus-indicator-size: 5px;
+        --ui-shell-skip-link-focus-border-width: 4px;
+        --ui-shell-focus-outline-width: var(
+            --ui-shell-header-focus-border-width
+        );
+        --ui-shell-focus-outline-offset: calc(
+            -1 * var(--ui-shell-focus-outline-width)
+        );
+        --ui-shell-popover-outline-width: var(--ui-shell-header-border-width);
+        --ui-shell-popover-outline-offset: calc(
+            -1 * var(--ui-shell-popover-outline-width)
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | UI Shell Layering
+        |--------------------------------------------------------------------------
+        */
+
+        --ui-z-index-shell-header: 6000;
+        --ui-z-index-shell-header-panel: 5999;
+        --ui-z-index-shell-header-popover: 6001;
+        --ui-z-index-shell-header-menu: 6001;
+        --ui-z-index-shell-header-menu-trigger: 6002;
+        --ui-z-index-shell-side-nav: 5000;
+        --ui-z-index-shell-side-nav-overlay: 4999;
+        --ui-z-index-shell-skip-link: 9999;
+
+        /*
+        |--------------------------------------------------------------------------
+        | UI Shell Motion
+        |--------------------------------------------------------------------------
+        */
+
+        --ui-shell-motion-duration-fast: 110ms;
+        --ui-shell-motion-easing-enter: cubic-bezier(0.2, 0, 0.38, 0.9);
+        --ui-shell-motion-easing-exit: cubic-bezier(0.2, 0, 1, 0.9);
+        --ui-shell-motion-easing-standard: cubic-bezier(0.5, 0, 0.1, 1);
+        --ui-shell-transition-expand: var(--ui-shell-motion-duration-fast)
+            var(--ui-shell-motion-easing-exit);
+        --ui-shell-transition-collapse: var(--ui-shell-motion-duration-fast)
+            var(--ui-shell-motion-easing-enter);
+        --ui-shell-transition-standard: var(--ui-shell-motion-duration-fast)
+            var(--ui-shell-motion-easing-standard);
+
+    }
+}

@@ -1,0 +1,340 @@
+name: Implementation Slice
+description: Define a bounded implementation task for Codex or a developer.
+title: "[Implementation]: "
+projects:
+    - "kyleswindell/1"
+
+body:
+    - type: markdown
+      attributes:
+          value: |
+              Use this form for a bounded implementation slice with explicit ownership, acceptance criteria, dependencies, verification, and review requirements.
+
+              Creating the issue does not make it implementation-ready. The GitHub Project status remains the source of truth. Do not move the issue to **Ready** until the Definition of Ready in `docs/02-standards/coding/Agent Implementation Checklist.md` is satisfied.
+
+              Do not include passwords, tokens, private keys, production secrets, or unredacted sensitive data.
+
+    - type: input
+      id: planning-source
+      attributes:
+          label: Planning source
+          description: Identify the matrix row, milestone, epic, parent issue, or planning document that produced this slice.
+          placeholder: "Example: Core Service Build Plan Matrix — Order 7, Audit foundation; parent issue #123"
+      validations:
+          required: false
+
+    - type: dropdown
+      id: owner-layer
+      attributes:
+          label: Primary owner layer
+          description: Select the layer that owns the implemented behavior.
+          options:
+              - Core Capability
+              - Platform Surface
+              - Business Module
+              - Shared UI
+              - Database
+              - Documentation
+              - Operations
+              - Tests
+              - Tooling
+          multiple: false
+      validations:
+          required: true
+
+    - type: input
+      id: specific-owner
+      attributes:
+          label: Specific owner
+          description: Name the capability, surface, module, component family, documentation branch, or tool that owns the work.
+          placeholder: "Example: Core/Audit, Core/Auth, Platform/Navigation, Modules/Customers, Shared UI/Button, source-template tooling"
+      validations:
+          required: true
+
+    - type: dropdown
+      id: execution-mode
+      attributes:
+          label: Execution mode
+          description: Select the permitted delegation level for this slice.
+          options:
+              - Human-led
+              - Codex-assisted
+              - Codex-delegable
+              - Codex-delegable with specialist review
+          multiple: false
+      validations:
+          required: true
+
+    - type: dropdown
+      id: work-categories
+      attributes:
+          label: Work categories
+          description: Select every category materially affected by the slice.
+          options:
+              - Application behavior
+              - Source files or generators
+              - Database or migration
+              - Shared UI
+              - Security-sensitive behavior
+              - Queue, event, or scheduled behavior
+              - Query or performance behavior
+              - Tests or regression coverage
+              - Documentation synchronization
+              - Operations or deployment
+          multiple: true
+      validations:
+          required: true
+
+    - type: textarea
+      id: outcome-and-scope
+      attributes:
+          label: Requested outcome and in-scope behavior
+          description: Describe the exact result this issue must produce. Include the workflow, actor, system behavior, and bounded implementation scope.
+          placeholder: |
+              Requested outcome:
+              - ...
+
+              In scope:
+              - ...
+              - ...
+
+              Affected workflow:
+              - ...
+      validations:
+          required: true
+
+    - type: textarea
+      id: non-goals-and-compatibility
+      attributes:
+          label: Non-goals and compatibility constraints
+          description: State what must not be changed and which existing routes, APIs, keys, tables, behaviors, or compatibility layers must remain stable.
+          placeholder: |
+              Non-goals:
+              - ...
+              - ...
+
+              Compatibility requirements:
+              - Preserve ...
+              - Do not rename ...
+              - Do not implement deferred ...
+      validations:
+          required: true
+
+    - type: textarea
+      id: acceptance-criteria
+      attributes:
+          label: Acceptance criteria
+          description: Provide observable completion conditions. Include successful, denied, failure, persistence, side-effect, and compatibility behavior where applicable.
+          placeholder: |
+              - [ ] ...
+              - [ ] ...
+              - [ ] ...
+
+              Required denied or failure behavior:
+              - [ ] ...
+
+              Required documentation or review outcome:
+              - [ ] ...
+      validations:
+          required: true
+
+    - type: textarea
+      id: canonical-owners
+      attributes:
+          label: Canonical documents, accepted decisions, and dependencies
+          description: List the repository paths or issue references that control architecture, behavior, schema, security, UI, operations, and sequencing. Explicitly state None only after review.
+          placeholder: |
+              Canonical architecture:
+              - `docs/...`
+
+              Feature or behavior contract:
+              - `docs/...`
+
+              Database contract:
+              - `docs/...` or Not applicable
+
+              Security or UI standards:
+              - `docs/...`
+
+              Accepted decisions:
+              - #...
+
+              Blocking dependencies:
+              - #...
+              - None
+      validations:
+          required: true
+
+    - type: textarea
+      id: implementation-boundaries
+      attributes:
+          label: Expected files, archetypes, stubs, and implementation boundaries
+          description: Identify expected files or directories, file archetypes, approved stubs or generators, integration boundaries, and prohibited dependencies.
+          placeholder: |
+              Expected owner paths:
+              - `app/Core/...`
+              - `tests/...`
+
+              Expected file archetypes:
+              - action
+              - DTO
+              - feature test
+
+              Approved stubs or generators:
+              - `stubs/archetypes/action.stub`
+              - Not applicable
+
+              Files or areas explicitly out of scope:
+              - ...
+
+              Prohibited dependencies or placements:
+              - ...
+      validations:
+          required: true
+
+    - type: textarea
+      id: security-data-reliability
+      attributes:
+          label: Security, data, transaction, and reliability boundaries
+          description: Address each applicable boundary. Write Not applicable only after confirming the category does not affect this slice.
+          placeholder: |
+              Actor, action, target, and scope:
+              - ...
+
+              Authentication and authorization:
+              - ...
+
+              Tenant or workspace isolation:
+              - ...
+
+              Validation:
+              - ...
+
+              Data classification and sensitive fields:
+              - ...
+
+              Audit, monitoring, and notification requirements:
+              - ...
+
+              Transaction owner and rollback behavior:
+              - ...
+
+              Concurrency, retry, duplicate-delivery, and idempotency behavior:
+              - ...
+
+              After-commit and remote side effects:
+              - ...
+
+              Export, retention, erasure, or secret-handling implications:
+              - ...
+      validations:
+          required: true
+
+    - type: textarea
+      id: ui-authority
+      attributes:
+          label: UI authority and visual boundaries
+          description: For UI work, identify the approved contract, design authority, Blade/CSS/JS/test owners, expected states, accessibility requirements, and manual review surface. Otherwise state Not applicable.
+          placeholder: |
+              UI owner:
+              - ...
+
+              Component or pattern contract:
+              - `resources/views/components/.../contract.php`
+
+              Approved visual authority:
+              - screenshot, design, existing approved implementation, or explicit direction
+
+              Required states and accessibility behavior:
+              - ...
+
+              Manual visual review:
+              - ...
+
+              Or:
+              - Not applicable
+      validations:
+          required: true
+
+    - type: textarea
+      id: verification-and-docs
+      attributes:
+          label: Tests, verification, documentation synchronization, and manual review
+          description: List the required tests, exact verification commands, canonical docs to update, and review that remains after implementation.
+          placeholder: |
+              Tests to add or update:
+              - ...
+
+              Required verification commands:
+              - `php artisan test --filter=...`
+              - `vendor/bin/pint --test`
+              - `npm run build`
+              - ...
+
+              PostgreSQL or migration verification:
+              - ...
+
+              Browser verification:
+              - ...
+
+              Documentation to update:
+              - `docs/...`
+
+              Manual review:
+              - ...
+
+              Checks that are intentionally not required:
+              - ...
+      validations:
+          required: true
+
+    - type: dropdown
+      id: review-types
+      attributes:
+          label: Required review types
+          description: Select every human review required before the issue may move to Done.
+          options:
+              - General code review
+              - Architecture review
+              - Database review
+              - Security review
+              - Privacy or data-governance review
+              - UI and accessibility review
+              - Operational or deployment review
+          multiple: true
+      validations:
+          required: true
+
+    - type: textarea
+      id: blockers-and-stop-conditions
+      attributes:
+          label: Blockers, open questions, and agent stop conditions
+          description: List unresolved inputs and conditions that require Codex or a developer to stop instead of making an assumption. State None only after review.
+          placeholder: |
+              Current blockers:
+              - #...
+              - None
+
+              Open decisions:
+              - ...
+
+              Stop before implementation when:
+              - ownership is unresolved
+              - ...
+      validations:
+          required: true
+
+    - type: checkboxes
+      id: readiness-acknowledgement
+      attributes:
+          label: Readiness acknowledgement
+          description: These acknowledgements apply when creating either a Planned or Ready implementation issue.
+          options:
+              - label: I reviewed every section and used **Not applicable** only after confirming that the category does not affect this slice.
+                required: true
+              - label: I understand that creating this issue does not make it **Ready**; the GitHub Project status remains the delivery source of truth.
+                required: true
+              - label: I listed unresolved decisions, incomplete dependencies, and blockers that prevent safe implementation.
+                required: true
+              - label: This issue must not be delegated while Codex would need to invent architecture, schema, permissions, security policy, transaction behavior, or visual design.
+                required: true

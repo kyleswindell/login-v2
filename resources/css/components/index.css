@@ -1,0 +1,167 @@
+/* ==========================================================================
+   File: resources/css/components/index.css
+   Purpose: Component CSS entrypoint.
+
+   Notes:
+   - Loads component selectors only.
+   - Import after tokens/index.css, base/index.css, and type/index.css.
+   - Dependency-heavy components are ordered after the primitives they compose.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Low-level utilities/components
+   -------------------------------------------------------------------------- */
+
+@import "./action.css";
+@import "./link.css";
+
+/* --------------------------------------------------------------------------
+   Buttons and button-like controls
+   -------------------------------------------------------------------------- */
+
+@import "./button.css";
+@import "./icon-button.css";
+@import "./copy-button.css";
+@import "./chat-button.css";
+@import "./combo-button.css";
+@import "./menu-button.css";
+@import "./button-group.css";
+
+/* --------------------------------------------------------------------------
+   Loading, progress, and status indicators
+   -------------------------------------------------------------------------- */
+
+@import "./loading.css";
+@import "./inline-loading.css";
+@import "./progress-bar.css";
+@import "./progress-indicator.css";
+@import "./status.css";
+@import "./shape-indicator.css";
+@import "./icon-indicator.css";
+@import "./badge-indicator.css";
+
+/* --------------------------------------------------------------------------
+   Tags, tabs, switches, and compact controls
+   -------------------------------------------------------------------------- */
+
+@import "./tag.css";
+@import "./content-switcher.css";
+@import "./tabs.css";
+@import "./toggle.css";
+
+/* --------------------------------------------------------------------------
+   Form foundation and basic inputs
+   -------------------------------------------------------------------------- */
+
+@import "./form.css";
+@import "./form-controls.css";
+@import "./checkbox.css";
+@import "./radio-button.css";
+@import "./text-input.css";
+@import "./fluid-text-input.css";
+@import "./text-area.css";
+@import "./fluid-text-area.css";
+@import "./number-input.css";
+@import "./fluid-number-input.css";
+@import "./slider.css";
+
+/* --------------------------------------------------------------------------
+   Select, list box, dropdown, combo box, and multiselect
+   -------------------------------------------------------------------------- */
+
+@import "./select.css";
+@import "./fluid-select.css";
+@import "./list-box.css";
+@import "./fluid-list-box.css";
+@import "./dropdown.css";
+@import "./fluid-dropdown.css";
+@import "./combo-box.css";
+@import "./fluid-combo-box.css";
+@import "./multi-select.css";
+@import "./fluid-multi-select.css";
+@import "./search.css";
+@import "./fluid-search.css";
+
+/* --------------------------------------------------------------------------
+   Date, time, and file inputs
+   -------------------------------------------------------------------------- */
+
+@import "./flatpickr.css";
+@import "./date-picker.css";
+@import "./fluid-date-picker.css";
+@import "./time-picker.css";
+@import "./fluid-time-picker.css";
+@import "./file-uploader.css";
+
+/* --------------------------------------------------------------------------
+   Menus, overlays, popovers, and disclosure surfaces
+   -------------------------------------------------------------------------- */
+
+@import "./menu.css";
+@import "./overflow-menu.css";
+@import "./popover.css";
+@import "./tooltip.css";
+@import "./toggletip.css";
+@import "./dialog.css";
+@import "./modal.css";
+@import "./drawer.css";
+
+/* --------------------------------------------------------------------------
+   Navigation and structural components
+   -------------------------------------------------------------------------- */
+
+@import "./accordion.css";
+@import "./breadcrumb.css";
+@import "./pagination.css";
+@import "./pagination-nav.css";
+@import "./page-header.css";
+
+/* --------------------------------------------------------------------------
+   Lists, tiles, snippets, and content blocks
+   -------------------------------------------------------------------------- */
+
+@import "./list.css";
+@import "./contained-list.css";
+@import "./structured-list.css";
+@import "./tile.css";
+@import "./code-snippet.css";
+
+/* --------------------------------------------------------------------------
+   Tables
+   -------------------------------------------------------------------------- */
+
+@import "./data-table.css";
+@import "./data-table-toolbar.css";
+@import "./data-table-expandable.css";
+@import "./data-table-sort.css";
+@import "./data-table-skeleton.css";
+
+/* --------------------------------------------------------------------------
+   Notifications and alerts
+   -------------------------------------------------------------------------- */
+
+@import "./notification.css";
+@import "./inline-notification.css";
+@import "./toast-notification.css";
+@import "./actionable-notification.css";
+@import "./inline-alert.css";
+
+/* --------------------------------------------------------------------------
+   Shell and layout composition
+   -------------------------------------------------------------------------- */
+
+@import "./ui-shell/index.css";
+@import "./stack.css";
+
+/* --------------------------------------------------------------------------
+   Tree view
+   -------------------------------------------------------------------------- */
+
+@import "./tree-view.css";
+
+/*
+ * AI label / slug support remains optional.
+ * Keep disabled unless the AI label / slug decorator branch is intentionally active.
+ */
+/* @import "./ai-label.css"; */
+/* @import "./slug.css"; */

@@ -3,6 +3,9 @@
 namespace Tests;
 
 use App\Models\User;
+use App\Modules\Notifications\Services\NotificationPermissions;
+use App\Modules\Roles\Services\RoleCatalog;
+use App\Modules\Settings\Services\SettingsPermissions;
 use App\Support\ActiveBatchReviewQueue;
 use Database\Seeders\PlatformRolesAndPermissionsSeeder;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
@@ -28,7 +31,7 @@ abstract class TestCase extends BaseTestCase
 
         $this->seed(PlatformRolesAndPermissionsSeeder::class);
 
-        $user->syncRoles(['platform_super_admin']);
+        $user->syncRoles([RoleCatalog::SUPER_ADMIN]);
         $this->actingAs($user);
 
         return $user;
@@ -40,7 +43,16 @@ abstract class TestCase extends BaseTestCase
 
         $this->seed(PlatformRolesAndPermissionsSeeder::class);
 
-        $user->syncRoles(['platform_reviewer']);
+        $user->syncRoles([RoleCatalog::USER]);
+        $user->givePermissionTo([
+            'platform.audit-logs.view',
+            'platform.docs.view',
+            'platform.error-logs.view',
+            NotificationPermissions::VIEW,
+            'platform.security-checklist.view',
+            SettingsPermissions::VIEW,
+            'platform.users.view',
+        ]);
         $this->actingAs($user);
 
         return $user;
@@ -57,8 +69,8 @@ abstract class TestCase extends BaseTestCase
 
         File::put($queuePath, $this->activeBatchReviewQueueFixture($ids));
 
-        config()->set('platform.ui_reference.active_batch_review_source_path', $queuePath);
-        config()->set('platform.ui_reference.active_batch_review_manifest_path', $manifestPath);
+        config()->set('platform.active_batch_review.active_batch_review_source_path', $queuePath);
+        config()->set('platform.active_batch_review.active_batch_review_manifest_path', $manifestPath);
 
         ActiveBatchReviewQueue::clearCache();
         ActiveBatchReviewQueue::syncManifest();

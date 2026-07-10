@@ -1,33 +1,106 @@
 /* ==========================================================================
-File: resources/css/components/stack.css
-Purpose: Stack component styles.
-Carbon reference:
+   File: resources/css/components/stack.css
+   Purpose: Stack layout component styles.
 
-* reference/carbon-main/packages/styles/scss/components/stack/
-
-Notes:
-
-* Defines Stack selectors only.
-* Do not define primitive spacing tokens here.
-* Stack spacing consumes resources/css/tokens/spacing.css.
-  ========================================================================== */
+   Notes:
+   - Defines Stack selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Stack is a small composition component for consistent horizontal and
+     vertical spacing between child elements.
+   ========================================================================== */
 
 @layer components {
-    .ui-stack {
-        display: flex;
-        flex-direction: column;
-        gap: var(--ui-stack-gap, var(--ui-spacing-05));
-    }
-
     .ui-stack-horizontal {
-        flex-direction: row;
+        --ui-stack-gap: 0;
+
+        display: inline-grid;
+        grid-auto-flow: column;
+        column-gap: var(--ui-stack-gap);
+        align-items: center;
     }
 
-    .ui-stack-condensed {
+    .ui-stack-vertical {
+        --ui-stack-gap: 0;
+
+        display: grid;
+        grid-auto-flow: row;
+        row-gap: var(--ui-stack-gap);
+    }
+
+    .ui-stack-scale-01 {
+        --ui-stack-gap: var(--ui-spacing-01);
+    }
+
+    .ui-stack-scale-02 {
+        --ui-stack-gap: var(--ui-spacing-02);
+    }
+
+    .ui-stack-scale-03 {
         --ui-stack-gap: var(--ui-spacing-03);
     }
 
-    .ui-stack-spacious {
+    .ui-stack-scale-04 {
+        --ui-stack-gap: var(--ui-spacing-04);
+    }
+
+    .ui-stack-scale-05 {
+        --ui-stack-gap: var(--ui-spacing-05);
+    }
+
+    .ui-stack-scale-06 {
+        --ui-stack-gap: var(--ui-spacing-06);
+    }
+
+    .ui-stack-scale-07 {
         --ui-stack-gap: var(--ui-spacing-07);
+    }
+
+    .ui-stack-scale-08 {
+        --ui-stack-gap: var(--ui-spacing-08);
+    }
+
+    .ui-stack-scale-09 {
+        --ui-stack-gap: var(--ui-spacing-09);
+    }
+
+    .ui-stack-scale-10 {
+        --ui-stack-gap: var(--ui-spacing-10);
+    }
+
+    .ui-stack-scale-11 {
+        --ui-stack-gap: var(--ui-spacing-11);
+    }
+
+    .ui-stack-scale-12 {
+        --ui-stack-gap: var(--ui-spacing-12);
+    }
+
+    .ui-stack-scale-13 {
+        --ui-stack-gap: var(--ui-spacing-13);
+    }
+
+    .ui-stack-gap-0 {
+        --ui-stack-gap: 0;
+    }
+
+    .ui-stack-gap-xs {
+        --ui-stack-gap: var(--ui-spacing-02);
+    }
+
+    .ui-stack-gap-sm {
+        --ui-stack-gap: var(--ui-spacing-03);
+    }
+
+    .ui-stack-gap-md {
+        --ui-stack-gap: var(--ui-spacing-05);
+    }
+
+    .ui-stack-gap-lg {
+        --ui-stack-gap: var(--ui-spacing-07);
+    }
+
+    .ui-stack-gap-xl {
+        --ui-stack-gap: var(--ui-spacing-09);
     }
 }

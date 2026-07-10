@@ -1,277 +1,325 @@
 /* ==========================================================================
-File: resources/css/components/menu.css
-Purpose: Menu component styles.
-Carbon reference:
+   File: resources/css/components/menu.css
+   Purpose: Menu component styles.
 
-* reference/carbon-main/packages/styles/scss/components/menu/
-
-Notes:
-
-* Defines Menu selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Menu uses Popover-style floating surfaces.
-  ========================================================================== */
+   Notes:
+   - Defines Menu selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports open, shown, bordered, background-token, icon, selectable,
+     disabled, danger, size, group, radio-group, shortcut, and divider states.
+   ========================================================================== */
 
 @layer components {
-    .ui-menu-composition {
-        @apply relative inline-flex flex-col items-start gap-2;
-    }
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
 
     .ui-menu {
-        @apply z-20 min-w-56 rounded-lg border p-1 shadow-xl;
-        border-color: var(--ui-border-subtle-01);
-        background-color: var(--ui-layer-01);
-        color: var(--ui-text-primary);
-        list-style: none;
-        box-shadow: 0 16px 32px
-            color-mix(in srgb, var(--ui-shadow-color) 24%, transparent);
+        box-sizing: border-box;
+        position: fixed;
+        z-index: var(--ui-z-index-modal);
+        min-inline-size: 10rem;
+        max-inline-size: 18rem;
+        margin: 0;
+        border: 0;
+        padding: var(--ui-spacing-02) 0;
+        overflow-y: auto;
+        background-color: var(--ui-layer);
+        box-shadow: var(--ui-shadow-floating);
+        opacity: 0;
+        visibility: hidden;
     }
 
-    .ui-menu[hidden] {
+    .ui-menu *,
+    .ui-menu *::before,
+    .ui-menu *::after {
+        box-sizing: inherit;
+    }
+
+    .ui-menu-border,
+    .ui-menu--border {
+        outline: 1px solid var(--ui-border-subtle);
+    }
+
+    .ui-menu-background-token-background,
+    .ui-menu--background-token__background {
+        background-color: var(--ui-background);
+    }
+
+    .ui-menu-with-icons,
+    .ui-menu--with-icons {
+        min-inline-size: 12rem;
+    }
+
+    .ui-menu-open,
+    .ui-menu--open {
+        visibility: visible;
+    }
+
+    .ui-menu-open:focus,
+    .ui-menu--open:focus,
+    .ui-menu-open:focus-visible,
+    .ui-menu--open:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-menu:not(.ui-menu-open):not(.ui-menu--open) .ui-menu-open,
+    .ui-menu:not(.ui-menu-open):not(.ui-menu--open) .ui-menu--open {
+        visibility: hidden;
+    }
+
+    .ui-menu-shown,
+    .ui-menu--shown {
+        overflow: visible;
+        opacity: 1;
+    }
+
+    /* ----------------------------------------------------------------------
+       Sizes
+       ---------------------------------------------------------------------- */
+
+    .ui-menu-xs .ui-menu-item,
+    .ui-menu--xs .ui-menu-item {
+        block-size: 1.5rem;
+    }
+
+    .ui-menu-sm .ui-menu-item,
+    .ui-menu--sm .ui-menu-item {
+        block-size: 2rem;
+    }
+
+    .ui-menu-md .ui-menu-item,
+    .ui-menu--md .ui-menu-item {
+        block-size: 2.5rem;
+    }
+
+    .ui-menu-lg .ui-menu-item,
+    .ui-menu--lg .ui-menu-item {
+        block-size: 3rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Item
+       ---------------------------------------------------------------------- */
+
+    .ui-menu-item {
+        display: grid;
+        grid-template-columns: 1fr max-content;
+        align-items: center;
+        block-size: 2rem;
+        column-gap: var(--ui-spacing-03);
+        padding-inline: var(--ui-spacing-05);
+        color: var(--ui-text-secondary);
+        cursor: pointer;
+        font-size: var(--ui-type-body-01-font-size);
+        font-weight: var(--ui-type-body-01-font-weight);
+        line-height: var(--ui-type-body-01-line-height);
+        letter-spacing: var(--ui-type-body-01-letter-spacing);
+        transition: background-color var(--ui-duration-fast-01)
+            var(--ui-motion-standard-productive);
+    }
+
+    .ui-menu-item:focus,
+    .ui-menu-item:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-menu-item:hover {
+        background-color: var(--ui-layer-hover);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-menu-item-label,
+    .ui-menu-item__label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .ui-menu-item-shortcut,
+    .ui-menu-item__shortcut {
+        display: flex;
+    }
+
+    .ui-menu-item-icon,
+    .ui-menu-item__icon,
+    .ui-menu-item-selection-icon,
+    .ui-menu-item__selection-icon {
         display: none;
     }
 
-    .ui-menu-align-bottom-start,
-    .ui-menu-align-bottom-end,
-    .ui-menu-align-top-start,
-    .ui-menu-align-top-end {
-        @apply absolute;
+    .ui-menu-item-icon svg,
+    .ui-menu-item__icon svg,
+    .ui-menu-item-selection-icon svg,
+    .ui-menu-item__selection-icon svg {
+        fill: currentColor;
     }
 
-    .ui-menu-align-bottom-start {
-        inset-block-start: calc(100% + 0.375rem);
-        inset-inline-start: 0;
+    /* ----------------------------------------------------------------------
+       Groups
+       ---------------------------------------------------------------------- */
+
+    .ui-menu-item-group > ul,
+    .ui-menu-item-radio-group > ul {
+        box-sizing: border-box;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        list-style: none;
     }
 
-    .ui-menu-align-bottom-end {
-        inset-block-start: calc(100% + 0.375rem);
-        inset-inline-end: 0;
+    /* ----------------------------------------------------------------------
+       Icon / selectable item layouts
+       ---------------------------------------------------------------------- */
+
+    .ui-menu-with-icons > .ui-menu-item,
+    .ui-menu--with-icons > .ui-menu-item,
+    .ui-menu-with-icons > .ui-menu-item-group > ul > .ui-menu-item,
+    .ui-menu--with-icons > .ui-menu-item-group > ul > .ui-menu-item,
+    .ui-menu-with-icons > .ui-menu-item-radio-group > ul > .ui-menu-item,
+    .ui-menu--with-icons > .ui-menu-item-radio-group > ul > .ui-menu-item,
+    .ui-menu-with-selectable-items > .ui-menu-item,
+    .ui-menu--with-selectable-items > .ui-menu-item,
+    .ui-menu-with-selectable-items > .ui-menu-item-group > ul > .ui-menu-item,
+    .ui-menu--with-selectable-items > .ui-menu-item-group > ul > .ui-menu-item,
+    .ui-menu-with-selectable-items
+        > .ui-menu-item-radio-group
+        > ul
+        > .ui-menu-item,
+    .ui-menu--with-selectable-items
+        > .ui-menu-item-radio-group
+        > ul
+        > .ui-menu-item {
+        grid-template-columns: 1rem 1fr max-content;
     }
 
-    .ui-menu-align-top-start {
-        inset-block-end: calc(100% + 0.375rem);
-        inset-inline-start: 0;
+    .ui-menu-with-icons > .ui-menu-item > .ui-menu-item-icon,
+    .ui-menu--with-icons > .ui-menu-item > .ui-menu-item__icon,
+    .ui-menu-with-icons
+        > .ui-menu-item-group
+        > ul
+        > .ui-menu-item
+        > .ui-menu-item-icon,
+    .ui-menu--with-icons
+        > .ui-menu-item-group
+        > ul
+        > .ui-menu-item
+        > .ui-menu-item__icon,
+    .ui-menu-with-icons
+        > .ui-menu-item-radio-group
+        > ul
+        > .ui-menu-item
+        > .ui-menu-item-icon,
+    .ui-menu--with-icons
+        > .ui-menu-item-radio-group
+        > ul
+        > .ui-menu-item
+        > .ui-menu-item__icon,
+    .ui-menu-with-selectable-items
+        > .ui-menu-item
+        > .ui-menu-item-selection-icon,
+    .ui-menu--with-selectable-items
+        > .ui-menu-item
+        > .ui-menu-item__selection-icon,
+    .ui-menu-with-selectable-items
+        > .ui-menu-item-group
+        > ul
+        > .ui-menu-item
+        > .ui-menu-item-selection-icon,
+    .ui-menu--with-selectable-items
+        > .ui-menu-item-group
+        > ul
+        > .ui-menu-item
+        > .ui-menu-item__selection-icon,
+    .ui-menu-with-selectable-items
+        > .ui-menu-item-radio-group
+        > ul
+        > .ui-menu-item
+        > .ui-menu-item-selection-icon,
+    .ui-menu--with-selectable-items
+        > .ui-menu-item-radio-group
+        > ul
+        > .ui-menu-item
+        > .ui-menu-item__selection-icon {
+        display: flex;
     }
 
-    .ui-menu-align-top-end {
-        inset-block-end: calc(100% + 0.375rem);
-        inset-inline-end: 0;
+    .ui-menu-with-icons.ui-menu-with-selectable-items > .ui-menu-item,
+    .ui-menu--with-icons.ui-menu--with-selectable-items > .ui-menu-item,
+    .ui-menu-with-icons.ui-menu-with-selectable-items
+        > .ui-menu-item-group
+        > ul
+        > .ui-menu-item,
+    .ui-menu--with-icons.ui-menu--with-selectable-items
+        > .ui-menu-item-group
+        > ul
+        > .ui-menu-item,
+    .ui-menu-with-icons.ui-menu-with-selectable-items
+        > .ui-menu-item-radio-group
+        > ul
+        > .ui-menu-item,
+    .ui-menu--with-icons.ui-menu--with-selectable-items
+        > .ui-menu-item-radio-group
+        > ul
+        > .ui-menu-item {
+        grid-template-columns: 1rem 1rem 1fr max-content;
     }
 
-    .ui-menu-item {
-        @apply flex w-full items-center gap-2 rounded-md border border-transparent text-left text-sm font-medium transition focus-visible:outline-none;
-        color: var(--ui-text-primary);
-        background-color: transparent;
-        cursor: pointer;
-        line-height: var(--ui-type-body-compact-01-line-height);
-        text-decoration: none;
-    }
+    /* ----------------------------------------------------------------------
+       Disabled / danger
+       ---------------------------------------------------------------------- */
 
-    .ui-menu-item-xs {
-        min-block-size: 1.5rem;
-        padding: 0.1875rem 0.5rem;
-        font-size: 0.75rem;
-    }
-
-    .ui-menu-item-sm {
-        min-block-size: 2rem;
-        padding: 0.375rem 0.625rem;
-    }
-
-    .ui-menu-item-md {
-        min-block-size: 2.5rem;
-        padding: 0.5rem 0.75rem;
-    }
-
-    .ui-menu-item-lg {
-        min-block-size: 3rem;
-        padding: 0.625rem 0.875rem;
-    }
-
-    .ui-menu-item:hover,
-    .ui-menu-item.is-hover,
-    .ui-menu-item.is-focus-hover {
-        background-color: var(--ui-layer-hover-01);
-        color: var(--ui-text-primary);
-    }
-
-    .ui-menu-item:focus-visible,
-    .ui-menu-item.is-focus,
-    .ui-menu-item.is-focus-hover {
-        outline: 2px solid var(--ui-focus);
-        outline-offset: -2px;
-    }
-
-    .ui-menu-item.is-selected,
-    .ui-menu-item-current,
-    .ui-menu-item[data-ui-current="true"] {
-        background-color: var(--ui-layer-selected-01);
-        color: var(--ui-text-primary);
-    }
-
-    .ui-menu-item-primary {
-        color: var(--ui-action-outline-primary-text);
-    }
-
-    .ui-menu-item-primary:hover,
-    .ui-menu-item-primary:focus-visible {
-        background-color: var(--ui-action-outline-primary-bg-hover);
-    }
-
-    .ui-menu-item-success {
-        color: var(--ui-action-outline-success-text);
-    }
-
-    .ui-menu-item-success:hover,
-    .ui-menu-item-success:focus-visible {
-        background-color: var(--ui-action-outline-success-bg-hover);
-    }
-
-    .ui-menu-item-warning {
-        color: var(--ui-action-outline-warning-text);
-    }
-
-    .ui-menu-item-warning:hover,
-    .ui-menu-item-warning:focus-visible {
-        background-color: var(--ui-action-outline-warning-bg-hover);
-    }
-
-    .ui-menu-item-notice {
-        color: var(--ui-action-outline-notice-text);
-    }
-
-    .ui-menu-item-notice:hover,
-    .ui-menu-item-notice:focus-visible {
-        background-color: var(--ui-action-outline-notice-bg-hover);
-    }
-
-    .ui-menu-item-info {
-        color: var(--ui-action-outline-info-text);
-    }
-
-    .ui-menu-item-info:hover,
-    .ui-menu-item-info:focus-visible {
-        background-color: var(--ui-action-outline-info-bg-hover);
-    }
-
-    .ui-menu-item-danger {
-        color: var(--ui-action-outline-danger-text);
-    }
-
-    .ui-menu-item-danger:hover,
-    .ui-menu-item-danger:focus-visible,
-    .ui-menu-item.is-danger-hover,
-    .ui-menu-item.is-danger-focus-hover {
-        background-color: var(--ui-action-soft-danger-bg-hover);
-        color: var(--ui-action-outline-danger-text);
-    }
-
-    .ui-menu-item.is-danger-focus-hover {
-        outline: 2px solid var(--ui-focus);
-        outline-offset: -2px;
-    }
-
-    .ui-menu-item:disabled,
-    .ui-menu-item[aria-disabled="true"],
     .ui-menu-item-disabled,
-    .ui-menu-item[data-ui-menu-item-state="disabled"] {
+    .ui-menu-item--disabled,
+    .ui-menu-item[aria-disabled="true"],
+    .ui-menu-item[data-disabled="true"],
+    .ui-menu-item[data-ui-disabled="true"] {
+        color: var(--ui-text-disabled);
         cursor: not-allowed;
-        background-color: transparent;
-        color: color-mix(
-            in srgb,
-            var(--ui-text-disabled) 42%,
-            var(--ui-background)
-        );
     }
 
-    .ui-menu-item:disabled:hover,
-    .ui-menu-item[aria-disabled="true"]:hover,
     .ui-menu-item-disabled:hover,
-    .ui-menu-item[data-ui-menu-item-state="disabled"]:hover {
-        background-color: transparent;
-        color: color-mix(
-            in srgb,
-            var(--ui-text-disabled) 42%,
-            var(--ui-background)
+    .ui-menu-item--disabled:hover,
+    .ui-menu-item[aria-disabled="true"]:hover,
+    .ui-menu-item[data-disabled="true"]:hover,
+    .ui-menu-item[data-ui-disabled="true"]:hover,
+    .ui-menu-item-disabled.ui-menu-item-danger:hover,
+    .ui-menu-item--disabled.ui-menu-item--danger:hover,
+    .ui-menu-item[aria-disabled="true"].ui-menu-item-danger:hover,
+    .ui-menu-item[aria-disabled="true"].ui-menu-item--danger:hover {
+        background-color: var(--ui-layer);
+        color: var(--ui-text-disabled);
+    }
+
+    .ui-menu-item-danger:focus,
+    .ui-menu-item-danger:hover,
+    .ui-menu-item--danger:focus,
+    .ui-menu-item--danger:hover {
+        background-color: var(
+            --ui-button-danger-primary,
+            var(--ui-support-error)
         );
+        color: var(--ui-text-on-color);
     }
 
-    .ui-menu-item:disabled .ui-menu-item-check,
-    .ui-menu-item:disabled .ui-menu-item-submenu,
-    .ui-menu-item:disabled .ui-menu-item-shortcut,
-    .ui-menu-item[aria-disabled="true"] .ui-menu-item-check,
-    .ui-menu-item[aria-disabled="true"] .ui-menu-item-submenu,
-    .ui-menu-item[aria-disabled="true"] .ui-menu-item-shortcut,
-    .ui-menu-item-disabled .ui-menu-item-check,
-    .ui-menu-item-disabled .ui-menu-item-submenu,
-    .ui-menu-item-disabled .ui-menu-item-shortcut,
-    .ui-menu-item[data-ui-menu-item-state="disabled"] .ui-menu-item-check,
-    .ui-menu-item[data-ui-menu-item-state="disabled"] .ui-menu-item-submenu,
-    .ui-menu-item[data-ui-menu-item-state="disabled"] .ui-menu-item-shortcut {
-        background-color: transparent;
-        color: currentColor;
-    }
+    /* ----------------------------------------------------------------------
+       Divider
+       ---------------------------------------------------------------------- */
 
-    .ui-menu-item-label {
-        @apply min-w-0 flex-1 truncate;
-    }
-
-    .ui-menu-item-check,
-    .ui-menu-item-submenu {
-        @apply inline-flex shrink-0 items-center justify-center font-semibold;
-        inline-size: 1rem;
-        color: var(--ui-icon-secondary);
-    }
-
-    .ui-menu-item-check-icon,
-    .ui-menu-item-submenu-icon {
-        @apply h-4 w-4;
-    }
-
-    .ui-menu-item-shortcut {
-        @apply shrink-0 rounded px-1.5 py-0.5 text-[0.68rem] font-semibold;
-        background-color: var(--ui-layer-accent-01);
-        color: var(--ui-text-helper);
-    }
-
-    .ui-menu-divider {
+    .ui-menu-item-divider {
+        display: block;
+        inline-size: 100%;
         block-size: 1px;
-        margin-block: 0.375rem;
-        border-block-start: 1px solid var(--ui-border-subtle-01);
+        margin-block: var(--ui-spacing-02);
+        background-color: var(--ui-border-subtle);
     }
 
-    .ui-menu-submenu-group {
-        @apply relative;
-    }
-
-    .ui-menu-submenu-panel {
-        @apply absolute z-30;
-        inset-block-start: -0.25rem;
-        inset-inline-start: calc(100% + 0.25rem);
-    }
-
-    .ui-menu-submenu-group:hover > .ui-menu-submenu-panel,
-    .ui-menu-submenu-panel[data-ui-menu-submenu-open="true"] {
-        display: grid;
-    }
-
-    .ui-menu-composition-rtl .ui-menu,
-    .ui-menu[dir="rtl"] {
-        direction: rtl;
-        text-align: start;
-    }
-
-    .ui-menu-composition-rtl .ui-menu-submenu-panel,
-    .ui-menu[dir="rtl"] .ui-menu-submenu-panel {
-        inset-inline-start: auto;
-        inset-inline-end: calc(100% + 0.25rem);
-    }
-
-    .ui-menu-composition-rtl .ui-menu-item-submenu-icon,
-    .ui-menu[dir="rtl"] .ui-menu-item-submenu-icon {
-        transform: rotate(180deg);
-    }
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
 
     @media (prefers-reduced-motion: reduce) {
         .ui-menu-item {
@@ -279,4 +327,39 @@ Notes:
         }
     }
 
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-menu {
+            outline: 1px solid CanvasText;
+        }
+
+        .ui-menu-open:focus,
+        .ui-menu--open:focus,
+        .ui-menu-open:focus-visible,
+        .ui-menu--open:focus-visible,
+        .ui-menu-item:focus,
+        .ui-menu-item:focus-visible {
+            outline-color: Highlight;
+        }
+
+        .ui-menu-item-disabled,
+        .ui-menu-item--disabled,
+        .ui-menu-item[aria-disabled="true"],
+        .ui-menu-item[data-disabled="true"],
+        .ui-menu-item[data-ui-disabled="true"] {
+            color: GrayText;
+        }
+
+        .ui-menu-item-danger:focus,
+        .ui-menu-item-danger:hover,
+        .ui-menu-item--danger:focus,
+        .ui-menu-item--danger:hover {
+            forced-color-adjust: none;
+            background-color: Mark;
+            color: Canvas;
+        }
+    }
 }

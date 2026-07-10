@@ -1,0 +1,265 @@
+<?php
+
+declare(strict_types=1);
+
+use App\Surfaces\Contracts\Surface;
+
+/*
+|--------------------------------------------------------------------------
+| File: {{ contractPath }}
+| Purpose: {{ label }} Component public API contract.
+|--------------------------------------------------------------------------
+|
+| This contract declares the public {{ label }} API that can be called from
+| Blade, validated by tooling, and consumed by app layouts or Patterns.
+|
+| Rendered evidence pages, examples/proofs, testing status, and manual review
+| state are intentionally owned outside this contract.
+|
+*/
+
+return Surface::component([
+    /*
+    |--------------------------------------------------------------------------
+    | Identity
+    |--------------------------------------------------------------------------
+    */
+
+    'identity' => [
+        'slug' => '{{ component }}',
+        'label' => '{{ label }}',
+        'component' => 'x-ui.{{ component }}',
+        'summary' => '{{ purpose }}',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Lifecycle
+    |--------------------------------------------------------------------------
+    */
+
+    'lifecycle' => [
+        'status' => 'provisional',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Public Blade API
+    |--------------------------------------------------------------------------
+    */
+
+    'api' => [
+        'usage_context' => '{{ usageContext }}',
+
+        'props' => [
+            /*
+            [
+                'name' => 'propName',
+                'type' => 'string|null',
+                'required' => false,
+                'default' => null,
+                'values' => [],
+                'description' => 'Describe the public behavior.',
+            ],
+            */
+        ],
+
+        'slots' => [
+            /*
+            [
+                'name' => 'default',
+                'required' => false,
+                'description' => 'Describe the approved slot content.',
+            ],
+            */
+        ],
+
+        'events' => [],
+
+        'data_attributes' => [
+            [
+                'name' => 'data-ui-component',
+                'required' => true,
+                'value' => '{{ component }}',
+                'description' => 'Generated root component marker.',
+            ],
+            [
+                'name' => 'data-ui-{{ component }}',
+                'required' => true,
+                'description' => 'Generated component behavior and query hook.',
+            ],
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | CSS Class Contract
+    |--------------------------------------------------------------------------
+    */
+
+    'class_contract' => [
+        'root' => 'ui-{{ component }}',
+        'required' => [
+            'ui-{{ component }}',
+        ],
+        'optional' => [],
+        'internal' => [],
+        'deprecated' => [],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Variants
+    |--------------------------------------------------------------------------
+    */
+
+    'variants' => [
+        'default' => [
+            'label' => 'Default',
+            'api' => [],
+            'description' => 'Default {{ label }} presentation.',
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Sizes
+    |--------------------------------------------------------------------------
+    */
+
+    'sizes' => [],
+
+    /*
+    |--------------------------------------------------------------------------
+    | States
+    |--------------------------------------------------------------------------
+    */
+
+    'states' => [
+        'default' => [
+            'label' => 'Default',
+            'required' => true,
+            'description' => 'Default {{ label }} state.',
+        ],
+        'focus-visible' => [
+            'label' => 'Focus-visible',
+            'required' => false,
+            'description' => 'Visible keyboard focus state when the component is interactive.',
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Public Token / Utility Surface
+    |--------------------------------------------------------------------------
+    */
+
+    'tokens' => [
+        'class_families' => [
+            'ui-{{ component }}',
+        ],
+        'component_tokens' => [
+            '{{ component }}',
+        ],
+        'deprecated' => [],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Dependencies
+    |--------------------------------------------------------------------------
+    */
+
+    'dependencies' => [
+        'depends_on' => [
+            'color',
+            'themes',
+            'spacing',
+            'typography',
+        ],
+        'uses' => [
+            'icons' => [],
+            'components' => [],
+            'js_initializers' => [
+                '{{ initializer }}',
+            ],
+        ],
+        'blocks' => [],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Accessibility Requirements
+    |--------------------------------------------------------------------------
+    */
+
+    'accessibility' => [
+        'keyboard' => [
+            /*
+             * Add source-proven keyboard requirements.
+             */
+        ],
+        'aria' => [
+            /*
+             * Add source-proven ARIA requirements.
+             */
+        ],
+        'focus' => [
+            /*
+             * Add source-proven focus requirements.
+             */
+        ],
+        'screen_reader' => [
+            /*
+             * Add source-proven screen-reader requirements.
+             */
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Deprecations / Compatibility Aliases
+    |--------------------------------------------------------------------------
+    */
+
+    'deprecations' => [
+        'props' => [],
+        'classes' => [],
+        'components' => [],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Enforcement
+    |--------------------------------------------------------------------------
+    */
+
+    'enforcement' => [
+        'mode' => 'legacy-compatible',
+        'invalid_usage' => 'warn',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Source
+    |--------------------------------------------------------------------------
+    */
+
+    'source' => [
+        'blade' => [
+            '{{ bladePath }}',
+        ],
+        'css' => [
+            '{{ cssPath }}',
+        ],
+        'js' => [
+            '{{ jsPath }}',
+        ],
+        'contract' => [
+            '{{ contractPath }}',
+        ],
+        'docs' => [
+            '{{ docsPath }}',
+        ],
+    ],
+]);

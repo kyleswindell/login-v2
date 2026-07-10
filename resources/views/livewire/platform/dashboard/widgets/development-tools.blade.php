@@ -1,4 +1,4 @@
-<x-ui.patterns.widget-shell
+<x-patterns.widget-shell
     title="Development Tools"
     description="Testing and diagnostic utilities for platform development."
     :meta="['Action widget']"
@@ -18,4 +18,4 @@
             </x-ui.button>
         </div>
     </div>
-</x-ui.patterns.widget-shell>
+</x-patterns.widget-shell>

@@ -1,0 +1,27 @@
+/* ==========================================================================
+   File: resources/css/base/component-reset.css
+   Purpose: Component root reset utility.
+   Notes:
+   - Defines reusable component reset behavior only.
+   - Use on component roots when browser/default element styling should be
+     neutralized before component styles are applied.
+   - Native button/control reset behavior belongs in control-reset.css.
+   ========================================================================== */
+
+@layer base {
+    :where(.ui-component-reset) {
+        box-sizing: border-box;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        font-family: inherit;
+        font-size: 100%;
+        vertical-align: baseline;
+    }
+
+    :where(.ui-component-reset *),
+    :where(.ui-component-reset *::before),
+    :where(.ui-component-reset *::after) {
+        box-sizing: inherit;
+    }
+}

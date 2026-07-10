@@ -1,0 +1,23 @@
+{{-- ==========================================================================
+    File: {{ path }}
+    Purpose: {{ purpose }}
+
+    Notes:
+    - This URL view receives display-ready data from its controller, Livewire
+      component, ViewModel, or PageData owner.
+    - Compose approved layouts, shell components, Patterns, and UI components.
+    - Do not perform database queries, authorization decisions, or mutations here.
+    ========================================================================== --}}
+
+<x-layouts.app
+    title="{{ title }}"
+    page-title="{{ title }}"
+    page-subtitle="{{ subtitle }}"
+>
+    {{-- ----------------------------------------------------------------------
+        Page content
+        ----------------------------------------------------------------------
+        Replace this comment with approved shell, Pattern, and UI component
+        composition. Keep the URL view thin.
+        ---------------------------------------------------------------------- --}}
+</x-layouts.app>

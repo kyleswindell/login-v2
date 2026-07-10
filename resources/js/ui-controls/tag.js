@@ -9,20 +9,23 @@ const setSelected = (tag, selected) => {
     tag.setAttribute('aria-pressed', selected ? 'true' : 'false');
 };
 
-const closeDisclosure = (trigger) => {
+const setExpanded = (trigger, expanded) => {
     const targetId = trigger.dataset.uiTagDisclosureTarget;
     const panel = targetId ? document.getElementById(targetId) : null;
 
-    trigger.setAttribute('aria-expanded', 'false');
+    trigger.dataset.uiTagExpanded = expanded ? 'true' : 'false';
+    trigger.setAttribute('aria-expanded', expanded ? 'true' : 'false');
 
     if (panel) {
-        panel.hidden = true;
+        panel.hidden = !expanded;
     }
 };
 
+const closeDisclosure = (trigger) => {
+    setExpanded(trigger, false);
+};
+
 const toggleDisclosure = (trigger) => {
-    const targetId = trigger.dataset.uiTagDisclosureTarget;
-    const panel = targetId ? document.getElementById(targetId) : null;
     const isOpen = trigger.getAttribute('aria-expanded') === 'true';
 
     document.querySelectorAll(operationalSelector).forEach((otherTrigger) => {
@@ -31,11 +34,7 @@ const toggleDisclosure = (trigger) => {
         }
     });
 
-    trigger.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
-
-    if (panel) {
-        panel.hidden = isOpen;
-    }
+    setExpanded(trigger, !isOpen);
 };
 
 const initDismissibleTags = (root) => {
@@ -74,7 +73,7 @@ const initSelectableTags = (root) => {
             }
 
             const group = tag.closest('[data-ui-tag-group]');
-            const mode = group?.dataset.uiTagSelectionMode;
+            const mode = group?.dataset.uiTagGroupSelectionMode;
             const nextSelected = tag.getAttribute('aria-pressed') !== 'true';
 
             if (mode === 'single' && nextSelected && group) {
@@ -97,7 +96,10 @@ const initOperationalTags = (root) => {
         }
 
         trigger.dataset.uiTagOperationalInit = '1';
-        closeDisclosure(trigger);
+        setExpanded(
+            trigger,
+            trigger.dataset.uiTagExpanded === 'true' || trigger.getAttribute('aria-expanded') === 'true',
+        );
 
         trigger.addEventListener('click', () => {
             if (!trigger.disabled) {

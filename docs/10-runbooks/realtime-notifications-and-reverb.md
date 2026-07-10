@@ -121,7 +121,7 @@ If Reverb is unavailable, the command may still create the database row without 
 
 Run:
 
-    docker compose up -d reverb
+    docker compose up -d reverb queue
     docker compose exec app php artisan local:ready
 
 For LAN review:
@@ -136,6 +136,14 @@ For LAN review:
     journalctl -u platform-reverb -n 200 --no-pager
 
 ### Queue Worker
+
+For Docker:
+
+    docker compose logs queue --tail=200
+    docker compose restart queue
+    docker compose exec app php artisan queue:failed
+
+For staging:
 
     sudo systemctl status platform-queue-worker --no-pager
     journalctl -u platform-queue-worker -n 200 --no-pager

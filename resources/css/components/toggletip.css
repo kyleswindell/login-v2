@@ -1,45 +1,390 @@
 /* ==========================================================================
-File: resources/css/components/toggletip.css
-Purpose: Toggletip component styles.
-Carbon reference:
+   File: resources/css/components/toggletip.css
+   Purpose: Toggletip component styles.
 
-* reference/carbon-main/packages/styles/scss/components/toggletip/
+   Carbon reference:
+   - reference/carbon-main/packages/styles/scss/components/toggletip/
 
-Notes:
-
-* Defines Toggletip selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Toggletip composes Popover behavior.
-  ========================================================================== */
+   Notes:
+   - Defines Toggletip selectors only.
+   - Toggletip composes Popover structure.
+   - The popover panel includes a caret.
+   - Toggletip opens on click, not hover.
+   ========================================================================== */
 
 @layer components {
-    .ui-toggletip {
-        position: relative;
-        display: inline-flex;
+    /* ----------------------------------------------------------------------
+       Label
+       ---------------------------------------------------------------------- */
+
+    .ui-toggletip-label {
+        margin-inline-end: var(--ui-spacing-03);
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-label-01-font-size);
+        font-weight: var(--ui-type-label-01-font-weight);
+        line-height: var(--ui-type-label-01-line-height);
+        letter-spacing: var(--ui-type-label-01-letter-spacing);
     }
 
-    .ui-toggletip-button {
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
+    .ui-toggletip {
+        --ui-popover-offset: 0.8125rem; /* 13px, matching Carbon toggletip */
+        --ui-toggletip-panel-background: var(--ui-layer-02);
+        --ui-toggletip-panel-color: var(--ui-text-secondary);
+        --ui-toggletip-panel-border-color: var(--ui-border-subtle-01);
+        --ui-toggletip-caret-size: 0.5rem;
+
+        position: relative;
         display: inline-flex;
         align-items: center;
+        vertical-align: middle;
+    }
+
+    .ui-toggletip--high-contrast {
+        --ui-toggletip-panel-background: var(--ui-background-inverse);
+        --ui-toggletip-panel-color: var(--ui-text-inverse);
+        --ui-toggletip-panel-border-color: var(--ui-background-inverse);
+    }
+
+    /* ----------------------------------------------------------------------
+       Trigger button
+       ---------------------------------------------------------------------- */
+
+    .ui-toggletip-button {
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
         justify-content: center;
+        inline-size: 1rem;
+        block-size: 1rem;
+        margin: 0;
         border: 0;
         padding: 0;
+        appearance: none;
         background: transparent;
         color: var(--ui-icon-secondary);
         cursor: pointer;
+        font: inherit;
     }
 
-    .ui-toggletip-button:hover {
+    .ui-toggletip-button svg,
+    .ui-toggletip-button .ui-icon,
+    .ui-toggletip-button__icon {
+        display: block;
+        inline-size: 1rem;
+        block-size: 1rem;
+        color: inherit;
+        fill: currentColor;
+    }
+
+    .ui-toggletip-button:hover,
+    .ui-toggletip--open .ui-toggletip-button {
         color: var(--ui-icon-primary);
     }
 
+    .ui-toggletip-button:focus,
     .ui-toggletip-button:focus-visible {
         outline: 2px solid var(--ui-focus);
         outline-offset: 2px;
     }
 
+    /* ----------------------------------------------------------------------
+       Popover wrapper
+       ---------------------------------------------------------------------- */
+
+    .ui-popover-container.ui-toggletip {
+        position: relative;
+    }
+
+    .ui-popover-container.ui-toggletip > .ui-popover {
+        position: absolute;
+        z-index: var(--ui-z-index-floating);
+        display: block;
+        inline-size: max-content;
+        max-inline-size: min(18rem, calc(100vw - 2rem));
+        inset: auto;
+        margin: 0;
+        transform: none;
+    }
+
+    .ui-popover-container.ui-toggletip > .ui-popover > .ui-popover-content {
+        position: relative;
+        inset: auto;
+        margin: 0;
+        transform: none;
+    }
+
+    .ui-toggletip .ui-popover-content[hidden] {
+        display: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Placement
+       ---------------------------------------------------------------------- */
+
+    .ui-popover-container.ui-toggletip.ui-popover--right > .ui-popover,
+    .ui-popover-container.ui-toggletip.ui-popover--right-start > .ui-popover,
+    .ui-popover-container.ui-toggletip.ui-popover--right-end > .ui-popover {
+        inset-inline-start: calc(100% + var(--ui-popover-offset));
+    }
+
+    .ui-popover-container.ui-toggletip.ui-popover--right > .ui-popover {
+        inset-block-start: 50%;
+        transform: translateY(-50%);
+    }
+
+    .ui-popover-container.ui-toggletip.ui-popover--right-start > .ui-popover {
+        inset-block-start: 0;
+    }
+
+    .ui-popover-container.ui-toggletip.ui-popover--right-end > .ui-popover {
+        inset-block-end: 0;
+    }
+
+    .ui-popover-container.ui-toggletip.ui-popover--left > .ui-popover,
+    .ui-popover-container.ui-toggletip.ui-popover--left-start > .ui-popover,
+    .ui-popover-container.ui-toggletip.ui-popover--left-end > .ui-popover {
+        inset-inline-end: calc(100% + var(--ui-popover-offset));
+    }
+
+    .ui-popover-container.ui-toggletip.ui-popover--left > .ui-popover {
+        inset-block-start: 50%;
+        transform: translateY(-50%);
+    }
+
+    .ui-popover-container.ui-toggletip.ui-popover--left-start > .ui-popover {
+        inset-block-start: 0;
+    }
+
+    .ui-popover-container.ui-toggletip.ui-popover--left-end > .ui-popover {
+        inset-block-end: 0;
+    }
+
+    .ui-popover-container.ui-toggletip.ui-popover--bottom > .ui-popover,
+    .ui-popover-container.ui-toggletip.ui-popover--bottom-start > .ui-popover,
+    .ui-popover-container.ui-toggletip.ui-popover--bottom-end > .ui-popover {
+        inset-block-start: calc(100% + var(--ui-popover-offset));
+    }
+
+    .ui-popover-container.ui-toggletip.ui-popover--bottom > .ui-popover {
+        inset-inline-start: 50%;
+        transform: translateX(-50%);
+    }
+
+    .ui-popover-container.ui-toggletip.ui-popover--bottom-start > .ui-popover {
+        inset-inline-start: 0;
+    }
+
+    .ui-popover-container.ui-toggletip.ui-popover--bottom-end > .ui-popover {
+        inset-inline-end: 0;
+    }
+
+    .ui-popover-container.ui-toggletip.ui-popover--top > .ui-popover,
+    .ui-popover-container.ui-toggletip.ui-popover--top-start > .ui-popover,
+    .ui-popover-container.ui-toggletip.ui-popover--top-end > .ui-popover {
+        inset-block-end: calc(100% + var(--ui-popover-offset));
+    }
+
+    .ui-popover-container.ui-toggletip.ui-popover--top > .ui-popover {
+        inset-inline-start: 50%;
+        transform: translateX(-50%);
+    }
+
+    .ui-popover-container.ui-toggletip.ui-popover--top-start > .ui-popover {
+        inset-inline-start: 0;
+    }
+
+    .ui-popover-container.ui-toggletip.ui-popover--top-end > .ui-popover {
+        inset-inline-end: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Panel
+       ---------------------------------------------------------------------- */
+
+    .ui-toggletip-popover-content {
+        position: relative;
+        display: block;
+        box-sizing: border-box;
+        inline-size: max-content;
+        max-inline-size: min(18rem, calc(100vw - 2rem));
+        border: 1px solid var(--ui-toggletip-panel-border-color);
+        background-color: var(--ui-toggletip-panel-background);
+        color: var(--ui-toggletip-panel-color);
+        box-shadow: var(
+            --ui-shadow-popover,
+            0 0.25rem 1rem rgba(0, 0, 0, 0.24)
+        );
+    }
+
     .ui-toggletip-content {
-        min-inline-size: 12rem;
+        display: grid;
+        max-inline-size: 18rem;
+        padding: var(--ui-spacing-05);
+        color: inherit;
+        font-size: var(--ui-type-body-01-font-size);
+        font-weight: var(--ui-type-body-01-font-weight);
+        line-height: var(--ui-type-body-01-line-height);
+        letter-spacing: var(--ui-type-body-01-letter-spacing);
+        row-gap: var(--ui-spacing-05);
+    }
+
+    .ui-toggletip-content p {
+        margin: 0;
+        font-size: var(--ui-type-body-01-font-size);
+        font-weight: var(--ui-type-body-01-font-weight);
+        line-height: var(--ui-type-body-01-line-height);
+        letter-spacing: var(--ui-type-body-01-letter-spacing);
+    }
+
+    .ui-toggletip-content .ui-link,
+    .ui-toggletip-actions .ui-link {
+        color: var(--ui-link-inverse, var(--ui-link-primary));
+    }
+
+    .ui-toggletip-content .ui-link:hover,
+    .ui-toggletip-actions .ui-link:hover {
+        color: var(--ui-link-inverse-hover, var(--ui-link-primary-hover));
+    }
+
+    .ui-toggletip-content .ui-link:focus,
+    .ui-toggletip-actions .ui-link:focus {
+        outline-color: var(--ui-focus-inverse, var(--ui-focus));
+    }
+
+    /* ----------------------------------------------------------------------
+       Actions
+       ---------------------------------------------------------------------- */
+
+    .ui-toggletip-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        column-gap: var(--ui-spacing-05);
+        padding: 0 var(--ui-spacing-05) var(--ui-spacing-05);
+    }
+
+    .ui-toggletip-close {
+        color: var(--ui-link-inverse, var(--ui-link-primary));
+        font-size: var(--ui-type-body-compact-01-font-size);
+        line-height: var(--ui-type-body-compact-01-line-height);
+    }
+
+    /* ----------------------------------------------------------------------
+       Caret
+       ---------------------------------------------------------------------- */
+
+    .ui-toggletip .ui-popover-caret {
+        position: absolute;
+        display: block;
+        inline-size: var(--ui-toggletip-caret-size);
+        block-size: var(--ui-toggletip-caret-size);
+        background-color: var(--ui-toggletip-panel-background);
+        border: 1px solid var(--ui-toggletip-panel-border-color);
+        transform: rotate(45deg);
+        pointer-events: none;
+    }
+
+    .ui-toggletip.ui-popover--right .ui-popover-caret,
+    .ui-toggletip.ui-popover--right-start .ui-popover-caret,
+    .ui-toggletip.ui-popover--right-end .ui-popover-caret {
+        inset-inline-start: calc(var(--ui-toggletip-caret-size) / -2);
+        border-block-start: 0;
+        border-inline-end: 0;
+    }
+
+    .ui-toggletip.ui-popover--right .ui-popover-caret {
+        inset-block-start: 50%;
+        transform: translateY(-50%) rotate(45deg);
+    }
+
+    .ui-toggletip.ui-popover--right-start .ui-popover-caret {
+        inset-block-start: var(--ui-spacing-04);
+    }
+
+    .ui-toggletip.ui-popover--right-end .ui-popover-caret {
+        inset-block-end: var(--ui-spacing-04);
+    }
+
+    .ui-toggletip.ui-popover--left .ui-popover-caret,
+    .ui-toggletip.ui-popover--left-start .ui-popover-caret,
+    .ui-toggletip.ui-popover--left-end .ui-popover-caret {
+        inset-inline-end: calc(var(--ui-toggletip-caret-size) / -2);
+        border-block-end: 0;
+        border-inline-start: 0;
+    }
+
+    .ui-toggletip.ui-popover--left .ui-popover-caret {
+        inset-block-start: 50%;
+        transform: translateY(-50%) rotate(45deg);
+    }
+
+    .ui-toggletip.ui-popover--left-start .ui-popover-caret {
+        inset-block-start: var(--ui-spacing-04);
+    }
+
+    .ui-toggletip.ui-popover--left-end .ui-popover-caret {
+        inset-block-end: var(--ui-spacing-04);
+    }
+
+    .ui-toggletip.ui-popover--bottom .ui-popover-caret,
+    .ui-toggletip.ui-popover--bottom-start .ui-popover-caret,
+    .ui-toggletip.ui-popover--bottom-end .ui-popover-caret {
+        inset-block-start: calc(var(--ui-toggletip-caret-size) / -2);
+        border-block-end: 0;
+        border-inline-end: 0;
+    }
+
+    .ui-toggletip.ui-popover--bottom .ui-popover-caret {
+        inset-inline-start: 50%;
+        transform: translateX(-50%) rotate(45deg);
+    }
+
+    .ui-toggletip.ui-popover--bottom-start .ui-popover-caret {
+        inset-inline-start: var(--ui-spacing-04);
+    }
+
+    .ui-toggletip.ui-popover--bottom-end .ui-popover-caret {
+        inset-inline-end: var(--ui-spacing-04);
+    }
+
+    .ui-toggletip.ui-popover--top .ui-popover-caret,
+    .ui-toggletip.ui-popover--top-start .ui-popover-caret,
+    .ui-toggletip.ui-popover--top-end .ui-popover-caret {
+        inset-block-end: calc(var(--ui-toggletip-caret-size) / -2);
+        border-block-start: 0;
+        border-inline-start: 0;
+    }
+
+    .ui-toggletip.ui-popover--top .ui-popover-caret {
+        inset-inline-start: 50%;
+        transform: translateX(-50%) rotate(45deg);
+    }
+
+    .ui-toggletip.ui-popover--top-start .ui-popover-caret {
+        inset-inline-start: var(--ui-spacing-04);
+    }
+
+    .ui-toggletip.ui-popover--top-end .ui-popover-caret {
+        inset-inline-end: var(--ui-spacing-04);
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-toggletip-button:hover svg,
+        .ui-toggletip--open .ui-toggletip-button svg {
+            fill: Highlight;
+        }
+
+        .ui-toggletip-popover-content,
+        .ui-toggletip .ui-popover-caret {
+            border-color: CanvasText;
+        }
     }
 }

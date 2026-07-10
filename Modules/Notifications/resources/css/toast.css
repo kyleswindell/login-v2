@@ -1,0 +1,93 @@
+/* ==========================================================================
+   File: Modules/Notifications/resources/css/notifications/toast.css
+   Purpose: Runtime toast notification placement and motion.
+
+   Notes:
+   - The Notification component owns toast structure and semantic styling.
+   - This module owns runtime toast stack placement and enter/exit/shift motion.
+   - Keep this separate from the header popover panel CSS.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Toast stack
+       ---------------------------------------------------------------------- */
+
+    [data-notification-toast-container] {
+        pointer-events: none;
+    }
+
+    [data-notification-toast-container] > [data-ui-notification-toast] {
+        --ui-toast-motion-x: 0px;
+        --ui-toast-motion-y: 0px;
+
+        pointer-events: auto;
+        inline-size: var(--ui-notification-toast-inline-size, 22rem);
+        max-inline-size: calc(100vw - var(--ui-spacing-07));
+        opacity: 1;
+        transform: translate3d(
+            var(--ui-toast-motion-x),
+            var(--ui-toast-motion-y),
+            0
+        );
+        will-change: transform, opacity;
+        transition-property: transform, opacity;
+        transition-duration:
+            var(--ui-duration-moderate-02), var(--ui-duration-fast-02);
+        transition-timing-function:
+            var(--ui-motion-entrance-productive),
+            var(--ui-motion-entrance-productive);
+    }
+
+    /* ----------------------------------------------------------------------
+       Toast states
+       ---------------------------------------------------------------------- */
+
+    [data-notification-toast-container]
+        > [data-ui-notification-toast][data-ui-toast-state="entering"] {
+        --ui-toast-motion-x: calc(100% + var(--ui-spacing-06));
+
+        opacity: 0;
+    }
+
+    [data-notification-toast-container]
+        > [data-ui-notification-toast][data-ui-toast-state="open"] {
+        --ui-toast-motion-x: 0px;
+
+        opacity: 1;
+    }
+
+    [data-notification-toast-container]
+        > [data-ui-notification-toast][data-ui-toast-state="exiting"] {
+        --ui-toast-motion-x: calc(100% + var(--ui-spacing-06));
+
+        opacity: 0;
+        transition-duration:
+            var(--ui-duration-moderate-01), var(--ui-duration-fast-02);
+        transition-timing-function:
+            var(--ui-motion-exit-productive), var(--ui-motion-exit-productive);
+    }
+
+    [dir="rtl"]
+        [data-notification-toast-container]
+        > [data-ui-notification-toast][data-ui-toast-state="entering"],
+    [dir="rtl"]
+        [data-notification-toast-container]
+        > [data-ui-notification-toast][data-ui-toast-state="exiting"] {
+        --ui-toast-motion-x: calc(-100% - var(--ui-spacing-06));
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+        [data-notification-toast-container] > [data-ui-notification-toast] {
+            --ui-toast-motion-x: 0px;
+            --ui-toast-motion-y: 0px;
+
+            transition-duration: 1ms;
+            will-change: auto;
+        }
+    }
+}

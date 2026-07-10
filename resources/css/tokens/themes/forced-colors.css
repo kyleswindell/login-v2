@@ -1,0 +1,46 @@
+/* ==========================================================================
+   File: resources/css/tokens/themes/forced-colors.css
+   Purpose: Forced-colors theme token overrides.
+   Notes:
+   - Defines theme-token overrides for forced-colors / high-contrast mode.
+   - Utility classes for forced-colors behavior belong in
+     resources/css/base/forced-colors.css.
+   - Uses system colors so selected, icon, link, and focus states remain
+     visible in forced-colors mode.
+   ========================================================================== */
+
+@layer base {
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        :root {
+            /* Icon colors */
+            --ui-icon-primary: ButtonText;
+            --ui-icon-secondary: ButtonText;
+            --ui-icon-interactive: ButtonText;
+            --ui-icon-disabled: GrayText;
+            --ui-icon-on-color-disabled: GrayText;
+
+            /* Selected / inverse icon colors */
+            --ui-icon-inverse: SelectedItemText;
+            --ui-icon-on-color: SelectedItemText;
+
+            /* Interactive and link colors */
+            --ui-interactive: ButtonText;
+            --ui-link-primary: LinkText;
+            --ui-link-primary-hover: LinkText;
+            --ui-link-secondary: LinkText;
+            --ui-link-inverse: SelectedItemText;
+            --ui-link-inverse-hover: SelectedItemText;
+            --ui-link-inverse-visited: SelectedItemText;
+            --ui-link-visited: VisitedText;
+
+            /* Selected and inverse backgrounds */
+            --ui-background-selected: SelectedItem;
+            --ui-background-selected-hover: SelectedItem;
+            --ui-background-inverse: SelectedItem;
+            --ui-layer-selected-inverse: SelectedItem;
+
+            /* Focus */
+            --ui-focus: Highlight;
+        }
+    }
+}

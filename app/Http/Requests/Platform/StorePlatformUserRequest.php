@@ -2,15 +2,21 @@
 
 namespace App\Http\Requests\Platform;
 
+use App\Modules\Roles\Services\AssignmentGuard;
+use App\Modules\Auth\Services\Password\LocalPasswordPolicy;
 use App\Support\InternalPhoneFormatter;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 
 class StorePlatformUserRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        $guard = app(AssignmentGuard::class);
+
+        return $guard->canAssignRoles(
+            $this->user(),
+            $guard->roleNamesFromInput($this->input('roles', [])),
+        );
     }
 
     /**
@@ -22,7 +28,11 @@ class StorePlatformUserRequest extends FormRequest
             'first_name' => ['required', 'string', 'max:100'],
             'last_name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'string', Password::defaults()],
+            'password' => [
+                'required',
+                'string',
+                ...LocalPasswordPolicy::rules(LocalPasswordPolicy::contextWordsForInput($this->all())),
+            ],
             'hourly_rate' => ['nullable', 'numeric', 'min:0', 'max:999999.99'],
             'phone' => ['nullable', 'string', 'max:50'],
             'facebook' => ['nullable', 'string', 'max:255'],

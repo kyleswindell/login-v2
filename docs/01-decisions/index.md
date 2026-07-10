@@ -83,13 +83,13 @@ Never reuse or renumber a decision identifier.
 
 ## 5. Proposed Decisions
 
-- [ADR-0005: Core, Modules, And UI Ownership Taxonomy](adr-0005-core-modules-ui-ownership-taxonomy.md) — Proposes Core, Modules, and UI as the three canonical source-of-truth ownership areas.
+No active proposed decision records are currently published.
 
-Proposed records are not accepted architecture until authorized review is recorded.
+Add proposed records here while they await authorized review.
 
 ## 6. Accepted Decisions
 
-No active accepted decision records are currently published in this branch.
+- [ADR-0005: Core, Modules, And UI Ownership Taxonomy](adr-0005-core-modules-ui-ownership-taxonomy.md) — Establishes Core, Modules, and UI as the three canonical source-of-truth ownership areas.
 
 Historical archived records must be reviewed before any are promoted back into the active branch.
 

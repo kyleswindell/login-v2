@@ -2,13 +2,13 @@
 DOC-META
 title: ADR-0005: Core, Modules, And UI Ownership Taxonomy
 doc_type: decision
-status: draft
+status: active
 owner: architecture
 canonical: true
 canonical_path: docs/01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md
 parent: docs/01-decisions/index.md
 template: docs/09-reference/templates/docs/_decision.md
-summary: Proposes Core, Modules, and UI as the three canonical source-of-truth ownership areas for Login 2.0.
+summary: Records Core, Modules, and UI as the three canonical source-of-truth ownership areas for Login 2.0.
 -->
 
 # ADR-0005: Core, Modules, And UI Ownership Taxonomy
@@ -17,12 +17,12 @@ Parent: [Decisions Index](index.md)
 
 ## 1. Decision Status
 
-Proposed
+Accepted
 
 ## 2. Dates
 
 - Proposed: 2026-07-10
-- Accepted, rejected, deprecated, or superseded:
+- Accepted, rejected, deprecated, or superseded: 2026-07-10
 
 ## 3. Decision Owner
 
@@ -36,7 +36,7 @@ Proposed
 - Parent goal: [#17 — M0 Goal 01: Canonical vocabulary and ownership](https://github.com/kyleswindell/login-v2/issues/17)
 - Planning document: [M0 Repository Convergence Planning](../07-planning/00-overview/m0-repository-convergence-planning.md)
 - Planning matrix: [Core Service Build Plan Matrix](../07-planning/core-service-build-plan-matrix.md)
-- Pull request:
+- Pull request: [#35 — Propose Core Modules and UI ownership taxonomy](https://github.com/kyleswindell/login-v2/pull/35)
 - Prior decisions: none active; archived ADRs remain historical until separately reviewed
 - Affected canonical owners:
   - `docs/03-architecture/`
@@ -298,24 +298,30 @@ Required follow-up:
 
 ## 15. Canonical Documentation Updates
 
-### Create
+### Immediate Synchronization
 
-- `docs/01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md`
-
-### Update After Acceptance
+Issue #1 acceptance updates:
 
 - `docs/01-decisions/index.md`
 - `docs/07-planning/00-overview/m0-repository-convergence-planning.md`
 - `docs/07-planning/core-service-build-plan-matrix.md`
-- affected architecture planning and indexes
-- affected coding, UI, testing, and documentation standards
-- root and folder-level `AGENTS.md`
-- GitHub issue and Project classifications where Platform ownership remains
+- root `AGENTS.md`
+
+### Bounded Follow-Up
+
+Later M0 work must reconcile:
+
+- architecture planning and indexes through Goals 03 and 07
+- coding, testing, UI, security, database, and documentation standards through Goal 08
+- folder-level `AGENTS.md` through issue #12 after target topology stabilizes
+- owner, Module, registry, dependency, and extension keys through issue #28
+- physical paths, namespaces, route names, and compatibility mappings through Goals 03 and 09
+- GitHub Project classifications that still use Platform as an ownership category
 
 ### Supersede Or Archive
 
 - no active decision record is superseded
-- ambiguous planning terminology should be normalized or retained with explicit compatibility notes
+- ambiguous planning terminology must be normalized or retained with explicit compatibility notes
 - archived ADRs remain historical
 
 ## 16. Verification
@@ -349,13 +355,18 @@ Treat existing Platform, core-module, platform-module, and generic module termin
 
 ## 18. Acceptance Or Rejection Record
 
-Complete this section when the proposal is resolved.
-
-- Outcome:
-- Date:
-- Accepted or rejected by:
+- Outcome: Accepted
+- Date: 2026-07-10
+- Accepted or rejected by: Kyle Swindell, repository owner
 - Evidence:
+  - explicit repository-owner approval recorded for issue #1
+  - pull request #35 review and merge history
 - Required follow-up:
+  - issue #27 — scope and actor vocabulary
+  - issue #28 — owner, Module, registry, dependency, and extension-key conventions
+  - Goal 03 — target topology and naming
+  - Goal 07 — cross-owner and cross-Module contracts
+  - Goal 09 — migration and compatibility
 
 ## 19. Related
 

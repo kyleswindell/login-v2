@@ -91,7 +91,7 @@ This document owns milestone intent and acceptance structure. It must not become
 
 ### 3.1 Goal Statement
 
-Establish one accepted, reviewable, and implementation-ready target state for Login 2.0 across terminology, ownership, repository topology, contracts, persistent data, Shared UI, standards, migration, verification, and delivery governance.
+Establish one accepted, reviewable, and implementation-ready target state for Login 2.0 across terminology, ownership, repository topology, contracts, persistent data, UI, standards, migration, verification, and delivery governance.
 
 After M0, later milestones must be able to execute bounded work without inferring architecture, policy, data ownership, or UI contracts from obsolete or contradictory sources.
 
@@ -161,8 +161,8 @@ M0 does not generally require:
 - completing every physical folder move
 - completing every namespace migration
 - implementing every Core capability
-- rebuilding every Platform surface
-- rebuilding every Business Module
+- rebuilding every required Core application surface
+- rebuilding every optional Module
 - finishing every UI element, component, or pattern
 - making every transitional test pass before its target behavior is accepted
 - creating every future database migration
@@ -326,17 +326,27 @@ The parent requires an acceptance review confirming that resulting artifacts:
 
 Settle the language and ownership model used throughout code, documentation, configuration, registries, database contracts, tests, and issues.
 
-### 8.2 Required Outcomes
+### 8.2 Accepted Ownership Baseline
 
-M0 must define and distinguish:
+[ADR-0005: Core, Modules, And UI Ownership Taxonomy](../../01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md) establishes three source-of-truth ownership areas:
 
-- Core Capability
-- Platform Surface
-- Business Module
-- Shared UI
+- **Core** — required base-application behavior, state, coordination, infrastructure, and contracts
+- **Modules** — optional, cohesive, independently versioned Composer feature packages
+- **UI** — reusable Elements, Components, Patterns, Layouts, CSS, JavaScript, icons, contracts, tests, and review evidence
+
+`Platform` is not a peer owner. Existing Platform responsibilities must be classified under Core or UI. Physical `app/Platform` paths remain transitional evidence until Goals 03 and 09 define and execute migration.
+
+A Core Capability is a distinct capability within Core. A business-oriented feature may be a Module, but business purpose is not required for Module classification.
+
+### 8.3 Remaining Required Outcomes
+
+M0 must still define and distinguish:
+
 - registry
 - contribution
 - owner key
+- Module key
+- dependency and extension relationships
 - instance
 - workspace
 - tenant
@@ -345,9 +355,11 @@ M0 must define and distinguish:
 - identity
 - service identity
 - actor
-- UI element
-- UI component
-- UI pattern
+- UI Element
+- UI Component
+- UI Pattern
+- UI Layout
+- surface
 - renderer
 - ViewModel or PageData
 - configuration owner
@@ -357,7 +369,7 @@ M0 must define and distinguish:
 - audit-event owner
 - database owner
 
-For each term, define:
+For each material term, define:
 
 - canonical name
 - meaning
@@ -367,43 +379,42 @@ For each term, define:
 - current code or documentation mismatches
 - propagation requirements
 
-### 8.3 Required Artifacts
+### 8.4 Required Artifacts
 
-- accepted vocabulary and ownership section in the Core Service Build Plan Matrix or a linked canonical matrix
-- decision record for Core, Platform, Business Module, and Shared UI vocabulary
-- instance/workspace/tenant/account glossary
-- owner-key and registry-key convention
-- capability and surface ownership matrix
-- terminology mismatch inventory
+- [x] [ADR-0005: Core, Modules, And UI Ownership Taxonomy](../../01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md)
+- [x] accepted ownership vocabulary and compatibility map in the Core Service Build Plan Matrix
+- [ ] instance/workspace/tenant/account glossary
+- [ ] owner, Module, registry, dependency, and extension-key conventions
+- [ ] complete terminology mismatch inventory and propagation report
 
-### 8.4 Candidate Child Issues
+### 8.5 Child Issues
 
-- Confirm Core Capability, Platform Surface, Business Module, and Shared UI vocabulary.
-- Confirm instance, workspace, tenant, account, user, and service identity vocabulary.
-- Define owner-key and registry-key formats.
-- Reconcile terminology across planning and standards.
-- Reconcile terminology across namespaces, configuration, routes, permissions, and tests.
-- Produce the accepted ownership matrix.
+- [x] #1 — Confirm Core, Modules, and UI ownership taxonomy.
+- [ ] #27 — Confirm instance, workspace, tenant, account, user, identity, service identity, and actor vocabulary.
+- [ ] #28 — Define owner, Module, registry, dependency, and extension-key formats and complete terminology propagation review.
 
-### 8.5 Dependencies
+### 8.6 Dependencies
 
-- none for initial inventory
-- Goal 02 provides current mismatch evidence
-- all later goals depend on accepted Goal 01 vocabulary
+- Goal 02 provides current mismatch evidence.
+- All later goals depend on the accepted ownership baseline.
+- Scope-sensitive key conventions remain dependent on issue #27.
 
-### 8.6 Exit Criteria
+### 8.7 Exit Criteria
 
-- [ ] each material term has one canonical definition
-- [ ] each material concept has one primary owner
-- [ ] deprecated terminology is explicitly mapped
+- [x] Core, Modules, and UI ownership boundaries are accepted.
+- [x] Platform and related deprecated ownership terminology are mapped.
+- [x] Module package, dependency, and extension direction is accepted.
+- [ ] each remaining material term has one canonical definition
+- [ ] each remaining material concept has one primary owner
 - [ ] owner-key and registry-key formats are accepted
-- [ ] planning matrices use the canonical vocabulary
+- [ ] planning matrices use the complete canonical vocabulary
 - [ ] remaining terminology questions are explicit blockers
 
-### 8.7 Non-Goals
+### 8.8 Non-Goals
 
 - moving every file into its target owner
 - renaming every class during this goal
+- implementing the Module lifecycle or package manager
 - implementing every registry
 
 ## 9. Goal 02 — Current-State Inventory And Disposition
@@ -1362,7 +1373,7 @@ This is the accepted Wave 0 mapping of issues #1 through #13 after review agains
 
 | Issue | Current Title                                                | Primary Parent Goal | Initial Disposition                  | Required Review                                                       |
 | ----- | ------------------------------------------------------------ | ------------------- | ------------------------------------ | --------------------------------------------------------------------- |
-| #1    | Confirm Core, Platform, and Business Module vocabulary       | Goal 01             | Retain and revise                    | Expand definitions, owner keys, and related vocabulary                |
+| #1    | Confirm Core, Modules, and UI ownership taxonomy                 | Goal 01             | Completed                            | Accepted through ADR-0005 and synchronized with canonical planning    |
 | #2    | Promote DataGovernance into the build matrix                 | Goal 06             | Retain and revise                    | Confirm target ownership and matrix coverage                          |
 | #3    | Add View Surface and Renderer Matrix                         | Goal 04             | Retain and revise                    | Keep contract ownership primary; relate to Goal 05 readiness          |
 | #4    | Create GitHub Project workflow documentation                 | Goal 10             | Retain and revise                    | Add parent/sub-issue, dependency, evidence, and acceptance rules      |
@@ -1508,7 +1519,7 @@ The exact canonical paths may be adjusted during Goal 01 and Goal 03, but one ca
 
 | Item                                                            | Type                    | Primary Goal | Required By          | Resolution Or Next Action                    |
 | --------------------------------------------------------------- | ----------------------- | ------------ | -------------------- | -------------------------------------------- |
-| Final Core, Platform, Business Module, and Shared UI vocabulary | Decision                | Goal 01      | Goal 03 onward       | Resolve through issue #1 and decision record |
+
 | Instance, workspace, tenant, account, and user vocabulary       | Decision                | Goal 01      | Goals 03, 06, and 07 | Create bounded decision issue                |
 | Owner-key and registry-key format                               | Decision                | Goal 01      | Goals 03, 04, and 07 | Create bounded decision issue                |
 | Future administrative URL prefix                                | Decision                | Goal 03      | Goal 09              | Resolve through issue #5                     |
